@@ -2,7 +2,7 @@
   "name": "@helpscout/blue",
   "version": "0.0.1",
   "private": true,
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build-storybook": "build-storybook",
     "build": "node scripts/build.js",
