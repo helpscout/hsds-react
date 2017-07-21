@@ -3,6 +3,13 @@
 An Input component is an enhanced version of the default HTML `<input>`.
 
 
+## Example
+
+```js
+<Input value="Aww yiss" placeholder="Please enter some form of yes." autoFocus />
+```
+
+
 ## Props
 
 | Prop | Type | Description |
