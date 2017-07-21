@@ -78,6 +78,9 @@ $seed-input-namespace: "c-Input";
     // Styles
     @include parent("#{$block}--seamless") {
       border-color: transparent;
+      @include parent("#{$block}__field:focus ~ ") {
+        border-color: transparent;
+      }
     }
 
     // States

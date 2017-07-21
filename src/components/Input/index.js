@@ -79,6 +79,7 @@ class Input extends Component {
       disabled,
       error,
       id,
+      inputRef,
       name,
       placeholder,
       placeholderItalic,
@@ -149,6 +150,7 @@ class Input extends Component {
             onChange={handleOnChange}
             onFocus={handleOnFocus}
             name={name}
+            ref={inputRef}
             placeholder={placeholder}
             type={type}
             value={value}

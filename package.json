@@ -6,7 +6,7 @@
   "scripts": {
     "build-storybook": "build-storybook",
     "build": "node scripts/build.js",
-    "lib": "babel src --out-dir lib --copy-files",
+    "lib": "npm run pretty && babel src --out-dir lib --copy-files",
     "pretty": "prettier --single-quote --trailing-comma es5 --write 'src/**/*.js'",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
