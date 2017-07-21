@@ -12,6 +12,14 @@
     "storybook": "start-storybook -p 8900",
     "test": "node scripts/test.js --env=jsdom"
   },
+  "dependencies": {
+    "seed-color-scheme": "0.1.1",
+    "seed-family": "0.0.4",
+    "seed-flexy": "0.3.4",
+    "seed-harvester": "0.1.5",
+    "seed-input": "0.0.7",
+    "seed-this": "0.0.5"
+  },
   "devDependencies": {
     "@storybook/react": "3.1.9",
     "autoprefixer": "7.1.1",
@@ -51,12 +59,6 @@
     "react-dom": "15.6.1",
     "react-error-overlay": "^1.0.9",
     "sass-loader": "6.0.6",
-    "seed-color-scheme": "0.1.1",
-    "seed-family": "0.0.4",
-    "seed-flexy": "0.3.4",
-    "seed-harvester": "0.1.5",
-    "seed-input": "0.0.7",
-    "seed-this": "0.0.5",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
