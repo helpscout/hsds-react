@@ -6,8 +6,8 @@
 # testing
 /coverage
 
-# production
-/build
+# build
+/lib
 
 # misc
 .DS_Store
