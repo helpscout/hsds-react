@@ -128,8 +128,10 @@ class Input extends Component {
       return [error, success, warning].map(state => {
         if (state && typeof state === 'string' && state.length) {
           return (
-            <div className="c-Input__helper-label">{state}</div>
-          )
+            <div className="c-Input__helper-label">
+              {state}
+            </div>
+          );
         }
       });
     };
