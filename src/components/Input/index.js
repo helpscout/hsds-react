@@ -4,12 +4,16 @@ import classNames from '../../utilities/classNames';
 import { noop } from '../../utilities/constants';
 
 const propTypes = {
+  onBlur: PropTypes.func,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
   autoFocus: PropTypes.bool,
   bold: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  id: PropTypes.string,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
   placeholderItalic: PropTypes.bool,
   prefix: PropTypes.string,
@@ -23,12 +27,16 @@ const propTypes = {
   warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 const defaultProps = {
+  onBlur: noop,
   onChange: noop,
+  onFocus: noop,
   autoFocus: false,
   bold: false,
   className: '',
   disabled: false,
   error: false,
+  id: '',
+  name: '',
   placeholder: '',
   placeholderItalic: false,
   prefix: '',
@@ -50,10 +58,18 @@ class Input extends Component {
     };
   }
 
+  handleOnBlur() {
+    this.props.onBlur();
+  }
+
   handleOnChange(e) {
     const value = e.currentTarget.value;
     this.setState({ value });
     this.props.onChange(value);
+  }
+
+  handleOnFocus() {
+    this.props.onBlur();
   }
 
   render() {
@@ -62,6 +78,8 @@ class Input extends Component {
       bold,
       disabled,
       error,
+      id,
+      name,
       placeholder,
       placeholderItalic,
       prefix,
@@ -75,7 +93,9 @@ class Input extends Component {
     } = this.props;
     const { value } = this.state;
 
+    const handleOnBlur = this.handleOnBlur.bind(this);
     const handleOnChange = this.handleOnChange.bind(this);
+    const handleOnFocus = this.handleOnFocus.bind(this);
 
     const className = classNames(
       'c-Input',
@@ -122,7 +142,11 @@ class Input extends Component {
             autoFocus={autoFocus}
             className="c-Input__field"
             disabled={disabled}
+            id={id}
+            onBlur={handleOnBlur}
             onChange={handleOnChange}
+            onFocus={handleOnFocus}
+            name={name}
             placeholder={placeholder}
             type={type}
             value={value}
