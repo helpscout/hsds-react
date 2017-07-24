@@ -4,16 +4,16 @@ import classNames from '../../utilities/classNames';
 import { noop } from '../../utilities/constants';
 
 const propTypes = {
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onEnter: PropTypes.func,
-  onFocus: PropTypes.func,
   autoFocus: PropTypes.bool,
   defaultHeight: PropTypes.number,
   disabled: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   id: PropTypes.string,
   name: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onEnter: PropTypes.func,
+  onFocus: PropTypes.func,
   placeholder: PropTypes.string,
   readOnly: PropTypes.bool,
   resize: PropTypes.bool,
@@ -24,16 +24,16 @@ const propTypes = {
   warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 const defaultProps = {
-  onBlur: noop,
-  onChange: noop,
-  onEnter: noop,
-  onFocus: noop,
   autoFocus: false,
   defaultHeight: 28,
   disabled: false,
   error: false,
   id: '',
   name: '',
+  onBlur: noop,
+  onChange: noop,
+  onEnter: noop,
+  onFocus: noop,
   placeholder: '',
   readOnly: false,
   resize: true,
@@ -100,7 +100,16 @@ class Textarea extends Component {
   }
 
   getExpandableField() {
-    const {id, disabled, name, autoFocus, onBlur, onFocus, placeholder, readOnly } = this.props;
+    const {
+      autoFocus,
+      disabled,
+      id,
+      name,
+      onBlur,
+      onFocus,
+      placeholder,
+      readOnly,
+    } = this.props;
     const { height, value } = this.state;
     const handleKeyUp = this.handleKeyUp.bind(this);
     const handleKeyDown = this.handleKeyDown.bind(this);

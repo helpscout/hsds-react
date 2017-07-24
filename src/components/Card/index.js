@@ -4,24 +4,24 @@ import classNames from '../../utilities/classNames';
 import { noop } from '../../utilities/constants';
 
 const propTypes = {
-  onBlur: PropTypes.func,
-  onClick: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-  onFocus: PropTypes.func,
   className: PropTypes.string,
   hover: PropTypes.bool,
   href: PropTypes.string,
+  onBlur: PropTypes.func,
+  onClick: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  onFocus: PropTypes.func,
   seamless: PropTypes.bool,
-  selector: PropTypes.string
+  selector: PropTypes.string,
 };
 const defaultProps = {
-  onBlur: noop,
-  onClick: false,
-  onFocus: noop,
   className: '',
   hover: false,
   href: '',
+  onBlur: noop,
+  onClick: false,
+  onFocus: noop,
   seamless: false,
-  selector: 'div'
+  selector: 'div',
 };
 
 const Card = props => {
@@ -41,7 +41,7 @@ const Card = props => {
     selectorTag,
     {
       ...props,
-      className
+      className,
     },
     props.children
   );

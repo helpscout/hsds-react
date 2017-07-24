@@ -8,7 +8,7 @@ const propTypes = {
 };
 const defaultProps = {
   className: '',
-  size: 'md'
+  size: 'md',
 };
 
 const CardBlock = props => {
