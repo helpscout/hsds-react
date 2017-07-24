@@ -13,7 +13,8 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
-    "seed-color-scheme": "0.1.1",
+    "seed-card": "0.1.0",
+    "seed-color-scheme": "0.3.0",
     "seed-family": "0.0.4",
     "seed-flexy": "0.3.4",
     "seed-harvester": "0.1.5",

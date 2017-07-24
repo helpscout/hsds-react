@@ -89,14 +89,7 @@ class Textarea extends Component {
   }
 
   getExpandableField() {
-    const {
-      id,
-      name,
-      autoFocus,
-      onBlur,
-      onFocus,
-      placeholder,
-    } = this.props;
+    const { id, name, autoFocus, onBlur, onFocus, placeholder } = this.props;
     const { height, value } = this.state;
     const handleKeyUp = this.handleKeyUp.bind(this);
     const handleKeyDown = this.handleKeyDown.bind(this);
@@ -136,17 +129,13 @@ class Textarea extends Component {
   }
 
   render() {
-    const {
-      resize,
-      resizeBoth,
-      seamless,
-    } = this.props;
+    const { resize, resizeBoth, seamless } = this.props;
 
     const className = classNames(
       'c-Textarea',
       resize && 'c-Textarea--resize',
       resizeBoth && 'c-Textarea--resizeBoth',
-      seamless && 'c-Textarea--seamless',
+      seamless && 'c-Textarea--seamless'
     );
 
     return (
