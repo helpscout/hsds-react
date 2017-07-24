@@ -4,13 +4,18 @@ import classNames from '../../utilities/classNames';
 import { noop } from '../../utilities/constants';
 
 const propTypes = {
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onEnter: PropTypes.func,
+  onFocus: PropTypes.func,
   autoFocus: PropTypes.bool,
   defaultHeight: PropTypes.number,
+  disabled: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   id: PropTypes.string,
   name: PropTypes.string,
-  onEnter: PropTypes.func,
   placeholder: PropTypes.string,
+  readOnly: PropTypes.bool,
   resize: PropTypes.bool,
   resizeBoth: PropTypes.bool,
   seamless: PropTypes.bool,
@@ -19,13 +24,18 @@ const propTypes = {
   warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 const defaultProps = {
+  onBlur: noop,
+  onChange: noop,
+  onEnter: noop,
+  onFocus: noop,
   autoFocus: false,
   defaultHeight: 28,
+  disabled: false,
   error: false,
   id: '',
   name: '',
-  onEnter: noop,
   placeholder: '',
+  readOnly: false,
   resize: true,
   resizeBoth: false,
   seamless: false,
@@ -85,11 +95,12 @@ class Textarea extends Component {
 
   setValue(event) {
     const { value } = event.target;
+    this.props.onChange(event);
     this.setState({ value });
   }
 
   getExpandableField() {
-    const { id, name, autoFocus, onBlur, onFocus, placeholder } = this.props;
+    const {id, disabled, name, autoFocus, onBlur, onFocus, placeholder, readOnly } = this.props;
     const { height, value } = this.state;
     const handleKeyUp = this.handleKeyUp.bind(this);
     const handleKeyDown = this.handleKeyDown.bind(this);
@@ -99,9 +110,11 @@ class Textarea extends Component {
         autoFocus={autoFocus}
         className="c-Textarea__field"
         defaultValue={this.props.value}
+        disabled={disabled}
         id={id}
         name={name}
         placeholder={placeholder}
+        readOnly={readOnly}
         ref={textarea => (this.textarea = textarea)}
         onBlur={onBlur}
         onChange={this.setValue}
@@ -133,6 +146,8 @@ class Textarea extends Component {
 
     const className = classNames(
       'c-Textarea',
+      disabled && 'is-disabled',
+      readOnly && 'is-readonly',
       resize && 'c-Textarea--resize',
       resizeBoth && 'c-Textarea--resizeBoth',
       seamless && 'c-Textarea--seamless'

@@ -150,6 +150,7 @@ class Input extends Component {
             onChange={handleOnChange}
             onFocus={handleOnFocus}
             name={name}
+            readOnly={readOnly}
             ref={inputRef}
             placeholder={placeholder}
             type={type}
