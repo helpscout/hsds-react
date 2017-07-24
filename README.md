@@ -1,6 +1,8 @@
 # Blue 🔷
 
-React component library
+React component library.
+
+> You're my boy, Blue!
 
 
 ## Getting Started
