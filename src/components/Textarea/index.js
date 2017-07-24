@@ -151,7 +151,7 @@ class Textarea extends Component {
   }
 
   render() {
-    const { resize, resizeBoth, seamless } = this.props;
+    const { disabled, readOnly, resize, resizeBoth, seamless } = this.props;
 
     const className = classNames(
       'c-Textarea',
