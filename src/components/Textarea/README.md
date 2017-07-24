@@ -1,12 +1,12 @@
-# Input
+# Textarea
 
-An Input component is an enhanced version of the default HTML `<input>`.
+An Textarea component is an enhanced version of the default HTML `<textarea>`.
 
 
 ## Example
 
 ```js
-<Input value="Aww yiss" placeholder="Please enter some form of yes." autoFocus />
+<Textarea value="You're awesome" placeholder="Please enter some form of awesome." autoFocus />
 ```
 
 
