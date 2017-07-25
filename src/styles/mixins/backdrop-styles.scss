@@ -38,4 +38,9 @@
       box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
     }
   }
+
+  // Disabled
+  @include parent("#{$block}.is-disabled #{$block}__field ~ ") {
+    background-color: _color(grey, 200);
+  }
 }
