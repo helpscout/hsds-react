@@ -1,6 +1,9 @@
 // Dependencies
+@import "pack/seed-control/_index";
+@import "pack/seed-dash/_index";
 @import "pack/seed-family/_index";
 @import "pack/seed-this/_index";
+@import "../mixins/backdrop-styles";
 
 // Config
 $seed-input-namespace: "c-Input";
@@ -12,12 +15,14 @@ $seed-input-namespace: "c-Input";
   @import "../configs/color";
   @import "../resets/base";
   $block: this();
+  $padding: 8px;
   $states: error, success, warning;
 
   align-items: center;
   background-color: transparent;
   border: none;
   display: flex;
+  position: relative;
 
   // Elements
   &__item {
@@ -33,6 +38,7 @@ $seed-input-namespace: "c-Input";
     color: currentColor;
     display: block;
     position: relative;
+    top: -1px; // to normalize and center the <input>
     height: 100%;
     width: 100%;
     z-index: 1;
@@ -43,6 +49,12 @@ $seed-input-namespace: "c-Input";
 
     &::placeholder {
       color: _color(grey, 700);
+    }
+
+    @each $state in $states {
+      @include parent("#{$block}.is-#{$state}") {
+        color: _color(state, $state, color);
+      }
     }
   }
 
@@ -58,37 +70,7 @@ $seed-input-namespace: "c-Input";
   }
 
   &__backdrop {
-    $this: this();
-    background-color: white;
-    border: 1px solid _color(border, ui, dark);
-    border-radius: 4px;
-    bottom: 0;
-    box-shadow: 0 0 0 0 rgba(_color(border), 0);
-    left: 0;
-    position: absolute;
-    right: 0;
-    transition: box-shadow 0.1s ease;
-    top: 0;
-
-    @include parent("#{$block}__field:focus ~ ") {
-      border-color: _color(blue);
-      box-shadow: 0 0 0 1px rgba(_color(blue), 0.3);
-    }
-
-    // Styles
-    @include parent("#{$block}--seamless") {
-      border-color: transparent;
-    }
-
-    // States
-    @each $state in $states {
-      @include parent("#{$block}.is-#{$state} #{$block}__field ~ ") {
-        border-color: _color(state, $state, border-color);
-      }
-      @include parent("#{$block}.is-#{$state} #{$block}__field:focus ~ ") {
-        box-shadow: 0 0 0 1px rgba(_color(state, $state, border-color), 0.3);
-      }
-    }
+    @include backdrop-styles($block, $states);
   }
 
   &__helper-label {
@@ -100,6 +82,51 @@ $seed-input-namespace: "c-Input";
       @include parent("#{$block}.is-#{$state} ~ ") {
         color: _color(state, $state, border-color);
       }
+    }
+  }
+
+  // Resizer
+  &__Resizer {
+    bottom: 0;
+    height: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    visibility: hidden;
+  }
+
+
+
+  // Modifiers
+  // Multiline: This transforms the <input> into an auto-expanding <textarea>
+  &--multiline {
+    height: auto;
+
+    #{$block}__field {
+      line-height: normal;
+      overflow: hidden;
+      margin-left: -($padding);
+      margin-right: -($padding);
+      padding: 0.6em $padding;
+      resize: none;
+      top: 1px; // to match the line-height of <input>
+      width: calc(100% + #{ceil($padding * 2)});
+    }
+
+    // Adjust field height
+    @each $size, $values in $seed-control-sizes {
+      &#{$block}--#{$size} {
+        #{$block}__field {
+          min-height: _get($values, height);
+        }
+      }
+    }
+  }
+
+  // Resizable: Applicable to multiline only. Enables resizing of <textarea>.
+  &--resizable {
+    #{$block}__field {
+      resize: vertical;
     }
   }
 }

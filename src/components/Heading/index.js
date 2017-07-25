@@ -18,12 +18,7 @@ const defaultProps = {
 };
 
 const Heading = props => {
-  const {
-    disableSelect,
-    light,
-    selector,
-    size,
-  } = props;
+  const { disableSelect, light, selector, size } = props;
 
   const className = classNames(
     'c-Heading',
@@ -34,7 +29,7 @@ const Heading = props => {
   );
 
   const selectorTag = selector ? selector : 'div';
-  
+
   const element = React.createElement(
     selectorTag,
     {

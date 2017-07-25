@@ -1,12 +1,21 @@
 # Input
 
-An Input component is an enhanced version of the default HTML `<input>`.
+An Input component is an enhanced version of the default HTML `<input>`. Input can be transformed into a `<textarea>` if the `multiline` prop is defined.
 
 
 ## Example
 
-```js
+
+### Input
+
+```html
 <Input value="Aww yiss" placeholder="Please enter some form of yes." autoFocus />
+```
+
+### Textarea
+
+```html
+<Input multiline={3} placeholder="I'm a 3-line auto-expanding textarea." autoFocus />
 ```
 
 
@@ -22,10 +31,12 @@ An Input component is an enhanced version of the default HTML `<input>`.
 | disabled | boolean | Disable the input. |
 | error | boolean or string | Change input to error state. Displays text underneath input. |
 | id | string | ID for the input. |
+| multiline | boolean or number | Transforms input into an auto-expanding textarea. |
 | name | string | Name for the input. |
 | placeholder | string | Placeholder text for the input. |
 | prefix | string | Text to appear before the input. |
 | readOnly | boolean | Disable editing of the input. |
+| resizable | boolean | Enables resizing for the textarea (only enabled for `multiline`). |
 | seamless | boolean | Removes the border around the input. |
 | size | boolean | Determines the size of the input. |
 | suffix | string | Text to appear after the input. |
