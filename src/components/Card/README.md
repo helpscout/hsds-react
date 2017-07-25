@@ -7,7 +7,7 @@ A Card component is used to encapsulate pieces of UI that share a common concept
 
 ```html
 <Card>
-  My Content
+  For just one night let’s not be co-workers. Let’s be co-people.
 </Card>
 ```
 

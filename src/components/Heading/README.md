@@ -5,7 +5,7 @@ A Heading component is a light-weight text heading wrapper enhanced with a colle
 ## Example
 
 ```html
-<Heading>I'm a Heading!</Heading>
+<Heading>Milk was a bad choice</Heading>
 ```
 
 

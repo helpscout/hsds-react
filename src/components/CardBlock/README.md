@@ -10,10 +10,10 @@ Note: It is highly recommended the `seamless` prop is used for the container `<C
 ```html
 <Card seamless>
   <CardBlock>
-    Block One
+    Frank "The Tank"
   </CardBlock>
   <CardBlock>
-    Block Two
+    You're my boy, Blue!
   </CardBlock>
 </Card>
 ```

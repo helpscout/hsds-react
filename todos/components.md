@@ -4,10 +4,11 @@ Below is a (working) list of components we need to build for Blue.
 
 Note: Beacon (v2) requires every one of these.
 
-* [ ] Avatar
+* [x] Avatar
 * [ ] Button
 * [ ] Badge
 * [ ] Icon
+* [ ] Image
 * [ ] Loader (...)
 * [ ] Popover*
 * [ ] Select

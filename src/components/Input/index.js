@@ -49,7 +49,7 @@ const defaultProps = {
   readOnly: false,
   resizable: false,
   seamless: false,
-  size: 'md',
+  size: '',
   success: false,
   suffix: '',
   type: 'text',
@@ -118,7 +118,7 @@ class Input extends Component {
       resizable && 'c-Input--resizable',
       seamless && 'c-Input--seamless',
       success && 'is-success',
-      value && 'c-Input--has-value',
+      value && 'has-value',
       warning && 'is-warning',
       this.props.className
     );

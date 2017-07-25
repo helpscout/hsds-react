@@ -6,6 +6,7 @@ import { linkTo } from '@storybook/addon-links';
 
 import '../src/styles/blue.scss';
 import {
+  Avatar,
   Card,
   CardBlock,
   Heading,
@@ -13,6 +14,16 @@ import {
   LoadingDots,
   Text,
 } from '../src/index.js';
+
+storiesOf('Avatar', module)
+  .add('default', () => <Avatar name="Maxi Power" />)
+  .add('sizes', () => (
+    <div>
+      <Avatar name="Maxi Power" size="lg" />
+      <Avatar name="Maxi Power" size="md" />
+      <Avatar name="Maxi Power" size="sm" />
+    </div>
+  ))
 
 storiesOf('Card', module)
   .add('default', () => <Card>Hello</Card>)
