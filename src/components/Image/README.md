@@ -2,13 +2,6 @@
 
 The Image component is a very light-weight wrapper for the default HTML `<img>` selector.
 
-At the moment, this component doesn't do too much beyond providing responsive styling with CSS. However, using this component over the default `<img>` will allow us to provide image-based enhancements at scale when the time comes.
-
-Enhancements can include:
-
-* Lazy-loading
-* `src-set` support
-
 
 ## Example
 
@@ -28,3 +21,14 @@ Enhancements can include:
 | style | string | Inline-styles for the image. |
 | title | string | Title description for the image. |
 | width | number | Width for the image. |
+
+
+
+## Future enhancements
+
+At the moment, this component doesn't do too much beyond providing responsive styling with CSS. However, using this component over the default `<img>` will allow us to provide image-based enhancements at scale when the time comes.
+
+Enhancements can include:
+
+* Lazy-loading
+* `src-set` support
