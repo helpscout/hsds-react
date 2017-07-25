@@ -16,7 +16,7 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
 | className | string | Custom class names to be added to the component. |
 | disableSelect | boolean | Disables text selection. |
 | error | boolean | Changes text color to error state. |
-| faint  | boolean | Changes text color to a very light grey. |
+| faint | boolean | Changes text color to a very light grey. |
 | muted | boolean  | Changes text color to a light grey. |
 | size | number | Adjust text size. |
 | subtle | boolean | Changes text color to a lighter grey. |

@@ -8,6 +8,7 @@ import '../src/styles/blue.scss';
 import {
   Card,
   CardBlock,
+  Heading,
   Input,
   Text,
 } from '../src/index.js';
@@ -35,6 +36,27 @@ storiesOf('Input', module)
   .add('success', () => <Input success="You're Awesome!" autoFocus />)
   .add('warning', () => <Input warning autoFocus />)
   .add('small', () => <Input size="sm" autoFocus />)
+
+storiesOf('Heading', module)
+  .add('default', () => <Heading>I am heading. Behold my heading.</Heading>)
+  .add('sizes', () => (
+    <div>
+      <Heading size="h1">Font size: h1</Heading><br />
+      <Heading size="h2">Font size: h2</Heading><br />
+      <Heading size="h3">Font size: h3</Heading><br />
+      <Heading size="h4">Font size: h4</Heading><br />
+      <Heading size="h5">Font size: h5</Heading><br />
+      <Heading size="h6">Font size: h6</Heading><br />
+      <Heading size="big">Font size: Big</Heading><br />
+      <Heading size="small">Font size: Small</Heading><br />
+    </div>
+  ))
+  .add('shades', () => (
+    <div>
+      <Heading size="small">Small Heading Dark</Heading><br />
+      <Heading size="small" light>Small Heading Light</Heading><br />
+    </div>
+  ))
 
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)

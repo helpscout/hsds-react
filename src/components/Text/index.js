@@ -42,7 +42,7 @@ const Text = props => {
 
   const className = classNames(
     'c-Text',
-    disableSelect && 'c-Text--disable-select',
+    disableSelect && 'is-disable-select',
     error && 'is-error',
     faint && 'c-Text--faint',
     muted && 'c-Text--muted',
