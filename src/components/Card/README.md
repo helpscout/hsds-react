@@ -5,7 +5,7 @@ A Card component is used to encapsulate pieces of UI that share a common concept
 
 ## Example
 
-```js
+```html
 <Card>
   My Content
 </Card>

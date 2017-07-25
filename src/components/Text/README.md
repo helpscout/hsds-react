@@ -4,7 +4,7 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
 
 ## Example
 
-```js
+```html
 <Text>I am text!</Text>
 ```
 

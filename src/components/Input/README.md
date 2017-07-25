@@ -8,13 +8,13 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 ### Input
 
-```js
+```html
 <Input value="Aww yiss" placeholder="Please enter some form of yes." autoFocus />
 ```
 
 ### Textarea
 
-```js
+```html
 <Input multiline={3} placeholder="I'm a 3-line auto-expanding textarea." autoFocus />
 ```
 

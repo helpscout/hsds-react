@@ -7,7 +7,7 @@ Note: It is highly recommended the `seamless` prop is used for the container `<C
 
 ## Example
 
-```js
+```html
 <Card seamless>
   <CardBlock>
     Block One
