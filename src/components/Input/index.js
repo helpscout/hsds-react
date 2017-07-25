@@ -1,5 +1,8 @@
+// See: https://github.com/Shopify/polaris/blob/master/src/components/TextField/TextField.tsx
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Resizer from './Resizer';
 import classNames from '../../utilities/classNames';
 import { noop } from '../../utilities/constants';
 
@@ -10,6 +13,7 @@ const propTypes = {
   disabled: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   id: PropTypes.string,
+  multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   name: PropTypes.string,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
@@ -18,6 +22,7 @@ const propTypes = {
   placeholderItalic: PropTypes.bool,
   prefix: PropTypes.string,
   readOnly: PropTypes.bool,
+  resizable: PropTypes.bool,
   seamless: PropTypes.bool,
   size: PropTypes.string,
   success: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -33,6 +38,7 @@ const defaultProps = {
   disabled: false,
   error: false,
   id: '',
+  multiline: null,
   name: '',
   onBlur: noop,
   onChange: noop,
@@ -41,6 +47,7 @@ const defaultProps = {
   placeholderItalic: false,
   prefix: '',
   readOnly: false,
+  resizable: false,
   seamless: false,
   size: 'md',
   success: false,
@@ -54,12 +61,9 @@ class Input extends Component {
   constructor(props) {
     super();
     this.state = {
+      height: null,
       value: props.value,
     };
-  }
-
-  handleOnBlur() {
-    this.props.onBlur();
   }
 
   handleOnChange(e) {
@@ -68,8 +72,8 @@ class Input extends Component {
     this.props.onChange(value);
   }
 
-  handleOnFocus() {
-    this.props.onBlur();
+  handleExpandingResize(height) {
+    this.setState({ height });
   }
 
   render() {
@@ -80,23 +84,28 @@ class Input extends Component {
       error,
       id,
       inputRef,
+      multiline,
       name,
+      onBlur,
+      onFocus,
       placeholder,
       placeholderItalic,
       prefix,
       readOnly,
+      resizable,
       seamless,
       size,
       success,
       suffix,
       type,
       warning,
+      ...rest
     } = this.props;
-    const { value } = this.state;
 
-    const handleOnBlur = this.handleOnBlur.bind(this);
+    const { height, value } = this.state;
+
     const handleOnChange = this.handleOnChange.bind(this);
-    const handleOnFocus = this.handleOnFocus.bind(this);
+    const handleExpandingResize = this.handleExpandingResize.bind(this);
 
     const className = classNames(
       'c-Input',
@@ -104,14 +113,27 @@ class Input extends Component {
       bold && 'c-Input--bold',
       disabled && 'is-disabled',
       error && 'is-error',
-      placeholderItalic && 'c-Input--placeholder-italic',
+      multiline && 'c-Input--multiline',
       readOnly && 'is-readonly',
+      resizable && 'c-Input--resizable',
       seamless && 'c-Input--seamless',
       success && 'is-success',
       value && 'c-Input--has-value',
       warning && 'is-warning',
       this.props.className
     );
+
+    const style = multiline && height ? { height } : null;
+
+    const resizer =
+      multiline != null
+        ? <Resizer
+            contents={value || placeholder}
+            currentHeight={height}
+            minimumLines={typeof multiline === 'number' ? multiline : 1}
+            onResize={handleExpandingResize}
+          />
+        : null;
 
     const prefixMarkup = prefix
       ? <div className="c-Input__item c-Input__prefix">
@@ -137,27 +159,32 @@ class Input extends Component {
       });
     };
 
+    const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
+      ...rest,
+      autoFocus,
+      disabled,
+      id,
+      name,
+      onBlur,
+      onFocus,
+      placeholder,
+      readOnly,
+      style,
+      type,
+      value,
+      className: 'c-Input__field',
+      onChange: handleOnChange,
+      ref: inputRef,
+    });
+
     return (
       <div className="c-InputWrapper">
         <div className={className}>
           {prefixMarkup}
-          <input
-            autoFocus={autoFocus}
-            className="c-Input__field"
-            disabled={disabled}
-            id={id}
-            onBlur={handleOnBlur}
-            onChange={handleOnChange}
-            onFocus={handleOnFocus}
-            name={name}
-            readOnly={readOnly}
-            ref={inputRef}
-            placeholder={placeholder}
-            type={type}
-            value={value}
-          />
+          {inputElement}
           {suffixMarkup}
           <div className="c-Input__backdrop" />
+          {resizer}
         </div>
         {statefulHelperTextMarkup()}
       </div>

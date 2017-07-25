@@ -1,6 +1,7 @@
 @import "../configs/color";
 
 @mixin backdrop-styles($block, $states) {
+  $color-border-focus: _color(blue, 400);
   $this: this();
   background-color: white;
   border: 1px solid _color(border, ui, dark);
@@ -14,15 +15,17 @@
   top: 0;
 
   @include parent("#{$block}__field:focus ~ ") {
-    border-color: _color(blue);
-    box-shadow: 0 0 0 1px rgba(_color(blue), 0.3);
+    border-color: $color-border-focus;
+    box-shadow: 0 0 0 1px $color-border-focus inset;
   }
 
   // Styles
   @include parent("#{$block}--seamless") {
     border-color: transparent;
+    box-shadow: none;
     @include parent("#{$block}__field:focus ~ ") {
       border-color: transparent;
+      box-shadow: none;
     }
   }
 
@@ -32,7 +35,7 @@
       border-color: _color(state, $state, border-color);
     }
     @include parent("#{$block}.is-#{$state} #{$block}__field:focus ~ ") {
-      box-shadow: 0 0 0 1px rgba(_color(state, $state, border-color), 0.3);
+      box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
     }
   }
 }

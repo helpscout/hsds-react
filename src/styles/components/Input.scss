@@ -1,4 +1,6 @@
 // Dependencies
+@import "pack/seed-control/_index";
+@import "pack/seed-dash/_index";
 @import "pack/seed-family/_index";
 @import "pack/seed-this/_index";
 @import "../mixins/backdrop-styles";
@@ -13,12 +15,14 @@ $seed-input-namespace: "c-Input";
   @import "../configs/color";
   @import "../resets/base";
   $block: this();
+  $padding: 8px;
   $states: error, success, warning;
 
   align-items: center;
   background-color: transparent;
   border: none;
   display: flex;
+  position: relative;
 
   // Elements
   &__item {
@@ -44,6 +48,12 @@ $seed-input-namespace: "c-Input";
 
     &::placeholder {
       color: _color(grey, 700);
+    }
+
+    @each $state in $states {
+      @include parent("#{$block}.is-#{$state}") {
+        color: _color(state, $state, color);
+      }
     }
   }
 
@@ -71,6 +81,50 @@ $seed-input-namespace: "c-Input";
       @include parent("#{$block}.is-#{$state} ~ ") {
         color: _color(state, $state, border-color);
       }
+    }
+  }
+
+  // Resizer
+  &__Resizer {
+    bottom: 0;
+    height: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    visibility: hidden;
+  }
+
+
+
+  // Modifiers
+  // Multiline: This transforms the <input> into an auto-expanding <textarea>
+  &--multiline {
+    height: auto;
+
+    #{$block}__field {
+      line-height: normal;
+      overflow: hidden;
+      margin-left: -($padding);
+      margin-right: -($padding);
+      padding: 0.6em $padding;
+      resize: none;
+      width: calc(100% + #{ceil($padding * 2)});
+    }
+
+    // Adjust field height
+    @each $size, $values in $seed-control-sizes {
+      &#{$block}--#{$size} {
+        #{$block}__field {
+          min-height: _get($values, height);
+        }
+      }
+    }
+  }
+
+  // Resizable: Applicable to multiline only. Enables resizing of <textarea>.
+  &--resizable {
+    #{$block}__field {
+      resize: vertical;
     }
   }
 }

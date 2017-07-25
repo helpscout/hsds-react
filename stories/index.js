@@ -10,7 +10,6 @@ import {
   CardBlock,
   Input,
   Text,
-  Textarea,
 } from '../src/index.js';
 
 storiesOf('Card', module)
@@ -26,6 +25,8 @@ storiesOf('Card', module)
 
 storiesOf('Input', module)
   .add('default', () => <Input />)
+  .add('multiline', () => <Input multiline placeholder="This is a textarea!" autoFocus />)
+  .add('multiline + resizable', () => <Input multiline={3} resizable autoFocus placeholder="This is a resizable textarea!" />)
   .add('placeholder', () => <Input placeholder="Hello" autoFocus />)
   .add('prefix + suffix', () => <Input prefix="$" suffix=".00" autoFocus />)
   .add('seamless', () => <Input seamless autoFocus />)
@@ -70,7 +71,3 @@ storiesOf('Text', module)
       <Text truncate>Woody (Tom Hanks), a good-hearted cowboy doll who belongs to a young boy named Andy (John Morris), sees his position as Andy's favorite toy jeopardized when his parents buy him a Buzz Lightyear (Tim Allen) action figure.</Text>
     </div>
   ))
-
-storiesOf('Textarea', module)
-  .add('default', () => <Textarea />)
-  .add('placeholder', () => <Textarea placeholder="Hello" autoFocus />)
