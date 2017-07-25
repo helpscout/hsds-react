@@ -20,3 +20,8 @@ npm start
 ```
 
 Check out Blue's Storybook at http://localhost:8900/ in your browser.
+
+
+## Todos
+
+*[Check out our ever-changing Todos notes here](./todos).

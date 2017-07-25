@@ -1,4 +1,6 @@
-# Todos
+# Workflow
+
+Below is a list of items related to the bundling / development workflow for Blue.
 
 ### JS
 
