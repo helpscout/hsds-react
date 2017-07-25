@@ -18,7 +18,7 @@ The Image component is a very light-weight wrapper for the default HTML `<img>` 
 | className | string | Custom class names to be added to the component. |
 | height | number | Width for the image. |
 | src | string | Source for the image. Requried. |
-| style | string | Inline-styles for the image. |
+| style | object | Inline-styles for the image. |
 | title | string | Title description for the image. |
 | width | number | Width for the image. |
 
