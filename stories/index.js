@@ -10,6 +10,7 @@ import {
   CardBlock,
   Heading,
   Input,
+  LoadingDots,
   Text,
 } from '../src/index.js';
 
@@ -57,6 +58,9 @@ storiesOf('Heading', module)
       <Heading size="small" light>Small Heading Light</Heading><br />
     </div>
   ))
+
+storiesOf('LoadingDots', module)
+  .add('default', () => <LoadingDots />)
 
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)
