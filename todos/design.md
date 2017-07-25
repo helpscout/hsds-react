@@ -19,7 +19,7 @@ We're off to a great start with the [Text](../src/components/Text) component. Ho
 
 ### Heading
 
-Recently added the [Heading](..src/components/Heading) component.
+Recently added the [Heading](../src/components/Heading) component.
 
 * We'll need to know the variety of different heading styles/sizes (and how we wanna name them). (e.g. H1-H6? more sizes? all caps?)
 
