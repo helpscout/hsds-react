@@ -5,7 +5,6 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 ## Example
 
-
 ### Input
 
 ```html

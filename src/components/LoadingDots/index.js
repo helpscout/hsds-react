@@ -10,10 +10,7 @@ const defaultProps = {
 };
 
 const LoadingDots = props => {
-  const className = classNames(
-    'c-LoadingDots',
-    props.className
-  );
+  const className = classNames('c-LoadingDots', props.className);
 
   return (
     <div className={className}>

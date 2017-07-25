@@ -12,6 +12,7 @@ import {
   Heading,
   Image,
   Input,
+  Link,
   LoadingDots,
   Overlay,
   Text,
@@ -82,6 +83,9 @@ storiesOf('Heading', module)
     </div>
   ))
 
+storiesOf('Link', module)
+  .add('default', () => <Link href="https://github.com/helpscout/blue">Linky</Link>)
+
 storiesOf('LoadingDots', module)
   .add('default', () => <LoadingDots />)
 
@@ -93,7 +97,6 @@ storiesOf('Overlay', module)
       </Card>
     </Overlay>
 ));
-
 
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)

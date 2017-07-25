@@ -22,15 +22,9 @@ const defaultProps = {
 };
 
 const Image = props => {
-  const {
-    className,
-    ...rest
-  } = props;
+  const { className, ...rest } = props;
 
-  const ImageClassName = classNames(
-    'c-Image',
-    className,
-  );
+  const ImageClassName = classNames('c-Image', className);
 
   const imageElement = React.createElement('img', {
     ...rest,

@@ -20,12 +20,7 @@ const defaultProps = {
 };
 
 const Avatar = props => {
-  const {
-    image,
-    name,
-    size,
-    title,
-  } = props;
+  const { image, name, size, title } = props;
 
   const className = classNames(
     'c-Avatar',
@@ -40,19 +35,16 @@ const Avatar = props => {
     src: image,
     title,
   };
-  
+
   const initials = nameToInitials(name);
 
-  const contentMarkup = image ? 
-  (
-    <div className="c-Avatar__image">
-      <Image {...imageProps} />
-    </div>
-  ) : (
-    <div className="c-Avatar__title">
-      {initials}
-    </div>
-  );
+  const contentMarkup = image
+    ? <div className="c-Avatar__image">
+        <Image {...imageProps} />
+      </div>
+    : <div className="c-Avatar__title">
+        {initials}
+      </div>;
 
   return (
     <div className={className}>

@@ -9,6 +9,7 @@ Note: Beacon (v2) requires every one of these.
 * [ ] Badge
 * [ ] Icon
 * [x] Image
+* [x] Link
 * [x] Loader (...)
 * [x] Overlay
 * [ ] Popover*

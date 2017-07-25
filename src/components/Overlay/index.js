@@ -15,15 +15,9 @@ const defaultProps = {
 };
 
 const Overlay = props => {
-  const {
-    onClick,
-    style,
-  } = props;
+  const { onClick, style } = props;
 
-  const className = classNames(
-    'c-Overlay',
-    props.className
-  );
+  const className = classNames('c-Overlay', props.className);
 
   return (
     <div className={className} style={style} role="dialog" onClick={onClick}>
