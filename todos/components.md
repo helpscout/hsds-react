@@ -14,5 +14,6 @@ Note: Beacon (v2) requires every one of these.
 * [ ] Popover*
 * [ ] Select
 * [ ] Tooltip*
+* [ ] Video*
 
 `*` = These will be hard(er) to code.
