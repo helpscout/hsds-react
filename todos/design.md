@@ -5,6 +5,11 @@ Below is a (working) list of design notes/todos.
 **[Link to Sketch file on Dropbox](https://www.dropbox.com/s/ycy3ro44reajybr/Blue.sketch?dl=0)**
 
 
+## Icons
+
+Would be awesome to get an `.svg` export of all the icons :D!!
+
+
 ## Input
 
 The [Input](../src/components/Input) component was the first React component built for Blue. Aesthetics + feature-wise, Input is in a good place. However, there are some pending things we'll need.
