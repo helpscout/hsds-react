@@ -38,6 +38,7 @@ $seed-input-namespace: "c-Input";
     color: currentColor;
     display: block;
     position: relative;
+    top: -1px; // to normalize and center the <input>
     height: 100%;
     width: 100%;
     z-index: 1;
@@ -108,6 +109,7 @@ $seed-input-namespace: "c-Input";
       margin-right: -($padding);
       padding: 0.6em $padding;
       resize: none;
+      top: 0; // to match the line-height of <input>
       width: calc(100% + #{ceil($padding * 2)});
     }
 
