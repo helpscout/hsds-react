@@ -10,18 +10,19 @@ import {
   Card,
   CardBlock,
   Heading,
+  Image,
   Input,
   LoadingDots,
   Text,
 } from '../src/index.js';
 
 storiesOf('Avatar', module)
-  .add('default', () => <Avatar name="Maxi Power" />)
+  .add('default', () => <Avatar name="Ron Burgundy" />)
   .add('sizes', () => (
     <div>
-      <Avatar name="Maxi Power" size="lg" />
-      <Avatar name="Maxi Power" size="md" />
-      <Avatar name="Maxi Power" size="sm" />
+      <Avatar name="Ron Burgundy" size="lg" />
+      <Avatar name="Ron Burgundy" size="md" />
+      <Avatar name="Ron Burgundy" size="sm" />
     </div>
   ))
 
@@ -34,6 +35,16 @@ storiesOf('Card', module)
       <CardBlock>Block Two</CardBlock>
       <CardBlock>Block Three</CardBlock>
     </Card>
+  ))
+
+storiesOf('Image', module)
+  .add('default', () => (
+    <Image
+      src="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
+      alt="Not now, Arctic Puffin!"
+      title="Not now, Arctic Puffin!"
+      width="300"
+    />
   ))
 
 storiesOf('Input', module)
@@ -105,6 +116,6 @@ storiesOf('Text', module)
   ))
   .add('truncate', () => (
     <div>
-      <Text truncate>Woody (Tom Hanks), a good-hearted cowboy doll who belongs to a young boy named Andy (John Morris), sees his position as Andy's favorite toy jeopardized when his parents buy him a Buzz Lightyear (Tim Allen) action figure.</Text>
+      <Text truncate>Buddy (Will Ferrell) was accidentally transported to the North Pole as a toddler and raised to adulthood among Santa's elves. Unable to shake the feeling that he doesn't fit in, the adult Buddy travels to New York, in full elf uniform, in search of his real father.</Text>
     </div>
   ))

@@ -8,8 +8,8 @@ Note: Beacon (v2) requires every one of these.
 * [ ] Button
 * [ ] Badge
 * [ ] Icon
-* [ ] Image
-* [ ] Loader (...)
+* [x] Image
+* [x] Loader (...)
 * [ ] Popover*
 * [ ] Select
 * [ ] Tooltip*

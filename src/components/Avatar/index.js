@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from '../Image';
 import classNames from '../../utilities/classNames';
 import { nameToInitials } from '../../utilities/strings';
 
@@ -32,14 +33,20 @@ const Avatar = props => {
     size && `c-Avatar--${size}`,
     props.className
   );
+
+  const imageProps = {
+    alt: title,
+    className: 'c-Avatar__photo',
+    src: image,
+    title,
+  };
   
   const initials = nameToInitials(name);
 
-  // TODO: Use Image component
   const contentMarkup = image ? 
   (
     <div className="c-Avatar__image">
-      <img src={image} alt={title} title={title} />
+      <Image {...imageProps} />
     </div>
   ) : (
     <div className="c-Avatar__title">
