@@ -16,6 +16,7 @@ The [Input](../src/components/Input) component was the first React component bui
 
 * [ ] read-only styles
 * [ ] sizes?
+* [ ] label styles? (what about label styles + states, like error?)
 
 
 ## Text (Typography)
