@@ -2,7 +2,7 @@
 
 React component library.
 
-> You're my boy, Blue!
+![You're my boy, Blue!](./yourmyboyblue.gif)
 
 
 ## Getting Started
