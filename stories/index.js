@@ -13,6 +13,7 @@ import {
   Image,
   Input,
   LoadingDots,
+  Overlay,
   Text,
 } from '../src/index.js';
 
@@ -83,6 +84,16 @@ storiesOf('Heading', module)
 
 storiesOf('LoadingDots', module)
   .add('default', () => <LoadingDots />)
+
+storiesOf('Overlay', module)
+  .add('default', () => (
+    <Overlay style={{width: '500px', height: '400px' }} onClick={ action('Overlay clicked') }>
+      <Card>
+        Not now, Arctic Puffin!
+      </Card>
+    </Overlay>
+));
+
 
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)

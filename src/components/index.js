@@ -5,4 +5,5 @@ export { default as Heading } from './Heading';
 export { default as Image } from './Image';
 export { default as Input } from './Input';
 export { default as LoadingDots } from './LoadingDots';
+export { default as Overlay } from './Overlay';
 export { default as Text } from './Text';

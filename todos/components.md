@@ -10,6 +10,7 @@ Note: Beacon (v2) requires every one of these.
 * [ ] Icon
 * [x] Image
 * [x] Loader (...)
+* [x] Overlay
 * [ ] Popover*
 * [ ] Select
 * [ ] Tooltip*
