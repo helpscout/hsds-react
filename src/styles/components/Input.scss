@@ -109,7 +109,7 @@ $seed-input-namespace: "c-Input";
       margin-right: -($padding);
       padding: 0.6em $padding;
       resize: none;
-      top: 0; // to match the line-height of <input>
+      top: 1px; // to match the line-height of <input>
       width: calc(100% + #{ceil($padding * 2)});
     }
 
