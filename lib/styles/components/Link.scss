@@ -1,0 +1,9 @@
+// Config
+$seed-link-namespace: "c-Link";
+$seed-link-include-a-selector: false;
+
+@import "pack/seed-link/_index";
+
+.c-Link {
+  @import "../resets/base";
+}

@@ -64,7 +64,7 @@ $seed-input-namespace: "c-Input";
     padding-left: 4px;
     padding-right: 4px;
 
-    @include parent("#{$block}--has-value") {
+    @include parent("#{$block}.has-value") {
       opacity: 1;
     }
   }
