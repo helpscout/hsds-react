@@ -21,7 +21,7 @@ We're off to a great start with the [Text](../src/components/Text) component. Ho
 
 I feel like headings should be a component on their own (`<Heading>`).
 
-* We'll need to know the variety of different heading styles/sizes.
+* We'll need to know the variety of different heading styles/sizes (and how we wanna name them). (e.g. H1-H6? more sizes? all caps?)
 
 
 ### Text
