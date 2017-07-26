@@ -19,7 +19,8 @@ Note: Beacon (v2) requires every one of these.
 * [ ] Modal `**`
 * [x] Overlay
 * [ ] Popover `*` (Difficulty reduced, if leveraging Tooltip)
-* [-] Select (Almost done)
+* [x] Select
+* [ ] Spinner
 * [x] Text
 * [ ] Tooltip `***`
 * [ ] Video `***` (Difficult due to the variety of external video sources.)
