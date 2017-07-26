@@ -57,7 +57,7 @@
 
   // Sizes
   @each $size, $values in $sizes {
-    &--#{$size} {
+    &.is-#{$size} {
       @each $prop, $value in $values {
         #{$prop}: $value;
       }

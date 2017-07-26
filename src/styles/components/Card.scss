@@ -17,11 +17,11 @@ $seed-card-border: 1px solid _color(border, ui, dark);
   text-decoration: none;
 
   // Modifiers
-  &--clickable {
+  &.is-clickable {
     cursor: pointer;
   }
 
-  &--hover {
+  &.is-hoverable {
     box-shadow: #{
       0 1px 3px 0 rgba(black, 0.1),
       0 0 0 1px rgba(_color(border, ui, dark), 0.7) inset,
@@ -38,7 +38,7 @@ $seed-card-border: 1px solid _color(border, ui, dark);
     }
   }
 
-  &--seamless {
+  &.is-seamless {
     padding: 0;
   } 
 }

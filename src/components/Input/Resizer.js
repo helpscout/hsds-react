@@ -73,7 +73,7 @@ class Resizer extends Component {
     const minimumLinesMarkup = minimumLines
       ? <div
           ref={node => (this.minimumLinesNode = node)}
-          className="c-GhostInput"
+          className="c-InputGhost"
           dangerouslySetInnerHTML={{
             __html: this.getContentsForMinimumLines(minimumLines),
           }}
@@ -81,10 +81,10 @@ class Resizer extends Component {
       : null;
 
     return (
-      <div aria-hidden className="c-Input__Resizer">
+      <div aria-hidden className="c-InputResizer">
         <div
           ref={node => (this.contentNode = node)}
-          className="c-GhostInput"
+          className="c-InputGhost"
           dangerouslySetInnerHTML={{ __html: this.getFinalContents(contents) }}
         />
         {minimumLinesMarkup}

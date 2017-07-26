@@ -7,4 +7,5 @@ export { default as Input } from './Input';
 export { default as Link } from './Link';
 export { default as LoadingDots } from './LoadingDots';
 export { default as Overlay } from './Overlay';
+export { default as Select } from './Select';
 export { default as Text } from './Text';

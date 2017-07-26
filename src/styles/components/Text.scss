@@ -1,9 +1,11 @@
+@import "../configs/constants";
+
 .c-Text {
   @import "../configs/color";
   @import "../resets/base";
-  $states: error, success, warning;
+  $states: $STATES;
   $shades: faint, muted, subtle;
-  $sizes: 11, 12, 13, 14, 15, 16, 20, 48;
+  $sizes: (11, 12, 13, 14, 15, 16, 20, 48);
 
   // Select
   &.is-disable-select {
@@ -12,14 +14,14 @@
 
   // Shades
   @each $shade in $shades {
-    &--#{$shade} {
+    &.is-#{$shade} {
       color: _color(text, $shade);
     }
   }
 
   // Sizes
   @each $size in $sizes {
-    &--#{$size} {
+    &.is-#{$size} {
       font-size: #{$size}px;
     }
   }
@@ -32,7 +34,7 @@
   }
 
   // Truncate
-  &--truncate {
+  &.is-truncate {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;

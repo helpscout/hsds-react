@@ -1,6 +1,6 @@
 // See: https://github.com/Shopify/polaris/blob/master/src/components/TextField/TextField.tsx
 
-import React, { Component } from 'react';
+import React, { PureComponent as Component } from 'react';
 import PropTypes from 'prop-types';
 import Resizer from './Resizer';
 import classNames from '../../utilities/classNames';
@@ -8,7 +8,6 @@ import { noop } from '../../utilities/constants';
 
 const propTypes = {
   autoFocus: PropTypes.bool,
-  bold: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -19,7 +18,6 @@ const propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
-  placeholderItalic: PropTypes.bool,
   prefix: PropTypes.string,
   readOnly: PropTypes.bool,
   resizable: PropTypes.bool,
@@ -33,7 +31,6 @@ const propTypes = {
 };
 const defaultProps = {
   autoFocus: false,
-  bold: false,
   className: '',
   disabled: false,
   error: false,
@@ -44,7 +41,6 @@ const defaultProps = {
   onChange: noop,
   onFocus: noop,
   placeholder: '',
-  placeholderItalic: false,
   prefix: '',
   readOnly: false,
   resizable: false,
@@ -79,7 +75,6 @@ class Input extends Component {
   render() {
     const {
       autoFocus,
-      bold,
       disabled,
       error,
       id,
@@ -89,7 +84,6 @@ class Input extends Component {
       onBlur,
       onFocus,
       placeholder,
-      placeholderItalic,
       prefix,
       readOnly,
       resizable,
@@ -109,18 +103,21 @@ class Input extends Component {
 
     const className = classNames(
       'c-Input',
-      `c-Input--${size}`,
-      bold && 'c-Input--bold',
       disabled && 'is-disabled',
       error && 'is-error',
-      multiline && 'c-Input--multiline',
+      multiline && 'is-multiline',
       readOnly && 'is-readonly',
-      resizable && 'c-Input--resizable',
-      seamless && 'c-Input--seamless',
+      resizable && 'is-resizable',
+      seamless && 'is-seamless',
       success && 'is-success',
       value && 'has-value',
       warning && 'is-warning',
       this.props.className
+    );
+
+    const fieldClassName = classNames(
+      'c-InputField',
+      size && `is-${size}`,
     );
 
     const style = multiline && height ? { height } : null;
@@ -172,7 +169,7 @@ class Input extends Component {
       style,
       type,
       value,
-      className: 'c-Input__field',
+      className: fieldClassName,
       onChange: handleOnChange,
       ref: inputRef,
     });
@@ -183,7 +180,7 @@ class Input extends Component {
           {prefixMarkup}
           {inputElement}
           {suffixMarkup}
-          <div className="c-Input__backdrop" />
+          <div className="c-InputBackdrop" />
           {resizer}
         </div>
         {statefulHelperTextMarkup()}

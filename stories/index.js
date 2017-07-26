@@ -15,6 +15,7 @@ import {
   Link,
   LoadingDots,
   Overlay,
+  Select,
   Text,
 } from '../src/index.js';
 
@@ -57,10 +58,19 @@ storiesOf('Input', module)
   .add('prefix + suffix', () => <Input prefix="$" suffix=".00" autoFocus />)
   .add('seamless', () => <Input seamless autoFocus />)
   .add('disabled', () => <Input disabled autoFocus />)
-  .add('error', () => <Input error autoFocus />)
-  .add('success', () => <Input success="You're Awesome!" autoFocus />)
-  .add('warning', () => <Input warning autoFocus />)
-  .add('small', () => <Input size="sm" autoFocus />)
+  .add('states', () => (
+    <div>
+      <Input error autoFocus /><br />
+      <Input success="You're Awesome!" autoFocus /><br />
+      <Input warning autoFocus />
+    </div>
+  ))
+  .add('sizes', () => (
+    <div>
+      <Input autoFocus placeholder="Regular" /><br />
+      <Input size="sm" autoFocus placeholder="Small" />
+    </div>
+  ))
 
 storiesOf('Heading', module)
   .add('default', () => <Heading>I am heading. Behold my heading.</Heading>)
@@ -97,6 +107,27 @@ storiesOf('Overlay', module)
       </Card>
     </Overlay>
 ));
+
+storiesOf('Select', module)
+  .add('default', () => (
+    <Select />
+  ))
+  .add('prefix + suffix', () => (
+    <Select prefix="$" suffix=".00" />
+  ))
+  .add('states', () => (
+    <div>
+      <Select error /><br />
+      <Select success /><br />
+      <Select warning />
+    </div>
+  ))
+  .add('sizes', () => (
+    <div>
+      <Select autoFocus placeholder="Regular" /><br />
+      <Select size="sm" autoFocus placeholder="Small" />
+    </div>
+  ))
 
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)

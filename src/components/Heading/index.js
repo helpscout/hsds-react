@@ -24,7 +24,7 @@ const Heading = props => {
     'c-Heading',
     disableSelect && 'is-disable-select',
     light && 'is-light',
-    size && `c-Heading--${size}`,
+    size && `is-${size}`,
     props.className
   );
 

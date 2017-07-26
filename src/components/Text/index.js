@@ -44,12 +44,12 @@ const Text = props => {
     'c-Text',
     disableSelect && 'is-disable-select',
     error && 'is-error',
-    faint && 'c-Text--faint',
-    muted && 'c-Text--muted',
-    size && `c-Text--${size}`,
-    subtle && 'c-Text--subtle',
+    faint && 'is-faint',
+    muted && 'is-muted',
+    size && `is-${size}`,
+    subtle && 'is-subtle',
     success && 'is-success',
-    truncate && 'c-Text--truncate',
+    truncate && 'is-truncate',
     warning && 'is-warning',
     props.className
   );
