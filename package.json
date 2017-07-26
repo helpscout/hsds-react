@@ -13,6 +13,7 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
+    "seed-button": "0.3.0",
     "seed-card": "0.1.0",
     "seed-color-scheme": "0.3.0",
     "seed-control": "0.1.0",
