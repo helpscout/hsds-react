@@ -115,10 +115,7 @@ class Input extends Component {
       this.props.className
     );
 
-    const fieldClassName = classNames(
-      'c-InputField',
-      size && `is-${size}`,
-    );
+    const fieldClassName = classNames('c-InputField', size && `is-${size}`);
 
     const style = multiline && height ? { height } : null;
 

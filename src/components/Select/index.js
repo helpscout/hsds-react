@@ -45,10 +45,10 @@ const defaultProps = {
 };
 
 const Select = props => {
-  const handleOnChange = (e) => {
+  const handleOnChange = e => {
     const value = e.currentTarget.value;
     props.onChange(value);
-  }
+  };
 
   const {
     className,
@@ -64,7 +64,7 @@ const Select = props => {
     suffix,
     value,
     warning,
-    ...rest,
+    ...rest
   } = props;
 
   const selectClassName = classNames(
@@ -78,10 +78,7 @@ const Select = props => {
     className
   );
 
-  const fieldClassName = classNames(
-    'c-InputField',
-    size && `is-${size}`,
-  );
+  const fieldClassName = classNames('c-InputField', size && `is-${size}`);
 
   const prefixMarkup = prefix
     ? <div className="c-Select__item c-Select__prefix">
