@@ -1,0 +1,36 @@
+@import "pack/seed-family/_index";
+
+@mixin input-styles($padding: 8px) {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  padding-left: $padding;
+  padding-right: $padding;
+  position: relative;
+
+  &.is-seamless {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // Elements
+  &__item {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__prefix,
+  &__suffix {
+    opacity: 0.3;
+    padding-left: 4px;
+    padding-right: 4px;
+    position: relative;
+    top: -1px;
+    white-space: nowrap;
+
+    @include parent(".has-value >") {
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import "pack/seed-color-scheme/_index";
+
+// Text
+@include _color((
+  text: (
+    default: _color(charcoal, 700),
+    body: _color(charcoal, 400),
+    heading: _color(charcoal, 700),
+    subtle: _color(charcoal, 500),
+    muted: _color(charcoal, 300),
+    faint: _color(charcoal, 200),
+  )
+));

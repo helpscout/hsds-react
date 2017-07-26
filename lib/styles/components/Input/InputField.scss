@@ -1,0 +1,46 @@
+@import "pack/seed-control/_index";
+@import "pack/seed-dash/_index";
+@import "pack/seed-family/_index";
+@import "../../configs/constants";
+
+.c-InputField {
+  @import "../../configs/color";
+  @import "../../resets/base";
+  $border-width: 1px;
+  $default-height: _get($seed-control-sizes, md, height);
+  $states: $STATES;
+
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  color: currentColor;
+  display: block;
+  height: $default-height;
+  padding: 0;
+  position: relative;
+  top: -($border-width); // to normalize and center the <input>
+  width: 100%;
+  z-index: 1;
+  
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: _color(grey, 700);
+  }
+
+  // Adjust field height
+  @each $size, $values in $seed-control-sizes {
+    &.is-#{$size} {
+      height: _get($values, height);
+    }
+  }
+
+  // States
+  @each $state in $states {
+    @include parent(".is-#{$state} > ") {
+      color: _color(state, $state, color);
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@import "../configs/color";
+
+@mixin backdrop-styles($block, $states) {
+  $InputField: ".c-InputField";
+  $color-border-focus: _color(blue, 400);
+  $this: this();
+  background-color: white;
+  border: 1px solid _color(border, ui, dark);
+  border-radius: 4px;
+  bottom: 0;
+  box-shadow: 0 0 0 0 rgba(_color(border), 0);
+  left: 0;
+  position: absolute;
+  right: 0;
+  transition: box-shadow 0.1s ease;
+  top: 0;
+
+  @include parent("#{$InputField}:focus ~ ") {
+    border-color: $color-border-focus;
+    box-shadow: 0 0 0 1px $color-border-focus inset;
+  }
+
+  // Styles
+  @include parent("#{$block}--seamless") {
+    border-color: transparent;
+    box-shadow: none;
+    @include parent("#{$InputField}:focus ~ ") {
+      border-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  // States
+  @each $state in $states {
+    @include parent("#{$block}.is-#{$state} #{$InputField} ~ ") {
+      border-color: _color(state, $state, border-color);
+    }
+    @include parent("#{$block}.is-#{$state} #{$InputField}:focus ~ ") {
+      box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
+    }
+  }
+
+  // Disabled
+  @include parent("#{$block}.is-disabled #{$InputField} ~ ") {
+    background-color: _color(grey, 200);
+  }
+}

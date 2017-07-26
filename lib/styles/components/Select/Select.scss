@@ -1,0 +1,24 @@
+@import "../../configs/constants";
+@import "../../mixins/input-styles";
+
+.c-Select {
+  $InputField: ".c-InputField";
+  $arrowSize: 20px;
+  $padding: 8px;
+  $states: $STATES;
+  
+  @import "../../configs/color";
+  @import "../../resets/base";
+  @include input-styles($padding);
+
+  #{$InputField} {
+    padding-left: ceil($padding / 2);
+    padding-right: $arrowSize;
+  }
+
+  &.has-placeholder {
+    #{$InputField} {
+      opacity: 0.6;
+    }
+  }
+}
