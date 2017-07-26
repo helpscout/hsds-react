@@ -27,6 +27,7 @@
     padding-right: 4px;
     position: relative;
     top: -1px;
+    white-space: nowrap;
 
     @include parent(".has-value >") {
       opacity: 1;

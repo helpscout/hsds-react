@@ -5,11 +5,24 @@ An Select component is an enhanced version of the default HTML `<select>`.
 
 ## Example
 
-### Input
+```html
+<Select placeholder="Pick one" options={['You sit on a throne of lies!', 'Son of a nutcracker!']} autoFocus />
+```
+
+### Option groups
 
 ```html
-<Select options={['You sit on a throne of lies!', 'Son of a nutcracker!']} autoFocus />
+<Select options={[
+  {
+    label: 'Quotes',
+    value: [
+      'You sit on a throne of lies!',
+      'Son of a nutcracker!'
+    ]
+  }
+  ]} autoFocus />
 ```
+
 
 
 ## Props
@@ -25,7 +38,7 @@ An Select component is an enhanced version of the default HTML `<select>`.
 | error | boolean or string | Change select to error state. Displays text underneath select. |
 | id | string | ID for the select. |
 | name | string | Name for the select. |
-| options | array | List of options to choose from. |
+| options | array or object or string | List of options to choose from. |
 | placeholder | string | Placeholder text for the select. |
 | prefix | string | Text to appear before the select. |
 | readOnly | boolean | Disable editing of the select. |
@@ -35,10 +48,3 @@ An Select component is an enhanced version of the default HTML `<select>`.
 | success | boolean or string | Change select to success state. Displays text underneath select. |
 | value | string | Initial value of the select. |
 | warning | boolean or string | Change select to warning state. Displays text underneath select. |
-
-
-## Todo
-
-* Render `options` prop into actual `<option>`
-* Add placeholder `<option>`
-* Select rendered `<option>` based on `prop.value`

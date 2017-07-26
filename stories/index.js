@@ -110,10 +110,32 @@ storiesOf('Overlay', module)
 
 storiesOf('Select', module)
   .add('default', () => (
-    <Select />
+    <Select options={['one', 'two', 'three']} />
   ))
-  .add('prefix + suffix', () => (
-    <Select prefix="$" suffix=".00" />
+  .add('groups', () => {
+    const options = [
+      {
+        title: 'Group 1',
+        value: [
+          'one', 'two', 'three'
+        ],
+      },
+      {
+        title: 'Group 2',
+        value: [
+          'four', 'five', 'six', 'seven'
+        ],
+      }
+    ]
+    return (
+      <Select options={options} onChange={action('value')} value="five" />
+    );
+  })
+  .add('placeholder', () => (
+    <Select placeholder="Select one" options={['one', 'two', 'three']}/>
+  ))
+  .add('prefix', () => (
+    <Select prefix="Filter by: " />
   ))
   .add('states', () => (
     <div>
