@@ -10,7 +10,8 @@
     "pretty": "prettier --single-quote --trailing-comma es5 --write 'src/**/*.js'",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "test:coverage": "npm run test -- --coverage"
   },
   "dependencies": {
     "seed-button": "0.3.0",
