@@ -26,7 +26,12 @@ const propTypes = {
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   id: PropTypes.string,
   name: PropTypes.string,
-  options: PropTypes.oneOfType([groupType, optionType, optionsType, PropTypes.string]),
+  options: PropTypes.oneOfType([
+    groupType,
+    optionType,
+    optionsType,
+    PropTypes.string,
+  ]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -75,11 +80,11 @@ class Select extends Component {
     this.setState({
       placeholder: false,
       value,
-    })
+    });
   }
 
   hasPlaceholder() {
-    return (this.state.value === '' && this.state.placeholder);
+    return this.state.value === '' && this.state.placeholder;
   }
 
   render() {
@@ -99,7 +104,7 @@ class Select extends Component {
       value,
       ...rest
     } = this.props;
-    
+
     const hasPlaceholder = this.hasPlaceholder();
 
     const selectClassName = classNames(
@@ -116,9 +121,10 @@ class Select extends Component {
 
     const fieldClassName = classNames('c-InputField', size && `is-${size}`);
 
-    const renderOptions = (option) => {
+    const renderOptions = option => {
       // HTML <optgroup> only allows for single level nesting
-      const hasOptions = option.hasOwnProperty('value') && Array.isArray(option.value);
+      const hasOptions =
+        option.hasOwnProperty('value') && Array.isArray(option.value);
       // Group
       if (hasOptions) {
         const label = option.title;
@@ -131,16 +137,33 @@ class Select extends Component {
       }
       // Option
       if (typeof option === 'string') {
-        return <option key={option} value={option}>{option}</option>;
+        return (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        );
       } else {
-        return <option key={option.value} value={option.value} disabled={option.disabled}>{option.label}</option>;
+        return (
+          <option
+            key={option.value}
+            value={option.value}
+            disabled={option.disabled}
+          >
+            {option.label}
+          </option>
+        );
       }
-    }
+    };
 
     const optionsMarkup = options.map(renderOptions);
 
     const placeholderMarkup = hasPlaceholder
-      ? <option label={this.state.placeholder} value={PLACEHOLDER_VALUE} disabled hidden />
+      ? <option
+          label={this.state.placeholder}
+          value={PLACEHOLDER_VALUE}
+          disabled
+          hidden
+        />
       : null;
 
     const prefixMarkup = prefix
@@ -172,7 +195,7 @@ class Select extends Component {
       </div>
     );
   }
-};
+}
 
 Select.propTypes = propTypes;
 Select.defaultProps = defaultProps;

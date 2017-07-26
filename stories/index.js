@@ -135,7 +135,7 @@ storiesOf('Select', module)
     <Select placeholder="Select one" options={['one', 'two', 'three']}/>
   ))
   .add('prefix', () => (
-    <Select prefix="Filter by: " />
+    <Select prefix="Filter by: " options={['One']}/>
   ))
   .add('states', () => (
     <div>
