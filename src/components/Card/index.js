@@ -14,9 +14,7 @@ const propTypes = {
   selector: PropTypes.string
 }
 const defaultProps = {
-  className: '',
   hover: false,
-  href: '',
   onBlur: noop,
   onClick: false,
   onFocus: noop,
@@ -25,7 +23,14 @@ const defaultProps = {
 }
 
 const Card = props => {
-  const { hover, href, onClick, seamless, selector } = props
+  const {
+    hover,
+    href,
+    onClick,
+    seamless,
+    selector,
+    ...rest
+  } = props
 
   const className = classNames(
     'c-Card',
@@ -40,8 +45,10 @@ const Card = props => {
   const element = React.createElement(
     selectorTag,
     {
-      ...props,
-      className
+      ...rest,
+      className,
+      href,
+      onClick
     },
     props.children
   )
