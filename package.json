@@ -13,7 +13,7 @@
     "storybook": "start-storybook -p 8900",
     "test": "node scripts/test.js --env=jsdom",
     "test:coverage": "npm run test -- --coverage",
-    "precommit": "npm run lint"
+    "precommit": "npm run pretty"
   },
   "dependencies": {
     "seed-button": "0.3.0",

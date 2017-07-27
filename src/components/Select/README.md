@@ -24,7 +24,6 @@ An Select component is an enhanced version of the default HTML `<select>`.
 ```
 
 
-
 ## Props
 
 | Prop | Type | Description |
