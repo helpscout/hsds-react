@@ -1,4 +1,4 @@
-# Blue 🔷
+# Blue 🔷 [![Build Status](https://travis-ci.com/helpscout/blue.svg?token=mizbXyxLU95YeKzixKT2&branch=master)](https://travis-ci.com/helpscout/blue)
 
 React component library.
 
