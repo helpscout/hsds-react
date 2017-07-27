@@ -48,7 +48,7 @@
 
   // Sizes
   @each $size, $values in $sizes {
-    &--#{$size} {
+    &.is-#{$size} {
       $sz: _get($values, size);
       height: $sz;
       font-size: _get($values, font-size);

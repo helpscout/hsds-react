@@ -12,11 +12,9 @@ const propTypes = {
   title: PropTypes.string
 }
 const defaultProps = {
-  className: '',
   image: false,
   name: '',
   title: '',
-  size: ''
 }
 
 const Avatar = props => {
@@ -25,15 +23,17 @@ const Avatar = props => {
   const className = classNames(
     'c-Avatar',
     image && 'has-image',
-    size && `c-Avatar--${size}`,
+    size && `is-${size}`,
     props.className
   )
 
+  const imageTitle = title ? title : name;
+
   const imageProps = {
-    alt: title,
+    alt: imageTitle,
     className: 'c-Avatar__photo',
     src: image,
-    title
+    title: imageTitle,
   }
 
   const initials = nameToInitials(name)

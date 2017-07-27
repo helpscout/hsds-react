@@ -5,20 +5,14 @@ import classNames from '../../utilities/classNames'
 const propTypes = {
   alt: PropTypes.string,
   className: PropTypes.string,
-  height: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   src: PropTypes.string.isRequired,
   style: PropTypes.object,
   title: PropTypes.string,
-  width: PropTypes.number
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 const defaultProps = {
-  alt: '',
-  className: '',
-  height: '',
   src: '',
-  style: {},
-  title: '',
-  width: ''
 }
 
 const Image = props => {
