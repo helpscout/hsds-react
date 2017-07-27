@@ -38,3 +38,7 @@ test('Return a string, even if arguments are numbers', () => {
   expect(typeof o).toBe('string')
   expect(o).toBe('1 2')
 })
+
+test('Returns empty string by default', () => {
+  expect(classNames()).toBe('')
+})
