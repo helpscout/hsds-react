@@ -145,13 +145,13 @@ storiesOf('Select', module)
   .add('groups', () => {
     const options = [
       {
-        title: 'Group 1',
+        label: 'Group 1',
         value: [
           'one', 'two', 'three'
         ]
       },
       {
-        title: 'Group 2',
+        label: 'Group 2',
         value: [
           'four', 'five', 'six', 'seven'
         ]
