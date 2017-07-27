@@ -15,7 +15,6 @@ const propTypes = {
   warning: PropTypes.bool
 }
 const defaultProps = {
-  className: '',
   disableSelect: false,
   truncate: false
 }
@@ -35,7 +34,7 @@ const Text = props => {
 
   const className = classNames(
     'c-Text',
-    disableSelect && 'is-disable-select',
+    disableSelect && 'is-disableSelect',
     error && 'is-error',
     faint && 'is-faint',
     muted && 'is-muted',

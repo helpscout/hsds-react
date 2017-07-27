@@ -5,9 +5,6 @@ import classNames from '../../utilities/classNames'
 const propTypes = {
   className: PropTypes.string
 }
-const defaultProps = {
-  className: ''
-}
 
 const LoadingDots = props => {
   const className = classNames('c-LoadingDots', props.className)
@@ -22,6 +19,5 @@ const LoadingDots = props => {
 }
 
 LoadingDots.propTypes = propTypes
-LoadingDots.defaultProps = defaultProps
 
 export default LoadingDots
