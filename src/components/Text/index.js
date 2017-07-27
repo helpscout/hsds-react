@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from '../../utilities/classNames';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from '../../utilities/classNames'
 
 const propTypes = {
   className: PropTypes.string,
@@ -12,8 +12,8 @@ const propTypes = {
   subtle: PropTypes.bool,
   success: PropTypes.bool,
   truncate: PropTypes.bool,
-  warning: PropTypes.bool,
-};
+  warning: PropTypes.bool
+}
 const defaultProps = {
   className: '',
   disableSelect: false,
@@ -24,8 +24,8 @@ const defaultProps = {
   success: false,
   size: false,
   truncate: false,
-  warning: false,
-};
+  warning: false
+}
 
 const Text = props => {
   const {
@@ -37,8 +37,8 @@ const Text = props => {
     subtle,
     success,
     truncate,
-    warning,
-  } = props;
+    warning
+  } = props
 
   const className = classNames(
     'c-Text',
@@ -52,16 +52,16 @@ const Text = props => {
     truncate && 'is-truncate',
     warning && 'is-warning',
     props.className
-  );
+  )
 
   return (
     <span className={className}>
       {props.children}
     </span>
-  );
-};
+  )
+}
 
-Text.propTypes = propTypes;
-Text.defaultProps = defaultProps;
+Text.propTypes = propTypes
+Text.defaultProps = defaultProps
 
-export default Text;
+export default Text

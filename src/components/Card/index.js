@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from '../../utilities/classNames';
-import { noop } from '../../utilities/constants';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/constants'
 
 const propTypes = {
   className: PropTypes.string,
@@ -11,8 +11,8 @@ const propTypes = {
   onClick: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   onFocus: PropTypes.func,
   seamless: PropTypes.bool,
-  selector: PropTypes.string,
-};
+  selector: PropTypes.string
+}
 const defaultProps = {
   className: '',
   hover: false,
@@ -21,11 +21,11 @@ const defaultProps = {
   onClick: false,
   onFocus: noop,
   seamless: false,
-  selector: 'div',
-};
+  selector: 'div'
+}
 
 const Card = props => {
-  const { hover, href, onClick, seamless, selector } = props;
+  const { hover, href, onClick, seamless, selector } = props
 
   const className = classNames(
     'c-Card',
@@ -33,23 +33,23 @@ const Card = props => {
     (onClick || hover || href) && 'is-hoverable',
     seamless && 'is-seamless',
     props.className
-  );
+  )
 
-  const selectorTag = href ? 'a' : selector;
+  const selectorTag = href ? 'a' : selector
 
   const element = React.createElement(
     selectorTag,
     {
       ...props,
-      className,
+      className
     },
     props.children
-  );
+  )
 
-  return element;
-};
+  return element
+}
 
-Card.propTypes = propTypes;
-Card.defaultProps = defaultProps;
+Card.propTypes = propTypes
+Card.defaultProps = defaultProps
 
-export default Card;
+export default Card

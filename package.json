@@ -5,9 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build-storybook": "build-storybook",
-    "build": "node scripts/build.js",
-    "lib": "npm run pretty && babel src --out-dir lib --copy-files",
-    "pretty": "prettier --single-quote --trailing-comma es5 --write 'src/**/*.js'",
+    "build": "npm run lib",
+    "lib": "npm run pretty babel src --out-dir lib --copy-files",
+    "pretty": "standard 'src/**/*.js' --fix",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
     "test": "node scripts/test.js --env=jsdom",
@@ -68,6 +68,7 @@
     "react-error-overlay": "^1.0.9",
     "react-test-renderer": "15.6.1",
     "sass-loader": "6.0.6",
+    "standard": "10.0.2",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
@@ -111,6 +112,19 @@
   "babel": {
     "presets": [
       "react-app"
+    ]
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach",
+      "it",
+      "expect",
+      "test"
     ]
   },
   "eslintConfig": {

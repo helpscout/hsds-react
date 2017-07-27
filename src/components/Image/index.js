@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from '../../utilities/classNames';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from '../../utilities/classNames'
 
 const propTypes = {
   alt: PropTypes.string,
@@ -9,8 +9,8 @@ const propTypes = {
   src: PropTypes.string.isRequired,
   style: PropTypes.object,
   title: PropTypes.string,
-  width: PropTypes.number,
-};
+  width: PropTypes.number
+}
 const defaultProps = {
   alt: '',
   className: '',
@@ -18,23 +18,23 @@ const defaultProps = {
   src: '',
   style: {},
   title: '',
-  width: '',
-};
+  width: ''
+}
 
 const Image = props => {
-  const { className, ...rest } = props;
+  const { className, ...rest } = props
 
-  const ImageClassName = classNames('c-Image', className);
+  const ImageClassName = classNames('c-Image', className)
 
   const imageElement = React.createElement('img', {
     ...rest,
-    className: ImageClassName,
-  });
+    className: ImageClassName
+  })
 
-  return imageElement;
-};
+  return imageElement
+}
 
-Image.propTypes = propTypes;
-Image.defaultProps = defaultProps;
+Image.propTypes = propTypes
+Image.defaultProps = defaultProps
 
-export default Image;
+export default Image

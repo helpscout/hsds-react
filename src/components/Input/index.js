@@ -1,10 +1,10 @@
 // See: https://github.com/Shopify/polaris/blob/master/src/components/TextField/TextField.tsx
 
-import React, { PureComponent as Component } from 'react';
-import PropTypes from 'prop-types';
-import Resizer from './Resizer';
-import classNames from '../../utilities/classNames';
-import { noop } from '../../utilities/constants';
+import React, { PureComponent as Component } from 'react'
+import PropTypes from 'prop-types'
+import Resizer from './Resizer'
+import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/constants'
 
 const propTypes = {
   autoFocus: PropTypes.bool,
@@ -27,8 +27,8 @@ const propTypes = {
   suffix: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string,
-  warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-};
+  warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+}
 const defaultProps = {
   autoFocus: false,
   className: '',
@@ -48,29 +48,29 @@ const defaultProps = {
   suffix: '',
   type: 'text',
   value: '',
-  warning: false,
-};
+  warning: false
+}
 
 class Input extends Component {
-  constructor(props) {
-    super();
+  constructor (props) {
+    super()
     this.state = {
       height: null,
-      value: props.value,
-    };
+      value: props.value
+    }
   }
 
-  handleOnChange(e) {
-    const value = e.currentTarget.value;
-    this.setState({ value });
-    this.props.onChange(value);
+  handleOnChange (e) {
+    const value = e.currentTarget.value
+    this.setState({ value })
+    this.props.onChange(value)
   }
 
-  handleExpandingResize(height) {
-    this.setState({ height });
+  handleExpandingResize (height) {
+    this.setState({ height })
   }
 
-  render() {
+  render () {
     const {
       autoFocus,
       disabled,
@@ -92,12 +92,12 @@ class Input extends Component {
       type,
       warning,
       ...rest
-    } = this.props;
+    } = this.props
 
-    const { height, value } = this.state;
+    const { height, value } = this.state
 
-    const handleOnChange = this.handleOnChange.bind(this);
-    const handleExpandingResize = this.handleExpandingResize.bind(this);
+    const handleOnChange = this.handleOnChange.bind(this)
+    const handleExpandingResize = this.handleExpandingResize.bind(this)
 
     const className = classNames(
       'c-Input',
@@ -111,45 +111,45 @@ class Input extends Component {
       value && 'has-value',
       warning && 'is-warning',
       this.props.className
-    );
+    )
 
-    const fieldClassName = classNames('c-InputField', size && `is-${size}`);
+    const fieldClassName = classNames('c-InputField', size && `is-${size}`)
 
-    const style = multiline && height ? { height } : null;
+    const style = multiline && height ? { height } : null
 
     const resizer =
       multiline != null
         ? <Resizer
-            contents={value || placeholder}
-            currentHeight={height}
-            minimumLines={typeof multiline === 'number' ? multiline : 1}
-            onResize={handleExpandingResize}
+          contents={value || placeholder}
+          currentHeight={height}
+          minimumLines={typeof multiline === 'number' ? multiline : 1}
+          onResize={handleExpandingResize}
           />
-        : null;
+        : null
 
     const prefixMarkup = prefix
-      ? <div className="c-Input__item c-Input__prefix">
-          {prefix}
-        </div>
-      : null;
+      ? <div className='c-Input__item c-Input__prefix'>
+        {prefix}
+      </div>
+      : null
 
     const suffixMarkup = suffix
-      ? <div className="c-Input__item c-Input__suffix">
-          {suffix}
-        </div>
-      : null;
+      ? <div className='c-Input__item c-Input__suffix'>
+        {suffix}
+      </div>
+      : null
 
     const statefulHelperTextMarkup = () => {
       return [error, success, warning].map(state => {
         if (state && typeof state === 'string' && state.length) {
           return (
-            <div className="c-Input__helper-label">
+            <div className='c-Input__helper-label'>
               {state}
             </div>
-          );
+          )
         }
-      });
-    };
+      })
+    }
 
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...rest,
@@ -166,25 +166,25 @@ class Input extends Component {
       value,
       className: fieldClassName,
       onChange: handleOnChange,
-      ref: inputRef,
-    });
+      ref: inputRef
+    })
 
     return (
-      <div className="c-InputWrapper">
+      <div className='c-InputWrapper'>
         <div className={className}>
           {prefixMarkup}
           {inputElement}
           {suffixMarkup}
-          <div className="c-InputBackdrop" />
+          <div className='c-InputBackdrop' />
           {resizer}
         </div>
         {statefulHelperTextMarkup()}
       </div>
-    );
+    )
   }
 }
 
-Input.propTypes = propTypes;
-Input.defaultProps = defaultProps;
+Input.propTypes = propTypes
+Input.defaultProps = defaultProps
 
-export default Input;
+export default Input

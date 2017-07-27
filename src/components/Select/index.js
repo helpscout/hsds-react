@@ -1,23 +1,23 @@
-import React, { PureComponent as Component } from 'react';
-import PropTypes from 'prop-types';
-import classNames from '../../utilities/classNames';
-import { noop } from '../../utilities/constants';
+import React, { PureComponent as Component } from 'react'
+import PropTypes from 'prop-types'
+import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/constants'
 
 const optionType = PropTypes.oneOfType([
   PropTypes.shape({
     disabled: PropTypes.bool,
     label: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.string
   }),
-  PropTypes.string,
-]);
+  PropTypes.string
+])
 
-const optionsType = PropTypes.arrayOf(optionType);
+const optionsType = PropTypes.arrayOf(optionType)
 
 const groupType = PropTypes.shape({
   label: PropTypes.string,
-  value: optionsType,
-});
+  value: optionsType
+})
 
 const propTypes = {
   autoFocus: PropTypes.bool,
@@ -30,7 +30,7 @@ const propTypes = {
     groupType,
     optionType,
     optionsType,
-    PropTypes.string,
+    PropTypes.string
   ]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
@@ -42,8 +42,8 @@ const propTypes = {
   size: PropTypes.string,
   success: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   value: PropTypes.string,
-  warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-};
+  warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+}
 const defaultProps = {
   autoFocus: false,
   className: '',
@@ -59,35 +59,35 @@ const defaultProps = {
   size: '',
   success: false,
   value: '',
-  warning: false,
-};
+  warning: false
+}
 
-const PLACEHOLDER_VALUE = '__placeholder__';
+const PLACEHOLDER_VALUE = '__placeholder__'
 
 class Select extends Component {
-  constructor(props) {
-    super();
+  constructor (props) {
+    super()
     this.state = {
       placeholder: props.placeholder,
-      value: props.value,
-    };
+      value: props.value
+    }
   }
 
-  handleOnChange(e) {
-    const value = e.currentTarget.value;
-    this.props.onChange(value);
+  handleOnChange (e) {
+    const value = e.currentTarget.value
+    this.props.onChange(value)
 
     this.setState({
       placeholder: false,
-      value,
-    });
+      value
+    })
   }
 
-  hasPlaceholder() {
-    return this.state.value === '' && this.state.placeholder;
+  hasPlaceholder () {
+    return this.state.value === '' && this.state.placeholder
   }
 
-  render() {
+  render () {
     const {
       className,
       disabled,
@@ -103,9 +103,9 @@ class Select extends Component {
       warning,
       value,
       ...rest
-    } = this.props;
+    } = this.props
 
-    const hasPlaceholder = this.hasPlaceholder();
+    const hasPlaceholder = this.hasPlaceholder()
 
     const selectClassName = classNames(
       'c-Select',
@@ -117,23 +117,23 @@ class Select extends Component {
       success && 'is-success',
       warning && 'is-warning',
       className
-    );
+    )
 
-    const fieldClassName = classNames('c-InputField', size && `is-${size}`);
+    const fieldClassName = classNames('c-InputField', size && `is-${size}`)
 
     const renderOptions = option => {
       // HTML <optgroup> only allows for single level nesting
       const hasOptions =
-        option.hasOwnProperty('value') && Array.isArray(option.value);
+        option.hasOwnProperty('value') && Array.isArray(option.value)
       // Group
       if (hasOptions) {
-        const label = option.title;
+        const label = option.title
         // Recursion!
         return (
           <optgroup label={label} key={label}>
             {option.value.map(renderOptions)}
           </optgroup>
-        );
+        )
       }
       // Option
       if (typeof option === 'string') {
@@ -141,7 +141,7 @@ class Select extends Component {
           <option key={option} value={option}>
             {option}
           </option>
-        );
+        )
       } else {
         return (
           <option
@@ -151,31 +151,31 @@ class Select extends Component {
           >
             {option.label}
           </option>
-        );
+        )
       }
-    };
+    }
 
-    const optionsMarkup = options.map(renderOptions);
+    const optionsMarkup = options.map(renderOptions)
 
     const placeholderMarkup = hasPlaceholder
       ? <option
-          label={this.state.placeholder}
-          value={PLACEHOLDER_VALUE}
-          disabled
-          hidden
+        label={this.state.placeholder}
+        value={PLACEHOLDER_VALUE}
+        disabled
+        hidden
         />
-      : null;
+      : null
 
     const prefixMarkup = prefix
-      ? <div className="c-Select__item c-Select__prefix">
-          {prefix}
-        </div>
-      : null;
+      ? <div className='c-Select__item c-Select__prefix'>
+        {prefix}
+      </div>
+      : null
 
-    const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value;
+    const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
     return (
-      <div className="c-InputWrapper">
+      <div className='c-InputWrapper'>
         <div className={selectClassName}>
           {prefixMarkup}
           <select
@@ -189,15 +189,15 @@ class Select extends Component {
             {placeholderMarkup}
             {optionsMarkup}
           </select>
-          <div className="c-SelectIcon" />
-          <div className="c-InputBackdrop" />
+          <div className='c-SelectIcon' />
+          <div className='c-InputBackdrop' />
         </div>
       </div>
-    );
+    )
   }
 }
 
-Select.propTypes = propTypes;
-Select.defaultProps = defaultProps;
+Select.propTypes = propTypes
+Select.defaultProps = defaultProps
 
-export default Select;
+export default Select
