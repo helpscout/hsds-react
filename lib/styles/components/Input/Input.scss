@@ -17,20 +17,6 @@
   @import "../../resets/base";
   @include input-styles($padding);
 
-  // Transform into component styles
-  &__helper-label {
-    @import "../../resets/base";
-    padding: 4px 0;
-
-    // States
-    @each $state in $states {
-      @include parent("#{$block}.is-#{$state} ~ ") {
-        color: _color(state, $state, border-color);
-      }
-    }
-  }
-
-
   // Modifiers
   // Multiline: This transforms the <input> into an auto-expanding <textarea>
   &.is-multiline {

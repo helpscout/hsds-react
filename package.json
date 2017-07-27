@@ -6,7 +6,7 @@
   "scripts": {
     "build-storybook": "build-storybook",
     "build": "npm run lib",
-    "lib": "npm run pretty babel src --out-dir lib --copy-files",
+    "lib": "babel src --out-dir lib --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "standard 'src/**/*.js'",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
