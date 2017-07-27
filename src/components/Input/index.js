@@ -31,21 +31,16 @@ const propTypes = {
 }
 const defaultProps = {
   autoFocus: false,
-  className: '',
   disabled: false,
   error: false,
   multiline: null,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
-  placeholder: '',
-  prefix: '',
   readOnly: false,
   resizable: false,
   seamless: false,
-  size: '',
   success: false,
-  suffix: '',
   type: 'text',
   value: '',
   warning: false
@@ -143,7 +138,7 @@ class Input extends Component {
       return [error, success, warning].map(state => {
         if (state && typeof state === 'string' && state.length) {
           return (
-            <div className='c-InputHelperLabel'>
+            <div className='c-InputHelperLabel' key={state}>
               {state}
             </div>
           )
