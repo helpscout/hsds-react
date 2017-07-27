@@ -7,14 +7,11 @@ const propTypes = {
   disableSelect: PropTypes.bool,
   light: PropTypes.bool,
   selector: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  size: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
+  size: PropTypes.string
 }
 const defaultProps = {
-  className: '',
   disableSelect: false,
-  light: false,
   selector: false,
-  size: false
 }
 
 const Heading = props => {
@@ -22,7 +19,7 @@ const Heading = props => {
 
   const className = classNames(
     'c-Heading',
-    disableSelect && 'is-disable-select',
+    disableSelect && 'is-disableSelect',
     light && 'is-light',
     size && `is-${size}`,
     props.className

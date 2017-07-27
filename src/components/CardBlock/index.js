@@ -6,28 +6,23 @@ const propTypes = {
   className: PropTypes.string,
   size: PropTypes.string
 }
-const defaultProps = {
-  className: '',
-  size: 'md'
-}
 
 const CardBlock = props => {
-  const { size } = props
+  const { size, ...rest } = props
 
   const className = classNames(
     'c-CardBlock',
-    `c-CardBlock--${size}`,
+    size && `c-CardBlock--${size}`,
     props.className
   )
 
   return (
-    <div className={className}>
+    <div className={className} {...rest}>
       {props.children}
     </div>
   )
 }
 
 CardBlock.propTypes = propTypes
-CardBlock.defaultProps = defaultProps
 
 export default CardBlock
