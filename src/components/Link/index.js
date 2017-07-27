@@ -13,7 +13,6 @@ const propTypes = {
   to: PropTypes.string
 }
 const defaultProps = {
-  className: '',
   external: false,
   href: '#',
   onBlur: noop,
