@@ -6,9 +6,10 @@ Below is a list of items related to the bundling / development workflow for Blue
 
 * [ ] Figure out how to bundle/build the components for `import` use via npm
 * [x] Pick a test library. (We're going with Jest + Enzyme!)
-* [ ] Start writing tests!
-* [ ] Implement some sort of linter
+* [x] Start writing tests!
+* [x] Implement some sort of linter (Went with Standardjs)
 * [ ] Implement some sort of [accessibility linter](https://github.com/reactjs/react-a11y)
+* [ ] Remove bunch of dependencies added with `create-react-app`
 
 #### Accessibility
 
