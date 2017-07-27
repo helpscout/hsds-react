@@ -2,4 +2,13 @@
 {
   "editor.rulers": [80,120],
   "editor.tabSize": 2,
+  "files.exclude": {
+    "lib/**/*": true,
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "node_modules": true
+  },
 }

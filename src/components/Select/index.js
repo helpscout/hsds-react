@@ -174,6 +174,18 @@ class Select extends Component {
 
     const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
+    const statefulHelperTextMarkup = () => {
+      return [error, success, warning].map(state => {
+        if (state && typeof state === 'string' && state.length) {
+          return (
+            <div className='c-InputHelperLabel' key={state}>
+              {state}
+            </div>
+          )
+        }
+      })
+    }
+
     return (
       <div className='c-InputWrapper'>
         <div className={selectClassName}>
@@ -192,6 +204,7 @@ class Select extends Component {
           <div className='c-SelectIcon' />
           <div className='c-InputBackdrop' />
         </div>
+        {statefulHelperTextMarkup()}
       </div>
     )
   }
