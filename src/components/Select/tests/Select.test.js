@@ -4,21 +4,21 @@ import Select from '..'
 
 describe('Placeholder', () => {
   test('Renders a placeholder if defined', () => {
-    const placeholder = "Choose your co-anchor…"
+    const placeholder = 'Choose your co-anchor…'
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
     const wrapper = mount(<Select options={options} placeholder={placeholder} />)
     const select = wrapper.find('select')
-    const selectOptions = select.children();
+    const selectOptions = select.children()
 
     expect(selectOptions.first().prop('label')).toBe(placeholder)
   })
 
   test('Does not render a placeholder if a value is passed', () => {
-    const placeholder = "Choose your co-anchor…"
+    const placeholder = 'Choose your co-anchor…'
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
-    const wrapper = mount(<Select options={options} placeholder={placeholder} value="Brick Tamland" />)
+    const wrapper = mount(<Select options={options} placeholder={placeholder} value='Brick Tamland' />)
     const select = wrapper.find('select')
-    const selectOptions = select.children();
+    const selectOptions = select.children()
 
     expect(selectOptions.first().prop('label')).not.toBe(placeholder)
   })
@@ -28,7 +28,7 @@ describe('Option', () => {
   test('Renders with a single string', () => {
     const options = 'Brick Tamland'
     const wrapper = mount(<Select options={options} />)
-    const selectOptions = wrapper.find('select').children();
+    const selectOptions = wrapper.find('select').children()
 
     expect(selectOptions.first().prop('value')).toBe(options)
     expect(selectOptions.first().text()).toBe(options)
@@ -37,7 +37,7 @@ describe('Option', () => {
   test('Renders with an array of strings', () => {
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
     const wrapper = mount(<Select options={options} />)
-    const selectOptions = wrapper.find('select').children();
+    const selectOptions = wrapper.find('select').children()
 
     expect(selectOptions.first().text()).toBe('Champ Kind')
     expect(selectOptions.length).toBe(options.length)
@@ -50,7 +50,7 @@ describe('Option', () => {
       disabled: true
     }
     const wrapper = mount(<Select options={options} />)
-    const selectOptions = wrapper.find('select').children();
+    const selectOptions = wrapper.find('select').children()
     const o = selectOptions.first()
 
     expect(o.prop('value')).toBe(options.value)
@@ -121,7 +121,7 @@ describe('Group', () => {
 
 describe('Value', () => {
   test('Selects the value if defined', () => {
-    const value = "Brian Fantana"
+    const value = 'Brian Fantana'
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
     const wrapper = mount(<Select options={options} value={value} />)
     const select = wrapper.find('select')
@@ -133,7 +133,7 @@ describe('Value', () => {
 describe('Events', () => {
   test('onChange callback passes selected value', () => {
     let result = ''
-    const onChange = (value) => { result = value } 
+    const onChange = (value) => { result = value }
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
     const wrapper = mount(<Select options={options} onChange={onChange} />)
 
@@ -223,7 +223,7 @@ describe('Styles', () => {
   })
 
   test('Adds sizing styles if defined', () => {
-    const wrapper = mount(<Select size="sm" />)
+    const wrapper = mount(<Select size='sm' />)
     const o = wrapper.find('.c-InputField')
 
     expect(o.prop('className')).toContain('is-sm')

@@ -7,13 +7,13 @@ test('Consolidate arguments into a single string, separated by spaces', () => {
 })
 
 test('Remove falsy arguments', () => {
-  const falsy = 10 > 100;
+  const falsy = 10 > 100
   const o = classNames(
     'a',
     'b',
     'c',
     falsy && 'd'
-  );
+  )
 
   expect(o).toBe('a b c')
 })
@@ -23,8 +23,8 @@ test('Remove `true` from final output', () => {
     'a',
     'b',
     true,
-    'c',
-  );
+    'c'
+  )
 
   expect(o).toBe('a b c')
 })

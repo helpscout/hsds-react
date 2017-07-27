@@ -4,3 +4,7 @@ $seed-button-namespace: "c-Button" !default;
 .c-Button {
   @import "../resets/base";
 }
+
+button.c-Button {
+  @import "../resets/base";
+}

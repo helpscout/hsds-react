@@ -8,7 +8,7 @@ const propTypes = {
   error: PropTypes.bool,
   faint: PropTypes.bool,
   muted: PropTypes.bool,
-  size: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   subtle: PropTypes.bool,
   success: PropTypes.bool,
   truncate: PropTypes.bool,
@@ -17,14 +17,7 @@ const propTypes = {
 const defaultProps = {
   className: '',
   disableSelect: false,
-  error: false,
-  faint: false,
-  muted: false,
-  subtle: false,
-  success: false,
-  size: false,
-  truncate: false,
-  warning: false
+  truncate: false
 }
 
 const Text = props => {
