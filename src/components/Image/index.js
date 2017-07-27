@@ -11,9 +11,6 @@ const propTypes = {
   title: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
-const defaultProps = {
-  src: '',
-}
 
 const Image = props => {
   const { className, ...rest } = props
@@ -29,6 +26,5 @@ const Image = props => {
 }
 
 Image.propTypes = propTypes
-Image.defaultProps = defaultProps
 
 export default Image

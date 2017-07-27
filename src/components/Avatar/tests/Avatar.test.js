@@ -7,7 +7,6 @@ const classNames = {
   initials: '.c-Avatar__title',
 };
 
-
 describe('Name', () => {
   test('Initializes first/last name to two letters', () => {
     const wrapper = shallow(<Avatar name="Ron Burgandy" />)
