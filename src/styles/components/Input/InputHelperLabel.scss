@@ -10,7 +10,7 @@
 
   // States
   @each $state in $states {
-    @include parent("#{$block}.is-#{$state} ~ ") {
+    @include parent(".is-#{$state} ~ ") {
       color: _color(state, $state, border-color);
     }
   }
