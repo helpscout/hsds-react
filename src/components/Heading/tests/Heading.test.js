@@ -33,7 +33,7 @@ describe('Selector', () => {
   })
 
   test('Renders a custom selector, if specified', () => {
-    const wrapper = shallow(<Heading selector="span" />)
+    const wrapper = shallow(<Heading selector='span' />)
 
     expect(wrapper.node.type).toBe('span')
   })

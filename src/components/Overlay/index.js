@@ -9,7 +9,6 @@ const propTypes = {
   style: PropTypes.object
 }
 const defaultProps = {
-  className: '',
   onClick: noop,
   style: {}
 }

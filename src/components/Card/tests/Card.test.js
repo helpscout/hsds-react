@@ -10,7 +10,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<Card className="not-metro-man" />)
+    const wrapper = shallow(<Card className='not-metro-man' />)
 
     expect(wrapper.prop('className')).toContain('not-metro-man')
   })
@@ -25,8 +25,8 @@ describe('Content', () => {
 
   test('Render child components', () => {
     const wrapper = mount(
-      <Card className="mega">
-        <Card className="mind">
+      <Card className='mega'>
+        <Card className='mind'>
           Megamind
         </Card>
       </Card>
@@ -60,7 +60,7 @@ describe('Link', () => {
 
 describe('Click', () => {
   test('Can trigger onClick callback', () => {
-    let value = false;
+    let value = false
     const onClick = () => { value = true }
     const wrapper = shallow(<Card onClick={onClick} />)
 
@@ -85,7 +85,7 @@ describe('Selector', () => {
   })
 
   test('Renders a custom selector, if specified', () => {
-    const wrapper = shallow(<Card selector="span" />)
+    const wrapper = shallow(<Card selector='span' />)
 
     expect(wrapper.node.type).toBe('span')
   })

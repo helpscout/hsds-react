@@ -10,7 +10,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<CardBlock className="not-metro-man" />)
+    const wrapper = shallow(<CardBlock className='not-metro-man' />)
 
     expect(wrapper.prop('className')).toContain('not-metro-man')
   })
@@ -25,8 +25,8 @@ describe('Content', () => {
 
   test('Render child components', () => {
     const wrapper = mount(
-      <CardBlock className="mega">
-        <CardBlock className="mind">
+      <CardBlock className='mega'>
+        <CardBlock className='mind'>
           Megamind
         </CardBlock>
       </CardBlock>
@@ -42,7 +42,7 @@ describe('Content', () => {
 
 describe('Click', () => {
   test('Can trigger onClick callback', () => {
-    let value = false;
+    let value = false
     const onClick = () => { value = true }
     const wrapper = shallow(<CardBlock onClick={onClick} />)
 

@@ -19,7 +19,7 @@ describe('ClassName', () => {
 
 describe('Click', () => {
   test('Can trigger onClick callback', () => {
-    let value = false;
+    let value = false
     const onClick = () => { value = true }
     const wrapper = shallow(<Link onClick={onClick} />)
 

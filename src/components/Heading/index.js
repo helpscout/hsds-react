@@ -11,7 +11,7 @@ const propTypes = {
 }
 const defaultProps = {
   disableSelect: false,
-  selector: false,
+  selector: false
 }
 
 const Heading = props => {
