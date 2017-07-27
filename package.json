@@ -7,8 +7,10 @@
     "build-storybook": "build-storybook",
     "build": "npm run lib",
     "lib": "npm run pretty babel src --out-dir lib --copy-files",
-    "lint": "standard 'src/**/*.js'",
-    "pretty": "npm run lint -- --fix",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "standard 'src/**/*.js'",
+    "lint:css": "stylelint 'src/styles/**/*.scss'",
+    "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
     "test": "node scripts/test.js --env=jsdom",
@@ -64,6 +66,7 @@
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
+    "postcss-scss": "1.0.2",
     "promise": "7.1.1",
     "react": "15.6.1",
     "react-dev-utils": "^3.0.2",
@@ -73,6 +76,8 @@
     "sass-loader": "6.0.6",
     "standard": "10.0.2",
     "style-loader": "0.18.2",
+    "stylelint": "7.9.0",
+    "stylelint-scss": "1.5.1",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
     "webpack": "2.6.1",
@@ -132,5 +137,13 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "stylelint": {
+    "plugins": [
+      "stylelint-scss"
+    ],
+    "rules": {
+      "indentation": [2]
+    }
   }
 }
