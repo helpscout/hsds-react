@@ -7,6 +7,7 @@ import { linkTo } from '@storybook/addon-links'
 import '../src/styles/blue.scss'
 import {
   Avatar,
+  Button,
   Card,
   CardBlock,
   Heading,
@@ -26,6 +27,35 @@ storiesOf('Avatar', module)
       <Avatar name='Ron Burgundy' size='lg' />
       <Avatar name='Ron Burgundy' size='md' />
       <Avatar name='Ron Burgundy' size='sm' />
+    </div>
+  ))
+
+storiesOf('Button', module)
+  .add('default', () => <Button onClick={action('Button clicked')}>Click Me</Button>)
+  .add('types', () => (
+    <div>
+      <Button>Regular</Button>
+      <Button type="primary">Primary</Button>
+      <Button type="link">Link</Button>
+    </div>
+  ))
+  .add('sizes', () => (
+    <div>
+      <Button size='lg'>Large</Button>
+      <Button size='md'>Medium</Button>
+      <Button size='sm'>Small</Button>
+    </div>
+  ))
+  .add('states', () => (
+    <div>
+      <Button state='success'>Success</Button>
+      <Button state='error'>Error</Button>
+      <Button state='warning'>Warning</Button>
+    </div>
+  ))
+  .add('disabled', () => (
+    <div>
+      <Button disabled>Can't touch this!</Button>
     </div>
   ))
 

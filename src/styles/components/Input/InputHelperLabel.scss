@@ -4,6 +4,7 @@
 
 .c-InputHelperLabel {
   @import "../../resets/base";
+  $block: this();
   $states: $STATES;
   padding: 4px 0;
 
