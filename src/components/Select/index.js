@@ -30,6 +30,7 @@ const propTypes = {
     groupType,
     optionType,
     optionsType,
+    PropTypes.array,
     PropTypes.string
   ]),
   onBlur: PropTypes.func,
@@ -37,8 +38,6 @@ const propTypes = {
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
   prefix: PropTypes.string,
-  readOnly: PropTypes.bool,
-  seamless: PropTypes.bool,
   size: PropTypes.string,
   success: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   value: PropTypes.string,
@@ -46,17 +45,12 @@ const propTypes = {
 }
 const defaultProps = {
   autoFocus: false,
-  className: '',
   disabled: false,
   error: false,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
   options: [],
-  prefix: '',
-  readOnly: false,
-  seamless: false,
-  size: '',
   success: false,
   value: '',
   warning: false
@@ -96,7 +90,6 @@ class Select extends Component {
       options,
       placeholder,
       prefix,
-      readOnly,
       seamless,
       size,
       success,
@@ -112,7 +105,6 @@ class Select extends Component {
       disabled && 'is-disabled',
       error && 'is-error',
       hasPlaceholder && 'has-placeholder',
-      readOnly && 'is-readonly',
       seamless && 'is-seamless',
       success && 'is-success',
       warning && 'is-warning',
@@ -127,7 +119,7 @@ class Select extends Component {
         option.hasOwnProperty('value') && Array.isArray(option.value)
       // Group
       if (hasOptions) {
-        const label = option.title
+        const label = option.label
         // Recursion!
         return (
           <optgroup label={label} key={label}>
@@ -155,7 +147,7 @@ class Select extends Component {
       }
     }
 
-    const optionsMarkup = options.map(renderOptions)
+    const optionsMarkup = Array.isArray(options) ? options.map(renderOptions) : renderOptions(options)
 
     const placeholderMarkup = hasPlaceholder
       ? <option
@@ -194,7 +186,6 @@ class Select extends Component {
             className={fieldClassName}
             disabled={disabled}
             onChange={e => this.handleOnChange(e)}
-            readOnly={readOnly}
             value={selectedValue}
             {...rest}
           >

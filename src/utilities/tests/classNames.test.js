@@ -40,5 +40,5 @@ test('Return a string, even if arguments are numbers', () => {
 })
 
 test('Returns empty string by default', () => {
-  expect(classNames()).toBe('')
+  expect(classNames('')).toBe('')
 })
