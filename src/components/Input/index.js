@@ -110,6 +110,8 @@ class Input extends Component {
 
     const fieldClassName = classNames('c-InputField', size && `is-${size}`)
 
+    // Ignoring as height calculation isn't possible with JSDOM (which is what Enzyme uses for tests)
+    /* istanbul ignore next */
     const style = multiline && height ? { height } : null
 
     const resizer =

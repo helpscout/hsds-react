@@ -118,6 +118,25 @@ describe('Multiline', () => {
 
     expect(o.prop('className')).toContain('is-resizable')
   })
+
+  test('Has regular height without multiline', () => {
+    const wrapper = shallow(<Input />)
+    const o = wrapper.find('.c-InputField')
+
+    expect(o.prop('style')).toBe(null)
+  })
+
+  test('Sets height on textarea with multiline', () => {
+    const wrapper = mount(<Input multiline={3} />)
+    // This is very difficult (basically impossible) to test with Enzyme/JSDOM.
+    // This method involves height calculation, which is absent from JSDOM's api.
+    // JSDOM always returns 0 for height.
+
+    // The only thing we can check is if the height is not null (because null is default)
+    // The height should be 0, which is what JSDOM returns.
+
+    expect(wrapper.state()).not.toBe(null)
+  })
 })
 
 describe('Prefix/Suffix', () => {
