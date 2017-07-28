@@ -2,11 +2,11 @@ import React from 'react'
 
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
 
 import '../src/styles/blue.scss'
 import {
   Avatar,
+  Badge,
   Button,
   Card,
   CardBlock,
@@ -30,13 +30,36 @@ storiesOf('Avatar', module)
     </div>
   ))
 
+storiesOf('Badge', module)
+  .add('default', () => <Badge>Badger</Badge>)
+  .add('status', () => (
+    <div>
+      <Badge status='error'>Badger</Badge><br />
+      <Badge status='info'>Badger</Badge><br />
+      <Badge status='success'>Badger</Badge><br />
+      <Badge status='warning'>Badger</Badge><br />
+    </div>
+  ))
+  .add('styles', () => (
+    <div>
+      <Badge>Regular</Badge><br />
+      <Badge white>White</Badge><br />
+    </div>
+  ))
+  .add('size', () => (
+    <div>
+      <Badge size='md'>Regular</Badge><br />
+      <Badge size='sm'>Small</Badge><br />
+    </div>
+  ))
+
 storiesOf('Button', module)
   .add('default', () => <Button onClick={action('Button clicked')}>Click Me</Button>)
   .add('types', () => (
     <div>
       <Button>Regular</Button>
-      <Button type="primary">Primary</Button>
-      <Button type="link">Link</Button>
+      <Button type='primary'>Primary</Button>
+      <Button type='link'>Link</Button>
     </div>
   ))
   .add('sizes', () => (
@@ -131,12 +154,10 @@ storiesOf('LoadingDots', module)
 
 storiesOf('Overlay', module)
   .add('default', () => (
-    <Overlay style={{width: '500px', height: '400px' }} onClick={action('Overlay clicked')}>
-      <Card>
-        Not now, Arctic Puffin!
-      </Card>
+    <Overlay style={{width: '500px', height: '400px'}} onClick={action('Overlay clicked')}>
+      <Card>Not now, Arctic Puffin!</Card>
     </Overlay>
-))
+  ))
 
 storiesOf('Select', module)
   .add('default', () => (

@@ -8,7 +8,7 @@
     "build": "npm run lib",
     "lib": "babel src --out-dir lib --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "standard 'src/**/*.js'",
+    "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
     "start": "npm run pretty && npm run storybook",

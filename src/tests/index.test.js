@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Button,
   Card,
   CardBlock,
@@ -15,6 +16,7 @@ import {
 
 const components = [
   Avatar,
+  Badge,
   Button,
   Card,
   CardBlock,
