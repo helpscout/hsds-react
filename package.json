@@ -126,6 +126,9 @@
     ]
   },
   "standard": {
+    "ignore": [
+      "lib"
+    ],
     "globals": [
       "describe",
       "context",
