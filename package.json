@@ -74,6 +74,7 @@
     "react-error-overlay": "^1.0.9",
     "react-test-renderer": "15.6.1",
     "sass-loader": "6.0.6",
+    "seed-barista": "1.0.3",
     "standard": "10.0.2",
     "style-loader": "0.18.2",
     "stylelint": "7.9.0",
@@ -145,7 +146,9 @@
       "stylelint-scss"
     ],
     "rules": {
-      "indentation": [2]
+      "indentation": [
+        2
+      ]
     }
   }
 }
