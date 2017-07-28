@@ -34,6 +34,9 @@ class Resizer extends Component {
     this.handleOnResize()
   }
 
+  // Ignoring as height calculation isn't possible with JSDOM
+  // (which is what Enzyme uses for tests)
+  /* istanbul ignore next */
   handleOnResize () {
     const contentHeight = this.contentNode.offsetHeight
     const minimumHeight = this.minimumLinesNode
@@ -49,7 +52,7 @@ class Resizer extends Component {
   }
 
   replaceEntity (entity) {
-    return ENTITIES_TO_REPLACE[entity] || entity
+    return ENTITIES_TO_REPLACE[entity] || /* istanbul ignore next */ entity
   }
 
   getContentsForMinimumLines (minimumLines) {
