@@ -73,6 +73,7 @@
     "react-dom": "15.6.1",
     "react-error-overlay": "^1.0.9",
     "react-test-renderer": "15.6.1",
+    "rgb-hex": "2.1.0",
     "sass-loader": "6.0.6",
     "seed-barista": "1.0.4",
     "standard": "10.0.2",
