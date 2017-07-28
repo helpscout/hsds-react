@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Image from '../Image'
+import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
 
@@ -8,17 +8,14 @@ const propTypes = {
   className: PropTypes.string,
   image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   name: PropTypes.string.isRequired,
-  size: PropTypes.string,
-  title: PropTypes.string
+  size: PropTypes.string
 }
 const defaultProps = {
-  image: false,
-  name: '',
-  title: ''
+  name: ''
 }
 
 const Avatar = props => {
-  const { image, name, size, title } = props
+  const { image, name, size } = props
 
   const className = classNames(
     'c-Avatar',
@@ -27,21 +24,19 @@ const Avatar = props => {
     props.className
   )
 
-  const imageTitle = title || name
-
-  const imageProps = {
-    alt: imageTitle,
-    className: 'c-Avatar__photo',
-    src: image,
-    title: imageTitle
-  }
-
   const initials = nameToInitials(name)
+  const imageStyle = image ? { backgroundImage: `url('${image}')` } : null
 
   const contentMarkup = image
-    ? <div className='c-Avatar__image'>
-      <Image {...imageProps} />
-    </div>
+    ? (
+      <div className='c-Avatar__image' style={imageStyle}>
+        <div className='c-Avatar__name'>
+          <VisuallyHidden>
+            {name}
+          </VisuallyHidden>
+        </div>
+      </div>
+    )
     : <div className='c-Avatar__title'>
       {initials}
     </div>

@@ -11,7 +11,8 @@ import {
   LoadingDots,
   Overlay,
   Select,
-  Text
+  Text,
+  VisuallyHidden
 } from '..'
 
 const components = [
@@ -27,7 +28,8 @@ const components = [
   LoadingDots,
   Overlay,
   Select,
-  Text
+  Text,
+  VisuallyHidden
 ]
 
 const componentTestHelper = (component) => {
