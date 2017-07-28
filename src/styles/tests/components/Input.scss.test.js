@@ -11,6 +11,6 @@ test('should do a thing', () => {
   const markup = mount(<Input />).html()
   styles.html(markup)
 
-  // const o = styles.$('.c-Input')
-  // console.log(o.prop('display'))
+  const o = styles.$('.c-Input')
+  console.log(o.prop('display'))
 })

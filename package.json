@@ -15,7 +15,7 @@
     "storybook": "start-storybook -p 8900",
     "test": "node scripts/test.js --env=jsdom",
     "test:coverage": "npm run test -- --coverage",
-    "precommit": "sh ./git-hooks/pre-commit"
+    "precommit": "sh ./.git-hooks/pre-commit"
   },
   "dependencies": {
     "seed-button": "0.3.0",
@@ -74,7 +74,7 @@
     "react-error-overlay": "^1.0.9",
     "react-test-renderer": "15.6.1",
     "sass-loader": "6.0.6",
-    "seed-barista": "1.0.3",
+    "seed-barista": "1.0.4",
     "standard": "10.0.2",
     "style-loader": "0.18.2",
     "stylelint": "7.9.0",
