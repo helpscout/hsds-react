@@ -7,7 +7,7 @@ Note: Beacon (v2) requires every one of these.
 * [x] Avatar
 * [ ] AvatarStack
 * [ ] Button `*`
-* [ ] Badge
+* [x] Badge
 * [x] Card
 * [x] CardBlock
 * [x] Heading
