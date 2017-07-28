@@ -17,11 +17,12 @@ import {
   LoadingDots,
   Overlay,
   Select,
-  Text
+  Text,
+  VisuallyHidden
 } from '../src/index.js'
 
 storiesOf('Avatar', module)
-  .add('default', () => <Avatar name='Ron Burgundy' />)
+  .add('default', () => <Avatar name='Ron Burgundy' image='https://media3.giphy.com/media/hUXSFaQ1zyiE8/200_s.gif' />)
   .add('sizes', () => (
     <div>
       <Avatar name='Ron Burgundy' size='lg' />
@@ -237,3 +238,7 @@ storiesOf('Text', module)
       <Text truncate>Buddy (Will Ferrell) was accidentally transported to the North Pole as a toddler and raised to adulthood among Santa's elves. Unable to shake the feeling that he doesn't fit in, the adult Buddy travels to New York, in full elf uniform, in search of his real father.</Text>
     </div>
   ))
+
+storiesOf('VisuallyHidden', module)
+  .add('default', () => <VisuallyHidden>Peek-a-boo! You can't see me</VisuallyHidden>)
+  .add('focusable', () => <VisuallyHidden focusable><a href='#'>Focusable!</a></VisuallyHidden>)

@@ -35,8 +35,10 @@
   }
 
   &__image {
+    background-position: center center;
+    background-size: cover;
     display: block;
-    height: auto;
+    height: 100%;
     width: 100%;
   }
 

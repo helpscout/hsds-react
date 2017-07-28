@@ -31,29 +31,28 @@ describe('Name', () => {
 })
 
 describe('Image', () => {
+  test('Has the correct className', () => {
+    const wrapper = mount(<Avatar name='Buddy the Elf' image='buddy.jpg' />)
+    const image = wrapper.find('.c-Avatar__image')
+
+    expect(image.exists()).toBeTruthy()
+  })
+
   test('Render image if image prop is specified', () => {
     const src = 'buddy.jpg'
     const wrapper = mount(<Avatar name='Buddy the Elf' image={src} />)
-    const image = wrapper.find('img')
+    const image = wrapper.find('.c-Avatar__image')
 
     expect(image.exists()).toBeTruthy()
-    expect(image.prop('src')).toBe(src)
+    expect(image.prop('style').backgroundImage).toContain(src)
   })
 
-  test('Rendered image should have correct alt/title attributes', () => {
+  test('Rendered image should have name within', () => {
     const name = 'Buddy the Elf'
     const wrapper = mount(<Avatar name={name} image='buddy.jpg' />)
-    const image = wrapper.find('img')
+    const image = wrapper.find('.c-Avatar__image')
 
-    expect(image.prop('alt')).toBe(name)
-    expect(image.prop('title')).toBe(name)
-  })
-
-  test('Has the correct className', () => {
-    const wrapper = mount(<Avatar name='Buddy the Elf' image='buddy.jpg' />)
-    const image = wrapper.find('img')
-
-    expect(image.prop('className')).toContain('c-Avatar__photo')
+    expect(image.text()).toBe(name)
   })
 
   test('Replaces Initials with image', () => {
@@ -61,15 +60,6 @@ describe('Image', () => {
     const initials = wrapper.find(classNames.initials)
 
     expect(initials.exists()).toBeFalsy()
-  })
-
-  test('Use "title" prop as alt/title for img, if specified', () => {
-    const title = 'SANTAAAAAA'
-    const wrapper = mount(<Avatar name='Buddy the Elf' image='buddy.jpg' title={title} />)
-    const image = wrapper.find('img')
-
-    expect(image.prop('alt')).toBe(title)
-    expect(image.prop('title')).toBe(title)
   })
 })
 
