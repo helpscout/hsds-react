@@ -20,6 +20,7 @@ Note: Beacon (v2) requires every one of these.
 * [ ] Modal `**`
 * [x] Overlay
 * [ ] Popover `*` (Difficulty reduced, if leveraging Tooltip)
+* [ ] Portal `*`
 * [x] Select
 * [ ] Spinner
 * [x] Text
