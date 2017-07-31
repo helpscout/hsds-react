@@ -2,6 +2,7 @@ import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Backdrop from '../Input/Backdrop'
 import HelpText from '../Input/HelpText'
+import Label from '../Label'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/constants'
 
@@ -27,6 +28,7 @@ const propTypes = {
   disabled: PropTypes.bool,
   helpText: PropTypes.string,
   id: PropTypes.string,
+  label: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.oneOfType([
     groupType,
@@ -84,6 +86,8 @@ class Select extends Component {
       className,
       disabled,
       helpText,
+      id,
+      label,
       onChange,
       options,
       placeholder,
@@ -154,6 +158,10 @@ class Select extends Component {
         />
       : null
 
+    const labelMarkup = label
+      ? <Label for={id}>{label}</Label>
+      : null
+
     const prefixMarkup = prefix
       ? <div className='c-Select__item c-Select__prefix'>
         {prefix}
@@ -170,11 +178,13 @@ class Select extends Component {
 
     return (
       <div className='c-InputWrapper'>
+        {labelMarkup}
         <div className={selectClassName}>
           {prefixMarkup}
           <select
             className={fieldClassName}
             disabled={disabled}
+            id={id}
             onChange={e => this.handleOnChange(e)}
             value={selectedValue}
             {...rest}

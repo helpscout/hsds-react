@@ -1,0 +1,17 @@
+@import "../configs/constants";
+
+.c-Label {
+  @import "../configs/color";
+  $states: $STATES;
+  
+  box-sizing: border-box;
+  display: inline-block;
+  margin-bottom: 4px;
+
+  // States
+  @each $state in $states {
+    &.is-#{$state} {
+      color: _color(state, $state, color);
+    }
+  }
+}

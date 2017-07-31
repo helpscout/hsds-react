@@ -34,8 +34,9 @@ An Select component is an enhanced version of the default HTML `<select>`.
 | autoFocus | boolean | Automatically focuses the select. |
 | className | string | Custom class names to be added to the component. |
 | disabled | boolean | Disable the select. |
-| helpText | string | Displays text underneath input. |
+| helpText | string | Displays text underneath select. |
 | id | string | ID for the select. |
+| label | string | Label for the select. |
 | name | string | Name for the select. |
 | options | array or object or string | List of options to choose from. |
 | placeholder | string | Placeholder text for the select. |
