@@ -142,6 +142,27 @@ describe('Events', () => {
   })
 })
 
+describe('Label', () => {
+  test('Adds label if specified', () => {
+    const wrapper = mount(<Select label='Channel' />)
+    const label = wrapper.find('Label')
+
+    expect(label.exists()).toBeTruthy()
+    expect(label.text()).toBe('Channel')
+  })
+
+  test('Sets ID on the select element', () => {
+    const id = 'channel'
+    const wrapper = mount(<Select label='Channel' id={id} />)
+    const label = wrapper.find('Label')
+    const select = wrapper.find('select')
+
+    expect(label.text()).toBe('Channel')
+    expect(label.prop('for')).toBe(id)
+    expect(select.prop('id')).toBe(id)
+  })
+})
+
 describe('Prefix', () => {
   test('Adds prefix if defined', () => {
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
