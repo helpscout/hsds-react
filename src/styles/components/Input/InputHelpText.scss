@@ -2,7 +2,7 @@
 @import "../../configs/constants";
 @import "../../configs/color";
 
-.c-InputHelperLabel {
+.c-InputHelpText {
   @import "../../resets/base";
   $block: this();
   $states: $STATES;
@@ -10,7 +10,7 @@
 
   // States
   @each $state in $states {
-    @include parent(".is-#{$state} ~ ") {
+    &.is-#{$state} {
       color: _color(state, $state, border-color);
     }
   }

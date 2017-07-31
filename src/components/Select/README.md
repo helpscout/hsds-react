@@ -34,7 +34,7 @@ An Select component is an enhanced version of the default HTML `<select>`.
 | autoFocus | boolean | Automatically focuses the select. |
 | className | string | Custom class names to be added to the component. |
 | disabled | boolean | Disable the select. |
-| error | boolean or string | Change select to error state. Displays text underneath select. |
+| helpText | string | Displays text underneath input. |
 | id | string | ID for the select. |
 | name | string | Name for the select. |
 | options | array or object or string | List of options to choose from. |
@@ -43,7 +43,15 @@ An Select component is an enhanced version of the default HTML `<select>`.
 | readOnly | boolean | Disable editing of the select. |
 | seamless | boolean | Removes the border around the select. |
 | size | boolean | Determines the size of the select. |
+| state | string | Change select to state color. |
 | suffix | string | Text to appear after the select. |
-| success | boolean or string | Change select to success state. Displays text underneath select. |
 | value | string | Initial value of the select. |
-| warning | boolean or string | Change select to warning state. Displays text underneath select. |
+
+
+### States
+
+| Prop | Description |
+| --- | --- |
+| `error` | Changes color to red. |
+| `success` | Changes color to green. |
+| `warning` | Changes color to yellow. |

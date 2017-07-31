@@ -114,9 +114,9 @@ storiesOf('Input', module)
   .add('disabled', () => <Input disabled autoFocus />)
   .add('states', () => (
     <div>
-      <Input error autoFocus /><br />
-      <Input success="You're Awesome!" autoFocus /><br />
-      <Input warning autoFocus />
+      <Input state='error' autoFocus /><br />
+      <Input state='success' helpText="You're Awesome!" autoFocus /><br />
+      <Input state='warning' autoFocus />
     </div>
   ))
   .add('sizes', () => (
@@ -191,9 +191,9 @@ storiesOf('Select', module)
   ))
   .add('states', () => (
     <div>
-      <Select error /><br />
-      <Select success /><br />
-      <Select warning />
+      <Select state='error' /><br />
+      <Select state='success' /><br />
+      <Select state='warning' />
     </div>
   ))
   .add('sizes', () => (
@@ -228,9 +228,9 @@ storiesOf('Text', module)
   .add('states', () => (
     <div>
       <Text>Default</Text><br />
-      <Text error>Error</Text><br />
-      <Text success>Success</Text><br />
-      <Text warning>Warning</Text><br />
+      <Text state='error'>Error</Text><br />
+      <Text state='success'>Success</Text><br />
+      <Text state='warning'>Warning</Text><br />
     </div>
   ))
   .add('truncate', () => (

@@ -2,6 +2,8 @@
 
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
+import Backdrop from './Backdrop'
+import HelpText from './HelpText'
 import Resizer from './Resizer'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/constants'
@@ -10,7 +12,7 @@ const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  helpText: PropTypes.string,
   id: PropTypes.string,
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   name: PropTypes.string,
@@ -23,16 +25,14 @@ const propTypes = {
   resizable: PropTypes.bool,
   seamless: PropTypes.bool,
   size: PropTypes.string,
-  success: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  state: PropTypes.string,
   suffix: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
-  warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+  value: PropTypes.string
 }
 const defaultProps = {
   autoFocus: false,
   disabled: false,
-  error: false,
   multiline: null,
   onBlur: noop,
   onChange: noop,
@@ -40,10 +40,8 @@ const defaultProps = {
   readOnly: false,
   resizable: false,
   seamless: false,
-  success: false,
   type: 'text',
-  value: '',
-  warning: false
+  value: ''
 }
 
 class Input extends Component {
@@ -69,7 +67,7 @@ class Input extends Component {
     const {
       autoFocus,
       disabled,
-      error,
+      helpText,
       id,
       inputRef,
       multiline,
@@ -82,10 +80,9 @@ class Input extends Component {
       resizable,
       seamless,
       size,
-      success,
+      state,
       suffix,
       type,
-      warning,
       ...rest
     } = this.props
 
@@ -97,14 +94,12 @@ class Input extends Component {
     const className = classNames(
       'c-Input',
       disabled && 'is-disabled',
-      error && 'is-error',
       multiline && 'is-multiline',
       readOnly && 'is-readonly',
       resizable && 'is-resizable',
       seamless && 'is-seamless',
-      success && 'is-success',
+      state && `is-${state}`,
       value && 'has-value',
-      warning && 'is-warning',
       this.props.className
     )
 
@@ -137,17 +132,11 @@ class Input extends Component {
       </div>
       : null
 
-    const statefulHelperTextMarkup = () => {
-      return [error, success, warning].map(state => {
-        if (state && typeof state === 'string' && state.length) {
-          return (
-            <div className='c-InputHelperLabel' key={state}>
-              {state}
-            </div>
-          )
-        }
-      })
-    }
+    const helpTextMarkup = helpText
+      ? <HelpText state={state}>
+        {helpText}
+      </HelpText>
+      : null
 
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...rest,
@@ -173,10 +162,10 @@ class Input extends Component {
           {prefixMarkup}
           {inputElement}
           {suffixMarkup}
-          <div className='c-InputBackdrop' />
+          <Backdrop disabled={disabled} state={state} />
           {resizer}
         </div>
-        {statefulHelperTextMarkup()}
+        {helpTextMarkup}
       </div>
     )
   }
