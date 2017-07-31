@@ -14,6 +14,7 @@ Note: Beacon (v2) requires every one of these.
 * [ ] Icon
 * [x] Image
 * [x] Input
+* [x] Label
 * [x] Link
 * [x] Loader (...)
 * [ ] Modal `**`
