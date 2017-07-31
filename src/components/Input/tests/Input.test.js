@@ -139,6 +139,16 @@ describe('Multiline', () => {
   })
 })
 
+describe('Label', () => {
+  test('Adds label if specified', () => {
+    const wrapper = mount(<Input label='Channel' />)
+    const label = wrapper.find('Label')
+
+    expect(label.exists()).toBeTruthy()
+    expect(label.text()).toBe('Channel')
+  })
+})
+
 describe('Prefix/Suffix', () => {
   test('Adds prefix if defined', () => {
     const text = 'Prefix'

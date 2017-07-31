@@ -4,6 +4,7 @@ import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Backdrop from './Backdrop'
 import HelpText from './HelpText'
+import Label from '../Label'
 import Resizer from './Resizer'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/constants'
@@ -14,6 +15,7 @@ const propTypes = {
   disabled: PropTypes.bool,
   helpText: PropTypes.string,
   id: PropTypes.string,
+  label: PropTypes.string,
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   name: PropTypes.string,
   onBlur: PropTypes.func,
@@ -70,6 +72,7 @@ class Input extends Component {
       helpText,
       id,
       inputRef,
+      label,
       multiline,
       name,
       onBlur,
@@ -120,6 +123,10 @@ class Input extends Component {
           />
         : null
 
+    const labelMarkup = label
+      ? <Label for={id}>{label}</Label>
+      : null
+
     const prefixMarkup = prefix
       ? <div className='c-Input__item c-Input__prefix'>
         {prefix}
@@ -158,6 +165,7 @@ class Input extends Component {
 
     return (
       <div className='c-InputWrapper'>
+        {labelMarkup}
         <div className={className}>
           {prefixMarkup}
           {inputElement}
