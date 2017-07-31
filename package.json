@@ -18,6 +18,8 @@
     "precommit": "sh ./.git-hooks/pre-commit"
   },
   "dependencies": {
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
     "seed-button": "0.3.0",
     "seed-card": "0.1.0",
     "seed-color-scheme": "0.3.0",
@@ -69,9 +71,7 @@
     "postcss-scss": "1.0.2",
     "promise": "7.1.1",
     "raw-loader": "0.5.1",
-    "react": "15.6.1",
     "react-dev-utils": "^3.0.2",
-    "react-dom": "15.6.1",
     "react-error-overlay": "^1.0.9",
     "react-test-renderer": "15.6.1",
     "rgb-hex": "2.1.0",

@@ -1,7 +1,7 @@
 @import "../configs/_color";
 $seed-card-namespace: "c-Card";
 $seed-card-block-namespace: "c-CardBlock";
-$seed-card-border: 1px solid _color(border, ui, dark);
+$seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
 // Import Seed Pack
 @import "pack/seed-card/_index";
 

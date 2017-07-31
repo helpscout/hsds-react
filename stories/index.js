@@ -14,6 +14,7 @@ import {
   Icon,
   Image,
   Input,
+  Modal,
   Link,
   LoadingDots,
   Overlay,
@@ -214,6 +215,9 @@ storiesOf('Icon', module)
       </div>
     )
   })
+
+storiesOf('Modal', module)
+  .add('default', () => <Modal>Stuff</Modal>)
 
 storiesOf('Link', module)
   .add('default', () => <Link href='https://github.com/helpscout/blue'>Linky</Link>)
