@@ -1,8 +1,8 @@
 # Blue 🔷 [![Build Status](https://travis-ci.com/helpscout/blue.svg?token=mizbXyxLU95YeKzixKT2&branch=master)](https://travis-ci.com/helpscout/blue)
 
-React component library.
+<img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
 
-![You're my boy, Blue!](./images/yourmyboyblue.gif)
+React component library.
 
 
 ## Getting Started
@@ -25,3 +25,10 @@ Check out Blue's Storybook at http://localhost:8900/ in your browser.
 ## Todos
 
 **[Check out our ever-changing Todos notes here](./todos)**.
+
+
+## Extras
+
+![You're my boy, Blue!](./images/yourmyboyblue.gif)
+
+> You're my boy, Blue!
