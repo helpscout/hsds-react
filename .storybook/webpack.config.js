@@ -33,6 +33,11 @@ module.exports = {
           }
         }]
       },
+      // SVG
+      {
+        test: /\.svg$/,
+        loader: 'raw-loader'
+      }
     ]
   },
 };

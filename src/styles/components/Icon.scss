@@ -1,0 +1,58 @@
+@import "pack/seed-dash/_index";
+
+.c-Icon {
+  @import "configs/color";
+  $sizes: (14, 16, 18, 20, 24);
+  $default-size: 20;
+
+  box-sizing: border-box;
+  color: currentColor;
+  height: ($default-size * 1px);
+  width: ($default-size * 1px);
+
+  // Modifiers
+  &.is-center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &.is-clickable {
+    cursor: pointer;
+  }
+
+  &.is-noInteract {
+    pointer-events: none;
+  }
+
+  &.is-muted {
+    color: _color(text, muted);
+  }
+
+  // Sizes
+  @each $size in $sizes {
+    &.is-#{$size} {
+      height: ($size * 1px);
+      width: ($size * 1px);
+    }
+  }
+
+  // SVG
+  &__icon {
+    color: currentColor;
+    display: block;
+    pointer-events: none;
+
+    svg {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    circle,
+    path,
+    rect {
+      fill: currentColor;
+    }
+  }
+}
