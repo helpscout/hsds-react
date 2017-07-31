@@ -11,7 +11,7 @@ Note: Beacon (v2) requires every one of these.
 * [x] Card
 * [x] CardBlock
 * [x] Heading
-* [ ] Icon
+* [x] Icon
 * [x] Image
 * [x] Input
 * [x] Label
