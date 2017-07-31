@@ -1,8 +1,10 @@
 # Blue 🔷 [![Build Status](https://travis-ci.com/helpscout/blue.svg?token=mizbXyxLU95YeKzixKT2&branch=master)](https://travis-ci.com/helpscout/blue)
 
+<img src="./images/Blue.png" width="300>
+
 React component library.
 
-![You're my boy, Blue!](./yourmyboyblue.gif)
+![You're my boy, Blue!](./images/yourmyboyblue.gif)
 
 
 ## Getting Started
