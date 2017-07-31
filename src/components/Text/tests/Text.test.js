@@ -67,19 +67,19 @@ describe('Styles', () => {
 
 describe('States', () => {
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<Text error />)
+    const wrapper = shallow(<Text state='error' />)
 
     expect(wrapper.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<Text success />)
+    const wrapper = shallow(<Text state='success' />)
 
     expect(wrapper.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<Text warning />)
+    const wrapper = shallow(<Text state='warning' />)
 
     expect(wrapper.prop('className')).toContain('is-warning')
   })

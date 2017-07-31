@@ -28,7 +28,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | autoFocus | boolean | Automatically focuses the input. |
 | className | string | Custom class names to be added to the component. |
 | disabled | boolean | Disable the input. |
-| error | boolean or string | Change input to error state. Displays text underneath input. |
+| helpText | string | Displays text underneath input. |
 | id | string | ID for the input. |
 | multiline | boolean or number | Transforms input into an auto-expanding textarea. |
 | name | string | Name for the input. |
@@ -38,8 +38,16 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | resizable | boolean | Enables resizing for the textarea (only enabled for `multiline`). |
 | seamless | boolean | Removes the border around the input. |
 | size | boolean | Determines the size of the input. |
+| state | string | Change input to state color. |
 | suffix | string | Text to appear after the input. |
-| success | boolean or string | Change input to success state. Displays text underneath input. |
 | type | string | Determines the input type. |
 | value | string | Initial value of the input. |
-| warning | boolean or string | Change input to warning state. Displays text underneath input. |
+
+
+### States
+
+| Prop | Description |
+| --- | --- |
+| `error` | Changes color to red. |
+| `success` | Changes color to green. |
+| `warning` | Changes color to yellow. |

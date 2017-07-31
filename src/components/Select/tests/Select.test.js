@@ -164,7 +164,7 @@ describe('States', () => {
 
   describe('Error', () => {
     test('Applies error styles if error prop is true', () => {
-      const wrapper = shallow(<Select error />)
+      const wrapper = shallow(<Select state='error' />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-error')
@@ -172,8 +172,8 @@ describe('States', () => {
 
     test('Adds error helper text if error prop is a string', () => {
       const message = 'Cannonballlll'
-      const wrapper = shallow(<Select error={message} />)
-      const o = wrapper.find('.c-InputHelperLabel')
+      const wrapper = mount(<Select state='error' helpText={message} />)
+      const o = wrapper.find('.c-InputHelpText')
 
       expect(o.text()).toContain(message)
     })
@@ -181,7 +181,7 @@ describe('States', () => {
 
   describe('Success', () => {
     test('Applies success styles if success prop is true', () => {
-      const wrapper = shallow(<Select success />)
+      const wrapper = shallow(<Select state='success' />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-success')
@@ -189,8 +189,8 @@ describe('States', () => {
 
     test('Adds success helper text if success prop is a string', () => {
       const message = 'Cannonballlll'
-      const wrapper = shallow(<Select success={message} />)
-      const o = wrapper.find('.c-InputHelperLabel')
+      const wrapper = mount(<Select state='success' helpText={message} />)
+      const o = wrapper.find('.c-InputHelpText')
 
       expect(o.text()).toContain(message)
     })
@@ -198,7 +198,7 @@ describe('States', () => {
 
   describe('Warning', () => {
     test('Applies warning styles if warning prop is true', () => {
-      const wrapper = shallow(<Select warning />)
+      const wrapper = shallow(<Select state='warning' />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-warning')
@@ -206,8 +206,8 @@ describe('States', () => {
 
     test('Adds warning helper text if warning prop is a string', () => {
       const message = 'Cannonballlll'
-      const wrapper = shallow(<Select warning={message} />)
-      const o = wrapper.find('.c-InputHelperLabel')
+      const wrapper = mount(<Select state='warning' helpText={message} />)
+      const o = wrapper.find('.c-InputHelpText')
 
       expect(o.text()).toContain(message)
     })

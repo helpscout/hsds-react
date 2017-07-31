@@ -195,21 +195,21 @@ describe('States', () => {
   })
 
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<Input error />)
+    const wrapper = shallow(<Input state='error' />)
     const o = wrapper.find('.c-Input')
 
     expect(o.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<Input success />)
+    const wrapper = shallow(<Input state='success' />)
     const o = wrapper.find('.c-Input')
 
     expect(o.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<Input warning />)
+    const wrapper = shallow(<Input state='warning' />)
     const o = wrapper.find('.c-Input')
 
     expect(o.prop('className')).toContain('is-warning')
@@ -218,8 +218,8 @@ describe('States', () => {
 
 describe('Stateful helper label', () => {
   test('Renders stateful helper label if error is a string', () => {
-    const wrapper = shallow(<Input error='Error' />)
-    const helperLabel = wrapper.find('.c-InputHelperLabel')
+    const wrapper = mount(<Input state='error' helpText='Error' />)
+    const helperLabel = wrapper.find('.c-InputHelpText')
 
     expect(helperLabel.exists()).toBeTruthy()
     expect(helperLabel.text()).toBe('Error')

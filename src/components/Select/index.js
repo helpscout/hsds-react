@@ -1,5 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
+import Backdrop from '../Input/Backdrop'
+import HelpText from '../Input/HelpText'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/constants'
 
@@ -23,7 +25,7 @@ const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  helpText: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.oneOfType([
@@ -39,21 +41,17 @@ const propTypes = {
   placeholder: PropTypes.string,
   prefix: PropTypes.string,
   size: PropTypes.string,
-  success: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  value: PropTypes.string,
-  warning: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+  state: PropTypes.string,
+  value: PropTypes.string
 }
 const defaultProps = {
   autoFocus: false,
   disabled: false,
-  error: false,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
   options: [],
-  success: false,
-  value: '',
-  warning: false
+  value: ''
 }
 
 const PLACEHOLDER_VALUE = '__placeholder__'
@@ -85,15 +83,15 @@ class Select extends Component {
     const {
       className,
       disabled,
-      error,
+      helpText,
       onChange,
       options,
       placeholder,
       prefix,
       seamless,
       size,
+      state,
       success,
-      warning,
       value,
       ...rest
     } = this.props
@@ -103,11 +101,9 @@ class Select extends Component {
     const selectClassName = classNames(
       'c-Select',
       disabled && 'is-disabled',
-      error && 'is-error',
       hasPlaceholder && 'has-placeholder',
       seamless && 'is-seamless',
-      success && 'is-success',
-      warning && 'is-warning',
+      state && `is-${state}`,
       className
     )
 
@@ -164,19 +160,13 @@ class Select extends Component {
       </div>
       : null
 
-    const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
+    const helpTextMarkup = helpText
+      ? <HelpText state={state}>
+        {helpText}
+      </HelpText>
+      : null
 
-    const statefulHelperTextMarkup = () => {
-      return [error, success, warning].map(state => {
-        if (state && typeof state === 'string' && state.length) {
-          return (
-            <div className='c-InputHelperLabel' key={state}>
-              {state}
-            </div>
-          )
-        }
-      })
-    }
+    const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
     return (
       <div className='c-InputWrapper'>
@@ -193,9 +183,9 @@ class Select extends Component {
             {optionsMarkup}
           </select>
           <div className='c-SelectIcon' />
-          <div className='c-InputBackdrop' />
+          <Backdrop disabled={disabled} state={state} />
         </div>
-        {statefulHelperTextMarkup()}
+        {helpTextMarkup}
       </div>
     )
   }

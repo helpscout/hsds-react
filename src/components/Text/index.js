@@ -5,14 +5,12 @@ import classNames from '../../utilities/classNames'
 const propTypes = {
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
-  error: PropTypes.bool,
   faint: PropTypes.bool,
   muted: PropTypes.bool,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  state: PropTypes.string,
   subtle: PropTypes.bool,
-  success: PropTypes.bool,
-  truncate: PropTypes.bool,
-  warning: PropTypes.bool
+  truncate: PropTypes.bool
 }
 const defaultProps = {
   disableSelect: false,
@@ -22,27 +20,23 @@ const defaultProps = {
 const Text = props => {
   const {
     disableSelect,
-    error,
     faint,
     muted,
     size,
+    state,
     subtle,
-    success,
-    truncate,
-    warning
+    truncate
   } = props
 
   const className = classNames(
     'c-Text',
     disableSelect && 'is-disableSelect',
-    error && 'is-error',
     faint && 'is-faint',
     muted && 'is-muted',
     size && `is-${size}`,
+    state && `is-${state}`,
     subtle && 'is-subtle',
-    success && 'is-success',
     truncate && 'is-truncate',
-    warning && 'is-warning',
     props.className
   )
 

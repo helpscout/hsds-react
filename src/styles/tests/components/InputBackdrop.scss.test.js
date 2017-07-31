@@ -61,7 +61,7 @@ describe('Styles', () => {
 
 describe('States', () => {
   test('Applies error styles if defined', () => {
-    const markup = mount(<Input error />).html()
+    const markup = mount(<Input state='error' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -70,7 +70,7 @@ describe('States', () => {
   })
 
   test('Applies success styles if defined', () => {
-    const markup = mount(<Input success />).html()
+    const markup = mount(<Input state='success' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -79,7 +79,7 @@ describe('States', () => {
   })
 
   test('Applies warning styles if defined', () => {
-    const markup = mount(<Input warning />).html()
+    const markup = mount(<Input state='warning' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
