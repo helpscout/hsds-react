@@ -1,0 +1,27 @@
+.c-Modal {
+  @import "../resets/base";
+  $offset: 8px;
+
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  padding: $offset;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  &__content {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &__close {
+    $offset: 8px;
+    position: absolute;
+    right: $offset;
+    top: $offset;
+  }
+}

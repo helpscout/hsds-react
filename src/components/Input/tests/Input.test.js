@@ -84,6 +84,30 @@ describe('Events', () => {
   })
 })
 
+describe('ID', () => {
+  test('Automatically generates an ID if not defined', () => {
+    const wrapper = mount(<Input label='Input' />)
+    const label = wrapper.find('label')
+    const input = wrapper.find('input')
+    const id = input.prop('id')
+
+    expect(id).toBeTruthy()
+    expect(id).toContain('Input')
+    expect(label.prop('htmlFor')).toBe(id)
+  })
+
+  test('Can set custom ID on Input', () => {
+    const wrapper = mount(<Input label='Input' id='sixty-percent-of-the-time' />)
+    const label = wrapper.find('label')
+    const input = wrapper.find('input')
+    const id = input.prop('id')
+
+    expect(id).toBeTruthy()
+    expect(id).toContain('sixty-percent-of-the-time')
+    expect(label.prop('htmlFor')).toBe(id)
+  })
+})
+
 describe('Multiline', () => {
   test('Default selector is an input', () => {
     const wrapper = shallow(<Input />)

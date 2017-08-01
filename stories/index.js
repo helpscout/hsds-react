@@ -217,7 +217,17 @@ storiesOf('Icon', module)
   })
 
 storiesOf('Modal', module)
-  .add('default', () => <Modal>Stuff</Modal>)
+  .add('default', () => (
+    <Modal trigger={<div>Click</div>}>
+      Content
+      <Modal trigger={<div>Click</div>}>
+        Double Nested Content
+        <Modal trigger={<div>Click</div>}>
+          Triple NESTED Content
+        </Modal>
+      </Modal>
+    </Modal>
+  ))
 
 storiesOf('Link', module)
   .add('default', () => <Link href='https://github.com/helpscout/blue'>Linky</Link>)

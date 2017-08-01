@@ -4,10 +4,11 @@ import Card from '../Card'
 import CardBlock from '../CardBlock'
 import Icon from '../Icon'
 import Overlay from '../Overlay'
-import Portal from '../Portal'
+import { PortalWrapper } from '../Portal'
 
 const propTypes = {
-  closeIcon: PropTypes.bool
+  closeIcon: PropTypes.bool,
+  trigger: PropTypes.element.isRequired
 }
 
 const defaultProps = {
@@ -15,32 +16,38 @@ const defaultProps = {
 }
 
 const portalOptions = {
+  id: 'Modal'
 }
 
 const Modal = props => {
   const {
-    closeIcon
+    children,
+    closeIcon,
+    closePortal
   } = props
 
-  const modalHeaderMarkup = closeIcon ? (
-    <CardBlock size='sm'>
-      <Icon name='cross-large' />
-    </CardBlock>
+  const closeMarkup = closeIcon ? (
+    <div className='c-Modal__close'>
+      <Icon name='cross-medium' onClick={closePortal} clickable />
+    </div>
   ) : null
 
   return (
-    <Overlay>
-      <Card seamless>
-        {modalHeaderMarkup}
-        <CardBlock>
-          {props.children}
-        </CardBlock>
-      </Card>
-    </Overlay>
+    <div className='c-Modal'>
+      <div className='c-Modal__content'>
+        <Card seamless>
+          <CardBlock>
+            {closeMarkup}
+            {children}
+          </CardBlock>
+        </Card>
+      </div>
+      <Overlay onClick={closePortal} />
+    </div>
   )
 }
 
 Modal.propTypes = propTypes
 Modal.defaultProps = defaultProps
 
-export default Portal(portalOptions)(Modal)
+export default PortalWrapper(portalOptions)(Modal)

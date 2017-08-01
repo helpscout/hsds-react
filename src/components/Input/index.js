@@ -7,7 +7,7 @@ import HelpText from './HelpText'
 import Label from '../Label'
 import Resizer from './Resizer'
 import classNames from '../../utilities/classNames'
-import { noop } from '../../utilities/constants'
+import { createUniqueIDFactory, noop } from '../../utilities/constants'
 
 const propTypes = {
   autoFocus: PropTypes.bool,
@@ -45,6 +45,8 @@ const defaultProps = {
   type: 'text',
   value: ''
 }
+
+const uniqueID = createUniqueIDFactory('Input')
 
 class Input extends Component {
   constructor (props) {
@@ -106,6 +108,7 @@ class Input extends Component {
       this.props.className
     )
 
+    const inputID = id || uniqueID()
     const fieldClassName = classNames('c-InputField', size && `is-${size}`)
 
     // Ignoring as height calculation isn't possible with JSDOM
@@ -124,7 +127,7 @@ class Input extends Component {
         : null
 
     const labelMarkup = label
-      ? <Label for={id}>{label}</Label>
+      ? <Label for={inputID}>{label}</Label>
       : null
 
     const prefixMarkup = prefix
@@ -147,9 +150,12 @@ class Input extends Component {
 
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...rest,
+      className: fieldClassName,
+      id: inputID,
+      onChange: handleOnChange,
+      ref: inputRef,
       autoFocus,
       disabled,
-      id,
       name,
       onBlur,
       onFocus,
@@ -157,10 +163,7 @@ class Input extends Component {
       readOnly,
       style,
       type,
-      value,
-      className: fieldClassName,
-      onChange: handleOnChange,
-      ref: inputRef
+      value
     })
 
     return (
