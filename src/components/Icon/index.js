@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ICONS from './icons'
 import classNames from '../../utilities/classNames'
-import { noop } from '../../utilities/constants'
+import { noop } from '../../utilities/other'
 import VisuallyHidden from '../VisuallyHidden'
 
 const propTypes = {

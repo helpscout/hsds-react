@@ -15,7 +15,7 @@ const defaultProps = {
 }
 
 const Heading = props => {
-  const { disableSelect, light, selector, size } = props
+  const { disableSelect, light, selector, size, ...rest } = props
 
   const className = classNames(
     'c-Heading',
@@ -30,7 +30,7 @@ const Heading = props => {
   const element = React.createElement(
     selectorTag,
     {
-      ...props,
+      ...rest,
       className
     },
     props.children

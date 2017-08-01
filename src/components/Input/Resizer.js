@@ -2,7 +2,7 @@
 
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import { noop } from '../../utilities/constants'
+import { noop } from '../../utilities/other'
 
 const ENTITIES_TO_REPLACE = {
   '&': '&amp;',

@@ -7,7 +7,8 @@ import HelpText from './HelpText'
 import Label from '../Label'
 import Resizer from './Resizer'
 import classNames from '../../utilities/classNames'
-import { createUniqueIDFactory, noop } from '../../utilities/constants'
+import { createUniqueIDFactory } from '../../utilities/id'
+import { noop } from '../../utilities/other'
 
 const propTypes = {
   autoFocus: PropTypes.bool,

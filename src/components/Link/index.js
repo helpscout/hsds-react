@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
-import { noop } from '../../utilities/constants'
+import { noop } from '../../utilities/other'
 
 const propTypes = {
   className: PropTypes.string,

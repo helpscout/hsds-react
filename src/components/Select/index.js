@@ -4,7 +4,7 @@ import Backdrop from '../Input/Backdrop'
 import HelpText from '../Input/HelpText'
 import Label from '../Label'
 import classNames from '../../utilities/classNames'
-import { noop } from '../../utilities/constants'
+import { noop } from '../../utilities/other'
 
 const optionType = PropTypes.oneOfType([
   PropTypes.shape({

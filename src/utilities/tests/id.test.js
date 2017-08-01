@@ -1,10 +1,4 @@
-import { createUniqueIDFactory, noop } from '../constants'
-
-describe('noop', () => {
-  test('Does nothing', () => {
-    expect(noop()).toBe(undefined)
-  })
-})
+import { createUniqueIDFactory } from '../id'
 
 describe('createUniqueIDFactory', () => {
   test('Generates an numerical ID (string), without arguments', () => {

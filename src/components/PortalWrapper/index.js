@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Portal from '../Portal'
 import PropTypes from 'prop-types'
-import { createUniqueIDFactory } from '../../utilities/constants'
+import KeypressListener from '../KeypressListener'
+import Keys from '../../constants/Keys'
+import { createUniqueIDFactory } from '../../utilities/id'
 
 const PortalWrapper = (options = {}) => ComposedComponent => {
   const propTypes = {
@@ -57,6 +59,7 @@ const PortalWrapper = (options = {}) => ComposedComponent => {
 
       return (
         <div>
+          <KeypressListener keyCode={Keys.ESCAPE} handler={closePortal} />
           {triggerMarkup}
           {portalMarkup}
         </div>
