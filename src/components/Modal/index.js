@@ -6,8 +6,10 @@ import CloseButton from '../CloseButton'
 import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
 import Scrollable from '../Scrollable'
+import classNames from '../../utilities/classNames'
 
 const propTypes = {
+  className: PropTypes.string,
   closeIcon: PropTypes.bool,
   isOpen: PropTypes.bool,
   trigger: PropTypes.element.isRequired
@@ -29,6 +31,11 @@ const Modal = props => {
     closePortal
   } = props
 
+  const className = classNames(
+    'c-Modal',
+    props.className
+  )
+
   const closeMarkup = closeIcon ? (
     <div className='c-Modal__close'>
       <CloseButton onClick={closePortal} />
@@ -36,7 +43,7 @@ const Modal = props => {
   ) : null
 
   return (
-    <div className='c-Modal'>
+    <div className={className}>
       <div className='c-Modal__content'>
         <Card seamless>
           {closeMarkup}
