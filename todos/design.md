@@ -27,12 +27,12 @@ Below is a (working) list of design notes/todos.
 * [ ] Sizes (name + style properties for each)
 * [ ] Error styles (Label, helper text, :hover, :active, :focus)
 * [ ] Success styles (Label, helper text, :hover, :active, :focus)
-* [ ] Warning styles (Label, helper text, :hover, :active, :focus)
+* [x] Warning styles (Label, helper text, :hover, :active, :focus)
 
 
 ## DotIndicator (open to names, haha)
 
-* [ ] States (name + style properties for each. E.g online, offline, idle?)
+* [x] States (name + style properties for each. E.g online, offline, idle?)
 
 
 ## Headings
@@ -47,4 +47,4 @@ Below is a (working) list of design notes/todos.
 
 ## Icons
 
-* [ ] `.svg` Export of all icons
+* [x] `.svg` Export of all icons
