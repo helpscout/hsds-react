@@ -7,9 +7,8 @@ $seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
 
 .c-Card {
   @import "../resets/base";
-  border: none;
   box-shadow: #{
-    0 0 0 1px rgba(_color(border, ui, dark), 0.7) inset,
+    0 0 0 0 rgba(black, 0)
     };
   color: currentColor;
   display: block;
@@ -24,16 +23,13 @@ $seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
   &.is-hoverable {
     box-shadow: #{
       0 1px 3px 0 rgba(black, 0.1),
-      0 0 0 1px rgba(_color(border, ui, dark), 0.7) inset,
-      0 -1px 0 0 _color(border, ui, dark) inset
       };
     transition: box-shadow 0.2s ease;
 
     &:hover {
+      border-color: _color(grey, 700);
       box-shadow: #{
         0 3px 12px 0 rgba(black, 0.15),
-        0 0 0 1px rgba(_color(grey, 700), 0.7) inset,
-        0 -1px 0 0 _color(grey, 700) inset
         };
     }
   }

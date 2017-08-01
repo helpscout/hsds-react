@@ -2,17 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Card from '../Card'
 import CardBlock from '../CardBlock'
-import Icon from '../Icon'
+import CloseButton from '../CloseButton'
 import Overlay from '../Overlay'
+import Scrollable from '../Scrollable'
 import { PortalWrapper } from '../Portal'
 
 const propTypes = {
   closeIcon: PropTypes.bool,
+  isOpen: PropTypes.bool,
   trigger: PropTypes.element.isRequired
 }
 
 const defaultProps = {
-  closeIcon: true
+  closeIcon: true,
+  isOpen: false
 }
 
 const portalOptions = {
@@ -28,7 +31,7 @@ const Modal = props => {
 
   const closeMarkup = closeIcon ? (
     <div className='c-Modal__close'>
-      <Icon name='cross-medium' onClick={closePortal} clickable />
+      <CloseButton onClick={closePortal} />
     </div>
   ) : null
 
@@ -36,10 +39,12 @@ const Modal = props => {
     <div className='c-Modal'>
       <div className='c-Modal__content'>
         <Card seamless>
-          <CardBlock>
-            {closeMarkup}
-            {children}
-          </CardBlock>
+          {closeMarkup}
+          <Scrollable fade rounded>
+            <CardBlock>
+              {children}
+            </CardBlock>
+          </Scrollable>
         </Card>
       </div>
       <Overlay onClick={closePortal} />
