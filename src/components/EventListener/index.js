@@ -21,10 +21,12 @@ class EventListener extends Component {
     this.attachListener()
   }
 
+  /* istanbul ignore next */
   componentWillUpdate () {
     this.detachListener()
   }
 
+  /* istanbul ignore next */
   componentDidUpdate () {
     this.attachListener()
   }
