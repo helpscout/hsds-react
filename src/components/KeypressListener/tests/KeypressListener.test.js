@@ -79,4 +79,20 @@ describe('Events', () => {
 
     expect(spy).toHaveBeenCalledTimes(2)
   })
+
+  test('Does not auto-trigger on mount', () => {
+    const spy = jest.fn()
+    mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} />)
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not auto-trigger on unmount', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} />)
+
+    wrapper.unmount()
+
+    expect(spy).not.toHaveBeenCalled()
+  })
 })
