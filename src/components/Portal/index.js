@@ -18,6 +18,7 @@ class Portal extends React.Component {
     this.openPortal(this.props)
   }
 
+  /* istanbul ignore next */
   componentWillReceiveProps (nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
       this.node.className = nextProps.className
