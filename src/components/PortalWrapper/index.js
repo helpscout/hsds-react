@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Portal from './index'
+import Portal from '../Portal'
 import PropTypes from 'prop-types'
 import { createUniqueIDFactory } from '../../utilities/constants'
 

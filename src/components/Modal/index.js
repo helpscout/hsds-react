@@ -4,8 +4,8 @@ import Card from '../Card'
 import CardBlock from '../CardBlock'
 import CloseButton from '../CloseButton'
 import Overlay from '../Overlay'
+import PortalWrapper from '../PortalWrapper'
 import Scrollable from '../Scrollable'
-import { PortalWrapper } from '../Portal'
 
 const propTypes = {
   closeIcon: PropTypes.bool,
