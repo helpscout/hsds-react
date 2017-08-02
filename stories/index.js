@@ -61,8 +61,8 @@ storiesOf('Button', module)
   .add('types', () => (
     <div>
       <Button>Regular</Button>
-      <Button type='primary'>Primary</Button>
-      <Button type='link'>Link</Button>
+      <Button primary>Primary</Button>
+      <Button plain>Plain</Button>
     </div>
   ))
   .add('sizes', () => (

@@ -1,37 +1,70 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 
 const propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  onBlur: PropTypes.func,
   onClick: PropTypes.func,
+  onFocus: PropTypes.func,
+  plain: PropTypes.bool,
+  primary: PropTypes.bool,
   size: PropTypes.string,
   state: PropTypes.string,
-  type: PropTypes.string
+  submit: PropTypes.bool
 }
 const defaultProps = {
   disabled: false,
-  onClick: () => {},
+  onBlur: noop,
+  onClick: noop,
+  onFocus: noop,
+  plain: false,
+  primary: false,
   size: '',
   state: '',
-  type: ''
+  submit: false
 }
 
 const Button = props => {
-  const { disabled, onClick, size, state, type } = props
+  const {
+    children,
+    className,
+    disabled,
+    onBlur,
+    onClick,
+    onFocus,
+    plain,
+    primary,
+    size,
+    state,
+    submit,
+    ...rest
+  } = props
 
-  const className = classNames(
+  const buttonClassName = classNames(
     'c-Button',
     size && `c-Button--${size}`,
     state && `is-${state}`,
-    type && `c-Button--${type}`,
+    plain && 'c-Button--link',
+    primary && 'c-Button--primary',
     props.className
   )
 
+  const type = submit ? 'submit' : 'button'
+
   return (
-    <button className={className} disabled={disabled} onClick={onClick}>
-      {props.children}
+    <button
+      className={buttonClassName}
+      disabled={disabled}
+      onBlur={onBlur}
+      onClick={onClick}
+      onFocus={onFocus}
+      type={type}
+      {...rest}
+    >
+      {children}
     </button>
   )
 }
