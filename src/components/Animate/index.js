@@ -7,6 +7,7 @@ const propTypes = {
   animateOnMount: PropTypes.bool,
   className: PropTypes.string,
   duration: PropTypes.number,
+  in: PropTypes.bool,
   sequence: PropTypes.string,
   wait: PropTypes.number
 }

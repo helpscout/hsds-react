@@ -48,7 +48,7 @@ const Modal = props => {
   return (
     <div className={className}>
       <div className='c-Modal__content'>
-        <Animate sequence='FadeIn Down' in={portalIsOpen} wait={300}>
+        <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
           <Card seamless>
             {closeMarkup}
             <Scrollable fade rounded>
@@ -59,7 +59,7 @@ const Modal = props => {
           </Card>
         </Animate>
       </div>
-      <Animate sequence='FadeIn' in={portalIsOpen} wait={200}>
+      <Animate sequence='fadeIn' in={portalIsOpen} wait={200}>
         <Overlay onClick={closePortal} />
       </Animate>
     </div>
