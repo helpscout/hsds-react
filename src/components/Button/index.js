@@ -4,6 +4,7 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 const propTypes = {
+  accessibilityLabel: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   onBlur: PropTypes.func,
@@ -16,6 +17,7 @@ const propTypes = {
   submit: PropTypes.bool
 }
 const defaultProps = {
+  accessibilityLabel: '',
   disabled: false,
   onBlur: noop,
   onClick: noop,
@@ -29,6 +31,7 @@ const defaultProps = {
 
 const Button = props => {
   const {
+    accessibilityLabel,
     children,
     className,
     disabled,
@@ -56,6 +59,7 @@ const Button = props => {
 
   return (
     <button
+      aria-label={accessibilityLabel}
       className={buttonClassName}
       disabled={disabled}
       onBlur={onBlur}
