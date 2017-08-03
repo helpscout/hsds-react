@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Animate from '../Animate'
 import Card from '../Card'
 import CardBlock from '../CardBlock'
 import CloseButton from '../CloseButton'
 import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
 import Scrollable from '../Scrollable'
+import classNames from '../../utilities/classNames'
 
 const propTypes = {
+  className: PropTypes.string,
   closeIcon: PropTypes.bool,
   isOpen: PropTypes.bool,
   trigger: PropTypes.element.isRequired
@@ -19,15 +22,22 @@ const defaultProps = {
 }
 
 const portalOptions = {
-  id: 'Modal'
+  id: 'Modal',
+  timeout: 400
 }
 
 const Modal = props => {
   const {
     children,
     closeIcon,
-    closePortal
+    closePortal,
+    portalIsOpen
   } = props
+
+  const className = classNames(
+    'c-Modal',
+    props.className
+  )
 
   const closeMarkup = closeIcon ? (
     <div className='c-Modal__close'>
@@ -36,18 +46,22 @@ const Modal = props => {
   ) : null
 
   return (
-    <div className='c-Modal'>
+    <div className={className}>
       <div className='c-Modal__content'>
-        <Card seamless>
-          {closeMarkup}
-          <Scrollable fade rounded>
-            <CardBlock>
-              {children}
-            </CardBlock>
-          </Scrollable>
-        </Card>
+        <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
+          <Card seamless>
+            {closeMarkup}
+            <Scrollable fade rounded>
+              <CardBlock>
+                {children}
+              </CardBlock>
+            </Scrollable>
+          </Card>
+        </Animate>
       </div>
-      <Overlay onClick={closePortal} />
+      <Animate sequence='fadeIn' in={portalIsOpen} wait={200}>
+        <Overlay onClick={closePortal} />
+      </Animate>
     </div>
   )
 }

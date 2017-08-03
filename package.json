@@ -21,6 +21,7 @@
     "@shopify/javascript-utilities": "2.0.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
+    "react-transition-group": "2.2.0",
     "seed-button": "0.3.0",
     "seed-card": "0.1.0",
     "seed-color-scheme": "0.3.0",

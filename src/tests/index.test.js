@@ -1,4 +1,5 @@
 import {
+  Animate,
   Avatar,
   Badge,
   Button,
@@ -18,6 +19,7 @@ import {
 } from '..'
 
 const components = [
+  Animate,
   Avatar,
   Badge,
   Button,
