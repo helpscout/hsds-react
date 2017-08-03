@@ -28,7 +28,7 @@ storiesOf('Animate', module)
   .add('default', () => (
     <div>
       Wait 1 second…
-      <Animate className='FadeIn Down' wait={1000} duration={400}>
+      <Animate sequence='FadeIn Down' wait={1000} duration={400}>
         <div className='dont-override-this'>Then, Fade In and Down</div>
       </Animate>
     </div>
@@ -229,7 +229,7 @@ storiesOf('Icon', module)
 
 storiesOf('Modal', module)
   .add('default', () => (
-    <Modal isOpen trigger={<Link>Open dis modal</Link>}>
+    <Modal trigger={<Link>Open dis modal</Link>}>
       <div>
         <Heading>Title</Heading>
         <p>

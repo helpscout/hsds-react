@@ -5,7 +5,12 @@ import PropTypes from 'prop-types'
 const propTypes = {
   children: PropTypes.element.isRequired,
   className: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  timeout: PropTypes.number
+}
+
+const defaultProps = {
+  timeout: 0
 }
 
 class Portal extends React.Component {
@@ -27,7 +32,9 @@ class Portal extends React.Component {
   }
 
   componentWillUnmount () {
-    this.closePortal()
+    setTimeout(() => {
+      this.closePortal()
+    }, this.props.timeout)
   }
 
   openPortal (props) {
@@ -63,5 +70,6 @@ class Portal extends React.Component {
 }
 
 Portal.propTypes = propTypes
+Portal.defaultProps = defaultProps
 
 export default Portal

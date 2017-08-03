@@ -36,7 +36,7 @@ describe('Trigger', () => {
 })
 
 describe('Key events', () => {
-  test('Closes modal when ESCAPE is pressed', () => {
+  test('Closes modal when ESCAPE is pressed', (done) => {
     const wrapper = mount(<Modal isOpen trigger={trigger} />)
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -46,8 +46,11 @@ describe('Key events', () => {
 
     simulateKeyPress(Keys.ESCAPE)
 
-    expect(document.body.childNodes.length).toBeLessThan(preCloseNodeCount)
-    expect(document.getElementsByClassName('c-Modal').length).toBe(0)
+    setTimeout(() => {
+      expect(document.body.childNodes.length).toBeLessThan(preCloseNodeCount)
+      expect(document.getElementsByClassName('c-Modal').length).toBe(0)
+      done()
+    }, 500)
 
     wrapper.unmount()
   })
@@ -76,14 +79,18 @@ describe('Portal', () => {
     wrapper.unmount()
   })
 
-  test('Does not render by default', () => {
-    const preMountNodeCount = document.body.childNodes.length
-    const wrapper = mount(<Modal trigger={trigger} />)
-    const portal = document.body.childNodes[0]
+  test('Does not render by default', (done) => {
+    setTimeout(() => {
+      const preMountNodeCount = document.body.childNodes.length
+      const wrapper = mount(<Modal trigger={trigger} />)
+      const portal = document.body.childNodes[0]
 
-    expect(document.body.childNodes.length).toBe(preMountNodeCount)
-    expect(portal).not.toBeTruthy()
+      expect(document.body.childNodes.length).toBe(preMountNodeCount)
+      expect(portal).not.toBeTruthy()
 
-    wrapper.unmount()
+      wrapper.unmount()
+
+      done()
+    }, 500)
   })
 })

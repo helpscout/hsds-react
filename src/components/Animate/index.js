@@ -4,10 +4,15 @@ import Transition, { ENTERED, ENTERING, EXITING, EXITED } from 'react-transition
 import classNames from '../../utilities/classNames'
 
 const propTypes = {
-  className: PropTypes.string, duration: PropTypes.number, wait: PropTypes.number
+  animateOnMount: PropTypes.bool,
+  className: PropTypes.string,
+  duration: PropTypes.number,
+  sequence: PropTypes.string,
+  wait: PropTypes.number
 }
 
 const defaultProps = {
+  animateOnMount: true,
   duration: 200,
   wait: 0
 }
@@ -28,15 +33,27 @@ class Animate extends Component {
   }
 
   componentDidMount () {
-    this.setState({
-      in: true
-    })
+    if (this.props.animateOnMount || this.props.in === true) {
+      this.setState({
+        in: true
+      })
+    }
   }
 
   componentWillUnmount () {
-    this.setState({
-      in: false
-    })
+    if (this.props.animateOnMount) {
+      this.setState({
+        in: false
+      })
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.in !== undefined) {
+      this.setState({
+        in: nextProps.in
+      })
+    }
   }
 
   render () {
@@ -46,6 +63,7 @@ class Animate extends Component {
     const {
       className,
       duration,
+      sequence,
       wait,
       ...rest
     } = props
@@ -56,21 +74,32 @@ class Animate extends Component {
       })
     }
 
+    const sequenceClassNames = sequence ? sequence
+      .split(' ')
+      .map(s => `is-${s}`)
+      .join(' ') : null
+
     const childClassName = (child, transitionStatus) => {
       return classNames(
         'animate',
         className,
+        sequenceClassNames,
         transitionStatus && animationStyles[transitionStatus],
         child.props.className
       )
     }
 
+    const timeout = {
+      enter: wait,
+      exit: wait
+    }
+
     return (
       <Transition
         {...rest}
-        in={transitionIn}
         className='animate'
-        timeout={wait}
+        in={transitionIn}
+        timeout={timeout}
       >
         {status => React.cloneElement(props.children, {
           className: childClassName(props.children, status),

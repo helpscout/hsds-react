@@ -19,8 +19,7 @@ test('Renders at the body on mount', () => {
   wrapper.unmount()
 })
 
-test('Is removed from the body on unmount', () => {
-  const preMountNodeCount = document.body.childNodes.length
+test('Is removed from the body on unmount', (done) => {
   const wrapper = mount(
     <Portal>
       <div className='brick'>BRICK</div>
@@ -29,8 +28,10 @@ test('Is removed from the body on unmount', () => {
 
   wrapper.unmount()
 
-  expect(document.body.childNodes.length).toBe(preMountNodeCount)
-  expect(document.getElementsByClassName('brick').length).toBe(0)
+  setTimeout(() => {
+    expect(document.getElementsByClassName('brick').length).toBe(0)
+    done()
+  }, 10)
 })
 
 test('Can add custom className', () => {

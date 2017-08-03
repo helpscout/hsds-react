@@ -1,9 +1,17 @@
-&.FadeIn {
+&.is-FadeIn {
   &.is-mounting {
     opacity: 0;
   }
 
   &.has-mounted {
     opacity: 1;
+  }
+
+  &.is-unmounting {
+    opacity: 0;
+  }
+
+  &.has-unmounted {
+    opacity: 0;
   }
 }

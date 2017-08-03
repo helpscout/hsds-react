@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AnimateFadeInDown from '../Animate/FadeInDown'
-import AnimateFadeIn from '../Animate/FadeIn'
+import Animate from '../Animate'
 import Card from '../Card'
 import CardBlock from '../CardBlock'
 import CloseButton from '../CloseButton'
@@ -23,14 +22,16 @@ const defaultProps = {
 }
 
 const portalOptions = {
-  id: 'Modal'
+  id: 'Modal',
+  timeout: 400
 }
 
 const Modal = props => {
   const {
     children,
     closeIcon,
-    closePortal
+    closePortal,
+    portalIsOpen
   } = props
 
   const className = classNames(
@@ -47,7 +48,7 @@ const Modal = props => {
   return (
     <div className={className}>
       <div className='c-Modal__content'>
-        <AnimateFadeInDown duration={200}>
+        <Animate sequence='FadeIn Down' in={portalIsOpen} wait={300}>
           <Card seamless>
             {closeMarkup}
             <Scrollable fade rounded>
@@ -56,11 +57,11 @@ const Modal = props => {
               </CardBlock>
             </Scrollable>
           </Card>
-        </AnimateFadeInDown>
+        </Animate>
       </div>
-      <AnimateFadeIn duration={50}>
+      <Animate sequence='FadeIn' in={portalIsOpen} wait={200}>
         <Overlay onClick={closePortal} />
-      </AnimateFadeIn>
+      </Animate>
     </div>
   )
 }
