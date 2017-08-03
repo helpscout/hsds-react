@@ -1,0 +1,32 @@
+@import "pack/seed-family/_index";
+@import "pack/seed-this/_index";
+
+.c-CloseButton {
+  @import "../resets/base";
+  @import "../resets/button";
+
+  $block: this();
+  $size: 32px;
+
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+  height: $size;
+  width: $size;
+
+  &__icon {
+    opacity: 0.5;
+    position: relative;
+    right: -1px; // Fix alignment
+    transition: opacity 0.1s ease;
+
+    @include parent("#{$block}:hover") {
+      opacity: 0.8;
+    }
+    @include parent("#{$block}:focus") {
+      opacity: 0.8;
+    }
+  }
+}

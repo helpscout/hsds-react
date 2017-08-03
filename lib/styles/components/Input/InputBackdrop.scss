@@ -37,16 +37,17 @@
 
   // States
   @each $state in $states {
-    @include parent(".is-#{$state} > #{$InputField} ~ ") {
+    &.is-#{$state} {
       border-color: _color(state, $state, border-color);
-    }
-    @include parent(".is-#{$state} > #{$InputField}:focus ~ ") {
-      box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
+      @include parent("#{$InputField}:focus ~ ") {
+        border-color: _color(state, $state, border-color);
+        box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
+      }
     }
   }
 
   // Disabled
-  @include parent(".is-disabled > #{$InputField} ~ ") {
+  &.is-disabled {
     background-color: _color(grey, 200);
   }
 }

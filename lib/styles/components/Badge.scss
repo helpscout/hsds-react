@@ -1,0 +1,57 @@
+
+@import "pack/seed-dash/_index";
+
+.c-Badge {
+  @import "../configs/color";
+  @import "../configs/font";
+  $status: (error, info, success, warning);
+  $sizes: (
+    sm: (
+      font-size: 11px,
+      padding: 2px 8px,
+    )
+  );
+  $styles: (
+    white: (
+      background-color: white,
+      box-shadow: 0 0 0 1px _color(border, ui) inset,
+      color: _color(charcoal, 200),
+    )
+  );
+
+  background-color: _color(charcoal, 200);
+  border-radius: 9999px;
+  box-sizing: border-box;
+  color: white;
+  display: inline-block;
+  font-family: $font-family;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 3px 8px;
+
+  // Sizes
+  @each $size, $values in $sizes {
+    &.is-#{$size} {
+      @each $prop, $value in $values {
+        #{$prop}: $value;
+      }
+    }
+  }
+
+  // Status
+  @each $s in $status {
+    &.is-#{$s} {
+      background-color: _color(state, $s, border-color);
+    }
+  }
+
+  // Styles
+  @each $style, $values in $styles {
+    &.is-#{$style} {
+      @each $prop, $value in $values {
+        #{$prop}: $value;
+      }
+    }
+  }
+}
