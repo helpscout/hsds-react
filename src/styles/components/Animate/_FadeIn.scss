@@ -1,0 +1,9 @@
+&.FadeIn {
+  &.is-mounting {
+    opacity: 0;
+  }
+
+  &.has-mounted {
+    opacity: 1;
+  }
+}

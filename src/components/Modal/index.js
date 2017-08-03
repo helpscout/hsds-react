@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import AnimateFadeInDown from '../Animate/FadeInDown'
+import AnimateFadeIn from '../Animate/FadeIn'
 import Card from '../Card'
 import CardBlock from '../CardBlock'
 import CloseButton from '../CloseButton'
@@ -45,16 +47,20 @@ const Modal = props => {
   return (
     <div className={className}>
       <div className='c-Modal__content'>
-        <Card seamless>
-          {closeMarkup}
-          <Scrollable fade rounded>
-            <CardBlock>
-              {children}
-            </CardBlock>
-          </Scrollable>
-        </Card>
+        <AnimateFadeInDown duration={200}>
+          <Card seamless>
+            {closeMarkup}
+            <Scrollable fade rounded>
+              <CardBlock>
+                {children}
+              </CardBlock>
+            </Scrollable>
+          </Card>
+        </AnimateFadeInDown>
       </div>
-      <Overlay onClick={closePortal} />
+      <AnimateFadeIn duration={50}>
+        <Overlay onClick={closePortal} />
+      </AnimateFadeIn>
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { action } from '@storybook/addon-actions'
 
 import '../src/styles/blue.scss'
 import {
+  Animate,
   Avatar,
   Badge,
   Button,
@@ -22,6 +23,16 @@ import {
   Text,
   VisuallyHidden
 } from '../src/index.js'
+
+storiesOf('Animate', module)
+  .add('default', () => (
+    <div>
+      Wait 1 second…
+      <Animate className='FadeIn Down' wait={1000} duration={400}>
+        <div className='dont-override-this'>Then, Fade In and Down</div>
+      </Animate>
+    </div>
+  ))
 
 storiesOf('Avatar', module)
   .add('default', () => <Avatar name='Ron Burgundy' image='https://media3.giphy.com/media/hUXSFaQ1zyiE8/200_s.gif' />)
