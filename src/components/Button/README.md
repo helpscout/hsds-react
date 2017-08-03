@@ -12,6 +12,7 @@ Actionable HTML buttons with basic styling
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| accessibilityLabel | string | Visually hidden text for screen readers. |
 | className | string | Custom class names to be added to the component. |
 | disabled | boolean | Disable the button so it can't be clicked. |
 | onBlur | function | `onBlur` event handler. |
