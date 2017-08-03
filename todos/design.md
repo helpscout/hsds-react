@@ -48,3 +48,11 @@ Below is a (working) list of design notes/todos.
 ## Icons
 
 * [x] `.svg` Export of all icons
+
+
+## CloseButton
+
+(Used in Modal for the Close UI)
+
+* [ ] Sizes / alt styles?
+* [ ] Designs for `:focus`, `:hover`, `:active` (and any combo of those 3, if applicable)
