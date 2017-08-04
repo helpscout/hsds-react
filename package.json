@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build-storybook": "build-storybook",
-    "build": "npm run lib",
+    "build": "export NODE_ENV=production && npm run clean && webpack --config config/webpack.config.npm.js",
+    "clean": "rm -rf lib && mkdir lib",
     "lib": "babel src --out-dir lib --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
@@ -89,6 +90,7 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "2.5.0",
     "webpack-manifest-plugin": "1.1.0",
+    "webpack-node-externals": "1.6.0",
     "whatwg-fetch": "2.0.3"
   },
   "jest": {
