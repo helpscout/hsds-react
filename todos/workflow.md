@@ -4,7 +4,7 @@ Below is a list of items related to the bundling / development workflow for Blue
 
 ### JS
 
-* [ ] Figure out how to bundle/build the components for `import` use via npm
+* [x] Figure out how to bundle/build the components for `import` use via npm (done with Webpack)
 * [x] Pick a test library. (We're going with Jest + Enzyme!)
 * [x] Start writing tests!
 * [x] Implement some sort of linter (Went with Standardjs)
