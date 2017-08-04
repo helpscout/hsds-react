@@ -20,9 +20,9 @@ const defaultProps = {
 
 const animationStyles = {
   [ENTERING]: 'is-mounting',
-  [ENTERED]: 'has-mounted',
+  [ENTERED]: 'is-mounted',
   [EXITING]: 'is-unmounting',
-  [EXITED]: 'has-unmounted'
+  [EXITED]: 'is-unmounted'
 }
 
 class Animate extends Component {
@@ -50,11 +50,12 @@ class Animate extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.in !== undefined) {
-      this.setState({
-        in: nextProps.in
-      })
-    }
+    /* istanbul ignore next */
+    if (nextProps.in === undefined) return
+
+    this.setState({
+      in: nextProps.in
+    })
   }
 
   render () {

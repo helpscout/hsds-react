@@ -3,7 +3,7 @@
     opacity: 0;
   }
 
-  &.has-mounted {
+  &.is-mounted {
     opacity: 1;
   }
 
@@ -11,7 +11,7 @@
     opacity: 0;
   }
 
-  &.has-unmounted {
+  &.is-unmounted {
     opacity: 0;
   }
 }
