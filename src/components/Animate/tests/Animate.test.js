@@ -95,7 +95,7 @@ describe('States', () => {
 
   test('Trigger unmounting animations on state change', (done) => {
     const wrapper = mount(
-      <Animate in={true} animateOnMount={false}>
+      <Animate in animateOnMount={false}>
         <div>Blue</div>
       </Animate>
     )
@@ -131,7 +131,7 @@ describe('States', () => {
 describe('Unmounting', () => {
   test('Does not unmount from DOM by default', (done) => {
     const wrapper = mount(
-      <Animate in={true}>
+      <Animate in>
         <div className='your'>
           <div className='my-boy'>
             Blue
@@ -152,7 +152,7 @@ describe('Unmounting', () => {
 
   test('Unmounts from DOM if specified', (done) => {
     const wrapper = mount(
-      <Animate unmountOnExit in={true}>
+      <Animate unmountOnExit in>
         <div className='your'>
           <div className='my-boy'>
             Blue
