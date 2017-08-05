@@ -2,6 +2,7 @@
 
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
+import EventListener from '../EventListener'
 import { noop } from '../../utilities/other'
 
 const ENTITIES_TO_REPLACE = {
@@ -72,6 +73,7 @@ class Resizer extends Component {
 
   render () {
     const { contents, minimumLines } = this.props
+    const handleOnResize = this.handleOnResize.bind(this)
 
     const minimumLinesMarkup = minimumLines
       ? <div
@@ -85,6 +87,7 @@ class Resizer extends Component {
 
     return (
       <div aria-hidden className='c-InputResizer'>
+        <EventListener event='resize' handler={handleOnResize} />
         <div
           ref={node => (this.contentNode = node)}
           className='c-InputGhost'
