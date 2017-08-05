@@ -40,7 +40,7 @@ module.exports = {
   output: {
     path: path.resolve('lib'),
     filename: 'index.js',
-    library: 'blue',
+    library: '@helpscout/blue',
     libraryTarget: 'commonjs2'
   },
   externals: [nodeExternals()],
