@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build-storybook": "build-storybook",
-    "build": "export NODE_ENV=production && npm run clean && webpack --config config/webpack.config.npm.js",
+    "build:css": "node scripts/sass.js",
+    "build:js": "export NODE_ENV=production && webpack --config config/webpack.config.npm.js",
+    "build": "npm run clean && npm run build:js && npm run build:css",
     "clean": "rm -rf lib && mkdir lib",
     "lib": "babel src --out-dir lib --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
@@ -68,6 +70,7 @@
     "husky": "0.14.3",
     "jest": "20.0.4",
     "jest-cli": "20.0.4",
+    "mkdirp": "0.5.1",
     "node-sass": "4.5.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
