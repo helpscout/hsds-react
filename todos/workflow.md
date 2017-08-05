@@ -18,4 +18,5 @@ With these self-contained components, we should strive to implement accessibilit
 
 ### CSS
 
-* [ ] Figure out some why to bundle/inline/build the CSS into the React components. ([styled-components](https://github.com/styled-components/styled-components) maybe?)
+* [ ] Figure out some why to bundle/inline/build the CSS into the React components.
+  * Thought! Since Webpack is compiling everything to a single `index.js` file… maybe the `.scss` files can be imported into the individual components, which will get compiled when Webpack does it's thing. Need to test.
