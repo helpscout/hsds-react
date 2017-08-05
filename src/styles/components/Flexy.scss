@@ -1,0 +1,18 @@
+$seed-flexy-namespace: c-Flexy;
+
+@import "pack/seed-flexy/_index";
+
+.c-Flexy {
+  $alignments: (
+    top: flex-start,
+    middle: center,
+    bottom: flex-end,
+    stretch: stretch
+  );
+
+  @each $name, $value in $alignments {
+    &.is-#{$name} {
+      align-items: $value;
+    }
+  }
+}

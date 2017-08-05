@@ -12,6 +12,7 @@ import {
   Card,
   CardBlock,
   Heading,
+  Flexy,
   Icon,
   Image,
   Input,
@@ -105,6 +106,21 @@ storiesOf('Card', module)
       <CardBlock>Block Two</CardBlock>
       <CardBlock>Block Three</CardBlock>
     </Card>
+  ))
+
+storiesOf('Flexy', module)
+  .add('default', () => (
+    <Flexy gap='sm'>
+      <Flexy.Block>
+        Block
+      </Flexy.Block>
+      <Flexy.Item>
+        Item
+      </Flexy.Item>
+      <Flexy.Item>
+        Item
+      </Flexy.Item>
+    </Flexy>
   ))
 
 storiesOf('Image', module)
