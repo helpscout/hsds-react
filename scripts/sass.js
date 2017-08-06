@@ -17,7 +17,6 @@ sass.render({
     console.error(error)
     return process.exit(1)
   } else {
-
     mkdirp('./lib')
 
     fs.writeFile('./lib/styles.css', result.css, function (err) {
