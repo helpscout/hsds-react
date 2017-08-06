@@ -17,10 +17,17 @@ sass.render({
     console.error(error)
     return process.exit(1)
   } else {
+
     mkdirp('./lib')
+
     fs.writeFile('./lib/styles.css', result.css, function (err) {
       if (!err) {
         return console.log('styles.css created.')
+      }
+    })
+    fs.writeFile('./lib/styles.scss', result.css, function (err) {
+      if (!err) {
+        return console.log('styles.scss created.')
       }
     })
   }

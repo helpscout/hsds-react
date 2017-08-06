@@ -7,7 +7,7 @@
     "build-storybook": "build-storybook",
     "build:css": "node scripts/sass.js",
     "build:js": "export NODE_ENV=production && webpack --config config/webpack.config.npm.js",
-    "build": "npm run clean && npm run build:js",
+    "build": "npm run clean && npm run build:js && build:css",
     "clean": "rm -rf lib && mkdir lib",
     "lib": "babel src --out-dir lib --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
