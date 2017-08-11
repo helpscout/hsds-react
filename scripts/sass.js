@@ -18,6 +18,8 @@ sass.render({
     return process.exit(1)
   } else {
     mkdirp('./lib')
+    mkdirp('./lib/css')
+    mkdirp('./lib/scss')
 
     fs.writeFile('./lib/css/blue.css', result.css, function (err) {
       if (!err) {
