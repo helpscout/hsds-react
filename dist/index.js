@@ -855,6 +855,7 @@ var Portal = function (_React$Component) {
   }, {
     key: 'closePortal',
     value: function closePortal() {
+      /* istanbul ignore next */
       if (this.node) {
         _reactDom2.default.unmountComponentAtNode(this.node);
         document.body.removeChild(this.node);
@@ -1448,12 +1449,18 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classNames = __webpack_require__(2);
+
+var _classNames2 = _interopRequireDefault(_classNames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Block = function Block(props) {
+  var className = (0, _classNames2.default)('c-Flexy__block', props.className);
+
   return _react2.default.createElement(
     'div',
-    { className: 'c-Flexy__block' },
+    { className: className },
     props.children
   );
 };
@@ -1495,6 +1502,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var propTypes = {
   align: _propTypes2.default.string,
+  className: _propTypes2.default.string,
   gap: _propTypes2.default.string,
   just: _propTypes2.default.string
 };
@@ -1505,7 +1513,7 @@ var Flexy = function Flexy(props) {
       just = props.just;
 
 
-  var className = (0, _classNames2.default)('c-Flexy', align && 'is-' + align, gap && 'c-Flexy--gap-' + gap, just && 'c-Flexy--just-' + just);
+  var className = (0, _classNames2.default)('c-Flexy', align && 'is-' + align, gap && 'c-Flexy--gap-' + gap, just && 'c-Flexy--just-' + just, props.className);
 
   return _react2.default.createElement(
     'div',
@@ -1535,12 +1543,18 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classNames = __webpack_require__(2);
+
+var _classNames2 = _interopRequireDefault(_classNames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Item = function Item(props) {
+  var className = (0, _classNames2.default)('c-Flexy__item', props.className);
+
   return _react2.default.createElement(
     'div',
-    { className: 'c-Flexy__item' },
+    { className: className },
     props.children
   );
 };
@@ -2604,8 +2618,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var defaultOptions = {
+  id: 'PortalWrapper'
+};
+
 var PortalWrapper = function PortalWrapper() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultOptions;
   return function (ComposedComponent) {
     var propTypes = {
       isOpen: _propTypes2.default.bool,
@@ -2630,6 +2648,9 @@ var PortalWrapper = function PortalWrapper() {
         _this.state = Object.assign({}, props, options);
         return _this;
       }
+
+      /* istanbul ignore next */
+
 
       _createClass(PortalWrapper, [{
         key: 'openPortal',
@@ -2671,9 +2692,9 @@ var PortalWrapper = function PortalWrapper() {
             )
           );
 
-          var triggerMarkup = _react2.default.cloneElement(trigger, {
+          var triggerMarkup = trigger ? _react2.default.cloneElement(trigger, {
             onClick: openPortal
-          });
+          }) : null;
 
           return _react2.default.createElement(
             'div',
