@@ -14,7 +14,6 @@
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
-    "postinstall": "npm run build",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
     "test": "node scripts/test.js --env=jsdom",
@@ -35,8 +34,7 @@
     "seed-harvester": "0.1.5",
     "seed-input": "0.0.7",
     "seed-link": "0.0.3",
-    "seed-this": "0.0.5",
-    "webpack-node-externals": "1.6.0"
+    "seed-this": "0.0.5"
   },
   "devDependencies": {
     "@storybook/react": "3.1.9",
@@ -93,6 +91,7 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "2.5.0",
     "webpack-manifest-plugin": "1.1.0",
+    "webpack-node-externals": "1.6.0",
     "whatwg-fetch": "2.0.3"
   },
   "jest": {
