@@ -17,10 +17,10 @@ Note: Beacon (v2) requires every one of these.
 * [x] Label
 * [x] Link
 * [x] Loader (...)
-* [ ] Modal `**`
+* [x] Modal `**`
 * [x] Overlay
 * [ ] Popover `*` (Difficulty reduced, if leveraging Tooltip)
-* [ ] Portal `*`
+* [x] Portal `*`
 * [x] Select
 * [ ] Spinner
 * [x] Text
