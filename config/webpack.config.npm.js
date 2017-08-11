@@ -38,7 +38,7 @@ module.exports = {
   // In production, we only want to load the polyfills and the app code.
   entry: [require.resolve('./polyfills'), paths.appIndexJs],
   output: {
-    path: path.resolve('lib'),
+    path: path.resolve('dist'),
     filename: 'index.js',
     library: '@helpscout/blue',
     libraryTarget: 'commonjs2'
