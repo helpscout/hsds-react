@@ -6,6 +6,7 @@ import classNames from '../../utilities/classNames'
 
 const propTypes = {
   align: PropTypes.string,
+  className: PropTypes.string,
   gap: PropTypes.string,
   just: PropTypes.string
 }
@@ -22,6 +23,7 @@ const Flexy = props => {
     align && `is-${align}`,
     gap && `c-Flexy--gap-${gap}`,
     just && `c-Flexy--just-${just}`
+    props.className
   )
 
   return (
