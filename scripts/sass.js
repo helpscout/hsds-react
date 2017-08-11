@@ -17,16 +17,16 @@ sass.render({
     console.error(error)
     return process.exit(1)
   } else {
-    mkdirp('./lib')
-    mkdirp('./lib/css')
-    mkdirp('./lib/scss')
+    mkdirp('./dist')
+    mkdirp('./dist/css')
+    mkdirp('./dist/scss')
 
-    fs.writeFile('./lib/css/blue.css', result.css, function (err) {
+    fs.writeFile('./dist/css/blue.css', result.css, function (err) {
       if (!err) {
         return console.log('blue.css created.')
       }
     })
-    fs.writeFile('./lib/scss/blue.scss', result.css, function (err) {
+    fs.writeFile('./dist/scss/blue.scss', result.css, function (err) {
       if (!err) {
         return console.log('blue.scss created.')
       }

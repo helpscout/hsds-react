@@ -2,14 +2,14 @@
   "name": "@helpscout/blue",
   "version": "0.0.1",
   "private": true,
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build-storybook": "build-storybook",
     "build:css": "node scripts/sass.js",
     "build:js": "export NODE_ENV=production && webpack --config config/webpack.config.npm.js",
     "build": "npm run clean && npm run build:js && npm run build:css",
-    "clean": "rm -rf lib && mkdir lib",
-    "lib": "babel src --out-dir lib --copy-files",
+    "clean": "rm -rf dist && mkdir dist",
+    "dist": "babel src --out-dir dist --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
@@ -134,7 +134,7 @@
   },
   "standard": {
     "ignore": [
-      "lib"
+      "dist"
     ],
     "globals": [
       "Event",
