@@ -35,7 +35,8 @@
     "seed-harvester": "0.1.5",
     "seed-input": "0.0.7",
     "seed-link": "0.0.3",
-    "seed-this": "0.0.5"
+    "seed-this": "0.0.5",
+    "webpack-node-externals": "1.6.0"
   },
   "devDependencies": {
     "@storybook/react": "3.1.9",
@@ -92,7 +93,6 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "2.5.0",
     "webpack-manifest-plugin": "1.1.0",
-    "webpack-node-externals": "1.6.0",
     "whatwg-fetch": "2.0.3"
   },
   "jest": {
