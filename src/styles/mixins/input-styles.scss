@@ -9,11 +9,6 @@
   padding-right: $padding;
   position: relative;
 
-  &.is-seamless {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   // Elements
   &__item {
     position: relative;
