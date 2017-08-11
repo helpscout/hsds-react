@@ -13,7 +13,6 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
-    "postinstall": "npm run build",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
