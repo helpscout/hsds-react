@@ -28,6 +28,16 @@ storiesOf('Modal', module)
       </div>
     </Modal>
   ))
+  .add('open', () => (
+    <Modal isOpen={true} trigger={<Link>Clicky</Link>}>
+      <div>
+        <Heading>Title</Heading>
+        <p>
+          Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+        </p>
+      </div>
+    </Modal>
+  ))
   .add('nested', () => (
     <Modal trigger={<Link>Clicky</Link>}>
       <div>
