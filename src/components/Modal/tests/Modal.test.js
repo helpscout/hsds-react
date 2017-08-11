@@ -56,6 +56,23 @@ describe('Key events', () => {
   })
 })
 
+describe('CloseIcon', () => {
+  test('Does not render closeIcon if specified', (done) => {
+    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} />)
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
+
+    expect(modal).toBeTruthy()
+
+    const closeIcon = modal.getElementsByClassName('c-Modal__close')
+
+    expect(closeIcon.length).toBeFalsy()
+
+    wrapper.unmount()
+    done()
+  })
+})
+
 describe('Portal', () => {
   test('Does not render Modal next to trigger', () => {
     const wrapper = mount(<Modal isOpen trigger={trigger} />)

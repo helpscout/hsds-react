@@ -6,7 +6,11 @@ import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
 import { createUniqueIDFactory } from '../../utilities/id'
 
-const PortalWrapper = (options = {}) => ComposedComponent => {
+const defaultOptions = {
+  id: 'PortalWrapper'
+}
+
+const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   const propTypes = {
     isOpen: PropTypes.bool,
     timeout: PropTypes.number
@@ -25,6 +29,7 @@ const PortalWrapper = (options = {}) => ComposedComponent => {
       this.state = Object.assign({}, props, options)
     }
 
+    /* istanbul ignore next */
     openPortal () {
       this.setState({
         isOpen: true
@@ -60,9 +65,12 @@ const PortalWrapper = (options = {}) => ComposedComponent => {
         </Animate>
       )
 
-      const triggerMarkup = React.cloneElement(trigger, {
-        onClick: openPortal
-      })
+      const triggerMarkup = trigger ? 
+        React.cloneElement(trigger, {
+          onClick: openPortal
+        })
+        :
+        null
 
       return (
         <div>

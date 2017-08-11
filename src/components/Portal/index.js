@@ -57,6 +57,7 @@ class Portal extends React.Component {
   }
 
   closePortal () {
+    /* istanbul ignore next */
     if (this.node) {
       ReactDOM.unmountComponentAtNode(this.node)
       document.body.removeChild(this.node)
