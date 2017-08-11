@@ -19,14 +19,14 @@ sass.render({
   } else {
     mkdirp('./lib')
 
-    fs.writeFile('./lib/styles.css', result.css, function (err) {
+    fs.writeFile('./lib/css/blue.css', result.css, function (err) {
       if (!err) {
-        return console.log('styles.css created.')
+        return console.log('blue.css created.')
       }
     })
-    fs.writeFile('./lib/styles.scss', result.css, function (err) {
+    fs.writeFile('./lib/scss/blue.scss', result.css, function (err) {
       if (!err) {
-        return console.log('styles.scss created.')
+        return console.log('blue.scss created.')
       }
     })
   }
