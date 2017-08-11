@@ -18,8 +18,7 @@
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
     "test": "node scripts/test.js --env=jsdom",
-    "test:coverage": "npm run test -- --coverage",
-    "precommit": "sh ./.git-hooks/pre-commit"
+    "test:coverage": "npm run test -- --coverage"
   },
   "dependencies": {
     "@shopify/javascript-utilities": "2.0.0",
