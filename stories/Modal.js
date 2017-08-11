@@ -29,7 +29,7 @@ storiesOf('Modal', module)
     </Modal>
   ))
   .add('open', () => (
-    <Modal isOpen={true} trigger={<Link>Clicky</Link>}>
+    <Modal isOpen trigger={<Link>Clicky</Link>}>
       <div>
         <Heading>Title</Heading>
         <p>

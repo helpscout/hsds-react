@@ -22,7 +22,7 @@ const Flexy = props => {
     'c-Flexy',
     align && `is-${align}`,
     gap && `c-Flexy--gap-${gap}`,
-    just && `c-Flexy--just-${just}`
+    just && `c-Flexy--just-${just}`,
     props.className
   )
 
