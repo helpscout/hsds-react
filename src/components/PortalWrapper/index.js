@@ -65,12 +65,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         </Animate>
       )
 
-      const triggerMarkup = trigger ? 
-        React.cloneElement(trigger, {
+      const triggerMarkup = trigger
+        ? React.cloneElement(trigger, {
           onClick: openPortal
         })
-        :
-        null
+        : null
 
       return (
         <div>
