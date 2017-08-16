@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import PortalWrapper from '..'
 
 const TestButton = props => {
@@ -10,7 +10,6 @@ const TestButton = props => {
     <button onClick={handleClick}>Click</button>
   )
 }
-
 
 test('Can create a component as a HOC', () => {
   const TestComponent = PortalWrapper()(TestButton)
@@ -47,5 +46,4 @@ test('Override default ID with options', (done) => {
 
     done()
   }, 50)
-
 })
