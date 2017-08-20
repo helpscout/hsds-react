@@ -297,6 +297,53 @@ var _classNames = __webpack_require__(2);
 
 var _classNames2 = _interopRequireDefault(_classNames);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+  className: _propTypes2.default.string,
+  state: _propTypes2.default.string
+};
+
+var HelpText = function HelpText(props) {
+  var state = props.state;
+
+
+  var className = (0, _classNames2.default)('c-InputHelpText', state && 'is-' + state, props.className);
+
+  return _react2.default.createElement(
+    'div',
+    { className: className },
+    props.children
+  );
+};
+
+HelpText.propTypes = propTypes;
+
+exports.default = HelpText;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classNames = __webpack_require__(2);
+
+var _classNames2 = _interopRequireDefault(_classNames);
+
 var _Text = __webpack_require__(14);
 
 var _Text2 = _interopRequireDefault(_Text);
@@ -331,7 +378,7 @@ Label.propTypes = propTypes;
 exports.default = Label;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -385,7 +432,7 @@ VisuallyHidden.defaultProps = defaultProps;
 exports.default = VisuallyHidden;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -461,7 +508,7 @@ Card.defaultProps = defaultProps;
 exports.default = Card;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -512,7 +559,7 @@ CardBlock.propTypes = propTypes;
 exports.default = CardBlock;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -540,7 +587,7 @@ var _classNames2 = _interopRequireDefault(_classNames);
 
 var _other = __webpack_require__(3);
 
-var _VisuallyHidden = __webpack_require__(6);
+var _VisuallyHidden = __webpack_require__(7);
 
 var _VisuallyHidden2 = _interopRequireDefault(_VisuallyHidden);
 
@@ -608,7 +655,7 @@ Icon.defaultProps = defaultProps;
 exports.default = Icon;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -651,53 +698,6 @@ var Backdrop = function Backdrop(props) {
 Backdrop.propTypes = propTypes;
 
 exports.default = Backdrop;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _classNames = __webpack_require__(2);
-
-var _classNames2 = _interopRequireDefault(_classNames);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-  className: _propTypes2.default.string,
-  state: _propTypes2.default.string
-};
-
-var HelpText = function HelpText(props) {
-  var state = props.state;
-
-
-  var className = (0, _classNames2.default)('c-InputHelpText', state && 'is-' + state, props.className);
-
-  return _react2.default.createElement(
-    'div',
-    { className: className },
-    props.children
-  );
-};
-
-HelpText.propTypes = propTypes;
-
-exports.default = HelpText;
 
 /***/ }),
 /* 12 */
@@ -1034,7 +1034,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _VisuallyHidden = __webpack_require__(6);
+var _VisuallyHidden = __webpack_require__(7);
 
 var _VisuallyHidden2 = _interopRequireDefault(_VisuallyHidden);
 
@@ -1268,7 +1268,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Icon = __webpack_require__(9);
+var _Icon = __webpack_require__(10);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -2018,15 +2018,15 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Backdrop = __webpack_require__(10);
+var _Backdrop = __webpack_require__(11);
 
 var _Backdrop2 = _interopRequireDefault(_Backdrop);
 
-var _HelpText = __webpack_require__(11);
+var _HelpText = __webpack_require__(5);
 
 var _HelpText2 = _interopRequireDefault(_HelpText);
 
-var _Label = __webpack_require__(5);
+var _Label = __webpack_require__(6);
 
 var _Label2 = _interopRequireDefault(_Label);
 
@@ -2469,11 +2469,11 @@ var _Animate = __webpack_require__(4);
 
 var _Animate2 = _interopRequireDefault(_Animate);
 
-var _Card = __webpack_require__(7);
+var _Card = __webpack_require__(8);
 
 var _Card2 = _interopRequireDefault(_Card);
 
-var _CardBlock = __webpack_require__(8);
+var _CardBlock = __webpack_require__(9);
 
 var _CardBlock2 = _interopRequireDefault(_CardBlock);
 
@@ -2798,15 +2798,15 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Backdrop = __webpack_require__(10);
+var _Backdrop = __webpack_require__(11);
 
 var _Backdrop2 = _interopRequireDefault(_Backdrop);
 
-var _HelpText = __webpack_require__(11);
+var _HelpText = __webpack_require__(5);
 
 var _HelpText2 = _interopRequireDefault(_HelpText);
 
-var _Label = __webpack_require__(5);
+var _Label = __webpack_require__(6);
 
 var _Label2 = _interopRequireDefault(_Label);
 
@@ -3075,7 +3075,7 @@ Object.defineProperty(exports, 'Button', {
   }
 });
 
-var _Card = __webpack_require__(7);
+var _Card = __webpack_require__(8);
 
 Object.defineProperty(exports, 'Card', {
   enumerable: true,
@@ -3084,7 +3084,7 @@ Object.defineProperty(exports, 'Card', {
   }
 });
 
-var _CardBlock = __webpack_require__(8);
+var _CardBlock = __webpack_require__(9);
 
 Object.defineProperty(exports, 'CardBlock', {
   enumerable: true,
@@ -3111,7 +3111,7 @@ Object.defineProperty(exports, 'Flexy', {
   }
 });
 
-var _Icon = __webpack_require__(9);
+var _Icon = __webpack_require__(10);
 
 Object.defineProperty(exports, 'Icon', {
   enumerable: true,
@@ -3147,7 +3147,7 @@ Object.defineProperty(exports, 'Input', {
   }
 });
 
-var _Label = __webpack_require__(5);
+var _Label = __webpack_require__(6);
 
 Object.defineProperty(exports, 'Label', {
   enumerable: true,
@@ -3210,12 +3210,21 @@ Object.defineProperty(exports, 'Text', {
   }
 });
 
-var _VisuallyHidden = __webpack_require__(6);
+var _VisuallyHidden = __webpack_require__(7);
 
 Object.defineProperty(exports, 'VisuallyHidden', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_VisuallyHidden).default;
+  }
+});
+
+var _HelpText = __webpack_require__(5);
+
+Object.defineProperty(exports, 'HelpText', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_HelpText).default;
   }
 });
 
