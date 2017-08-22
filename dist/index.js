@@ -2680,16 +2680,12 @@ var PortalWrapper = function PortalWrapper() {
 
           var portalMarkup = _react2.default.createElement(
             _Animate2.default,
-            { animateOnMount: false, 'in': isOpen, unmountOnExit: true },
-            _react2.default.createElement(
-              _Portal2.default,
-              { id: id, timeout: timeout },
-              _react2.default.createElement(ComposedComponent, _extends({
-                openPortal: openPortal,
-                closePortal: closePortal,
-                portalIsOpen: isOpen
-              }, this.props))
-            )
+            { animateOnMount: false, 'in': isOpen, unmountOnExit: true, wait: 300 },
+            _react2.default.createElement(ComposedComponent, _extends({
+              openPortal: openPortal,
+              closePortal: closePortal,
+              portalIsOpen: isOpen
+            }, this.props))
           );
 
           var triggerMarkup = trigger ? _react2.default.cloneElement(trigger, {
