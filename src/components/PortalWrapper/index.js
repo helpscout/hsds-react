@@ -53,15 +53,13 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const id = uniqueID()
 
       const portalMarkup = (
-        <Animate animateOnMount={false} in={isOpen} unmountOnExit>
-          <Portal id={id} timeout={timeout}>
-            <ComposedComponent
-              openPortal={openPortal}
-              closePortal={closePortal}
-              portalIsOpen={isOpen}
-              {...this.props}
-            />
-          </Portal>
+        <Animate animateOnMount={false} in={isOpen} unmountOnExit wait={300}>
+          <ComposedComponent
+            openPortal={openPortal}
+            closePortal={closePortal}
+            portalIsOpen={isOpen}
+            {...this.props}
+          />
         </Animate>
       )
 

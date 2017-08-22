@@ -38,35 +38,26 @@ describe('Trigger', () => {
 describe('Key events', () => {
   test('Closes modal when ESCAPE is pressed', (done) => {
     const wrapper = mount(<Modal isOpen trigger={trigger} />)
-    const portal = document.body.childNodes[0]
-    const modal = portal.getElementsByClassName('c-Modal')[0]
-    const preCloseNodeCount = document.body.childNodes.length
+    const modal = wrapper.find('.c-Modal')
 
-    expect(modal).toBeTruthy()
+    expect(modal.length).toBe(1)
 
     simulateKeyPress(Keys.ESCAPE)
 
     setTimeout(() => {
-      expect(document.body.childNodes.length).toBeLessThan(preCloseNodeCount)
-      expect(document.getElementsByClassName('c-Modal').length).toBe(0)
+      expect(wrapper.find('.c-Modal').length).toBe(0)
+      wrapper.unmount()
       done()
     }, 500)
-
-    wrapper.unmount()
   })
 })
 
 describe('CloseIcon', () => {
   test('Does not render closeIcon if specified', (done) => {
     const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} />)
-    const portal = document.body.childNodes[0]
-    const modal = portal.getElementsByClassName('c-Modal')[0]
+    const closeIcon = wrapper.find('.c-Modal__close')
 
-    expect(modal).toBeTruthy()
-
-    const closeIcon = modal.getElementsByClassName('c-Modal__close')
-
-    expect(closeIcon.length).toBeFalsy()
+    expect(closeIcon.length).toBe(0)
 
     wrapper.unmount()
     done()
@@ -74,24 +65,22 @@ describe('CloseIcon', () => {
 })
 
 describe('Portal', () => {
-  test('Does not render Modal next to trigger', () => {
+  test('Renders Modal next to trigger', () => {
     const wrapper = mount(<Modal isOpen trigger={trigger} />)
     const modal = wrapper.find('.c-Modal')
 
-    expect(modal.exists()).toBeFalsy()
+    expect(modal.exists()).toBeTruthy()
 
     wrapper.unmount()
   })
 
-  test('Renders at the body', () => {
+  test('Does not render at the body', () => {
     const preMountNodeCount = document.body.childNodes.length
     const wrapper = mount(<Modal isOpen trigger={trigger} />)
     const portal = document.body.childNodes[0]
-    const modal = portal.getElementsByClassName('c-Modal')[0]
 
-    expect(document.body.childNodes.length).toBe(preMountNodeCount + 1)
-    expect(modal).toBeTruthy()
-    expect(modal.classList).toContain('c-Modal')
+    expect(document.body.childNodes.length).toBe(preMountNodeCount)
+    expect(portal).toBeFalsy()
 
     wrapper.unmount()
   })
