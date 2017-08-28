@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import Portal from '../Portal'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
-import { createUniqueIDFactory } from '../../utilities/id'
+// import { createUniqueIDFactory } from '../../utilities/id'
 
 const defaultOptions = {
   id: 'PortalWrapper'
@@ -21,7 +20,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     timeout: 0
   }
 
-  const uniqueID = createUniqueIDFactory(options.id)
+  // const uniqueID = createUniqueIDFactory(options.id)
 
   class PortalWrapper extends Component {
     constructor (props) {
@@ -45,12 +44,10 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     render () {
       const {
         isOpen,
-        timeout,
         trigger
       } = this.state
       const openPortal = this.openPortal.bind(this)
       const closePortal = this.closePortal.bind(this)
-      const id = uniqueID()
 
       const portalMarkup = (
         <Animate animateOnMount={false} in={isOpen} unmountOnExit wait={300}>
