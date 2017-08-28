@@ -1,5 +1,6 @@
 export { default as Animate } from './Animate'
 export { default as Avatar } from './Avatar'
+export { default as AvatarStack } from './AvatarStack'
 export { default as Badge } from './Badge'
 export { default as Button } from './Button'
 export { default as Card } from './Card'

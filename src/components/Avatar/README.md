@@ -12,6 +12,7 @@ An Avatar component displays a user's avatar image, or their initials if an imag
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| borderColor | string | Color for the Avatar border. |
 | className | string | Custom class names to be added to the component. |
 | name | string | Name of the user. Required. |
 | size | string | Size of the avatar. |

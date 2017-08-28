@@ -28,6 +28,13 @@ describe('Name', () => {
 
     expect(title.text()).toBe('B')
   })
+
+  test('Can be overridden by count prop', () => {
+    const wrapper = shallow(<Avatar name='Buddy' count='Elf' />)
+    const title = wrapper.find(classNames.initials)
+
+    expect(title.text()).toBe('Elf')
+  })
 })
 
 describe('Image', () => {
@@ -74,6 +81,26 @@ describe('ClassNames', () => {
     expect(classNames).toContain('now')
     expect(classNames).toContain('arctic')
     expect(classNames).toContain('puffin')
+  })
+})
+
+describe('Border color', () => {
+  test('Can apply borderColor', () => {
+    const wrapper = shallow(<Avatar name='Buddy' borderColor='green' />)
+    const crop = wrapper.find('.c-Avatar__crop')
+    const style = crop.props().style
+
+    expect(style).toBeTruthy()
+    expect(style.border).toContain('px solid')
+    expect(style.borderColor).toBe('green')
+  })
+
+  test('Does not have a border by default', () => {
+    const wrapper = shallow(<Avatar name='Buddy' />)
+    const crop = wrapper.find('.c-Avatar__crop')
+    const style = crop.props().style
+
+    expect(style).not.toBeTruthy()
   })
 })
 
