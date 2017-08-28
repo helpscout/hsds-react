@@ -2,6 +2,7 @@ import '../src/styles/blue.scss'
 
 import './Animate'
 import './Avatar'
+import './AvatarStack'
 import './Badge'
 import './Button'
 import './Card'

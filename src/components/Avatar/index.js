@@ -1,21 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import types from './types'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
 
-const propTypes = {
-  className: PropTypes.string,
-  image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  name: PropTypes.string.isRequired,
-  size: PropTypes.string
-}
+const propTypes = types
 const defaultProps = {
   name: ''
 }
 
 const Avatar = props => {
-  const { image, name, size } = props
+  const { borderColor, count, image, name, size } = props
 
   const className = classNames(
     'c-Avatar',
@@ -26,6 +21,8 @@ const Avatar = props => {
 
   const initials = nameToInitials(name)
   const imageStyle = image ? { backgroundImage: `url('${image}')` } : null
+
+  const text = count || initials
 
   const contentMarkup = image
     ? (
@@ -38,12 +35,17 @@ const Avatar = props => {
       </div>
     )
     : <div className='c-Avatar__title'>
-      {initials}
+      {text}
     </div>
+
+  const styles = borderColor ? {
+    border: '2px solid',
+    borderColor
+  } : null
 
   return (
     <div className={className}>
-      <div className='c-Avatar__crop'>
+      <div className='c-Avatar__crop' style={styles}>
         {contentMarkup}
       </div>
     </div>

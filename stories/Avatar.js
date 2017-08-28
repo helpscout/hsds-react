@@ -16,3 +16,8 @@ storiesOf('Avatar', module)
       <Avatar name='Ron Burgundy' size='sm' />
     </div>
   ))
+  .add('border', () => (
+    <div>
+      <Avatar name='Ron Burgundy' size='lg' borderColor='red' />
+    </div>
+  ))

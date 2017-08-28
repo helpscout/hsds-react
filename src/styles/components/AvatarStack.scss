@@ -1,0 +1,13 @@
+.c-AvatarStack {
+  @import "../resets/base";
+  $border-width: 2px;
+
+  -ms-display: flex;
+  display: flex;
+  padding-left: ceil($border-width * 3);
+
+  &__item {
+    position: relative;
+    margin-left: -(ceil($border-width * 3));
+  }
+}
