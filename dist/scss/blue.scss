@@ -37,6 +37,16 @@
 
 .c-Avatar.is-sm { height: 26px; font-size: 10px; width: 26px; }
 
+.c-AvatarStack { -ms-display: flex; display: flex; padding-left: 6px; }
+
+.c-AvatarStack { box-sizing: border-box; }
+
+.c-AvatarStack { font-family: "Aktiv Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; }
+
+.c-AvatarStack * { box-sizing: border-box; }
+
+.c-AvatarStack__item { position: relative; margin-left: -6px; }
+
 .c-Badge { background-color: #93a1af; border-radius: 9999px; box-sizing: border-box; color: white; display: inline-block; font-family: "Aktiv Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 500; line-height: 1; padding: 3px 8px; }
 
 .c-Badge.is-sm { font-size: 11px; padding: 2px 8px; }
