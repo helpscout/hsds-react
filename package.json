@@ -81,7 +81,7 @@
     "raw-loader": "0.5.1",
     "react": "15.6.1",
     "react-dom": "15.6.1",
-    "react-router-dom": "4.2.2"
+    "react-router-dom": "4.2.2",
     "react-dev-utils": "^3.0.2",
     "react-error-overlay": "^1.0.9",
     "react-router": "4.2.0",
