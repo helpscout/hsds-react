@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link as RouteLink } from 'react-router-dom'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
@@ -17,12 +18,11 @@ const defaultProps = {
   href: '#',
   onBlur: noop,
   onClick: noop,
-  onFocus: noop,
-  to: ''
+  onFocus: noop
 }
 
 const Link = props => {
-  const { className, external, ...rest } = props
+  const { className, external, to, href, ...rest } = props
 
   const linkClassName = classNames('c-Link', className)
 
@@ -32,11 +32,17 @@ const Link = props => {
   // Note: If we're going to support React Router, then the `to` prop
   // should render React Router's <Link> component.
 
-  return (
-    <a className={linkClassName} target={target} rel={rel} {...rest}>
+  const linkMarkup = to ? (
+    <RouteLink className={linkClassName} target={target} rel={rel} to={to} {...rest}>
+      {props.children}
+    </RouteLink>
+  ) : (
+    <a className={linkClassName} target={target} rel={rel} href={href} {...rest}>
       {props.children}
     </a>
   )
+
+  return linkMarkup
 }
 
 Link.propTypes = propTypes

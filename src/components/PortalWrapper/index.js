@@ -1,31 +1,43 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { Route } from 'react-router-dom'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
-// import { createUniqueIDFactory } from '../../utilities/id'
+import Portal from '../Portal'
+import { createUniqueIDFactory } from '../../utilities/id'
+import portalTypes from '../Portal/types'
 
 const defaultOptions = {
   id: 'PortalWrapper'
 }
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
-  const propTypes = {
-    isOpen: PropTypes.bool,
-    timeout: PropTypes.number
-  }
+  const propTypes = portalTypes
 
   const defaultProps = {
     isOpen: false,
     timeout: 0
   }
 
-  // const uniqueID = createUniqueIDFactory(options.id)
+  const uniqueID = createUniqueIDFactory(options.id)
 
   class PortalWrapper extends Component {
     constructor (props) {
       super()
       this.state = Object.assign({}, props, options)
+    }
+
+    componentDidMount () {
+      if (this.props.path) {
+        this.openPortal()
+      }
+    }
+
+    componentWillReceiveProps (nextProps) {
+      /* istanbul ignore next */
+      if (nextProps.path) {
+        this.openPortal()
+      }
     }
 
     /* istanbul ignore next */
@@ -43,22 +55,49 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     render () {
       const {
+        exact,
         isOpen,
+        onBeforeClose,
+        onBeforeOpen,
+        onClose,
+        onOpen,
+        path,
+        renderTo,
         trigger
       } = this.state
+      const { timeout } = this.props
+
       const openPortal = this.openPortal.bind(this)
       const closePortal = this.closePortal.bind(this)
+      const id = uniqueID()
+      const uniqueIndex = parseInt(id.replace(options.id, ''), 10)
+      const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
 
       const portalMarkup = (
         <Animate animateOnMount={false} in={isOpen} unmountOnExit wait={300}>
-          <ComposedComponent
-            openPortal={openPortal}
-            closePortal={closePortal}
-            portalIsOpen={isOpen}
-            {...this.props}
-          />
+          <Portal
+            onBeforeClose={onBeforeClose}
+            onClose={onClose}
+            onBeforeOpen={onBeforeOpen}
+            onOpen={onOpen}
+            id={id}
+            renderTo={renderTo}
+            timeout={timeout}
+          >
+            <ComposedComponent
+              openPortal={openPortal}
+              closePortal={closePortal}
+              portalIsOpen={isOpen}
+              zIndex={zIndex}
+              {...this.props}
+            />
+          </Portal>
         </Animate>
       )
+
+      const portalContainerMarkup = path ? (
+        <Route exact={exact} path={path} render={props => portalMarkup} />
+      ) : portalMarkup
 
       const triggerMarkup = trigger
         ? React.cloneElement(trigger, {
@@ -70,7 +109,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         <div>
           <KeypressListener keyCode={Keys.ESCAPE} handler={closePortal} />
           {triggerMarkup}
-          {portalMarkup}
+          {portalContainerMarkup}
         </div>
       )
     }
