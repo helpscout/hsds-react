@@ -14,9 +14,10 @@
 
   &__content {
     display: flex;
+    justify-content: center;
     max-height: 98%;
     position: relative;
-    width: 100%;
+    width: auto;
     z-index: 1;
   }
 

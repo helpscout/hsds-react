@@ -60,3 +60,18 @@ describe('External', () => {
     expect(wrapper.prop('rel')).toContain('noopener noreferrer')
   })
 })
+
+describe('Route', () => {
+  test('Is a standard <a> tag by default', () => {
+    const wrapper = shallow(<Link href='/gator'>Gator</Link>)
+
+    expect(wrapper.node.type).toBe('a')
+  })
+
+  test('Becomes a react-router-dom Link if to is defined', () => {
+    const wrapper = shallow(<Link to='/gator'>Gator</Link>)
+
+    expect(wrapper.node.type).not.toBe('a')
+    expect(typeof wrapper.node.type).toBe('function')
+  })
+})

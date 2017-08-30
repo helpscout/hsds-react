@@ -1,8 +1,14 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import { Heading, Modal, Link } from '../src/index.js'
+import { MemoryRouter } from 'react-router'
+import { Route } from 'react-router-dom'
 
 storiesOf('Modal', module)
+  .addDecorator(story => (
+    <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
+  ))
   .add('default', () => (
     <Modal trigger={<Link>Open dis modal</Link>}>
       <div>
@@ -67,3 +73,100 @@ storiesOf('Modal', module)
       </div>
     </Modal>
   ))
+  .add('custom mounting selector', () => {
+    return (
+      <div>
+        <p>Render modal here:</p>
+        <div className='render-modal-here' />
+
+        <Modal trigger={<Link>Clicky</Link>} renderTo='.render-modal-here'>
+          <div>
+            <Heading>Title</Heading>
+            <p>
+              Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+            </p>
+          </div>
+        </Modal>
+      </div>
+    )
+  })
+  .add('lifecycle events', () => {
+    const onBeforeOpen = (modalOpen) => {
+      console.log('Before open!')
+      action('Event: onBeforeOpen')
+      setTimeout(() => {
+        modalOpen()
+      }, 500)
+    }
+    const onBeforeClose = (modalClose) => {
+      console.log('Before close!')
+      action('Event: onBeforeClose')
+      setTimeout(() => {
+        modalClose()
+      }, 500)
+    }
+    return (
+      <div>
+        <p>onBeforeOpen: 500 delay</p>
+        <p>onBeforeClose: 500 delay</p>
+        <Modal
+          onBeforeOpen={onBeforeOpen}
+          onOpen={action('Event: onOpen')}
+          onBeforeClose={onBeforeClose}
+          onClose={action('Event: onClose')}
+          trigger={<Link>Clicky</Link>}
+        >
+          <div>
+            <Heading>Title</Heading>
+            <p>
+              Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+            </p>
+          </div>
+        </Modal>
+      </div>
+    )
+  })
+  .add('routes', () => {
+    const onBeforeOpen = (open) => {
+      setTimeout(() => {
+        open()
+      }, 500)
+    }
+    return (
+      <div>
+        <h1>Routes</h1>
+        <ul>
+          <li>
+            <Link to='/'>Home</Link>
+          </li>
+          <li>
+            <Link to='/team'>Team</Link>
+          </li>
+          <li>
+            <Link to='/team/brick'>Brick</Link>
+          </li>
+        </ul>
+
+        <Modal path='/team' onBeforeOpen={onBeforeOpen}>
+          <h1>Team Modal</h1>
+          <p>Modal content</p>
+        </Modal>
+
+        <Modal path='/team/brick'>
+          <h1>Team Modal: Brick</h1>
+          <p>Modal inner content</p>
+        </Modal>
+
+        <Route exact path='/' render={props => (
+          <div>
+            <h1>HOME PAGE</h1>
+          </div>
+        )} />
+        <Route path='/team' render={props => (
+          <div>
+            <h1>TEAM PAGE</h1>
+          </div>
+        )} />
+      </div>
+    )
+  })

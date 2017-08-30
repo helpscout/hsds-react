@@ -1,12 +1,19 @@
 # Link
 
-A Link component is a light-weight wrapper for the default HTML `<a>` selector.
-
+A Link component is a light-weight wrapper for the default HTML `<a>` selector. This component supports [`react-router`](https://github.com/ReactTraining/react-router).
 
 ## Example
 
 ```html
 You're my boy, <Link href="https://github.com/helpscout/blue">Blue</Link>!
+```
+
+### React Router Link
+
+This component can be transformed into a [`react-router` `<Link>`](https://reacttraining.com/react-router/web/api/Link) component by using the `to` prop.
+
+```html
+You're my boy, <Link to="/blue">Blue</Link>!
 ```
 
 
@@ -20,8 +27,4 @@ You're my boy, <Link href="https://github.com/helpscout/blue">Blue</Link>!
 | onFocus | function | Callback function when the component is focused. |
 | external | bool | Opens link in a new tab. |
 | href | string | Address for the link. Default is `#`. |
-
-
-### React Router Support
-
-At the moment, the Link component isn't hooked to support [React Router's `<Link>`](http://knowbody.github.io/react-router-docs/api/Link.html) component. However, we can do this if we want to. The React Router Link can be rendered if the `to` prop is used instead of `href`.
+| to | string | [`react-router`](https://github.com/ReactTraining/react-router) Address for the link. |
