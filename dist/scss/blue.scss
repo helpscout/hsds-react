@@ -609,7 +609,7 @@ button.c-Link:-moz-focusring { outline: 1px dotted ButtonText; }
 
 .c-Modal * { box-sizing: border-box; }
 
-.c-Modal__content { display: flex; max-height: 98%; position: relative; width: 100%; z-index: 1; }
+.c-Modal__content { display: flex; justify-content: center; max-height: 98%; position: relative; width: auto; z-index: 1; }
 
 .c-Modal__close { position: absolute; right: 8px; top: 8px; z-index: 3; }
 
