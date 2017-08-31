@@ -1,8 +1,9 @@
 # Blue 🔷 [![Build Status](https://travis-ci.com/helpscout/blue.svg?token=mizbXyxLU95YeKzixKT2&branch=master)](https://travis-ci.com/helpscout/blue) [![Coverage Status](https://coveralls.io/repos/github/helpscout/blue/badge.svg?branch=master)](https://coveralls.io/github/helpscout/blue?branch=master)
 
-<img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
 
-React component library.
+Help Scout's React component library
+
+<img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
 
 
 ## Getting Started
