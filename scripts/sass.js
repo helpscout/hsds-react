@@ -23,13 +23,14 @@ sass.render({
 
     fs.writeFile('./dist/css/blue.css', result.css, function (err) {
       if (!err) {
-        return console.log('blue.css created.')
+        console.log('blue.css created.')
       }
     })
     fs.writeFile('./dist/scss/blue.scss', result.css, function (err) {
       if (!err) {
-        return console.log('blue.scss created.')
+        console.log('blue.scss created.')
       }
     })
+    return process.exit(0)
   }
 })
