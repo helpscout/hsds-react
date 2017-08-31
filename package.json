@@ -24,7 +24,7 @@
     "test": "npm run test:coverage",
     "test:coverage": "npm run test:dev -- --coverage",
     "test:dev": "node scripts/test.js --env=jsdom",
-    "version": "npm run build && git add dist"
+    "version": "npm run build"
   },
   "peerDependencies": {
     "react": "^15",
