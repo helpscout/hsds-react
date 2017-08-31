@@ -17,6 +17,7 @@ const defaultProps = {
 class Portal extends React.Component {
   constructor (props) {
     super()
+    this.document = this.getWindowDocument()
     this.node = null
     this.portal = null
     this.mountSelector = null
@@ -45,14 +46,18 @@ class Portal extends React.Component {
     }, this.props.timeout)
   }
 
+  getWindowDocument () {
+    return (window.frameElement && window.frameElement.contentDocument) || window.document
+  }
+
   getMountSelector () {
     const { renderTo } = this.props
     // 1. Prioritize renderTo selector
-    let mountSelector = renderTo ? document.querySelector(renderTo) : false
+    let mountSelector = renderTo ? this.document.querySelector(renderTo) : false
     // 2. Fallback to <Portal.Container />
-    mountSelector = mountSelector || document.querySelector(`#${portalContainerId}`)
+    mountSelector = mountSelector || this.document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body
-    return mountSelector || document.body // fallback
+    return mountSelector || this.document.body // fallback
   }
 
   mountPortal (props) {
@@ -65,7 +70,7 @@ class Portal extends React.Component {
       onOpen
     } = props
 
-    this.node = document.createElement('div')
+    this.node = this.document.createElement('div')
     if (className) {
       this.node.className = className
     }
