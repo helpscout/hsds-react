@@ -6,6 +6,13 @@ Help Scout's React component library
 <img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
 
 
+## Install
+
+```
+npm install @helpscout/blue --save-dev
+```
+
+
 ## Getting Started
 
 After cloning this repo down, run:
