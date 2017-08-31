@@ -21,8 +21,9 @@
     "release": "npm run release:patch",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
-    "test": "node scripts/test.js --env=jsdom",
-    "test:coverage": "npm run test -- --coverage",
+    "test": "npm run test:coverage",
+    "test:dev": "node scripts/test.js --env=jsdom",
+    "test:coverage": "npm run test:dev -- --coverage",
     "version": "npm run build && git add dist"
   },
   "peerDependencies": {
