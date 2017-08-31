@@ -22,15 +22,21 @@ sass.render({
     mkdirp('./dist/scss')
 
     fs.writeFile('./dist/css/blue.css', result.css, function (err) {
-      if (!err) {
-        console.log('blue.css created.')
+      if (err) {
+        console.error(error)
+        return process.exit(1)
       }
-    })
-    fs.writeFile('./dist/scss/blue.scss', result.css, function (err) {
-      if (!err) {
+      console.log('blue.css created.')
+
+      fs.writeFile('./dist/scss/blue.scss', result.css, function (err) {
+        if (err) {
+          console.error(error)
+          return process.exit(1)
+        }
         console.log('blue.scss created.')
-      }
+
+        return process.exit(0)
+      })
     })
-    return process.exit(0)
   }
 })
