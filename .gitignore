@@ -7,7 +7,7 @@ node_modules
 coverage
 
 # build
-dist
+# dist
 
 # misc
 .DS_Store
