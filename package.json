@@ -8,7 +8,7 @@
     "build:css": "node scripts/sass.js",
     "build:js": "export NODE_ENV=production && webpack --config config/webpack.config.npm.js",
     "build": "npm run pretty && npm run clean && npm run build:css && npm run build:js",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
     "clean": "rm -rf dist && mkdir dist",
     "dist": "babel src --out-dir dist --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
@@ -22,8 +22,8 @@
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
     "test": "npm run test:coverage",
-    "test:dev": "node scripts/test.js --env=jsdom",
     "test:coverage": "npm run test:dev -- --coverage",
+    "test:dev": "node scripts/test.js --env=jsdom",
     "version": "npm run build && git add dist"
   },
   "peerDependencies": {
@@ -110,6 +110,15 @@
     "webpack-manifest-plugin": "1.1.0",
     "webpack-node-externals": "1.6.0",
     "whatwg-fetch": "2.0.3"
+  },
+  "nyc": {
+    "exclude": [
+      "config/**/*.js",
+      "dist/**/*.js",
+      "scripts/**/*.js",
+      "stories/**/*.js",
+      "src/**/*.test.js"
+    ]
   },
   "jest": {
     "collectCoverageFrom": [
