@@ -1,0 +1,8 @@
+.c-FormGroup {
+  @import "../../resets/base";
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -3,7 +3,7 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Backdrop from './Backdrop'
-import HelpText from './HelpText'
+import HelpText from '../HelpText'
 import Label from '../Label'
 import Resizer from './Resizer'
 import classNames from '../../utilities/classNames'
@@ -174,7 +174,7 @@ class Input extends Component {
           {prefixMarkup}
           {inputElement}
           {suffixMarkup}
-          <Backdrop disabled={disabled} state={state} />
+          <Backdrop disabled={disabled} readOnly={readOnly} state={state} />
           {resizer}
         </div>
         {helpTextMarkup}
@@ -185,5 +185,7 @@ class Input extends Component {
 
 Input.propTypes = propTypes
 Input.defaultProps = defaultProps
+Input.Backdrop = Backdrop
+Input.Resizer = Resizer
 
 export default Input

@@ -3,6 +3,7 @@ import arrowRight from '../../icons/arrow-right.svg'
 import attachment from '../../icons/attachment.svg'
 import chatActive from '../../icons/chat-active.svg'
 import chat from '../../icons/chat.svg'
+import check from '../../icons/check.svg'
 import clockLarge from '../../icons/clock-large.svg'
 import clockSmall from '../../icons/clock-small.svg'
 import crossLarge from '../../icons/cross-large.svg'
@@ -28,6 +29,7 @@ const ICONS = {
   attachment,
   'chat-active': chatActive,
   chat,
+  check,
   'clock-large': clockLarge,
   'clock-small': clockSmall,
   'cross-large': crossLarge,

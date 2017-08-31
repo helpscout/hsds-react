@@ -253,7 +253,7 @@ describe('States', () => {
 describe('Stateful helper label', () => {
   test('Renders stateful helper label if error is a string', () => {
     const wrapper = mount(<Input state='error' helpText='Error' />)
-    const helperLabel = wrapper.find('.c-InputHelpText')
+    const helperLabel = wrapper.find('.c-HelpText')
 
     expect(helperLabel.exists()).toBeTruthy()
     expect(helperLabel.text()).toBe('Error')

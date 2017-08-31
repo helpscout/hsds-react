@@ -10,6 +10,7 @@ Note: Beacon (v2) requires every one of these.
 * [x] Badge
 * [x] Card
 * [x] CardBlock
+* [x] Checkbox/Radio
 * [x] Heading
 * [x] Icon
 * [x] Image
