@@ -27,7 +27,7 @@ Once everything is installed, run:
 npm start
 ```
 
-Check out Blue's Storybook at http://localhost:8900/ in your browser.
+Check out Blue's Storybook at http://localhost:8900/ in your browser!
 
 
 ## Todos
