@@ -8,7 +8,7 @@
   $color-border-focus: _color(blue, 400);
   $states: $STATES;
   $this: this();
-  
+
   background-color: white;
   border: 1px solid _color(border, ui, dark);
   border-radius: 4px;
@@ -35,6 +35,10 @@
     }
   }
 
+  &.is-checkbox {
+    box-shadow: 0 0 0 0 rgba(_color(border), 0), 0 0.5px 1px rgba(black, 0.2) inset;
+  }
+
   // States
   @each $state in $states {
     &.is-#{$state} {
@@ -50,5 +54,8 @@
   &.is-disabled {
     background-color: _color(grey, 200);
   }
+  // Read-Only
+  &.is-readonly {
+    background-color: _color(grey, 300);
+  }
 }
-

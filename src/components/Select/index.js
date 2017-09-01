@@ -1,7 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Backdrop from '../Input/Backdrop'
-import HelpText from '../Input/HelpText'
+import HelpText from '../HelpText'
 import Label from '../Label'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'

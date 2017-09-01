@@ -11,6 +11,7 @@ storiesOf('Input', module)
   .add('prefix + suffix', () => <Input prefix='$' suffix='.00' autoFocus />)
   .add('seamless', () => <Input seamless autoFocus />)
   .add('disabled', () => <Input disabled autoFocus />)
+  .add('readonly', () => <Input readOnly autoFocus value={`I can't turn left`} />)
   .add('states', () => (
     <div>
       <Input state='error' autoFocus /><br />

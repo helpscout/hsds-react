@@ -194,7 +194,7 @@ describe('States', () => {
     test('Adds error helper text if error prop is a string', () => {
       const message = 'Cannonballlll'
       const wrapper = mount(<Select state='error' helpText={message} />)
-      const o = wrapper.find('.c-InputHelpText')
+      const o = wrapper.find('.c-HelpText')
 
       expect(o.text()).toContain(message)
     })
@@ -211,7 +211,7 @@ describe('States', () => {
     test('Adds success helper text if success prop is a string', () => {
       const message = 'Cannonballlll'
       const wrapper = mount(<Select state='success' helpText={message} />)
-      const o = wrapper.find('.c-InputHelpText')
+      const o = wrapper.find('.c-HelpText')
 
       expect(o.text()).toContain(message)
     })
@@ -228,7 +228,7 @@ describe('States', () => {
     test('Adds warning helper text if warning prop is a string', () => {
       const message = 'Cannonballlll'
       const wrapper = mount(<Select state='warning' helpText={message} />)
-      const o = wrapper.find('.c-InputHelpText')
+      const o = wrapper.find('.c-HelpText')
 
       expect(o.text()).toContain(message)
     })

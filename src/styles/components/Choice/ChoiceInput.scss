@@ -1,0 +1,50 @@
+@import "pack/seed-this/_index";
+@import "../../mixins/visually-hidden";
+@import "../../configs/constants";
+
+.c-ChoiceInput {
+  @import "../../resets/base";
+  $block: this();
+  $states: $STATES;
+  $size: 16px;
+  height: $size;
+  position: relative;
+  width: $size;
+
+  &__input {
+    @include visually-hidden;
+  }
+
+  &__icon {
+    color: _color(blue, 500);
+    padding: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__radio {
+    background-color: currentColor;
+    border-radius: 50%;
+    margin: 2px;
+    height: 8px;
+    width: 8px;
+  }
+
+  // Modifiers
+  &.is-radio {
+    #{$block}__icon {
+    }
+
+    .c-InputBackdrop {
+      border-radius: 50%;
+    }
+  }
+
+  @each $state in $states {
+    &.is-#{$state} {
+      #{$block}__icon {
+        color: _color(state, $state, border-color);
+      }
+    }
+  }
+}
