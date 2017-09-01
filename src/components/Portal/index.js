@@ -48,7 +48,8 @@ class Portal extends React.Component {
   getMountSelector () {
     const { renderTo } = this.props
     // 1. Prioritize renderTo selector
-    let mountSelector = renderTo ? document.querySelector(renderTo) : false
+    let mountSelector = (typeof renderTo === 'string' && renderTo) ? document.querySelector(renderTo) : false
+    mountSelector = (typeof renderTo === 'object' && renderTo.tagName) ? renderTo : mountSelector
     // 2. Fallback to <Portal.Container />
     mountSelector = mountSelector || document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body

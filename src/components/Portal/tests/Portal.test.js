@@ -89,6 +89,30 @@ describe('renderTo', () => {
     global.document.body.innerHTML = ''
   })
 
+  test('Can render to custom DOM element, if specified', () => {
+    const testBody = global.document.createElement('div')
+    global.document.body.appendChild(testBody)
+
+    const wrapper = mount(
+      <div className='channel4'>
+        <div className='custom' />
+        <Portal id='champ' renderTo={global.document.body}>
+          <div className='brick'>BRICK</div>
+        </Portal>
+      </div>
+      , { attachTo: testBody })
+
+    const body = global.document.body.innerHTML
+
+    expect(body).toContain('id')
+    expect(body).toContain('champ')
+    expect(body).toContain('BRICK')
+
+    wrapper.detach()
+    global.document.body.removeChild(testBody)
+    global.document.body.innerHTML = ''
+  })
+
   test('Can render to Portal.Container, if exists', () => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)

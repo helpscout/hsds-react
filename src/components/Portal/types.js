@@ -2,7 +2,10 @@ import PropTypes from 'prop-types'
 
 const propTypes = {
   exact: PropTypes.bool,
-  renderTo: PropTypes.string,
+  renderTo: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
   onBeforeOpen: PropTypes.func,
   onOpen: PropTypes.func,
   onBeforeClose: PropTypes.func,
