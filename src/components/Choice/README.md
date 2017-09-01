@@ -36,7 +36,7 @@ Choose an anchor:
 | disabled | boolean | Disable the input. |
 | helpText | string | Displays text underneath input. |
 | id | string | ID for the input. |
-| hideLabel | boolean | Hides the label with [VisuallyHidden](../VisuallyHidden)]
+| hideLabel | boolean | Hides the label with [VisuallyHidden](../VisuallyHidden). |
 | label | string | Label for the input. |
 | name | string | Name for the input. |
 | onBlur | function | Callback when the input is blurred. |
