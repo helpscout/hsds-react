@@ -171,6 +171,8 @@ describe('renderTo', () => {
 })
 
 describe('Events', () => {
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
+
   test('onBeforeOpen callback works', () => {
     const mockCallback = jest.fn()
     const onBeforeOpen = (open) => {
@@ -240,7 +242,7 @@ describe('Events', () => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
       done()
-    }, 10)
+    }, 100)
   })
 
   test('onClose callback works', (done) => {
@@ -260,7 +262,7 @@ describe('Events', () => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
       done()
-    }, 10)
+    }, 100)
   })
 
   test('onBeforeClose + onClose callback works', (done) => {
@@ -285,6 +287,6 @@ describe('Events', () => {
       expect(mockCallback.mock.calls.length).toBe(2)
       cleanUp()
       done()
-    }, 10)
+    }, 100)
   })
 })
