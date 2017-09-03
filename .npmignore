@@ -20,3 +20,11 @@ coverage
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.git-hooks
+.storybook
+.vscode
+config
+scripts
+stories
+todos
