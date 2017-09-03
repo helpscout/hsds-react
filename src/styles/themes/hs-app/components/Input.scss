@@ -1,0 +1,34 @@
+@import "../configs/constants";
+@import "../configs/color";
+
+
+.c-InputWrapper {
+  .c-Label {
+    .c-Text {
+      color: $HS_APP_INPUT_LABEL_COLOR;
+    }
+  }
+}
+
+.c-Input {
+  @import "../resets/base";
+}
+
+.c-InputField {
+  @import "../resets/base";
+
+  &.is-sm {
+    font-size: $HS_APP_INPUT_FONT_SIZE_SM;
+    top: 0;
+  }
+}
+
+.c-InputBackdrop {
+  $InputField: ".c-InputField";
+  $color-border-focus: _color(blue, 500);
+
+  @include backdrop-styles($InputField, $color-border-focus);
+
+  box-shadow: none !important;
+  border-radius: $HS_APP_INPUT_BORDER_RADIUS;
+}

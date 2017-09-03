@@ -1,0 +1,11 @@
+@mixin visibility-forced {
+  border: initial !important;
+  box-sizing: border-box;
+  clip: initial !important;
+  height: initial !important;
+  overflow: initial !important;
+  padding: initial !important;
+  position: initial !important;
+  top: initial;
+  width: initial !important;
+}
