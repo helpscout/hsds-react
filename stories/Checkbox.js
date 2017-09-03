@@ -1,7 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Checkbox, ChoiceGroup } from '../src/index.js'
-import { Theme } from './addons/theme'
 
 storiesOf('Checkbox', module)
   .add('default', () => (
