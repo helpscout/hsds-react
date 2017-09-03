@@ -1,4 +1,5 @@
 import '../src/styles/blue.scss'
+import '../src/styles/blue.hs-app.scss'
 
 import './Animate'
 import './Avatar'

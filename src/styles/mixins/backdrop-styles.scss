@@ -1,9 +1,10 @@
 @import "../configs/color";
+@import "../configs/constants";
 
-@mixin backdrop-styles($block, $states) {
-  $InputField: ".c-InputField";
-  $color-border-focus: _color(blue, 400);
+@mixin backdrop-styles($InputField, $color-border-focus) {
+  $states: $STATES;
   $this: this();
+
   background-color: white;
   border: 1px solid _color(border, ui, dark);
   border-radius: 4px;
@@ -21,7 +22,7 @@
   }
 
   // Styles
-  @include parent("#{$block}--seamless") {
+  @include parent(".is-seamless > ") {
     border-color: transparent;
     box-shadow: none;
     @include parent("#{$InputField}:focus ~ ") {
@@ -30,18 +31,27 @@
     }
   }
 
+  &.is-checkbox {
+    box-shadow: 0 0 0 0 rgba(_color(border), 0), 0 0.5px 1px rgba(black, 0.2) inset;
+  }
+
   // States
   @each $state in $states {
-    @include parent("#{$block}.is-#{$state} #{$InputField} ~ ") {
+    &.is-#{$state} {
       border-color: _color(state, $state, border-color);
-    }
-    @include parent("#{$block}.is-#{$state} #{$InputField}:focus ~ ") {
-      box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
+      @include parent("#{$InputField}:focus ~ ") {
+        border-color: _color(state, $state, border-color);
+        box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
+      }
     }
   }
 
   // Disabled
-  @include parent("#{$block}.is-disabled #{$InputField} ~ ") {
+  &.is-disabled {
     background-color: _color(grey, 200);
+  }
+  // Read-Only
+  &.is-readonly {
+    background-color: _color(grey, 300);
   }
 }

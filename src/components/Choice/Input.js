@@ -75,7 +75,7 @@ const Input = props => {
         aria-describedby={helpText || undefined}
         aria-invalid={state !== 'error'}
         checked={checked}
-        className='c-InputField c-ChoiceInput__input'
+        className={`c-InputField c-ChoiceInput__input is-${type}`}
         disabled={disabled}
         id={id}
         name={name}

@@ -7,36 +7,43 @@ const includePaths = harvester([
   './src/styles'
 ])
 
-// Default .css compile
-sass.render({
-  file: './src/styles/blue.scss',
-  includePaths: includePaths,
-  outputStyle: 'compact'
-}, function (error, result) {
-  if (error) {
-    console.error(error)
-    return process.exit(1)
-  } else {
-    mkdirp('./dist')
-    mkdirp('./dist/css')
-    mkdirp('./dist/scss')
+mkdirp('./dist')
+mkdirp('./dist/css')
+mkdirp('./dist/scss')
 
-    fs.writeFile('./dist/css/blue.css', result.css, function (err) {
-      if (err) {
-        console.error(error)
-        return process.exit(1)
-      }
-      console.log('blue.css created.')
+const files = [
+  'blue',
+  'blue.hs-app'
+]
 
-      fs.writeFile('./dist/scss/blue.scss', result.css, function (err) {
+const renderFile = (fileName) => {
+  // Default .css compile
+  return sass.render({
+    file: `./src/styles/${fileName}.scss`,
+    includePaths: includePaths,
+    outputStyle: 'compact'
+  }, function (error, result) {
+    if (error) {
+      console.error(error)
+      return process.exit(1)
+    } else {
+      fs.writeFile(`./dist/css/${fileName}.css`, result.css, function (err) {
         if (err) {
           console.error(error)
           return process.exit(1)
         }
-        console.log('blue.scss created.')
+        console.log(`${fileName}.css created.`)
 
-        return process.exit(0)
+        fs.writeFile(`./dist/scss/${fileName}.scss`, result.css, function (err) {
+          if (err) {
+            console.error(error)
+            return process.exit(1)
+          }
+          console.log(`${fileName}.scss created.`)
+        })
       })
-    })
-  }
-})
+    }
+  })
+}
+
+files.forEach(file => renderFile(file))

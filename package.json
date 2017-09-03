@@ -173,6 +173,7 @@
       "afterEach",
       "it",
       "expect",
+      "jasmine",
       "jest",
       "React",
       "react",

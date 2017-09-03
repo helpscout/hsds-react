@@ -1,0 +1,11 @@
+@import "../configs/constants";
+
+& {
+  box-sizing: border-box;
+  font-family: $HS_APP_FONT_FAMILY;
+  font-size: $HS_APP_FONT_SIZE;
+
+  * {
+    box-sizing: border-box;
+  }
+}
