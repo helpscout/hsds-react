@@ -9,7 +9,7 @@ import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   checked: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -56,6 +56,7 @@ class Choice extends Component {
 
   render () {
     const {
+      className,
       disabled,
       helpText,
       hideLabel,
@@ -66,20 +67,21 @@ class Choice extends Component {
       readOnly,
       state,
       type,
-      value
+      value,
+      ...rest
     } = this.props
     const { checked } = this.state
 
     const choiceID = uniqueID()
 
-    const className = classNames(
+    const componentClassName = classNames(
       'c-Choice',
       `is-${type}`,
       checked && 'is-selected',
       disabled && `is-disabled`,
       readOnly && `is-readonly`,
       state && `is-${state}`,
-      this.props.className
+      className
     )
 
     const handleOnChange = this.handleOnChange.bind(this)
@@ -107,7 +109,7 @@ class Choice extends Component {
       : null
 
     return (
-      <div className={className}>
+      <div className={componentClassName} {...rest}>
         <label htmlFor={choiceID} className='c-Choice__label'>
           <Flexy align='left' gap='sm'>
             <Flexy.Item>

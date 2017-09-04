@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   size: PropTypes.string
 }

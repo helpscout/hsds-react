@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   alt: PropTypes.string,
   className: PropTypes.string,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -15,11 +15,11 @@ const propTypes = {
 const Image = props => {
   const { className, ...rest } = props
 
-  const ImageClassName = classNames('c-Image', className)
+  const componentClassName = classNames('c-Image', className)
 
   const imageElement = React.createElement('img', {
     ...rest,
-    className: ImageClassName
+    className: componentClassName
   })
 
   return imageElement

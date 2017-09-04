@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   faint: PropTypes.bool,
@@ -12,6 +12,7 @@ const propTypes = {
   subtle: PropTypes.bool,
   truncate: PropTypes.bool
 }
+
 const defaultProps = {
   disableSelect: false,
   truncate: false
@@ -19,16 +20,19 @@ const defaultProps = {
 
 const Text = props => {
   const {
+    children,
+    className,
     disableSelect,
     faint,
     muted,
     size,
     state,
     subtle,
-    truncate
+    truncate,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Text',
     disableSelect && 'is-disableSelect',
     faint && 'is-faint',
@@ -37,12 +41,12 @@ const Text = props => {
     state && `is-${state}`,
     subtle && 'is-subtle',
     truncate && 'is-truncate',
-    props.className
+    className
   )
 
   return (
-    <span className={className}>
-      {props.children}
+    <span className={componentClassName} {...rest}>
+      {children}
     </span>
   )
 }

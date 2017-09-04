@@ -8,10 +8,9 @@ import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
 import Scrollable from '../Scrollable'
 import classNames from '../../utilities/classNames'
-import portalTypes from '../Portal/types'
+import { propTypes as portalTypes } from '../Portal'
 
-const propTypes = Object.assign({}, portalTypes, {
-  className: PropTypes.string,
+export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
   trigger: PropTypes.element
 })
@@ -31,15 +30,25 @@ const portalOptions = {
 const Modal = props => {
   const {
     children,
+    className,
     closeIcon,
     closePortal,
+    exact,
+    isOpen,
+    openPortal,
+    path,
     portalIsOpen,
-    zIndex
+    timeout,
+    trigger,
+    styles,
+    zIndex,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Modal',
-    props.className
+    isOpen && 'is-open',
+    className
   )
 
   const closeMarkup = closeIcon ? (
@@ -48,12 +57,12 @@ const Modal = props => {
     </div>
   ) : null
 
-  const modalStyle = {
+  const modalStyle = styles ? Object.assign({}, styles, {
     zIndex
-  }
+  }) : { zIndex }
 
   return (
-    <div className={className} style={modalStyle}>
+    <div className={componentClassName} style={modalStyle} {...rest}>
       <div className='c-Modal__content'>
         <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
           <Card seamless>

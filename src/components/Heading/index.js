@@ -2,27 +2,36 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   light: PropTypes.bool,
   selector: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   size: PropTypes.string
 }
+
 const defaultProps = {
   disableSelect: false,
   selector: false
 }
 
 const Heading = props => {
-  const { disableSelect, light, selector, size, ...rest } = props
+  const {
+    children,
+    className,
+    disableSelect,
+    light,
+    selector,
+    size,
+    ...rest
+  } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Heading',
     disableSelect && 'is-disableSelect',
     light && 'is-light',
     size && `is-${size}`,
-    props.className
+    className
   )
 
   const selectorTag = selector || 'div'
@@ -31,9 +40,9 @@ const Heading = props => {
     selectorTag,
     {
       ...rest,
-      className
+      className: componentClassName
     },
-    props.children
+    children
   )
 
   return element

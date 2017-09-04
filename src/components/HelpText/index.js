@@ -3,33 +3,42 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import Text from '../Text'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   muted: PropTypes.bool,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   state: PropTypes.string
+}
+
+const defaultProps = {
+  size: 13
 }
 
 const HelpText = props => {
   const {
     children,
+    className,
     muted,
-    state
+    size,
+    state,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-HelpText',
     muted && `is-muted`,
     state && `is-${state}`,
-    props.className
+    className
   )
 
   return (
-    <div className={className}>
-      <Text size={13}>{children}</Text>
+    <div className={componentClassName} {...rest}>
+      <Text size={size}>{children}</Text>
     </div>
   )
 }
 
 HelpText.propTypes = propTypes
+HelpText.defaultProps = defaultProps
 
 export default HelpText

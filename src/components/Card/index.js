@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   hover: PropTypes.bool,
   href: PropTypes.string,
@@ -13,6 +13,7 @@ const propTypes = {
   seamless: PropTypes.bool,
   selector: PropTypes.string
 }
+
 const defaultProps = {
   hover: false,
   onBlur: noop,
@@ -24,6 +25,8 @@ const defaultProps = {
 
 const Card = props => {
   const {
+    className,
+    children,
     hover,
     href,
     onClick,
@@ -32,12 +35,12 @@ const Card = props => {
     ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Card',
     (onClick || href) && 'is-clickable',
     (onClick || hover || href) && 'is-hoverable',
     seamless && 'is-seamless',
-    props.className
+    className
   )
 
   const selectorTag = href ? 'a' : selector
@@ -46,11 +49,11 @@ const Card = props => {
     selectorTag,
     {
       ...rest,
-      className,
+      className: componentClassName,
       href,
       onClick
     },
-    props.children
+    children
   )
 
   return element

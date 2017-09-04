@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Transition, { ENTERED, ENTERING, EXITING, EXITED } from 'react-transition-group/Transition'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   animateOnMount: PropTypes.bool,
   className: PropTypes.string,
   duration: PropTypes.number,
@@ -63,6 +63,7 @@ class Animate extends Component {
     const transitionIn = this.state.in
 
     const {
+      children,
       className,
       duration,
       sequence,
@@ -103,9 +104,9 @@ class Animate extends Component {
         in={transitionIn}
         timeout={timeout}
       >
-        {status => React.cloneElement(props.children, {
-          className: childClassName(props.children, status),
-          style: childStyle(props.children)
+        {status => React.cloneElement(children, {
+          className: childClassName(children, status),
+          style: childStyle(children)
         })}
       </Transition>
     )

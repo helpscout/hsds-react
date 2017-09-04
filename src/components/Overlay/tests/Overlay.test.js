@@ -62,11 +62,11 @@ describe('Click', () => {
 
 describe('Styles', () => {
   test('Renders inline-styles, if specified', () => {
-    const styles = {
+    const style = {
       background: 'blue'
     }
-    const wrapper = mount(<Overlay styles={styles} />)
+    const wrapper = mount(<Overlay style={style} />)
 
-    expect(wrapper.prop('styles')).toBe(styles)
+    expect(wrapper.prop('style')).toBe(style)
   })
 })

@@ -1,13 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import types from './types'
 import { default as Container, ID as portalContainerId } from './Container'
 
-const propTypes = Object.assign({}, types, {
-  children: PropTypes.element.isRequired,
+export const propTypes = {
+  children: PropTypes.element,
   className: PropTypes.string,
-  id: PropTypes.string
+  exact: PropTypes.bool,
+  id: PropTypes.string,
+  renderTo: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
+  onBeforeOpen: PropTypes.func,
+  onOpen: PropTypes.func,
+  onBeforeClose: PropTypes.func,
+  onClose: PropTypes.func,
+  path: PropTypes.string,
+  timeout: PropTypes.number
+}
+
+const types = Object.assign({}, propTypes, {
+  children: PropTypes.element.isRequired
 })
 
 const defaultProps = {
@@ -151,7 +165,7 @@ class Portal extends React.Component {
   }
 }
 
-Portal.propTypes = propTypes
+Portal.propTypes = types
 Portal.defaultProps = defaultProps
 Portal.Container = Container
 

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { noop } from '../../utilities/other'
 import { addEventListener, removeEventListener } from '@shopify/javascript-utilities/events'
 
-const propTypes = {
+export const propTypes = {
   keyCode: PropTypes.number,
   handler: PropTypes.func
 }

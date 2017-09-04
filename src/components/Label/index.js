@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import Text from '../Text'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   for: PropTypes.string,
   state: PropTypes.string
@@ -11,17 +11,20 @@ const propTypes = {
 
 const Label = props => {
   const {
-    state
+    className,
+    for: htmlFor,
+    state,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Label',
     state && `is-${state}`,
-    props.className
+    className
   )
 
   return (
-    <label className={className} htmlFor={props.for}>
+    <label className={componentClassName} htmlFor={htmlFor} {...rest}>
       <Text faint>
         {props.children}
       </Text>

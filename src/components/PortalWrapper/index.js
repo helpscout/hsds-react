@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
+import { default as Portal, propTypes as portalTypes } from '../Portal'
 import Keys from '../../constants/Keys'
-import Portal from '../Portal'
 import { createUniqueIDFactory } from '../../utilities/id'
-import portalTypes from '../Portal/types'
 
 const defaultOptions = {
   id: 'PortalWrapper'

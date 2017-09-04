@@ -13,12 +13,13 @@ const ENTITIES_TO_REPLACE = {
 }
 const REPLACE_REGEX = /[\n&<>]/g
 
-const propTypes = {
+export const propTypes = {
   contents: PropTypes.string,
   currentHeight: PropTypes.number,
   minimumLines: PropTypes.number,
   onResize: PropTypes.func
 }
+
 const defaultProps = {
   contents: '',
   currentHeight: null,

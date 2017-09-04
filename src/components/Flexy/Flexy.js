@@ -4,7 +4,7 @@ import Block from './Block'
 import Item from './Item'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   align: PropTypes.string,
   className: PropTypes.string,
   gap: PropTypes.string,
@@ -14,21 +14,24 @@ const propTypes = {
 const Flexy = props => {
   const {
     align,
+    children,
+    className,
     gap,
-    just
+    just,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Flexy',
     align && `is-${align}`,
     gap && `c-Flexy--gap-${gap}`,
     just && `c-Flexy--just-${just}`,
-    props.className
+    className
   )
 
   return (
-    <div className={className}>
-      {props.children}
+    <div className={componentClassName} {...rest}>
+      {children}
     </div>
   )
 }
