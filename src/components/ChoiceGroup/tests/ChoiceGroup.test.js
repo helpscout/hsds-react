@@ -31,9 +31,11 @@ describe('Children', () => {
         <Radio />
       </ChoiceGroup>
     )
+    const component = wrapper.find(ChoiceGroup)
     const el = wrapper.find(Radio)
 
     expect(el.length).toBe(3)
+    expect(component.hasClass('is-multi-select')).toBeFalsy()
     wrapper.unmount()
   })
 
@@ -126,6 +128,34 @@ describe('Events', () => {
 })
 
 describe('MultiSelect', () => {
+  test('Has multi-select className, if applicable', () => {
+    const wrapper = mount(
+      <ChoiceGroup value='katinka'>
+        <Checkbox value='derek' />
+        <Checkbox value='hansel' />
+        <Checkbox value='mugatu' />
+      </ChoiceGroup>
+    )
+    const o = wrapper.find(ChoiceGroup)
+
+    expect(o.hasClass('is-multi-select')).toBeTruthy()
+    wrapper.unmount()
+  })
+
+  test('Does not have multiSelect className, if applicable', () => {
+    const wrapper = mount(
+      <ChoiceGroup value='katinka'>
+        <Radio value='derek' />
+        <Radio value='hansel' />
+        <Radio value='mugatu' />
+      </ChoiceGroup>
+    )
+    const o = wrapper.find(ChoiceGroup)
+
+    expect(o.hasClass('is-multi-select')).not.toBeTruthy()
+    wrapper.unmount()
+  })
+
   test('Does not multiSelect for Radio children', () => {
     const wrapper = mount(
       <ChoiceGroup value='katinka'>

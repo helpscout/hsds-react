@@ -87,15 +87,15 @@ class ChoiceGroup extends Component {
       children,
       onBlur,
       onFocus,
-      multiSelect,
+      multiSelect: multiSelectSetting,
       name,
       ...rest
     } = this.props
-    const { selectedValue } = this.state
+    const { multiSelect, selectedValue } = this.state
 
     const componentClassName = classNames(
       'c-ChoiceGroup',
-      multiSelect && 'is-multi-select',
+      (multiSelectSetting || multiSelect) && 'is-multi-select',
       className
     )
     const handleOnChange = this.handleOnChange.bind(this)

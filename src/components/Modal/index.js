@@ -38,9 +38,9 @@ const Modal = props => {
     openPortal,
     path,
     portalIsOpen,
+    style,
     timeout,
     trigger,
-    styles,
     zIndex,
     ...rest
   } = props
@@ -57,7 +57,7 @@ const Modal = props => {
     </div>
   ) : null
 
-  const modalStyle = styles ? Object.assign({}, styles, {
+  const modalStyle = style ? Object.assign({}, style, {
     zIndex
   }) : { zIndex }
 
