@@ -4,7 +4,7 @@ import { Link as RouteLink } from 'react-router-dom'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   external: PropTypes.bool,
   href: PropTypes.string,
@@ -13,6 +13,7 @@ const propTypes = {
   onFocus: PropTypes.func,
   to: PropTypes.string
 }
+
 const defaultProps = {
   external: false,
   href: '#',
@@ -22,9 +23,10 @@ const defaultProps = {
 }
 
 const Link = props => {
-  const { className, external, to, href, ...rest } = props
+  const {
+    className, external, to, href, ...rest } = props
 
-  const linkClassName = classNames('c-Link', className)
+  const componentClassName = classNames('c-Link', className)
 
   const target = external ? '_blank' : undefined
   const rel = external ? 'noopener noreferrer' : undefined
@@ -33,11 +35,11 @@ const Link = props => {
   // should render React Router's <Link> component.
 
   const linkMarkup = to ? (
-    <RouteLink className={linkClassName} target={target} rel={rel} to={to} {...rest}>
+    <RouteLink className={componentClassName} target={target} rel={rel} to={to} {...rest}>
       {props.children}
     </RouteLink>
   ) : (
-    <a className={linkClassName} target={target} rel={rel} href={href} {...rest}>
+    <a className={componentClassName} target={target} rel={rel} href={href} {...rest}>
       {props.children}
     </a>
   )

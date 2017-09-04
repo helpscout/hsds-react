@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   accessibilityLabel: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -16,6 +16,7 @@ const propTypes = {
   state: PropTypes.string,
   submit: PropTypes.bool
 }
+
 const defaultProps = {
   accessibilityLabel: '',
   disabled: false,
@@ -46,7 +47,7 @@ const Button = props => {
     ...rest
   } = props
 
-  const buttonClassName = classNames(
+  const componentClassName = classNames(
     'c-Button',
     size && `c-Button--${size}`,
     state && `is-${state}`,
@@ -60,7 +61,7 @@ const Button = props => {
   return (
     <button
       aria-label={accessibilityLabel}
-      className={buttonClassName}
+      className={componentClassName}
       disabled={disabled}
       onBlur={onBlur}
       onClick={onClick}

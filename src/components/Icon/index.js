@@ -5,7 +5,7 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import VisuallyHidden from '../VisuallyHidden'
 
-const propTypes = {
+export const propTypes = {
   center: PropTypes.bool,
   className: PropTypes.string,
   clickable: PropTypes.bool,
@@ -16,6 +16,7 @@ const propTypes = {
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   title: PropTypes.string
 }
+
 const defaultProps = {
   clickable: false,
   center: false,
@@ -28,23 +29,25 @@ const defaultProps = {
 const Icon = props => {
   const {
     center,
+    className,
     clickable,
     ignoreClick,
     muted,
     onClick,
     name,
     size,
-    title
+    title,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Icon',
     center && 'is-center',
     clickable && 'is-clickable',
     !clickable && ignoreClick && 'is-noInteract',
     muted && 'is-muted',
     size && `is-${size}`,
-    props.className
+    className
   )
 
   const src = { __html: ICONS[name] }
@@ -52,9 +55,10 @@ const Icon = props => {
 
   return (
     <div
-      className={className}
+      className={componentClassName}
       onClick={onClick}
       data-icon-name={name}
+      {...rest}
     >
       <div
         className='c-Icon__icon'

@@ -12,7 +12,7 @@ const valuePropType = PropTypes.oneOfType([
   PropTypes.bool
 ])
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
@@ -28,6 +28,7 @@ const propTypes = {
     valuePropType
   ])
 }
+
 const defaultProps = {
   onBlur: noop,
   onChange: noop,
@@ -86,12 +87,15 @@ class ChoiceGroup extends Component {
       children,
       onBlur,
       onFocus,
-      name
+      multiSelect: multiSelectSetting,
+      name,
+      ...rest
     } = this.props
-    const { selectedValue } = this.state
+    const { multiSelect, selectedValue } = this.state
 
     const componentClassName = classNames(
       'c-ChoiceGroup',
+      (multiSelectSetting || multiSelect) && 'is-multi-select',
       className
     )
     const handleOnChange = this.handleOnChange.bind(this)
@@ -112,7 +116,7 @@ class ChoiceGroup extends Component {
     }) : null
 
     return (
-      <div className={componentClassName} id={id}>
+      <div className={componentClassName} id={id} {...rest}>
         {choiceMarkup}
       </div>
     )

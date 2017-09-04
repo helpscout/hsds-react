@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   fade: PropTypes.bool,
   rounded: PropTypes.bool
@@ -11,15 +11,17 @@ const propTypes = {
 const Scrollable = props => {
   const {
     children,
+    className,
     fade,
-    rounded
+    rounded,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-Scrollable',
     fade && 'has-fade',
     rounded && 'is-rounded',
-    props.className
+    className
   )
 
   const fadeMarkup = fade ? (
@@ -27,7 +29,7 @@ const Scrollable = props => {
   ) : null
 
   return (
-    <div className={className}>
+    <div className={componentClassName} {...rest}>
       {fadeMarkup}
       <div className='c-Scrollable__content'>
         {children}

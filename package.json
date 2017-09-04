@@ -10,6 +10,7 @@
     "build": "npm run pretty && npm run clean && npm run build:css && npm run build:js",
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
     "clean": "rm -rf dist && mkdir dist",
+    "dev": "npm run test:dev",
     "dist": "babel src --out-dir dist --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",

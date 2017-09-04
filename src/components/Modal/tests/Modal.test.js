@@ -185,3 +185,60 @@ describe('Route', () => {
     done()
   })
 })
+
+describe('Style', () => {
+  test('Can render extra styles', (done) => {
+    const style = { background: 'red' }
+    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} />)
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
+
+    expect(modal).toBeTruthy()
+
+    const html = modal.outerHTML
+
+    expect(html).toContain('background')
+    expect(html).toContain('red')
+
+    wrapper.unmount()
+    global.document.body.innerHTML = ''
+    done()
+  })
+
+  test('Can render extra styles + zIndex', (done) => {
+    const style = { background: 'red' }
+    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} zIndex={2000} />)
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
+
+    expect(modal).toBeTruthy()
+
+    const html = modal.outerHTML
+
+    expect(html).toContain('background')
+    expect(html).toContain('red')
+    expect(html).toContain('z-index')
+    expect(html).toContain('2000')
+
+    wrapper.unmount()
+    global.document.body.innerHTML = ''
+    done()
+  })
+
+  test('Can render zIndex, without style prop', (done) => {
+    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />)
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
+
+    expect(modal).toBeTruthy()
+
+    const html = modal.outerHTML
+
+    expect(html).toContain('z-index')
+    expect(html).toContain('2000')
+
+    wrapper.unmount()
+    global.document.body.innerHTML = ''
+    done()
+  })
+})

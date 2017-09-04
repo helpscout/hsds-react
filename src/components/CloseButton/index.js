@@ -4,7 +4,7 @@ import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
@@ -26,13 +26,13 @@ const CloseButton = props => {
     ...rest
   } = props
 
-  const buttonClassName = classNames(
+  const componentClassName = classNames(
     'c-CloseButton',
     className
   )
 
   return (
-    <button className={buttonClassName} {...rest} aria-label='Close' title={title}>
+    <button className={componentClassName} {...rest} aria-label='Close' title={title}>
       <Icon
         center
         className='c-CloseButton__icon'

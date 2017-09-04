@@ -1,5 +1,3 @@
-// See: https://github.com/Shopify/polaris/blob/master/src/components/TextField/TextField.tsx
-
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Backdrop from './Backdrop'
@@ -10,7 +8,7 @@ import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -33,6 +31,7 @@ const propTypes = {
   type: PropTypes.string,
   value: PropTypes.string
 }
+
 const defaultProps = {
   autoFocus: false,
   disabled: false,
@@ -71,6 +70,7 @@ class Input extends Component {
   render () {
     const {
       autoFocus,
+      className,
       disabled,
       helpText,
       id,
@@ -97,7 +97,7 @@ class Input extends Component {
     const handleOnChange = this.handleOnChange.bind(this)
     const handleExpandingResize = this.handleExpandingResize.bind(this)
 
-    const className = classNames(
+    const componentClassName = classNames(
       'c-Input',
       disabled && 'is-disabled',
       multiline && 'is-multiline',
@@ -106,7 +106,7 @@ class Input extends Component {
       seamless && 'is-seamless',
       state && `is-${state}`,
       value && 'has-value',
-      this.props.className
+      className
     )
 
     const inputID = id || uniqueID()
@@ -170,7 +170,7 @@ class Input extends Component {
     return (
       <div className='c-InputWrapper'>
         {labelMarkup}
-        <div className={className}>
+        <div className={componentClassName}>
           {prefixMarkup}
           {inputElement}
           {suffixMarkup}

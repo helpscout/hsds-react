@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   checkbox: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -12,23 +12,25 @@ const propTypes = {
 
 const Backdrop = props => {
   const {
+    className,
     checkbox,
     disabled,
     readOnly,
-    state
+    state,
+    ...rest
   } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-InputBackdrop',
     checkbox && 'is-checkbox',
     disabled && 'is-disabled',
     readOnly && 'is-readonly',
     state && `is-${state}`,
-    props.className
+    className
   )
 
   return (
-    <div className={className} role='presentation' />
+    <div className={componentClassName} role='presentation' {...rest} />
   )
 }
 

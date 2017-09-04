@@ -2,14 +2,20 @@ import React from 'react'
 import classNames from '../../utilities/classNames'
 
 const Block = props => {
-  const className = classNames(
+  const {
+    children,
+    className,
+    ...rest
+  } = props
+
+  const componentClassName = classNames(
     'c-Flexy__block',
-    props.className
+    className
   )
 
   return (
-    <div className={className}>
-      {props.children}
+    <div className={componentClassName} {...rest}>
+      {children}
     </div>
   )
 }

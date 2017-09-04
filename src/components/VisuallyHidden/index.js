@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   focusable: PropTypes.bool
 }
@@ -12,19 +12,19 @@ const defaultProps = {
 }
 
 const VisuallyHidden = props => {
-  const { focusable } = props
+  const { children, className, focusable, ...rest } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-VisuallyHidden',
     focusable && 'is-focusable',
-    props.className
+    className
   )
 
   const tabIndex = focusable ? 1 : null
 
   return (
-    <span className={className} tabIndex={tabIndex}>
-      {props.children}
+    <span className={componentClassName} tabIndex={tabIndex} {...rest}>
+      {children}
     </span>
   )
 }

@@ -6,7 +6,7 @@ import Label from '../Label'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-const optionType = PropTypes.oneOfType([
+export const optionType = PropTypes.oneOfType([
   PropTypes.shape({
     disabled: PropTypes.bool,
     label: PropTypes.string,
@@ -15,14 +15,14 @@ const optionType = PropTypes.oneOfType([
   PropTypes.string
 ])
 
-const optionsType = PropTypes.arrayOf(optionType)
+export const optionsType = PropTypes.arrayOf(optionType)
 
-const groupType = PropTypes.shape({
+export const groupType = PropTypes.shape({
   label: PropTypes.string,
   value: optionsType
 })
 
-const propTypes = {
+export const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -46,6 +46,7 @@ const propTypes = {
   state: PropTypes.string,
   value: PropTypes.string
 }
+
 const defaultProps = {
   autoFocus: false,
   disabled: false,
@@ -102,7 +103,7 @@ class Select extends Component {
 
     const hasPlaceholder = this.hasPlaceholder()
 
-    const selectClassName = classNames(
+    const componentClassName = classNames(
       'c-Select',
       disabled && 'is-disabled',
       hasPlaceholder && 'has-placeholder',
@@ -179,7 +180,7 @@ class Select extends Component {
     return (
       <div className='c-InputWrapper'>
         {labelMarkup}
-        <div className={selectClassName}>
+        <div className={componentClassName}>
           {prefixMarkup}
           <select
             className={fieldClassName}

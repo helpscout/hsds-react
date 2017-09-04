@@ -3,24 +3,28 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
-  onClick: PropTypes.func,
-  style: PropTypes.object
+  onClick: PropTypes.func
 }
+
 const defaultProps = {
-  onClick: noop,
-  style: {}
+  onClick: noop
 }
 
 const Overlay = props => {
-  const { onClick, style } = props
+  const {
+    children,
+    className,
+    onClick,
+    ...rest
+  } = props
 
-  const className = classNames('c-Overlay', props.className)
+  const componentClassName = classNames('c-Overlay', className)
 
   return (
-    <div className={className} style={style} role='dialog' onClick={onClick}>
-      {props.children}
+    <div className={componentClassName} role='dialog' onClick={onClick} {...rest}>
+      {children}
     </div>
   )
 }

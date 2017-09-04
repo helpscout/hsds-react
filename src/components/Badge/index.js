@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-const propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   size: PropTypes.string,
   status: PropTypes.string,
@@ -10,18 +10,26 @@ const propTypes = {
 }
 
 const Badge = props => {
-  const { size, status, white } = props
-  const className = classNames(
+  const {
+    children,
+    className,
+    size,
+    status,
+    white,
+    ...rest
+  } = props
+
+  const componentClassName = classNames(
     'c-Badge',
     size && `is-${size}`,
     status && `is-${status}`,
     white && 'is-white',
-    props.className
+    className
   )
 
   return (
-    <div className={className}>
-      {props.children}
+    <div className={componentClassName} {...rest}>
+      {children}
     </div>
   )
 }

@@ -4,13 +4,18 @@ import classNames from '../../utilities/classNames'
 export const ID = 'HSBluePortalContainer'
 
 const Container = props => {
-  const className = classNames(
+  const {
+    className,
+    ...rest
+  } = props
+
+  const componentClassName = classNames(
     'c-PortalContainer',
-    props.className
+    className
   )
 
   return (
-    <div id={ID} className={className} />
+    <div id={ID} className={componentClassName} {...rest} />
   )
 }
 

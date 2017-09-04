@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
-import Avatar from '../Avatar'
-import avatarTypes from '../Avatar/types'
+import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
 
-const propTypes = {
+export const propTypes = {
   avatars: PropTypes.arrayOf(PropTypes.shape(avatarTypes)),
   borderColor: PropTypes.string,
   max: PropTypes.number,
@@ -21,17 +20,19 @@ const AvatarStack = props => {
   const {
     avatars,
     borderColor,
+    className,
     max,
-    size
+    size,
+    ...rest
   } = props
 
   const totalAvatarCount = avatars.length
   const avatarList = max ? avatars.slice(0, max) : avatars
   const additionalAvatarCount = totalAvatarCount - avatarList.length
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-AvatarStack',
-    props.className
+    className
   )
 
   const additionalAvatarMarkup = additionalAvatarCount ? (
@@ -56,7 +57,7 @@ const AvatarStack = props => {
   })
 
   return (
-    <div className={className}>
+    <div className={componentClassName} {...rest}>
       {avatarMarkup}
       {additionalAvatarMarkup}
     </div>
