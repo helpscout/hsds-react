@@ -6,6 +6,7 @@ A PortalWrapper component is a High-Order Component that connects a component wi
 ## Example
 
 ```js
+import Animate from '../Animate'
 import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
 
@@ -22,12 +23,14 @@ const MyModal = props => {
   } = props
 
   return (
-    <div className='MyModal'>
-      <div className='MyModalContent'>
-        {children}
+    <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
+      <div className='MyModal'>
+        <div className='MyModalContent'>
+          {children}
+        </div>
+        <Overlay onClick={closePortal} />
       </div>
-      <Overlay onClick={closePortal} />
-    </div>
+    </Animate>
   )
 }
 
@@ -35,12 +38,22 @@ export default PortalWrapper(portalOptions)(MyModal)
 ```
 
 
-## Props
+## Options
 
 | Prop | Type | Description |
 | --- | --- | --- |
 | isOpen | boolean | Shows/hides the Portal'ed component. |
 | timeout | number | Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. |
+
+
+## Props
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| portalIsOpen | boolean | State of the Portal'ed component being visible. |
+| portalIsMounted | boolean | State of the Portal'ed component exiting in the DOM. |
+
+Note: PortalWrapper also passes props from [Portal](../Portal). The props above are **not** found in Portal.
 
 
 ### Render hooks

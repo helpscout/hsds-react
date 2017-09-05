@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import PortalWrapper from '..'
 
+const PORTAL_TEST_TIMEOUT = 250
 const TestButton = props => {
   const handleClick = () => {
     console.log('wee')
@@ -45,5 +46,5 @@ test('Override default ID with options', (done) => {
     wrapper.unmount()
 
     done()
-  }, 50)
+  }, PORTAL_TEST_TIMEOUT)
 })
