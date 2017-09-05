@@ -1,9 +1,8 @@
 import React from 'react'
 import classNames from '../../utilities/classNames'
-import Choice from './Choice'
-import Grid from './Grid'
+import { default as GridComponent } from '../Grid'
 
-const FormGroup = props => {
+const Grid = props => {
   const {
     className,
     children,
@@ -17,12 +16,11 @@ const FormGroup = props => {
 
   return (
     <div className={componentClassName} {...rest}>
-      {children}
+      <GridComponent>
+        {children}
+      </GridComponent>
     </div>
   )
 }
 
-FormGroup.Choice = Choice
-FormGroup.Grid = Grid
-
-export default FormGroup
+export default Grid

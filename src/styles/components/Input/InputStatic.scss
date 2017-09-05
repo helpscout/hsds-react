@@ -1,0 +1,38 @@
+@import "pack/seed-control/_index";
+@import "pack/seed-dash/_index";
+@import "pack/seed-family/_index";
+@import "../../configs/constants";
+
+.c-InputStatic {
+  @import "../../configs/color";
+  @import "../../resets/base";
+  $default-height: _get($seed-control-sizes, md, height);
+
+  color: currentColor;
+  display: inline-block;
+  height: $default-height;
+  line-height: $default-height;
+
+  // Adjust height
+  @each $size, $values in $seed-control-sizes {
+    &.is-#{$size} {
+      height: _get($values, height);
+      line-height: _get($values, height);
+    }
+  }
+
+  &.is-block {
+    display: block;
+  }
+
+  // Alignment
+  &.is-left {
+    text-align: left;
+  }
+  &.is-right {
+    text-align: right;
+  }
+  &.is-center {
+    text-align: center;
+  }
+}

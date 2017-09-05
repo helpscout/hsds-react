@@ -4,6 +4,7 @@ import Backdrop from './Backdrop'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import Resizer from './Resizer'
+import Static from './Static'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
@@ -187,5 +188,6 @@ Input.propTypes = propTypes
 Input.defaultProps = defaultProps
 Input.Backdrop = Backdrop
 Input.Resizer = Resizer
+Input.Static = Static
 
 export default Input
