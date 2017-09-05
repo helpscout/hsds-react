@@ -33,6 +33,7 @@ Choose an anchor:
 | --- | --- | --- |
 | autoFocus | boolean | Automatically focuses the input. |
 | className | string | Custom class names to be added to the component. |
+| componentID | string | Namespace for the input ID. Default is `Choice`. |
 | disabled | boolean | Disable the input. |
 | helpText | string | Displays text underneath input. |
 | id | string | ID for the input. |

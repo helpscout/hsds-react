@@ -14,7 +14,7 @@ const Checkbox = props => {
   )
 
   return (
-    <Choice className={componentClassName} id='Checkbox' type='checkbox' {...rest} />
+    <Choice className={componentClassName} componentID='Checkbox' type='checkbox' {...rest} />
   )
 }
 

@@ -26,6 +26,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     constructor (props) {
       super()
       this.state = Object.assign({}, props, options, {
+        id: uniqueID(),
         isMounted: props.isOpen
       })
     }
@@ -93,12 +94,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         ...rest
       } = this.props
       // Remapping open/mount state for ComposedComponent
-      const { isOpen: portalIsMounted, isMounted: portalIsOpen } = this.state
+      const { id, isOpen: portalIsMounted, isMounted: portalIsOpen } = this.state
 
       const openPortal = this.openPortal.bind(this)
       const handleOnClose = this.handleOnClose.bind(this)
 
-      const id = uniqueID()
       const uniqueIndex = parseInt(id.replace(options.id, ''), 10)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
 

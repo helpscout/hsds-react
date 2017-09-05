@@ -14,7 +14,7 @@ const Radio = props => {
   )
 
   return (
-    <Choice className={componentClassName} id='Radio' type='radio' {...rest} />
+    <Choice className={componentClassName} componentID='Radio' type='radio' {...rest} />
   )
 }
 

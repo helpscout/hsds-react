@@ -6,6 +6,7 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 const propTypes = {
+  align: PropTypes.string,
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
   id: PropTypes.string,
@@ -28,6 +29,7 @@ const defaultProps = {
 
 const Input = props => {
   const {
+    align,
     checked,
     disabled,
     helpText,
@@ -44,6 +46,7 @@ const Input = props => {
 
   const className = classNames(
     'c-ChoiceInput',
+    align && `is-${align}`,
     disabled && `is-disabled`,
     readOnly && `is-readonly`,
     state && `is-${state}`,

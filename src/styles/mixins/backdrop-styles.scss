@@ -24,6 +24,7 @@
 
   // Styles
   @include parent(".is-seamless > ") {
+    background: transparent;
     border-color: transparent;
     box-shadow: none;
     @include parent("#{$InputField}:focus ~ ") {
