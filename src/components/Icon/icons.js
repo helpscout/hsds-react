@@ -1,4 +1,5 @@
 import alert from '../../icons/alert.svg'
+import arrowLeft from '../../icons/arrow-left.svg'
 import arrowRight from '../../icons/arrow-right.svg'
 import attachment from '../../icons/attachment.svg'
 import chatActive from '../../icons/chat-active.svg'
@@ -25,6 +26,7 @@ import video from '../../icons/video.svg'
 
 const ICONS = {
   alert,
+  'arrow-left': arrowLeft,
   'arrow-right': arrowRight,
   attachment,
   'chat-active': chatActive,
