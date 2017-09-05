@@ -46,7 +46,7 @@ npm run test
 
 
 
-## Publishing/Releasing
+## Publishing
 
 To publish and release a new version of Blue, run the following command:
 
