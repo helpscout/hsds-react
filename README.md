@@ -30,7 +30,7 @@ npm start
 Check out Blue's Storybook at http://localhost:8900/ in your browser!
 
 
-### Testing
+## Testing
 
 To run Jest in watch mode, run:
 
