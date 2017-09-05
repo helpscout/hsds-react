@@ -6,6 +6,8 @@ import { default as Portal, propTypes as portalTypes } from '../Portal'
 import Keys from '../../constants/Keys'
 import { createUniqueIDFactory } from '../../utilities/id'
 
+const ANIMATION_TIMEOUT = 200
+
 const defaultOptions = {
   id: 'PortalWrapper'
 }
@@ -23,7 +25,9 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   class PortalWrapper extends Component {
     constructor (props) {
       super()
-      this.state = Object.assign({}, props, options)
+      this.state = Object.assign({}, props, options, {
+        isMounted: props.isOpen
+      })
     }
 
     componentDidMount () {
@@ -42,53 +46,87 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     /* istanbul ignore next */
     openPortal () {
       this.setState({
-        isOpen: true
+        isOpen: true,
+        isMounted: true
       })
     }
 
     closePortal () {
       this.setState({
-        isOpen: false
+        isOpen: false,
+        isMounted: false
       })
+    }
+
+    sequenceClosePortal (onClose) {
+      setTimeout(() => {
+        onClose()
+      }, ANIMATION_TIMEOUT)
+    }
+
+    handleOnClose (onClose) {
+      const { onBeforeClose } = this.props
+
+      if (onClose && typeof onClose === 'function') {
+        if (onBeforeClose) {
+          onBeforeClose(() => this.sequenceClosePortal(onClose))
+        } else {
+          this.sequenceClosePortal(onClose)
+        }
+      } else {
+        this.closePortal()
+      }
     }
 
     render () {
       const {
         exact,
-        isOpen,
+        isOpenProps,
         onBeforeClose,
         onBeforeOpen,
         onClose,
         onOpen,
         path,
         renderTo,
-        trigger
-      } = this.state
-      const { timeout } = this.props
+        trigger,
+        timeout,
+        ...rest
+      } = this.props
+      // Remapping open/mount state for ComposedComponent
+      const { isOpen: portalIsMounted, isMounted: portalIsOpen } = this.state
 
       const openPortal = this.openPortal.bind(this)
-      const closePortal = this.closePortal.bind(this)
+      const handleOnClose = this.handleOnClose.bind(this)
+
       const id = uniqueID()
       const uniqueIndex = parseInt(id.replace(options.id, ''), 10)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
 
       const portalMarkup = (
-        <Animate animateOnMount={false} in={isOpen} unmountOnExit wait={300}>
+        <Animate
+          animateOnMount={false}
+          in={portalIsMounted}
+          unmountOnExit
+          wait={ANIMATION_TIMEOUT}
+        >
           <Portal
-            onBeforeClose={onBeforeClose}
+            onBeforeClose={handleOnClose}
             onClose={onClose}
             onBeforeOpen={onBeforeOpen}
             onOpen={onOpen}
             id={id}
             renderTo={renderTo}
+            portalIsMounted={portalIsMounted}
             timeout={timeout}
+            {...rest}
           >
             <ComposedComponent
               openPortal={openPortal}
-              closePortal={closePortal}
-              portalIsOpen={isOpen}
+              closePortal={handleOnClose}
+              portalIsOpen={portalIsOpen}
+              portalIsMounted={portalIsMounted}
               zIndex={zIndex}
-              {...this.props}
+              {...rest}
             />
           </Portal>
         </Animate>
@@ -106,7 +144,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       return (
         <div>
-          <KeypressListener keyCode={Keys.ESCAPE} handler={closePortal} />
+          <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
           {triggerMarkup}
           {portalContainerMarkup}
         </div>

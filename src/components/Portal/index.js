@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { default as Container, ID as portalContainerId } from './Container'
 
 export const propTypes = {
-  children: PropTypes.element,
   className: PropTypes.string,
   exact: PropTypes.bool,
   id: PropTypes.string,
@@ -44,6 +43,10 @@ class Portal extends React.Component {
     this.openPortal(this.props)
   }
 
+  componentWillUpdate (nextProps, nextState) {
+    this.mountPortal(nextProps)
+  }
+
   /* istanbul ignore next */
   componentWillReceiveProps (nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
@@ -70,15 +73,29 @@ class Portal extends React.Component {
     return mountSelector || document.body // fallback
   }
 
-  mountPortal (props) {
-    if (this.node) return
-
+  renderPortalContent (props) {
     const {
+      children
+    } = props
+
+    this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
+      this,
       children,
+      this.node
+    )
+  }
+
+  mountPortal (props) {
+    const {
       className,
       id,
       onOpen
     } = props
+
+    if (this.node) {
+      this.renderPortalContent(props)
+      return
+    }
 
     this.node = document.createElement('div')
     if (className) {
@@ -89,12 +106,7 @@ class Portal extends React.Component {
     }
     // Render to specified target, instead of document
     this.mountSelector.appendChild(this.node)
-
-    this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
-      this,
-      children,
-      this.node
-    )
+    this.renderPortalContent(props)
 
     if (onOpen) onOpen(this)
 

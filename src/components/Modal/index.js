@@ -38,6 +38,7 @@ const Modal = props => {
     openPortal,
     path,
     portalIsOpen,
+    portalIsMounted,
     style,
     timeout,
     trigger,

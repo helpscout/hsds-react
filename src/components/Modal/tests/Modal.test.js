@@ -5,6 +5,12 @@ import Portal from '../../Portal'
 import Keys from '../../../constants/Keys'
 import { MemoryRouter as Router } from 'react-router'
 
+const MODAL_TEST_TIMEOUT = 280
+const cleanUp = (wrapper) => {
+  if (wrapper) wrapper.unmount()
+  global.document.body.innerHTML = ''
+}
+
 const trigger = (
   <a className='trigger'>Trigger</a>
 )
@@ -52,7 +58,7 @@ describe('Key events', () => {
       expect(document.body.childNodes.length).toBeLessThan(preCloseNodeCount)
       expect(document.getElementsByClassName('c-Modal').length).toBe(0)
       done()
-    }, 500)
+    }, MODAL_TEST_TIMEOUT)
 
     wrapper.unmount()
   })
@@ -110,7 +116,7 @@ describe('Portal', () => {
       wrapper.unmount()
 
       done()
-    }, 500)
+    }, MODAL_TEST_TIMEOUT)
   })
 })
 
@@ -240,5 +246,32 @@ describe('Style', () => {
     wrapper.unmount()
     global.document.body.innerHTML = ''
     done()
+  })
+})
+
+describe('PortalWrapper', () => {
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
+
+  test('onBeforeClose callback works', (done) => {
+    const testBody = global.document.createElement('div')
+    global.document.body.appendChild(testBody)
+
+    const mockCallback = jest.fn()
+    const onBeforeClose = (close) => {
+      close()
+      mockCallback()
+    }
+
+    const wrapper = mount(
+      <Modal onBeforeClose={onBeforeClose} isOpen />
+    , { attachTo: testBody })
+
+    wrapper.detach()
+
+    setTimeout(() => {
+      expect(mockCallback.mock.calls.length).toBe(1)
+      cleanUp()
+      done()
+    }, MODAL_TEST_TIMEOUT)
   })
 })

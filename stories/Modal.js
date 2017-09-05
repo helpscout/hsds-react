@@ -110,6 +110,7 @@ storiesOf('Modal', module)
         <p>onBeforeOpen: 500 delay</p>
         <p>onBeforeClose: 500 delay</p>
         <Modal
+          className='weee'
           onBeforeOpen={onBeforeOpen}
           onOpen={action('Event: onOpen')}
           onBeforeClose={onBeforeClose}
