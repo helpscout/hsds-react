@@ -7244,6 +7244,12 @@ seed-border@0.0.8:
     seed-breakpoints "^0.4.0"
     seed-publish "0.0.2"
 
+seed-breakpoints@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/seed-breakpoints/-/seed-breakpoints-0.4.0.tgz#a42b7732f622f492bf972c3925f95579a71e601c"
+  dependencies:
+    seed-props "0.3.0"
+
 seed-breakpoints@0.4.1, seed-breakpoints@^0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/seed-breakpoints/-/seed-breakpoints-0.4.1.tgz#5fa8623ca5d4162492bfac04dbcbbca2c37628af"
@@ -7327,6 +7333,14 @@ seed-flexy@0.3.4:
     seed-breakpoints "0.4.1"
     seed-publish "0.2.0"
 
+seed-grid@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/seed-grid/-/seed-grid-0.4.0.tgz#aa6430ac1abe65c438d0e100ee07f5ced4220ff2"
+  dependencies:
+    sass-pathfinder "0.0.5"
+    seed-breakpoints "0.4.0"
+    seed-publish "0.0.2"
+
 seed-harvester@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/seed-harvester/-/seed-harvester-0.1.5.tgz#ed01b03b7400b0a90e91d70a0243df83d3067e52"
@@ -7359,6 +7373,10 @@ seed-packfinder@0.0.3:
   resolved "https://registry.yarnpkg.com/seed-packfinder/-/seed-packfinder-0.0.3.tgz#a6dac0d66e02ebd7e0e639e7ea4663a40580add7"
   dependencies:
     find-root "^1.0.0"
+
+seed-props@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/seed-props/-/seed-props-0.3.0.tgz#352f44ae43e64766bb5f8286fc3cde8054ded206"
 
 seed-props@0.3.1:
   version "0.3.1"
