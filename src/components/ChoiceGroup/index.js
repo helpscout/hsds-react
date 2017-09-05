@@ -41,6 +41,7 @@ class ChoiceGroup extends Component {
   constructor (props) {
     super()
     this.state = {
+      id: uniqueID(),
       selectedValue: props.value ? [].concat(props.value) : []
     }
     this.multiSelect = true
@@ -73,8 +74,9 @@ class ChoiceGroup extends Component {
   }
 
   handleOnChange (value, checked) {
+    if (typeof value === 'object' && value.target) return
+
     const { multiSelect } = this.state
-    // console.log('change', value)
     const selectedValue = multiSelect ? this.getMultiSelectValue(value) : [value]
 
     this.setState({ selectedValue })
@@ -91,7 +93,7 @@ class ChoiceGroup extends Component {
       name,
       ...rest
     } = this.props
-    const { multiSelect, selectedValue } = this.state
+    const { id, multiSelect, selectedValue } = this.state
 
     const componentClassName = classNames(
       'c-ChoiceGroup',
@@ -99,7 +101,6 @@ class ChoiceGroup extends Component {
       className
     )
     const handleOnChange = this.handleOnChange.bind(this)
-    const id = uniqueID()
 
     const choiceMarkup = children ? React.Children.map(children, (child, index) => {
       return (

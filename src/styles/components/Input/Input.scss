@@ -47,4 +47,9 @@
       resize: vertical;
     }
   }
+
+  &.is-seamless {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

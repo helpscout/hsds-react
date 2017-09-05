@@ -53,6 +53,7 @@ class Input extends Component {
   constructor (props) {
     super()
     this.state = {
+      id: props.id || uniqueID(),
       height: null,
       value: props.value
     }
@@ -93,7 +94,7 @@ class Input extends Component {
       ...rest
     } = this.props
 
-    const { height, value } = this.state
+    const { height, id: inputID, value } = this.state
 
     const handleOnChange = this.handleOnChange.bind(this)
     const handleExpandingResize = this.handleExpandingResize.bind(this)
@@ -110,7 +111,6 @@ class Input extends Component {
       className
     )
 
-    const inputID = id || uniqueID()
     const fieldClassName = classNames('c-InputField', size && `is-${size}`)
 
     // Ignoring as height calculation isn't possible with JSDOM

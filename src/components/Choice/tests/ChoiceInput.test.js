@@ -145,3 +145,13 @@ describe('Type', () => {
     wrapper.unmount()
   })
 })
+
+describe('Styles', () => {
+  test('Can apply align styles', () => {
+    const wrapper = mount(<Input align='top' />)
+    const o = wrapper.find('.c-Flexy')
+
+    expect(o.hasClass('is-top')).toBeTruthy()
+    wrapper.unmount()
+  })
+})

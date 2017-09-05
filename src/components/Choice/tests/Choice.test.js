@@ -15,6 +15,21 @@ describe('ClassName', () => {
   })
 })
 
+describe('ID', () => {
+  test('Has default componentID', () => {
+    const wrapper = shallow(<Choice />)
+
+    expect(wrapper.state().id).toContain('Choice')
+  })
+
+  test('Can override default componentID', () => {
+    const wrapper = shallow(<Choice componentID='milk' />)
+
+    expect(wrapper.state().id).toContain('milk')
+    expect(wrapper.state().id).not.toContain('Choice')
+  })
+})
+
 describe('Autofocus', () => {
   test('Does not autoFocus by default', () => {
     const wrapper = mount(<Choice />)
@@ -29,6 +44,39 @@ describe('Autofocus', () => {
     const input = wrapper.find('input')
 
     expect(input.prop('autoFocus')).toBeTruthy()
+    wrapper.unmount()
+  })
+})
+
+describe('Children', () => {
+  test('Can render child component', () => {
+    const wrapper = mount(
+      <Choice checked>
+        <div className='milk'>Was a bad choice</div>
+      </Choice>
+    )
+    const input = wrapper.find('input')
+    const o = wrapper.find('.milk')
+
+    expect(input.prop('autoFocus')).toBeTruthy()
+    expect(o.length).toBeTruthy()
+    expect(o.text()).toContain('bad choice')
+    wrapper.unmount()
+  })
+
+  test('Can render child component, instead of label', () => {
+    const wrapper = mount(
+      <Choice checked label='news-team-assemble'>
+        <div className='milk'>Was a bad choice</div>
+      </Choice>
+    )
+    const input = wrapper.find('input')
+    const o = wrapper.find('.milk')
+
+    expect(input.prop('autoFocus')).toBeTruthy()
+    expect(o.length).toBeTruthy()
+    expect(o.text()).toContain('bad choice')
+    expect(wrapper.html()).not.toContain('news-team')
     wrapper.unmount()
   })
 })

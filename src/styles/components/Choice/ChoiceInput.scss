@@ -1,3 +1,4 @@
+@import "pack/seed-family/_index";
 @import "pack/seed-this/_index";
 @import "../../mixins/visually-hidden";
 @import "../../configs/constants";
@@ -38,6 +39,10 @@
     .c-InputBackdrop {
       border-radius: 50%;
     }
+  }
+
+  &.is-top {
+    top: 2px;
   }
 
   @each $state in $states {
