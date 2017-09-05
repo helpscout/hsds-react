@@ -24,7 +24,7 @@ Note: For convenience purposes, Grid surrounds child components with a [Grid.Con
 
 ## Sub-Components
 
-Grid contains 3 sub-components: [Grid.Container](#grid-container), [Grid.Row](#grid-row), and [Grid.Col].
+Grid contains 3 sub-components: [Grid.Container](#grid-container), [Grid.Row](#grid-row), and [Grid.Col](#grid-col).
 
 ### Example
 
