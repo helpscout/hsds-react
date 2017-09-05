@@ -6,6 +6,7 @@ storiesOf('Icon', module)
   .add('icons', () => {
     const icons = [
       'alert',
+      'arrow-left',
       'arrow-right',
       'attachment',
       'chat-active',
