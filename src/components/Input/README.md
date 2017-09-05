@@ -38,7 +38,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | readOnly | boolean | Disable editing of the input. |
 | resizable | boolean | Enables resizing for the textarea (only enabled for `multiline`). |
 | seamless | boolean | Removes the border around the input. |
-| size | boolean | Determines the size of the input. |
+| size | string | Determines the size of the input. |
 | state | string | Change input to state color. |
 | suffix | string | Text to appear after the input. |
 | type | string | Determines the input type. |
@@ -52,3 +52,21 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | `error` | Changes color to red. |
 | `success` | Changes color to green. |
 | `warning` | Changes color to yellow. |
+
+
+
+## Input.Static
+
+`Input.Static` components are plain-text components with adjusted height properties to allow them to be aligned with Input components. `Input.Static` is typically used to contain horizontal-style form labels.
+
+```html
+<Input.Static>Catch-phrase</Input.Static>
+<Input multiline={3} placeholder="Please enter sign-off catch-phrase." autoFocus />
+```
+
+### Props
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| align | string | Determines the alignment of the component. |
+| size | string | Determines the size of the component. |

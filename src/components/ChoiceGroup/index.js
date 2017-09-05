@@ -51,7 +51,7 @@ class ChoiceGroup extends Component {
     let multiSelect
 
     if (child && child.type && child.type.name) {
-      multiSelect = child.type.name !== 'Radio' // false for Radio
+      multiSelect = child.type.name.toLowerCase() !== 'radio' // false for radio
     }
     // Override auto-setting based on children
     multiSelect = this.props.multiSelect !== undefined ? this.props.multiSelect : multiSelect
