@@ -100,7 +100,7 @@ class Animate extends Component {
     return (
       <Transition
         {...rest}
-        className='animate'
+        className='Animate'
         in={transitionIn}
         timeout={timeout}
       >
