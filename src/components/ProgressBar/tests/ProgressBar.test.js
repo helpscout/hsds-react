@@ -2,6 +2,24 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import ProgressBar from '..'
 
+describe('Accessibility', () => {
+  test('Has the correct aria tags', () => {
+    const wrapper = shallow(<ProgressBar value={20} description='Loading stuff!' />)
+    const props = wrapper.props()
+
+    expect(props['aria-valuenow']).toBe(20)
+    expect(props['aria-valuemin']).toBe('0')
+    expect(props['aria-valuemax']).toBe('100')
+    expect(props['aria-valuetext']).toBe('Loading stuff!')
+  })
+
+  test('Accepts additional classNames', () => {
+    const wrapper = shallow(<ProgressBar className='mugatu' />)
+
+    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+  })
+})
+
 describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = shallow(<ProgressBar />)

@@ -6,13 +6,13 @@
   $height: 6px;
   $sizes: (
     lg: (
-      height: 16px,
-    ),
-    md: (
       height: 10px,
     ),
-    sm: (
+    md: (
       height: $height,
+    ),
+    sm: (
+      height: 2px,
     ),
   );
   background-color: _color(grey, 300);
