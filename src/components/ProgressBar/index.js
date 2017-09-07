@@ -4,6 +4,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
+  description: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.string,
   value: PropTypes.oneOfType([
@@ -42,6 +43,7 @@ class ProgressBar extends Component {
   render () {
     const {
       className,
+      description,
       size,
       value,
       ...rest
@@ -57,7 +59,15 @@ class ProgressBar extends Component {
     }
 
     return (
-      <div className={componentClassName} {...rest}>
+      <div
+        className={componentClassName}
+        role='progressbar'
+        aria-valuenow={value}
+        aria-valuemin='0'
+        aria-valuemax='100'
+        aria-valuetext={description}
+        {...rest}
+      >
         <div className='c-ProgressBar__bar' style={progresBarStyle} />
       </div>
     )
