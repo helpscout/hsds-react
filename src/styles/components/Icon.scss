@@ -1,7 +1,7 @@
 @import "pack/seed-dash/_index";
 
 .c-Icon {
-  @import "configs/color";
+  @import "../configs/color";
   $sizes: (12, 14, 16, 18, 20, 24);
   $default-size: 20;
 
