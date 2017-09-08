@@ -36,7 +36,7 @@ const Card = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-Card',
+    'c-card',
     (onClick || href) && 'is-clickable',
     (onClick || hover || href) && 'is-hoverable',
     seamless && 'is-seamless',

@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Input from '..'
+import Flexy from '../../Flexy'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -149,7 +150,7 @@ describe('Type', () => {
 describe('Styles', () => {
   test('Can apply align styles', () => {
     const wrapper = mount(<Input align='top' />)
-    const o = wrapper.find('.c-Flexy')
+    const o = wrapper.find(Flexy)
 
     expect(o.hasClass('is-top')).toBeTruthy()
     wrapper.unmount()
