@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import { stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   checkbox: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
-  state: PropTypes.string
+  state: stateTypes
 }
 
 const Backdrop = props => {

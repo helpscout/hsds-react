@@ -8,6 +8,7 @@ import Static from './Static'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
+import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   autoFocus: PropTypes.bool,
@@ -26,8 +27,8 @@ export const propTypes = {
   readOnly: PropTypes.bool,
   resizable: PropTypes.bool,
   seamless: PropTypes.bool,
-  size: PropTypes.string,
-  state: PropTypes.string,
+  size: standardSizeTypes,
+  state: stateTypes,
   suffix: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string

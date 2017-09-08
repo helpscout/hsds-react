@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import Text from '../Text'
+import { stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
   for: PropTypes.string,
-  state: PropTypes.string
+  state: stateTypes
 }
 
 const Label = props => {

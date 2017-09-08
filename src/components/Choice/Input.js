@@ -4,6 +4,7 @@ import Backdrop from '../Input/Backdrop'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { stateTypes } from '../../constants/propTypes'
 
 const propTypes = {
   align: PropTypes.string,
@@ -16,7 +17,7 @@ const propTypes = {
   onFocus: PropTypes.func,
   name: PropTypes.string,
   readOnly: PropTypes.bool,
-  state: PropTypes.string,
+  state: stateTypes,
   type: PropTypes.string,
   value: PropTypes.string
 }
@@ -62,7 +63,7 @@ const Input = props => {
   const iconTypeMarkup = type === 'radio' ? (
     <div className='c-ChoiceInput__radio' />
   ) : (
-    <Icon name='check' size={12} />
+    <Icon name='check' size='12' />
   )
 
   const iconMarkup = checked ? (

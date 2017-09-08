@@ -5,12 +5,7 @@ import classNames from '../../utilities/classNames'
 import FormGroup from '../FormGroup'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
-
-const valuePropType = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-  PropTypes.bool
-])
+import { valueTypes } from './propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -24,8 +19,8 @@ export const propTypes = {
   multiSelect: PropTypes.bool,
   name: PropTypes.string,
   value: PropTypes.oneOfType([
-    PropTypes.arrayOf(valuePropType),
-    valuePropType
+    PropTypes.arrayOf(valueTypes),
+    valueTypes
   ])
 }
 

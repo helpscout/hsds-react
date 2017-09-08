@@ -8,9 +8,11 @@ import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
+import { stateTypes } from '../../constants/propTypes'
+import { alignTypes, typeTypes } from './propTypes'
 
 export const propTypes = {
-  align: PropTypes.string,
+  align: alignTypes,
   checked: PropTypes.bool,
   className: PropTypes.string,
   componentID: PropTypes.string,
@@ -24,8 +26,8 @@ export const propTypes = {
   onFocus: PropTypes.func,
   name: PropTypes.string,
   readOnly: PropTypes.bool,
-  state: PropTypes.string,
-  type: PropTypes.string,
+  state: stateTypes,
+  type: typeTypes,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,

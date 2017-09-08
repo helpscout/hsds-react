@@ -4,6 +4,7 @@ import ICONS from './icons'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import VisuallyHidden from '../VisuallyHidden'
+import { sizeTypes } from './propTypes'
 
 export const propTypes = {
   center: PropTypes.bool,
@@ -13,7 +14,7 @@ export const propTypes = {
   muted: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  size: sizeTypes,
   title: PropTypes.string
 }
 

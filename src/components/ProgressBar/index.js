@@ -2,11 +2,12 @@ import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   description: PropTypes.string,
   onChange: PropTypes.func,
-  size: PropTypes.string,
+  size: standardSizeTypes,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number

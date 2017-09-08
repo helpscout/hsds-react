@@ -1,13 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
-import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
+import {
+  default as Avatar,
+  propTypes as avatarTypes,
+} from '../Avatar'
+import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   avatars: PropTypes.arrayOf(PropTypes.shape(avatarTypes)),
   borderColor: PropTypes.string,
   max: PropTypes.number,
-  size: PropTypes.string
+  size: standardSizeTypes
 }
 
 const defaultProps = {
