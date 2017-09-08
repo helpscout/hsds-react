@@ -11,8 +11,8 @@ const CardBlock = props => {
   const { size, ...rest } = props
 
   const className = classNames(
-    'c-CardBlock',
-    size && `c-CardBlock--${size}`,
+    'c-card__block',
+    size && `c-card__block--${size}`,
     props.className
   )
 

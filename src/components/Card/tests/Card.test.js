@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<Card />)
 
-    expect(wrapper.prop('className')).toBe('c-Card')
+    expect(wrapper.prop('className')).toBe('c-card')
   })
 
   test('Accepts custom className', () => {

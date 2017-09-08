@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<CardBlock />)
 
-    expect(wrapper.prop('className')).toBe('c-CardBlock')
+    expect(wrapper.prop('className')).toBe('c-card__block')
   })
 
   test('Accepts custom className', () => {
@@ -57,14 +57,14 @@ describe('Styles', () => {
     const wrapper = shallow(<CardBlock />)
     const classNames = wrapper.prop('className')
 
-    expect(classNames).not.toContain('c-CardBlock--sm')
-    expect(classNames).not.toContain('c-CardBlock--md')
-    expect(classNames).not.toContain('c-CardBlock--lg')
+    expect(classNames).not.toContain('c-card__block--sm')
+    expect(classNames).not.toContain('c-card__block--md')
+    expect(classNames).not.toContain('c-card__block--lg')
   })
 
   test('Renders size styles, if specified', () => {
     const wrapper = shallow(<CardBlock size='sm' />)
 
-    expect(wrapper.prop('className')).toContain('c-CardBlock--sm')
+    expect(wrapper.prop('className')).toContain('c-card__block--sm')
   })
 })

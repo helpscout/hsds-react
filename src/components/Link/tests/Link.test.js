@@ -10,7 +10,7 @@ describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = wrap(<Link />)
 
-    expect(wrapper.prop('className')).toContain('c-Link')
+    expect(wrapper.prop('className')).toContain('c-link')
   })
 
   test('Applies custom className if specified', () => {
@@ -94,6 +94,7 @@ describe('RouteWrapper', () => {
       done()
     })
   })
+
   test('`to` router navigation is skipped on ctrl+click', done => {
     const route = '/some/route/'
     const wrapper = wrap(<Link href='/gator' to={route}>Gator</Link>, options)

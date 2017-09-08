@@ -11,7 +11,7 @@ describe('ClassNames', () => {
     const wrapper = wrap(<Button className='foo bar baz'>Click Me</Button>)
     const classNames = wrapper.prop('className')
 
-    expect(classNames).toContain('c-Button')
+    expect(classNames).toContain('c-button')
     expect(classNames).toContain('foo')
     expect(classNames).toContain('bar')
     expect(classNames).toContain('baz')
@@ -23,8 +23,8 @@ describe('Types', () => {
     const primary = wrap(<Button primary>Primary</Button>)
     const plain = wrap(<Button plain>Plain</Button>)
 
-    expect(primary.prop('className')).toContain('c-Button--primary')
-    expect(plain.prop('className')).toContain('c-Button--link')
+    expect(primary.prop('className')).toContain('c-button--primary')
+    expect(plain.prop('className')).toContain('c-button--link')
   })
 
   test('Creates a button with type="submit"', () => {
@@ -40,9 +40,9 @@ describe('Sizes', () => {
     const md = wrap(<Button size='md'>Medium</Button>)
     const sm = wrap(<Button size='sm'>Small</Button>)
 
-    expect(lg.prop('className')).toContain('c-Button--lg')
-    expect(md.prop('className')).toContain('c-Button--md')
-    expect(sm.prop('className')).toContain('c-Button--sm')
+    expect(lg.prop('className')).toContain('c-button--lg')
+    expect(md.prop('className')).toContain('c-button--md')
+    expect(sm.prop('className')).toContain('c-button--sm')
   })
 })
 
