@@ -26,7 +26,7 @@ const Link = props => {
   const {
     className, external, to, href, ...rest } = props
 
-  const componentClassName = classNames('c-Link', className)
+  const componentClassName = classNames('c-link', className)
 
   const target = external ? '_blank' : undefined
   const rel = external ? 'noopener noreferrer' : undefined

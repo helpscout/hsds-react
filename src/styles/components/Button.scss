@@ -1,6 +1,5 @@
-$seed-button-namespace: "c-Button" !default;
 @import "pack/seed-button/_index";
 
-button.c-Button {
+button.c-button {
   @import "../resets/base";
 }

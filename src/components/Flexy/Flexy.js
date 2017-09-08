@@ -22,10 +22,10 @@ const Flexy = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-Flexy',
+    'o-flexy',
     align && `is-${align}`,
-    gap && `c-Flexy--gap-${gap}`,
-    just && `c-Flexy--just-${just}`,
+    gap && `o-flexy--gap-${gap}`,
+    just && `o-flexy--just-${just}`,
     className
   )
 

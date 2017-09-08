@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = shallow(<Link />)
 
-    expect(wrapper.prop('className')).toContain('c-Link')
+    expect(wrapper.prop('className')).toContain('c-link')
   })
 
   test('Applies custom className if specified', () => {
