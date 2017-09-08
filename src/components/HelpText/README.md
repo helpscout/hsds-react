@@ -15,6 +15,7 @@ A HelpText component is a light-weight text wrapper enhanced with a collection o
 | --- | --- | --- |
 | className | string | Custom class names to be added to the component. |
 | muted | boolean  | Changes text color to a light grey. |
+| size | string | Adjust text size. |
 | state | string | Changes the text color based on state. |
 
 

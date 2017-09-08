@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import { sizeTypes } from './propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   light: PropTypes.bool,
   selector: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  size: PropTypes.string
+  size: sizeTypes
 }
 
 const defaultProps = {

@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import Block from './Block'
 import Item from './Item'
 import classNames from '../../utilities/classNames'
+import { alignTypes, gapTypes, justTypes } from './propTypes'
 
 export const propTypes = {
-  align: PropTypes.string,
+  align: alignTypes,
   className: PropTypes.string,
-  gap: PropTypes.string,
-  just: PropTypes.string
+  gap: gapTypes,
+  just: justTypes
 }
 
 const Flexy = props => {

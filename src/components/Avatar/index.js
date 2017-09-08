@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
+import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   borderColor: PropTypes.string,
@@ -10,7 +11,7 @@ export const propTypes = {
   className: PropTypes.string,
   image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   name: PropTypes.string.isRequired,
-  size: PropTypes.string
+  size: standardSizeTypes
 }
 
 const defaultProps = {

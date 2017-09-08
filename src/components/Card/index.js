@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { blockSelectorTagTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -11,7 +12,7 @@ export const propTypes = {
   onClick: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   onFocus: PropTypes.func,
   seamless: PropTypes.bool,
-  selector: PropTypes.string
+  selector: blockSelectorTagTypes
 }
 
 const defaultProps = {

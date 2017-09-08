@@ -2,16 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import Text from '../Text'
+import { sizeTypes } from '../Text/propTypes'
+import { stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
   muted: PropTypes.bool,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  state: PropTypes.string
+  size: sizeTypes,
+  state: stateTypes
 }
 
 const defaultProps = {
-  size: 13
+  size: '13'
 }
 
 const HelpText = props => {

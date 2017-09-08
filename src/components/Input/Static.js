@@ -1,10 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import { standardSizeTypes } from '../../constants/propTypes'
+import { staticAlignTypes } from './propTypes'
 
 export const propTypes = {
-  align: PropTypes.string,
-  size: PropTypes.string
+  align: staticAlignTypes,
+  size: standardSizeTypes
 }
 
 const Static = props => {
