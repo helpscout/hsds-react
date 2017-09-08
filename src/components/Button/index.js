@@ -35,6 +35,7 @@ const Button = props => {
   const {
     accessibilityLabel,
     children,
+    className,
     disabled,
     onBlur,
     onClick,
@@ -53,7 +54,7 @@ const Button = props => {
     state && `is-${state}`,
     plain && 'c-Button--link',
     primary && 'c-Button--primary',
-    props.className
+    className
   )
 
   const type = submit ? 'submit' : 'button'
