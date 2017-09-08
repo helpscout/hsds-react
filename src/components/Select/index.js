@@ -5,6 +5,7 @@ import HelpText from '../HelpText'
 import Label from '../Label'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
 
 export const optionType = PropTypes.oneOfType([
   PropTypes.shape({
@@ -42,8 +43,8 @@ export const propTypes = {
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
   prefix: PropTypes.string,
-  size: PropTypes.string,
-  state: PropTypes.string,
+  size: standardSizeTypes,
+  state: stateTypes,
   value: PropTypes.string
 }
 

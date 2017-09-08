@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
-  size: PropTypes.string
+  size: standardSizeTypes
 }
 
 const CardBlock = props => {

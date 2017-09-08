@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import { statusTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
   size: PropTypes.string,
-  status: PropTypes.string,
+  status: statusTypes,
   white: PropTypes.bool
 }
 

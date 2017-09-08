@@ -1,15 +1,21 @@
 import React from 'react'
 import classNames from '../../utilities/classNames'
+import PropTypes from 'prop-types'
+
+export const propTypes = {
+  inline: PropTypes.bool
+}
 
 const Item = props => {
   const {
     children,
     className,
+    inline,
     ...rest
   } = props
 
   const componentClassName = classNames(
-    'o-flexy__item',
+    inline ? 'o-flexy__inline-item' : 'o-flexy__item',
     className
   )
 
@@ -19,5 +25,7 @@ const Item = props => {
     </div>
   )
 }
+
+Item.propTypes = propTypes
 
 export default Item

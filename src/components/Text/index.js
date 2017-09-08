@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { sizeTypes } from './propTypes'
 import classNames from '../../utilities/classNames'
+import { stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   faint: PropTypes.bool,
   muted: PropTypes.bool,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  state: PropTypes.string,
+  size: sizeTypes,
+  state: stateTypes,
   subtle: PropTypes.bool,
   truncate: PropTypes.bool
 }

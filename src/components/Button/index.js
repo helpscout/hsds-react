@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
+import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   accessibilityLabel: PropTypes.string,
@@ -13,8 +14,8 @@ export const propTypes = {
   onFocus: PropTypes.func,
   plain: PropTypes.bool,
   primary: PropTypes.bool,
-  size: PropTypes.string,
-  state: PropTypes.string,
+  size: standardSizeTypes,
+  state: stateTypes,
   submit: PropTypes.bool
 }
 

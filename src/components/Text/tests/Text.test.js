@@ -28,10 +28,10 @@ describe('Styles', () => {
 
   test('Applies sizing styles if specified', () => {
     const wrapper13 = shallow(<Text size='13' />)
-    const wrapper18 = shallow(<Text size='18' />)
+    const wrapper20 = shallow(<Text size='20' />)
 
     expect(wrapper13.prop('className')).toContain('is-13')
-    expect(wrapper18.prop('className')).toContain('is-18')
+    expect(wrapper20.prop('className')).toContain('is-20')
   })
 
   test('Applies disableSelect styles if specified', () => {

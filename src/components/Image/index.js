@@ -7,7 +7,6 @@ export const propTypes = {
   className: PropTypes.string,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   src: PropTypes.string.isRequired,
-  style: PropTypes.object,
   title: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
