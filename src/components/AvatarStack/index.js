@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import {
   default as Avatar,
-  propTypes as avatarTypes,
+  propTypes as avatarTypes
 } from '../Avatar'
 import { standardSizeTypes } from '../../constants/propTypes'
 

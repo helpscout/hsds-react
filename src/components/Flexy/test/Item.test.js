@@ -19,7 +19,6 @@ describe('ClassName', () => {
 
 describe('Inline', () => {
   test('Applies inline className if specified', () => {
-    const customClass = 'piano-key-neck-tie'
     const wrapper = shallow(<Flexy.Item inline />)
 
     expect(wrapper.hasClass('o-flexy__inline-item')).toBeTruthy()

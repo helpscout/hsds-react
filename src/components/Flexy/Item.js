@@ -3,7 +3,7 @@ import classNames from '../../utilities/classNames'
 import PropTypes from 'prop-types'
 
 export const propTypes = {
-  inline: PropTypes.bool,
+  inline: PropTypes.bool
 }
 
 const Item = props => {
