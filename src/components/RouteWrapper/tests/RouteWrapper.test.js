@@ -58,4 +58,14 @@ describe('Route fetching', () => {
       done()
     })
   })
+
+  test('Rendering with a `to` but _not_ inside a `<Router>` context should log an error', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    const to = 'some/route'
+    // No Router in the context!
+    wrap(<RouteWrappedPig to={to} />)
+    expect(errorSpy).toHaveBeenCalled()
+    errorSpy.mockReset()
+    errorSpy.mockRestore()
+  })
 })

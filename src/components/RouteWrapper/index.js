@@ -14,16 +14,20 @@ const RouteWrapper = (WrappedComponent) => {
     render () {
       const { fetch = () => Promise.resolve(), to, ...rest } = this.props
       if (to) {
-        const history = this.context.router.history
-        rest.onClick = (e) => {
-          if (e && (e.metaKey || e.ctrlKey)) {
-            // Allow ctrl+clicks to function normally
-            return
+        if (this.context && this.context.router) {
+          const history = this.context.router.history
+          rest.onClick = (e) => {
+            if (e && (e.metaKey || e.ctrlKey)) {
+              // Allow ctrl+clicks to function normally
+              return
+            }
+            e && e.preventDefault()
+            fetch().then(() => {
+              history.push(to)
+            })
           }
-          e && e.preventDefault()
-          fetch().then(() => {
-            history.push(to)
-          })
+        } else {
+          console.error('The `to` attribute can only be used in the the context of a React Router.')
         }
       }
       return <WrappedComponent {...rest} />
