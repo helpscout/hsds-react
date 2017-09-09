@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import RouteWrapper from '../RouteWrapper'
 import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
@@ -78,4 +79,4 @@ const Button = props => {
 Button.propTypes = propTypes
 Button.defaultProps = defaultProps
 
-export default Button
+export default RouteWrapper(Button)
