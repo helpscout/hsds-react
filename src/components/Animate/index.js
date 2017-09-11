@@ -84,7 +84,7 @@ class Animate extends Component {
 
     const childClassName = (child, transitionStatus) => {
       return classNames(
-        'animate',
+        'Animate',
         className,
         sequenceClassNames,
         transitionStatus && animationStyles[transitionStatus],
