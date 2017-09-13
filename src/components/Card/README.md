@@ -3,16 +3,15 @@
 A Card component is used to encapsulate pieces of UI that share a common concept or action.
 
 
-## Example
+### Example
 
 ```html
 <Card>
-  Not new, Arctic Puffin!
+  You're my boy, Blue!
 </Card>
 ```
 
-
-## Props
+### Props
 
 | Prop | Type | Description |
 | --- | --- | --- |
@@ -24,3 +23,33 @@ A Card component is used to encapsulate pieces of UI that share a common concept
 | href | string | Adds an `href` to the component. Transforms it into an `<a>` tag. |
 | seamless | boolean | Removes the padding within the component. |
 | selector | string | Determines the HTML tag for the component. Default is `div`. |
+
+
+
+## Card.Block
+
+A Card.Block component is used to section content within a [`<Card>`](../Card).
+
+Note: It is highly recommended the `seamless` prop is used for the container `<Card>`. This allows for the `<Card.Block>` components to flow all the way to the inner-edges of `<Card>`.
+
+
+### Example
+
+```html
+<Card seamless>
+  <Card.Block>
+    Frank "The Tank"
+  </Card.Block>
+  <Card.Block>
+    You're my boy, Blue!
+  </Card.Block>
+</Card>
+```
+
+
+### Props
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| className | string | Custom class names to be added to the component. |
+| size | string | Adjusts the size of the component. Default is `md`. |

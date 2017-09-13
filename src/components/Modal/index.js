@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import Card from '../Card'
-import CardBlock from '../CardBlock'
 import CloseButton from '../CloseButton'
 import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
@@ -69,9 +68,9 @@ const Modal = props => {
           <Card seamless>
             {closeMarkup}
             <Scrollable fade rounded>
-              <CardBlock>
+              <Card.Block>
                 {children}
-              </CardBlock>
+              </Card.Block>
             </Scrollable>
           </Card>
         </Animate>

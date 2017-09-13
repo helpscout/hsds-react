@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { blockSelectorTagTypes } from '../../constants/propTypes'
+import Block from './Block'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -62,5 +63,6 @@ const Card = props => {
 
 Card.propTypes = propTypes
 Card.defaultProps = defaultProps
+Card.Block = Block
 
 export default Card
