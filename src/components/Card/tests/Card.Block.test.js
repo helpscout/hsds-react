@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import CardBlock from '..'
+import CardBlock from '../Block'
 
 describe('ClassName', () => {
   test('Has default className', () => {

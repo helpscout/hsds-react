@@ -8,22 +8,22 @@ export const propTypes = {
   size: standardSizeTypes
 }
 
-const CardBlock = props => {
-  const { size, ...rest } = props
+const Block = props => {
+  const { className, children, size, ...rest } = props
 
-  const className = classNames(
+  const componentClassName = classNames(
     'c-card__block',
     size && `c-card__block--${size}`,
-    props.className
+    className
   )
 
   return (
-    <div className={className} {...rest}>
-      {props.children}
+    <div className={componentClassName} {...rest}>
+      {children}
     </div>
   )
 }
 
-CardBlock.propTypes = propTypes
+Block.propTypes = propTypes
 
-export default CardBlock
+export default Block
