@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { Heading, Modal, Link } from '../src/index.js'
@@ -44,6 +45,27 @@ storiesOf('Modal', module)
       </div>
     </Modal>
   ))
+  .add('custom close trigger', () => {
+    class Contents extends React.Component {
+      render() {
+        return (
+          <p>
+            <button onClick={this.context.closePortal}>Close me</button>
+          </p>
+        )
+      }
+    }
+
+    Contents.contextTypes = {
+      closePortal: PropTypes.func
+    }
+
+    return (
+      <Modal trigger={<Link>Open me</Link>}>
+        <Contents />
+      </Modal>
+    )
+  })
   .add('nested', () => (
     <Modal trigger={<Link>Clicky</Link>}>
       <div>

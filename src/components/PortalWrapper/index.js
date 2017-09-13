@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
@@ -79,6 +80,12 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
+    getChildContext() {
+      return {
+        closePortal: this.closePortal.bind(this)
+      }
+    }
+
     render () {
       const {
         exact,
@@ -152,6 +159,9 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
   }
 
+  PortalWrapper.childContextTypes = {
+    closePortal: PropTypes.func
+  }
   PortalWrapper.propTypes = propTypes
   PortalWrapper.defaultProps = defaultProps
 
