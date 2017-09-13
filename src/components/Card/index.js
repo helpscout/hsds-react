@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { blockSelectorTagTypes } from '../../constants/propTypes'
+import Block from './Block'
 
 export const propTypes = {
+  borderless: PropTypes.bool,
   className: PropTypes.string,
+  flex: PropTypes.bool,
   hover: PropTypes.bool,
   href: PropTypes.string,
   onBlur: PropTypes.func,
@@ -26,8 +29,10 @@ const defaultProps = {
 
 const Card = props => {
   const {
+    borderless,
     className,
     children,
+    flex,
     hover,
     href,
     onClick,
@@ -40,6 +45,8 @@ const Card = props => {
     'c-card',
     (onClick || href) && 'is-clickable',
     (onClick || hover || href) && 'is-hoverable',
+    borderless && 'is-borderless',
+    flex && 'is-flex',
     seamless && 'is-seamless',
     className
   )
@@ -62,5 +69,6 @@ const Card = props => {
 
 Card.propTypes = propTypes
 Card.defaultProps = defaultProps
+Card.Block = Block
 
 export default Card

@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import CardBlock from '..'
+import CardBlock from '../Block'
+import Scrollable from '../../Scrollable'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -52,6 +53,37 @@ describe('Click', () => {
   })
 })
 
+describe('Scrollable', () => {
+  test('Does not render Scrollable by default', () => {
+    const wrapper = shallow(<CardBlock />)
+    const o = wrapper.find(Scrollable)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders Scrollable if specified', () => {
+    const wrapper = mount(<CardBlock scrollable />)
+    const o = wrapper.find(Scrollable)
+    const n = wrapper.find('.c-card__block')
+
+    expect(o.length).toBe(1)
+    expect(o.hasClass('c-card__block')).toBeTruthy()
+    expect(o.hasClass('is-scrollable')).toBeTruthy()
+    expect(n.length).toBe(2)
+
+    wrapper.unmount()
+  })
+
+  test('Renders Scrollable with flex if specified', () => {
+    const wrapper = shallow(<CardBlock scrollable flex />)
+    const o = wrapper.find(Scrollable)
+
+    expect(o.length).toBe(1)
+    expect(o.hasClass('is-scrollable')).toBeTruthy()
+    expect(o.hasClass('is-flex')).toBeTruthy()
+  })
+})
+
 describe('Styles', () => {
   test('Does not have a size modifier style by default', () => {
     const wrapper = shallow(<CardBlock />)
@@ -66,5 +98,17 @@ describe('Styles', () => {
     const wrapper = shallow(<CardBlock size='sm' />)
 
     expect(wrapper.prop('className')).toContain('c-card__block--sm')
+  })
+
+  test('Renders bgMuted styles, if specified', () => {
+    const wrapper = shallow(<CardBlock bgMuted />)
+
+    expect(wrapper.hasClass('is-bg-muted')).toBeTruthy()
+  })
+
+  test('Renders flex styles, if specified', () => {
+    const wrapper = shallow(<CardBlock flex />)
+
+    expect(wrapper.hasClass('is-flex')).toBeTruthy()
   })
 })

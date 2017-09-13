@@ -92,9 +92,21 @@ describe('Selector', () => {
 })
 
 describe('Styles', () => {
+  test('Renders borderless styles, if specified', () => {
+    const wrapper = shallow(<Card borderless />)
+
+    expect(wrapper.hasClass('is-borderless')).toBeTruthy()
+  })
+
+  test('Renders flex styles, if specified', () => {
+    const wrapper = shallow(<Card flex />)
+
+    expect(wrapper.hasClass('is-flex')).toBeTruthy()
+  })
+
   test('Renders seamless styles, if specified', () => {
     const wrapper = shallow(<Card seamless />)
 
-    expect(wrapper.prop('className')).toContain('is-seamless')
+    expect(wrapper.hasClass('is-seamless')).toBeTruthy()
   })
 })
