@@ -80,7 +80,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    getChildContext() {
+    getChildContext () {
       return {
         closePortal: this.closePortal.bind(this)
       }

@@ -41,6 +41,19 @@ describe('Open', () => {
 
     expect(wrapper.hasClass('is-open')).not.toBeTruthy()
   })
+
+  test('Can change state by updating isOpen prop', () => {
+    const wrapper = shallow(<SidebarCollapsibleCard />)
+    wrapper.setProps({ isOpen: true })
+
+    expect(wrapper.hasClass('is-open')).toBeTruthy()
+    expect(wrapper.state().isOpen).toBeTruthy()
+
+    wrapper.setProps({ isOpen: false })
+
+    expect(wrapper.hasClass('is-open')).not.toBeTruthy()
+    expect(wrapper.state().isOpen).not.toBeTruthy()
+  })
 })
 
 describe('Header/Title', () => {

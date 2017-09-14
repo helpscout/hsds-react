@@ -47,7 +47,7 @@ storiesOf('Modal', module)
   ))
   .add('custom close trigger', () => {
     class Contents extends React.Component {
-      render() {
+      render () {
         return (
           <p>
             <button onClick={this.context.closePortal}>Close me</button>
