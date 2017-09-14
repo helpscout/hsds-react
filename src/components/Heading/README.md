@@ -16,6 +16,7 @@ A Heading component is a light-weight text heading wrapper enhanced with a colle
 | className | string | Custom class names to be added to the component. |
 | disableSelect | boolean | Disables text selection. |
 | light | boolean | Lightens the heading color. |
+| lineHeightReset | boolean | Sets the line-height to `1`. |
 | selector | string | Determines HTML selector. Default is `div`. |
 | size | string | Adjust heading size. |
 

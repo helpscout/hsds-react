@@ -59,4 +59,10 @@ describe('Styles', () => {
 
     expect(wrapper.prop('className')).toContain('is-light')
   })
+
+  test('Applies line-height reset styles if specified', () => {
+    const wrapper = shallow(<Heading lineHeightReset />)
+
+    expect(wrapper.hasClass('is-line-height-reset')).toBeTruthy()
+  })
 })

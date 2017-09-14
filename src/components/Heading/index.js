@@ -7,6 +7,7 @@ export const propTypes = {
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   light: PropTypes.bool,
+  lineHeightReset: PropTypes.bool,
   selector: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   size: sizeTypes
 }
@@ -22,6 +23,7 @@ const Heading = props => {
     className,
     disableSelect,
     light,
+    lineHeightReset,
     selector,
     size,
     ...rest
@@ -31,6 +33,7 @@ const Heading = props => {
     'c-Heading',
     disableSelect && 'is-disableSelect',
     light && 'is-light',
+    lineHeightReset && 'is-line-height-reset',
     size && `is-${size}`,
     className
   )
