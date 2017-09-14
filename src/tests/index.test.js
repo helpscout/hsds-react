@@ -9,6 +9,7 @@ import {
   Choice,
   ChoiceGroup,
   CloseButton,
+  Collapsible,
   EventListener,
   Flexy,
   FormGroup,
@@ -29,6 +30,7 @@ import {
   RouteWrapper,
   Select,
   Scrollable,
+  SidebarCollapsibleCard,
   Text,
   VisuallyHidden
 } from '..'
@@ -44,6 +46,7 @@ const components = [
   Choice,
   ChoiceGroup,
   CloseButton,
+  Collapsible,
   EventListener,
   Flexy,
   FormGroup,
@@ -64,6 +67,7 @@ const components = [
   Radio,
   Scrollable,
   Select,
+  SidebarCollapsibleCard,
   Text,
   VisuallyHidden
 ]

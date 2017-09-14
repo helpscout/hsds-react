@@ -118,13 +118,14 @@
       "config/**/*.js",
       "dist/**/*.js",
       "scripts/**/*.js",
-      "stories/**/*.js",
-      "src/**/*.test.js"
-    ]
+      "stories/**/*.js"
+    ],
+    "cache": false
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
+      "!src/tests/helpers/**/*.{js,jsx}",
       "!src/components/index.js"
     ],
     "setupFiles": [
@@ -178,6 +179,7 @@
       "jest",
       "React",
       "react",
+      "requestAnimationFrame",
       "test"
     ]
   },

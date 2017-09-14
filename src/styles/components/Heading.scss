@@ -71,4 +71,9 @@
       color: $value;
     }
   }
+
+  // Resets
+  &.is-line-height-reset {
+    line-height: 1;
+  }
 }
