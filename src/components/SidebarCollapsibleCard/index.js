@@ -58,13 +58,20 @@ class SidebarCollapsibleCard extends Component {
 
     const handleToggleOpen = this.handleToggleOpen.bind(this)
 
-    const headerMarkup = header || title ? (
-      <Heading className='c-SidebarCollapsibleCard__title' size='h4' lineHeightReset>
-        {title}
-      </Heading>
-    ) : null
+    const displayHeader = () => {
+      if (header) return header
+      if (title) {
+        return (
+          <Heading className='c-SidebarCollapsibleCard__title' size='h4' lineHeightReset>
+            {title}
+          </Heading>
+        )
+      }
+      return null
+    }
 
     const iconName = open ? 'caret-up' : 'caret-down'
+    const headerMarkup = displayHeader()
     const regionId = `${cardId}-region`
 
     return (
