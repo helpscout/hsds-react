@@ -31,6 +31,37 @@ const customHeader = (
 Note: `header` will override `title` if both are used.
 
 
+
+### Sortable
+
+This component can be drag sortable using the [Sortable](../Sortable) component. Due to the design of this component, you must pass `useDragHandle` and `hideDragHandles` into `Sortable`. This is because this component has it's own drag handles, which is activated when either `sortable` is true or when it is used within `Sortable`.
+
+```html
+<Sortable
+  useDragHandle
+  hideDragHandles
+>
+  <SidebarCollapsibleCard title='Zoolander 2'>
+    <dl>
+      <dt>Character</dt>
+      <dd>Jacobim Mugatu</dd>
+      <dt>Year</dt>
+      <dd>2016</dd>
+    </dl>
+  </SidebarCollapsibleCard>
+  <SidebarCollapsibleCard title='The Lego Movie'>
+    <dl>
+      <dt>Character</dt>
+      <dd>Lord Business</dd>
+      <dt>Year</dt>
+      <dd>2014</dd>
+    </dl>
+  </SidebarCollapsibleCard>
+</Sortable>
+```
+
+
+
 ## Props
 
 | Prop | Type | Description |
@@ -41,5 +72,6 @@ Note: `header` will override `title` if both are used.
 | isOpen | boolean | Opens/collapses the component. |
 | onClose | function | Callback function when the component closes. |
 | onOpen | function | Callback function when the component opens. |
+| sortable | boolean | Renders the drag handler for sorting. See [Sortable](../Sortable) |
 | style | string | Custom styles to be added to the component. |
 | title | string | Title for the header in this component. |

@@ -5084,7 +5084,7 @@ lodash.uniqby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
 
-lodash@4.x.x, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.1.0, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.4:
+lodash@4.x.x, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.1.0, lodash@^4.11.1, lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -6677,6 +6677,15 @@ react-simple-di@^1.2.0:
     babel-runtime "6.x.x"
     hoist-non-react-statics "1.x.x"
 
+react-sortable-hoc@^0.6.7:
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/react-sortable-hoc/-/react-sortable-hoc-0.6.7.tgz#e30d247bc36dd5a605430c331ac9cb50a5fa72a6"
+  dependencies:
+    babel-runtime "^6.11.6"
+    invariant "^2.2.1"
+    lodash "^4.12.0"
+    prop-types "^15.5.7"
+
 react-split-pane@^0.1.63:
   version "0.1.65"
   resolved "https://registry.yarnpkg.com/react-split-pane/-/react-split-pane-0.1.65.tgz#37c0b5ea5c960827e7f3621d0a114b0f8c9c8918"
@@ -7183,12 +7192,6 @@ sass-loader@6.0.6:
     lodash.tail "^4.1.1"
     pify "^3.0.0"
 
-sass-pathfinder@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/sass-pathfinder/-/sass-pathfinder-0.0.3.tgz#7c93c1b43a6ba823f420437590d9e04c84ce7edd"
-  dependencies:
-    lodash "^4.14.0"
-
 sass-pathfinder@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/sass-pathfinder/-/sass-pathfinder-0.0.5.tgz#e28259aa4da7b2949242c7dc36113a99000c17ce"
@@ -7276,16 +7279,6 @@ seed-card@0.1.0:
     seed-dash "0.0.1"
     seed-publish "0.0.4"
 
-seed-color-scheme-helpscout@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/seed-color-scheme-helpscout/-/seed-color-scheme-helpscout-0.0.3.tgz#8267ef6a2cc755a77581a8a65af27fb4a673ac40"
-  dependencies:
-    seed-color-scheme "0.0.2"
-
-seed-color-scheme@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/seed-color-scheme/-/seed-color-scheme-0.0.2.tgz#40de2ca0db44cb3bc84461b3266439aeebffc3e7"
-
 seed-color-scheme@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/seed-color-scheme/-/seed-color-scheme-0.3.0.tgz#a765ea3143675e6dd96ca699a72542b384e6eb1b"
@@ -7298,13 +7291,6 @@ seed-config@0.1.1:
   resolved "https://registry.yarnpkg.com/seed-config/-/seed-config-0.1.1.tgz#9810b2e372a618d8b0704ec5f282c5b872d198ab"
   dependencies:
     sass-pathfinder "0.0.5"
-
-seed-control@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/seed-control/-/seed-control-0.0.4.tgz#04ffbe0ea7b41bbbbeeff4ebe55269bf68d26696"
-  dependencies:
-    sass-pathfinder "0.0.5"
-    seed-dash "0.0.1"
 
 seed-control@0.1.0:
   version "0.1.0"
@@ -7351,17 +7337,6 @@ seed-harvester@0.1.5:
     sass-pathfinder "0.0.5"
     seed-packfinder "0.0.3"
 
-seed-input@0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/seed-input/-/seed-input-0.0.7.tgz#59e6539eb2d37d738e436790dbc3d0009029fdd1"
-  dependencies:
-    sass-pathfinder "0.0.5"
-    seed-border "0.0.10"
-    seed-control "0.0.4"
-    seed-dash "0.0.1"
-    seed-publish "0.1.1"
-    seed-states "0.0.4"
-
 seed-link@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/seed-link/-/seed-link-0.0.3.tgz#f188423b4bb5e9620317ca3ede3c9845a41a00f1"
@@ -7390,22 +7365,9 @@ seed-publish@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/seed-publish/-/seed-publish-0.0.4.tgz#da70b56caa36b840558e6569a18b2d5867de9d8e"
 
-seed-publish@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/seed-publish/-/seed-publish-0.1.1.tgz#8f8c38ed36ff44df014a977341d4853f59f51820"
-
 seed-publish@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/seed-publish/-/seed-publish-0.2.0.tgz#20060eb323d6808baa0436d844fa84049eb946fa"
-
-seed-states@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/seed-states/-/seed-states-0.0.4.tgz#83595515428b5f690b057624041a91dc930ac7a1"
-  dependencies:
-    sass-pathfinder "0.0.3"
-    seed-color-scheme "0.0.2"
-    seed-color-scheme-helpscout "0.0.3"
-    seed-dash "0.0.1"
 
 seed-this@0.0.5:
   version "0.0.5"

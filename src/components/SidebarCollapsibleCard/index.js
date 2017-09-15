@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { default as Collapsible, propTypes as collapsibleTypes } from '../Collapsible'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
+import SortableDragHandle from '../Sortable/DragHandle'
 import Icon from '../Icon'
 import { createUniqueIDFactory } from '../../utilities/id'
 import classNames from '../../utilities/classNames'
@@ -10,12 +11,14 @@ import classNames from '../../utilities/classNames'
 export const propTypes = Object.assign({}, collapsibleTypes, {
   header: PropTypes.element,
   title: PropTypes.string,
-  isOpen: PropTypes.bool
+  isOpen: PropTypes.bool,
+  sortable: PropTypes.bool
 })
 
 export const defaultProps = {
   duration: 200,
-  isOpen: false
+  isOpen: false,
+  sortable: false
 }
 
 const uniqueID = createUniqueIDFactory('SidebarCollapsibleCard')
@@ -49,6 +52,7 @@ class SidebarCollapsibleCard extends Component {
       onClose,
       onOpen,
       isOpen,
+      sortable,
       title,
       ...rest
     } = this.props
@@ -78,16 +82,22 @@ class SidebarCollapsibleCard extends Component {
     }
 
     const iconName = open ? 'caret-up' : 'caret-down'
-    const headerMarkup = displayHeader()
     const regionId = `${cardId}-region`
+    const headerMarkup = displayHeader()
+    const dragHandleMarkup = sortable ? (
+      <Flexy.Item>
+        <SortableDragHandle className='c-SidebarCollapsibleCard__drag-handle' />
+      </Flexy.Item>
+    ) : null
 
     return (
       <div className={componentClassName} {...rest} role='presentation' id={cardId}>
         <a href='#' className='c-SidebarCollapsibleCard__header' onClick={handleToggleOpen} role='heading' aria-expanded={open} aria-controls={regionId}>
-          <Flexy>
+          <Flexy gap='sm'>
             <Flexy.Block>
               {headerMarkup}
             </Flexy.Block>
+            {dragHandleMarkup}
             <Flexy.Item>
               <Icon name={iconName} size='14' muted />
             </Flexy.Item>

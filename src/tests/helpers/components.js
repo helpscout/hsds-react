@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 
 const baseComponentOptions = {
   className: '',
@@ -9,16 +9,18 @@ const baseComponentOptions = {
 export const baseComponentTest = (Component, options = baseComponentOptions) => {
   describe('ClassName', () => {
     test('Has default className', () => {
-      const wrapper = shallow(<Component />)
+      const wrapper = mount(<Component />)
 
       expect(wrapper.hasClass(options.className)).toBeTruthy()
+      wrapper.unmount()
     })
 
     test('Applies custom className if specified', () => {
       const customClass = 'piano-key-neck-tie'
-      const wrapper = shallow(<Component className={customClass} />)
+      const wrapper = mount(<Component className={customClass} />)
 
       expect(wrapper.hasClass(customClass)).toBeTruthy()
+      wrapper.unmount()
     })
   })
 
