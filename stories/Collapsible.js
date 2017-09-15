@@ -6,6 +6,7 @@ class SampleComponent extends Component {
   constructor () {
     super()
     this.state = { open: false }
+    this.handleToggleOpen = this.handleToggleOpen.bind(this)
   }
 
   handleToggleOpen () {
@@ -15,7 +16,7 @@ class SampleComponent extends Component {
   render () {
     const { children, ...rest } = this.props
     const { open } = this.state
-    const handleToggleOpen = this.handleToggleOpen.bind(this)
+    const handleToggleOpen = this.handleToggleOpen
 
     return (
       <div>

@@ -36,6 +36,8 @@ class Portal extends React.Component {
     this.isOpening = false
     this.isOpen = false
     this.isClosing = false
+    this.mountPortal = this.mountPortal.bind(this)
+    this.unmountPortal = this.unmountPortal.bind(this)
   }
 
   componentDidMount () {
@@ -139,7 +141,7 @@ class Portal extends React.Component {
       onBeforeOpen
     } = props
 
-    const mountPortal = this.mountPortal.bind(this)
+    const mountPortal = this.mountPortal
 
     if (onBeforeOpen) {
       /* istanbul ignore next */
@@ -158,7 +160,7 @@ class Portal extends React.Component {
       onBeforeClose
     } = props
 
-    const unmountPortal = this.unmountPortal.bind(this)
+    const unmountPortal = this.unmountPortal
 
     if (onBeforeClose) {
       /* istanbul ignore next */

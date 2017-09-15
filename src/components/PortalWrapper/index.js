@@ -30,6 +30,9 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         id: uniqueID(),
         isMounted: props.isOpen
       })
+      this.closePortal = this.closePortal.bind(this)
+      this.openPortal = this.openPortal.bind(this)
+      this.handleOnClose = this.handleOnClose.bind(this)
     }
 
     componentDidMount () {
@@ -82,7 +85,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     getChildContext () {
       return {
-        closePortal: this.closePortal.bind(this)
+        closePortal: this.closePortal
       }
     }
 
@@ -103,8 +106,8 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       // Remapping open/mount state for ComposedComponent
       const { id, isOpen: portalIsMounted, isMounted: portalIsOpen } = this.state
 
-      const openPortal = this.openPortal.bind(this)
-      const handleOnClose = this.handleOnClose.bind(this)
+      const openPortal = this.openPortal
+      const handleOnClose = this.handleOnClose
 
       const uniqueIndex = parseInt(id.replace(options.id, ''), 10)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null

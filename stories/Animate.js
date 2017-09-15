@@ -8,6 +8,7 @@ class AnimateOutExample extends Component {
     this.state = {
       show: true
     }
+    this.toggleIn = this.toggleIn.bind(this)
   }
 
   toggleIn () {
@@ -18,7 +19,7 @@ class AnimateOutExample extends Component {
 
   render () {
     const { show } = this.state
-    const toggleIn = this.toggleIn.bind(this)
+    const toggleIn = this.toggleIn
 
     return (
       <div>

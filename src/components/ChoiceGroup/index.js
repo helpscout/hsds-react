@@ -40,6 +40,7 @@ class ChoiceGroup extends Component {
       selectedValue: props.value ? [].concat(props.value) : []
     }
     this.multiSelect = true
+    this.handleOnChange = this.handleOnChange.bind(this)
   }
 
   componentWillMount () {
@@ -95,7 +96,7 @@ class ChoiceGroup extends Component {
       (multiSelectSetting || multiSelect) && 'is-multi-select',
       className
     )
-    const handleOnChange = this.handleOnChange.bind(this)
+    const handleOnChange = this.handleOnChange
 
     const choiceMarkup = children ? React.Children.map(children, (child, index) => {
       return (

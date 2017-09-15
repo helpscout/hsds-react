@@ -28,6 +28,10 @@ const defaultProps = {
 }
 
 class Resizer extends Component {
+  constructor () {
+    super()
+    this.handleOnResize = this.handleOnResize.bind(this)
+  }
   componentDidMount () {
     this.handleOnResize()
   }
@@ -74,7 +78,7 @@ class Resizer extends Component {
 
   render () {
     const { contents, minimumLines } = this.props
-    const handleOnResize = this.handleOnResize.bind(this)
+    const handleOnResize = this.handleOnResize
 
     const minimumLinesMarkup = minimumLines
       ? <div
