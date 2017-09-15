@@ -1,3 +1,4 @@
+@import "pack/seed-family/_index";
 @import "../configs/color";
 
 .c-SidebarCollapsibleCard {
@@ -5,6 +6,7 @@
   $br: 3px;
   $bx-sdw: _color(grey, 400);
   $offset: 16px;
+  $padding: 12px;
   background-color: transparent;
   border-radius: $br;
   box-shadow: 0 0 0 rgba($bx-sdw, 0);
@@ -17,7 +19,7 @@
     cursor: pointer;
     display: block;
     min-height: 40px;
-    padding: 12px 12px 12px $offset;
+    padding: $padding $padding $padding $offset;
     text-decoration: none;
 
     &:hover {
@@ -40,9 +42,23 @@
     padding: ceil($offset / 4) $offset $offset;
   }
 
+  &__drag-handle {
+    color: _color(text, muted);
+    margin: (-($padding)) (-(ceil($padding / 2))) (-($padding)) (-($padding));
+    padding: $padding ceil($padding / 2) $padding $padding;
+    @include parent(".is-sorting") {
+      color: _color(text);
+    }
+  }
+
   // Modifiers
   &.is-open {
     background-color: _color(grey, 200);
     box-shadow: 0 1px 2px $bx-sdw;
+  }
+
+  @include parent(".is-sorting") {
+    background-color: white;
+    box-shadow: 0 0 0 1px _color(grey, 500), 0 2px 4px $bx-sdw;
   }
 }

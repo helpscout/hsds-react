@@ -21,6 +21,7 @@ storiesOf('Icon', module)
       'cross-medium',
       'cross-small',
       'document',
+      'drag',
       'emoji',
       'helpscout-logo',
       'image-add',

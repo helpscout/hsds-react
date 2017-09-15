@@ -14,6 +14,7 @@ import clockSmall from '../../icons/clock-small.svg'
 import crossLarge from '../../icons/cross-large.svg'
 import crossMedium from '../../icons/cross-medium.svg'
 import crossSmall from '../../icons/cross-small.svg'
+import drag from '../../icons/drag.svg'
 import document from '../../icons/document.svg'
 import emoji from '../../icons/emoji.svg'
 import fullscreen from '../../icons/fullscreen.svg'
@@ -45,6 +46,7 @@ const ICONS = {
   'cross-large': crossLarge,
   'cross-medium': crossMedium,
   'cross-small': crossSmall,
+  drag,
   document,
   emoji,
   fullscreen,

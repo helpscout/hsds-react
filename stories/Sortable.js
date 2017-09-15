@@ -1,34 +1,15 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Sortable, SidebarCollapsibleCard } from '../src/index.js'
+import { Card, Sortable, SidebarCollapsibleCard } from '../src/index.js'
 
-storiesOf('SidebarCollapsibleCard', module)
+storiesOf('Sortable', module)
   .add('default', () => (
-    <div>
-      <SidebarCollapsibleCard title='Profile'>
-        Buddy the Elf
-      </SidebarCollapsibleCard>
-
-      <SidebarCollapsibleCard title='Status'>
-        Happy!
-      </SidebarCollapsibleCard>
-    </div>
+    <Sortable>
+      <Card>Jacobim Mugatu</Card>
+      <Card>Lord Business</Card>
+      <Card>Brennan Huff</Card>
+    </Sortable>
   ))
-  .add('open', () => (
-    <SidebarCollapsibleCard title='Profile' isOpen>
-      Buddy the Elf
-    </SidebarCollapsibleCard>
-  ))
-  .add('custom heading', () => {
-    const headerMarkup = (
-      <div style={{fontSize: 40}}>Giant Custom Header!</div>
-    )
-    return (
-      <SidebarCollapsibleCard header={headerMarkup} isOpen>
-        Buddy the Elf
-      </SidebarCollapsibleCard>
-    )
-  })
   .add('sidebar', () => (
     <Sortable
       useDragHandle

@@ -31,6 +31,7 @@ import {
   Select,
   Scrollable,
   SidebarCollapsibleCard,
+  Sortable,
   Text,
   VisuallyHidden
 } from '..'
@@ -68,6 +69,7 @@ const components = [
   Scrollable,
   Select,
   SidebarCollapsibleCard,
+  Sortable,
   Text,
   VisuallyHidden
 ]

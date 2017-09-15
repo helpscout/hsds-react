@@ -166,3 +166,23 @@ describe('Collapsible', () => {
     expect(p.onClose).toBe(fn)
   })
 })
+
+describe('Sortable', () => {
+  test('Not sortable by default', () => {
+    const wrapper = shallow(
+      <SidebarCollapsibleCard />
+    )
+    const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Adds Sortable.DragHandle if sortable', () => {
+    const wrapper = shallow(
+      <SidebarCollapsibleCard sortable />
+    )
+    const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+
+    expect(o.length).toBe(1)
+  })
+})
