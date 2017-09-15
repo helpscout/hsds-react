@@ -53,6 +53,8 @@ class Choice extends Component {
       checked: props.checked,
       id: props.id || uniqueID(props.componentID || 'Choice')
     }
+
+    this.handleOnChange = this.handleOnChange.bind(this)
   }
 
   componentWillReceiveProps (newProps) {
@@ -99,7 +101,7 @@ class Choice extends Component {
       className
     )
 
-    const handleOnChange = this.handleOnChange.bind(this)
+    const handleOnChange = this.handleOnChange
 
     let labelTextMarkup = hideLabel ? (
       <VisuallyHidden>{label}</VisuallyHidden>

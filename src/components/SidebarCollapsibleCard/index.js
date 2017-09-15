@@ -27,6 +27,7 @@ class SidebarCollapsibleCard extends Component {
       id: props.id || uniqueID(),
       isOpen: props.isOpen
     }
+    this.handleToggleOpen = this.handleToggleOpen.bind(this)
   }
 
   componentWillUpdate (nextProps, nextState) {
@@ -62,7 +63,7 @@ class SidebarCollapsibleCard extends Component {
       className
     )
 
-    const handleToggleOpen = this.handleToggleOpen.bind(this)
+    const handleToggleOpen = this.handleToggleOpen
 
     const displayHeader = () => {
       if (header) return header

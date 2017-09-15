@@ -58,6 +58,8 @@ class Input extends Component {
       height: null,
       value: props.value
     }
+    this.handleOnChange = this.handleOnChange.bind(this)
+    this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
 
   handleOnChange (e) {
@@ -97,8 +99,8 @@ class Input extends Component {
 
     const { height, id: inputID, value } = this.state
 
-    const handleOnChange = this.handleOnChange.bind(this)
-    const handleExpandingResize = this.handleExpandingResize.bind(this)
+    const handleOnChange = this.handleOnChange
+    const handleExpandingResize = this.handleExpandingResize
 
     const componentClassName = classNames(
       'c-Input',
