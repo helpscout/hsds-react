@@ -21,3 +21,4 @@ KeypressListener is used as a child component, as it's `document` on/off binding
 | --- | --- | --- |
 | keyCode | number | Number corresponding to the keyCode. We recommend you reference the [Keys constant](../../constants/Keys.js). |
 | handler | function | Callback when the keyCode is pressed. |
+| type | string | Type of key event: `keyup`, `keydown`, `keypress`. Default is `keyup` .|

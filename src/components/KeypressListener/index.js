@@ -8,11 +8,13 @@ import { addEventListener, removeEventListener } from '@shopify/javascript-utili
 
 export const propTypes = {
   keyCode: PropTypes.number,
-  handler: PropTypes.func
+  handler: PropTypes.func,
+  type: PropTypes.oneOf(['keyup', 'keypress', 'keydown'])
 }
 
-const defaultProp = {
-  handler: noop
+const defaultProps = {
+  handler: noop,
+  type: 'keyup'
 }
 
 class KeypressListener extends Component {
@@ -23,12 +25,12 @@ class KeypressListener extends Component {
 
   componentDidMount () {
     const node = document
-    addEventListener(node, 'keyup', this.handleKeyEvent)
+    addEventListener(node, this.props.type, this.handleKeyEvent)
   }
 
   componentWillUnmount () {
     const node = document
-    removeEventListener(node, 'keyup', this.handleKeyEvent)
+    removeEventListener(node, this.props.type, this.handleKeyEvent)
   }
 
   handleKeyEvent (event) {
@@ -45,6 +47,6 @@ class KeypressListener extends Component {
 }
 
 KeypressListener.propTypes = propTypes
-KeypressListener.defaultProp = defaultProp
+KeypressListener.defaultProps = defaultProps
 
 export default KeypressListener
