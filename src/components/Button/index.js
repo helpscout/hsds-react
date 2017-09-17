@@ -35,6 +35,7 @@ const defaultProps = {
 const Button = props => {
   const {
     accessibilityLabel,
+    buttonRef,
     children,
     className,
     disabled,
@@ -63,6 +64,7 @@ const Button = props => {
   return (
     <button
       aria-label={accessibilityLabel}
+      ref={buttonRef}
       className={componentClassName}
       disabled={disabled}
       onBlur={onBlur}

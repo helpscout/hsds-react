@@ -9,6 +9,8 @@ import { addEventListener, removeEventListener } from '@shopify/javascript-utili
 export const propTypes = {
   keyCode: PropTypes.number,
   handler: PropTypes.func,
+  modifier: PropTypes.string,
+  only: PropTypes.bool,
   type: PropTypes.oneOf(['keyup', 'keypress', 'keydown'])
 }
 
@@ -34,9 +36,16 @@ class KeypressListener extends Component {
   }
 
   handleKeyEvent (event) {
-    const {keyCode, handler} = this.props
+    const {keyCode, handler, modifier, only} = this.props
+    let modKey = true
+    if (modifier === 'shift') {
+      modKey = event.shiftKey
+    }
+    if (only) {
+      modKey = event.shiftKey === false
+    }
 
-    if (event.keyCode === keyCode) {
+    if (event.keyCode === keyCode && modKey) {
       handler(event)
     }
   }

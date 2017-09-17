@@ -20,6 +20,7 @@ class Item extends Component {
     super()
     this.handleOnBlur = this.handleOnBlur.bind(this)
     this.handleOnFocus = this.handleOnFocus.bind(this)
+    this.hasMenu = false
   }
 
   handleOnBlur (event, reactEvent) {
