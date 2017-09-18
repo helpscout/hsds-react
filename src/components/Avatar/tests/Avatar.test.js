@@ -8,6 +8,13 @@ const classNames = {
 }
 
 describe('Name', () => {
+  test('Uses the `initials` attribute if specified', () => {
+    const wrapper = shallow(<Avatar name='Ron Burgandy' initials='XY' />)
+    const title = wrapper.find(classNames.initials)
+
+    expect(title.text()).toBe('XY')
+  })
+
   test('Initializes first/last name to two letters', () => {
     const wrapper = shallow(<Avatar name='Ron Burgandy' />)
     const title = wrapper.find(classNames.initials)
