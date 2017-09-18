@@ -11,6 +11,7 @@ export const propTypes = {
   className: PropTypes.string,
   image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   name: PropTypes.string.isRequired,
+  initials: PropTypes.string,
   size: standardSizeTypes
 }
 
@@ -28,6 +29,7 @@ const Avatar = props => {
     size,
     ...rest
   } = props
+  let { initials } = props
 
   const componentClassName = classNames(
     'c-Avatar',
@@ -36,7 +38,7 @@ const Avatar = props => {
     className
   )
 
-  const initials = nameToInitials(name)
+  initials = initials || nameToInitials(name)
   const imageStyle = image ? { backgroundImage: `url('${image}')` } : null
 
   const text = count || initials
