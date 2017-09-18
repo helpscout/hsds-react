@@ -17,15 +17,62 @@ storiesOf('Dropdown', module)
       <Dropdown.Menu>
         <Dropdown.Item onFocus={logAction}>
           Hello 1
+
+          <Dropdown.Menu>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+
+              <Dropdown.Menu enableCycling>
+                <Dropdown.Item onFocus={logAction}>
+                  Hello 2
+                </Dropdown.Item>
+                <Dropdown.Item onFocus={logAction}>
+                  Hello 2
+                </Dropdown.Item>
+                <Dropdown.Item onFocus={logAction}>
+                  Hello 2
+                </Dropdown.Item>
+                <Dropdown.Item onFocus={logAction}>
+                  Hello 2
+                </Dropdown.Item>
+              </Dropdown.Menu>
+
+            </Dropdown.Item>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+          </Dropdown.Menu>
         </Dropdown.Item>
         <Dropdown.Item onFocus={logAction}>
-          Hello 2
+          <div>
+            Hello 2
+          </div>
         </Dropdown.Item>
         <Dropdown.Item onFocus={logAction}>
           Hello 3
         </Dropdown.Item>
         <Dropdown.Item onFocus={logAction}>
           Hello 4
+          <Dropdown.Menu enableCycling>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+          </Dropdown.Menu>
         </Dropdown.Item>
         <Dropdown.Item onFocus={logAction}>
           Hello 5

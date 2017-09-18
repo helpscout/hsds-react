@@ -3,6 +3,8 @@ import Divider from './Divider'
 import Item from './Item'
 import Menu from './Menu'
 import Trigger from './Trigger'
+import KeypressListener from '../KeypressListener'
+import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 
 class Dropdown extends Component {
@@ -14,6 +16,7 @@ class Dropdown extends Component {
     this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
     this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
     this.handleTriggerFocus = this.handleTriggerFocus.bind(this)
+    this.handleDownArrow = this.handleDownArrow.bind(this)
   }
 
   componentWillUpdate (nextProps) {
@@ -37,6 +40,14 @@ class Dropdown extends Component {
     triggerNode.focus()
   }
 
+  handleDownArrow () {
+    const { isOpen } = this.state
+    if (!isOpen) {
+      this.setState({ isOpen: true })
+      this.handleTriggerFocus()
+    }
+  }
+
   render () {
     const {
       children,
@@ -50,6 +61,7 @@ class Dropdown extends Component {
     const handleOnTriggerClick = this.handleOnTriggerClick
     const handleOnMenuClose = this.handleOnMenuClose
     const handleTriggerFocus = this.handleTriggerFocus
+    const handleDownArrow = this.handleDownArrow
 
     const componentClassName = classNames(
       'c-Dropdown',
@@ -71,6 +83,7 @@ class Dropdown extends Component {
 
     return (
       <div className={componentClassName} {...rest}>
+        <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
         {triggerMarkup}
         {menuMarkup}
       </div>

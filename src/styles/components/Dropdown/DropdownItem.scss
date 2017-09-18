@@ -1,0 +1,18 @@
+.c-DropdownItem {
+  @import "../../resets/base";
+
+  &.is-hover {
+    background: rgba(red, 0.2);
+  }
+  &.is-focused {
+    background: rgba(green, 0.2);
+  }
+  &.is-selected {
+    background: rgba(blue, 0.2);
+  }
+
+  &__link {
+    display: block;
+    outline: none;
+  }
+}

@@ -7,13 +7,17 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
+  enableCycling: PropTypes.bool,
   onFirstItemFocus: PropTypes.func,
   onLastItemFocus: PropTypes.func,
   isOpen: PropTypes.bool,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  parentMenu: PropTypes.bool,
+  selectedIndex: PropTypes.number
 }
 
 const defaultProps = {
+  enableCycling: false,
   onFirstItemFocus: noop,
   onLastItemFocus: noop,
   isOpen: false,
@@ -25,12 +29,13 @@ class Menu extends Component {
     super()
     this.state = {
       prevFocusIndex: null,
-      focusIndex: null,
+      focusIndex: props.selectedIndex !== undefined ? props.selectedIndex : null,
+      hoverIndex: null,
       hasFocus: false,
       isOpen: props.isOpen
     }
     this.items = []
-    this.isFocused = false
+    this.isFocused = props.isOpen ? props.isOpen : false
 
     this.handleUpArrow = this.handleUpArrow.bind(this)
     this.handleDownArrow = this.handleDownArrow.bind(this)
@@ -38,12 +43,17 @@ class Menu extends Component {
     this.handleRightArrow = this.handleRightArrow.bind(this)
     this.handleShiftTab = this.handleShiftTab.bind(this)
     this.handleTab = this.handleTab.bind(this)
+    this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
+    this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
 
     this.handleFocusItemNode = this.handleFocusItemNode.bind(this)
     this.handleItemOnBlur = this.handleItemOnBlur.bind(this)
     this.handleItemOnFocus = this.handleItemOnFocus.bind(this)
+    this.handleItemOnMouseEnter = this.handleItemOnMouseEnter.bind(this)
+    this.handleItemOnMouseLeave = this.handleItemOnMouseLeave.bind(this)
+    this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
+    this.handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
-    // this.handleTab = this.handleTab.bind(this)
     this.handleFocusFirstItem = this.handleFocusFirstItem.bind(this)
     this.handleFocusLastItem = this.handleFocusLastItem.bind(this)
   }
@@ -54,11 +64,16 @@ class Menu extends Component {
   }
 
   componentWillUpdate (nextProps) {
-    if (this.props.children !== nextProps.children) {
-      this.mapRefsToItems()
-    }
     if (this.props.isOpen !== nextProps.isOpen) {
+      this.mapRefsToItems()
       this.setState({ isOpen: nextProps.isOpen })
+      this.isFocused = nextProps.isOpen
+    }
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.isOpen !== prevProps.isOpen) {
+      this.mapRefsToItems()
     }
   }
 
@@ -89,17 +104,25 @@ class Menu extends Component {
   }
 
   incrementFocusIndex (direction = 'up') {
+    const { enableCycling } = this.props
     const { focusIndex } = this.state
+    const itemCount = this.items.length - 1
     let newFocusIndex
-    let prevFocusIndex
+    let prevFocusIndex = focusIndex
 
     if (direction === 'up') {
-      prevFocusIndex = focusIndex
-      newFocusIndex = focusIndex <= 1 ? 0 : focusIndex - 1
+      if (enableCycling) {
+        newFocusIndex = focusIndex <= 0 ? itemCount : focusIndex - 1
+      } else {
+        newFocusIndex = focusIndex <= 0 ? 0 : focusIndex - 1
+      }
     }
     if (direction === 'down') {
-      prevFocusIndex = focusIndex
-      newFocusIndex = focusIndex === null ? 0 : (this.items.length - 1) <= focusIndex ? focusIndex : focusIndex + 1
+      if (enableCycling) {
+        newFocusIndex = focusIndex === null ? 0 : itemCount <= focusIndex ? 0 : focusIndex + 1
+      } else {
+        newFocusIndex = focusIndex === null ? 0 : itemCount <= focusIndex ? focusIndex : focusIndex + 1
+      }
     }
     if (direction === 'reset') {
       prevFocusIndex = null
@@ -112,61 +135,127 @@ class Menu extends Component {
 
     this.setState({
       prevFocusIndex,
-      focusIndex: newFocusIndex
+      focusIndex: newFocusIndex,
+      hoverIndex: null
     })
   }
 
-  handleUpArrow () {
+  handleUpArrow (event) {
+    event.preventDefault()
     if (!this.isFocused) return
     this.incrementFocusIndex('up')
     this.handleFocusItemNode()
   }
 
-  handleDownArrow () {
+  handleDownArrow (event) {
+    event.preventDefault()
     if (!this.isFocused) return
     this.incrementFocusIndex('down')
     this.handleFocusItemNode()
   }
 
-  handleLeftArrow () {
+  handleLeftArrow (event) {
+    event.preventDefault()
+    if (!this.isFocused) return
+    const { parentMenu } = this.props
+    if (parentMenu) {
+      this.handleOnClose()
+    }
   }
 
-  handleRightArrow () {
+  handleRightArrow (event) {
+    event.preventDefault()
+    const { focusIndex } = this.state
+    if (!this.isFocused) return
+
+    if (focusIndex === null || focusIndex === undefined) return
+
+    const item = this.items[focusIndex]
+    if (item.menu) {
+      this.setState({ selectedIndex: focusIndex })
+      this.isFocused = false
+    }
+  }
+
+  handleOnMouseEnter () {
+    // const { parentMenu } = this.props
+    // if (parentMenu) {
+    //   this.isFocused = true
+    // }
+  }
+
+  handleOnMouseLeave () {
+    // const { parentMenu } = this.props
+    // if (parentMenu) {
+    //   this.isFocused = true
+    // }
   }
 
   handleTab () {
-    this.incrementFocusIndex('down')
+    // this.incrementFocusIndex('down')
   }
 
   handleShiftTab () {
-    this.incrementFocusIndex('up')
+    // this.incrementFocusIndex('up')
   }
 
   handleFocusItemNode () {
+    if (!this.isFocused) return
     const { focusIndex } = this.state
     const focusItem = this.items[focusIndex]
-
-    focusItem.node.focus()
+    if (focusItem) {
+      focusItem.node.focus()
+    }
   }
 
   handleItemOnBlur () {
-    this.setState({ focusIndex: 0 })
   }
 
   handleItemOnFocus (event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
-    this.setState({ focusIndex })
+    this.setState({ focusIndex, hoverIndex: null })
+  }
+
+  handleItemOnMouseEnter (event, reactEvent, item) {
+    const { focusIndex: oldFocusIndex } = this.state
+    const focusIndex = this.getIndexFromItem(item)
+    const hoverIndex = focusIndex
+    if (this.isFocused) {
+      this.setState({ focusIndex, hoverIndex })
+    } else {
+      this.setState({ focusIndex: oldFocusIndex, hoverIndex })
+    }
+  }
+
+  handleItemOnMouseLeave (event, reactEvent, item) {
+    this.setState({ focusIndex: null, hoverIndex: null })
+  }
+
+  handleItemOnMenuClose () {
+    this.isFocused = true
+    this.setState({ selectedIndex: null, hoverIndex: null })
+  }
+
+  handleItemOnClickToOpenMenu (event, reactEvent, item) {
+    const focusIndex = this.getIndexFromItem(item)
+    this.setState({ selectedIndex: focusIndex })
+    this.isFocused = false
   }
 
   handleOnClose () {
     const { onClose } = this.props
-    this.setState({ isOpen: false })
+    this.setState({ selectedIndex: null, isOpen: false })
     onClose()
   }
 
   handleFocusFirstItem (event) {
-    const { onFirstItemFocus } = this.props
+    const { onFirstItemFocus, parentMenu } = this.props
     const { prevFocusIndex, focusIndex } = this.state
+
+    if (parentMenu) {
+      this.handleOnClose()
+      return
+    }
 
     if (focusIndex === 0 && prevFocusIndex !== null) {
       this.incrementFocusIndex('reset')
@@ -189,12 +278,20 @@ class Menu extends Component {
     const {
       children,
       className,
-      onFirstItemFocus,
-      onLastItemFocus,
+      enableCycling,
       isOpen,
       onClose,
+      onFirstItemFocus,
+      onLastItemFocus,
+      parentMenu,
+      selectedIndex: propsSelectedIndex,
       ...rest
     } = this.props
+    const {
+      focusIndex,
+      hoverIndex,
+      selectedIndex
+    } = this.state
 
     const handleUpArrow = this.handleUpArrow
     const handleDownArrow = this.handleDownArrow
@@ -202,9 +299,15 @@ class Menu extends Component {
     const handleRightArrow = this.handleRightArrow
     const handleTab = this.handleTab
     const handleShiftTab = this.handleShiftTab
+    const handleOnMouseEnter = this.handleOnMouseEnter
+    const handleOnMouseLeave = this.handleOnMouseLeave
 
     const handleItemOnBlur = this.handleItemOnBlur
     const handleItemOnFocus = this.handleItemOnFocus
+    const handleItemOnMouseEnter = this.handleItemOnMouseEnter
+    const handleItemOnMouseLeave = this.handleItemOnMouseLeave
+    const handleItemOnMenuClose = this.handleItemOnMenuClose
+    const handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu
     const handleOnClose = this.handleOnClose
     const handleFocusFirstItem = this.handleFocusFirstItem
     const handleFocusLastItem = this.handleFocusLastItem
@@ -213,8 +316,16 @@ class Menu extends Component {
       const itemRef = `item-${index}`
       return React.cloneElement(child, {
         ref: itemRef,
+        isHover: hoverIndex === index,
+        isFocused: this.isFocused && focusIndex === index,
+        isSelected: selectedIndex === index,
         onBlur: handleItemOnBlur,
-        onFocus: handleItemOnFocus
+        onFocus: handleItemOnFocus,
+        onMouseEnter: handleItemOnMouseEnter,
+        onMouseLeave: handleItemOnMouseLeave,
+        onMenuClose: handleItemOnMenuClose,
+        onClickToOpenMenu: handleItemOnClickToOpenMenu,
+        parentMenu: true
       })
     })
 
@@ -223,13 +334,16 @@ class Menu extends Component {
       className
     )
 
-    return (
-      <div className={componentClassName} {...rest}>
+    const menuMarkup = isOpen ? (
+      <div
+        className={componentClassName}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
+        {...rest}
+      >
         <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
         <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
         <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
-        <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
-        <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
         <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
         <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
         <KeypressListener keyCode={Keys.TAB} handler={handleTab} only />
@@ -240,7 +354,9 @@ class Menu extends Component {
         </ul>
         <div tabIndex={0} onFocus={handleFocusLastItem} />
       </div>
-    )
+    ) : null
+
+    return menuMarkup
   }
 }
 
