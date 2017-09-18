@@ -26,10 +26,10 @@ const Avatar = props => {
     count,
     image,
     name,
+    initials,
     size,
     ...rest
   } = props
-  let { initials } = props
 
   const componentClassName = classNames(
     'c-Avatar',
@@ -38,10 +38,9 @@ const Avatar = props => {
     className
   )
 
-  initials = initials || nameToInitials(name)
   const imageStyle = image ? { backgroundImage: `url('${image}')` } : null
 
-  const text = count || initials
+  const text = count || initials || nameToInitials(name)
 
   const contentMarkup = image
     ? (
