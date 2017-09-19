@@ -2,6 +2,9 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Portal from '..'
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
+const PORTAL_TEST_TIMEOUT = 300
+
 const cleanUp = (wrapper) => {
   if (wrapper) wrapper.unmount()
   global.document.body.innerHTML = ''
@@ -37,7 +40,7 @@ test('Is removed from the body on unmount', (done) => {
     expect(document.getElementsByClassName('brick').length).toBe(0)
     cleanUp()
     done()
-  }, 10)
+  }, PORTAL_TEST_TIMEOUT)
 })
 
 test('Can add custom className', () => {
@@ -171,8 +174,6 @@ describe('renderTo', () => {
 })
 
 describe('Events', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
-
   test('onBeforeOpen callback works', () => {
     const mockCallback = jest.fn()
     const onBeforeOpen = (open) => {
@@ -242,7 +243,7 @@ describe('Events', () => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
       done()
-    }, 100)
+    }, PORTAL_TEST_TIMEOUT)
   })
 
   test('onClose callback works', (done) => {
@@ -262,7 +263,7 @@ describe('Events', () => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
       done()
-    }, 100)
+    }, PORTAL_TEST_TIMEOUT)
   })
 
   test('onBeforeClose + onClose callback works', (done) => {
@@ -287,6 +288,6 @@ describe('Events', () => {
       expect(mockCallback.mock.calls.length).toBe(2)
       cleanUp()
       done()
-    }, 100)
+    }, PORTAL_TEST_TIMEOUT)
   })
 })
