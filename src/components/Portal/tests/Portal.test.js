@@ -2,6 +2,9 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Portal from '..'
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
+const PORTAL_TEST_TIMEOUT = 300
+
 const cleanUp = (wrapper) => {
   if (wrapper) wrapper.unmount()
   global.document.body.innerHTML = ''
@@ -37,7 +40,7 @@ test('Is removed from the body on unmount', (done) => {
     expect(document.getElementsByClassName('brick').length).toBe(0)
     cleanUp()
     done()
-  }, 10)
+  }, PORTAL_TEST_TIMEOUT)
 })
 
 test('Can add custom className', () => {
@@ -84,9 +87,9 @@ describe('renderTo', () => {
     expect(custom).toContain('champ')
     expect(custom).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 
   test('Can render to custom DOM element, if specified', () => {
@@ -108,9 +111,9 @@ describe('renderTo', () => {
     expect(body).toContain('champ')
     expect(body).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 
   test('Can render to Portal.Container, if exists', () => {
@@ -135,9 +138,9 @@ describe('renderTo', () => {
     expect(custom).toContain('champ')
     expect(custom).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 
   test('Fallsback to document.body if custom selector doesn\'t exist', () => {
@@ -164,15 +167,13 @@ describe('renderTo', () => {
     expect(portal).toBeTruthy()
     expect(portal.innerHTML).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 })
 
 describe('Events', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
-
   test('onBeforeOpen callback works', () => {
     const mockCallback = jest.fn()
     const onBeforeOpen = (open) => {
@@ -236,13 +237,14 @@ describe('Events', () => {
       </Portal>
     , { attachTo: testBody })
 
-    wrapper.detach()
+    wrapper.unmount()
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
+      wrapper.detach()
       done()
-    }, 100)
+    }, PORTAL_TEST_TIMEOUT)
   })
 
   test('onClose callback works', (done) => {
@@ -256,13 +258,14 @@ describe('Events', () => {
       </Portal>
     , { attachTo: testBody })
 
-    wrapper.detach()
+    wrapper.unmount()
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
+      wrapper.detach()
       done()
-    }, 100)
+    }, PORTAL_TEST_TIMEOUT)
   })
 
   test('onBeforeClose + onClose callback works', (done) => {
@@ -281,12 +284,13 @@ describe('Events', () => {
       </Portal>
     , { attachTo: testBody })
 
-    wrapper.detach()
+    wrapper.unmount()
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(2)
+      wrapper.detach()
       cleanUp()
       done()
-    }, 100)
+    }, PORTAL_TEST_TIMEOUT)
   })
 })
