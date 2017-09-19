@@ -140,3 +140,101 @@ describe('Item', () => {
     wrapper.unmount()
   })
 })
+
+describe('Stateful parent component', () => {
+  class ParentComponent extends React.Component {
+    constructor (props) {
+      super()
+      this.state = {
+        items: props.items ? props.items : []
+      }
+      this.handleOnSort = this.handleOnSort.bind(this)
+    }
+
+    handleOnSort () {
+      this.setState({ items: this.state.items.concat('Brian') })
+    }
+
+    render () {
+      const items = this.state.items.map(i => (
+        <div key={i}>{i}</div>
+      ))
+
+      return (
+        <Sortable onSortEnd={this.handleOnSort}>
+          {items}
+        </Sortable>
+      )
+    }
+  }
+
+  class ParentComponentTwo extends React.Component {
+    constructor (props) {
+      super()
+      this.state = {
+        value: 0,
+        items: props.items ? props.items : []
+      }
+      this.handleOnSort = this.handleOnSort.bind(this)
+    }
+
+    handleOnSort () {
+      this.setState({
+        value: this.state.value + 1
+      })
+    }
+
+    render () {
+      const {
+        className
+      } = this.props
+      const items = this.state.items.map(i => (
+        <div key={i}>{i}</div>
+      ))
+
+      return (
+        <Sortable onSortEnd={this.handleOnSort} className={className}>
+          {items}
+        </Sortable>
+      )
+    }
+  }
+
+  test('Should re-render items stateful change via onSortEnd', () => {
+    const items = ['Ron', 'Brick', 'Champ']
+    const wrapper = mount(<ParentComponent items={items} />)
+    const o = wrapper.find(Sortable)
+    const oldState = o.node.state
+
+    expect(wrapper.find('.c-SortableItem').length).toBe(3)
+    o.props().onSortEnd()
+    expect(wrapper.find('.c-SortableItem').length).toBe(4)
+    o.props().onSortEnd()
+    expect(wrapper.find('.c-SortableItem').length).toBe(5)
+
+    expect(oldState.items).not.toEqual(o.node.state.items)
+
+    wrapper.unmount()
+  })
+
+  test('Should only re-render Sortable if children prop is updated', () => {
+    const items = ['Ron', 'Brick', 'Champ']
+    const wrapper = mount(<ParentComponentTwo items={items} />)
+    const o = wrapper.find(Sortable)
+    const oldWrapperState = wrapper.state()
+    const oldState = o.node.state
+
+    expect(wrapper.find('.c-SortableItem').length).toBe(3)
+    o.props().onSortEnd()
+    expect(wrapper.find('.c-SortableItem').length).toBe(3)
+    o.props().onSortEnd()
+    expect(wrapper.find('.c-SortableItem').length).toBe(3)
+
+    wrapper.setProps({ className: 'news-team' })
+
+    expect(oldWrapperState).not.toEqual(wrapper.state())
+    expect(oldState.items).toEqual(o.node.state.items)
+
+    wrapper.unmount()
+  })
+})

@@ -22,8 +22,16 @@ class Sortable extends Component {
     this.remapChildrenToState()
   }
 
-  remapChildrenToState () {
-    const { children } = this.props
+  componentWillReceiveProps (nextProps) {
+    /* istanbul ignore next */
+    /* Note: There are tests for this, but for some reason, Istanbul isn't
+     * picking it up */
+    if (this.props.children !== nextProps.children) {
+      this.remapChildrenToState(nextProps.children)
+    }
+  }
+
+  remapChildrenToState (children = this.props.children) {
     if (!children) return
 
     const items = React.Children.map(children, (child, index) => {
