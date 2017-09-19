@@ -1,15 +1,24 @@
 import React from 'react'
+import Bubble from './Bubble'
+import ChatBlock from './ChatBlock'
 import classNames from '../../utilities/classNames'
-// import PropTypes from 'prop-types'
-import Text from '../Text'
+import { bubbleTypes } from './propTypes'
 
-export const propTypes = {
-}
+export const propTypes = bubbleTypes
 
 const Chat = props => {
   const {
     children,
     className,
+    read,
+    from,
+    ltr,
+    primary,
+    rtl,
+    size,
+    timestamp,
+    title,
+    to,
     ...rest
   } = props
 
@@ -19,13 +28,28 @@ const Chat = props => {
   )
 
   return (
-    <div>
-      <div className={componentClassName} {...rest}>
-        <Text>
-          {children}
-        </Text>
-      </div>
-    </div>
+    <ChatBlock
+      className={componentClassName}
+      from={from}
+      ltr={ltr}
+      read={read}
+      rtl={rtl}
+      timestamp={timestamp}
+      to={to}
+      {...rest}
+    >
+      <Bubble
+        from={from}
+        ltr={ltr}
+        primary={primary}
+        rtl={rtl}
+        size={size}
+        title={title}
+        to={to}
+      >
+        {children}
+      </Bubble>
+    </ChatBlock>
   )
 }
 

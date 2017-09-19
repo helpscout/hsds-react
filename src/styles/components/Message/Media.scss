@@ -1,0 +1,18 @@
+@import "pack/seed-this/_index";
+
+.c-MessageMedia {
+  @import "../../resets/base";
+  $block: this();
+
+  &__caption {
+    padding: 8px;
+  }
+
+  &__media-container {
+    padding-bottom: 4px;
+
+    #{$block}__media {
+      cursor: pointer;
+    }
+  }
+}

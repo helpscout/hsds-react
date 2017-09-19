@@ -1,8 +1,10 @@
 @import "pack/seed-dash/_index";
+@import "pack/seed-family/_index";
 
 .c-Avatar {
   @import "../configs/color";
   @import "../resets/base";
+  $block: this();
   $sizes: (
     lg: (
       size: 52px,
@@ -32,6 +34,17 @@
     justify-content: center;
     overflow: hidden;
     width: 100%;
+
+    // Styles
+    @include parent(".is-circle > ") {
+      border-radius: 200%;
+    }
+    @include parent(".is-rounded > ") {
+      border-radius: 3px;
+    }
+    @include parent(".is-square > ") {
+      border-radius: 0;
+    }
   }
 
   &__image {

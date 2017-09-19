@@ -11,10 +11,12 @@ export const propTypes = {
   className: PropTypes.string,
   clickable: PropTypes.bool,
   ignoreClick: PropTypes.bool,
+  faint: PropTypes.bool,
   muted: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   size: sizeTypes,
+  subtle: PropTypes.bool,
   title: PropTypes.string
 }
 
@@ -32,11 +34,13 @@ const Icon = props => {
     center,
     className,
     clickable,
+    faint,
     ignoreClick,
     muted,
     onClick,
     name,
     size,
+    subtle,
     title,
     ...rest
   } = props
@@ -46,7 +50,9 @@ const Icon = props => {
     center && 'is-center',
     clickable && 'is-clickable',
     !clickable && ignoreClick && 'is-noInteract',
+    faint && 'is-faint',
     muted && 'is-muted',
+    subtle && 'is-subtle',
     size && `is-${size}`,
     className
   )

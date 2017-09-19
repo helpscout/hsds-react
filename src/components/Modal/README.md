@@ -31,6 +31,7 @@ A Modal component presents content within a container on top of the application'
 | exact | boolean | Used with `path` and React Router. Renders if path matches _exactly_ |
 | isOpen | boolean | Shows/hides the component. |
 | path | string | Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). |
+| scrollFade | boolean | Enables the upper fade-to-white styles. Default `true`. |
 | trigger | element | The UI the user clicks to trigger the modal. |
 
 

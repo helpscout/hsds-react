@@ -1,0 +1,27 @@
+@import "pack/seed-this/_index";
+
+.c-Message {
+  @import "../../resets/base";
+  $block: this();
+  margin-bottom: 20px;
+  min-width: 320px;
+
+  &__avatar-block {
+    padding-bottom: 1px;
+    padding-top: 1px;
+    width: 28px;
+  }
+
+  &.is-to {
+    text-align: right;
+
+    #{$block}__avatar-block {
+      display: flex;
+      align-self: flex-end;
+    }
+  }
+
+  &.is-from {
+    text-align: left;
+  }
+}

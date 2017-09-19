@@ -3,6 +3,7 @@
 .c-Icon {
   @import "../configs/color";
   $sizes: (12, 14, 16, 18, 20, 24);
+  $shades: faint, muted, subtle;
   $default-size: 20;
 
   box-sizing: border-box;
@@ -24,8 +25,11 @@
     pointer-events: none;
   }
 
-  &.is-muted {
-    color: _color(text, muted);
+  // Shades
+  @each $shade in $shades {
+    &.is-#{$shade} {
+      color: _color(text, $shade);
+    }
   }
 
   // Sizes

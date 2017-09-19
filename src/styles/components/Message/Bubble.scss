@@ -1,0 +1,75 @@
+@import "pack/seed-family/_index";
+@import "pack/seed-this/_index";
+@import "../../configs/color";
+
+.c-MessageBubble {
+  @import "../../resets/base";
+  $block: this();
+  $parent-block: ".c-MessageChat";
+  $br: 8px;
+  $br-sm: 2px;
+  $default-padding: 12px 20px 12px;
+  $width: 380px;
+
+  background-color: _color(grey, 400);
+  border: 1px solid _color(grey, 400);
+  border-top-left-radius: $br;
+  border-top-right-radius: $br;
+  border-bottom-right-radius: $br-sm;
+  border-bottom-left-radius: $br;
+  display: inline-block;
+  padding: $default-padding;
+  max-width: 500px;
+  text-align: left;
+
+  &__title {
+    margin-bottom: 2px;
+  }
+
+  @include parent("#{$parent-block} ~ #{$parent-block}") {
+    border-top-right-radius: $br-sm;
+  }
+
+  &.is-from {
+    background-color: white;
+    border-color: _color(grey, 500);
+    border-top-left-radius: $br-sm;
+    border-top-right-radius: $br;
+    border-bottom-right-radius: $br;
+    border-bottom-left-radius: $br-sm;
+
+    @include parent("#{$parent-block}:last-of-type") {
+      border-top-right-radius: $br;
+      border-bottom-left-radius: $br;
+    }
+  }
+
+  // Styles
+  &.is-primary {
+    background-color: _color(blue);
+    border-color: _color(blue);
+    color: white;
+
+    * {
+      color: currentColor;
+    }
+
+    #{$block}__title {
+      opacity: 0.6;
+    }
+  }
+
+  // Direction
+  &.is-rtl {
+    direction: rtl;
+    text-align: right;
+  }
+
+  // Sizes
+  &.is-md {
+    padding: $default-padding;
+  }
+  &.is-sm {
+    padding: 5px;
+  }
+}

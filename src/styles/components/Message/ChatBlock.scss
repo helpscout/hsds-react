@@ -1,0 +1,18 @@
+.c-MessageChatBlock {
+  @import "../../resets/base";
+  $timestamp-size: 60px;
+  display: block;
+  margin: 0 0 2px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__timestamp {
+    min-width: $timestamp-size;
+  }
+
+  &__block {
+    max-width: calc(100% - #{$timestamp-size});
+  }
+}

@@ -10,14 +10,18 @@ import { createUniqueIDFactory } from '../../utilities/id'
 const ANIMATION_TIMEOUT = 200
 
 const defaultOptions = {
-  id: 'PortalWrapper'
+  id: 'PortalWrapper',
+  lockBodyOnOpen: false
 }
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
-  const propTypes = portalTypes
+  const propTypes = Object.assign({}, portalTypes, {
+    lockBodyOnOpen: PropTypes.bool
+  })
 
   const defaultProps = {
     isOpen: false,
+    lockBodyOnOpen: false,
     timeout: 0
   }
 
@@ -33,6 +37,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       this.closePortal = this.closePortal.bind(this)
       this.openPortal = this.openPortal.bind(this)
       this.handleOnClose = this.handleOnClose.bind(this)
+      this.bodyOverflowStyle = null
     }
 
     componentDidMount () {
@@ -54,6 +59,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         isOpen: true,
         isMounted: true
       })
+      this.lockBody()
     }
 
     closePortal () {
@@ -61,11 +67,31 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         isOpen: false,
         isMounted: false
       })
+      this.unlockBody()
+    }
+
+    lockBody () {
+      const { lockBodyOnOpen } = this.state
+      if (lockBodyOnOpen) {
+        // Cache the overflow style
+        if (this.bodyOverflowStyle === null) {
+          this.bodyOverflowStyle = document.body.style.overflow
+        }
+        document.body.style.overflow = 'hidden'
+      }
+    }
+
+    unlockBody () {
+      const { lockBodyOnOpen } = this.state
+      if (lockBodyOnOpen) {
+        document.body.style.overflow = this.bodyOverflowStyle
+      }
     }
 
     sequenceClosePortal (onClose) {
       setTimeout(() => {
         onClose()
+        this.unlockBody()
       }, ANIMATION_TIMEOUT)
     }
 

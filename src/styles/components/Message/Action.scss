@@ -1,0 +1,11 @@
+@import "../../configs/color";
+
+.c-MessageAction {
+  @import "../../resets/base";
+  padding-bottom: 4px;
+  padding-top: 4px;
+
+  a {
+    color: _color(charcoal, 400);
+  }
+}
