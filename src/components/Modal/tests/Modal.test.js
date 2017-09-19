@@ -31,6 +31,7 @@ describe('Trigger', () => {
     expect(el.text()).toBe('Trigger')
 
     wrapper.unmount()
+    cleanUp()
   })
 
   test('Automatically receives click event', () => {
@@ -40,6 +41,7 @@ describe('Trigger', () => {
     expect(el.prop('onClick')).toBeInstanceOf(Function)
 
     wrapper.unmount()
+    cleanUp()
   })
 })
 
@@ -57,10 +59,10 @@ describe('Key events', () => {
     setTimeout(() => {
       expect(document.body.childNodes.length).toBeLessThan(preCloseNodeCount)
       expect(document.getElementsByClassName('c-Modal').length).toBe(0)
+      wrapper.unmount()
+      cleanUp()
       done()
     }, MODAL_TEST_TIMEOUT)
-
-    wrapper.unmount()
   })
 })
 
@@ -89,6 +91,7 @@ describe('Portal', () => {
     expect(modal.exists()).toBeFalsy()
 
     wrapper.unmount()
+    cleanUp()
   })
 
   test('Renders at the body', () => {
@@ -102,6 +105,7 @@ describe('Portal', () => {
     expect(modal.classList).toContain('c-Modal')
 
     wrapper.unmount()
+    cleanUp()
   })
 
   test('Does not render by default', (done) => {
@@ -114,7 +118,7 @@ describe('Portal', () => {
       expect(portal).not.toBeTruthy()
 
       wrapper.unmount()
-
+      cleanUp()
       done()
     }, MODAL_TEST_TIMEOUT)
   })
@@ -138,9 +142,9 @@ describe('Route', () => {
 
     expect(modal).toBeTruthy()
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
     done()
   })
 
@@ -162,9 +166,9 @@ describe('Route', () => {
 
     expect(modal).toBeTruthy()
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
     done()
   })
 
@@ -185,9 +189,9 @@ describe('Route', () => {
 
     expect(modal).toBeFalsy()
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
     done()
   })
 })
@@ -207,7 +211,7 @@ describe('Style', () => {
     expect(html).toContain('red')
 
     wrapper.unmount()
-    global.document.body.innerHTML = ''
+    cleanUp()
     done()
   })
 
@@ -227,7 +231,7 @@ describe('Style', () => {
     expect(html).toContain('2000')
 
     wrapper.unmount()
-    global.document.body.innerHTML = ''
+    cleanUp()
     done()
   })
 
@@ -244,7 +248,7 @@ describe('Style', () => {
     expect(html).toContain('2000')
 
     wrapper.unmount()
-    global.document.body.innerHTML = ''
+    cleanUp()
     done()
   })
 })
@@ -266,11 +270,12 @@ describe('PortalWrapper', () => {
       <Modal onBeforeClose={onBeforeClose} isOpen />
     , { attachTo: testBody })
 
-    wrapper.detach()
+    wrapper.unmount()
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
+      wrapper.detach()
       done()
     }, MODAL_TEST_TIMEOUT)
   })
