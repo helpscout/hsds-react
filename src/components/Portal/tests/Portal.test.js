@@ -87,9 +87,9 @@ describe('renderTo', () => {
     expect(custom).toContain('champ')
     expect(custom).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 
   test('Can render to custom DOM element, if specified', () => {
@@ -111,9 +111,9 @@ describe('renderTo', () => {
     expect(body).toContain('champ')
     expect(body).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 
   test('Can render to Portal.Container, if exists', () => {
@@ -138,9 +138,9 @@ describe('renderTo', () => {
     expect(custom).toContain('champ')
     expect(custom).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 
   test('Fallsback to document.body if custom selector doesn\'t exist', () => {
@@ -167,9 +167,9 @@ describe('renderTo', () => {
     expect(portal).toBeTruthy()
     expect(portal.innerHTML).toContain('BRICK')
 
+    wrapper.unmount()
     wrapper.detach()
-    global.document.body.removeChild(testBody)
-    global.document.body.innerHTML = ''
+    cleanUp()
   })
 })
 
@@ -237,11 +237,12 @@ describe('Events', () => {
       </Portal>
     , { attachTo: testBody })
 
-    wrapper.detach()
+    wrapper.unmount()
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
+      wrapper.detach()
       done()
     }, PORTAL_TEST_TIMEOUT)
   })
@@ -257,11 +258,12 @@ describe('Events', () => {
       </Portal>
     , { attachTo: testBody })
 
-    wrapper.detach()
+    wrapper.unmount()
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(1)
       cleanUp()
+      wrapper.detach()
       done()
     }, PORTAL_TEST_TIMEOUT)
   })
@@ -282,10 +284,11 @@ describe('Events', () => {
       </Portal>
     , { attachTo: testBody })
 
-    wrapper.detach()
+    wrapper.unmount()
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(2)
+      wrapper.detach()
       cleanUp()
       done()
     }, PORTAL_TEST_TIMEOUT)
