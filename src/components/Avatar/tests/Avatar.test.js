@@ -3,6 +3,7 @@ import { mount, shallow } from 'enzyme'
 import Avatar from '..'
 
 const classNames = {
+  root: '.c-Avatar',
   image: '.c-Avatar__photo',
   initials: '.c-Avatar__title'
 }
@@ -42,6 +43,12 @@ describe('Name', () => {
 
     expect(title.text()).toBe('Elf')
   })
+
+  test('Sets `title` attribute to the `name`', () => {
+    const wrapper = shallow(<Avatar name='Bobby McGee' />)
+    const root = wrapper.find(classNames.root)
+    expect(root.prop('title')).toBe('Bobby McGee')
+  })
 })
 
 describe('Image', () => {
@@ -74,6 +81,12 @@ describe('Image', () => {
     const initials = wrapper.find(classNames.initials)
 
     expect(initials.exists()).toBeFalsy()
+  })
+
+  test('Sets `title` attribute to the `name`', () => {
+    const wrapper = shallow(<Avatar name='Bobby McGee' />)
+    const root = wrapper.find(classNames.root)
+    expect(root.prop('title')).toBe('Bobby McGee')
   })
 })
 
