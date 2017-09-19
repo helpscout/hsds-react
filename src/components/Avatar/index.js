@@ -62,7 +62,7 @@ const Avatar = props => {
   } : null
 
   return (
-    <div className={componentClassName} {...rest}>
+    <div className={componentClassName} title={name} {...rest}>
       <div className='c-Avatar__crop' style={styles}>
         {contentMarkup}
       </div>
