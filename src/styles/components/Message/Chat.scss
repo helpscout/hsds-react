@@ -1,0 +1,26 @@
+@import "../../configs/color";
+
+.c-MessageChat {
+  @import "../../resets/base";
+  $br: 8px;
+  $br-sm: 2px;
+
+  background-color: _color(grey, 300);
+  border-radius: $br $br-sm $br-sm $br;
+  display: block;
+  padding: 12px 20px 12px;
+  margin: 0 0 2px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:first-of-type {
+    border-top-right-radius: $br;
+    // border-bottom-left-radius: $br-sm;
+  }
+  &:last-of-type {
+    // border-top-left-radius: $br-sm;
+    border-bottom-right-radius: $br;
+  }
+}
