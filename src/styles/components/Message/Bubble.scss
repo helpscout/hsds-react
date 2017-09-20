@@ -9,7 +9,6 @@
   $br: 8px;
   $br-sm: 2px;
   $default-padding: 12px 20px 12px;
-  $width: 380px;
 
   background-color: _color(grey, 400);
   border: 1px solid _color(grey, 400);
@@ -24,6 +23,10 @@
 
   &__title {
     margin-bottom: 2px;
+  }
+
+  &__typing {
+    padding: 4px 0;
   }
 
   @include parent("#{$parent-block} ~ #{$parent-block}") {
@@ -44,6 +47,20 @@
     }
   }
 
+  // Direction
+  &.is-rtl {
+    direction: rtl;
+    text-align: right;
+  }
+
+  // Sizes
+  &.is-md {
+    padding: $default-padding;
+  }
+  &.is-sm {
+    padding: 5px;
+  }
+
   // Styles
   &.is-primary {
     background-color: _color(blue);
@@ -59,17 +76,13 @@
     }
   }
 
-  // Direction
-  &.is-rtl {
-    direction: rtl;
-    text-align: right;
-  }
+  &.is-note {
+    background-color: _color(yellow, 200);
+    border-color: _color(yellow, 400);
+    color: _color(yellow, 800);
 
-  // Sizes
-  &.is-md {
-    padding: $default-padding;
-  }
-  &.is-sm {
-    padding: 5px;
+    * {
+      color: currentColor;
+    }
   }
 }

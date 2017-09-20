@@ -19,6 +19,7 @@ const Media = props => {
     caption,
     from,
     imageUrl,
+    isNote,
     ltr,
     primary,
     read,
@@ -65,6 +66,7 @@ const Media = props => {
     <Chat
       className={componentClassName}
       from={from}
+      isNote={isNote}
       ltr={ltr}
       primary={primary}
       read={read}

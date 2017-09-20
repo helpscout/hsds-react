@@ -7,6 +7,8 @@
   $shades: faint, muted, subtle;
   $sizes: (11, 12, 13, 14, 15, 16, 20, 48);
 
+  line-height: 1.5;
+
   // Select
   &.is-disableSelect {
     user-select: none;
@@ -23,6 +25,7 @@
   @each $size in $sizes {
     &.is-#{$size} {
       font-size: #{$size}px;
+      line-height: 1.5;
     }
   }
 
@@ -39,5 +42,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  &.is-word-wrap {
+    word-break: break-word;
+  }
+
+  // Resets
+  &.is-line-height-reset {
+    line-height: 1;
   }
 }

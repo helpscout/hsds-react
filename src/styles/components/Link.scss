@@ -5,4 +5,8 @@ $seed-link-include-a-selector: false;
 
 .c-link {
   @import "../resets/base";
+
+  &.is-word-wrap {
+    word-break: break-all;
+  }
 }

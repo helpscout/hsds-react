@@ -2,19 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { shouldWordWrap } from '../../utilities/strings'
 import RouteWrapper from '../RouteWrapper'
 
 export const propTypes = {
+  autoWordWrap: PropTypes.bool,
   className: PropTypes.string,
   external: PropTypes.bool,
   href: PropTypes.string,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
-  to: PropTypes.string
+  to: PropTypes.string,
+  wordWrap: PropTypes.bool
 }
 
 const defaultProps = {
+  autoWordWrap: true,
   external: false,
   href: '#',
   onBlur: noop,
@@ -23,16 +27,30 @@ const defaultProps = {
 }
 
 const Link = props => {
-  const { className, external, href, ...rest } = props
+  const {
+    autoWordWrap,
+    children,
+    className,
+    external,
+    href,
+    wordWrap,
+    ...rest
+  } = props
 
-  const componentClassName = classNames('c-link', className)
+  const forceWordWrap = wordWrap || (autoWordWrap && shouldWordWrap(children))
+
+  const componentClassName = classNames(
+    'c-link',
+    forceWordWrap && 'is-word-wrap',
+    className
+  )
 
   const target = external ? '_blank' : undefined
   const rel = external ? 'noopener noreferrer' : undefined
 
   return (
     <a className={componentClassName} target={target} rel={rel} href={href} {...rest}>
-      {props.children}
+      {children}
     </a>
   )
 }

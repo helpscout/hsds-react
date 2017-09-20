@@ -12,6 +12,7 @@ const Chat = props => {
     className,
     read,
     from,
+    isNote,
     ltr,
     primary,
     rtl,
@@ -19,6 +20,7 @@ const Chat = props => {
     timestamp,
     title,
     to,
+    typing,
     ...rest
   } = props
 
@@ -40,12 +42,14 @@ const Chat = props => {
     >
       <Bubble
         from={from}
+        isNote={isNote}
         ltr={ltr}
         primary={primary}
         rtl={rtl}
         size={size}
         title={title}
         to={to}
+        typing={typing}
       >
         {children}
       </Bubble>

@@ -13,7 +13,9 @@ export const chatTypes = Object.assign({}, messageTypes, {
 })
 
 export const bubbleTypes = Object.assign({}, chatTypes, {
+  isNote: PropTypes.bool,
   primary: PropTypes.bool,
   title: PropTypes.string,
-  size: PropTypes.oneOf(['md', 'sm', ''])
+  size: PropTypes.oneOf(['md', 'sm', '']),
+  typing: PropTypes.bool
 })

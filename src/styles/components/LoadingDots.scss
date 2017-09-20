@@ -2,10 +2,11 @@
   @import "../configs/color";
   $gap: 3px;
   $size: 5px;
+  color: _color(grey, 800);
   display: flex;
 
   &__dot {
-    background-color: _color(grey, 800);
+    background-color: currentColor;
     border-radius: 200%;
     display: block;
     margin-right: $gap;

@@ -5,6 +5,7 @@ import Flexy from '../Flexy'
 import Action from './Action'
 import Bubble from './Bubble'
 import Chat from './Chat'
+import Content from './Content'
 import Media from './Media'
 import Question from './Question'
 import Timestamp from './Timestamp'
@@ -39,10 +40,8 @@ const Message = props => {
   )
 
   const isChatType = child => {
-    return child.type === Action ||
-      child.type === Chat ||
-      child.type === Media ||
-      child.type === Question
+    const chatTypes = [Action, Chat, Content, Media, Question]
+    return chatTypes.some(child.type)
   }
 
   const childrenMarkup = React.Children.map(children, (child) => {
@@ -86,6 +85,7 @@ Message.defaultProps = defaultProps
 Message.Action = Action
 Message.Bubble = Bubble
 Message.Chat = Chat
+Message.Content = Content
 Message.Media = Media
 Message.Question = Question
 Message.Timestamp = Timestamp

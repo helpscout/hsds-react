@@ -4,7 +4,6 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { blockSelectorTagTypes } from '../../constants/propTypes'
 import Block from './Block'
-
 export const propTypes = {
   borderless: PropTypes.bool,
   className: PropTypes.string,
@@ -47,6 +46,7 @@ const Card = props => {
     (onClick || hover || href) && 'is-hoverable',
     borderless && 'is-borderless',
     flex && 'is-flex',
+    href && 'is-link',
     seamless && 'is-seamless',
     className
   )

@@ -1,6 +1,6 @@
 import React from 'react'
-import classNames from '../../utilities/classNames'
 import PropTypes from 'prop-types'
+import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   inline: PropTypes.bool
