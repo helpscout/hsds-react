@@ -10,12 +10,13 @@ const logAction = () => {
 
 storiesOf('Dropdown', module)
   .add('default', () => (
-    <Dropdown>
-      <Dropdown.Trigger>
+    <div>
+      <Dropdown>
+        <Dropdown.Trigger>
         Hello
       </Dropdown.Trigger>
-      <Dropdown.Menu>
-        <Dropdown.Item onFocus={logAction}>
+        <Dropdown.Menu>
+          <Dropdown.Item onFocus={logAction}>
           Hello 1
 
           <Dropdown.Menu>
@@ -48,16 +49,16 @@ storiesOf('Dropdown', module)
               Hello 2
             </Dropdown.Item>
           </Dropdown.Menu>
-        </Dropdown.Item>
-        <Dropdown.Item onFocus={logAction}>
-          <div>
+          </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
+            <div>
             Hello 2
           </div>
-        </Dropdown.Item>
-        <Dropdown.Item onFocus={logAction}>
+          </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
           Hello 3
         </Dropdown.Item>
-        <Dropdown.Item onFocus={logAction}>
+          <Dropdown.Item onFocus={logAction}>
           Hello 4
           <Dropdown.Menu enableCycling>
             <Dropdown.Item onFocus={logAction}>
@@ -73,13 +74,50 @@ storiesOf('Dropdown', module)
               Hello 2
             </Dropdown.Item>
           </Dropdown.Menu>
-        </Dropdown.Item>
-        <Dropdown.Item onFocus={logAction}>
+          </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
           Hello 5
         </Dropdown.Item>
-        <Dropdown.Item onFocus={logAction}>
+          <Dropdown.Item onFocus={logAction}>
           Hello 6
         </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+        </Dropdown.Menu>
+      </Dropdown>
+      <Dropdown>
+        <Dropdown.Trigger>
+          Hello
+        </Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item onFocus={logAction}>
+          Hello 1
+        </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
+            <div>
+            Hello 2
+          </div>
+          </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
+          Hello 3
+        </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
+          Hello 4
+          <Dropdown.Menu enableCycling>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+            <Dropdown.Item onFocus={logAction}>
+              Hello 2
+            </Dropdown.Item>
+          </Dropdown.Menu>
+          </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
+          Hello 5
+        </Dropdown.Item>
+          <Dropdown.Item onFocus={logAction}>
+          Hello 6
+        </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <a href='#'>Link</a>
+    </div>
   ))

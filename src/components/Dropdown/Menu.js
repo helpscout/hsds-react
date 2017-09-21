@@ -41,8 +41,6 @@ class Menu extends Component {
     this.handleDownArrow = this.handleDownArrow.bind(this)
     this.handleLeftArrow = this.handleLeftArrow.bind(this)
     this.handleRightArrow = this.handleRightArrow.bind(this)
-    this.handleShiftTab = this.handleShiftTab.bind(this)
-    this.handleTab = this.handleTab.bind(this)
     this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
     this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
 
@@ -54,8 +52,6 @@ class Menu extends Component {
     this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
     this.handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
-    this.handleFocusFirstItem = this.handleFocusFirstItem.bind(this)
-    this.handleFocusLastItem = this.handleFocusLastItem.bind(this)
   }
 
   componentDidMount () {
@@ -96,11 +92,6 @@ class Menu extends Component {
 
   itemHasMenu (item) {
 
-  }
-
-  isLastItemFocused () {
-    const { focusIndex } = this.state
-    return focusIndex === this.items.length - 1
   }
 
   incrementFocusIndex (direction = 'up') {
@@ -191,14 +182,6 @@ class Menu extends Component {
     // }
   }
 
-  handleTab () {
-    // this.incrementFocusIndex('down')
-  }
-
-  handleShiftTab () {
-    // this.incrementFocusIndex('up')
-  }
-
   handleFocusItemNode () {
     if (!this.isFocused) return
     const { focusIndex } = this.state
@@ -208,12 +191,13 @@ class Menu extends Component {
     }
   }
 
-  handleItemOnBlur () {
+  handleItemOnBlur (event) {
   }
 
   handleItemOnFocus (event, reactEvent, item) {
+    const { focusIndex: prevFocusIndex } = this.state
     const focusIndex = this.getIndexFromItem(item)
-    this.setState({ focusIndex, hoverIndex: null })
+    this.setState({ prevFocusIndex, focusIndex, hoverIndex: null })
   }
 
   handleItemOnMouseEnter (event, reactEvent, item) {
@@ -248,32 +232,6 @@ class Menu extends Component {
     onClose()
   }
 
-  handleFocusFirstItem (event) {
-    const { onFirstItemFocus, parentMenu } = this.props
-    const { prevFocusIndex, focusIndex } = this.state
-
-    if (parentMenu) {
-      this.handleOnClose()
-      return
-    }
-
-    if (focusIndex === 0 && prevFocusIndex !== null) {
-      this.incrementFocusIndex('reset')
-      onFirstItemFocus()
-    } else {
-      this.incrementFocusIndex('start')
-      setTimeout(() => {
-        this.handleFocusItemNode()
-      }, 0)
-    }
-  }
-
-  handleFocusLastItem (event) {
-    const { onLastItemFocus } = this.props
-    this.handleOnClose()
-    onLastItemFocus()
-  }
-
   render () {
     const {
       children,
@@ -297,8 +255,6 @@ class Menu extends Component {
     const handleDownArrow = this.handleDownArrow
     const handleLeftArrow = this.handleLeftArrow
     const handleRightArrow = this.handleRightArrow
-    const handleTab = this.handleTab
-    const handleShiftTab = this.handleShiftTab
     const handleOnMouseEnter = this.handleOnMouseEnter
     const handleOnMouseLeave = this.handleOnMouseLeave
 
@@ -309,8 +265,6 @@ class Menu extends Component {
     const handleItemOnMenuClose = this.handleItemOnMenuClose
     const handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu
     const handleOnClose = this.handleOnClose
-    const handleFocusFirstItem = this.handleFocusFirstItem
-    const handleFocusLastItem = this.handleFocusLastItem
 
     const childrenMarkup = React.Children.map(children, (child, index) => {
       const itemRef = `item-${index}`
@@ -331,6 +285,7 @@ class Menu extends Component {
 
     const componentClassName = classNames(
       'c-DropdownMenu',
+      'c-card',
       className
     )
 
@@ -339,6 +294,7 @@ class Menu extends Component {
         className={componentClassName}
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseLeave}
+        ref={node => { this.node = node }}
         {...rest}
       >
         <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
@@ -346,13 +302,9 @@ class Menu extends Component {
         <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
         <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
         <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
-        <KeypressListener keyCode={Keys.TAB} handler={handleTab} only />
-        <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={handleShiftTab} />
-        <div tabIndex={0} onFocus={handleFocusFirstItem} />
         <ul>
           {childrenMarkup}
         </ul>
-        <div tabIndex={0} onFocus={handleFocusLastItem} />
       </div>
     ) : null
 

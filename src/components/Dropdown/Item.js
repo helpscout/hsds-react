@@ -147,7 +147,7 @@ class Item extends Component {
           onFocus={handleOnFocus}
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
-          tabIndex={0}
+          tabIndex={-1}
           ref={node => { this.node = node }}
         >
           {itemMarkup}
