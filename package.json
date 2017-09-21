@@ -11,6 +11,7 @@
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
     "clean": "rm -rf dist && mkdir dist",
     "dev": "npm run test:dev",
+    "deploy": "storybook-to-ghpages",
     "dist": "babel src --out-dir dist --copy-files",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@storybook/react": "3.1.9",
+    "@storybook/storybook-deployer": "2.0.0",
     "autoprefixer": "7.1.1",
     "babel-cli": "^6.24.1",
     "babel-core": "6.25.0",
