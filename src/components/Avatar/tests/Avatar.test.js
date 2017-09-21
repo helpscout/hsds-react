@@ -3,11 +3,19 @@ import { mount, shallow } from 'enzyme'
 import Avatar from '..'
 
 const classNames = {
+  root: '.c-Avatar',
   image: '.c-Avatar__photo',
   initials: '.c-Avatar__title'
 }
 
 describe('Name', () => {
+  test('Uses the `initials` attribute if specified', () => {
+    const wrapper = shallow(<Avatar name='Ron Burgandy' initials='XY' />)
+    const title = wrapper.find(classNames.initials)
+
+    expect(title.text()).toBe('XY')
+  })
+
   test('Initializes first/last name to two letters', () => {
     const wrapper = shallow(<Avatar name='Ron Burgandy' />)
     const title = wrapper.find(classNames.initials)
@@ -34,6 +42,12 @@ describe('Name', () => {
     const title = wrapper.find(classNames.initials)
 
     expect(title.text()).toBe('Elf')
+  })
+
+  test('Sets `title` attribute to the `name`', () => {
+    const wrapper = shallow(<Avatar name='Bobby McGee' />)
+    const root = wrapper.find(classNames.root)
+    expect(root.prop('title')).toBe('Bobby McGee')
   })
 })
 
@@ -67,6 +81,12 @@ describe('Image', () => {
     const initials = wrapper.find(classNames.initials)
 
     expect(initials.exists()).toBeFalsy()
+  })
+
+  test('Sets `title` attribute to the `name`', () => {
+    const wrapper = shallow(<Avatar name='Bobby McGee' />)
+    const root = wrapper.find(classNames.root)
+    expect(root.prop('title')).toBe('Bobby McGee')
   })
 })
 

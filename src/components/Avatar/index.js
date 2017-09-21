@@ -11,6 +11,7 @@ export const propTypes = {
   className: PropTypes.string,
   image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   name: PropTypes.string.isRequired,
+  initials: PropTypes.string,
   size: standardSizeTypes
 }
 
@@ -25,6 +26,7 @@ const Avatar = props => {
     count,
     image,
     name,
+    initials,
     size,
     ...rest
   } = props
@@ -36,10 +38,9 @@ const Avatar = props => {
     className
   )
 
-  const initials = nameToInitials(name)
   const imageStyle = image ? { backgroundImage: `url('${image}')` } : null
 
-  const text = count || initials
+  const text = count || initials || nameToInitials(name)
 
   const contentMarkup = image
     ? (
@@ -61,7 +62,7 @@ const Avatar = props => {
   } : null
 
   return (
-    <div className={componentClassName} {...rest}>
+    <div className={componentClassName} title={name} {...rest}>
       <div className='c-Avatar__crop' style={styles}>
         {contentMarkup}
       </div>

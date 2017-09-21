@@ -23,8 +23,7 @@ const defaultProps = {
 }
 
 const Link = props => {
-  const {
-    className, external, href, ...rest } = props
+  const { className, external, href, ...rest } = props
 
   const componentClassName = classNames('c-link', className)
 
