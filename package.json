@@ -55,6 +55,7 @@
     "coveralls": "2.13.1",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
+    "emoji-mart": "^1.0.1",
     "enzyme": "2.9.1",
     "eslint": "3.19.0",
     "eslint-config-react-app": "^1.0.5",

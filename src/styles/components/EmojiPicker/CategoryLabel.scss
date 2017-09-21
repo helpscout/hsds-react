@@ -1,0 +1,9 @@
+@import "../../configs/color";
+
+.emoji-mart-category-label {
+  // <Heading size='small' muted /> styles
+  color: _color(charcoal, 200);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
