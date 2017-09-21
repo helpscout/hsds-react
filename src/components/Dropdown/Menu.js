@@ -2,6 +2,7 @@ import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
 import KeypressListener from '../KeypressListener'
+import Overlay from '../Overlay'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -290,21 +291,24 @@ class Menu extends Component {
     )
 
     const menuMarkup = isOpen ? (
-      <div
-        className={componentClassName}
-        onMouseEnter={handleOnMouseEnter}
-        onMouseLeave={handleOnMouseLeave}
-        ref={node => { this.node = node }}
-        {...rest}
-      >
-        <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
-        <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
-        <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
-        <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
-        <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
-        <ul>
-          {childrenMarkup}
-        </ul>
+      <div>
+        <div
+          className={componentClassName}
+          onMouseEnter={handleOnMouseEnter}
+          onMouseLeave={handleOnMouseLeave}
+          ref={node => { this.node = node }}
+          {...rest}
+        >
+          <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
+          <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
+          <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
+          <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
+          <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
+          <ul>
+            {childrenMarkup}
+          </ul>
+        </div>
+        <Overlay onClick={handleOnClose} />
       </div>
     ) : null
 

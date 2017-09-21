@@ -32,15 +32,15 @@ class Dropdown extends Component {
   }
 
   handleClick (event) {
-    if (this.state.isOpen) {
-      const clickNode = event.target
-      const triggerNode = this.refs.trigger.node
-      const menuNode = this.refs.menu.node
+    // if (this.state.isOpen) {
+    //   const clickNode = event.target
+    //   const triggerNode = this.refs.trigger.node
+    //   const menuNode = this.refs.menu.node
 
-      if (clickNode !== triggerNode && !menuNode.contains(clickNode)) {
-        this.handleOnMenuClose()
-      }
-    }
+    //   if (clickNode !== triggerNode && !menuNode.contains(clickNode)) {
+    //     this.handleOnMenuClose()
+    //   }
+    // }
   }
 
   handleOnTriggerClick () {
