@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { Select } from '../src/index.js'
 
 storiesOf('Select', module)
@@ -23,7 +22,7 @@ storiesOf('Select', module)
       }
     ]
     return (
-      <Select options={options} onChange={action('value')} value='five' />
+      <Select options={options} value='five' />
     )
   })
   .add('placeholder', () => (
