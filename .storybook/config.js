@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { addDecorator, configure } from '@storybook/react'
-import { setOptions } from '@storybook/addon-options'
+// import { setOptions } from '@storybook/addon-options'
 
 const Docs = props => {
   return (
@@ -12,11 +12,11 @@ const Docs = props => {
   )
 }
 
-setOptions({
-  name: 'Blue',
-  url: 'https://github.com/helpscout/blue',
-  showDownPanel: false,
-})
+// setOptions({
+//   name: 'Blue',
+//   url: 'https://github.com/helpscout/blue',
+//   showDownPanel: false,
+// })
 
 addDecorator(story => (
   <Docs story={story} />
