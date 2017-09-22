@@ -1,5 +1,4 @@
 import React from 'react'
-import addons from '@storybook/addons'
 import Story from './components/Story'
 
 const addPrettyDocs = (storyFn, context, infoOptions) => {

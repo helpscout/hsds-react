@@ -33,7 +33,6 @@ class Story extends Component {
       </div>
     ) : null
 
-
     return (
       <div className='DocStory'>
         {renderHeading}
