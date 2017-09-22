@@ -1,4 +1,11 @@
 .c-DropdownMenu {
   position: relative;
+  width: 200px;
   z-index: 1;
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 }

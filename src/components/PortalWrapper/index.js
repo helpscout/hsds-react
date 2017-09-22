@@ -7,8 +7,6 @@ import { default as Portal, propTypes as portalTypes } from '../Portal'
 import Keys from '../../constants/Keys'
 import { createUniqueIDFactory } from '../../utilities/id'
 
-const ANIMATION_TIMEOUT = 200
-
 const defaultOptions = {
   id: 'PortalWrapper'
 }
@@ -18,7 +16,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
   const defaultProps = {
     isOpen: false,
-    timeout: 0
+    timeout: 200
   }
 
   const uniqueID = createUniqueIDFactory(options.id)
@@ -66,7 +64,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     sequenceClosePortal (onClose) {
       setTimeout(() => {
         onClose()
-      }, ANIMATION_TIMEOUT)
+      }, this.state.timeout)
     }
 
     handleOnClose (onClose) {
@@ -117,7 +115,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
           animateOnMount={false}
           in={portalIsMounted}
           unmountOnExit
-          wait={ANIMATION_TIMEOUT}
+          wait={this.state.timeout}
         >
           <Portal
             onBeforeClose={handleOnClose}
@@ -127,7 +125,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             id={id}
             renderTo={renderTo}
             portalIsMounted={portalIsMounted}
-            timeout={timeout}
+            timeout={this.state.timeout}
             {...rest}
           >
             <ComposedComponent
@@ -135,6 +133,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
               closePortal={handleOnClose}
               portalIsOpen={portalIsOpen}
               portalIsMounted={portalIsMounted}
+              trigger={trigger}
               zIndex={zIndex}
               {...rest}
             />
@@ -146,7 +145,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         <Route exact={exact} path={path} render={props => portalMarkup} />
       ) : portalMarkup
 
-      const triggerMarkup = trigger
+      const triggerMarkup = trigger && React.isValidElement(trigger)
         ? React.cloneElement(trigger, {
           onClick: openPortal
         })

@@ -1,11 +1,15 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
+import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
+import Card from '../Card'
+import Drop from '../Drop'
 import Overlay from '../Overlay'
+import Scrollable from '../Scrollable'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
+import { noop, requestAnimationFrame } from '../../utilities/other'
 
 export const propTypes = {
   enableCycling: PropTypes.bool,
@@ -25,6 +29,11 @@ const defaultProps = {
   onClose: noop
 }
 
+const dropOptions = {
+  id: 'Dropdown',
+  openOnArrowDown: true
+}
+
 class Menu extends Component {
   constructor (props) {
     super()
@@ -33,7 +42,8 @@ class Menu extends Component {
       focusIndex: props.selectedIndex !== undefined ? props.selectedIndex : null,
       hoverIndex: null,
       hasFocus: false,
-      isOpen: props.isOpen
+      isOpen: props.isOpen,
+      height: null
     }
     this.items = []
     this.isFocused = props.isOpen ? props.isOpen : false
@@ -53,11 +63,14 @@ class Menu extends Component {
     this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
     this.handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
+
+    this.setHeight = this.setHeight.bind(this)
   }
 
   componentDidMount () {
     this.mapRefsToItems()
     this.setMenuFocus()
+    this.setHeight()
   }
 
   componentWillUpdate (nextProps) {
@@ -72,6 +85,24 @@ class Menu extends Component {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.mapRefsToItems()
     }
+  }
+
+  setHeight () {
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const cr = this.listNode.getBoundingClientRect()
+        const offset = 20
+        let height
+        if (cr.top + (cr.height + 2) > window.innerHeight) {
+          height = window.innerHeight - cr.top - offset
+        } else {
+          height = null
+        }
+        if (height !== this.state.height) {
+          this.setState({ height })
+        }
+      }, 0)
+    })
   }
 
   setMenuFocus () {
@@ -89,10 +120,6 @@ class Menu extends Component {
 
   getIndexFromItem (item) {
     return this.items.indexOf(item)
-  }
-
-  itemHasMenu (item) {
-
   }
 
   incrementFocusIndex (direction = 'up') {
@@ -237,6 +264,7 @@ class Menu extends Component {
     const {
       children,
       className,
+      closePortal,
       enableCycling,
       isOpen,
       onClose,
@@ -244,8 +272,10 @@ class Menu extends Component {
       onLastItemFocus,
       parentMenu,
       selectedIndex: propsSelectedIndex,
+      trigger,
       ...rest
     } = this.props
+
     const {
       focusIndex,
       hoverIndex,
@@ -266,6 +296,7 @@ class Menu extends Component {
     const handleItemOnMenuClose = this.handleItemOnMenuClose
     const handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu
     const handleOnClose = this.handleOnClose
+    const setHeight = this.setHeight
 
     const childrenMarkup = React.Children.map(children, (child, index) => {
       const itemRef = `item-${index}`
@@ -286,12 +317,17 @@ class Menu extends Component {
 
     const componentClassName = classNames(
       'c-DropdownMenu',
-      'c-card',
       className
     )
 
-    const menuMarkup = isOpen ? (
-      <div>
+    const overlayMarkup = !parentMenu ? (
+      <Overlay onClick={closePortal} fixed transparent />
+    ) : null
+
+    const cardStyle = { height: this.state.height }
+
+    return (
+      <div className='c-DropdownMenuWrapper'>
         <div
           className={componentClassName}
           onMouseEnter={handleOnMouseEnter}
@@ -299,24 +335,30 @@ class Menu extends Component {
           ref={node => { this.node = node }}
           {...rest}
         >
+          <EventListener event='resize' handler={setHeight} />
           <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
           <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
           <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
           <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
-          <ul>
-            {childrenMarkup}
-          </ul>
+          <Card seamless style={cardStyle}>
+            <Scrollable>
+              <ul
+                className='c-DropdownMenu__list'
+                ref={node => { this.listNode = node }}
+              >
+                {childrenMarkup}
+              </ul>
+            </Scrollable>
+          </Card>
         </div>
-        <Overlay onClick={handleOnClose} />
+        {overlayMarkup}
       </div>
-    ) : null
-
-    return menuMarkup
+    )
   }
 }
 
 Menu.propTypes = propTypes
 Menu.defaultProps = defaultProps
 
-export default Menu
+export default Drop(dropOptions)(Menu)

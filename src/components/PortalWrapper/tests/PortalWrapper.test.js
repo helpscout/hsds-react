@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import PortalWrapper from '..'
 
-const PORTAL_TEST_TIMEOUT = 250
+const PORTAL_TEST_TIMEOUT = 400
 const TestButton = props => {
   const handleClick = () => {
     console.log('wee')

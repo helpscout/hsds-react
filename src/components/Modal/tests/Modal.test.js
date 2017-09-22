@@ -5,7 +5,7 @@ import Portal from '../../Portal'
 import Keys from '../../../constants/Keys'
 import { MemoryRouter as Router } from 'react-router'
 
-const MODAL_TEST_TIMEOUT = 280
+const MODAL_TEST_TIMEOUT = 500
 const cleanUp = (wrapper) => {
   if (wrapper) wrapper.unmount()
   global.document.body.innerHTML = ''
@@ -254,7 +254,7 @@ describe('Style', () => {
 })
 
 describe('PortalWrapper', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
 
   test('onBeforeClose callback works', (done) => {
     const testBody = global.document.createElement('div')

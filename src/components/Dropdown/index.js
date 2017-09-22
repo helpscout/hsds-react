@@ -96,7 +96,6 @@ class Dropdown extends Component {
     const handleOnTriggerClick = this.handleOnTriggerClick
     const handleOnTriggerFocus = this.handleOnTriggerFocus
     const handleOnMenuClose = this.handleOnMenuClose
-    const handleTriggerFocus = this.handleTriggerFocus
     const handleDownArrow = this.handleDownArrow
     const handleTab = this.handleTab
     const handleShiftTab = this.handleShiftTab
@@ -116,9 +115,8 @@ class Dropdown extends Component {
     const menuMarkup = isOpen ? React.cloneElement(children[1], {
       isOpen,
       onClose: handleOnMenuClose,
-      onFirstItemFocus: handleTriggerFocus,
-      onLastItemFocus: () => { console.log('weee') },
-      ref: 'menu'
+      ref: 'menu',
+      trigger: this.refs.trigger
     }) : null
 
     return (

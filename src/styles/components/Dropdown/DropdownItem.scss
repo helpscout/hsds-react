@@ -1,5 +1,14 @@
+@import "../../configs/color";
+
 .c-DropdownItem {
   @import "../../resets/base";
+  border-bottom: 1px solid _color(grey, 400);
+  cursor: pointer;
+  padding: 0;
+
+  &:last-child {
+    border: none;
+  }
 
   &.is-hover {
     background: rgba(red, 0.2);
@@ -14,5 +23,6 @@
   &__link {
     display: block;
     outline: none;
+    padding: 8px 8px;
   }
 }
