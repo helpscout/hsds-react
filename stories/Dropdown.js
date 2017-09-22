@@ -1,10 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Dropdown } from '../src/index.js'
-import { action } from '@storybook/addon-actions'
 
 const logAction = () => {
-  action('Action!')
   console.log('Action')
 }
 
