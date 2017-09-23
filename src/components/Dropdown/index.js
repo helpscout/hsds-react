@@ -12,7 +12,8 @@ class Dropdown extends Component {
   constructor (props) {
     super()
     this.state = {
-      isOpen: props.isOpen
+      isOpen: props.isOpen,
+      selectedIndex: null
     }
     this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
     this.handleOnTriggerFocus = this.handleOnTriggerFocus.bind(this)
@@ -56,7 +57,7 @@ class Dropdown extends Component {
   handleDownArrow () {
     const { isOpen } = this.state
     if (!isOpen && this.isFocused) {
-      this.setState({ isOpen: true })
+      this.setState({ isOpen: true, selectedIndex: 0 })
     }
   }
 
@@ -87,7 +88,8 @@ class Dropdown extends Component {
       ...rest
     } = this.props
     const {
-      isOpen
+      isOpen,
+      selectedIndex
     } = this.state
 
     const handleOnTriggerClick = this.handleOnTriggerClick
@@ -112,7 +114,8 @@ class Dropdown extends Component {
       isOpen,
       onClose: handleOnMenuClose,
       ref: 'menu',
-      trigger: this.refs.trigger
+      trigger: this.refs.trigger,
+      selectedIndex
     }) : null
 
     return (
