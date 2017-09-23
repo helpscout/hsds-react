@@ -3,17 +3,16 @@ import Divider from './Divider'
 import Item from './Item'
 import Menu from './Menu'
 import Trigger from './Trigger'
-import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
+import { focusNextFocusableNode, focusPreviousFocusableNode } from '../../utilities/focus'
 
 class Dropdown extends Component {
   constructor (props) {
     super()
     this.state = {
-      isOpen: props.isOpen,
-      isFocused: false
+      isOpen: props.isOpen
     }
     this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
     this.handleOnTriggerFocus = this.handleOnTriggerFocus.bind(this)
@@ -22,7 +21,7 @@ class Dropdown extends Component {
     this.handleDownArrow = this.handleDownArrow.bind(this)
     this.handleTab = this.handleTab.bind(this)
     this.handleShiftTab = this.handleShiftTab.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.isFocused = false
   }
 
   componentWillUpdate (nextProps) {
@@ -31,56 +30,53 @@ class Dropdown extends Component {
     }
   }
 
-  handleClick (event) {
-    // if (this.state.isOpen) {
-    //   const clickNode = event.target
-    //   const triggerNode = this.refs.trigger.node
-    //   const menuNode = this.refs.menu.node
-
-    //   if (clickNode !== triggerNode && !menuNode.contains(clickNode)) {
-    //     this.handleOnMenuClose()
-    //   }
-    // }
-  }
-
   handleOnTriggerClick () {
     this.setState({ isOpen: !this.state.isOpen })
     this.handleTriggerFocus()
   }
 
   handleOnTriggerFocus () {
-    this.setState({ isFocused: true })
-    this.handleTriggerFocus()
+    this.isFocused = true
+    setTimeout(() => {
+      this.isFocused = true
+    }, 0)
   }
 
   handleOnMenuClose () {
-    this.setState({ isFocused: false, isOpen: false })
-    // this.handleTriggerFocus()
+    this.setState({ isOpen: false })
+    this.isFocused = false
   }
 
   handleTriggerFocus () {
+    this.isFocused = true
     const triggerNode = this.refs.trigger.node
     triggerNode.focus()
   }
 
   handleDownArrow () {
-    const { isOpen, isFocused } = this.state
-    if (!isOpen && isFocused) {
+    const { isOpen } = this.state
+    if (!isOpen && this.isFocused) {
       this.setState({ isOpen: true })
     }
   }
 
-  handleTab () {
-    this.setState({ isFocused: false })
+  handleTab (event) {
+    this.isFocused = false
     if (this.state.isOpen) {
+      event.preventDefault()
       this.handleOnMenuClose()
+      focusNextFocusableNode(this.refs.trigger.node)
+      return false
     }
   }
 
-  handleShiftTab () {
-    this.setState({ isFocused: false })
+  handleShiftTab (event) {
+    this.isFocused = false
     if (this.state.isOpen) {
+      event.preventDefault()
       this.handleOnMenuClose()
+      focusPreviousFocusableNode(this.refs.trigger.node)
+      return false
     }
   }
 
@@ -100,7 +96,6 @@ class Dropdown extends Component {
     const handleDownArrow = this.handleDownArrow
     const handleTab = this.handleTab
     const handleShiftTab = this.handleShiftTab
-    const handleClick = this.handleClick
 
     const componentClassName = classNames(
       'c-Dropdown',
@@ -122,7 +117,6 @@ class Dropdown extends Component {
 
     return (
       <div className={componentClassName} {...rest}>
-        <EventListener event='click' handler={handleClick} />
         <KeypressListener keyCode={Keys.TAB} handler={handleTab} only type='keydown' />
         <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={handleShiftTab} type='keydown' />
         <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />

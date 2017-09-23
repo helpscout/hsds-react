@@ -333,7 +333,6 @@ class Menu extends Component {
     const overlayMarkup = !parentMenu ? (
       <Overlay onClick={closePortal} fixed transparent />
     ) : null
-    console.log(this)
 
     return (
       <div

@@ -162,7 +162,6 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
             <ComposedComponent
               closePortal={closePortal}
               isOpen={portalIsOpen}
-              triggerNode={this.triggerNode}
               {...rest}
             />
           </div>

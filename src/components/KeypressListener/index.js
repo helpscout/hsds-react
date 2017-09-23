@@ -40,8 +40,7 @@ class KeypressListener extends Component {
     let modKey = true
     if (modifier === 'shift') {
       modKey = event.shiftKey
-    }
-    if (only) {
+    } else if (only) {
       modKey = event.shiftKey === false
     }
 

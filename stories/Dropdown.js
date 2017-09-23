@@ -6,6 +6,19 @@ const logAction = () => {
   console.log('Action')
 }
 
+const itemsMarkup = (amount = 10) => {
+  const items = []
+  for (let i = 0; i < amount; i++) {
+    const item = (
+      <Dropdown.Item key={i}>
+        Item {i + 1}
+      </Dropdown.Item>
+    )
+    items.push(item)
+  }
+  return items
+}
+
 storiesOf('Dropdown', module)
   .add('test', () => (
     <div style={{padding: '100px 20%'}}>
@@ -16,48 +29,17 @@ storiesOf('Dropdown', module)
               Hello
             </Dropdown.Trigger>
             <Dropdown.Menu isOpen direction='up'>
-              <Dropdown.Item onFocus={logAction}>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
-              <Dropdown.Item>
-                Item
-              </Dropdown.Item>
+              {itemsMarkup(10)}
             </Dropdown.Menu>
           </Dropdown>
         </Flexy.Item>
         <Flexy.Item>
           <Dropdown>
             <Dropdown.Trigger>
-              Hello
+              There
             </Dropdown.Trigger>
             <Dropdown.Menu isOpen direction='up'>
-              <Dropdown.Item onFocus={logAction}>
-                Hello 2
-              </Dropdown.Item>
-              <Dropdown.Item onFocus={logAction}>
-                Hello 2
-              </Dropdown.Item>
+              {itemsMarkup(5)}
             </Dropdown.Menu>
           </Dropdown>
         </Flexy.Item>
