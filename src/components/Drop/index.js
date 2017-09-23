@@ -1,6 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import debounce from 'lodash.debounce'
 import EventListener from '../EventListener'
 import PortalWrapper from '../PortalWrapper'
 import classNames from '../../utilities/classNames'
@@ -14,6 +15,7 @@ export const propTypes = Object.assign({}, portalTypes, {
 const popoverWrapperBaseZIndex = 1020
 
 const defaultOptions = {
+  autoPosition: true,
   id: 'Drop',
   offset: 8,
   timeout: 0,
@@ -39,7 +41,7 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
         isOpen: false
       }
 
-      this.updatePosition = this.updatePosition.bind(this)
+      this.updatePosition = debounce(this.updatePosition.bind(this), 4)
     }
 
     componentDidMount () {
@@ -68,28 +70,32 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
     }
 
     updatePosition () {
-      const el = this.triggerNode
-      if (!el) return
+      if (!this.triggerNode) return
+      if (!portalOptions.autoPosition) return
 
-      const cr = el.getBoundingClientRect()
+      const triggerRect = this.triggerNode.getBoundingClientRect()
       const offset = portalOptions.offset
       let reposition = false
-      let ccr
+      let contentNodeRect
 
       if (this.contentNode) {
-        ccr = this.contentNode.getBoundingClientRect()
-        if (ccr.top + ccr.height > window.innerHeight) {
+        contentNodeRect = this.contentNode.getBoundingClientRect()
+        if (contentNodeRect.top + contentNodeRect.height > window.innerHeight) {
           reposition = true
         }
       }
 
       const top = reposition
-        ? cr.top - cr.height - ccr.height
-        : cr.top + cr.height
+        ? triggerRect.top - triggerRect.height - contentNodeRect.height
+        : triggerRect.top + triggerRect.height
 
       const left = reposition
-        ? (cr.left + cr.width) - ccr.width
-        : cr.left
+        ? (triggerRect.left + triggerRect.width) - contentNodeRect.width
+        : triggerRect.left
+
+      // TODO: Improve handling of calculations to avoid needing
+      // to terminal on negative values.
+      if (top < 0 || left < 0) return
 
       const position = {
         top: parseInt(top + offset + window.scrollY, 10),
@@ -135,13 +141,14 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
 
       const updatePosition = this.updatePosition
 
-      const popoverWrapperStyle = Object.assign({}, style, {
-        display: position.top === null ? 'none' : 'block',
-        position: 'absolute',
-        top: position.top,
-        left: position.left,
-        zIndex
-      })
+      const popoverWrapperStyle = portalOptions.autoPosition
+        ? Object.assign({}, style, {
+          display: position.top === null ? 'none' : 'block',
+          position: 'absolute',
+          top: position.top,
+          left: position.left,
+          zIndex
+        }) : null
 
       return (
         <div
@@ -155,6 +162,7 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
             <ComposedComponent
               closePortal={closePortal}
               isOpen={portalIsOpen}
+              triggerNode={this.triggerNode}
               {...rest}
             />
           </div>

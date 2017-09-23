@@ -55,6 +55,7 @@ class Dropdown extends Component {
 
   handleOnMenuClose () {
     this.setState({ isFocused: false, isOpen: false })
+    // this.handleTriggerFocus()
   }
 
   handleTriggerFocus () {

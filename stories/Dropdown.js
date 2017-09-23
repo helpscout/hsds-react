@@ -8,7 +8,7 @@ const logAction = () => {
 
 storiesOf('Dropdown', module)
   .add('test', () => (
-    <div style={{padding: '100px'}}>
+    <div style={{padding: '100px 20%'}}>
       <Flexy just='left' gap='md'>
         <Flexy.Item>
           <Dropdown>

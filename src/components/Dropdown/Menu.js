@@ -1,6 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
+import debounce from 'lodash.debounce'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
 import Card from '../Card'
@@ -30,6 +31,7 @@ const defaultProps = {
 }
 
 const dropOptions = {
+  autoPosition: true,
   id: 'Dropdown',
   openOnArrowDown: true
 }
@@ -42,11 +44,11 @@ class Menu extends Component {
       focusIndex: props.selectedIndex !== undefined ? props.selectedIndex : null,
       hoverIndex: null,
       hasFocus: false,
-      isOpen: props.isOpen,
-      height: null
+      isOpen: props.isOpen
     }
     this.items = []
     this.isFocused = props.isOpen ? props.isOpen : false
+    this.height = 0
 
     this.handleUpArrow = this.handleUpArrow.bind(this)
     this.handleDownArrow = this.handleDownArrow.bind(this)
@@ -54,6 +56,7 @@ class Menu extends Component {
     this.handleRightArrow = this.handleRightArrow.bind(this)
     this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
     this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
+    this.handleOnResize = debounce(this.handleOnResize.bind(this), 30)
 
     this.handleFocusItemNode = this.handleFocusItemNode.bind(this)
     this.handleItemOnBlur = this.handleItemOnBlur.bind(this)
@@ -64,13 +67,16 @@ class Menu extends Component {
     this.handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
 
-    this.setHeight = this.setHeight.bind(this)
+    this.node = null
+    this.wrapperNode = null
+    this.contentNode = null
+    this.listNode = null
   }
 
   componentDidMount () {
     this.mapRefsToItems()
     this.setMenuFocus()
-    this.setHeight()
+    this.handleOnResize()
   }
 
   componentWillUpdate (nextProps) {
@@ -87,21 +93,25 @@ class Menu extends Component {
     }
   }
 
+  handleOnResize () {
+    this.setHeight()
+  }
+
   setHeight () {
     requestAnimationFrame(() => {
-      setTimeout(() => {
-        const cr = this.listNode.getBoundingClientRect()
-        const offset = 20
-        let height
-        if (cr.top + (cr.height + 2) > window.innerHeight) {
-          height = window.innerHeight - cr.top - offset
-        } else {
-          height = null
-        }
-        if (height !== this.state.height) {
-          this.setState({ height })
-        }
-      }, 0)
+      const listNodeRect = this.listNode.getBoundingClientRect()
+      const offset = 20
+      let height
+      if (listNodeRect.top + (listNodeRect.height + 2) > window.innerHeight) {
+        height = window.innerHeight - listNodeRect.top - offset
+      } else {
+        height = null
+      }
+
+      if (height !== this.height) {
+        this.contentNode.style.height = height ? `${height}px` : null
+        this.height = height
+      }
     })
   }
 
@@ -215,7 +225,7 @@ class Menu extends Component {
     const { focusIndex } = this.state
     const focusItem = this.items[focusIndex]
     if (focusItem) {
-      focusItem.node.focus()
+      focusItem.node.scrollIntoView()
     }
   }
 
@@ -296,7 +306,7 @@ class Menu extends Component {
     const handleItemOnMenuClose = this.handleItemOnMenuClose
     const handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu
     const handleOnClose = this.handleOnClose
-    const setHeight = this.setHeight
+    const handleOnResize = this.handleOnResize
 
     const childrenMarkup = React.Children.map(children, (child, index) => {
       const itemRef = `item-${index}`
@@ -323,11 +333,13 @@ class Menu extends Component {
     const overlayMarkup = !parentMenu ? (
       <Overlay onClick={closePortal} fixed transparent />
     ) : null
-
-    const cardStyle = { height: this.state.height }
+    console.log(this)
 
     return (
-      <div className='c-DropdownMenuWrapper'>
+      <div
+        className='c-DropdownMenuWrapper'
+        ref={node => { this.wrapperNode = node }}
+      >
         <div
           className={componentClassName}
           onMouseEnter={handleOnMouseEnter}
@@ -335,21 +347,27 @@ class Menu extends Component {
           ref={node => { this.node = node }}
           {...rest}
         >
-          <EventListener event='resize' handler={setHeight} />
+          <EventListener event='resize' handler={handleOnResize} />
           <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
           <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
           <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
           <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
-          <Card seamless style={cardStyle}>
-            <Scrollable>
-              <ul
-                className='c-DropdownMenu__list'
-                ref={node => { this.listNode = node }}
-              >
-                {childrenMarkup}
-              </ul>
-            </Scrollable>
+          <Card seamless>
+            <div
+              className='c-DropdownMenu__content'
+              ref={node => { this.contentNode = node }}
+              style={{height: this.height}}
+            >
+              <Scrollable>
+                <ul
+                  className='c-DropdownMenu__list'
+                  ref={node => { this.listNode = node }}
+                >
+                  {childrenMarkup}
+                </ul>
+              </Scrollable>
+            </div>
           </Card>
         </div>
         {overlayMarkup}
