@@ -85,6 +85,7 @@ class Dropdown extends Component {
     const {
       children,
       className,
+      selectedIndex: propsSelectedIndex,
       ...rest
     } = this.props
     const {
@@ -122,6 +123,7 @@ class Dropdown extends Component {
       <div className={componentClassName} {...rest}>
         <KeypressListener keyCode={Keys.TAB} handler={handleTab} only type='keydown' />
         <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={handleShiftTab} type='keydown' />
+        <KeypressListener keyCode={Keys.LEFT_ARROW} only handler={handleShiftTab} type='keydown' />
         <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
         {triggerMarkup}
         {menuMarkup}
