@@ -1,12 +1,10 @@
 import React, {PureComponent as Component} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import debounce from 'lodash.debounce'
 import EventListener from '../EventListener'
 import PortalWrapper from '../PortalWrapper'
 import classNames from '../../utilities/classNames'
 import { propTypes as portalTypes } from '../Portal'
-import { requestAnimationFrame } from '../../utilities/other'
 
 export const propTypes = Object.assign({}, portalTypes, {
   trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object])
@@ -41,7 +39,7 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
         isOpen: false
       }
 
-      this.updatePosition = debounce(this.updatePosition.bind(this), 4)
+      this.updatePosition = this.updatePosition.bind(this)
     }
 
     componentDidMount () {
@@ -106,10 +104,8 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
         this.state.position.top !== position.top ||
         this.state.position.left !== position.left
       ) {
-        requestAnimationFrame(() => {
-          this.setState({
-            position
-          })
+        this.setState({
+          position
         })
       }
     }
@@ -155,7 +151,6 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
           className={componentClassName}
           style={popoverWrapperStyle}
           ref={node => { this.contentNode = node }}
-          {...rest}
         >
           <EventListener event='resize' handler={updatePosition} />
           <div className='c-Drop__positioner' ref={node => { this.composedNode = node }}>

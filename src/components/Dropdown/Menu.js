@@ -1,7 +1,6 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
-import debounce from 'lodash.debounce'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
 import Card from '../Card'
@@ -56,7 +55,7 @@ class Menu extends Component {
     this.handleRightArrow = this.handleRightArrow.bind(this)
     this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
     this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
-    this.handleOnResize = debounce(this.handleOnResize.bind(this), 30)
+    this.handleOnResize = this.handleOnResize.bind(this)
 
     this.handleFocusItemNode = this.handleFocusItemNode.bind(this)
     this.handleItemOnBlur = this.handleItemOnBlur.bind(this)
@@ -76,7 +75,9 @@ class Menu extends Component {
   componentDidMount () {
     this.mapRefsToItems()
     this.setMenuFocus()
-    this.handleOnResize()
+    setTimeout(() => {
+      this.handleOnResize()
+    }, 0)
   }
 
   componentWillUpdate (nextProps) {

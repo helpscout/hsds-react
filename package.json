@@ -87,6 +87,7 @@
     "promise": "7.1.1",
     "raw-loader": "0.5.1",
     "react": "15.6.1",
+    "react-addons-perf": "^15.4.2",
     "react-dev-utils": "^3.0.2",
     "react-dom": "15.6.1",
     "react-error-overlay": "^1.0.9",
