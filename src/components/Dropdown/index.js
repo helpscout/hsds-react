@@ -107,6 +107,7 @@ class Dropdown extends Component {
     )
 
     const triggerMarkup = React.cloneElement(children[0], {
+      isActive: isOpen,
       onClick: handleOnTriggerClick,
       ref: 'trigger',
       onFocus: handleOnTriggerFocus

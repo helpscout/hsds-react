@@ -12,6 +12,7 @@ export const propTypes = {
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
+  isActive: PropTypes.bool,
   plain: PropTypes.bool,
   primary: PropTypes.bool,
   size: standardSizeTypes,
@@ -39,6 +40,7 @@ const Button = props => {
     children,
     className,
     disabled,
+    isActive,
     onBlur,
     onClick,
     onFocus,
@@ -52,6 +54,7 @@ const Button = props => {
 
   const componentClassName = classNames(
     'c-button',
+    isActive && 'is-selected',
     size && `c-button--${size}`,
     state && `is-${state}`,
     plain && 'c-button--link',

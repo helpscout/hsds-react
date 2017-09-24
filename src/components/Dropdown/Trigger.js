@@ -5,6 +5,7 @@ import Button from '../Button'
 class Trigger extends Component {
   render () {
     const {
+      isActive,
       children,
       className,
       ...rest
@@ -18,8 +19,9 @@ class Trigger extends Component {
     return (
       <Button
         buttonRef={node => { this.node = node }}
-        tabIndex={0}
         className={componentClassName}
+        isActive={isActive}
+        tabIndex={0}
         {...rest}
       >
         {children}
