@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import PortalWrapper from '../PortalWrapper'
 import classNames from '../../utilities/classNames'
+import { applyStylesToNode } from '../../utilities/node'
 import { propTypes as portalTypes } from '../Portal'
 
 export const propTypes = Object.assign({}, portalTypes, {
@@ -27,38 +28,34 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
     constructor (props) {
       super()
 
+      this.state = {
+        isOpen: false
+      }
+
+      this.position = {
+        top: null,
+        left: null
+      }
+
       this.contentNode = null
       this.composedNode = null
       this.portal = null
-
-      this.state = {
-        position: {
-          top: null,
-          left: null
-        },
-        isOpen: false
-      }
 
       this.updatePosition = this.updatePosition.bind(this)
     }
 
     componentDidMount () {
       this.setTriggerNode()
+      this.updatePosition()
     }
 
     componentWillReceiveProps (nextProps) {
       this.setState({ isOpen: nextProps.portalIsOpen })
-      this.updatePosition()
-    }
-
-    shouldComponentUpdate (nextProps, nextState) {
-      // return this.state.isOpen !== nextState.isOpen
-      return true
     }
 
     componentDidUpdate () {
       this.setTriggerNode()
-      // this.updatePosition()
+      this.updatePosition()
     }
 
     setTriggerNode () {
@@ -68,8 +65,11 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
     }
 
     updatePosition () {
+      // TODO: IMPLEMENT DIRECTIONS (Up, Right, Down, Left)
+      // IT CURRENTLY ONLY ACCOUNTS FOR UP/DOWN
       if (!this.triggerNode) return
       if (!portalOptions.autoPosition) return
+      const { zIndex } = this.props
 
       const triggerRect = this.triggerNode.getBoundingClientRect()
       const offset = portalOptions.offset
@@ -100,14 +100,16 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
         left: parseInt(left + window.scrollX, 10)
       }
 
-      if (
-        this.state.position.top !== position.top ||
-        this.state.position.left !== position.left
-      ) {
-        this.setState({
-          position
-        })
+      const nodeStyles = {
+        display: position.top !== null ? 'block' : 'none',
+        position: 'absolute',
+        top: position.top,
+        left: position.left,
+        zIndex
       }
+
+      applyStylesToNode(this.contentNode, nodeStyles)
+      this.position = position
     }
 
     render () {
@@ -128,7 +130,6 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
         zIndex,
         ...rest
       } = this.props
-      const { position } = this.state
 
       const componentClassName = classNames(
         'c-Drop',
@@ -137,19 +138,9 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
 
       const updatePosition = this.updatePosition
 
-      const popoverWrapperStyle = portalOptions.autoPosition
-        ? Object.assign({}, style, {
-          display: position.top === null ? 'none' : 'block',
-          position: 'absolute',
-          top: position.top,
-          left: position.left,
-          zIndex
-        }) : null
-
       return (
         <div
           className={componentClassName}
-          style={popoverWrapperStyle}
           ref={node => { this.contentNode = node }}
         >
           <EventListener event='resize' handler={updatePosition} />
