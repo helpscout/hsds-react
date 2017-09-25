@@ -1,4 +1,5 @@
 import React, {PureComponent as Component} from 'react'
+import EventListener from '../EventListener'
 import Divider from './Divider'
 import Item from './Item'
 import Menu from './Menu'
@@ -15,14 +16,16 @@ class Dropdown extends Component {
       isOpen: props.isOpen,
       selectedIndex: null
     }
+
+    this.isFocused = false
+
+    this.handleOnBodyClick = this.handleOnBodyClick.bind(this)
     this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
     this.handleOnTriggerFocus = this.handleOnTriggerFocus.bind(this)
     this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
-    this.handleTriggerFocus = this.handleTriggerFocus.bind(this)
     this.handleDownArrow = this.handleDownArrow.bind(this)
     this.handleTab = this.handleTab.bind(this)
     this.handleShiftTab = this.handleShiftTab.bind(this)
-    this.isFocused = false
   }
 
   componentWillUpdate (nextProps) {
@@ -31,27 +34,35 @@ class Dropdown extends Component {
     }
   }
 
+  handleOnBodyClick (event) {
+    const clickNode = event.target
+    if (this.state.isOpen) {
+      if (clickNode !== this.refs.trigger.node) {
+        this.handleOnMenuClose()
+      } else {
+        this.handleOnTriggerClick()
+      }
+    } else {
+      if (clickNode === this.refs.trigger.node) {
+        this.handleOnTriggerClick()
+      }
+    }
+  }
+
   handleOnTriggerClick () {
     this.setState({ isOpen: !this.state.isOpen })
-    this.handleTriggerFocus()
+    this.isFocused = true
   }
 
   handleOnTriggerFocus () {
-    this.isFocused = true
     setTimeout(() => {
       this.isFocused = true
     }, 0)
   }
 
   handleOnMenuClose () {
-    this.setState({ isOpen: false })
+    this.setState({ selectedIndex: null, isOpen: false })
     this.isFocused = false
-  }
-
-  handleTriggerFocus () {
-    this.isFocused = true
-    const triggerNode = this.refs.trigger.node
-    triggerNode.focus()
   }
 
   handleDownArrow () {
@@ -93,7 +104,7 @@ class Dropdown extends Component {
       selectedIndex
     } = this.state
 
-    const handleOnTriggerClick = this.handleOnTriggerClick
+    const handleOnBodyClick = this.handleOnBodyClick
     const handleOnTriggerFocus = this.handleOnTriggerFocus
     const handleOnMenuClose = this.handleOnMenuClose
     const handleDownArrow = this.handleDownArrow
@@ -108,7 +119,6 @@ class Dropdown extends Component {
 
     const triggerMarkup = React.cloneElement(children[0], {
       isActive: isOpen,
-      onClick: handleOnTriggerClick,
       ref: 'trigger',
       onFocus: handleOnTriggerFocus
     })
@@ -122,6 +132,7 @@ class Dropdown extends Component {
 
     return (
       <div className={componentClassName} {...rest}>
+        <EventListener event='click' handler={handleOnBodyClick} />
         <KeypressListener keyCode={Keys.TAB} handler={handleTab} only type='keydown' />
         <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={handleShiftTab} type='keydown' />
         <KeypressListener keyCode={Keys.LEFT_ARROW} only handler={handleShiftTab} type='keydown' />

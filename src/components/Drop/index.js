@@ -5,6 +5,7 @@ import EventListener from '../EventListener'
 import PortalWrapper from '../PortalWrapper'
 import classNames from '../../utilities/classNames'
 import { applyStylesToNode } from '../../utilities/node'
+import { pureComponentShouldUpdate } from '../../utilities/components'
 import { propTypes as portalTypes } from '../Portal'
 
 export const propTypes = Object.assign({}, portalTypes, {
@@ -56,6 +57,10 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
     componentDidUpdate () {
       this.setTriggerNode()
       this.updatePosition()
+    }
+
+    shouldComponentUpdate (nextProps, nextState) {
+      return pureComponentShouldUpdate(this, nextProps, nextState)
     }
 
     setTriggerNode () {

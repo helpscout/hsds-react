@@ -36,13 +36,15 @@ class EventListener extends Component {
   }
 
   attachListener () {
-    const {event, handler, capture, passive} = this.props
-    addEventListener(window, event, handler, {capture, passive})
+    const {event, handler, capture, passive, scope} = this.props
+    const captureScope = scope || window
+    addEventListener(captureScope, event, handler, {capture, passive})
   }
 
   detachListener () {
-    const {event, handler, capture} = this.props
-    removeEventListener(window, event, handler, capture)
+    const {event, handler, capture, scope} = this.props
+    const captureScope = scope || window
+    removeEventListener(captureScope, event, handler, capture)
   }
 
   render () {

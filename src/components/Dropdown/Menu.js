@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
+import Animate from '../Animate'
 import Card from '../Card'
 import Drop from '../Drop'
-import Overlay from '../Overlay'
 import Scrollable from '../Scrollable'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
@@ -39,11 +39,8 @@ class Menu extends Component {
   constructor (props) {
     super()
     this.state = {
-      prevFocusIndex: null,
       focusIndex: props.selectedIndex !== undefined ? props.selectedIndex : null,
-      hoverIndex: null,
-      hasFocus: false,
-      isOpen: props.isOpen
+      hoverIndex: null
     }
     this.items = []
     this.isFocused = props.isOpen ? props.isOpen : false
@@ -65,6 +62,7 @@ class Menu extends Component {
     this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
     this.handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
+    this.handleOnMenuClick = this.handleOnMenuClick.bind(this)
 
     this.node = null
     this.wrapperNode = null
@@ -83,7 +81,6 @@ class Menu extends Component {
   componentWillUpdate (nextProps) {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.mapRefsToItems()
-      this.setState({ isOpen: nextProps.isOpen })
       this.isFocused = nextProps.isOpen
     }
   }
@@ -138,7 +135,6 @@ class Menu extends Component {
     const { focusIndex } = this.state
     const itemCount = this.items.length - 1
     let newFocusIndex
-    let prevFocusIndex = focusIndex
 
     if (direction === 'up') {
       if (enableCycling) {
@@ -155,16 +151,13 @@ class Menu extends Component {
       }
     }
     if (direction === 'reset') {
-      prevFocusIndex = null
       newFocusIndex = null
     }
     if (direction === 'start') {
-      prevFocusIndex = 0
       newFocusIndex = 0
     }
 
     this.setState({
-      prevFocusIndex,
       focusIndex: newFocusIndex,
       hoverIndex: null
     })
@@ -234,9 +227,8 @@ class Menu extends Component {
   }
 
   handleItemOnFocus (event, reactEvent, item) {
-    const { focusIndex: prevFocusIndex } = this.state
     const focusIndex = this.getIndexFromItem(item)
-    this.setState({ prevFocusIndex, focusIndex, hoverIndex: null })
+    this.setState({ focusIndex, hoverIndex: null })
   }
 
   handleItemOnMouseEnter (event, reactEvent, item) {
@@ -267,8 +259,12 @@ class Menu extends Component {
 
   handleOnClose () {
     const { onClose } = this.props
-    this.setState({ selectedIndex: null, isOpen: false })
+    this.setState({ selectedIndex: null })
     onClose()
+  }
+
+  handleOnMenuClick (event) {
+    event.stopPropagation()
   }
 
   render () {
@@ -308,6 +304,7 @@ class Menu extends Component {
     const handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu
     const handleOnClose = this.handleOnClose
     const handleOnResize = this.handleOnResize
+    const handleOnMenuClick = this.handleOnMenuClick
 
     const childrenMarkup = React.Children.map(children, (child, index) => {
       const itemRef = `item-${index}`
@@ -331,10 +328,6 @@ class Menu extends Component {
       className
     )
 
-    const overlayMarkup = !parentMenu ? (
-      <Overlay onClick={closePortal} fixed transparent />
-    ) : null
-
     return (
       <div
         className='c-DropdownMenuWrapper'
@@ -348,29 +341,31 @@ class Menu extends Component {
           {...rest}
         >
           <EventListener event='resize' handler={handleOnResize} />
+          <EventListener event='click' handler={handleOnMenuClick} scope={this.wrapperNode} />
           <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
           <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
           <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
           <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
-          <Card seamless>
-            <div
-              className='c-DropdownMenu__content'
-              ref={node => { this.contentNode = node }}
-              style={{height: this.height}}
-            >
-              <Scrollable>
-                <ul
-                  className='c-DropdownMenu__list'
-                  ref={node => { this.listNode = node }}
-                >
-                  {childrenMarkup}
-                </ul>
-              </Scrollable>
-            </div>
-          </Card>
+          <Animate sequence='fadeIn down' in={isOpen} wait={0}>
+            <Card seamless>
+              <div
+                className='c-DropdownMenu__content'
+                ref={node => { this.contentNode = node }}
+                style={{height: this.height}}
+              >
+                <Scrollable>
+                  <ul
+                    className='c-DropdownMenu__list'
+                    ref={node => { this.listNode = node }}
+                  >
+                    {childrenMarkup}
+                  </ul>
+                </Scrollable>
+              </div>
+            </Card>
+          </Animate>
         </div>
-        {overlayMarkup}
       </div>
     )
   }
