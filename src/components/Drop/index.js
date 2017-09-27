@@ -17,7 +17,7 @@ const popoverWrapperBaseZIndex = 1020
 const defaultOptions = {
   autoPosition: true,
   id: 'Drop',
-  offset: 8,
+  offset: 4,
   timeout: 0,
   zIndex: popoverWrapperBaseZIndex
 }

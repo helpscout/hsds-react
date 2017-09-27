@@ -49,6 +49,7 @@ class Item extends Component {
   }
 
   handleOnClick (event, reactEvent) {
+    event.stopPropagation()
     const { onClick, onClickToOpenMenu } = this.props
     onClick(event, reactEvent, this)
     if (this.menu) {

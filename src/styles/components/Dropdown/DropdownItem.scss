@@ -2,7 +2,6 @@
 
 .c-DropdownItem {
   @import "../../resets/base";
-  border-bottom: 1px solid _color(grey, 400);
   cursor: pointer;
   padding: 0;
 
@@ -11,18 +10,19 @@
   }
 
   &.is-hover {
-    background: rgba(red, 0.2);
+    background-color: _color(grey, 300);
   }
   &.is-focused {
-    background: rgba(green, 0.2);
+    background-color: _color(grey, 300);
   }
   &.is-selected {
-    background: rgba(blue, 0.2);
+    background-color: _color(blue);
+    color: white;
   }
 
   &__link {
     display: block;
     outline: none;
-    padding: 8px 8px;
+    padding: 8px 16px;
   }
 }

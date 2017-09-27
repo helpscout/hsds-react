@@ -32,7 +32,8 @@ const defaultProps = {
 const dropOptions = {
   autoPosition: true,
   id: 'Dropdown',
-  openOnArrowDown: true
+  openOnArrowDown: true,
+  timeout: 0
 }
 
 class Menu extends Component {
@@ -332,6 +333,7 @@ class Menu extends Component {
       <div
         className='c-DropdownMenuWrapper'
         ref={node => { this.wrapperNode = node }}
+        onClick={handleOnMenuClick}
       >
         <div
           className={componentClassName}
@@ -341,14 +343,13 @@ class Menu extends Component {
           {...rest}
         >
           <EventListener event='resize' handler={handleOnResize} />
-          <EventListener event='click' handler={handleOnMenuClick} scope={this.wrapperNode} />
           <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
           <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
           <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
           <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
-          <Animate sequence='fadeIn down' in={isOpen} wait={0}>
-            <Card seamless>
+          <Animate sequence='fadeIn down' in={isOpen} duration={100}>
+            <Card seamless floating>
               <div
                 className='c-DropdownMenu__content'
                 ref={node => { this.contentNode = node }}
