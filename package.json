@@ -3,6 +3,7 @@
   "version": "0.0.27",
   "private": false,
   "main": "dist/index.js",
+  "license": "MIT",
   "scripts": {
     "build-storybook": "build-storybook",
     "build:css": "node scripts/sass.js",
