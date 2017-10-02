@@ -174,6 +174,7 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
 
       applyStylesToNode(this.contentNode, nodeStyles)
       this.position = { top, left }
+      this.direction = { x: directionX, y: directionY }
     }
 
     render () {
@@ -197,7 +198,9 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
 
       const componentClassName = classNames(
         'c-Drop',
-        className
+        className,
+        this.direction.x && `is-${this.direction.x}`,
+        this.direction.y && `is-${this.direction.y}`
       )
 
       const updatePosition = this.updatePosition

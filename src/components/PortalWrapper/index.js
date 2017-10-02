@@ -131,6 +131,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             <ComposedComponent
               openPortal={openPortal}
               closePortal={handleOnClose}
+              onClose={onClose}
               portalIsOpen={portalIsOpen}
               portalIsMounted={portalIsMounted}
               trigger={trigger}

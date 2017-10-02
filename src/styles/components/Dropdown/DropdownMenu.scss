@@ -12,4 +12,9 @@
     margin: 0;
     padding: 5px 0;
   }
+
+  // Modifiers
+  &.is-sub-menu {
+    margin-top: -6px;
+  }
 }

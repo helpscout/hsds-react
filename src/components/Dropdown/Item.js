@@ -7,10 +7,8 @@ import Menu from './Menu'
 export const propTypes = {
   isHover: PropTypes.bool,
   isFocused: PropTypes.bool,
-  isSelected: PropTypes.bool,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
-  onClickToOpenMenu: PropTypes.func,
   onFocus: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
@@ -21,7 +19,6 @@ export const propTypes = {
 const defaultProps = {
   onBlur: noop,
   onClick: noop,
-  onClickToOpenMenu: noop,
   onFocus: noop,
   onMouseEnter: noop,
   onMouseLeave: noop,
@@ -29,18 +26,30 @@ const defaultProps = {
 }
 
 class Item extends Component {
-  constructor () {
+  constructor (props) {
     super()
+
+    this.state = {
+      isOpen: props.isHover
+    }
+
     this.handleOnBlur = this.handleOnBlur.bind(this)
     this.handleOnClick = this.handleOnClick.bind(this)
     this.handleOnFocus = this.handleOnFocus.bind(this)
     this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
     this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
+    this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
     this.node = null
   }
 
   componentWillMount () {
     this.menu = this.getMenuFromChildren()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.isHover !== this.state.isOpen) {
+      this.setState({ isOpen: nextProps.isHover })
+    }
   }
 
   handleOnBlur (event, reactEvent) {
@@ -50,11 +59,8 @@ class Item extends Component {
 
   handleOnClick (event, reactEvent) {
     event.stopPropagation()
-    const { onClick, onClickToOpenMenu } = this.props
+    const { onClick } = this.props
     onClick(event, reactEvent, this)
-    if (this.menu) {
-      onClickToOpenMenu(event, reactEvent, this)
-    }
   }
 
   handleOnFocus (event, reactEvent) {
@@ -70,6 +76,12 @@ class Item extends Component {
   handleOnMouseLeave (event, reactEvent) {
     const { onMouseLeave } = this.props
     onMouseLeave(event, reactEvent, this)
+  }
+
+  handleOnMenuClose () {
+    const { onMenuClose } = this.props
+    this.setState({ isOpen: false })
+    onMenuClose()
   }
 
   getMenu (child) {
@@ -100,36 +112,37 @@ class Item extends Component {
       itemRef,
       isFocused,
       isHover,
-      isSelected,
       onBlur,
       onClick,
-      onClickToOpenMenu,
       onFocus,
       onMouseEnter,
       onMenuClose,
       parentMenu,
       ...rest
     } = this.props
+    const { isOpen } = this.state
 
     const handleOnBlur = this.handleOnBlur
     const handleOnClick = this.handleOnClick
     const handleOnFocus = this.handleOnFocus
     const handleOnMouseEnter = this.handleOnMouseEnter
     const handleOnMouseLeave = this.handleOnMouseLeave
+    const handleOnMenuClose = this.handleOnMenuClose
 
     const componentClassName = classNames(
       'c-DropdownItem',
-      isHover && 'is-hover',
+      isOpen && 'is-hover',
       isFocused && 'is-focused',
-      isSelected && 'is-selected',
       className
     )
 
     const itemMarkup = this.menu ? this.removeMenuFromChildren() : children
-    const menuMarkup = this.menu && isSelected ? React.cloneElement(this.menu, {
-      isOpen: isSelected,
+    const menuMarkup = this.menu && isOpen ? React.cloneElement(this.menu, {
+      isOpen,
       selectedIndex: 0,
-      onClose: onMenuClose,
+      onClose: handleOnMenuClose,
+      trigger: this.node,
+      direction: this.menu.props.direction ? this.menu.props.direction : 'right',
       parentMenu
     }) : null
     const menuIndicatorMarkup = this.menu ? (

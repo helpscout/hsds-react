@@ -35,6 +35,7 @@ const Modal = props => {
     exact,
     isOpen,
     openPortal,
+    onClose,
     path,
     portalIsOpen,
     portalIsMounted,

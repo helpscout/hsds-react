@@ -52,17 +52,14 @@ class Menu extends Component {
     this.handleDownArrow = this.handleDownArrow.bind(this)
     this.handleLeftArrow = this.handleLeftArrow.bind(this)
     this.handleRightArrow = this.handleRightArrow.bind(this)
-    this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
-    this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
+    this.handleEscape = this.handleEscape.bind(this)
     this.handleOnResize = this.handleOnResize.bind(this)
 
     this.handleFocusItemNode = this.handleFocusItemNode.bind(this)
-    this.handleItemOnBlur = this.handleItemOnBlur.bind(this)
     this.handleItemOnFocus = this.handleItemOnFocus.bind(this)
     this.handleItemOnMouseEnter = this.handleItemOnMouseEnter.bind(this)
     this.handleItemOnMouseLeave = this.handleItemOnMouseLeave.bind(this)
     this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
-    this.handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
     this.handleOnMenuClick = this.handleOnMenuClick.bind(this)
 
@@ -197,23 +194,13 @@ class Menu extends Component {
 
     const item = this.items[focusIndex]
     if (item.menu) {
-      this.setState({ selectedIndex: focusIndex })
+      this.setState({ hoverIndex: focusIndex })
       this.isFocused = false
     }
   }
 
-  handleOnMouseEnter () {
-    // const { parentMenu } = this.props
-    // if (parentMenu) {
-    //   this.isFocused = true
-    // }
-  }
-
-  handleOnMouseLeave () {
-    // const { parentMenu } = this.props
-    // if (parentMenu) {
-    //   this.isFocused = true
-    // }
+  handleEscape (event) {
+    this.handleOnClose()
   }
 
   handleFocusItemNode () {
@@ -225,27 +212,22 @@ class Menu extends Component {
     }
   }
 
-  handleItemOnBlur (event) {
-  }
-
   handleItemOnFocus (event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
     this.setState({ focusIndex, hoverIndex: null })
   }
 
   handleItemOnMouseEnter (event, reactEvent, item) {
-    const { focusIndex: oldFocusIndex } = this.state
     const focusIndex = this.getIndexFromItem(item)
     const hoverIndex = focusIndex
-    if (this.isFocused) {
-      this.setState({ focusIndex, hoverIndex })
-    } else {
-      this.setState({ focusIndex: oldFocusIndex, hoverIndex })
+    this.setState({ focusIndex, hoverIndex })
+    if (item.menu) {
+      this.isFocused = false
     }
   }
 
   handleItemOnMouseLeave (event, reactEvent, item) {
-    this.setState({ focusIndex: null, hoverIndex: null })
+    // this.setState({ focusIndex: null, hoverIndex: null })
   }
 
   handleItemOnMenuClose () {
@@ -253,15 +235,9 @@ class Menu extends Component {
     this.setState({ selectedIndex: null, hoverIndex: null })
   }
 
-  handleItemOnClickToOpenMenu (event, reactEvent, item) {
-    const focusIndex = this.getIndexFromItem(item)
-    this.setState({ selectedIndex: focusIndex })
-    this.isFocused = false
-  }
-
   handleOnClose () {
     const { onClose } = this.props
-    this.setState({ selectedIndex: null })
+    this.setState({ hoverIndex: null })
     onClose()
   }
 
@@ -287,24 +263,19 @@ class Menu extends Component {
 
     const {
       focusIndex,
-      hoverIndex,
-      selectedIndex
+      hoverIndex
     } = this.state
 
     const handleUpArrow = this.handleUpArrow
     const handleDownArrow = this.handleDownArrow
     const handleLeftArrow = this.handleLeftArrow
     const handleRightArrow = this.handleRightArrow
-    const handleOnMouseEnter = this.handleOnMouseEnter
-    const handleOnMouseLeave = this.handleOnMouseLeave
+    const handleEscape = this.handleEscape
 
-    const handleItemOnBlur = this.handleItemOnBlur
     const handleItemOnFocus = this.handleItemOnFocus
     const handleItemOnMouseEnter = this.handleItemOnMouseEnter
     const handleItemOnMouseLeave = this.handleItemOnMouseLeave
     const handleItemOnMenuClose = this.handleItemOnMenuClose
-    const handleItemOnClickToOpenMenu = this.handleItemOnClickToOpenMenu
-    const handleOnClose = this.handleOnClose
     const handleOnResize = this.handleOnResize
     const handleOnMenuClick = this.handleOnMenuClick
 
@@ -314,19 +285,17 @@ class Menu extends Component {
         ref: itemRef,
         isHover: hoverIndex === index,
         isFocused: this.isFocused && focusIndex === index,
-        isSelected: selectedIndex === index,
-        onBlur: handleItemOnBlur,
         onFocus: handleItemOnFocus,
         onMouseEnter: handleItemOnMouseEnter,
         onMouseLeave: handleItemOnMouseLeave,
         onMenuClose: handleItemOnMenuClose,
-        onClickToOpenMenu: handleItemOnClickToOpenMenu,
         parentMenu: true
       })
     })
 
     const componentClassName = classNames(
       'c-DropdownMenu',
+      parentMenu && 'is-sub-menu',
       className
     )
 
@@ -338,8 +307,6 @@ class Menu extends Component {
       >
         <div
           className={componentClassName}
-          onMouseEnter={handleOnMouseEnter}
-          onMouseLeave={handleOnMouseLeave}
           ref={node => { this.node = node }}
           {...rest}
         >
@@ -348,7 +315,7 @@ class Menu extends Component {
           <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
           <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
           <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
-          <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
+          <KeypressListener keyCode={Keys.ESCAPE} handler={handleEscape} />
           <Animate sequence='fadeIn down' in={isOpen} duration={100}>
             <Card seamless floating>
               <div
