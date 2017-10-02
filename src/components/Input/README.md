@@ -29,6 +29,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | className | string | Custom class names to be added to the component. |
 | disabled | boolean | Disable the input. |
 | helpText | string | Displays text underneath input. |
+| hintText | string | Displays text above input. |
 | id | string | ID for the input. |
 | label | string | Label for the input. |
 | multiline | boolean or number | Transforms input into an auto-expanding textarea. |

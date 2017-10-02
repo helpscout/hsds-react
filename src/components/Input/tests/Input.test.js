@@ -163,6 +163,24 @@ describe('Multiline', () => {
   })
 })
 
+describe('HelpText', () => {
+  test('Adds helpText if specified', () => {
+    const wrapper = mount(<Input helpText='Help text' />)
+    const helpText = wrapper.find('div').last()
+    expect(helpText.exists()).toBeTruthy()
+    expect(helpText.text()).toBe('Help text')
+  })
+})
+
+describe('HintText', () => {
+  test('Adds hintText if specified', () => {
+    const wrapper = mount(<Input hintText='Hint text' />)
+    const hintText = wrapper.find('div').first()
+    expect(hintText.exists()).toBeTruthy()
+    expect(hintText.text()).toBe('Hint text')
+  })
+})
+
 describe('Label', () => {
   test('Adds label if specified', () => {
     const wrapper = mount(<Input label='Channel' />)
