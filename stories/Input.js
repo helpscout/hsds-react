@@ -4,6 +4,8 @@ import { Input } from '../src/index.js'
 
 storiesOf('Input', module)
   .add('default', () => <Input />)
+  .add('helptext', () => <Input helpText='This text appears below the input' />)
+  .add('hinttext', () => <Input hintText='This text appears above the input' />)
   .add('multiline', () => <Input multiline placeholder='This is a textarea!' autoFocus />)
   .add('multiline + resizable', () => <Input multiline={3} resizable autoFocus placeholder='This is a resizable textarea!' />)
   .add('label', () => <Input label='Labelled' autoFocus />)
@@ -15,7 +17,7 @@ storiesOf('Input', module)
   .add('states', () => (
     <div>
       <Input state='error' autoFocus /><br />
-      <Input state='success' helpText="You're Awesome!" autoFocus /><br />
+      <Input state='success' helpText="You're Awesome!" hintText="You're awesome!" autoFocus /><br />
       <Input state='warning' autoFocus />
     </div>
   ))
