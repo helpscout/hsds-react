@@ -1,10 +1,6 @@
+import { getNodeScope, isNodeElement } from './node'
+
 export const FOCUSABLE_SELECTOR = 'a,frame,iframe,input:not([type=hidden]),select,textarea,button,*[tabindex]:not([tabindex="-1"])'
-
-const Element = window.Element
-
-export const getNodeScope = (nodeScope) => {
-  return nodeScope || nodeScope instanceof Element === true ? nodeScope : document
-}
 
 export const findFocusableNodes = (nodeScope) => {
   const scope = getNodeScope(nodeScope)
@@ -22,14 +18,14 @@ export const findLastFocusableNode = (nodeScope) => {
 }
 
 export const findCurrentFocusedNodeIndex = (currentNode, nodeScope) => {
-  if (currentNode instanceof Element !== true) return
+  if (!isNodeElement(currentNode)) return
   const focusableNodes = findFocusableNodes(nodeScope)
   const currentNodeIndex = Array.prototype.indexOf.call(focusableNodes, currentNode)
   return currentNodeIndex !== -1 ? currentNodeIndex : false
 }
 
 export const findNextFocusableNode = (currentNode, nodeScope) => {
-  if (currentNode instanceof Element !== true) return
+  if (!isNodeElement(currentNode)) return
 
   const scope = getNodeScope(nodeScope)
   const focusableNodes = findFocusableNodes(scope)
@@ -40,7 +36,7 @@ export const findNextFocusableNode = (currentNode, nodeScope) => {
 }
 
 export const findPreviousFocusableNode = (currentNode, nodeScope) => {
-  if (currentNode instanceof Element !== true) return
+  if (!isNodeElement(currentNode)) return
 
   const scope = getNodeScope(nodeScope)
   const focusableNodes = findFocusableNodes(scope)

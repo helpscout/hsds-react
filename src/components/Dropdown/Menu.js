@@ -9,7 +9,8 @@ import Drop from '../Drop'
 import Scrollable from '../Scrollable'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
-import { noop, requestAnimationFrame } from '../../utilities/other'
+import { noop } from '../../utilities/other'
+import { applyStylesToNode, getViewportHeight } from '../../utilities/node'
 
 export const propTypes = {
   enableCycling: PropTypes.bool,
@@ -45,7 +46,7 @@ class Menu extends Component {
     }
     this.items = []
     this.isFocused = props.isOpen ? props.isOpen : false
-    this.height = 0
+    this.height = null
 
     this.handleUpArrow = this.handleUpArrow.bind(this)
     this.handleDownArrow = this.handleDownArrow.bind(this)
@@ -97,21 +98,21 @@ class Menu extends Component {
   }
 
   setHeight () {
-    requestAnimationFrame(() => {
-      const listNodeRect = this.listNode.getBoundingClientRect()
-      const offset = 20
-      let height
-      if (listNodeRect.top + (listNodeRect.height + 2) > window.innerHeight) {
-        height = window.innerHeight - listNodeRect.top - offset
-      } else {
-        height = null
-      }
+    const viewportHeight = getViewportHeight()
+    const listNodeRect = this.listNode.getBoundingClientRect()
+    const offset = 20
+    let height
 
-      if (height !== this.height) {
-        this.contentNode.style.height = height ? `${height}px` : null
-        this.height = height
-      }
-    })
+    if (listNodeRect.top + listNodeRect.height > viewportHeight) {
+      height = viewportHeight - listNodeRect.top - offset
+    } else {
+      height = null
+    }
+
+    if (height !== this.height) {
+      applyStylesToNode(this.contentNode, { height: height || null })
+      this.height = height
+    }
   }
 
   setMenuFocus () {

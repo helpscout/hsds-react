@@ -4,13 +4,22 @@ import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import PortalWrapper from '../PortalWrapper'
 import classNames from '../../utilities/classNames'
-import { applyStylesToNode } from '../../utilities/node'
 import { pureComponentShouldUpdate } from '../../utilities/components'
 import { propTypes as portalTypes } from '../Portal'
+import {
+  applyStylesToNode,
+  getViewportHeight,
+  getViewportWidth
+} from '../../utilities/node'
 
 export const propTypes = Object.assign({}, portalTypes, {
-  trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object])
+  trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
+  direction: PropTypes.string
 })
+
+const defaultProps = {
+  direction: 'down'
+}
 
 const popoverWrapperBaseZIndex = 1020
 
@@ -41,6 +50,10 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
       this.contentNode = null
       this.composedNode = null
       this.portal = null
+      this.direction = {
+        x: '',
+        y: 'down'
+      }
 
       this.updatePosition = this.updatePosition.bind(this)
     }
@@ -69,52 +82,98 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
+    getDirectionX () {
+      const { direction } = this.props
+      // No defaults
+      return direction.match(/left/) ? 'left'
+        : direction.match(/right/) ? 'right'
+        : ''
+    }
+
+    getDirectionY () {
+      const { direction } = this.props
+      // Default to down
+      return direction.match(/up/) ? 'up'
+        : direction.match(/down/) ? 'down'
+        : 'down'
+    }
+
     updatePosition () {
-      // TODO: IMPLEMENT DIRECTIONS (Up, Right, Down, Left)
-      // IT CURRENTLY ONLY ACCOUNTS FOR UP/DOWN
-      if (!this.triggerNode) return
+      if (!this.triggerNode || !this.contentNode) return
       if (!portalOptions.autoPosition) return
       const { zIndex } = this.props
 
-      const triggerRect = this.triggerNode.getBoundingClientRect()
-      const offset = portalOptions.offset
-      let reposition = false
-      let contentNodeRect
+      const pos = this.triggerNode.getBoundingClientRect()
+      const nodePos = this.composedNode.getBoundingClientRect()
+      const height = this.composedNode.offsetHeight
+      const width = this.composedNode.offsetWidth
+      const boundingOffset = 8
+      const triggerOffset = portalOptions.offset
+      const offset = triggerOffset + boundingOffset
+      const offsetTop = pos.top > this.triggerNode.offsetTop ? pos.top : this.triggerNode.offsetTop
+      const offsetLeft = pos.left > this.triggerNode.offsetLeft ? pos.left : this.triggerNode.offsetLeft
+      const viewportHeight = getViewportHeight()
+      const viewportWidth = getViewportWidth()
+      const posSize = offsetTop + pos.height
 
-      if (this.contentNode) {
-        contentNodeRect = this.contentNode.getBoundingClientRect()
-        if (contentNodeRect.top + contentNodeRect.height > window.innerHeight) {
-          reposition = true
-        }
+      let top
+      let left
+      let directionX = this.getDirectionX()
+      let directionY = this.getDirectionY()
+
+      directionX = directionX === 'right' && offsetLeft + width + offset > viewportWidth ? 'left'
+        : directionX === 'left' && offsetLeft - width - offset < 0 ? 'right'
+        : directionX
+
+      directionY = directionY === 'down' && posSize + height + offset > viewportHeight && posSize - height - offset > 0 ? 'up'
+        : directionY === 'up' && posSize - height - offset < 0 ? 'down'
+        : directionY
+
+      switch (directionY) {
+        case 'up' :
+          top = offsetTop - triggerOffset - nodePos.height
+          break
+
+        case 'down' :
+          top = offsetTop + pos.height + triggerOffset
+          break
       }
 
-      const top = reposition
-        ? triggerRect.top - triggerRect.height - contentNodeRect.height
-        : triggerRect.top + triggerRect.height
+      switch (directionX) {
+        case 'left' :
+          left = offsetLeft - triggerOffset - nodePos.width
+          if (directionY === 'down') {
+            top = offsetTop
+          } else {
+            top = offsetTop - nodePos.height + pos.height
+          }
+          break
 
-      const left = reposition
-        ? (triggerRect.left + triggerRect.width) - contentNodeRect.width
-        : triggerRect.left
+        case 'right' :
+          left = offsetLeft + pos.width + triggerOffset
+          if (directionY === 'down') {
+            top = offsetTop
+          } else {
+            top = offsetTop - nodePos.height + pos.height
+          }
+          break
 
-      // TODO: Improve handling of calculations to avoid needing
-      // to terminal on negative values.
-      if (top < 0 || left < 0) return
-
-      const position = {
-        top: parseInt(top + offset + window.scrollY, 10),
-        left: parseInt(left + window.scrollX, 10)
+        default :
+          left = offsetLeft
+          break
       }
 
       const nodeStyles = {
-        display: position.top !== null ? 'block' : 'none',
+        display: offsetTop !== null ? 'block' : 'none',
         position: 'absolute',
-        top: position.top,
-        left: position.left,
+        top: 0,
+        left: 0,
+        transform: `translate(${left}px, ${top}px)`,
         zIndex
       }
 
       applyStylesToNode(this.contentNode, nodeStyles)
-      this.position = position
+      this.position = { top, left }
     }
 
     render () {
@@ -149,7 +208,7 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
           ref={node => { this.contentNode = node }}
         >
           <EventListener event='resize' handler={updatePosition} />
-          <div className='c-Drop__positioner' ref={node => { this.composedNode = node }}>
+          <div className='c-Drop__positioner' ref={node => { this.composedNode = node }} style={{ display: 'inline-block' }}>
             <ComposedComponent
               closePortal={closePortal}
               isOpen={portalIsOpen}
@@ -162,6 +221,7 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
   }
 
   Drop.propTypes = propTypes
+  Drop.defaultProps = defaultProps
 
   return PortalWrapper(portalOptions)(Drop)
 }

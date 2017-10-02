@@ -1,4 +1,5 @@
 import React, {PureComponent as Component} from 'react'
+import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import Divider from './Divider'
 import Item from './Item'
@@ -8,6 +9,13 @@ import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { focusNextFocusableNode, focusPreviousFocusableNode } from '../../utilities/focus'
+
+export const propTypes = {
+  direction: PropTypes.string
+}
+const defaultProps = {
+  direction: 'down'
+}
 
 class Dropdown extends Component {
   constructor (props) {
@@ -96,6 +104,7 @@ class Dropdown extends Component {
     const {
       children,
       className,
+      direction,
       selectedIndex: propsSelectedIndex,
       ...rest
     } = this.props
@@ -123,6 +132,7 @@ class Dropdown extends Component {
       onFocus: handleOnTriggerFocus
     })
     const menuMarkup = isOpen ? React.cloneElement(children[1], {
+      direction,
       isOpen,
       onClose: handleOnMenuClose,
       ref: 'menu',
@@ -144,6 +154,8 @@ class Dropdown extends Component {
   }
 }
 
+Dropdown.propTypes = propTypes
+Dropdown.defaultProps = defaultProps
 Dropdown.Divider = Divider
 Dropdown.Item = Item
 Dropdown.Menu = Menu

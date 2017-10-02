@@ -21,24 +21,24 @@ const itemsMarkup = (amount = 10) => {
 
 storiesOf('Dropdown', module)
   .add('test', () => (
-    <div style={{padding: '100px 20%'}}>
+    <div style={{padding: '20% 20%'}}>
       <Flexy just='left' gap='md'>
         <Flexy.Item>
           <Dropdown>
             <Dropdown.Trigger>
               Hello
             </Dropdown.Trigger>
-            <Dropdown.Menu isOpen direction='up'>
+            <Dropdown.Menu isOpen>
               {itemsMarkup(10)}
             </Dropdown.Menu>
           </Dropdown>
         </Flexy.Item>
         <Flexy.Item>
-          <Dropdown>
+          <Dropdown direction='left up'>
             <Dropdown.Trigger>
               There
             </Dropdown.Trigger>
-            <Dropdown.Menu isOpen direction='up'>
+            <Dropdown.Menu isOpen>
               {itemsMarkup(5)}
             </Dropdown.Menu>
           </Dropdown>
