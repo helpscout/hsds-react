@@ -95,7 +95,6 @@ class Item extends Component {
 
   handleOnMenuClose () {
     const { onMenuClose } = this.props
-    this.setState({ isOpen: false })
     onMenuClose()
   }
 

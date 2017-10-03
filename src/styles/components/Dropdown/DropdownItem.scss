@@ -4,6 +4,7 @@
   @import "../../resets/base";
   cursor: pointer;
   padding: 0;
+  user-select: none;
 
   &:last-child {
     border: none;
@@ -24,5 +25,9 @@
     display: block;
     outline: none;
     padding: 8px 16px;
+
+    &:active {
+      background-color: _color(grey, 400);
+    }
   }
 }

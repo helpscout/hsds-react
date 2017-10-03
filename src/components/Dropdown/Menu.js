@@ -63,11 +63,14 @@ class Menu extends Component {
     this.wrapperNode = null
     this.contentNode = null
     this.listNode = null
+    // https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
+    this._isMounted = false
   }
 
   componentDidMount () {
     this.mapRefsToItems()
     this.setMenuFocus()
+    this._isMounted = true
     setTimeout(() => {
       this.handleOnResize()
     }, 0)
@@ -84,6 +87,10 @@ class Menu extends Component {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.mapRefsToItems()
     }
+  }
+
+  componentWillUnmount () {
+    this._isMounted = false
   }
 
   handleOnResize () {
@@ -228,13 +235,14 @@ class Menu extends Component {
   }
 
   handleItemOnMenuClose () {
-    this.isFocused = true
-    this.setState({ selectedIndex: null, hoverIndex: null })
+    if (this._isMounted) {
+      this.isFocused = true
+      this.setState({ selectedIndex: null, hoverIndex: null })
+    }
   }
 
   handleOnClose () {
     const { onClose } = this.props
-    this.setState({ hoverIndex: null })
     onClose()
   }
 

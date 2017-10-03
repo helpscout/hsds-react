@@ -38,10 +38,6 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
     constructor (props) {
       super()
 
-      this.state = {
-        isOpen: false
-      }
-
       this.position = {
         top: null,
         left: null
@@ -61,10 +57,6 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
     componentDidMount () {
       this.setTriggerNode()
       this.updatePosition()
-    }
-
-    componentWillReceiveProps (nextProps) {
-      this.setState({ isOpen: nextProps.portalIsOpen })
     }
 
     componentDidUpdate () {
