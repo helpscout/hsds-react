@@ -38,10 +38,33 @@ class KeypressListener extends Component {
   handleKeyEvent (event) {
     const {keyCode, handler, modifier, only} = this.props
     let modKey = true
-    if (modifier === 'shift') {
-      modKey = event.shiftKey
+
+    if (modifier) {
+      switch (modifier) {
+        case 'shift':
+          modKey = event.shiftKey
+          break
+        case 'alt':
+          modKey = event.altKey
+          break
+        case 'option':
+          modKey = event.altKey
+          break
+        case 'meta':
+          modKey = event.metaKey
+          break
+        case 'command':
+          modKey = event.metaKey
+          break
+        case 'control':
+          modKey = event.ctrlKey
+          break
+      }
     } else if (only) {
-      modKey = event.shiftKey === false
+      modKey =  event.shiftKey === false && 
+                event.altKey === false &&
+                event.metaKey === false &&
+                event.ctrlKey === false
     }
 
     if (event.keyCode === keyCode && modKey) {

@@ -89,6 +89,8 @@ export const getViewportHeight = (scope) => {
   const node = getNodeScope(scope)
   const { height, offset } = getComputedHeightProps(node)
 
+  /* istanbul ignore next */
+  // Tested one case, but cannot test the other in JSDOM
   return height > window.innerHeight ? height : window.innerHeight - offset
 }
 
@@ -96,5 +98,7 @@ export const getViewportWidth = (scope) => {
   const node = getNodeScope(scope)
   const { width, offset } = getComputedWidthProps(node)
 
+  /* istanbul ignore next */
+  // Tested one case, but cannot test the other in JSDOM
   return width > window.innerWidth ? width : window.innerWidth - offset
 }
