@@ -10,7 +10,7 @@ const itemsMarkup = (amount = 10) => {
   const items = []
   for (let i = 0; i < amount; i++) {
     const item = (
-      <Dropdown.Item key={i}>
+      <Dropdown.Item key={i} onClick={logAction}>
         Item {i + 1}
       </Dropdown.Item>
     )
@@ -29,7 +29,7 @@ storiesOf('Dropdown', module)
               Hello
             </Dropdown.Trigger>
             <Dropdown.Menu>
-              <Dropdown.Item>
+              <Dropdown.Item onClick={logAction}>
                 Nested
                 <Dropdown.Menu>
                   <Dropdown.Item>

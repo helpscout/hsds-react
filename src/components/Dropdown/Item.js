@@ -1,5 +1,6 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
+import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Menu from './Menu'
@@ -35,6 +36,7 @@ class Item extends Component {
 
     this.handleOnBlur = this.handleOnBlur.bind(this)
     this.handleOnClick = this.handleOnClick.bind(this)
+    this.handleOnEnter = this.handleOnEnter.bind(this)
     this.handleOnFocus = this.handleOnFocus.bind(this)
     this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
     this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
@@ -57,10 +59,23 @@ class Item extends Component {
     onBlur(event, reactEvent, this)
   }
 
+  handleOnEnter (event, reactEvent) {
+    event.stopPropagation()
+    if (event.keyCode === Keys.ENTER) {
+      if (this.menu) {
+        this.handleOnMouseEnter(event, reactEvent)
+      } else {
+        this.handleOnClick(event, reactEvent)
+      }
+    }
+  }
+
   handleOnClick (event, reactEvent) {
     event.stopPropagation()
     const { onClick } = this.props
-    onClick(event, reactEvent, this)
+    if (!this.menu) {
+      onClick(event, reactEvent, this)
+    }
   }
 
   handleOnFocus (event, reactEvent) {
@@ -125,6 +140,7 @@ class Item extends Component {
     const handleOnBlur = this.handleOnBlur
     const handleOnClick = this.handleOnClick
     const handleOnFocus = this.handleOnFocus
+    const handleOnEnter = this.handleOnEnter
     const handleOnMouseEnter = this.handleOnMouseEnter
     const handleOnMouseLeave = this.handleOnMouseLeave
     const handleOnMenuClose = this.handleOnMenuClose
@@ -161,6 +177,7 @@ class Item extends Component {
           onFocus={handleOnFocus}
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
+          onKeyDown={handleOnEnter}
           tabIndex={-1}
           ref={node => { this.node = node }}
         >

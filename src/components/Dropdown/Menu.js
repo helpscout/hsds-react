@@ -14,8 +14,6 @@ import { applyStylesToNode, getViewportHeight } from '../../utilities/node'
 
 export const propTypes = {
   enableCycling: PropTypes.bool,
-  onFirstItemFocus: PropTypes.func,
-  onLastItemFocus: PropTypes.func,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   parentMenu: PropTypes.bool,
@@ -24,8 +22,6 @@ export const propTypes = {
 
 const defaultProps = {
   enableCycling: false,
-  onFirstItemFocus: noop,
-  onLastItemFocus: noop,
   isOpen: false,
   onClose: noop
 }
@@ -193,7 +189,7 @@ class Menu extends Component {
     if (focusIndex === null || focusIndex === undefined) return
 
     const item = this.items[focusIndex]
-    if (item.menu) {
+    if (item && item.menu) {
       this.setState({ hoverIndex: focusIndex })
       this.isFocused = false
     }
@@ -208,13 +204,14 @@ class Menu extends Component {
     const { focusIndex } = this.state
     const focusItem = this.items[focusIndex]
     if (focusItem) {
+      focusItem.node.focus()
       focusItem.node.scrollIntoView()
     }
   }
 
   handleItemOnFocus (event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
-    this.setState({ focusIndex, hoverIndex: null })
+    this.setState({ focusIndex })
   }
 
   handleItemOnMouseEnter (event, reactEvent, item) {
@@ -253,10 +250,8 @@ class Menu extends Component {
       enableCycling,
       isOpen,
       onClose,
-      onFirstItemFocus,
-      onLastItemFocus,
       parentMenu,
-      selectedIndex: propsSelectedIndex,
+      selectedIndex,
       trigger,
       ...rest
     } = this.props
