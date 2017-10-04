@@ -1,6 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
+import Item from './Item'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
 import Animate from '../Animate'
@@ -284,7 +285,8 @@ class Menu extends Component {
 
     const childrenMarkup = React.Children.map(children, (child, index) => {
       const itemRef = `item-${index}`
-      return React.cloneElement(child, {
+
+      return child.type === Item ? React.cloneElement(child, {
         ref: itemRef,
         isHover: hoverIndex === index,
         isFocused: this.isFocused && focusIndex === index,
@@ -293,7 +295,7 @@ class Menu extends Component {
         onMouseLeave: handleItemOnMouseLeave,
         onMenuClose: handleItemOnMenuClose,
         parentMenu: true
-      })
+      }) : child
     })
 
     const componentClassName = classNames(
@@ -346,4 +348,5 @@ class Menu extends Component {
 Menu.propTypes = propTypes
 Menu.defaultProps = defaultProps
 
+export const MenuComponent = Menu
 export default Drop(dropOptions)(Menu)
