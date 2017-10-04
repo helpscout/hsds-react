@@ -3,9 +3,12 @@ import { mount } from 'enzyme'
 import KeypressListener from '..'
 import Keys from '../../../constants/Keys'
 
-const simulateKeyPress = (keyCode) => {
+const simulateKeyPress = (keyCode, modifier) => {
   const event = new Event('keyup')
   event.keyCode = keyCode
+  if (modifier) {
+    event[modifier] = true
+  }
 
   document.dispatchEvent(event)
 }
@@ -94,5 +97,103 @@ describe('Events', () => {
     wrapper.unmount()
 
     expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('Modifier keys', () => {
+  test('Shift modifier key', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} modifier='shift' />)
+
+    simulateKeyPress(Keys.ENTER)
+    expect(spy).not.toHaveBeenCalled()
+
+    simulateKeyPress(Keys.ENTER, 'shiftKey')
+    expect(spy).toHaveBeenCalled()
+
+    wrapper.unmount()
+  })
+
+  test('Control modifier key', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} modifier='control' />)
+
+    simulateKeyPress(Keys.ENTER)
+    expect(spy).not.toHaveBeenCalled()
+
+    simulateKeyPress(Keys.ENTER, 'ctrlKey')
+    expect(spy).toHaveBeenCalled()
+
+    wrapper.unmount()
+  })
+
+  test('Alt modifier key', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} modifier='alt' />)
+
+    simulateKeyPress(Keys.ENTER)
+    expect(spy).not.toHaveBeenCalled()
+
+    simulateKeyPress(Keys.ENTER, 'altKey')
+    expect(spy).toHaveBeenCalled()
+
+    wrapper.unmount()
+  })
+
+  test('Command modifier key', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} modifier='command' />)
+
+    simulateKeyPress(Keys.ENTER)
+    expect(spy).not.toHaveBeenCalled()
+
+    simulateKeyPress(Keys.ENTER, 'metaKey')
+    expect(spy).toHaveBeenCalled()
+
+    wrapper.unmount()
+  })
+
+  test('Meta modifier key', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} modifier='meta' />)
+
+    simulateKeyPress(Keys.ENTER)
+    expect(spy).not.toHaveBeenCalled()
+
+    simulateKeyPress(Keys.ENTER, 'metaKey')
+    expect(spy).toHaveBeenCalled()
+
+    wrapper.unmount()
+  })
+
+  test('Option modifier key', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} modifier='option' />)
+
+    simulateKeyPress(Keys.ENTER)
+    expect(spy).not.toHaveBeenCalled()
+
+    simulateKeyPress(Keys.ENTER, 'altKey')
+    expect(spy).toHaveBeenCalled()
+
+    wrapper.unmount()
+  })
+})
+
+describe('Only, without modifier keys', () => {
+  test('Does not trigger when modifier keys are pressed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<KeypressListener keyCode={Keys.ENTER} handler={spy} noModifier />)
+
+    simulateKeyPress(Keys.ENTER, 'shiftKey')
+    simulateKeyPress(Keys.ENTER, 'altKey')
+    simulateKeyPress(Keys.ENTER, 'ctrlKey')
+    simulateKeyPress(Keys.ENTER, 'metaKey')
+    expect(spy).not.toHaveBeenCalled()
+
+    simulateKeyPress(Keys.ENTER)
+    expect(spy).toHaveBeenCalledTimes(1)
+
+    wrapper.unmount()
   })
 })

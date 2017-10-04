@@ -143,7 +143,7 @@ class Dropdown extends Component {
     return (
       <div className={componentClassName} {...rest}>
         <EventListener event='click' handler={handleOnBodyClick} />
-        <KeypressListener keyCode={Keys.TAB} handler={handleTab} only type='keydown' />
+        <KeypressListener keyCode={Keys.TAB} handler={handleTab} noModifier type='keydown' />
         <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={handleShiftTab} type='keydown' />
         <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
         {triggerMarkup}

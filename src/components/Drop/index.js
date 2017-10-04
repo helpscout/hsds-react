@@ -7,8 +7,7 @@ import classNames from '../../utilities/classNames'
 import { propTypes as portalTypes } from '../Portal'
 import {
   applyStylesToNode,
-  getViewportHeight,
-  getViewportWidth
+  getOptimalViewportPosition
 } from '../../utilities/node'
 
 export const propTypes = Object.assign({}, portalTypes, {
@@ -85,83 +84,37 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
         : 'down'
     }
 
+    getDirections () {
+      return {
+        x: this.getDirectionX(),
+        y: this.getDirectionY()
+      }
+    }
+
     updatePosition () {
-      if (!this.triggerNode || !this.contentNode) return
+      if (!this.triggerNode || !this.composedNode) return
       if (!portalOptions.autoPosition) return
       const { zIndex } = this.props
 
-      const pos = this.triggerNode.getBoundingClientRect()
-      const nodePos = this.composedNode.getBoundingClientRect()
-      const height = this.composedNode.offsetHeight
-      const width = this.composedNode.offsetWidth
-      const boundingOffset = 8
-      const triggerOffset = portalOptions.offset
-      const offset = triggerOffset + boundingOffset
-      const offsetTop = pos.top > this.triggerNode.offsetTop ? pos.top : this.triggerNode.offsetTop
-      const offsetLeft = pos.left > this.triggerNode.offsetLeft ? pos.left : this.triggerNode.offsetLeft
-      const viewportHeight = getViewportHeight()
-      const viewportWidth = getViewportWidth()
-      const posSize = offsetTop + pos.height
-
-      let top
-      let left
-      let directionX = this.getDirectionX()
-      let directionY = this.getDirectionY()
-
-      directionX = directionX === 'right' && offsetLeft + width + offset > viewportWidth ? 'left'
-        : directionX === 'left' && offsetLeft - width - offset < 0 ? 'right'
-        : directionX
-
-      directionY = directionY === 'down' && posSize + height + offset > viewportHeight && posSize - height - offset > 0 ? 'up'
-        : directionY === 'up' && posSize - height - offset < 0 ? 'down'
-        : directionY
-
-      switch (directionY) {
-        case 'up' :
-          top = offsetTop - triggerOffset - nodePos.height
-          break
-
-        case 'down' :
-          top = offsetTop + pos.height + triggerOffset
-          break
-      }
-
-      switch (directionX) {
-        case 'left' :
-          left = offsetLeft - triggerOffset - nodePos.width
-          if (directionY === 'down') {
-            top = offsetTop
-          } else {
-            top = offsetTop - nodePos.height + pos.height
-          }
-          break
-
-        case 'right' :
-          left = offsetLeft + pos.width + triggerOffset
-          if (directionY === 'down') {
-            top = offsetTop
-          } else {
-            top = offsetTop - nodePos.height + pos.height
-          }
-          break
-
-        default :
-          left = offsetLeft
-          break
-      }
+      const position = getOptimalViewportPosition({
+        triggerNode: this.triggerNode,
+        contentNode: this.composedNode,
+        offset: portalOptions.offset,
+        direction: this.getDirections()
+      })
 
       const nodeStyles = {
-        display: offsetTop !== null ? 'block' : 'none',
+        display: position.offsetTop !== null ? 'block' : 'none',
         position: 'absolute',
         top: 0,
         left: 0,
-        transform: `translate(${left}px, ${top}px)`,
+        transform: `translate(${position.left}px, ${position.top}px)`,
         zIndex
       }
 
       applyStylesToNode(this.contentNode, nodeStyles)
-      this.position = { top, left }
-      this.direction = { x: directionX, y: directionY }
+      this.position = { top: position.top, left: position.left }
+      this.direction = position.direction
     }
 
     render () {

@@ -9,6 +9,10 @@ const propTypes = {
   handler: PropTypes.func
 }
 
+const defaultProps = {
+  scope: window
+}
+
 // see https://github.com/oliviertassinari/react-event-listener/
 class EventListener extends Component {
   constructor () {
@@ -37,14 +41,12 @@ class EventListener extends Component {
 
   attachListener () {
     const {event, handler, capture, passive, scope} = this.props
-    const captureScope = scope || window
-    addEventListener(captureScope, event, handler, {capture, passive})
+    addEventListener(scope, event, handler, {capture, passive})
   }
 
   detachListener () {
     const {event, handler, capture, scope} = this.props
-    const captureScope = scope || window
-    removeEventListener(captureScope, event, handler, capture)
+    removeEventListener(scope, event, handler, capture)
   }
 
   render () {
@@ -53,5 +55,6 @@ class EventListener extends Component {
 }
 
 EventListener.propTypes = propTypes
+EventListener.defaultProps = defaultProps
 
 export default EventListener

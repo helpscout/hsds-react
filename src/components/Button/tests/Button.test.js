@@ -57,6 +57,12 @@ describe('States', () => {
     expect(warning.prop('className')).toContain('is-warning')
   })
 
+  test('Adds the active classNames', () => {
+    const wrapper = wrap(<Button isActive>Button</Button>)
+
+    expect(wrapper.prop('className')).toContain('is-selected')
+  })
+
   test('Disables the button', () => {
     const callback = jest.fn()
     const disabledButton = mount(<Button disabled onClick={callback}>Disabled</Button>)

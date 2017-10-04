@@ -102,3 +102,89 @@ export const getViewportWidth = (scope) => {
   // Tested one case, but cannot test the other in JSDOM
   return width > window.innerWidth ? width : window.innerWidth - offset
 }
+
+export const getOptimalViewportPosition = (options) => {
+  if (!options && typeof options !== 'object') return false
+
+  const { triggerNode, contentNode, offset, direction } = options
+  if (!isNodeElement(triggerNode) || !isNodeElement(contentNode)) return false
+
+  const pos = triggerNode.getBoundingClientRect()
+  const nodePos = contentNode.getBoundingClientRect()
+  const height = nodePos.height
+  const width = nodePos.width
+  const boundingOffset = 8
+  // The following vars are tested. However, they can only be tested for pos.top/pos.left vs other
+  // ternary outcomes. This is due to a limitation of JSDOM not supporting offsetTop/offsetLeft.
+  // Which is why the ternary begins by checking if the environment is node based.
+  /* istanbul ignore next */
+  const offsetTop = isNodeEnv() ? pos.top : pos.top > triggerNode.offsetTop ? pos.top : triggerNode.offsetTop
+  /* istanbul ignore next */
+  const offsetLeft = isNodeEnv() ? pos.left : pos.left > triggerNode.offsetLeft ? pos.left : triggerNode.offsetLeft
+  const viewportHeight = getViewportHeight()
+  const viewportWidth = getViewportWidth()
+  const posSize = offsetTop + pos.height
+  /* istanbul ignore next */
+  // Tested, but istanbul isn't picking it up
+  const triggerOffset = typeof offset !== 'undefined' ? offset : 0
+  const totalOffset = triggerOffset + boundingOffset
+  let directionX = direction && direction.x ? direction.x : ''
+  let directionY = direction && direction.y ? direction.y : 'down'
+
+  let top
+  let left
+
+  directionX = directionX === 'right' && offsetLeft + width + totalOffset > viewportWidth ? 'left'
+    : directionX === 'left' && offsetLeft - width - totalOffset < 0 ? 'right'
+    : directionX
+
+  directionY = directionY === 'down' && posSize + height + totalOffset > viewportHeight && posSize - height - totalOffset > 0 ? 'up'
+    : directionY === 'up' && posSize - height - totalOffset < 0 ? 'down'
+    : directionY
+
+  switch (directionY) {
+    case 'up' :
+      top = offsetTop - triggerOffset - height
+      break
+
+    case 'down' :
+      top = offsetTop + pos.height + triggerOffset
+      break
+  }
+
+  switch (directionX) {
+    case 'left' :
+      left = offsetLeft - triggerOffset - nodePos.width
+      if (directionY === 'down') {
+        top = offsetTop
+      } else {
+        top = offsetTop - height + pos.height
+      }
+      break
+
+    case 'right' :
+      left = offsetLeft + pos.width + triggerOffset
+      if (directionY === 'down') {
+        top = offsetTop
+      } else {
+        top = offsetTop - nodePos.height + pos.height
+      }
+      break
+
+    default :
+      left = offsetLeft
+      break
+  }
+
+  return {
+    top,
+    left,
+    offsetTop,
+    offsetLeft,
+    offset: totalOffset,
+    direction: {
+      x: directionX,
+      y: directionY
+    }
+  }
+}

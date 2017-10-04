@@ -8,5 +8,5 @@ export const requestAnimationFrame = (callback) => {
 }
 
 export const isNodeEnv = () => {
-  return typeof process !== 'undefined' && process.env
+  return typeof process !== 'undefined' && process.env !== undefined
 }
