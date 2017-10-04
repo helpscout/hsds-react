@@ -1,6 +1,6 @@
 import {
   getOptimalViewportPosition
-} from '../../node'
+} from '../../nodePosition'
 
 test('Returns false for invalid arguments', () => {
   expect(getOptimalViewportPosition()).toBeFalsy()

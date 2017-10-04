@@ -72,3 +72,16 @@ describe('Trigger', () => {
     expect(el.prop('onClick')).toBeInstanceOf(Function)
   })
 })
+
+describe('Styles', () => {
+  test('Should add direction className, if applicable', () => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent isOpen direction='left down' />)
+    const o = document.querySelector('.c-Drop')
+
+    expect(o.classList.contains('is-left')).toBeTruthy()
+    expect(o.classList.contains('is-down')).toBeTruthy()
+
+    wrapper.unmount()
+  })
+})
