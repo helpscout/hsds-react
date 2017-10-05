@@ -1,5 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
+import Flexy from '../Flexy'
+import Icon from '../Icon'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -161,7 +163,9 @@ class Item extends Component {
       parentMenu
     }) : null
     const menuIndicatorMarkup = this.menu ? (
-      <span>▼</span>
+      <Flexy.Item className='c-DropdownItem__submenu-icon'>
+        <Icon name='caret-right' muted size='12' />
+      </Flexy.Item>
     ) : null
 
     return (
@@ -169,7 +173,7 @@ class Item extends Component {
         className={componentClassName}
         {...rest}
       >
-        <span
+        <div
           className='c-DropdownItem__link'
           onBlur={handleOnBlur}
           onClick={handleOnClick}
@@ -180,9 +184,13 @@ class Item extends Component {
           tabIndex={-1}
           ref={node => { this.node = node }}
         >
-          {itemMarkup}
-          {menuIndicatorMarkup}
-        </span>
+          <Flexy>
+            <Flexy.Block>
+              {itemMarkup}
+            </Flexy.Block>
+            {menuIndicatorMarkup}
+          </Flexy>
+        </div>
         {menuMarkup}
       </li>
     )

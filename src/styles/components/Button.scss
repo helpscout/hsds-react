@@ -4,3 +4,9 @@ $seed-button-namespace: "c-Button";
 button.#{$seed-button-namespace} {
   @import "../resets/base";
 }
+
+@-moz-document url-prefix() {
+  .#{$seed-button-namespace} {
+    padding-top: 1px;
+  }
+}
