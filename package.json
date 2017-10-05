@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "private": false,
   "main": "dist/index.js",
   "license": "MIT",
@@ -35,13 +35,13 @@
   },
   "dependencies": {
     "@shopify/javascript-utilities": "2.0.0",
+    "emoji-mart": "^1.0.1",
     "lodash.includes": "4.3.0",
     "object-assign": "4.1.1",
-    "emoji-mart": "^1.0.1",
+    "promise": "7.1.1",
     "react-router-dom": "^4",
     "react-sortable-hoc": "^0.6.7",
     "react-transition-group": "2.2.0",
-    "promise": "7.1.1",
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
