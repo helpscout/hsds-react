@@ -10,11 +10,9 @@
     border: none;
   }
 
-  &.is-hover {
-    background-color: _color(grey, 300);
-  }
+  &.is-hover,
   &.is-focused {
-    background-color: _color(grey, 300);
+    background-color: rgba(_color(grey, 300), 1);
   }
   &.is-selected {
     background-color: _color(blue);
@@ -22,12 +20,14 @@
   }
 
   &__link {
+    background-color: rgba(_color(grey, 400), 0);
     display: block;
     outline: none;
     padding: 8px 16px;
+    transition: background-color 0.1s ease;
 
     &:active {
-      background-color: _color(grey, 400);
+      background-color: rgba(_color(grey, 400), 1);
     }
   }
 

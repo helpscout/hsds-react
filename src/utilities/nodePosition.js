@@ -106,11 +106,11 @@ export const getOptimalViewportPosition = (options) => {
   }
 
   return {
-    top,
-    left,
-    offsetTop,
-    offsetLeft,
-    offset: totalOffset,
+    top: parseInt(top),
+    left: parseInt(left),
+    offsetTop: parseInt(offsetTop),
+    offsetLeft: parseInt(offsetLeft),
+    offset: parseInt(totalOffset),
     direction: {
       x: directionX,
       y: directionY
