@@ -53,12 +53,12 @@ const Button = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-button',
+    'c-Button',
     isActive && 'is-selected',
-    size && `c-button--${size}`,
+    size && `c-Button--${size}`,
     state && `is-${state}`,
-    plain && 'c-button--link',
-    primary && 'c-button--primary',
+    plain && 'c-Button--link',
+    primary && 'c-Button--primary',
     props.className
   )
 

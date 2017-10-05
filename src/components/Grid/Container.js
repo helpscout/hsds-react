@@ -17,9 +17,9 @@ const Container = props => {
   } = props
 
   const componentClassName = classNames(
-    'o-container',
-    fluid && 'o-container--fluid',
-    responsive && 'o-container--responsive',
+    'c-Container',
+    fluid && 'c-Container--fluid',
+    responsive && 'c-Container--responsive',
     className
   )
 

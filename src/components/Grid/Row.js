@@ -16,7 +16,7 @@ const Row = props => {
     ...rest
   } = props
 
-  const namespace = flex ? 'o-row-flex' : 'o-row'
+  const namespace = flex ? 'c-Row-flex' : 'c-Row'
   const sizeClassName = size ? variantClassNames(`${namespace}-`, size) : null
 
   const componentClassName = classNames(

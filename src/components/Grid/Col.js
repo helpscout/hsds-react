@@ -14,10 +14,10 @@ const Col = props => {
     ...rest
   } = props
 
-  const sizeClassName = size ? variantClassNames('o-col', size) : null
+  const sizeClassName = size ? variantClassNames('c-Col', size) : null
 
   const componentClassName = classNames(
-    'o-col',
+    'c-Col',
     sizeClassName,
     className
   )
