@@ -11,7 +11,8 @@ import Scrollable from '../Scrollable'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { applyStylesToNode, getViewportHeight } from '../../utilities/node'
+import { applyStylesToNode } from '../../utilities/node'
+import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
 
 export const propTypes = {
   enableCycling: PropTypes.bool,
@@ -99,16 +100,10 @@ class Menu extends Component {
   }
 
   setHeight () {
-    const viewportHeight = getViewportHeight()
-    const listNodeRect = this.listNode.getBoundingClientRect()
-    const offset = 20
-    let height
-
-    if (listNodeRect.top + listNodeRect.height > viewportHeight) {
-      height = viewportHeight - listNodeRect.top - offset
-    } else {
-      height = null
-    }
+    const height = getHeightRelativeToViewport({
+      node: this.listNode,
+      offset: 20
+    })
 
     if (height !== this.height) {
       applyStylesToNode(this.contentNode, { height: height || null })
@@ -238,7 +233,7 @@ class Menu extends Component {
   handleItemOnMenuClose () {
     if (this._isMounted) {
       this.isFocused = true
-      this.setState({ selectedIndex: null, hoverIndex: null })
+      this.setState({ hoverIndex: null })
     }
   }
 

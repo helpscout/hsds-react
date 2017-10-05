@@ -2,6 +2,18 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 import { default as Menu, MenuComponent } from '../Menu'
 import Item from '../Item'
+import Keys from '../../../constants/Keys'
+
+const simulateKeyPress = (keyCode, eventType = 'keyup') => {
+  const event = new Event(eventType)
+  event.keyCode = keyCode
+
+  document.dispatchEvent(event)
+}
+
+afterEach(() => {
+  document.body.innerHTML = ''
+})
 
 describe('Items', () => {
   test('Can render a single item', () => {
@@ -72,5 +84,138 @@ describe('Items', () => {
 
     expect(n.items.length).toBe(4)
     expect(o.length).toBe(1)
+  })
+})
+
+describe('Selected', () => {
+  test('Does not select an item by default', () => {
+    const wrapper = shallow(
+      <Menu>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </Menu>
+    )
+    const o = wrapper.find(Item).first()
+
+    expect(o.hasClass('is-focused')).toBeFalsy()
+  })
+
+  test('Select/focus an item if menu is opened', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0}>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.find(Item).first()
+
+    expect(wrapper.state().focusIndex).toBe(0)
+    expect(o.hasClass('is-focused')).not.toBeTruthy()
+  })
+
+  test('Select/focus an item if specified', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.find(Item).first()
+
+    expect(wrapper.state().focusIndex).toBe(0)
+    expect(o.hasClass('is-focused')).toBeTruthy()
+  })
+})
+
+describe('Arrow interactions', () => {
+  test('Changes focusIndex on arrow down of a non-selected item', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.find(Item).first()
+    const n = wrapper.find(Item).last()
+
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+
+    expect(wrapper.state().focusIndex).toBe(3)
+    expect(o.hasClass('is-focused')).not.toBeTruthy()
+    expect(n.hasClass('is-focused')).toBeTruthy()
+  })
+
+  test('Changes focusIndex on arrow up of a non-selected item', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={3} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.find(Item).first()
+    const n = wrapper.find(Item).last()
+
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+
+    expect(wrapper.state().focusIndex).toBe(0)
+    expect(o.hasClass('is-focused')).toBeTruthy()
+    expect(n.hasClass('is-focused')).not.toBeTruthy()
+  })
+
+  test('Changes focusIndex on arrow up and down of a non-selected item', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={3} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.find(Item).first()
+    const n = wrapper.find(Item).last()
+
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+
+    expect(wrapper.state().focusIndex).toBe(0)
+    expect(o.hasClass('is-focused')).toBeTruthy()
+    expect(n.hasClass('is-focused')).not.toBeTruthy()
+  })
+})
+
+describe('Escape', () => {
+  test('Pressing escape fires onClose callback', () => {
+    const spy = jest.fn()
+    mount(
+      <MenuComponent selectedIndex={3} isOpen onClose={spy}>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    simulateKeyPress(Keys.ESCAPE)
+
+    expect(spy).toHaveBeenCalled()
   })
 })

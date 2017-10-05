@@ -137,7 +137,7 @@ class Dropdown extends Component {
       onClose: handleOnMenuClose,
       ref: 'menu',
       trigger: this.refs.trigger,
-      selectedIndex
+      selectedIndex: children[1].props.selectedIndex !== undefined ? children[1].props.selectedIndex : selectedIndex
     }) : null
 
     return (

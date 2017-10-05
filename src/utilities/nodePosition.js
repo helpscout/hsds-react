@@ -117,3 +117,19 @@ export const getOptimalViewportPosition = (options) => {
     }
   }
 }
+
+export const getHeightRelativeToViewport = (options) => {
+  if (!options && typeof options !== 'object') return false
+  const { offset, node } = options
+  if (!isNodeElement(node)) return false
+
+  const viewportHeight = getViewportHeight()
+  const pos = node.getBoundingClientRect()
+  const nodeOffset = offset !== undefined ? offset : 0
+
+  const isNodeOutsideOfViewport = pos.top + pos.height > viewportHeight
+  const newHeight = viewportHeight - pos.top - nodeOffset
+  const height = isNodeOutsideOfViewport ? newHeight : null
+
+  return height
+}
