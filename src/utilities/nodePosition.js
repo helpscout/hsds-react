@@ -50,6 +50,7 @@ export const getOptimalViewportPosition = (options) => {
   /* istanbul ignore next */
   // Tested, but istanbul isn't picking it up
   const triggerOffset = typeof offset !== 'undefined' ? offset : 0
+  const triggerWidth = pos.width
   const totalOffset = triggerOffset + boundingOffset
   let directionX = direction && direction.x ? direction.x : ''
   let directionY = direction && direction.y ? direction.y : 'down'
@@ -57,12 +58,17 @@ export const getOptimalViewportPosition = (options) => {
   let top
   let left
 
-  directionX = directionX === 'right' && offsetLeft + width + totalOffset > viewportWidth ? 'left'
-    : directionX === 'left' && offsetLeft - width - totalOffset < 0 ? 'right'
+  const totalOffsetWidthRight = offsetLeft + width + totalOffset + triggerWidth
+  const totalOffsetWidthLeft = offsetLeft - width - totalOffset
+  const totalOffsetHeightDown = posSize + height + totalOffset
+  const totalOffsetHeightUp = posSize - height - totalOffset
+
+  directionX = directionX === 'right' && totalOffsetWidthRight > viewportWidth && totalOffsetWidthLeft > 0 ? 'left'
+    : directionX === 'left' && totalOffsetWidthLeft < 0 ? 'right'
     : directionX
 
-  directionY = directionY === 'down' && posSize + height + totalOffset > viewportHeight && posSize - height - totalOffset > 0 ? 'up'
-    : directionY === 'up' && posSize - height - totalOffset < 0 ? 'down'
+  directionY = directionY === 'down' && totalOffsetHeightDown > viewportHeight && totalOffsetHeightUp > 0 ? 'up'
+    : directionY === 'up' && totalOffsetHeightUp < 0 ? 'down'
     : directionY
 
   switch (directionY) {

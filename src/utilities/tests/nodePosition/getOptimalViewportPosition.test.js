@@ -246,7 +246,7 @@ describe('Positioning', () => {
       width: 100,
       height: 80,
       top: 0,
-      left: 1000,
+      left: 900,
       right: 0,
       bottom: 0
     }
