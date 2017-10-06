@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "0.0.28",
+  "version": "0.0.30",
   "private": false,
   "main": "dist/index.js",
   "license": "MIT",
@@ -18,9 +18,9 @@
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
-    "release:patch": "np patch",
-    "release:minor": "np minor",
-    "release:major": "np major",
+    "release:patch": "np patch --no-yarn",
+    "release:minor": "np minor --no-yarn",
+    "release:major": "np major --no-yarn",
     "release": "npm run release:patch",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
@@ -35,9 +35,14 @@
   },
   "dependencies": {
     "@shopify/javascript-utilities": "2.0.0",
+    "emoji-mart": "^1.0.1",
     "lodash.includes": "4.3.0",
+    "object-assign": "4.1.1",
+    "promise": "7.1.1",
     "react-router-dom": "^4",
-    "react-transition-group": "2.2.0"
+    "react-sortable-hoc": "^0.6.7",
+    "react-transition-group": "2.2.0",
+    "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.2.4",
@@ -60,7 +65,6 @@
     "coveralls": "2.13.1",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
-    "emoji-mart": "^1.0.1",
     "enzyme": "2.9.1",
     "eslint": "3.19.0",
     "eslint-config-react-app": "^1.0.5",
@@ -80,11 +84,9 @@
     "node-sass": "4.5.3",
     "np": "2.16.0",
     "nyc": "11.1.0",
-    "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
     "postcss-scss": "1.0.2",
-    "promise": "7.1.1",
     "raw-loader": "0.5.1",
     "react": "15.6.1",
     "react-addons-perf": "^15.4.2",
@@ -93,7 +95,6 @@
     "react-error-overlay": "^1.0.9",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "react-sortable-hoc": "^0.6.7",
     "react-test-renderer": "15.6.1",
     "rgb-hex": "2.1.0",
     "sass-loader": "6.0.6",
@@ -118,8 +119,7 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "2.5.0",
     "webpack-manifest-plugin": "1.1.0",
-    "webpack-node-externals": "1.6.0",
-    "whatwg-fetch": "2.0.3"
+    "webpack-node-externals": "1.6.0"
   },
   "nyc": {
     "exclude": [
