@@ -97,6 +97,44 @@ describe('Items', () => {
     expect(n.items.length).toBe(4)
     expect(o.length).toBe(1)
   })
+
+  test('Sets focusIndex when item is focused', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    expect(wrapper.state().focusIndex).not.toBe(3)
+
+    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    o.simulate('focus')
+
+    expect(wrapper.state().focusIndex).toBe(3)
+  })
+
+  test('Sets focusIndex/hoverIndex when item is mouseenter', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    expect(wrapper.state().focusIndex).not.toBe(3)
+    expect(wrapper.state().hoverIndex).not.toBe(3)
+
+    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    o.simulate('mouseenter')
+
+    expect(wrapper.state().focusIndex).toBe(3)
+    expect(wrapper.state().hoverIndex).toBe(3)
+  })
 })
 
 describe('Selected', () => {
@@ -145,7 +183,53 @@ describe('Selected', () => {
   })
 })
 
-describe('Arrow interactions', () => {
+describe('Height', () => {
+  test('Adjusts height on mount, if Menu will be outside of Viewport', (done) => {
+    const wrapper = mount(<MenuComponent />)
+    const o = wrapper.node
+    const initialHeight = o.height
+
+    o.listNode.getBoundingClientRect = () => ({
+      width: 200,
+      height: 400,
+      top: 400,
+      left: 8,
+      right: 0,
+      bottom: 0
+    })
+
+    expect(o.contentNode.style.height).toBeFalsy()
+
+    setTimeout(() => {
+      expect(initialHeight).not.toBe(o.height)
+      expect(typeof o.height).toBe('number')
+      expect(o.height).toBeGreaterThan(0)
+      expect(parseInt(o.contentNode.style.height)).toBe(o.height)
+      done()
+    }, 1)
+  })
+
+  test('Keeps height at null if Menu is within viewport', (done) => {
+    const wrapper = mount(<MenuComponent />)
+    const o = wrapper.node
+
+    o.listNode.getBoundingClientRect = () => ({
+      width: 200,
+      height: 40,
+      top: 0,
+      left: 8,
+      right: 0,
+      bottom: 0
+    })
+
+    setTimeout(() => {
+      expect(o.height).toBe(null)
+      done()
+    }, 1)
+  })
+})
+
+describe('Keyboard Arrows: Up/Down', () => {
   test('Changes focusIndex on arrow down of a non-selected item', () => {
     const wrapper = mount(
       <MenuComponent selectedIndex={0} isOpen>
@@ -212,6 +296,184 @@ describe('Arrow interactions', () => {
     expect(o.hasClass('is-focused')).toBeTruthy()
     expect(n.hasClass('is-focused')).not.toBeTruthy()
   })
+
+  test('Up arrow does not do anything if menu is not focused', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={3} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    wrapper.node.isFocused = false
+
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+    expect(wrapper.state().focusIndex).toBe(3)
+  })
+
+  test('Down arrow does not do anything if menu is not focused', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={3} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    wrapper.node.isFocused = false
+
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    expect(wrapper.state().focusIndex).toBe(3)
+  })
+})
+
+describe('Keyboard Arrows: Left/Right', () => {
+  test('Left arrow does not close if menu is root menu', () => {
+    const spy = jest.fn()
+    mount(
+      <MenuComponent selectedIndex={3} isOpen onClose={spy}>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Left arrow fires onClose callback if menu is sub menu', () => {
+    const spy = jest.fn()
+    mount(
+      <MenuComponent selectedIndex={3} isOpen onClose={spy} parentMenu>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Left arrow does not fire onClose callback, if menu is sub menu, but not focused', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={3} isOpen onClose={spy} parentMenu>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    wrapper.node.isFocused = false
+
+    simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Right arrow sets hoverIndex + unfocuses menu, if sub menu is present', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={1} isOpen onClose={spy} parentMenu>
+        <Item />
+        <Item>
+          Sub Menu
+          <Menu />
+        </Item>
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.node
+    const previousHoverIndex = wrapper.state().hoverIndex
+
+    simulateKeyPress(Keys.RIGHT_ARROW, 'keydown')
+
+    expect(o.items[wrapper.state().focusIndex].menu).toBeTruthy()
+    expect(previousHoverIndex).not.toBe(wrapper.state().hoverIndex)
+    expect(o.isFocused).toBeFalsy()
+  })
+
+  test('Right arrow does not unfocus, if there is no sub menu is present', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={1} isOpen onClose={spy} parentMenu>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.node
+
+    expect(o.isFocused).toBeTruthy()
+
+    simulateKeyPress(Keys.RIGHT_ARROW, 'keydown')
+
+    expect(o.items[wrapper.state().focusIndex].menu).not.toBeTruthy()
+    expect(o.isFocused).toBeTruthy()
+  })
+
+  test('Right arrow does not unfocus, if there is no focusIndex', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={1} isOpen onClose={spy} parentMenu>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.node
+
+    expect(o.isFocused).toBeTruthy()
+
+    wrapper.setState({ focusIndex: null })
+    simulateKeyPress(Keys.RIGHT_ARROW, 'keydown')
+    expect(o.isFocused).toBeTruthy()
+
+    wrapper.setState({ focusIndex: undefined })
+    simulateKeyPress(Keys.RIGHT_ARROW, 'keydown')
+    expect(o.isFocused).toBeTruthy()
+  })
+
+  test('Right arrow does not fire onClose callback, if menu is sub menu, but not focused', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={3} isOpen onClose={spy} parentMenu>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    wrapper.node.isFocused = false
+
+    simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('Open state', () => {
+  test('Sets internal isFocused when isOpen prop changes to true', () => {
+    const wrapper = mount(
+      <MenuComponent>
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.node
+    wrapper.setProps({ isOpen: true })
+
+    expect(o.isFocused).toBe(true)
+  })
 })
 
 describe('Escape', () => {
@@ -229,5 +491,103 @@ describe('Escape', () => {
     simulateKeyPress(Keys.ESCAPE)
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Focus', () => {
+  test('Focuses item on key down arrow', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+
+    expect(wrapper.state().focusIndex).toBe(3)
+    expect(wrapper.node.items[3].node).toBe(document.activeElement)
+  })
+
+  test('Does not focuses item on key down arrow, if menu is unfocused', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.node
+    o.isFocused = false
+
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+
+    expect(wrapper.node.items[3].node).not.toBe(document.activeElement)
+  })
+
+  test('Removes this.isFocused when item with sub-menu is hovered', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Item />
+        <Item />
+        <Item>
+          Item
+          <Menu />
+        </Item>
+      </MenuComponent>
+    )
+
+    expect(wrapper.node.isFocused).toBeTruthy()
+    expect(wrapper.state().focusIndex).not.toBe(3)
+    expect(wrapper.state().hoverIndex).not.toBe(3)
+
+    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    o.simulate('mouseenter')
+
+    expect(wrapper.state().focusIndex).toBe(3)
+    expect(wrapper.state().hoverIndex).toBe(3)
+    expect(wrapper.node.isFocused).not.toBeTruthy()
+  })
+})
+
+describe('Propagation', () => {
+  test('Clicking the menu stops the event from bubbling', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <div onClick={spy}>
+        <MenuComponent selectedIndex={3} isOpen>
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+        </MenuComponent>
+      </div>
+    )
+
+    wrapper.find(MenuComponent).simulate('click')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('Unmounting', () => {
+  test('Sets internal _isMounted to false when unmounting', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={3} isOpen>
+        <Item />
+      </MenuComponent>
+    )
+
+    expect(wrapper.node._isMounted).not.toBeFalsy()
+    wrapper.unmount()
+    expect(wrapper.node._isMounted).toBeFalsy()
   })
 })

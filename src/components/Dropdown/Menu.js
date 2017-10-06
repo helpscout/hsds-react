@@ -102,7 +102,8 @@ class Menu extends Component {
     })
 
     if (height !== this.height) {
-      applyStylesToNode(this.contentNode, { height: height || null })
+      // Direct DOM manipulation to avoid component re-render from state change
+      applyStylesToNode(this.contentNode, { height })
       this.height = height
     }
   }
@@ -114,6 +115,7 @@ class Menu extends Component {
   mapRefsToItems () {
     this.items = []
     Object.keys(this.refs).forEach(key => {
+      /* istanbul ignore else */
       if (includes(key, 'item-')) {
         this.items.push(this.refs[key])
       }
@@ -184,6 +186,8 @@ class Menu extends Component {
   }
 
   handleFocusItemNode () {
+    /* istanbul ignore if */
+    // Tested, but not being picked up by Istanbul
     if (!this.isFocused) return
     const { focusIndex } = this.state
     const focusItem = this.items[focusIndex]
@@ -208,6 +212,7 @@ class Menu extends Component {
   }
 
   handleItemOnMenuClose () {
+    /* istanbul ignore else */
     if (this._isMounted) {
       this.isFocused = true
       this.setState({ hoverIndex: null })
