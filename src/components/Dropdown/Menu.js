@@ -10,6 +10,7 @@ import Drop from '../Drop'
 import Scrollable from '../Scrollable'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
+import { incrementFocusIndex } from '../../utilities/focus'
 import { noop } from '../../utilities/other'
 import { applyStylesToNode } from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
@@ -56,7 +57,6 @@ class Menu extends Component {
     this.handleFocusItemNode = this.handleFocusItemNode.bind(this)
     this.handleItemOnFocus = this.handleItemOnFocus.bind(this)
     this.handleItemOnMouseEnter = this.handleItemOnMouseEnter.bind(this)
-    this.handleItemOnMouseLeave = this.handleItemOnMouseLeave.bind(this)
     this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
     this.handleOnMenuClick = this.handleOnMenuClick.bind(this)
@@ -96,10 +96,6 @@ class Menu extends Component {
   }
 
   handleOnResize () {
-    this.setHeight()
-  }
-
-  setHeight () {
     const height = getHeightRelativeToViewport({
       node: this.listNode,
       offset: 20
@@ -132,28 +128,13 @@ class Menu extends Component {
     const { enableCycling } = this.props
     const { focusIndex } = this.state
     const itemCount = this.items.length - 1
-    let newFocusIndex
 
-    if (direction === 'up') {
-      if (enableCycling) {
-        newFocusIndex = focusIndex <= 0 ? itemCount : focusIndex - 1
-      } else {
-        newFocusIndex = focusIndex <= 0 ? 0 : focusIndex - 1
-      }
-    }
-    if (direction === 'down') {
-      if (enableCycling) {
-        newFocusIndex = focusIndex === null ? 0 : itemCount <= focusIndex ? 0 : focusIndex + 1
-      } else {
-        newFocusIndex = focusIndex === null ? 0 : itemCount <= focusIndex ? focusIndex : focusIndex + 1
-      }
-    }
-    if (direction === 'reset') {
-      newFocusIndex = null
-    }
-    if (direction === 'start') {
-      newFocusIndex = 0
-    }
+    const newFocusIndex = incrementFocusIndex({
+      currentIndex: focusIndex,
+      direction,
+      enableCycling,
+      itemCount
+    })
 
     this.setState({
       focusIndex: newFocusIndex,
@@ -226,10 +207,6 @@ class Menu extends Component {
     }
   }
 
-  handleItemOnMouseLeave (event, reactEvent, item) {
-    // this.setState({ focusIndex: null, hoverIndex: null })
-  }
-
   handleItemOnMenuClose () {
     if (this._isMounted) {
       this.isFocused = true
@@ -273,7 +250,6 @@ class Menu extends Component {
 
     const handleItemOnFocus = this.handleItemOnFocus
     const handleItemOnMouseEnter = this.handleItemOnMouseEnter
-    const handleItemOnMouseLeave = this.handleItemOnMouseLeave
     const handleItemOnMenuClose = this.handleItemOnMenuClose
     const handleOnResize = this.handleOnResize
     const handleOnMenuClick = this.handleOnMenuClick
@@ -287,7 +263,6 @@ class Menu extends Component {
         isFocused: this.isFocused && focusIndex === index,
         onFocus: handleItemOnFocus,
         onMouseEnter: handleItemOnMouseEnter,
-        onMouseLeave: handleItemOnMouseLeave,
         onMenuClose: handleItemOnMenuClose,
         parentMenu: true
       }) : child

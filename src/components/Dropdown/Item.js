@@ -63,6 +63,7 @@ class Item extends Component {
 
   handleOnEnter (event, reactEvent) {
     event.stopPropagation()
+    /* istanbul ignore else */
     if (event.keyCode === Keys.ENTER) {
       if (this.menu) {
         this.handleOnMouseEnter(event, reactEvent)
@@ -75,6 +76,7 @@ class Item extends Component {
   handleOnClick (event, reactEvent) {
     event.stopPropagation()
     const { onClick } = this.props
+    /* istanbul ignore else */
     if (!this.menu) {
       onClick(event, reactEvent, this)
     }
@@ -95,6 +97,8 @@ class Item extends Component {
     onMouseLeave(event, reactEvent, this)
   }
 
+  /* istanbul ignore next */
+  // Works in the browser, but JSDOM isn't picking this up
   handleOnMenuClose () {
     const { onMenuClose } = this.props
     onMenuClose()
@@ -116,8 +120,10 @@ class Item extends Component {
 
   removeMenuFromChildren () {
     const { children } = this.props
-    if (Array.isArray(children)) {
+    if (this.menu && Array.isArray(children)) {
       return children.filter(child => !this.getMenu(child))
+    } else {
+      return children
     }
   }
 
@@ -153,15 +159,21 @@ class Item extends Component {
       className
     )
 
-    const itemMarkup = this.menu ? this.removeMenuFromChildren() : children
-    const menuMarkup = this.menu && isOpen ? React.cloneElement(this.menu, {
-      isOpen,
-      selectedIndex: 0,
-      onClose: handleOnMenuClose,
-      trigger: this.node,
-      direction: this.menu.props.direction ? this.menu.props.direction : 'right',
-      parentMenu
-    }) : null
+    const itemMarkup = this.removeMenuFromChildren()
+
+    const menuMarkup = this.menu && isOpen ? (
+      <div className='c-DropdownItem__menu'>
+        {React.cloneElement(this.menu, {
+          isOpen,
+          selectedIndex: this.menu.props.selectedIndex !== undefined ? this.menu.props.selectedIndex : 0,
+          onClose: handleOnMenuClose,
+          trigger: this.node,
+          direction: this.menu.props.direction ? this.menu.props.direction : 'right',
+          parentMenu
+        })}
+      </div>
+    ) : null
+
     const menuIndicatorMarkup = this.menu ? (
       <Flexy.Item className='c-DropdownItem__submenu-icon'>
         <Icon name='caret-right' muted size='12' />
@@ -185,7 +197,7 @@ class Item extends Component {
           ref={node => { this.node = node }}
         >
           <Flexy>
-            <Flexy.Block>
+            <Flexy.Block className='c-DropdownItem__content'>
               {itemMarkup}
             </Flexy.Block>
             {menuIndicatorMarkup}

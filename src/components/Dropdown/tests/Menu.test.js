@@ -15,6 +15,18 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
+describe('Nodes', () => {
+  test('Has a reference to DOM nodes', () => {
+    const wrapper = mount(<MenuComponent />)
+    const o = wrapper.node
+
+    expect(o.node).toBeTruthy()
+    expect(o.wrapperNode).toBeTruthy()
+    expect(o.contentNode).toBeTruthy()
+    expect(o.listNode).toBeTruthy()
+  })
+})
+
 describe('Items', () => {
   test('Can render a single item', () => {
     const wrapper = shallow(<Menu><Item /></Menu>)

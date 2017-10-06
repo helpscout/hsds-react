@@ -59,3 +59,46 @@ export const focusPreviousFocusableNode = (currentNode, nodeScope) => {
   node && node !== document ? node.focus() : findLastFocusableNode(nodeScope).focus()
   return node
 }
+
+export const incrementFocusIndex = (options) => {
+  if (!options || typeof options !== 'object') return false
+
+  const defaultOptions = {
+    currentIndex: null,
+    direction: 'down',
+    enableCycling: false,
+    itemCount: 1
+  }
+
+  const {
+    currentIndex,
+    direction,
+    enableCycling,
+    itemCount
+  } = Object.assign({}, defaultOptions, options)
+
+  if (typeof currentIndex !== 'number' && currentIndex !== null) return false
+  if (typeof direction !== 'string') return false
+  if (typeof enableCycling !== 'boolean') return false
+  if (typeof itemCount !== 'number') return false
+
+  let newFocusIndex
+
+  if (direction === 'up') {
+    if (enableCycling) {
+      newFocusIndex = currentIndex === null ? 0 : currentIndex <= 0 ? itemCount : currentIndex - 1
+    } else {
+      newFocusIndex = currentIndex === null ? 0 : currentIndex <= 0 ? 0 : currentIndex - 1
+    }
+  }
+
+  if (direction === 'down') {
+    if (enableCycling) {
+      newFocusIndex = currentIndex === null ? 0 : itemCount <= currentIndex ? 0 : currentIndex + 1
+    } else {
+      newFocusIndex = currentIndex === null ? 0 : itemCount <= currentIndex ? currentIndex : currentIndex + 1
+    }
+  }
+
+  return newFocusIndex
+}
