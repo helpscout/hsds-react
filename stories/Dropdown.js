@@ -2,15 +2,15 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Dropdown, Flexy } from '../src/index.js'
 
-const logAction = () => {
-  console.log('Action')
+const logAction = (i) => () => {
+  console.log(`Action ${i}`)
 }
 
 const itemsMarkup = (amount = 10) => {
   const items = []
   for (let i = 0; i < amount; i++) {
     const item = (
-      <Dropdown.Item key={i} onClick={logAction}>
+      <Dropdown.Item key={i} onClick={logAction(i + 1)}>
         Item {i + 1}
       </Dropdown.Item>
     )

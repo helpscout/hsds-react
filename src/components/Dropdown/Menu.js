@@ -124,7 +124,7 @@ class Menu extends Component {
     return this.items.indexOf(item)
   }
 
-  incrementFocusIndex (direction = 'up') {
+  incrementFocusIndex (direction) {
     const { enableCycling } = this.props
     const { focusIndex } = this.state
     const itemCount = this.items.length - 1
