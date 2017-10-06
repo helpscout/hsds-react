@@ -44,6 +44,7 @@ storiesOf('Dropdown', module)
                   {itemsMarkup(4)}
                 </Dropdown.Menu>
               </Dropdown.Item>
+              <Dropdown.Divider />
               {itemsMarkup(10)}
             </Dropdown.Menu>
           </Dropdown>
