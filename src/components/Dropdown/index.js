@@ -126,12 +126,16 @@ class Dropdown extends Component {
       className
     )
 
-    const triggerMarkup = React.cloneElement(children[0], {
+    const isChildTrigger = children && children[0] && React.isValidElement(children[0])
+    const isChildMenu = children && children[1] && React.isValidElement(children[1]) && children[1].type === Menu
+
+    const triggerMarkup = isChildTrigger ? React.cloneElement(children[0], {
       isActive: isOpen,
       ref: 'trigger',
       onFocus: handleOnTriggerFocus
-    })
-    const menuMarkup = isOpen ? React.cloneElement(children[1], {
+    }) : null
+
+    const menuMarkup = isOpen && isChildMenu ? React.cloneElement(children[1], {
       direction,
       isOpen,
       onClose: handleOnMenuClose,
