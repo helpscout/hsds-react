@@ -66,6 +66,16 @@ That's it! The script will take care of the rest (from testing to publishing). T
 
 
 
+## Deploying Storybook
+
+To deploy the Storybook, run the following command:
+
+```
+npm run deploy
+```
+
+
+
 ## Todos
 
 **[Check out our ever-changing Todos notes here](./todos)**.

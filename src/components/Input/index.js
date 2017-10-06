@@ -14,6 +14,7 @@ export const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  hintText: PropTypes.string,
   helpText: PropTypes.string,
   id: PropTypes.string,
   label: PropTypes.string,
@@ -78,6 +79,7 @@ class Input extends Component {
       className,
       disabled,
       helpText,
+      hintText,
       id,
       inputRef,
       label,
@@ -153,6 +155,12 @@ class Input extends Component {
       </HelpText>
       : null
 
+    const hintTextMarkup = hintText
+      ? <HelpText state={state}>
+        {hintText}
+      </HelpText>
+      : null
+
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...rest,
       className: fieldClassName,
@@ -174,6 +182,7 @@ class Input extends Component {
     return (
       <div className='c-InputWrapper'>
         {labelMarkup}
+        {hintTextMarkup}
         <div className={componentClassName}>
           {prefixMarkup}
           {inputElement}

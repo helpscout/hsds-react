@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { Heading, Modal, Link } from '../src/index.js'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
@@ -115,14 +114,12 @@ storiesOf('Modal', module)
   .add('lifecycle events', () => {
     const onBeforeOpen = (modalOpen) => {
       console.log('Before open!')
-      action('Event: onBeforeOpen')
       setTimeout(() => {
         modalOpen()
       }, 500)
     }
     const onBeforeClose = (modalClose) => {
       console.log('Before close!')
-      action('Event: onBeforeClose')
       setTimeout(() => {
         modalClose()
       }, 500)
@@ -134,9 +131,7 @@ storiesOf('Modal', module)
         <Modal
           className='weee'
           onBeforeOpen={onBeforeOpen}
-          onOpen={action('Event: onOpen')}
           onBeforeClose={onBeforeClose}
-          onClose={action('Event: onClose')}
           trigger={<Link>Clicky</Link>}
         >
           <div>

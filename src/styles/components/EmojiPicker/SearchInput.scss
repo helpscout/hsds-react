@@ -1,0 +1,8 @@
+@import "../../configs/color";
+
+.emoji-mart-search input {
+  @import "../../resets/base";
+  border-color: _color(grey, 500);
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
