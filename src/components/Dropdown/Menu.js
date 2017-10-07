@@ -16,6 +16,7 @@ import { applyStylesToNode } from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
 
 export const propTypes = {
+  closeMenuOnClick: PropTypes.bool,
   enableCycling: PropTypes.bool,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
@@ -24,6 +25,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
+  closeMenuOnClick: true,
   enableCycling: false,
   isOpen: false,
   onClose: noop
@@ -55,6 +57,7 @@ class Menu extends Component {
     this.handleOnResize = this.handleOnResize.bind(this)
 
     this.handleFocusItemNode = this.handleFocusItemNode.bind(this)
+    this.handleItemOnClick = this.handleItemOnClick.bind(this)
     this.handleItemOnFocus = this.handleItemOnFocus.bind(this)
     this.handleItemOnMouseEnter = this.handleItemOnMouseEnter.bind(this)
     this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
@@ -199,6 +202,13 @@ class Menu extends Component {
     }
   }
 
+  handleItemOnClick () {
+    const { closeMenuOnClick } = this.props
+    if (closeMenuOnClick) {
+      this.handleOnClose()
+    }
+  }
+
   handleItemOnFocus (event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
     this.setState({ focusIndex })
@@ -235,6 +245,7 @@ class Menu extends Component {
       children,
       className,
       closePortal,
+      closeMenuOnClick,
       enableCycling,
       isOpen,
       onClose,
@@ -255,6 +266,7 @@ class Menu extends Component {
     const handleRightArrow = this.handleRightArrow
     const handleEscape = this.handleEscape
 
+    const handleItemOnClick = this.handleItemOnClick
     const handleItemOnFocus = this.handleItemOnFocus
     const handleItemOnMouseEnter = this.handleItemOnMouseEnter
     const handleItemOnMenuClose = this.handleItemOnMenuClose
@@ -276,6 +288,10 @@ class Menu extends Component {
         isHover: hoverIndex === index,
         isFocused: focusIndex === index,
         onFocus: handleItemOnFocus,
+        onClick: () => {
+          child.props.onClick()
+          handleItemOnClick()
+        },
         onMouseEnter: handleItemOnMouseEnter,
         onMenuClose: handleItemOnMenuClose,
         parentMenu: true
