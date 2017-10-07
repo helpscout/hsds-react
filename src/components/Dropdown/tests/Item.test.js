@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Item from '../Item'
-import Menu from '../Menu'
+import { default as Menu, MenuComponent } from '../Menu'
 import Icon from '../../Icon'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
@@ -50,18 +50,18 @@ describe('isOpen', () => {
     expect(wrapper.state().isOpen).not.toBeTruthy()
   })
 
-  test('Is set by isHover', () => {
-    const wrapper = shallow(<Item isHover />)
+  test('Is set by isOpen', () => {
+    const wrapper = shallow(<Item isOpen />)
 
     expect(wrapper.state().isOpen).toBeTruthy()
   })
 
-  test('Can be updated by isHover prop change', () => {
-    const wrapper = shallow(<Item isHover />)
+  test('Can be updated by isOpen prop change', () => {
+    const wrapper = shallow(<Item isOpen />)
 
     expect(wrapper.state().isOpen).toBeTruthy()
 
-    wrapper.setProps({ isHover: false })
+    wrapper.setProps({ isOpen: false })
 
     expect(wrapper.state().isOpen).not.toBeTruthy()
   })
@@ -91,9 +91,9 @@ describe('Sub menu', () => {
     expect(wrapper.find(Menu).length).not.toBeTruthy()
   })
 
-  test('Renders the sub-menu when Item isHovered', () => {
+  test('Renders the sub-menu when Item isOpen', () => {
     const wrapper = mount(
-      <Item isHover>
+      <Item isOpen>
         Nested
         <Menu />
       </Item>
@@ -135,7 +135,7 @@ describe('Sub menu', () => {
 
   test('Has a default direction of right', () => {
     const wrapper = mount(
-      <Item isHover>
+      <Item isOpen>
         Nested
         <Menu />
       </Item>
@@ -148,7 +148,7 @@ describe('Sub menu', () => {
 
   test('Can override default direction', () => {
     const wrapper = mount(
-      <Item isHover>
+      <Item isOpen>
         Nested
         <Menu direction='down' />
       </Item>
@@ -161,7 +161,7 @@ describe('Sub menu', () => {
 
   test('Has a default selectedIndex of 0', () => {
     const wrapper = mount(
-      <Item isHover>
+      <Item isOpen>
         Nested
         <Menu />
       </Item>
@@ -174,7 +174,7 @@ describe('Sub menu', () => {
 
   test('Can set a selectedIndex', () => {
     const wrapper = mount(
-      <Item isHover>
+      <Item isOpen>
         Nested
         <Menu selectedIndex={3} />
       </Item>
@@ -187,7 +187,7 @@ describe('Sub menu', () => {
 
   test('Sets parentMenu prop on sub-menu', () => {
     const wrapper = mount(
-      <Item isHover parentMenu>
+      <Item isOpen parentMenu>
         Nested
         <Menu selectedIndex={3} />
       </Item>
@@ -233,8 +233,8 @@ describe('Events', () => {
   test('onClick should not fire if there is a sub-menu', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Item onClick={spy}>
-        <Menu />
+      <Item onClick={spy} isOpen>
+        <MenuComponent />
       </Item>
     )
     const o = wrapper.find(`.${LINK_CLASSNAME}`)

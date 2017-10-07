@@ -114,16 +114,17 @@ class Menu extends Component {
 
   mapRefsToItems () {
     this.items = []
-    Object.keys(this.refs).forEach(key => {
+    Object.keys(this.refs).forEach((key, index) => {
       /* istanbul ignore else */
       if (includes(key, 'item-')) {
-        this.items.push(this.refs[key])
+        const item = this.refs[key]
+        this.items.push(item)
       }
     })
   }
 
   getIndexFromItem (item) {
-    return this.items.indexOf(item)
+    return item.props.itemIndex
   }
 
   incrementFocusIndex (direction) {
@@ -192,8 +193,9 @@ class Menu extends Component {
     const { focusIndex } = this.state
     const focusItem = this.items[focusIndex]
     if (focusItem) {
-      focusItem.node.focus()
-      focusItem.node.scrollIntoView()
+      const node = focusItem.node
+      node.focus()
+      node.scrollIntoView()
     }
   }
 
@@ -259,13 +261,20 @@ class Menu extends Component {
     const handleOnResize = this.handleOnResize
     const handleOnMenuClick = this.handleOnMenuClick
 
-    const childrenMarkup = React.Children.map(children, (child, index) => {
+    let itemIndexCounter = -1
+    const childrenMarkup = React.Children.map(children, child => {
+      if (child.type === Item) {
+        itemIndexCounter++
+      }
+      const index = itemIndexCounter
       const itemRef = `item-${index}`
 
       return child.type === Item ? React.cloneElement(child, {
         ref: itemRef,
+        itemIndex: index,
+        isOpen: hoverIndex === index,
         isHover: hoverIndex === index,
-        isFocused: this.isFocused && focusIndex === index,
+        isFocused: focusIndex === index,
         onFocus: handleItemOnFocus,
         onMouseEnter: handleItemOnMouseEnter,
         onMenuClose: handleItemOnMenuClose,

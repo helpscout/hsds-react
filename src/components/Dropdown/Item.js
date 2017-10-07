@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
+import { default as Menu, MenuComponent } from './Menu'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import Menu from './Menu'
 
 export const propTypes = {
   isHover: PropTypes.bool,
   isFocused: PropTypes.bool,
+  itemIndex: PropTypes.number,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
@@ -33,7 +34,9 @@ class Item extends Component {
     super()
 
     this.state = {
-      isOpen: props.isHover
+      isOpen: props.isOpen,
+      isHover: props.isHover,
+      isFocused: props.isFocused
     }
 
     this.handleOnBlur = this.handleOnBlur.bind(this)
@@ -51,14 +54,25 @@ class Item extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.isHover !== this.state.isOpen) {
-      this.setState({ isOpen: nextProps.isHover })
+    const { isFocused, isHover, isOpen } = this.state
+    if (nextProps.isFocused !== isFocused ||
+        nextProps.isOpen !== isOpen ||
+        nextProps.isHover !== isHover
+      ) {
+      this.setState({
+        isFocused: nextProps.isFocused,
+        isOpen: nextProps.isHover,
+        isHover: nextProps.isHover
+      })
     }
   }
 
   handleOnBlur (event, reactEvent) {
     const { onBlur } = this.props
     onBlur(event, reactEvent, this)
+    this.setState({
+      isFocused: false
+    })
   }
 
   handleOnEnter (event, reactEvent) {
@@ -79,22 +93,35 @@ class Item extends Component {
     /* istanbul ignore else */
     if (!this.menu) {
       onClick(event, reactEvent, this)
+    } else {
+      this.setState({
+        isOpen: !this.state.isOpen
+      })
     }
   }
 
   handleOnFocus (event, reactEvent) {
     const { onFocus } = this.props
     onFocus(event, reactEvent, this)
+    this.setState({
+      isFocused: true
+    })
   }
 
   handleOnMouseEnter (event, reactEvent) {
     const { onMouseEnter } = this.props
     onMouseEnter(event, reactEvent, this)
+    this.setState({
+      isHover: true
+    })
   }
 
   handleOnMouseLeave (event, reactEvent) {
     const { onMouseLeave } = this.props
     onMouseLeave(event, reactEvent, this)
+    this.setState({
+      isHover: false
+    })
   }
 
   /* istanbul ignore next */
@@ -106,7 +133,7 @@ class Item extends Component {
 
   getMenu (child) {
     if (!React.isValidElement(child)) return false
-    return (child.type && child.type === Menu)
+    return (child.type && (child.type === Menu || child.type === MenuComponent))
   }
 
   getMenuFromChildren () {
@@ -114,7 +141,7 @@ class Item extends Component {
     if (Array.isArray(children)) {
       return children.find(child => this.getMenu(child))
     } else {
-      return this.getMenu(children)
+      return this.getMenu(children) ? children : false
     }
   }
 
@@ -132,8 +159,10 @@ class Item extends Component {
       children,
       className,
       itemRef,
-      isFocused,
-      isHover,
+      isFocused: propIsFocused,
+      isHover: propIsHover,
+      isOpen: propIsOpen,
+      itemIndex,
       onBlur,
       onClick,
       onFocus,
@@ -142,7 +171,7 @@ class Item extends Component {
       parentMenu,
       ...rest
     } = this.props
-    const { isOpen } = this.state
+    const { isOpen, isHover, isFocused } = this.state
 
     const handleOnBlur = this.handleOnBlur
     const handleOnClick = this.handleOnClick
@@ -154,7 +183,7 @@ class Item extends Component {
 
     const componentClassName = classNames(
       'c-DropdownItem',
-      isOpen && 'is-hover',
+      isHover && 'is-hover',
       isFocused && 'is-focused',
       className
     )

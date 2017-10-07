@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import { default as Menu, MenuComponent } from '../Menu'
+import Divider from '../Divider'
 import Item from '../Item'
 import Keys from '../../../constants/Keys'
 
@@ -152,21 +153,6 @@ describe('Selected', () => {
     expect(o.hasClass('is-focused')).toBeFalsy()
   })
 
-  test('Select/focus an item if menu is opened', () => {
-    const wrapper = mount(
-      <MenuComponent selectedIndex={0}>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-      </MenuComponent>
-    )
-    const o = wrapper.find(Item).first()
-
-    expect(wrapper.state().focusIndex).toBe(0)
-    expect(o.hasClass('is-focused')).not.toBeTruthy()
-  })
-
   test('Select/focus an item if specified', () => {
     const wrapper = mount(
       <MenuComponent selectedIndex={0} isOpen>
@@ -295,6 +281,43 @@ describe('Keyboard Arrows: Up/Down', () => {
     expect(wrapper.state().focusIndex).toBe(0)
     expect(o.hasClass('is-focused')).toBeTruthy()
     expect(n.hasClass('is-focused')).not.toBeTruthy()
+  })
+
+  test('Can account for divider', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen>
+        <Item />
+        <Divider />
+        <Item />
+        <Item />
+        <Divider />
+        <Item />
+      </MenuComponent>
+    )
+    const o = wrapper.find(Item).first()
+    const n = wrapper.find(Item).at(1)
+    const z = wrapper.find(Item).last()
+
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+
+    expect(wrapper.state().focusIndex).toBe(1)
+    expect(o.hasClass('is-focused')).not.toBeTruthy()
+    expect(n.hasClass('is-focused')).toBeTruthy()
+
+    simulateKeyPress(Keys.UP_ARROW, 'keydown')
+
+    expect(wrapper.state().focusIndex).toBe(0)
+    expect(o.hasClass('is-focused')).toBeTruthy()
+    expect(n.hasClass('is-focused')).not.toBeTruthy()
+
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+    simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
+
+    expect(wrapper.state().focusIndex).toBe(3)
+    expect(o.hasClass('is-focused')).not.toBeTruthy()
+    expect(n.hasClass('is-focused')).not.toBeTruthy()
+    expect(z.hasClass('is-focused')).toBeTruthy()
   })
 
   test('Up arrow does not do anything if menu is not focused', () => {
