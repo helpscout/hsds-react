@@ -153,6 +153,59 @@ describe('Items', () => {
 
     expect(spy).toHaveBeenCalledWith('Brick')
   })
+
+  test('Closes menu on click, by default', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen onClose={spy}>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    const o = wrapper.find(Item).first().find('.c-DropdownItem__link')
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Closes menu on click AND fires item onClick callback', () => {
+    const spy = jest.fn()
+    const itemSpy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen onClose={spy}>
+        <Item onClick={itemSpy} />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    const o = wrapper.find(Item).first().find('.c-DropdownItem__link')
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+    expect(itemSpy).toHaveBeenCalled()
+  })
+
+  test('Does not close menu on click, if specified', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen onClose={spy} closeMenuOnClick={false}>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    const o = wrapper.find(Item).first().find('.c-DropdownItem__link')
+    o.simulate('click')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
 })
 
 describe('Selected', () => {

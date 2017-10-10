@@ -14,11 +14,13 @@ import { isNodeElement } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
+  closeMenuOnClick: PropTypes.bool,
   direction: PropTypes.string,
   onClose: PropTypes.func,
   onSelect: PropTypes.func
 }
 const defaultProps = {
+  closeMenuOnClick: true,
   direction: 'down',
   onClose: noop
 }
@@ -141,6 +143,7 @@ class Dropdown extends Component {
     const {
       children,
       className,
+      closeMenuOnClick,
       direction,
       onClose,
       onSelect,
@@ -175,6 +178,7 @@ class Dropdown extends Component {
 
       if (child.type === Menu || child.type === MenuComponent) {
         return isOpen ? React.cloneElement(child, {
+          closeMenuOnClick,
           direction,
           isOpen,
           onClose: handleOnMenuClose,
