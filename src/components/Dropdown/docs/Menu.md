@@ -1,6 +1,6 @@
 # Menu
 
-A Menu component contains the series of [Item](../Item) components used within a [Dropdown](./Dropdown.md). This component is composed using the [Drop](../Drop) higher-order component.
+A Menu component contains the series of [Item](../Item) components used within a [Dropdown](./Dropdown.md). This component is composed using the [Drop](../../Drop) higher-order component.
 
 
 ## Example
