@@ -15,7 +15,8 @@ import { noop } from '../../utilities/other'
 
 export const propTypes = {
   direction: PropTypes.string,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  onSelect: PropTypes.func
 }
 const defaultProps = {
   direction: 'down',
@@ -142,6 +143,7 @@ class Dropdown extends Component {
       className,
       direction,
       onClose,
+      onSelect,
       isOpen: propsisOpen,
       selectedIndex: propsSelectedIndex,
       ...rest
@@ -163,7 +165,6 @@ class Dropdown extends Component {
       isOpen && 'is-open',
       className
     )
-
     const childrenMarkup = React.Children.map(children, (child, index) => {
       if (index === 0) {
         return React.cloneElement(child, {
@@ -177,6 +178,7 @@ class Dropdown extends Component {
           direction,
           isOpen,
           onClose: handleOnMenuClose,
+          onSelect: onSelect || child.props.onSelect,
           ref: 'menu',
           trigger: this.triggerNode,
           selectedIndex: child.props.selectedIndex !== undefined ? child.props.selectedIndex : selectedIndex

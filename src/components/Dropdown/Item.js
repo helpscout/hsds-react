@@ -13,11 +13,13 @@ export const propTypes = {
   itemIndex: PropTypes.number,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
+  onSelect: PropTypes.func,
   onFocus: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onMenuClose: PropTypes.func,
-  parentMenu: PropTypes.bool
+  parentMenu: PropTypes.bool,
+  value: PropTypes.node
 }
 
 const defaultProps = {
@@ -26,7 +28,8 @@ const defaultProps = {
   onFocus: noop,
   onMouseEnter: noop,
   onMouseLeave: noop,
-  onMenuClose: noop
+  onMenuClose: noop,
+  onSelect: noop
 }
 
 class Item extends Component {
@@ -89,10 +92,11 @@ class Item extends Component {
 
   handleOnClick (event, reactEvent) {
     event.stopPropagation()
-    const { onClick } = this.props
+    const { onClick, onSelect, value } = this.props
     /* istanbul ignore else */
     if (!this.menu) {
       onClick(event, reactEvent, this)
+      onSelect(value)
     } else {
       this.setState({
         isOpen: !this.state.isOpen

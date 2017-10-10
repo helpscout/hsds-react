@@ -144,6 +144,24 @@ describe('Open', () => {
   })
 })
 
+describe('Selected', () => {
+  test('Fires onSelect callback on item click', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Dropdown onSelect={spy} isOpen>
+        <Dropdown.Trigger />
+        <MenuComponent>
+          <Dropdown.Item value='Ron' />
+        </MenuComponent>
+      </Dropdown>
+    )
+    const o = wrapper.find(Dropdown.Item)
+    o.node.handleOnClick({stopPropagation: () => {}})
+
+    expect(spy).toHaveBeenCalledWith('Ron')
+  })
+})
+
 describe('Click events', () => {
   test('Does not open when document.body is clicked', () => {
     const wrapper = mount(

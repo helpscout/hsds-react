@@ -288,4 +288,24 @@ describe('Events', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('onSelect should return the value, onClick', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Item onSelect={spy} value='Brick' />)
+    const o = wrapper.find(`.${LINK_CLASSNAME}`)
+
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalledWith('Brick')
+  })
+
+  test('Enter keypress should return the value', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Item onSelect={spy} value='Brick' />)
+    const o = wrapper.find(`.${LINK_CLASSNAME}`)
+
+    o.simulate('keydown', { keyCode: 13 })
+
+    expect(spy).toHaveBeenCalledWith('Brick')
+  })
 })

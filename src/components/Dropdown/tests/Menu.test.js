@@ -136,6 +136,23 @@ describe('Items', () => {
     expect(wrapper.state().focusIndex).toBe(3)
     expect(wrapper.state().hoverIndex).toBe(3)
   })
+
+  test('Fires onSelect callback when Item is clicked', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen onSelect={spy}>
+        <Item />
+        <Item />
+        <Item />
+        <Item value='Brick' />
+      </MenuComponent>
+    )
+
+    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalledWith('Brick')
+  })
 })
 
 describe('Selected', () => {

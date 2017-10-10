@@ -19,6 +19,7 @@ export const propTypes = {
   enableCycling: PropTypes.bool,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  onSelect: PropTypes.func,
   parentMenu: PropTypes.bool,
   selectedIndex: PropTypes.number
 }
@@ -26,7 +27,8 @@ export const propTypes = {
 const defaultProps = {
   enableCycling: false,
   isOpen: false,
-  onClose: noop
+  onClose: noop,
+  onSelect: noop
 }
 
 const dropOptions = {
@@ -238,6 +240,7 @@ class Menu extends Component {
       enableCycling,
       isOpen,
       onClose,
+      onSelect,
       parentMenu,
       selectedIndex,
       trigger,
@@ -278,6 +281,7 @@ class Menu extends Component {
         onFocus: handleItemOnFocus,
         onMouseEnter: handleItemOnMouseEnter,
         onMenuClose: handleItemOnMenuClose,
+        onSelect,
         parentMenu: true
       }) : child
     })
