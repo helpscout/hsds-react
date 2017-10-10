@@ -22,7 +22,7 @@ const defaultProps = {
 const modalBaseZIndex = 1040
 const portalOptions = {
   id: 'Modal',
-  timeout: 400,
+  timeout: 200,
   zIndex: modalBaseZIndex
 }
 
@@ -35,6 +35,7 @@ const Modal = props => {
     exact,
     isOpen,
     openPortal,
+    onClose,
     path,
     portalIsOpen,
     portalIsMounted,

@@ -104,6 +104,12 @@ describe('Styles', () => {
     expect(wrapper.hasClass('is-flex')).toBeTruthy()
   })
 
+  test('Renders floating styles, if specified', () => {
+    const wrapper = shallow(<Card floating />)
+
+    expect(wrapper.hasClass('is-floating')).toBeTruthy()
+  })
+
   test('Renders seamless styles, if specified', () => {
     const wrapper = shallow(<Card seamless />)
 

@@ -15,7 +15,7 @@ const Item = props => {
   } = props
 
   const componentClassName = classNames(
-    inline ? 'o-flexy__inline-item' : 'o-flexy__item',
+    inline ? 'c-Flexy__inline-item' : 'c-Flexy__item',
     className
   )
 

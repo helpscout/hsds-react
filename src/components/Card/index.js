@@ -8,6 +8,7 @@ import Block from './Block'
 export const propTypes = {
   borderless: PropTypes.bool,
   className: PropTypes.string,
+  floating: PropTypes.bool,
   flex: PropTypes.bool,
   hover: PropTypes.bool,
   href: PropTypes.string,
@@ -32,6 +33,7 @@ const Card = props => {
     borderless,
     className,
     children,
+    floating,
     flex,
     hover,
     href,
@@ -46,6 +48,7 @@ const Card = props => {
     (onClick || href) && 'is-clickable',
     (onClick || hover || href) && 'is-hoverable',
     borderless && 'is-borderless',
+    floating && 'is-floating',
     flex && 'is-flex',
     seamless && 'is-seamless',
     className

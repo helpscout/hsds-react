@@ -1,6 +1,7 @@
+$seed-flexy-namespace: "c-Flexy";
 @import "pack/seed-flexy/_index";
 
-.o-flexy {
+.#{$seed-flexy-namespace} {
   $alignments: (
     top: flex-start,
     middle: center,

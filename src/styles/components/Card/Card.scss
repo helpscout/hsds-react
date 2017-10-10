@@ -22,6 +22,12 @@ $seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
     cursor: pointer;
   }
 
+  &.is-floating {
+    box-shadow: #{
+      0 1px 3px 0 rgba(black, 0.1),
+      };
+  }
+
   &.is-flex {
     display: flex;
     flex-direction: column;

@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = shallow(<Col />)
 
-    expect(wrapper.hasClass('o-col')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
@@ -47,8 +47,8 @@ describe('Size', () => {
       <Col size='8' />
     )
 
-    expect(wrapper.hasClass('o-col')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-8')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-8')).toBeTruthy()
   })
 
   test('Can render additional sizes, separated by space', () => {
@@ -56,10 +56,10 @@ describe('Size', () => {
       <Col size='8 6@md 4@lg' />
     )
 
-    expect(wrapper.hasClass('o-col')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-8')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-6@md')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-4@lg')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-8')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-6@md')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-4@lg')).toBeTruthy()
   })
 
   test('Can render additional sizes, separated by comma', () => {
@@ -67,10 +67,10 @@ describe('Size', () => {
       <Col size='8,6@md, 4@lg' />
     )
 
-    expect(wrapper.hasClass('o-col')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-8')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-6@md')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-4@lg')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-8')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-6@md')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-4@lg')).toBeTruthy()
   })
 
   test('Can render additional sizes, separated by comma + space', () => {
@@ -78,9 +78,9 @@ describe('Size', () => {
       <Col size='8,6@md     4@lg' />
     )
 
-    expect(wrapper.hasClass('o-col')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-8')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-6@md')).toBeTruthy()
-    expect(wrapper.hasClass('o-col-4@lg')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-8')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-6@md')).toBeTruthy()
+    expect(wrapper.hasClass('c-Col-4@lg')).toBeTruthy()
   })
 })

@@ -11,4 +11,13 @@
   position: absolute;
   right: 0;
   top: 0;
+
+  &.is-fixed {
+    position: fixed;
+  }
+
+  &.is-transparent {
+    cursor: default;
+    opacity: 0;
+  }
 }

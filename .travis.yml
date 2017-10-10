@@ -14,8 +14,8 @@ install:
 
 script:
   - npm run pretty
-  - npm test
   - npm run build:css
+  - npm test
 
 after_success:
   - npm run coverage

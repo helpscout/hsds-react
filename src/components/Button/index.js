@@ -12,6 +12,7 @@ export const propTypes = {
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
+  isActive: PropTypes.bool,
   plain: PropTypes.bool,
   primary: PropTypes.bool,
   size: standardSizeTypes,
@@ -35,9 +36,11 @@ const defaultProps = {
 const Button = props => {
   const {
     accessibilityLabel,
+    buttonRef,
     children,
     className,
     disabled,
+    isActive,
     onBlur,
     onClick,
     onFocus,
@@ -50,11 +53,12 @@ const Button = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-button',
-    size && `c-button--${size}`,
+    'c-Button',
+    isActive && 'is-selected',
+    size && `c-Button--${size}`,
     state && `is-${state}`,
-    plain && 'c-button--link',
-    primary && 'c-button--primary',
+    plain && 'c-Button--link',
+    primary && 'c-Button--primary',
     props.className
   )
 
@@ -63,6 +67,7 @@ const Button = props => {
   return (
     <button
       aria-label={accessibilityLabel}
+      ref={buttonRef}
       className={componentClassName}
       disabled={disabled}
       onBlur={onBlur}

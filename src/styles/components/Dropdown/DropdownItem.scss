@@ -1,0 +1,38 @@
+@import "../../configs/color";
+
+.c-DropdownItem {
+  @import "../../resets/base";
+  cursor: pointer;
+  padding: 0;
+  list-style: none;
+  user-select: none;
+
+  &:last-child {
+    border: none;
+  }
+
+  &.is-hover,
+  &.is-focused {
+    background-color: rgba(_color(grey, 300), 1);
+  }
+  &.is-selected {
+    background-color: _color(blue);
+    color: white;
+  }
+
+  &__link {
+    background-color: rgba(_color(grey, 400), 0);
+    display: block;
+    outline: none;
+    padding: 8px 16px;
+    transition: background-color 0.1s ease;
+
+    &:active {
+      background-color: rgba(_color(grey, 400), 1);
+    }
+  }
+
+  &__submenu-icon {
+    margin-right: -8px;
+  }
+}
