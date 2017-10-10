@@ -40,7 +40,7 @@ class SidebarCollapsibleCard extends Component {
   }
 
   handleToggleOpen (e) {
-    e.preventDefault()
+    e && e.preventDefault()
     this.setState({ isOpen: !this.state.isOpen })
   }
 
