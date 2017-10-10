@@ -19,6 +19,11 @@ const itemsMarkup = (amount = 10) => {
   return items
 }
 
+const onBeforeClose = onClose => {
+  console.log('onBeforeClose')
+  onClose()
+}
+
 storiesOf('Dropdown', module)
   .add('Default', () => (
     <div style={{padding: '50px'}}>
@@ -26,9 +31,9 @@ storiesOf('Dropdown', module)
         <Flexy.Item>
           <Dropdown>
             <Dropdown.Trigger>
-              Hello
+              Dropdown
             </Dropdown.Trigger>
-            <Dropdown.Menu>
+            <Dropdown.Menu onBeforeClose={onBeforeClose}>
               <Dropdown.Item onClick={logAction}>
                 Nested
                 <Dropdown.Menu>
@@ -52,7 +57,7 @@ storiesOf('Dropdown', module)
         <Flexy.Item>
           <Dropdown direction='left up'>
             <Dropdown.Trigger>
-              There
+              Another
             </Dropdown.Trigger>
             <Dropdown.Menu isOpen>
               {itemsMarkup(5)}
@@ -60,7 +65,7 @@ storiesOf('Dropdown', module)
           </Dropdown>
         </Flexy.Item>
         <Flexy.Item>
-          <a href='#'>Hit Stop</a>
+          <a href='#'>Link</a>
         </Flexy.Item>
       </Flexy>
     </div>

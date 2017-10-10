@@ -16,8 +16,10 @@ import { noop } from '../../utilities/other'
 export const propTypes = {
   closeMenuOnClick: PropTypes.bool,
   direction: PropTypes.string,
+  isOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  selectedIndex: PropTypes.number
 }
 const defaultProps = {
   closeMenuOnClick: true,
@@ -170,10 +172,19 @@ class Dropdown extends Component {
     )
     const childrenMarkup = React.Children.map(children, (child, index) => {
       if (index === 0) {
-        return React.cloneElement(child, {
+        let triggerProps = {
           ref: 'trigger',
-          onFocus: handleOnTriggerFocus
-        })
+          onFocus: handleOnTriggerFocus,
+          'aria-haspopup': true,
+          'aria-expanded': isOpen
+        }
+        if (child.type === Trigger) {
+          // TODO: Allow for dynamic directions
+          triggerProps = Object.assign({}, triggerProps, {
+            direction: 'down'
+          })
+        }
+        return React.cloneElement(child, triggerProps)
       }
 
       if (child.type === Menu || child.type === MenuComponent) {

@@ -250,7 +250,10 @@ class Menu extends Component {
       closeMenuOnClick,
       enableCycling,
       isOpen,
+      onBeforeClose,
+      onBeforeOpen,
       onClose,
+      onOpen,
       onSelect,
       parentMenu,
       selectedIndex,
@@ -297,8 +300,7 @@ class Menu extends Component {
         },
         onMouseEnter: handleItemOnMouseEnter,
         onMenuClose: handleItemOnMenuClose,
-        onSelect,
-        parentMenu: true
+        onSelect
       }) : child
     })
 

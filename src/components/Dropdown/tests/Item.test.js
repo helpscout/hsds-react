@@ -187,9 +187,9 @@ describe('Sub menu', () => {
 
   test('Sets parentMenu prop on sub-menu', () => {
     const wrapper = mount(
-      <Item isOpen parentMenu>
+      <Item isOpen>
         Nested
-        <Menu selectedIndex={3} />
+        <Menu selectedIndex={3} parentMenu />
       </Item>
     )
 

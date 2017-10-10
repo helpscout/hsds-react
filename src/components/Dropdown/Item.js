@@ -18,7 +18,6 @@ export const propTypes = {
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onMenuClose: PropTypes.func,
-  parentMenu: PropTypes.bool,
   value: PropTypes.node
 }
 
@@ -172,7 +171,6 @@ class Item extends Component {
       onFocus,
       onMouseEnter,
       onMenuClose,
-      parentMenu,
       ...rest
     } = this.props
     const { isOpen, isHover, isFocused } = this.state
@@ -202,7 +200,7 @@ class Item extends Component {
           onClose: handleOnMenuClose,
           trigger: this.node,
           direction: this.menu.props.direction ? this.menu.props.direction : 'right',
-          parentMenu
+          parentMenu: true
         })}
       </div>
     ) : null
@@ -216,6 +214,7 @@ class Item extends Component {
     return (
       <li
         className={componentClassName}
+        role='presentation'
         {...rest}
       >
         <div
@@ -228,6 +227,8 @@ class Item extends Component {
           onKeyDown={handleOnEnter}
           tabIndex={-1}
           ref={node => { this.node = node }}
+          aria-haspopup={!!this.menu}
+          aria-expanded={!!(this.menu && isOpen)}
         >
           <Flexy>
             <Flexy.Block className='c-DropdownItem__content'>

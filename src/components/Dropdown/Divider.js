@@ -13,7 +13,7 @@ const Divider = props => {
   )
 
   return (
-    <div className={componentClassName} {...rest} />
+    <div className={componentClassName} role='separator' {...rest} />
   )
 }
 

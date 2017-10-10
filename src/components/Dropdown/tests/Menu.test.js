@@ -206,6 +206,19 @@ describe('Items', () => {
 
     expect(spy).not.toHaveBeenCalled()
   })
+
+  test('Can trigger onBeforeClose callback', (done) => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Menu selectedIndex={0} isOpen onBeforeClose={spy} />
+    )
+    wrapper.unmount()
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
+      done()
+    }, 100)
+  })
 })
 
 describe('Selected', () => {
@@ -648,6 +661,33 @@ describe('Focus', () => {
     expect(wrapper.state().focusIndex).toBe(3)
     expect(wrapper.state().hoverIndex).toBe(3)
     expect(wrapper.node.isFocused).not.toBeTruthy()
+  })
+
+  test('Resets focus when sub-menu is closed, and if menu is mounted', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen />
+    )
+    const o = wrapper.instance()
+    o.isFocused = false
+
+    o.handleItemOnMenuClose()
+
+    expect(o._isMounted).toBeTruthy()
+    expect(o.isFocused).toBeTruthy()
+  })
+
+  test('Only resets focus when sub-menu is closed, and if menu is mounted', () => {
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen />
+    )
+    const o = wrapper.instance()
+    o.isFocused = false
+    o._isMounted = false
+
+    o.handleItemOnMenuClose()
+
+    expect(o._isMounted).not.toBeTruthy()
+    expect(o.isFocused).not.toBeTruthy()
   })
 })
 
