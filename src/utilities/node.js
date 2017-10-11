@@ -7,7 +7,7 @@ export const isNodeElement = (node) => {
 }
 
 export const getNodeScope = (nodeScope) => {
-  return nodeScope && isNodeElement(nodeScope) ? nodeScope : document
+  return nodeScope && isNodeElement(nodeScope) ? nodeScope : nodeScope === window ? window : document
 }
 
 export const applyStylesToNode = (node, styles = {}) => {
@@ -101,4 +101,43 @@ export const getViewportWidth = (scope) => {
   /* istanbul ignore next */
   // Tested one case, but cannot test the other in JSDOM
   return width > window.innerWidth ? width : window.innerWidth - offset
+}
+
+/**
+ * Checks if node is visible with the view (a node Element or window). This is typically used for scroll interactions.
+ * Note: This function currently only measures vertical scroll-based
+ * calculations.
+ *
+ * @param     options   object    Config object
+ * @option    node      Element   DOM node to check visibility for
+ * @option    scope     Element   DOM node to check visibility within
+ * @option    offset    number    Top buffer amount for visiblity check
+ * @option    complete  bool      node must be in complete view, if true
+ * @return    bool                True/False if node is in view
+ */
+export const isNodeVisible = (options) => {
+  if (!options || typeof options !== 'object') return false
+  const { node, scope, offset, complete } = options
+
+  if (!isNodeElement(node)) return false
+
+  let nodeOffset = offset !== undefined ? offset : 0
+  nodeOffset = typeof nodeOffset !== 'number' ? 0 : nodeOffset < 0 ? 0 : nodeOffset
+
+  const nodeScope = getNodeScope(scope || window)
+  const isWindow = nodeScope === window
+
+  const rect = node.getBoundingClientRect()
+  /* istanbul ignore next */
+  // Tested, but JSDOM + Istanbul cannot account for offsetTop.
+  const offsetTop = isNodeEnv() ? rect.top : node.offsetTop
+
+  const viewportHeight = isWindow ? window.innerHeight : nodeScope.getBoundingClientRect().height
+  const viewportTop = isWindow ? window.scrollY : nodeScope.scrollTop
+  const viewportBottom = isWindow ? window.innerHeight : viewportTop + viewportHeight
+
+  const bottom = offsetTop + rect.height
+  const top = complete && nodeOffset === 0 ? bottom : bottom - nodeOffset
+
+  return top <= viewportBottom && bottom >= viewportTop
 }
