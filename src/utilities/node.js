@@ -140,7 +140,5 @@ export const isNodeVisible = (options) => {
   const bottom = offsetTop + rect.height
   const top = complete && nodeOffset === 0 ? bottom : bottom - nodeOffset
 
-  console.log(top, parseInt(viewportBottom))
-
   return parseInt(top, 10) <= parseInt(viewportBottom, 10) && parseInt(bottom, 10) >= parseInt(viewportTop, 10)
 }
