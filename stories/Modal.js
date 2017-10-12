@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { storiesOf } from '@storybook/react'
-import { Heading, Modal, Link, Scrollable } from '../src/index.js'
+import { Heading, Modal, Link } from '../src/index.js'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 
