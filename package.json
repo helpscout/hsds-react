@@ -39,10 +39,10 @@
     "lodash.includes": "4.3.0",
     "object-assign": "4.1.1",
     "promise": "7.1.1",
+    "prop-types-extra": "1.0.1",
     "react-router-dom": "^4",
     "react-sortable-hoc": "^0.6.7",
-    "react-transition-group": "2.2.0",
-    "whatwg-fetch": "2.0.3"
+    "react-transition-group": "2.2.0"
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.2.4",
@@ -94,7 +94,6 @@
     "react-dom": "15.6.1",
     "react-error-overlay": "^1.0.9",
     "react-router": "4.2.0",
-    "react-router-dom": "4.2.2",
     "react-test-renderer": "15.6.1",
     "rgb-hex": "2.1.0",
     "sass-loader": "6.0.6",

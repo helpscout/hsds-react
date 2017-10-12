@@ -44,3 +44,15 @@ describe('Styles', () => {
     expect(wrapper.prop('className')).toContain('is-rounded')
   })
 })
+
+describe('Events', () => {
+  test('Fires onScroll callback when scrolled', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Scrollable onScroll={spy} />)
+    const o = wrapper.instance()
+
+    o.handleOnScroll()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})

@@ -21,6 +21,14 @@
     z-index: 1;
   }
 
+  &__card-block {
+    height: 100%;
+  }
+
+  &__scrollable {
+    padding: 20px;
+  }
+
   &__close {
     $offset: 8px;
     position: absolute;
