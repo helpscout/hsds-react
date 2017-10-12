@@ -68,10 +68,8 @@ const Modal = props => {
         <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
           <Card seamless>
             {closeMarkup}
-            <Scrollable fade rounded>
-              <Card.Block>
-                {children}
-              </Card.Block>
+            <Scrollable fade rounded className='c-Modal__scrollable'>
+              {children}
             </Scrollable>
           </Card>
         </Animate>

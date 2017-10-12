@@ -1,10 +1,11 @@
 import React, {PureComponent as Component} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { componentOrElement } from 'prop-types-extra'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import LoadingDots from '../LoadingDots'
-import { isNodeVisible } from '../../utilities/node'
+import { isNodeElement, isNodeVisible } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
@@ -12,7 +13,8 @@ export const propTypes = {
   offset: PropTypes.number,
   isLoading: PropTypes.bool,
   onLoading: PropTypes.func,
-  onLoaded: PropTypes.func
+  onLoaded: PropTypes.func,
+  scrollParent: componentOrElement
 }
 const defaultProps = {
   offset: 0,
@@ -58,15 +60,14 @@ class InfiniteScroller extends Component {
   handleOnScroll (event) {
     const { offset } = this.props
     const { isLoading, nodeScope } = this.state
+    const isVisible = isNodeVisible({
+      node: this.node,
+      scope: nodeScope,
+      offset,
+      complete: true
+    })
 
-    if (isLoading ||
-      !isNodeVisible({
-        node: this.node,
-        scope: nodeScope,
-        offset,
-        complete: true
-      })
-    ) return
+    if (isLoading || !isVisible) return
 
     this.handleOnLoading()
   }
@@ -91,13 +92,24 @@ class InfiniteScroller extends Component {
   }
 
   setParentNode () {
-    const node = ReactDOM.findDOMNode(this)
-    /* istanbul ignore next */
-    // Tested for node.parentNode, but not for window.
-    // This is a super fail-safe. This will always be parentNode, with the
-    // exception of document or window. Cannot be tested in JSDOM/Enzyme,
-    // since it prohibits mounting on document.body directly.
-    const nodeScope = node && node.parentNode ? node.parentNode : window
+    const { scrollParent } = this.props
+    let nodeScope
+
+    if (scrollParent) {
+      /* istanbul ignore next */
+      // Tested, but Instabul isn't picking up the ternary null
+      nodeScope = isNodeElement(scrollParent) ? scrollParent : null
+    }
+
+    if (!nodeScope) {
+      const node = ReactDOM.findDOMNode(this)
+      /* istanbul ignore next */
+      // Tested for node.parentNode, but not for window.
+      // This is a super fail-safe. This will always be parentNode, with the
+      // exception of document or window. Cannot be tested in JSDOM/Enzyme,
+      // since it prohibits mounting on document.body directly.
+      nodeScope = node && node.parentNode ? node.parentNode : window
+    }
 
     this.setState({ nodeScope })
   }
@@ -110,6 +122,7 @@ class InfiniteScroller extends Component {
       isLoading: propsIsLoading,
       onLoading,
       onLoaded,
+      scrollParent,
       ...rest
     } = this.props
     const { isLoading, nodeScope } = this.state

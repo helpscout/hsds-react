@@ -126,6 +126,7 @@ export const isNodeVisible = (options) => {
 
   const nodeScope = getNodeScope(scope || window)
   const isWindow = nodeScope === window
+  const bufferOffset = 4 // To account for potential borders on the nodeScope
 
   const rect = node.getBoundingClientRect()
   /* istanbul ignore next */
@@ -134,10 +135,12 @@ export const isNodeVisible = (options) => {
 
   const viewportHeight = isWindow ? window.innerHeight : nodeScope.getBoundingClientRect().height
   const viewportTop = isWindow ? window.scrollY : nodeScope.scrollTop
-  const viewportBottom = isWindow ? window.innerHeight : viewportTop + viewportHeight
+  const viewportBottom = isWindow ? window.innerHeight : viewportTop + viewportHeight + bufferOffset
 
   const bottom = offsetTop + rect.height
   const top = complete && nodeOffset === 0 ? bottom : bottom - nodeOffset
 
-  return top <= viewportBottom && bottom >= viewportTop
+  console.log(top, parseInt(viewportBottom))
+
+  return parseInt(top, 10) <= parseInt(viewportBottom, 10) && parseInt(bottom, 10) >= parseInt(viewportTop, 10)
 }

@@ -33,6 +33,35 @@ describe('Node Scope', () => {
   })
 })
 
+describe('scrollParent', () => {
+  test('Undefined scrollParent will default to parentnode', () => {
+    const wrapper = mount(
+      <div className='derlict'>
+        <InfiniteScroller />
+      </div>
+    )
+    const o = wrapper.find(InfiniteScroller).node
+    const d = wrapper.find('.derlict').node
+
+    expect(o.state.nodeScope).toBe(d)
+  })
+
+  test('A node element scrollParent can be defined', () => {
+    const node = document.createElement('div')
+    node.id = 'hansel'
+
+    const wrapper = mount(
+      <div className='derlict'>
+        <InfiniteScroller scrollParent={node} />
+      </div>
+    )
+    const o = wrapper.find(InfiniteScroller).node
+
+    expect(o.state.nodeScope).toBe(node)
+    expect(o.state.nodeScope.id).toBe('hansel')
+  })
+})
+
 describe('Loading', () => {
   test('Adds isLoading className', () => {
     const wrapper = shallow(<InfiniteScroller isLoading />)
