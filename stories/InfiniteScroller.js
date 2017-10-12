@@ -59,7 +59,7 @@ const handleOnLoading = (onLoaded) => {
   setTimeout(() => {
     console.log('Loaded')
     onLoaded()
-  }, 200)
+  }, 500)
 }
 
 stories.add('default', () => (
