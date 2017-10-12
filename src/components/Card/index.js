@@ -44,7 +44,7 @@ const Card = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-card',
+    'c-Card',
     (onClick || href) && 'is-clickable',
     (onClick || hover || href) && 'is-hoverable',
     borderless && 'is-borderless',

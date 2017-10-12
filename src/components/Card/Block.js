@@ -24,17 +24,17 @@ const Block = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-card__block',
+    'c-Card__block',
     bgMuted && 'is-bg-muted',
     flex && 'is-flex',
     scrollable && 'is-scrollable',
-    size && `c-card__block--${size}`,
+    size && `c-Card__block--${size}`,
     className
   )
 
   const scrollableClassName = classNames(
-    'c-card__block',
-    'c-card__block--scrollable',
+    'c-Card__block',
+    'c-Card__block--scrollable',
     flex && 'is-flex',
     scrollable && 'is-scrollable'
   )

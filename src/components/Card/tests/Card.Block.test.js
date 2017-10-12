@@ -7,7 +7,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<CardBlock />)
 
-    expect(wrapper.prop('className')).toBe('c-card__block')
+    expect(wrapper.prop('className')).toBe('c-Card__block')
   })
 
   test('Accepts custom className', () => {
@@ -64,10 +64,10 @@ describe('Scrollable', () => {
   test('Renders Scrollable if specified', () => {
     const wrapper = mount(<CardBlock scrollable />)
     const o = wrapper.find(Scrollable)
-    const n = wrapper.find('.c-card__block')
+    const n = wrapper.find('.c-Card__block')
 
     expect(o.length).toBe(1)
-    expect(o.hasClass('c-card__block')).toBeTruthy()
+    expect(o.hasClass('c-Card__block')).toBeTruthy()
     expect(o.hasClass('is-scrollable')).toBeTruthy()
     expect(n.length).toBe(2)
 
@@ -89,15 +89,15 @@ describe('Styles', () => {
     const wrapper = shallow(<CardBlock />)
     const classNames = wrapper.prop('className')
 
-    expect(classNames).not.toContain('c-card__block--sm')
-    expect(classNames).not.toContain('c-card__block--md')
-    expect(classNames).not.toContain('c-card__block--lg')
+    expect(classNames).not.toContain('c-Card__block--sm')
+    expect(classNames).not.toContain('c-Card__block--md')
+    expect(classNames).not.toContain('c-Card__block--lg')
   })
 
   test('Renders size styles, if specified', () => {
     const wrapper = shallow(<CardBlock size='sm' />)
 
-    expect(wrapper.prop('className')).toContain('c-card__block--sm')
+    expect(wrapper.prop('className')).toContain('c-Card__block--sm')
   })
 
   test('Renders bgMuted styles, if specified', () => {
