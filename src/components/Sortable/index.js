@@ -75,6 +75,7 @@ class Sortable extends Component {
       children,
       useDragHandle,
       helperClass,
+      onSortEnd,
       ...rest
     } = this.props
     const {
