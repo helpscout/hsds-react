@@ -47,3 +47,4 @@ return (
 | className | string | Custom class names to be added to the component. |
 | isLoading | boolean | Sets the component into an `isLoading` state. |
 | offset | number | Top buffer (`px`) before infinite scroll is triggered. |
+| scrollParent | DOM node | DOM node to listen to scroll events on, instead of closest parentNode (default). |
