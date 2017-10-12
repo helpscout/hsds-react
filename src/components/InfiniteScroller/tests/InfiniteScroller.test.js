@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import { mount, shallow } from 'enzyme'
 import InfiniteScroller from '..'
 import LoadingDots from '../../LoadingDots'
+import { ModalComponent } from '../../Modal'
 import Text from '../../Text'
+
+const scrollEvent = new Event('scroll')
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -59,6 +62,74 @@ describe('scrollParent', () => {
 
     expect(o.state.nodeScope).toBe(node)
     expect(o.state.nodeScope.id).toBe('hansel')
+  })
+
+  test('getScrollParent can retrieve a DOM node', () => {
+    class CustomModal extends Component {
+      getScrollParent () {
+        return this.node
+      }
+      render () {
+        const getScrollParent = this.getScrollParent.bind(this)
+        return (
+          <ModalComponent>
+            <div className='outer'>
+              <div
+                className='custom-scroller'
+                ref={node => { this.node = node }}
+              />
+              <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
+            </div>
+          </ModalComponent>
+        )
+      }
+    }
+    const spy = jest.fn()
+    const wrapper = mount(
+      <CustomModal />
+    )
+
+    const o = wrapper.find('.custom-scroller')
+    const n = wrapper.find(InfiniteScroller).node
+
+    o.node.dispatchEvent(scrollEvent)
+
+    expect(n.state.nodeScope).toBe(o.node)
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('getScrollParent falls back to direct parentNode if falsy', () => {
+    class CustomModal extends Component {
+      getScrollParent () {
+        return false
+      }
+      render () {
+        const getScrollParent = this.getScrollParent.bind(this)
+        return (
+          <ModalComponent>
+            <div className='outer'>
+              <div
+                className='custom-scroller'
+                ref={node => { this.node = node }}
+              />
+              <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
+            </div>
+          </ModalComponent>
+        )
+      }
+    }
+    const spy = jest.fn()
+    const wrapper = mount(
+      <CustomModal />
+    )
+
+    const o = wrapper.find('.outer')
+    const n = wrapper.find(InfiniteScroller).node
+
+    o.node.dispatchEvent(scrollEvent)
+
+    expect(n.state.nodeScope).toBe(o.node)
+    expect(spy).toHaveBeenCalled()
   })
 })
 
@@ -159,5 +230,21 @@ describe('Callbacks', () => {
       expect(wrapper.state().isLoading).not.toBeTruthy()
       done()
     }, 0)
+  })
+})
+
+describe('Integration: Modal', () => {
+  test('Can work with Modal', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <ModalComponent>
+        <InfiniteScroller onLoading={spy} />
+      </ModalComponent>
+    )
+    const o = wrapper.find('.c-Scrollable__content')
+
+    o.node.dispatchEvent(scrollEvent)
+
+    expect(spy).toHaveBeenCalled()
   })
 })

@@ -84,4 +84,5 @@ const Modal = props => {
 Modal.propTypes = propTypes
 Modal.defaultProps = defaultProps
 
+export const ModalComponent = Modal
 export default PortalWrapper(portalOptions)(Modal)

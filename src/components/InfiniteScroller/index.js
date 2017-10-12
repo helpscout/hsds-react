@@ -11,12 +11,14 @@ import { noop } from '../../utilities/other'
 export const propTypes = {
   className: PropTypes.string,
   offset: PropTypes.number,
+  getScrollParent: PropTypes.func,
   isLoading: PropTypes.bool,
   onLoading: PropTypes.func,
   onLoaded: PropTypes.func,
   scrollParent: componentOrElement
 }
 const defaultProps = {
+  getScrollParent: noop,
   offset: 0,
   isLoading: false,
   onLoading: noop,
@@ -92,10 +94,11 @@ class InfiniteScroller extends Component {
   }
 
   setParentNode () {
-    const { scrollParent } = this.props
-    let nodeScope
+    const { getScrollParent, scrollParent } = this.props
+    let nodeScope = getScrollParent()
+    nodeScope = isNodeElement(nodeScope) ? nodeScope : null
 
-    if (scrollParent) {
+    if (!nodeScope && scrollParent) {
       /* istanbul ignore next */
       // Tested, but Instabul isn't picking up the ternary null
       nodeScope = isNodeElement(scrollParent) ? scrollParent : null
@@ -118,6 +121,7 @@ class InfiniteScroller extends Component {
     const {
       className,
       children,
+      getScrollParent,
       loading,
       isLoading: propsIsLoading,
       onLoading,
