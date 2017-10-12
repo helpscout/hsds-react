@@ -26,11 +26,13 @@ A Modal component presents content within a container on top of the application'
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| onScroll | function | Callback function when inner Scrollable is scrolled. |
 | className | string | Custom class names to be added to the component. |
 | closeIcon | boolean | Shows/hides the component's close icon UI. |
 | exact | boolean | Used with `path` and React Router. Renders if path matches _exactly_ |
 | isOpen | boolean | Shows/hides the component. |
 | path | string | Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). |
+| scrollableRef | function | Retrieves the scrollable node. |
 | trigger | element | The UI the user clicks to trigger the modal. |
 
 

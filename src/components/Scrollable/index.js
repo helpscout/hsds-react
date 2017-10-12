@@ -7,10 +7,12 @@ export const propTypes = {
   className: PropTypes.string,
   fade: PropTypes.bool,
   onScroll: PropTypes.func,
-  rounded: PropTypes.bool
+  rounded: PropTypes.bool,
+  scrollableRef: PropTypes.func
 }
 const defaultProps = {
-  onScroll: noop
+  onScroll: noop,
+  scrollableRef: noop
 }
 
 class Scrollable extends Component {
@@ -31,6 +33,7 @@ class Scrollable extends Component {
       fade,
       onScroll,
       rounded,
+      scrollableRef,
       ...rest
     } = this.props
 
@@ -50,7 +53,11 @@ class Scrollable extends Component {
     return (
       <div className={componentClassName} {...rest}>
         {fadeMarkup}
-        <div className='c-Scrollable__content' onScroll={handleOnScroll}>
+        <div
+          className='c-Scrollable__content'
+          onScroll={handleOnScroll}
+          ref={scrollableRef}
+        >
           {children}
         </div>
       </div>

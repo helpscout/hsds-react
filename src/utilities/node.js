@@ -3,7 +3,11 @@ import { isNodeEnv } from './other'
 export const Element = window.Element
 
 export const isNodeElement = (node) => {
-  return node && (node instanceof Element || node === document)
+  return node && (
+    node instanceof Element ||
+    node.nodeType === 1 || // Thanks Brett! <3
+    node === document
+  )
 }
 
 export const getNodeScope = (nodeScope) => {

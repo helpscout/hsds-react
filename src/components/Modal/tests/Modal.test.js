@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import { shallow, mount } from 'enzyme'
-import Modal from '..'
+import { default as Modal, ModalComponent } from '..'
 import Portal from '../../Portal'
+import Scrollable from '../../Scrollable'
 import Keys from '../../../constants/Keys'
 import { MemoryRouter as Router } from 'react-router'
 
 const MODAL_TEST_TIMEOUT = 500
+
 const cleanUp = (wrapper) => {
   if (wrapper) wrapper.unmount()
   global.document.body.innerHTML = ''
@@ -278,5 +280,40 @@ describe('PortalWrapper', () => {
       wrapper.detach()
       done()
     }, MODAL_TEST_TIMEOUT)
+  })
+})
+
+describe('Integration: Scrollable', () => {
+  class MyComponent extends Component {
+    constructor () {
+      super()
+      this.scrollable = null
+    }
+    render () {
+      return (
+        <ModalComponent
+          scrollableRef={node => { this.scrollable = node }}
+          {...this.props}
+        />
+      )
+    }
+  }
+
+  test('Can pass scrollableRef to parent', () => {
+    const wrapper = mount(<MyComponent />)
+    const n = wrapper.find('.c-Scrollable__content').node
+    const o = wrapper.instance()
+
+    expect(o.scrollable).toBe(n)
+  })
+
+  test('Can fire onScroll callback', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MyComponent onScroll={spy} />)
+    const o = wrapper.find(Scrollable)
+
+    o.node.props.onScroll()
+
+    expect(spy).toHaveBeenCalled()
   })
 })
