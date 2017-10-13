@@ -1,5 +1,6 @@
 import {
   Animate,
+  AnimateGroup,
   Avatar,
   AvatarStack,
   Badge,
@@ -42,6 +43,7 @@ import {
 
 const components = [
   Animate,
+  AnimateGroup,
   Avatar,
   AvatarStack,
   Badge,

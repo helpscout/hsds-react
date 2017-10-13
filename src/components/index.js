@@ -1,4 +1,5 @@
 export { default as Animate } from './Animate'
+export { default as AnimateGroup } from './AnimateGroup'
 export { default as Avatar } from './Avatar'
 export { default as AvatarStack } from './AvatarStack'
 export { default as Badge } from './Badge'

@@ -1,6 +1,9 @@
 import React, {PureComponent as Component} from 'react'
+import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
 import {
+  Animate,
+  AnimateGroup,
   Card,
   Image,
   InfiniteScroller,
@@ -9,42 +12,79 @@ import {
   Text
 } from '../src/index.js'
 
+window.Perf = Perf
+
 const stories = storiesOf('InfiniteScroller', module)
+
+// Setup stuff
+const makeStoryItems = (count, start = 0) => {
+  const collection = []
+  const badHash = () => Math.random() * (100 - 1) + 1
+  const uniq = () => `${Math.round((new Date()).getTime() / 1000)}-${badHash()}`
+
+  for (let i = 0, len = count; i < len; i++) {
+    const index = start + i
+    collection.push(
+      <Animate sequence='fadeIn'>
+        <Card style={{margin: 8}} key={`item-${uniq()}-${i}`}>
+          Item {index+1}
+        </Card>
+      </Animate>
+    )
+  }
+  return collection
+}
 
 class StoryComponent extends Component {
   constructor () {
     super()
-    this.state = { isLoading: false }
+    this.state = {
+      isLoading: false,
+      items: makeStoryItems(15)
+    }
     this.onLoading = this.onLoading.bind(this)
+    this.onLoaded = this.onLoaded.bind(this)
   }
 
   onLoading (onLoaded) {
     this.setState({ isLoading: true })
     console.log('Loading!')
     setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
       onLoaded()
-      console.log('Loaded!')
     }, 500)
+  }
+
+  onLoaded() {
+    const { items } = this.state
+    this.setState({
+      items: items.concat(makeStoryItems(5, items.length))
+    })
+    console.log('Loaded!')
   }
 
   render () {
     const {
-      isLoading
+      isLoading,
+      items
     } = this.state
 
+    const onLoaded = this.onLoaded
     const onLoading = this.onLoading
 
     return (
-      <Card style={{height: 400}} seamless>
+      <Card style={{minWidth: 600, height: 320, margin: 'auto'}} seamless>
         <Scrollable>
-          <Image
-            src='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
-            alt='Not now, Arctic Puffin!'
-            title='Not now, Arctic Puffin!'
-          />
+          <AnimateGroup>
+            {items}
+          </AnimateGroup>
           <InfiniteScroller
             onLoading={onLoading}
+            onLoaded={onLoaded}
             isLoading={isLoading}
+            style={{ padding: 16 }}
           >
             <Text>Load More</Text>
           </InfiniteScroller>
@@ -54,30 +94,14 @@ class StoryComponent extends Component {
   }
 }
 
-const handleOnLoading = (onLoaded) => {
-  console.log('Loading')
-  setTimeout(() => {
-    console.log('Loaded')
-    onLoaded()
-  }, 500)
-}
 
+// Stories
 stories.add('default', () => (
   <StoryComponent />
 ))
 
 stories.add('modal', () => (
   <Modal trigger={<a>Click</a>} isOpen>
-    <Image
-      src='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
-      alt='Not now, Arctic Puffin!'
-      title='Not now, Arctic Puffin!'
-    />
-    <InfiniteScroller
-      onLoading={handleOnLoading}
-      style={{paddingTop: 20, paddingBottom: 20}}
-    >
-      <Text>Load More</Text>
-    </InfiniteScroller>
+    <StoryComponent />
   </Modal>
 ))

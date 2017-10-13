@@ -84,12 +84,39 @@ class InfiniteScroller extends Component {
 
   handleOnLoaded () {
     const { onLoaded } = this.props
+    // Prevents scrollable area for unexpectedly scrolling after
+    // new items are injected.
+    this.normalizeNodeScrollScroll(this.getNodeScrollTop())
+    // Once the scroll position as been re-adjusted, then load new items
     onLoaded()
 
     if (this.state.isLoading) {
       this.setState({
         isLoading: false
       })
+    }
+  }
+
+  getNodeScrollTop() {
+    const { nodeScope } = this.state
+    /* istanbul ignore next */
+    if (nodeScope !== window && nodeScope.scrollTop !== undefined) {
+      return nodeScope.scrollTop
+    } else {
+      return nodeScope.scrollY
+    }
+  }
+
+  normalizeNodeScrollScroll(scrollTop) {
+    const { nodeScope } = this.state
+    /* istanbul ignore if */
+    if (typeof scrollTop !== 'number') return
+
+    /* istanbul ignore else */
+    if (nodeScope === window) {
+      nodeScope.scrollTo(window.scrollX, scrollTop)
+    } else if (nodeScope.scrollTop !== undefined) {
+      nodeScope.scrollTop = scrollTop
     }
   }
 
