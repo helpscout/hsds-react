@@ -5,6 +5,7 @@ import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
 
 export const propTypes = {
+  block: PropTypes.bool,
   className: PropTypes.string,
   external: PropTypes.bool,
   href: PropTypes.string,
@@ -23,16 +24,27 @@ const defaultProps = {
 }
 
 const Link = props => {
-  const { className, external, href, ...rest } = props
+  const {
+    block,
+    children,
+    className,
+    external,
+    href,
+    ...rest
+  } = props
 
-  const componentClassName = classNames('c-link', className)
+  const componentClassName = classNames(
+    'c-Link',
+    block && 'is-block',
+    className
+  )
 
   const target = external ? '_blank' : undefined
   const rel = external ? 'noopener noreferrer' : undefined
 
   return (
     <a className={componentClassName} target={target} rel={rel} href={href} {...rest}>
-      {props.children}
+      {children}
     </a>
   )
 }
