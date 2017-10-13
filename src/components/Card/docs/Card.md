@@ -14,7 +14,7 @@ A Card component is used to encapsulate pieces of UI that share a common concept
 
 ## Link
 
-If a `to` or `href` prop is passed into the Card component, it will render the [Link](../../../Link) component, which provides additional link-based props.
+If a `to` or `href` prop is passed into the Card component, it will render the [Link](../../Link) component, which provides additional link-based props.
 
 ```html
 <Card href='https://www.helpscout.net/'>
