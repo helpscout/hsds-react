@@ -5,7 +5,6 @@ import {
   Animate,
   AnimateGroup,
   Card,
-  Image,
   InfiniteScroller,
   Modal,
   Scrollable,
@@ -27,7 +26,7 @@ const makeStoryItems = (count, start = 0) => {
     collection.push(
       <Animate sequence='fadeIn'>
         <Card style={{margin: 8}} key={`item-${uniq()}-${i}`}>
-          Item {index+1}
+          Item {index + 1}
         </Card>
       </Animate>
     )
@@ -57,7 +56,7 @@ class StoryComponent extends Component {
     }, 500)
   }
 
-  onLoaded() {
+  onLoaded () {
     const { items } = this.state
     this.setState({
       items: items.concat(makeStoryItems(5, items.length))
@@ -93,7 +92,6 @@ class StoryComponent extends Component {
     )
   }
 }
-
 
 // Stories
 stories.add('default', () => (

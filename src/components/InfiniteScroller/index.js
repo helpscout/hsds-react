@@ -97,7 +97,7 @@ class InfiniteScroller extends Component {
     }
   }
 
-  getNodeScrollTop() {
+  getNodeScrollTop () {
     const { nodeScope } = this.state
     /* istanbul ignore next */
     if (nodeScope !== window && nodeScope.scrollTop !== undefined) {
@@ -107,7 +107,7 @@ class InfiniteScroller extends Component {
     }
   }
 
-  normalizeNodeScrollScroll(scrollTop) {
+  normalizeNodeScrollScroll (scrollTop) {
     const { nodeScope } = this.state
     /* istanbul ignore if */
     if (typeof scrollTop !== 'number') return
