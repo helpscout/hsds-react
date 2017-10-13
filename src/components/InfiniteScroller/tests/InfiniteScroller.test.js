@@ -147,6 +147,7 @@ describe('Loading', () => {
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(1)
+    expect(o.node.props.align).toBe('center')
   })
 
   test('Can render custom loading markup', () => {

@@ -3,12 +3,17 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
 export const propTypes = {
+  align: PropTypes.oneOf(['left', 'center', 'right', '']),
   className: PropTypes.string
 }
 
 const LoadingDots = props => {
-  const { className, ...rest } = props
-  const componentClassName = classNames('c-LoadingDots', className)
+  const { align, className, ...rest } = props
+  const componentClassName = classNames(
+    'c-LoadingDots',
+    align && `is-${align}`,
+    className
+  )
 
   return (
     <div className={componentClassName} {...rest}>
