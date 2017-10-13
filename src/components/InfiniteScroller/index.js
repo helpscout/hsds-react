@@ -140,7 +140,7 @@ class InfiniteScroller extends Component {
     )
 
     const loadingMarkup = loading || (
-      <LoadingDots />
+      <LoadingDots align='center' />
     )
     const contentMarkup = isLoading ? loadingMarkup : children
 
