@@ -26,7 +26,7 @@
   }
 
   &__scrollable {
-    .c-Scrollable__content {
+    & > .c-Scrollable__content {
       padding: 20px;
     }
   }
