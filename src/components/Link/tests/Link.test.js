@@ -10,7 +10,7 @@ describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = wrap(<Link />)
 
-    expect(wrapper.prop('className')).toContain('c-link')
+    expect(wrapper.prop('className')).toContain('c-Link')
   })
 
   test('Applies custom className if specified', () => {
@@ -130,5 +130,13 @@ describe('RouteWrapper', () => {
       expect(push).toHaveBeenCalledWith(to)
       done()
     })
+  })
+})
+
+describe('Styles', () => {
+  test('Sets block styles, if defined', () => {
+    const wrapper = wrap(<Link block />)
+
+    expect(wrapper.hasClass('is-block')).toBeTruthy()
   })
 })

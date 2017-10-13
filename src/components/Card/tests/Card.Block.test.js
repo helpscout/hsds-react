@@ -7,13 +7,13 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<CardBlock />)
 
-    expect(wrapper.prop('className')).toBe('c-Card__block')
+    expect(wrapper.hasClass('c-Card__block')).toBeTruthy()
   })
 
   test('Accepts custom className', () => {
     const wrapper = shallow(<CardBlock className='not-metro-man' />)
 
-    expect(wrapper.prop('className')).toContain('not-metro-man')
+    expect(wrapper.hasClass('not-metro-man')).toBeTruthy()
   })
 })
 
@@ -25,31 +25,27 @@ describe('Content', () => {
   })
 
   test('Render child components', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <CardBlock className='mega'>
         <CardBlock className='mind'>
           Megamind
         </CardBlock>
       </CardBlock>
     )
+    const o = wrapper.find('.mind')
 
-    const innerCardBlock = wrapper.childAt(0)
-
-    expect(innerCardBlock.exists()).toBeTruthy()
-    expect(innerCardBlock.prop('className')).toContain('mind')
-    expect(innerCardBlock.text()).toBe('Megamind')
+    expect(o.length).toBeTruthy()
   })
 })
 
 describe('Click', () => {
   test('Can trigger onClick callback', () => {
-    let value = false
-    const onClick = () => { value = true }
-    const wrapper = shallow(<CardBlock onClick={onClick} />)
+    const spy = jest.fn()
+    const wrapper = shallow(<CardBlock onClick={spy} />)
 
     wrapper.simulate('click')
 
-    expect(value).toBeTruthy()
+    expect(spy).toHaveBeenCalled()
   })
 })
 
@@ -62,16 +58,12 @@ describe('Scrollable', () => {
   })
 
   test('Renders Scrollable if specified', () => {
-    const wrapper = mount(<CardBlock scrollable />)
+    const wrapper = shallow(<CardBlock scrollable />)
     const o = wrapper.find(Scrollable)
-    const n = wrapper.find('.c-Card__block')
 
     expect(o.length).toBe(1)
     expect(o.hasClass('c-Card__block')).toBeTruthy()
     expect(o.hasClass('is-scrollable')).toBeTruthy()
-    expect(n.length).toBe(2)
-
-    wrapper.unmount()
   })
 
   test('Renders Scrollable with flex if specified', () => {
@@ -81,6 +73,23 @@ describe('Scrollable', () => {
     expect(o.length).toBe(1)
     expect(o.hasClass('is-scrollable')).toBeTruthy()
     expect(o.hasClass('is-flex')).toBeTruthy()
+  })
+
+  test('Can fire onScroll callback, if specified', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<CardBlock scrollable onScroll={spy} />)
+    const o = wrapper.find(Scrollable)
+
+    o.node.props.onScroll()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Can retreive scrollableRef', () => {
+    const spy = jest.fn()
+    mount(<CardBlock scrollable scrollableRef={spy} />)
+
+    expect(spy).toHaveBeenCalled()
   })
 })
 

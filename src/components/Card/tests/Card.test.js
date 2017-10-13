@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Card from '..'
+import Link from '../../Link'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -13,6 +14,45 @@ describe('ClassName', () => {
     const wrapper = shallow(<Card className='not-metro-man' />)
 
     expect(wrapper.prop('className')).toContain('not-metro-man')
+  })
+})
+
+describe('Block', () => {
+  test('Does not render a Card.Block by default', () => {
+    const wrapper = shallow(<Card />)
+    const o = wrapper.find(Card.Block)
+
+    expect(o.length).toBeFalsy()
+  })
+
+  test('Can render a Card.Block', () => {
+    const wrapper = shallow(
+      <Card>
+        <Card.Block>
+          MegaMind
+        </Card.Block>
+      </Card>
+      )
+    const o = wrapper.find(Card.Block)
+
+    expect(o.length).toBe(1)
+    expect(o.node.props.children).toBe('MegaMind')
+  })
+
+  test('Can render a multiple Card.Block', () => {
+    const wrapper = shallow(
+      <Card>
+        <Card.Block>
+          Mega
+        </Card.Block>
+        <Card.Block>
+          Mind
+        </Card.Block>
+      </Card>
+      )
+    const o = wrapper.find(Card.Block)
+
+    expect(o.length).toBe(2)
   })
 })
 
@@ -43,18 +83,56 @@ describe('Content', () => {
 describe('Link', () => {
   const link = 'https://www.helpscout.net'
 
-  test('Renders an `a` selector if href is specified', () => {
-    const wrapper = shallow(<Card href={link} />)
-
-    expect(wrapper.node.type).toBe('a')
-    expect(wrapper.prop('href')).toBe(link)
-  })
-
   test('Adds link styles if href is specified', () => {
     const wrapper = shallow(<Card href={link} />)
 
     expect(wrapper.prop('className')).toContain('is-clickable')
     expect(wrapper.prop('className')).toContain('is-hoverable')
+  })
+
+  test('Renders a Link component if href is defined', () => {
+    const wrapper = shallow(<Card href={link} />)
+    const o = wrapper.find(Link)
+
+    expect(o.length).toBe(1)
+    expect(o.node.props.block).toBeTruthy()
+    expect(o.node.props.href).toBe(link)
+  })
+
+  test('Renders a Link component if to is defined', () => {
+    const wrapper = shallow(<Card to={link} />)
+    const o = wrapper.find(Link)
+
+    expect(o.length).toBe(1)
+    expect(o.node.props.block).toBeTruthy()
+    expect(o.node.props.to).toBe(link)
+  })
+
+  test('Renders a Link component with target="_blank"', () => {
+    const wrapper = shallow(<Card href={link} external />)
+    const o = wrapper.find(Link)
+    const p = o.node.props
+
+    expect(o.length).toBe(1)
+    expect(p.block).toBeTruthy()
+    expect(p.href).toBe(link)
+    expect(p.external).toBeTruthy()
+    expect(o.html()).toContain('_blank')
+  })
+
+  test('Renders a Link, with a Card.Block child', () => {
+    const wrapper = shallow(
+      <Card href={link}>
+        <Card.Block>MegaMind</Card.Block>
+      </Card>
+    )
+    const b = wrapper.find(Card.Block)
+    const o = wrapper.find(Link)
+
+    expect(o.length).toBe(1)
+    expect(o.node.props.children.type).toBe(Card.Block)
+    expect(b.length).toBe(1)
+    expect(b.node.props.children).toBe('MegaMind')
   })
 })
 
