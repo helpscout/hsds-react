@@ -32,23 +32,27 @@ class InfiniteScroller extends Component {
       isLoading: props.isLoading,
       nodeScope: window
     }
+    this._isMounted = null
     this.node = null
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
   componentDidMount () {
+    this._isMounted = true
     this.setParentNode()
+  }
+
+  componentWillUnmount () {
+    this._isMounted = false
   }
 
   componentWillReceiveProps (nextProps) {
     /* istanbul ignore else */
-    if (nextProps.isLoading !== this.state.isLoading) {
-      this.setState({
-        isLoading: nextProps.isLoading
-      })
+    if (nextProps.isLoading && !this.state.isLoading) {
+      this.handleOnLoading()
     }
     /* istanbul ignore else */
-    if (nextProps.isLoading && !this.state.isLoading) {
+    if (!nextProps.isLoading && this.state.isLoading) {
       this.handleOnLoaded()
     }
   }
@@ -76,9 +80,11 @@ class InfiniteScroller extends Component {
 
   handleOnLoading () {
     const { onLoading } = this.props
-    this.setState({
-      isLoading: true
-    })
+    if (this._isMounted) {
+      this.setState({
+        isLoading: true
+      })
+    }
     onLoading(() => { this.handleOnLoaded() })
   }
 
@@ -90,7 +96,8 @@ class InfiniteScroller extends Component {
     // Once the scroll position as been re-adjusted, then load new items
     onLoaded()
 
-    if (this.state.isLoading) {
+    /* istanbul ignore else */
+    if (this._isMounted && this.state.isLoading) {
       this.setState({
         isLoading: false
       })
@@ -112,7 +119,7 @@ class InfiniteScroller extends Component {
     /* istanbul ignore if */
     if (typeof scrollTop !== 'number') return
 
-    /* istanbul ignore else */
+    /* istanbul ignore next */
     if (nodeScope === window) {
       nodeScope.scrollTo(window.scrollX, scrollTop)
     } else if (nodeScope.scrollTop !== undefined) {
