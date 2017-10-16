@@ -147,3 +147,28 @@ describe('AnimationState', () => {
     expect(wrapper.state().animationState).toBe('measuring')
   })
 })
+
+describe('Duration', () => {
+  test('Duration can be set', () => {
+    const wrapper = mount(<Collapsible duration={1000} />)
+    const o = wrapper.instance()
+
+    expect(o.getTransitionDuration()).toBe(1000)
+  })
+
+  test('Duration can be overridden by durationOpen', () => {
+    const wrapper = mount(<Collapsible duration={1000} durationOpen={300} />)
+    const o = wrapper.instance()
+    wrapper.setState({animationState: 'open'})
+
+    expect(o.getTransitionDuration()).toBe(300)
+  })
+
+  test('Duration can be overridden by durationClose', () => {
+    const wrapper = mount(<Collapsible duration={1000} durationClose={100} />)
+    const o = wrapper.instance()
+    wrapper.setState({animationState: 'closing'})
+
+    expect(o.getTransitionDuration()).toBe(100)
+  })
+})

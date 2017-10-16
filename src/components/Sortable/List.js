@@ -24,7 +24,6 @@ const List = SortableContainer((props) => {
   )
 
   const itemsMarkup = items ? items.map((item, index) => {
-    const key = `item-${index}`
     const {
       index: itemIndex,
       ...itemRest
@@ -32,7 +31,6 @@ const List = SortableContainer((props) => {
 
     return React.cloneElement(item, {
       index,
-      key,
       useDragHandle,
       hideDragHandles,
       ...itemRest

@@ -3,6 +3,10 @@ import { mount, shallow } from 'enzyme'
 import SidebarCollapsibleCard from '..'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
+const simulateEvent = (eventName) => {
+  window.dispatchEvent(new Event(eventName))
+}
+
 const baseComponentOptions = {
   className: 'c-SidebarCollapsibleCard',
   skipChildrenTest: true
@@ -154,6 +158,8 @@ describe('Collapsible', () => {
         onOpen={fn}
         onClose={fn}
         duration={1000}
+        durationOpen={300}
+        durationClose={500}
       />
     )
     const o = wrapper.find('Collapsible')
@@ -161,6 +167,8 @@ describe('Collapsible', () => {
 
     expect(o.length).toBe(1)
     expect(p.duration).toBe(1000)
+    expect(p.durationOpen).toBe(300)
+    expect(p.durationClose).toBe(500)
     expect(p.isOpen).toBe(true)
     expect(p.onOpen).toBe(fn)
     expect(p.onClose).toBe(fn)
@@ -184,5 +192,76 @@ describe('Sortable', () => {
     const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
 
     expect(o.length).toBe(1)
+  })
+
+  test('onSortStart callback can fire when sort begins', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <SidebarCollapsibleCard sortable onSortStart={spy} />
+    )
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    h.simulate('mousedown')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Should collapse onSortStart and cache prev openState', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <SidebarCollapsibleCard sortable onSortStart={spy} isOpen />
+    )
+    const o = wrapper.instance()
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    h.simulate('mousedown')
+
+    expect(o._prevIsOpen).toBeTruthy()
+    expect(o.isSorting).toBeTruthy()
+    expect(o.state.isOpen).toBeFalsy()
+  })
+
+  test('onSortEnd callback can fire when sort ends', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <SidebarCollapsibleCard sortable onSortEnd={spy} />
+    )
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    h.simulate('mousedown')
+    simulateEvent('mouseup')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onSortEnd callback can only fire when isSorting', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <SidebarCollapsibleCard sortable onSortEnd={spy} />
+    )
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    simulateEvent('mouseup')
+    simulateEvent('mouseup')
+    simulateEvent('mouseup')
+    simulateEvent('mouseup')
+    simulateEvent('mouseup')
+    h.simulate('mousedown')
+    simulateEvent('mouseup')
+
+    expect(spy).toHaveBeenCalledTimes(1)
+  })
+
+  test('Should expand onSortEnd, if previously opened', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <SidebarCollapsibleCard sortable onSortStart={spy} isOpen />
+    )
+    const o = wrapper.instance()
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    h.simulate('mousedown')
+
+    expect(o.state.isOpen).toBeFalsy()
+
+    simulateEvent('mouseup')
+
+    expect(o.isSorting).not.toBeTruthy()
+    expect(o.state.isOpen).toBeTruthy()
   })
 })
