@@ -42,6 +42,35 @@ describe('Children', () => {
     expect(o.type.displayName).toBe('sortableElement')
     expect(o.key).toBeTruthy()
   })
+
+  test('Provides children with unique keys, if id prop is not defined', () => {
+    const wrapper = shallow(
+      <Sortable>
+        <div>Ron</div>
+        <div>Champ</div>
+        <div>Brick</div>
+      </Sortable>
+    )
+    const o = wrapper.state().items[0]
+    const p = wrapper.state().items[1]
+
+    expect(o.key).not.toBe(p.key)
+  })
+
+  test('Use ID from child as key, if defined', () => {
+    const wrapper = shallow(
+      <Sortable>
+        <div id='ron'>Ron</div>
+        <div id='champ'>Champ</div>
+        <div>Brick</div>
+      </Sortable>
+    )
+    const o = wrapper.state().items[0]
+    const p = wrapper.state().items[1]
+
+    expect(o.key).toContain('ron')
+    expect(p.key).toContain('champ')
+  })
 })
 
 describe('DragHandles', () => {

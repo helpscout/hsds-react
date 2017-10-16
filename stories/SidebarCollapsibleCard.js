@@ -34,8 +34,9 @@ storiesOf('SidebarCollapsibleCard', module)
       useDragHandle
       hideDragHandles
       style={{padding: 10, background: '#f1f3f5'}}
+      pressDelay={100}
     >
-      <SidebarCollapsibleCard title='Zoolander 2'>
+      <SidebarCollapsibleCard title='Zoolander 2' id='001'>
         <dl>
           <dt>Character</dt>
           <dd>Jacobim Mugatu</dd>
@@ -43,7 +44,7 @@ storiesOf('SidebarCollapsibleCard', module)
           <dd>2016</dd>
         </dl>
       </SidebarCollapsibleCard>
-      <SidebarCollapsibleCard title='The Lego Movie'>
+      <SidebarCollapsibleCard title='The Lego Movie' id='002'>
         <dl>
           <dt>Character</dt>
           <dd>Lord Business</dd>
@@ -51,7 +52,7 @@ storiesOf('SidebarCollapsibleCard', module)
           <dd>2014</dd>
         </dl>
       </SidebarCollapsibleCard>
-      <SidebarCollapsibleCard title='Step Brothers'>
+      <SidebarCollapsibleCard title='Step Brothers' id='003'>
         <dl>
           <dt>Character</dt>
           <dd>Brennan Huff</dd>

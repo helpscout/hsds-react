@@ -6,8 +6,15 @@ import DragHandle from './DragHandle'
 import Item from './Item'
 import List from './List'
 import { listTypes } from './propTypes'
+import { noop } from '../../utilities/other'
 
 export const propTypes = listTypes
+
+const defaultProps = {
+  onSortStart: noop,
+  onSortMove: noop,
+  onSortEnd: noop
+}
 
 class Sortable extends Component {
   constructor () {
@@ -36,7 +43,7 @@ class Sortable extends Component {
 
     const items = React.Children.map(children, (child, index) => {
       const sortableElement = includes(child.type.displayName, 'sortableElement')
-      const key = `item-${index}`
+      const key = child.props.id ? child.props.id : `item-${index}`
 
       if (sortableElement) {
         return React.cloneElement(child, {
@@ -107,6 +114,7 @@ class Sortable extends Component {
 }
 
 Sortable.propTypes = propTypes
+Sortable.defaultProps = defaultProps
 Sortable.DragHandle = DragHandle
 Sortable.Item = Item
 Sortable.List = List
