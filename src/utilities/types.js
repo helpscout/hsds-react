@@ -1,3 +1,17 @@
+import React from 'react'
+
+export const isComponentOneOfType = (component, types) => {
+  if (!Array.isArray(types) && typeof types !== 'string') return false
+  const isArray = Array.isArray(types)
+
+  return (
+    React.isValidElement(component) &&
+    Array.isArray(types) &&
+    component.type &&
+    isArray ? types.some(o => o === component.type) : component.type === types
+  )
+}
+
 export const isNativeSpanType = (component) => {
   const types = [
     'a',
@@ -10,7 +24,7 @@ export const isNativeSpanType = (component) => {
     'u'
   ]
 
-  return component.type && types.some(o => o === component.type)
+  return isComponentOneOfType(component, types)
 }
 
 export const isNativeBlockType = (component) => {
@@ -22,5 +36,5 @@ export const isNativeBlockType = (component) => {
     'div'
   ]
 
-  return component.type && types.some(o => o === component.type)
+  return isComponentOneOfType(component, types)
 }

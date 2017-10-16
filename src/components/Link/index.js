@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { shouldWordWrap } from '../../utilities/strings'
+import { wordHasSpaces } from '../../utilities/strings'
 import RouteWrapper from '../RouteWrapper'
 
 export const propTypes = {
@@ -39,7 +39,7 @@ const Link = props => {
     ...rest
   } = props
 
-  const forceWordWrap = wordWrap || (autoWordWrap && shouldWordWrap(children))
+  const forceWordWrap = wordWrap || (autoWordWrap && !wordHasSpaces(children))
 
   const componentClassName = classNames(
     'c-Link',

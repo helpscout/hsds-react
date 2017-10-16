@@ -18,7 +18,7 @@ const Image = props => {
 
   const componentClassName = classNames(
     'c-Image',
-    block && `is-${block}`,
+    block && 'is-block',
     shape && `is-${shape}`,
     className
   )

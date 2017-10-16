@@ -31,7 +31,7 @@ const PreviewCard = props => {
   return (
     <Card className={componentClassName} {...rest}>
       {titleMarkup}
-      <Text muted>
+      <Text muted className='c-PreviewCard__content'>
         {children}
       </Text>
     </Card>

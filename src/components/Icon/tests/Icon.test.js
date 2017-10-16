@@ -48,9 +48,21 @@ describe('Styles', () => {
     expect(wrapper.prop('className')).toContain('is-center')
   })
 
+  test('Add faint styles if applied', () => {
+    const wrapper = shallow(<Icon name='emoji' faint />)
+
+    expect(wrapper.prop('className')).toContain('is-faint')
+  })
+
   test('Add muted styles if applied', () => {
     const wrapper = shallow(<Icon name='emoji' muted />)
 
     expect(wrapper.prop('className')).toContain('is-muted')
+  })
+
+  test('Add subtle styles if applied', () => {
+    const wrapper = shallow(<Icon name='emoji' subtle />)
+
+    expect(wrapper.prop('className')).toContain('is-subtle')
   })
 })
