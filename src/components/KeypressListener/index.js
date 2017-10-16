@@ -8,11 +8,17 @@ import { addEventListener, removeEventListener } from '@shopify/javascript-utili
 
 export const propTypes = {
   keyCode: PropTypes.number,
-  handler: PropTypes.func
+  handler: PropTypes.func,
+  modifier: PropTypes.string,
+  noModifier: PropTypes.bool,
+  type: PropTypes.oneOf(['keyup', 'keypress', 'keydown'])
 }
 
-const defaultProp = {
-  handler: noop
+const defaultProps = {
+  handler: noop,
+  noModifier: true,
+  scope: document,
+  type: 'keyup'
 }
 
 class KeypressListener extends Component {
@@ -22,19 +28,47 @@ class KeypressListener extends Component {
   }
 
   componentDidMount () {
-    const node = document
-    addEventListener(node, 'keyup', this.handleKeyEvent)
+    const { scope } = this.props
+    addEventListener(scope, this.props.type, this.handleKeyEvent)
   }
 
   componentWillUnmount () {
-    const node = document
-    removeEventListener(node, 'keyup', this.handleKeyEvent)
+    const { scope } = this.props
+    removeEventListener(scope, this.props.type, this.handleKeyEvent)
   }
 
   handleKeyEvent (event) {
-    const {keyCode, handler} = this.props
+    const {keyCode, handler, modifier, noModifier} = this.props
+    let modKey = true
 
-    if (event.keyCode === keyCode) {
+    /* istanbul ignore else */
+    // Tested, but istanbul is being picky
+    if (modifier) {
+      switch (modifier) {
+        case 'shift':
+          modKey = event.shiftKey
+          break
+        case 'alt':
+          modKey = event.altKey
+          break
+        case 'option':
+          modKey = event.altKey
+          break
+        case 'meta':
+          modKey = event.metaKey
+          break
+        case 'command':
+          modKey = event.metaKey
+          break
+        case 'control':
+          modKey = event.ctrlKey
+          break
+      }
+    } else if (noModifier) {
+      modKey = !event.shiftKey && !event.altKey && !event.metaKey && !event.ctrlKey
+    }
+
+    if (event.keyCode === keyCode && modKey) {
       handler(event)
     }
   }
@@ -45,6 +79,6 @@ class KeypressListener extends Component {
 }
 
 KeypressListener.propTypes = propTypes
-KeypressListener.defaultProp = defaultProp
+KeypressListener.defaultProps = defaultProps
 
 export default KeypressListener

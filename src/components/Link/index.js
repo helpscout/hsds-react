@@ -7,6 +7,7 @@ import RouteWrapper from '../RouteWrapper'
 
 export const propTypes = {
   autoWordWrap: PropTypes.bool,
+  block: PropTypes.bool,
   className: PropTypes.string,
   external: PropTypes.bool,
   href: PropTypes.string,
@@ -29,6 +30,7 @@ const defaultProps = {
 const Link = props => {
   const {
     autoWordWrap,
+    block,
     children,
     className,
     external,
@@ -41,6 +43,7 @@ const Link = props => {
 
   const componentClassName = classNames(
     'c-link',
+    block && 'is-block',
     forceWordWrap && 'is-word-wrap',
     className
   )

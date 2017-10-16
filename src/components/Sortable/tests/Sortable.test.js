@@ -1,23 +1,22 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Sortable from '..'
+import List from '../List'
 import SortableItem from '../Item'
 import SidebarCollapsibleCard from '../../SidebarCollapsibleCard'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = mount(<Sortable />)
+    const wrapper = shallow(<Sortable />)
 
     expect(wrapper.hasClass('c-Sortable')).toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<Sortable className={customClass} />)
+    const wrapper = shallow(<Sortable className={customClass} />)
 
     expect(wrapper.hasClass(customClass)).toBeTruthy()
-    wrapper.unmount()
   })
 })
 
@@ -29,7 +28,7 @@ describe('Children', () => {
   })
 
   test('Remaps children to state as SortableItem components', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <Sortable>
         <div>Ron</div>
         <div>Champ</div>
@@ -42,8 +41,35 @@ describe('Children', () => {
 
     expect(o.type.displayName).toBe('sortableElement')
     expect(o.key).toBeTruthy()
+  })
 
-    wrapper.unmount()
+  test('Provides children with unique keys, if id prop is not defined', () => {
+    const wrapper = shallow(
+      <Sortable>
+        <div>Ron</div>
+        <div>Champ</div>
+        <div>Brick</div>
+      </Sortable>
+    )
+    const o = wrapper.state().items[0]
+    const p = wrapper.state().items[1]
+
+    expect(o.key).not.toBe(p.key)
+  })
+
+  test('Use ID from child as key, if defined', () => {
+    const wrapper = shallow(
+      <Sortable>
+        <div id='ron'>Ron</div>
+        <div id='champ'>Champ</div>
+        <div>Brick</div>
+      </Sortable>
+    )
+    const o = wrapper.state().items[0]
+    const p = wrapper.state().items[1]
+
+    expect(o.key).toContain('ron')
+    expect(p.key).toContain('champ')
   })
 })
 
@@ -95,7 +121,7 @@ describe('DragHandles', () => {
 
 describe('Item', () => {
   test('Can render SortableItem components', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <Sortable>
         <SortableItem>Ron</SortableItem>
         <SortableItem>Champ</SortableItem>
@@ -105,12 +131,10 @@ describe('Item', () => {
     const o = wrapper.state().items
 
     expect(o.length).toBe(3)
-
-    wrapper.unmount()
   })
 
   test('Can render SortableItem components + regular compnents', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <Sortable>
         <SortableItem>Ron</SortableItem>
         <SortableItem>Champ</SortableItem>
@@ -121,8 +145,6 @@ describe('Item', () => {
     const o = wrapper.state().items
 
     expect(o.length).toBe(4)
-
-    wrapper.unmount()
   })
 
   test('Passes a sortable prop to child components if they support it', () => {
@@ -236,5 +258,25 @@ describe('Stateful parent component', () => {
     expect(oldState.items).toEqual(o.node.state.items)
 
     wrapper.unmount()
+  })
+})
+
+describe('onSortEnd', () => {
+  it('Should be attached to the Sortable object', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Sortable onSortEnd={spy} />)
+    const o = wrapper.instance()
+
+    o.onSortEnd({oldIndex: 1, newIndex: 2})
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  it('onSortEnd prop should not directly be passed to List component', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Sortable onSortEnd={spy} />)
+    const o = wrapper.find(List)
+
+    expect(o.node.props.onSortEnd).not.toBe(spy)
   })
 })

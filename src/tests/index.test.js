@@ -1,5 +1,6 @@
 import {
   Animate,
+  AnimateGroup,
   Avatar,
   AvatarStack,
   Badge,
@@ -10,6 +11,7 @@ import {
   ChoiceGroup,
   CloseButton,
   Collapsible,
+  Dropdown,
   Emoji,
   EmojiPicker,
   EventListener,
@@ -19,6 +21,7 @@ import {
   Heading,
   Icon,
   Image,
+  InfiniteScroller,
   Input,
   KeypressListener,
   Label,
@@ -43,6 +46,7 @@ import {
 
 const components = [
   Animate,
+  AnimateGroup,
   Avatar,
   AvatarStack,
   Badge,
@@ -53,6 +57,7 @@ const components = [
   ChoiceGroup,
   CloseButton,
   Collapsible,
+  Dropdown,
   Emoji,
   EmojiPicker,
   EventListener,
@@ -62,6 +67,7 @@ const components = [
   Heading,
   Icon,
   Image,
+  InfiniteScroller,
   Input,
   KeypressListener,
   Label,

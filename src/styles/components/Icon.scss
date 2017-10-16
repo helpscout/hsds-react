@@ -8,7 +8,9 @@
 
   box-sizing: border-box;
   color: currentColor;
+  display: block;
   height: ($default-size * 1px);
+  position: relative;
   width: ($default-size * 1px);
 
   // Modifiers
@@ -19,6 +21,10 @@
 
   &.is-clickable {
     cursor: pointer;
+  }
+
+  &.is-inline {
+    display: inline-block;
   }
 
   &.is-noInteract {

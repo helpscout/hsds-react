@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
 
-const propTypes = {
+export const propTypes = {
   duration: PropTypes.number,
+  durationOpen: PropTypes.number,
+  durationClose: PropTypes.number,
   isOpen: PropTypes.bool,
   onOpen: PropTypes.func,
   onClose: PropTypes.func
@@ -121,11 +123,23 @@ class Collapsible extends Component {
     return `${height || 0}px`
   }
 
+  getTransitionDuration () {
+    const {duration, durationOpen, durationClose} = this.props
+    const {animationState} = this.state
+    const openDuration = durationOpen !== undefined ? durationOpen : duration
+    const closeDuration = durationClose !== undefined ? durationClose : duration
+    const isOpening = animationState.indexOf('closing') < 0
+
+    return isOpening ? openDuration : closeDuration
+  }
+
   render () {
     const {
       className,
       children,
       duration,
+      durationOpen,
+      durationClose,
       isOpen,
       onOpen,
       onClose,
@@ -151,7 +165,7 @@ class Collapsible extends Component {
 
     const collapseStyle = {
       height: displayHeight,
-      transitionDuration: `${duration}ms`
+      transitionDuration: `${this.getTransitionDuration()}ms`
     }
     const componentStyle = style ? Object.assign({}, style, collapseStyle) : collapseStyle
 

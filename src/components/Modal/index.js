@@ -7,25 +7,30 @@ import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
 import Scrollable from '../Scrollable'
 import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 import { propTypes as portalTypes } from '../Portal'
 
 export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
   scrollFade: PropTypes.bool,
+  scrollableRef: PropTypes.func,
+  onScroll: PropTypes.func,
   trigger: PropTypes.element
 })
 
 const defaultProps = {
   closeIcon: true,
   scrollFade: true,
-  isOpen: false
+  isOpen: false,
+  onScroll: noop,
+  scrollableRef: noop
 }
 
 const modalBaseZIndex = 1040
 const portalOptions = {
   lockBodyOnOpen: true,
   id: 'Modal',
-  timeout: 400,
+  timeout: 200,
   zIndex: modalBaseZIndex
 }
 
@@ -39,10 +44,13 @@ const Modal = props => {
     isOpen,
     lockBodyOnOpen,
     openPortal,
+    onClose,
+    onScroll,
     path,
     portalIsOpen,
     portalIsMounted,
     scrollFade,
+    scrollableRef,
     style,
     timeout,
     trigger,
@@ -72,10 +80,14 @@ const Modal = props => {
         <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
           <Card seamless role='dialog'>
             {closeMarkup}
-            <Scrollable fade={scrollFade} rounded>
-              <Card.Block>
-                {children}
-              </Card.Block>
+            <Scrollable
+              className='c-Modal__scrollable'
+              fade
+              rounded
+              onScroll={onScroll}
+              scrollableRef={scrollableRef}
+            >
+              {children}
             </Scrollable>
           </Card>
         </Animate>
@@ -90,4 +102,5 @@ const Modal = props => {
 Modal.propTypes = propTypes
 Modal.defaultProps = defaultProps
 
+export const ModalComponent = Modal
 export default PortalWrapper(portalOptions)(Modal)

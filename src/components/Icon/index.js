@@ -12,6 +12,7 @@ export const propTypes = {
   clickable: PropTypes.bool,
   ignoreClick: PropTypes.bool,
   faint: PropTypes.bool,
+  inline: PropTypes.bool,
   muted: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func,
@@ -36,6 +37,7 @@ const Icon = props => {
     clickable,
     faint,
     ignoreClick,
+    inline,
     muted,
     onClick,
     name,
@@ -51,6 +53,7 @@ const Icon = props => {
     clickable && 'is-clickable',
     !clickable && ignoreClick && 'is-noInteract',
     faint && 'is-faint',
+    inline && 'is-inline',
     muted && 'is-muted',
     subtle && 'is-subtle',
     size && `is-${size}`,
@@ -61,19 +64,19 @@ const Icon = props => {
   const iconTitle = title || name
 
   return (
-    <div
+    <span
       className={componentClassName}
       onClick={onClick}
       data-icon-name={name}
       {...rest}
     >
-      <div
+      <span
         className='c-Icon__icon'
         dangerouslySetInnerHTML={src}
         title={iconTitle}
       />
       <VisuallyHidden>{iconTitle}</VisuallyHidden>
-    </div>
+    </span>
   )
 }
 

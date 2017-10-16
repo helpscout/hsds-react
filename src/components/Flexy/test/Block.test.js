@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<Flexy.Block />)
 
-    expect(wrapper.hasClass('o-flexy__block')).toBeTruthy()
+    expect(wrapper.hasClass('c-Flexy__block')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {

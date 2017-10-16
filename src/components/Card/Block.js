@@ -1,15 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from '../../utilities/classNames'
 import Scrollable from '../Scrollable'
+import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   bgMuted: PropTypes.bool,
   className: PropTypes.string,
   scrollable: PropTypes.bool,
+  scrollableRef: PropTypes.func,
+  onScroll: PropTypes.func,
   flex: PropTypes.bool,
   size: standardSizeTypes
+}
+
+const defaultProps = {
+  onScroll: noop,
+  scrollableRef: noop
 }
 
 const Block = props => {
@@ -17,43 +25,50 @@ const Block = props => {
     bgMuted,
     className,
     children,
+    onScroll,
     scrollable,
+    scrollableRef,
     flex,
     size,
     ...rest
   } = props
 
   const componentClassName = classNames(
-    'c-card__block',
+    'c-Card__block',
     bgMuted && 'is-bg-muted',
     flex && 'is-flex',
     scrollable && 'is-scrollable',
-    size && `c-card__block--${size}`,
+    size && `c-Card__block--${size}`,
     className
   )
 
   const scrollableClassName = classNames(
-    'c-card__block',
-    'c-card__block--scrollable',
+    'c-Card__block',
+    'c-Card__block--scrollable',
     flex && 'is-flex',
     scrollable && 'is-scrollable'
   )
 
-  const blockMarkup = scrollable ? (
-    <Scrollable className={scrollableClassName}>
-      <div className={componentClassName} {...rest}>
-        {children}
-      </div>
-    </Scrollable>
-  ) : (
+  const contentMarkup = (
     <div className={componentClassName} {...rest}>
       {children}
     </div>
   )
 
-  return blockMarkup
+  const componentMarkup = scrollable ? (
+    <Scrollable
+      className={scrollableClassName}
+      onScroll={onScroll}
+      scrollableRef={scrollableRef}
+    >
+      {contentMarkup}
+    </Scrollable>
+  ) : contentMarkup
+
+  return componentMarkup
 }
 
 Block.propTypes = propTypes
+Block.defaultProps = defaultProps
 
 export default Block

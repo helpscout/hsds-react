@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<Flexy.Item />)
 
-    expect(wrapper.hasClass('o-flexy__item')).toBeTruthy()
+    expect(wrapper.hasClass('c-Flexy__item')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
@@ -21,8 +21,8 @@ describe('Inline', () => {
   test('Applies inline className if specified', () => {
     const wrapper = shallow(<Flexy.Item inline />)
 
-    expect(wrapper.hasClass('o-flexy__inline-item')).toBeTruthy()
-    expect(wrapper.hasClass('o-flexy__item')).not.toBeTruthy()
+    expect(wrapper.hasClass('c-Flexy__inline-item')).toBeTruthy()
+    expect(wrapper.hasClass('c-Flexy__item')).not.toBeTruthy()
   })
 })
 

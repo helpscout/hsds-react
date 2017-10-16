@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import Transition, { ENTERED, ENTERING, EXITING, EXITED } from 'react-transition-group/Transition'
 import classNames from '../../utilities/classNames'

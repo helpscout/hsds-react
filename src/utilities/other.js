@@ -6,3 +6,9 @@ export const requestAnimationFrame = (callback) => {
   /* istanbul ignore next */
   window.requestAnimationFrame ? window.requestAnimationFrame(callback) : callback()
 }
+
+export const isNodeEnv = () => {
+  return typeof process !== 'undefined' &&
+    process.title && typeof process.title === 'string' &&
+    process.title.toLowerCase().indexOf('node') >= 0
+}

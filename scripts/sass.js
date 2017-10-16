@@ -13,8 +13,7 @@ mkdirp('./dist/scss')
 
 const files = [
   'blue',
-  'blue.hs-app',
-  'blue.hs-app.slim'
+  'blue.hs-app'
 ]
 
 const renderFile = (fileName) => {

@@ -40,6 +40,7 @@ This component can be drag sortable using the [Sortable](../Sortable) component.
 <Sortable
   useDragHandle
   hideDragHandles
+  pressDelay={100}
 >
   <SidebarCollapsibleCard title='Zoolander 2'>
     <dl>
@@ -60,6 +61,8 @@ This component can be drag sortable using the [Sortable](../Sortable) component.
 </Sortable>
 ```
 
+Note: In order for this component to play nicely with [Sortable](../Sortable), a `pressDelay` prop must be defined (recommended minimum of `100`). This allows for the collapse timing to synchronize with the Sortable item height calculations.
+
 
 
 ## Props
@@ -72,6 +75,8 @@ This component can be drag sortable using the [Sortable](../Sortable) component.
 | isOpen | boolean | Opens/collapses the component. |
 | onClose | function | Callback function when the component closes. |
 | onOpen | function | Callback function when the component opens. |
+| onSortStart | function | Callback function when component starts being sorted. |
+| onSortEnd | function | Callback function when component stops being sorted. |
 | sortable | boolean | Renders the drag handler for sorting. See [Sortable](../Sortable) |
 | style | string | Custom styles to be added to the component. |
 | title | string | Title for the header in this component. |

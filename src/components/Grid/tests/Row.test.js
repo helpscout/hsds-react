@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = shallow(<Row />)
 
-    expect(wrapper.hasClass('o-row')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
@@ -36,8 +36,8 @@ describe('Flex', () => {
       <Row flex />
     )
 
-    expect(wrapper.hasClass('o-row-flex')).toBeTruthy()
-    expect(wrapper.hasClass('o-row')).not.toBeTruthy()
+    expect(wrapper.hasClass('c-Row-flex')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row')).not.toBeTruthy()
   })
 })
 
@@ -58,8 +58,8 @@ describe('Size', () => {
       <Row size='md' />
     )
 
-    expect(wrapper.hasClass('o-row')).toBeTruthy()
-    expect(wrapper.hasClass('o-row--md')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row--md')).toBeTruthy()
   })
 
   test('Can render additional responsive sizes', () => {
@@ -67,9 +67,9 @@ describe('Size', () => {
       <Row size='md, sm@lg' />
     )
 
-    expect(wrapper.hasClass('o-row')).toBeTruthy()
-    expect(wrapper.hasClass('o-row--md')).toBeTruthy()
-    expect(wrapper.hasClass('o-row--sm@lg')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row--md')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row--sm@lg')).toBeTruthy()
   })
 
   test('Can render sizes with flex variant', () => {
@@ -77,8 +77,8 @@ describe('Size', () => {
       <Row flex size='md' />
     )
 
-    expect(wrapper.hasClass('o-row-flex')).toBeTruthy()
-    expect(wrapper.hasClass('o-row-flex--md')).toBeTruthy()
-    expect(wrapper.hasClass('o-row')).not.toBeTruthy()
+    expect(wrapper.hasClass('c-Row-flex')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row-flex--md')).toBeTruthy()
+    expect(wrapper.hasClass('c-Row')).not.toBeTruthy()
   })
 })

@@ -9,7 +9,7 @@ const Block = props => {
   } = props
 
   const componentClassName = classNames(
-    'o-flexy__block',
+    'c-Flexy__block',
     className
   )
 

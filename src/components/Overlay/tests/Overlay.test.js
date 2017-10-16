@@ -69,4 +69,16 @@ describe('Styles', () => {
 
     expect(wrapper.prop('style')).toBe(style)
   })
+
+  test('Renders fixed styles, if specified', () => {
+    const wrapper = shallow(<Overlay fixed />)
+
+    expect(wrapper.hasClass('is-fixed')).toBeTruthy()
+  })
+
+  test('Renders transparent styles, if specified', () => {
+    const wrapper = shallow(<Overlay transparent />)
+
+    expect(wrapper.hasClass('is-transparent')).toBeTruthy()
+  })
 })

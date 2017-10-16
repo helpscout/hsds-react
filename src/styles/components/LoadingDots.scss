@@ -4,6 +4,19 @@
   $size: 5px;
   color: _color(grey, 800);
   display: flex;
+  width: ($size * 3) + ($gap * 2);
+
+  // Modifiers
+  &.is-left {
+    margin-right: auto;
+  }
+  &.is-center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &.is-right {
+    margin-left: auto;
+  }
 
   &__dot {
     background-color: currentColor;

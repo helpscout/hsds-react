@@ -62,9 +62,9 @@ describe('Variants', () => {
     const wrapper = mount(<Grid fluid />)
     const o = wrapper.find(Container)
 
-    expect(o.hasClass('o-container')).toBeTruthy()
-    expect(o.hasClass('o-container--fluid')).toBeTruthy()
-    expect(o.hasClass('o-container--responsive')).not.toBeTruthy()
+    expect(o.hasClass('c-Container')).toBeTruthy()
+    expect(o.hasClass('c-Container--fluid')).toBeTruthy()
+    expect(o.hasClass('c-Container--responsive')).not.toBeTruthy()
 
     wrapper.unmount()
   })

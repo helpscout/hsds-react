@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = shallow(<Container />)
 
-    expect(wrapper.hasClass('o-container')).toBeTruthy()
+    expect(wrapper.hasClass('c-Container')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
@@ -45,16 +45,16 @@ describe('Variants', () => {
   test('Correctly renders fluid variant', () => {
     const wrapper = shallow(<Container fluid />)
 
-    expect(wrapper.hasClass('o-container')).toBeTruthy()
-    expect(wrapper.hasClass('o-container--fluid')).toBeTruthy()
-    expect(wrapper.hasClass('o-container--responsive')).not.toBeTruthy()
+    expect(wrapper.hasClass('c-Container')).toBeTruthy()
+    expect(wrapper.hasClass('c-Container--fluid')).toBeTruthy()
+    expect(wrapper.hasClass('c-Container--responsive')).not.toBeTruthy()
   })
 
   test('Correctly renders responsive variant', () => {
     const wrapper = shallow(<Container responsive />)
 
-    expect(wrapper.hasClass('o-container')).toBeTruthy()
-    expect(wrapper.hasClass('o-container--responsive')).toBeTruthy()
-    expect(wrapper.hasClass('o-container--fluid')).not.toBeTruthy()
+    expect(wrapper.hasClass('c-Container')).toBeTruthy()
+    expect(wrapper.hasClass('c-Container--responsive')).toBeTruthy()
+    expect(wrapper.hasClass('c-Container--fluid')).not.toBeTruthy()
   })
 })

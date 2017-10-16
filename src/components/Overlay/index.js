@@ -5,7 +5,9 @@ import { noop } from '../../utilities/other'
 
 export const propTypes = {
   className: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  fixed: PropTypes.bool,
+  transparent: PropTypes.bool
 }
 
 const defaultProps = {
@@ -16,11 +18,17 @@ const Overlay = props => {
   const {
     children,
     className,
+    fixed,
     onClick,
+    transparent,
     ...rest
   } = props
 
-  const componentClassName = classNames('c-Overlay', className)
+  const componentClassName = classNames(
+    'c-Overlay',
+    fixed && 'is-fixed',
+    transparent && 'is-transparent',
+    className)
 
   return (
     <div className={componentClassName} role='dialog' onClick={onClick} {...rest}>

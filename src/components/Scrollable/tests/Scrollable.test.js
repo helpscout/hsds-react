@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import { mount, shallow } from 'enzyme'
 import Scrollable from '..'
 
@@ -42,5 +42,41 @@ describe('Styles', () => {
     const wrapper = shallow(<Scrollable fade rounded />)
 
     expect(wrapper.prop('className')).toContain('is-rounded')
+  })
+})
+
+describe('Events', () => {
+  test('Fires onScroll callback when scrolled', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Scrollable onScroll={spy} />)
+    const o = wrapper.instance()
+
+    o.handleOnScroll()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('scrollableRef', () => {
+  class MyComponent extends Component {
+    constructor () {
+      super()
+      this.scrollable = null
+    }
+    render () {
+      return (
+        <Scrollable
+          scrollableRef={node => { this.scrollable = node }}
+        />
+      )
+    }
+  }
+
+  test('Can pass scrollableRef to parent', () => {
+    const wrapper = mount(<MyComponent />)
+    const n = wrapper.find('.c-Scrollable__content').node
+    const o = wrapper.instance()
+
+    expect(o.scrollable).toBe(n)
   })
 })
