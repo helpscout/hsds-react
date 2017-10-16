@@ -117,6 +117,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const {
         exact,
         isOpenProps,
+        lockBodyOnOpen,
         onBeforeClose,
         onBeforeOpen,
         onClose,

@@ -42,7 +42,7 @@ const Link = props => {
   const forceWordWrap = wordWrap || (autoWordWrap && shouldWordWrap(children))
 
   const componentClassName = classNames(
-    'c-link',
+    'c-Link',
     block && 'is-block',
     forceWordWrap && 'is-word-wrap',
     className
