@@ -1,5 +1,5 @@
 import React, {PureComponent as Component} from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import InfiniteScroller from '..'
 import LoadingDots from '../../LoadingDots'
 import { ModalComponent } from '../../Modal'
@@ -9,16 +9,33 @@ const scrollEvent = new Event('scroll')
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<InfiniteScroller />)
+    const wrapper = mount(<InfiniteScroller />)
 
     expect(wrapper.hasClass('c-InfiniteScroller')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<InfiniteScroller className={customClass} />)
+    const wrapper = mount(<InfiniteScroller className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
+  })
+})
+
+describe('isMounted', () => {
+  test('Sets internal isMounted on mount', () => {
+    const wrapper = mount(<InfiniteScroller />)
+    const o = wrapper.instance()
+
+    expect(o._isMounted).toBeTruthy()
+  })
+
+  test('Sets internal isMounted to false on unmount', () => {
+    const wrapper = mount(<InfiniteScroller />)
+    const o = wrapper.instance()
+    wrapper.unmount()
+
+    expect(o._isMounted).not.toBeTruthy()
   })
 })
 
@@ -135,13 +152,13 @@ describe('scrollParent', () => {
 
 describe('Loading', () => {
   test('Adds isLoading className', () => {
-    const wrapper = shallow(<InfiniteScroller isLoading />)
+    const wrapper = mount(<InfiniteScroller isLoading />)
 
     expect(wrapper.hasClass('is-loading')).toBeTruthy()
   })
 
   test('Renders LoadingDots by default when isLoading', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <InfiniteScroller isLoading />
     )
     const o = wrapper.find(LoadingDots)
@@ -151,7 +168,7 @@ describe('Loading', () => {
   })
 
   test('Can render custom loading markup', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <InfiniteScroller isLoading loading={<Text>Derlict</Text>} />
     )
     const o = wrapper.find(LoadingDots)
@@ -162,7 +179,7 @@ describe('Loading', () => {
   })
 
   test('Can change isLoading state by prop change', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <InfiniteScroller />
     )
 
@@ -175,7 +192,7 @@ describe('Loading', () => {
 describe('Callbacks', () => {
   test('onLoading callback can be fired when triggered', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<InfiniteScroller onLoading={spy} isLoading />)
+    const wrapper = mount(<InfiniteScroller onLoading={spy} isLoading />)
     const o = wrapper.instance()
 
     o.handleOnLoading()
@@ -184,13 +201,25 @@ describe('Callbacks', () => {
     expect(wrapper.state().isLoading).toBeTruthy()
   })
 
+  test('onLoading callback can still be fired when triggered when mounted', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<InfiniteScroller onLoading={spy} />)
+    const o = wrapper.instance()
+
+    wrapper.unmount()
+
+    o.handleOnLoading()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('onLoading callback can fire onLoaded callback', (done) => {
     const spy = jest.fn()
     const onLoading = (onLoaded) => {
       spy()
       onLoaded()
     }
-    const wrapper = shallow(<InfiniteScroller onLoading={onLoading} isLoading />)
+    const wrapper = mount(<InfiniteScroller onLoading={onLoading} isLoading />)
     const o = wrapper.instance()
 
     o.handleOnLoading()
@@ -204,7 +233,7 @@ describe('Callbacks', () => {
 
   test('Does not fire onLoading callback when isLoading is set', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
+    const wrapper = mount(
       <InfiniteScroller isLoading onLoading={spy} />
     )
     const o = wrapper.instance()
@@ -216,7 +245,7 @@ describe('Callbacks', () => {
 
   test('onLoaded callback can be fired when triggered', (done) => {
     const spy = jest.fn()
-    const wrapper = shallow(<InfiniteScroller onLoaded={spy} isLoading />)
+    const wrapper = mount(<InfiniteScroller onLoaded={spy} isLoading />)
     const o = wrapper.instance()
 
     o.handleOnLoading()
@@ -231,6 +260,59 @@ describe('Callbacks', () => {
       expect(wrapper.state().isLoading).not.toBeTruthy()
       done()
     }, 0)
+  })
+
+  test('onLoaded callback can still be fired when triggered when mounted', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<InfiniteScroller onLoaded={spy} />)
+    const o = wrapper.instance()
+
+    wrapper.unmount()
+    o.handleOnLoaded()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onLoading callback can be triggered when isLoading prop changes to truthy ', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<InfiniteScroller onLoading={spy} />)
+
+    wrapper.setProps({isLoading: true})
+
+    expect(spy).toHaveBeenCalled()
+    expect(wrapper.state().isLoading).toBeTruthy()
+  })
+
+  test('onLoaded callback cannot be triggered when already loading', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<InfiniteScroller isLoading />)
+
+    wrapper.setProps({onLoading: spy})
+    wrapper.setProps({isLoading: true})
+
+    expect(spy).not.toHaveBeenCalled()
+    expect(wrapper.state().isLoading).toBeTruthy()
+  })
+
+  test('onLoaded callback can be triggered when isLoading prop changes from true to false', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<InfiniteScroller onLoaded={spy} isLoading />)
+
+    wrapper.setProps({isLoading: false})
+
+    expect(spy).toHaveBeenCalled()
+    expect(wrapper.state().isLoading).not.toBeTruthy()
+  })
+
+  test('onLoading callback cannot be triggered when already loaded', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<InfiniteScroller />)
+
+    wrapper.setProps({onLoaded: spy})
+    wrapper.setProps({isLoading: false})
+
+    expect(spy).not.toHaveBeenCalled()
+    expect(wrapper.state().isLoading).not.toBeTruthy()
   })
 })
 
