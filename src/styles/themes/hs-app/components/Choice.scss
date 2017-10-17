@@ -2,7 +2,7 @@
 
 .c-Choice {
   @import "../resets/base";
-  
+
   .c-InputBackdrop {
     display: none;
   }
@@ -15,13 +15,15 @@
     opacity: initial;
     position: relative !important;
     top: -2px;
-  
+
     &.is-checkbox {
       -webkit-appearance: checkbox;
+      -moz-appearance: checkbox;
       appearance: checkbox;
     }
     &.is-radio {
       -webkit-appearance: radio;
+      -moz-appearance: radio;
       appearance: radio;
     }
   }

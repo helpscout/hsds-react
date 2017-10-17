@@ -5,6 +5,10 @@
   font-family: $HS_APP_FONT_FAMILY;
   font-size: $HS_APP_FONT_SIZE;
 
+  @-moz-document url-prefix() {
+    font-family: $HS_APP_FONT_FAMILY_FIREFOX;
+  }
+
   * {
     box-sizing: border-box;
   }

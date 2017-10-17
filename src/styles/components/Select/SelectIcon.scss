@@ -6,21 +6,26 @@
   $arrowSize: 3px;
   $offset: 4px;
 
+  align-self: center;
   color: _color(charcoal, 400);
-  display: flex;
-  flex-direction: column;
+  display: block;
   padding: 0 $offset;
   pointer-events: none;
   position: absolute;
   right: $offset;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
   z-index: 1;
 
   &:before {
     border-bottom: $arrowSize solid currentColor;
     border-left: $arrowSize solid transparent;
     border-right: $arrowSize solid transparent;
+    bottom: 0;
     content: "";
     margin: $arrowOffset;
+    position: absolute;
   }
 
   &:after {
@@ -29,5 +34,7 @@
     border-right: $arrowSize solid transparent;
     content: "";
     margin: $arrowOffset;
+    position: absolute;
+    top: 0;
   }
 }
