@@ -33,17 +33,13 @@ const Timestamp = props => {
     <Icon name='tick-large' size='12' faint title='Read' />
   ) : null
 
-  const timestampMarkup = timestamp ? (
-    <Text size='12' faint disableSelect>
-      <time dateTime={timestamp}>{timestamp}</time>
-    </Text>
-  ) : null
-
   return (
     <div className={componentClassName} {...rest}>
       <Flexy gap='xs' just='left'>
         <Flexy.Item>
-          {timestampMarkup}
+          <Text size='12' faint disableSelect>
+            <time dateTime={timestamp}>{timestamp}</time>
+          </Text>
         </Flexy.Item>
         <Flexy.Item>
           {readMarkup}

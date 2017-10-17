@@ -72,8 +72,8 @@ const Media = props => {
       read={read}
       rtl={rtl}
       size='sm'
-      title={title}
       timestamp={timestamp}
+      title={title}
       to={to}
       {...rest}
     >

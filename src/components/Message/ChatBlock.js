@@ -1,10 +1,10 @@
 import React, {PureComponent as Component} from 'react'
 import Animate from '../Animate'
 import Flexy from '../Flexy'
-import Timestamp from './Timestamp'
-import classNames from '../../utilities/classNames'
 import Action from './Action'
 import Bubble from './Bubble'
+import Timestamp from './Timestamp'
+import classNames from '../../utilities/classNames'
 import { chatTypes } from './propTypes'
 
 export const propTypes = chatTypes
