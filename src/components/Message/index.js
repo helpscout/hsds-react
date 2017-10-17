@@ -41,7 +41,9 @@ const Message = props => {
 
   const isChatType = child => {
     const chatTypes = [Action, Chat, Content, Media, Question]
-    return chatTypes.some(child.type)
+    return chatTypes.some(type => {
+      return typeof child.type === 'function' && child.type === type
+    })
   }
 
   const childrenMarkup = React.Children.map(children, (child) => {
@@ -71,7 +73,7 @@ const Message = props => {
     <div className={componentClassName} {...rest}>
       <Flexy align='top' gap='sm'>
         {from && avatarBlockMarkup}
-        <Flexy.Block>
+        <Flexy.Block className='c-Message__block'>
           {childrenMarkup}
         </Flexy.Block>
         {to && avatarBlockMarkup}

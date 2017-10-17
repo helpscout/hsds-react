@@ -13,36 +13,102 @@ const TestButton = props => {
 
 afterEach(() => {
   document.body.innerHTML = ''
+  document.body.style.overflow = null
 })
 
-test('Can create a component as a HOC', () => {
-  const TestComponent = PortalWrapper()(TestButton)
-  const wrapper = mount(<TestComponent isOpen />)
-  const c = document.body.childNodes[0]
+describe('HOC', () => {
+  test('Can create a component as a HOC', () => {
+    const TestComponent = PortalWrapper()(TestButton)
+    mount(<TestComponent isOpen />)
+    const c = document.body.childNodes[0]
 
-  expect(c.innerHTML).toContain('button')
-
-  wrapper.unmount()
+    expect(c.querySelector('button')).toBeTruthy()
+  })
 })
 
-test('Adds default ID', () => {
-  const TestComponent = PortalWrapper()(TestButton)
-  const wrapper = mount(<TestComponent isOpen />)
-  const c = document.body.childNodes[0]
+describe('ID', () => {
+  test('Adds default ID', () => {
+    const TestComponent = PortalWrapper()(TestButton)
+    mount(<TestComponent isOpen />)
+    const c = document.body.childNodes[0]
 
-  expect(c.id).toContain('PortalWrapper')
+    expect(c.id).toContain('PortalWrapper')
+  })
 
-  wrapper.unmount()
+  test('Override default ID with options', () => {
+    const options = {
+      id: 'Brick'
+    }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent isOpen />)
+    const c = document.body.childNodes[0]
+
+    expect(c.id).toContain('Brick')
+  })
 })
 
-test('Override default ID with options', () => {
-  const options = {
-    id: 'Brick'
-  }
-  const TestComponent = PortalWrapper(options)(TestButton)
-  const wrapper = mount(<TestComponent isOpen />)
-  const c = document.body.childNodes[0]
-  expect(c.id).toContain('Brick')
+describe('Body lock', () => {
+  test('Does not enable body lock by default', () => {
+    const options = {}
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const wrapper = mount(<TestComponent isOpen />)
 
-  wrapper.unmount()
+    expect(wrapper.state().lockBodyOnOpen).toBe(false)
+  })
+
+  test('Enables body lock if defined', () => {
+    const options = { lockBodyOnOpen: true }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const wrapper = mount(<TestComponent isOpen />)
+
+    expect(wrapper.state().lockBodyOnOpen).toBe(true)
+  })
+
+  test('Locks body when opened, if enabled', () => {
+    const options = { lockBodyOnOpen: true }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const wrapper = mount(<TestComponent isOpen />)
+    const o = wrapper.instance()
+
+    o.openPortal()
+
+    expect(document.body.style.overflow).toBe('hidden')
+  })
+
+  test('Does not lock body when opened, if not enabled', () => {
+    const options = { lockBodyOnOpen: false }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const wrapper = mount(<TestComponent isOpen />)
+    const o = wrapper.instance()
+
+    o.openPortal()
+
+    expect(document.body.style.overflow).not.toBe('hidden')
+  })
+
+  test('Unlocks body when closed, after being opened, if enabled', () => {
+    const options = { lockBodyOnOpen: true }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const wrapper = mount(<TestComponent isOpen />)
+    const o = wrapper.instance()
+
+    o.openPortal()
+    o.closePortal()
+
+    expect(document.body.style.overflow).not.toBe('hidden')
+  })
+
+  test('Restores body overflow to previous setting, after being closed', () => {
+    const options = { lockBodyOnOpen: true }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const wrapper = mount(<TestComponent isOpen />)
+    const o = wrapper.instance()
+
+    document.body.style.overflow = 'auto'
+
+    o.openPortal()
+    o.closePortal()
+
+    expect(document.body.style.overflow).toBe('auto')
+  })
 })
