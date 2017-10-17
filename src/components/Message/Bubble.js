@@ -35,6 +35,7 @@ const Bubble = props => {
     (ltr && !rtl) && 'is-ltr',
     (!ltr && rtl) && 'is-rtl',
     to && 'is-to',
+    typing && 'is-typing',
     className
   )
 
@@ -46,7 +47,7 @@ const Bubble = props => {
     ) : child
   })
 
-  const titleMarkup = (primary && title) ? (
+  const titleMarkup = title ? (
     <Heading className='c-MessageBubble__title' size='small'>
       {title}
     </Heading>
