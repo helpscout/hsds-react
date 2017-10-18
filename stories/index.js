@@ -1,6 +1,7 @@
 import '../src/styles/blue.scss'
 import '../src/styles/blue.hs-app.scss'
 
+import './Alert'
 import './Animate'
 import './Avatar'
 import './AvatarStack'

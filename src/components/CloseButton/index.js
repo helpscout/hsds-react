@@ -3,12 +3,15 @@ import PropTypes from 'prop-types'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { sizeTypes } from './propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
+  seamless: PropTypes.bool,
+  size: sizeTypes,
   title: PropTypes.string
 }
 
@@ -22,12 +25,16 @@ const defaultProps = {
 const CloseButton = props => {
   const {
     className,
+    seamless,
+    size,
     title,
     ...rest
   } = props
 
   const componentClassName = classNames(
     'c-CloseButton',
+    seamless && 'is-seamless',
+    size && `is-${size}`,
     className
   )
 
@@ -37,7 +44,7 @@ const CloseButton = props => {
         center
         className='c-CloseButton__icon'
         ignoreClick
-        muted
+        muted={!seamless}
         name='cross-medium'
         title='Close'
       />

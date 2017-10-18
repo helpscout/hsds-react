@@ -1,4 +1,5 @@
 import {
+  Alert,
   Animate,
   AnimateGroup,
   Avatar,
@@ -42,6 +43,7 @@ import {
 } from '..'
 
 const components = [
+  Alert,
   Animate,
   AnimateGroup,
   Avatar,

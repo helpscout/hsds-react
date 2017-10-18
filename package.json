@@ -108,6 +108,7 @@
     "rgb-hex": "2.1.0",
     "rimraf": "2.6.2",
     "sass-loader": "6.0.6",
+    "seed-alert": "0.2.6",
     "seed-barista": "1.0.4",
     "seed-button": "0.3.0",
     "seed-card": "0.1.0",

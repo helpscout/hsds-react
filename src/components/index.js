@@ -1,3 +1,4 @@
+export { default as Alert } from './Alert'
 export { default as Animate } from './Animate'
 export { default as AnimateGroup } from './AnimateGroup'
 export { default as Avatar } from './Avatar'
