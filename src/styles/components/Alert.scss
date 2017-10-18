@@ -25,6 +25,13 @@ $seed-alert-namespace: "c-Alert";
     }
   }
 
+  &__badge {
+    padding: 4px 0;
+    + * {
+      margin-left: 8px;
+    }
+  }
+
   // Adjust margin for icons
   &__icon {
     padding: 3px 0;

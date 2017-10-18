@@ -1,5 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
+import Badge from '../Badge'
+import Collapsible from '../Collapsible'
 import CloseButton from '../CloseButton'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
@@ -8,8 +10,7 @@ import { statusTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   actionRight: PropTypes.element,
-  badge: PropTypes.element,
-  closeLabel: PropTypes.string,
+  badge: PropTypes.string,
   dismissible: PropTypes.bool,
   icon: PropTypes.bool,
   onDismiss: PropTypes.func,
@@ -26,6 +27,7 @@ export const classNameSpace = 'c-Alert'
 export const cx = {
   main: classNameSpace,
   actionRight: `${classNameSpace}__actionRight`,
+  badge: `${classNameSpace}__badge`,
   block: `${classNameSpace}__block`,
   closeButton: `${classNameSpace}__closeButton`,
   content: `${classNameSpace}__content`,
@@ -70,6 +72,7 @@ class Alert extends Component {
     const componentClassName = classNames(
       cx.main,
       actionRight && 'has-actionRight',
+      badge && 'has-badge',
       dismissible && 'is-dismissible',
       icon && 'has-icon',
       noMargin && 'is-noMargin',
@@ -83,7 +86,11 @@ class Alert extends Component {
       </div>
     ) : null
 
-    const iconMarkup = icon ? (
+    const leftMarkup = badge ? (
+      <div className={cx.badge}>
+        <Badge status={status}>{badge}</Badge>
+      </div>
+    ) : icon ? (
       <div className={cx.icon}>
         <Icon name='alert' size='20' />
       </div>
@@ -102,7 +109,7 @@ class Alert extends Component {
     const componentMarkup = (
       <div className={componentClassName} {...rest} role='alert'>
         <div className={cx.content}>
-          {iconMarkup}
+          {leftMarkup}
           <div className={cx.block}>
             {children}
           </div>
@@ -112,7 +119,11 @@ class Alert extends Component {
       </div>
     )
 
-    return (dismissible && !dismissed) || !dismissed ? componentMarkup : null
+    return dismissible ? (
+      <Collapsible duration={200} isOpen={!dismissed}>
+        {componentMarkup}
+      </Collapsible>
+    ) : componentMarkup
   }
 }
 

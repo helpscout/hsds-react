@@ -46,6 +46,12 @@ stories.add('dismissible', () => (
   </div>
 ))
 
+stories.add('badge', () => (
+  <div>
+    <Alert badge='Wow'>Badge Buddy!</Alert>
+  </div>
+))
+
 stories.add('icon', () => (
   <div>
     <Alert icon>Icon Buddy!</Alert>

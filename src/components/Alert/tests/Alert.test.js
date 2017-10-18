@@ -1,7 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import { default as Alert, cx } from '..'
-import { Button, CloseButton, Icon } from '../../'
+import { Badge, Button, CloseButton, Collapsible, Icon } from '../../'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -49,7 +49,6 @@ describe('Dismissing', () => {
     o.simulate('click')
 
     expect(wrapper.state().dismissed).toBe(true)
-    expect(wrapper.html()).toBeFalsy()
   })
 
   test('onDismiss callback can be fired on CloseButton click', () => {
@@ -60,6 +59,31 @@ describe('Dismissing', () => {
     o.simulate('click')
 
     expect(spy).toHaveBeenCalled()
+  })
+
+  test('Does not contain Collasible by default', () => {
+    const wrapper = shallow(<Alert />)
+    const o = wrapper.find(Collapsible)
+
+    expect(o.length).not.toBeTruthy()
+  })
+
+  test('Renders Collasible by default', () => {
+    const wrapper = shallow(<Alert dismissible />)
+    const o = wrapper.find(Collapsible)
+
+    expect(o.length).toBeTruthy()
+    expect(o.node.props.isOpen).toBeTruthy()
+  })
+
+  test('Collapses alert on CloseButton click', () => {
+    const wrapper = mount(<Alert dismissible />)
+    const b = wrapper.find(CloseButton)
+    const o = wrapper.find(Collapsible)
+
+    b.simulate('click')
+
+    expect(o.node.props.isOpen).not.toBeTruthy()
   })
 })
 
@@ -80,6 +104,16 @@ describe('Action right', () => {
     expect(o.length).toBeTruthy()
     expect(wrapper.hasClass('has-actionRight')).toBeTruthy()
   })
+
+  test('onClick from actionRight Button can still fire', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Alert actionRight={<Button onClick={spy} />} />)
+    const o = wrapper.find(Button)
+
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('Content', () => {
@@ -91,6 +125,26 @@ describe('Content', () => {
     expect(o.length).toBeTruthy()
     expect(d.length).toBeTruthy()
     expect(d.node.props.children).toBe('Buddy')
+  })
+})
+
+describe('Badge', () => {
+  test('Does not render an Badge by default', () => {
+    const wrapper = shallow(<Alert />)
+    const o = wrapper.find(Badge)
+
+    expect(o.length).not.toBeTruthy()
+  })
+
+  test('Renders an alert Badge, if specified', () => {
+    const wrapper = shallow(<Alert badge='Badge' />)
+    const d = wrapper.find(`.${cx.badge}`)
+    const o = wrapper.find(Badge)
+
+    expect(d.length).toBeTruthy()
+    expect(o.length).toBeTruthy()
+    expect(o.node.props.children).toBe('Badge')
+    expect(wrapper.hasClass('has-badge')).toBeTruthy()
   })
 })
 
