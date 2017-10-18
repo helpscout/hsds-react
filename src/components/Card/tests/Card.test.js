@@ -134,6 +134,36 @@ describe('Link', () => {
     expect(b.length).toBe(1)
     expect(b.node.props.children).toBe('MegaMind')
   })
+
+  test('onBlur fires for a Link', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(
+      <Card href={link} onBlur={spy} />
+    )
+    wrapper.simulate('blur')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onClick fires for a Link', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(
+      <Card href={link} onClick={spy} />
+    )
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onFocus fires for a Link', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(
+      <Card href={link} onFocus={spy} />
+    )
+    wrapper.simulate('focus')
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('Click', () => {
