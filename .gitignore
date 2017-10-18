@@ -5,6 +5,7 @@ node_modules
 
 # testing
 .nyc_output
+.eslintcache
 coverage
 
 # build

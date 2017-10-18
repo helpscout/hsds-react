@@ -23,9 +23,23 @@
     position: relative;
     top: -1px;
     white-space: nowrap;
+    @-moz-document url-prefix() {
+      top: 0;
+    }
 
     @include parent(".has-value >") {
       opacity: 1;
     }
+  }
+}
+
+@mixin input-normalize-autofill-styles($background: white) {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $background inset;
+    background-clip: content-box;
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
