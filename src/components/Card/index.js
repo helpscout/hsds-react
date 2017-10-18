@@ -62,6 +62,7 @@ const Card = props => {
     <Link
       block
       className={componentClassName}
+      onClick={onClick}
       href={href}
       to={to}
       {...rest}
