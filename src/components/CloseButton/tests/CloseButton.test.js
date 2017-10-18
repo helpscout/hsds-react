@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import CloseButton from '..'
 
 describe('ClassName', () => {
@@ -40,7 +40,7 @@ describe('Accessibility', () => {
 describe('Events', () => {
   test('Can trigger onBlur callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<CloseButton onBlur={spy} />)
+    const wrapper = shallow(<CloseButton onBlur={spy} />)
 
     wrapper.simulate('blur')
 
@@ -49,7 +49,7 @@ describe('Events', () => {
 
   test('Can trigger onClick callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<CloseButton onClick={spy} />)
+    const wrapper = shallow(<CloseButton onClick={spy} />)
 
     wrapper.simulate('click')
 
@@ -58,10 +58,24 @@ describe('Events', () => {
 
   test('Can trigger onFocus callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<CloseButton onFocus={spy} />)
+    const wrapper = shallow(<CloseButton onFocus={spy} />)
 
     wrapper.simulate('focus')
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Styles', () => {
+  test('Applies "seamless" styles, if specified', () => {
+    const wrapper = shallow(<CloseButton seamless />)
+
+    expect(wrapper.hasClass('is-seamless')).toBeTruthy()
+  })
+
+  test('Applies size styles, if specified', () => {
+    const wrapper = shallow(<CloseButton size='sm' />)
+
+    expect(wrapper.hasClass('is-sm')).toBeTruthy()
   })
 })

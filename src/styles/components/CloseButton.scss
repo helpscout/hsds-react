@@ -1,3 +1,4 @@
+@import "pack/seed-dash/_index";
 @import "pack/seed-family/_index";
 @import "pack/seed-this/_index";
 
@@ -6,7 +7,22 @@
   @import "../resets/button";
 
   $block: this();
+  $padding: 2px 6px;
   $size: 32px;
+  $sizes: (
+    md: (
+      size: $size,
+      padding: $padding
+    ),
+    sm: (
+      size: 28px,
+      padding: 2px 3px
+    ),
+    xs: (
+      size: 24px,
+      padding: 2px 1px
+    )
+  );
 
   background-color: white;
   border: none;
@@ -14,6 +30,8 @@
   cursor: pointer;
   display: block;
   height: $size;
+  padding: $padding;
+  position: relative;
   width: $size;
 
   &__icon {
@@ -21,12 +39,56 @@
     position: relative;
     right: -1px; // Fix alignment
     transition: opacity 0.1s ease;
+    z-index: 1;
 
     @include parent("#{$block}:hover") {
       opacity: 0.8;
     }
     @include parent("#{$block}:focus") {
       opacity: 0.8;
+    }
+  }
+
+  &:before {
+    background-color: currentColor;
+    border-radius: 50%;
+    content: "";
+    display: none;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transform: translateZ(0);
+    transition: opacity 0.2s ease;
+    width: 100%;
+  }
+  &:hover:before {
+    opacity: 0.1;
+  }
+  &:active:before {
+    opacity: 0.3;
+  }
+  &:focus:before {
+    opacity: 0.1;
+  }
+
+  // Modifiers
+  &.is-seamless {
+    background-color: transparent;
+    color: currentColor;
+    &:before {
+      display: block;
+    }
+  }
+
+  // Sizes
+  @each $size, $values in $sizes {
+    &.is-#{$size} {
+      $sz: _get($values, size);
+      height: $sz;
+      padding: _get($values, padding);
+      width: $sz;
     }
   }
 }

@@ -1,0 +1,84 @@
+$seed-alert-namespace: "c-Alert";
+@import "pack/seed-alert/_index";
+
+.#{$seed-alert-namespace} {
+  @import "../resets/base";
+  padding: 8px 16px;
+  text-align: left;
+
+  // Modifiers
+  &.is-noMargin {
+    margin-bottom: 0;
+  }
+
+  &__content {
+    align-items: flex-start;
+    display: flex;
+
+    // Base elements
+    > * {
+      max-width: 100%;
+      min-width: 0;
+      + * {
+        margin-left: 12px;
+      }
+    }
+  }
+
+  &__badge {
+    padding: 4px 0;
+    + * {
+      margin-left: 8px;
+    }
+  }
+
+  // Adjust margin for icons
+  &__icon {
+    padding: 3px 0;
+    + * {
+      margin-left: 8px;
+    }
+  }
+
+  // .c-alert__block
+  // This element contains the content of the alert (usually text).
+  // This element uses a base line-height to allow for adaptability with the dynamic
+  // range of child content, and it ensures that both the child content aligns
+  // correctly with the block's sibling content.
+  //
+  // The block also has a min-height of 28px, which matches the height of it's
+  // potential sibling elements (icons, badges, buttons).
+  &__block {
+    line-height: 28px;
+    max-width: 100%;
+    min-height: 28px;
+    min-width: 0;
+
+    .c-Heading,
+    .c-Text,
+    .c-Link,
+    h1, h2, h3, h4, h5, h6,
+    p,
+    ol, ul {
+      color: inherit;
+    }
+
+    ul {
+      margin-bottom: 8px;
+
+      li:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    > p {
+      margin: 5px 0;
+    }
+  }
+
+  &__closeButton {
+    margin-left: auto;
+    margin-right: -4px;
+    padding-left: 8px;
+  }
+}
