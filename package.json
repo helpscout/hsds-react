@@ -23,7 +23,7 @@
     "lint:es": "eslint src/**/*.js --cache && echo \"eslint: No lint errors 🙌!\"",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
-    "release:beta": "np patch --no-yarn --tag=beta --any-branch",
+    "release:beta": "np --no-yarn --tag=beta --any-branch --no-publish",
     "release:patch": "np patch --no-yarn",
     "release:minor": "np minor --no-yarn",
     "release:major": "np major --no-yarn",
