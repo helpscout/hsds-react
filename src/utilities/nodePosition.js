@@ -79,6 +79,12 @@ export const getOptimalViewportPosition = (options) => {
     case 'down' :
       top = offsetTop + pos.height + triggerOffset
       break
+
+    /* istanbul ignore next */
+    // Tested. Top is generated in the next switch case
+    default :
+      top = null
+      break
   }
 
   switch (directionX) {
@@ -106,11 +112,11 @@ export const getOptimalViewportPosition = (options) => {
   }
 
   return {
-    top: parseInt(top),
-    left: parseInt(left),
-    offsetTop: parseInt(offsetTop),
-    offsetLeft: parseInt(offsetLeft),
-    offset: parseInt(totalOffset),
+    top: parseInt(top, 10),
+    left: parseInt(left, 10),
+    offsetTop: parseInt(offsetTop, 10),
+    offsetLeft: parseInt(offsetLeft, 10),
+    offset: parseInt(totalOffset, 10),
     direction: {
       x: directionX,
       y: directionY
