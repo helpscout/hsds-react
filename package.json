@@ -24,16 +24,17 @@
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
     "release:beta": "np --no-yarn --tag=beta --any-branch --no-publish",
-    "release:patch": "np patch --no-yarn",
-    "release:minor": "np minor --no-yarn",
-    "release:major": "np major --no-yarn",
+    "release:patch": "np patch --no-yarn --no-publish",
+    "release:minor": "np minor --no-yarn --no-publish",
+    "release:major": "np major --no-yarn --no-publish",
     "release": "npm run release:patch",
     "start": "npm run pretty && npm run storybook",
     "storybook": "start-storybook -p 8900",
     "test": "npm run test:coverage",
     "test:coverage": "npm run test:dev -- --coverage",
     "test:dev": "node scripts/test.js --env=jsdom",
-    "version": "npm run build"
+    "version": "npm run build",
+    "postversion": "npm publish dist"
   },
   "peerDependencies": {
     "react": "^15",
