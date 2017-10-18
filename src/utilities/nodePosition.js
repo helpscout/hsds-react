@@ -80,6 +80,8 @@ export const getOptimalViewportPosition = (options) => {
       top = offsetTop + pos.height + triggerOffset
       break
 
+    /* istanbul ignore next */
+    // Tested. Top is generated in the next switch case
     default :
       top = null
       break
