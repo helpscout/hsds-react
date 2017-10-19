@@ -1,13 +1,13 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
-import { Animate } from '../src/index.js'
+import { Animate, Card, Heading, Text } from '../src/index.js'
 import Anime from '../src/components/Animate/new'
 
 class AnimateOutExample extends Component {
   constructor () {
     super()
     this.state = {
-      show: true
+      show: false
     }
     this.toggleIn = this.toggleIn.bind(this)
   }
@@ -26,9 +26,14 @@ class AnimateOutExample extends Component {
       <div>
         <button onClick={toggleIn}>Toggle Animation</button>
         <br />
-        <Animate in={show} sequence='fadeIn down' duration={100}>
-          <div className='dont-override-this'>Then, Fade In and Down</div>
-        </Animate>
+        <div style={{width: 300}}>
+          <Anime in={show} sequence={['fade', 'scale']}>
+            <Card>
+              <Heading>Heading</Heading>
+              <Text>Text…</Text>
+            </Card>
+          </Anime>
+        </div>
       </div>
     )
   }
@@ -36,12 +41,7 @@ class AnimateOutExample extends Component {
 
 storiesOf('Animate', module)
   .add('new', () => (
-    <div>
-      Wait for it…
-      <Anime in>
-        <div className='dont-override-this'>Then, Fade In and Down</div>
-      </Anime>
-    </div>
+    <AnimateOutExample />
   ))
   .add('default', () => (
     <div>
