@@ -1,6 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import { Animate } from '../src/index.js'
+import Anime from '../src/components/Animate/new'
 
 class AnimateOutExample extends Component {
   constructor () {
@@ -34,6 +35,14 @@ class AnimateOutExample extends Component {
 }
 
 storiesOf('Animate', module)
+  .add('new', () => (
+    <div>
+      Wait for it…
+      <Anime in>
+        <div className='dont-override-this'>Then, Fade In and Down</div>
+      </Anime>
+    </div>
+  ))
   .add('default', () => (
     <div>
       Wait for it…
