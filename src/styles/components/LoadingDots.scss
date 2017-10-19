@@ -2,6 +2,7 @@
   @import "../configs/color";
   $gap: 3px;
   $size: 5px;
+  color: _color(grey, 800);
   display: flex;
   width: ($size * 3) + ($gap * 2);
 
@@ -18,7 +19,7 @@
   }
 
   &__dot {
-    background-color: _color(grey, 800);
+    background-color: currentColor;
     border-radius: 200%;
     display: block;
     margin-right: $gap;

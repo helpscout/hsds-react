@@ -54,6 +54,7 @@ const Card = props => {
     borderless && 'is-borderless',
     floating && 'is-floating',
     flex && 'is-flex',
+    href && 'is-link',
     seamless && 'is-seamless',
     className
   )

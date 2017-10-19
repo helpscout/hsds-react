@@ -12,6 +12,7 @@ import { propTypes as portalTypes } from '../Portal'
 
 export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
+  scrollFade: PropTypes.bool,
   scrollableRef: PropTypes.func,
   onScroll: PropTypes.func,
   trigger: PropTypes.element
@@ -19,6 +20,7 @@ export const propTypes = Object.assign({}, portalTypes, {
 
 const defaultProps = {
   closeIcon: true,
+  scrollFade: true,
   isOpen: false,
   onScroll: noop,
   scrollableRef: noop
@@ -26,6 +28,7 @@ const defaultProps = {
 
 const modalBaseZIndex = 1040
 const portalOptions = {
+  lockBodyOnOpen: true,
   id: 'Modal',
   timeout: 200,
   zIndex: modalBaseZIndex
@@ -39,12 +42,14 @@ const Modal = props => {
     closePortal,
     exact,
     isOpen,
+    lockBodyOnOpen,
     openPortal,
     onClose,
     onScroll,
     path,
     portalIsOpen,
     portalIsMounted,
+    scrollFade,
     scrollableRef,
     style,
     timeout,
@@ -70,10 +75,10 @@ const Modal = props => {
   }) : { zIndex }
 
   return (
-    <div className={componentClassName} style={modalStyle} {...rest}>
+    <div className={componentClassName} role='document' style={modalStyle} {...rest}>
       <div className='c-Modal__content'>
         <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
-          <Card seamless>
+          <Card seamless role='dialog'>
             {closeMarkup}
             <Scrollable
               className='c-Modal__scrollable'
@@ -88,7 +93,7 @@ const Modal = props => {
         </Animate>
       </div>
       <Animate sequence='fadeIn' in={portalIsOpen} wait={200}>
-        <Overlay onClick={closePortal} />
+        <Overlay onClick={closePortal} role='presentation' />
       </Animate>
     </div>
   )

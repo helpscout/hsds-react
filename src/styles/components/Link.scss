@@ -11,4 +11,7 @@ $seed-link-include-a-selector: false;
   &.is-block {
     display: block;
   }
+  &.is-word-wrap {
+    word-break: break-all;
+  }
 }

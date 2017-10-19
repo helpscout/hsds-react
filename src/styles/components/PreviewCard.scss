@@ -1,0 +1,18 @@
+@import "../configs/color";
+@import "pack/seed-this/_index";
+
+.c-PreviewCard {
+  @import "../resets/base";
+  $block: this();
+
+  &__title {
+    margin-bottom: 4px;
+  }
+
+  // Modifiers
+  &.is-link {
+    #{$block}__title {
+      color: _color(blue);
+    }
+  }
+}

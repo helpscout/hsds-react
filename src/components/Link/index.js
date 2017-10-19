@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { wordHasSpaces } from '../../utilities/strings'
 import RouteWrapper from '../RouteWrapper'
 
 export const propTypes = {
+  autoWordWrap: PropTypes.bool,
   block: PropTypes.bool,
   className: PropTypes.string,
   external: PropTypes.bool,
@@ -12,10 +14,12 @@ export const propTypes = {
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
-  to: PropTypes.string
+  to: PropTypes.string,
+  wordWrap: PropTypes.bool
 }
 
 const defaultProps = {
+  autoWordWrap: true,
   external: false,
   href: '#',
   onBlur: noop,
@@ -25,17 +29,22 @@ const defaultProps = {
 
 const Link = props => {
   const {
+    autoWordWrap,
     block,
     children,
     className,
     external,
     href,
+    wordWrap,
     ...rest
   } = props
+
+  const forceWordWrap = wordWrap || (autoWordWrap && !wordHasSpaces(children))
 
   const componentClassName = classNames(
     'c-Link',
     block && 'is-block',
+    forceWordWrap && 'is-word-wrap',
     className
   )
 

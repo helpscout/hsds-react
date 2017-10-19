@@ -4,6 +4,7 @@ import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
 import { standardSizeTypes } from '../../constants/propTypes'
+import { shapeTypes } from './propTypes'
 
 export const propTypes = {
   borderColor: PropTypes.string,
@@ -12,11 +13,13 @@ export const propTypes = {
   image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   name: PropTypes.string.isRequired,
   initials: PropTypes.string,
-  size: standardSizeTypes
+  size: standardSizeTypes,
+  shape: shapeTypes
 }
 
 const defaultProps = {
-  name: ''
+  name: '',
+  shape: 'circle'
 }
 
 const Avatar = props => {
@@ -28,12 +31,14 @@ const Avatar = props => {
     name,
     initials,
     size,
+    shape,
     ...rest
   } = props
 
   const componentClassName = classNames(
     'c-Avatar',
     image && 'has-image',
+    shape && `is-${shape}`,
     size && `is-${size}`,
     className
   )

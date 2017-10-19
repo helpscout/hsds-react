@@ -8,11 +8,13 @@ export const propTypes = {
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   faint: PropTypes.bool,
+  lineHeightReset: PropTypes.bool,
   muted: PropTypes.bool,
   size: sizeTypes,
   state: stateTypes,
   subtle: PropTypes.bool,
-  truncate: PropTypes.bool
+  truncate: PropTypes.bool,
+  wordWrap: PropTypes.bool
 }
 
 const defaultProps = {
@@ -26,11 +28,13 @@ const Text = props => {
     className,
     disableSelect,
     faint,
+    lineHeightReset,
     muted,
     size,
     state,
     subtle,
     truncate,
+    wordWrap,
     ...rest
   } = props
 
@@ -39,10 +43,12 @@ const Text = props => {
     disableSelect && 'is-disableSelect',
     faint && 'is-faint',
     muted && 'is-muted',
+    lineHeightReset && 'is-line-height-reset',
     size && `is-${size}`,
     state && `is-${state}`,
     subtle && 'is-subtle',
     truncate && 'is-truncate',
+    wordWrap && 'is-word-wrap',
     className
   )
 
