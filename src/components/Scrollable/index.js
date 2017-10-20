@@ -2,17 +2,20 @@ import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import ScrollLock from '../ScrollLock'
 
 export const propTypes = {
   className: PropTypes.string,
   fade: PropTypes.bool,
   onScroll: PropTypes.func,
   rounded: PropTypes.bool,
-  scrollableRef: PropTypes.func
+  scrollableRef: PropTypes.func,
+  isScrollLocked: PropTypes.bool
 }
 const defaultProps = {
   onScroll: noop,
-  scrollableRef: noop
+  scrollableRef: noop,
+  isScrollLocked: true
 }
 
 class Scrollable extends Component {
@@ -34,6 +37,7 @@ class Scrollable extends Component {
       onScroll,
       rounded,
       scrollableRef,
+      isScrollLocked,
       ...rest
     } = this.props
 
@@ -53,13 +57,15 @@ class Scrollable extends Component {
     return (
       <div className={componentClassName} {...rest}>
         {fadeMarkup}
-        <div
-          className='c-Scrollable__content'
-          onScroll={handleOnScroll}
-          ref={scrollableRef}
-        >
-          {children}
-        </div>
+        <ScrollLock isDisabled={!isScrollLocked}>
+          <div
+            className='c-Scrollable__content'
+            onScroll={handleOnScroll}
+            ref={scrollableRef}
+            >
+            {children}
+          </div>
+        </ScrollLock>
       </div>
     )
   }
