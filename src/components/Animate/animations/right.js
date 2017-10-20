@@ -1,10 +1,10 @@
 const amount = -24
 
 export default {
-  onEnter: {
+  onEntering: {
     translateX: [0, amount]
   },
-  onExit: {
+  onExiting: {
     translateX: [amount, 0]
   }
 }

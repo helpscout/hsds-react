@@ -1,8 +1,8 @@
 export default {
-  onEnter: {
+  onEntering: {
     scale: [0.9, 1]
   },
-  onExit: {
+  onExiting: {
     scale: [1, 0.9]
   }
 }

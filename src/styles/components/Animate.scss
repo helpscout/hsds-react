@@ -1,0 +1,14 @@
+.c-Animate {
+  @import "../resets/base";
+
+  // Modifers
+  &.is-block {
+    display: block;
+  }
+  &.is-inline {
+    display: inline;
+  }
+  &.is-inlineBlock {
+    display: inline-block;
+  }
+}
