@@ -1,6 +1,6 @@
 # Select
 
-An Select component is an enhanced version of the default HTML `<select>`.
+A Select component is an enhanced version of the default HTML `<select>`.
 
 
 ## Example
