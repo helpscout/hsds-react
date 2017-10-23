@@ -1,0 +1,8 @@
+$seed-list-namespace: "c-List";
+@import "pack/seed-list/_index";
+
+.#{$seed-list-namespace} {
+  @import "../resets/base";
+  margin-bottom: 0;
+  margin-top: 0;
+}
