@@ -20,6 +20,7 @@ export const propTypes = {
   helpText: PropTypes.string,
   hideLabel: PropTypes.bool,
   id: PropTypes.string,
+  inputRef: PropTypes.func,
   label: PropTypes.string,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
@@ -39,6 +40,7 @@ const defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+  inputRef: noop,
   type: 'checkbox',
   value: ''
 }
@@ -79,6 +81,7 @@ class Choice extends Component {
       helpText,
       hideLabel,
       id,
+      inputRef,
       label,
       onBlur,
       onFocus,
@@ -137,6 +140,7 @@ class Choice extends Component {
                   disabled={disabled}
                   helpText={helpText}
                   id={choiceID}
+                  inputRef={inputRef}
                   name={name}
                   onBlur={onBlur}
                   onChange={handleOnChange}
