@@ -197,3 +197,20 @@ describe('Only, without modifier keys', () => {
     wrapper.unmount()
   })
 })
+
+describe('Scope', () => {
+  test('Sets document as scope by default', () => {
+    const wrapper = mount(<KeypressListener />)
+    const o = wrapper.instance()
+
+    expect(o.scope === document).toBeTruthy()
+  })
+
+  test('Can set a specific node scope', () => {
+    const div = document.createElement('div')
+    const wrapper = mount(<KeypressListener scope={div} />)
+    const o = wrapper.instance()
+
+    expect(o.scope === div).toBeTruthy()
+  })
+})
