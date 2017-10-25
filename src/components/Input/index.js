@@ -17,6 +17,7 @@ export const propTypes = {
   hintText: PropTypes.string,
   helpText: PropTypes.string,
   id: PropTypes.string,
+  inputRef: PropTypes.func,
   label: PropTypes.string,
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   name: PropTypes.string,
@@ -38,6 +39,7 @@ export const propTypes = {
 const defaultProps = {
   autoFocus: false,
   disabled: false,
+  inputRef: noop,
   multiline: null,
   onBlur: noop,
   onChange: noop,

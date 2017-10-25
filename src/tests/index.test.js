@@ -20,6 +20,8 @@ import {
   FormGroup,
   Grid,
   Heading,
+  HelpText,
+  Hr,
   Icon,
   Image,
   InfiniteScroller,
@@ -43,6 +45,7 @@ import {
   Scrollable,
   SidebarCollapsibleCard,
   Sortable,
+  Switch,
   Text,
   VisuallyHidden
 } from '..'
@@ -69,6 +72,8 @@ const components = [
   FormGroup,
   Grid,
   Heading,
+  HelpText,
+  Hr,
   Icon,
   Image,
   InfiniteScroller,
@@ -92,6 +97,7 @@ const components = [
   Select,
   SidebarCollapsibleCard,
   Sortable,
+  Switch,
   Text,
   VisuallyHidden
 ]

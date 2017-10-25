@@ -1,0 +1,18 @@
+$seed-hr-namespace: "c-Hr";
+@import "pack/seed-hr/_index";
+
+.#{$seed-hr-namespace} {
+  $sizes: (
+    md: 20px,
+    sm: 12px,
+    xs: 8px
+  );
+
+  // Modifiers
+  @each $size, $margin in $sizes {
+    &.is-#{$size} {
+      margin-bottom: $margin;
+      margin-top: $margin;
+    }
+  }
+}
