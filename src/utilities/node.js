@@ -146,3 +146,7 @@ export const isNodeVisible = (options) => {
 
   return parseInt(top, 10) <= parseInt(viewportBottom, 10) && parseInt(bottom, 10) >= parseInt(viewportTop, 10)
 }
+
+export const getClosestDocument = (node) => {
+  return node && isNodeElement(node) ? node.ownerDocument : document
+}

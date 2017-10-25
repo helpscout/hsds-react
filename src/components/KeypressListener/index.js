@@ -1,10 +1,12 @@
-// See:
+// Modified version of:
 // https://github.com/Shopify/polaris/blob/master/src/components/KeypressListener/KeypressListener.tsx
 
-import { Component } from 'react'
+import React, { PureComponent as Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { noop } from '../../utilities/other'
 import { addEventListener, removeEventListener } from '@shopify/javascript-utilities/events'
+import { getClosestDocument } from '../../utilities/node'
+import { noop } from '../../utilities/other'
 
 export const propTypes = {
   keyCode: PropTypes.number,
@@ -25,16 +27,27 @@ class KeypressListener extends Component {
   constructor () {
     super()
     this.handleKeyEvent = this.handleKeyEvent.bind(this)
+    this.node = null
+    this.scope = null
   }
 
   componentDidMount () {
     const { scope } = this.props
-    addEventListener(scope, this.props.type, this.handleKeyEvent)
+    this.node = ReactDOM.findDOMNode(this)
+    this.scope = scope === document ? getClosestDocument(this.node) : scope
+
+    addEventListener(this.scope, this.props.type, this.handleKeyEvent)
   }
 
   componentWillUnmount () {
-    const { scope } = this.props
-    removeEventListener(scope, this.props.type, this.handleKeyEvent)
+    removeEventListener(this.scope, this.props.type, this.handleKeyEvent)
+
+    this.node = null
+    this.scope = null
+  }
+
+  shouldComponentUpdate () {
+    return false
   }
 
   handleKeyEvent (event) {
@@ -74,7 +87,7 @@ class KeypressListener extends Component {
   }
 
   render () {
-    return null
+    return (<div />)
   }
 }
 
