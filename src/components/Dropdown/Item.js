@@ -8,6 +8,7 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
+  disabled: PropTypes.bool,
   isHover: PropTypes.bool,
   isFocused: PropTypes.bool,
   itemIndex: PropTypes.number,
@@ -18,17 +19,25 @@ export const propTypes = {
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onMenuClose: PropTypes.func,
+  onParentMenuClose: PropTypes.func,
   value: PropTypes.node
 }
 
 const defaultProps = {
+  disabled: false,
   onBlur: noop,
   onClick: noop,
   onFocus: noop,
   onMouseEnter: noop,
   onMouseLeave: noop,
   onMenuClose: noop,
+  onParentMenuClose: noop,
   onSelect: noop
+}
+
+const childContextTypes = {
+  parentMenu: PropTypes.element,
+  parentMenuClose: PropTypes.func
 }
 
 class Item extends Component {
@@ -49,10 +58,23 @@ class Item extends Component {
     this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
     this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
     this.node = null
+    this._isMounted = false
   }
 
   componentWillMount () {
     this.menu = this.getMenuFromChildren()
+  }
+
+  componentDidMount () {
+    this._isMounted = true
+  }
+
+  getChildContext () {
+    const { onParentMenuClose } = this.props
+    return {
+      parentMenu: this.menu,
+      parentMenuClose: onParentMenuClose
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -67,6 +89,10 @@ class Item extends Component {
         isHover: nextProps.isHover
       })
     }
+  }
+
+  componentWillUnmount () {
+    this._isMounted = false
   }
 
   handleOnBlur (event, reactEvent) {
@@ -90,8 +116,11 @@ class Item extends Component {
   }
 
   handleOnClick (event, reactEvent) {
-    event.stopPropagation()
-    const { onClick, onSelect, value } = this.props
+    const { disabled, onClick, onSelect, value } = this.props
+
+    if (event) event.stopPropagation()
+    if (disabled) return
+
     /* istanbul ignore else */
     if (!this.menu) {
       onClick(event, reactEvent, this)
@@ -135,7 +164,7 @@ class Item extends Component {
   }
 
   getMenu (child) {
-    if (!React.isValidElement(child)) return false
+    if (!React.isValidElement(child)) return null
     return (child.type && (child.type === Menu || child.type === MenuComponent))
   }
 
@@ -144,7 +173,7 @@ class Item extends Component {
     if (Array.isArray(children)) {
       return children.find(child => this.getMenu(child))
     } else {
-      return this.getMenu(children) ? children : false
+      return this.getMenu(children) ? children : null
     }
   }
 
@@ -161,6 +190,7 @@ class Item extends Component {
     const {
       children,
       className,
+      disabled,
       itemRef,
       isFocused: propIsFocused,
       isHover: propIsHover,
@@ -171,6 +201,7 @@ class Item extends Component {
       onFocus,
       onMouseEnter,
       onMenuClose,
+      onParentMenuClose,
       ...rest
     } = this.props
     const { isOpen, isHover, isFocused } = this.state
@@ -185,6 +216,7 @@ class Item extends Component {
 
     const componentClassName = classNames(
       'c-DropdownItem',
+      disabled && 'is-disabled',
       isHover && 'is-hover',
       isFocused && 'is-focused',
       className
@@ -192,15 +224,14 @@ class Item extends Component {
 
     const itemMarkup = this.removeMenuFromChildren()
 
-    const menuMarkup = this.menu && isOpen ? (
+    const menuMarkup = !disabled && this.menu && isOpen ? (
       <div className='c-DropdownItem__menu'>
         {React.cloneElement(this.menu, {
           isOpen,
           selectedIndex: this.menu.props.selectedIndex !== undefined ? this.menu.props.selectedIndex : 0,
           onClose: handleOnMenuClose,
           trigger: this.node,
-          direction: this.menu.props.direction ? this.menu.props.direction : 'right',
-          parentMenu: true
+          direction: this.menu.props.direction ? this.menu.props.direction : 'right'
         })}
       </div>
     ) : null
@@ -212,7 +243,7 @@ class Item extends Component {
     ) : null
 
     return (
-      <li
+      <div
         className={componentClassName}
         role='presentation'
         {...rest}
@@ -227,8 +258,10 @@ class Item extends Component {
           onKeyDown={handleOnEnter}
           tabIndex={-1}
           ref={node => { this.node = node }}
+          role='menuitem'
           aria-haspopup={!!this.menu}
           aria-expanded={!!(this.menu && isOpen)}
+          aria-disabled={disabled}
         >
           <Flexy>
             <Flexy.Block className='c-DropdownItem__content'>
@@ -238,12 +271,13 @@ class Item extends Component {
           </Flexy>
         </div>
         {menuMarkup}
-      </li>
+      </div>
     )
   }
 }
 
 Item.propTypes = propTypes
 Item.defaultProps = defaultProps
+Item.childContextTypes = childContextTypes
 
 export default Item

@@ -24,5 +24,19 @@ A Menu component contains the series of [Item](../Item) components used within a
 | closeMenuOnClick | boolean | Closes component when item is clicked. Default is `true`. |
 | enableCycling | boolean | Cycles item selection in a when up/down arrows are pressed. Default is `false.` |
 | isOpen | boolean | Determines if component is open/rendered. |
-| parentMenu | boolean | Determines if component is a parent menu or sub-menu. |
+| onSelect | function | Callback when [Item](./Item.md) is selected. |
 | selectedIndex | number | Pre-select an item based on it's index number. |
+
+
+### Render hooks
+
+This component has special callback props tied into it's mounting cycle.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| onBeforeOpen | function | Fires when the component is mounted, but not rendered. |
+| onOpen | function | Fires as soon as the component has rendered. |
+| onBeforeClose | function | Fires when the component is about to unmount. |
+| onClose | function | Fires after the component is unmounted. |
+
+See [Portal's documentation](../Portal#render-hooks) for more details.

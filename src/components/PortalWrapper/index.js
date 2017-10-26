@@ -81,6 +81,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     unlockBody () {
       const { lockBodyOnOpen } = this.state
+      /* istanbul ignore else */
       if (lockBodyOnOpen) {
         document.body.style.overflow = this.bodyOverflowStyle
       }
