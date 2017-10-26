@@ -184,19 +184,6 @@ describe('Sub menu', () => {
 
     expect(o.props().selectedIndex).toBe(3)
   })
-
-  test('Sets parentMenu prop on sub-menu', () => {
-    const wrapper = mount(
-      <Item isOpen>
-        Nested
-        <Menu selectedIndex={3} parentMenu />
-      </Item>
-    )
-
-    const o = wrapper.find(Menu)
-
-    expect(o.props().parentMenu).toBeTruthy()
-  })
 })
 
 describe('Events', () => {
@@ -307,5 +294,42 @@ describe('Events', () => {
     o.simulate('keydown', { keyCode: 13 })
 
     expect(spy).toHaveBeenCalledWith('Brick')
+  })
+})
+
+describe('Disabled', () => {
+  test('Is not disabled by default', () => {
+    const wrapper = shallow(<Item />)
+
+    expect(wrapper.instance().props.disabled).not.toBeTruthy()
+    expect(wrapper.hasClass('is-disabled')).not.toBeTruthy()
+  })
+
+  test('Can be set to disabled', () => {
+    const wrapper = shallow(<Item disabled />)
+
+    expect(wrapper.instance().props.disabled).toBeTruthy()
+    expect(wrapper.hasClass('is-disabled')).toBeTruthy()
+  })
+
+  test('onClick callback cannot be fired, if disabled', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Item disabled onClick={spy} />)
+    const o = wrapper.find('.c-DropdownItem__link')
+
+    o.simulate('click')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not render sub-menu if open, and disabled', () => {
+    const wrapper = mount(
+      <Item disabled>
+        <MenuComponent />
+      </Item>
+    )
+    const o = wrapper.find('c-DropdownItem__menu')
+
+    expect(o.length).not.toBeTruthy()
   })
 })

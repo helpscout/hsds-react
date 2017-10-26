@@ -24,6 +24,7 @@ An Item component is a list-item wrapper for individual actions or links that ap
 | onMouseEnter | function | Callback when mouse enters the component. |
 | onMouseLeave | function | Callback when mouse leaves the component. |
 | onMenuClose | function | Callback when nested Menu is closed. |
+| onParentMenuClose | function | Callback from parent [Menu](./Menu.md) to recursively close parent Menus. |
 | onSelect | function | Callback when component is selected. |
 | className | string | Custom class names to be added to the component. |
 | isFocused | boolean | Determines the focus state/style of the component. |

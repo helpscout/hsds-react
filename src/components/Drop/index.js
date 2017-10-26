@@ -73,6 +73,8 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
             <ComposedComponent
               closePortal={closePortal}
               isOpen={portalIsOpen}
+              onClose={onClose}
+              onOpen={onOpen}
               {...rest}
             />
           </Positioner>
