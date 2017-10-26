@@ -5,6 +5,8 @@
   background-color: transparent;
   border: none;
   display: flex;
+  padding-bottom: 1px;
+  padding-top: 1px;
   padding-left: $padding;
   padding-right: $padding;
   position: relative;
@@ -21,11 +23,8 @@
     padding-left: 4px;
     padding-right: 4px;
     position: relative;
-    top: -1px;
+    top: 0;
     white-space: nowrap;
-    @-moz-document url-prefix() {
-      top: 0;
-    }
 
     @include parent(".has-value >") {
       opacity: 1;
