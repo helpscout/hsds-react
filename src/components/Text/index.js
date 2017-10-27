@@ -10,6 +10,7 @@ export const propTypes = {
   faint: PropTypes.bool,
   lineHeightReset: PropTypes.bool,
   muted: PropTypes.bool,
+  selector: PropTypes.oneOf(['span', 'pre', 'samp']),
   size: sizeTypes,
   state: stateTypes,
   subtle: PropTypes.bool,
@@ -19,6 +20,7 @@ export const propTypes = {
 
 const defaultProps = {
   disableSelect: false,
+  selector: 'span',
   truncate: false
 }
 
@@ -30,6 +32,7 @@ const Text = props => {
     faint,
     lineHeightReset,
     muted,
+    selector,
     size,
     state,
     subtle,
@@ -44,6 +47,7 @@ const Text = props => {
     faint && 'is-faint',
     muted && 'is-muted',
     lineHeightReset && 'is-line-height-reset',
+    selector && `is-${selector}`,
     size && `is-${size}`,
     state && `is-${state}`,
     subtle && 'is-subtle',
@@ -52,10 +56,13 @@ const Text = props => {
     className
   )
 
-  return (
-    <span className={componentClassName} {...rest}>
-      {children}
-    </span>
+  return React.createElement(
+    selector,
+    {
+      ...rest,
+      className: componentClassName
+    },
+    children
   )
 }
 
