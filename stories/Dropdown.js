@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Dropdown, Flexy, Link } from '../src/index.js'
+import { Dropdown, Flexy, Hr, Link } from '../src/index.js'
 
 const logAction = (i) => () => {
   console.log(`Action ${i}`)
@@ -64,7 +64,7 @@ stories.add('Default', () => (
         </Dropdown>
       </Flexy.Item>
       <Flexy.Item>
-        <Dropdown direction='left up'>
+        <Dropdown>
           <Dropdown.Trigger>
             Another
           </Dropdown.Trigger>
@@ -124,5 +124,53 @@ stories.add('Trigger', () => (
         {itemsMarkup(10)}
       </Dropdown.Menu>
     </Dropdown>
+  </div>
+))
+
+stories.add('directions', () => (
+  <div style={{padding: 100}}>
+    <Dropdown direction='down left'>
+      <Dropdown.Trigger>
+        Down (Left)
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        {itemsMarkup(3)}
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Hr />
+
+    <Dropdown direction='down right'>
+      <Dropdown.Trigger>
+        Down (Right)
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        {itemsMarkup(3)}
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Hr />
+
+    <Dropdown direction='up left'>
+      <Dropdown.Trigger>
+        Up (Left)
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        {itemsMarkup(3)}
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Hr />
+
+    <Dropdown direction='up right'>
+      <Dropdown.Trigger>
+        Up (Right)
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        {itemsMarkup(3)}
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Hr />
   </div>
 ))

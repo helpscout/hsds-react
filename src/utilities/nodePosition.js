@@ -16,7 +16,7 @@ export const getDirectionY = (direction) => {
   // Default to down
   return direction.match(/up/) ? 'up'
     : direction.match(/down/) ? 'down'
-    : 'down'
+    : ''
 }
 
 export const getDirections = (direction) => {
@@ -104,6 +104,96 @@ export const getOptimalViewportPosition = (options) => {
       } else {
         top = offsetTop - nodePos.height + pos.height
       }
+      break
+
+    default :
+      left = offsetLeft
+      break
+  }
+
+  return {
+    top: parseInt(top, 10),
+    left: parseInt(left, 10),
+    offsetTop: parseInt(offsetTop, 10),
+    offsetLeft: parseInt(offsetLeft, 10),
+    offset: parseInt(totalOffset, 10),
+    direction: {
+      x: directionX,
+      y: directionY
+    }
+  }
+}
+
+// This function is temporary. It is a "dumbed down" version of
+// getOptimalViewportPosition. This function was created to serve the use-case
+// of Dropdown until getOptimalViewportPosition can support 12/16 point
+// positioning.
+export const getViewportPosition = (options) => {
+  if (!options && typeof options !== 'object') return false
+
+  const { triggerNode, contentNode, offset, direction } = options
+  if (!isNodeElement(triggerNode) || !isNodeElement(contentNode)) return false
+
+  const pos = triggerNode.getBoundingClientRect()
+  const nodePos = contentNode.getBoundingClientRect()
+  const height = nodePos.height
+  const width = nodePos.width
+  const boundingOffset = 8
+  // The following vars are tested. However, they can only be tested for pos.top/pos.left vs other
+  // ternary outcomes. This is due to a limitation of JSDOM not supporting offsetTop/offsetLeft.
+  // Which is why the ternary begins by checking if the environment is node based.
+  /* istanbul ignore next */
+  const offsetTop = isNodeEnv() ? pos.top : pos.top > triggerNode.offsetTop ? pos.top : triggerNode.offsetTop
+  /* istanbul ignore next */
+  const offsetLeft = isNodeEnv() ? pos.left : pos.left > triggerNode.offsetLeft ? pos.left : triggerNode.offsetLeft
+  const viewportHeight = getViewportHeight()
+  const posSize = offsetTop + pos.height
+  /* istanbul ignore next */
+  // Tested, but istanbul isn't picking it up
+  const triggerOffset = typeof offset !== 'undefined' ? offset : 0
+  const totalOffset = triggerOffset + boundingOffset
+  let directionX = direction && direction.x ? direction.x : ''
+  let directionY = direction && direction.y ? direction.y : ''
+
+  let top
+  let left
+
+  const totalOffsetHeightDown = posSize + height + totalOffset
+  const totalOffsetHeightUp = posSize - height - totalOffset
+
+  directionY = directionY === 'down' && totalOffsetHeightDown > viewportHeight && totalOffsetHeightUp > 0 ? 'up'
+    : directionY === 'up' && totalOffsetHeightUp < 0 ? 'down'
+    : directionY
+
+  /* istanbul ignore next */
+  // Ignoring since this method will be removed once getOptimalViewportPosition
+  // has been enhanced.
+  switch (directionY) {
+    case 'up' :
+      top = offsetTop - triggerOffset - height
+      break
+
+    case 'down' :
+      top = offsetTop + pos.height + triggerOffset
+      break
+
+    default :
+      top = offsetTop
+      break
+  }
+
+  /* istanbul ignore next */
+  // Ignoring since this method will be removed once getOptimalViewportPosition
+  // has been enhanced.
+  switch (directionX) {
+    case 'left' :
+      left = directionY ? offsetLeft
+        : offsetLeft - triggerOffset - nodePos.width
+      break
+
+    case 'right' :
+      left = directionY ? offsetLeft - width + pos.width
+        : offsetLeft + pos.width + triggerOffset
       break
 
     default :

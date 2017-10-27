@@ -12,7 +12,10 @@ import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { incrementFocusIndex } from '../../utilities/focus'
 import { noop } from '../../utilities/other'
-import { applyStylesToNode } from '../../utilities/node'
+import {
+  applyStylesToNode,
+  isNodeScrollable
+} from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
 
 export const propTypes = {
@@ -76,6 +79,7 @@ class Menu extends Component {
     this.node = null
     this.wrapperNode = null
     this.contentNode = null
+    this.scrollableNode = null
     this.listNode = null
     // https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
     this._isMounted = false
@@ -214,7 +218,13 @@ class Menu extends Component {
     if (focusItem) {
       const node = focusItem.node
       node.focus()
-      node.scrollIntoView()
+      /* istanbul ignore next */
+      // Cannot be tested in JSDOM, due to lack of scrollHeight DOM API
+      if (isNodeScrollable(this.scrollableNode)) {
+        /* istanbul ignore next */
+        // Scrolling does not exist in JSDOM
+        node.scrollIntoView()
+      }
     }
   }
 
@@ -362,7 +372,9 @@ class Menu extends Component {
                 ref={node => { this.contentNode = node }}
                 style={{height: this.height}}
               >
-                <Scrollable>
+                <Scrollable
+                  scrollableRef={node => { this.scrollableNode = node }}
+                >
                   <div
                     className='c-DropdownMenu__list'
                     ref={node => { this.listNode = node }}

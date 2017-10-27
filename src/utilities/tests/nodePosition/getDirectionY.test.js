@@ -9,7 +9,7 @@ test('Returns false for invalid arguments', () => {
 })
 
 test('Returns blank if no matches', () => {
-  expect(getDirectionY('nopeeeeeee')).toBe('down')
+  expect(getDirectionY('nopeeeeeee')).toBe('')
 })
 
 test('Returns down if matches', () => {
