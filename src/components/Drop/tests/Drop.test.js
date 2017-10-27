@@ -1,13 +1,25 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Drop from '..'
+import classNames from '../../../utilities/classNames'
 
 const ContentComponent = props => {
+  const { className, style } = props
+  const componentClassName = classNames(
+    'content',
+    className
+  )
   const handleClick = () => {
     console.log('wee')
   }
   return (
-    <div className='content' onClick={handleClick}>Content</div>
+    <div
+      className={componentClassName}
+      onClick={handleClick}
+      style={style}
+    >
+      Content
+    </div>
   )
 }
 const trigger = (
@@ -25,6 +37,26 @@ test('Can create a component as a HOC', () => {
 
   expect(o).toBeTruthy()
   expect(o.innerHTML).toContain('Content')
+
+  wrapper.unmount()
+})
+
+test('Can pass className to composed component', () => {
+  const TestComponent = Drop()(ContentComponent)
+  const wrapper = mount(<TestComponent className='ron' isOpen />)
+  const o = document.querySelector('.content')
+
+  expect(o.classList.contains('ron')).toBeTruthy()
+
+  wrapper.unmount()
+})
+
+test('Can styles to composed component', () => {
+  const TestComponent = Drop()(ContentComponent)
+  const wrapper = mount(<TestComponent style={{background: 'red'}} isOpen />)
+  const o = document.querySelector('.content')
+
+  expect(o.style.background).toBe('red')
 
   wrapper.unmount()
 })
