@@ -148,7 +148,7 @@ export const isNodeVisible = (options) => {
 }
 
 export const getScrollParent = (node) => {
-  /* istanbul ignore next */
+  /* istanbul ignore else */
   if (!isNodeElement(node)) {
     return null
   }

@@ -218,9 +218,11 @@ class Menu extends Component {
     if (focusItem) {
       const node = focusItem.node
       node.focus()
-      /* instabul ignore next */
+      /* istanbul ignore next */
       // Cannot be tested in JSDOM, due to lack of scrollHeight DOM API
       if (isNodeScrollable(this.scrollableNode)) {
+        /* istanbul ignore next */
+        // Scrolling does not exist in JSDOM
         node.scrollIntoView()
       }
     }
