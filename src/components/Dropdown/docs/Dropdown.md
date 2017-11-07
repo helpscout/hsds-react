@@ -5,7 +5,7 @@ A Dropdown component is provides the UI to contain a series of actions, presente
 
 ## Example
 
-```html
+```jsx
 <Dropdown>
   <Dropdown.Trigger>Action</Dropdown.Trigger>
   <Dropdown.Menu>

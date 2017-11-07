@@ -3,8 +3,7 @@ import { mount, shallow } from 'enzyme'
 import Action from '../Action'
 import ChatBlock from '../ChatBlock'
 import Bubble from '../Bubble'
-import Timestamp from '../Timestamp'
-import { Animate, Flexy } from '../../'
+import { Animate, Flexy, Timestamp } from '../../'
 
 const cx = 'c-MessageChatBlock'
 
@@ -23,19 +22,12 @@ describe('ClassNames', () => {
 })
 
 describe('Timestamp', () => {
-  test('Sets a showTimestamp state', () => {
-    const wrapper = shallow(<ChatBlock />)
-
-    expect(wrapper.state().showTimestamp).toBe(false)
-  })
-
   test('Renders timestamp on mouseenter', () => {
     const wrapper = mount(<ChatBlock timestamp='time' to />)
     const o = wrapper.find(Animate)
 
     wrapper.simulate('mouseenter')
 
-    expect(wrapper.state().showTimestamp).toBe(true)
     expect(wrapper.find(Timestamp).length).toBeTruthy()
     expect(o.props().in).toBeTruthy()
   })
@@ -46,24 +38,22 @@ describe('Timestamp', () => {
 
     wrapper.simulate('mouseenter')
 
-    expect(wrapper.state().showTimestamp).toBe(true)
     expect(wrapper.find(Timestamp).length).toBeTruthy()
 
     wrapper.simulate('mouseleave')
 
-    expect(wrapper.state().showTimestamp).toBe(false)
     expect(o.props().in).toBeFalsy()
   })
 
   test('Renders as first child, if to props is set', () => {
-    const wrapper = shallow(<ChatBlock timestamp='time' to />)
+    const wrapper = mount(<ChatBlock timestamp='time' to />)
     const f = wrapper.find(Flexy)
 
     expect(f.children().nodes[0].props.className).toContain(`${cx}__timestamp`)
   })
 
   test('Renders as last child, if to props is set', () => {
-    const wrapper = shallow(<ChatBlock timestamp='time' from />)
+    const wrapper = mount(<ChatBlock timestamp='time' from />)
     const f = wrapper.find(Flexy)
 
     expect(f.children().nodes[1].props.className).toContain(`${cx}__timestamp`)
@@ -72,15 +62,15 @@ describe('Timestamp', () => {
 
 describe('Content', () => {
   test('Can render children content', () => {
-    const wrapper = shallow(<ChatBlock>Mugatu</ChatBlock>)
+    const wrapper = mount(<ChatBlock>Mugatu</ChatBlock>)
     const o = wrapper.find(`.${cx}__block`)
 
     expect(o.length).toBeTruthy()
-    expect(o.node.props.children).toContain('Mugatu')
+    expect(o.node.innerHTML).toContain('Mugatu')
   })
 
   test('Enhances Action child component', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatBlock
         to
         from
@@ -104,7 +94,7 @@ describe('Content', () => {
   })
 
   test('Enhances Bubble child component', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatBlock
         to
         from
@@ -130,28 +120,28 @@ describe('Content', () => {
 
 describe('To/From', () => {
   test('Applies "from" styles, if defined', () => {
-    const wrapper = shallow(<ChatBlock from />)
+    const wrapper = mount(<ChatBlock from />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
-    const wrapper = shallow(<ChatBlock to />)
+    const wrapper = mount(<ChatBlock to />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('is-to')).toBeTruthy()
   })
 
   test('Aligns to left if from', () => {
-    const wrapper = shallow(<ChatBlock from />)
+    const wrapper = mount(<ChatBlock from />)
     const o = wrapper.find(Flexy)
 
     expect(o.props().just).toBe('left')
   })
 
   test('Aligns to right if to', () => {
-    const wrapper = shallow(<ChatBlock to />)
+    const wrapper = mount(<ChatBlock to />)
     const o = wrapper.find(Flexy)
 
     expect(o.props().just).toBe('right')

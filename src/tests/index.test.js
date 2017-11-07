@@ -13,6 +13,7 @@ import {
   CloseButton,
   Code,
   Collapsible,
+  DetailList,
   Dropdown,
   Emoji,
   EmojiPicker,
@@ -23,6 +24,7 @@ import {
   Heading,
   HelpText,
   Hr,
+  HoverWrapper,
   Icon,
   Image,
   InfiniteScroller,
@@ -49,6 +51,8 @@ import {
   Sortable,
   Switch,
   Text,
+  Timeline,
+  Timestamp,
   VisuallyHidden
 } from '..'
 
@@ -67,6 +71,7 @@ const components = [
   CloseButton,
   Code,
   Collapsible,
+  DetailList,
   Dropdown,
   Emoji,
   EmojiPicker,
@@ -77,6 +82,7 @@ const components = [
   Heading,
   HelpText,
   Hr,
+  HoverWrapper,
   Icon,
   Image,
   InfiniteScroller,
@@ -103,6 +109,8 @@ const components = [
   Sortable,
   Switch,
   Text,
+  Timeline,
+  Timestamp,
   VisuallyHidden
 ]
 

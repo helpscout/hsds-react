@@ -5,7 +5,7 @@ A Divider component provides a visual horizontal rule that separates [Items](./I
 
 ## Example
 
-```html
+```jsx
 <Dropdown.Menu>
   ...
   <Dropdown.Divider />

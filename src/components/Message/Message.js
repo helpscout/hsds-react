@@ -8,7 +8,6 @@ import Chat from './Chat'
 import Content from './Content'
 import Media from './Media'
 import Question from './Question'
-import Timestamp from './Timestamp'
 import { messageTypes } from './propTypes'
 
 export const propTypes = Object.assign({}, messageTypes, {
@@ -90,6 +89,5 @@ Message.Chat = Chat
 Message.Content = Content
 Message.Media = Media
 Message.Question = Question
-Message.Timestamp = Timestamp
 
 export default Message

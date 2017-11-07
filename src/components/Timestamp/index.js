@@ -25,7 +25,7 @@ const Timestamp = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-MessageTimestamp',
+    'c-Timestamp',
     className
   )
 
