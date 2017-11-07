@@ -1,4 +1,3 @@
-import React from 'react'
 import DetailList from '..'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
