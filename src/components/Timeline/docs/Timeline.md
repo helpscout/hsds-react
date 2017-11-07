@@ -9,10 +9,10 @@ A Timeline component contains [Timeline.Item](./Item.md) child components, and p
 <Timeline>
   <Timeline.Item>
     ...
-  </Timeline.Item />
+  </Timeline.Item>
   <Timeline.Item>
     ...
-  </Timeline.Item />
+  </Timeline.Item>
 </Timeline>
 ```
 

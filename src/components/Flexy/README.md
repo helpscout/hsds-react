@@ -7,7 +7,7 @@ For more information on the Flexy design patter, check out [`seed-flexy`](http:/
 
 ## Example
 
-```html
+```jsx
 <Flexy>
   <Flexy.Item>
     <Icon name='chat' />

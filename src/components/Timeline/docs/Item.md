@@ -9,7 +9,7 @@ A Timeline.Item component renders individual items within a [Timeline](./Timelin
 <Timeline>
   <Timeline.Item>
     60% of the time, it works everytime.
-  </Timeline.Item />
+  </Timeline.Item>
 </Timeline>
 ```
 
