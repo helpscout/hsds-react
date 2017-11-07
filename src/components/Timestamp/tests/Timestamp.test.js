@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Timestamp from '../Timestamp'
+import Timestamp from '..'
 import { Icon, Text } from '../../'
 
-const cx = 'c-MessageTimestamp'
+const cx = 'c-Timestamp'
 
 describe('ClassNames', () => {
   test('Has default className', () => {

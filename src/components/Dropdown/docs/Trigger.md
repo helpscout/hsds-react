@@ -5,7 +5,7 @@ A Trigger component is an enhanced [Button](../Button) component used specifical
 
 ## Example
 
-```html
+```jsx
 <Dropdown>
   <Dropdown.Trigger>Choose…</Dropdown.Trigger>
 </Dropdown>
@@ -16,7 +16,7 @@ A Trigger component is an enhanced [Button](../Button) component used specifical
 
 By default, if a text-node is passed into Trigger, it will render the text-node into an enhanced [Button](../../Button) wrapper. However, you can provide you own component into Trigger as well.
 
-```html
+```jsx
 <Dropdown>
   <Dropdown.Trigger>
     <a>Link Trigger</a>

@@ -5,7 +5,7 @@ A Modal component presents content within a container on top of the application'
 
 ## Example
 
-```html
+```jsx
 <Modal trigger={<a>Click</a>}>
   Content
 </Modal>
@@ -14,7 +14,7 @@ A Modal component presents content within a container on top of the application'
 
 ### React Router Modal
 
-```html
+```jsx
 <Modal path='/news-team/channel4' trigger={<a>Click</a>}>
   Content
 </Modal>

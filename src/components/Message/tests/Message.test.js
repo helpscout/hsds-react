@@ -7,7 +7,6 @@ import Chat from '../Chat'
 import Content from '../Content'
 import Media from '../Media'
 import Question from '../Question'
-import Timestamp from '../Timestamp'
 import { Avatar } from '../../'
 
 const cx = 'c-Message'
@@ -102,7 +101,6 @@ describe('Sub-components', () => {
     expect(Message.Content).toBe(Content)
     expect(Message.Media).toBe(Media)
     expect(Message.Question).toBe(Question)
-    expect(Message.Timestamp).toBe(Timestamp)
   })
 })
 

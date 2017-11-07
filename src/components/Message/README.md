@@ -19,4 +19,3 @@ Message provides a collection of smaller components:
 * [Content](./docs/Content.md)
 * [Media](./docs/Media.md)
 * [Question](./docs/Question.md)
-* [Timestamp](./docs/Timestamp.md)

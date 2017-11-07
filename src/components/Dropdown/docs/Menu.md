@@ -5,7 +5,7 @@ A Menu component contains the series of [Item](../Item) components used within a
 
 ## Example
 
-```html
+```jsx
 <Dropdown>
   <Dropdown.Trigger>Choose…</Dropdown.Trigger>
   <Dropdown.Menu>

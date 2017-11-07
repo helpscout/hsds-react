@@ -5,7 +5,7 @@ A Portal component provides the ability to mount components at the root `<body>`
 
 ## Example
 
-```html
+```jsx
 <Portal>
   <Card>
     Happy! Happy! Ha ha ha ha!
@@ -26,7 +26,7 @@ By default, Portal renders elements into the root `<body>` of the page. However,
 
 In this example, our Portal content will render within the `div.zoolander` selector.
 
-```html
+```jsx
 <App>
   <Main>
     <Portal renderTo='.zoolander'>
@@ -43,7 +43,7 @@ In this example, our Portal content will render within the `div.zoolander` selec
 
 In this example, our Portal content will render within the `<Portal.Container>` component.
 
-```html
+```jsx
 <App>
   <Main>
     <Portal renderTo='.zoolander'>

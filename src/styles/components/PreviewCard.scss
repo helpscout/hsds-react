@@ -4,6 +4,10 @@
 .c-PreviewCard {
   @import "../resets/base";
   $block: this();
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 
   &__title {
     margin-bottom: 4px;

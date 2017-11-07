@@ -5,9 +5,9 @@ An Item component is a list-item wrapper for individual actions or links that ap
 
 ## Example
 
-```html
+```jsx
 <Dropdown.Menu>
-  <Dropdown.Item onClick={saySignOff} />
+  <Dropdown.Item onClick={saySignOff}>
     Ron
   </Dropdown.Item />
 </Dropdown.Menu>
