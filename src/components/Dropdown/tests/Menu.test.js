@@ -16,6 +16,22 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
+describe('Classname', () => {
+  test('Has default className', () => {
+    const wrapper = shallow(<MenuComponent />)
+    const o = wrapper.find('.c-DropdownMenu')
+
+    expect(o.length).toBeTruthy()
+  })
+
+  test('Can accept custom classNames', () => {
+    const wrapper = shallow(<MenuComponent className='ron' />)
+    const o = wrapper.find('.c-DropdownMenu')
+
+    expect(o.hasClass('ron')).toBeTruthy()
+  })
+})
+
 describe('Nodes', () => {
   test('Has a reference to DOM nodes', () => {
     const wrapper = mount(<MenuComponent />)
