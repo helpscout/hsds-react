@@ -53,6 +53,7 @@ import {
   Text,
   Timeline,
   Timestamp,
+  Truncate,
   VisuallyHidden
 } from '..'
 
@@ -111,6 +112,7 @@ const components = [
   Text,
   Timeline,
   Timestamp,
+  Truncate,
   VisuallyHidden
 ]
 
