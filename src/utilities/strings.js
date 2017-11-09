@@ -19,3 +19,29 @@ export const isWord = (word) => {
 export const wordHasSpaces = (word) => {
   return isWordString(word) && word.trim().indexOf(' ') > 0
 }
+
+// Source
+// https://github.com/kahwee/truncate-middle
+export const truncateMiddle = (word, startLen, endLen, ellip) => {
+  if (!isWordString(word)) {
+    return ''
+  }
+  const wordLen = word.length
+  // Setting default values
+  const frontLen = ~~startLen // will cast to integer
+  const backLen = ~~endLen
+  const truncateStr = ellip || '&hellip;'
+
+  if (
+    (frontLen === 0 && backLen === 0) ||
+    (frontLen >= wordLen) ||
+    (backLen >= wordLen) ||
+    ((frontLen + backLen) >= wordLen)
+  ) {
+    return word
+  } else if (backLen === 0) {
+    return word.slice(0, frontLen) + truncateStr
+  } else {
+    return word.slice(0, frontLen) + truncateStr + word.slice(wordLen - backLen)
+  }
+}

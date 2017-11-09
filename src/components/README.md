@@ -56,4 +56,5 @@ Below is a list of documentation for our Components:
 * [Text](./Text)
 * [Timeline](./Timeline)
 * [Timestamp](./Timestamp)
+* [Truncate](./Truncate)
 * [VisuallyHidden](./VisuallyHidden)
