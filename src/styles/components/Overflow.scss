@@ -1,0 +1,32 @@
+.c-Overflow {
+  @import "../resets/base";
+  overflow: hidden;
+  position: relative;
+
+  &__container {
+    overflow-x: auto;
+    padding-bottom: 20px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__content {
+    position: relative;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  // Modifiers
+  &__fader {
+    background: linear-gradient(to left, currentColor, rgba(255, 255, 255, 0));
+    bottom: 0;
+    color: white;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    z-index: 1;
+  }
+}

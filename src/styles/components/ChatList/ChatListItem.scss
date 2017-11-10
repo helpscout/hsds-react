@@ -1,0 +1,65 @@
+@import "../../configs/color";
+
+.c-ChatListItem {
+  @import "../../resets/base";
+  background-color: _color(grey, 200);
+  position: relative;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(_color(grey, 300), 0.8);
+  }
+
+  &:focus {
+    outline: none !important;
+    z-index: 2;
+  }
+
+  &__block {
+    padding-bottom: 16px;
+    padding-top: 16px;
+  }
+
+  &__typing {
+    padding-bottom: 8px;
+    padding-top: 8px;
+  }
+
+  &__viewing {
+    $size: 12px;
+    border-left: $size solid _color(yellow, 500);
+    border-bottom: $size solid transparent;
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 1;
+  }
+
+  &__heading {
+    margin-bottom: 4px;
+  }
+
+  &__message {
+    margin-bottom: 4px;
+  }
+
+  // States
+  &.is-assigned {
+    background-color: white;
+
+    &:hover {
+      background-color: rgba(_color(grey, 200), 0.5);
+    }
+  }
+
+  &.is-focused {
+    background-color: rgba(_color(blue, 200), 0.3);
+    border-left: 4px solid _color(blue, 500);
+
+    &:hover {
+      background-color: rgba(_color(blue, 200), 0.4);
+    }
+  }
+}

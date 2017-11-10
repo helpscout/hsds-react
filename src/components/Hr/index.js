@@ -4,10 +4,11 @@ import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   role: PropTypes.string,
-  size: PropTypes.oneOf(['md', 'sm', 'xs', ''])
+  size: PropTypes.oneOf(['md', 'sm', 'xs', 'none'])
 }
 const defaultProps = {
-  role: 'separator'
+  role: 'separator',
+  size: 'md'
 }
 
 const Hr = props => {

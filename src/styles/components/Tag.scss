@@ -1,0 +1,59 @@
+@import "../configs/color";
+
+.c-Tag {
+  @import "../resets/base";
+  $colors: (
+    blue: _color(blue, 500),
+    green: _color(green, 500),
+    grey: _color(charcoal, 200),
+    orange: _color(orange, 500),
+    purple: _color(purple, 500),
+    red: _color(red, 500)
+  );
+
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  color: red;
+  display: inline-block;
+  padding: 0 4px;
+
+  // Modifiers
+  &.is-filled {
+    background-color: currentColor;
+  }
+
+  &.is-pulsing {
+    animation: _Blue_Tag_Blink 4s infinite both;
+  }
+
+  // Colors
+  @each $color, $value in $colors {
+    &.is-#{$color} {
+      color: $value;
+    }
+  }
+
+  // Animations
+  @keyframes _Blue_Tag_Blink {
+    0%,
+    50%,
+    100% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0.4;
+    }
+  }
+  @keyframes _Blue_Tag_Blink {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
+}

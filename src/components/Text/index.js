@@ -5,6 +5,7 @@ import classNames from '../../utilities/classNames'
 import { stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
+  allCaps: PropTypes.bool,
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   faint: PropTypes.bool,
@@ -26,6 +27,7 @@ const defaultProps = {
 
 const Text = props => {
   const {
+    allCaps,
     children,
     className,
     disableSelect,
@@ -43,6 +45,7 @@ const Text = props => {
 
   const componentClassName = classNames(
     'c-Text',
+    allCaps && 'is-all-caps',
     disableSelect && 'is-disableSelect',
     faint && 'is-faint',
     muted && 'is-muted',

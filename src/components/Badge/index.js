@@ -5,6 +5,7 @@ import { statusTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   className: PropTypes.string,
+  count: PropTypes.bool,
   size: PropTypes.string,
   status: statusTypes,
   white: PropTypes.bool
@@ -13,6 +14,7 @@ export const propTypes = {
 const Badge = props => {
   const {
     children,
+    count,
     className,
     size,
     status,
@@ -22,6 +24,7 @@ const Badge = props => {
 
   const componentClassName = classNames(
     'c-Badge',
+    count && 'is-count',
     size && `is-${size}`,
     status && `is-${status}`,
     white && 'is-white',

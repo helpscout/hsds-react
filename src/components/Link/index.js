@@ -14,6 +14,7 @@ export const propTypes = {
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
+  noUnderline: PropTypes.bool,
   to: PropTypes.string,
   wordWrap: PropTypes.bool
 }
@@ -35,6 +36,7 @@ const Link = props => {
     className,
     external,
     href,
+    noUnderline,
     wordWrap,
     ...rest
   } = props
@@ -45,6 +47,7 @@ const Link = props => {
     'c-Link',
     block && 'is-block',
     forceWordWrap && 'is-word-wrap',
+    noUnderline && 'is-no-underline',
     className
   )
 

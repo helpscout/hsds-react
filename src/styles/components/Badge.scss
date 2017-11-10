@@ -12,6 +12,10 @@
     )
   );
   $styles: (
+    count: (
+      font-weight: 400,
+      padding: 3px
+    ),
     white: (
       background-color: white,
       box-shadow: 0 0 0 1px _color(border, ui) inset,
@@ -27,8 +31,10 @@
   font-family: $font-family;
   font-size: 12px;
   font-weight: 500;
+  min-width: 18px;
   line-height: 1;
   padding: 3px 8px;
+  text-align: center;
 
   // Sizes
   @each $size, $values in $sizes {

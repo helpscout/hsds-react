@@ -55,6 +55,11 @@
   }
 
   // Styles
+  &.is-all-caps {
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
   &.is-samp {
     font-family: $font-family-code;
   }

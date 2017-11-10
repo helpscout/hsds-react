@@ -7,6 +7,7 @@ import Text from '../Text'
 
 export const propTypes = {
   read: PropTypes.bool,
+  muted: PropTypes.bool,
   timestamp: PropTypes.string
 }
 
@@ -19,6 +20,7 @@ const Timestamp = props => {
   const {
     children,
     className,
+    muted,
     read,
     timestamp,
     ...rest
@@ -26,6 +28,7 @@ const Timestamp = props => {
 
   const componentClassName = classNames(
     'c-Timestamp',
+    muted && 'is-muted',
     className
   )
 

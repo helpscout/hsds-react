@@ -170,3 +170,8 @@ export const isNodeScrollable = (node) => {
 export const getClosestDocument = (node) => {
   return node && isNodeElement(node) ? node.ownerDocument : document
 }
+
+export const hasContentOverflow = (node) => {
+  if (!isNodeElement(node)) return false
+  return node.clientWidth < node.scrollWidth
+}
