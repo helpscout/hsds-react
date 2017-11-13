@@ -1,13 +1,23 @@
 @import "../../configs/color";
 
 .c-ChatListItem {
+  // Mixins
+  @mixin set-background-color($color) {
+    background-color: $color;
+    .c-Overflow__fader {
+      color: $color;
+    }
+  }
+
   @import "../../resets/base";
-  background-color: _color(grey, 200);
+  @include set-background-color(_color(grey, 200));
   position: relative;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: rgba(_color(grey, 300), 0.8);
+    @include set-background-color(
+      lighten(_color(grey, 300), 1)
+    );
   }
 
   &:focus {
@@ -45,21 +55,35 @@
     margin-bottom: 4px;
   }
 
+  &__timestamp {
+    margin-right: 12px;
+  }
+
+  &__tags {
+    max-width: 120px;
+  }
+
   // States
   &.is-assigned {
-    background-color: white;
+    @include set-background-color(white);
 
     &:hover {
-      background-color: rgba(_color(grey, 200), 0.5);
+      @include set-background-color(
+        lighten(_color(grey, 200), 1)
+      );
     }
   }
 
   &.is-focused {
-    background-color: rgba(_color(blue, 200), 0.3);
+    @include set-background-color(
+      lighten(_color(blue, 200), 5)
+    );
     border-left: 4px solid _color(blue, 500);
 
     &:hover {
-      background-color: rgba(_color(blue, 200), 0.4);
+      @include set-background-color(
+        lighten(_color(blue, 200), 4)
+      );
     }
   }
 }

@@ -1,0 +1,11 @@
+.c-ChatListHeader {
+  @import "../../resets/base";
+
+  &__content {
+    padding: 12px 20px;
+  }
+
+  &__avatars {
+    margin-left: 16px;
+  }
+}

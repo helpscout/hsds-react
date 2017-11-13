@@ -1,36 +1,20 @@
 import React from 'react'
-import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
-import { ChatList } from '../src/index.js'
+import { AvatarList, Avatar, ChatList } from '../../src/index.js'
+import AvatarSpec from '../Avatar/specs/Avatar'
+import ChatSpec from './specs/Chat'
 
-const tags = [
-  {
-    color: 'grey',
-    children: 'lead'
-  },
-  {
-    color: 'purple',
-    children: 'vip'
-  }
-]
-
-const ChatSpec = createSpec({
-  id: faker.random.uuid(),
-  isAssigned: faker.random.boolean(),
-  isTyping: faker.random.boolean(),
-  isViewing: faker.random.boolean(),
-  isWaiting: faker.random.boolean(),
-  message: faker.lorem.paragraph(),
-  name: () => `${faker.name.firstName()()} ${faker.name.lastName()()}`,
-  newMessageCount: faker.random.number({min: 0, max: 2}),
-  tags: () => tags,
-  timestamp: '22 min'
-})
-
+const avatars = AvatarSpec.generate(8)
 const fixtures = ChatSpec.generate(8)
+
 const itemMarkup = fixtures.map((item, index) => {
+  const avatar = (
+    <Avatar image={avatars[4].image} name={avatars[4].name} size='sm' shape='rounded' />
+  )
+
   return (
     <ChatList.Item
+      avatar={item.isAssigned ? avatar : null}
       key={item.id}
       isAssigned={item.isAssigned}
       isFocused={index === 2}
@@ -51,6 +35,12 @@ const stories = storiesOf('ChatList', module)
 stories.add('default', () => (
   <div style={{width: 300}}>
     <ChatList>
+      <ChatList.Header
+        avatars={<AvatarList avatars={avatars} max={3} />}
+        count={fixtures.length}
+      >
+        Chats
+      </ChatList.Header>
       {itemMarkup}
     </ChatList>
   </div>

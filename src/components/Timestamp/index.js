@@ -40,7 +40,7 @@ const Timestamp = props => {
     <div className={componentClassName} {...rest}>
       <Flexy gap='xs' just='left'>
         <Flexy.Item>
-          <Text size='12' faint disableSelect>
+          <Text size='12' faint disableSelect noWrap>
             <time dateTime={timestamp}>{timestamp}</time>
           </Text>
         </Flexy.Item>

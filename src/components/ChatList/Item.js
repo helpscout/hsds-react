@@ -8,6 +8,7 @@ import Hr from '../Hr'
 import LoadingDots from '../LoadingDots'
 import List from '../List'
 import Link from '../Link'
+import Overflow from '../Overflow'
 import Tag from '../Tag'
 import Text from '../Text'
 import Timestamp from '../Timestamp'
@@ -16,6 +17,7 @@ import classNames from '../../utilities/classNames'
 import { tagTypes } from './propTypes'
 
 export const propTypes = {
+  avatar: PropTypes.element,
   href: PropTypes.string,
   isAssigned: PropTypes.bool,
   isFocused: PropTypes.bool,
@@ -44,6 +46,7 @@ const defaultProps = {
 
 const Item = props => {
   const {
+    avatar,
     className,
     children,
     isAssigned,
@@ -95,14 +98,14 @@ const Item = props => {
     </Text>
   )
 
-  const tagListMarkup = tags.map(tag => {
+  const tagListMarkup = tags.map((tag, index) => {
     const {
       children,
       ...tagProps
     } = tag
 
     return (
-      <List.Item key={children}>
+      <List.Item key={index}>
         <Tag {...tagProps}>
           {children}
         </Tag>
@@ -113,12 +116,16 @@ const Item = props => {
   const tagsMarkup = tags.length ? (
     <Flexy.Item>
       <div className='c-ChatListItem__tags'>
-        <List type='inline' size='xs'>
-          {tagListMarkup}
-        </List>
+        <Overflow>
+          <List type='inline' size='xs'>
+            {tagListMarkup}
+          </List>
+        </Overflow>
       </div>
     </Flexy.Item>
   ) : null
+
+  const avatarMarkup = avatar || null
 
   return (
     <Link className={componentClassName} {...rest} block noUnderline>
@@ -140,13 +147,14 @@ const Item = props => {
         <div className='c-ChatListItem__message'>
           {messageMarkup}
         </div>
-        <Flexy gap='md'>
-          <Flexy.Item>
+        <Flexy gap='sm' align='bottom'>
+          <Flexy.Block>
             <div className='c-ChatListItem__timestamp'>
               <Timestamp timestamp={timestamp} muted />
             </div>
-          </Flexy.Item>
+          </Flexy.Block>
           {tagsMarkup}
+          {avatarMarkup}
         </Flexy>
       </Card.Block>
       <Hr className='c-ChatListItem__divider' size='none' />

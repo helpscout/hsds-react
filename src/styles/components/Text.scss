@@ -6,7 +6,7 @@
   @import "../resets/base";
   $states: $STATES;
   $shades: faint, muted, subtle;
-  $sizes: (11, 12, 13, 14, 15, 16, 20, 48);
+  $sizes: (10, 11, 12, 13, 14, 15, 16, 20, 48);
 
   line-height: 1.5;
 
@@ -47,6 +47,10 @@
 
   &.is-word-wrap {
     word-break: break-word;
+  }
+
+  &.is-no-wrap {
+    white-space: nowrap;
   }
 
   // Resets

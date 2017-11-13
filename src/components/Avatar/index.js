@@ -12,12 +12,14 @@ export const propTypes = {
   className: PropTypes.string,
   image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   name: PropTypes.string.isRequired,
+  light: PropTypes.bool,
   initials: PropTypes.string,
   size: standardSizeTypes,
   shape: shapeTypes
 }
 
 const defaultProps = {
+  light: false,
   name: '',
   shape: 'circle'
 }
@@ -29,6 +31,7 @@ const Avatar = props => {
     count,
     image,
     name,
+    light,
     initials,
     size,
     shape,
@@ -38,6 +41,7 @@ const Avatar = props => {
   const componentClassName = classNames(
     'c-Avatar',
     image && 'has-image',
+    light && 'is-light',
     shape && `is-${shape}`,
     size && `is-${size}`,
     className

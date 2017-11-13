@@ -16,7 +16,8 @@
   border: 1px solid currentColor;
   color: red;
   display: inline-block;
-  padding: 0 4px;
+  padding: 1px 4px;
+  height: 18px;
 
   // Modifiers
   &.is-filled {

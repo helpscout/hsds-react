@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import Centralize from '../Centralize'
 import Text from '../Text'
 import { tagColorTypes } from './propTypes'
 
@@ -37,9 +38,11 @@ const Tag = props => {
 
   return (
     <div className={componentClassName} {...rest}>
-      <Text allCaps={allCaps} size={allCaps ? 11 : 13} lineHeightReset>
-        {children}
-      </Text>
+      <Centralize>
+        <Text allCaps={allCaps} size={allCaps ? 10 : 13} lineHeightReset>
+          {children}
+        </Text>
+      </Centralize>
     </div>
   )
 }

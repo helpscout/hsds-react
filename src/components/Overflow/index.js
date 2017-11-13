@@ -4,14 +4,18 @@ import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import { hasContentOverflow } from '../../utilities/node'
+import { noop } from '../../utilities/other'
 
 export const propTypes = {
   backgroundColor: PropTypes.string,
+  isScrollable: PropTypes.bool,
+  onWheel: PropTypes.func,
   style: PropTypes.object
 }
 
 const defaultProps = {
-  backgroundColor: 'white',
+  isScrollable: true,
+  onWheel: noop,
   style: {}
 }
 
@@ -22,6 +26,8 @@ class Overflow extends Component {
       faded: false
     }
     this.faderWidth = 32
+    this.faderNodeLeft = null
+    this.faderNodeRight = null
     this.containerNode = null
     this.applyFade = this.applyFade.bind(this)
     this.onContainerScroll = this.onContainerScroll.bind(this)
@@ -35,25 +41,36 @@ class Overflow extends Component {
     const node = ReactDOM.findDOMNode(this)
     const containerNode = this.containerNode
     const height = containerNode.clientHeight
+    const heightOffset = 20
 
     this.setState({
       faded: hasContentOverflow(containerNode)
     })
 
-    node.style.height = height ? `${height}px` : null
+    node.style.height = height ? `${height - heightOffset}px` : null
   }
 
   onContainerScroll (event) {
+    const { onWheel } = this.props
     const scrollNode = event.currentTarget
     const offset = this.faderWidth
     const { clientWidth, scrollWidth, scrollLeft } = scrollNode
     const scrollAmount = clientWidth + scrollLeft + offset
 
-    if (scrollAmount >= scrollWidth) {
-      this.faderNode.style.width = `${offset + (scrollWidth - scrollAmount)}px`
+    if (scrollLeft > 0) {
+      const size = scrollLeft < offset ? scrollLeft : offset
+      this.faderNodeLeft.style.width = `${size}px`
     } else {
-      this.faderNode.style.width = `${offset}px`
+      this.faderNodeLeft.style.width = `0px`
     }
+
+    if (scrollAmount >= scrollWidth) {
+      this.faderNodeRight.style.width = `${offset + (scrollWidth - scrollAmount)}px`
+    } else {
+      this.faderNodeRight.style.width = `${offset}px`
+    }
+
+    onWheel(event)
   }
 
   render () {
@@ -61,6 +78,8 @@ class Overflow extends Component {
       backgroundColor,
       className,
       children,
+      isScrollable,
+      onWheel,
       ...rest
     } = this.props
 
@@ -71,13 +90,26 @@ class Overflow extends Component {
     const componentClassName = classNames(
       'c-Overflow',
       faded && 'is-faded',
+      isScrollable && 'is-scrollable',
       className
     )
 
-    const faderMarkup = (
+    const faderLeftMarkup = (
       <div
-        className='c-Overflow__fader'
-        ref={node => (this.faderNode = node)}
+        className='c-Overflow__fader is-left'
+        ref={node => (this.faderNodeLeft = node)}
+        role='presentation'
+        style={{
+          color: backgroundColor,
+          width: 0
+        }}
+      />
+    )
+
+    const faderRightMarkup = (
+      <div
+        className='c-Overflow__fader is-right'
+        ref={node => (this.faderNodeRight = node)}
         role='presentation'
         style={{
           color: backgroundColor,
@@ -88,16 +120,17 @@ class Overflow extends Component {
 
     return (
       <div className={componentClassName} {...rest}>
+        {faderLeftMarkup}
         <div
           className='c-Overflow__container'
           ref={node => (this.containerNode = node)}
-          onWheel={onContainerScroll}
+          onWheel={isScrollable ? onContainerScroll : onWheel}
         >
           <div className='c-Overflow__content'>
             {children}
           </div>
         </div>
-        {faderMarkup}
+        {faderRightMarkup}
         <EventListener event='resize' handler={applyFade} />
       </div>
     )

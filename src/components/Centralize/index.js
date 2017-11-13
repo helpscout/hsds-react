@@ -1,10 +1,7 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
-import Header from './Header'
-import Item from './Item'
 
-const ChatList = props => {
+const Centralize = props => {
   const {
     className,
     children,
@@ -12,7 +9,7 @@ const ChatList = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-ChatList',
+    'c-Centralize',
     className
   )
 
@@ -23,8 +20,6 @@ const ChatList = props => {
   )
 }
 
-ChatList.displayName = 'ChatList'
-ChatList.Header = Header
-ChatList.Item = Item
+Centralize.displayName = 'Centralize'
 
-export default ChatList
+export default Centralize
