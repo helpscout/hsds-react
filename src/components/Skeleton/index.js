@@ -5,7 +5,7 @@ import Image from './Image'
 import Paragraph from './Paragraph'
 import Text from './Text'
 
-const Skeleton = () => {}
+const Skeleton = {}
 
 Skeleton.Avatar = Avatar
 Skeleton.Block = Block

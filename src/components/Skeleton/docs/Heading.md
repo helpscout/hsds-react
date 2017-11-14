@@ -1,12 +1,12 @@
-# Text
+# Heading
 
-A Skeleton.Text component is a placeholder component [Text](../../Text) UI.
+A Skeleton.Heading component is a placeholder component [Heading](../../Heading) UI.
 
 
 ## Example
 
 ```jsx
-<Skeleton.Text />
+<Skeleton.Heading />
 ```
 
 
@@ -15,5 +15,4 @@ A Skeleton.Text component is a placeholder component [Text](../../Text) UI.
 | Prop | Type | Description |
 | --- | --- | --- |
 | className | string | Custom class names to be added to the component. |
-| heading | boolean | Applies heading styles to the component. |
 | width | number / string | Defines the width of the component. |

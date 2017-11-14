@@ -1,12 +1,12 @@
-# Paragraph
+# Image
 
-A Skeleton.Paragraph component is a placeholder component for multiple [Skeleton.Text](./Text) UI.
+A Skeleton.Image component is a placeholder component [Image](../../Image) UI.
 
 
 ## Example
 
 ```jsx
-<Skeleton.Paragraph />
+<Skeleton.Image />
 ```
 
 
