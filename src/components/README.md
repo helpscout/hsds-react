@@ -51,6 +51,7 @@ Below is a list of documentation for our Components:
 * [ScrollLock](./ScrollLock)
 * [Scrollable](./Scrollable)
 * [SidebarCollapsibleCard](./SidebarCollapsibleCard)
+* [Skeleton](./Skeleton)
 * [Sortable](./Sortable)
 * [Switch](./Switch)
 * [Text](./Text)
