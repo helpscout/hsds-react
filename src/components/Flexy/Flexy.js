@@ -41,7 +41,7 @@ const Flexy = props => {
   )
 }
 
-Flexy.PropTypes = propTypes
+Flexy.propTypes = propTypes
 Flexy.defaultProps = defaultProps
 Flexy.Block = Block
 Flexy.Item = Item

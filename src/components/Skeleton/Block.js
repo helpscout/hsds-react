@@ -15,7 +15,7 @@ const Block = props => {
   )
 
   return (
-    <div className={componentClassName} />
+    <div className={componentClassName} {...rest} role='presentation' />
   )
 }
 

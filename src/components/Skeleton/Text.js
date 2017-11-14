@@ -4,11 +4,13 @@ import Block from './Block'
 import classNames from '../../utilities/classNames'
 
 export const propTypes = {
+  heading: PropTypes.bool,
   style: PropTypes.object,
-  width: PropTypes.oneOfTypes([PropTypes.number, PropTypes.string])
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 
 const defaultProps = {
+  heading: false,
   style: {},
   width: '70%'
 }
@@ -17,6 +19,7 @@ const Text = props => {
   const {
     className,
     children,
+    heading,
     style,
     width,
     ...rest
@@ -24,10 +27,11 @@ const Text = props => {
 
   const componentClassName = classNames(
     'c-SkeletonText',
+    heading && 'is-heading',
     className
   )
 
-  const componentStyle = Object.assign(style, { width })
+  const componentStyle = Object.assign({}, style, { width })
 
   return (
     <Block
@@ -38,6 +42,8 @@ const Text = props => {
   )
 }
 
+Text.propTypes = propTypes
+Text.defaultProps = defaultProps
 Text.displayName = 'SkeletonText'
 
 export default Text

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Block from './Block'
 import classNames from '../../utilities/classNames'
 import { standardSizeTypes } from '../../constants/propTypes'
@@ -11,6 +10,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
+  size: 'md',
   shape: 'circle'
 }
 
@@ -35,6 +35,8 @@ const Avatar = props => {
   )
 }
 
+Avatar.propTypes = propTypes
+Avatar.defaultProps = defaultProps
 Avatar.displayName = 'SkeletonAvatar'
 
 export default Avatar
