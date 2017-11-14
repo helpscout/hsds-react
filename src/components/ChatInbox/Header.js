@@ -20,31 +20,31 @@ const Header = props => {
   } = props
 
   const componentClassName = classNames(
-    'c-ChatListHeader',
+    'c-ChatInboxHeader',
     className
   )
 
-  const countMarkup = count !== 'undefined' ? (
+  const countMarkup = count !== undefined ? (
     <Flexy.Item>
-      <Heading className='c-ChatListHeader__count' light size='small'>
+      <Heading className='c-ChatInboxHeader__count' light size='small'>
         ({count})
       </Heading>
     </Flexy.Item>
   ) : null
 
   const avatarsMarkup = avatars ? (
-    <Flexy.Item className='c-ChatListHeader__avatars'>
+    <Flexy.Item className='c-ChatInboxHeader__avatars'>
       {avatars}
     </Flexy.Item>
   ) : null
 
   return (
     <div className={componentClassName} {...rest}>
-      <Flexy className='c-ChatListHeader__content' gap='md'>
+      <Flexy className='c-ChatInboxHeader__content' gap='md'>
         <Flexy.Block>
           <Flexy just='left' gap='xs'>
             <Flexy.Item>
-              <Heading className='c-ChatListHeader__title' size='small'>
+              <Heading className='c-ChatInboxHeader__title' size='small'>
                 {children}
               </Heading>
             </Flexy.Item>
@@ -59,6 +59,6 @@ const Header = props => {
 }
 
 Header.propTypes = propTypes
-Header.displayName = 'ChatListHeader'
+Header.displayName = 'ChatInboxHeader'
 
 export default Header

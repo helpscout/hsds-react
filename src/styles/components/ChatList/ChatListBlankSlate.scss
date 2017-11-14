@@ -1,0 +1,11 @@
+@import "../../configs/color";
+
+.c-ChatListBlankSlate {
+  @import "../../resets/base";
+  background-color: _color(grey, 200);
+
+  &__content {
+    padding: 20px;
+    text-align: center;
+  }
+}

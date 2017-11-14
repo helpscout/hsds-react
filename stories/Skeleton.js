@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react'
 import { Flexy, Skeleton } from '../src/index.js'
 
 const stories = storiesOf('Skeleton', module)
-console.log(Skeleton)
 
 stories.add('default', () => (
   <div style={{width: 300}}>

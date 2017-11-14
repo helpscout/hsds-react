@@ -39,7 +39,7 @@ const Tag = props => {
   return (
     <div className={componentClassName} {...rest}>
       <Centralize>
-        <Text allCaps={allCaps} size={allCaps ? 10 : 13} lineHeightReset>
+        <Text allCaps={allCaps} size={allCaps ? '10' : '13'} lineHeightReset>
           {children}
         </Text>
       </Centralize>

@@ -1,7 +1,8 @@
-.c-ChatListHeader {
+.c-ChatInboxHeader {
   @import "../../resets/base";
 
   &__content {
+    min-height: 50px;
     padding: 12px 20px;
   }
 

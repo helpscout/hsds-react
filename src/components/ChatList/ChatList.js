@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
-import Header from './Header'
+import BlankSlate from './BlankSlate'
 import Item from './Item'
 
 const ChatList = props => {
@@ -16,15 +16,19 @@ const ChatList = props => {
     className
   )
 
+  const contentMarkup = (children && children.length) ?
+    children :
+    (<BlankSlate />)
+
   return (
     <div className={componentClassName} {...rest}>
-      {children}
+      {contentMarkup}
     </div>
   )
 }
 
 ChatList.displayName = 'ChatList'
-ChatList.Header = Header
+ChatList.BlankSlate = BlankSlate
 ChatList.Item = Item
 
 export default ChatList

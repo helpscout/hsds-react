@@ -9,6 +9,7 @@ import LoadingDots from '../LoadingDots'
 import List from '../List'
 import Link from '../Link'
 import Overflow from '../Overflow'
+import Skeleton from '../Skeleton'
 import Tag from '../Tag'
 import Text from '../Text'
 import Timestamp from '../Timestamp'
@@ -63,11 +64,27 @@ const Item = props => {
     ...rest
   } = props
 
+  const isLoading = (
+    (message === undefined || !isTyping) &&
+    name === undefined
+  )
+
   const componentClassName = classNames(
     'c-ChatListItem',
-    isAssigned && 'is-assigned',
+    (isAssigned || isLoading) && 'is-assigned',
     isFocused && 'is-focused',
     className
+  )
+
+
+  const headingMarkup = !isLoading ? (
+    <Heading size='h5' className='c-ChatListItem__title'>
+      <Truncate>
+        {name}
+      </Truncate>
+    </Heading>
+  ) : (
+    <Skeleton.Text width='95%' />
   )
 
   const viewingMarkup = isViewing ? (
@@ -86,17 +103,24 @@ const Item = props => {
     </Flexy.Item>
   ) : null
 
-  const messageMarkup = isTyping ? (
-    <div className='c-ChatListItem__typing'>
-      <LoadingDots />
-    </div>
-  ) : (
-    <Text faint size='13'>
-      <Truncate type='end' limit={messageLimit} ellipsis=''>
-        {message}
-      </Truncate>
-    </Text>
-  )
+  const messageMarkup = !isLoading ?
+    isTyping ? (
+      <div className='c-ChatListItem__typing'>
+        <LoadingDots />
+      </div>
+    ) : (
+      <Text faint size='13'>
+        <Truncate type='end' limit={messageLimit} ellipsis=''>
+          {message}
+        </Truncate>
+      </Text>
+    ) : (
+      <div>
+        <Skeleton.Text width='70%' />
+        <Skeleton.Text width='80%' />
+        <Skeleton.Text width='10%' />
+      </div>
+    )
 
   const tagListMarkup = tags.map((tag, index) => {
     const {
@@ -125,6 +149,10 @@ const Item = props => {
     </Flexy.Item>
   ) : null
 
+  const timestampMarkup = !isLoading ? (
+    <Timestamp timestamp={timestamp} muted />
+  ) : null
+
   const avatarMarkup = avatar || null
 
   return (
@@ -134,11 +162,7 @@ const Item = props => {
         <div className='c-ChatListItem__heading'>
           <Flexy gap='md'>
             <Flexy.Block>
-              <Heading size='h5' className='c-ChatListItem__title'>
-                <Truncate>
-                  {name}
-                </Truncate>
-              </Heading>
+              {headingMarkup}
             </Flexy.Block>
             {waitingMarkup}
             {newMessageCountMarkup}
@@ -150,7 +174,7 @@ const Item = props => {
         <Flexy gap='sm' align='bottom'>
           <Flexy.Block>
             <div className='c-ChatListItem__timestamp'>
-              <Timestamp timestamp={timestamp} muted />
+              {timestampMarkup}
             </div>
           </Flexy.Block>
           {tagsMarkup}
