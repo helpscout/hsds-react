@@ -12,6 +12,10 @@ export const propTypes = {
   just: justTypes
 }
 
+const defaultProps = {
+  gap: 'sm'
+}
+
 const Flexy = props => {
   const {
     align,
@@ -37,7 +41,8 @@ const Flexy = props => {
   )
 }
 
-Flexy.PropTypes = propTypes
+Flexy.propTypes = propTypes
+Flexy.defaultProps = defaultProps
 Flexy.Block = Block
 Flexy.Item = Item
 
