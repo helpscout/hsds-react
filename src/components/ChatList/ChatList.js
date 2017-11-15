@@ -16,9 +16,9 @@ const ChatList = props => {
     className
   )
 
-  const contentMarkup = (children && children.length) ?
-    children :
-    (<BlankSlate />)
+  const contentMarkup = React.Children.count(children)
+    ? children
+    : (<BlankSlate />)
 
   return (
     <div className={componentClassName} {...rest}>

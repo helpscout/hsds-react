@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { AvatarList, Avatar, ChatList } from '../../src/index.js'
+import { Avatar, ChatList } from '../../src/index.js'
 import AvatarSpec from '../Avatar/specs/Avatar'
 import ChatSpec from './specs/Chat'
 
@@ -75,4 +75,3 @@ stories.add('item: loading', () => (
     <ChatList.Item />
   </div>
 ))
-

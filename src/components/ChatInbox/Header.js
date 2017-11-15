@@ -3,11 +3,22 @@ import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
 import Hr from '../Hr'
+import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 
 export const propTypes = {
   avatars: PropTypes.node,
-  count: PropTypes.number
+  count: PropTypes.number,
+  isCollapsed: PropTypes.bool,
+  isCollapsible: PropTypes.bool,
+  onClick: PropTypes.func
+}
+
+const defaultProps = {
+  isCollapsible: false,
+  isCollapsed: false,
+  onClick: noop
 }
 
 const Header = props => {
@@ -16,11 +27,14 @@ const Header = props => {
     className,
     count,
     children,
+    isCollapsed,
+    isCollapsible,
     ...rest
   } = props
 
   const componentClassName = classNames(
     'c-ChatInboxHeader',
+    isCollapsible && 'is-collapsible',
     className
   )
 
@@ -32,11 +46,17 @@ const Header = props => {
     </Flexy.Item>
   ) : null
 
-  const avatarsMarkup = avatars ? (
-    <Flexy.Item className='c-ChatInboxHeader__avatars'>
-      {avatars}
-    </Flexy.Item>
-  ) : null
+  const avatarsMarkup = avatars || null
+
+  const collapseMarkup = (
+    <Icon name='collapse' muted />
+  )
+
+  const actionMarkup = isCollapsible
+    ? (isCollapsed ? collapseMarkup : avatarsMarkup)
+    : avatarsMarkup
+
+  const dividerMarkup = (<Hr size='none' />)
 
   return (
     <div className={componentClassName} {...rest}>
@@ -51,14 +71,22 @@ const Header = props => {
             {countMarkup}
           </Flexy>
         </Flexy.Block>
-        {avatarsMarkup}
+        <Flexy.Item>
+          <div className='c-ChatInboxHeader__action'>
+            {actionMarkup}
+          </div>
+        </Flexy.Item>
       </Flexy>
-      <Hr size='none' />
+      {isCollapsible
+        ? (isCollapsed ? dividerMarkup : null)
+        : dividerMarkup
+      }
     </div>
   )
 }
 
 Header.propTypes = propTypes
+Header.defaultProps = defaultProps
 Header.displayName = 'ChatInboxHeader'
 
 export default Header

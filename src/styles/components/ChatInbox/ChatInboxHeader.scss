@@ -9,4 +9,9 @@
   &__avatars {
     margin-left: 16px;
   }
+
+  // Modifiers
+  &.is-collapsible {
+    cursor: pointer;
+  }
 }

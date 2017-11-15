@@ -1,8 +1,8 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
+import ScrollLock from '../ScrollLock'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import ScrollLock from '../ScrollLock'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -34,6 +34,7 @@ class Scrollable extends Component {
       children,
       className,
       fade,
+      onRef,
       onScroll,
       rounded,
       scrollableRef,

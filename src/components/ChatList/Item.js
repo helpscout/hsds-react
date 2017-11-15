@@ -76,7 +76,6 @@ const Item = props => {
     className
   )
 
-
   const headingMarkup = !isLoading ? (
     <Heading size='h5' className='c-ChatListItem__title'>
       <Truncate>
@@ -103,8 +102,8 @@ const Item = props => {
     </Flexy.Item>
   ) : null
 
-  const messageMarkup = !isLoading ?
-    isTyping ? (
+  const messageMarkup = !isLoading
+    ? isTyping ? (
       <div className='c-ChatListItem__typing'>
         <LoadingDots />
       </div>

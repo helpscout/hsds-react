@@ -19,7 +19,7 @@ const BlankSlate = props => {
   return (
     <div className={componentClassName} {...rest}>
       <div className='c-ChatListBlankSlate__content'>
-        <Text faint center size='13'>
+        <Text faint size='13'>
           You're all caught-up
         </Text>
       </div>

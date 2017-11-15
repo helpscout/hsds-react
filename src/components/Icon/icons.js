@@ -11,6 +11,7 @@ import chat from '../../icons/chat.svg'
 import check from '../../icons/check.svg'
 import clockLarge from '../../icons/clock-large.svg'
 import clockSmall from '../../icons/clock-small.svg'
+import collapse from '../../icons/collapse.svg'
 import crossLarge from '../../icons/cross-large.svg'
 import crossMedium from '../../icons/cross-medium.svg'
 import crossSmall from '../../icons/cross-small.svg'
@@ -43,6 +44,7 @@ const ICONS = {
   check,
   'clock-large': clockLarge,
   'clock-small': clockSmall,
+  collapse,
   'cross-large': crossLarge,
   'cross-medium': crossMedium,
   'cross-small': crossSmall,
