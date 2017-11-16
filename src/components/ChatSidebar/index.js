@@ -8,76 +8,111 @@ import { noop } from '../../utilities/other'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 
 export const propTypes = {
+  bloopScrollTopOffset: PropTypes.number,
+  isShowBloop: PropTypes.bool,
   newMessageCount: PropTypes.number,
+  onHideBloop: PropTypes.func,
   onShowBloop: PropTypes.func,
-  onHideBloop: PropTypes.func
 }
 
 const defaultProps = {
+  bloopScrollTopOffset: 100,
+  isShowBloop: false,
   newMessageCount: 0,
   onHideBloop: noop,
-  onShowBloop: noop
+  onShowBloop: noop,
 }
 
 class ChatSidebar extends Component {
-  constructor () {
+  constructor (props) {
     super()
-    this.state = {
-      showNewMessageNotification: false
-    }
     this.handleOnBloopClick = this.handleOnBloopClick.bind(this)
+    this.handleOnBloopClose = this.handleOnBloopClose.bind(this)
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
   handleOnBloopClick () {
-    const { onBloopClose } = this.props
     smoothScrollTo({
       node: this.contentNode,
       position: 0
     })
-    onBloopClose()
+  }
+
+  handleOnBloopClose () {
+    const { newMessageCount, onHideBloop } = this.props
+    onHideBloop(newMessageCount)
+  }
+
+  hasScrolledEnoughForBloop () {
+    const {
+      bloopScrollTopOffset
+    } = this.props
+
+    return this.contentNode.scrollTop > bloopScrollTopOffset
+  }
+
+  canShowBloop () {
+    const {
+      newMessageCount,
+      isShowBloop
+    } = this.props
+
+    return (
+      newMessageCount > 0 && 
+      isShowBloop && 
+      this.hasScrolledEnoughForBloop()
+    )
   }
 
   handleOnScroll () {
-    const { onShowBloop, onHideBloop } = this.props
-    const scrollTopThreshold = 100
-    const showNewMessageNotification = (this.contentNode.scrollTop > scrollTopThreshold)
+    const {
+      bloopScrollTopOffset,
+      isShowBloop,
+      newMessageCount,
+      onHideBloop,
+      onShowBloop
+    } = this.props
 
-    this.setState({
-      showNewMessageNotification
-    })
+    if (!isShowBloop) return;
 
-    showNewMessageNotification ? onShowBloop() : onHideBloop()
+    if (this.hasScrolledEnoughForBloop()) {
+      (this.canShowBloop()) ?
+        onShowBloop(newMessageCount) :
+        onHideBloop(newMessageCount)
+    }
   }
 
   render () {
     const {
+      bloopScrollTopOffset,
       className,
       children,
       onBloopClose,
       onHideBloop,
       onShowBloop,
       newMessageCount,
+      isShowBloop,
       ...rest
     } = this.props
-    const { showNewMessageNotification } = this.state
 
     const handleOnBloopClick = this.handleOnBloopClick
+    const handleOnBloopClose = this.handleOnBloopClose
     const handleOnScroll = this.handleOnScroll
+    const shouldShowBloop = this.canShowBloop()
 
     const componentClassName = classNames(
       'c-ChatSidebar',
       className
     )
 
-    const shouldShowBloop = (newMessageCount > 0 && showNewMessageNotification)
-
     return (
       <div className={componentClassName} {...rest}>
         <div className='c-ChatSidebar__bloop'>
           <Bloop
             isOpen={shouldShowBloop}
-            onClick={handleOnBloopClick}>
+            onClick={handleOnBloopClick}
+            onClose={handleOnBloopClose}
+          >
             {newMessageCount} new {pluralize('message', newMessageCount)}
           </Bloop>
         </div>

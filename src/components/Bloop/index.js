@@ -31,6 +31,8 @@ class Bloop extends Component {
       children,
       isOpen: propsIsOpen,
       onClick,
+      onOpen,
+      onClose,
       ...rest
     } = this.props
     const { isOpen } = this.state
@@ -43,7 +45,7 @@ class Bloop extends Component {
     )
 
     return (
-      <Collapsible isOpen={isOpen}>
+      <Collapsible isOpen={isOpen} onClose={onClose}>
         <div
           className={componentClassName}
           onClick={handleOnClick}

@@ -29,33 +29,39 @@ class SampleComponent extends Component {
     this.state = {
       chatAvatars: avatars,
       chats: [],
-      hasNewMessage: false,
-      collapseAssignedInbox: true
+      collapseAssignedInbox: true,
+      isShowBloop: false,
+      seenChatCount: 0
     }
     this.handleOnAddMessage = this.handleOnAddMessage.bind(this)
-    this.handleOnBloopClose = this.handleOnBloopClose.bind(this)
+    this.handleOnHideBloop = this.handleOnHideBloop.bind(this)
   }
 
   handleOnAddMessage () {
     const { chats } = this.state
     this.setState({
-      chats: [...chats, ChatSpec.generate()]
-      // hasNewMessage: true
+      chats: [...chats, ChatSpec.generate()],
+      isShowBloop: true
     })
   }
 
-  handleOnBloopClose () {
-    this.setState({ hasNewMessage: false })
+  handleOnHideBloop (value) {
+    this.setState({
+      seenChatCount: value,
+      isShowBloop: false
+    })
   }
 
   render () {
     const {
       chatAvatars,
       chats,
-      collapseAssignedInbox
+      collapseAssignedInbox,
+      isShowBloop,
+      seenChatCount
     } = this.state
     const handleOnAddMessage = this.handleOnAddMessage
-    const handleOnBloopClose = this.handleOnBloopClose
+    const handleOnHideBloop = this.handleOnHideBloop
 
     const messageMarkup = chats.map((item, index) => {
       const avatar = (
@@ -84,11 +90,14 @@ class SampleComponent extends Component {
       )
     })
 
+    const newMessageCount = chats.length - seenChatCount
+
     const sidebarMarkup = (
       <div style={{width: 300, height: '100vh'}}>
         <ChatSidebar
-          newMessageCount={chats.length}
-          onBloopClose={handleOnBloopClose}
+          newMessageCount={newMessageCount}
+          onHideBloop={handleOnHideBloop}
+          isShowBloop={isShowBloop}
         >
           <ChatInbox>
             <ChatInbox.Header
