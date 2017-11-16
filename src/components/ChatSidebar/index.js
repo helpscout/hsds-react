@@ -12,7 +12,7 @@ export const propTypes = {
   isShowBloop: PropTypes.bool,
   newMessageCount: PropTypes.number,
   onHideBloop: PropTypes.func,
-  onShowBloop: PropTypes.func,
+  onShowBloop: PropTypes.func
 }
 
 const defaultProps = {
@@ -20,7 +20,7 @@ const defaultProps = {
   isShowBloop: false,
   newMessageCount: 0,
   onHideBloop: noop,
-  onShowBloop: noop,
+  onShowBloop: noop
 }
 
 class ChatSidebar extends Component {
@@ -58,27 +58,26 @@ class ChatSidebar extends Component {
     } = this.props
 
     return (
-      newMessageCount > 0 && 
-      isShowBloop && 
+      newMessageCount > 0 &&
+      isShowBloop &&
       this.hasScrolledEnoughForBloop()
     )
   }
 
   handleOnScroll () {
     const {
-      bloopScrollTopOffset,
       isShowBloop,
       newMessageCount,
       onHideBloop,
       onShowBloop
     } = this.props
 
-    if (!isShowBloop) return;
+    if (!isShowBloop) return
 
     if (this.hasScrolledEnoughForBloop()) {
-      (this.canShowBloop()) ?
-        onShowBloop(newMessageCount) :
-        onHideBloop(newMessageCount)
+      (this.canShowBloop())
+        ? onShowBloop(newMessageCount)
+        : onHideBloop(newMessageCount)
     }
   }
 

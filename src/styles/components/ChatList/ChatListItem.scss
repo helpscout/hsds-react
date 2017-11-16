@@ -1,6 +1,7 @@
 @import "../../configs/color";
 
 .c-ChatListItem {
+  $border-width: 4px;
   // Mixins
   @mixin set-background-color($color) {
     background-color: $color;
@@ -11,7 +12,7 @@
 
   @import "../../resets/base";
   @include set-background-color(_color(grey, 200));
-  border-left: 0px solid transparent;
+  border-left: $border-width solid transparent;
   position: relative;
   transition: background-color 0.3s ease, border-left 0.1s ease;
 
@@ -27,6 +28,7 @@
   }
 
   &__block {
+    padding-left: 20px - $border-width;
     padding-bottom: 16px;
     padding-top: 16px;
   }
@@ -85,7 +87,7 @@
     @include set-background-color(
       lighten(_color(blue, 200), 5)
     );
-    border-left: 4px solid _color(blue, 500);
+    border-left: $border-width solid _color(blue, 500);
 
     &:hover {
       @include set-background-color(
