@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Animate from '../Animate'
 import Badge from '../Badge'
 import Card from '../Card'
 import Flexy from '../Flexy'
@@ -40,7 +41,7 @@ const defaultProps = {
   isViewing: false,
   isWaiting: false,
   isTyping: false,
-  messageLimit: 80,
+  messageLimit: 70,
   newMessageCount: 0,
   tags: []
 }
@@ -87,18 +88,24 @@ const Item = props => {
   )
 
   const viewingMarkup = isViewing ? (
-    <div className='c-ChatListItem__viewing' title='Is being viewed' />
+    <Animate sequence='fadeIn' wait={100} duration={200}>
+      <div className='c-ChatListItem__viewing' title='Is being viewed' />
+    </Animate>
   ) : null
 
   const newMessageCountMarkup = newMessageCount ? (
     <Flexy.Item>
-      <Badge status='success' count>{newMessageCount}</Badge>
+      <Animate sequence='fadeIn scale' wait={100} duration={200}>
+        <Badge status='success' count>{newMessageCount}</Badge>
+      </Animate>
     </Flexy.Item>
   ) : null
 
   const waitingMarkup = isWaiting ? (
     <Flexy.Item>
-      <Tag color='red' pulsing allCaps>Waiting</Tag>
+      <Animate sequence='fadeIn scale' wait={100} duration={200}>
+        <Tag color='red' pulsing allCaps>Waiting</Tag>
+      </Animate>
     </Flexy.Item>
   ) : null
 
@@ -152,36 +159,56 @@ const Item = props => {
     <Timestamp timestamp={timestamp} muted />
   ) : null
 
-  const avatarMarkup = avatar || null
+  const avatarMarkup = avatar ? (
+    <Animate
+      sequence='scale fadeIn'
+      wait={100}
+    >
+      {avatar}
+    </Animate>
+  ) : null
+
+  const metaMarkup = !isLoading ? (
+    <Flexy
+      className='c-ChatListItem__meta'
+      gap='sm'
+      align='bottom'
+    >
+      <Flexy.Block>
+        <div className='c-ChatListItem__timestamp'>
+          {timestampMarkup}
+        </div>
+      </Flexy.Block>
+      {tagsMarkup}
+      {avatarMarkup}
+    </Flexy>
+  ) : null
 
   return (
-    <Link className={componentClassName} {...rest} block noUnderline>
-      {viewingMarkup}
-      <Card.Block className='c-ChatListItem__block'>
-        <div className='c-ChatListItem__heading'>
-          <Flexy gap='md'>
-            <Flexy.Block>
-              {headingMarkup}
-            </Flexy.Block>
-            {waitingMarkup}
-            {newMessageCountMarkup}
-          </Flexy>
-        </div>
-        <div className='c-ChatListItem__message'>
-          {messageMarkup}
-        </div>
-        <Flexy gap='sm' align='bottom'>
-          <Flexy.Block>
-            <div className='c-ChatListItem__timestamp'>
-              {timestampMarkup}
+    <Animate sequence='fadeIn'>
+      <div className='c-ChatListItemWrapper'>
+        <Link className={componentClassName} {...rest} block noUnderline>
+          {viewingMarkup}
+          <Card.Block className='c-ChatListItem__block'>
+            <Flexy
+              className='c-ChatListItem__heading'
+              gap='md'
+            >
+              <Flexy.Block>
+                {headingMarkup}
+              </Flexy.Block>
+              {waitingMarkup}
+              {newMessageCountMarkup}
+            </Flexy>
+            <div className='c-ChatListItem__message'>
+              {messageMarkup}
             </div>
-          </Flexy.Block>
-          {tagsMarkup}
-          {avatarMarkup}
-        </Flexy>
-      </Card.Block>
-      <Hr className='c-ChatListItem__divider' size='none' />
-    </Link>
+            {metaMarkup}
+          </Card.Block>
+          <Hr className='c-ChatListItem__divider' size='none' />
+        </Link>
+      </div>
+    </Animate>
   )
 }
 

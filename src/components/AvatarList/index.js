@@ -57,7 +57,6 @@ const AvatarList = props => {
     return (
       <List.Item
         className='c-AvatarList__item'
-        key={index}
         key={`${avatarProps.name}-${index}`}
       >
         <Avatar shape={shape} size={size} {...avatarProps} />

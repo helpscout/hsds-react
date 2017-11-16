@@ -21,15 +21,15 @@ class ChatInbox extends Component {
     this.state = {
       isCollapsed: props.isCollapsed
     }
-
+    this._selfManageCollapse = props.isCollapsed !== undefined
     this.handleOnClickHeader = this.handleOnClickHeader.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
-    const { isCollapsed } = nextProps
-    if (isCollapsed !== undefined) {
-      this.setState({ isCollapsed })
-    }
+    // const { isCollapsed } = nextProps
+    // if (isCollapsed !== undefined) {
+    //   this.setState({ isCollapsed })
+    // }
   }
 
   handleOnClickHeader (event, onClick) {

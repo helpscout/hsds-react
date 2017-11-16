@@ -11,8 +11,9 @@
 
   @import "../../resets/base";
   @include set-background-color(_color(grey, 200));
+  border-left: 0px solid transparent;
   position: relative;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, border-left 0.1s ease;
 
   &:hover {
     @include set-background-color(
@@ -48,11 +49,17 @@
   }
 
   &__heading {
+    min-height: 18px;
     margin-bottom: 4px;
   }
 
   &__message {
+    min-height: 38px;
     margin-bottom: 4px;
+  }
+
+  &__meta {
+    min-height: 26px;
   }
 
   &__timestamp {

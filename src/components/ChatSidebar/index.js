@@ -1,22 +1,32 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
+import pluralize from 'pluralize'
 import Scrollable from '../Scrollable'
 import Bloop from '../Bloop'
-import { smoothScrollTo } from '../../utilities/smoothScroll'
 import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
+import { smoothScrollTo } from '../../utilities/smoothScroll'
 
 export const propTypes = {
-  hasNewMessage: PropTypes.bool
+  newMessageCount: PropTypes.number,
+  onShowBloop: PropTypes.func,
+  onHideBloop: PropTypes.func
 }
 
 const defaultProps = {
-  hasNewMessage: false
+  newMessageCount: 0,
+  onHideBloop: noop,
+  onShowBloop: noop
 }
 
 class ChatSidebar extends Component {
   constructor () {
     super()
+    this.state = {
+      showNewMessageNotification: false
+    }
     this.handleOnBloopClick = this.handleOnBloopClick.bind(this)
+    this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
   handleOnBloopClick () {
@@ -28,29 +38,52 @@ class ChatSidebar extends Component {
     onBloopClose()
   }
 
+  handleOnScroll () {
+    const { onShowBloop, onHideBloop } = this.props
+    const scrollTopThreshold = 100
+    const showNewMessageNotification = (this.contentNode.scrollTop > scrollTopThreshold)
+
+    this.setState({
+      showNewMessageNotification
+    })
+
+    showNewMessageNotification ? onShowBloop() : onHideBloop()
+  }
+
   render () {
     const {
       className,
       children,
-      hasNewMessage,
       onBloopClose,
+      onHideBloop,
+      onShowBloop,
+      newMessageCount,
       ...rest
     } = this.props
+    const { showNewMessageNotification } = this.state
 
     const handleOnBloopClick = this.handleOnBloopClick
+    const handleOnScroll = this.handleOnScroll
 
     const componentClassName = classNames(
       'c-ChatSidebar',
       className
     )
 
+    const shouldShowBloop = (newMessageCount > 0 && showNewMessageNotification)
+
     return (
       <div className={componentClassName} {...rest}>
         <div className='c-ChatSidebar__bloop'>
-          <Bloop isOpen={hasNewMessage} onClick={handleOnBloopClick}>1 new message</Bloop>
+          <Bloop
+            isOpen={shouldShowBloop}
+            onClick={handleOnBloopClick}>
+            {newMessageCount} new {pluralize('message', newMessageCount)}
+          </Bloop>
         </div>
         <Scrollable
           className='c-ChatSidebar__content'
+          onScroll={handleOnScroll}
           scrollableRef={ref => (this.contentNode = ref)}
         >
           {children}

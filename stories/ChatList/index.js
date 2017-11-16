@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { Avatar, ChatList } from '../../src/index.js'
 import AvatarSpec from '../Avatar/specs/Avatar'
 import ChatSpec from './specs/Chat'
+import ChatListItemStateExample from './ChatListItemStateExample'
 
 const avatars = AvatarSpec.generate(8)
 const fixtures = ChatSpec.generate(8)
@@ -73,5 +74,11 @@ stories.add('item', () => (
 stories.add('item: loading', () => (
   <div style={{width: 300}}>
     <ChatList.Item />
+  </div>
+))
+
+stories.add('item: states', () => (
+  <div style={{width: 300}}>
+    <ChatListItemStateExample />
   </div>
 ))

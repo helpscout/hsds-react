@@ -10,7 +10,6 @@ export const smoothScrollTo = ({ node, position, duration }) => {
   const scrollDuration = duration || 500
 
   const currentScrollPosition = isWindow ? window.scrollY : scrollNode.scrollTop
-  const isScrollUp = currentScrollPosition > position
 
   let diff = currentScrollPosition - position
   let start
