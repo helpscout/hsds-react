@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import ScrollLock from '..'
 
 describe('Normal usage', () => {
@@ -121,5 +121,48 @@ describe('Childless', () => {
     const div = wrapper.find('div')
 
     expect(div.length).toBe(0)
+  })
+})
+
+describe('Direction', () => {
+  test('Has a default direction of y', () => {
+    const wrapper = mount(<ScrollLock />)
+
+    expect(wrapper.props().direction).toBe('y')
+  })
+
+  test('Can set direction of x', () => {
+    const wrapper = mount(<ScrollLock direction='x' />)
+
+    expect(wrapper.props().direction).toBe('x')
+  })
+})
+
+describe('Events', () => {
+  test('onWheel callback can be triggered', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(
+      <ScrollLock onWheel={spy}>
+        <div style={{overflow: 'auto', height: '12px'}}>
+          Hi
+        </div>
+      </ScrollLock>
+    )
+    const hi = wrapper.find('div')
+    const preventDefault = jest.fn()
+    const currentTarget = {
+      clientHeight: 12,
+      scrollTop: 0,
+      scrollHeight: 30
+    }
+    const event = {
+      deltaY: 24,
+      preventDefault,
+      currentTarget
+    }
+
+    hi.simulate('wheel', event)
+
+    expect(spy).toHaveBeenCalledWith(event)
   })
 })

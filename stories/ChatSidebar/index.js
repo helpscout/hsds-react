@@ -28,10 +28,14 @@ class SampleComponent extends Component {
     super()
     this.state = {
       chatAvatars: avatars,
-      chats: [],
+      chats: [
+        ChatSpec.generate(),
+        ChatSpec.generate(),
+        ChatSpec.generate(),
+        ChatSpec.generate()
+      ],
       collapseAssignedInbox: true,
-      isShowBloop: false,
-      seenChatCount: 0
+      isShowBloop: false
     }
     this.handleOnAddMessage = this.handleOnAddMessage.bind(this)
     this.handleOnHideBloop = this.handleOnHideBloop.bind(this)
@@ -47,7 +51,6 @@ class SampleComponent extends Component {
 
   handleOnHideBloop (value) {
     this.setState({
-      seenChatCount: value,
       isShowBloop: false
     })
   }
@@ -57,8 +60,7 @@ class SampleComponent extends Component {
       chatAvatars,
       chats,
       collapseAssignedInbox,
-      isShowBloop,
-      seenChatCount
+      isShowBloop
     } = this.state
     const handleOnAddMessage = this.handleOnAddMessage
     const handleOnHideBloop = this.handleOnHideBloop
@@ -90,7 +92,7 @@ class SampleComponent extends Component {
       )
     })
 
-    const newMessageCount = chats.length - seenChatCount
+    const newMessageCount = chats.length
 
     const sidebarMarkup = (
       <div style={{width: 300, height: '100vh'}}>

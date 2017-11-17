@@ -25,15 +25,18 @@
     position: absolute;
     top: 0;
     width: 32px;
+    transform: scaleX(0);
     z-index: 1;
 
     &.is-left {
       background: linear-gradient(to right, currentColor, rgba(255, 255, 255, 0));
       left: 0;
+      transform-origin: left;
     }
     &.is-right {
       background: linear-gradient(to left, currentColor, rgba(255, 255, 255, 0));
       right: 0;
+      transform-origin: right;
     }
   }
 }

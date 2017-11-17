@@ -25,6 +25,32 @@
     }
   }
 
+  &__fader {
+    color: white;
+    height: 28px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    transform: scaleY(0);
+    z-index: 1;
+
+    @include parent(".is-rounded") {
+      border-top-left-radius: $br;
+      border-top-right-radius: $br;
+    }
+
+    &.is-top {
+      background: linear-gradient(to bottom, currentColor, rgba(255, 255, 255, 0));
+      transform-origin: top;
+      top: 0;
+    }
+    &.is-bottom {
+      background: linear-gradient(to top, currentColor, rgba(255, 255, 255, 0));
+      bottom: 0;
+      transform-origin: bottom;
+    }
+  }
+
   &__content {
     box-sizing: border-box;
     max-height: 100%;

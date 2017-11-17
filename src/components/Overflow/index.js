@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
-import { hasContentOverflow } from '../../utilities/node'
-import { noop } from '../../utilities/other'
+import { hasContentOverflowX } from '../../utilities/node'
+import { noop, requestAnimationFrame } from '../../utilities/other'
 
 export const propTypes = {
   backgroundColor: PropTypes.string,
@@ -25,7 +25,7 @@ class Overflow extends Component {
     this.state = {
       faded: false
     }
-    this.faderWidth = 32
+    this.faderSize = 32
     this.faderNodeLeft = null
     this.faderNodeRight = null
     this.containerNode = null
@@ -44,7 +44,7 @@ class Overflow extends Component {
     const heightOffset = 20
 
     this.setState({
-      faded: hasContentOverflow(containerNode)
+      faded: hasContentOverflowX(containerNode)
     })
 
     node.style.height = height ? `${height - heightOffset}px` : null
@@ -53,22 +53,25 @@ class Overflow extends Component {
   onContainerScroll (event) {
     const { onWheel } = this.props
     const scrollNode = event.currentTarget
-    const offset = this.faderWidth
+    const offset = this.faderSize
     const { clientWidth, scrollWidth, scrollLeft } = scrollNode
     const scrollAmount = clientWidth + scrollLeft + offset
 
-    if (scrollLeft > 0) {
-      const size = scrollLeft < offset ? scrollLeft : offset
-      this.faderNodeLeft.style.width = `${size}px`
-    } else {
-      this.faderNodeLeft.style.width = `0px`
-    }
+    requestAnimationFrame(() => {
+      if (scrollLeft > 0) {
+        const size = scrollLeft < offset ? scrollLeft : offset
+        this.faderNodeLeft.style.transform = `scaleX(${size / offset})`
+      } else {
+        this.faderNodeLeft.style.transform = `scaleX(0)`
+      }
 
-    if (scrollAmount >= scrollWidth) {
-      this.faderNodeRight.style.width = `${offset + (scrollWidth - scrollAmount)}px`
-    } else {
-      this.faderNodeRight.style.width = `${offset}px`
-    }
+      if (scrollAmount >= scrollWidth) {
+        const amount = ((offset - (-1 * (scrollWidth - scrollAmount))) / offset)
+        this.faderNodeRight.style.transform = `scaleX(${amount})`
+      } else {
+        this.faderNodeRight.style.transform = `scaleX(1)`
+      }
+    })
 
     onWheel(event)
   }
@@ -100,8 +103,7 @@ class Overflow extends Component {
         ref={node => (this.faderNodeLeft = node)}
         role='presentation'
         style={{
-          color: backgroundColor,
-          width: 0
+          color: backgroundColor
         }}
       />
     )
@@ -113,7 +115,7 @@ class Overflow extends Component {
         role='presentation'
         style={{
           color: backgroundColor,
-          width: faded ? this.faderWidth : 0
+          transform: faded ? 'scaleX(1)' : 'scaleX(0)'
         }}
       />
     )

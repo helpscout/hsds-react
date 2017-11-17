@@ -43,7 +43,7 @@
     border-left: $size solid _color(yellow, 500);
     border-bottom: $size solid transparent;
     height: 0;
-    left: 0;
+    left: -($border-width);
     position: absolute;
     top: 0;
     width: 0;

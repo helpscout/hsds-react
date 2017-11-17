@@ -32,6 +32,7 @@ class ChatSidebar extends Component {
   }
 
   handleOnBloopClick () {
+    this.handleOnBloopClose()
     smoothScrollTo({
       node: this.contentNode,
       position: 0
@@ -74,11 +75,9 @@ class ChatSidebar extends Component {
 
     if (!isShowBloop) return
 
-    if (this.hasScrolledEnoughForBloop()) {
-      (this.canShowBloop())
-        ? onShowBloop(newMessageCount)
-        : onHideBloop(newMessageCount)
-    }
+    (this.canShowBloop())
+      ? onShowBloop(newMessageCount)
+      : onHideBloop(newMessageCount)
   }
 
   render () {
@@ -95,7 +94,6 @@ class ChatSidebar extends Component {
     } = this.props
 
     const handleOnBloopClick = this.handleOnBloopClick
-    const handleOnBloopClose = this.handleOnBloopClose
     const handleOnScroll = this.handleOnScroll
     const shouldShowBloop = this.canShowBloop()
 
@@ -110,13 +108,13 @@ class ChatSidebar extends Component {
           <Bloop
             isOpen={shouldShowBloop}
             onClick={handleOnBloopClick}
-            onClose={handleOnBloopClose}
           >
             {newMessageCount} new {pluralize('message', newMessageCount)}
           </Bloop>
         </div>
         <Scrollable
           className='c-ChatSidebar__content'
+          fade
           onScroll={handleOnScroll}
           scrollableRef={ref => (this.contentNode = ref)}
         >
