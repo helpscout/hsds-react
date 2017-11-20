@@ -35,23 +35,23 @@ class SampleComponent extends Component {
         ChatSpec.generate()
       ],
       collapseAssignedInbox: true,
-      isShowBloop: false
+      isShowStatusBar: false
     }
     this.handleOnAddMessage = this.handleOnAddMessage.bind(this)
-    this.handleOnHideBloop = this.handleOnHideBloop.bind(this)
+    this.handleOnHideStatusBar = this.handleOnHideStatusBar.bind(this)
   }
 
   handleOnAddMessage () {
     const { chats } = this.state
     this.setState({
       chats: [...chats, ChatSpec.generate()],
-      isShowBloop: true
+      isShowStatusBar: true
     })
   }
 
-  handleOnHideBloop (value) {
+  handleOnHideStatusBar (value) {
     this.setState({
-      isShowBloop: false
+      isShowStatusBar: false
     })
   }
 
@@ -60,10 +60,10 @@ class SampleComponent extends Component {
       chatAvatars,
       chats,
       collapseAssignedInbox,
-      isShowBloop
+      isShowStatusBar
     } = this.state
     const handleOnAddMessage = this.handleOnAddMessage
-    const handleOnHideBloop = this.handleOnHideBloop
+    const handleOnHideStatusBar = this.handleOnHideStatusBar
 
     const messageMarkup = chats.map((item, index) => {
       const avatar = (
@@ -98,8 +98,8 @@ class SampleComponent extends Component {
       <div style={{width: 300, height: '100vh'}}>
         <ChatSidebar
           newMessageCount={newMessageCount}
-          onHideBloop={handleOnHideBloop}
-          isShowBloop={isShowBloop}
+          onHideStatusBar={handleOnHideStatusBar}
+          isShowStatusBar={isShowStatusBar}
         >
           <ChatInbox>
             <ChatInbox.Header

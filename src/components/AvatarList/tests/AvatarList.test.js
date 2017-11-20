@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import AvatarStack from '..'
-import Avatar from '../../Avatar'
+import AvatarList from '..'
+import { Avatar, AnimateGroup, Animate } from '../../index'
 
 const avatars = [
   {
@@ -20,7 +20,7 @@ const avatars = [
 
 describe('ClassNames', () => {
   test('Accept classNames', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} className='channel4' />)
+    const wrapper = shallow(<AvatarList avatars={avatars} className='channel4' />)
 
     const classNames = wrapper.prop('className')
 
@@ -30,34 +30,28 @@ describe('ClassNames', () => {
 
 describe('Avatars', () => {
   test('Renders Avatars', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} />)
+    const wrapper = shallow(<AvatarList avatars={avatars} />)
     const avatar = wrapper.find(Avatar)
 
     expect(avatar.length).toBe(4)
   })
 })
 
-describe('Border Color', () => {
-  test('Has a default borderColor', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} />)
-    const avatar = wrapper.find(Avatar).first()
-    const borderColor = avatar.props().borderColor
+describe('Animate', () => {
+  test('Avatar are Animated, and added within an AnimateGroup', () => {
+    const wrapper = shallow(<AvatarList avatars={avatars} />)
+    const animateGroup = wrapper.find(AnimateGroup)
+    const animate = wrapper.find(Animate)
 
-    expect(borderColor).toBeTruthy()
-  })
-
-  test('Can customize borderColor', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} borderColor='red' />)
-    const avatar = wrapper.find(Avatar).first()
-    const borderColor = avatar.props().borderColor
-
-    expect(borderColor).toBe('red')
+    expect(animateGroup.length).toBeTruthy()
+    expect(animate.length).toBe(4)
+    expect(animate.first().find(Avatar).length).toBeTruthy()
   })
 })
 
 describe('Limit', () => {
   test('Can limit the amount of avatars', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} max={2} />)
+    const wrapper = shallow(<AvatarList avatars={avatars} max={2} />)
     const avatar = wrapper.find(Avatar)
     const additionalCounter = avatar.last()
     const limitCount = 3 // to account for the additional counter
@@ -67,7 +61,7 @@ describe('Limit', () => {
   })
 
   test('Cannot set limit to zero (0)', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} max={0} />)
+    const wrapper = shallow(<AvatarList avatars={avatars} max={0} />)
     const avatar = wrapper.find(Avatar)
     const additionalCounter = avatar.last()
 
@@ -77,15 +71,15 @@ describe('Limit', () => {
 })
 
 describe('Size', () => {
-  test('Does not have a default size', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} />)
+  test('Renders a sm size by default', () => {
+    const wrapper = shallow(<AvatarList avatars={avatars} />)
     const avatar = wrapper.find(Avatar).first()
 
-    expect(avatar.props().size).toBe(undefined)
+    expect(avatar.props().size).toBe('sm')
   })
 
   test('Apply size classes', () => {
-    const wrapper = shallow(<AvatarStack avatars={avatars} size='lg' />)
+    const wrapper = shallow(<AvatarList avatars={avatars} size='lg' />)
     const avatar = wrapper.find(Avatar).first()
 
     expect(avatar.props().size).toBe('lg')

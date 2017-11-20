@@ -2,100 +2,100 @@ import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import pluralize from 'pluralize'
 import Scrollable from '../Scrollable'
-import Bloop from '../Bloop'
+import StatusBar from '../StatusBar'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 
 export const propTypes = {
-  bloopScrollTopOffset: PropTypes.number,
-  isShowBloop: PropTypes.bool,
+  isShowStatusBar: PropTypes.bool,
   newMessageCount: PropTypes.number,
-  onHideBloop: PropTypes.func,
-  onShowBloop: PropTypes.func
+  onHideStatusBar: PropTypes.func,
+  onShowStatusBar: PropTypes.func,
+  statusBarScrollTopOffset: PropTypes.number
 }
 
 const defaultProps = {
-  bloopScrollTopOffset: 100,
-  isShowBloop: false,
+  isShowStatusBar: false,
   newMessageCount: 0,
-  onHideBloop: noop,
-  onShowBloop: noop
+  onHideStatusBar: noop,
+  onShowStatusBar: noop,
+  statusBarScrollTopOffset: 100
 }
 
 class ChatSidebar extends Component {
   constructor (props) {
     super()
-    this.handleOnBloopClick = this.handleOnBloopClick.bind(this)
-    this.handleOnBloopClose = this.handleOnBloopClose.bind(this)
+    this.handleOnStatusBarClick = this.handleOnStatusBarClick.bind(this)
+    this.handleOnStatusBarClose = this.handleOnStatusBarClose.bind(this)
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
-  handleOnBloopClick () {
-    this.handleOnBloopClose()
+  handleOnStatusBarClick () {
+    this.handleOnStatusBarClose()
     smoothScrollTo({
       node: this.contentNode,
       position: 0
     })
   }
 
-  handleOnBloopClose () {
-    const { newMessageCount, onHideBloop } = this.props
-    onHideBloop(newMessageCount)
+  handleOnStatusBarClose () {
+    const { newMessageCount, onHideStatusBar } = this.props
+    onHideStatusBar(newMessageCount)
   }
 
-  hasScrolledEnoughForBloop () {
+  hasScrolledEnoughForStatusBar () {
     const {
-      bloopScrollTopOffset
+      statusBarScrollTopOffset
     } = this.props
 
-    return this.contentNode.scrollTop > bloopScrollTopOffset
+    return this.contentNode.scrollTop > statusBarScrollTopOffset
   }
 
-  canShowBloop () {
+  canShowStatusBar () {
     const {
       newMessageCount,
-      isShowBloop
+      isShowStatusBar
     } = this.props
 
     return (
       newMessageCount > 0 &&
-      isShowBloop &&
-      this.hasScrolledEnoughForBloop()
+      isShowStatusBar &&
+      this.hasScrolledEnoughForStatusBar()
     )
   }
 
   handleOnScroll () {
     const {
-      isShowBloop,
+      isShowStatusBar,
       newMessageCount,
-      onHideBloop,
-      onShowBloop
+      onHideStatusBar,
+      onShowStatusBar
     } = this.props
 
-    if (!isShowBloop) return
+    if (!isShowStatusBar) return
 
-    (this.canShowBloop())
-      ? onShowBloop(newMessageCount)
-      : onHideBloop(newMessageCount)
+    (this.canShowStatusBar())
+      ? onShowStatusBar(newMessageCount)
+      : onHideStatusBar(newMessageCount)
   }
 
   render () {
     const {
-      bloopScrollTopOffset,
+      statusBarScrollTopOffset,
       className,
       children,
-      onBloopClose,
-      onHideBloop,
-      onShowBloop,
+      onStatusBarClose,
+      onHideStatusBar,
+      onShowStatusBar,
       newMessageCount,
-      isShowBloop,
+      isShowStatusBar,
       ...rest
     } = this.props
 
-    const handleOnBloopClick = this.handleOnBloopClick
+    const handleOnStatusBarClick = this.handleOnStatusBarClick
     const handleOnScroll = this.handleOnScroll
-    const shouldShowBloop = this.canShowBloop()
+    const shouldShowStatusBar = this.canShowStatusBar()
 
     const componentClassName = classNames(
       'c-ChatSidebar',
@@ -104,18 +104,17 @@ class ChatSidebar extends Component {
 
     return (
       <div className={componentClassName} {...rest}>
-        <div className='c-ChatSidebar__bloop'>
-          <Bloop
-            isOpen={shouldShowBloop}
-            onClick={handleOnBloopClick}
+        <div className='c-ChatSidebar__status-bar'>
+          <StatusBar
+            isOpen={shouldShowStatusBar}
+            onClick={handleOnStatusBarClick}
           >
             {newMessageCount} new {pluralize('message', newMessageCount)}
-          </Bloop>
+          </StatusBar>
         </div>
         <Scrollable
           className='c-ChatSidebar__content'
           fade
-          fadeBottom
           onScroll={handleOnScroll}
           scrollableRef={ref => (this.contentNode = ref)}
         >

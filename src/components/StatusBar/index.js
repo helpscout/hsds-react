@@ -1,9 +1,18 @@
 import React, {PureComponent as Component} from 'react'
-import Collapsible from '../Collapsible'
+import { default as Collapsible, collapsibleTypes } from '../Collapsible'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 
-class Bloop extends Component {
+export const propTypes = collapsibleTypes
+const defaultProps = {
+  isOpen: false,
+  onClick: noop,
+  onClose: noop,
+  onOpen: noop
+}
+
+class StatusBar extends Component {
   constructor (props) {
     super()
     this.state = {
@@ -14,6 +23,7 @@ class Bloop extends Component {
 
   componentWillReceiveProps (nextProps) {
     const { isOpen } = nextProps
+    /* istanbul ignore else */
     if (isOpen !== undefined) {
       this.setState({ isOpen })
     }
@@ -40,12 +50,12 @@ class Bloop extends Component {
     const handleOnClick = this.handleOnClick
 
     const componentClassName = classNames(
-      'c-Bloop',
+      'c-StatusBar',
       className
     )
 
     return (
-      <Collapsible isOpen={isOpen} onClose={onClose}>
+      <Collapsible isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
         <div
           className={componentClassName}
           onClick={handleOnClick}
@@ -60,6 +70,8 @@ class Bloop extends Component {
   }
 }
 
-Bloop.displayName = 'Bloop'
+StatusBar.propTypes = propTypes
+StatusBar.defaultProps = defaultProps
+StatusBar.displayName = 'StatusBar'
 
-export default Bloop
+export default StatusBar
