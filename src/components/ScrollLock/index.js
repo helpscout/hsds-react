@@ -17,7 +17,13 @@ const defaultProps = {
 
 class ScrollLock extends Component {
   render () {
-    const { children, direction, isDisabled, stopPropagation, onWheel } = this.props
+    const {
+      children,
+      direction,
+      isDisabled,
+      onWheel,
+      stopPropagation
+    } = this.props
 
     if (!children) {
       return null

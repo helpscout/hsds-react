@@ -4,18 +4,21 @@ import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import { hasContentOverflowX } from '../../utilities/node'
+import { getFadeLeftStyles, getFadeRightStyles } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 
 export const propTypes = {
   backgroundColor: PropTypes.string,
   isScrollable: PropTypes.bool,
-  onWheel: PropTypes.func,
+  onScroll: PropTypes.func,
+  scrollableRef: PropTypes.func,
   style: PropTypes.object
 }
 
 const defaultProps = {
   isScrollable: true,
-  onWheel: noop,
+  onScroll: noop,
+  scrollableRef: noop,
   style: {}
 }
 
@@ -23,14 +26,14 @@ class Overflow extends Component {
   constructor () {
     super()
     this.state = {
-      faded: false
+      shouldFadeOnMount: false
     }
     this.faderSize = 32
     this.faderNodeLeft = null
     this.faderNodeRight = null
     this.containerNode = null
     this.applyFade = this.applyFade.bind(this)
-    this.onContainerScroll = this.onContainerScroll.bind(this)
+    this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
   componentDidMount () {
@@ -44,36 +47,34 @@ class Overflow extends Component {
     const heightOffset = 20
 
     this.setState({
-      faded: hasContentOverflowX(containerNode)
+      shouldFadeOnMount: hasContentOverflowX(containerNode)
     })
 
+    /* istanbul ignore next */
+    // JSDOM does not provide node.clientHeight, which prevents
+    // us from testing this calculation
     node.style.height = height ? `${height - heightOffset}px` : null
   }
 
-  onContainerScroll (event) {
-    const { onWheel } = this.props
-    const scrollNode = event.currentTarget
+  applyFadeStyles (event) {
+    const { isScrollable } = this.props
     const offset = this.faderSize
-    const { clientWidth, scrollWidth, scrollLeft } = scrollNode
-    const scrollAmount = clientWidth + scrollLeft + offset
+
+    if (!isScrollable) return
+
+    const transformLeft = getFadeLeftStyles(event, offset)
+    const transformRight = getFadeRightStyles(event, offset)
 
     requestAnimationFrame(() => {
-      if (scrollLeft > 0) {
-        const size = scrollLeft < offset ? scrollLeft : offset
-        this.faderNodeLeft.style.transform = `scaleX(${size / offset})`
-      } else {
-        this.faderNodeLeft.style.transform = `scaleX(0)`
-      }
-
-      if (scrollAmount >= scrollWidth) {
-        const amount = ((offset - (-1 * (scrollWidth - scrollAmount))) / offset)
-        this.faderNodeRight.style.transform = `scaleX(${amount})`
-      } else {
-        this.faderNodeRight.style.transform = `scaleX(1)`
-      }
+      this.faderNodeLeft.style.transform = transformLeft
+      this.faderNodeRight.style.transform = transformRight
     })
+  }
 
-    onWheel(event)
+  handleOnScroll (event) {
+    const { onScroll } = this.props
+    this.applyFadeStyles(event)
+    onScroll(event)
   }
 
   render () {
@@ -82,17 +83,18 @@ class Overflow extends Component {
       className,
       children,
       isScrollable,
-      onWheel,
+      onScroll,
+      scrollableRef,
       ...rest
     } = this.props
 
-    const { faded } = this.state
+    const { shouldFadeOnMount } = this.state
     const applyFade = this.applyFade
-    const onContainerScroll = this.onContainerScroll
+    const handleOnScroll = this.handleOnScroll
 
     const componentClassName = classNames(
       'c-Overflow',
-      faded && 'is-faded',
+      shouldFadeOnMount && 'is-faded',
       isScrollable && 'is-scrollable',
       className
     )
@@ -115,7 +117,7 @@ class Overflow extends Component {
         role='presentation'
         style={{
           color: backgroundColor,
-          transform: faded ? 'scaleX(1)' : 'scaleX(0)'
+          transform: shouldFadeOnMount ? 'scaleX(1)' : 'scaleX(0)'
         }}
       />
     )
@@ -125,8 +127,11 @@ class Overflow extends Component {
         {faderLeftMarkup}
         <div
           className='c-Overflow__container'
-          ref={node => (this.containerNode = node)}
-          onWheel={isScrollable ? onContainerScroll : onWheel}
+          ref={node => {
+            this.containerNode = node
+            scrollableRef(node)
+          }}
+          onScroll={handleOnScroll}
         >
           <div className='c-Overflow__content'>
             {children}

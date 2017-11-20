@@ -106,15 +106,20 @@ describe('Staggering', () => {
 })
 
 describe('Children', () => {
-  test('Can render a non Animate child', () => {
-    const wrapper = shallow(
-      <AnimateGroup>
+  test('Don\'t render non-compatible children, with stagger', () => {
+    const wrapper = mount(
+      <AnimateGroup stagger>
+        <Animate duration={30}>
+          <div className='champ'>Champ</div>
+        </Animate>
         <div className='ron'>Ron</div>
       </AnimateGroup>
     )
-    const o = wrapper.find('.ron')
+    const o = wrapper.find('.champ')
+    const p = wrapper.find('.ron')
 
     expect(o.length).toBeTruthy()
+    expect(p.length).not.toBeTruthy()
   })
 })
 

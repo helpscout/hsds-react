@@ -115,6 +115,7 @@ class ChatSidebar extends Component {
         <Scrollable
           className='c-ChatSidebar__content'
           fade
+          fadeBottom
           onScroll={handleOnScroll}
           scrollableRef={ref => (this.contentNode = ref)}
         >

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ScrollLock from '../ScrollLock'
 import classNames from '../../utilities/classNames'
 import { hasContentOverflowY } from '../../utilities/node'
+import { getFadeTopStyles, getFadeBottomStyles } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 
 export const propTypes = {
@@ -51,31 +52,23 @@ class Scrollable extends Component {
 
   applyFadeStyles (event) {
     const { fade, fadeBottom } = this.props
+    const offset = this.faderSize
+
     if (!fade && !fadeBottom) return
 
-    const scrollNode = event.currentTarget
-    const offset = this.faderSize
-    const { clientHeight, scrollHeight, scrollTop } = scrollNode
-    const scrollAmount = clientHeight + scrollTop + offset
+    if (fade) {
+      const transformTop = getFadeTopStyles(event, offset)
+      requestAnimationFrame(() => {
+        this.faderNodeTop.style.transform = transformTop
+      })
+    }
 
-    requestAnimationFrame(() => {
-      if (fade) {
-        if (scrollTop > 0) {
-          const size = scrollTop < offset ? scrollTop : offset
-          this.faderNodeTop.style.transform = `scaleY(${size / offset})`
-        } else {
-          this.faderNodeTop.style.transform = `scaleY(0)`
-        }
-      }
-
-      if (fadeBottom) {
-        if (scrollAmount >= scrollHeight) {
-          this.faderNodeBottom.style.tranform = `scaleY(${(-1 * (scrollHeight - scrollAmount)) / offset})`
-        } else {
-          this.faderNodeBottom.style.transform = `scaleY(1)`
-        }
-      }
-    })
+    if (fadeBottom) {
+      const transformBottom = getFadeBottomStyles(event, offset)
+      requestAnimationFrame(() => {
+        this.faderNodeBottom.style.transform = transformBottom
+      })
+    }
   }
 
   handleOnScroll (event) {

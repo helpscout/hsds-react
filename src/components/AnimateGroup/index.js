@@ -1,5 +1,9 @@
 import React from 'react'
-import { TransitionGroup } from 'react-transition-group'
+import {
+  Transition,
+  CSSTransition,
+  TransitionGroup
+} from 'react-transition-group'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
@@ -33,13 +37,17 @@ const AnimateGroup = props => {
       const { id } = child.props
       const key = id || index
 
-      if (child.type === Animate) {
+      if (
+        child.type === Animate ||
+        child.type === Transition ||
+        child.type === CSSTransition
+      ) {
         return React.cloneElement(child, {
           wait: (child.props.wait + ((index + 1) * staggerDelay)),
           key
         })
       } else {
-        return React.cloneElement(child, { key })
+        return null
       }
     })
   ) : children

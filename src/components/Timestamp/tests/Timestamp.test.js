@@ -63,3 +63,11 @@ describe('Icon', () => {
     expect(o.props().name).toContain('tick')
   })
 })
+
+describe('Styles', () => {
+  test('Has muted styles', () => {
+    const wrapper = shallow(<Timestamp muted />)
+
+    expect(wrapper.hasClass('is-muted')).toBeTruthy()
+  })
+})
