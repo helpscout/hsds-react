@@ -1,5 +1,4 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import BlankSlate from './BlankSlate'
 import Item from './Item'

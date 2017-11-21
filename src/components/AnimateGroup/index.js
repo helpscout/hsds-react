@@ -34,7 +34,7 @@ const AnimateGroup = props => {
 
   const childrenMarkup = stagger ? (
     React.Children.map(children, (child, index) => {
-      if (!child) return null
+      if (!React.isValidElement(child)) return null
 
       const key = child.props.id || index
 

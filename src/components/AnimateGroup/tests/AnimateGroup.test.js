@@ -121,6 +121,22 @@ describe('Children', () => {
     expect(o.length).toBeTruthy()
     expect(p.length).not.toBeTruthy()
   })
+
+  test('Filter out null children', () => {
+    const children = [
+      (<Animate duration={30} key={11}>
+        <div className='champ'>Champ</div>
+      </Animate>),
+      null
+    ]
+    const wrapper = mount(
+      <AnimateGroup stagger>
+        {children}
+      </AnimateGroup>
+    )
+
+    expect(wrapper.children().length).toBe(1)
+  })
 })
 
 describe('className', () => {

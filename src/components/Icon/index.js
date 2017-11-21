@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ICONS from './icons'
+import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import VisuallyHidden from '../VisuallyHidden'
 import { sizeTypes } from './propTypes'
 
 export const propTypes = {
