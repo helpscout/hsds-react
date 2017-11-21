@@ -34,6 +34,12 @@ describe('Styles', () => {
     expect(wrapper20.prop('className')).toContain('is-20')
   })
 
+  test('Applies allCaps styles if specified', () => {
+    const wrapper = shallow(<Text allCaps />)
+
+    expect(wrapper.prop('className')).toContain('is-all-caps')
+  })
+
   test('Applies disableSelect styles if specified', () => {
     const wrapper = shallow(<Text disableSelect />)
 

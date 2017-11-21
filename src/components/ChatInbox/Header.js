@@ -39,8 +39,8 @@ const Header = props => {
   )
 
   const countMarkup = count !== undefined ? (
-    <Flexy.Item>
-      <Heading className='c-ChatInboxHeader__count' light size='small'>
+    <Flexy.Item className='c-ChatInboxHeader__count'>
+      <Heading light size='small'>
         ({count})
       </Heading>
     </Flexy.Item>
@@ -53,7 +53,7 @@ const Header = props => {
   )
 
   const actionMarkup = isCollapsible
-    ? (isCollapsed ? collapseMarkup : avatarsMarkup)
+    ? (!isCollapsed ? collapseMarkup : avatarsMarkup)
     : avatarsMarkup
 
   const dividerMarkup = (<Hr size='none' />)

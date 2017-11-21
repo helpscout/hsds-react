@@ -27,7 +27,7 @@ class ChatInbox extends Component {
 
   handleOnClickHeader (event, onClick) {
     const { isCollapsible } = this.props
-
+    /* istanbul ignore else */
     if (isCollapsible) {
       this.setState({ isCollapsed: !this.state.isCollapsed })
     }
