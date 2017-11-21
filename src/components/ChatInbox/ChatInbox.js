@@ -25,13 +25,6 @@ class ChatInbox extends Component {
     this.handleOnClickHeader = this.handleOnClickHeader.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
-    // const { isCollapsed } = nextProps
-    // if (isCollapsed !== undefined) {
-    //   this.setState({ isCollapsed })
-    // }
-  }
-
   handleOnClickHeader (event, onClick) {
     const { isCollapsible } = this.props
 

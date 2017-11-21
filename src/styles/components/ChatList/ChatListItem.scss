@@ -38,7 +38,7 @@
     padding-top: 8px;
   }
 
-  &__viewing {
+  &__viewingFlag {
     $size: 12px;
     border-left: $size solid _color(yellow, 500);
     border-bottom: $size solid transparent;
@@ -73,7 +73,8 @@
   }
 
   // States
-  &.is-assigned {
+  &.is-assigned,
+  &.is-loading {
     @include set-background-color(white);
 
     &:hover {

@@ -34,7 +34,6 @@ class SampleComponent extends Component {
         ChatSpec.generate(),
         ChatSpec.generate()
       ],
-      collapseAssignedInbox: true,
       isShowStatusBar: false
     }
     this.handleOnAddMessage = this.handleOnAddMessage.bind(this)
@@ -59,7 +58,6 @@ class SampleComponent extends Component {
     const {
       chatAvatars,
       chats,
-      collapseAssignedInbox,
       isShowStatusBar
     } = this.state
     const handleOnAddMessage = this.handleOnAddMessage
@@ -117,7 +115,7 @@ class SampleComponent extends Component {
             </ChatInbox.Content>
           </ChatInbox>
 
-          <ChatInbox isCollapsible={collapseAssignedInbox}>
+          <ChatInbox isCollapsible>
             <ChatInbox.Header
               avatars={
                 <AvatarList avatars={chatAvatars} max={3} />

@@ -66,14 +66,17 @@ const Item = props => {
   } = props
 
   const isLoading = (
-    (message === undefined || !isTyping) &&
-    name === undefined
+    (message === undefined || name === undefined) &&
+    !isTyping
   )
 
   const componentClassName = classNames(
     'c-ChatListItem',
-    (isAssigned || isLoading) && 'is-assigned',
+    isAssigned && 'is-assigned',
     isFocused && 'is-focused',
+    isLoading && 'is-loading',
+    isViewing && 'is-viewing',
+    isWaiting && 'is-waiting',
     className
   )
 
@@ -88,13 +91,15 @@ const Item = props => {
   )
 
   const viewingMarkup = isViewing ? (
-    <Animate sequence='fadeIn' wait={100} duration={200}>
-      <div className='c-ChatListItem__viewing' title='Is being viewed' />
-    </Animate>
+    <div className='c-ChatListItem__viewing'>
+      <Animate sequence='fadeIn' wait={100} duration={200}>
+        <div className='c-ChatListItem__viewingFlag' title='Is being viewed' />
+      </Animate>
+    </div>
   ) : null
 
   const newMessageCountMarkup = newMessageCount ? (
-    <Flexy.Item>
+    <Flexy.Item className='c-ChatListItem__messageCount'>
       <Animate sequence='fadeIn scale' wait={100} duration={200}>
         <Badge status='success' count>{newMessageCount}</Badge>
       </Animate>
@@ -102,7 +107,7 @@ const Item = props => {
   ) : null
 
   const waitingMarkup = isWaiting ? (
-    <Flexy.Item>
+    <Flexy.Item className='c-ChatListItem__waiting'>
       <Animate sequence='fadeIn scale' wait={100} duration={200}>
         <Tag color='red' pulsing allCaps>Waiting</Tag>
       </Animate>
@@ -160,12 +165,16 @@ const Item = props => {
   ) : null
 
   const avatarMarkup = avatar ? (
-    <Animate
-      sequence='scale fadeIn'
-      wait={100}
-    >
-      {avatar}
-    </Animate>
+    <Flexy.Item>
+      <div className='c-ChatListItem__avatar'>
+        <Animate
+          sequence='scale fadeIn'
+          wait={100}
+        >
+          {avatar}
+        </Animate>
+      </div>
+    </Flexy.Item>
   ) : null
 
   const metaMarkup = !isLoading ? (
