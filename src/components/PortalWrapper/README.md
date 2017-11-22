@@ -43,7 +43,6 @@ export default PortalWrapper(portalOptions)(MyModal)
 | Prop | Type | Description |
 | --- | --- | --- |
 | isOpen | boolean | Shows/hides the Portal'ed component. |
-| lockBodyOnOpen | boolean | Prevents the `body` from scrolling when Portal is open. |
 | timeout | number | Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. |
 
 
