@@ -7,7 +7,7 @@ KeypressListener is used as a child component, as it's `document` on/off binding
 
 ## Example
 
-```html
+```jsx
 <MyComponent>
   <KeypressListener keyCode={Keys.ENTER} handler={surprise} />
   ...

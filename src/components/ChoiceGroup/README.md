@@ -5,7 +5,7 @@ A ChoiceGroup component is a wrapper component for [`Checkbox`](../Checkbox) and
 
 ## Example
 
-```html
+```jsx
 Choose an anchor:
 
 <ChoiceGroup value='ron'>

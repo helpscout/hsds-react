@@ -1,14 +1,14 @@
-# Collapsible
+# StatusBar
 
-A Collapsible component provides content with the ability to collapse or expand.
+A StatusBar component provides contextual feedback messages for user actions.
 
 
 ## Example
 
 ```jsx
-<Collapsible>
-  <div>By the beard of Zeus!</div>
-</Collapsible>
+<StatusBar>
+  Buddy! You have 3 new messages.
+</StatusBar>
 ```
 
 
@@ -20,7 +20,7 @@ A Collapsible component provides content with the ability to collapse or expand.
 | duration | `number` | Time (ms) for the expand/collapse animation. |
 | durationOpen | `number` | Time (ms) for the expand animation. |
 | durationClose | `number` | Time (ms) for the collapse animation. |
-| isOpen | `boolean` | Opens/collapses the component. |
+| isOpen | `boolean` | Opens/collapses the component. Default `false`. |
 | onClose | `function` | Callback function when the component closes. |
 | onOpen | `function` | Callback function when the component opens. |
 | style | `string` | Custom styles to be added to the component. |

@@ -32,4 +32,4 @@ export default HoverWrapper(MyComponent)
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| isHovered | boolean | Whether the node is in a hovered-state. |
+| isHovered | `boolean` | Whether the node is in a hovered-state. |

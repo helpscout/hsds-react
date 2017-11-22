@@ -11,15 +11,13 @@ export const propTypes = {
   backgroundColor: PropTypes.string,
   isScrollable: PropTypes.bool,
   onScroll: PropTypes.func,
-  scrollableRef: PropTypes.func,
-  style: PropTypes.object
+  scrollableRef: PropTypes.func
 }
 
 const defaultProps = {
   isScrollable: true,
   onScroll: noop,
-  scrollableRef: noop,
-  style: {}
+  scrollableRef: noop
 }
 
 class Overflow extends Component {

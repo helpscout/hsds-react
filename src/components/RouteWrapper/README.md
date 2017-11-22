@@ -12,7 +12,7 @@ class Blue extends Component { ... }
 Blue = RouteWrapper(Blue)
 ```
 
-```html
+```jsx
 You're my boy, <Blue fetch={fetchData} to="path/to/route" \>!
 ```
 

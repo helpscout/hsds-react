@@ -6,7 +6,7 @@ A Code component is an enhanced version of the default HTML `<code>`.
 ## Example
 
 ```jsx
-<code>npm install @elf/arctic-puffin</code>
+<Code>npm install @elf/arctic-puffin</Code>
 ```
 
 
@@ -14,4 +14,4 @@ A Code component is an enhanced version of the default HTML `<code>`.
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
+| className | `string` | Custom class names to be added to the component. |

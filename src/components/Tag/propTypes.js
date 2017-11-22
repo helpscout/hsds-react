@@ -7,4 +7,4 @@ export const tagColorTypes = PropTypes.oneOf([
   'orange',
   'purple',
   'red'
-])
+]).isRequired

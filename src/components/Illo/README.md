@@ -1,11 +1,11 @@
-# Icon
+# Illo
 
-An Icon component renders an SVG icon.
+An Illo component renders an SVG illustration.
 
 ## Example
 
 ```jsx
-<Icon name='emoji' />
+<Illo name='blankSlateBurgandy' />
 ```
 
 
@@ -14,9 +14,6 @@ An Icon component renders an SVG icon.
 | Prop | Type | Description |
 | --- | --- | --- |
 | className | `string` | Custom class names to be added to the component. |
-| clickable | `bool` | Enables the component to be clickable. |
-| ignoreClick | `bool` | Ignores click events. Bubbles click event to parent component. |
-| muted | `bool` | Applies muted styles. |
 | name | `string` | Determines the SVG image. Required. |
 | onClick | `function` | Callback function when component is clicked. |
 | size | `number`/`string` | Adjusts the size of the component. |

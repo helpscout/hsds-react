@@ -7,7 +7,7 @@ EventListener is used as a child component, as it's `window` on/off bindings hap
 
 ## Example
 
-```html
+```jsx
 <MyComponent>
   <EventListener event='resize' handler={surprise} />
   ...

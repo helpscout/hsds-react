@@ -5,7 +5,7 @@ A CloseButton component provides the closing action typically used in UI like Mo
 
 ## Example
 
-```html
+```jsx
 <CloseButton onClick={closeMyWindow} />
 ```
 

@@ -14,15 +14,10 @@
   background-color: transparent;
   border-radius: 3px;
   border: 1px solid currentColor;
-  color: red;
+  color: _color(charcoal, 200);
   display: inline-block;
   padding: 1px 4px;
   height: 18px;
-
-  // Modifiers
-  &.is-filled {
-    background-color: currentColor;
-  }
 
   &.is-pulsing {
     animation: _Blue_Tag_Blink 4s infinite both;
@@ -32,6 +27,12 @@
   @each $color, $value in $colors {
     &.is-#{$color} {
       color: $value;
+      // Modifiers
+      &.is-filled {
+        background-color: $value;
+        border-color: $value;
+        color: white;
+      }
     }
   }
 

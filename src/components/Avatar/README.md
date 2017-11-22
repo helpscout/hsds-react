@@ -4,7 +4,7 @@ An Avatar component displays a user's avatar image, or their initials if an imag
 
 ## Example
 
-```html
+```jsx
 <Avatar name="Will Ferrell" image="will.png" />
 ```
 

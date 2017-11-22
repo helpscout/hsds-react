@@ -8,7 +8,7 @@ import Heading from '../Heading'
 import Hr from '../Hr'
 import LoadingDots from '../LoadingDots'
 import List from '../List'
-import Link from '../Link'
+import { default as Link, propTypes as linkTypes } from '../Link'
 import Overflow from '../Overflow'
 import Skeleton from '../Skeleton'
 import Tag from '../Tag'
@@ -18,9 +18,8 @@ import Truncate from '../Truncate'
 import classNames from '../../utilities/classNames'
 import { tagTypes } from './propTypes'
 
-export const propTypes = {
+export const propTypes = Object.assign({}, linkTypes, {
   avatar: PropTypes.element,
-  href: PropTypes.string,
   isAssigned: PropTypes.bool,
   isFocused: PropTypes.bool,
   isTyping: PropTypes.bool,
@@ -31,9 +30,8 @@ export const propTypes = {
   name: PropTypes.string,
   newMessageCount: PropTypes.number,
   tags: tagTypes,
-  to: PropTypes.string,
   timestamp: PropTypes.string
-}
+})
 
 const defaultProps = {
   isAssigned: false,

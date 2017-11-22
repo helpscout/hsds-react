@@ -5,7 +5,7 @@ A SidebarCollapsibleCard component contains content with the ability to collapse
 
 ## Example
 
-```html
+```jsx
 <SidebarCollapsibleCard title='Quote'>
   <div>By the beard of Zeus!</div>
 </SidebarCollapsibleCard>
@@ -16,7 +16,7 @@ A SidebarCollapsibleCard component contains content with the ability to collapse
 
 Typically, this component renders a title provided by the `title` prop. However, you can provide it with custom markup to render in the header area via the `header` prop.
 
-```html
+```jsx
 const customHeader = (
   <div className='custom-heading'>
     <h1>Big Quote></h1>
@@ -36,7 +36,7 @@ Note: `header` will override `title` if both are used.
 
 This component can be drag sortable using the [Sortable](../Sortable) component. Due to the design of this component, you must pass `useDragHandle` and `hideDragHandles` into `Sortable`. This is because this component has it's own drag handles, which is activated when either `sortable` is true or when it is used within `Sortable`.
 
-```html
+```jsx
 <Sortable
   useDragHandle
   hideDragHandles

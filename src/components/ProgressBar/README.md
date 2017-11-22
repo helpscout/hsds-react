@@ -5,7 +5,7 @@ A ProgressBar component visualizes the progression of a task. This component is 
 
 ## Example
 
-```html
+```jsx
 <ProgressBar value={50} />
 ```
 

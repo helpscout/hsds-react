@@ -4,7 +4,7 @@ A Grid component provide layout-based styles to help structure UI elements. Grid
 
 ## Example
 
-```html
+```jsx
 <Grid>
   <Grid.Col size='4'>You're</Grid.Col>
   <Grid.Col size='4'>My Boy</Grid.Col>
@@ -28,7 +28,7 @@ Grid contains 3 sub-components: [Grid.Container](#grid-container), [Grid.Row](#g
 
 ### Example
 
-```html
+```jsx
 <Grid.Container>
   <Grid.Row>
     <Grid.Col size='4'>You're</Grid.Col>
@@ -43,7 +43,7 @@ Grid contains 3 sub-components: [Grid.Container](#grid-container), [Grid.Row](#g
 
 #### Example
 
-```html
+```jsx
 <Grid.Container>
   ...
 </Grid.Container>
@@ -63,7 +63,7 @@ Grid contains 3 sub-components: [Grid.Container](#grid-container), [Grid.Row](#g
 
 #### Example
 
-```html
+```jsx
 <Grid.Row>
   ...
 </Grid.Row>
@@ -83,7 +83,7 @@ Grid contains 3 sub-components: [Grid.Container](#grid-container), [Grid.Row](#g
 
 #### Example
 
-```html
+```jsx
 <Grid.Col>
   ...
 </Grid.Col>

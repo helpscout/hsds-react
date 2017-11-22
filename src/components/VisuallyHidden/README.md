@@ -7,13 +7,13 @@ Typically, you would add text inside of a VisuallyHidden component. However, you
 
 ## Example
 
-```html
+```jsx
 <VisuallyHidden>Label</VisuallyHidden>
 ```
 
 ### Focusable
 
-```html
+```jsx
 <VisuallyHidden focusable><a href="#">Skip to content</a></VisuallyHidden>
 ```
 

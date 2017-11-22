@@ -5,13 +5,13 @@ A Select component is an enhanced version of the default HTML `<select>`.
 
 ## Example
 
-```html
+```jsx
 <Select placeholder="Pick one" options={['You sit on a throne of lies!', 'Son of a nutcracker!']} autoFocus />
 ```
 
 ### Option groups
 
-```html
+```jsx
 <Select options={[
   {
     label: 'Quotes',
