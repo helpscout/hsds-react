@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Input from '../../../components/Input'
 import barista from '../helpers/barista'
 
@@ -9,7 +9,7 @@ const styles = barista(`
 
 describe('Input', () => {
   test('Should be display flex', () => {
-    const markup = mount(<Input />).html()
+    const markup = shallow(<Input />).html()
     styles.html(markup)
 
     const o = styles.$('.c-Input')
@@ -21,7 +21,7 @@ describe('Input', () => {
 
 describe('Prefix/Suffix', () => {
   test('Should be dimmed by default', () => {
-    const markup = mount(<Input prefix='Prefix' />).html()
+    const markup = shallow(<Input prefix='Prefix' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-Input__prefix')
@@ -30,7 +30,7 @@ describe('Prefix/Suffix', () => {
   })
 
   test('Should be full opacity if input has value', () => {
-    const markup = mount(<Input prefix='Prefix' value='Value' />).html()
+    const markup = shallow(<Input prefix='Prefix' value='Value' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-Input__prefix')
@@ -39,7 +39,7 @@ describe('Prefix/Suffix', () => {
   })
 
   test('Should prevent text-wrapping', () => {
-    const markup = mount(<Input prefix='Prefix' />).html()
+    const markup = shallow(<Input prefix='Prefix' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-Input__prefix')
@@ -50,7 +50,7 @@ describe('Prefix/Suffix', () => {
 
 describe('Multiline', () => {
   test('Should not be resizable by default', () => {
-    const markup = mount(<Input multiline />).html()
+    const markup = shallow(<Input multiline />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputField')
@@ -60,7 +60,7 @@ describe('Multiline', () => {
   })
 
   test('Applies resizable styles if set', () => {
-    const markup = mount(<Input multiline resizable />).html()
+    const markup = shallow(<Input multiline resizable />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputField')

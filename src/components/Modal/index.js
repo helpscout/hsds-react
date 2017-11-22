@@ -28,7 +28,6 @@ const defaultProps = {
 
 const modalBaseZIndex = 1040
 const portalOptions = {
-  lockBodyOnOpen: true,
   id: 'Modal',
   timeout: 200,
   zIndex: modalBaseZIndex
@@ -42,7 +41,6 @@ const Modal = props => {
     closePortal,
     exact,
     isOpen,
-    lockBodyOnOpen,
     openPortal,
     onClose,
     onScroll,

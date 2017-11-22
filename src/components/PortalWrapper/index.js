@@ -8,18 +8,14 @@ import Keys from '../../constants/Keys'
 import { createUniqueIDFactory } from '../../utilities/id'
 
 const defaultOptions = {
-  id: 'PortalWrapper',
-  lockBodyOnOpen: false
+  id: 'PortalWrapper'
 }
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
-  const propTypes = Object.assign({}, portalTypes, {
-    lockBodyOnOpen: PropTypes.bool
-  })
+  const propTypes = portalTypes
 
   const defaultProps = {
     isOpen: false,
-    lockBodyOnOpen: false,
     timeout: 200
   }
 
@@ -57,7 +53,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         isOpen: true,
         isMounted: true
       })
-      this.lockBody()
     }
 
     closePortal () {
@@ -65,32 +60,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         isOpen: false,
         isMounted: false
       })
-      this.unlockBody()
-    }
-
-    lockBody () {
-      const { lockBodyOnOpen } = this.state
-      if (lockBodyOnOpen) {
-        // Cache the overflow style
-        if (this.bodyOverflowStyle === null) {
-          this.bodyOverflowStyle = document.body.style.overflow
-        }
-        document.body.style.overflow = 'hidden'
-      }
-    }
-
-    unlockBody () {
-      const { lockBodyOnOpen } = this.state
-      /* istanbul ignore else */
-      if (lockBodyOnOpen) {
-        document.body.style.overflow = this.bodyOverflowStyle
-      }
     }
 
     sequenceClosePortal (onClose) {
       setTimeout(() => {
         onClose()
-        this.unlockBody()
       }, this.state.timeout)
     }
 
@@ -118,7 +92,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const {
         exact,
         isOpenProps,
-        lockBodyOnOpen,
         onBeforeClose,
         onBeforeOpen,
         onClose,
