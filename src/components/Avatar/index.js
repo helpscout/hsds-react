@@ -1,21 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import StatusDot from '../StatusDot'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
+import { statusTypes } from '../StatusDot/propTypes'
 import { nameToInitials } from '../../utilities/strings'
 import { standardSizeTypes } from '../../constants/propTypes'
 import { shapeTypes } from './propTypes'
 
 export const propTypes = {
   borderColor: PropTypes.string,
-  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
+  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  name: PropTypes.string.isRequired,
-  light: PropTypes.bool,
   initials: PropTypes.string,
+  light: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  shape: shapeTypes,
   size: standardSizeTypes,
-  shape: shapeTypes
+  status: statusTypes
 }
 
 const defaultProps = {
@@ -35,6 +38,7 @@ const Avatar = props => {
     initials,
     size,
     shape,
+    status,
     ...rest
   } = props
 
@@ -44,6 +48,7 @@ const Avatar = props => {
     light && 'is-light',
     shape && `is-${shape}`,
     size && `is-${size}`,
+    status && `is-${status}`,
     className
   )
 
@@ -70,11 +75,18 @@ const Avatar = props => {
     borderColor
   } : null
 
+  const statusMarkup = status ? (
+    <div className='c-Avatar__status'>
+      <StatusDot status={status} />
+    </div>
+  ) : null
+
   return (
     <div className={componentClassName} title={name} {...rest}>
       <div className='c-Avatar__crop' style={styles}>
         {contentMarkup}
       </div>
+      {statusMarkup}
     </div>
   )
 }

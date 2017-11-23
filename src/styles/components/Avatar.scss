@@ -24,6 +24,7 @@
   color: _color(brand, primary);
   font-size: _get($sizes, md, font-size);
   height: $default-size;
+  position: relative;
   width: $default-size;
 
   &__crop {
@@ -60,6 +61,28 @@
     color: white;
     line-height: 1;
     text-transform: uppercase;
+  }
+
+  &__status {
+    position: absolute;
+    z-index: 1;
+
+    @include parent(".is-circle > ") {
+      bottom: 0;
+      right: 0;
+    }
+    @include parent(".is-circle.is-sm > ") {
+      bottom: -3px;
+      right: -3px;
+    }
+    @include parent(".is-rounded > ") {
+      bottom: -6px;
+      right: -6px;
+    }
+    @include parent(".is-square > ") {
+      bottom: -6px;
+      right: -6px;
+    }
   }
 
   // Sizes
