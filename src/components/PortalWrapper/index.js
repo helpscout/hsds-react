@@ -90,6 +90,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     render () {
       const {
+        className,
         exact,
         isOpenProps,
         onBeforeClose,
@@ -130,6 +131,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             {...rest}
           >
             <ComposedComponent
+              className={className}
               openPortal={openPortal}
               closePortal={handleOnClose}
               onClose={onClose}
@@ -154,7 +156,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         : null
 
       return (
-        <div>
+        <div className='c-PortalWrapper'>
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
           {triggerMarkup}
           {portalContainerMarkup}
