@@ -301,3 +301,16 @@ describe('Keyboard events', () => {
     expect(spy).toHaveBeenCalled()
   })
 })
+
+describe('Mounting', () => {
+  test('Tracks mount status internally', () => {
+    const wrapper = mount(<Dropdown isOpen />)
+    const o = wrapper.instance()
+
+    expect(o._isMounted).toBe(true)
+
+    wrapper.unmount()
+
+    expect(o._isMounted).toBe(false)
+  })
+})
