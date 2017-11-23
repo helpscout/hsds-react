@@ -15,7 +15,7 @@ The Image component is a very light-weight wrapper for the default HTML `<img>` 
 | Prop | Type | Description |
 | --- | --- | --- |
 | alt | `string` | Alt description for the image. |
-| block | `boolean` | Enables `display: block` for the image. |
+| block | `bool` | Enables `display: block` for the image. |
 | className | `string` | Custom class names to be added to the component. |
 | height | `number` | Width for the image. |
 | src | `string` | Source for the image. Requried. |

@@ -23,8 +23,8 @@ A List component is a presentational component, and is an enhanced version of th
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| border | string | Border style for the items. `dot` or `line`. |
-| className | string | Custom class names to be added to the component. |
-| role | string | Aria-role for the component. Default is `list`. |
-| size | string | Size style for the items. `xs`, `sm`, `md`, or `lg`. |
-| type | string | List style style for the items. `bullet`, `inline`, or `number`. |
+| border | `string` | Border style for the items. `dot` or `line`. |
+| className | `string` | Custom class names to be added to the component. |
+| role | `string` | Aria-role for the component. Default is `list`. |
+| size | `string` | Size style for the items. `xs`, `sm`, `md`, or `lg`. |
+| type | `string` | List style style for the items. `bullet`, `inline`, or `number`. |

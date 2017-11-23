@@ -26,4 +26,4 @@ A DetailList component is a presentational component, and is an enhanced version
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
+| className | `string` | Custom class names to be added to the component. |

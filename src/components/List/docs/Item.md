@@ -19,5 +19,5 @@ An Item component is a presentational component, and is an enhanced version of t
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| role | string | Aria-role for the component. Default is `list-item`. |
+| className | `string` | Custom class names to be added to the component. |
+| role | `string` | Aria-role for the component. Default is `list-item`. |

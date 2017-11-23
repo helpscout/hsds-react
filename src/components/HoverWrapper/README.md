@@ -5,7 +5,7 @@ A HoverWrapper component is a High-Order Component that passes a `isHovered` pro
 
 ## Example
 
-```js
+```jsx
 const MyComponent = props => {
   const {
     children,
@@ -32,4 +32,4 @@ export default HoverWrapper(MyComponent)
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| isHovered | `boolean` | Whether the node is in a hovered-state. |
+| isHovered | `bool` | Whether the node is in a hovered-state. |

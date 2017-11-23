@@ -20,5 +20,5 @@ You're my boy, <Blue fetch={fetchData} to="path/to/route" \>!
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| to | string | React Router path to navigate on click. |
-| fetch | function| function which returns a promise, will be invoked before routing the `to` route |
+| to | `string` | React Router path to navigate on click. |
+| fetch | `function` | function which returns a promise, will be invoked before routing the `to` route |

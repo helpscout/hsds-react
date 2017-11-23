@@ -64,10 +64,10 @@ In this example, our Portal content will render within the `<Portal.Container>` 
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| id | string | The ID for the component. |
-| renderTo | string | A CSS selector to render content, instead of the `<body>`. |
-| timeout | number | Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. |
+| className | `string` | Custom class names to be added to the component. |
+| id | `string` | The ID for the component. |
+| renderTo | `string` | A CSS selector to render content, instead of the `<body>`. |
+| timeout | `number` | Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. |
 
 
 ### Render hooks
@@ -76,10 +76,10 @@ Portal has special callback props tied into it's mounting cycle.
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| onBeforeOpen | function | Fires when the component is mounted, but not rendered. |
-| onOpen | function | Fires as soon as the component has rendered. |
-| onBeforeClose | function | Fires when the component is about to unmount. |
-| onClose | function | Fires after the component is unmounted. |
+| onBeforeOpen | `function` | Fires when the component is mounted, but not rendered. |
+| onOpen | `function` | Fires as soon as the component has rendered. |
+| onBeforeClose | `function` | Fires when the component is about to unmount. |
+| onClose | `function` | Fires after the component is unmounted. |
 
 
 #### `onBeforeOpen`

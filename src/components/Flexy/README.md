@@ -5,25 +5,10 @@ A Flexy component is a layout-based component that uses Flexbox to intelligently
 For more information on the Flexy design patter, check out [`seed-flexy`](http://developer.helpscout.net/seed/packs/seed-flexy/).
 
 
-## Example
+## Components
 
-```jsx
-<Flexy>
-  <Flexy.Item>
-    <Icon name='chat' />
-  </Flexy.Item>
-  <Flexy.Block>
-    <Heading>News Team!</Heading>
-  </Flexy.Block>
-</Flexy>
-```
+The Flexy component is comprised of smaller components:
 
-
-## Props
-
-| Prop | Type | Description |
-| --- | --- | --- |
-| align | string | Determines the vertical alignment of Flexy child elements. Default is `middle`. |
-| className | string | Custom class names to be added to the component. |
-| gap | string | Determines the amount of spacing between Flexy child elements. |
-| just | string | Determines the horizontal alignment of Flexy child elements. |
+* [Flexy](./docs/Flexy.md)
+* [Block](./docs/Block.md)
+* [Item](./docs/Item.md)

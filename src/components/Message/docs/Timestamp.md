@@ -14,6 +14,6 @@ A Timestamp component renders the UI for the time and read status of a [Message]
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| read | boolean | Determines if the Message is read. |
-| timestamp | string | Timestamp for the Message. |
+| className | `string` | Custom class names to be added to the component. |
+| read | `bool` | Determines if the Message is read. |
+| timestamp | `string` | Timestamp for the Message. |

@@ -18,7 +18,7 @@ A Timeline.Item component renders individual items within a [Timeline](./Timelin
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| onMouseEnter | function | Callback when mouse enters the component. |
-| onMouseLeave | function | Callback when mouse leaves the component. |
-| className | string | Custom class names to be added to the component. |
-| timestamp | string | Renders a [Timestamp](../../Timestamp) when component is [hovered](../../HoverWrapper). |
+| className | `string` | Custom class names to be added to the component. |
+| onMouseEnter | `function` | Callback when mouse enters the component. |
+| onMouseLeave | `function` | Callback when mouse leaves the component. |
+| timestamp | `string` | Renders a [Timestamp](../../Timestamp) when component is [hovered](../../HoverWrapper). |

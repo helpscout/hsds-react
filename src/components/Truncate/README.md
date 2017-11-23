@@ -13,10 +13,10 @@ A truncate component is a light-weight text wrapper with the ability to truncate
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| ellipsis | string | Characters to show during truncation. |
-| limit | number | The amount of characters to keep before truncation. |
-| type | string | Location of truncation. |
+| className | `string` | Custom class names to be added to the component. |
+| ellipsis | `string` | Characters to show during truncation. |
+| limit | `number` | The amount of characters to keep before truncation. |
+| type | `string` | Location of truncation. |
 
 
 ### `type`

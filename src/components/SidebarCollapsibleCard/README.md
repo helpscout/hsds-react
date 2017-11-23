@@ -69,14 +69,14 @@ Note: In order for this component to play nicely with [Sortable](../Sortable), a
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| duration | number | Time (ms) for the expand/collapse animation. |
-| header | element | Custom markup to render into the header of this component. |
-| isOpen | boolean | Opens/collapses the component. |
-| onClose | function | Callback function when the component closes. |
-| onOpen | function | Callback function when the component opens. |
-| onSortStart | function | Callback function when component starts being sorted. |
-| onSortEnd | function | Callback function when component stops being sorted. |
-| sortable | boolean | Renders the drag handler for sorting. See [Sortable](../Sortable) |
-| style | string | Custom styles to be added to the component. |
-| title | string | Title for the header in this component. |
+| className | `string` | Custom class names to be added to the component. |
+| duration | `number` | Time (ms) for the expand/collapse animation. |
+| header | `element` | Custom markup to render into the header of this component. |
+| isOpen | `bool` | Opens/collapses the component. |
+| onClose | `function` | Callback function when the component closes. |
+| onOpen | `function` | Callback function when the component opens. |
+| onSortEnd | `function` | Callback function when component stops being sorted. |
+| onSortStart | `function` | Callback function when component starts being sorted. |
+| sortable | `bool` | Renders the drag handler for sorting. See [Sortable](../Sortable) |
+| style | `string` | Custom styles to be added to the component. |
+| title | `string` | Title for the header in this component. |

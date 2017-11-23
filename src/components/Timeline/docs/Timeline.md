@@ -21,4 +21,4 @@ A Timeline component contains [Timeline.Item](./Item.md) child components, and p
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
+| className | `string` | Custom class names to be added to the component. |

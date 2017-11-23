@@ -18,4 +18,4 @@ A Divider component provides a visual horizontal rule that separates [Items](./I
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
+| className | `string` | Custom class names to be added to the component. |

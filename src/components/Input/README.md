@@ -22,28 +22,28 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| onBlur | function | Callback when input is blurred. |
-| onChange | function | Callback when input value is changed. |
-| onFocus | function | Callback when input is focused. |
-| autoFocus | boolean | Automatically focuses the input. |
-| className | string | Custom class names to be added to the component. |
-| disabled | boolean | Disable the input. |
-| helpText | string | Displays text underneath input. |
-| hintText | string | Displays text above input. |
-| id | string | ID for the input. |
-| label | string | Label for the input. |
-| multiline | boolean or number | Transforms input into an auto-expanding textarea. |
-| name | string | Name for the input. |
-| placeholder | string | Placeholder text for the input. |
-| prefix | string | Text to appear before the input. |
-| readOnly | boolean | Disable editing of the input. |
-| resizable | boolean | Enables resizing for the textarea (only enabled for `multiline`). |
-| seamless | boolean | Removes the border around the input. |
-| size | string | Determines the size of the input. |
-| state | string | Change input to state color. |
-| suffix | string | Text to appear after the input. |
-| type | string | Determines the input type. |
-| value | string | Initial value of the input. |
+| onBlur | `function` | Callback when input is blurred. |
+| onChange | `function` | Callback when input value is changed. |
+| onFocus | `function` | Callback when input is focused. |
+| autoFocus | `bool` | Automatically focuses the input. |
+| className | `string` | Custom class names to be added to the component. |
+| disabled | `bool` | Disable the input. |
+| helpText | `string` | Displays text underneath input. |
+| hintText | `string` | Displays text above input. |
+| id | `string` | ID for the input. |
+| label | `string` | Label for the input. |
+| multiline | `bool`/`number` | Transforms input into an auto-expanding textarea. |
+| name | `string` | Name for the input. |
+| placeholder | `string` | Placeholder text for the input. |
+| prefix | `string` | Text to appear before the input. |
+| readOnly | `bool` | Disable editing of the input. |
+| resizable | `bool` | Enables resizing for the textarea (only enabled for `multiline`). |
+| seamless | `bool` | Removes the border around the input. |
+| size | `string` | Determines the size of the input. |
+| state | `string` | Change input to state color. |
+| suffix | `string` | Text to appear after the input. |
+| type | `string` | Determines the input type. |
+| value | `string` | Initial value of the input. |
 
 
 ### States
@@ -69,5 +69,5 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| align | string | Determines the alignment of the component. |
-| size | string | Determines the size of the component. |
+| align | `string` | Determines the alignment of the component. |
+| size | `string` | Determines the size of the component. |

@@ -22,5 +22,5 @@ Typically, you would add text inside of a VisuallyHidden component. However, you
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| focusable | boolean | Enables the ability to be tab focused. |
+| className | `string` | Custom class names to be added to the component. |
+| focusable | `bool` | Enables the ability to be tab focused. |

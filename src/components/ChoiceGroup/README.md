@@ -22,10 +22,10 @@ Choose an anchor:
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| disabled | boolean | Disable the input. |
-| name | string | Name for the inputs. |
-| onBlur | function | Callback when an input is blurred. |
-| onChange | function | Callback when an input value is changed. |
-| onFocus | function | Callback when an input is focused. |
-| value | string | The default value of input group. |
+| className | `string` | Custom class names to be added to the component. |
+| disabled | `bool` | Disable the input. |
+| name | `string` | Name for the inputs. |
+| onBlur | `function` | Callback when an input is blurred. |
+| onChange | `function` | Callback when an input value is changed. |
+| onFocus | `function` | Callback when an input is focused. |
+| value | `string` | The default value of input group. |

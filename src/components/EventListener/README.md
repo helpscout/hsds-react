@@ -19,6 +19,6 @@ EventListener is used as a child component, as it's `window` on/off bindings hap
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| event | string | A Javascript event. |
-| handler | function | Callback when the event is triggered. |
-| scope | element | Node element to capture the event. Default is `window`. |
+| event | `string` | A Javascript event. |
+| handler | `function` | Callback when the event is triggered. |
+| scope | `element` | Node element to capture the event. Default is `window`. |

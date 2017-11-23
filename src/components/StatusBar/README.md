@@ -20,7 +20,7 @@ A StatusBar component provides contextual feedback messages for user actions.
 | duration | `number` | Time (ms) for the expand/collapse animation. |
 | durationOpen | `number` | Time (ms) for the expand animation. |
 | durationClose | `number` | Time (ms) for the collapse animation. |
-| isOpen | `boolean` | Opens/collapses the component. Default `false`. |
+| isOpen | `bool` | Opens/collapses the component. Default `false`. |
 | onClose | `function` | Callback function when the component closes. |
 | onOpen | `function` | Callback function when the component opens. |
 | style | `string` | Custom styles to be added to the component. |
