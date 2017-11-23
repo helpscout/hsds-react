@@ -1,13 +1,19 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import PortalWrapper from '..'
+import classNames from '../../../utilities/classNames'
 
 const TestButton = props => {
+  const { className } = props
+  const componentClassName = classNames(
+    'button',
+    className
+  )
   const handleClick = () => {
     console.log('wee')
   }
   return (
-    <button onClick={handleClick}>Click</button>
+    <button className={componentClassName} onClick={handleClick}>Click</button>
   )
 }
 
@@ -23,6 +29,16 @@ describe('HOC', () => {
     const c = document.body.childNodes[0]
 
     expect(c.querySelector('button')).toBeTruthy()
+  })
+})
+
+describe('ClassName', () => {
+  test('Can pass className to composed component', () => {
+    const TestComponent = PortalWrapper()(TestButton)
+    mount(<TestComponent className='ron' isOpen />)
+
+    const o = document.querySelector('.button')
+    expect(o.classList.contains('ron')).toBeTruthy()
   })
 })
 

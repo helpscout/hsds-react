@@ -32,43 +32,45 @@ afterEach(() => {
 
 test('Can create a component as a HOC', () => {
   const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  mount(<TestComponent isOpen />)
   const o = document.querySelector('.content')
 
   expect(o).toBeTruthy()
   expect(o.innerHTML).toContain('Content')
-
-  wrapper.unmount()
 })
 
 test('Can pass className to composed component', () => {
   const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent className='ron' isOpen />)
+  mount(<TestComponent className='ron' isOpen />)
   const o = document.querySelector('.content')
 
   expect(o.classList.contains('ron')).toBeTruthy()
+})
 
-  wrapper.unmount()
+test('Should not steal composed component custom className', () => {
+  const TestComponent = Drop()(ContentComponent)
+  mount(<TestComponent className='ron' isOpen />)
+  const o = document.querySelector('.c-Drop')
+  const content = document.querySelector('.content')
+
+  expect(o.classList.contains('ron')).not.toBeTruthy()
+  expect(content.classList.contains('ron')).toBeTruthy()
 })
 
 test('Can styles to composed component', () => {
   const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent style={{background: 'red'}} isOpen />)
+  mount(<TestComponent style={{background: 'red'}} isOpen />)
   const o = document.querySelector('.content')
 
   expect(o.style.background).toBe('red')
-
-  wrapper.unmount()
 })
 
 test('Adds default ID', () => {
   const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  mount(<TestComponent isOpen />)
   const o = document.body.childNodes[0]
 
   expect(o.id).toContain('Drop')
-
-  wrapper.unmount()
 })
 
 test('Override default ID with options', () => {
@@ -76,12 +78,10 @@ test('Override default ID with options', () => {
     id: 'Brick'
   }
   const TestComponent = Drop(options)(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  mount(<TestComponent isOpen />)
   const o = document.body.childNodes[0]
 
   expect(o.id).toContain('Brick')
-
-  wrapper.unmount()
 })
 
 describe('Trigger', () => {

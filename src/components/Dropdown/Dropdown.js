@@ -38,6 +38,7 @@ class Dropdown extends Component {
 
     this.isFocused = false
     this.triggerNode = null
+    this._isMounted = false
 
     this.handleOnBodyClick = this.handleOnBodyClick.bind(this)
     this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
@@ -49,12 +50,23 @@ class Dropdown extends Component {
   }
 
   componentDidMount () {
+    this._isMounted = true
     this.setTriggerNode()
   }
 
+  componentWillUnmount () {
+    this._isMounted = false
+  }
+
+  safeSetState (newState) {
+    /* istanbul ignore else */
+    if (this._isMounted) {
+      this.setState(newState)
+    }
+  }
   componentWillUpdate (nextProps) {
     if (this.props.isOpen !== nextProps.isOpen) {
-      this.setState({ isOpen: nextProps.isOpen })
+      this.safeSetState({ isOpen: nextProps.isOpen })
     }
   }
 
@@ -83,7 +95,7 @@ class Dropdown extends Component {
   }
 
   handleOnTriggerClick () {
-    this.setState({ isOpen: !this.state.isOpen })
+    this.safeSetState({ isOpen: !this.state.isOpen })
     this.isFocused = true
   }
 
@@ -95,7 +107,7 @@ class Dropdown extends Component {
 
   handleOnMenuClose () {
     const { onClose } = this.props
-    this.setState({ selectedIndex: null, isOpen: false })
+    this.safeSetState({ selectedIndex: null, isOpen: false })
     this.isFocused = false
 
     onClose()
@@ -104,7 +116,7 @@ class Dropdown extends Component {
   handleDownArrow () {
     const { isOpen } = this.state
     if (!isOpen && this.isFocused) {
-      this.setState({ isOpen: true, selectedIndex: 0 })
+      this.safeSetState({ isOpen: true, selectedIndex: 0 })
     }
   }
 

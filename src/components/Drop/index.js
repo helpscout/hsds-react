@@ -57,8 +57,7 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
       } = portalOptions
 
       const componentClassName = classNames(
-        'c-Drop',
-        className
+        'c-Drop'
       )
 
       return (

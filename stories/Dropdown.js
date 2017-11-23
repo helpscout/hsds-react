@@ -38,7 +38,7 @@ stories.add('Default', () => (
           <Dropdown.Trigger>
             Dropdown
           </Dropdown.Trigger>
-          <Dropdown.Menu onBeforeClose={onBeforeClose} onOpen={onOpen}>
+          <Dropdown.Menu className='menu' onBeforeClose={onBeforeClose} onOpen={onOpen}>
             <Dropdown.Header>Header</Dropdown.Header>
             <Dropdown.Item onClick={logAction}>
               Nested
