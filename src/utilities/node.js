@@ -170,3 +170,17 @@ export const isNodeScrollable = (node) => {
 export const getClosestDocument = (node) => {
   return node && isNodeElement(node) ? node.ownerDocument : document
 }
+
+export const hasContentOverflowX = (node) => {
+  if (!isNodeElement(node)) return false
+  /* istanbul ignore next */
+  // Cannot be tested in JSDOM (missing measurements for props)
+  return node.clientWidth < node.scrollWidth
+}
+
+export const hasContentOverflowY = (node) => {
+  if (!isNodeElement(node)) return false
+  /* istanbul ignore next */
+  // Cannot be tested in JSDOM (missing measurements for props)
+  return node.clientHeight < node.scrollHeight
+}

@@ -61,7 +61,7 @@ const Truncate = props => {
   ) : children
 
   return (
-    <span className={componentClassName} {...rest}>
+    <span className={componentClassName} {...rest} title={children}>
       {word}
     </span>
   )

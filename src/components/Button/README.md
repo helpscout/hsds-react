@@ -9,15 +9,15 @@ This component is extended by the `RouteWrapper` higher order component, and can
 
 ## Examples
 
-```html
+```jsx
 <Button primary onClick={() => console.log('Hello world')>Click me!</Button>
 ```
 
-```html
+```jsx
 <Button primary to="path/to/route">Click me!</Button>
 ```
 
-```html
+```jsx
 <Button primary fetch={fetchData} to="path/to/route">Click me!</Button>
 ```
 

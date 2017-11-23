@@ -4,7 +4,7 @@ A HelpText component is a light-weight text wrapper enhanced with a collection o
 
 ## Example
 
-```html
+```jsx
 <HelpText>News team, assemble!</Text>
 ```
 

@@ -5,11 +5,13 @@ import classNames from '../../utilities/classNames'
 import { stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
+  allCaps: PropTypes.bool,
   className: PropTypes.string,
   disableSelect: PropTypes.bool,
   faint: PropTypes.bool,
   lineHeightReset: PropTypes.bool,
   muted: PropTypes.bool,
+  noWrap: PropTypes.bool,
   selector: PropTypes.oneOf(['span', 'pre', 'samp']),
   size: sizeTypes,
   state: stateTypes,
@@ -26,12 +28,14 @@ const defaultProps = {
 
 const Text = props => {
   const {
+    allCaps,
     children,
     className,
     disableSelect,
     faint,
     lineHeightReset,
     muted,
+    noWrap,
     selector,
     size,
     state,
@@ -43,9 +47,11 @@ const Text = props => {
 
   const componentClassName = classNames(
     'c-Text',
+    allCaps && 'is-all-caps',
     disableSelect && 'is-disableSelect',
     faint && 'is-faint',
     muted && 'is-muted',
+    noWrap && 'is-no-wrap',
     lineHeightReset && 'is-line-height-reset',
     selector && `is-${selector}`,
     size && `is-${size}`,

@@ -7,7 +7,7 @@ This component provides the ability to drag sort child components. This componen
 
 Any child components placed inside this component automatically become sortable.
 
-```html
+```jsx
 <Sortable>
   <Card>Jacobim Mugatu</Card>
   <Card>Lord Business</Card>

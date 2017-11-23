@@ -1,0 +1,17 @@
+.c-ChatInboxHeader {
+  @import "../../resets/base";
+
+  &__content {
+    min-height: 50px;
+    padding: 12px 20px;
+  }
+
+  &__avatars {
+    margin-left: 16px;
+  }
+
+  // Modifiers
+  &.is-collapsible {
+    cursor: pointer;
+  }
+}

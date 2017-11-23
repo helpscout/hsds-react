@@ -5,7 +5,7 @@ A Choice component is a smart wrapper for [`Checkbox`](../Checkbox) and [`Radio`
 
 ## Example
 
-```html
+```jsx
 <Choice label="Stay classy San Diego" value="stay-classy" />
 ```
 
@@ -14,7 +14,7 @@ A Choice component is a smart wrapper for [`Checkbox`](../Checkbox) and [`Radio`
 
 Multiple Choice components can be used in a group using the [ChoiceGroup](../ChoiceGroup) wrapper component.
 
-```html
+```jsx
 Choose an anchor:
 
 <ChoiceGroup>

@@ -7,7 +7,7 @@ An Animate component is a wrapper component that provides CSS-based animations. 
 
 ##### Fade in animation
 
-```html
+```jsx
 <Animate sequence='fadeIn'>
   <Avatar name="Will Ferrell" image="will.png" />
 </Animate>

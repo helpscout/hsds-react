@@ -6,7 +6,7 @@
   @import "../resets/base";
   $states: $STATES;
   $shades: faint, muted, subtle;
-  $sizes: (11, 12, 13, 14, 15, 16, 20, 48);
+  $sizes: (10, 11, 12, 13, 14, 15, 16, 20, 48);
 
   line-height: 1.5;
 
@@ -49,12 +49,21 @@
     word-break: break-word;
   }
 
+  &.is-no-wrap {
+    white-space: nowrap;
+  }
+
   // Resets
   &.is-line-height-reset {
     line-height: 1;
   }
 
   // Styles
+  &.is-all-caps {
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
   &.is-samp {
     font-family: $font-family-code;
   }

@@ -4,7 +4,7 @@ An Overlay component provides the backdrop for UI like Popovers or Modals.
 
 ## Example
 
-```html
+```jsx
 <Overlay onClick={closeMyModal} />
 ```
 
@@ -13,9 +13,9 @@ An Overlay component provides the backdrop for UI like Popovers or Modals.
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| onClick | function | Callback when the component is clicked. |
-| style | object | Inline-styles for the component. |
+| className | `string` | Custom class names to be added to the component. |
+| onClick | `function` | Callback when the component is clicked. |
+| style | `object` | Inline-styles for the component. |
 
 
 ### Child components

@@ -30,7 +30,7 @@ export const truncateMiddle = (word, startLen, endLen, ellip) => {
   // Setting default values
   const frontLen = ~~startLen // will cast to integer
   const backLen = ~~endLen
-  const truncateStr = ellip || '&hellip;'
+  const truncateStr = ellip !== undefined ? ellip : '…'
 
   if (
     (frontLen === 0 && backLen === 0) ||

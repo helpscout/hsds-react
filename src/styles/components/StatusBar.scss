@@ -1,0 +1,11 @@
+@import "../configs/color";
+
+.c-StatusBar {
+  @import "../resets/base";
+  background-color: _color(blue, 200);
+  border-bottom: 1px solid _color(blue, 300);
+  color: _color(blue, 500);
+  cursor: pointer;
+  padding: 8px 20px;
+  text-align: center;
+}

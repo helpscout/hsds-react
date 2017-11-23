@@ -14,4 +14,4 @@ A Skeleton.Block component is the main base used to construct Skeleton component
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
+| className | `string` | Custom class names to be added to the component. |

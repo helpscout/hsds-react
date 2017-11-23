@@ -14,4 +14,4 @@ A Skeleton.Image component is a placeholder component [Image](../../Image) UI.
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
+| className | `string` | Custom class names to be added to the component. |

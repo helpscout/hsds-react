@@ -1,16 +1,39 @@
-// Config
-$seed-link-namespace: "c-Link";
-$seed-link-include-a-selector: false;
+@import "../configs/color";
 
-@import "pack/seed-link/_index";
-
-.#{seed-link-namespace} {
+.c-Link {
   @import "../resets/base";
+  color: _color(blue, 500);
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    color: _color(blue, 400);
+    outline-width: 0;
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: _color(blue, 400);
+    outline-width: 0;
+  }
+
+  &:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
 
   // Modifiers
   &.is-block {
     display: block;
   }
+
+  &.is-no-underline {
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   &.is-word-wrap {
     word-break: break-all;
   }

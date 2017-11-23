@@ -5,7 +5,7 @@ A Radio component is an enhanced version of the default HTML `<input>` `radio`. 
 
 ## Example
 
-```html
+```jsx
 <Radio label="Stay classy San Diego" value="stay-classy" />
 ```
 
@@ -14,7 +14,7 @@ A Radio component is an enhanced version of the default HTML `<input>` `radio`. 
 
 Multiple Choice components can be used in a group using the [ChoiceGroup](../ChoiceGroup) wrapper component.
 
-```html
+```jsx
 Choose an anchor:
 
 <ChoiceGroup>

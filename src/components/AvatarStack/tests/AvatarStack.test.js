@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import AvatarStack from '..'
 import Avatar from '../../Avatar'
 
@@ -57,17 +57,17 @@ describe('Border Color', () => {
 
 describe('Limit', () => {
   test('Can limit the amount of avatars', () => {
-    const wrapper = mount(<AvatarStack avatars={avatars} max={2} />)
+    const wrapper = shallow(<AvatarStack avatars={avatars} max={2} />)
     const avatar = wrapper.find(Avatar)
     const additionalCounter = avatar.last()
     const limitCount = 3 // to account for the additional counter
 
     expect(avatar.length).toBe(limitCount)
-    expect(additionalCounter.text()).toBe('+2')
+    expect(additionalCounter.html()).toContain('+2')
   })
 
   test('Cannot set limit to zero (0)', () => {
-    const wrapper = mount(<AvatarStack avatars={avatars} max={0} />)
+    const wrapper = shallow(<AvatarStack avatars={avatars} max={0} />)
     const avatar = wrapper.find(Avatar)
     const additionalCounter = avatar.last()
 

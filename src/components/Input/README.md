@@ -7,13 +7,13 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 ### Input
 
-```html
+```jsx
 <Input value="Stay classy San Diego" placeholder="Please enter sign-off catch-phrase" autoFocus />
 ```
 
 ### Textarea
 
-```html
+```jsx
 <Input multiline={3} placeholder="Please enter sign-off catch-phrase." autoFocus />
 ```
 
@@ -60,7 +60,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 `Input.Static` components are plain-text components with adjusted height properties to allow them to be aligned with Input components. `Input.Static` is typically used to contain horizontal-style form labels.
 
-```html
+```jsx
 <Input.Static>Catch-phrase</Input.Static>
 <Input multiline={3} placeholder="Please enter sign-off catch-phrase." autoFocus />
 ```

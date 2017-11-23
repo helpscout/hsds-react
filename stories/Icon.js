@@ -17,6 +17,7 @@ storiesOf('Icon', module)
       'chat',
       'clock-large',
       'clock-small',
+      'collapse',
       'cross-large',
       'cross-medium',
       'cross-small',
@@ -45,7 +46,7 @@ storiesOf('Icon', module)
   })
   .add('sizes', () => {
     const icons = [
-      14, 16, 18, 24
+      '14', '16', '18', '24'
     ].map(i => (
       <div style={{display: 'inline-block', margin: 12, textAlign: 'center'}}>
         <Icon name='emoji' size={i} key={i} center />

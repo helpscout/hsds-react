@@ -4,7 +4,7 @@ A LoadingDots component is a cycling ellipsis animation, typically used in chat/
 
 ## Example
 
-```html
+```jsx
 <LoadingDots />
 ```
 
@@ -13,4 +13,4 @@ A LoadingDots component is a cycling ellipsis animation, typically used in chat/
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| align | string | Determines the horizontal alignment of this component. Accepts `left`, `center`, `right`. |
+| align | `string` | Determines the horizontal alignment of this component. Accepts `left`, `center`, `right`. |

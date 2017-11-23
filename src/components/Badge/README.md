@@ -4,8 +4,8 @@ A Badge component is a UI element that helps indicate the count, state, or statu
 
 ## Example
 
-```html
-<Badge status="info">Jazz Flute</Badge>
+```jsx
+<Badge status='info'>Jazz Flute</Badge>
 ```
 
 

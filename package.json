@@ -52,7 +52,7 @@
     "react-transition-group": "2.2.0"
   },
   "devDependencies": {
-    "@helpscout/helix": "0.0.8",
+    "@helpscout/helix": "0.0.13",
     "@storybook/addon-options": "^3.2.4",
     "@storybook/cli": "^3.2.9",
     "@storybook/react": "^3.2.4",
@@ -113,6 +113,7 @@
     "seed-barista": "1.0.4",
     "seed-button": "0.3.0",
     "seed-card": "0.1.0",
+    "seed-centralize": "0.0.4",
     "seed-color-scheme": "0.3.0",
     "seed-control": "0.1.0",
     "seed-dash": "0.0.2",
@@ -121,7 +122,6 @@
     "seed-grid": "0.4.0",
     "seed-harvester": "0.1.5",
     "seed-hr": "0.0.3",
-    "seed-link": "0.0.3",
     "seed-list": "0.0.16",
     "seed-switch": "0.0.4",
     "seed-this": "0.0.5",
@@ -149,6 +149,8 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
       "!src/tests/helpers/**/*.{js,jsx}",
+      "!src/utilities/smoothScroll.{js,jsx}",
+      "!src/vendors/**/*.{js,jsx}",
       "!src/components/index.js"
     ],
     "setupFiles": [

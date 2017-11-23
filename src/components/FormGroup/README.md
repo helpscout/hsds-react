@@ -4,7 +4,7 @@ A FormGroup component provides marginal spacing between form elements.
 
 ## Example
 
-```html
+```jsx
 <FormGroup>
   <Input label='First name' />
 </FormGroup>
@@ -17,7 +17,7 @@ A FormGroup component provides marginal spacing between form elements.
 
 `FormGroup.Grid` extends the default `FormGroup` by wrapping the child component with [Grid component](../Grid).
 
-```html
+```jsx
 <FormGroup.Grid>
   <Grid.Col size='4'>
     <Input.Static>First name</Input.Static>
@@ -33,7 +33,7 @@ A FormGroup component provides marginal spacing between form elements.
 
 A `FormGroup.Choice` is used for [Choice](../Choice) based components, such as [Checkbox](../Checkbox) and [Radio](../Radio).
 
-```html
+```jsx
 <Label>Choose:</Label>
 <FormGroup.Choice>
   <Checkbox label='Derek' value='derek' />

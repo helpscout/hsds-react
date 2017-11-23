@@ -1,11 +1,11 @@
 # AnimateGroup
 
-This component serves as an alias for the TransitionGroup from the [react-transition-group](https://github.com/reactjs/react-transition-group) library.
+This component is a light wrapper for `TransitionGroup` from the [react-transition-group](https://github.com/reactjs/react-transition-group) library.
 
 
 ## Example
 
-```html
+```jsx
 <AnimateGroup>
   <Animate>
     ...
@@ -13,4 +13,12 @@ This component serves as an alias for the TransitionGroup from the [react-transi
 </AnimateGroup>
 ```
 
-See their [documentation](https://reactcommunity.org/react-transition-group/#TransitionGroup) for additional details.
+
+## Props
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| stagger | `bool` | Adds an incremental delay between child `Animate` components. |
+| staggerDelay | `number` | Amount of time (`ms`) to delay for `stagger`. |
+
+See `react-transition-group`'s [documentation](https://reactcommunity.org/react-transition-group/#TransitionGroup) for additional details.
