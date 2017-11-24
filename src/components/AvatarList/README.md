@@ -16,5 +16,6 @@ This component is similar to [AvatarStack](../AvatarStack) with minor UI and ani
 | --- | --- | --- |
 | avatars | `array` | A list of [Avatars](../Avatar).]
 | className | `string` | Custom class names to be added to the component. |
+| max | `number` | Number of avatars to display before truncating. |
 | shape | `string` | Shape of the avatars. |
 | size | `string` | Size of the avatars. |

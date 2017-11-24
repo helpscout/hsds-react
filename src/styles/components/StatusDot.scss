@@ -1,0 +1,28 @@
+.c-StatusDot {
+  @import "../resets/base";
+  @import "../configs/color";
+
+  $states: (
+    online: _color(green),
+    offline: _color(red),
+    busy: _color(yellow),
+    inactive: _color(grey, 600)
+  );
+
+  $borderWidth: 3px;
+  $dotSize: 6px;
+  $size: ceil($borderWidth * 2) + $dotSize;
+
+  background-color: _color(grey, 600);
+  border-radius: 50%;
+  border: $borderWidth solid white;
+  height: $size;
+  width: $size;
+
+  // Status
+  @each $state, $color in $states {
+    &.is-#{$state} {
+      background-color: $color;
+    }
+  }
+}

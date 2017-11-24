@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Avatar from '..'
+import { StatusDot } from '../../index'
 
 const classNames = {
   root: '.c-Avatar',
@@ -131,5 +132,24 @@ describe('Size', () => {
 
     expect(sm.prop('className')).toContain('is-sm')
     expect(lg.prop('className')).toContain('is-lg')
+  })
+})
+
+describe('StatusDot', () => {
+  test('Does not render a StatusDot by default', () => {
+    const wrapper = shallow(<Avatar />)
+    const o = wrapper.find(StatusDot)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders a StatusDot if status is defined', () => {
+    const wrapper = shallow(<Avatar status='online' />)
+    const statusMarkup = wrapper.find('.c-Avatar__status')
+    const o = statusMarkup.find(StatusDot)
+
+    expect(wrapper.hasClass('is-online'))
+    expect(statusMarkup.length).toBe(1)
+    expect(o.length).toBe(1)
   })
 })
