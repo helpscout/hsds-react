@@ -62,7 +62,6 @@ stories.add('few', () => (
   </AvatarGrid>
 ))
 
-
 stories.add('size', () => (
   <AvatarGrid max={9} size='sm'>
     {avatarsMarkup}

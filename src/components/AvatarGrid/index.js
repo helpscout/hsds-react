@@ -50,7 +50,7 @@ const AvatarGrid = props => {
 
   const componentWrapperClassName = classNames(
     'c-AvatarGridWrapper',
-    center && 'is-center',
+    center && 'is-center'
   )
   const componentClassName = classNames(
     'c-AvatarGrid',
