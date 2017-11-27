@@ -62,3 +62,33 @@ describe('ID', () => {
     expect(c.id).toContain('Brick')
   })
 })
+
+describe('Manager', () => {
+  test('Can close last Manage item ', () => {
+    const TestComponent = PortalWrapper()(TestButton)
+    const wrapper = mount(
+      <div>
+        <TestComponent isOpen />
+        <TestComponent isOpen />
+      </div>
+    )
+    const o = wrapper.find(TestComponent).last()
+
+    o.node.closePortal()
+    expect(o.node.state.isOpen).toBe(false)
+  })
+
+  test('Cannot close Component that is not last in Manage list', () => {
+    const TestComponent = PortalWrapper()(TestButton)
+    const wrapper = mount(
+      <div>
+        <TestComponent isOpen />
+        <TestComponent isOpen />
+      </div>
+    )
+    const o = wrapper.find(TestComponent).first()
+
+    o.node.closePortal()
+    expect(o.node.state.isOpen).toBe(true)
+  })
+})
