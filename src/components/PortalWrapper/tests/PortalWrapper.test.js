@@ -72,7 +72,6 @@ describe('Manager', () => {
         <TestComponent isOpen />
       </div>
     )
-    const c = document.body.childNodes[0]
     const o = wrapper.find(TestComponent).last()
 
     o.node.closePortal()
@@ -87,7 +86,6 @@ describe('Manager', () => {
         <TestComponent isOpen />
       </div>
     )
-    const c = document.body.childNodes[0]
     const o = wrapper.find(TestComponent).first()
 
     o.node.closePortal()
