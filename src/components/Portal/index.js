@@ -38,6 +38,7 @@ class Portal extends React.Component {
     this.isClosing = false
     this.mountPortal = this.mountPortal.bind(this)
     this.unmountPortal = this.unmountPortal.bind(this)
+    this._portalList = []
   }
 
   componentDidMount () {
@@ -109,6 +110,8 @@ class Portal extends React.Component {
     // Render to specified target, instead of document
     this.mountSelector.appendChild(this.node)
     this.renderPortalContent(props)
+
+    this._portalList.push(this.node)
 
     if (onOpen) onOpen(this)
 
