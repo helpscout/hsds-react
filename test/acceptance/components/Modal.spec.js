@@ -19,16 +19,16 @@ describe('Modal', () => {
         <div id='modals' />
       </div>
     )
-    expect($('.modal').length).to.equal(0)
+    expect($('.modal').length).toBe(0)
 
     $('.trigger')[0].click()
 
-    expect($('.modal').length).to.equal(1)
+    expect($('.modal').length).toBe(1)
 
     $('.c-Overlay')[0].click()
 
     setTimeout(() => {
-      expect($('.modal').length).to.equal(0)
+      expect($('.modal').length).toBe(0)
       done()
     }, 450)
   })

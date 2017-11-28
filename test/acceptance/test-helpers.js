@@ -1,9 +1,7 @@
 // polyfill PhantomJS environment
 import 'babel-polyfill'
 import { mount } from 'enzyme'
-import { expect } from 'chai'
 import jQuery from 'jquery'
-
 import '../../src/styles/blue.scss'
 import '../../src/styles/blue.hs-app.scss'
 
@@ -27,7 +25,6 @@ const $mountHelper = (component) => {
   return $wrapper
 }
 
-global.expect = expect
 global.mount = mountHelper
 global.$mount = $mountHelper
 global.$ = jQuery

@@ -19,12 +19,12 @@ describe('Dropdown', () => {
       </div>
     )
 
-    expect($('.menu').length).to.equal(0)
+    expect($('.menu').length).toBe(0)
 
     $('.trigger')[0].click()
 
     setTimeout(() => {
-      expect($('.menu').length).to.equal(1)
+      expect($('.menu').length).toBe(1)
       done()
     }, 300)
   })
