@@ -1,0 +1,6 @@
+$seed-centralize-namespace: "c-Centralize";
+@import "pack/seed-centralize/_index";
+
+.#{$seed-centralize-namespace} {
+  height: 100%;
+}

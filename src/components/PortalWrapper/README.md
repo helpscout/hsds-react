@@ -5,7 +5,7 @@ A PortalWrapper component is a High-Order Component that connects a component wi
 
 ## Example
 
-```js
+```jsx
 import Animate from '../Animate'
 import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
@@ -42,16 +42,16 @@ export default PortalWrapper(portalOptions)(MyModal)
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| isOpen | boolean | Shows/hides the Portal'ed component. |
-| timeout | number | Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. |
+| isOpen | `bool` | Shows/hides the Portal'ed component. |
+| timeout | `number` | Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. |
 
 
 ## Props
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| portalIsOpen | boolean | State of the Portal'ed component being visible. |
-| portalIsMounted | boolean | State of the Portal'ed component exiting in the DOM. |
+| portalIsOpen | `bool` | State of the Portal'ed component being visible. |
+| portalIsMounted | `bool` | State of the Portal'ed component exiting in the DOM. |
 
 Note: PortalWrapper also passes props from [Portal](../Portal). The props above are **not** found in Portal.
 
@@ -62,9 +62,9 @@ This component has special callback props tied into it's mounting cycle.
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| onBeforeOpen | function | Fires when the component is mounted, but not rendered. |
-| onOpen | function | Fires as soon as the component has rendered. |
-| onBeforeClose | function | Fires when the component is about to unmount. |
-| onClose | function | Fires after the component is unmounted. |
+| onBeforeOpen | `function` | Fires when the component is mounted, but not rendered. |
+| onOpen | `function` | Fires as soon as the component has rendered. |
+| onBeforeClose | `function` | Fires when the component is about to unmount. |
+| onClose | `function` | Fires after the component is unmounted. |
 
 See [Portal's documentation](../Portal#render-hooks) for more details.

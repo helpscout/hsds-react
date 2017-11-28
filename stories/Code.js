@@ -1,0 +1,12 @@
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import { Code, Text } from '../src/index.js'
+
+const stories = storiesOf('Code', module)
+
+stories.add('default', () => (
+  <Text>
+    What is this… A&nbsp;
+    <Code>npm install @zoolander/building-for-ants</Code>?!
+  </Text>
+))

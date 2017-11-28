@@ -16,6 +16,22 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
+describe('Classname', () => {
+  test('Has default className', () => {
+    const wrapper = shallow(<MenuComponent />)
+    const o = wrapper.find('.c-DropdownMenu')
+
+    expect(o.length).toBeTruthy()
+  })
+
+  test('Can accept custom classNames', () => {
+    const wrapper = shallow(<MenuComponent className='ron' />)
+    const o = wrapper.find('.c-DropdownMenu')
+
+    expect(o.hasClass('ron')).toBeTruthy()
+  })
+})
+
 describe('Nodes', () => {
   test('Has a reference to DOM nodes', () => {
     const wrapper = mount(<MenuComponent />)
@@ -218,6 +234,41 @@ describe('Items', () => {
       expect(spy).toHaveBeenCalled()
       done()
     }, 100)
+  })
+
+  test('Closes ALL menus when a sub-menu item is clicked', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuComponent selectedIndex={0} isOpen onClose={spy}>
+        <Item>
+          <MenuComponent isOpen>
+            <Item>
+              <MenuComponent isOpen>
+                <Item />
+              </MenuComponent>
+            </Item>
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+          </MenuComponent>
+        </Item>
+        <Item />
+        <Item />
+        <Item />
+      </MenuComponent>
+    )
+
+    const o = wrapper.find(Item).first()
+      .find(MenuComponent)
+      .find(Item).first()
+      .find(MenuComponent)
+      .find(Item).first()
+      .find('.c-DropdownItem__link')
+
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
   })
 })
 
@@ -454,13 +505,17 @@ describe('Keyboard Arrows: Left/Right', () => {
   test('Left arrow fires onClose callback if menu is sub menu', () => {
     const spy = jest.fn()
     mount(
-      <MenuComponent selectedIndex={3} isOpen onClose={spy} parentMenu>
+      <MenuComponent selectedIndex={3} isOpen onClose={spy}>
         <Item />
         <Item />
         <Item />
         <Item />
       </MenuComponent>
-    )
+      , {
+        context: {
+          parentMenu: (<div />)
+        }
+      })
 
     simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
 
@@ -470,7 +525,7 @@ describe('Keyboard Arrows: Left/Right', () => {
   test('Left arrow does not fire onClose callback, if menu is sub menu, but not focused', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <MenuComponent selectedIndex={3} isOpen onClose={spy} parentMenu>
+      <MenuComponent selectedIndex={3} isOpen onClose={spy}>
         <Item />
         <Item />
         <Item />
@@ -487,7 +542,7 @@ describe('Keyboard Arrows: Left/Right', () => {
   test('Right arrow sets hoverIndex + unfocuses menu, if sub menu is present', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <MenuComponent selectedIndex={1} isOpen onClose={spy} parentMenu>
+      <MenuComponent selectedIndex={1} isOpen onClose={spy}>
         <Item />
         <Item>
           Sub Menu
@@ -510,7 +565,7 @@ describe('Keyboard Arrows: Left/Right', () => {
   test('Right arrow does not unfocus, if there is no sub menu is present', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <MenuComponent selectedIndex={1} isOpen onClose={spy} parentMenu>
+      <MenuComponent selectedIndex={1} isOpen onClose={spy}>
         <Item />
         <Item />
         <Item />
@@ -530,7 +585,7 @@ describe('Keyboard Arrows: Left/Right', () => {
   test('Right arrow does not unfocus, if there is no focusIndex', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <MenuComponent selectedIndex={1} isOpen onClose={spy} parentMenu>
+      <MenuComponent selectedIndex={1} isOpen onClose={spy}>
         <Item />
         <Item />
         <Item />
@@ -553,7 +608,7 @@ describe('Keyboard Arrows: Left/Right', () => {
   test('Right arrow does not fire onClose callback, if menu is sub menu, but not focused', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <MenuComponent selectedIndex={3} isOpen onClose={spy} parentMenu>
+      <MenuComponent selectedIndex={3} isOpen onClose={spy}>
         <Item />
         <Item />
         <Item />

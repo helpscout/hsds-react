@@ -12,7 +12,10 @@ import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { incrementFocusIndex } from '../../utilities/focus'
 import { noop } from '../../utilities/other'
-import { applyStylesToNode } from '../../utilities/node'
+import {
+  applyStylesToNode,
+  isNodeScrollable
+} from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
 
 export const propTypes = {
@@ -20,8 +23,8 @@ export const propTypes = {
   enableCycling: PropTypes.bool,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  onOpen: PropTypes.func,
   onSelect: PropTypes.func,
-  parentMenu: PropTypes.bool,
   selectedIndex: PropTypes.number
 }
 
@@ -30,7 +33,13 @@ const defaultProps = {
   enableCycling: false,
   isOpen: false,
   onClose: noop,
+  onOpen: noop,
   onSelect: noop
+}
+
+const contextTypes = {
+  parentMenu: PropTypes.element,
+  parentMenuClose: PropTypes.func
 }
 
 const dropOptions = {
@@ -64,11 +73,13 @@ class Menu extends Component {
     this.handleItemOnMouseEnter = this.handleItemOnMouseEnter.bind(this)
     this.handleItemOnMenuClose = this.handleItemOnMenuClose.bind(this)
     this.handleOnClose = this.handleOnClose.bind(this)
+    this.handleOnCloseParent = this.handleOnCloseParent.bind(this)
     this.handleOnMenuClick = this.handleOnMenuClick.bind(this)
 
     this.node = null
     this.wrapperNode = null
     this.contentNode = null
+    this.scrollableNode = null
     this.listNode = null
     // https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
     this._isMounted = false
@@ -98,6 +109,13 @@ class Menu extends Component {
 
   componentWillUnmount () {
     this._isMounted = false
+  }
+
+  safeSetState (newState) {
+    /* istanbul ignore else */
+    if (this._isMounted) {
+      this.setState(newState)
+    }
   }
 
   handleOnResize () {
@@ -144,7 +162,7 @@ class Menu extends Component {
       itemCount
     })
 
-    this.setState({
+    this.safeSetState({
       focusIndex: newFocusIndex,
       hoverIndex: null
     })
@@ -167,7 +185,7 @@ class Menu extends Component {
   handleLeftArrow (event) {
     event.preventDefault()
     if (!this.isFocused) return
-    const { parentMenu } = this.props
+    const { parentMenu } = this.context
     if (parentMenu) {
       this.handleOnClose()
     }
@@ -182,7 +200,7 @@ class Menu extends Component {
 
     const item = this.items[focusIndex]
     if (item && item.menu) {
-      this.setState({ hoverIndex: focusIndex })
+      this.safeSetState({ hoverIndex: focusIndex })
       this.isFocused = false
     }
   }
@@ -200,26 +218,32 @@ class Menu extends Component {
     if (focusItem) {
       const node = focusItem.node
       node.focus()
-      node.scrollIntoView()
+      /* istanbul ignore next */
+      // Cannot be tested in JSDOM, due to lack of scrollHeight DOM API
+      if (isNodeScrollable(this.scrollableNode)) {
+        /* istanbul ignore next */
+        // Scrolling does not exist in JSDOM
+        node.scrollIntoView()
+      }
     }
   }
 
   handleItemOnClick () {
     const { closeMenuOnClick } = this.props
-    if (closeMenuOnClick) {
-      this.handleOnClose()
-    }
+
+    if (!closeMenuOnClick) return
+    this.handleOnCloseParent()
   }
 
   handleItemOnFocus (event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
-    this.setState({ focusIndex })
+    this.safeSetState({ focusIndex })
   }
 
   handleItemOnMouseEnter (event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
     const hoverIndex = focusIndex
-    this.setState({ focusIndex, hoverIndex })
+    this.safeSetState({ focusIndex, hoverIndex })
     if (item.menu) {
       this.isFocused = false
     }
@@ -229,13 +253,22 @@ class Menu extends Component {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.isFocused = true
-      this.setState({ hoverIndex: null })
+      this.safeSetState({ hoverIndex: null })
     }
   }
 
   handleOnClose () {
     const { onClose } = this.props
     onClose()
+  }
+
+  handleOnCloseParent () {
+    const { parentMenuClose } = this.context
+    this.handleOnClose()
+
+    if (parentMenuClose) {
+      parentMenuClose()
+    }
   }
 
   handleOnMenuClick (event) {
@@ -255,7 +288,6 @@ class Menu extends Component {
       onClose,
       onOpen,
       onSelect,
-      parentMenu,
       selectedIndex,
       trigger,
       ...rest
@@ -266,11 +298,16 @@ class Menu extends Component {
       hoverIndex
     } = this.state
 
+    const {
+      parentMenu
+    } = this.context
+
     const handleUpArrow = this.handleUpArrow
     const handleDownArrow = this.handleDownArrow
     const handleLeftArrow = this.handleLeftArrow
     const handleRightArrow = this.handleRightArrow
     const handleEscape = this.handleEscape
+    const handleOnCloseParent = this.handleOnCloseParent
 
     const handleItemOnClick = this.handleItemOnClick
     const handleItemOnFocus = this.handleItemOnFocus
@@ -300,6 +337,7 @@ class Menu extends Component {
         },
         onMouseEnter: handleItemOnMouseEnter,
         onMenuClose: handleItemOnMenuClose,
+        onParentMenuClose: handleOnCloseParent,
         onSelect
       }) : child
     })
@@ -327,20 +365,23 @@ class Menu extends Component {
           <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
           <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleEscape} />
-          <Animate sequence='fade downSmall' in={isOpen} duration={100}>
+          <Animate sequence='fade downSmall' in={isOpen} duration={160}>
             <Card seamless floating>
               <div
                 className='c-DropdownMenu__content'
                 ref={node => { this.contentNode = node }}
                 style={{height: this.height}}
               >
-                <Scrollable>
-                  <ul
+                <Scrollable
+                  scrollableRef={node => { this.scrollableNode = node }}
+                >
+                  <div
                     className='c-DropdownMenu__list'
                     ref={node => { this.listNode = node }}
+                    role='menu'
                   >
                     {childrenMarkup}
-                  </ul>
+                  </div>
                 </Scrollable>
               </div>
             </Card>
@@ -353,6 +394,7 @@ class Menu extends Component {
 
 Menu.propTypes = propTypes
 Menu.defaultProps = defaultProps
+Menu.contextTypes = contextTypes
 
 export const MenuComponent = Menu
 export default Drop(dropOptions)(Menu)

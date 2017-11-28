@@ -8,6 +8,16 @@ cache:
 
 before_install:
   - npm set progress=false
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+addons:
+  apt:
+    sources:
+     - google-chrome
+    packages:
+     - google-chrome-stable
 
 install:
   - npm install
@@ -15,7 +25,7 @@ install:
 script:
   - npm run pretty
   - npm run build:css
-  - npm test
+  - npm run test:all
 
 after_success:
   - npm run coverage

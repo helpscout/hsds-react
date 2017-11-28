@@ -1,90 +1,4 @@
-import {
-  Alert,
-  Animate,
-  AnimateGroup,
-  Avatar,
-  AvatarStack,
-  Badge,
-  Button,
-  Card,
-  Checkbox,
-  Choice,
-  ChoiceGroup,
-  CloseButton,
-  Collapsible,
-  Dropdown,
-  Emoji,
-  EmojiPicker,
-  EventListener,
-  Flexy,
-  FormGroup,
-  Grid,
-  Heading,
-  Icon,
-  Image,
-  InfiniteScroller,
-  Input,
-  KeypressListener,
-  Label,
-  Link,
-  LoadingDots,
-  Overlay,
-  Portal,
-  PortalWrapper,
-  ProgressBar,
-  Radio,
-  RouteWrapper,
-  Select,
-  Scrollable,
-  SidebarCollapsibleCard,
-  Sortable,
-  Text,
-  VisuallyHidden
-} from '..'
-
-const components = [
-  Alert,
-  Animate,
-  AnimateGroup,
-  Avatar,
-  AvatarStack,
-  Badge,
-  Button,
-  Card,
-  Checkbox,
-  Choice,
-  ChoiceGroup,
-  CloseButton,
-  Collapsible,
-  Dropdown,
-  Emoji,
-  EmojiPicker,
-  EventListener,
-  Flexy,
-  FormGroup,
-  Grid,
-  Heading,
-  Icon,
-  Image,
-  InfiniteScroller,
-  Input,
-  KeypressListener,
-  Label,
-  Link,
-  LoadingDots,
-  Overlay,
-  Portal,
-  PortalWrapper,
-  ProgressBar,
-  RouteWrapper,
-  Radio,
-  Scrollable,
-  Select,
-  SidebarCollapsibleCard,
-  Sortable,
-  Text,
-  VisuallyHidden
-]
+import * as components from '..'
 
 const componentTestHelper = (component) => {
   test(component.name, () => {
@@ -93,4 +7,9 @@ const componentTestHelper = (component) => {
   })
 }
 
-components.forEach(c => componentTestHelper(c))
+Object.keys(components).forEach(key => {
+  const component = components[key]
+  if (typeof component === 'function') {
+    componentTestHelper(component)
+  }
+})

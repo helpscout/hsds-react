@@ -5,7 +5,7 @@ A Choice component is a smart wrapper for [`Checkbox`](../Checkbox) and [`Radio`
 
 ## Example
 
-```html
+```jsx
 <Choice label="Stay classy San Diego" value="stay-classy" />
 ```
 
@@ -14,7 +14,7 @@ A Choice component is a smart wrapper for [`Checkbox`](../Checkbox) and [`Radio`
 
 Multiple Choice components can be used in a group using the [ChoiceGroup](../ChoiceGroup) wrapper component.
 
-```html
+```jsx
 Choose an anchor:
 
 <ChoiceGroup>
@@ -31,22 +31,22 @@ Choose an anchor:
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| autoFocus | boolean | Automatically focuses the input. |
-| className | string | Custom class names to be added to the component. |
-| componentID | string | Namespace for the input ID. Default is `Choice`. |
-| disabled | boolean | Disable the input. |
-| helpText | string | Displays text underneath input. |
-| id | string | ID for the input. |
-| hideLabel | boolean | Hides the label with [VisuallyHidden](../VisuallyHidden). |
-| label | string | Label for the input. |
-| name | string | Name for the input. |
-| onBlur | function | Callback when the input is blurred. |
-| onChange | function | Callback when the input value is changed. |
-| onFocus | function | Callback when the input is focused. |
-| readOnly | boolean | Disable editing of the input. |
-| state | string | Change input to state color. |
-| type | string | Determines the input type. `checkbox` or `radio`. |
-| value | string | The value of the input. |
+| autoFocus | `bool` | Automatically focuses the input. |
+| className | `string` | Custom class names to be added to the component. |
+| componentID | `string` | Namespace for the input ID. Default is `Choice`. |
+| disabled | `bool` | Disable the input. |
+| helpText | `string` | Displays text underneath input. |
+| hideLabel | `bool` | Hides the label with [VisuallyHidden](../VisuallyHidden). |
+| id | `string` | ID for the input. |
+| label | `string` | Label for the input. |
+| name | `string` | Name for the input. |
+| onBlur | `function` | Callback when the input is blurred. |
+| onChange | `function` | Callback when the input value is changed. |
+| onFocus | `function` | Callback when the input is focused. |
+| readOnly | `bool` | Disable editing of the input. |
+| state | `string` | Change input to state color. |
+| type | `string` | Determines the input type. `checkbox` or `radio`. |
+| value | `string` | The value of the input. |
 
 
 ### States

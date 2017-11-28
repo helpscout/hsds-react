@@ -2,4 +2,13 @@
   box-sizing: border-box;
   height: auto;
   max-width: 100%;
+
+  // Modifiers
+  &.is-block {
+    display: block;
+  }
+
+  &.is-rounded {
+    border-radius: 2px;
+  }
 }

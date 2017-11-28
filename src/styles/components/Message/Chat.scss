@@ -1,0 +1,9 @@
+.c-MessageChat {
+  @import "../../resets/base";
+  display: block;
+  margin: 0 0 2px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

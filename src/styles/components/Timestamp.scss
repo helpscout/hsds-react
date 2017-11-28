@@ -1,0 +1,8 @@
+.c-Timestamp {
+  @import "../resets/base";
+
+  // Modifiers
+  &.is-muted {
+    opacity: 0.6;
+  }
+}

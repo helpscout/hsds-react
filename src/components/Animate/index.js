@@ -24,7 +24,10 @@ export const propTypes = {
   onExit: PropTypes.func,
   onExited: PropTypes.func,
   sequence: sequencesType,
-  wait: PropTypes.number
+  wait: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object
+  ]),
 }
 
 const defaultProps = {
@@ -45,7 +48,7 @@ class Animate extends Component {
   constructor (props) {
     super()
     this.state = {
-      duration: props.duration + props.wait,
+      duration: props.duration + getWait(props.wait, 'in'),
       in: false
     }
     this.handleOnEnter = this.handleOnEnter.bind(this)
@@ -95,11 +98,12 @@ class Animate extends Component {
 
   setStateIn (transitionIn) {
     const { wait } = this.props
+    const waitSequence = transitionIn ? 'in' : 'out'
     setTimeout(() => {
       if (this._isMounted) {
         this.setState({ in: transitionIn })
       }
-    }, wait)
+    }, getWait(wait, waitSequence))
   }
 
   getAnimationStyles (animationState = AnimationStates.ENTER) {
@@ -248,6 +252,17 @@ class Animate extends Component {
       </Transition>
     )
   }
+}
+
+const getWait = (wait, sequence) => {
+  const defaultWait = 0
+  if (typeof wait === 'number') {
+    return wait
+  }
+  if (typeof wait === 'object' && sequence) {
+    return wait[sequence] !== undefined ? wait[sequence] : defaultWait
+  }
+  return defaultWait
 }
 
 Animate.propTypes = propTypes

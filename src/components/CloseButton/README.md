@@ -5,7 +5,7 @@ A CloseButton component provides the closing action typically used in UI like Mo
 
 ## Example
 
-```html
+```jsx
 <CloseButton onClick={closeMyWindow} />
 ```
 
@@ -14,10 +14,10 @@ A CloseButton component provides the closing action typically used in UI like Mo
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| onBlur | function | Callback when button is blurred. |
-| onClick | function | Callback when button is clicked. |
-| onChange | function | Callback when button value is changed. |
-| onFocus | function | Callback when button is focused. |
-| className | string | Custom class names to be added to the component. |
-| seamless | boolean | Applies a seamless style to the component. |
-| title | string | Custom title for the button. |
+| className | `string` | Custom class names to be added to the component. |
+| onBlur | `function` | Callback when button is blurred. |
+| onChange | `function` | Callback when button value is changed. |
+| onClick | `function` | Callback when button is clicked. |
+| onFocus | `function` | Callback when button is focused. |
+| seamless | `bool` | Applies a seamless style to the component. |
+| title | `string` | Custom title for the button. |

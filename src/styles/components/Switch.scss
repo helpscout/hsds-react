@@ -1,0 +1,33 @@
+$seed-switch-namespace: "c-Switch";
+
+@import "pack/seed-switch/_index";
+@import "pack/seed-this/_index";
+
+.#{$seed-switch-namespace} {
+  $block: this();
+
+  &__state {
+    border-radius: $seed-switch-toggle-border-radius;
+    bottom: 0;
+    box-shadow: 0 0 0 0 transparent;
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: box-shadow 0.2s ease;
+    z-index: 0;
+  }
+
+  // State
+  &.is-error {
+    #{$block}__state {
+      box-shadow: 0 0 0 2px rgba(_color(state, error, border-color), 0.6);
+    }
+  }
+}
+
+.#{$seed-switch-toggle-namespace} {
+  display: block;
+  z-index: 1;
+}

@@ -4,7 +4,7 @@ An AvatarStack component displays an array of [Avatars](../Avatar). This compone
 
 ## Example
 
-```html
+```jsx
 <AvatarStack avatars={listOfAvatars} />
 ```
 
@@ -12,7 +12,9 @@ An AvatarStack component displays an array of [Avatars](../Avatar). This compone
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| avatars | array | A list of [Avatars](../Avatar).]
-| borderColor | string | Color for the Avatar border. |
-| className | string | Custom class names to be added to the component. |
-| size | string | Size of the avatar. |
+| avatars | `array` | A list of [Avatars](../Avatar).]
+| borderColor | `string` | Color for the Avatar border. |
+| className | `string` | Custom class names to be added to the component. |
+| max | `number` | Number of avatars to display before truncating. |
+| shape | `string` | Shape of the avatars. |
+| size | `string` | Size of the avatars. |

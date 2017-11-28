@@ -47,3 +47,15 @@ describe('ClassNames', () => {
     expect(classNames).toContain('now')
   })
 })
+
+describe('Styles', () => {
+  test('Applies block styles, if applied', () => {
+    const wrapper = shallow(<Image src='mugatu.jpg' className='so hot right now' block />)
+    expect(wrapper.hasClass('is-block')).toBeTruthy()
+  })
+
+  test('Applies shape styles, if applied', () => {
+    const wrapper = shallow(<Image src='mugatu.jpg' className='so hot right now' shape='rounded' />)
+    expect(wrapper.hasClass('is-rounded')).toBeTruthy()
+  })
+})

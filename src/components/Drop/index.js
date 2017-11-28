@@ -57,8 +57,7 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
       } = portalOptions
 
       const componentClassName = classNames(
-        'c-Drop',
-        className
+        'c-Drop'
       )
 
       return (
@@ -71,8 +70,12 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
             zIndex={zIndex}
           >
             <ComposedComponent
+              className={className}
               closePortal={closePortal}
               isOpen={portalIsOpen}
+              onClose={onClose}
+              onOpen={onOpen}
+              style={style}
               {...rest}
             />
           </Positioner>

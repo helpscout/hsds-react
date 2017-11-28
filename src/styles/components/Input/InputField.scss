@@ -11,6 +11,11 @@
   $default-height: _get($seed-control-sizes, md, height);
   $states: $STATES;
 
+  // Scoped functions
+  @function get-height($height: $default-height, $border: $border-width) {
+    @return ceil($height - $border * 2);
+  }
+
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -18,15 +23,12 @@
   border: none;
   color: currentColor;
   display: block;
-  height: $default-height;
+  height: get-height();
   padding: 0;
   position: relative;
-  top: -($border-width); // to normalize and center the <input>
+  top: 0;
   width: 100%;
   z-index: 1;
-  @-moz-document url-prefix() {
-    top: 0;
-  }
   &:focus {
     outline: none;
   }
@@ -38,7 +40,7 @@
   // Adjust field height
   @each $size, $values in $seed-control-sizes {
     &.is-#{$size} {
-      height: _get($values, height);
+      height: get-height(_get($values, height));
     }
   }
 

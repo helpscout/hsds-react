@@ -1,0 +1,99 @@
+@import "../../configs/color";
+
+.c-ChatListItem {
+  $border-width: 4px;
+  // Mixins
+  @mixin set-background-color($color) {
+    background-color: $color;
+    .c-Overflow__fader {
+      color: $color;
+    }
+  }
+
+  @import "../../resets/base";
+  @include set-background-color(_color(grey, 200));
+  border-left: $border-width solid transparent;
+  position: relative;
+  transition: background-color 0.3s ease, border-left 0.1s ease;
+
+  &:hover {
+    @include set-background-color(
+      lighten(_color(grey, 300), 1)
+    );
+  }
+
+  &:focus {
+    outline: none !important;
+    z-index: 2;
+  }
+
+  &__block {
+    padding-left: 20px - $border-width;
+    padding-bottom: 16px;
+    padding-top: 16px;
+  }
+
+  &__typing {
+    padding-bottom: 8px;
+    padding-top: 8px;
+  }
+
+  &__viewingFlag {
+    $size: 12px;
+    border-left: $size solid _color(yellow, 500);
+    border-bottom: $size solid transparent;
+    height: 0;
+    left: -($border-width);
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 1;
+  }
+
+  &__heading {
+    min-height: 18px;
+    margin-bottom: 4px;
+  }
+
+  &__message {
+    min-height: 38px;
+    margin-bottom: 4px;
+  }
+
+  &__meta {
+    min-height: 26px;
+  }
+
+  &__timestamp {
+    margin-right: 12px;
+  }
+
+  &__tags {
+    max-width: 120px;
+  }
+
+  // States
+  &.is-assigned,
+  &.is-loading {
+    @include set-background-color(white);
+
+    &:hover {
+      @include set-background-color(
+        lighten(_color(grey, 200), 1)
+      );
+    }
+  }
+
+  &.is-focused {
+    @include set-background-color(
+      lighten(_color(blue, 200), 5)
+    );
+    border-left: $border-width solid _color(blue, 500);
+
+    &:hover {
+      @include set-background-color(
+        lighten(_color(blue, 200), 4)
+      );
+    }
+  }
+}

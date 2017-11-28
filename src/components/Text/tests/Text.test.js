@@ -34,6 +34,12 @@ describe('Styles', () => {
     expect(wrapper20.prop('className')).toContain('is-20')
   })
 
+  test('Applies allCaps styles if specified', () => {
+    const wrapper = shallow(<Text allCaps />)
+
+    expect(wrapper.prop('className')).toContain('is-all-caps')
+  })
+
   test('Applies disableSelect styles if specified', () => {
     const wrapper = shallow(<Text disableSelect />)
 
@@ -62,6 +68,18 @@ describe('Styles', () => {
     const wrapper = shallow(<Text truncate />)
 
     expect(wrapper.prop('className')).toContain('is-truncate')
+  })
+
+  test('Applies line-height reset styles if specified', () => {
+    const wrapper = shallow(<Text lineHeightReset />)
+
+    expect(wrapper.prop('className')).toContain('is-line-height-reset')
+  })
+
+  test('Applies word-wrap reset styles if specified', () => {
+    const wrapper = shallow(<Text wordWrap />)
+
+    expect(wrapper.prop('className')).toContain('is-word-wrap')
   })
 })
 

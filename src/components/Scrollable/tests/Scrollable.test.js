@@ -28,12 +28,49 @@ describe('Content', () => {
 })
 
 describe('Fade', () => {
-  test('Renders fade when specified', () => {
+  test('Renders fade elements', () => {
     const wrapper = shallow(<Scrollable fade />)
-    const fade = wrapper.find('.c-Scrollable__fade')
+    const fade = wrapper.find('.c-Scrollable__fader')
 
-    expect(wrapper.prop('className')).toContain('has-fade')
-    expect(fade.exists()).toBeTruthy()
+    expect(fade.length).toBe(2)
+  })
+
+  test('Applies bottom fade styles on mount, if applicable', () => {
+    const wrapper = mount(<Scrollable fadeBottom />)
+    const fade = wrapper.instance().faderNodeBottom
+    wrapper.setState({ shouldFadeOnMount: true })
+
+    expect(fade.style.transform).toBe('scaleY(1)')
+  })
+
+  test('Applies top fade styles when scrolled', () => {
+    const wrapper = mount(<Scrollable fade />)
+    const o = wrapper.instance()
+
+    const currentTarget = {
+      clientHeight: 100,
+      scrollHeight: 200,
+      scrollTop: 30
+    }
+
+    o.handleOnScroll({ currentTarget })
+
+    expect(o.faderNodeTop.style.transform).toContain('scaleY')
+  })
+
+  test('Applies bottom fade styles when scrolled', () => {
+    const wrapper = mount(<Scrollable fadeBottom />)
+    const o = wrapper.instance()
+
+    const currentTarget = {
+      clientHeight: 100,
+      scrollHeight: 200,
+      scrollTop: 30
+    }
+
+    o.handleOnScroll({ currentTarget })
+
+    expect(o.faderNodeBottom.style.transform).toContain('scaleY')
   })
 })
 

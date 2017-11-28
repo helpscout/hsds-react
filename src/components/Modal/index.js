@@ -12,14 +12,32 @@ import { propTypes as portalTypes } from '../Portal'
 
 export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
+  scrollFade: PropTypes.bool,
   scrollableRef: PropTypes.func,
+  modalAnimationDelay: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object
+  ]),
+  overlayAnimationDelay: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object
+  ]),
   onScroll: PropTypes.func,
   trigger: PropTypes.element
 })
 
 const defaultProps = {
   closeIcon: true,
+  scrollFade: true,
   isOpen: false,
+  modalAnimationDelay: {
+    in: 200,
+    out: 100
+  },
+  overlayAnimationDelay: {
+    in: 100,
+    out: 200
+  },
   onScroll: noop,
   scrollableRef: noop
 }
@@ -27,7 +45,7 @@ const defaultProps = {
 const modalBaseZIndex = 1040
 const portalOptions = {
   id: 'Modal',
-  timeout: 200,
+  timeout: 100,
   zIndex: modalBaseZIndex
 }
 
@@ -39,12 +57,15 @@ const Modal = props => {
     closePortal,
     exact,
     isOpen,
+    modalAnimationDelay,
     openPortal,
     onClose,
     onScroll,
+    overlayAnimationDelay,
     path,
     portalIsOpen,
     portalIsMounted,
+    scrollFade,
     scrollableRef,
     style,
     timeout,
@@ -70,10 +91,10 @@ const Modal = props => {
   }) : { zIndex }
 
   return (
-    <div className={componentClassName} style={modalStyle} {...rest}>
+    <div className={componentClassName} role='document' style={modalStyle} {...rest}>
       <div className='c-Modal__content'>
-        <Animate sequence='fade down' in={portalIsOpen} wait={300}>
-          <Card seamless>
+        <Animate sequence='fade down' in={portalIsOpen} wait={modalAnimationDelay}>
+          <Card seamless role='dialog'>
             {closeMarkup}
             <Scrollable
               className='c-Modal__scrollable'
@@ -87,8 +108,8 @@ const Modal = props => {
           </Card>
         </Animate>
       </div>
-      <Animate sequence='fade' in={portalIsOpen} wait={200}>
-        <Overlay onClick={closePortal} />
+      <Animate sequence='fade' in={portalIsOpen} wait={overlayAnimationDelay}>
+        <Overlay onClick={closePortal} role='presentation' />
       </Animate>
     </div>
   )

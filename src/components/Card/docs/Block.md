@@ -7,7 +7,7 @@ Note: It is highly recommended the `seamless` prop is used for the container `<C
 
 ## Example
 
-```html
+```jsx
 <Card seamless>
   <Card.Block>
     Frank "The Tank"
@@ -23,10 +23,10 @@ Note: It is highly recommended the `seamless` prop is used for the container `<C
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| onScroll | function | Callback function when inner Scrollable is scrolled. |
-| bgMuted | boolean | Applies a muted background to the component. |
-| className | string | Custom class names to be added to the component. |
-| flex | boolean | Adds flexbox styles to the component. |
-| scrollable | boolean | Integrates [Scrollable](../Scrollable) into the component. |
-| scrollableRef | function | Retrieves the scrollable node. |
-| size | string | Adjusts the size of the component. Default is `md`. |
+| bgMuted | `bool` | Applies a muted background to the component. |
+| className | `string` | Custom class names to be added to the component. |
+| flex | `bool` | Adds flexbox styles to the component. |
+| onScroll | `function` | Callback function when inner Scrollable is scrolled. |
+| scrollable | `bool` | Integrates [Scrollable](../Scrollable) into the component. |
+| scrollableRef | `function` | Retrieves the scrollable node. |
+| size | `string` | Adjusts the size of the component. Default is `md`. |

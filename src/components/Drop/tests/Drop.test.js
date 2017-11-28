@@ -1,13 +1,25 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Drop from '..'
+import classNames from '../../../utilities/classNames'
 
 const ContentComponent = props => {
+  const { className, style } = props
+  const componentClassName = classNames(
+    'content',
+    className
+  )
   const handleClick = () => {
     console.log('wee')
   }
   return (
-    <div className='content' onClick={handleClick}>Content</div>
+    <div
+      className={componentClassName}
+      onClick={handleClick}
+      style={style}
+    >
+      Content
+    </div>
   )
 }
 const trigger = (
@@ -20,23 +32,45 @@ afterEach(() => {
 
 test('Can create a component as a HOC', () => {
   const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  mount(<TestComponent isOpen />)
   const o = document.querySelector('.content')
 
   expect(o).toBeTruthy()
   expect(o.innerHTML).toContain('Content')
+})
 
-  wrapper.unmount()
+test('Can pass className to composed component', () => {
+  const TestComponent = Drop()(ContentComponent)
+  mount(<TestComponent className='ron' isOpen />)
+  const o = document.querySelector('.content')
+
+  expect(o.classList.contains('ron')).toBeTruthy()
+})
+
+test('Should not steal composed component custom className', () => {
+  const TestComponent = Drop()(ContentComponent)
+  mount(<TestComponent className='ron' isOpen />)
+  const o = document.querySelector('.c-Drop')
+  const content = document.querySelector('.content')
+
+  expect(o.classList.contains('ron')).not.toBeTruthy()
+  expect(content.classList.contains('ron')).toBeTruthy()
+})
+
+test('Can styles to composed component', () => {
+  const TestComponent = Drop()(ContentComponent)
+  mount(<TestComponent style={{background: 'red'}} isOpen />)
+  const o = document.querySelector('.content')
+
+  expect(o.style.background).toBe('red')
 })
 
 test('Adds default ID', () => {
   const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  mount(<TestComponent isOpen />)
   const o = document.body.childNodes[0]
 
   expect(o.id).toContain('Drop')
-
-  wrapper.unmount()
 })
 
 test('Override default ID with options', () => {
@@ -44,12 +78,10 @@ test('Override default ID with options', () => {
     id: 'Brick'
   }
   const TestComponent = Drop(options)(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  mount(<TestComponent isOpen />)
   const o = document.body.childNodes[0]
 
   expect(o.id).toContain('Brick')
-
-  wrapper.unmount()
 })
 
 describe('Trigger', () => {

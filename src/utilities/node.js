@@ -146,3 +146,41 @@ export const isNodeVisible = (options) => {
 
   return parseInt(top, 10) <= parseInt(viewportBottom, 10) && parseInt(bottom, 10) >= parseInt(viewportTop, 10)
 }
+
+export const getScrollParent = (node) => {
+  /* istanbul ignore else */
+  if (!isNodeElement(node)) {
+    return null
+  }
+  /* istanbul ignore next */
+  // Cannot be tested in JSDOM. scrollHeight and clientHeight do not exist.
+  if (node.scrollHeight > node.clientHeight) {
+    return node
+  } else {
+    return getScrollParent(node.parentNode)
+  }
+}
+
+export const isNodeScrollable = (node) => {
+  /* istanbul ignore next */
+  // Cannot be tested in JSDOM. scrollHeight and clientHeight do not exist.
+  return node && isNodeElement(node) ? node.scrollHeight > node.clientHeight : false
+}
+
+export const getClosestDocument = (node) => {
+  return node && isNodeElement(node) ? node.ownerDocument : document
+}
+
+export const hasContentOverflowX = (node) => {
+  if (!isNodeElement(node)) return false
+  /* istanbul ignore next */
+  // Cannot be tested in JSDOM (missing measurements for props)
+  return node.clientWidth < node.scrollWidth
+}
+
+export const hasContentOverflowY = (node) => {
+  if (!isNodeElement(node)) return false
+  /* istanbul ignore next */
+  // Cannot be tested in JSDOM (missing measurements for props)
+  return node.clientHeight < node.scrollHeight
+}

@@ -6,10 +6,13 @@ import KeypressListener from '../KeypressListener'
 import { default as Portal, propTypes as portalTypes } from '../Portal'
 import Keys from '../../constants/Keys'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { setupManager } from '../../utilities/globalManager'
 
 const defaultOptions = {
   id: 'PortalWrapper'
 }
+
+const managerNamespace = 'BluePortalWrapperManager'
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   const propTypes = portalTypes
@@ -24,6 +27,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   class PortalWrapper extends Component {
     constructor (props) {
       super()
+
       this.state = Object.assign({}, props, options, {
         id: uniqueID(),
         isMounted: props.isOpen
@@ -31,9 +35,17 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       this.closePortal = this.closePortal.bind(this)
       this.openPortal = this.openPortal.bind(this)
       this.handleOnClose = this.handleOnClose.bind(this)
+      // Welcome aboard, Mr. Manager!
+      this._MrManager = setupManager(managerNamespace)
+      // Wow, I'm Mr. Manager!
+      // Well, manager… we we just say manager.
     }
 
     componentDidMount () {
+      const { id, isMounted } = this.state
+      if (isMounted) {
+        this._MrManager.add(id)
+      }
       if (this.props.path) {
         this.openPortal()
       }
@@ -48,17 +60,23 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     /* istanbul ignore next */
     openPortal () {
+      const { id } = this.state
       this.setState({
         isOpen: true,
         isMounted: true
       })
+      this._MrManager.add(id)
     }
 
     closePortal () {
-      this.setState({
-        isOpen: false,
-        isMounted: false
-      })
+      const { id } = this.state
+      if (this._MrManager.last() === id) {
+        this.setState({
+          isOpen: false,
+          isMounted: false
+        })
+        this._MrManager.remove(id)
+      }
     }
 
     sequenceClosePortal (onClose) {
@@ -89,6 +107,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     render () {
       const {
+        className,
         exact,
         isOpenProps,
         onBeforeClose,
@@ -129,6 +148,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             {...rest}
           >
             <ComposedComponent
+              className={className}
               openPortal={openPortal}
               closePortal={handleOnClose}
               onClose={onClose}
@@ -153,7 +173,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         : null
 
       return (
-        <div>
+        <div className='c-PortalWrapper'>
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
           {triggerMarkup}
           {portalContainerMarkup}

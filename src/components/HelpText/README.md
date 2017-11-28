@@ -4,7 +4,7 @@ A HelpText component is a light-weight text wrapper enhanced with a collection o
 
 ## Example
 
-```html
+```jsx
 <HelpText>News team, assemble!</Text>
 ```
 
@@ -13,10 +13,10 @@ A HelpText component is a light-weight text wrapper enhanced with a collection o
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| className | string | Custom class names to be added to the component. |
-| muted | boolean  | Changes text color to a light grey. |
-| size | string | Adjust text size. |
-| state | string | Changes the text color based on state. |
+| className | `string` | Custom class names to be added to the component. |
+| muted | `bool`  | Changes text color to a light grey. |
+| size | `string` | Adjust text size. |
+| state | `string` | Changes the text color based on state. |
 
 
 ### States

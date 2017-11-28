@@ -1,8 +1,11 @@
 @import "pack/seed-dash/_index";
+@import "pack/seed-family/_index";
+@import "pack/seed-this/_index";
 
 .c-Avatar {
   @import "../configs/color";
   @import "../resets/base";
+  $block: this();
   $sizes: (
     lg: (
       size: 52px,
@@ -21,6 +24,7 @@
   color: _color(brand, primary);
   font-size: _get($sizes, md, font-size);
   height: $default-size;
+  position: relative;
   width: $default-size;
 
   &__crop {
@@ -32,6 +36,17 @@
     justify-content: center;
     overflow: hidden;
     width: 100%;
+
+    // Styles
+    @include parent(".is-circle > ") {
+      border-radius: 200%;
+    }
+    @include parent(".is-rounded > ") {
+      border-radius: 3px;
+    }
+    @include parent(".is-square > ") {
+      border-radius: 0;
+    }
   }
 
   &__image {
@@ -48,6 +63,28 @@
     text-transform: uppercase;
   }
 
+  &__status {
+    position: absolute;
+    z-index: 1;
+
+    @include parent(".is-circle > ") {
+      bottom: 0;
+      right: 0;
+    }
+    @include parent(".is-circle.is-sm > ") {
+      bottom: -3px;
+      right: -3px;
+    }
+    @include parent(".is-rounded > ") {
+      bottom: -6px;
+      right: -6px;
+    }
+    @include parent(".is-square > ") {
+      bottom: -6px;
+      right: -6px;
+    }
+  }
+
   // Sizes
   @each $size, $values in $sizes {
     &.is-#{$size} {
@@ -55,6 +92,14 @@
       height: $sz;
       font-size: _get($values, font-size);
       width: $sz;
+    }
+  }
+
+  // Styles
+  &.is-light {
+    color: _color(grey, 400);
+    #{$block}__title {
+      color: _color(text, muted);
     }
   }
 }

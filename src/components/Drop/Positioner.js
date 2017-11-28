@@ -5,7 +5,7 @@ import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
 import {
-  getOptimalViewportPosition,
+  getViewportPosition,
   getDirections
 } from '../../utilities/nodePosition'
 import { noop } from '../../utilities/other'
@@ -82,7 +82,7 @@ class Positioner extends Component {
     // the getOptimalViewportPosition method is tested.
     // However, I'm unable to test it with this component due to the difficulty
     // of setting up Enzyme to recognize the triggerNode
-    return getOptimalViewportPosition({
+    return getViewportPosition({
       triggerNode: this.triggerNode,
       contentNode: this.contentNode,
       offset: offset,

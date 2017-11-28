@@ -17,6 +17,11 @@ const trigger = (
   <a className='trigger'>Trigger</a>
 )
 
+afterEach(() => {
+  document.body.innerHTML = ''
+  document.body.style.overflow = null
+})
+
 const simulateKeyPress = (keyCode) => {
   const event = new Event('keyup')
   event.keyCode = keyCode
@@ -31,9 +36,6 @@ describe('Trigger', () => {
 
     expect(el.exists()).toBeTruthy()
     expect(el.text()).toBe('Trigger')
-
-    wrapper.unmount()
-    cleanUp()
   })
 
   test('Automatically receives click event', () => {
@@ -41,15 +43,12 @@ describe('Trigger', () => {
     const el = wrapper.find('.trigger')
 
     expect(el.prop('onClick')).toBeInstanceOf(Function)
-
-    wrapper.unmount()
-    cleanUp()
   })
 })
 
 describe('Key events', () => {
   test('Closes modal when ESCAPE is pressed', (done) => {
-    const wrapper = mount(<Modal isOpen trigger={trigger} />)
+    mount(<Modal isOpen trigger={trigger} />)
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
     const preCloseNodeCount = document.body.childNodes.length
@@ -61,16 +60,14 @@ describe('Key events', () => {
     setTimeout(() => {
       expect(document.body.childNodes.length).toBeLessThan(preCloseNodeCount)
       expect(document.getElementsByClassName('c-Modal').length).toBe(0)
-      wrapper.unmount()
-      cleanUp()
       done()
     }, MODAL_TEST_TIMEOUT)
   })
 })
 
 describe('CloseIcon', () => {
-  test('Does not render closeIcon if specified', (done) => {
-    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} />)
+  test('Does not render closeIcon if specified', () => {
+    mount(<Modal isOpen trigger={trigger} closeIcon={false} />)
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
 
@@ -79,9 +76,6 @@ describe('CloseIcon', () => {
     const closeIcon = modal.getElementsByClassName('c-Modal__close')
 
     expect(closeIcon.length).toBeFalsy()
-
-    wrapper.unmount()
-    done()
   })
 })
 
@@ -98,29 +92,24 @@ describe('Portal', () => {
 
   test('Renders at the body', () => {
     const preMountNodeCount = document.body.childNodes.length
-    const wrapper = mount(<Modal isOpen trigger={trigger} />)
+    mount(<Modal isOpen trigger={trigger} />)
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
 
     expect(document.body.childNodes.length).toBe(preMountNodeCount + 1)
     expect(modal).toBeTruthy()
     expect(modal.classList).toContain('c-Modal')
-
-    wrapper.unmount()
-    cleanUp()
   })
 
   test('Does not render by default', (done) => {
     setTimeout(() => {
       const preMountNodeCount = document.body.childNodes.length
-      const wrapper = mount(<Modal trigger={trigger} />)
+      mount(<Modal trigger={trigger} />)
       const portal = document.body.childNodes[0]
 
       expect(document.body.childNodes.length).toBe(preMountNodeCount)
       expect(portal).not.toBeTruthy()
 
-      wrapper.unmount()
-      cleanUp()
       done()
     }, MODAL_TEST_TIMEOUT)
   })
@@ -144,9 +133,7 @@ describe('Route', () => {
 
     expect(modal).toBeTruthy()
 
-    wrapper.unmount()
     wrapper.detach()
-    cleanUp()
     done()
   })
 
@@ -168,9 +155,7 @@ describe('Route', () => {
 
     expect(modal).toBeTruthy()
 
-    wrapper.unmount()
     wrapper.detach()
-    cleanUp()
     done()
   })
 
@@ -191,17 +176,15 @@ describe('Route', () => {
 
     expect(modal).toBeFalsy()
 
-    wrapper.unmount()
     wrapper.detach()
-    cleanUp()
     done()
   })
 })
 
 describe('Style', () => {
-  test('Can render extra styles', (done) => {
+  test('Can render extra styles', () => {
     const style = { background: 'red' }
-    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} />)
+    mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} />)
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
 
@@ -211,15 +194,11 @@ describe('Style', () => {
 
     expect(html).toContain('background')
     expect(html).toContain('red')
-
-    wrapper.unmount()
-    cleanUp()
-    done()
   })
 
-  test('Can render extra styles + zIndex', (done) => {
+  test('Can render extra styles + zIndex', () => {
     const style = { background: 'red' }
-    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} zIndex={2000} />)
+    mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} zIndex={2000} />)
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
 
@@ -231,14 +210,10 @@ describe('Style', () => {
     expect(html).toContain('red')
     expect(html).toContain('z-index')
     expect(html).toContain('2000')
-
-    wrapper.unmount()
-    cleanUp()
-    done()
   })
 
-  test('Can render zIndex, without style prop', (done) => {
-    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />)
+  test('Can render zIndex, without style prop', () => {
+    mount(<Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />)
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
 
@@ -248,10 +223,6 @@ describe('Style', () => {
 
     expect(html).toContain('z-index')
     expect(html).toContain('2000')
-
-    wrapper.unmount()
-    cleanUp()
-    done()
   })
 })
 
@@ -276,7 +247,6 @@ describe('PortalWrapper', () => {
 
     setTimeout(() => {
       expect(mockCallback.mock.calls.length).toBe(1)
-      cleanUp()
       wrapper.detach()
       done()
     }, MODAL_TEST_TIMEOUT)

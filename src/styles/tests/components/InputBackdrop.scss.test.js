@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import rgbHex from 'rgb-hex'
 import Input from '../../../components/Input'
 import barista from '../helpers/barista'
@@ -11,7 +11,7 @@ const styles = barista(`
 
 describe('Base', () => {
   test('Simulates an input style', () => {
-    const markup = mount(<Input />).html()
+    const markup = shallow(<Input />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -22,7 +22,7 @@ describe('Base', () => {
   })
 
   test('Absolulely positioned to parent', () => {
-    const markup = mount(<Input />).html()
+    const markup = shallow(<Input />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -37,7 +37,7 @@ describe('Base', () => {
 
 describe('Styles', () => {
   test('Removes borders if seamless', () => {
-    const markup = mount(<Input seamless />).html()
+    const markup = shallow(<Input seamless />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -46,7 +46,7 @@ describe('Styles', () => {
   })
 
   test('Absolutely positioned to parent', () => {
-    const markup = mount(<Input />).html()
+    const markup = shallow(<Input />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -61,7 +61,7 @@ describe('Styles', () => {
 
 describe('States', () => {
   test('Applies error styles if defined', () => {
-    const markup = mount(<Input state='error' />).html()
+    const markup = shallow(<Input state='error' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -70,7 +70,7 @@ describe('States', () => {
   })
 
   test('Applies success styles if defined', () => {
-    const markup = mount(<Input state='success' />).html()
+    const markup = shallow(<Input state='success' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -79,7 +79,7 @@ describe('States', () => {
   })
 
   test('Applies warning styles if defined', () => {
-    const markup = mount(<Input state='warning' />).html()
+    const markup = shallow(<Input state='warning' />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')
@@ -88,7 +88,7 @@ describe('States', () => {
   })
 
   test('Applies disabled styles if defined', () => {
-    const markup = mount(<Input disabled />).html()
+    const markup = shallow(<Input disabled />).html()
     styles.html(markup)
 
     const o = styles.$('.c-InputBackdrop')

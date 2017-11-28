@@ -1,0 +1,34 @@
+@import "pack/seed-dash/_index";
+
+.c-Illo {
+  $sizes: (40, 60, 80);
+  $default-size: 40;
+
+  box-sizing: border-box;
+  display: block;
+  height: ($default-size * 1px);
+  margin: auto;
+  position: relative;
+  width: ($default-size * 1px);
+
+  // Sizes
+  @each $size in $sizes {
+    &.is-#{$size} {
+      height: ($size * 1px);
+      width: ($size * 1px);
+    }
+  }
+
+  // SVG
+  &__icon {
+    display: block;
+    pointer-events: none;
+
+    svg {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
