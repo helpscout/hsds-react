@@ -25,8 +25,7 @@ install:
 script:
   - npm run pretty
   - npm run build:css
-  - npm test
-  - npm test:all
+  - npm run test:all
 
 after_success:
   - npm run coverage
