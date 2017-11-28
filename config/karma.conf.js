@@ -8,11 +8,14 @@ const testHelperPath = '../test/acceptance/test-helpers.js'
 const eslintFormatter = require('react-dev-utils/eslintFormatter')
 
 module.exports = function(config) {
-  config.set({
+  const configuration = {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-    frameworks: ['mocha'],
+    frameworks: [
+      'jasmine',
+      'jasmine-matchers'
+    ],
 
     files: [
       // entry file for Webpack
@@ -47,6 +50,14 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
+
+    // for Travis
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
@@ -106,10 +117,18 @@ module.exports = function(config) {
 
     // enable our plugins
     plugins: [
-      require('karma-mocha'),
+      require('karma-jasmine'),
+      require('karma-jasmine-matchers'),
       require('karma-webpack'),
       require('karma-chrome-launcher'),
       require('karma-firefox-launcher')
     ]
-  })
+  }
+
+  // For Travis
+  if(process.env.TRAVIS) {
+    configuration.browsers = ['Chrome_travis_ci']
+  }
+
+  config.set(configuration)
 }
