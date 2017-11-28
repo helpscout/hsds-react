@@ -11,14 +11,14 @@ stories.add('default', () => (
       <Animate sequence='fade'>
         <div>Fade in</div>
       </Animate>
-      <Animate sequence='fade'>
-        <div>Fade in</div>
+      <Animate sequence='fade left'>
+        <div>Fade in + left</div>
       </Animate>
       <Animate sequence='fade'>
         <div>Fade in</div>
       </Animate>
-      <Animate sequence='fade'>
-        <div>Fade in</div>
+      <Animate sequence='fade left'>
+        <div>Fade in + left</div>
       </Animate>
     </AnimateGroup>
   </div>

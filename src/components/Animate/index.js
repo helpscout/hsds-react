@@ -27,7 +27,7 @@ export const propTypes = {
   wait: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.object
-  ]),
+  ])
 }
 
 const defaultProps = {
@@ -73,7 +73,7 @@ class Animate extends Component {
     if (animateOnMount || transitionIn) {
       this.setStateIn(true)
     } else {
-      this.setStateIn(transitionIn)
+      // this.setStateIn(transitionIn)
     }
 
     this._isMounted = true
@@ -81,16 +81,16 @@ class Animate extends Component {
 
   componentWillReceiveProps (nextProps) {
     /* istanbul ignore next */
-    if (nextProps.in === undefined) return
-
-    this.setStateIn(nextProps.in)
+    if (nextProps.in !== undefined && nextProps.in !== this.state.in) {
+      this.setStateIn(nextProps.in)
+    }
   }
 
   componentWillUnmount () {
     this._isMounted = false
 
     this.pauseAnimation()
-    this.setStateIn(false)
+    // this.setStateIn(false)
 
     this.node = null
     this.currentAnimation = null
@@ -99,11 +99,16 @@ class Animate extends Component {
   setStateIn (transitionIn) {
     const { wait } = this.props
     const waitSequence = transitionIn ? 'in' : 'out'
-    setTimeout(() => {
+    // setTimeout(() => {
       if (this._isMounted) {
         this.setState({ in: transitionIn })
       }
-    }, getWait(wait, waitSequence))
+    // }, getWait(wait, waitSequence))
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    const { in: transitionIn } = this.state
+    return nextProps.in !== transitionIn && nextState.in !== transitionIn
   }
 
   getAnimationStyles (animationState = AnimationStates.ENTER) {
@@ -149,24 +154,31 @@ class Animate extends Component {
     }
   }
 
+  setAnimation (state) {
+    const animation = this.makeAnimations(state)
+    if (animation) {
+      this.currentAnimation = animation
+    }
+  }
+
   handleOnEnter () {
     const { onEnter } = this.props
 
-    this.currentAnimation = this.makeAnimations(AnimationStates.ENTER)
+    this.setAnimation(AnimationStates.ENTER)
     this.resolveAnimationPromise(onEnter)
   }
 
   handleOnEntering () {
     const { onEntering } = this.props
 
-    this.currentAnimation = this.makeAnimations(AnimationStates.ENTERING)
+    this.setAnimation(AnimationStates.ENTERING)
     this.resolveAnimationPromise(onEntering)
   }
 
   handleOnEntered () {
     const { onEntered } = this.props
 
-    this.currentAnimation = this.makeAnimations(AnimationStates.ENTERED)
+    this.setAnimation(AnimationStates.ENTERED)
     this.resolveAnimationPromise(onEntered)
   }
 
@@ -174,21 +186,21 @@ class Animate extends Component {
     const { onExit } = this.props
 
     this.pauseAnimation()
-    this.currentAnimation = this.makeAnimations(AnimationStates.EXIT)
+    this.setAnimation(AnimationStates.EXIT)
     this.resolveAnimationPromise(onExit)
   }
 
   handleOnExiting () {
     const { onExiting } = this.props
 
-    this.currentAnimation = this.makeAnimations(AnimationStates.EXITING)
+    this.setAnimation(AnimationStates.EXITING)
     this.resolveAnimationPromise(onExiting)
   }
 
   handleOnExited () {
     const { onExited } = this.props
 
-    this.currentAnimation = this.makeAnimations(AnimationStates.EXITED)
+    this.setAnimation(AnimationStates.EXITED)
     this.resolveAnimationPromise(onExited)
   }
 

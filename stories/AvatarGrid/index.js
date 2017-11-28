@@ -52,7 +52,7 @@ stories.add('animations', () => (
     animationStagger={100}
     max={9}
   >
-    {avatarsMarkup}
+    {aFewAvatarsMarkup}
   </AvatarGrid>
 ))
 

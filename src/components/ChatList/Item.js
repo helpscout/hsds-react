@@ -90,7 +90,7 @@ const Item = props => {
 
   const viewingMarkup = isViewing ? (
     <div className='c-ChatListItem__viewing'>
-      <Animate sequence='fadeIn' wait={100} duration={200}>
+      <Animate sequence='fade' wait={100} duration={200}>
         <div className='c-ChatListItem__viewingFlag' title='Is being viewed' />
       </Animate>
     </div>
@@ -98,7 +98,7 @@ const Item = props => {
 
   const newMessageCountMarkup = newMessageCount ? (
     <Flexy.Item className='c-ChatListItem__messageCount'>
-      <Animate sequence='fadeIn scale' wait={100} duration={200}>
+      <Animate sequence='fade scale' wait={100} duration={200}>
         <Badge status='success' count>{newMessageCount}</Badge>
       </Animate>
     </Flexy.Item>
@@ -106,7 +106,7 @@ const Item = props => {
 
   const waitingMarkup = isWaiting ? (
     <Flexy.Item className='c-ChatListItem__waiting'>
-      <Animate sequence='fadeIn scale' wait={100} duration={200}>
+      <Animate sequence='fade scale' wait={100} duration={200}>
         <Tag color='red' pulsing allCaps>Waiting</Tag>
       </Animate>
     </Flexy.Item>
@@ -166,7 +166,7 @@ const Item = props => {
     <Flexy.Item>
       <div className='c-ChatListItem__avatar'>
         <Animate
-          sequence='scale fadeIn'
+          sequence='scale fade'
           wait={100}
         >
           {avatar}
@@ -192,7 +192,7 @@ const Item = props => {
   ) : null
 
   return (
-    <Animate sequence='fadeIn'>
+    <Animate sequence='fade'>
       <div className='c-ChatListItemWrapper'>
         <Link className={componentClassName} {...rest} block noUnderline>
           {viewingMarkup}

@@ -19,7 +19,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
-  animationSequence: 'fadeIn',
+  animationSequence: 'fade',
   animationStagger: 20,
   center: true,
   max: 9,

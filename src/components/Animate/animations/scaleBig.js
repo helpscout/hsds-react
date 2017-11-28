@@ -1,8 +1,11 @@
 export default {
+  onMount: {
+    transform: 'scale(0)'
+  },
   onEntering: {
-    scale: [0.5, 1]
+    scale: [0, 1]
   },
   onExiting: {
-    scale: [1, 0.5]
+    scale: [1, 0]
   }
 }

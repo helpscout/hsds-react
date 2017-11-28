@@ -7,7 +7,6 @@ import {
 } from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
-import List from '../List'
 import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
@@ -40,51 +39,50 @@ const AvatarList = props => {
 
   const componentClassName = classNames(
     'c-AvatarList',
+    'c-List',
+    'c-List--inline',
+    'c-List--xs',
     className
   )
 
   const additionalAvatarMarkup = additionalAvatarCount ? (
     <Animate
       key='AvatarList__additionalAvatarMarkup'
-      sequence='fadeIn'
+      className='c-AvatarList__item c-List__item'
+      sequence='fade'
     >
-      <List.Item className='c-AvatarList__item'>
-        <Avatar
-          count={`+${additionalAvatarCount}`}
-          light
-          name={`+${additionalAvatarCount}`}
-          shape={shape}
-          size={size}
-        />
-      </List.Item>
+      <Avatar
+        count={`+${additionalAvatarCount}`}
+        light
+        name={`+${additionalAvatarCount}`}
+        shape={shape}
+        size={size}
+      />
     </Animate>
   ) : null
 
   const avatarMarkup = avatarList.map((avatarProps, index) => {
     return (
       <Animate
+        className='c-AvatarList__item c-List__item'
         key={`${avatarProps.name}-${index}`}
-        sequence='fadeIn'
+        sequence='fade'
       >
-        <List.Item className='c-AvatarList__item'>
-          <Avatar shape={shape} size={size} {...avatarProps} />
-        </List.Item>
+        <Avatar shape={shape} size={size} {...avatarProps} />
       </Animate>
     )
   })
 
   return (
-    <List
+    <AnimateGroup
       className={componentClassName}
-      type='inline'
-      size='xs'
+      stagger
+      staggerDelay={10}
       {...rest}
     >
-      <AnimateGroup stagger staggerDelay={10}>
-        {avatarMarkup}
-        {additionalAvatarMarkup}
-      </AnimateGroup>
-    </List>
+      {avatarMarkup}
+      {additionalAvatarMarkup}
+    </AnimateGroup>
   )
 }
 

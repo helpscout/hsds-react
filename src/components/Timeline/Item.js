@@ -21,7 +21,7 @@ const Item = props => {
 
   const timestampMarkup = timestamp ? (
     <Flexy.Item className='c-TimelineItem__timestamp'>
-      <Animate in={isHovered} sequence='fadeIn' animateOnMount={false}>
+      <Animate in={isHovered} sequence='fade' animateOnMount={false}>
         <Timestamp timestamp={timestamp} />
       </Animate>
     </Flexy.Item>

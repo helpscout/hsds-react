@@ -24,7 +24,7 @@ const makeStoryItems = (count, start = 0) => {
   for (let i = 0, len = count; i < len; i++) {
     const index = start + i
     collection.push(
-      <Animate sequence='fadeIn'>
+      <Animate sequence='fade'>
         <Card style={{margin: 8}} key={`item-${uniq()}-${i}`}>
           Item {index + 1}
         </Card>

@@ -4,6 +4,9 @@ import { storiesOf } from '@storybook/react'
 import { Heading, Modal, Link } from '../src/index.js'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
+import Perf from 'react-addons-perf'
+
+window.Perf = Perf
 
 storiesOf('Modal', module)
   .addDecorator(story => (

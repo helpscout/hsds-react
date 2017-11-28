@@ -23,7 +23,7 @@ const MyModal = props => {
   } = props
 
   return (
-    <Animate sequence='fadeIn down' in={portalIsOpen} wait={300}>
+    <Animate sequence='fade down' in={portalIsOpen} wait={300}>
       <div className='MyModal'>
         <div className='MyModalContent'>
           {children}
