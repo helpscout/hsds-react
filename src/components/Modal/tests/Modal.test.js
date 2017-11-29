@@ -17,6 +17,10 @@ const trigger = (
   <a className='trigger'>Trigger</a>
 )
 
+beforeEach(() => {
+  window.BluePortalWrapperGlobalManager = undefined
+})
+
 afterEach(() => {
   document.body.innerHTML = ''
   document.body.style.overflow = null
