@@ -6,7 +6,13 @@
     online: _color(green),
     offline: _color(red),
     busy: _color(yellow),
+    active: _color(green),
     inactive: _color(grey, 600)
+  );
+
+  $sizes: (
+    md: 8px,
+    sm: 6px,
   );
 
   $borderWidth: 3px;
@@ -19,10 +25,23 @@
   height: $size;
   width: $size;
 
+  &.is-inline {
+    display: inline-block;
+  }
+
   // Status
   @each $state, $color in $states {
     &.is-#{$state} {
       background-color: $color;
+    }
+  }
+
+  // Sizes
+  @each $name, $size in $sizes {
+    $size: ceil($borderWidth * 2) + $size;
+    &.is-#{$name} {
+      height: $size;
+      width: $size;
     }
   }
 }
