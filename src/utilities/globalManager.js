@@ -14,7 +14,8 @@ export const setupManager = (namespace = '') => {
     add: add(window[ns]),
     remove: remove(window[ns]),
     first: first(window[ns]),
-    last: last(window[ns])
+    last: last(window[ns]),
+    max: max(window[ns])
   }
 }
 
@@ -37,4 +38,8 @@ export const first = manager => () => {
 
 export const last = manager => () => {
   return manager[manager.length - 1]
+}
+
+export const max = manager => () => {
+  return Math.max.apply(Math, manager)
 }

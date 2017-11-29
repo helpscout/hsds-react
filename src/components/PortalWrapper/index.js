@@ -5,14 +5,18 @@ import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
 import { default as Portal, propTypes as portalTypes } from '../Portal'
 import Keys from '../../constants/Keys'
-import { createUniqueIDFactory } from '../../utilities/id'
+import {
+  createUniqueIDFactory,
+  createUniqueIndexFactory
+} from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
+import Content from './Content'
 
 const defaultOptions = {
   id: 'PortalWrapper'
 }
 
-const managerNamespace = 'BluePortalWrapperManager'
+const managerNamespace = 'BluePortalWrapperGlobalManager'
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   const propTypes = portalTypes
@@ -23,11 +27,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   }
 
   const uniqueID = createUniqueIDFactory(options.id)
+  const uniqueIndex = createUniqueIndexFactory(1000)
 
   class PortalWrapper extends Component {
     constructor (props) {
       super()
-
       this.state = Object.assign({}, props, options, {
         id: uniqueID(),
         isMounted: props.isOpen
@@ -35,6 +39,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       this.closePortal = this.closePortal.bind(this)
       this.openPortal = this.openPortal.bind(this)
       this.handleOnClose = this.handleOnClose.bind(this)
+      this._portalWrapperId = uniqueIndex()
       // Welcome aboard, Mr. Manager!
       this._MrManager = setupManager(managerNamespace)
       // Wow, I'm Mr. Manager!
@@ -42,40 +47,32 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     componentDidMount () {
-      const { id, isMounted } = this.state
-      if (isMounted) {
-        this._MrManager.add(id)
-      }
+      /* istanbul ignore else */
       if (this.props.path) {
         this.openPortal()
       }
     }
 
     componentWillReceiveProps (nextProps) {
-      /* istanbul ignore next */
+      /* istanbul ignore else */
       if (nextProps.path) {
         this.openPortal()
       }
     }
 
-    /* istanbul ignore next */
     openPortal () {
-      const { id } = this.state
       this.setState({
         isOpen: true,
         isMounted: true
       })
-      this._MrManager.add(id)
     }
 
     closePortal () {
-      const { id } = this.state
-      if (this._MrManager.last() === id) {
+      if (this._MrManager.max() === this._portalWrapperId) {
         this.setState({
           isOpen: false,
           isMounted: false
         })
-        this._MrManager.remove(id)
       }
     }
 
@@ -126,7 +123,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const openPortal = this.openPortal
       const handleOnClose = this.handleOnClose
 
-      const uniqueIndex = parseInt(id.replace(options.id, ''), 10)
+      const uniqueIndex = getUniqueIndex(id, options.id)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
 
       const portalMarkup = (
@@ -147,17 +144,22 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             timeout={this.state.timeout}
             {...rest}
           >
-            <ComposedComponent
-              className={className}
-              openPortal={openPortal}
-              closePortal={handleOnClose}
-              onClose={onClose}
-              portalIsOpen={portalIsOpen}
-              portalIsMounted={portalIsMounted}
-              trigger={trigger}
-              zIndex={zIndex}
-              {...rest}
-            />
+            <Content
+              manager={this._MrManager}
+              id={this._portalWrapperId}
+            >
+              <ComposedComponent
+                className={className}
+                openPortal={openPortal}
+                closePortal={handleOnClose}
+                onClose={onClose}
+                portalIsOpen={portalIsOpen}
+                portalIsMounted={portalIsMounted}
+                trigger={trigger}
+                zIndex={zIndex}
+                {...rest}
+              />
+            </Content>
           </Portal>
         </Animate>
       )
@@ -190,5 +192,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
   return PortalWrapper
 }
+
+const getUniqueIndex = (id, namespace) => {
+  return parseInt(id.replace(namespace, ''), 10)
+}
+
+PortalWrapper.Content = Content
 
 export default PortalWrapper

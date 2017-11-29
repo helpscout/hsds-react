@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
 import { Heading, Modal, Link } from '../src/index.js'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
+
+window.Perf = Perf
 
 storiesOf('Modal', module)
   .addDecorator(story => (
@@ -170,12 +173,27 @@ storiesOf('Modal', module)
         </ul>
 
         <Modal path='/team' onBeforeOpen={onBeforeOpen}>
-          <h1>Team Modal</h1>
+          <h1>Team Modal: A</h1>
           <p>Modal content</p>
         </Modal>
 
         <Modal path='/team/brick'>
-          <h1>Team Modal: Brick</h1>
+          <h1>Team Modal: B</h1>
+          <p>Modal inner content</p>
+        </Modal>
+
+        <Modal path='/team/brick'>
+          <h1>Team Modal: C</h1>
+          <p>Modal inner content</p>
+        </Modal>
+
+        <Modal path='/team/brick'>
+          <h1>Team Modal: D</h1>
+          <p>Modal inner content</p>
+        </Modal>
+
+        <Modal path='/team/brick'>
+          <h1>Team Modal: E</h1>
           <p>Modal inner content</p>
         </Modal>
 
