@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import Portal from '..'
 
 // jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
-const PORTAL_TEST_TIMEOUT = 10
+const PORTAL_TEST_TIMEOUT = 300
 
 const cleanUp = (wrapper) => {
   if (wrapper) wrapper.unmount()
