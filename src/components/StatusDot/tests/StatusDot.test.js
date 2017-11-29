@@ -22,7 +22,7 @@ describe('BorderColor', () => {
     const wrapper = shallow(<StatusDot />)
 
     expect(wrapper.instance().props.borderColor).toBeFalsy()
-    expect(wrapper.props().style).toBeFalsy()
+    expect(wrapper.props().style.borderColor).toBeFalsy()
   })
 
   test('Can customize borderColor style', () => {
@@ -38,6 +38,59 @@ describe('BorderColor', () => {
     expect(wrapper.instance().props.borderColor).toBe('red')
     expect(wrapper.props().style.borderColor).toBe('red')
     expect(wrapper.props().style.margin).toBe(10)
+  })
+})
+
+describe('Inline', () => {
+  test('Is not inline by default', () => {
+    const wrapper = shallow(<StatusDot />)
+
+    expect(wrapper.hasClass('is-inline')).not.toBe(true)
+  })
+
+  test('Can render inline styles, if defined', () => {
+    const wrapper = shallow(<StatusDot inline />)
+
+    expect(wrapper.hasClass('is-inline')).toBeTruthy()
+  })
+})
+
+describe('OuterBorderColor', () => {
+  test('Does not have custom outerBorderColor by default', () => {
+    const wrapper = shallow(<StatusDot />)
+
+    expect(wrapper.instance().props.outerBorderColor).toBeFalsy()
+    expect(wrapper.props().style.boxShadow).toBeFalsy()
+  })
+
+  test('Can customize outerBorderColor style', () => {
+    const wrapper = shallow(<StatusDot outerBorderColor='red' />)
+
+    expect(wrapper.instance().props.outerBorderColor).toBe('red')
+    expect(wrapper.props().style.boxShadow).toContain('red')
+  })
+
+  test('Can customize outerBorderColor style + add custom style', () => {
+    const wrapper = shallow(<StatusDot outerBorderColor='red' style={{ margin: 10 }} />)
+
+    expect(wrapper.instance().props.outerBorderColor).toBe('red')
+    expect(wrapper.props().style.boxShadow).toContain('red')
+    expect(wrapper.props().style.margin).toBe(10)
+  })
+})
+
+describe('Size', () => {
+  test('Has a default size', () => {
+    const wrapper = shallow(<StatusDot />)
+
+    expect(wrapper.hasClass('is-sm')).toBe(true)
+  })
+
+  test('Can render size styles, if defined', () => {
+    const wrapper = shallow(<StatusDot size='md' />)
+
+    expect(wrapper.hasClass('is-md')).toBeTruthy()
+    expect(wrapper.hasClass('is-sm')).not.toBeTruthy()
   })
 })
 
