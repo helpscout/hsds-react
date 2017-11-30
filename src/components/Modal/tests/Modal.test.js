@@ -231,7 +231,7 @@ describe('Style', () => {
 })
 
 describe('PortalWrapper', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 
   test('onBeforeClose callback works', (done) => {
     const testBody = global.document.createElement('div')

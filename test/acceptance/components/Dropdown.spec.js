@@ -1,6 +1,7 @@
 import React from 'react'
 import { Dropdown, Portal } from '../../../src/index'
 import Keys from '../../../src/constants/Keys'
+import { wait } from '../test-helpers'
 
 const simulateKeyPress = (keyCode) => {
   const event = new Event('keyup')
@@ -10,7 +11,7 @@ const simulateKeyPress = (keyCode) => {
 }
 
 describe('Dropdown', () => {
-  it('should open menu on trigger click', () => {
+  it('should open menu on trigger click', (done) => {
     mount(
       <div>
         <Dropdown>
@@ -31,10 +32,13 @@ describe('Dropdown', () => {
 
     $('.trigger')[0].click()
 
-    expect($('.menu').length).toBe(1)
+    wait().then(() => {
+      expect($('.menu').length).toBe(1)
+      done()
+    })
   })
 
-  it('should open menu if specified', () => {
+  it('should open menu if specified', (done) => {
     mount(
       <div>
         <Dropdown isOpen>
@@ -50,10 +54,14 @@ describe('Dropdown', () => {
         <Portal.Container />
       </div>
     )
-    expect($('.menu').length).toBe(1)
+
+    wait().then(() => {
+      expect($('.menu').length).toBe(1)
+      done()
+    })
   })
 
-  it('should can open sub-menu on sub-trigger click', () => {
+  it('should can open sub-menu on sub-trigger click', (done) => {
     mount(
       <div>
         <Dropdown isOpen>
@@ -79,9 +87,16 @@ describe('Dropdown', () => {
       </div>
     )
 
-    expect($('.menu').length).toBe(1)
-    $('.sub').find('.c-DropdownItem__link')[0].click()
-    expect($('.menu').length).toBe(2)
+    wait()
+      .then(() => {
+        expect($('.menu').length).toBe(1)
+        $('.sub').find('.c-DropdownItem__link')[0].click()
+      })
+      .then(() => wait())
+      .then(() => {
+        expect($('.menu').length).toBe(2)
+        done()
+      })
   })
 
   it('should close all menus on ESCAPE press', (done) => {
@@ -110,14 +125,19 @@ describe('Dropdown', () => {
       </div>
     )
 
-    $('.sub').find('.c-DropdownItem__link')[0].click()
-    expect($('.menu').length).toBe(2)
-
-    simulateKeyPress(Keys.ESCAPE)
-
-    setTimeout(() => {
-      expect($('.menu').length).toBe(0)
-      done()
-    }, 300)
+    wait()
+      .then(() => {
+        $('.sub').find('.c-DropdownItem__link')[0].click()
+      })
+      .then(() => wait())
+      .then(() => {
+        expect($('.menu').length).toBe(2)
+      })
+      .then(() => simulateKeyPress(Keys.ESCAPE))
+      .then(() => wait(30))
+      .then(() => {
+        expect($('.menu').length).toBe(0)
+        done()
+      })
   })
 })

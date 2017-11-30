@@ -2,6 +2,9 @@ import React from 'react'
 import { MemoryRouter as Router } from 'react-router'
 import { Heading, Link, Modal, Portal } from '../../../src/index'
 import Keys from '../../../src/constants/Keys'
+import { wait } from '../test-helpers'
+
+const modalUnmountTime = 450
 
 const simulateKeyPress = (keyCode) => {
   const event = new Event('keyup')
@@ -32,14 +35,18 @@ describe('Modal', () => {
 
     $('.trigger')[0].click()
 
-    expect($('.modal').length).toBe(1)
-
-    $('.c-Overlay')[0].click()
-
-    setTimeout(() => {
-      expect($('.modal').length).toBe(0)
-      done()
-    }, 450)
+    wait(100)
+      .then(() => {
+        expect($('.modal').length).toBe(1)
+      })
+      .then(() => {
+        $('.c-Overlay')[0].click()
+      })
+      .then(() => wait(modalUnmountTime))
+      .then(() => {
+        expect($('.modal').length).toBe(0)
+        done()
+      })
   })
 
   it('should be able to open with route', (done) => {
@@ -52,8 +59,11 @@ describe('Modal', () => {
       </Router>
     )
 
-    expect($('.modal').length).toBe(1)
-    done()
+    wait(100)
+      .then(() => {
+        expect($('.modal').length).toBe(1)
+        done()
+      })
   })
 
   it('should be able to open multiple modals on route change', (done) => {
@@ -68,21 +78,27 @@ describe('Modal', () => {
       </Router>
     )
 
-    expect($('.modal').length).toBe(1)
-
-    wrapper.node.history.goBack()
-
-    expect($('.modal').length).toBe(3)
-    done()
+    wait(100)
+      .then(() => {
+        expect($('.modal').length).toBe(1)
+      })
+      .then(() => {
+        wrapper.node.history.goBack()
+      })
+      .then(() => wait(100))
+      .then(() => {
+        expect($('.modal').length).toBe(3)
+        done()
+      })
   })
 
   it('should be able to close individual modals, in order', (done) => {
     const wrapper = mount(
-      <Router initialEntries={['/new/path', '/']} initialIndex={1}>
+      <Router initialEntries={['/view/path', '/']} initialIndex={1}>
         <div>
           <Modal className='modal one' path='/' />
-          <Modal className='modal two' path='/new' />
-          <Modal className='modal three' path='/new/path' />
+          <Modal className='modal two' path='/view' />
+          <Modal className='modal three' path='/view/path' />
           <Portal.Container />
         </div>
       </Router>
@@ -90,23 +106,27 @@ describe('Modal', () => {
 
     wrapper.node.history.goBack()
 
-    simulateKeyPress(Keys.ESCAPE)
-
-    setTimeout(() => {
-      expect($('.modal').length).toBe(2)
-      expect($('.modal.one').length).toBe(1)
-      expect($('.modal.two').length).toBe(1)
-      expect($('.modal.three').length).toBe(0)
-
-      simulateKeyPress(Keys.ESCAPE)
-
-      setTimeout(() => {
+    wait(100)
+      .then(() => {
+        simulateKeyPress(Keys.ESCAPE)
+      })
+      .then(() => wait(modalUnmountTime))
+      .then(() => {
+        expect($('.modal').length).toBe(2)
+        expect($('.modal.one').length).toBe(1)
+        expect($('.modal.two').length).toBe(1)
+        expect($('.modal.three').length).toBe(0)
+      })
+      .then(() => {
+        simulateKeyPress(Keys.ESCAPE)
+      })
+      .then(() => wait(modalUnmountTime))
+      .then(() => {
         expect($('.modal').length).toBe(1)
         expect($('.modal.one').length).toBe(1)
         expect($('.modal.two').length).toBe(0)
         expect($('.modal.three').length).toBe(0)
         done()
-      }, 450)
-    }, 450)
+      })
   })
 })

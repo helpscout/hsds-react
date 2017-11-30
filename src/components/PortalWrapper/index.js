@@ -25,14 +25,15 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     isOpen: false,
     timeout: 200
   }
+  const extendedOptions = Object.assign(defaultOptions, options)
 
-  const uniqueID = createUniqueIDFactory(options.id)
+  const uniqueID = createUniqueIDFactory(extendedOptions.id)
   const uniqueIndex = createUniqueIndexFactory(1000)
 
   class PortalWrapper extends Component {
     constructor (props) {
       super()
-      this.state = Object.assign({}, props, options, {
+      this.state = Object.assign({}, props, extendedOptions, {
         id: uniqueID(),
         isMounted: props.isOpen
       })

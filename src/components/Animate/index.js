@@ -73,7 +73,7 @@ class Animate extends Component {
     if (animateOnMount || transitionIn) {
       this.setStateIn(true)
     } else {
-      // this.setStateIn(transitionIn)
+      this.setStateIn(transitionIn)
     }
 
     this._isMounted = true
@@ -90,7 +90,7 @@ class Animate extends Component {
     this._isMounted = false
 
     this.pauseAnimation()
-    // this.setStateIn(false)
+    this.setStateIn(false)
 
     this.node = null
     this.currentAnimation = null
@@ -99,17 +99,17 @@ class Animate extends Component {
   setStateIn (transitionIn) {
     const { wait } = this.props
     const waitSequence = transitionIn ? 'in' : 'out'
-    // setTimeout(() => {
+    setTimeout(() => {
       if (this._isMounted) {
         this.setState({ in: transitionIn })
       }
-    // }, getWait(wait, waitSequence))
+    }, getWait(wait, waitSequence))
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    const { in: transitionIn } = this.state
-    return nextProps.in !== transitionIn && nextState.in !== transitionIn
-  }
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   const { in: transitionIn } = this.state
+  //   return nextProps.in !== transitionIn && nextState.in !== transitionIn
+  // }
 
   getAnimationStyles (animationState = AnimationStates.ENTER) {
     const {
