@@ -21,3 +21,4 @@ An Icon component renders an SVG icon.
 | onClick | `function` | Callback function when component is clicked. |
 | size | `number`/`string` | Adjusts the size of the component. |
 | title | `string` | Provides a name for the component. |
+| withCaret | `bool` | Renders a caret icon, next to the component's SVG icon. |
