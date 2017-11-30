@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "0.0.61",
+  "version": "0.0.62",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
