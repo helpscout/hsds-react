@@ -62,7 +62,7 @@ describe('Fade', () => {
     })
   })
 
-  test('Applies bottom fade styles when scrolled', () => {
+  test('Applies bottom fade styles when scrolled', (done) => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
 
@@ -74,7 +74,10 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    expect(o.faderNodeBottom.style.transform).toContain('scaleY')
+    wait(10).then(() => {
+      expect(o.faderNodeBottom.style.transform).toContain('scaleY')
+      done()
+    })
   })
 })
 

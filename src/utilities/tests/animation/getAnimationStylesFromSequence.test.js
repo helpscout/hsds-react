@@ -55,6 +55,23 @@ describe('Sequence', () => {
 
     expect(o.height).toBe('100')
   })
+
+  test('Returns a valid sequence object', () => {
+    const options = {
+      animations,
+      animationState: AnimationStates.ENTER,
+      node,
+      sequence: {
+        onEnter: {
+          opacity: [0, 1]
+        }
+      }
+    }
+    const o = getAnimationStylesFromSequence(options)
+
+    expect(o.opacity).toBe(options.sequence.onEnter.opacity)
+    expect(o.easing).toBeTruthy()
+  })
 })
 
 describe('Easing', () => {

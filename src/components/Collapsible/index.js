@@ -53,6 +53,7 @@ class Collapsible extends Component {
   }
 
   safeSetState (state) {
+    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state)
     }

@@ -28,7 +28,8 @@ export const getAnimationStylesFromSequence = (options) => {
   if (!isValidAnimationOptions(options)) return {}
 
   let seq = typeof sequence === 'object' ? sequence[animationState]
-    : animations[sequence] ? animations[sequence][animationState] : {}
+    : animations[sequence] ? animations[sequence][animationState]
+    : /* istanbul ignore next */ {}
 
   seq = seq || {}
 

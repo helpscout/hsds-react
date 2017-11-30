@@ -271,6 +271,7 @@ const getWait = (wait, sequence) => {
   if (typeof wait === 'number') {
     return wait
   }
+  /* istanbul ignore else */
   if (typeof wait === 'object' && sequence) {
     return wait[sequence] !== undefined ? wait[sequence] : defaultWait
   }
