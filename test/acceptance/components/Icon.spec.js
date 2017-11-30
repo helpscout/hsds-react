@@ -2,7 +2,6 @@ import React from 'react'
 import { Icon } from '../../../src/index'
 
 describe('Icon', () => {
-
   describe('Color', () => {
     it('should inherit icon color from parent node', () => {
       mount(
@@ -37,7 +36,6 @@ describe('Icon', () => {
   })
 
   describe('withCaret', () => {
-
     it('should not align caret below icon', () => {
       mount(
         <div>
