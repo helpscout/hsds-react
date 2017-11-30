@@ -1,7 +1,7 @@
 import React from 'react'
 import { StatusDot } from '../../../src/index'
 
-describe('Status', () => {
+describe('StatusDot', () => {
   it('should not align adjacent to sibling node by default', () => {
     mount(
       <div>

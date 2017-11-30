@@ -66,3 +66,22 @@ describe('Styles', () => {
     expect(wrapper.prop('className')).toContain('is-subtle')
   })
 })
+
+describe('withCaret', () => {
+  const caretClassName = '.c-Icon__icon.is-caret'
+
+  test('Does not render caret by default', () => {
+    const wrapper = shallow(<Icon name='emoji' />)
+    const o = wrapper.find(caretClassName)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Can render caret, if specified', () => {
+    const wrapper = shallow(<Icon name='emoji' withCaret />)
+    const o = wrapper.find(caretClassName)
+
+    expect(wrapper.hasClass('is-withCaret')).toBe(true)
+    expect(o.length).toBe(1)
+  })
+})
