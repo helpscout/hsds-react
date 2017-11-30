@@ -22,12 +22,13 @@ export const propTypes = {
 }
 
 const defaultProps = {
-  clickable: false,
   center: false,
+  clickable: false,
   ignoreClick: true,
   muted: false,
   name: null,
-  onClick: noop
+  onClick: noop,
+  size: '20'
 }
 
 const Icon = props => {

@@ -16,6 +16,7 @@ An StatusDot component is a UI element that helps indicate the status of somethi
 | --- | --- | --- |
 | borderColor | `string` | Color for the component border. |
 | className | `string` | Custom class names to be added to the component.  |
+| icon | `string` | Renders an [Icon](../Icon) into the component. |
 | inline | `bool` | Applies a display inline style to the component.|
 | outerBorderColor | `string` | Color for the component's outer border. |
 | size | `string` | Adjusts the size of the component. |

@@ -24,6 +24,17 @@ stories.add('outerBorderColor', () => (
   </div>
 ))
 
+stories.add('icon', () => (
+  <div style={{background: '#eee'}}>
+    <div>
+      <StatusDot status='online' inline icon='tick' />: Online
+    </div>
+    <div>
+      <StatusDot status='offline' inline icon='cross' />: Offline
+    </div>
+  </div>
+))
+
 stories.add('states', () => (
   <div>
     <div>
