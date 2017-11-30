@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "0.0.60",
+  "version": "0.0.61",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -20,7 +20,7 @@
     "dist": "babel src --out-dir dist --copy-files",
     "karma": "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
     "lint": "npm run lint:es && npm run lint:js && npm run lint:css",
-    "lint:js": "standard 'src/**/*.js' 'stories/**/*.js'",
+    "lint:js": "standard 'src/**/*.js' 'stories/**/*.js' 'test/**/*.js'",
     "lint:es": "eslint src/**/*.js --cache && echo \"eslint: No lint errors 🙌!\"",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
@@ -57,9 +57,9 @@
   },
   "devDependencies": {
     "@helpscout/helix": "0.0.13",
-    "@storybook/addon-options": "^3.2.4",
-    "@storybook/cli": "^3.2.9",
-    "@storybook/react": "^3.2.4",
+    "@storybook/addon-options": "^3.2.16",
+    "@storybook/cli": "^3.2.16",
+    "@storybook/react": "^3.2.16",
     "@storybook/storybook-deployer": "2.0.0",
     "autoprefixer": "7.1.1",
     "babel-cli": "^6.24.1",
@@ -220,7 +220,10 @@
       "React",
       "react",
       "requestAnimationFrame",
-      "test"
+      "test",
+      "$mount",
+      "mount",
+      "$"
     ]
   },
   "eslintConfig": {
