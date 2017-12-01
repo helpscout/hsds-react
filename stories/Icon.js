@@ -32,9 +32,11 @@ stories.add('icons', () => {
     'meatball',
     'search',
     'star',
+    'tag',
     'tick-large',
     'tick-small',
-    'video'
+    'video',
+    'user'
   ].map(i => (
     <div style={{display: 'inline-block', margin: 12, textAlign: 'center'}}>
       <Icon name={i} key={i} center />
@@ -83,7 +85,7 @@ stories.add('withCaret', () => {
     '14', '16', '18', '24'
   ].map(i => (
     <div style={{display: 'inline-block', margin: 12, textAlign: 'center'}}>
-      <Icon name='emoji' size={i} key={i} center withCaret />
+      <Icon name='user' size={i} key={i} center withCaret />
       <Text muted size='sm'>{i}</Text>
       <br />
     </div>
@@ -93,7 +95,7 @@ stories.add('withCaret', () => {
     <div>
       <Flexy just='left'>
         <Flexy.Item>
-          <Icon name='emoji' withCaret />
+          <Icon name='user' withCaret />
         </Flexy.Item>
         <Flexy.Item>
           <Text muted size='sm'>With Caret</Text>
@@ -102,7 +104,7 @@ stories.add('withCaret', () => {
 
       <Flexy just='left'>
         <Flexy.Item>
-          <Icon name='emoji' withCaret muted />
+          <Icon name='user' withCaret muted />
         </Flexy.Item>
         <Flexy.Item>
           <Text muted size='sm'>Muted + Caret</Text>
@@ -111,7 +113,7 @@ stories.add('withCaret', () => {
 
       <Flexy just='left' style={{color: 'red'}}>
         <Flexy.Item>
-          <Icon name='emoji' withCaret />
+          <Icon name='user' withCaret />
         </Flexy.Item>
         <Flexy.Item>
           <Text muted size='sm'>Caret + Custom color</Text>
