@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import StatusDot from '..'
+import { Icon } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -38,6 +39,25 @@ describe('BorderColor', () => {
     expect(wrapper.instance().props.borderColor).toBe('red')
     expect(wrapper.props().style.borderColor).toBe('red')
     expect(wrapper.props().style.margin).toBe(10)
+  })
+})
+
+describe('Icon', () => {
+  test('Does not render an icon by default', () => {
+    const wrapper = shallow(<StatusDot />)
+    const o = wrapper.find(Icon)
+
+    expect(wrapper.hasClass('is-icon')).not.toBe(true)
+    expect(o.length).toBe(0)
+  })
+
+  test('Can render icon, if defined', () => {
+    const wrapper = shallow(<StatusDot icon='tick' />)
+    const o = wrapper.find(Icon)
+
+    expect(wrapper.hasClass('is-icon')).toBeTruthy()
+    expect(o.length).toBe(1)
+    expect(o.props().name).toBe('tick')
   })
 })
 

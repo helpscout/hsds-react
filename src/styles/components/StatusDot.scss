@@ -18,10 +18,12 @@
   $borderWidth: 3px;
   $dotSize: 6px;
   $size: ceil($borderWidth * 2) + $dotSize;
+  $defaultColor: _color(grey, 600);
 
-  background-color: _color(grey, 600);
+  background-color: currentColor;
   border-radius: 50%;
   border: $borderWidth solid white;
+  color: $defaultColor;
   height: $size;
   width: $size;
 
@@ -32,7 +34,7 @@
   // Status
   @each $state, $color in $states {
     &.is-#{$state} {
-      background-color: $color;
+      color: $color;
     }
   }
 
@@ -43,5 +45,13 @@
       height: $size;
       width: $size;
     }
+  }
+
+  &.is-icon {
+    $size: 16px;
+    background-color: white;
+    border-width: 0;
+    height: $size;
+    width: $size;
   }
 }

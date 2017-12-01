@@ -1,9 +1,11 @@
 @import "pack/seed-dash/_index";
+@import "pack/seed-family/_index";
 
 .c-Icon {
   @import "../configs/color";
-  $sizes: (12, 14, 16, 18, 20, 24);
+  $sizes: (8, 10, 12, 14, 16, 18, 20, 24);
   $shades: faint, muted, subtle;
+  $caretSize: 10px;
   $default-size: 20;
 
   box-sizing: border-box;
@@ -43,6 +45,10 @@
     &.is-#{$size} {
       height: ($size * 1px);
       width: ($size * 1px);
+
+      &.is-withCaret {
+        width: (($size * 1px) + $caretSize);
+      }
     }
   }
 
@@ -63,6 +69,19 @@
     path,
     rect {
       fill: currentColor;
+    }
+
+    @include parent(".is-withCaret > ") {
+      width: calc(100% - #{$caretSize});
+    }
+
+    &.is-caret {
+      $size: $caretSize;
+      height: $size;
+      position: absolute;
+      right: 0;
+      top: calc(50% - #{ceil($size / 2)});
+      width: $size;
     }
   }
 }

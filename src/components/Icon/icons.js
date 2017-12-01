@@ -26,8 +26,10 @@ import link from '../../icons/link.svg'
 import meatball from '../../icons/meatball.svg'
 import search from '../../icons/search.svg'
 import star from '../../icons/star.svg'
+import tag from '../../icons/tag.svg'
 import tickLarge from '../../icons/tick-large.svg'
 import tickSmall from '../../icons/tick-small.svg'
+import user from '../../icons/user.svg'
 import video from '../../icons/video.svg'
 
 const ICONS = {
@@ -42,9 +44,11 @@ const ICONS = {
   'chat-active': chatActive,
   chat,
   check,
+  clock: clockLarge,
   'clock-large': clockLarge,
   'clock-small': clockSmall,
   collapse,
+  cross: crossLarge,
   'cross-large': crossLarge,
   'cross-medium': crossMedium,
   'cross-small': crossSmall,
@@ -60,8 +64,11 @@ const ICONS = {
   'option-dots': meatball,
   search,
   star,
+  tag,
+  tick: tickLarge,
   'tick-large': tickLarge,
   'tick-small': tickSmall,
+  user,
   video
 }
 
