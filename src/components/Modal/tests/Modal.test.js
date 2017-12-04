@@ -2,7 +2,7 @@ import React, {PureComponent as Component} from 'react'
 import { shallow, mount } from 'enzyme'
 import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '..'
-import { Portal, Scrollable } from '../../index'
+import { Card, Portal, Scrollable } from '../../index'
 import Keys from '../../../constants/Keys'
 import wait from '../../../tests/helpers/wait'
 
@@ -334,5 +334,31 @@ describe('Integration: Scrollable', () => {
     o.node.props.onScroll()
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Seamless', () => {
+  test('Should not be seamless by default', () => {
+    const wrapper = mount(
+      <ModalComponent>
+        <div className='ron'>RON</div>
+      </ModalComponent>
+    )
+    const o = wrapper.find(Card)
+
+    expect(o.length).toBe(1)
+  })
+
+  test('Does not render the Card component, if seamless', () => {
+    const wrapper = mount(
+      <ModalComponent seamless>
+        <div className='ron'>RON</div>
+      </ModalComponent>
+    )
+    const card = wrapper.find(Card)
+    const o = wrapper.find('.ron')
+
+    expect(card.length).toBe(0)
+    expect(o.length).toBe(1)
   })
 })

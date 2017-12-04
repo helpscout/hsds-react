@@ -15,6 +15,7 @@ import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 
 export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
+  seamless: PropTypes.bool,
   scrollFade: PropTypes.bool,
   scrollableRef: PropTypes.func,
   modalAnimationDelay: PropTypes.oneOfType([
@@ -31,6 +32,7 @@ export const propTypes = Object.assign({}, portalTypes, {
 
 const defaultProps = {
   closeIcon: true,
+  seamless: false,
   scrollFade: true,
   isOpen: false,
   modalAnimationDelay: {
@@ -99,6 +101,7 @@ class Modal extends Component {
       path,
       portalIsOpen,
       portalIsMounted,
+      seamless,
       scrollFade,
       scrollableRef,
       style,
@@ -129,26 +132,30 @@ class Modal extends Component {
       zIndex
     }) : { zIndex }
 
+    const childrenMarkup = !seamless ? (
+      <Card seamless role='dialog'>
+        {closeMarkup}
+        <Scrollable
+          className='c-Modal__scrollable'
+          fade
+          rounded
+          onScroll={onScroll}
+          scrollableRef={(node) => {
+            this.scrollableNode = node
+            scrollableRef(node)
+          }}
+        >
+          {children}
+        </Scrollable>
+      </Card>
+    ) : children
+
     return (
       <div className={componentClassName} role='document' style={modalStyle} {...rest}>
         <EventListener event='resize' handler={handleOnResize} />
         <div className='c-Modal__content'>
           <Animate className='c-Modal__Card-container' sequence='fade down' in={portalIsOpen} wait={modalAnimationDelay}>
-            <Card seamless role='dialog'>
-              {closeMarkup}
-              <Scrollable
-                className='c-Modal__scrollable'
-                fade
-                rounded
-                onScroll={onScroll}
-                scrollableRef={(node) => {
-                  this.scrollableNode = node
-                  scrollableRef(node)
-                }}
-              >
-                {children}
-              </Scrollable>
-            </Card>
+            {childrenMarkup}
           </Animate>
         </div>
         <Animate sequence='fade' in={portalIsOpen} wait={overlayAnimationDelay}>
