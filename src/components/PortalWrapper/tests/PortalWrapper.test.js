@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import PortalWrapper from '..'
 import classNames from '../../../utilities/classNames'
+import wait from '../../../tests/helpers/wait'
 
 const TestButton = props => {
   const { className } = props
@@ -13,69 +14,100 @@ const TestButton = props => {
     console.log('wee')
   }
   return (
-    <button className={componentClassName} onClick={handleClick}>Click</button>
+    <div>
+      <button className={componentClassName} onClick={handleClick}>Click</button>
+    </div>
   )
 }
+
+beforeEach(() => {
+  window.BluePortalWrapperGlobalManager = undefined
+})
 
 afterEach(() => {
   document.body.innerHTML = ''
   document.body.style.overflow = null
 })
 
-describe('HOC', () => {
-  test('Can create a component as a HOC', () => {
-    const TestComponent = PortalWrapper()(TestButton)
-    mount(<TestComponent isOpen />)
-    const c = document.body.childNodes[0]
+const options = {
+  timeout: 0
+}
 
-    expect(c.querySelector('button')).toBeTruthy()
+describe('HOC', () => {
+  test('Can create a component as a HOC', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent isOpen />)
+
+    wait().then(() => {
+      const c = document.body.childNodes[0]
+      expect(c.querySelector('button')).toBeTruthy()
+      done()
+    })
   })
 })
 
 describe('ClassName', () => {
-  test('Can pass className to composed component', () => {
-    const TestComponent = PortalWrapper()(TestButton)
+  test('Can pass className to composed component', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent className='ron' isOpen />)
 
-    const o = document.querySelector('.button')
-    expect(o.classList.contains('ron')).toBeTruthy()
+    wait().then(() => {
+      const o = document.querySelector('.button')
+      expect(o.classList.contains('ron')).toBeTruthy()
+      done()
+    })
   })
 })
 
 describe('ID', () => {
-  test('Adds default ID', () => {
-    const TestComponent = PortalWrapper()(TestButton)
+  test('Adds default ID', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />)
-    const c = document.body.childNodes[0]
 
-    expect(c.id).toContain('PortalWrapper')
+    wait().then(() => {
+      const c = document.body.childNodes[0]
+      expect(c.id).toContain('PortalWrapper')
+      done()
+    })
   })
 
-  test('Override default ID with options', () => {
+  test('Override default ID with options', (done) => {
     const options = {
-      id: 'Brick'
+      id: 'Brick',
+      timeout: 0
     }
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />)
-    const c = document.body.childNodes[0]
 
-    expect(c.id).toContain('Brick')
+    wait().then(() => {
+      const c = document.body.childNodes[0]
+      expect(c.id).toContain('Brick')
+      done()
+    })
   })
 })
 
 describe('Manager', () => {
-  test('Can close last Manage item ', () => {
-    const TestComponent = PortalWrapper()(TestButton)
+  test('Can close last Manage item ', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
     const wrapper = mount(
       <div>
         <TestComponent isOpen />
         <TestComponent isOpen />
       </div>
     )
+
     const o = wrapper.find(TestComponent).last()
 
-    o.node.closePortal()
-    expect(o.node.state.isOpen).toBe(false)
+    wait()
+      .then(() => {
+        o.node.closePortal()
+      })
+      .then(() => wait())
+      .then(() => {
+        expect(o.node.state.isOpen).toBe(false)
+        done()
+      })
   })
 
   test('Cannot close Component that is not last in Manage list', () => {

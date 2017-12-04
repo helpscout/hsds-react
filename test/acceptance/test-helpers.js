@@ -4,6 +4,7 @@ import { mount } from 'enzyme'
 import jQuery from 'jquery'
 import '../../src/styles/blue.scss'
 import '../../src/styles/blue.hs-app.scss'
+export {default as wait} from '../../src/tests/helpers/wait'
 
 // require all the test files in the test folder that end with Spec.js or Spec.jsx
 const testsContext = require.context('.', true, /spec.jsx?$/)

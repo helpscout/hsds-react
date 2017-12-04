@@ -13,11 +13,7 @@ storiesOf('Modal', module)
     <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
   ))
   .add('default', () => (
-    <Modal trigger={<Link>Open dis modal</Link>}
-      timeout={0}
-      modalAnimationDelay={0}
-      overlayAnimationDelay={0}
-    >
+    <Modal trigger={<Link>Open dis modal</Link>}>
       <div>
         <Heading>Title</Heading>
         <p>

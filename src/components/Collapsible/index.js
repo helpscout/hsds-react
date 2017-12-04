@@ -25,8 +25,17 @@ class Collapsible extends Component {
       height: null,
       animationState: 'idle'
     }
+    this._isMounted = false
     this.node = null
     this.heightNode = null
+  }
+
+  componentDidMount () {
+    this._isMounted = true
+  }
+
+  componentWillUnmount () {
+    this._isMounted = false
   }
 
   componentWillReceiveProps ({isOpen: willOpen}) {
@@ -34,13 +43,20 @@ class Collapsible extends Component {
 
     /* istanbul ignore next */
     if (isOpen !== willOpen) {
-      this.setState({animationState: 'measuring'})
+      this.safeSetState({animationState: 'measuring'})
     }
   }
 
   componentDidUpdate ({isOpen: wasOpen}) {
     this.handleAnimation(wasOpen)
     this.handleAnimationStateCallback()
+  }
+
+  safeSetState (state) {
+    /* istanbul ignore else */
+    if (this._isMounted) {
+      this.setState(state)
+    }
   }
 
   handleAnimation (wasOpen) {
@@ -50,26 +66,26 @@ class Collapsible extends Component {
     requestAnimationFrame(() => {
       switch (animationState) {
         case 'measuring':
-          this.setState({
+          this.safeSetState({
             animationState: wasOpen ? 'closingStart' : 'openingStart',
             height: wasOpen && this.heightNode ? this.heightNode.scrollHeight : 0
           })
           break
         case 'closingStart':
-          this.setState({
+          this.safeSetState({
             animationState: 'closing',
             height: 0
           })
           break
         case 'closing':
           setTimeout(() => {
-            this.setState({
+            this.safeSetState({
               animationState: 'closed'
             })
           }, duration)
           break
         case 'openingStart':
-          this.setState({
+          this.safeSetState({
             animationState: 'opening',
             height: this.heightNode ? this.heightNode.scrollHeight
             /* istanbul ignore next */
@@ -78,7 +94,7 @@ class Collapsible extends Component {
           break
         case 'opening':
           setTimeout(() => {
-            this.setState({
+            this.safeSetState({
               animationState: 'opened'
             })
           }, duration)

@@ -1,6 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import { mount, shallow } from 'enzyme'
 import Scrollable from '..'
+import wait from '../../../tests/helpers/wait'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -43,7 +44,7 @@ describe('Fade', () => {
     expect(fade.style.transform).toBe('scaleY(1)')
   })
 
-  test('Applies top fade styles when scrolled', () => {
+  test('Applies top fade styles when scrolled', (done) => {
     const wrapper = mount(<Scrollable fade />)
     const o = wrapper.instance()
 
@@ -55,10 +56,13 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    expect(o.faderNodeTop.style.transform).toContain('scaleY')
+    wait(10).then(() => {
+      expect(o.faderNodeTop.style.transform).toContain('scaleY')
+      done()
+    })
   })
 
-  test('Applies bottom fade styles when scrolled', () => {
+  test('Applies bottom fade styles when scrolled', (done) => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
 
@@ -70,7 +74,10 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    expect(o.faderNodeBottom.style.transform).toContain('scaleY')
+    wait(10).then(() => {
+      expect(o.faderNodeBottom.style.transform).toContain('scaleY')
+      done()
+    })
   })
 })
 

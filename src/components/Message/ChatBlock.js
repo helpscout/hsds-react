@@ -35,7 +35,7 @@ const ChatBlock = props => {
 
   const timestampMarkup = timestamp ? (
     <Flexy.Item className='c-MessageChatBlock__timestamp'>
-      <Animate in={isHovered} sequence='fadeIn' animateOnMount={false}>
+      <Animate in={isHovered} sequence='fade' animateOnMount={false}>
         <Timestamp timestamp={timestamp} read={read} />
       </Animate>
     </Flexy.Item>

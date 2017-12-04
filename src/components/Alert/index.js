@@ -1,6 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import Badge from '../Badge'
+import Animate from '../Animate'
 import Collapsible from '../Collapsible'
 import CloseButton from '../CloseButton'
 import Icon from '../Icon'
@@ -121,7 +122,9 @@ class Alert extends Component {
 
     return dismissible ? (
       <Collapsible duration={200} isOpen={!dismissed}>
-        {componentMarkup}
+        <Animate in={!dismissed} sequence={['fade']} duration={100}>
+          {componentMarkup}
+        </Animate>
       </Collapsible>
     ) : componentMarkup
   }

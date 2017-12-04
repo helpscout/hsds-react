@@ -1,6 +1,9 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import Animate from '..'
+import { mount, shallow } from 'enzyme'
+import { default as Animate, getWait } from '..'
+import AnimationStates from '../../../constants/AnimationStates'
+import animations from '../animations'
+import wait from '../../../tests/helpers/wait'
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
@@ -32,106 +35,41 @@ describe('Content', () => {
 describe('AnimateOnMount', () => {
   test('Automatically animates by default', (done) => {
     const wrapper = mount(
-      <Animate>
+      <Animate duration={2} sequence='fade'>
         <div>Blue</div>
       </Animate>
     )
 
-    setTimeout(() => {
-      expect(wrapper.html()).toContain('is-mounted')
-      wrapper.unmount()
-      done()
-    }, 100)
+    wait(200)
+      .then(() => {
+        expect(wrapper.html()).toContain('opacity: 1')
+        wrapper.unmount()
+        done()
+      })
   })
 
   test('Animation can be disabled if set to false', (done) => {
     const wrapper = mount(
-      <Animate animateOnMount={false}>
+      <Animate duration={2} sequence='fade' animateOnMount={false} in={false}>
         <div>Blue</div>
       </Animate>
     )
 
-    setTimeout(() => {
-      expect(wrapper.html()).not.toContain('is-mounted')
-      wrapper.unmount()
-      done()
-    }, 100)
-  })
-})
+    expect(wrapper.html()).toContain('opacity: 0')
 
-describe('States', () => {
-  test('Adds mounting/mounted state class', (done) => {
-    const wrapper = mount(
-      <Animate>
-        <div>Blue</div>
-      </Animate>
-    )
-
-    expect(wrapper.html()).toContain('is-mounting')
-
-    setTimeout(() => {
-      expect(wrapper.html()).toContain('is-mounted')
-      wrapper.unmount()
-      done()
-    }, 100)
-  })
-
-  test('Trigger mounting animations on state change', (done) => {
-    const wrapper = mount(
-      <Animate in={false} animateOnMount={false}>
-        <div>Blue</div>
-      </Animate>
-    )
-
-    expect(wrapper.hasClass('is-mounting')).toBeFalsy()
-
-    wrapper.setProps({ in: true })
-
-    expect(wrapper.hasClass('is-mounting')).toBeTruthy()
-
-    wrapper.unmount()
-    done()
-  })
-
-  test('Trigger unmounting animations on state change', (done) => {
-    const wrapper = mount(
-      <Animate in animateOnMount={false}>
-        <div>Blue</div>
-      </Animate>
-    )
-
-    expect(wrapper.hasClass('is-mounting')).toBeTruthy()
-
-    wrapper.setProps({ in: false })
-
-    expect(wrapper.hasClass('is-unmounting')).toBeTruthy()
-
-    wrapper.unmount()
-    done()
-  })
-
-  test('Should not trigger animation if prop change does not involve `in` prop', (done) => {
-    const wrapper = mount(
-      <Animate in={false} animateOnMount={false}>
-        <div>Blue</div>
-      </Animate>
-    )
-
-    expect(wrapper.hasClass('is-mounting')).toBeFalsy()
-
-    wrapper.setProps({ color: true })
-
-    expect(wrapper.hasClass('is-mounting')).toBeFalsy()
-
-    wrapper.unmount()
-    done()
+    wait(200)
+      .then(() => {
+        expect(wrapper.html()).toContain('opacity: 0')
+        wrapper.unmount()
+        done()
+      })
   })
 })
 
 describe('Unmounting', () => {
   test('Does not unmount from DOM by default', (done) => {
     const wrapper = mount(
-      <Animate in>
+      <Animate in duration={8}>
         <div className='your'>
           <div className='my-boy'>
             Blue
@@ -142,17 +80,17 @@ describe('Unmounting', () => {
 
     wrapper.setProps({ in: false })
 
-    setTimeout(() => {
-      expect(wrapper.html()).not.toBe(null)
-
-      wrapper.unmount()
-      done()
-    }, 300)
+    wait(120)
+      .then(() => {
+        expect(wrapper.html()).not.toBe(null)
+        wrapper.unmount()
+        done()
+      })
   })
 
   test('Unmounts from DOM if specified', (done) => {
     const wrapper = mount(
-      <Animate unmountOnExit in>
+      <Animate unmountOnExit in duration={8}>
         <div className='your'>
           <div className='my-boy'>
             Blue
@@ -161,13 +99,89 @@ describe('Unmounting', () => {
       </Animate>
     )
 
-    wrapper.setProps({ in: false })
+    wait(20)
+      .then(() => {
+        wrapper.setProps({ in: false })
+      })
+      .then(() => wait(200))
+      .then(() => {
+        expect(wrapper.html()).toBe(null)
+        wrapper.unmount()
+        done()
+      })
+  })
+})
 
-    setTimeout(() => {
-      expect(wrapper.html()).toBe(null)
+describe('getAnimateStyles', () => {
+  test('Has ENTER state as default', () => {
+    const wrapper = shallow(<Animate sequence='fade' />)
+    const o = wrapper.instance()
 
-      wrapper.unmount()
-      done()
-    }, 300)
+    expect(o.getAnimationStyles()).toEqual(animations.fade[AnimationStates.ENTER])
+  })
+
+  test('Argument accepts animation state', () => {
+    const wrapper = shallow(<Animate sequence='fade' />)
+    const o = wrapper.instance()
+    const state = AnimationStates.EXIT
+
+    expect(o.getAnimationStyles(state)).toEqual(animations.fade[state])
+  })
+})
+
+describe('makeAnimations', () => {
+  test('Returns an Animejs object, if valid', () => {
+    const wrapper = shallow(<Animate sequence='fade' />)
+    const o = wrapper.instance()
+    const state = AnimationStates.ENTER
+
+    expect(typeof o.makeAnimations(state)).toBe('object')
+  })
+})
+
+describe('Styles', () => {
+  test('Can render block style className, if applied', () => {
+    const wrapper = shallow(<Animate block sequence='fade' />)
+
+    expect(wrapper.hasClass('is-block')).toBe(true)
+  })
+
+  test('Can render inline style className, if applied', () => {
+    const wrapper = shallow(<Animate inline sequence='fade' />)
+
+    expect(wrapper.hasClass('is-inline')).toBe(true)
+  })
+
+  test('Can render inline-block style className, if applied', () => {
+    const wrapper = shallow(<Animate inlineBlock sequence='fade' />)
+
+    expect(wrapper.hasClass('is-inlineBlock')).toBe(true)
+  })
+})
+
+describe('getWait', () => {
+  test('Returns 0 by default', () => {
+    expect(getWait()).toBe(0)
+  })
+
+  test('Returns 0 (default) if invalid argument', () => {
+    expect(getWait(true)).toBe(0)
+    expect(getWait(false)).toBe(0)
+    expect(getWait([])).toBe(0)
+    expect(getWait({})).toBe(0)
+  })
+
+  test('Returns wait (number) if applicable', () => {
+    expect(getWait(10)).toBe(10)
+    expect(getWait(100)).toBe(100)
+  })
+
+  test('Returns wait + sequence number', () => {
+    expect(getWait({ in: 50, out: 200 }, 'in')).toBe(50)
+    expect(getWait({ in: 50, out: 200 }, 'out')).toBe(200)
+  })
+
+  test('Returns default if wait + sequence does not exist', () => {
+    expect(getWait({ in: 50, out: 200 }, 'nope')).toBe(0)
   })
 })

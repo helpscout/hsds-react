@@ -43,6 +43,8 @@ stories.add('dismissible', () => (
     <Alert dismissible>
       Buddy! This is dismissible.
     </Alert>
+
+    <p>Content</p>
   </div>
 ))
 

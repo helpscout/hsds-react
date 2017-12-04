@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@shopify/javascript-utilities": "2.0.0",
+    "animejs": "2.2.0",
     "emoji-mart": "^1.0.1",
     "lodash.includes": "4.3.0",
     "object-assign": "4.1.1",
@@ -168,7 +169,8 @@
       "!src/components/index.js"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+      "<rootDir>/config/polyfills.js",
+      "<rootDir>/config/jsdomPolyfills.js"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",

@@ -48,11 +48,11 @@ stories.add('default', () => (
 
 stories.add('animations', () => (
   <AvatarGrid
-    animationSequence='scale'
+    animationSequence='scaleBig'
     animationStagger={100}
     max={9}
   >
-    {avatarsMarkup}
+    {aFewAvatarsMarkup}
   </AvatarGrid>
 ))
 

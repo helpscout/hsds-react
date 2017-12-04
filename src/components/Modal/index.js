@@ -14,8 +14,14 @@ export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
   scrollFade: PropTypes.bool,
   scrollableRef: PropTypes.func,
-  modalAnimationDelay: PropTypes.number,
-  overlayAnimationDelay: PropTypes.number,
+  modalAnimationDelay: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object
+  ]),
+  overlayAnimationDelay: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object
+  ]),
   onScroll: PropTypes.func,
   trigger: PropTypes.element
 })
@@ -24,8 +30,14 @@ const defaultProps = {
   closeIcon: true,
   scrollFade: true,
   isOpen: false,
-  modalAnimationDelay: 300,
-  overlayAnimationDelay: 200,
+  modalAnimationDelay: {
+    in: 200,
+    out: 100
+  },
+  overlayAnimationDelay: {
+    in: 100,
+    out: 200
+  },
   onScroll: noop,
   scrollableRef: noop
 }
@@ -33,7 +45,7 @@ const defaultProps = {
 const modalBaseZIndex = 1040
 const portalOptions = {
   id: 'Modal',
-  timeout: 200,
+  timeout: 40,
   zIndex: modalBaseZIndex
 }
 
@@ -81,7 +93,7 @@ const Modal = props => {
   return (
     <div className={componentClassName} role='document' style={modalStyle} {...rest}>
       <div className='c-Modal__content'>
-        <Animate sequence='fadeIn down' in={portalIsOpen} wait={modalAnimationDelay}>
+        <Animate sequence='fade down' in={portalIsOpen} wait={modalAnimationDelay}>
           <Card seamless role='dialog'>
             {closeMarkup}
             <Scrollable
@@ -96,7 +108,7 @@ const Modal = props => {
           </Card>
         </Animate>
       </div>
-      <Animate sequence='fadeIn' in={portalIsOpen} wait={overlayAnimationDelay}>
+      <Animate sequence='fade' in={portalIsOpen} wait={overlayAnimationDelay}>
         <Overlay onClick={closePortal} role='presentation' />
       </Animate>
     </div>

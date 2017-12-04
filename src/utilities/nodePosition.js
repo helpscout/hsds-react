@@ -152,6 +152,7 @@ export const getViewportPosition = (options) => {
   // Tested, but istanbul isn't picking it up
   const triggerOffset = typeof offset !== 'undefined' ? offset : 0
   const totalOffset = triggerOffset + boundingOffset
+  /* istanbul ignore next */
   let directionX = direction && direction.x ? direction.x : ''
   let directionY = direction && direction.y ? direction.y : ''
 

@@ -1,12 +1,12 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
-import { Animate } from '../src/index.js'
+import { Animate, Card, Heading, Text } from '../src/index.js'
 
 class AnimateOutExample extends Component {
   constructor () {
     super()
     this.state = {
-      show: true
+      show: false
     }
     this.toggleIn = this.toggleIn.bind(this)
   }
@@ -25,9 +25,14 @@ class AnimateOutExample extends Component {
       <div>
         <button onClick={toggleIn}>Toggle Animation</button>
         <br />
-        <Animate in={show} sequence='fadeIn down' duration={100}>
-          <div className='dont-override-this'>Then, Fade In and Down</div>
-        </Animate>
+        <div style={{width: 300}}>
+          <Animate in={show} sequence='fade down' duration={300} animateOnMount={false} unmountOnExit>
+            <Card>
+              <Heading>Anchorman</Heading>
+              <Text>Stay classy San Diego!</Text>
+            </Card>
+          </Animate>
+        </div>
       </div>
     )
   }
@@ -36,18 +41,41 @@ class AnimateOutExample extends Component {
 storiesOf('Animate', module)
   .add('default', () => (
     <div>
-      Wait for it…
-      <Animate sequence='fadeIn down'>
-        <div className='dont-override-this'>Then, Fade In and Down</div>
+      <p>No delay</p>
+      <Animate sequence='fade down'>
+        <Card>
+          <Heading>Anchorman</Heading>
+          <Text>Stay classy San Diego!</Text>
+        </Card>
       </Animate>
     </div>
   ))
   .add('custom wait/duration', () => (
     <div>
-      Wait 1 second…
-      <Animate sequence='fadeIn down' wait={1000} duration={400}>
-        <div className='dont-override-this'>Then, Fade In and Down</div>
+      <p>Tiny tiny delay</p>
+      <Animate sequence='scale' wait={300}>
+        <Card>
+          <Heading>Anchorman</Heading>
+          <Text>Stay classy San Diego!</Text>
+        </Card>
       </Animate>
+      <br />
+      <p>Wait 1 second… (duration: 400ms)</p>
+      <Animate sequence='fade down' wait={1000} duration={400}>
+        <Card>
+          <Heading>Anchorman</Heading>
+          <Text>Stay classy San Diego!</Text>
+        </Card>
+      </Animate>
+      <br />
+      <p>Suupperr slow (duration: 3000ms)</p>
+      <Animate sequence='fade down' duration={3000}>
+        <Card>
+          <Heading>Anchorman</Heading>
+          <Text>Stay classy San Diego!</Text>
+        </Card>
+      </Animate>
+      <br />
     </div>
   ))
   .add('animateOut', () => (

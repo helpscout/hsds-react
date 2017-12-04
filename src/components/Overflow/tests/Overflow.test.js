@@ -1,6 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import { mount, shallow } from 'enzyme'
 import Overflow from '..'
+import wait from '../../../tests/helpers/wait'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -47,7 +48,7 @@ describe('Fade', () => {
     expect(fade.style.transform).toBe('scaleX(1)')
   })
 
-  test('Applies left fade styles when scrolled', () => {
+  test('Applies left fade styles when scrolled', (done) => {
     const wrapper = mount(<Overflow />)
     const o = wrapper.instance()
 
@@ -59,7 +60,11 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    expect(o.faderNodeLeft.style.transform).toContain('scaleX')
+    wait(20)
+      .then(() => {
+        expect(o.faderNodeLeft.style.transform).toContain('scaleX')
+        done()
+      })
   })
 
   test('Applies right fade styles when scrolled', () => {

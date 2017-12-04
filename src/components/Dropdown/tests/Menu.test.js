@@ -4,6 +4,7 @@ import { default as Menu, MenuComponent } from '../Menu'
 import Divider from '../Divider'
 import Item from '../Item'
 import Keys from '../../../constants/Keys'
+import wait from '../../../tests/helpers/wait'
 
 const simulateKeyPress = (keyCode, eventType = 'keyup') => {
   const event = new Event(eventType)
@@ -228,12 +229,17 @@ describe('Items', () => {
     const wrapper = mount(
       <Menu selectedIndex={0} isOpen onBeforeClose={spy} />
     )
-    wrapper.unmount()
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 100)
+    wait()
+      .then(() => {
+        wrapper.unmount()
+      })
+      .then(() => wait(100))
+      .then(() => {
+        expect(spy).toHaveBeenCalled()
+        wrapper.unmount()
+        done()
+      })
   })
 
   test('Closes ALL menus when a sub-menu item is clicked', () => {

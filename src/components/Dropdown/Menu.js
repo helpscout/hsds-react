@@ -365,7 +365,7 @@ class Menu extends Component {
           <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
           <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleEscape} />
-          <Animate sequence='fadeIn down' in={isOpen} duration={100}>
+          <Animate sequence='fade downSmall' in={isOpen} duration={160}>
             <Card seamless floating>
               <div
                 className='c-DropdownMenu__content'
