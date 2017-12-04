@@ -60,7 +60,7 @@ describe('Key events', () => {
       .then(() => {
         simulateKeyPress(Keys.ESCAPE)
       })
-      .then(() => wait(MODAL_TEST_TIMEOUT + 50))
+      .then(() => wait(MODAL_TEST_TIMEOUT + 200))
       .then(() => {
         expect(document.querySelectorAll('.c-Modal').length).toBe(0)
         done()

@@ -40,8 +40,6 @@ describe('AnimateOnMount', () => {
       </Animate>
     )
 
-    expect(wrapper.html()).toContain('opacity: 0')
-
     wait(80)
       .then(() => {
         expect(wrapper.html()).toContain('opacity: 1')
