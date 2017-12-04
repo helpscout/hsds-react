@@ -3,6 +3,7 @@ import { MemoryRouter as Router } from 'react-router'
 import { Heading, Link, Modal, Portal } from '../../../src/index'
 import Keys from '../../../src/constants/Keys'
 import { wait } from '../test-helpers'
+import getScrollbarWidth from '../../../src/vendors/getScrollbarWidth'
 
 const modalUnmountTime = 450
 
@@ -14,119 +15,185 @@ const simulateKeyPress = (keyCode) => {
 }
 
 describe('Modal', () => {
-  it('should be able to open/close modal', (done) => {
-    const triggerMarkup = (<Link className='trigger'>Click</Link>)
-    mount(
-      <div>
-        <Modal
-          trigger={triggerMarkup}
-          className='modal'
-          renderTo='#modals'
-          timeout={0}
-          modalAnimationDelay={0}
-          overlayAnimationDelay={0}
-        >
-          <Heading>Modal content</Heading>
-        </Modal>
-        <div id='modals' />
-      </div>
-    )
-    expect($('.modal').length).toBe(0)
+  describe('Open/Close', () => {
+    it('should be able to open/close modal', (done) => {
+      const triggerMarkup = (<Link className='trigger'>Click</Link>)
+      mount(
+        <div>
+          <Modal
+            trigger={triggerMarkup}
+            className='modal'
+            renderTo='#modals'
+            timeout={0}
+            modalAnimationDelay={0}
+            overlayAnimationDelay={0}
+          >
+            <Heading>Modal content</Heading>
+          </Modal>
+          <div id='modals' />
+        </div>
+      )
+      expect($('.modal').length).toBe(0)
 
-    $('.trigger')[0].click()
+      $('.trigger')[0].click()
 
-    wait(100)
-      .then(() => {
-        expect($('.modal').length).toBe(1)
-      })
-      .then(() => {
-        $('.c-Overlay')[0].click()
-      })
-      .then(() => wait(modalUnmountTime))
-      .then(() => {
-        expect($('.modal').length).toBe(0)
-        done()
-      })
+      wait(100)
+        .then(() => {
+          expect($('.modal').length).toBe(1)
+        })
+        .then(() => {
+          $('.c-Overlay')[0].click()
+        })
+        .then(() => wait(modalUnmountTime))
+        .then(() => {
+          expect($('.modal').length).toBe(0)
+          done()
+        })
+    })
+
+    it('should be able to open with route', (done) => {
+      mount(
+        <Router initialEntries={['/']}>
+          <div>
+            <Modal className='modal' exact path='/' />
+            <Portal.Container />
+          </div>
+        </Router>
+      )
+
+      wait(100)
+        .then(() => {
+          expect($('.modal').length).toBe(1)
+          done()
+        })
+    })
+
+    it('should be able to open multiple modals on route change', (done) => {
+      const wrapper = mount(
+        <Router initialEntries={['/new/path', '/']} initialIndex={1}>
+          <div>
+            <Modal className='modal' path='/' />
+            <Modal className='modal' path='/new' />
+            <Modal className='modal' path='/new/path' />
+            <Portal.Container />
+          </div>
+        </Router>
+      )
+
+      wait(100)
+        .then(() => {
+          expect($('.modal').length).toBe(1)
+        })
+        .then(() => {
+          wrapper.node.history.goBack()
+        })
+        .then(() => wait(100))
+        .then(() => {
+          expect($('.modal').length).toBe(3)
+          done()
+        })
+    })
+
+    it('should be able to close individual modals, in order', (done) => {
+      const wrapper = mount(
+        <Router initialEntries={['/view/path', '/']} initialIndex={1}>
+          <div>
+            <Modal className='modal one' path='/' />
+            <Modal className='modal two' path='/view' />
+            <Modal className='modal three' path='/view/path' />
+            <Portal.Container />
+          </div>
+        </Router>
+      )
+
+      wrapper.node.history.goBack()
+
+      wait(100)
+        .then(() => {
+          simulateKeyPress(Keys.ESCAPE)
+        })
+        .then(() => wait(modalUnmountTime))
+        .then(() => {
+          expect($('.modal').length).toBe(2)
+          expect($('.modal.one').length).toBe(1)
+          expect($('.modal.two').length).toBe(1)
+          expect($('.modal.three').length).toBe(0)
+        })
+        .then(() => {
+          simulateKeyPress(Keys.ESCAPE)
+        })
+        .then(() => wait(modalUnmountTime))
+        .then(() => {
+          expect($('.modal').length).toBe(1)
+          expect($('.modal.one').length).toBe(1)
+          expect($('.modal.two').length).toBe(0)
+          expect($('.modal.three').length).toBe(0)
+          done()
+        })
+    })
   })
 
-  it('should be able to open with route', (done) => {
-    mount(
-      <Router initialEntries={['/']}>
+  describe('Scrollable', () => {
+    it('should not extend beyond the Modal (height)', (done) => {
+      const triggerMarkup = (<Link className='trigger'>Click</Link>)
+      mount(
         <div>
-          <Modal className='modal' exact path='/' />
-          <Portal.Container />
+          <Modal
+            trigger={triggerMarkup}
+            className='modal'
+            renderTo='#modals'
+            timeout={0}
+            modalAnimationDelay={0}
+            overlayAnimationDelay={0}
+          >
+            <Heading>Modal content</Heading>
+            <div className='big' style={{height: 4000}} />
+          </Modal>
+          <div id='modals' />
         </div>
-      </Router>
-    )
+      )
+      expect($('.modal').length).toBe(0)
 
-    wait(100)
-      .then(() => {
-        expect($('.modal').length).toBe(1)
-        done()
-      })
-  })
+      $('.trigger')[0].click()
 
-  it('should be able to open multiple modals on route change', (done) => {
-    const wrapper = mount(
-      <Router initialEntries={['/new/path', '/']} initialIndex={1}>
+      wait(100)
+        .then(() => {
+          expect($('.c-Modal__content').height())
+            .toBeGreaterThan($('.c-Modal__scrollable').height())
+          done()
+        })
+    })
+
+    it('should adjust CloseButton position to account for scrollbar', (done) => {
+      const triggerMarkup = (<Link className='trigger'>Click</Link>)
+      mount(
         <div>
-          <Modal className='modal' path='/' />
-          <Modal className='modal' path='/new' />
-          <Modal className='modal' path='/new/path' />
-          <Portal.Container />
+          <Modal
+            trigger={triggerMarkup}
+            className='modal'
+            renderTo='#modals'
+            timeout={0}
+            modalAnimationDelay={0}
+            overlayAnimationDelay={0}
+          >
+            <Heading>Modal content</Heading>
+            <div className='big' style={{height: 4000}} />
+          </Modal>
+          <div id='modals' />
         </div>
-      </Router>
-    )
+      )
+      expect($('.modal').length).toBe(0)
 
-    wait(100)
-      .then(() => {
-        expect($('.modal').length).toBe(1)
-      })
-      .then(() => {
-        wrapper.node.history.goBack()
-      })
-      .then(() => wait(100))
-      .then(() => {
-        expect($('.modal').length).toBe(3)
-        done()
-      })
-  })
+      $('.trigger')[0].click()
 
-  it('should be able to close individual modals, in order', (done) => {
-    const wrapper = mount(
-      <Router initialEntries={['/view/path', '/']} initialIndex={1}>
-        <div>
-          <Modal className='modal one' path='/' />
-          <Modal className='modal two' path='/view' />
-          <Modal className='modal three' path='/view/path' />
-          <Portal.Container />
-        </div>
-      </Router>
-    )
+      wait(100)
+        .then(() => {
+          const scrollbarWidth = getScrollbarWidth()
+          const right = parseInt($('.c-Modal__close').css('right'), 10)
 
-    wrapper.node.history.goBack()
-
-    wait(100)
-      .then(() => {
-        simulateKeyPress(Keys.ESCAPE)
-      })
-      .then(() => wait(modalUnmountTime))
-      .then(() => {
-        expect($('.modal').length).toBe(2)
-        expect($('.modal.one').length).toBe(1)
-        expect($('.modal.two').length).toBe(1)
-        expect($('.modal.three').length).toBe(0)
-      })
-      .then(() => {
-        simulateKeyPress(Keys.ESCAPE)
-      })
-      .then(() => wait(modalUnmountTime))
-      .then(() => {
-        expect($('.modal').length).toBe(1)
-        expect($('.modal.one').length).toBe(1)
-        expect($('.modal.two').length).toBe(0)
-        expect($('.modal.three').length).toBe(0)
-        done()
-      })
+          expect(right >= scrollbarWidth).toBe(true)
+          done()
+        })
+    })
   })
 })

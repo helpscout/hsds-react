@@ -2,8 +2,7 @@ import React, {PureComponent as Component} from 'react'
 import { shallow, mount } from 'enzyme'
 import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '..'
-import Portal from '../../Portal'
-import Scrollable from '../../Scrollable'
+import { Portal, Scrollable } from '../../index'
 import Keys from '../../../constants/Keys'
 import wait from '../../../tests/helpers/wait'
 
@@ -83,6 +82,13 @@ describe('CloseIcon', () => {
         wrapper.unmount()
         done()
       })
+  })
+
+  test('Adjusts CloseButton position on mount', () => {
+    const wrapper = mount(<ModalComponent isOpen />)
+    const o = wrapper.find('.c-Modal__close')
+
+    expect(o.html()).toContain('right:')
   })
 })
 
