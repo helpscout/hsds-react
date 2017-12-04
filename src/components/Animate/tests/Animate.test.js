@@ -80,7 +80,7 @@ describe('Unmounting', () => {
 
     wrapper.setProps({ in: false })
 
-    wait(80)
+    wait(120)
       .then(() => {
         expect(wrapper.html()).not.toBe(null)
         wrapper.unmount()
@@ -103,7 +103,7 @@ describe('Unmounting', () => {
       .then(() => {
         wrapper.setProps({ in: false })
       })
-      .then(() => wait(80))
+      .then(() => wait(200))
       .then(() => {
         expect(wrapper.html()).toBe(null)
         wrapper.unmount()
