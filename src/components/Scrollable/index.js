@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ScrollLock from '../ScrollLock'
 import classNames from '../../utilities/classNames'
 import { hasContentOverflowY } from '../../utilities/node'
+import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 import { getFadeTopStyles, getFadeBottomStyles } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 
@@ -25,6 +26,8 @@ const defaultProps = {
   isScrollLocked: true
 }
 
+const scrollbarWidth = getScrollbarWidth()
+
 class Scrollable extends Component {
   constructor () {
     super()
@@ -36,6 +39,7 @@ class Scrollable extends Component {
     this.faderNodeBottom = null
     this.containerNode = null
     this.handleOnScroll = this.handleOnScroll.bind(this)
+    this.scrollbarWidth = scrollbarWidth
   }
 
   componentDidMount () {
@@ -60,6 +64,7 @@ class Scrollable extends Component {
       const transformTop = getFadeTopStyles(event, offset)
       requestAnimationFrame(() => {
         this.faderNodeTop.style.transform = transformTop
+        this.applyFadeStyleOffset(this.faderNodeTop)
       })
     }
 
@@ -67,8 +72,16 @@ class Scrollable extends Component {
       const transformBottom = getFadeBottomStyles(event, offset)
       requestAnimationFrame(() => {
         this.faderNodeBottom.style.transform = transformBottom
+        this.applyFadeStyleOffset(this.faderNodeBottom)
       })
     }
+  }
+
+  applyFadeStyleOffset (node) {
+    const offset = (hasContentOverflowY(this.containerNode))
+      ? /* istanbul ignore next */ `${this.scrollbarWidth}px`
+      : 0
+    node.style.right = offset
   }
 
   handleOnScroll (event) {
@@ -91,6 +104,7 @@ class Scrollable extends Component {
       isScrollLocked,
       ...rest
     } = this.props
+
     const { shouldFadeOnMount } = this.state
 
     const handleOnScroll = this.handleOnScroll

@@ -22,6 +22,10 @@
     z-index: 1;
   }
 
+  &__Card-container {
+    display: flex;
+  }
+
   &__card-block {
     height: 100%;
   }
