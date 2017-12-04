@@ -34,6 +34,7 @@ A Modal component presents content within a container on top of the application'
 | path | `string` | Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). |
 | scrollFade | `bool` | Enables the upper fade-to-white styles. Default `true`. |
 | scrollableRef | `function` | Retrieves the scrollable node. |
+| seamless | `bool` | Renders content with the standard [Card](../Card) UI. |
 | trigger | `element` | The UI the user clicks to trigger the modal. |
 
 

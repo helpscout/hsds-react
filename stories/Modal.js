@@ -8,201 +8,218 @@ import { Route } from 'react-router-dom'
 
 window.Perf = Perf
 
-storiesOf('Modal', module)
-  .addDecorator(story => (
-    <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
-  ))
-  .add('default', () => (
-    <Modal trigger={<Link>Open dis modal</Link>}>
-      <div>
-        <Heading>Title</Heading>
+const stories = storiesOf('Modal', module)
+
+stories.addDecorator(story => (
+  <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
+))
+
+stories.add('default', () => (
+  <Modal trigger={<Link>Open dis modal</Link>}>
+    <div>
+      <Heading>Title</Heading>
+      <p>
+        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+      </p>
+      <p>
+        Tenderloin bacon chicken jowl cupim, sausage shank spare ribs kielbasa. Flank corned beef kevin pastrami short ribs pork andouille turkey sirloin strip steak. Shank tri-tip porchetta beef ribs salami. Pork chop tail kielbasa, turkey pork loin filet mignon chicken jowl alcatra hamburger salami cupim.
+      </p>
+      <p>
+        Corned beef pork belly cupim turkey, filet mignon bresaola short ribs sirloin brisket. Fatback turkey strip steak tenderloin pig ham hock salami cow filet mignon ribeye. Brisket drumstick capicola rump. Biltong jowl prosciutto fatback bresaola strip steak pork chop shankle tri-tip shank salami pancetta ham hock. Cupim kielbasa doner salami, meatball capicola filet mignon pastrami.
+      </p>
+      <p>
+        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+      </p>
+      <p>
+        Tenderloin bacon chicken jowl cupim, sausage shank spare ribs kielbasa. Flank corned beef kevin pastrami short ribs pork andouille turkey sirloin strip steak. Shank tri-tip porchetta beef ribs salami. Pork chop tail kielbasa, turkey pork loin filet mignon chicken jowl alcatra hamburger salami cupim.
+      </p>
+      <p>
+        Corned beef pork belly cupim turkey, filet mignon bresaola short ribs sirloin brisket. Fatback turkey strip steak tenderloin pig ham hock salami cow filet mignon ribeye. Brisket drumstick capicola rump. Biltong jowl prosciutto fatback bresaola strip steak pork chop shankle tri-tip shank salami pancetta ham hock. Cupim kielbasa doner salami, meatball capicola filet mignon pastrami.
+      </p>
+    </div>
+  </Modal>
+))
+
+stories.add('open', () => (
+  <Modal isOpen trigger={<Link>Clicky</Link>}>
+    <div>
+      <Heading>Title</Heading>
+      <p>
+        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+      </p>
+    </div>
+  </Modal>
+))
+
+stories.add('custom close trigger', () => {
+  class Contents extends React.Component {
+    render () {
+      return (
         <p>
-          Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+          <button onClick={this.context.closePortal}>Close me</button>
         </p>
-        <p>
-          Tenderloin bacon chicken jowl cupim, sausage shank spare ribs kielbasa. Flank corned beef kevin pastrami short ribs pork andouille turkey sirloin strip steak. Shank tri-tip porchetta beef ribs salami. Pork chop tail kielbasa, turkey pork loin filet mignon chicken jowl alcatra hamburger salami cupim.
-        </p>
-        <p>
-          Corned beef pork belly cupim turkey, filet mignon bresaola short ribs sirloin brisket. Fatback turkey strip steak tenderloin pig ham hock salami cow filet mignon ribeye. Brisket drumstick capicola rump. Biltong jowl prosciutto fatback bresaola strip steak pork chop shankle tri-tip shank salami pancetta ham hock. Cupim kielbasa doner salami, meatball capicola filet mignon pastrami.
-        </p>
-        <p>
-          Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-        </p>
-        <p>
-          Tenderloin bacon chicken jowl cupim, sausage shank spare ribs kielbasa. Flank corned beef kevin pastrami short ribs pork andouille turkey sirloin strip steak. Shank tri-tip porchetta beef ribs salami. Pork chop tail kielbasa, turkey pork loin filet mignon chicken jowl alcatra hamburger salami cupim.
-        </p>
-        <p>
-          Corned beef pork belly cupim turkey, filet mignon bresaola short ribs sirloin brisket. Fatback turkey strip steak tenderloin pig ham hock salami cow filet mignon ribeye. Brisket drumstick capicola rump. Biltong jowl prosciutto fatback bresaola strip steak pork chop shankle tri-tip shank salami pancetta ham hock. Cupim kielbasa doner salami, meatball capicola filet mignon pastrami.
-        </p>
-      </div>
+      )
+    }
+  }
+
+  Contents.contextTypes = {
+    closePortal: PropTypes.func
+  }
+
+  return (
+    <Modal trigger={<Link>Open me</Link>}>
+      <Contents />
     </Modal>
-  ))
-  .add('open', () => (
-    <Modal isOpen trigger={<Link>Clicky</Link>}>
-      <div>
-        <Heading>Title</Heading>
-        <p>
-          Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-        </p>
-      </div>
-    </Modal>
-  ))
-  .add('custom close trigger', () => {
-    class Contents extends React.Component {
-      render () {
-        return (
+  )
+})
+
+stories.add('seamless', () => (
+  <Modal trigger={<Link>Clicky</Link>} seamless>
+    <div>
+      <Heading>No Card!</Heading>
+      <p>So much room for activites!</p>
+    </div>
+  </Modal>
+))
+
+stories.add('nested', () => (
+  <Modal trigger={<Link>Clicky</Link>}>
+    <div>
+      <Heading>Title</Heading>
+      <p>
+        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+      </p>
+
+      <Modal trigger={<Link>Level 2</Link>}>
+        <div>
+          <Heading>Level 2</Heading>
           <p>
-            <button onClick={this.context.closePortal}>Close me</button>
+            Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
           </p>
-        )
-      }
-    }
+        </div>
 
-    Contents.contextTypes = {
-      closePortal: PropTypes.func
-    }
-
-    return (
-      <Modal trigger={<Link>Open me</Link>}>
-        <Contents />
+        <Modal trigger={<Link>Level 3</Link>}>
+          <div>
+            <Heading>Level 3</Heading>
+            <p>
+              Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+            </p>
+          </div>
+        </Modal>
       </Modal>
-    )
-  })
-  .add('nested', () => (
-    <Modal trigger={<Link>Clicky</Link>}>
-      <div>
-        <Heading>Title</Heading>
-        <p>
-          Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-        </p>
 
-        <Modal trigger={<Link>Level 2</Link>}>
-          <div>
-            <Heading>Level 2</Heading>
-            <p>
-              Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-            </p>
-          </div>
+    </div>
+  </Modal>
+))
 
-          <Modal trigger={<Link>Level 3</Link>}>
-            <div>
-              <Heading>Level 3</Heading>
-              <p>
-                Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-              </p>
-            </div>
-          </Modal>
-        </Modal>
+stories.add('custom mounting selector', () => {
+  return (
+    <div>
+      <p>Render modal here:</p>
+      <div className='render-modal-here' />
 
-      </div>
-    </Modal>
-  ))
-  .add('custom mounting selector', () => {
-    return (
-      <div>
-        <p>Render modal here:</p>
-        <div className='render-modal-here' />
+      <Modal trigger={<Link>Clicky</Link>} renderTo='.render-modal-here'>
+        <div>
+          <Heading>Title</Heading>
+          <p>
+            Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+          </p>
+        </div>
+      </Modal>
+    </div>
+  )
+})
 
-        <Modal trigger={<Link>Clicky</Link>} renderTo='.render-modal-here'>
-          <div>
-            <Heading>Title</Heading>
-            <p>
-              Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-            </p>
-          </div>
-        </Modal>
-      </div>
-    )
-  })
-  .add('lifecycle events', () => {
-    const onBeforeOpen = (modalOpen) => {
-      console.log('Before open!')
-      setTimeout(() => {
-        modalOpen()
-      }, 500)
-    }
-    const onBeforeClose = (modalClose) => {
-      console.log('Before close!')
-      setTimeout(() => {
-        modalClose()
-      }, 500)
-    }
-    return (
-      <div>
-        <p>onBeforeOpen: 500 delay</p>
-        <p>onBeforeClose: 500 delay</p>
-        <Modal
-          className='weee'
-          onBeforeOpen={onBeforeOpen}
-          onBeforeClose={onBeforeClose}
-          trigger={<Link>Clicky</Link>}
-        >
-          <div>
-            <Heading>Title</Heading>
-            <p>
-              Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-            </p>
-          </div>
-        </Modal>
-      </div>
-    )
-  })
-  .add('routes', () => {
-    const onBeforeOpen = (open) => {
-      setTimeout(() => {
-        open()
-      }, 500)
-    }
-    return (
-      <div>
-        <h1>Routes</h1>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-          <li>
-            <Link to='/team'>Team</Link>
-          </li>
-          <li>
-            <Link to='/team/brick'>Brick</Link>
-          </li>
-        </ul>
+stories.add('lifecycle events', () => {
+  const onBeforeOpen = (modalOpen) => {
+    console.log('Before open!')
+    setTimeout(() => {
+      modalOpen()
+    }, 500)
+  }
+  const onBeforeClose = (modalClose) => {
+    console.log('Before close!')
+    setTimeout(() => {
+      modalClose()
+    }, 500)
+  }
+  return (
+    <div>
+      <p>onBeforeOpen: 500 delay</p>
+      <p>onBeforeClose: 500 delay</p>
+      <Modal
+        className='weee'
+        onBeforeOpen={onBeforeOpen}
+        onBeforeClose={onBeforeClose}
+        trigger={<Link>Clicky</Link>}
+      >
+        <div>
+          <Heading>Title</Heading>
+          <p>
+            Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
+          </p>
+        </div>
+      </Modal>
+    </div>
+  )
+})
 
-        <Modal path='/team' onBeforeOpen={onBeforeOpen}>
-          <h1>Team Modal: A</h1>
-          <p>Modal content</p>
-        </Modal>
+stories.add('routes', () => {
+  const onBeforeOpen = (open) => {
+    setTimeout(() => {
+      open()
+    }, 500)
+  }
+  return (
+    <div>
+      <h1>Routes</h1>
+      <ul>
+        <li>
+          <Link to='/'>Home</Link>
+        </li>
+        <li>
+          <Link to='/team'>Team</Link>
+        </li>
+        <li>
+          <Link to='/team/brick'>Brick</Link>
+        </li>
+      </ul>
 
-        <Modal path='/team/brick'>
-          <h1>Team Modal: B</h1>
-          <p>Modal inner content</p>
-        </Modal>
+      <Modal path='/team' onBeforeOpen={onBeforeOpen}>
+        <h1>Team Modal: A</h1>
+        <p>Modal content</p>
+      </Modal>
 
-        <Modal path='/team/brick'>
-          <h1>Team Modal: C</h1>
-          <p>Modal inner content</p>
-        </Modal>
+      <Modal path='/team/brick'>
+        <h1>Team Modal: B</h1>
+        <p>Modal inner content</p>
+      </Modal>
 
-        <Modal path='/team/brick'>
-          <h1>Team Modal: D</h1>
-          <p>Modal inner content</p>
-        </Modal>
+      <Modal path='/team/brick'>
+        <h1>Team Modal: C</h1>
+        <p>Modal inner content</p>
+      </Modal>
 
-        <Modal path='/team/brick'>
-          <h1>Team Modal: E</h1>
-          <p>Modal inner content</p>
-        </Modal>
+      <Modal path='/team/brick'>
+        <h1>Team Modal: D</h1>
+        <p>Modal inner content</p>
+      </Modal>
 
-        <Route exact path='/' render={props => (
-          <div>
-            <h1>HOME PAGE</h1>
-          </div>
-        )} />
-        <Route path='/team' render={props => (
-          <div>
-            <h1>TEAM PAGE</h1>
-          </div>
-        )} />
-      </div>
-    )
-  })
+      <Modal path='/team/brick'>
+        <h1>Team Modal: E</h1>
+        <p>Modal inner content</p>
+      </Modal>
+
+      <Route exact path='/' render={props => (
+        <div>
+          <h1>HOME PAGE</h1>
+        </div>
+      )} />
+      <Route path='/team' render={props => (
+        <div>
+          <h1>TEAM PAGE</h1>
+        </div>
+      )} />
+    </div>
+  )
+})
