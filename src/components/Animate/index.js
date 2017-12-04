@@ -70,10 +70,9 @@ class Animate extends Component {
   componentDidMount () {
     const { animateOnMount, in: transitionIn } = this.props
 
+    /* istanbul ignore next */
     if (animateOnMount || transitionIn) {
       this.setStateIn(true)
-    } else {
-      this.setStateIn(transitionIn)
     }
 
     this._isMounted = true
@@ -106,11 +105,6 @@ class Animate extends Component {
     }, getWait(wait, waitSequence))
   }
 
-  // shouldComponentUpdate (nextProps, nextState) {
-  //   const { in: transitionIn } = this.state
-  //   return nextProps.in !== transitionIn && nextState.in !== transitionIn
-  // }
-
   getAnimationStyles (animationState = AnimationStates.ENTER) {
     const {
       sequence
@@ -124,13 +118,12 @@ class Animate extends Component {
     })
   }
 
-  makeAnimations (animationState = AnimationStates.ENTER) {
+  makeAnimations (animationState) {
     const {
       duration
     } = this.props
 
     const animation = this.getAnimationStyles(animationState)
-    if (!Object.keys(animation).length) return null
 
     return anime(Object.assign(
       {
@@ -147,6 +140,8 @@ class Animate extends Component {
   }
 
   resolveAnimationPromise (callback) {
+    // Anime.js integration
+    /* istanbul ignore next */
     if (this.currentAnimation) {
       this.currentAnimation.finished.then(callback)
     } else {
@@ -156,6 +151,7 @@ class Animate extends Component {
 
   setAnimation (state) {
     const animation = this.makeAnimations(state)
+    /* istanbul ignore else */
     if (animation) {
       this.currentAnimation = animation
     }
@@ -266,7 +262,7 @@ class Animate extends Component {
   }
 }
 
-const getWait = (wait, sequence) => {
+export const getWait = (wait, sequence) => {
   const defaultWait = 0
   if (typeof wait === 'number') {
     return wait
