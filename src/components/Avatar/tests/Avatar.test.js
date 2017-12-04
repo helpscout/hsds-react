@@ -152,4 +152,11 @@ describe('StatusDot', () => {
     expect(statusMarkup.length).toBe(1)
     expect(o.length).toBe(1)
   })
+
+  test('Renders an icon in StatusDot, if defined', () => {
+    const wrapper = shallow(<Avatar status='online' statusIcon='tick' />)
+    const o = wrapper.find(StatusDot)
+
+    expect(o.props().icon).toBe('tick')
+  })
 })

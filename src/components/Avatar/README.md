@@ -25,3 +25,4 @@ An Avatar component displays a user's avatar image, or their initials if an imag
 | size | `string` | Size of the avatar. |
 | title | `string` | Text for the image `alt` and `title` attributes. |
 | status | `string` | Renders a [StatusDot](../StatusDot) with the status type. |
+| statusIcon | `string` | Name of the [Icon](../Icon) to render into the [StatusDot](../StatusDot). |

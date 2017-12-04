@@ -18,6 +18,7 @@ export const propTypes = {
   name: PropTypes.string.isRequired,
   shape: shapeTypes,
   size: standardSizeTypes,
+  statusIcon: PropTypes.string,
   status: statusTypes
 }
 
@@ -39,6 +40,7 @@ const Avatar = props => {
     size,
     shape,
     status,
+    statusIcon,
     ...rest
   } = props
 
@@ -77,7 +79,7 @@ const Avatar = props => {
 
   const statusMarkup = status ? (
     <div className='c-Avatar__status'>
-      <StatusDot status={status} />
+      <StatusDot status={status} icon={statusIcon} />
     </div>
   ) : null
 
