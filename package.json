@@ -166,7 +166,8 @@
       "!src/tests/helpers/**/*.{js,jsx}",
       "!src/utilities/smoothScroll.{js,jsx}",
       "!src/vendors/**/*.{js,jsx}",
-      "!src/components/index.js"
+      "!src/components/index.js",
+      "!src/components/Animate/animations/**/*.js"
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js",
