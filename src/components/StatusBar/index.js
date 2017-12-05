@@ -1,15 +1,27 @@
 import React, {PureComponent as Component} from 'react'
+import PropTypes from 'prop-types'
 import { default as Collapsible, collapsibleTypes } from '../Collapsible'
-import Text from '../Text'
+import Centralize from '../Centralize'
+import Button from './Button'
 import classNames from '../../utilities/classNames'
+import { themeTypes } from './propTypes'
 import { noop } from '../../utilities/other'
+import { statusTypes } from '../../constants/propTypes'
 
-export const propTypes = collapsibleTypes
+export const propTypes = Object.assign({}, collapsibleTypes, {
+  closeOnClick: PropTypes.bool,
+  statusTypes,
+  themeTypes
+})
+
 const defaultProps = {
   isOpen: false,
   onClick: noop,
   onClose: noop,
-  onOpen: noop
+  onOpen: noop,
+  closeOnClick: true,
+  status: 'info',
+  theme: 'light'
 }
 
 class StatusBar extends Component {
@@ -30,19 +42,24 @@ class StatusBar extends Component {
   }
 
   handleOnClick () {
-    const { onClick } = this.props
-    this.setState({ isOpen: false })
+    const { closeOnClick, onClick } = this.props
+    if (closeOnClick) {
+      this.setState({ isOpen: false })
+    }
     onClick()
   }
 
   render () {
     const {
       className,
+      closeOnClick,
       children,
       isOpen: propsIsOpen,
       onClick,
       onOpen,
       onClose,
+      status,
+      theme,
       ...rest
     } = this.props
     const { isOpen } = this.state
@@ -51,20 +68,22 @@ class StatusBar extends Component {
 
     const componentClassName = classNames(
       'c-StatusBar',
+      status && `is-${status}`,
+      theme && `is-${theme}`,
       className
     )
 
     return (
       <Collapsible isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-        <div
+        <Centralize
           className={componentClassName}
           onClick={handleOnClick}
           {...rest}
         >
-          <Text size='12'>
+          <div className='c-StatusBar__content'>
             {children}
-          </Text>
-        </div>
+          </div>
+        </Centralize>
       </Collapsible>
     )
   }
@@ -73,5 +92,6 @@ class StatusBar extends Component {
 StatusBar.propTypes = propTypes
 StatusBar.defaultProps = defaultProps
 StatusBar.displayName = 'StatusBar'
+StatusBar.Button = Button
 
 export default StatusBar
