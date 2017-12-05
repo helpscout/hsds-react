@@ -21,8 +21,8 @@ describe('ClassName', () => {
 })
 
 describe('Children', () => {
-  test('Renders child content into <Text> component', () => {
-    const wrapper = shallow(<StatusBar isOpen>Hello</StatusBar>)
+  test('Can render children', () => {
+    const wrapper = shallow(<StatusBar isOpen><Text>Hello</Text></StatusBar>)
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Hello')
@@ -39,7 +39,11 @@ describe('Collapsible', () => {
   })
 
   test('Contains content within <Collapsible>', () => {
-    const wrapper = shallow(<StatusBar isOpen />)
+    const wrapper = shallow(
+      <StatusBar isOpen>
+        <Text>Content</Text>
+      </StatusBar>
+    )
     const o = wrapper.find(Collapsible)
 
     expect(o.length).toBeTruthy()
@@ -54,11 +58,15 @@ describe('Collapsible', () => {
   })
 
   test('Can be expanded with isOpen prop', () => {
-    const wrapper = shallow(<StatusBar isOpen>Hello</StatusBar>)
+    const wrapper = shallow(
+      <StatusBar isOpen>
+        <Text>Content</Text>
+      </StatusBar>
+    )
     const o = wrapper.find(Collapsible)
 
     expect(o.props().isOpen).toBeTruthy()
-    expect(o.find(Text).html()).toContain('Hello')
+    expect(o.find(Text).html()).toContain('Content')
   })
 
   test('Should pass isOpen prop to Collapsible', () => {
@@ -81,5 +89,16 @@ describe('Collapsible', () => {
 
     expect(wrapper.state().isOpen).not.toBeTruthy()
     expect(spy).toHaveBeenCalled()
+  })
+
+  test('Close on click can be disabled', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<StatusBar isOpen onClose={spy} closeOnClick={false} />)
+    const o = wrapper.find('.c-StatusBar')
+
+    o.simulate('click')
+
+    expect(wrapper.state().isOpen).toBeTruthy()
+    expect(spy).not.toHaveBeenCalled()
   })
 })
