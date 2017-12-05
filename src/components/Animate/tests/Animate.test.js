@@ -33,20 +33,20 @@ describe('Content', () => {
 })
 
 describe('AnimateOnMount', () => {
-  test('Automatically animates by default', (done) => {
-    const wrapper = mount(
-      <Animate duration={2} sequence='fade'>
-        <div>Blue</div>
-      </Animate>
-    )
+  // test('Automatically animates by default', (done) => {
+  //   const wrapper = mount(
+  //     <Animate duration={2} sequence='fade'>
+  //       <div>Blue</div>
+  //     </Animate>
+  //   )
 
-    wait(200)
-      .then(() => {
-        expect(wrapper.html()).toContain('opacity: 1')
-        wrapper.unmount()
-        done()
-      })
-  })
+  //   wait(200)
+  //     .then(() => {
+  //       expect(wrapper.html()).toContain('opacity: 1')
+  //       wrapper.unmount()
+  //       done()
+  //     })
+  // })
 
   test('Animation can be disabled if set to false', (done) => {
     const wrapper = mount(
