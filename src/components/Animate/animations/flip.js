@@ -1,6 +1,6 @@
 export default {
   onMount: {
-    perspective: 400,
+    perspective: 400
   },
   onEntering: {
     rotateX: [80, 0]

@@ -4,25 +4,6 @@ import { Animate, AnimateGroup, Card } from '../../src/index.js'
 
 const stories = storiesOf('AnimateGroup', module)
 
-const customHeightSequence = {
-  onMount: {
-    height: 0,
-    overflow: 'hidden'
-  },
-  onEntering: (node) => {
-    const el = node.childNodes[0]
-    return {
-      height: [0, el.offsetHeight * 2, el.offsetHeight]
-    }
-  },
-  onExit: (node) => {
-    const el = node.childNodes[0]
-    return {
-      height: [el.offsetHeight, 0]
-    }
-  }
-}
-
 stories.add('default', () => (
   <div>
     <p>Stagger fade in</p>
@@ -46,7 +27,7 @@ stories.add('default', () => (
 stories.add('expand', () => (
   <div>
     <p>Stagger fade in</p>
-    <div style={{ margin: 'auto', width: '80%'}}>
+    <div style={{margin: 'auto', width: '80%'}}>
       <Card>
         <div>Card</div>
       </Card>
