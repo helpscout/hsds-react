@@ -60,7 +60,7 @@ class Scrollable extends Component {
 
     if (!fade && !fadeBottom) return
 
-    if (fade) {
+    if (fade && this.faderNodeTop) {
       const transformTop = getFadeTopStyles(event, offset)
       requestAnimationFrame(() => {
         this.faderNodeTop.style.transform = transformTop
@@ -68,7 +68,7 @@ class Scrollable extends Component {
       })
     }
 
-    if (fadeBottom) {
+    if (fadeBottom && this.faderNodeBottom) {
       const transformBottom = getFadeBottomStyles(event, offset)
       requestAnimationFrame(() => {
         this.faderNodeBottom.style.transform = transformBottom
