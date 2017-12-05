@@ -1,10 +1,10 @@
-const amount = -24
+const amount = 24
 
 export default {
   onEntering: {
-    translateX: [0, amount]
+    translateX: [amount, 0]
   },
   onExiting: {
-    translateX: [amount, 0]
+    translateX: [0, amount]
   }
 }
