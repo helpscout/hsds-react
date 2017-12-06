@@ -41,6 +41,13 @@ describe('Flexy', () => {
     expect(o.length).toBe(1)
     expect(o.hasClass('c-Toolbar')).toBe(true)
   })
+
+  test('Passes props to Flexy', () => {
+    const wrapper = shallow(<Toolbar just='right' />)
+    const o = wrapper.find(Flexy)
+
+    expect(o.prop('just')).toBe('right')
+  })
 })
 
 describe('Placement', () => {
