@@ -1,25 +1,26 @@
 import React from 'react'
+import Flexy from '../Flexy'
 import classNames from '../../utilities/classNames'
 
-const Block = props => {
+const Item = props => {
   const {
-    children,
     className,
+    children,
     ...rest
   } = props
 
   const componentClassName = classNames(
-    'c-Flexy__block',
+    'c-ToolbarItem',
     className
   )
 
   return (
-    <div className={componentClassName} {...rest}>
+    <Flexy.Item className={componentClassName} {...rest}>
       {children}
-    </div>
+    </Flexy.Item>
   )
 }
 
-Block.displayName = 'FlexyBlock'
+Item.displayName = 'ToolbarItem'
 
-export default Block
+export default Item

@@ -1,0 +1,30 @@
+@import "../../configs/color";
+
+.c-Toolbar {
+  @import "../../resets/base";
+  background-color: white;
+  min-height: 50px;
+  padding: 8px;
+  position: relative;
+
+  &.has-shadow {
+    z-index: 1;
+  }
+
+  // Placement
+  &.is-placement-top {
+    border-bottom: 1px solid _color(border);
+  }
+  &.is-placement-bottom {
+    border-top: 1px solid _color(border);
+  }
+
+  // Themes
+  &.is-theme-default {
+    background-color: white;
+  }
+  &.is-theme-note {
+    background-color: _color(note, background);
+    color: _color(yellow, 800);
+  }
+}

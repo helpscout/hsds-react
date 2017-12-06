@@ -2,6 +2,9 @@
 
 // Text
 @include _color((
+  note: (
+    background: #FFF7DD,
+  ),
   text: (
     default: _color(charcoal, 700),
     body: _color(charcoal, 400),
