@@ -64,6 +64,10 @@
     text-transform: uppercase;
   }
 
+  &.is-block {
+    display: block;
+  }
+
   &.is-samp {
     font-family: $font-family-code;
   }

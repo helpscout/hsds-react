@@ -1,0 +1,9 @@
+.c-InlineItem {
+  @import "../../resets/base";
+  $defaultSpacing: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0 $defaultSpacing $defaultSpacing 0;
+  padding: 0;
+  vertical-align: middle;
+}

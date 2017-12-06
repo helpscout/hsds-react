@@ -5,6 +5,14 @@ export const placementTypes = PropTypes.oneOf([
   'bottom'
 ]).isRequired
 
+export const sizeTypes = PropTypes.oneOf([
+  'xl',
+  'lg',
+  'md',
+  'sm',
+  'xs'
+]).isRequired
+
 export const themeTypes = PropTypes.oneOf([
   'default',
   'note'

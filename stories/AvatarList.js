@@ -19,9 +19,15 @@ const avatars = [
   }
 ]
 
-stories.add('default', () => {
+export const SampleComponent = () => {
   return (
     <AvatarList avatars={avatars} max={2} />
+  )
+}
+
+stories.add('default', () => {
+  return (
+    <SampleComponent />
   )
 })
 

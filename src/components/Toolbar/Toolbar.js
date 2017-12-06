@@ -4,18 +4,20 @@ import Flexy from '../Flexy'
 import Block from './Block'
 import Item from './Item'
 import Shadow from './Shadow'
-import { placementTypes, themeTypes } from './propTypes'
+import { placementTypes, sizeTypes, themeTypes } from './propTypes'
 import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   placement: placementTypes,
   shadow: PropTypes.bool,
+  size: sizeTypes,
   theme: themeTypes
 }
 
 const defaultProps = {
   placement: 'top',
   shadow: false,
+  size: 'sm',
   theme: 'default'
 }
 
@@ -25,6 +27,7 @@ const Toolbar = props => {
     className,
     placement,
     shadow,
+    size,
     theme,
     ...rest
   } = props
@@ -33,6 +36,7 @@ const Toolbar = props => {
     'c-Toolbar',
     placement && `is-placement-${placement}`,
     shadow && 'has-shadow',
+    size && `is-size-${size}`,
     theme && `is-theme-${theme}`,
     className
   )
