@@ -45,5 +45,6 @@ Flexy.propTypes = propTypes
 Flexy.defaultProps = defaultProps
 Flexy.Block = Block
 Flexy.Item = Item
+Flexy.displayName = 'Flexy'
 
 export default Flexy

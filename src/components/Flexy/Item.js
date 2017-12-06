@@ -27,5 +27,6 @@ const Item = props => {
 }
 
 Item.propTypes = propTypes
+Item.displayName = 'FlexyItem'
 
 export default Item
