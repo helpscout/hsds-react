@@ -30,24 +30,24 @@ stories.add('filled', () => (
   </div>
 ))
 
-stories.add('removable', () => (
+stories.add('isRemovable', () => (
   <div>
     <div>
-      <Tag color='red' removable>Ron</Tag>
-      <Tag color='grey' removable>Ron</Tag>
-      <Tag color='green' removable>Ron</Tag>
-      <Tag color='blue' removable>Ron</Tag>
-      <Tag color='orange' removable>Ron</Tag>
-      <Tag color='purple' removable>Ron</Tag>
+      <Tag color='red' isRemovable>Ron</Tag>
+      <Tag color='grey' isRemovable>Ron</Tag>
+      <Tag color='green' isRemovable>Ron</Tag>
+      <Tag color='blue' isRemovable>Ron</Tag>
+      <Tag color='orange' isRemovable>Ron</Tag>
+      <Tag color='purple' isRemovable>Ron</Tag>
     </div>
     <br />
     <div>
-      <Tag color='red' filled removable>Ron</Tag>
-      <Tag color='grey' filled removable>Ron</Tag>
-      <Tag color='green' filled removable>Ron</Tag>
-      <Tag color='blue' filled removable>Ron</Tag>
-      <Tag color='orange' filled removable>Ron</Tag>
-      <Tag color='purple' filled removable>Ron</Tag>
+      <Tag color='red' filled isRemovable>Ron</Tag>
+      <Tag color='grey' filled isRemovable>Ron</Tag>
+      <Tag color='green' filled isRemovable>Ron</Tag>
+      <Tag color='blue' filled isRemovable>Ron</Tag>
+      <Tag color='orange' filled isRemovable>Ron</Tag>
+      <Tag color='purple' filled isRemovable>Ron</Tag>
     </div>
   </div>
 ))

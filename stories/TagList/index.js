@@ -41,7 +41,7 @@ export class SampleComponent extends Component {
     })
 
     return (
-      <TagList removable onRemove={handleOnRemove}>
+      <TagList isRemovable onRemove={handleOnRemove}>
         {tagMarkup}
       </TagList>
     )
