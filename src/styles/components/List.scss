@@ -5,6 +5,7 @@ $seed-list-namespace: "c-List";
 .#{$seed-list-namespace} {
   @import "../resets/base";
   $block: this();
+  display: flex;
   margin-bottom: 0;
   margin-top: 0;
 

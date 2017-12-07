@@ -1,6 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Toolbar } from '../../src/index.js'
+import { SampleComponent as AvatarListSampleComponent } from '../AvatarList'
+import { SampleComponent as TagListSampleComponent } from '../TagList'
 
 const stories = storiesOf('Toolbar', module)
 
@@ -11,6 +13,18 @@ stories.add('default', () => (
     </Toolbar.Item>
     <Toolbar.Item>
       Right Content
+    </Toolbar.Item>
+  </Toolbar>
+))
+
+stories.add('example', () => (
+  <Toolbar size='lg'>
+    <Toolbar.Item>
+      <TagListSampleComponent />
+    </Toolbar.Item>
+    <Toolbar.Block />
+    <Toolbar.Item inline>
+      <AvatarListSampleComponent />
     </Toolbar.Item>
   </Toolbar>
 ))
