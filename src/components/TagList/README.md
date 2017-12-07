@@ -6,9 +6,9 @@ A TagList component is a UI element that contains [Tag](../Tag) components.
 
 ```jsx
 <TagList>
-  <Tag color='red'>stay</Badge>
-  <Tag color='green'>class</Badge>
-  <Tag color='grey' filled>san diego</Badge>
+  <Tag color='red'>stay</Tag>
+  <Tag color='green'>class</Tag>
+  <Tag color='grey' filled>san diego</Tag>
 </TagList>
 ```
 

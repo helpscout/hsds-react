@@ -5,7 +5,7 @@ A Tag component is a UI element that provide contextual labels for categories/ta
 ## Example
 
 ```jsx
-<Tag color='red'>important</Badge>
+<Tag color='red'>important</Tag>
 ```
 
 
