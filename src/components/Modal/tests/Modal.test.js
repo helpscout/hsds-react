@@ -362,3 +362,26 @@ describe('Seamless', () => {
     expect(o.length).toBe(1)
   })
 })
+
+describe('wrapperClassName', () => {
+  test('Adds default wrapperClassName', (done) => {
+    mount(<Modal isOpen trigger={trigger} />)
+
+    wait(40).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o.className).toContain('c-ModalWrapper')
+      done()
+    })
+  })
+
+  test('Can customize wrapperClassName', (done) => {
+    mount(<Modal isOpen trigger={trigger} wrapperClassName='ron' />)
+
+    wait(40).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o.className).toContain('ron')
+      expect(o.className).toContain('c-ModalWrapper')
+      done()
+    })
+  })
+})

@@ -7,11 +7,13 @@ import { propTypes as portalTypes } from '../Portal'
 
 export const propTypes = Object.assign({}, portalTypes, {
   trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
-  direction: PropTypes.string
+  direction: PropTypes.string,
+  wrapperClassName: PropTypes.string
 })
 
 const defaultProps = {
-  direction: 'down'
+  direction: 'down',
+  wrapperClassName: 'c-DropWrapper'
 }
 
 const popoverWrapperBaseZIndex = 1020
@@ -46,6 +48,7 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
         style,
         timeout,
         trigger,
+        wrapperClassName,
         zIndex: propsZindex,
         ...rest
       } = this.props
