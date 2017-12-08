@@ -1,0 +1,6 @@
+.c-ModalFooter {
+  @import "../../resets/base";
+  $borderRadius: 3px;
+  border-bottom-left-radius: $borderRadius;
+  border-Bottom-right-radius: $borderRadius;
+}

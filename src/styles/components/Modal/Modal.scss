@@ -1,5 +1,5 @@
 .c-Modal {
-  @import "../resets/base";
+  @import "../../resets/base";
   $offset: 8px;
 
   align-items: center;
@@ -26,6 +26,11 @@
     display: flex;
   }
 
+  &__Card {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__card-block {
     height: 100%;
   }
@@ -41,6 +46,7 @@
     position: absolute;
     right: $offset;
     top: $offset;
+    transform: translateZ(0);
     z-index: 3;
   }
 }

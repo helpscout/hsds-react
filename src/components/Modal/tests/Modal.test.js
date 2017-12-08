@@ -385,3 +385,131 @@ describe('wrapperClassName', () => {
     })
   })
 })
+
+describe('Header', () => {
+  test('Does not render a Modal.Header by default', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <Modal.Body>
+          <div className='ron'>Burgandy</div>
+        </Modal.Body>
+      </ModalComponent>
+    )
+    const o = wrapper.find(Modal.Header)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders the Modal.Header within a Card', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <Modal.Header />
+        <div className='ron'>Burgandy</div>
+      </ModalComponent>
+    )
+    const o = wrapper.find(Card).find(Modal.Header)
+    const bodyHeader = wrapper.find(Modal.Body).find(Modal.Header)
+
+    expect(o.length).toBe(1)
+    expect(bodyHeader.length).toBe(0)
+  })
+})
+
+describe('Footer', () => {
+  test('Does not render a Modal.Footer by default', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <Modal.Body>
+          <div className='ron'>Burgandy</div>
+        </Modal.Body>
+      </ModalComponent>
+    )
+    const o = wrapper.find(Modal.Footer)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders the Modal.Footer within a Card', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <Modal.Footer />
+        <div className='ron'>Burgandy</div>
+      </ModalComponent>
+    )
+    const o = wrapper.find(Card).find(Modal.Footer)
+    const bodyFooter = wrapper.find(Modal.Body).find(Modal.Footer)
+
+    expect(o.length).toBe(1)
+    expect(bodyFooter.length).toBe(0)
+  })
+})
+
+describe('Body', () => {
+  test('Can render a Modal.Body', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <Modal.Body>
+          <div className='ron'>Burgandy</div>
+        </Modal.Body>
+      </ModalComponent>
+    )
+    const body = wrapper.find(Modal.Body)
+    const div = body.find('.ron')
+
+    expect(body.length).toBe(1)
+    expect(div.length).toBe(1)
+    expect(div.html()).toContain('Burgandy')
+  })
+
+  test('Renders Modal.Body within Card, by default', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <Modal.Body>
+          <div className='ron'>Burgandy</div>
+        </Modal.Body>
+      </ModalComponent>
+    )
+    const card = wrapper.find(Card)
+    const body = card.find(Modal.Body)
+    const div = body.find('.ron')
+
+    expect(card.length).toBe(1)
+    expect(body.length).toBe(1)
+    expect(div.length).toBe(1)
+    expect(div.html()).toContain('Burgandy')
+  })
+
+  test('Renders content within a Scrollable, within Modal.Body, by default', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <Modal.Body>
+          <div className='ron'>Burgandy</div>
+        </Modal.Body>
+      </ModalComponent>
+    )
+    const card = wrapper.find(Card)
+    const body = card.find(Modal.Body)
+    const scrollable = body.find(Scrollable)
+    const div = scrollable.find('.ron')
+
+    expect(card.length).toBe(1)
+    expect(body.length).toBe(1)
+    expect(scrollable.length).toBe(1)
+    expect(div.length).toBe(1)
+    expect(div.html()).toContain('Burgandy')
+  })
+
+  test('Renders content within a Modal.Body, even if Modal.Body is not provided', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <div className='ron'>Burgandy</div>
+      </ModalComponent>
+    )
+    const body = wrapper.find(Modal.Body)
+    const div = body.find('.ron')
+
+    expect(body.length).toBe(1)
+    expect(div.length).toBe(1)
+    expect(div.html()).toContain('Burgandy')
+  })
+})

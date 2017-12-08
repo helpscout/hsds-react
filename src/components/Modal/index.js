@@ -1,5 +1,8 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
+import Body from './Body'
+import Footer from './Footer'
+import Header from './Header'
 import Animate from '../Animate'
 import Card from '../Card'
 import CloseButton from '../CloseButton'
@@ -64,6 +67,7 @@ class Modal extends Component {
     this.handleOnResize = this.handleOnResize.bind(this)
     this.closeNode = null
     this.scrollableNode = null
+    this._hasHeader = false
   }
 
   componentDidMount () {
@@ -76,7 +80,11 @@ class Modal extends Component {
   }
 
   positionCloseNode () {
-    if (!this.closeNode || !this.scrollableNode) return
+    if (
+      !this.closeNode ||
+      !this.scrollableNode ||
+      this._hasHeader
+    ) return
 
     const defaultOffset = 8
     const borderOffset = 2
@@ -135,30 +143,67 @@ class Modal extends Component {
       zIndex
     }) : { zIndex }
 
-    const childrenMarkup = !seamless ? (
-      <Card seamless role='dialog'>
+    let headerMarkup
+    let bodyMarkup
+    let footerMarkup
+
+    let parsedChildren = React.Children.map(children, child => {
+      if (child.type === Header) {
+        this._hasHeader = true
+        headerMarkup = child
+        return null
+      }
+      if (child.type === Body) {
+        bodyMarkup = child
+        return null
+      }
+      if (child.type === Footer) {
+        footerMarkup = child
+        return null
+      }
+      return child
+    })
+
+    parsedChildren = bodyMarkup
+      ? bodyMarkup.props.children
+      : parsedChildren
+
+    const modalContentMarkup = !seamless ? (
+      <Card className='c-Modal__Card' seamless role='dialog'>
+        {headerMarkup}
         {closeMarkup}
-        <Scrollable
-          className='c-Modal__scrollable'
-          fade
-          rounded
-          onScroll={onScroll}
-          scrollableRef={(node) => {
-            this.scrollableNode = node
-            scrollableRef(node)
-          }}
-        >
-          {children}
-        </Scrollable>
+        <Body>
+          <Scrollable
+            className='c-Modal__scrollable'
+            fade
+            rounded
+            onScroll={onScroll}
+            scrollableRef={(node) => {
+              this.scrollableNode = node
+              scrollableRef(node)
+            }}
+          >
+            {parsedChildren}
+          </Scrollable>
+        </Body>
+        {footerMarkup}
       </Card>
-    ) : children
+    ) : (
+      <div className='c-Modal__innerContent'>
+        {headerMarkup}
+        <Body>
+          {parsedChildren}
+        </Body>
+        {footerMarkup}
+      </div>
+    )
 
     return (
       <div className={componentClassName} role='document' style={modalStyle} {...rest}>
         <EventListener event='resize' handler={handleOnResize} />
         <div className='c-Modal__content'>
           <Animate className='c-Modal__Card-container' sequence='fade down' in={portalIsOpen} wait={modalAnimationDelay}>
-            {childrenMarkup}
+            {modalContentMarkup}
           </Animate>
         </div>
         <Animate sequence='fade' in={portalIsOpen} wait={overlayAnimationDelay}>
@@ -171,6 +216,12 @@ class Modal extends Component {
 
 Modal.propTypes = propTypes
 Modal.defaultProps = defaultProps
+Modal.displayName = 'Modal'
+
+const ComposedModal = PortalWrapper(portalOptions)(Modal)
+ComposedModal.Header = Header
+ComposedModal.Body = Body
+ComposedModal.Footer = Footer
 
 export const ModalComponent = Modal
-export default PortalWrapper(portalOptions)(Modal)
+export default ComposedModal

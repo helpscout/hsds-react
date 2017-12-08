@@ -42,4 +42,9 @@
     background-color: _color(note, background);
     color: _color(yellow, 800);
   }
+
+  // Seamless
+  &.is-seamless {
+    border: none;
+  }
 }
