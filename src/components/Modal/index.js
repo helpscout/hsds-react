@@ -27,7 +27,8 @@ export const propTypes = Object.assign({}, portalTypes, {
     PropTypes.object
   ]),
   onScroll: PropTypes.func,
-  trigger: PropTypes.element
+  trigger: PropTypes.element,
+  wrapperClassName: PropTypes.string
 })
 
 const defaultProps = {
@@ -44,7 +45,8 @@ const defaultProps = {
     out: 200
   },
   onScroll: noop,
-  scrollableRef: noop
+  scrollableRef: noop,
+  wrapperClassName: 'c-ModalWrapper'
 }
 
 const modalBaseZIndex = 1040
@@ -107,6 +109,7 @@ class Modal extends Component {
       style,
       timeout,
       trigger,
+      wrapperClassName,
       zIndex,
       ...rest
     } = this.props

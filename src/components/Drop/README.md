@@ -46,6 +46,7 @@ export default Drop(dropOptions)(MyPopover)
 | Prop | Type | Description |
 | --- | --- | --- |
 | direction | `string` | Determines the preferred "drop" direction. Accepts `left`, `right`, `up`, `down`, or a combination of horizontal/vertical directions. |
+| wrapperClassName | `string` | Custom className to add to the [PortalWrapper](../PortalWrapper) component. |
 
 Drop is composed using [PortalWrapper](../PortalWrapper). Check out [PortalWrapper](../PortalWrapper) for additional HOC option and prop details.
 

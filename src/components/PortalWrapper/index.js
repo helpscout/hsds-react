@@ -9,7 +9,9 @@ import {
   createUniqueIDFactory,
   createUniqueIndexFactory
 } from '../../utilities/id'
+import { getComponentDefaultProp } from '../../utilities/component'
 import { setupManager } from '../../utilities/globalManager'
+import classNames from '../../utilities/classNames'
 import Content from './Content'
 
 const defaultOptions = {
@@ -33,9 +35,14 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   class PortalWrapper extends Component {
     constructor (props) {
       super()
+      const composedWrapperClassName = getComponentDefaultProp(ComposedComponent, 'wrapperClassName')
       this.state = Object.assign({}, props, extendedOptions, {
         id: uniqueID(),
-        isMounted: props.isOpen
+        isMounted: props.isOpen,
+        wrapperClassName: classNames(
+          props.wrapperClassName,
+          composedWrapperClassName
+        )
       })
       this.closePortal = this.closePortal.bind(this)
       this.openPortal = this.openPortal.bind(this)
@@ -116,10 +123,15 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         renderTo,
         trigger,
         timeout,
+        wrapperClassName: propsWrapperClassName,
         ...rest
       } = this.props
       // Remapping open/mount state for ComposedComponent
-      const { id, isOpen: portalIsMounted, isMounted: portalIsOpen } = this.state
+      const {
+        id, isOpen: portalIsMounted,
+        isMounted: portalIsOpen,
+        wrapperClassName
+      } = this.state
 
       const openPortal = this.openPortal
       const handleOnClose = this.handleOnClose
@@ -135,6 +147,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
           wait={this.state.timeout}
         >
           <Portal
+            className={wrapperClassName}
             onBeforeClose={handleOnClose}
             onClose={onClose}
             onBeforeOpen={onBeforeOpen}

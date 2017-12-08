@@ -31,94 +31,96 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
-test('Can create a component as a HOC', (done) => {
-  const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+describe('Composed', () => {
+  test('Can create a component as a HOC', (done) => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent isOpen />)
 
-  wait()
-    .then(() => {
-      const o = document.querySelector('.content')
+    wait()
+      .then(() => {
+        const o = document.querySelector('.content')
 
-      expect(o).toBeTruthy()
-      expect(o.innerHTML).toContain('Content')
-      wrapper.unmount()
-      done()
-    })
-})
+        expect(o).toBeTruthy()
+        expect(o.innerHTML).toContain('Content')
+        wrapper.unmount()
+        done()
+      })
+  })
 
-test('Can pass className to composed component', (done) => {
-  const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent className='ron' isOpen />)
+  test('Can pass className to composed component', (done) => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent className='ron' isOpen />)
 
-  wait()
-    .then(() => {
-      const o = document.querySelector('.content')
+    wait()
+      .then(() => {
+        const o = document.querySelector('.content')
 
-      expect(o.classList.contains('ron')).toBeTruthy()
-      wrapper.unmount()
-      done()
-    })
-})
+        expect(o.classList.contains('ron')).toBeTruthy()
+        wrapper.unmount()
+        done()
+      })
+  })
 
-test('Should not steal composed component custom className', (done) => {
-  const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent className='ron' isOpen />)
+  test('Should not steal composed component custom className', (done) => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent className='ron' isOpen />)
 
-  wait()
-    .then(() => {
-      const o = document.querySelector('.c-Drop')
-      const content = document.querySelector('.content')
+    wait()
+      .then(() => {
+        const o = document.querySelector('.c-Drop')
+        const content = document.querySelector('.content')
 
-      expect(o.classList.contains('ron')).not.toBeTruthy()
-      expect(content.classList.contains('ron')).toBeTruthy()
-      wrapper.unmount()
-      done()
-    })
-})
+        expect(o.classList.contains('ron')).not.toBeTruthy()
+        expect(content.classList.contains('ron')).toBeTruthy()
+        wrapper.unmount()
+        done()
+      })
+  })
 
-test('Can styles to composed component', (done) => {
-  const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent style={{background: 'red'}} isOpen />)
+  test('Can styles to composed component', (done) => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent style={{background: 'red'}} isOpen />)
 
-  wait()
-    .then(() => {
-      const o = document.querySelector('.content')
+    wait()
+      .then(() => {
+        const o = document.querySelector('.content')
 
-      expect(o.style.background).toBe('red')
-      wrapper.unmount()
-      done()
-    })
-})
+        expect(o.style.background).toBe('red')
+        wrapper.unmount()
+        done()
+      })
+  })
 
-test('Adds default ID', (done) => {
-  const TestComponent = Drop()(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  test('Adds default ID', (done) => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent isOpen />)
 
-  wait()
-    .then(() => {
-      const o = document.body.childNodes[0]
+    wait()
+      .then(() => {
+        const o = document.body.childNodes[0]
 
-      expect(o.id).toContain('Drop')
-      wrapper.unmount()
-      done()
-    })
-})
+        expect(o.id).toContain('Drop')
+        wrapper.unmount()
+        done()
+      })
+  })
 
-test('Override default ID with options', (done) => {
-  const options = {
-    id: 'Brick'
-  }
-  const TestComponent = Drop(options)(ContentComponent)
-  const wrapper = mount(<TestComponent isOpen />)
+  test('Override default ID with options', (done) => {
+    const options = {
+      id: 'Brick'
+    }
+    const TestComponent = Drop(options)(ContentComponent)
+    const wrapper = mount(<TestComponent isOpen />)
 
-  wait()
-    .then(() => {
-      const o = document.body.childNodes[0]
+    wait()
+      .then(() => {
+        const o = document.body.childNodes[0]
 
-      expect(o.id).toContain('Brick')
-      wrapper.unmount()
-      done()
-    })
+        expect(o.id).toContain('Brick')
+        wrapper.unmount()
+        done()
+      })
+  })
 })
 
 describe('Trigger', () => {
@@ -139,5 +141,30 @@ describe('Trigger', () => {
     const el = wrapper.find('.trigger')
 
     expect(el.prop('onClick')).toBeInstanceOf(Function)
+  })
+})
+
+describe('wrapperClassName', () => {
+  const TestComponent = Drop()(ContentComponent)
+
+  test('Adds default wrapperClassName', (done) => {
+    mount(<TestComponent isOpen />)
+
+    wait(40).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o.className).toContain('c-DropWrapper')
+      done()
+    })
+  })
+
+  test('Can customize wrapperClassName', (done) => {
+    mount(<TestComponent isOpen wrapperClassName='ron' />)
+
+    wait(40).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o.className).toContain('ron')
+      expect(o.className).toContain('c-DropWrapper')
+      done()
+    })
   })
 })

@@ -124,3 +124,27 @@ describe('Manager', () => {
     expect(o.node.state.isOpen).toBe(true)
   })
 })
+
+describe('wrapperClassName', () => {
+  test('Does not add a wrapperClassName to portal', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent isOpen />)
+
+    wait().then(() => {
+      const c = document.body.childNodes[0]
+      expect(c.className).toBeFalsy()
+      done()
+    })
+  })
+
+  test('Can customize wrapperClassName', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent isOpen wrapperClassName='blue' />)
+
+    wait().then(() => {
+      const c = document.body.childNodes[0]
+      expect(c.className).toContain('blue')
+      done()
+    })
+  })
+})

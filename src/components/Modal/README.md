@@ -36,6 +36,7 @@ A Modal component presents content within a container on top of the application'
 | scrollableRef | `function` | Retrieves the scrollable node. |
 | seamless | `bool` | Renders content with the standard [Card](../Card) UI. |
 | trigger | `element` | The UI the user clicks to trigger the modal. |
+| wrapperClassName | `string` | Custom className to add to the [PortalWrapper](../PortalWrapper) component. |
 
 
 ### Render hooks
