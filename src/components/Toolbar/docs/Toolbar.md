@@ -27,8 +27,9 @@ This component is constructed using the [Flexy](../../Flexy/docs/Flexy.md) compo
 | className | `string` | Custom class names to be added to the component. |
 | gap | `string` | Determines the amount of spacing between Flexy child elements. |
 | just | `string` | Determines the horizontal alignment of Flexy child elements. |
-| shadow | `bool` | Renders a drop-shadow. |
 | placement | `string` | Determines the border placement on the component. |
+| seamless | `bool` | Removes the border from the component. |
+| shadow | `bool` | Renders a drop-shadow. |
 | theme | `string` | Determines the thematic colors of the component. |
 
 

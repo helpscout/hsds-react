@@ -91,6 +91,22 @@ describe('Shadow', () => {
   })
 })
 
+describe('seamless', () => {
+  test('Does not have a seamless style by default', () => {
+    const wrapper = shallow(<Toolbar />)
+    const o = wrapper.find('.c-Toolbar')
+
+    expect(o.hasClass('is-seamless')).not.toBe(true)
+  })
+
+  test('Can apply seamless styles', () => {
+    const wrapper = shallow(<Toolbar seamless />)
+    const o = wrapper.find('.c-Toolbar')
+
+    expect(o.hasClass('is-seamless')).toBe(true)
+  })
+})
+
 describe('Theme', () => {
   test('Has a default theme', () => {
     const wrapper = shallow(<Toolbar />)

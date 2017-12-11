@@ -10,12 +10,14 @@ import classNames from '../../utilities/classNames'
 export const propTypes = {
   placement: placementTypes,
   shadow: PropTypes.bool,
+  seamless: PropTypes.bool,
   size: sizeTypes,
   theme: themeTypes
 }
 
 const defaultProps = {
   placement: 'top',
+  seamless: false,
   shadow: false,
   size: 'sm',
   theme: 'default'
@@ -27,6 +29,7 @@ const Toolbar = props => {
     className,
     placement,
     shadow,
+    seamless,
     size,
     theme,
     ...rest
@@ -35,6 +38,7 @@ const Toolbar = props => {
   const componentClassName = classNames(
     'c-Toolbar',
     placement && `is-placement-${placement}`,
+    seamless && 'is-seamless',
     shadow && 'has-shadow',
     size && `is-size-${size}`,
     theme && `is-theme-${theme}`,

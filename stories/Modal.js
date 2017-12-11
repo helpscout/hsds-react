@@ -2,13 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
-import { Heading, Modal, Link } from '../src/index.js'
+import { Button, EmojiPicker, Heading, Modal, Link, Toolbar } from '../src/index.js'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
+import { createSpec, faker } from '@helpscout/helix'
 
 window.Perf = Perf
 
 const stories = storiesOf('Modal', module)
+
+const ContentSpec = createSpec({
+  content: faker.lorem.paragraph(),
+  id: faker.random.uuid()
+})
 
 stories.addDecorator(story => (
   <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
@@ -18,24 +24,9 @@ stories.add('default', () => (
   <Modal trigger={<Link>Open dis modal</Link>}>
     <div>
       <Heading>Title</Heading>
-      <p>
-        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-      </p>
-      <p>
-        Tenderloin bacon chicken jowl cupim, sausage shank spare ribs kielbasa. Flank corned beef kevin pastrami short ribs pork andouille turkey sirloin strip steak. Shank tri-tip porchetta beef ribs salami. Pork chop tail kielbasa, turkey pork loin filet mignon chicken jowl alcatra hamburger salami cupim.
-      </p>
-      <p>
-        Corned beef pork belly cupim turkey, filet mignon bresaola short ribs sirloin brisket. Fatback turkey strip steak tenderloin pig ham hock salami cow filet mignon ribeye. Brisket drumstick capicola rump. Biltong jowl prosciutto fatback bresaola strip steak pork chop shankle tri-tip shank salami pancetta ham hock. Cupim kielbasa doner salami, meatball capicola filet mignon pastrami.
-      </p>
-      <p>
-        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-      </p>
-      <p>
-        Tenderloin bacon chicken jowl cupim, sausage shank spare ribs kielbasa. Flank corned beef kevin pastrami short ribs pork andouille turkey sirloin strip steak. Shank tri-tip porchetta beef ribs salami. Pork chop tail kielbasa, turkey pork loin filet mignon chicken jowl alcatra hamburger salami cupim.
-      </p>
-      <p>
-        Corned beef pork belly cupim turkey, filet mignon bresaola short ribs sirloin brisket. Fatback turkey strip steak tenderloin pig ham hock salami cow filet mignon ribeye. Brisket drumstick capicola rump. Biltong jowl prosciutto fatback bresaola strip steak pork chop shankle tri-tip shank salami pancetta ham hock. Cupim kielbasa doner salami, meatball capicola filet mignon pastrami.
-      </p>
+      {ContentSpec.generate(8).map(({id, content}) => (
+        <p key={id}>{content}</p>
+      ))}
     </div>
   </Modal>
 ))
@@ -44,10 +35,76 @@ stories.add('open', () => (
   <Modal isOpen trigger={<Link>Clicky</Link>}>
     <div>
       <Heading>Title</Heading>
-      <p>
-        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-      </p>
+      {ContentSpec.generate(2).map(({id, content}) => (
+        <p key={id}>{content}</p>
+      ))}
     </div>
+  </Modal>
+))
+
+stories.add('header/footer', () => (
+  <Modal isOpen trigger={<Link>Clicky</Link>}>
+    <Modal.Header>
+      Header
+    </Modal.Header>
+    <Modal.Body>
+      <Heading>Title</Heading>
+      {ContentSpec.generate(8).map(({id, content}) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.Footer>
+      Footer
+    </Modal.Footer>
+  </Modal>
+))
+
+stories.add('header/footer styles', () => (
+  <Modal isOpen trigger={<Link>Clicky</Link>}>
+    <Modal.Header seamless>
+      Header
+    </Modal.Header>
+    <div>
+      <Heading>Title</Heading>
+      {ContentSpec.generate(8).map(({id, content}) => (
+        <p key={id}>{content}</p>
+      ))}
+    </div>
+    <Modal.Footer shadow>
+      Footer
+    </Modal.Footer>
+  </Modal>
+))
+
+stories.add('header/footer with items', () => (
+  <Modal isOpen trigger={<Link>Clicky</Link>} closeIcon={false}>
+    <Modal.Header>
+      <Toolbar.Item>
+        <Heading size='h4'>Heading</Heading>
+      </Toolbar.Item>
+      <Toolbar.Block />
+      <Toolbar.Item>
+        <Button>Action</Button>
+      </Toolbar.Item>
+    </Modal.Header>
+    <Modal.Body>
+      <Heading size='h4'>Inner Heading</Heading>
+      {ContentSpec.generate(8).map(({id, content}) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.Footer>
+      <Toolbar.Item>
+        <Button>Another Action</Button>
+      </Toolbar.Item>
+      <Toolbar.Block />
+      <Toolbar.Item>
+        <Button plain>Action</Button>
+      </Toolbar.Item>
+      <Toolbar.Item>
+        <Button primary>Primary</Button>
+      </Toolbar.Item>
+    </Modal.Footer>
   </Modal>
 ))
 
@@ -74,11 +131,8 @@ stories.add('custom close trigger', () => {
 })
 
 stories.add('seamless', () => (
-  <Modal trigger={<Link>Clicky</Link>} seamless>
-    <div>
-      <Heading>No Card!</Heading>
-      <p>So much room for activites!</p>
-    </div>
+  <Modal trigger={<Link>Clicky</Link>} seamless isOpen>
+    <EmojiPicker />
   </Modal>
 ))
 
@@ -86,24 +140,24 @@ stories.add('nested', () => (
   <Modal trigger={<Link>Clicky</Link>}>
     <div>
       <Heading>Title</Heading>
-      <p>
-        Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-      </p>
+      {ContentSpec.generate(2).map(({id, content}) => (
+        <p key={id}>{content}</p>
+      ))}
 
       <Modal trigger={<Link>Level 2</Link>}>
         <div>
           <Heading>Level 2</Heading>
-          <p>
-            Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-          </p>
+          {ContentSpec.generate(2).map(({id, content}) => (
+            <p key={id}>{content}</p>
+          ))}
         </div>
 
         <Modal trigger={<Link>Level 3</Link>}>
           <div>
             <Heading>Level 3</Heading>
-            <p>
-              Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-            </p>
+            {ContentSpec.generate(2).map(({id, content}) => (
+              <p key={id}>{content}</p>
+            ))}
           </div>
         </Modal>
       </Modal>
@@ -121,9 +175,9 @@ stories.add('custom mounting selector', () => {
       <Modal trigger={<Link>Clicky</Link>} renderTo='.render-modal-here'>
         <div>
           <Heading>Title</Heading>
-          <p>
-            Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-          </p>
+          {ContentSpec.generate(2).map(({id, content}) => (
+            <p key={id}>{content}</p>
+          ))}
         </div>
       </Modal>
     </div>
@@ -155,9 +209,9 @@ stories.add('lifecycle events', () => {
       >
         <div>
           <Heading>Title</Heading>
-          <p>
-            Bacon ipsum dolor amet filet mignon swine biltong ball tip ribeye. Bresaola strip steak t-bone andouille biltong. Short loin picanha shankle bresaola pastrami brisket turducken, kevin rump landjaeger kielbasa. Alcatra tongue shoulder leberkas.
-          </p>
+          {ContentSpec.generate(2).map(({id, content}) => (
+            <p key={id}>{content}</p>
+          ))}
         </div>
       </Modal>
     </div>
