@@ -445,6 +445,36 @@ describe('Footer', () => {
 })
 
 describe('Body', () => {
+  test('Can parse plain-text', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        Ron
+      </ModalComponent>
+    )
+    const body = wrapper.find(Modal.Body)
+
+    expect(body.length).toBe(1)
+    expect(body.html()).toContain('Ron')
+  })
+
+  test('Can render Modal.Body without childrent content', () => {
+    const wrapper = shallow(
+      <ModalComponent />
+    )
+    const body = wrapper.find(Modal.Body)
+
+    expect(body.length).toBe(1)
+  })
+
+  test('Can render Modal.Body without number content', () => {
+    const wrapper = shallow(
+      <ModalComponent>1</ModalComponent>
+    )
+    const body = wrapper.find(Modal.Body)
+
+    expect(body.length).toBe(1)
+  })
+
   test('Can render a Modal.Body', () => {
     const wrapper = shallow(
       <ModalComponent>

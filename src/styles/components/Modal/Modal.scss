@@ -1,5 +1,8 @@
+@import "pack/seed-this/_index";
+
 .c-Modal {
   @import "../../resets/base";
+  $block: this();
   $offset: 8px;
 
   align-items: center;
@@ -26,9 +29,11 @@
     display: flex;
   }
 
-  &__Card {
-    display: flex;
-    flex-direction: column;
+  & {
+    #{$block}__Card { // Increase specificity on this style
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__card-block {
