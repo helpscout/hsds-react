@@ -148,6 +148,10 @@ class Modal extends Component {
     let footerMarkup
 
     let parsedChildren = React.Children.map(children, child => {
+      if (!child || typeof child !== 'object' || !child.type) {
+        return child
+      }
+
       if (child.type === Header) {
         this._hasHeader = true
         headerMarkup = child
