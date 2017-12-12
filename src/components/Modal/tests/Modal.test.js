@@ -430,7 +430,7 @@ describe('Body', () => {
     expect(body.html()).toContain('Ron')
   })
 
-  test('Can render Modal.Body without childrent content', () => {
+  test('Can render Modal.Body without children content', () => {
     const wrapper = shallow(
       <ModalComponent>
         <Modal.Body />
@@ -538,5 +538,39 @@ describe('Content', () => {
     const o = wrapper.instance()
 
     expect(o.scrollableNode).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Can render non-sub component children', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        <div className='ron'>Test</div>
+      </ModalComponent>
+    )
+    const o = wrapper.find('.ron')
+
+    expect(o.length).toBe(1)
+  })
+
+  test('Can render wrapper-like child components', () => {
+    const WrapperComponent = props => {
+      return (
+        <Modal.Content>
+          {props.children}
+        </Modal.Content>
+      )
+    }
+
+    const wrapper = shallow(
+      <ModalComponent>
+        <WrapperComponent>
+          <div className='ron'>Test</div>
+        </WrapperComponent>
+      </ModalComponent>
+    )
+    const o = wrapper.find('.ron')
+
+    expect(o.length).toBe(1)
   })
 })

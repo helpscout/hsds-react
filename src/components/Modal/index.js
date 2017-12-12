@@ -14,7 +14,6 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { propTypes as portalTypes } from '../Portal'
 import { hasContentOverflowY } from '../../utilities/node'
-import { warn } from '../../utilities/log'
 import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 
 export const propTypes = Object.assign({}, portalTypes, {
@@ -63,7 +62,6 @@ class Modal extends Component {
     this.handleOnResize = this.handleOnResize.bind(this)
     this.closeNode = null
     this.scrollableNode = null
-    this._hasHeader = false
   }
 
   componentDidMount () {
@@ -78,8 +76,7 @@ class Modal extends Component {
   positionCloseNode () {
     if (
       !this.closeNode ||
-      !this.scrollableNode ||
-      this._hasHeader
+      !this.scrollableNode
     ) return
 
     const defaultOffset = 8
@@ -138,16 +135,6 @@ class Modal extends Component {
     }) : { zIndex }
 
     const parsedChildren = React.Children.map(children, child => {
-      if (!child || (
-          child.type !== Body &&
-          child.type !== Content &&
-          child.type !== Header &&
-          child.type !== Footer
-        )) {
-        warn('Modal: Child must be a sub-component of Modal.')
-        return null
-      }
-
       if (child.type === Content || child.type === Body) {
         return React.cloneElement(child, {
           scrollableRef: (node) => {

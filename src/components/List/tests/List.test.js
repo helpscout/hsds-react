@@ -80,6 +80,21 @@ describe('Number', () => {
   })
 })
 
+describe('Display', () => {
+  test('Is display block by default', () => {
+    const wrapper = shallow(<List />)
+
+    expect(wrapper.hasClass('is-display-block')).toBeTruthy()
+  })
+
+  test('Can be set to display flex', () => {
+    const wrapper = shallow(<List display='flex' />)
+
+    expect(wrapper.hasClass('is-display-block')).not.toBeTruthy()
+    expect(wrapper.hasClass('is-display-flex')).toBeTruthy()
+  })
+})
+
 describe('Size', () => {
   test('Can render size styles, if specified', () => {
     const wrapper = shallow(<List size='md' />)
