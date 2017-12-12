@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '..'
@@ -85,7 +85,11 @@ describe('CloseIcon', () => {
   })
 
   test('Adjusts CloseButton position on mount', () => {
-    const wrapper = mount(<ModalComponent isOpen />)
+    const wrapper = mount(
+      <ModalComponent isOpen>
+        <Modal.Body />
+      </ModalComponent>
+    )
     const o = wrapper.find('.c-Modal__close')
 
     expect(o.html()).toContain('right:')
@@ -302,41 +306,6 @@ describe('PortalWrapper', () => {
   })
 })
 
-describe('Integration: Scrollable', () => {
-  class MyComponent extends Component {
-    constructor () {
-      super()
-      this.scrollable = null
-    }
-    render () {
-      return (
-        <ModalComponent
-          scrollableRef={node => { this.scrollable = node }}
-          {...this.props}
-        />
-      )
-    }
-  }
-
-  test('Can pass scrollableRef to parent', () => {
-    const wrapper = mount(<MyComponent />)
-    const n = wrapper.find('.c-Scrollable__content').node
-    const o = wrapper.instance()
-
-    expect(o.scrollable).toBe(n)
-  })
-
-  test('Can fire onScroll callback', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<MyComponent onScroll={spy} />)
-    const o = wrapper.find(Scrollable)
-
-    o.node.props.onScroll()
-
-    expect(spy).toHaveBeenCalled()
-  })
-})
-
 describe('Seamless', () => {
   test('Should not be seamless by default', () => {
     const wrapper = mount(
@@ -352,7 +321,9 @@ describe('Seamless', () => {
   test('Does not render the Card component, if seamless', () => {
     const wrapper = mount(
       <ModalComponent seamless>
-        <div className='ron'>RON</div>
+        <Modal.Content>
+          <div className='ron'>RON</div>
+        </Modal.Content>
       </ModalComponent>
     )
     const card = wrapper.find(Card)
@@ -448,7 +419,9 @@ describe('Body', () => {
   test('Can parse plain-text', () => {
     const wrapper = shallow(
       <ModalComponent>
-        Ron
+        <Modal.Body>
+          Ron
+        </Modal.Body>
       </ModalComponent>
     )
     const body = wrapper.find(Modal.Body)
@@ -459,7 +432,9 @@ describe('Body', () => {
 
   test('Can render Modal.Body without childrent content', () => {
     const wrapper = shallow(
-      <ModalComponent />
+      <ModalComponent>
+        <Modal.Body />
+      </ModalComponent>
     )
     const body = wrapper.find(Modal.Body)
 
@@ -468,7 +443,11 @@ describe('Body', () => {
 
   test('Can render Modal.Body without number content', () => {
     const wrapper = shallow(
-      <ModalComponent>1</ModalComponent>
+      <ModalComponent>
+        <Modal.Body>
+          1
+        </Modal.Body>
+      </ModalComponent>
     )
     const body = wrapper.find(Modal.Body)
 
@@ -510,7 +489,7 @@ describe('Body', () => {
   })
 
   test('Renders content within a Scrollable, within Modal.Body, by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body>
           <div className='ron'>Burgandy</div>
@@ -528,18 +507,36 @@ describe('Body', () => {
     expect(div.length).toBe(1)
     expect(div.html()).toContain('Burgandy')
   })
+})
 
-  test('Renders content within a Modal.Body, even if Modal.Body is not provided', () => {
-    const wrapper = shallow(
+describe('Content', () => {
+  test('Does not set the scrollableNode if Modal.Body is absent', () => {
+    const wrapper = mount(
       <ModalComponent>
-        <div className='ron'>Burgandy</div>
+        <Modal.Content>
+          Ron
+        </Modal.Content>
       </ModalComponent>
     )
-    const body = wrapper.find(Modal.Body)
-    const div = body.find('.ron')
 
-    expect(body.length).toBe(1)
-    expect(div.length).toBe(1)
-    expect(div.html()).toContain('Burgandy')
+    const o = wrapper.instance()
+
+    expect(o.scrollableNode).not.toBeTruthy()
+  })
+
+  test('Can set the scrollNode from a Body nested within a Content', () => {
+    const wrapper = mount(
+      <ModalComponent>
+        <Modal.Content>
+          <Modal.Body>
+            Ron
+          </Modal.Body>
+        </Modal.Content>
+      </ModalComponent>
+    )
+
+    const o = wrapper.instance()
+
+    expect(o.scrollableNode).toBeTruthy()
   })
 })

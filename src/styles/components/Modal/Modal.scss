@@ -15,7 +15,7 @@
   right: 0;
   top: 0;
 
-  &__content {
+  &__innerWrapper {
     display: flex;
     justify-content: center;
     max-height: 98%;
@@ -38,12 +38,6 @@
 
   &__card-block {
     height: 100%;
-  }
-
-  &__scrollable {
-    & > .c-Scrollable__content {
-      padding: 20px;
-    }
   }
 
   &__close {

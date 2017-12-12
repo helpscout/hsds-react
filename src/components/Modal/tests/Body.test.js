@@ -1,6 +1,7 @@
-import React from 'react'
-import { shallow } from 'enzyme'
+import React, {PureComponent as Component} from 'react'
+import { mount, shallow } from 'enzyme'
 import Body from '../Body'
+import { Scrollable } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -23,5 +24,53 @@ describe('Children', () => {
     const el = wrapper.find('div.child')
 
     expect(el.text()).toContain('Hello')
+  })
+})
+
+describe('Scrollable', () => {
+  class MyComponent extends Component {
+    constructor () {
+      super()
+      this.scrollable = null
+    }
+    render () {
+      return (
+        <Body
+          scrollableRef={node => { this.scrollable = node }}
+          {...this.props}
+        />
+      )
+    }
+  }
+
+  test('Applies scrollable styles by default', () => {
+    const wrapper = shallow(<Body />)
+
+    expect(wrapper.hasClass('is-scrollable')).toBeTruthy()
+  })
+
+  test('Removes scrollable styles, if disabled', () => {
+    const wrapper = shallow(<Body scrollable={false} />)
+
+    expect(wrapper.hasClass('is-scrollable')).not.toBeTruthy()
+    expect(wrapper.hasClass('is-not-scrollable')).toBeTruthy()
+  })
+
+  test('Can pass scrollableRef to parent', () => {
+    const wrapper = mount(<MyComponent />)
+    const n = wrapper.find('.c-Scrollable__content').node
+    const o = wrapper.instance()
+
+    expect(o.scrollable).toBe(n)
+  })
+
+  test('Can fire onScroll callback', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MyComponent onScroll={spy} />)
+    const o = wrapper.find(Scrollable)
+
+    o.node.props.onScroll()
+
+    expect(spy).toHaveBeenCalled()
   })
 })
