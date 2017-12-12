@@ -1,6 +1,7 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import Body from './Body'
+import Content from './Content'
 import Footer from './Footer'
 import Header from './Header'
 import Animate from '../Animate'
@@ -9,18 +10,16 @@ import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
 import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
-import Scrollable from '../Scrollable'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { propTypes as portalTypes } from '../Portal'
 import { hasContentOverflowY } from '../../utilities/node'
+import { warn } from '../../utilities/log'
 import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 
 export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
   seamless: PropTypes.bool,
-  scrollFade: PropTypes.bool,
-  scrollableRef: PropTypes.func,
   modalAnimationDelay: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.object
@@ -29,7 +28,6 @@ export const propTypes = Object.assign({}, portalTypes, {
     PropTypes.number,
     PropTypes.object
   ]),
-  onScroll: PropTypes.func,
   trigger: PropTypes.element,
   wrapperClassName: PropTypes.string
 })
@@ -37,7 +35,6 @@ export const propTypes = Object.assign({}, portalTypes, {
 const defaultProps = {
   closeIcon: true,
   seamless: false,
-  scrollFade: true,
   isOpen: false,
   modalAnimationDelay: {
     in: 200,
@@ -48,7 +45,6 @@ const defaultProps = {
     out: 200
   },
   onScroll: noop,
-  scrollableRef: noop,
   wrapperClassName: 'c-ModalWrapper'
 }
 
@@ -112,8 +108,6 @@ class Modal extends Component {
       portalIsOpen,
       portalIsMounted,
       seamless,
-      scrollFade,
-      scrollableRef,
       style,
       timeout,
       trigger,
@@ -143,69 +137,44 @@ class Modal extends Component {
       zIndex
     }) : { zIndex }
 
-    let headerMarkup
-    let bodyMarkup
-    let footerMarkup
+    const parsedChildren = React.Children.map(children, child => {
+      if (!child || (
+          child.type !== Body &&
+          child.type !== Content &&
+          child.type !== Header &&
+          child.type !== Footer
+        )) {
+        warn('Modal: Child must be a sub-component of Modal.')
+        return null
+      }
 
-    let parsedChildren = React.Children.map(children, child => {
-      if (!child || typeof child !== 'object' || !child.type) {
-        return child
+      if (child.type === Content || child.type === Body) {
+        return React.cloneElement(child, {
+          scrollableRef: (node) => {
+            this.scrollableNode = node
+            child.props.scrollableRef(node)
+          }
+        })
       }
 
-      if (child.type === Header) {
-        this._hasHeader = true
-        headerMarkup = child
-        return null
-      }
-      if (child.type === Body) {
-        bodyMarkup = child
-        return null
-      }
-      if (child.type === Footer) {
-        footerMarkup = child
-        return null
-      }
       return child
     })
 
-    parsedChildren = bodyMarkup
-      ? bodyMarkup.props.children
-      : parsedChildren
-
     const modalContentMarkup = !seamless ? (
       <Card className='c-Modal__Card' seamless role='dialog'>
-        {headerMarkup}
         {closeMarkup}
-        <Body>
-          <Scrollable
-            className='c-Modal__scrollable'
-            fade
-            rounded
-            onScroll={onScroll}
-            scrollableRef={(node) => {
-              this.scrollableNode = node
-              scrollableRef(node)
-            }}
-          >
-            {parsedChildren}
-          </Scrollable>
-        </Body>
-        {footerMarkup}
+        {parsedChildren}
       </Card>
     ) : (
-      <div className='c-Modal__innerContent'>
-        {headerMarkup}
-        <Body>
-          {parsedChildren}
-        </Body>
-        {footerMarkup}
+      <div className='c-Modal__innerContent' role='dialog'>
+        {parsedChildren}
       </div>
     )
 
     return (
       <div className={componentClassName} role='document' style={modalStyle} {...rest}>
         <EventListener event='resize' handler={handleOnResize} />
-        <div className='c-Modal__content'>
+        <div className='c-Modal__innerWrapper'>
           <Animate className='c-Modal__Card-container' sequence='fade down' in={portalIsOpen} wait={modalAnimationDelay}>
             {modalContentMarkup}
           </Animate>
@@ -225,6 +194,7 @@ Modal.displayName = 'Modal'
 const ComposedModal = PortalWrapper(portalOptions)(Modal)
 ComposedModal.Header = Header
 ComposedModal.Body = Body
+ComposedModal.Content = Content
 ComposedModal.Footer = Footer
 
 export const ModalComponent = Modal

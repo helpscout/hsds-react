@@ -2,7 +2,7 @@ import React, {PureComponent as Component} from 'react'
 import { mount } from 'enzyme'
 import InfiniteScroller from '..'
 import LoadingDots from '../../LoadingDots'
-import { ModalComponent } from '../../Modal'
+import { default as Modal, ModalComponent } from '../../Modal'
 import Text from '../../Text'
 
 const scrollEvent = new Event('scroll')
@@ -90,13 +90,15 @@ describe('scrollParent', () => {
         const getScrollParent = this.getScrollParent.bind(this)
         return (
           <ModalComponent>
-            <div className='outer'>
-              <div
-                className='custom-scroller'
-                ref={node => { this.node = node }}
-              />
-              <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
-            </div>
+            <Modal.Body>
+              <div className='outer'>
+                <div
+                  className='custom-scroller'
+                  ref={node => { this.node = node }}
+                />
+                <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
+              </div>
+            </Modal.Body>
           </ModalComponent>
         )
       }
@@ -124,13 +126,15 @@ describe('scrollParent', () => {
         const getScrollParent = this.getScrollParent.bind(this)
         return (
           <ModalComponent>
-            <div className='outer'>
-              <div
-                className='custom-scroller'
-                ref={node => { this.node = node }}
-              />
-              <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
-            </div>
+            <Modal.Body>
+              <div className='outer'>
+                <div
+                  className='custom-scroller'
+                  ref={node => { this.node = node }}
+                />
+                <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
+              </div>
+            </Modal.Body>
           </ModalComponent>
         )
       }
@@ -321,7 +325,9 @@ describe('Integration: Modal', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <ModalComponent>
-        <InfiniteScroller onLoading={spy} />
+        <Modal.Body>
+          <InfiniteScroller onLoading={spy} />
+        </Modal.Body>
       </ModalComponent>
     )
     const o = wrapper.find('.c-Scrollable__content')

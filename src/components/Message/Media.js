@@ -54,10 +54,12 @@ const Media = props => {
   const mediaContainerMarkup = imageUrl ? (
     <div className='c-MessageMedia__media-container'>
       <Modal trigger={mediaMarkup} scrollFade={false}>
-        <div>
-          {mediaMarkup}
-        </div>
-        {captionMarkup}
+        <Modal.Content>
+          <div>
+            {mediaMarkup}
+          </div>
+          {captionMarkup}
+        </Modal.Content>
       </Modal>
     </div>
   ) : null

@@ -22,23 +22,23 @@ stories.addDecorator(story => (
 
 stories.add('default', () => (
   <Modal trigger={<Link>Open dis modal</Link>}>
-    <div>
+    <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(8).map(({id, content}) => (
         <p key={id}>{content}</p>
       ))}
-    </div>
+    </Modal.Body>
   </Modal>
 ))
 
 stories.add('open', () => (
   <Modal isOpen trigger={<Link>Clicky</Link>}>
-    <div>
+    <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(2).map(({id, content}) => (
         <p key={id}>{content}</p>
       ))}
-    </div>
+    </Modal.Body>
   </Modal>
 ))
 
@@ -64,12 +64,12 @@ stories.add('header/footer styles', () => (
     <Modal.Header seamless>
       Header
     </Modal.Header>
-    <div>
+    <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(8).map(({id, content}) => (
         <p key={id}>{content}</p>
       ))}
-    </div>
+    </Modal.Body>
     <Modal.Footer shadow>
       Footer
     </Modal.Footer>
@@ -78,33 +78,35 @@ stories.add('header/footer styles', () => (
 
 stories.add('header/footer with items', () => (
   <Modal isOpen trigger={<Link>Clicky</Link>} closeIcon={false}>
-    <Modal.Header>
-      <Toolbar.Item>
-        <Heading size='h4'>Heading</Heading>
-      </Toolbar.Item>
-      <Toolbar.Block />
-      <Toolbar.Item>
-        <Button>Action</Button>
-      </Toolbar.Item>
-    </Modal.Header>
-    <Modal.Body>
-      <Heading size='h4'>Inner Heading</Heading>
-      {ContentSpec.generate(8).map(({id, content}) => (
-        <p key={id}>{content}</p>
-      ))}
-    </Modal.Body>
-    <Modal.Footer>
-      <Toolbar.Item>
-        <Button>Another Action</Button>
-      </Toolbar.Item>
-      <Toolbar.Block />
-      <Toolbar.Item>
-        <Button plain>Action</Button>
-      </Toolbar.Item>
-      <Toolbar.Item>
-        <Button primary>Primary</Button>
-      </Toolbar.Item>
-    </Modal.Footer>
+    <Modal.Content>
+      <Modal.Header>
+        <Toolbar.Item>
+          <Heading size='h4'>Heading</Heading>
+        </Toolbar.Item>
+        <Toolbar.Block />
+        <Toolbar.Item>
+          <Button>Action</Button>
+        </Toolbar.Item>
+      </Modal.Header>
+      <Modal.Body>
+        <Heading size='h4'>Inner Heading</Heading>
+        {ContentSpec.generate(8).map(({id, content}) => (
+          <p key={id}>{content}</p>
+        ))}
+      </Modal.Body>
+      <Modal.Footer>
+        <Toolbar.Item>
+          <Button>Another Action</Button>
+        </Toolbar.Item>
+        <Toolbar.Block />
+        <Toolbar.Item>
+          <Button plain>Action</Button>
+        </Toolbar.Item>
+        <Toolbar.Item>
+          <Button primary>Primary</Button>
+        </Toolbar.Item>
+      </Modal.Footer>
+    </Modal.Content>
   </Modal>
 ))
 
@@ -132,37 +134,39 @@ stories.add('custom close trigger', () => {
 
 stories.add('seamless', () => (
   <Modal trigger={<Link>Clicky</Link>} seamless isOpen>
-    <EmojiPicker />
+    <Modal.Content>
+      <EmojiPicker />
+    </Modal.Content>
   </Modal>
 ))
 
 stories.add('nested', () => (
   <Modal trigger={<Link>Clicky</Link>}>
-    <div>
+    <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(2).map(({id, content}) => (
         <p key={id}>{content}</p>
       ))}
 
       <Modal trigger={<Link>Level 2</Link>}>
-        <div>
+        <Modal.Body>
           <Heading>Level 2</Heading>
           {ContentSpec.generate(2).map(({id, content}) => (
             <p key={id}>{content}</p>
           ))}
-        </div>
 
-        <Modal trigger={<Link>Level 3</Link>}>
-          <div>
-            <Heading>Level 3</Heading>
-            {ContentSpec.generate(2).map(({id, content}) => (
-              <p key={id}>{content}</p>
-            ))}
-          </div>
-        </Modal>
+          <Modal trigger={<Link>Level 3</Link>}>
+            <Modal.Body>
+              <Heading>Level 3</Heading>
+              {ContentSpec.generate(2).map(({id, content}) => (
+                <p key={id}>{content}</p>
+              ))}
+            </Modal.Body>
+          </Modal>
+        </Modal.Body>
       </Modal>
 
-    </div>
+    </Modal.Body>
   </Modal>
 ))
 
@@ -173,12 +177,12 @@ stories.add('custom mounting selector', () => {
       <div className='render-modal-here' />
 
       <Modal trigger={<Link>Clicky</Link>} renderTo='.render-modal-here'>
-        <div>
+        <Modal.Body>
           <Heading>Title</Heading>
           {ContentSpec.generate(2).map(({id, content}) => (
             <p key={id}>{content}</p>
           ))}
-        </div>
+        </Modal.Body>
       </Modal>
     </div>
   )
@@ -207,12 +211,12 @@ stories.add('lifecycle events', () => {
         onBeforeClose={onBeforeClose}
         trigger={<Link>Clicky</Link>}
       >
-        <div>
+        <Modal.Body>
           <Heading>Title</Heading>
           {ContentSpec.generate(2).map(({id, content}) => (
             <p key={id}>{content}</p>
           ))}
-        </div>
+        </Modal.Body>
       </Modal>
     </div>
   )
@@ -240,28 +244,38 @@ stories.add('routes', () => {
       </ul>
 
       <Modal path='/team' onBeforeOpen={onBeforeOpen}>
-        <h1>Team Modal: A</h1>
-        <p>Modal content</p>
+        <Modal.Body>
+          <h1>Team Modal: A</h1>
+          <p>Modal content</p>
+        </Modal.Body>
       </Modal>
 
       <Modal path='/team/brick'>
-        <h1>Team Modal: B</h1>
-        <p>Modal inner content</p>
+        <Modal.Body>
+          <h1>Team Modal: B</h1>
+          <p>Modal inner content</p>
+        </Modal.Body>
       </Modal>
 
       <Modal path='/team/brick'>
-        <h1>Team Modal: C</h1>
-        <p>Modal inner content</p>
+        <Modal.Body>
+          <h1>Team Modal: C</h1>
+          <p>Modal inner content</p>
+        </Modal.Body>
       </Modal>
 
       <Modal path='/team/brick'>
-        <h1>Team Modal: D</h1>
-        <p>Modal inner content</p>
+        <Modal.Body>
+          <h1>Team Modal: D</h1>
+          <p>Modal inner content</p>
+        </Modal.Body>
       </Modal>
 
       <Modal path='/team/brick'>
-        <h1>Team Modal: E</h1>
-        <p>Modal inner content</p>
+        <Modal.Body>
+          <h1>Team Modal: E</h1>
+          <p>Modal inner content</p>
+        </Modal.Body>
       </Modal>
 
       <Route exact path='/' render={props => (

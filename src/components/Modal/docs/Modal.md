@@ -34,10 +34,7 @@ A Modal component presents content within a container on top of the application'
 | closeIcon | `bool` | Shows/hides the component's close icon UI. |
 | exact | `bool` | Used with `path` and React Router. Renders if path matches _exactly_ |
 | isOpen | `bool` | Shows/hides the component. |
-| onScroll | `function` | Callback function when inner Scrollable is scrolled. |
 | path | `string` | Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). |
-| scrollFade | `bool` | Enables the upper fade-to-white styles. Default `true`. |
-| scrollableRef | `function` | Retrieves the scrollable node. |
 | seamless | `bool` | Renders content with the standard [Card](../Card) UI. |
 | trigger | `element` | The UI the user clicks to trigger the modal. |
 | wrapperClassName | `string` | Custom className to add to the [PortalWrapper](../PortalWrapper) component. |
@@ -55,4 +52,3 @@ This component has special callback props tied into it's mounting cycle.
 | onClose | `function` | Fires after the component is unmounted. |
 
 See [Portal's documentation](../Portal#render-hooks) for more details.
-

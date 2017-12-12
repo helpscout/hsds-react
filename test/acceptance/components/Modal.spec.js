@@ -28,7 +28,9 @@ describe('Modal', () => {
             modalAnimationDelay={0}
             overlayAnimationDelay={0}
           >
-            <Heading>Modal content</Heading>
+            <Modal.Body>
+              <Heading>Modal content</Heading>
+            </Modal.Body>
           </Modal>
           <div id='modals' />
         </div>
@@ -146,8 +148,10 @@ describe('Modal', () => {
             modalAnimationDelay={0}
             overlayAnimationDelay={0}
           >
-            <Heading>Modal content</Heading>
-            <div className='big' style={{height: 4000}} />
+            <Modal.Body>
+              <Heading>Modal content</Heading>
+              <div className='big' style={{height: 4000}} />
+            </Modal.Body>
           </Modal>
           <div id='modals' />
         </div>
@@ -158,8 +162,8 @@ describe('Modal', () => {
 
       wait(100)
         .then(() => {
-          expect($('.c-Modal__content').height())
-            .toBeGreaterThan($('.c-Modal__scrollable').height())
+          expect($('.c-Modal__innerWrapper').height())
+            .toBeGreaterThan($('.c-ModalBody__scrollable').height())
           done()
         })
     })
@@ -176,8 +180,10 @@ describe('Modal', () => {
             modalAnimationDelay={0}
             overlayAnimationDelay={0}
           >
-            <Heading>Modal content</Heading>
-            <div className='big' style={{height: 4000}} />
+            <Modal.Body>
+              <Heading>Modal content</Heading>
+              <div className='big' style={{height: 4000}} />
+            </Modal.Body>
           </Modal>
           <div id='modals' />
         </div>

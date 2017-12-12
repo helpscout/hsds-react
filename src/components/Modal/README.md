@@ -8,6 +8,7 @@ A Modal component presents content within a container on top of the application'
 The Modal component is comprised of smaller components:
 
 * [Modal](./docs/Modal.md)
+* [Content](./docs/Content.md)
 * [Header](./docs/Header.md)
 * [Body](./docs/Body.md)
 * [Footer](./docs/Footer.md)

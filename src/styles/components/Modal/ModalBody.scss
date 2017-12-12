@@ -3,4 +3,14 @@
   display: flex;
   flex: 1;
   height: 100%;
+
+  &__scrollable {
+    & > .c-Scrollable__content {
+      padding: 20px;
+    }
+  }
+
+  &.is-not-scrollable {
+    padding: 20px;
+  }
 }
