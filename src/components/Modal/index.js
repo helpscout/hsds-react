@@ -135,7 +135,7 @@ class Modal extends Component {
     }) : { zIndex }
 
     const parsedChildren = React.Children.map(children, child => {
-      if (child.type === Content || child.type === Body) {
+      if (child && (child.type === Content || child.type === Body)) {
         return React.cloneElement(child, {
           scrollableRef: (node) => {
             this.scrollableNode = node
