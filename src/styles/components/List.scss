@@ -5,9 +5,17 @@ $seed-list-namespace: "c-List";
 .#{$seed-list-namespace} {
   @import "../resets/base";
   $block: this();
-  display: flex;
+  display: block;
   margin-bottom: 0;
   margin-top: 0;
+
+
+  &.is-display-block {
+    display: block;
+  }
+  &.is-display-flex {
+    display: flex;
+  }
 
   &--inline {
     #{$block}__item {

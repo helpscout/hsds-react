@@ -6,6 +6,10 @@ import Item from './Item'
 export const propTypes = {
   border: PropTypes.oneOf(['line', 'dot', '']),
   className: PropTypes.string,
+  display: PropTypes.oneOf([
+    'block',
+    'flex'
+  ]),
   size: PropTypes.oneOf([
     'xs',
     'sm',
@@ -22,6 +26,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
+  display: 'block',
   role: 'list'
 }
 
@@ -30,6 +35,7 @@ const List = props => {
     border,
     children,
     className,
+    display,
     role,
     size,
     type,
@@ -40,6 +46,7 @@ const List = props => {
     'c-List',
     border === 'dot' && 'c-List--dotted',
     border === 'line' && 'c-List--bordered',
+    display && `is-display-${display}`,
     size && `c-List--${size}`,
     type && `c-List--${type}`,
     className

@@ -42,6 +42,7 @@ const AvatarList = props => {
     'c-List',
     'c-List--inline',
     'c-List--xs',
+    'is-display-flex',
     className
   )
 
