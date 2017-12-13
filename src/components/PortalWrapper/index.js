@@ -62,9 +62,12 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     componentWillReceiveProps (nextProps) {
+      const { isOpen, path } = nextProps
       /* istanbul ignore else */
-      if (nextProps.path) {
+      if (path) {
         this.openPortal()
+      } else if (isOpen !== undefined || isOpen !== null) {
+        this.setState({ isOpen })
       }
     }
 

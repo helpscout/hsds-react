@@ -168,3 +168,40 @@ describe('wrapperClassName', () => {
     })
   })
 })
+
+describe('isOpen', () => {
+  test('Can open wrapped component with isOpen prop change to true', (done) => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent />)
+
+    wait()
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).not.toBeTruthy()
+
+        wrapper.setProps({ isOpen: true })
+      })
+      .then(() => wait(10))
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).toBeTruthy()
+        done()
+      })
+  })
+
+  test('Can close wrapped component with isOpen prop change to false', (done) => {
+    const TestComponent = Drop()(ContentComponent)
+    const wrapper = mount(<TestComponent isOpen timeout={0} />)
+
+    wait()
+      .then(() => {
+        wrapper.setProps({ isOpen: false })
+      })
+      .then(() => wait(300))
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).not.toBeTruthy()
+        done()
+      })
+  })
+})

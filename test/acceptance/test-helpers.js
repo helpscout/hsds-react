@@ -16,7 +16,8 @@ document.body.appendChild(mountNode)
 
 const mountHelper = (component) => {
   window.BluePortalWrapperGlobalManager = null
-  mountNode.innerHTML = ''
+  mountNode.innerHTML = '<div id="HSBluePortalContainer"></div>'
+  // mountNode.innerHTML = ''
   const wrapper = mount(component, { attachTo: mountNode })
   return wrapper
 }
