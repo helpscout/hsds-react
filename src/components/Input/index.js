@@ -65,6 +65,15 @@ class Input extends Component {
     this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
 
+  componentWillReceiveProps (nextProps) {
+    const prevValue = this.state.value
+    const nextValue = nextProps.value
+
+    if (nextValue !== prevValue) {
+      this.setState({value: nextValue})
+    }
+  }
+
   handleOnChange (e) {
     const value = e.currentTarget.value
     this.setState({ value })
