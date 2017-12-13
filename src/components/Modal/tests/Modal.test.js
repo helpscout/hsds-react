@@ -573,4 +573,15 @@ describe('Children', () => {
 
     expect(o.length).toBe(1)
   })
+
+
+  test('Can handle null content', () => {
+    const wrapper = shallow(
+      <ModalComponent>
+        {[null]}
+      </ModalComponent>
+    )
+
+    expect(wrapper).toBeTruthy()
+  })
 })
