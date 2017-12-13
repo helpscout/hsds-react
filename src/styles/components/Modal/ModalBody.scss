@@ -3,6 +3,7 @@
   display: flex;
   flex: 1;
   height: 100%;
+  max-width: 100%;
 
   &__scrollable {
     & > .c-Scrollable__content {

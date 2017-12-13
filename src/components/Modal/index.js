@@ -13,7 +13,7 @@ import PortalWrapper from '../PortalWrapper'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { propTypes as portalTypes } from '../Portal'
-import { hasContentOverflowY } from '../../utilities/node'
+import { isNodeElement, hasContentOverflowY } from '../../utilities/node'
 import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 
 export const propTypes = Object.assign({}, portalTypes, {
@@ -47,6 +47,10 @@ const defaultProps = {
   wrapperClassName: 'c-ModalWrapper'
 }
 
+const childContextTypes = {
+  positionCloseNode: PropTypes.func
+}
+
 const modalBaseZIndex = 1040
 const portalOptions = {
   id: 'Modal',
@@ -73,19 +77,26 @@ class Modal extends Component {
     this.positionCloseNode()
   }
 
-  positionCloseNode () {
+  positionCloseNode (scrollableNode) {
+    const scrollNode = scrollableNode || this.scrollableNode
     if (
       !this.closeNode ||
-      !this.scrollableNode
+      !isNodeElement(scrollNode)
     ) return
 
     const defaultOffset = 8
     const borderOffset = 2
-    const offset = hasContentOverflowY(this.scrollableNode)
+    const offset = hasContentOverflowY(scrollNode)
       ? /* istanbul ignore next */ `${scrollbarWidth + borderOffset}px`
       : `${defaultOffset}px`
 
     this.closeNode.style.right = offset
+  }
+
+  getChildContext () {
+    return {
+      positionCloseNode: this.positionCloseNode
+    }
   }
 
   render () {
@@ -176,6 +187,7 @@ class Modal extends Component {
 
 Modal.propTypes = propTypes
 Modal.defaultProps = defaultProps
+Modal.childContextTypes = childContextTypes
 Modal.displayName = 'Modal'
 
 const ComposedModal = PortalWrapper(portalOptions)(Modal)
