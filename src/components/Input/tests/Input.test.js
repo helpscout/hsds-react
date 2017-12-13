@@ -84,6 +84,34 @@ describe('Events', () => {
   })
 })
 
+describe('value', () => {
+  test('Does not update the state if new value is the same as previous value', () => {
+    const lifecycleSpy = jest.spyOn(Input.prototype, 'componentWillReceiveProps')
+    const stateSpy = jest.spyOn(Input.prototype, 'setState')
+
+    const wrapper = mount(<Input value='initial value' />)
+    expect(wrapper.find('input').prop('value')).toBe('initial value')
+
+    wrapper.setProps({value: 'initial value'})
+    expect(lifecycleSpy).toHaveBeenCalled()
+    expect(stateSpy).not.toHaveBeenCalled()
+    expect(wrapper.find('input').prop('value')).toBe('initial value')
+  })
+
+  test('Does update the state if new value is different than previous value', () => {
+    const lifecycleSpy = jest.spyOn(Input.prototype, 'componentWillReceiveProps')
+    const stateSpy = jest.spyOn(Input.prototype, 'setState')
+
+    const wrapper = mount(<Input value='initial value' />)
+    expect(wrapper.find('input').prop('value')).toBe('initial value')
+
+    wrapper.setProps({value: 'new value'})
+    expect(lifecycleSpy).toHaveBeenCalled()
+    expect(stateSpy).toHaveBeenCalledWith({value: 'new value'})
+    expect(wrapper.find('input').prop('value')).toBe('new value')
+  })
+})
+
 describe('ID', () => {
   test('Automatically generates an ID if not defined', () => {
     const wrapper = mount(<Input label='Input' />)
