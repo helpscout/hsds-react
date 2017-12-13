@@ -26,7 +26,7 @@ const Content = props => {
   )
 
   const childrenMarkup = React.Children.map(children, child => {
-    if (child.type && child.type === Body) {
+    if (child && (child.type && child.type === Body)) {
       return React.cloneElement(child, {
         scrollableRef: (node) => {
           scrollableRef(node)
