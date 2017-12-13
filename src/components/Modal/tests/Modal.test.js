@@ -84,7 +84,7 @@ describe('CloseIcon', () => {
       })
   })
 
-  test('Adjusts CloseButton position on mount', () => {
+  test('Adjusts CloseButton position on mount', (done) => {
     const wrapper = mount(
       <ModalComponent isOpen>
         <Modal.Body />
@@ -92,7 +92,11 @@ describe('CloseIcon', () => {
     )
     const o = wrapper.find('.c-Modal__close')
 
-    expect(o.html()).toContain('right:')
+    wait(200)
+      .then(() => {
+        expect(o.html()).toContain('right:')
+        done()
+      })
   })
 })
 
