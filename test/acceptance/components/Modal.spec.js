@@ -133,6 +133,43 @@ describe('Modal', () => {
           done()
         })
     })
+
+    it('should be able to open with prop change', (done) => {
+      const wrapper = mount(
+        <Modal className='modal' />
+      )
+
+      wait()
+        .then(() => {
+          wrapper.setProps({ isOpen: true })
+        })
+        .then(() => wait(100))
+        .then(() => {
+          expect($('.modal').length).toBe(1)
+          wrapper.unmount()
+          done()
+        })
+    })
+
+    it('should be able to close with prop change', (done) => {
+      const wrapper = mount(
+        <Modal className='modal' isOpen timeout={0} />
+      )
+
+      wait(100)
+        .then(() => {
+          expect($('.modal').length).toBe(1)
+        })
+        .then(() => {
+          wrapper.setProps({ isOpen: false })
+        })
+        .then(() => wait(modalUnmountTime))
+        .then(() => {
+          expect($('.modal').length).toBe(0)
+          wrapper.unmount()
+          done()
+        })
+    })
   })
 
   describe('Scrollable', () => {
@@ -156,8 +193,6 @@ describe('Modal', () => {
           <div id='modals' />
         </div>
       )
-      expect($('.modal').length).toBe(0)
-
       $('.trigger')[0].click()
 
       wait(100)
@@ -188,8 +223,6 @@ describe('Modal', () => {
           <div id='modals' />
         </div>
       )
-      expect($('.modal').length).toBe(0)
-
       $('.trigger')[0].click()
 
       wait(100)

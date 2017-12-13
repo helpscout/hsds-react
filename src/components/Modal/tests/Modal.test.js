@@ -600,3 +600,38 @@ describe('Context', () => {
     })
   })
 })
+
+describe('isOpen', () => {
+  test('Can open wrapped component with isOpen prop change to true', (done) => {
+    const wrapper = mount(<Modal />)
+
+    wait()
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).not.toBeTruthy()
+
+        wrapper.setProps({ isOpen: true })
+      })
+      .then(() => wait(50))
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).toBeTruthy()
+        done()
+      })
+  })
+
+  test('Can close wrapped component with isOpen prop change to false', (done) => {
+    const wrapper = mount(<Modal isOpen timeout={0} />)
+
+    wait()
+      .then(() => {
+        wrapper.setProps({ isOpen: false })
+      })
+      .then(() => wait(MODAL_TEST_TIMEOUT))
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).not.toBeTruthy()
+        done()
+      })
+  })
+})
