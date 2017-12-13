@@ -1,7 +1,6 @@
-import React, {PureComponent as Component} from 'react'
-import { mount, shallow } from 'enzyme'
+import React from 'react'
+import { shallow } from 'enzyme'
 import Content from '../Content'
-import { Scrollable } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
