@@ -12,7 +12,7 @@ const defaultProps = {
   scrollableRef: noop
 }
 
-const Content = props => {
+const Content = (props, context) => {
   const {
     className,
     children,

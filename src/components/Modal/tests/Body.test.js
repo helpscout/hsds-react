@@ -74,3 +74,41 @@ describe('Scrollable', () => {
     expect(spy).toHaveBeenCalled()
   })
 })
+
+describe('ScrollableNode', () => {
+  test('Sets an internal scrollableNode on mount', () => {
+    const wrapper = mount(<Body />)
+
+    expect(wrapper.instance().scrollableNode).toBeTruthy()
+  })
+
+  test('Unsets an internal scrollableNode on unmount', () => {
+    const wrapper = mount(<Body />)
+    const o = wrapper.instance()
+    wrapper.unmount()
+
+    expect(o.scrollableNode).not.toBeTruthy()
+  })
+
+  test('scrollableRef callback prop still works', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Body scrollableRef={spy} />)
+    const o = wrapper.instance().scrollableNode
+
+    expect(spy).toHaveBeenCalledWith(o)
+  })
+})
+
+describe('Context', () => {
+  test('Position closeIcon using context', () => {
+    const spy = jest.fn()
+    mount(<Body />, {
+      context: {
+        positionCloseNode: spy
+      }
+    })
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy.mock.calls[0][0]).toBeTruthy()
+  })
+})

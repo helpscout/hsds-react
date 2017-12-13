@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import Scrollable from '../Scrollable'
 import classNames from '../../utilities/classNames'
@@ -18,44 +18,73 @@ const defaultProps = {
   scrollFade: true
 }
 
-const Body = props => {
-  const {
-    className,
-    children,
-    onScroll,
-    scrollable,
-    scrollFade,
-    scrollableRef,
-    ...rest
-  } = props
+const contextTypes = {
+  positionCloseNode: PropTypes.func
+}
 
-  const componentClassName = classNames(
-    'c-ModalBody',
-    scrollable ? 'is-scrollable' : 'is-not-scrollable',
-    className
-  )
+class Body extends Component {
+  constructor () {
+    super()
+    this.scrollableNode = null
+  }
 
-  const childrenContent = scrollable ? (
-    <Scrollable
-      className='c-ModalBody__scrollable'
-      fade={scrollFade}
-      rounded
-      onScroll={onScroll}
-      scrollableRef={scrollableRef}
-    >
-      {children}
-    </Scrollable>
-  ) : children
+  componentDidMount () {
+    this.positionCloseNode()
+  }
 
-  return (
-    <div className={componentClassName} {...rest}>
-      {childrenContent}
-    </div>
-  )
+  positionCloseNode () {
+    if (this.context.positionCloseNode) {
+      this.context.positionCloseNode(this.scrollableNode)
+    }
+  }
+
+  componentWillUnmount () {
+    this.scrollableNode = null
+  }
+
+  render () {
+    const {
+      className,
+      children,
+      onScroll,
+      scrollable,
+      scrollFade,
+      scrollableRef,
+      ...rest
+    } = this.props
+
+    const componentClassName = classNames(
+      'c-ModalBody',
+      scrollable ? 'is-scrollable' : 'is-not-scrollable',
+      className
+    )
+
+    const childrenContent = scrollable ? (
+      <Scrollable
+        className='c-ModalBody__scrollable'
+        fade={scrollFade}
+        rounded
+        onScroll={onScroll}
+        scrollableRef={node => {
+          this.scrollableNode = node
+          scrollableRef(node)
+        }}
+      >
+        {children}
+      </Scrollable>
+    ) : children
+
+    return (
+      <div className={componentClassName} {...rest}>
+        {childrenContent}
+      </div>
+    )
+  }
 }
 
 Body.propTypes = propTypes
 Body.defaultProps = defaultProps
+Body.contextTypes = contextTypes
 Body.displayName = 'ModalBody'
 
 export default Body
