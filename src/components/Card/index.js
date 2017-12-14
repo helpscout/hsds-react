@@ -11,6 +11,7 @@ export const propTypes = Object.assign({}, linkPropTypes, {
   className: PropTypes.string,
   floating: PropTypes.bool,
   flex: PropTypes.bool,
+  fullHeight: PropTypes.bool,
   hover: PropTypes.bool,
   href: PropTypes.string,
   onBlur: PropTypes.func,
@@ -21,6 +22,10 @@ export const propTypes = Object.assign({}, linkPropTypes, {
 })
 
 const defaultProps = {
+  borderless: false,
+  flex: false,
+  floating: false,
+  fullHeight: false,
   hover: false,
   onBlur: noop,
   onClick: noop,
@@ -36,6 +41,7 @@ const Card = props => {
     children,
     floating,
     flex,
+    fullHeight,
     hover,
     href,
     onClick,
@@ -54,6 +60,7 @@ const Card = props => {
     borderless && 'is-borderless',
     floating && 'is-floating',
     flex && 'is-flex',
+    fullHeight && 'is-fullHeight',
     href && 'is-link',
     seamless && 'is-seamless',
     className
