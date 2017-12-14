@@ -609,14 +609,14 @@ describe('isOpen', () => {
   test('Can open wrapped component with isOpen prop change to true', (done) => {
     const wrapper = mount(<Modal />)
 
-    wait()
+    wait(60)
       .then(() => {
         const o = document.body.childNodes[0]
         expect(o).not.toBeTruthy()
 
         wrapper.setProps({ isOpen: true })
       })
-      .then(() => wait(50))
+      .then(() => wait(MODAL_TEST_TIMEOUT))
       .then(() => {
         const o = document.body.childNodes[0]
         expect(o).toBeTruthy()
