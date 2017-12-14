@@ -1,21 +1,8 @@
-@import "../configs/color";
+@import "../mixins/linkStyles";
 
 .c-Link {
   @import "../resets/base";
-  color: _color(blue, 500);
-  cursor: pointer;
-  text-decoration: none;
-
-  &:hover {
-    color: _color(blue, 400);
-    outline-width: 0;
-    text-decoration: underline;
-  }
-
-  &:active {
-    color: _color(blue, 400);
-    outline-width: 0;
-  }
+  @include linkStyles();
 
   &:focus {
     outline: 5px auto -webkit-focus-ring-color;

@@ -8,9 +8,11 @@ export const propTypes = {
   allCaps: PropTypes.bool,
   block: PropTypes.bool,
   className: PropTypes.string,
+  center: PropTypes.bool,
   disableSelect: PropTypes.bool,
   faint: PropTypes.bool,
   lineHeightReset: PropTypes.bool,
+  linkStyle: PropTypes.bool,
   muted: PropTypes.bool,
   noWrap: PropTypes.bool,
   selector: PropTypes.oneOf(['span', 'pre', 'samp']),
@@ -22,7 +24,9 @@ export const propTypes = {
 }
 
 const defaultProps = {
+  center: false,
   disableSelect: false,
+  linkStyle: false,
   selector: 'span',
   truncate: false
 }
@@ -33,9 +37,11 @@ const Text = props => {
     block,
     children,
     className,
+    center,
     disableSelect,
     faint,
     lineHeightReset,
+    linkStyle,
     muted,
     noWrap,
     selector,
@@ -51,11 +57,13 @@ const Text = props => {
     'c-Text',
     allCaps && 'is-all-caps',
     block && 'is-block',
+    center && 'is-center',
     disableSelect && 'is-disableSelect',
     faint && 'is-faint',
     muted && 'is-muted',
     noWrap && 'is-no-wrap',
     lineHeightReset && 'is-line-height-reset',
+    linkStyle && 'is-linkStyle',
     selector && `is-${selector}`,
     size && `is-${size}`,
     state && `is-${state}`,

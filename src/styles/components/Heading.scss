@@ -3,6 +3,7 @@
 .c-Heading {
   @import "../configs/color";
   @import "../configs/font";
+  @import "../mixins/linkStyles";
   // Config
   $shades: (
     light: _color(charcoal, 200),
@@ -71,6 +72,15 @@
       color: $value;
     }
   }
+
+  &.is-center {
+    text-align: center;
+  }
+
+  &.is-linkStyle {
+    @include linkStyles();
+  }
+
 
   // Resets
   &.is-line-height-reset {

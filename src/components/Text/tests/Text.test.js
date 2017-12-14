@@ -70,6 +70,18 @@ describe('Styles', () => {
     expect(wrapper.prop('className')).toContain('is-truncate')
   })
 
+  test('Applies center styles if specified', () => {
+    const wrapper = shallow(<Text center />)
+
+    expect(wrapper.prop('className')).toContain('is-center')
+  })
+
+  test('Applies link-style styles if specified', () => {
+    const wrapper = shallow(<Text linkStyle />)
+
+    expect(wrapper.prop('className')).toContain('is-linkStyle')
+  })
+
   test('Applies line-height reset styles if specified', () => {
     const wrapper = shallow(<Text lineHeightReset />)
 
