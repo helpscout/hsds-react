@@ -54,6 +54,18 @@ describe('Styles', () => {
     expect(wrapper.prop('className')).toContain('is-disableSelect')
   })
 
+  test('Applies center styles if specified', () => {
+    const wrapper = shallow(<Heading center />)
+
+    expect(wrapper.prop('className')).toContain('is-center')
+  })
+
+  test('Applies link-style styles if specified', () => {
+    const wrapper = shallow(<Heading linkStyle />)
+
+    expect(wrapper.prop('className')).toContain('is-linkStyle')
+  })
+
   test('Applies light styles if specified', () => {
     const wrapper = shallow(<Heading light />)
 

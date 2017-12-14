@@ -212,6 +212,12 @@ describe('Styles', () => {
     expect(wrapper.hasClass('is-flex')).toBeTruthy()
   })
 
+  test('Renders fullHeight styles, if specified', () => {
+    const wrapper = shallow(<Card fullHeight />)
+
+    expect(wrapper.hasClass('is-fullHeight')).toBeTruthy()
+  })
+
   test('Renders floating styles, if specified', () => {
     const wrapper = shallow(<Card floating />)
 

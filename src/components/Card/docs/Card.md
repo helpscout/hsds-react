@@ -30,6 +30,7 @@ If a `to` or `href` prop is passed into the Card component, it will render the [
 | borderless | `bool` | Removes the border from the component. |
 | className | `string` | Custom class names to be added to the component. |
 | flex | `bool` | Adds flexbox styles to the component. |
+| fullHeight | `bool` | Adds full height styles. Often used with flex containers. |
 | hover | `bool` | Adds a hover style to the component. |
 | href | `string` | Adds an `href` to the component. Transforms it into an `<a>` tag. |
 | onBlur | `function` | Callback when the component is blurred. |

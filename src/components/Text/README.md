@@ -14,9 +14,11 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
 | Prop | Type | Description |
 | --- | --- | --- |
 | className | `string` | Custom class names to be added to the component. |
+| center | `bool` | Center aligns text. |
 | disableSelect | `bool` | Disables text selection. |
 | faint | `bool` | Changes text color to a very light grey. |
 | muted | `bool`  | Changes text color to a light grey. |
+| linkStyle | `bool` | Applies [Link](../Link) styles. |
 | size | `string` | Adjust text size. |
 | state | `string` | Changes the text color based on state. |
 | subtle | `bool` | Changes text color to a lighter grey. |
