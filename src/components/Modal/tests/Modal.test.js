@@ -49,7 +49,7 @@ describe('Key events', () => {
   test('Closes modal when ESCAPE is pressed', (done) => {
     mount(<Modal isOpen trigger={trigger} />)
 
-    wait(40)
+    wait(60)
       .then(() => {
         const portal = document.body.childNodes[0]
         const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -71,7 +71,7 @@ describe('CloseIcon', () => {
   test('Does not render closeIcon if specified', (done) => {
     const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} />)
 
-    wait(40)
+    wait(60)
       .then(() => {
         const portal = document.body.childNodes[0]
         const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -112,7 +112,7 @@ describe('Portal', () => {
   test('Renders at the body', (done) => {
     const wrapper = mount(<Modal isOpen trigger={trigger} />)
 
-    wait(40)
+    wait(60)
       .then(() => {
         const portal = document.body.childNodes[0]
         const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -150,7 +150,7 @@ describe('Route', () => {
       </Router>
     , { attachTo: testBody })
 
-    wait(40)
+    wait(60)
       .then(() => {
         const modal = global.document.getElementsByClassName('c-Modal')[0]
 
@@ -178,7 +178,7 @@ describe('Route', () => {
       .then(() => {
         wrapper.node.history.goBack()
       })
-      .then(() => wait(40))
+      .then(() => wait(60))
       .then(() => {
         const modal = global.document.getElementsByClassName('c-Modal')[0]
 
@@ -202,7 +202,7 @@ describe('Route', () => {
       </Router>
     , { attachTo: testBody })
 
-    wait(40)
+    wait(60)
       .then(() => {
         const modal = global.document.getElementsByClassName('c-Modal')[0]
 
@@ -221,7 +221,7 @@ describe('Style', () => {
       <Modal isOpen trigger={trigger} closeIcon={false} style={style} />
     )
 
-    wait(40)
+    wait(60)
       .then(() => {
         const portal = document.body.childNodes[0]
         const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -242,7 +242,7 @@ describe('Style', () => {
     const style = { background: 'red' }
     const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} zIndex={2000} />)
 
-    wait(40)
+    wait(60)
       .then(() => {
         const portal = document.body.childNodes[0]
         const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -263,7 +263,7 @@ describe('Style', () => {
   test('Can render zIndex, without style prop', (done) => {
     const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />)
 
-    wait(40)
+    wait(60)
       .then(() => {
         const portal = document.body.childNodes[0]
         const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -297,7 +297,7 @@ describe('PortalWrapper', () => {
       <Modal onBeforeClose={onBeforeClose} isOpen />
     , { attachTo: testBody })
 
-    wait(40)
+    wait(60)
       .then(() => {
         wrapper.unmount()
       })
@@ -342,7 +342,7 @@ describe('wrapperClassName', () => {
   test('Adds default wrapperClassName', (done) => {
     mount(<Modal isOpen trigger={trigger} />)
 
-    wait(40).then(() => {
+    wait(60).then(() => {
       const o = document.body.childNodes[0]
       expect(o.className).toContain('c-ModalWrapper')
       done()
@@ -352,7 +352,7 @@ describe('wrapperClassName', () => {
   test('Can customize wrapperClassName', (done) => {
     mount(<Modal isOpen trigger={trigger} wrapperClassName='ron' />)
 
-    wait(40).then(() => {
+    wait(60).then(() => {
       const o = document.body.childNodes[0]
       expect(o.className).toContain('ron')
       expect(o.className).toContain('c-ModalWrapper')
