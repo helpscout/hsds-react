@@ -25,6 +25,6 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 
 // Optimize for CI
 // https://github.com/facebook/jest/issues/3855#issuecomment-309521581
-argv.push('--maxWorkers=4')
+argv.push('--runInBand')
 
 jest.run(argv)
