@@ -36,7 +36,7 @@ const defaultProps = {
   closeIcon: true,
   seamless: false,
   isOpen: false,
-  closeIconRepositionDelay: 100,
+  closeIconRepositionDelay: 50,
   modalAnimationDelay: {
     in: 200,
     out: 100
