@@ -225,7 +225,7 @@ describe('Modal', () => {
       )
       $('.trigger')[0].click()
 
-      wait(100)
+      wait(300)
         .then(() => {
           const scrollbarWidth = getScrollbarWidth()
           const right = parseInt($('.c-Modal__close').css('right'), 10)

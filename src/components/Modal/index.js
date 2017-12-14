@@ -19,6 +19,7 @@ import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
   seamless: PropTypes.bool,
+  closeIconRepositionDelay: PropTypes.number,
   modalAnimationDelay: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.object
@@ -35,6 +36,7 @@ const defaultProps = {
   closeIcon: true,
   seamless: false,
   isOpen: false,
+  closeIconRepositionDelay: 50,
   modalAnimationDelay: {
     in: 200,
     out: 100
@@ -63,9 +65,10 @@ const scrollbarWidth = getScrollbarWidth()
 class Modal extends Component {
   constructor () {
     super()
-    this.handleOnResize = this.handleOnResize.bind(this)
     this.closeNode = null
     this.scrollableNode = null
+    this.handleOnResize = this.handleOnResize.bind(this)
+    this.positionCloseNode = this.positionCloseNode.bind(this)
   }
 
   componentDidMount () {
@@ -78,19 +81,27 @@ class Modal extends Component {
   }
 
   positionCloseNode (scrollableNode) {
+    const { modalAnimationDelay, closeIconRepositionDelay } = this.props
     const scrollNode = scrollableNode || this.scrollableNode
     if (
       !this.closeNode ||
       !isNodeElement(scrollNode)
     ) return
 
+    let delay = modalAnimationDelay && modalAnimationDelay.in
+    /* istanbul ignore next */
+    delay = delay < modalAnimationDelay ? delay : closeIconRepositionDelay
+
     const defaultOffset = 8
     const borderOffset = 2
-    const offset = hasContentOverflowY(scrollNode)
-      ? /* istanbul ignore next */ `${scrollbarWidth + borderOffset}px`
-      : `${defaultOffset}px`
 
-    this.closeNode.style.right = offset
+    setTimeout(() => {
+      const offset = hasContentOverflowY(scrollNode)
+        ? /* istanbul ignore next */ `${scrollbarWidth + borderOffset}px`
+        : `${defaultOffset}px`
+
+      this.closeNode.style.right = offset
+    }, delay)
   }
 
   getChildContext () {
@@ -104,17 +115,18 @@ class Modal extends Component {
       children,
       className,
       closeIcon,
+      closeIconRepositionDelay,
       closePortal,
       exact,
       isOpen,
       modalAnimationDelay,
-      openPortal,
       onClose,
       onScroll,
+      openPortal,
       overlayAnimationDelay,
       path,
-      portalIsOpen,
       portalIsMounted,
+      portalIsOpen,
       seamless,
       style,
       timeout,
