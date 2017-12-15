@@ -13,6 +13,7 @@ export const propTypes = {
   allCaps: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   color: tagColorTypes,
+  display: PropTypes.oneOf(['block', 'inlineBlock']),
   filled: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isRemovable: PropTypes.bool,
@@ -24,6 +25,7 @@ export const propTypes = {
 const defaultProps = {
   animationDuration: 100,
   color: 'grey',
+  display: 'inlineBlock',
   isRemovable: false,
   onRemove: noop,
   value: ''
@@ -54,6 +56,7 @@ class Tag extends Component {
       children,
       className,
       color,
+      display,
       filled,
       id,
       isRemovable,
@@ -69,6 +72,7 @@ class Tag extends Component {
     const componentClassName = classNames(
       'c-Tag',
       color && `is-${color}`,
+      display && `is-display-${display}`,
       filled && 'is-filled',
       pulsing && 'is-pulsing',
       className
@@ -91,7 +95,7 @@ class Tag extends Component {
         className={componentClassName}
         duration={animationDuration}
         in={transitionIn}
-        inlineBlock
+        inlineBlock={display === 'inlineBlock'}
         unmountOnExit
         {...rest}
       >

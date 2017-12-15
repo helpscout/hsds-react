@@ -136,6 +136,23 @@ describe('Events', () => {
   })
 })
 
+describe('adjustHeight', () => {
+  test('Method fires on mount', (done) => {
+    const wrapper = mount(<Overflow />)
+    const instance = wrapper.instance()
+    const spy = jest.spyOn(instance, 'adjustHeight')
+
+    wrapper.mount()
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
+      spy.mockReset()
+      spy.mockRestore()
+      done()
+    }, 100)
+  })
+})
+
 describe('scrollableRef', () => {
   class MyComponent extends Component {
     constructor () {

@@ -9,12 +9,14 @@ import { noop, requestAnimationFrame } from '../../utilities/other'
 
 export const propTypes = {
   backgroundColor: PropTypes.string,
+  initialHeightAdjustDelay: PropTypes.number,
   isScrollable: PropTypes.bool,
   onScroll: PropTypes.func,
   scrollableRef: PropTypes.func
 }
 
 const defaultProps = {
+  initialHeightAdjustDelay: 60,
   isScrollable: true,
   onScroll: noop,
   scrollableRef: noop
@@ -30,15 +32,19 @@ class Overflow extends Component {
     this.faderNodeLeft = null
     this.faderNodeRight = null
     this.containerNode = null
-    this.applyFade = this.applyFade.bind(this)
+    this.adjustHeight = this.adjustHeight.bind(this)
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
   componentDidMount () {
-    this.applyFade()
+    const { initialHeightAdjustDelay } = this.props
+    this.adjustHeight()
+    setTimeout(() => {
+      this.adjustHeight()
+    }, initialHeightAdjustDelay)
   }
 
-  applyFade () {
+  adjustHeight () {
     const node = ReactDOM.findDOMNode(this)
     const containerNode = this.containerNode
     const height = containerNode.clientHeight
@@ -80,6 +86,7 @@ class Overflow extends Component {
       backgroundColor,
       className,
       children,
+      initialHeightAdjustDelay,
       isScrollable,
       onScroll,
       scrollableRef,
@@ -87,7 +94,7 @@ class Overflow extends Component {
     } = this.props
 
     const { shouldFadeOnMount } = this.state
-    const applyFade = this.applyFade
+    const adjustHeight = this.adjustHeight
     const handleOnScroll = this.handleOnScroll
 
     const componentClassName = classNames(
@@ -136,7 +143,7 @@ class Overflow extends Component {
           </div>
         </div>
         {faderRightMarkup}
-        <EventListener event='resize' handler={applyFade} />
+        <EventListener event='resize' handler={adjustHeight} />
       </div>
     )
   }
@@ -144,5 +151,6 @@ class Overflow extends Component {
 
 Overflow.propTypes = propTypes
 Overflow.defaultProps = defaultProps
+Overflow.displayName = 'Overflow'
 
 export default Overflow

@@ -16,6 +16,7 @@ A Tag component is a UI element that provide contextual labels for categories/ta
 | allCaps | `bool` | Custom class names to be added to the component. |
 | className | `string` | Custom class names to be added to the component. |
 | color | `string` | Determines the color of the component. |
+| display | `string` | Determines the CSS `display` of the component. Default `inlineBlock`. |
 | id | `string`/`number` | ID of the component. |
 | isRemovable | `bool` | Renders an `x` [Icon](../Icon), which can remove this component from the DOM. |
 | filled | `bool` | Applies a filled in color style to the component. |

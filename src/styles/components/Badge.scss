@@ -60,4 +60,12 @@
       }
     }
   }
+
+  // Display
+  &.is-display-block {
+    display: block;
+  }
+  &.is-display-inlineBlock {
+    display: inline-block;
+  }
 }

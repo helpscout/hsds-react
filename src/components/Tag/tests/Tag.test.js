@@ -123,6 +123,12 @@ describe('Styles', () => {
     expect(wrapper.hasClass('is-red')).toBeTruthy()
   })
 
+  test('Has display styles', () => {
+    const wrapper = shallow(<Tag display='inlineBlock' />)
+
+    expect(wrapper.hasClass('is-display-inlineBlock')).toBeTruthy()
+  })
+
   test('Has filled styles', () => {
     const wrapper = shallow(<Tag filled />)
 

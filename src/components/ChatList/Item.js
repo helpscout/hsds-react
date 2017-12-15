@@ -99,7 +99,7 @@ const Item = props => {
   const newMessageCountMarkup = newMessageCount ? (
     <Flexy.Item className='c-ChatListItem__messageCount'>
       <Animate sequence='fade scale' wait={100} duration={200}>
-        <Badge status='success' count>{newMessageCount}</Badge>
+        <Badge status='success' count display='block'>{newMessageCount}</Badge>
       </Animate>
     </Flexy.Item>
   ) : null
@@ -107,7 +107,7 @@ const Item = props => {
   const waitingMarkup = isWaiting ? (
     <Flexy.Item className='c-ChatListItem__waiting'>
       <Animate sequence='fade scale' wait={100} duration={200}>
-        <Tag color='red' pulsing allCaps>Waiting</Tag>
+        <Tag color='red' pulsing allCaps display='block'>Waiting</Tag>
       </Animate>
     </Flexy.Item>
   ) : null
