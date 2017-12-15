@@ -33,7 +33,9 @@ describe('TagList', () => {
     ))
     mount(
       <div>
-        <TagList className='control' />
+        <TagList className='control'>
+          <Tag value='Tag' />
+        </TagList>
         <TagList className='test' style={{ width: 200 }} overflowFade>
           {tagMarkup}
         </TagList>

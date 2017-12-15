@@ -6,9 +6,14 @@ import { statusTypes } from '../../constants/propTypes'
 export const propTypes = {
   className: PropTypes.string,
   count: PropTypes.bool,
+  display: PropTypes.oneOf(['block', 'inlineBlock']),
   size: PropTypes.string,
   status: statusTypes,
   white: PropTypes.bool
+}
+
+const defaultProps = {
+  display: 'inlineBlock'
 }
 
 const Badge = props => {
@@ -16,6 +21,7 @@ const Badge = props => {
     children,
     count,
     className,
+    display,
     size,
     status,
     white,
@@ -25,6 +31,7 @@ const Badge = props => {
   const componentClassName = classNames(
     'c-Badge',
     count && 'is-count',
+    display && `is-display-${display}`,
     size && `is-${size}`,
     status && `is-${status}`,
     white && 'is-white',
@@ -39,5 +46,7 @@ const Badge = props => {
 }
 
 Badge.propTypes = propTypes
+Badge.defaultProps = defaultProps
+Badge.displayName = 'Badge'
 
 export default Badge

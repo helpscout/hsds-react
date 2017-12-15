@@ -14,7 +14,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<Badge />)
 
-    expect(wrapper.prop('className')).toBe('c-Badge')
+    expect(wrapper.prop('className')).toContain('c-Badge')
   })
 
   test('Accepts custom className', () => {
@@ -37,6 +37,12 @@ describe('Styles', () => {
     const wrapper = shallow(<Badge white>Zoolander</Badge>)
 
     expect(wrapper.prop('className')).toContain(`is-white`)
+  })
+
+  test('Has display styles', () => {
+    const wrapper = shallow(<Badge display='inlineBlock' />)
+
+    expect(wrapper.hasClass('is-display-inlineBlock')).toBeTruthy()
   })
 })
 

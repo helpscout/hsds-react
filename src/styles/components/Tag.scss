@@ -23,6 +23,14 @@
     animation: _Blue_Tag_Blink 4s infinite both;
   }
 
+  // Display
+  &.is-display-block {
+    display: block;
+  }
+  &.is-display-inlineBlock {
+    display: inline-block;
+  }
+
   // Colors
   @each $color, $value in $colors {
     &.is-#{$color} {

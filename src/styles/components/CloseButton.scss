@@ -32,7 +32,19 @@
   height: $size;
   padding: $padding;
   position: relative;
+  transition: background-color 0.3s ease;
   width: $size;
+
+  &:hover {
+    background-color: rgba(black, 0.04);
+  }
+  &:focus {
+    background-color: rgba(black, 0.04);
+    outline: none;
+  }
+  &:active {
+    background-color: rgba(black, 0.08);
+  }
 
   &__icon {
     opacity: 0.5;
@@ -64,19 +76,26 @@
     width: 100%;
   }
   &:hover:before {
-    opacity: 0.1;
-  }
-  &:active:before {
-    opacity: 0.3;
+    opacity: 0.04;
   }
   &:focus:before {
-    opacity: 0.1;
+    opacity: 0.04;
+  }
+  &:active:before {
+    opacity: 0.08;
   }
 
   // Modifiers
   &.is-seamless {
     background-color: transparent;
     color: currentColor;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent;
+    }
+
     &:before {
       display: block;
     }

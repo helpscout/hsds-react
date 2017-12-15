@@ -54,5 +54,6 @@ const CloseButton = props => {
 
 CloseButton.propTypes = propTypes
 CloseButton.defaultProps = defaultProps
+CloseButton.displayName = 'CloseButton'
 
 export default CloseButton
