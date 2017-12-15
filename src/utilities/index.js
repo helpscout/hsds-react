@@ -1,17 +1,32 @@
-import * as animation from './animation'
-import * as classNames from './classNames'
-import * as component from './component'
-import * as easing from './easing'
-import * as focus from './focus'
-import * as globalManager from './globalManager'
-import * as id from './id'
-import * as node from './node'
-import * as nodePosition from './nodePosition'
-import * as other from './other'
-import * as scrollFade from './scrollFade'
-import * as smoothScroll from './smoothScroll'
-import * as strings from './strings'
-import * as types from './types'
+import * as animationUtils from './animation'
+import * as classNamesUtils from './classNames'
+import * as componentUtils from './component'
+import * as easingUtils from './easing'
+import * as focusUtils from './focus'
+import * as globalManagerUtils from './globalManager'
+import * as idUtils from './id'
+import * as nodeUtils from './node'
+import * as nodePositionUtils from './nodePosition'
+import * as otherUtils from './other'
+import * as scrollFadeUtils from './scrollFade'
+import * as smoothScrollUtils from './smoothScroll'
+import * as stringsUtils from './strings'
+import * as typesUtils from './types'
+
+export const animation = animationUtils
+export const classNames = classNamesUtils
+export const component = componentUtils
+export const easing = easingUtils
+export const focus = focusUtils
+export const globalManager = globalManagerUtils
+export const id = idUtils
+export const node = nodeUtils
+export const nodePosition = nodePositionUtils
+export const other = otherUtils
+export const scrollFade = scrollFadeUtils
+export const smoothScroll = smoothScrollUtils
+export const strings = stringsUtils
+export const types = typesUtils
 
 export default {
   animation,
