@@ -36,6 +36,7 @@ const defaultProps = {
 
 const Card = props => {
   const {
+    autoWordWrap,
     borderless,
     className,
     children,
@@ -68,6 +69,7 @@ const Card = props => {
 
   const element = href || to ? (
     <Link
+      autoWordWrap={autoWordWrap}
       block
       className={componentClassName}
       onClick={onClick}

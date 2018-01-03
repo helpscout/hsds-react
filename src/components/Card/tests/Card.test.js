@@ -164,6 +164,20 @@ describe('Link', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('Does not pass autoWordWrap prop to div', () => {
+    const wrapper = shallow(<Card autoWordWrap />)
+    const o = wrapper.find('.c-Card')
+
+    expect(o.props().autoWordWrap).toBeFalsy()
+  })
+
+  test('Can pass autoWordWrap to Link', () => {
+    const wrapper = shallow(<Card href={link} autoWordWrap />)
+    const o = wrapper.find('.c-Card')
+
+    expect(o.props().autoWordWrap).toBeTruthy()
+  })
 })
 
 describe('Click', () => {
