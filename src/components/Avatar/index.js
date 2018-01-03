@@ -25,6 +25,7 @@ export const propTypes = {
 const defaultProps = {
   light: false,
   name: '',
+  size: 'md',
   shape: 'circle'
 }
 

@@ -35,6 +35,15 @@ describe('Avatars', () => {
 
     expect(avatar.length).toBe(4)
   })
+
+  test('Passes avatarsClassName to Avatar', () => {
+    const wrapper = shallow(
+      <AvatarStack avatars={avatars} avatarsClassName='ron' />
+    )
+    const avatar = wrapper.find(Avatar).first()
+
+    expect(avatar.hasClass('ron')).toBe(true)
+  })
 })
 
 describe('Border Color', () => {
@@ -77,11 +86,11 @@ describe('Limit', () => {
 })
 
 describe('Size', () => {
-  test('Does not have a default size', () => {
+  test('Should have a default size', () => {
     const wrapper = shallow(<AvatarStack avatars={avatars} />)
     const avatar = wrapper.find(Avatar).first()
 
-    expect(avatar.props().size).toBe(undefined)
+    expect(avatar.props().size).toBe('md')
   })
 
   test('Apply size classes', () => {

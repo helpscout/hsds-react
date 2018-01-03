@@ -9,6 +9,7 @@ import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   avatars: PropTypes.arrayOf(PropTypes.shape(avatarTypes)),
+  avatarsClassName: PropTypes.string,
   borderColor: PropTypes.string,
   max: PropTypes.number,
   size: standardSizeTypes
@@ -23,6 +24,7 @@ const defaultProps = {
 const AvatarStack = props => {
   const {
     avatars,
+    avatarsClassName,
     borderColor,
     className,
     max,
@@ -43,6 +45,7 @@ const AvatarStack = props => {
     <div className='c-AvatarStack__item'>
       <Avatar
         borderColor={borderColor}
+        className={avatarsClassName}
         size={size}
         name={`+${additionalAvatarCount}`}
         count={`+${additionalAvatarCount}`}
@@ -54,8 +57,17 @@ const AvatarStack = props => {
     const zIndex = (avatarList.length - index) + 1
 
     return (
-      <div className='c-AvatarStack__item' style={{zIndex}} key={`${avatarProps.name}-${index}`}>
-        <Avatar borderColor={borderColor} size={size} {...avatarProps} />
+      <div
+        className='c-AvatarStack__item'
+        key={`${avatarProps.name}-${index}`}
+        style={{zIndex}}
+      >
+        <Avatar
+          {...avatarProps}
+          borderColor={borderColor}
+          className={avatarsClassName}
+          size={size}
+        />
       </div>
     )
   })
