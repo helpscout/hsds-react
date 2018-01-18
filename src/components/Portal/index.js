@@ -27,7 +27,7 @@ const defaultProps = {
   timeout: 0
 }
 
-class Portal extends React.Component {
+class Portal extends React.PureComponent {
   constructor (props) {
     super()
     this.node = null
@@ -182,5 +182,6 @@ class Portal extends React.Component {
 Portal.propTypes = types
 Portal.defaultProps = defaultProps
 Portal.Container = Container
+Portal.displayName = 'Portal'
 
 export default Portal
