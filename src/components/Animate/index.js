@@ -276,5 +276,6 @@ export const getWait = (wait, sequence) => {
 
 Animate.propTypes = propTypes
 Animate.defaultProps = defaultProps
+Animate.displayName = 'Animate'
 
 export default Animate

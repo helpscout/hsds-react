@@ -125,7 +125,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         path,
         renderTo,
         trigger,
-        timeout,
+        timeout: propsTimeOut,
         wrapperClassName: propsWrapperClassName,
         ...rest
       } = this.props
@@ -133,6 +133,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const {
         id, isOpen: portalIsMounted,
         isMounted: portalIsOpen,
+        timeout,
         wrapperClassName
       } = this.state
 
@@ -147,7 +148,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
           animateOnMount={false}
           in={portalIsMounted}
           unmountOnExit
-          wait={this.state.timeout}
+          wait={timeout}
         >
           <Portal
             className={wrapperClassName}
@@ -158,7 +159,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             id={id}
             renderTo={renderTo}
             portalIsMounted={portalIsMounted}
-            timeout={this.state.timeout}
+            timeout={timeout}
             {...rest}
           >
             <Content
@@ -206,6 +207,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   }
   PortalWrapper.propTypes = propTypes
   PortalWrapper.defaultProps = defaultProps
+  PortalWrapper.displayName = 'PortalWrapper'
 
   return PortalWrapper
 }
