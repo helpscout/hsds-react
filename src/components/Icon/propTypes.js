@@ -4,6 +4,7 @@ export const sizeTypes = PropTypes.oneOf([
   '8',
   '10',
   '12',
+  '13',
   '14',
   '16',
   '18',

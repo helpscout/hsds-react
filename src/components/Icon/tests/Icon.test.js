@@ -39,6 +39,12 @@ describe('Sizes', () => {
 
     expect(wrapper.prop('className')).toContain('is-24')
   })
+
+  test('Has size 13', () => {
+    const wrapper = shallow(<Icon name='emoji' size='13' />)
+
+    expect(wrapper.prop('className')).toContain('is-13')
+  })
 })
 
 describe('Styles', () => {
