@@ -16,7 +16,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
-  initialHeightAdjustDelay: 60,
+  initialHeightAdjustDelay: 30,
   isScrollable: true,
   onScroll: noop,
   scrollableRef: noop
