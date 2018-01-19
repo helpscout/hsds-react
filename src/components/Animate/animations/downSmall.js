@@ -1,10 +1,13 @@
 const amount = -12
 
 export default {
-  onEntering: {
-    translateY: [amount, 0]
+  entering: {
+    transform: `translateY(${amount}px)`
   },
-  onExiting: {
-    translateY: [0, amount]
+  entered: {
+    transform: 'translateY(0)'
+  },
+  exiting: {
+    transform: `translateY(${amount}px)`
   }
 }

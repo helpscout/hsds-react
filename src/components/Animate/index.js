@@ -1,12 +1,11 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
-import anime from 'animejs'
 import { Transition } from 'react-transition-group'
 import animations from './animations'
-import AnimationStates from '../../constants/AnimationStates'
-import { getSequenceNames, getAnimationStyles } from '../../utilities/animation'
+import { getSequenceNames } from '../../utilities/animation'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { getEasingTiming } from '../../utilities/easing'
 import { sequencesType } from './propTypes'
 
 export const propTypes = {
@@ -14,6 +13,8 @@ export const propTypes = {
   block: PropTypes.bool,
   className: PropTypes.string,
   duration: PropTypes.number,
+  easing: PropTypes.string,
+  mountOnEnter: PropTypes.bool,
   in: PropTypes.bool,
   inline: PropTypes.bool,
   inlineBlock: PropTypes.bool,
@@ -24,16 +25,20 @@ export const propTypes = {
   onExit: PropTypes.func,
   onExited: PropTypes.func,
   sequence: sequencesType,
+  transitionProperty: PropTypes.string,
   wait: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.object
-  ])
+  ]),
+  unmountOnExit: PropTypes.bool
 }
 
 const defaultProps = {
   animateOnMount: true,
   duration: 200,
+  easing: 'ease-in-out',
   in: true,
+  mountOnEnter: true,
   onEnter: noop,
   onEntering: noop,
   onEntered: noop,
@@ -41,161 +46,19 @@ const defaultProps = {
   onExit: noop,
   onExited: noop,
   sequence: ['fade'],
+  transitionProperty: 'all',
+  unmountOnExit: true,
   wait: 0
 }
 
 class Animate extends Component {
   constructor (props) {
     super()
-    this.state = {
-      duration: props.duration + getWait(props.wait, 'in'),
-      in: false
-    }
-    this.handleOnEnter = this.handleOnEnter.bind(this)
-    this.handleOnEntering = this.handleOnEntering.bind(this)
-    this.handleOnEntered = this.handleOnEntered.bind(this)
-    this.handleOnExiting = this.handleOnExiting.bind(this)
-    this.handleOnExit = this.handleOnExit.bind(this)
-    this.handleOnExited = this.handleOnExited.bind(this)
-    this.initialStyles = {}
     this.node = null
-    this.currentAnimation = null
-    this._isMounted = false
-  }
-
-  componentWillMount () {
-    this.initialStyles = this.getAnimationStyles(AnimationStates.MOUNT)
-  }
-
-  componentDidMount () {
-    const { animateOnMount, in: transitionIn } = this.props
-
-    /* istanbul ignore next */
-    if (animateOnMount || transitionIn) {
-      this.setStateIn(true)
-    }
-
-    this._isMounted = true
-  }
-
-  componentWillReceiveProps (nextProps) {
-    /* istanbul ignore next */
-    if (nextProps.in !== undefined && nextProps.in !== this.state.in) {
-      this.setStateIn(nextProps.in)
-    }
   }
 
   componentWillUnmount () {
-    this._isMounted = false
-
     this.node = null
-    this.currentAnimation = null
-  }
-
-  setStateIn (transitionIn) {
-    const { wait } = this.props
-    const waitSequence = transitionIn ? 'in' : 'out'
-    setTimeout(() => {
-      if (this._isMounted) {
-        this.setState({ in: transitionIn })
-      }
-    }, getWait(wait, waitSequence))
-  }
-
-  getAnimationStyles (animationState = AnimationStates.ENTER) {
-    const {
-      sequence
-    } = this.props
-
-    return getAnimationStyles({
-      animations,
-      animationState,
-      node: this.node,
-      sequences: getSequenceNames(sequence)
-    })
-  }
-
-  makeAnimations (animationState) {
-    const {
-      duration
-    } = this.props
-
-    const animation = this.getAnimationStyles(animationState)
-
-    return anime(Object.assign(
-      {
-        targets: this.node,
-        duration
-      },
-      animation))
-  }
-
-  pauseAnimation () {
-    /* istanbul ignore else */
-    if (this.currentAnimation) {
-      this.currentAnimation.pause()
-    }
-  }
-
-  resolveAnimationPromise (callback) {
-    // Anime.js integration
-    /* istanbul ignore next */
-    if (this.currentAnimation) {
-      this.currentAnimation.finished.then(callback)
-    } else {
-      callback()
-    }
-  }
-
-  setAnimation (state) {
-    const animation = this.makeAnimations(state)
-    /* istanbul ignore else */
-    if (animation) {
-      this.currentAnimation = animation
-    }
-  }
-
-  handleOnEnter () {
-    const { onEnter } = this.props
-
-    this.setAnimation(AnimationStates.ENTER)
-    this.resolveAnimationPromise(onEnter)
-  }
-
-  handleOnEntering () {
-    const { onEntering } = this.props
-
-    this.setAnimation(AnimationStates.ENTERING)
-    this.resolveAnimationPromise(onEntering)
-  }
-
-  handleOnEntered () {
-    const { onEntered } = this.props
-
-    this.setAnimation(AnimationStates.ENTERED)
-    this.resolveAnimationPromise(onEntered)
-  }
-
-  handleOnExit () {
-    const { onExit } = this.props
-
-    this.pauseAnimation()
-    this.setAnimation(AnimationStates.EXIT)
-    this.resolveAnimationPromise(onExit)
-  }
-
-  handleOnExiting () {
-    const { onExiting } = this.props
-
-    this.setAnimation(AnimationStates.EXITING)
-    this.resolveAnimationPromise(onExiting)
-  }
-
-  handleOnExited () {
-    const { onExited } = this.props
-
-    this.setAnimation(AnimationStates.EXITED)
-    this.resolveAnimationPromise(onExited)
   }
 
   render () {
@@ -204,30 +67,19 @@ class Animate extends Component {
       block,
       children,
       className,
-      duration: propsDuration,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited,
-      in: propsIn,
+      duration,
+      easing,
+      in: transitionIn,
       inline,
       inlineBlock,
+      mountOnEnter,
       style: defaultStyle,
       sequence,
+      transitionProperty,
+      unmountOnExit,
       wait,
       ...rest
     } = this.props
-
-    const { duration, in: transitionIn } = this.state
-
-    const handleOnEnter = this.handleOnEnter
-    const handleOnEntering = this.handleOnEntering
-    const handleOnEntered = this.handleOnEntered
-    const handleOnExiting = this.handleOnExiting
-    const handleOnExit = this.handleOnExit
-    const handleOnExited = this.handleOnExited
 
     const componentClassName = classNames(
       'c-Animate',
@@ -237,39 +89,61 @@ class Animate extends Component {
       className
     )
 
-    const componentStyles = Object.assign({}, this.initialStyles, defaultStyle)
+    const componentStyles = Object.assign({}, defaultStyle, {
+      transitionProperty: transitionProperty,
+      transitionDuration: `${duration}ms`,
+      transitionDelay: `${wait}ms`,
+      transitionTimingFunction: getEasingTiming(easing)
+    })
+
+    const animationStyles = mapAnimationStyles(
+      animations,
+      getSequenceNames(sequence)
+    )
 
     return (
       <Transition
         {...rest}
-        className={componentClassName}
+        mountOnEnter={mountOnEnter}
+        unmountOnExit={unmountOnExit}
+        appear={animateOnMount}
         in={transitionIn}
-        onEnter={handleOnEnter}
-        onEntering={handleOnEntering}
-        onEntered={handleOnEntered}
-        onExiting={handleOnExiting}
-        onExit={handleOnExit}
-        onExited={handleOnExited}
         timeout={duration}
-      >
-        <div ref={node => { this.node = node }} style={componentStyles}>
+      >{(transitionState) => (
+        <div
+          className={classNames(componentClassName, `is-${transitionState}`)}
+          ref={node => { this.node = node }}
+          style={{...componentStyles, ...animationStyles[transitionState]}}
+        >
           {children}
         </div>
+      )}
       </Transition>
     )
   }
 }
 
-export const getWait = (wait, sequence) => {
-  const defaultWait = 0
-  if (typeof wait === 'number') {
-    return wait
+export const mapAnimationStyles = (animations, sequences) => {
+  let styles = {
+    entering: {},
+    entered: {},
+    exiting: {},
+    exited: {}
   }
-  /* istanbul ignore else */
-  if (typeof wait === 'object' && sequence) {
-    return wait[sequence] !== undefined ? wait[sequence] : defaultWait
-  }
-  return defaultWait
+
+  if (!Array.isArray(sequences)) return styles
+
+  sequences.forEach(sequence => {
+    const animation = animations[sequence]
+    /* istanbul ignore else */
+    if (animation) {
+      Object.keys(animation).forEach(key => {
+        styles[key] = Object.assign(styles[key], animation[key])
+      })
+    }
+  })
+
+  return styles
 }
 
 Animate.propTypes = propTypes

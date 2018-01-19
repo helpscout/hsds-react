@@ -1,93 +1,117 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
-import classNames from '../../utilities/classNames'
 import {
   default as Avatar,
   propTypes as avatarTypes
 } from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
+import classNames from '../../utilities/classNames'
 import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
-  avatars: PropTypes.arrayOf(PropTypes.shape(avatarTypes)),
+  animationEasing: PropTypes.string,
+  animationSequence: PropTypes.string,
+  animationStagger: PropTypes.number,
+  avatarsClassName: PropTypes.string,
   max: PropTypes.number,
   shape: avatarTypes.shape,
   size: standardSizeTypes
 }
 
 const defaultProps = {
-  avatars: [],
+  animationEasing: 'ease',
+  animationSequence: 'fade',
+  animationStagger: 10,
   max: 4,
   shape: 'rounded',
   size: 'sm'
 }
 
-const AvatarList = props => {
-  const {
-    avatars,
-    className,
-    max,
-    shape,
-    size,
-    ...rest
-  } = props
+class AvatarList extends Component {
+  render () {
+    const {
+      animationEasing,
+      animationSequence,
+      animationStagger,
+      avatarsClassName,
+      children,
+      className,
+      max,
+      shape,
+      size,
+      ...rest
+    } = this.props
 
-  const totalAvatarCount = avatars.length
-  const avatarList = max ? avatars.slice(0, max) : avatars
-  const additionalAvatarCount = totalAvatarCount - avatarList.length
+    const avatars = React.Children
+      .toArray(children)
+      .filter(child => child.type && child.type === Avatar)
 
-  const componentClassName = classNames(
-    'c-AvatarList',
-    'c-List',
-    'c-List--inline',
-    'c-List--xs',
-    'is-display-flex',
-    className
-  )
+    const totalAvatarCount = avatars.length
+    const avatarList = max ? avatars.slice(0, max) : avatars
+    const additionalAvatarCount = totalAvatarCount - avatarList.length
 
-  const additionalAvatarMarkup = additionalAvatarCount ? (
-    <Animate
-      key='AvatarList__additionalAvatarMarkup'
-      className='c-AvatarList__item c-List__item'
-      sequence='fade'
-    >
-      <Avatar
-        count={`+${additionalAvatarCount}`}
-        light
-        name={`+${additionalAvatarCount}`}
-        shape={shape}
-        size={size}
-      />
-    </Animate>
-  ) : null
-
-  const avatarMarkup = avatarList.map((avatarProps, index) => {
-    return (
-      <Animate
-        className='c-AvatarList__item c-List__item'
-        key={`${avatarProps.name}-${index}`}
-        sequence='fade'
-      >
-        <Avatar shape={shape} size={size} {...avatarProps} />
-      </Animate>
+    const componentClassName = classNames(
+      'c-AvatarList',
+      'c-List',
+      'c-List--inline',
+      'c-List--xs',
+      'is-display-flex',
+      className
     )
-  })
 
-  return (
-    <AnimateGroup
-      className={componentClassName}
-      stagger
-      staggerDelay={10}
-      {...rest}
-    >
-      {avatarMarkup}
-      {additionalAvatarMarkup}
-    </AnimateGroup>
-  )
+    const additionalAvatarMarkup = additionalAvatarCount ? (
+      <Animate
+        key='AvatarList__additionalAvatarMarkup'
+        className='c-AvatarList__item c-List__item'
+        easing={animationEasing}
+        sequence={animationSequence}
+      >
+        <Avatar
+          className={avatarsClassName}
+          count={`+${additionalAvatarCount}`}
+          light
+          name={`+${additionalAvatarCount}`}
+          shape={shape}
+          size={size}
+        />
+      </Animate>
+    ) : null
+
+    const avatarMarkup = avatarList.map((avatar) => {
+      const composedAvatar = React.cloneElement(avatar, {
+        className: classNames(avatar.props.className, avatarsClassName),
+        shape,
+        size
+      })
+      return (
+        <Animate
+          className='c-AvatarList__item c-List__item'
+          easing={animationEasing}
+          key={avatar.key}
+          sequence={animationSequence}
+        >
+          {composedAvatar}
+        </Animate>
+      )
+    })
+
+    return (
+      <AnimateGroup
+        className={componentClassName}
+        stagger
+        staggerDelay={animationStagger}
+        {...rest}
+      >
+        {avatarMarkup}
+        {additionalAvatarMarkup}
+      </AnimateGroup>
+    )
+  }
 }
 
 AvatarList.propTypes = propTypes
 AvatarList.defaultProps = defaultProps
+AvatarList.displayName = 'AvatarList'
 
 export default AvatarList

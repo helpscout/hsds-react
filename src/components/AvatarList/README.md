@@ -7,14 +7,21 @@ This component is similar to [AvatarStack](../AvatarStack) with minor UI and ani
 ## Example
 
 ```jsx
-<AvatarList avatars={listOfAvatars} />
+<AvatarList>
+  <Avatar />
+  <Avatar />
+  <Avatar />
+</AvatarList>
 ```
 
 ## Props
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| avatars | `array` | A list of [Avatars](../Avatar).]
+| animationEasing | `string` | Easing of [animation](../Animate) applied to the child [Avatars](../Avatar). |
+| animationSequence | `string` | Style of [animation](../Animate) applied to the child [Avatars](../Avatar). |
+| animationStagger | `number` | Amount (in `ms`) to stagger the [animations](../Animate) of the [Avatars](../Avatar). |
+| avatarsClassName | `string` | Custom className to pass to [Avatars](../Avatar). |
 | className | `string` | Custom class names to be added to the component. |
 | max | `number` | Number of avatars to display before truncating. |
 | shape | `string` | Shape of the avatars. |

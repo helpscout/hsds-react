@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
  * @constructor
  */
 const RouteWrapper = (WrappedComponent) => {
-  class Component extends React.Component {
+  class Component extends React.PureComponent {
     render () {
       const { fetch = () => Promise.resolve(), to, ...rest } = this.props
       if (to) {

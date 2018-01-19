@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import classNames from '../../utilities/classNames'
 import Item from './Item'
 import { sizeTypes } from './propTypes'
@@ -11,25 +11,27 @@ const defaultProps = {
   size: 'sm'
 }
 
-const Inline = props => {
-  const {
-    className,
-    children,
-    size,
-    ...rest
-  } = props
+class Inline extends Component {
+  render () {
+    const {
+      className,
+      children,
+      size,
+      ...rest
+    } = this.props
 
-  const componentClassName = classNames(
-    'c-Inline',
-    size && `is-${size}`,
-    className
-  )
+    const componentClassName = classNames(
+      'c-Inline',
+      size && `is-${size}`,
+      className
+    )
 
-  return (
-    <div className={componentClassName} {...rest} role='list'>
-      {children}
-    </div>
-  )
+    return (
+      <div className={componentClassName} {...rest} role='list'>
+        {children}
+      </div>
+    )
+  }
 }
 
 Inline.propTypes = propTypes

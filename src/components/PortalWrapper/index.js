@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
+import { matchPath } from 'react-router'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
 import { default as Portal, propTypes as portalTypes } from '../Portal'
@@ -27,6 +27,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     isOpen: false,
     timeout: 200
   }
+
+  const contextTypes = {
+    router: PropTypes.object
+  }
+
   const extendedOptions = Object.assign(defaultOptions, options)
 
   const uniqueID = createUniqueIDFactory(extendedOptions.id)
@@ -47,6 +52,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       this.closePortal = this.closePortal.bind(this)
       this.openPortal = this.openPortal.bind(this)
       this.handleOnClose = this.handleOnClose.bind(this)
+      this._isMounted = false
       this._portalWrapperId = uniqueIndex()
       // Welcome aboard, Mr. Manager!
       this._MrManager = setupManager(managerNamespace)
@@ -55,8 +61,10 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     componentDidMount () {
+      const { path } = this.props
+      this._isMounted = true
       /* istanbul ignore else */
-      if (this.props.path) {
+      if (this.routeMatches(path)) {
         this.openPortal()
       }
     }
@@ -64,15 +72,46 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     componentWillReceiveProps (nextProps) {
       const { isOpen, path } = nextProps
       /* istanbul ignore else */
-      if (path) {
+      if (this.routeMatches(path)) {
         this.openPortal()
       } else if (isOpen !== undefined || isOpen !== null) {
-        this.setState({ isOpen })
+        this.safeSetState({ isOpen })
+      }
+    }
+
+    componentWillUnmount () {
+      this._isMounted = false
+    }
+
+    safeSetState (state) {
+      /* istanbul ignore else */
+      if (this._isMounted) {
+        this.setState(state)
+      }
+    }
+
+    routeMatches (path) {
+      /* istanbul ignore next */
+      // Context will always exist, except for Enzyme shallow/mount rendered
+      // instances.
+      if (!this.context) return false
+
+      const { exact } = this.props
+      const { router } = this.context
+
+      if (!router || !router.history) return false
+
+      const { history } = router
+
+      if (path && history && history.location) {
+        return matchPath(history.location.pathname, {path, exact}) !== null
+      } else {
+        return false
       }
     }
 
     openPortal () {
-      this.setState({
+      this.safeSetState({
         isOpen: true,
         isMounted: true
       })
@@ -80,7 +119,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     closePortal () {
       if (this._MrManager.max() === this._portalWrapperId) {
-        this.setState({
+        this.safeSetState({
           isOpen: false,
           isMounted: false
         })
@@ -182,9 +221,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         </Animate>
       )
 
-      const portalContainerMarkup = path ? (
-        <Route exact={exact} path={path} render={props => portalMarkup} />
-      ) : portalMarkup
+      const portalContainerMarkup = portalMarkup
 
       const triggerMarkup = trigger && React.isValidElement(trigger)
         ? React.cloneElement(trigger, {
@@ -207,6 +244,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   }
   PortalWrapper.propTypes = propTypes
   PortalWrapper.defaultProps = defaultProps
+  PortalWrapper.contextTypes = contextTypes
   PortalWrapper.displayName = 'PortalWrapper'
 
   return PortalWrapper

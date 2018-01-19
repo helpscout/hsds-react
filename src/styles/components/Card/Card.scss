@@ -52,6 +52,7 @@ $seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
       0 1px 3px 0 rgba(black, 0.1),
       };
     transition: box-shadow 0.2s ease;
+    will-change: box-shadow;
 
     &:hover {
       border-color: _color(grey, 700);

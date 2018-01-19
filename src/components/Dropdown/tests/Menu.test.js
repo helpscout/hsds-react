@@ -34,14 +34,18 @@ describe('Classname', () => {
 })
 
 describe('Nodes', () => {
-  test('Has a reference to DOM nodes', () => {
-    const wrapper = mount(<MenuComponent />)
+  test('Has a reference to DOM nodes', (done) => {
+    const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.node
 
-    expect(o.node).toBeTruthy()
-    expect(o.wrapperNode).toBeTruthy()
-    expect(o.contentNode).toBeTruthy()
-    expect(o.listNode).toBeTruthy()
+    wait()
+      .then(() => {
+        expect(o.node).toBeTruthy()
+        expect(o.wrapperNode).toBeTruthy()
+        expect(o.contentNode).toBeTruthy()
+        expect(o.listNode).toBeTruthy()
+        done()
+      })
   })
 })
 
@@ -104,7 +108,7 @@ describe('Items', () => {
       items.push(<Item key={i} />)
     }
     const wrapper = mount(
-      <MenuComponent>
+      <MenuComponent isOpen>
         {items}
         <div className='brick'>Brick</div>
       </MenuComponent>
@@ -311,7 +315,7 @@ describe('Selected', () => {
 
 describe('Height', () => {
   test('Adjusts height on mount, if Menu will be outside of Viewport', (done) => {
-    const wrapper = mount(<MenuComponent />)
+    const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.node
     const initialHeight = o.height
 
@@ -336,7 +340,7 @@ describe('Height', () => {
   })
 
   test('Keeps height at null if Menu is within viewport', (done) => {
-    const wrapper = mount(<MenuComponent />)
+    const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.node
 
     o.listNode.getBoundingClientRect = () => ({

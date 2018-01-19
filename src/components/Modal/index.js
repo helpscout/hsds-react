@@ -185,7 +185,13 @@ class Modal extends Component {
       <div className={componentClassName} role='document' style={modalStyle} {...rest}>
         <EventListener event='resize' handler={handleOnResize} />
         <div className='c-Modal__innerWrapper'>
-          <Animate className='c-Modal__Card-container' sequence='fade down' in={portalIsOpen} wait={modalAnimationDelay}>
+          <Animate
+            className='c-Modal__Card-container'
+            easing='elastic'
+            sequence='fade down'
+            in={portalIsOpen}
+            wait={modalAnimationDelay}
+          >
             {modalContentMarkup}
           </Animate>
         </div>

@@ -2,4 +2,5 @@
   @import "../resets/base";
   overflow: hidden;
   transition-property: height;
+  will-change: height;
 }

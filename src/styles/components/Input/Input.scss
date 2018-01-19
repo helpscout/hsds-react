@@ -20,6 +20,7 @@
   // Multiline: This transforms the <input> into an auto-expanding <textarea>
   &.is-multiline {
     height: auto;
+    will-change: height;
 
     #{$InputField} {
       line-height: normal;

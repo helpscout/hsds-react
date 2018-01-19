@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import { default as Link, propTypes as linkPropTypes } from '../Link'
 import Block from './Block'
@@ -34,63 +34,65 @@ const defaultProps = {
   selector: 'div'
 }
 
-const Card = props => {
-  const {
-    autoWordWrap,
-    borderless,
-    className,
-    children,
-    floating,
-    flex,
-    fullHeight,
-    hover,
-    href,
-    onClick,
-    seamless,
-    selector,
-    to,
-    ...rest
-  } = props
-
-  const hasOnClick = onClick !== noop
-
-  const componentClassName = classNames(
-    'c-Card',
-    (hasOnClick || href || to) && 'is-clickable',
-    (hasOnClick || hover || href || to) && 'is-hoverable',
-    borderless && 'is-borderless',
-    floating && 'is-floating',
-    flex && 'is-flex',
-    fullHeight && 'is-fullHeight',
-    href && 'is-link',
-    seamless && 'is-seamless',
-    className
-  )
-
-  const element = href || to ? (
-    <Link
-      autoWordWrap={autoWordWrap}
-      block
-      className={componentClassName}
-      onClick={onClick}
-      href={href}
-      to={to}
-      {...rest}
-    >
-      {children}
-    </Link>
-  ) : React.createElement(
-    selector,
-    {
-      ...rest,
-      className: componentClassName,
+class Card extends Component {
+  render () {
+    const {
+      autoWordWrap,
+      borderless,
+      className,
+      children,
+      floating,
+      flex,
+      fullHeight,
+      hover,
       href,
-      onClick
-    },
-    children
-  )
+      onClick,
+      seamless,
+      selector,
+      to,
+      ...rest
+    } = this.props
 
-  return element
+    const hasOnClick = onClick !== noop
+
+    const componentClassName = classNames(
+      'c-Card',
+      (hasOnClick || href || to) && 'is-clickable',
+      (hasOnClick || hover || href || to) && 'is-hoverable',
+      borderless && 'is-borderless',
+      floating && 'is-floating',
+      flex && 'is-flex',
+      fullHeight && 'is-fullHeight',
+      href && 'is-link',
+      seamless && 'is-seamless',
+      className
+    )
+
+    const element = href || to ? (
+      <Link
+        autoWordWrap={autoWordWrap}
+        block
+        className={componentClassName}
+        onClick={onClick}
+        href={href}
+        to={to}
+        {...rest}
+      >
+        {children}
+      </Link>
+    ) : React.createElement(
+      selector,
+      {
+        ...rest,
+        className: componentClassName,
+        href,
+        onClick
+      },
+      children
+    )
+
+    return element
+  }
 }
 
 Card.propTypes = propTypes

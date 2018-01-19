@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Block from './Block'
@@ -23,40 +23,42 @@ const defaultProps = {
   theme: 'default'
 }
 
-const Toolbar = props => {
-  const {
-    children,
-    className,
-    placement,
-    shadow,
-    seamless,
-    size,
-    theme,
-    ...rest
-  } = props
+class Toolbar extends Component {
+  render () {
+    const {
+      children,
+      className,
+      placement,
+      shadow,
+      seamless,
+      size,
+      theme,
+      ...rest
+    } = this.props
 
-  const componentClassName = classNames(
-    'c-Toolbar',
-    placement && `is-placement-${placement}`,
-    seamless && 'is-seamless',
-    shadow && 'has-shadow',
-    size && `is-size-${size}`,
-    theme && `is-theme-${theme}`,
-    className
-  )
+    const componentClassName = classNames(
+      'c-Toolbar',
+      placement && `is-placement-${placement}`,
+      seamless && 'is-seamless',
+      shadow && 'has-shadow',
+      size && `is-size-${size}`,
+      theme && `is-theme-${theme}`,
+      className
+    )
 
-  const shadowMarkup = shadow ? (
-    <Shadow placement={placement} />
-  ) : null
+    const shadowMarkup = shadow ? (
+      <Shadow placement={placement} />
+    ) : null
 
-  return (
-    <div className='c-ToolbarWrapper'>
-      <Flexy className={componentClassName} {...rest}>
-        {children}
-      </Flexy>
-      {shadowMarkup}
-    </div>
-  )
+    return (
+      <div className='c-ToolbarWrapper'>
+        <Flexy className={componentClassName} {...rest}>
+          {children}
+        </Flexy>
+        {shadowMarkup}
+      </div>
+    )
+  }
 }
 
 Toolbar.propTypes = propTypes

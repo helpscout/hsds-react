@@ -1,5 +1,21 @@
 .c-Animate {
   @import "../resets/base";
+  visibility: hidden;
+  transition-timing-function: "ease-in-out";
+
+  // Sequences
+  &.is-entering {
+    visibility: hidden;
+  }
+  &.is-entered {
+    visibility: visible;
+  }
+  &.is-exiting {
+    visibility: visible;
+  }
+  &.is-exited {
+    visibility: hidden;
+  }
 
   // Modifers
   &.is-block {
