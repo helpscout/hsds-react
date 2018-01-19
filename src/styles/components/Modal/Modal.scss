@@ -9,6 +9,7 @@
   bottom: 0;
   display: flex;
   justify-content: center;
+  min-height: 0;
   left: 0;
   padding: $offset;
   position: fixed;
@@ -20,6 +21,7 @@
     justify-content: center;
     max-height: 98%;
     max-width: 100%;
+    min-height: 0;
     position: relative;
     width: auto;
     z-index: 1;
@@ -28,12 +30,14 @@
   &__Card-container {
     display: flex;
     max-width: 100%;
+    min-height: 0;
   }
 
   & {
     #{$block}__Card { // Increase specificity on this style
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
   }
 

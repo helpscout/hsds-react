@@ -25,6 +25,8 @@
       line-height: normal;
       overflow: hidden;
       height: auto;
+      margin-bottom: 1px;
+      margin-top: 1px;
       margin-left: -($padding);
       margin-right: -($padding);
       padding: 0.6em $padding;
@@ -34,7 +36,7 @@
 
       @each $size, $values in $seed-control-sizes {
         &.is-#{$size} {
-          min-height: _get($values, height);
+          min-height: (_get($values, height) - 2);
         }
       }
     }

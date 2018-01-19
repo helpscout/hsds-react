@@ -56,7 +56,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    wait(10).then(() => {
+    wait(60).then(() => {
       expect(o.faderNodeTop.style.transform).toContain('scaleY')
       done()
     })
@@ -74,7 +74,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    wait(10).then(() => {
+    wait(60).then(() => {
       expect(o.faderNodeBottom.style.transform).toContain('scaleY')
       done()
     })

@@ -2,6 +2,8 @@
   @import "../resets/base";
   overflow: hidden;
   position: relative;
+  transition: height 100ms ease;
+  will-change: height;
 
   &__container {
     overflow-x: auto;

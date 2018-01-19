@@ -40,7 +40,9 @@ class Overflow extends Component {
     const { initialHeightAdjustDelay } = this.props
     this.adjustHeight()
     setTimeout(() => {
-      this.adjustHeight()
+      requestAnimationFrame(() => {
+        this.adjustHeight()
+      })
     }, initialHeightAdjustDelay)
   }
 

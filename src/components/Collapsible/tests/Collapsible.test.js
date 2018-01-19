@@ -17,7 +17,7 @@ describe('onOpen', () => {
     const wrapper = mount(<Collapsible onOpen={spy} duration={0} />)
     wrapper.setProps({ isOpen: true })
 
-    wait(120)
+    wait(200)
       .then(() => {
         expect(spy).toHaveBeenCalled()
         wrapper.unmount()
@@ -32,7 +32,7 @@ describe('onClose', () => {
     const wrapper = mount(<Collapsible isOpen onClose={spy} duration={0} />)
     wrapper.setProps({ isOpen: false })
 
-    wait(120)
+    wait(200)
       .then(() => {
         expect(spy).toHaveBeenCalled()
         wrapper.unmount()

@@ -1,6 +1,10 @@
 @import "../configs/font";
 
 & {
+  // Fallback
   font-family: $font-family;
-  font-size: 14px;
+  font-size: 13px;
+  // CSS Variables
+  font-family: var(--BlueConfigGlobalFontFamily);
+  font-size: var(--BlueConfigGlobalFontSize);
 }

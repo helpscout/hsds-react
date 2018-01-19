@@ -8,12 +8,13 @@
   @import "../../configs/color";
   @import "../../resets/base";
   $border-width: 1px;
+  $offset: 1px;
   $default-height: _get($seed-control-sizes, md, height);
   $states: $STATES;
 
   // Scoped functions
-  @function get-height($height: $default-height, $border: $border-width) {
-    @return ceil($height - $border * 2);
+  @function get-height($height: $default-height, $border: $border-width, $offset: 1) {
+    @return ceil($height - $border * 2 - $offset * 2);
   }
 
   -webkit-appearance: none;
@@ -24,6 +25,8 @@
   color: currentColor;
   display: block;
   height: get-height();
+  margin-bottom: $offset;
+  margin-top: $offset;
   padding: 0;
   position: relative;
   top: 0;

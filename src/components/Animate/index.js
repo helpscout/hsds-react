@@ -88,9 +88,6 @@ class Animate extends Component {
   componentWillUnmount () {
     this._isMounted = false
 
-    this.pauseAnimation()
-    this.setStateIn(false)
-
     this.node = null
     this.currentAnimation = null
   }
@@ -134,6 +131,7 @@ class Animate extends Component {
   }
 
   pauseAnimation () {
+    /* istanbul ignore else */
     if (this.currentAnimation) {
       this.currentAnimation.pause()
     }
