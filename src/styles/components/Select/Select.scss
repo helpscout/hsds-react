@@ -12,13 +12,14 @@
   @include input-styles($padding);
 
 
-  &__prefix,
-  &__suffix {
-    @-moz-document url-prefix() {
-      line-height: 1;
-      top: 2px;
-    }
-  }
+  // Not necessary with System font.
+  // &__prefix,
+  // &__suffix {
+  //   @-moz-document url-prefix() {
+  //     line-height: 1;
+  //     top: 2px;
+  //   }
+  // }
 
   #{$InputField} {
     padding-left: ceil($padding / 2);

@@ -16,7 +16,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
-  initialHeightAdjustDelay: 60,
+  initialHeightAdjustDelay: 30,
   isScrollable: true,
   onScroll: noop,
   scrollableRef: noop
@@ -40,7 +40,9 @@ class Overflow extends Component {
     const { initialHeightAdjustDelay } = this.props
     this.adjustHeight()
     setTimeout(() => {
-      this.adjustHeight()
+      requestAnimationFrame(() => {
+        this.adjustHeight()
+      })
     }, initialHeightAdjustDelay)
   }
 

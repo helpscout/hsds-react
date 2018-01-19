@@ -5,8 +5,9 @@ button.#{$seed-button-namespace} {
   @import "../resets/base";
 }
 
-@-moz-document url-prefix() {
-  .#{$seed-button-namespace} {
-    padding-top: 1px;
-  }
-}
+// Not necessary with System font.
+// @-moz-document url-prefix() {
+//   .#{$seed-button-namespace} {
+//     padding-top: 1px;
+//   }
+// }

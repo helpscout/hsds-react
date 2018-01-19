@@ -149,7 +149,7 @@ describe('adjustHeight', () => {
       spy.mockReset()
       spy.mockRestore()
       done()
-    }, 100)
+    }, 200)
   })
 })
 

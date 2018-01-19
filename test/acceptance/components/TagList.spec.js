@@ -44,7 +44,7 @@ describe('TagList', () => {
     const control = $('.control')
     const test = $('.test')
 
-    wait(100)
+    wait(400)
       .then(() => {
         expect(control.height()).toBe(test.height())
         done()

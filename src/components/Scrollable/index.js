@@ -31,9 +31,6 @@ const scrollbarWidth = getScrollbarWidth()
 class Scrollable extends Component {
   constructor () {
     super()
-    this.state = {
-      shouldFadeOnMount: false
-    }
     this.faderSize = 28
     this.faderNodeTop = null
     this.faderNodeBottom = null
@@ -48,10 +45,12 @@ class Scrollable extends Component {
 
   applyFade () {
     const containerNode = this.containerNode
-
-    this.setState({
-      shouldFadeOnMount: hasContentOverflowY(containerNode)
-    })
+    /* istanbul ignore else */
+    if (containerNode) {
+      this.applyFadeStyles({
+        currentTarget: containerNode
+      })
+    }
   }
 
   applyFadeStyles (event) {
@@ -105,8 +104,6 @@ class Scrollable extends Component {
       ...rest
     } = this.props
 
-    const { shouldFadeOnMount } = this.state
-
     const handleOnScroll = this.handleOnScroll
 
     const componentClassName = classNames(
@@ -134,7 +131,7 @@ class Scrollable extends Component {
         role='presentation'
         style={{
           color: backgroundColor,
-          transform: fadeBottom && shouldFadeOnMount ? 'scaleY(1)' : 'scaleY(0)'
+          transform: fadeBottom ? 'scaleY(1)' : 'scaleY(0)'
         }}
       />
     )
