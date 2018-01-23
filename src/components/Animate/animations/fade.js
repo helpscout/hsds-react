@@ -1,13 +1,11 @@
 export default {
-  onMount: {
+  entering: {
     opacity: 0
   },
-  onEnter: {
-    easing: 'linear',
-    opacity: [0, 1]
+  entered: {
+    opacity: 1
   },
-  onExit: {
-    easing: 'linear',
-    opacity: [1, 0]
+  exiting: {
+    opacity: 0
   }
 }

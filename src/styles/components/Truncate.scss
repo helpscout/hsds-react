@@ -1,5 +1,6 @@
 .c-Truncate {
   box-sizing: border-box;
+  will-change: contents;
 
   &.is-auto {
     display: block;

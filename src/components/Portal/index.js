@@ -1,4 +1,4 @@
-import React from 'react'
+import {PureComponent as Component} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { default as Container, ID as portalContainerId } from './Container'
@@ -27,7 +27,7 @@ const defaultProps = {
   timeout: 0
 }
 
-class Portal extends React.PureComponent {
+class Portal extends Component {
   constructor (props) {
     super()
     this.node = null

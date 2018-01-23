@@ -1,83 +1,118 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
-import classNames from '../../utilities/classNames'
 import {
   default as Avatar,
   propTypes as avatarTypes
 } from '../Avatar'
+import AnimateGroup from '../AnimateGroup'
+import Animate from '../Animate'
+import classNames from '../../utilities/classNames'
 import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
-  avatars: PropTypes.arrayOf(PropTypes.shape(avatarTypes)),
+  animationEasing: PropTypes.string,
+  animationSequence: PropTypes.string,
+  animationStagger: PropTypes.number,
   avatarsClassName: PropTypes.string,
   borderColor: PropTypes.string,
   max: PropTypes.number,
+  shape: avatarTypes.shape,
   size: standardSizeTypes
 }
 
 const defaultProps = {
-  avatars: [],
+  animationEasing: 'ease',
+  animationSequence: 'fade',
+  animationStagger: 0,
   borderColor: 'white',
-  max: 4
+  max: 4,
+  shape: 'circle',
+  size: 'md'
 }
 
-const AvatarStack = props => {
-  const {
-    avatars,
-    avatarsClassName,
-    borderColor,
-    className,
-    max,
-    size,
-    ...rest
-  } = props
+class AvatarStack extends Component {
+  render () {
+    const {
+      animationEasing,
+      animationSequence,
+      animationStagger,
+      avatarsClassName,
+      borderColor,
+      children,
+      className,
+      max,
+      shape,
+      size,
+      ...rest
+    } = this.props
 
-  const totalAvatarCount = avatars.length
-  const avatarList = max ? avatars.slice(0, max) : avatars
-  const additionalAvatarCount = totalAvatarCount - avatarList.length
+    const avatars = React.Children
+      .toArray(children)
+      .filter(child => child.type && child.type === Avatar)
 
-  const componentClassName = classNames(
-    'c-AvatarStack',
-    className
-  )
+    const totalAvatarCount = avatars.length
+    const avatarList = max ? avatars.slice(0, max) : avatars
+    const additionalAvatarCount = totalAvatarCount - avatarList.length
 
-  const additionalAvatarMarkup = additionalAvatarCount ? (
-    <div className='c-AvatarStack__item'>
-      <Avatar
-        borderColor={borderColor}
-        className={avatarsClassName}
-        size={size}
-        name={`+${additionalAvatarCount}`}
-        count={`+${additionalAvatarCount}`}
-      />
-    </div>
-  ) : null
+    const componentClassName = classNames(
+      'c-AvatarStack',
+      className
+    )
 
-  const avatarMarkup = avatarList.map((avatarProps, index) => {
-    const zIndex = (avatarList.length - index) + 1
+    const additionalAvatarMarkup = additionalAvatarCount ? (
+      <Animate
+        key='AvatarGrid__additionalAvatarMarkup'
+        easing={animationEasing}
+        sequence={animationSequence}
+      >
+        <div className='c-AvatarStack__item is-additional'>
+          <Avatar
+            borderColor={borderColor}
+            className={avatarsClassName}
+            count={`+${additionalAvatarCount}`}
+            name={`+${additionalAvatarCount}`}
+            shape={shape}
+            size={size}
+          />
+        </div>
+      </Animate>
+    ) : null
+
+    const avatarMarkup = avatarList.map((avatar, index) => {
+      const zIndex = (avatarList.length - index) + 1
+      const composedAvatar = React.cloneElement(avatar, {
+        borderColor,
+        className: classNames(avatar.props.className, avatarsClassName),
+        shape,
+        size
+      })
+
+      return (
+        <Animate
+          key={avatar.key}
+          easing={animationEasing}
+          sequence={animationSequence}
+          style={{...avatar.style, zIndex}}
+        >
+          <div className='c-AvatarStack__item'>
+            {composedAvatar}
+          </div>
+        </Animate>
+      )
+    })
 
     return (
-      <div
-        className='c-AvatarStack__item'
-        key={`${avatarProps.name}-${index}`}
-        style={{zIndex}}
+      <AnimateGroup
+        className={componentClassName}
+        stagger
+        staggerDelay={animationStagger}
+        {...rest}
       >
-        <Avatar
-          {...avatarProps}
-          borderColor={borderColor}
-          className={avatarsClassName}
-          size={size}
-        />
-      </div>
+        {avatarMarkup}
+        {additionalAvatarMarkup}
+      </AnimateGroup>
     )
-  })
-
-  return (
-    <div className={componentClassName} {...rest}>
-      {avatarMarkup}
-      {additionalAvatarMarkup}
-    </div>
-  )
+  }
 }
 
 AvatarStack.propTypes = propTypes

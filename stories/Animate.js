@@ -26,7 +26,14 @@ class AnimateOutExample extends Component {
         <button onClick={toggleIn}>Toggle Animation</button>
         <br />
         <div style={{width: 300}}>
-          <Animate in={show} sequence='fade down' duration={300} animateOnMount={false} unmountOnExit>
+          <Animate
+            animateOnMount={false}
+            duration={200}
+            easing='bounce'
+            in={show}
+            sequence='fade down'
+            unmountOnExit
+          >
             <Card>
               <Heading>Anchorman</Heading>
               <Text>Stay classy San Diego!</Text>
@@ -53,7 +60,7 @@ storiesOf('Animate', module)
   .add('custom wait/duration', () => (
     <div>
       <p>Tiny tiny delay</p>
-      <Animate sequence='scale' wait={300}>
+      <Animate sequence='fade scale' wait={300} easing='bounce'>
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>

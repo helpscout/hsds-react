@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -28,8 +28,9 @@ const defaultProps = {
   onFocus: noop
 }
 
-const Link = props => {
-  const {
+class Link extends Component {
+  render () {
+    const {
     autoWordWrap,
     block,
     children,
@@ -39,11 +40,11 @@ const Link = props => {
     noUnderline,
     wordWrap,
     ...rest
-  } = props
+  } = this.props
 
-  const forceWordWrap = wordWrap || (autoWordWrap && !wordHasSpaces(children))
+    const forceWordWrap = wordWrap || (autoWordWrap && !wordHasSpaces(children))
 
-  const componentClassName = classNames(
+    const componentClassName = classNames(
     'c-Link',
     block && 'is-block',
     forceWordWrap && 'is-word-wrap',
@@ -51,14 +52,15 @@ const Link = props => {
     className
   )
 
-  const target = external ? '_blank' : undefined
-  const rel = external ? 'noopener noreferrer' : undefined
+    const target = external ? '_blank' : undefined
+    const rel = external ? 'noopener noreferrer' : undefined
 
-  return (
-    <a className={componentClassName} target={target} rel={rel} href={href} {...rest}>
-      {children}
-    </a>
-  )
+    return (
+      <a className={componentClassName} target={target} rel={rel} href={href} {...rest}>
+        {children}
+      </a>
+    )
+  }
 }
 
 Link.propTypes = propTypes

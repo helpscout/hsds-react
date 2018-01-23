@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import Inline from '../Inline'
@@ -18,52 +18,54 @@ const defaultProps = {
   isRemovable: false
 }
 
-const TagList = props => {
-  const {
-    className,
-    children,
-    onRemove,
-    overflowFade,
-    isRemovable,
-    ...rest
-  } = props
+class TagList extends Component {
+  render () {
+    const {
+      className,
+      children,
+      onRemove,
+      overflowFade,
+      isRemovable,
+      ...rest
+    } = this.props
 
-  const componentClassName = classNames(
-    'c-TagList',
-    className
-  )
+    const componentClassName = classNames(
+      'c-TagList',
+      className
+    )
 
-  const handleOnRemove = (value) => {
-    onRemove(value)
-  }
+    const handleOnRemove = (value) => {
+      onRemove(value)
+    }
 
-  const childrenMarkup = React.Children.map(children, tag => {
-    if (tag.type !== Tag) return null
+    const childrenMarkup = React.Children.map(children, tag => {
+      if (tag.type !== Tag) return null
+
+      return (
+        <Inline.Item extendChild>
+          {React.cloneElement(tag, {
+            ...tag.props,
+            isRemovable,
+            onRemove: handleOnRemove
+          })}
+        </Inline.Item>
+      )
+    })
+
+    const componentMarkup = (
+      <Inline size='xs'>
+        {childrenMarkup}
+      </Inline>
+    )
 
     return (
-      <Inline.Item extendChild>
-        {React.cloneElement(tag, {
-          ...tag.props,
-          isRemovable,
-          onRemove: handleOnRemove
-        })}
-      </Inline.Item>
+      <div className={componentClassName} {...rest}>
+        {overflowFade ? (
+          <Overflow>{componentMarkup}</Overflow>
+        ) : componentMarkup}
+      </div>
     )
-  })
-
-  const componentMarkup = (
-    <Inline size='xs'>
-      {childrenMarkup}
-    </Inline>
-  )
-
-  return (
-    <div className={componentClassName} {...rest}>
-      {overflowFade ? (
-        <Overflow>{componentMarkup}</Overflow>
-      ) : componentMarkup}
-    </div>
-  )
+  }
 }
 
 TagList.propTypes = propTypes

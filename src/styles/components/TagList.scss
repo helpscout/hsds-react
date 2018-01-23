@@ -2,4 +2,5 @@
   @import "../resets/base";
   max-height: 40px;
   overflow: hidden;
+  will-change: contents;
 }

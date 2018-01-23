@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import Block from './Block'
 import Item from './Item'
@@ -16,29 +16,31 @@ const defaultProps = {
   gap: 'sm'
 }
 
-const Flexy = props => {
-  const {
-    align,
-    children,
-    className,
-    gap,
-    just,
-    ...rest
-  } = props
+class Flexy extends Component {
+  render () {
+    const {
+      align,
+      children,
+      className,
+      gap,
+      just,
+      ...rest
+    } = this.props
 
-  const componentClassName = classNames(
-    'c-Flexy',
-    align && `is-${align}`,
-    gap && `c-Flexy--gap-${gap}`,
-    just && `c-Flexy--just-${just}`,
-    className
-  )
+    const componentClassName = classNames(
+      'c-Flexy',
+      align && `is-${align}`,
+      gap && `c-Flexy--gap-${gap}`,
+      just && `c-Flexy--just-${just}`,
+      className
+    )
 
-  return (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
+    return (
+      <div className={componentClassName} {...rest}>
+        {children}
+      </div>
+    )
+  }
 }
 
 Flexy.propTypes = propTypes

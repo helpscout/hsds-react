@@ -8,6 +8,7 @@
   &__container {
     overflow-x: auto;
     padding-bottom: 20px;
+    will-change: scroll-position;
 
     &::-webkit-scrollbar {
       display: none;
@@ -20,7 +21,6 @@
     z-index: 0;
   }
 
-  // Modifiers
   &__fader {
     bottom: 0;
     color: white;
@@ -31,12 +31,12 @@
     z-index: 1;
 
     &.is-left {
-      background: linear-gradient(to right, currentColor, rgba(255, 255, 255, 0));
+      background: linear-gradient(to right, currentColor, rgba(white, 0));
       left: 0;
       transform-origin: left;
     }
     &.is-right {
-      background: linear-gradient(to left, currentColor, rgba(255, 255, 255, 0));
+      background: linear-gradient(to left, currentColor, rgba(white, 0));
       right: 0;
       transform-origin: right;
     }

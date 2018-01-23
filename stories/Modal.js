@@ -225,11 +225,6 @@ stories.add('lifecycle events', () => {
 })
 
 stories.add('routes', () => {
-  const onBeforeOpen = (open) => {
-    setTimeout(() => {
-      open()
-    }, 500)
-  }
   return (
     <div>
       <h1>Routes</h1>
@@ -245,7 +240,7 @@ stories.add('routes', () => {
         </li>
       </ul>
 
-      <Modal path='/team' onBeforeOpen={onBeforeOpen}>
+      <Modal path='/team'>
         <Modal.Body>
           <h1>Team Modal: A</h1>
           <p>Modal content</p>

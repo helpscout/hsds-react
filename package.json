@@ -45,8 +45,8 @@
   },
   "dependencies": {
     "@shopify/javascript-utilities": "2.0.0",
-    "animejs": "2.2.0",
     "emoji-mart": "^1.0.1",
+    "lodash.camelcase": "4.3.0",
     "lodash.includes": "4.3.0",
     "object-assign": "4.1.1",
     "prop-types": "15.6.0",

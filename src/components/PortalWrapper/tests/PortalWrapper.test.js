@@ -33,10 +33,16 @@ const options = {
   timeout: 0
 }
 
+const context = {
+  context: {
+    router: {}
+  }
+}
+
 describe('HOC', () => {
   test('Can create a component as a HOC', (done) => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />)
+    mount(<TestComponent isOpen />, context)
 
     wait().then(() => {
       const c = document.body.childNodes[0]
@@ -49,7 +55,7 @@ describe('HOC', () => {
 describe('ClassName', () => {
   test('Can pass className to composed component', (done) => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent className='ron' isOpen />)
+    mount(<TestComponent className='ron' isOpen />, context)
 
     wait().then(() => {
       const o = document.querySelector('.button')
@@ -62,7 +68,7 @@ describe('ClassName', () => {
 describe('ID', () => {
   test('Adds default ID', (done) => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />)
+    mount(<TestComponent isOpen />, context)
 
     wait().then(() => {
       const c = document.body.childNodes[0]
@@ -77,7 +83,7 @@ describe('ID', () => {
       timeout: 0
     }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />)
+    mount(<TestComponent isOpen />, context)
 
     wait().then(() => {
       const c = document.body.childNodes[0]
@@ -95,7 +101,7 @@ describe('Manager', () => {
         <TestComponent isOpen />
         <TestComponent isOpen />
       </div>
-    )
+    , context)
 
     const o = wrapper.find(TestComponent).last()
 
@@ -117,7 +123,7 @@ describe('Manager', () => {
         <TestComponent isOpen />
         <TestComponent isOpen />
       </div>
-    )
+    , context)
     const o = wrapper.find(TestComponent).first()
 
     o.node.closePortal()
@@ -128,7 +134,7 @@ describe('Manager', () => {
 describe('wrapperClassName', () => {
   test('Does not add a wrapperClassName to portal', (done) => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />)
+    mount(<TestComponent isOpen />, context)
 
     wait().then(() => {
       const c = document.body.childNodes[0]
@@ -139,7 +145,7 @@ describe('wrapperClassName', () => {
 
   test('Can customize wrapperClassName', (done) => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen wrapperClassName='blue' />)
+    mount(<TestComponent isOpen wrapperClassName='blue' />, context)
 
     wait().then(() => {
       const c = document.body.childNodes[0]
@@ -152,7 +158,7 @@ describe('wrapperClassName', () => {
 describe('isOpen', () => {
   test('Can open wrapped component with isOpen prop change to true', (done) => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const wrapper = mount(<TestComponent />)
+    const wrapper = mount(<TestComponent />, context)
 
     wait()
       .then(() => {
@@ -171,7 +177,7 @@ describe('isOpen', () => {
 
   test('Can close wrapped component with isOpen prop change to false', (done) => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const wrapper = mount(<TestComponent isOpen timeout={0} />)
+    const wrapper = mount(<TestComponent isOpen timeout={0} />, context)
 
     wait()
       .then(() => {
@@ -183,5 +189,95 @@ describe('isOpen', () => {
         expect(o).not.toBeTruthy()
         done()
       })
+  })
+})
+
+describe('Router', () => {
+  test('Does not render if path is provided, but no context', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent path='/test' timeout={0} />)
+
+    wait(10)
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).not.toBeTruthy()
+        done()
+      })
+  })
+
+  test('Does not render if the router shape is in valid', (done) => {
+    const context = {
+      context: {
+        router: {
+          history: {},
+          location: { pathname: '/different' }
+        }
+      }
+    }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent path='/diff' timeout={0} />, context)
+
+    wait(100)
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).not.toBeTruthy()
+        done()
+      })
+  })
+
+  test('Does not render if the route path does not match', (done) => {
+    const context = {
+      context: {
+        router: {
+          history: {
+            location: { pathname: '/different' }
+          }
+        }
+      }
+    }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent path='/diff' timeout={0} />, context)
+
+    wait(100)
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).not.toBeTruthy()
+        done()
+      })
+  })
+
+  test('Renders if path matches router', (done) => {
+    const context = {
+      context: {
+        router: {
+          history: {
+            location: { pathname: '/test' }
+          }
+        }
+      }
+    }
+    const TestComponent = PortalWrapper(options)(TestButton)
+    mount(<TestComponent path='/test' timeout={0} />, context)
+
+    wait(10)
+      .then(() => {
+        const o = document.body.childNodes[0]
+        expect(o).toBeTruthy()
+        done()
+      })
+  })
+})
+
+describe('Mounting', () => {
+  test('Tracks mount status internally', () => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const wrapper = mount(<TestComponent timeout={0} />)
+    const o = wrapper.instance()
+
+    expect(o._isMounted).toBe(true)
+
+    wrapper.unmount()
+
+    expect(o._isMounted).toBe(false)
   })
 })
