@@ -10,6 +10,10 @@ stories.add('default', () => (
   <Avatar name={fixture.name} image={fixture.image} />
 ))
 
+stories.add('fallback', () => (
+  <Avatar name={fixture.name} image='https://notfound' />
+))
+
 stories.add('status', () => (
   <div>
     <Flexy just='left'>
