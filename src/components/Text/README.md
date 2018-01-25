@@ -23,6 +23,7 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
 | state | `string` | Changes the text color based on state. |
 | subtle | `bool` | Changes text color to a lighter grey. |
 | truncate | `bool` | Enables CSS truncation for text. |
+| wordWrap | `bool` | Enables CSS `word-break` for text. |
 
 
 ### States
