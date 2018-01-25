@@ -63,10 +63,11 @@ class Avatar extends Component {
     } = this.props
 
     const { imageLoaded } = this.state
+    const hasImage = image && imageLoaded
 
     const componentClassName = classNames(
       'c-Avatar',
-      image && imageLoaded && 'has-image',
+      hasImage && 'has-image',
       light && 'is-light',
       shape && `is-${shape}`,
       size && `is-${size}`,
@@ -74,11 +75,11 @@ class Avatar extends Component {
       className
     )
 
-    const imageStyle = image && imageLoaded ? { backgroundImage: `url('${image}')` } : null
+    const imageStyle = hasImage ? { backgroundImage: `url('${image}')` } : null
 
     const text = count || initials || nameToInitials(name)
 
-    const contentMarkup = image && imageLoaded
+    const contentMarkup = hasImage
       ? (
         <div className='c-Avatar__image' style={imageStyle}>
           <div className='c-Avatar__name'>
@@ -93,10 +94,16 @@ class Avatar extends Component {
         {text}
       </div>
 
-    const styles = borderColor ? {
+    let styles = borderColor ? {
       border: '2px solid',
       borderColor
-    } : null
+    } : {}
+
+    hasImage && Object.assign(styles, {
+      backgroundColor: 'transparent'
+    })
+
+    styles = Object.keys(styles).length ? styles : null
 
     const statusMarkup = status ? (
       <div className='c-Avatar__status'>

@@ -5,6 +5,7 @@ import { StatusDot } from '../../index'
 
 const classNames = {
   root: '.c-Avatar',
+  crop: '.c-Avatar__crop',
   image: '.c-Avatar__image',
   initials: '.c-Avatar__title'
 }
@@ -58,6 +59,14 @@ describe('Image', () => {
     const image = wrapper.find(classNames.image)
 
     expect(image.exists()).toBeTruthy()
+  })
+
+  test('Background is transparent to prevent flash of color before image loads', () => {
+    const wrapper = mount(<Avatar name='Buddy the Elf' image='buddy.jpg' />)
+    const crop = wrapper.find(classNames.crop)
+
+    expect(crop.exists()).toBeTruthy()
+    expect(crop.prop('style').backgroundColor).toEqual('transparent')
   })
 
   test('Render image if image prop is specified', () => {
@@ -119,7 +128,7 @@ describe('ClassNames', () => {
 describe('Border color', () => {
   test('Can apply borderColor', () => {
     const wrapper = shallow(<Avatar name='Buddy' borderColor='green' />)
-    const crop = wrapper.find('.c-Avatar__crop')
+    const crop = wrapper.find(classNames.crop)
     const style = crop.props().style
 
     expect(style).toBeTruthy()
@@ -129,7 +138,7 @@ describe('Border color', () => {
 
   test('Does not have a border by default', () => {
     const wrapper = shallow(<Avatar name='Buddy' />)
-    const crop = wrapper.find('.c-Avatar__crop')
+    const crop = wrapper.find(classNames.crop)
     const style = crop.props().style
 
     expect(style).not.toBeTruthy()
