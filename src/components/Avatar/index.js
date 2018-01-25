@@ -30,6 +30,22 @@ const defaultProps = {
 }
 
 class Avatar extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      // Assume image will load so that we only re-render on error
+      imageLoaded: true
+    }
+    this.onImageLoadedError = this.onImageLoadedError.bind(this)
+  }
+
+  onImageLoadedError () {
+    this.setState({
+      imageLoaded: false
+    })
+  }
+
   render () {
     const {
       borderColor,
@@ -46,9 +62,11 @@ class Avatar extends Component {
       ...rest
     } = this.props
 
+    const { imageLoaded } = this.state
+
     const componentClassName = classNames(
       'c-Avatar',
-      image && 'has-image',
+      image && imageLoaded && 'has-image',
       light && 'is-light',
       shape && `is-${shape}`,
       size && `is-${size}`,
@@ -56,17 +74,18 @@ class Avatar extends Component {
       className
     )
 
-    const imageStyle = image ? { backgroundImage: `url('${image}')` } : null
+    const imageStyle = image && imageLoaded ? { backgroundImage: `url('${image}')` } : null
 
     const text = count || initials || nameToInitials(name)
 
-    const contentMarkup = image
+    const contentMarkup = image && imageLoaded
       ? (
         <div className='c-Avatar__image' style={imageStyle}>
           <div className='c-Avatar__name'>
             <VisuallyHidden>
               {name}
             </VisuallyHidden>
+            <img alt='' onError={this.onImageLoadedError} src={image} style={{display: 'none'}} />
           </div>
         </div>
       )

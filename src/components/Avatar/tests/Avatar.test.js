@@ -5,7 +5,7 @@ import { StatusDot } from '../../index'
 
 const classNames = {
   root: '.c-Avatar',
-  image: '.c-Avatar__photo',
+  image: '.c-Avatar__image',
   initials: '.c-Avatar__title'
 }
 
@@ -55,7 +55,7 @@ describe('Name', () => {
 describe('Image', () => {
   test('Has the correct className', () => {
     const wrapper = mount(<Avatar name='Buddy the Elf' image='buddy.jpg' />)
-    const image = wrapper.find('.c-Avatar__image')
+    const image = wrapper.find(classNames.image)
 
     expect(image.exists()).toBeTruthy()
   })
@@ -63,7 +63,7 @@ describe('Image', () => {
   test('Render image if image prop is specified', () => {
     const src = 'buddy.jpg'
     const wrapper = mount(<Avatar name='Buddy the Elf' image={src} />)
-    const image = wrapper.find('.c-Avatar__image')
+    const image = wrapper.find(classNames.image)
 
     expect(image.exists()).toBeTruthy()
     expect(image.prop('style').backgroundImage).toContain(src)
@@ -72,7 +72,7 @@ describe('Image', () => {
   test('Rendered image should have name within', () => {
     const name = 'Buddy the Elf'
     const wrapper = mount(<Avatar name={name} image='buddy.jpg' />)
-    const image = wrapper.find('.c-Avatar__image')
+    const image = wrapper.find(classNames.image)
 
     expect(image.text()).toBe(name)
   })
@@ -82,6 +82,17 @@ describe('Image', () => {
     const initials = wrapper.find(classNames.initials)
 
     expect(initials.exists()).toBeFalsy()
+  })
+
+  test('Replaces image with initials on error', () => {
+    const wrapper = mount(<Avatar name='Buddy the Elf' image='buddy.jpg' />)
+    wrapper.find('img').first().simulate('error')
+
+    const initials = wrapper.find(classNames.initials)
+    const image = wrapper.find(classNames.image)
+
+    expect(initials.exists()).toBeTruthy()
+    expect(image.exists()).toBeFalsy()
   })
 
   test('Sets `title` attribute to the `name`', () => {
