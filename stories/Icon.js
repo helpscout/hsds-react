@@ -80,6 +80,42 @@ stories.add('colors', () => {
   )
 })
 
+stories.add('shades', () => {
+  return (
+    <div>
+      <div>
+        <Icon name='emoji' />
+        <Text muted size='sm'>Regular</Text>
+        <br />
+      </div>
+      <br />
+      <div>
+        <Icon name='emoji' shade='subtle' />
+        <Text muted size='sm'>Subtle</Text>
+        <br />
+      </div>
+      <br />
+      <div>
+        <Icon name='emoji' shade='muted' />
+        <Text muted size='sm'>Muted</Text>
+        <br />
+      </div>
+      <br />
+      <div>
+        <Icon name='emoji' shade='faint' />
+        <Text muted size='sm'>Faint</Text>
+        <br />
+      </div>
+      <br />
+      <div>
+        <Icon name='emoji' shade='extraMuted' />
+        <Text muted size='sm'>Extra Muted</Text>
+        <br />
+      </div>
+    </div>
+  )
+})
+
 stories.add('withCaret', () => {
   const icons = [
     '14', '16', '18', '24'

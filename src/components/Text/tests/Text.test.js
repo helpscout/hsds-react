@@ -19,6 +19,14 @@ describe('Content', () => {
   })
 })
 
+describe('Shade', () => {
+  test('Add shade styles if applied', () => {
+    const wrapper = shallow(<Text shade='muted' />)
+
+    expect(wrapper.prop('className')).toContain('is-muted')
+  })
+})
+
 describe('Styles', () => {
   test('Has default component className', () => {
     const wrapper = shallow(<Text />)

@@ -4,6 +4,7 @@ import ICONS from './icons'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { textShadeTypes } from '../../constants/propTypes'
 import { sizeTypes } from './propTypes'
 
 export const propTypes = {
@@ -16,6 +17,7 @@ export const propTypes = {
   muted: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  shade: textShadeTypes,
   size: sizeTypes,
   subtle: PropTypes.bool,
   title: PropTypes.string,
@@ -44,6 +46,7 @@ const Icon = props => {
     muted,
     onClick,
     name,
+    shade,
     size,
     subtle,
     title,
@@ -59,6 +62,7 @@ const Icon = props => {
     faint && 'is-faint',
     inline && 'is-inline',
     muted && 'is-muted',
+    shade && `is-${shade}`,
     subtle && 'is-subtle',
     size && `is-${size}`,
     withCaret && 'is-withCaret',

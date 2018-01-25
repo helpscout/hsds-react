@@ -19,10 +19,21 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
 | faint | `bool` | Changes text color to a very light grey. |
 | muted | `bool`  | Changes text color to a light grey. |
 | linkStyle | `bool` | Applies [Link](../Link) styles. |
+| shade | `string` | Changes text color shade. |
 | size | `string` | Adjust text size. |
 | state | `string` | Changes the text color based on state. |
 | subtle | `bool` | Changes text color to a lighter grey. |
 | truncate | `bool` | Enables CSS truncation for text. |
+
+
+### Shades
+
+| Prop | Description |
+| --- | --- |
+| `subtle` | Medium-light grey. |
+| `muted` | Lighter grey. |
+| `faint` | Very lighter grey. |
+| `extraMuted` | Extra light grey. |
 
 
 ### States
