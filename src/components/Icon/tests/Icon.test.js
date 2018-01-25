@@ -47,6 +47,14 @@ describe('Sizes', () => {
   })
 })
 
+describe('Shade', () => {
+  test('Add shade styles if applied', () => {
+    const wrapper = shallow(<Icon name='emoji' shade='muted' />)
+
+    expect(wrapper.prop('className')).toContain('is-muted')
+  })
+})
+
 describe('Styles', () => {
   test('Add center styles if applied', () => {
     const wrapper = shallow(<Icon name='emoji' center />)

@@ -7,6 +7,14 @@ export const standardSizeTypes = PropTypes.oneOf([
   ''
 ])
 
+export const textShadeTypes = PropTypes.oneOf([
+  'subtle',
+  'muted',
+  'faint',
+  'extraMuted',
+  ''
+])
+
 export const statusTypes = PropTypes.oneOf([
   'error',
   'info',

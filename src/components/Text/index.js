@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { sizeTypes } from './propTypes'
 import classNames from '../../utilities/classNames'
-import { stateTypes } from '../../constants/propTypes'
+import { stateTypes, textShadeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   allCaps: PropTypes.bool,
@@ -16,6 +16,7 @@ export const propTypes = {
   muted: PropTypes.bool,
   noWrap: PropTypes.bool,
   selector: PropTypes.oneOf(['span', 'pre', 'samp']),
+  shade: textShadeTypes,
   size: sizeTypes,
   state: stateTypes,
   subtle: PropTypes.bool,
@@ -45,6 +46,7 @@ const Text = props => {
     muted,
     noWrap,
     selector,
+    shade,
     size,
     state,
     subtle,
@@ -65,6 +67,7 @@ const Text = props => {
     lineHeightReset && 'is-line-height-reset',
     linkStyle && 'is-linkStyle',
     selector && `is-${selector}`,
+    shade && `is-${shade}`,
     size && `is-${size}`,
     state && `is-${state}`,
     subtle && 'is-subtle',

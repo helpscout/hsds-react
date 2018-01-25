@@ -4,7 +4,7 @@
 .c-Icon {
   @import "../configs/color";
   $sizes: (8, 10, 12, 13, 14, 16, 18, 20, 24);
-  $shades: faint, muted, subtle;
+  $shades: faint, muted, subtle, extraMuted;
   $caretSize: 10px;
   $default-size: 20;
 

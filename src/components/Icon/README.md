@@ -19,6 +19,17 @@ An Icon component renders an SVG icon.
 | muted | `bool` | Applies muted styles. |
 | name | `string` | Determines the SVG image. Required. |
 | onClick | `function` | Callback function when component is clicked. |
+| shade | `string` | Changes icon color shade. |
 | size | `number`/`string` | Adjusts the size of the component. |
 | title | `string` | Provides a name for the component. |
 | withCaret | `bool` | Renders a caret icon, next to the component's SVG icon. |
+
+
+### Shades
+
+| Prop | Description |
+| --- | --- |
+| `subtle` | Medium-light grey. |
+| `muted` | Lighter grey. |
+| `faint` | Very lighter grey. |
+| `extraMuted` | Extra light grey. |
