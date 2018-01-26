@@ -1,5 +1,5 @@
-import { isNodeEnv } from './other'
-export {closest, matches} from '../polyfills/Element'
+import closest from 'closest'
+import {isNodeEnv} from './other'
 
 const Element = window.Element
 
@@ -186,14 +186,8 @@ export const hasContentOverflowY = (node) => {
   return node.clientHeight < node.scrollHeight
 }
 
-export const nodeMatches = (node, selector) => {
-  if (!isNodeElement(node)) return null
-  if (typeof selector !== 'string') return null
-  return node.matches(selector)
-}
-
 export const getClosestNode = (node, selector) => {
   if (!isNodeElement(node)) return null
   if (typeof selector !== 'string') return null
-  return node.closest(selector)
+  return closest(node, selector)
 }
