@@ -1,10 +1,12 @@
 @import "pack/seed-dash/_index";
 
 .c-Illo {
-  $sizes: (40, 60, 80);
+  @import "../configs/color";
+  $sizes: (40, 60, 72, 80);
   $default-size: 40;
 
   box-sizing: border-box;
+  color: currentColor;
   display: block;
   height: ($default-size * 1px);
   margin: auto;
@@ -29,6 +31,33 @@
       height: auto;
       max-width: 100%;
       width: 100%;
+    }
+  }
+
+  &__pathFillSecondary {
+    opacity: 0.3;
+  }
+  &.has-colorSecondary {
+    .c-Illo__pathFillSecondary {
+      opacity: 1;
+    }
+  }
+
+  // Colors
+  &__pathFill {
+    fill: currentColor;
+
+    &UIDark {
+      fill: _color(charcoal, 200);
+    }
+    &UI {
+      fill: _color(grey, 600);
+    }
+    &UILight {
+      fill: _color(grey, 300);
+    }
+    &UIWhite {
+      fill: white;
     }
   }
 }
