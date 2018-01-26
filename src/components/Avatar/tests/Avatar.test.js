@@ -104,6 +104,15 @@ describe('Image', () => {
     expect(image.exists()).toBeFalsy()
   })
 
+  test('Background style is unset on error', () => {
+    const wrapper = mount(<Avatar name='Buddy the Elf' image='buddy.jpg' />)
+    wrapper.find('img').first().simulate('error')
+
+    const crop = wrapper.find(classNames.crop)
+
+    expect(crop.prop('style')).toBe(null)
+  })
+
   test('Sets `title` attribute to the `name`', () => {
     const wrapper = shallow(<Avatar name='Bobby McGee' />)
     const root = wrapper.find(classNames.root)
