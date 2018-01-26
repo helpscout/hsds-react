@@ -7,6 +7,8 @@ import VisuallyHidden from '../VisuallyHidden'
 import { sizeTypes } from './propTypes'
 
 export const propTypes = {
+  color: PropTypes.string,
+  colorSecondary: PropTypes.string,
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   size: sizeTypes,
@@ -20,25 +22,32 @@ const defaultProps = {
 const Illo = props => {
   const {
     className,
+    color,
+    colorSecondary,
     name,
     size,
+    style,
     title,
     ...rest
   } = props
 
   const componentClassName = classNames(
     'c-Illo',
+    color && 'has-color',
+    colorSecondary && 'has-colorSecondary',
     size && `is-${size}`,
     className
   )
 
   const src = { __html: ILLOS[name] }
   const iconTitle = title || name
+  const componentStyle = Object.assign({}, style, { color })
 
   return (
     <span
       className={componentClassName}
       data-illo-name={name}
+      style={componentStyle}
       {...rest}
     >
       <Centralize>
