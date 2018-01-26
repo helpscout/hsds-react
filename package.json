@@ -167,6 +167,7 @@
       "!src/utilities/smoothScroll.{js,jsx}",
       "!src/utilities/index.{js,jsx}",
       "!src/utilities/log.{js,jsx}",
+      "!src/polyfills/**/*.{js,jsx}",
       "!src/vendors/**/*.{js,jsx}",
       "!src/components/index.js",
       "!src/components/Animate/animations/**/*.js"

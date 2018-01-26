@@ -5,7 +5,7 @@ import classNames from '../../utilities/classNames'
 import { hasContentOverflowY } from '../../utilities/node'
 import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 import { getFadeTopStyles, getFadeBottomStyles } from '../../utilities/scrollFade'
-import { noop, requestAnimationFrame } from '../../utilities/other'
+import { noop } from '../../utilities/other'
 
 export const propTypes = {
   backgroundColor: PropTypes.string,
@@ -61,18 +61,14 @@ class Scrollable extends Component {
 
     if (fade && this.faderNodeTop) {
       const transformTop = getFadeTopStyles(event, offset)
-      requestAnimationFrame(() => {
-        this.faderNodeTop.style.transform = transformTop
-        this.applyFadeStyleOffset(this.faderNodeTop)
-      })
+      this.faderNodeTop.style.transform = transformTop
+      this.applyFadeStyleOffset(this.faderNodeTop)
     }
 
     if (fadeBottom && this.faderNodeBottom) {
       const transformBottom = getFadeBottomStyles(event, offset)
-      requestAnimationFrame(() => {
-        this.faderNodeBottom.style.transform = transformBottom
-        this.applyFadeStyleOffset(this.faderNodeBottom)
-      })
+      this.faderNodeBottom.style.transform = transformBottom
+      this.applyFadeStyleOffset(this.faderNodeBottom)
     }
   }
 
