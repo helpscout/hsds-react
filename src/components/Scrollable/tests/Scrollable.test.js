@@ -36,12 +36,25 @@ describe('Fade', () => {
     expect(fade.length).toBe(2)
   })
 
-  test('Applies bottom fade styles on mount, if applicable', () => {
+  test('Applies bottom fade styles on mount, if applicable', (done) => {
     const wrapper = mount(<Scrollable fadeBottom />)
-    const fade = wrapper.instance().faderNodeBottom
-    wrapper.setState({ shouldFadeOnMount: true })
+    const o = wrapper.instance()
+    const fade = o.faderNodeBottom
 
-    expect(fade.style.transform).toBe('scaleY(1)')
+    expect(fade.style.transform).toBe('scaleY(0)')
+
+    const currentTarget = {
+      clientHeight: 100,
+      scrollHeight: 200,
+      scrollTop: 30
+    }
+
+    o.handleOnScroll({ currentTarget })
+
+    wait(60).then(() => {
+      expect(o.faderNodeBottom.style.transform).toBe('scaleY(1)')
+      done()
+    })
   })
 
   test('Applies top fade styles when scrolled', (done) => {

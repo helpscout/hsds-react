@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@shopify/javascript-utilities": "2.0.0",
+    "closest": "0.0.1",
     "emoji-mart": "^1.0.1",
     "lodash.camelcase": "4.3.0",
     "lodash.includes": "4.3.0",
@@ -167,6 +168,7 @@
       "!src/utilities/smoothScroll.{js,jsx}",
       "!src/utilities/index.{js,jsx}",
       "!src/utilities/log.{js,jsx}",
+      "!src/polyfills/**/*.{js,jsx}",
       "!src/vendors/**/*.{js,jsx}",
       "!src/components/index.js",
       "!src/components/Animate/animations/**/*.js"

@@ -1,6 +1,7 @@
-import { isNodeEnv } from './other'
+import closest from 'closest'
+import {isNodeEnv} from './other'
 
-export const Element = window.Element
+const Element = window.Element
 
 export const isNodeElement = (node) => {
   return node && (
@@ -183,4 +184,10 @@ export const hasContentOverflowY = (node) => {
   /* istanbul ignore next */
   // Cannot be tested in JSDOM (missing measurements for props)
   return node.clientHeight < node.scrollHeight
+}
+
+export const getClosestNode = (node, selector) => {
+  if (!isNodeElement(node)) return null
+  if (typeof selector !== 'string') return null
+  return closest(node, selector)
 }
