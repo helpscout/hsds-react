@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '..'
-import { Card, Portal, Scrollable } from '../../index'
+import { Card, Portal, Overlay, Scrollable } from '../../index'
 import Keys from '../../../constants/Keys'
 import wait from '../../../tests/helpers/wait'
 
@@ -358,6 +358,39 @@ describe('wrapperClassName', () => {
       expect(o.className).toContain('c-ModalWrapper')
       done()
     })
+  })
+})
+
+describe('cardClassName', () => {
+  test('Can customize the Card className', () => {
+    const wrapper = mount(
+      <ModalComponent cardClassName='mugatu' />
+    )
+    const o = wrapper.find(Card)
+    const m = wrapper.find('.mugatu')
+
+    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(m.length).toBe(1)
+  })
+
+  test('Does not add custom className to seamless Modals', () => {
+    const wrapper = mount(
+      <ModalComponent cardClassName='mugatu' seamless />
+    )
+    const o = wrapper.find('.mugatu')
+
+    expect(o.length).toBe(0)
+  })
+})
+
+describe('overlayClassName', () => {
+  test('Can customize the Overlay className', () => {
+    const wrapper = mount(
+      <ModalComponent overlayClassName='mugatu' />
+    )
+    const o = wrapper.find(Overlay)
+
+    expect(o.hasClass('mugatu')).toBeTruthy()
   })
 })
 

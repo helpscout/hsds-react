@@ -30,12 +30,14 @@ A Modal component presents content within a container on top of the application'
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| cardClassName | `string` | Custom class names to be added to the child [Card](../Card) component. |
 | className | `string` | Custom class names to be added to the component. |
 | closeIcon | `bool` | Shows/hides the component's close icon UI. |
 | closeIconRepositionDelay | `number ` | Amount of time before the [CloseButton](../../CloseButton) gets repositioned. |
 | exact | `bool` | Used with `path` and React Router. Renders if path matches _exactly_ |
 | isOpen | `bool` | Shows/hides the component. |
 | path | `string` | Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). |
+| overlayClassName | `string` | Custom class names to be added to the child [Overlay](../Overlay) component. |
 | seamless | `bool` | Renders content with the standard [Card](../Card) UI. |
 | trigger | `element` | The UI the user clicks to trigger the modal. |
 | wrapperClassName | `string` | Custom className to add to the [PortalWrapper](../../PortalWrapper) component. |

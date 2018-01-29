@@ -17,8 +17,8 @@ import { isNodeElement, hasContentOverflowY } from '../../utilities/node'
 import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 
 export const propTypes = Object.assign({}, portalTypes, {
+  cardClassName: PropTypes.string,
   closeIcon: PropTypes.bool,
-  seamless: PropTypes.bool,
   closeIconRepositionDelay: PropTypes.number,
   modalAnimationDelay: PropTypes.oneOfType([
     PropTypes.number,
@@ -28,6 +28,8 @@ export const propTypes = Object.assign({}, portalTypes, {
     PropTypes.number,
     PropTypes.object
   ]),
+  overlayClassName: PropTypes.string,
+  seamless: PropTypes.bool,
   trigger: PropTypes.element,
   wrapperClassName: PropTypes.string
 })
@@ -112,6 +114,7 @@ class Modal extends Component {
 
   render () {
     const {
+      cardClassName,
       children,
       className,
       closeIcon,
@@ -124,6 +127,7 @@ class Modal extends Component {
       onScroll,
       openPortal,
       overlayAnimationDelay,
+      overlayClassName,
       path,
       portalIsMounted,
       portalIsOpen,
@@ -171,7 +175,7 @@ class Modal extends Component {
     })
 
     const modalContentMarkup = !seamless ? (
-      <Card className='c-Modal__Card' seamless role='dialog'>
+      <Card className={`${cardClassName} c-Modal__Card`} seamless role='dialog'>
         {closeMarkup}
         {parsedChildren}
       </Card>
@@ -196,7 +200,7 @@ class Modal extends Component {
           </Animate>
         </div>
         <Animate sequence='fade' in={portalIsOpen} wait={overlayAnimationDelay}>
-          <Overlay onClick={closePortal} role='presentation' />
+          <Overlay className={overlayClassName} onClick={closePortal} role='presentation' />
         </Animate>
       </div>
     )
