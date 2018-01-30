@@ -147,6 +147,14 @@ class Modal extends Component {
       isOpen && 'is-open',
       className
     )
+    const cardComponentClassName = classNames(
+      'c-Modal__Card',
+      cardClassName
+    )
+    const overlayComponentClassName = classNames(
+      'c-Modal__Overlay',
+      overlayClassName
+    )
 
     const closeMarkup = closeIcon ? (
       <div
@@ -175,7 +183,7 @@ class Modal extends Component {
     })
 
     const modalContentMarkup = !seamless ? (
-      <Card className={`${cardClassName} c-Modal__Card`} seamless role='dialog'>
+      <Card className={cardComponentClassName} seamless role='dialog'>
         {closeMarkup}
         {parsedChildren}
       </Card>
@@ -200,7 +208,7 @@ class Modal extends Component {
           </Animate>
         </div>
         <Animate sequence='fade' in={portalIsOpen} wait={overlayAnimationDelay}>
-          <Overlay className={overlayClassName} onClick={closePortal} role='presentation' />
+          <Overlay className={overlayComponentClassName} onClick={closePortal} role='presentation' />
         </Animate>
       </div>
     )

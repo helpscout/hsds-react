@@ -294,6 +294,21 @@ describe('States', () => {
 
     expect(o.prop('className')).toContain('is-warning')
   })
+
+  test('Updates state.state on prop change', () => {
+    const wrapper = mount(<Input state='warning' />)
+    const input = wrapper.find('.c-Input')
+
+    wrapper.setProps({ state: 'success' })
+
+    expect(wrapper.state().state).toBe('success')
+    expect(input.hasClass('is-success')).toBe(true)
+
+    wrapper.setProps({ state: null })
+
+    expect(wrapper.state().state).toBe(null)
+    expect(input.hasClass('is-success')).toBe(false)
+  })
 })
 
 describe('Stateful helper label', () => {
@@ -303,5 +318,29 @@ describe('Stateful helper label', () => {
 
     expect(helperLabel.exists()).toBeTruthy()
     expect(helperLabel.text()).toBe('Error')
+  })
+})
+
+describe('removeStateStylesOnFocus', () => {
+  test('Does not remove state style on focus, by default', () => {
+    const wrapper = mount(<Input state='error' />)
+    const input = wrapper.find('.c-Input')
+    const o = wrapper.find('input')
+
+    o.simulate('focus')
+
+    expect(wrapper.state().state).toBe('error')
+    expect(input.hasClass('is-error')).toBe(true)
+  })
+
+  test('Removes state style on focus, by specified', () => {
+    const wrapper = mount(<Input state='error' removeStateStylesOnFocus />)
+    const input = wrapper.find('.c-Input')
+    const o = wrapper.find('input')
+
+    o.simulate('focus')
+
+    expect(wrapper.state().state).toBeFalsy()
+    expect(input.hasClass('is-error')).toBe(false)
   })
 })

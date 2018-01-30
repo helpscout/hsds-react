@@ -43,6 +43,7 @@ export const propTypes = {
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
   prefix: PropTypes.string,
+  removeStateStylesOnFocus: PropTypes.bool,
   size: standardSizeTypes,
   state: stateTypes,
   value: PropTypes.string
@@ -55,6 +56,7 @@ const defaultProps = {
   onChange: noop,
   onFocus: noop,
   options: [],
+  removeStateStylesOnFocus: false,
   value: ''
 }
 
@@ -65,7 +67,19 @@ class Select extends Component {
     super()
     this.state = {
       placeholder: props.placeholder,
+      state: props.state,
       value: props.value
+    }
+    this.handleOnFocus = this.handleOnFocus.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { state } = nextProps
+    const prevState = this.state.state
+
+    /* istanbul ignore else */
+    if (state !== prevState) {
+      this.setState({state})
     }
   }
 
@@ -77,6 +91,15 @@ class Select extends Component {
       placeholder: false,
       value
     })
+  }
+
+  handleOnFocus (e) {
+    const { onFocus, removeStateStylesOnFocus } = this.props
+    const { state } = this.state
+    if (removeStateStylesOnFocus && state) {
+      this.setState({ state: null })
+    }
+    onFocus(e)
   }
 
   hasPlaceholder () {
@@ -92,17 +115,22 @@ class Select extends Component {
       id,
       label,
       onChange,
+      onFocus,
       options,
       placeholder,
       prefix,
+      removeStateStylesOnFocus,
       seamless,
       size,
-      state,
+      state: stateProp,
       success,
       value,
       ...rest
     } = this.props
 
+    const { state } = this.state
+
+    const handleOnFocus = this.handleOnFocus
     const hasPlaceholder = this.hasPlaceholder()
 
     const componentClassName = classNames(
@@ -189,6 +217,7 @@ class Select extends Component {
             disabled={disabled}
             id={id}
             onChange={e => this.handleOnChange(e)}
+            onFocus={handleOnFocus}
             value={selectedValue}
             {...rest}
           >

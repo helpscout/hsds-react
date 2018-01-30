@@ -56,6 +56,7 @@ This component also accepts regular `<option>` elements as children.
 | placeholder | `string` | Placeholder text for the select. |
 | prefix | `string` | Text to appear before the select. |
 | readOnly | `bool` | Disable editing of the select. |
+| removeStateStylesOnFocus | `bool` | Removes the `state` styles on input focus. Default `false`. |
 | seamless | `bool` | Removes the border around the select. |
 | size | `bool` | Determines the size of the select. |
 | state | `string` | Change select to state color. |

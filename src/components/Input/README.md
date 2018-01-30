@@ -22,9 +22,6 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| onBlur | `function` | Callback when input is blurred. |
-| onChange | `function` | Callback when input value is changed. |
-| onFocus | `function` | Callback when input is focused. |
 | autoFocus | `bool` | Automatically focuses the input. |
 | className | `string` | Custom class names to be added to the component. |
 | disabled | `bool` | Disable the input. |
@@ -34,9 +31,13 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | label | `string` | Label for the input. |
 | multiline | `bool`/`number` | Transforms input into an auto-expanding textarea. |
 | name | `string` | Name for the input. |
+| onBlur | `function` | Callback when input is blurred. |
+| onChange | `function` | Callback when input value is changed. |
+| onFocus | `function` | Callback when input is focused. |
 | placeholder | `string` | Placeholder text for the input. |
 | prefix | `string` | Text to appear before the input. |
 | readOnly | `bool` | Disable editing of the input. |
+| removeStateStylesOnFocus | `bool` | Removes the `state` styles on input focus. Default `false`. |
 | resizable | `bool` | Enables resizing for the textarea (only enabled for `multiline`). |
 | seamless | `bool` | Removes the border around the input. |
 | size | `string` | Determines the size of the input. |
