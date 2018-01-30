@@ -7,6 +7,7 @@ import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   accessibilityLabel: PropTypes.string,
+  block: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   onBlur: PropTypes.func,
@@ -22,6 +23,7 @@ export const propTypes = {
 
 const defaultProps = {
   accessibilityLabel: '',
+  block: false,
   disabled: false,
   onBlur: noop,
   onClick: noop,
@@ -36,6 +38,7 @@ const defaultProps = {
 const Button = props => {
   const {
     accessibilityLabel,
+    block,
     buttonRef,
     children,
     className,
@@ -55,11 +58,12 @@ const Button = props => {
   const componentClassName = classNames(
     'c-Button',
     isActive && 'is-selected',
+    block && 'c-Button--block',
     size && `c-Button--${size}`,
     state && `is-${state}`,
     plain && 'c-Button--link',
     primary && 'c-Button--primary',
-    props.className
+    className
   )
 
   const type = submit ? 'submit' : 'button'
