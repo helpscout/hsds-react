@@ -85,6 +85,7 @@ class Select extends Component {
 
   render () {
     const {
+      children,
       className,
       disabled,
       helpText,
@@ -149,7 +150,7 @@ class Select extends Component {
       }
     }
 
-    const optionsMarkup = Array.isArray(options) ? options.map(renderOptions) : renderOptions(options)
+    const optionsMarkup = children || (Array.isArray(options) ? options.map(renderOptions) : renderOptions(options))
 
     const placeholderMarkup = hasPlaceholder
       ? <option

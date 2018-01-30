@@ -43,6 +43,31 @@ describe('Option', () => {
     expect(selectOptions.length).toBe(options.length)
   })
 
+  test('Renders children, if specified', () => {
+    const wrapper = mount(
+      <Select>
+        <option>Hello</option>
+      </Select>
+    )
+    const selectOptions = wrapper.find('select').children()
+
+    expect(selectOptions.first().text()).toBe('Hello')
+    expect(selectOptions.length).toBe(1)
+  })
+
+  test('Renders children over option prop', () => {
+    const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
+    const wrapper = mount(
+      <Select options={options}>
+        <option>Hello</option>
+      </Select>
+    )
+    const selectOptions = wrapper.find('select').children()
+
+    expect(selectOptions.first().text()).toBe('Hello')
+    expect(selectOptions.length).toBe(1)
+  })
+
   test('Renders with a correct object schema', () => {
     const options = {
       label: 'Champ Kind',

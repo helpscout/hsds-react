@@ -9,6 +9,7 @@ A Select component is an enhanced version of the default HTML `<select>`.
 <Select placeholder="Pick one" options={['You sit on a throne of lies!', 'Son of a nutcracker!']} autoFocus />
 ```
 
+
 ### Option groups
 
 ```jsx
@@ -21,6 +22,19 @@ A Select component is an enhanced version of the default HTML `<select>`.
     ]
   }
   ]} autoFocus />
+```
+
+
+### Children options
+
+This component also accepts regular `<option>` elements as children.
+
+```jsx
+<Select placeholder="Pick one">
+  <option>...</option>
+  <option>...</option>
+  <option>...</option>
+</Select>
 ```
 
 

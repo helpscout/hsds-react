@@ -32,6 +32,18 @@ describe('Types', () => {
 
     expect(button.prop('type')).toBe('submit')
   })
+
+  test('Can create block buttons, if specified', () => {
+    const o = wrap(<Button primary>Primary</Button>)
+
+    expect(o.hasClass('c-Button--block')).toBeFalsy()
+  })
+
+  test('Can create block buttons, if specified', () => {
+    const o = wrap(<Button primary block>Primary</Button>)
+
+    expect(o.hasClass('c-Button--block')).toBeTruthy()
+  })
 })
 
 describe('Sizes', () => {

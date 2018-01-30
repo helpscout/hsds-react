@@ -1,4 +1,6 @@
 $seed-button-namespace: "c-Button";
+$seed-button-font-weight: 600;
+@import "../configs/seed-control";
 @import "pack/seed-button/_index";
 
 button.#{$seed-button-namespace} {
