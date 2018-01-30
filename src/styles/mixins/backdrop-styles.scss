@@ -41,9 +41,13 @@
   @each $state in $states {
     &.is-#{$state} {
       border-color: _color(state, $state, border-color);
+      box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
       @include parent("#{$InputField}:focus ~ ") {
         border-color: _color(state, $state, border-color);
-        box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
+        box-shadow: #{
+          0 0 0 1px _color(state, $state, border-color) inset,
+          0 0 0 2px rgba(_color(state, $state, border-color), 0.2)
+        };
       }
     }
   }
