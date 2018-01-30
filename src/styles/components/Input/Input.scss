@@ -10,7 +10,7 @@
 .c-Input {
   $InputField: ".c-InputField";
   $block: this();
-  $padding: 8px;
+  $padding: 16px;
 
   @import "../../configs/color";
   @import "../../resets/base";
