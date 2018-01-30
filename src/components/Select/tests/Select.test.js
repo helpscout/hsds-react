@@ -258,6 +258,21 @@ describe('States', () => {
       expect(o.text()).toContain(message)
     })
   })
+
+  test('Updates state.state on prop change', () => {
+    const wrapper = mount(<Select state='warning' />)
+    const select = wrapper.find('.c-Select')
+
+    wrapper.setProps({ state: 'success' })
+
+    expect(wrapper.state().state).toBe('success')
+    expect(select.hasClass('is-success')).toBe(true)
+
+    wrapper.setProps({ state: null })
+
+    expect(wrapper.state().state).toBe(null)
+    expect(select.hasClass('is-success')).toBe(false)
+  })
 })
 
 describe('Styles', () => {
@@ -273,5 +288,29 @@ describe('Styles', () => {
     const o = wrapper.find('.c-InputField')
 
     expect(o.prop('className')).toContain('is-sm')
+  })
+})
+
+describe('removeStateStylesOnFocus', () => {
+  test('Does not remove state style on focus, by default', () => {
+    const wrapper = mount(<Select state='error' />)
+    const select = wrapper.find('.c-Select')
+    const o = wrapper.find('select')
+
+    o.simulate('focus')
+
+    expect(wrapper.state().state).toBe('error')
+    expect(select.hasClass('is-error')).toBe(true)
+  })
+
+  test('Removes state style on focus, by specified', () => {
+    const wrapper = mount(<Select state='error' removeStateStylesOnFocus />)
+    const select = wrapper.find('.c-Select')
+    const o = wrapper.find('select')
+
+    o.simulate('focus')
+
+    expect(wrapper.state().state).toBeFalsy()
+    expect(select.hasClass('is-error')).toBe(false)
   })
 })

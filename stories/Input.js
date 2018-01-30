@@ -75,9 +75,9 @@ stories.add('readonly', () => (
 
 stories.add('states', () => (
   <div>
-    <Input state='error' autoFocus /><br />
-    <Input state='success' helpText="You're Awesome!" hintText="You're awesome!" autoFocus /><br />
-    <Input state='warning' autoFocus />
+    <Input state='error' /><br />
+    <Input state='success' helpText="You're Awesome!" hintText="You're awesome!" /><br />
+    <Input state='warning' removeStateStylesOnFocus />
   </div>
 ))
 

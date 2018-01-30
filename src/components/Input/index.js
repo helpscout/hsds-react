@@ -27,6 +27,7 @@ export const propTypes = {
   placeholder: PropTypes.string,
   prefix: PropTypes.string,
   readOnly: PropTypes.bool,
+  removeStateStylesOnFocus: PropTypes.bool,
   resizable: PropTypes.bool,
   seamless: PropTypes.bool,
   size: standardSizeTypes,
@@ -45,6 +46,7 @@ const defaultProps = {
   onChange: noop,
   onFocus: noop,
   readOnly: false,
+  removeStateStylesOnFocus: false,
   resizable: false,
   seamless: false,
   type: 'text',
@@ -59,18 +61,25 @@ class Input extends Component {
     this.state = {
       id: props.id || uniqueID(),
       height: null,
+      state: props.state,
       value: props.value
     }
     this.handleOnChange = this.handleOnChange.bind(this)
+    this.handleOnInputFocus = this.handleOnInputFocus.bind(this)
     this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
+    const { value, state } = nextProps
     const prevValue = this.state.value
-    const nextValue = nextProps.value
+    const prevState = this.state.state
 
-    if (nextValue !== prevValue) {
-      this.setState({value: nextValue})
+    if (value !== prevValue) {
+      this.setState({value})
+    }
+
+    if (state !== prevState) {
+      this.setState({state})
     }
   }
 
@@ -78,6 +87,15 @@ class Input extends Component {
     const value = e.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
+  }
+
+  handleOnInputFocus (e) {
+    const { onFocus, removeStateStylesOnFocus } = this.props
+    const { state } = this.state
+    if (removeStateStylesOnFocus && state) {
+      this.setState({ state: null })
+    }
+    onFocus(e)
   }
 
   handleExpandingResize (height) {
@@ -101,18 +119,20 @@ class Input extends Component {
       placeholder,
       prefix,
       readOnly,
+      removeStateStylesOnFocus,
       resizable,
       seamless,
       size,
-      state,
+      state: stateProp,
       suffix,
       type,
       ...rest
     } = this.props
 
-    const { height, id: inputID, value } = this.state
+    const { height, id: inputID, value, state } = this.state
 
     const handleOnChange = this.handleOnChange
+    const handleOnInputFocus = this.handleOnInputFocus
     const handleExpandingResize = this.handleExpandingResize
 
     const componentClassName = classNames(
@@ -182,7 +202,7 @@ class Input extends Component {
       disabled,
       name,
       onBlur,
-      onFocus,
+      onFocus: handleOnInputFocus,
       placeholder,
       readOnly,
       style,
