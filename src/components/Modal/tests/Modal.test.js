@@ -370,6 +370,7 @@ describe('cardClassName', () => {
     const m = wrapper.find('.mugatu')
 
     expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.hasClass('c-Modal__Card')).toBeTruthy()
     expect(m.length).toBe(1)
   })
 
@@ -390,6 +391,7 @@ describe('overlayClassName', () => {
     )
     const o = wrapper.find(Overlay)
 
+    expect(o.hasClass('c-Modal__Overlay')).toBeTruthy()
     expect(o.hasClass('mugatu')).toBeTruthy()
   })
 })

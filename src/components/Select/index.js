@@ -77,6 +77,7 @@ class Select extends Component {
     const { state } = nextProps
     const prevState = this.state.state
 
+    /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({state})
     }

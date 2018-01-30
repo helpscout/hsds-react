@@ -78,6 +78,7 @@ class Input extends Component {
       this.setState({value})
     }
 
+    /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({state})
     }
