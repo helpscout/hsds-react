@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Flexy, Skeleton } from '../src/index.js'
+import { FormGroup, Flexy, Skeleton } from '../src/index.js'
 
 const stories = storiesOf('Skeleton', module)
 
@@ -30,6 +30,18 @@ stories.add('avatar', () => (
 stories.add('heading', () => (
   <div>
     <Skeleton.Heading width='70%' />
+  </div>
+))
+
+stories.add('form', () => (
+  <div style={{width: 300}}>
+    <FormGroup>
+      <Skeleton.Control size='sm' style={{marginBottom: 5}} />
+      <Skeleton.Control size='sm' />
+    </FormGroup>
+    <FormGroup>
+      <Skeleton.Control />
+    </FormGroup>
   </div>
 ))
 
