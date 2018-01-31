@@ -20,6 +20,7 @@ The default `export` of Skeleton is a plain JS-object, which contains a collecti
 
 * [Avatar](./docs/Avatar.md)
 * [Block](./docs/Block.md)
+* [Control](./docs/Control.md)
 * [Heading](./docs/Heading.md)
 * [Image](./docs/Image.md)
 * [Paragraph](./docs/Paragraph.md)
