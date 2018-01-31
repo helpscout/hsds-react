@@ -125,6 +125,7 @@ class Input extends Component {
       seamless,
       size,
       state: stateProp,
+      style: styleProp,
       suffix,
       type,
       ...rest
@@ -212,7 +213,7 @@ class Input extends Component {
     })
 
     return (
-      <div className='c-InputWrapper'>
+      <div className='c-InputWrapper' style={styleProp}>
         {labelMarkup}
         {hintTextMarkup}
         <div className={componentClassName}>

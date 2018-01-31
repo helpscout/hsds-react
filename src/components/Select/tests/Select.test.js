@@ -289,6 +289,12 @@ describe('Styles', () => {
 
     expect(o.prop('className')).toContain('is-sm')
   })
+
+  test('Passes style prop to wrapper', () => {
+    const wrapper = shallow(<Select style={{background: 'red'}} />)
+
+    expect(wrapper.prop('style').background).toBe('red')
+  })
 })
 
 describe('removeStateStylesOnFocus', () => {
