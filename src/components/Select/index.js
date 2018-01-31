@@ -123,6 +123,7 @@ class Select extends Component {
       seamless,
       size,
       state: stateProp,
+      style: styleProp,
       success,
       value,
       ...rest
@@ -208,7 +209,7 @@ class Select extends Component {
     const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
     return (
-      <div className='c-InputWrapper'>
+      <div className='c-InputWrapper' style={styleProp}>
         {labelMarkup}
         <div className={componentClassName}>
           {prefixMarkup}

@@ -33,11 +33,14 @@ stories.add('hintText', () => (
 ))
 
 stories.add('multiline', () => (
-  <Input
-    multiline
-    autoFocus
-    placeholder='This is a textarea!'
-  />
+  <div>
+    <Input placeholder='This is an input!' style={{marginBottom: '5px'}} />
+    <Input
+      autoFocus
+      multiline={3}
+      placeholder='This is a textarea!'
+    />
+  </div>
 ))
 
 stories.add('multiline + resizable', () => (
