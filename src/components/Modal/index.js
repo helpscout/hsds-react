@@ -21,7 +21,19 @@ export const propTypes = Object.assign({}, portalTypes, {
   closeIcon: PropTypes.bool,
   closeIconRepositionDelay: PropTypes.number,
   modalAnimationDelay: PropTypes.number,
+  modalAnimationDuration: PropTypes.number,
+  modalAnimationEasing: PropTypes.string,
+  modalAnimationSequence: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   overlayAnimationDelay: PropTypes.number,
+  overlayAnimationDuration: PropTypes.number,
+  overlayAnimationEasing: PropTypes.string,
+  overlayAnimationSequence: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   overlayClassName: PropTypes.string,
   seamless: PropTypes.bool,
   trigger: PropTypes.element,
@@ -34,10 +46,16 @@ const defaultProps = {
   seamless: false,
   isOpen: false,
   closeIconRepositionDelay: 50,
-  modalAnimationDelay: 180,
-  overlayAnimationDelay: 180,
+  modalAnimationDelay: 0,
+  modalAnimationDuration: 200,
+  modalAnimationEasing: 'bounce',
+  modalAnimationSequence: 'fade down',
+  overlayAnimationDelay: 0,
+  overlayAnimationDuration: 200,
+  overlayAnimationEasing: 'ease',
+  overlayAnimationSequence: 'fade',
   onScroll: noop,
-  timeout: 180,
+  timeout: 80,
   wrapperClassName: 'c-ModalWrapper'
 }
 
@@ -79,9 +97,10 @@ class Modal extends Component {
       !isNodeElement(scrollNode)
     ) return
 
-    let delay = modalAnimationDelay && modalAnimationDelay.in
     /* istanbul ignore next */
-    delay = delay < modalAnimationDelay ? delay : closeIconRepositionDelay
+    const delay = modalAnimationDelay < closeIconRepositionDelay
+      ? closeIconRepositionDelay
+      : modalAnimationDelay
 
     const defaultOffset = 8
     const borderOffset = 2
@@ -112,10 +131,16 @@ class Modal extends Component {
       exact,
       isOpen,
       modalAnimationDelay,
+      modalAnimationDuration,
+      modalAnimationEasing,
+      modalAnimationSequence,
       onClose,
       onScroll,
       openPortal,
       overlayAnimationDelay,
+      overlayAnimationDuration,
+      overlayAnimationEasing,
+      overlayAnimationSequence,
       overlayClassName,
       path,
       portalIsMounted,
@@ -189,14 +214,20 @@ class Modal extends Component {
           <Animate
             className='c-Modal__Card-container'
             delay={modalAnimationDelay}
+            duration={modalAnimationDuration}
             easing='elastic'
             in={portalIsOpen}
-            sequence='fade down'
+            sequence={modalAnimationSequence}
           >
             {modalContentMarkup}
           </Animate>
         </div>
-        <Animate sequence='fade' in={portalIsOpen} delay={overlayAnimationDelay}>
+        <Animate
+          delay={overlayAnimationDelay}
+          duration={overlayAnimationDuration}
+          in={portalIsOpen}
+          sequence={overlayAnimationSequence}
+        >
           <Overlay className={overlayComponentClassName} onClick={closePortal} role='presentation' />
         </Animate>
       </div>

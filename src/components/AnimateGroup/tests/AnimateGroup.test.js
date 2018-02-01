@@ -179,3 +179,16 @@ describe('duration', () => {
     expect(o.prop('delay')).toBe(66)
   })
 })
+
+describe('sequence', () => {
+  test('Does not set sequence by default', () => {
+    const wrapper = shallow(
+      <AnimateGroup>
+        <Animate sequence='down' />
+      </AnimateGroup>
+    )
+    const o = wrapper.find(Animate)
+
+    expect(o.prop('sequence')).toContain('down')
+  })
+})

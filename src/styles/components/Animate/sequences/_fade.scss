@@ -7,4 +7,7 @@
     opacity: 1;
     pointer-events: auto;
   }
+  &.ax-exiting {
+    pointer-events: none;
+  }
 }

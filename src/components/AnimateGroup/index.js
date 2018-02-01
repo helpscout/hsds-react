@@ -12,6 +12,7 @@ export const propTypes = {
   easing: PropTypes.string,
   delay: PropTypes.number,
   duration: PropTypes.number,
+  sequence: PropTypes.string,
   stagger: PropTypes.bool,
   staggerDelay: PropTypes.number,
   staggerDuration: PropTypes.number
@@ -31,6 +32,7 @@ class AnimateGroup extends Component {
       delay,
       duration,
       easing,
+      sequence,
       stagger,
       staggerDelay,
       staggerDuration,
@@ -45,25 +47,30 @@ class AnimateGroup extends Component {
     const childrenMarkup = stagger ? (
       React.Children.map(children, (child, index) => {
         if (!React.isValidElement(child)) return null
-
-        const key = child.props.id || index
-        const easingProp = child.props.easing || easing
-        /* istanbul ignore next */
-        const durationProp = (stagger && staggerDuration ? staggerDuration : duration) || child.props.duration
-        const staggerIndexDelay = (child.props.delay + ((index + 1) * staggerDelay))
-        /* istanbul ignore next */
-        const delayProp = stagger ? staggerIndexDelay : delay
-
         if (
           child.type === Animate ||
           child.type === Transition ||
           child.type === CSSTransition
         ) {
+          const key = child.props.id || child.key || index
+          // Ignoring all these because, for whatever reason, the props
+          // get lost in the JSDOM/Enzyme setup. It works in browser though.
+          /* istanbul ignore next */
+          const easingProp = child.props.easing || easing
+          /* istanbul ignore next */
+          const durationProp = (stagger && staggerDuration ? staggerDuration : duration) || child.props.duration
+          const staggerIndexDelay = (child.props.delay + ((index + 1) * staggerDelay))
+          /* istanbul ignore next */
+          const delayProp = stagger ? staggerIndexDelay : delay
+          /* istanbul ignore next */
+          const sequenceProp = child.props.sequence || sequence
+
           return React.cloneElement(child, {
             ...child.props,
             duration: durationProp,
             delay: delayProp,
             easing: easingProp,
+            sequence: sequenceProp,
             key
           })
         } else {
