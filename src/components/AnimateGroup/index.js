@@ -10,8 +10,11 @@ import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   easing: PropTypes.string,
+  delay: PropTypes.number,
+  duration: PropTypes.number,
   stagger: PropTypes.bool,
-  staggerDelay: PropTypes.number
+  staggerDelay: PropTypes.number,
+  staggerDuration: PropTypes.number
 }
 
 const defaultProps = {
@@ -25,9 +28,12 @@ class AnimateGroup extends Component {
     const {
       className,
       children,
+      delay,
+      duration,
       easing,
       stagger,
       staggerDelay,
+      staggerDuration,
       ...rest
     } = this.props
 
@@ -42,6 +48,11 @@ class AnimateGroup extends Component {
 
         const key = child.props.id || index
         const easingProp = child.props.easing || easing
+        /* istanbul ignore next */
+        const durationProp = (stagger && staggerDuration ? staggerDuration : duration) || child.props.duration
+        const staggerIndexDelay = (child.props.delay + ((index + 1) * staggerDelay))
+        /* istanbul ignore next */
+        const delayProp = stagger ? staggerIndexDelay : delay
 
         if (
           child.type === Animate ||
@@ -49,8 +60,10 @@ class AnimateGroup extends Component {
           child.type === CSSTransition
         ) {
           return React.cloneElement(child, {
+            ...child.props,
+            duration: durationProp,
+            delay: delayProp,
             easing: easingProp,
-            wait: (child.props.wait + ((index + 1) * staggerDelay)),
             key
           })
         } else {

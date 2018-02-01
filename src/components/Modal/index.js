@@ -20,17 +20,12 @@ export const propTypes = Object.assign({}, portalTypes, {
   cardClassName: PropTypes.string,
   closeIcon: PropTypes.bool,
   closeIconRepositionDelay: PropTypes.number,
-  modalAnimationDelay: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.object
-  ]),
-  overlayAnimationDelay: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.object
-  ]),
+  modalAnimationDelay: PropTypes.number,
+  overlayAnimationDelay: PropTypes.number,
   overlayClassName: PropTypes.string,
   seamless: PropTypes.bool,
   trigger: PropTypes.element,
+  timeout: PropTypes.number,
   wrapperClassName: PropTypes.string
 })
 
@@ -39,15 +34,10 @@ const defaultProps = {
   seamless: false,
   isOpen: false,
   closeIconRepositionDelay: 50,
-  modalAnimationDelay: {
-    in: 200,
-    out: 100
-  },
-  overlayAnimationDelay: {
-    in: 100,
-    out: 200
-  },
+  modalAnimationDelay: 180,
+  overlayAnimationDelay: 180,
   onScroll: noop,
+  timeout: 180,
   wrapperClassName: 'c-ModalWrapper'
 }
 
@@ -58,7 +48,6 @@ const childContextTypes = {
 const modalBaseZIndex = 1040
 const portalOptions = {
   id: 'Modal',
-  timeout: 40,
   zIndex: modalBaseZIndex
 }
 
@@ -199,15 +188,15 @@ class Modal extends Component {
         <div className='c-Modal__innerWrapper'>
           <Animate
             className='c-Modal__Card-container'
+            delay={modalAnimationDelay}
             easing='elastic'
-            sequence='fade down'
             in={portalIsOpen}
-            wait={modalAnimationDelay}
+            sequence='fade down'
           >
             {modalContentMarkup}
           </Animate>
         </div>
-        <Animate sequence='fade' in={portalIsOpen} wait={overlayAnimationDelay}>
+        <Animate sequence='fade' in={portalIsOpen} delay={overlayAnimationDelay}>
           <Overlay className={overlayComponentClassName} onClick={closePortal} role='presentation' />
         </Animate>
       </div>

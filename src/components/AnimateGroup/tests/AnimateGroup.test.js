@@ -19,7 +19,7 @@ describe('Staggering', () => {
     expect(wrapper.props().stagger).toBe(false)
   })
 
-  test('Staggers by adjusting wait times for <Animate />', () => {
+  test('Staggers by adjusting delay times for <Animate />', () => {
     const staggerDelay = 200
     const wrapper = shallow(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
@@ -32,8 +32,8 @@ describe('Staggering', () => {
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().wait).toBe(staggerDelay)
-    expect(second.props().wait).toBe(staggerDelay * 2)
+    expect(first.props().delay).toBe(staggerDelay)
+    expect(second.props().delay).toBe(staggerDelay * 2)
   })
 
   test('Can adjust staggerDelay', () => {
@@ -49,8 +49,8 @@ describe('Staggering', () => {
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().wait).toBe(staggerDelay)
-    expect(second.props().wait).toBe(staggerDelay * 2)
+    expect(first.props().delay).toBe(staggerDelay)
+    expect(second.props().delay).toBe(staggerDelay * 2)
   })
 
   test('staggerDelay does not trigger staggering', () => {
@@ -66,16 +66,16 @@ describe('Staggering', () => {
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().wait).toBe(0)
-    expect(second.props().wait).toBe(0)
+    expect(first.props().delay).toBe(0)
+    expect(second.props().delay).toBe(0)
   })
 
-  test('staggerDelay respects Animate wait prop', () => {
+  test('staggerDelay respects Animate delay prop', () => {
     const staggerDelay = 700
     const wrapper = shallow(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
-        <Animate wait={100}><div className='ron'>Ron</div></Animate>
-        <Animate wait={200}><div className='champ'>Champ</div></Animate>
+        <Animate delay={100}><div className='ron'>Ron</div></Animate>
+        <Animate delay={200}><div className='champ'>Champ</div></Animate>
       </AnimateGroup>
     )
 
@@ -83,8 +83,8 @@ describe('Staggering', () => {
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().wait).toBe(staggerDelay + 100)
-    expect(second.props().wait).toBe(staggerDelay * 2 + 200)
+    expect(first.props().delay).toBe(staggerDelay + 100)
+    expect(second.props().delay).toBe(staggerDelay * 2 + 200)
   })
 
   test('stagger does not affect Animate duration', () => {
@@ -94,6 +94,7 @@ describe('Staggering', () => {
         <Animate duration={30}><div className='ron'>Ron</div></Animate>
         <Animate duration={30}><div className='champ'>Champ</div></Animate>
       </AnimateGroup>
+
     )
 
     const o = wrapper.find(Animate)
@@ -152,5 +153,29 @@ describe('className', () => {
     const o = wrapper.find('.channel4')
 
     expect(o.length).toBeTruthy()
+  })
+})
+
+describe('duration', () => {
+  test('Does not override child duration prop', () => {
+    const wrapper = shallow(
+      <AnimateGroup>
+        <Animate duration={66} />
+      </AnimateGroup>
+    )
+    const o = wrapper.find(Animate)
+
+    expect(o.prop('duration')).toBe(66)
+  })
+
+  test('Can set child delay', () => {
+    const wrapper = shallow(
+      <AnimateGroup>
+        <Animate delay={66} />
+      </AnimateGroup>
+    )
+    const o = wrapper.find(Animate)
+
+    expect(o.prop('delay')).toBe(66)
   })
 })

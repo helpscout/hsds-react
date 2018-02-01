@@ -183,7 +183,7 @@ describe('isOpen', () => {
       .then(() => {
         wrapper.setProps({ isOpen: false })
       })
-      .then(() => wait(300))
+      .then(() => wait(500))
       .then(() => {
         const o = document.body.childNodes[0]
         expect(o).not.toBeTruthy()

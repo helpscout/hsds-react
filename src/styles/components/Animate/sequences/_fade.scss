@@ -1,0 +1,10 @@
+&.ax-fade {
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+
+  &.ax-entered {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

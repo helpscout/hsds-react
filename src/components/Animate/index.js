@@ -1,7 +1,6 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
-import animations from './animations'
 import { getSequenceNames } from '../../utilities/animation'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -12,43 +11,41 @@ export const propTypes = {
   animateOnMount: PropTypes.bool,
   block: PropTypes.bool,
   className: PropTypes.string,
+  delay: PropTypes.number,
   duration: PropTypes.number,
   easing: PropTypes.string,
-  mountOnEnter: PropTypes.bool,
   in: PropTypes.bool,
   inline: PropTypes.bool,
   inlineBlock: PropTypes.bool,
+  mountOnEnter: PropTypes.bool,
   onEnter: PropTypes.func,
-  onEntering: PropTypes.func,
   onEntered: PropTypes.func,
-  onExiting: PropTypes.func,
+  onEntering: PropTypes.func,
   onExit: PropTypes.func,
   onExited: PropTypes.func,
+  onExiting: PropTypes.func,
   sequence: sequencesType,
+  timeout: PropTypes.number,
   transitionProperty: PropTypes.string,
-  wait: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.object
-  ]),
   unmountOnExit: PropTypes.bool
 }
 
 const defaultProps = {
   animateOnMount: true,
-  duration: 200,
+  delay: 0,
+  duration: 300,
   easing: 'ease-in-out',
   in: true,
   mountOnEnter: true,
   onEnter: noop,
-  onEntering: noop,
   onEntered: noop,
-  onExiting: noop,
+  onEntering: noop,
   onExit: noop,
   onExited: noop,
+  onExiting: noop,
   sequence: ['fade'],
   transitionProperty: 'all',
-  unmountOnExit: true,
-  wait: 0
+  unmountOnExit: true
 }
 
 class Animate extends Component {
@@ -75,9 +72,10 @@ class Animate extends Component {
       mountOnEnter,
       style: defaultStyle,
       sequence,
+      timeout,
       transitionProperty,
       unmountOnExit,
-      wait,
+      delay,
       ...rest
     } = this.props
 
@@ -92,14 +90,13 @@ class Animate extends Component {
     const componentStyles = Object.assign({}, defaultStyle, {
       transitionProperty: transitionProperty,
       transitionDuration: `${duration}ms`,
-      transitionDelay: `${wait}ms`,
+      transitionDelay: `${delay}ms`,
       transitionTimingFunction: getEasingTiming(easing)
     })
 
-    const animationStyles = mapAnimationStyles(
-      animations,
-      getSequenceNames(sequence)
-    )
+    const sequenceClassNames = getSequenceNames(sequence)
+      .map(s => `ax-${s}`)
+      .join(' ')
 
     return (
       <Transition
@@ -108,12 +105,19 @@ class Animate extends Component {
         unmountOnExit={unmountOnExit}
         appear={animateOnMount}
         in={transitionIn}
-        timeout={duration}
+        timeout={{
+          enter: 0,
+          exit: timeout !== undefined ? timeout : (duration + delay)
+        }}
       >{(transitionState) => (
         <div
-          className={classNames(componentClassName, `is-${transitionState}`)}
+          className={classNames(
+            componentClassName,
+            sequenceClassNames,
+            `ax-${transitionState}`
+          )}
           ref={node => { this.node = node }}
-          style={{...componentStyles, ...animationStyles[transitionState]}}
+          style={{...componentStyles}}
         >
           {children}
         </div>
@@ -121,29 +125,6 @@ class Animate extends Component {
       </Transition>
     )
   }
-}
-
-export const mapAnimationStyles = (animations, sequences) => {
-  let styles = {
-    entering: {},
-    entered: {},
-    exiting: {},
-    exited: {}
-  }
-
-  if (!Array.isArray(sequences)) return styles
-
-  sequences.forEach(sequence => {
-    const animation = animations[sequence]
-    /* istanbul ignore else */
-    if (animation) {
-      Object.keys(animation).forEach(key => {
-        styles[key] = Object.assign(styles[key], animation[key])
-      })
-    }
-  })
-
-  return styles
 }
 
 Animate.propTypes = propTypes

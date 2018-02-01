@@ -72,7 +72,7 @@ stories.add('default', () => (
 
 stories.add('animations', () => (
   <AvatarGrid
-    animationSequence='scaleBig'
+    animationSequence='scaleLg'
     animationStagger={100}
     max={9}
   >

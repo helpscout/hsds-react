@@ -57,18 +57,18 @@ storiesOf('Animate', module)
       </Animate>
     </div>
   ))
-  .add('custom wait/duration', () => (
+  .add('custom delay/duration', () => (
     <div>
       <p>Tiny tiny delay</p>
-      <Animate sequence='fade scale' wait={300} easing='bounce'>
+      <Animate sequence='fade scale' delay={300} easing='bounce'>
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>
         </Card>
       </Animate>
       <br />
-      <p>Wait 1 second… (duration: 400ms)</p>
-      <Animate sequence='fade down' wait={1000} duration={400}>
+      <p>delay 1 second… (duration: 400ms)</p>
+      <Animate sequence='fade down' delay={1000} duration={400}>
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>

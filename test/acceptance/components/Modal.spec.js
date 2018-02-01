@@ -156,7 +156,7 @@ describe('Modal', () => {
         <Modal className='modal' isOpen timeout={0} />
       )
 
-      wait(100)
+      wait(modalUnmountTime)
         .then(() => {
           expect($('.modal').length).toBe(1)
         })

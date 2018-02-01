@@ -18,7 +18,11 @@ This component is a light wrapper for `TransitionGroup` from the [react-transiti
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| className | `string` | Custom class names to be added to the component. |
+| delay | `number` | The duration (in `ms`) to delay the child animations. |
+| duration | `number` | The duration (in `ms`) for the child animation sequence. | 
 | stagger | `bool` | Adds an incremental delay between child `Animate` components. |
 | staggerDelay | `number` | Amount of time (`ms`) to delay for `stagger`. |
+| staggerDuration | `number` | Time (`ms`) to for staggering animation durations. |
 
 See `react-transition-group`'s [documentation](https://reactcommunity.org/react-transition-group/#TransitionGroup) for additional details.

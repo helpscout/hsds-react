@@ -32,8 +32,8 @@ export const customCubicBezier = {
   easeInOutBack: '0.680, -0.550, 0.265, 1.550',
 
   // Custom: Exaggerated form of easeInOutBack
-  bounce: bounceCubicBezier,
-  elastic: bounceCubicBezier
+  bounce: '0.680, -0.650, 0.265, 1.650',
+  elastic: '0.680, -1.500, 0.265, 2.500'
 }
 
 export const cubicBezierCSSProp = curve => {
