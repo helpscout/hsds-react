@@ -7,7 +7,7 @@ const stories = storiesOf('AnimateGroup', module)
 stories.add('default', () => (
   <div>
     <p>Stagger fade in</p>
-    <AnimateGroup stagger staggerDelay={500}>
+    <AnimateGroup stagger>
       <Animate sequence='fade'>
         <div>Fade in</div>
       </Animate>
@@ -31,28 +31,28 @@ stories.add('expand', () => (
       <Card>
         <div>Card</div>
       </Card>
-      <AnimateGroup stagger staggerDelay={700}>
-        <Animate sequence='fade up' duration={700}>
+      <AnimateGroup stagger>
+        <Animate sequence='fade up'>
           <Card>
             <div>Expand, Up</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade scale' duration={700}>
+        <Animate sequence='expand fade scale'>
           <Card>
             <div>Expand, Fade, Scale</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade left' duration={700}>
+        <Animate sequence='expand fade left'>
           <Card>
             <div>Expand, Fade, Left</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade right' duration={700}>
+        <Animate sequence='expand fade right'>
           <Card>
             <div>Expand, Fade, Right</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade down' duration={700}>
+        <Animate sequence='expand fade down'>
           <Card>
             <div>Expand, Fade, Down</div>
           </Card>
@@ -62,5 +62,28 @@ stories.add('expand', () => (
         <div>Card</div>
       </Card>
     </div>
+  </div>
+))
+
+stories.add('sequence', () => (
+  <div>
+    <p>Sequence defined by Group</p>
+    <AnimateGroup stagger sequence='fade left'>
+      <Animate>
+        <div>Element</div>
+      </Animate>
+      <Animate>
+        <div>Element</div>
+      </Animate>
+      <Animate>
+        <div>Element</div>
+      </Animate>
+      <Animate>
+        <div>Element</div>
+      </Animate>
+      <Animate>
+        <div>Element</div>
+      </Animate>
+    </AnimateGroup>
   </div>
 ))

@@ -36,8 +36,18 @@ A Modal component presents content within a container on top of the application'
 | closeIconRepositionDelay | `number ` | Amount of time before the [CloseButton](../../CloseButton) gets repositioned. |
 | exact | `bool` | Used with `path` and React Router. Renders if path matches _exactly_ |
 | isOpen | `bool` | Shows/hides the component. |
-| path | `string` | Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). |
 | overlayClassName | `string` | Custom class names to be added to the child [Overlay](../Overlay) component. |
+| modalAnimationDelay | `number` | Custom [animation](../Animate) delay for the child [Card](../Card) component. |
+| modalAnimationDuration | `number` | Custom [animation](../Animate) duration for the child [Card](../Card) component. |
+| modalAnimationEasing | `string` | Custom [animation](../Animate) easing for the child [Card](../Card) component. |
+| modalAnimationSequence | `array`/`string` | Custom [animation](../Animate) sequence for the child [Card](../Card) component. |
+| overlayClassName | `string` | Custom class names to be added to the child [Overlay](../Overlay) component. |
+| overlayAnimationDelay | `number` | Custom [animation](../Animate) delay for the child [Overlay](../Overlay) component. |
+| overlayAnimationDuration | `number` | Custom [animation](../Animate) duration for the child [Overlay](../Overlay) component. |
+| overlayAnimationEasing | `string` | Custom [animation](../Animate) easing for the child [Overlay](../Overlay) component. |
+| overlayAnimationSequence | `array`/`string` | Custom [animation](../Animate) sequence for the child [Overlay](../Overlay) component. |
+| overlayClassName | `string` | Custom class names to be added to the child [Overlay](../Overlay) component. |
+| path | `string` | Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). |
 | seamless | `bool` | Renders content with the standard [Card](../Card) UI. |
 | trigger | `element` | The UI the user clicks to trigger the modal. |
 | wrapperClassName | `string` | Custom className to add to the [PortalWrapper](../../PortalWrapper) component. |

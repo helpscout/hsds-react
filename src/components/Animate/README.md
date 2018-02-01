@@ -35,6 +35,6 @@ An Animate component is a wrapper component that provides CSS-based animations. 
 | onExit | `function` | Callback after the component's `exit` animation sequence. |
 | onExit | `function` | Callback before the component's `exit` animation sequence. |
 | onExiting | `function` | Callback during the component's `exit` animation sequence. |
-| sequence | `string` | Names of animation styles to apply. |
+| sequence | `array`/`string` | Names of animation styles to apply. |
 | timeout | `number` | The duration (in `ms`) to apply/remove the animations. Default `0`. |
 | transitionProperty | `string` | Determines the CSS transition property. Default `all`. |
