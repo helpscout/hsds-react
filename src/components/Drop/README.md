@@ -22,7 +22,7 @@ const MyPopover = props => {
   } = props
 
   return (
-    <Animate sequence='fade down' in={portalIsOpen} wait={300}>
+    <Animate sequence='fade down' in={portalIsOpen} delay={300}>
       <div className='MyPopover'>
         {children}
       </div>

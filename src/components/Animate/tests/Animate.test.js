@@ -1,4 +1,5 @@
 import React from 'react'
+import { Transition } from 'react-transition-group'
 import { mount } from 'enzyme'
 import { default as Animate } from '..'
 import wait from '../../../tests/helpers/wait'
@@ -40,7 +41,7 @@ describe('AnimateOnMount', () => {
 
     wait(200)
       .then(() => {
-        expect(wrapper.html()).toContain('opacity: 1')
+        expect(wrapper.html()).toContain('ax-entered')
         wrapper.unmount()
         done()
       })
@@ -113,5 +114,21 @@ describe('Styles', () => {
     const o = wrapper.find('.c-Animate')
 
     expect(o.hasClass('is-inlineBlock')).toBe(true)
+  })
+})
+
+describe('Timeout', () => {
+  test('Passes timeout to Transition, if specified', () => {
+    const wrapper = mount(<Animate inlineBlock timeout={66} />)
+    const o = wrapper.find(Transition)
+
+    expect(o.props().timeout.exit).toBe(66)
+  })
+
+  test('Defaults exit timeout to duration + delay', () => {
+    const wrapper = mount(<Animate inlineBlock duration={10} delay={10} />)
+    const o = wrapper.find(Transition)
+
+    expect(o.props().timeout.exit).toBe(20)
   })
 })

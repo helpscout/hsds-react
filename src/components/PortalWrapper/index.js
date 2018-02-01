@@ -12,6 +12,7 @@ import {
 import { getComponentDefaultProp } from '../../utilities/component'
 import { setupManager } from '../../utilities/globalManager'
 import classNames from '../../utilities/classNames'
+import { requestAnimationFrame } from '../../utilities/other'
 import Content from './Content'
 
 const defaultOptions = {
@@ -32,7 +33,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     router: PropTypes.object
   }
 
-  const extendedOptions = Object.assign(defaultOptions, options)
+  const extendedOptions = Object.assign({}, defaultOptions, options)
 
   const uniqueID = createUniqueIDFactory(extendedOptions.id)
   const uniqueIndex = createUniqueIndexFactory(1000)
@@ -41,9 +42,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     constructor (props) {
       super()
       const composedWrapperClassName = getComponentDefaultProp(ComposedComponent, 'wrapperClassName')
+      const composedWrapperTimeout = getComponentDefaultProp(ComposedComponent, 'timeout')
       this.state = Object.assign({}, props, extendedOptions, {
         id: uniqueID(),
         isMounted: props.isOpen,
+        timeout: composedWrapperTimeout,
         wrapperClassName: classNames(
           props.wrapperClassName,
           composedWrapperClassName
@@ -127,9 +130,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     sequenceClosePortal (onClose) {
-      setTimeout(() => {
-        onClose()
-      }, this.state.timeout)
+      requestAnimationFrame(() => onClose())
     }
 
     handleOnClose (onClose) {
@@ -185,9 +186,9 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const portalMarkup = (
         <Animate
           animateOnMount={false}
+          timeout={timeout}
           in={portalIsMounted}
           unmountOnExit
-          wait={timeout}
         >
           <Portal
             className={wrapperClassName}

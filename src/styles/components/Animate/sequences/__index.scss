@@ -1,0 +1,11 @@
+.c-Animate {
+  // Directions
+  @import "./up";
+  @import "./down";
+  @import "./left";
+  @import "./right";
+  // Fade
+  @import "./fade";
+  // Sizing
+  @import "./scale";
+}
