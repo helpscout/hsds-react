@@ -16,6 +16,16 @@
       font-weight: 400,
       padding: 3px
     ),
+    square: (
+      background-color: _color(grey, 200),
+      box-shadow: 0 0 0 1px _color(border, ui) inset,
+      border-radius: 3px,
+      color: _color(grey, 800),
+      font-weight: 400,
+      padding: 4px 3px,
+      font-size: 11px,
+      line-height: 10px,
+    ),
     white: (
       background-color: white,
       box-shadow: 0 0 0 1px _color(border, ui) inset,
