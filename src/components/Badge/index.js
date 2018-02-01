@@ -9,6 +9,7 @@ export const propTypes = {
   display: PropTypes.oneOf(['block', 'inlineBlock']),
   size: PropTypes.string,
   status: statusTypes,
+  isSquare: PropTypes.bool,
   white: PropTypes.bool
 }
 
@@ -22,6 +23,7 @@ const Badge = props => {
     count,
     className,
     display,
+    isSquare,
     size,
     status,
     white,
@@ -32,6 +34,7 @@ const Badge = props => {
     'c-Badge',
     count && 'is-count',
     display && `is-display-${display}`,
+    isSquare && `is-square`,
     size && `is-${size}`,
     status && `is-${status}`,
     white && 'is-white',

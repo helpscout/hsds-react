@@ -40,5 +40,6 @@ An StatusDot component is a UI element that helps indicate the status of somethi
 | `online` | Renders a green dot. |
 | `offline` | Renders a red dot. |
 | `busy` | Renders a yellow dot. |
+| `new` | Renders a green dot. |
 | `active` | Renders a green dot. |
 | `inactive` | Renders a grey dot. |
