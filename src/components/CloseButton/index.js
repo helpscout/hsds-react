@@ -44,8 +44,7 @@ const CloseButton = props => {
         center
         className='c-CloseButton__icon'
         ignoreClick
-        muted={!seamless}
-        name='cross-medium'
+        name='cross-large'
         title='Close'
       />
     </button>

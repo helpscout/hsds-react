@@ -36,7 +36,7 @@ stories.add('open', () => (
     <Modal.Content>
       <Modal.Body>
         <Heading>Title</Heading>
-        {ContentSpec.generate(2).map(({id, content}) => (
+        {ContentSpec.generate(12).map(({id, content}) => (
           <p key={id}>{content}</p>
         ))}
       </Modal.Body>

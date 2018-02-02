@@ -3,6 +3,7 @@
 @import "pack/seed-this/_index";
 
 .c-CloseButton {
+  @import "../configs/color";
   @import "../resets/base";
   @import "../resets/button";
 
@@ -27,6 +28,7 @@
   background-color: white;
   border: none;
   border-radius: 50%;
+  color: _color(grey, 700);
   cursor: pointer;
   display: block;
   height: $size;
@@ -37,6 +39,7 @@
 
   &:hover {
     background-color: rgba(black, 0.04);
+    color: _color(grey, 700);
   }
   &:focus {
     background-color: rgba(black, 0.04);
@@ -49,7 +52,6 @@
   &__icon {
     opacity: 0.5;
     position: relative;
-    right: -1px; // Fix alignment
     transition: opacity 0.1s ease;
     z-index: 1;
 
@@ -94,6 +96,7 @@
     &:active,
     &:focus {
       background-color: transparent;
+      color: currentColor;
     }
 
     &:before {

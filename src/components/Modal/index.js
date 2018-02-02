@@ -103,11 +103,10 @@ class Modal extends Component {
       : modalAnimationDelay
 
     const defaultOffset = 8
-    const borderOffset = 2
 
     setTimeout(() => {
       const offset = hasContentOverflowY(scrollNode)
-        ? /* istanbul ignore next */ `${scrollbarWidth + borderOffset}px`
+        ? /* istanbul ignore next */ `${scrollbarWidth + defaultOffset}px`
         : `${defaultOffset}px`
 
       this.closeNode.style.right = offset
