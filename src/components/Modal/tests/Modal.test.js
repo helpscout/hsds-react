@@ -674,3 +674,33 @@ describe('isOpen', () => {
       })
   })
 })
+
+
+describe('modalAnimation', () => {
+  test('modalAnimationDelay can be passed to Animate component', () => {
+    const wrapper = shallow (
+      <ModalComponent modalAnimationDelay={66} />
+    )
+    const o = wrapper.find('.c-Modal__Card-container')
+
+    expect(o.prop('delay')).toBe(66)
+  })
+
+  test('modalAnimationDuration can be passed to Animate component', () => {
+    const wrapper = shallow (
+      <ModalComponent modalAnimationDuration={66} />
+    )
+    const o = wrapper.find('.c-Modal__Card-container')
+
+    expect(o.prop('duration')).toBe(66)
+  })
+
+  test('modalAnimationEasing can be passed to Animate component', () => {
+    const wrapper = shallow (
+      <ModalComponent modalAnimationEasing='fakeBounce' />
+    )
+    const o = wrapper.find('.c-Modal__Card-container')
+
+    expect(o.prop('easing')).toBe('fakeBounce')
+  })
+})
