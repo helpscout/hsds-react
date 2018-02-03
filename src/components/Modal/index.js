@@ -214,7 +214,7 @@ class Modal extends Component {
             className='c-Modal__Card-container'
             delay={modalAnimationDelay}
             duration={modalAnimationDuration}
-            easing='elastic'
+            easing={modalAnimationEasing}
             in={portalIsOpen}
             sequence={modalAnimationSequence}
           >
