@@ -37,4 +37,5 @@ This component is extended by the `RouteWrapper` higher order component, and can
 | size | `string` | Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`. |
 | state | `string` | Applies state styles to the button. Can be one of `"success"`, `"error"` or `"warning"`. |
 | submit | `bool` | Sets the `type` of the button to `"submit"`. |
+| theme | `string` | Applies a theme based style to the button. |
 | to | `string` | React Router path to navigate on click. |

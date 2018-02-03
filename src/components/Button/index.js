@@ -14,11 +14,13 @@ export const propTypes = {
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
   isActive: PropTypes.bool,
+  outline: PropTypes.bool,
   plain: PropTypes.bool,
   primary: PropTypes.bool,
   size: standardSizeTypes,
   state: stateTypes,
-  submit: PropTypes.bool
+  submit: PropTypes.bool,
+  theme: PropTypes.string
 }
 
 const defaultProps = {
@@ -28,6 +30,7 @@ const defaultProps = {
   onBlur: noop,
   onClick: noop,
   onFocus: noop,
+  outline: false,
   plain: false,
   primary: false,
   size: '',
@@ -47,11 +50,13 @@ const Button = props => {
     onBlur,
     onClick,
     onFocus,
+    outline,
     plain,
     primary,
     size,
     state,
     submit,
+    theme,
     ...rest
   } = props
 
@@ -59,10 +64,12 @@ const Button = props => {
     'c-Button',
     isActive && 'is-selected',
     block && 'c-Button--block',
-    size && `c-Button--${size}`,
-    state && `is-${state}`,
+    outline && 'c-Button--outline',
     plain && 'c-Button--link',
     primary && 'c-Button--primary',
+    size && `c-Button--${size}`,
+    state && `is-${state}`,
+    theme && `c-Button--${theme}`,
     className
   )
 
