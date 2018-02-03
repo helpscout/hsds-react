@@ -19,7 +19,7 @@
   z-index: 1;
 
   &:before {
-    border-bottom: $arrowSize solid currentColor;
+    border-bottom: ($arrowSize + 1) solid currentColor;
     border-left: $arrowSize solid transparent;
     border-right: $arrowSize solid transparent;
     bottom: 0;
@@ -29,7 +29,7 @@
   }
 
   &:after {
-    border-top: $arrowSize solid currentColor;
+    border-top: ($arrowSize + 1) solid currentColor;
     border-left: $arrowSize solid transparent;
     border-right: $arrowSize solid transparent;
     content: "";
