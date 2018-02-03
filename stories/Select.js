@@ -26,7 +26,11 @@ storiesOf('Select', module)
     )
   })
   .add('placeholder', () => (
-    <Select placeholder='Select one' options={['one', 'two', 'three']} />
+    <Select
+      placeholder='Select one'
+      options={['one', 'two', 'three']}
+      onChange={v => console.log(v)}
+    />
   ))
   .add('prefix', () => (
     <Select prefix='Filter by: ' options={['One']} />

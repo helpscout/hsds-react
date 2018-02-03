@@ -675,10 +675,9 @@ describe('isOpen', () => {
   })
 })
 
-
 describe('modalAnimation', () => {
   test('modalAnimationDelay can be passed to Animate component', () => {
-    const wrapper = shallow (
+    const wrapper = shallow(
       <ModalComponent modalAnimationDelay={66} />
     )
     const o = wrapper.find('.c-Modal__Card-container')
@@ -687,7 +686,7 @@ describe('modalAnimation', () => {
   })
 
   test('modalAnimationDuration can be passed to Animate component', () => {
-    const wrapper = shallow (
+    const wrapper = shallow(
       <ModalComponent modalAnimationDuration={66} />
     )
     const o = wrapper.find('.c-Modal__Card-container')
@@ -696,7 +695,7 @@ describe('modalAnimation', () => {
   })
 
   test('modalAnimationEasing can be passed to Animate component', () => {
-    const wrapper = shallow (
+    const wrapper = shallow(
       <ModalComponent modalAnimationEasing='fakeBounce' />
     )
     const o = wrapper.find('.c-Modal__Card-container')

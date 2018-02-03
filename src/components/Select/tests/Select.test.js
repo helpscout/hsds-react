@@ -15,14 +15,14 @@ describe('Placeholder', () => {
     expect(option.text()).toBe(placeholder)
   })
 
-  test('Does not render a placeholder if a value is passed', () => {
+  test('Keeps a placeholder if a value is passed', () => {
     const placeholder = 'Choose your co-anchor…'
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
     const wrapper = mount(<Select options={options} placeholder={placeholder} value='Brick Tamland' />)
     const select = wrapper.find('select')
     const selectOptions = select.children()
 
-    expect(selectOptions.first().prop('label')).not.toBe(placeholder)
+    expect(selectOptions.first().prop('label')).toBe(placeholder)
   })
 })
 
