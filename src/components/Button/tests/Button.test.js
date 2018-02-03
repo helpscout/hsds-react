@@ -85,6 +85,34 @@ describe('States', () => {
   })
 })
 
+describe('Outline', () => {
+  test('Does not have outline by default', () => {
+    const o = wrap(<Button />)
+
+    expect(o.props().outline).not.toBeTruthy()
+  })
+
+  test('Can apply outline styles', () => {
+    const o = wrap(<Button outline />)
+
+    expect(o.hasClass('c-Button--outline')).toBeTruthy()
+  })
+})
+
+describe('Themes', () => {
+  test('Does not have a theme className by default', () => {
+    const o = wrap(<Button />)
+
+    expect(o.props().theme).not.toBeTruthy()
+  })
+
+  test('Can add theme className', () => {
+    const o = wrap(<Button theme='editing' />)
+
+    expect(o.hasClass('c-Button--editing')).toBeTruthy()
+  })
+})
+
 describe('RouteWrapper', () => {
   let options
   let push
