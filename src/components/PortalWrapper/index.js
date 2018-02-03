@@ -1,5 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactDOM from 'react-dom'
 import { matchPath } from 'react-router'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
@@ -43,20 +44,26 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       super()
       const composedWrapperClassName = getComponentDefaultProp(ComposedComponent, 'wrapperClassName')
       const composedWrapperTimeout = getComponentDefaultProp(ComposedComponent, 'timeout')
+      const timeout = extendedOptions.timeout !== undefined ? extendedOptions.timeout : composedWrapperTimeout
+
       this.state = Object.assign({}, props, extendedOptions, {
         id: uniqueID(),
         isMounted: props.isOpen,
-        timeout: composedWrapperTimeout,
+        timeout: timeout,
         wrapperClassName: classNames(
           props.wrapperClassName,
           composedWrapperClassName
         )
       })
+
       this.closePortal = this.closePortal.bind(this)
       this.openPortal = this.openPortal.bind(this)
       this.handleOnClose = this.handleOnClose.bind(this)
+      this.triggerComponent = null
+      this.triggerNode = null
       this._isMounted = false
       this._portalWrapperId = uniqueIndex()
+
       // Welcome aboard, Mr. Manager!
       this._MrManager = setupManager(managerNamespace)
       // Wow, I'm Mr. Manager!
@@ -66,30 +73,55 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     componentDidMount () {
       const { path } = this.props
       this._isMounted = true
+      this.setTriggerNode()
       /* istanbul ignore else */
       if (this.routeMatches(path)) {
         this.openPortal()
       }
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps (nextProps, nextState) {
       const { isOpen, path } = nextProps
       /* istanbul ignore else */
       if (this.routeMatches(path)) {
-        this.openPortal()
-      } else if (isOpen !== undefined || isOpen !== null) {
-        this.safeSetState({ isOpen })
+        return this.openPortal()
+      }
+
+      /* istanbul ignore else */
+      if (isOpen !== this.state.isOpen) {
+        return isOpen ? this.openPortal() : this.closePortal()
+      }
+
+      /* istanbul ignore else */
+      if (!nextState.isOpen) {
+        return this.refocusTriggerNode()
       }
     }
 
     componentWillUnmount () {
       this._isMounted = false
+      this.triggerComponent = null
+      this.triggerNode = null
     }
 
     safeSetState (state) {
       /* istanbul ignore else */
       if (this._isMounted) {
         this.setState(state)
+      }
+    }
+
+    setTriggerNode () {
+      /* istanbul ignore else */
+      if (this.triggerComponent) {
+        this.triggerNode = ReactDOM.findDOMNode(this.triggerComponent)
+      }
+    }
+
+    refocusTriggerNode () {
+      /* istanbul ignore else */
+      if (this.triggerNode) {
+        this.triggerNode.focus()
       }
     }
 
@@ -165,15 +197,17 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         path,
         renderTo,
         trigger,
-        timeout: propsTimeOut,
+        timeout: timeoutProp,
         wrapperClassName: propsWrapperClassName,
         ...rest
       } = this.props
+
       // Remapping open/mount state for ComposedComponent
       const {
-        id, isOpen: portalIsMounted,
+        id,
+        isOpen: portalIsMounted,
         isMounted: portalIsOpen,
-        timeout,
+        timeout: timeoutState,
         wrapperClassName
       } = this.state
 
@@ -182,6 +216,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       const uniqueIndex = getUniqueIndex(id, options.id)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
+      const timeout = timeoutState !== undefined ? timeoutState : timeoutProp
 
       const portalMarkup = (
         <Animate
@@ -226,7 +261,21 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       const triggerMarkup = trigger && React.isValidElement(trigger)
         ? React.cloneElement(trigger, {
-          onClick: openPortal
+          onClick: () => {
+            const { onClick } = trigger.props
+            /* istanbul ignore else */
+            if (onClick && typeof onClick === 'function') {
+              onClick()
+            }
+            openPortal()
+          },
+          ref: node => {
+            const ref = trigger.ref
+            if (ref && typeof ref === 'function') {
+              ref(node)
+            }
+            this.triggerComponent = node
+          }
         })
         : null
 

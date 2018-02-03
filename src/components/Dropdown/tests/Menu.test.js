@@ -238,7 +238,7 @@ describe('Items', () => {
       .then(() => {
         wrapper.unmount()
       })
-      .then(() => wait(100))
+      .then(() => wait(300))
       .then(() => {
         expect(spy).toHaveBeenCalled()
         wrapper.unmount()

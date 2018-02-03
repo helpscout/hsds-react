@@ -281,3 +281,84 @@ describe('Mounting', () => {
     expect(o._isMounted).toBe(false)
   })
 })
+
+describe('Trigger', () => {
+  test('Sets triggerNode on mount', () => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = (
+      <button>Trigger</button>
+    )
+    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
+    const o = wrapper.node
+
+    expect(o.triggerComponent).toBeTruthy()
+    expect(o.triggerNode).toBeTruthy()
+  })
+
+  test('Unsets triggerNode on unmount', () => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = (
+      <button>Trigger</button>
+    )
+    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
+    const o = wrapper.node
+
+    wrapper.unmount()
+
+    expect(o.triggerNode).not.toBeTruthy()
+  })
+
+  test('Focuses triggerNode if prop change remains false', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = (
+      <button>Trigger</button>
+    )
+    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
+    wrapper.setProps({ isOpen: false })
+
+    setTimeout(() => {
+      expect(document.activeElement.isEqualNode(wrapper.node.triggerNode)).toBeTruthy()
+      done()
+    }, 100)
+  })
+
+  test('Focuses triggerNode on isOpen prop change to false', (done) => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = (
+      <button>Trigger</button>
+    )
+    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
+    wrapper.setProps({ isOpen: false })
+
+    setTimeout(() => {
+      expect(document.activeElement.isEqualNode(wrapper.node.triggerNode)).toBeTruthy()
+      document.activeElement.blur()
+      done()
+    }, 100)
+  })
+
+  test('Allows for ref', () => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    let refNode = null
+    const trigger = (
+      <div ref={node => { refNode = node }}>Trigger</div>
+    )
+    mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
+
+    expect(refNode).not.toBe(null)
+  })
+
+  test('Allows for onClick', () => {
+    const spy = jest.fn()
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = (
+      <div onClick={spy} className='trigger'>Trigger</div>
+    )
+    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
+    const o = wrapper.find('.trigger')
+
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
