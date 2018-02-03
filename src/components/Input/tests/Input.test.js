@@ -368,15 +368,19 @@ describe('inputNode', () => {
 
 describe('isFocused', () => {
   test('Can focus input using isFocused prop', (done) => {
+    const spy = jest.fn()
     const wrapper = mount(<Input isFocused />)
     const o = wrapper.node.inputNode
+    o.onfocus = spy
+
     setTimeout(() => {
-      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      expect(spy).toHaveBeenCalled()
       done()
     }, 160)
   })
 
   test('Can focus input using custom timeout', (done) => {
+    const spy = jest.fn()
     const wrapper = mount(
       <Input
         isFocused
@@ -384,11 +388,32 @@ describe('isFocused', () => {
       />
     )
     const o = wrapper.node.inputNode
+    o.onfocus = spy
 
-    expect(document.activeElement.isEqualNode(o)).not.toBeTruthy()
+    expect(spy).not.toHaveBeenCalled()
 
     setTimeout(() => {
-      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      expect(spy).toHaveBeenCalled()
+      done()
+    }, 40)
+  })
+
+  test('Can toggle isFocused', (done) => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Input
+        onFocus={spy}
+        isFocused={false}
+        forceAutoFocusTimeout={20}
+      />
+    )
+    const o = wrapper.node.inputNode
+    o.onfocus = spy
+
+    wrapper.setProps({isFocused: true})
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
       done()
     }, 40)
   })

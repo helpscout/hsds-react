@@ -340,15 +340,19 @@ describe('selectNode', () => {
 
 describe('isFocused', () => {
   test('Can focus select using isFocused prop', (done) => {
+    const spy = jest.fn()
     const wrapper = mount(<Select isFocused />)
     const o = wrapper.node.selectNode
+    o.onfocus = spy
+
     setTimeout(() => {
-      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      expect(spy).toHaveBeenCalled()
       done()
     }, 160)
   })
 
   test('Can focus select using custom timeout', (done) => {
+    const spy = jest.fn()
     const wrapper = mount(
       <Select
         isFocused
@@ -356,9 +360,32 @@ describe('isFocused', () => {
       />
     )
     const o = wrapper.node.selectNode
+    o.onfocus = spy
+
+    expect(spy).not.toHaveBeenCalled()
 
     setTimeout(() => {
-      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      expect(spy).toHaveBeenCalled()
+      done()
+    }, 40)
+  })
+
+  test('Can toggle isFocused', (done) => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Select
+        onFocus={spy}
+        isFocused={false}
+        forceAutoFocusTimeout={20}
+      />
+    )
+    const o = wrapper.node.selectNode
+    o.onfocus = spy
+
+    wrapper.setProps({isFocused: true})
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
       done()
     }, 40)
   })

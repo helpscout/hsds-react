@@ -79,7 +79,7 @@ class Input extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { value, state } = nextProps
+    const { isFocused, value, state } = nextProps
     const prevValue = this.state.value
     const prevState = this.state.state
 
@@ -91,6 +91,11 @@ class Input extends Component {
     if (state !== prevState) {
       this.setState({state})
     }
+
+    /* istanbul ignore else */
+    if (isFocused) {
+      this.forceAutoFocus()
+    }
   }
 
   componentWillUnmount () {
@@ -100,11 +105,18 @@ class Input extends Component {
   maybeForceAutoFocus () {
     const {
       autoFocus,
-      forceAutoFocusTimeout,
       isFocused
     } = this.props
 
-    if ((autoFocus || isFocused) && this.inputNode) {
+    if ((autoFocus || isFocused)) {
+      this.forceAutoFocus()
+    }
+  }
+
+  forceAutoFocus () {
+    const { forceAutoFocusTimeout } = this.props
+    /* istanbul ignore else */
+    if (this.inputNode) {
       setTimeout(() => {
         this.inputNode.focus()
       }, forceAutoFocusTimeout)

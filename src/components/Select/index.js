@@ -81,12 +81,17 @@ class Select extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { state } = nextProps
+    const { isFocused, state } = nextProps
     const prevState = this.state.state
 
     /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({state})
+    }
+
+    /* istanbul ignore else */
+    if (isFocused) {
+      this.forceAutoFocus()
     }
   }
 
@@ -97,11 +102,18 @@ class Select extends Component {
   maybeForceAutoFocus () {
     const {
       autoFocus,
-      forceAutoFocusTimeout,
       isFocused
     } = this.props
 
-    if ((autoFocus || isFocused) && this.selectNode) {
+    if ((autoFocus || isFocused)) {
+      this.forceAutoFocus()
+    }
+  }
+
+  forceAutoFocus () {
+    const { forceAutoFocusTimeout } = this.props
+    /* istanbul ignore else */
+    if (this.selectNode) {
       setTimeout(() => {
         this.selectNode.focus()
       }, forceAutoFocusTimeout)
