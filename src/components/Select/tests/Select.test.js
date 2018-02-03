@@ -322,3 +322,44 @@ describe('removeStateStylesOnFocus', () => {
     expect(select.hasClass('is-error')).toBe(false)
   })
 })
+
+describe('selectNode', () => {
+  test('Sets selectNode on mount', () => {
+    const wrapper = mount(<Select />)
+
+    expect(wrapper.node.selectNode).toBeTruthy()
+  })
+
+  test('Unsets selectNode on unmount', () => {
+    const wrapper = mount(<Select />)
+    wrapper.unmount()
+
+    expect(wrapper.node.selectNode).not.toBeTruthy()
+  })
+})
+
+describe('isFocused', () => {
+  test('Can focus select using isFocused prop', (done) => {
+    const wrapper = mount(<Select isFocused />)
+    const o = wrapper.node.selectNode
+    setTimeout(() => {
+      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      done()
+    }, 160)
+  })
+
+  test('Can focus select using custom timeout', (done) => {
+    const wrapper = mount(
+      <Select
+        isFocused
+        forceAutoFocusTimeout={20}
+      />
+    )
+    const o = wrapper.node.selectNode
+
+    setTimeout(() => {
+      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      done()
+    }, 40)
+  })
+})

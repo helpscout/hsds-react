@@ -27,8 +27,10 @@ export const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  forceAutoFocusTimeout: PropTypes.number,
   helpText: PropTypes.string,
   id: PropTypes.string,
+  isFocused: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.oneOfType([
@@ -52,6 +54,7 @@ export const propTypes = {
 const defaultProps = {
   autoFocus: false,
   disabled: false,
+  forceAutoFocusTimeout: 120,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
@@ -70,6 +73,11 @@ class Select extends Component {
       value: props.value
     }
     this.handleOnFocus = this.handleOnFocus.bind(this)
+    this.selectNode = null
+  }
+
+  componentDidMount () {
+    this.maybeForceAutoFocus()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -79,6 +87,24 @@ class Select extends Component {
     /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({state})
+    }
+  }
+
+  componentWillUnmount () {
+    this.selectNode = null
+  }
+
+  maybeForceAutoFocus () {
+    const {
+      autoFocus,
+      forceAutoFocusTimeout,
+      isFocused
+    } = this.props
+
+    if ((autoFocus || isFocused) && this.selectNode) {
+      setTimeout(() => {
+        this.selectNode.focus()
+      }, forceAutoFocusTimeout)
     }
   }
 
@@ -109,8 +135,10 @@ class Select extends Component {
       children,
       className,
       disabled,
+      forceAutoFocusTimeout,
       helpText,
       id,
+      isFocused,
       label,
       onChange,
       onFocus,
@@ -218,6 +246,7 @@ class Select extends Component {
             id={id}
             onChange={e => this.handleOnChange(e)}
             onFocus={handleOnFocus}
+            ref={node => { this.selectNode = node }}
             value={selectedValue}
             {...rest}
           >

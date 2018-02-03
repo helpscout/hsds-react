@@ -350,3 +350,46 @@ describe('removeStateStylesOnFocus', () => {
     expect(input.hasClass('is-error')).toBe(false)
   })
 })
+
+describe('inputNode', () => {
+  test('Sets inputNode on mount', () => {
+    const wrapper = mount(<Input />)
+
+    expect(wrapper.node.inputNode).toBeTruthy()
+  })
+
+  test('Unsets inputNode on unmount', () => {
+    const wrapper = mount(<Input />)
+    wrapper.unmount()
+
+    expect(wrapper.node.inputNode).not.toBeTruthy()
+  })
+})
+
+describe('isFocused', () => {
+  test('Can focus input using isFocused prop', (done) => {
+    const wrapper = mount(<Input isFocused />)
+    const o = wrapper.node.inputNode
+    setTimeout(() => {
+      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      done()
+    }, 160)
+  })
+
+  test('Can focus input using custom timeout', (done) => {
+    const wrapper = mount(
+      <Input
+        isFocused
+        forceAutoFocusTimeout={20}
+      />
+    )
+    const o = wrapper.node.inputNode
+
+    expect(document.activeElement.isEqualNode(o)).not.toBeTruthy()
+
+    setTimeout(() => {
+      expect(document.activeElement.isEqualNode(o)).toBeTruthy()
+      done()
+    }, 40)
+  })
+})
