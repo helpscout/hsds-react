@@ -117,7 +117,7 @@ class Select extends Component {
       onChange,
       onFocus,
       options,
-      placeholder,
+      placeholder: placeholderProp,
       prefix,
       removeStateStylesOnFocus,
       seamless,
@@ -129,7 +129,7 @@ class Select extends Component {
       ...rest
     } = this.props
 
-    const { state } = this.state
+    const { placeholder, state } = this.state
 
     const handleOnFocus = this.handleOnFocus
     const hasPlaceholder = this.hasPlaceholder()
@@ -181,14 +181,16 @@ class Select extends Component {
 
     const optionsMarkup = children || (Array.isArray(options) ? options.map(renderOptions) : renderOptions(options))
 
-    const placeholderMarkup = hasPlaceholder
-      ? <option
-        label={this.state.placeholder}
+    const placeholderMarkup = hasPlaceholder ? (
+      <option
+        label={placeholder}
         value={PLACEHOLDER_VALUE}
         disabled
         hidden
-        />
-      : null
+      >
+        {placeholder}
+      </option>
+    ) : null
 
     const labelMarkup = label
       ? <Label for={id}>{label}</Label>

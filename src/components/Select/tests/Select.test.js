@@ -9,8 +9,10 @@ describe('Placeholder', () => {
     const wrapper = mount(<Select options={options} placeholder={placeholder} />)
     const select = wrapper.find('select')
     const selectOptions = select.children()
+    const option = selectOptions.first()
 
-    expect(selectOptions.first().prop('label')).toBe(placeholder)
+    expect(option.prop('label')).toBe(placeholder)
+    expect(option.text()).toBe(placeholder)
   })
 
   test('Does not render a placeholder if a value is passed', () => {
