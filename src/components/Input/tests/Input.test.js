@@ -350,3 +350,71 @@ describe('removeStateStylesOnFocus', () => {
     expect(input.hasClass('is-error')).toBe(false)
   })
 })
+
+describe('inputNode', () => {
+  test('Sets inputNode on mount', () => {
+    const wrapper = mount(<Input />)
+
+    expect(wrapper.node.inputNode).toBeTruthy()
+  })
+
+  test('Unsets inputNode on unmount', () => {
+    const wrapper = mount(<Input />)
+    wrapper.unmount()
+
+    expect(wrapper.node.inputNode).not.toBeTruthy()
+  })
+})
+
+describe('isFocused', () => {
+  test('Can focus input using isFocused prop', (done) => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input isFocused />)
+    const o = wrapper.node.inputNode
+    o.onfocus = spy
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
+      done()
+    }, 160)
+  })
+
+  test('Can focus input using custom timeout', (done) => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Input
+        isFocused
+        forceAutoFocusTimeout={20}
+      />
+    )
+    const o = wrapper.node.inputNode
+    o.onfocus = spy
+
+    expect(spy).not.toHaveBeenCalled()
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
+      done()
+    }, 40)
+  })
+
+  test('Can toggle isFocused', (done) => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Input
+        onFocus={spy}
+        isFocused={false}
+        forceAutoFocusTimeout={20}
+      />
+    )
+    const o = wrapper.node.inputNode
+    o.onfocus = spy
+
+    wrapper.setProps({isFocused: true})
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
+      done()
+    }, 40)
+  })
+})

@@ -45,8 +45,10 @@ This component also accepts regular `<option>` elements as children.
 | autoFocus | `bool` | Automatically focuses the select. |
 | className | `string` | Custom class names to be added to the component. |
 | disabled | `bool` | Disable the select. |
+| forceAutoFocusTimeout | `bool` | Determines the amount of time (`ms`) for the component to focus on mount. |
 | helpText | `string` | Displays text underneath select. |
 | id | `string` | ID for the select. |
+| isFocused | `string` | Determines if the component is focused. |
 | label | `string` | Label for the select. |
 | name | `string` | Name for the select. |
 | onBlur | `function` | Callback when select is blurred. |

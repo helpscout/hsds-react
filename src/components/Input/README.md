@@ -25,9 +25,11 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | autoFocus | `bool` | Automatically focuses the input. |
 | className | `string` | Custom class names to be added to the component. |
 | disabled | `bool` | Disable the input. |
+| forceAutoFocusTimeout | `bool` | Determines the amount of time (`ms`) for the component to focus on mount. |
 | helpText | `string` | Displays text underneath input. |
 | hintText | `string` | Displays text above input. |
 | id | `string` | ID for the input. |
+| isFocused | `string` | Determines if the component is focused. |
 | label | `string` | Label for the input. |
 | multiline | `bool`/`number` | Transforms input into an auto-expanding textarea. |
 | name | `string` | Name for the input. |

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
-import { Button, EmojiPicker, Heading, Modal, Link, Toolbar } from '../src/index.js'
+import { Button, EmojiPicker, Heading, Modal, Link, Input, Toolbar } from '../src/index.js'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
@@ -15,6 +15,90 @@ const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
   id: faker.random.uuid()
 })
+
+class StatefulComponent extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      showModal: false,
+      value: ''
+    }
+    this.handleOnButtonClick = this.handleOnButtonClick.bind(this)
+    this.handleOnInputChange = this.handleOnInputChange.bind(this)
+    this.handleOnSubmit = this.handleOnSubmit.bind(this)
+    this.handleOnModalOpen = this.handleOnModalOpen.bind(this)
+    this.handleOnModalClose = this.handleOnModalClose.bind(this)
+  }
+
+  handleOnButtonClick () {
+    this.setState({
+      showModal: !this.state.showModal
+    })
+  }
+
+  handleOnInputChange (value) {
+    this.setState({
+      value
+    })
+  }
+
+  handleOnModalOpen () {
+    const inputNode = document.querySelector('input')
+    if (inputNode) {
+      inputNode.focus()
+    }
+  }
+
+  handleOnModalClose () {
+    this.setState({
+      showModal: false
+    })
+  }
+
+  handleOnSubmit () {
+    this.setState({
+      showModal: false,
+      value: ''
+    })
+  }
+
+  render () {
+    const { showModal, value } = this.state
+
+    const triggerMarkup = (
+      <Button
+        onClick={this.handleOnButtonClick}
+        theme={value ? 'editing' : null}
+      >
+        {value ? 'Keep Editing' : 'Reply'}
+      </Button>
+    )
+
+    return (
+      <Modal
+        closeIcon={false}
+        isOpen={showModal}
+        trigger={triggerMarkup}
+        onOpen={this.handleOnModalOpen}
+        onClose={this.handleOnModalClose}
+      >
+        <Modal.Body>
+          <Modal.Content>
+            <Input
+              autoFocus
+              multiline={3}
+              onChange={this.handleOnInputChange}
+              value={value}
+            />
+            <Button onClick={this.handleOnSubmit} primary>
+              Submit
+            </Button>
+          </Modal.Content>
+        </Modal.Body>
+      </Modal>
+    )
+  }
+}
 
 stories.addDecorator(story => (
   <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
@@ -288,3 +372,11 @@ stories.add('routes', () => {
     </div>
   )
 })
+
+stories.add('stateful example', () => (
+  <div>
+    <button>Does Nothing</button>
+    <hr />
+    <StatefulComponent />
+  </div>
+))

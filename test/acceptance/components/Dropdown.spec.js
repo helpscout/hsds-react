@@ -10,7 +10,7 @@ const simulateKeyPress = (keyCode) => {
   document.dispatchEvent(event)
 }
 
-const waitTime = 400
+const waitTime = 420
 
 describe('Dropdown', () => {
   it('should open menu on trigger click', (done) => {

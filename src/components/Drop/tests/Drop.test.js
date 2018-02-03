@@ -27,6 +27,10 @@ const trigger = (
   <a className='trigger'>Trigger</a>
 )
 
+beforeEach(() => {
+  document.body.innerHTML = ''
+})
+
 afterEach(() => {
   document.body.innerHTML = ''
 })
@@ -145,9 +149,8 @@ describe('Trigger', () => {
 })
 
 describe('wrapperClassName', () => {
-  const TestComponent = Drop()(ContentComponent)
-
   test('Adds default wrapperClassName', (done) => {
+    const TestComponent = Drop()(ContentComponent)
     mount(<TestComponent isOpen />)
 
     wait(40).then(() => {
@@ -158,6 +161,7 @@ describe('wrapperClassName', () => {
   })
 
   test('Can customize wrapperClassName', (done) => {
+    const TestComponent = Drop()(ContentComponent)
     mount(<TestComponent isOpen wrapperClassName='ron' />)
 
     wait(40).then(() => {

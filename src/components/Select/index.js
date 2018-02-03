@@ -27,8 +27,10 @@ export const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  forceAutoFocusTimeout: PropTypes.number,
   helpText: PropTypes.string,
   id: PropTypes.string,
+  isFocused: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.oneOfType([
@@ -52,6 +54,7 @@ export const propTypes = {
 const defaultProps = {
   autoFocus: false,
   disabled: false,
+  forceAutoFocusTimeout: 120,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
@@ -70,15 +73,50 @@ class Select extends Component {
       value: props.value
     }
     this.handleOnFocus = this.handleOnFocus.bind(this)
+    this.selectNode = null
+  }
+
+  componentDidMount () {
+    this.maybeForceAutoFocus()
   }
 
   componentWillReceiveProps (nextProps) {
-    const { state } = nextProps
+    const { isFocused, state } = nextProps
     const prevState = this.state.state
 
     /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({state})
+    }
+
+    /* istanbul ignore else */
+    if (isFocused) {
+      this.forceAutoFocus()
+    }
+  }
+
+  componentWillUnmount () {
+    this.selectNode = null
+  }
+
+  maybeForceAutoFocus () {
+    const {
+      autoFocus,
+      isFocused
+    } = this.props
+
+    if ((autoFocus || isFocused)) {
+      this.forceAutoFocus()
+    }
+  }
+
+  forceAutoFocus () {
+    const { forceAutoFocusTimeout } = this.props
+    /* istanbul ignore else */
+    if (this.selectNode) {
+      setTimeout(() => {
+        this.selectNode.focus()
+      }, forceAutoFocusTimeout)
     }
   }
 
@@ -109,8 +147,10 @@ class Select extends Component {
       children,
       className,
       disabled,
+      forceAutoFocusTimeout,
       helpText,
       id,
+      isFocused,
       label,
       onChange,
       onFocus,
@@ -218,6 +258,7 @@ class Select extends Component {
             id={id}
             onChange={e => this.handleOnChange(e)}
             onFocus={handleOnFocus}
+            ref={node => { this.selectNode = node }}
             value={selectedValue}
             {...rest}
           >

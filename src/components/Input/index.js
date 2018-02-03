@@ -15,9 +15,11 @@ export const propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   hintText: PropTypes.string,
-  helpText: PropTypes.string,
+  modalhelpText: PropTypes.string,
+  forceAutoFocusTimeout: PropTypes.number,
   id: PropTypes.string,
   inputRef: PropTypes.func,
+  isFocused: PropTypes.bool,
   label: PropTypes.string,
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   name: PropTypes.string,
@@ -40,7 +42,9 @@ export const propTypes = {
 const defaultProps = {
   autoFocus: false,
   disabled: false,
+  forceAutoFocusTimeout: 120,
   inputRef: noop,
+  isFocused: false,
   multiline: null,
   onBlur: noop,
   onChange: noop,
@@ -64,13 +68,18 @@ class Input extends Component {
       state: props.state,
       value: props.value
     }
+    this.inputNode = null
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnInputFocus = this.handleOnInputFocus.bind(this)
     this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
 
+  componentDidMount () {
+    this.maybeForceAutoFocus()
+  }
+
   componentWillReceiveProps (nextProps) {
-    const { value, state } = nextProps
+    const { isFocused, value, state } = nextProps
     const prevValue = this.state.value
     const prevState = this.state.state
 
@@ -81,6 +90,36 @@ class Input extends Component {
     /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({state})
+    }
+
+    /* istanbul ignore else */
+    if (isFocused) {
+      this.forceAutoFocus()
+    }
+  }
+
+  componentWillUnmount () {
+    this.inputNode = null
+  }
+
+  maybeForceAutoFocus () {
+    const {
+      autoFocus,
+      isFocused
+    } = this.props
+
+    if ((autoFocus || isFocused)) {
+      this.forceAutoFocus()
+    }
+  }
+
+  forceAutoFocus () {
+    const { forceAutoFocusTimeout } = this.props
+    /* istanbul ignore else */
+    if (this.inputNode) {
+      setTimeout(() => {
+        this.inputNode.focus()
+      }, forceAutoFocusTimeout)
     }
   }
 
@@ -108,10 +147,12 @@ class Input extends Component {
       autoFocus,
       className,
       disabled,
+      forceAutoFocusTimeout,
       helpText,
       hintText,
       id,
       inputRef,
+      isFocused,
       label,
       multiline,
       name,
@@ -199,7 +240,10 @@ class Input extends Component {
       className: fieldClassName,
       id: inputID,
       onChange: handleOnChange,
-      ref: inputRef,
+      ref: (node) => {
+        this.inputNode = node
+        inputRef(node)
+      },
       autoFocus,
       disabled,
       name,
