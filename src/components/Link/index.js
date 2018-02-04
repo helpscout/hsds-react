@@ -11,6 +11,7 @@ export const propTypes = {
   className: PropTypes.string,
   external: PropTypes.bool,
   href: PropTypes.string,
+  nodeRef: PropTypes.func,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
@@ -23,6 +24,7 @@ const defaultProps = {
   autoWordWrap: true,
   external: false,
   href: '#',
+  nodeRef: noop,
   onBlur: noop,
   onClick: noop,
   onFocus: noop
@@ -37,6 +39,7 @@ class Link extends Component {
     className,
     external,
     href,
+    nodeRef,
     noUnderline,
     wordWrap,
     ...rest
@@ -56,7 +59,14 @@ class Link extends Component {
     const rel = external ? 'noopener noreferrer' : undefined
 
     return (
-      <a className={componentClassName} target={target} rel={rel} href={href} {...rest}>
+      <a
+        className={componentClassName}
+        target={target}
+        rel={rel}
+        ref={nodeRef}
+        href={href}
+        {...rest}
+      >
         {children}
       </a>
     )

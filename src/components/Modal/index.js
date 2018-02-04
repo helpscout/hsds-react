@@ -108,8 +108,10 @@ class Modal extends Component {
       const offset = hasContentOverflowY(scrollNode)
         ? /* istanbul ignore next */ `${scrollbarWidth + defaultOffset}px`
         : `${defaultOffset}px`
-
-      this.closeNode.style.right = offset
+      /* istanbul ignore else */
+      if (this.closeNode) {
+        this.closeNode.style.right = offset
+      }
     }, delay)
   }
 
@@ -196,7 +198,7 @@ class Modal extends Component {
     })
 
     const modalContentMarkup = !seamless ? (
-      <Card className={cardComponentClassName} seamless role='dialog'>
+      <Card className={cardComponentClassName} seamless role='dialog' nodeRef={node => { this.cardNode = node }}>
         {closeMarkup}
         {parsedChildren}
       </Card>

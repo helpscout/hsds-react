@@ -33,6 +33,7 @@ If a `to` or `href` prop is passed into the Card component, it will render the [
 | fullHeight | `bool` | Adds full height styles. Often used with flex containers. |
 | hover | `bool` | Adds a hover style to the component. |
 | href | `string` | Adds an `href` to the component. Transforms it into an `<a>` tag. |
+| nodeRef | `func` | Callback function to retrieve the component's DOM node. |
 | onBlur | `function` | Callback when the component is blurred. |
 | onClick | `bool`/`function` | Callback when the component is clicked. |
 | onFocus | `function` | Callback when the component is focused. |

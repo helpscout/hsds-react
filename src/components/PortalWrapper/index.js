@@ -26,15 +26,16 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   const propTypes = portalTypes
 
   const defaultProps = {
-    isOpen: false,
-    timeout: 200
+    isOpen: false
   }
 
   const contextTypes = {
     router: PropTypes.object
   }
 
-  const extendedOptions = Object.assign({}, defaultOptions, options)
+  const extendedOptions = Object.assign({}, defaultOptions, options, {
+    timeout: 100
+  })
 
   const uniqueID = createUniqueIDFactory(extendedOptions.id)
   const uniqueIndex = createUniqueIndexFactory(1000)
@@ -44,11 +45,13 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       super()
       const composedWrapperClassName = getComponentDefaultProp(ComposedComponent, 'wrapperClassName')
       const composedWrapperTimeout = getComponentDefaultProp(ComposedComponent, 'timeout')
-      const timeout = extendedOptions.timeout !== undefined ? extendedOptions.timeout : composedWrapperTimeout
+      const timeout = props.timeout !== undefined
+        ? props.timeout : composedWrapperTimeout !== undefined
+        ? composedWrapperTimeout
+        : extendedOptions.timeout
 
-      this.state = Object.assign({}, props, extendedOptions, {
+      this.state = Object.assign({}, extendedOptions, props, {
         id: uniqueID(),
-        isMounted: props.isOpen,
         timeout: timeout,
         wrapperClassName: classNames(
           props.wrapperClassName,
@@ -80,21 +83,25 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    componentWillReceiveProps (nextProps, nextState) {
+    componentWillReceiveProps (nextProps) {
       const { isOpen, path } = nextProps
       /* istanbul ignore else */
       if (this.routeMatches(path)) {
         return this.openPortal()
       }
 
-      /* istanbul ignore else */
-      if (isOpen !== this.state.isOpen) {
-        return isOpen ? this.openPortal() : this.closePortal()
-      }
+      if (isOpen === this.props.isOpen) return false
 
       /* istanbul ignore else */
-      if (!nextState.isOpen) {
-        return this.refocusTriggerNode()
+      if (isOpen !== this.state.isOpen) {
+        return isOpen ? this.openPortal() : this.forceClosePortal()
+      }
+    }
+
+    componentDidUpdate () {
+      /* istanbul ignore else */
+      if (!this.state.isOpen) {
+        this.refocusTriggerNode()
       }
     }
 
@@ -147,18 +154,20 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     openPortal () {
       this.safeSetState({
-        isOpen: true,
-        isMounted: true
+        isOpen: true
       })
     }
 
     closePortal () {
       if (this._MrManager.max() === this._portalWrapperId) {
-        this.safeSetState({
-          isOpen: false,
-          isMounted: false
-        })
+        this.forceClosePortal()
       }
+    }
+
+    forceClosePortal () {
+      this.safeSetState({
+        isOpen: false
+      })
     }
 
     sequenceClosePortal (onClose) {
@@ -205,9 +214,8 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       // Remapping open/mount state for ComposedComponent
       const {
         id,
-        isOpen: portalIsMounted,
-        isMounted: portalIsOpen,
-        timeout: timeoutState,
+        isOpen: portalIsOpen,
+        timeout,
         wrapperClassName
       } = this.state
 
@@ -216,13 +224,12 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       const uniqueIndex = getUniqueIndex(id, options.id)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
-      const timeout = timeoutState !== undefined ? timeoutState : timeoutProp
 
       const portalMarkup = (
         <Animate
           animateOnMount={false}
           timeout={timeout}
-          in={portalIsMounted}
+          in={portalIsOpen}
           unmountOnExit
         >
           <Portal
@@ -233,7 +240,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             onOpen={onOpen}
             id={id}
             renderTo={renderTo}
-            portalIsMounted={portalIsMounted}
+            portalIsMounted={portalIsOpen}
             timeout={timeout}
             {...rest}
           >
@@ -247,7 +254,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
                 closePortal={handleOnClose}
                 onClose={onClose}
                 portalIsOpen={portalIsOpen}
-                portalIsMounted={portalIsMounted}
+                portalIsMounted={portalIsOpen}
                 trigger={trigger}
                 zIndex={zIndex}
                 {...rest}

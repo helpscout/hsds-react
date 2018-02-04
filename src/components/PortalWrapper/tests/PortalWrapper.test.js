@@ -308,33 +308,38 @@ describe('Trigger', () => {
     expect(o.triggerNode).not.toBeTruthy()
   })
 
-  test('Focuses triggerNode if prop change remains false', (done) => {
+  test('Does not focus triggerNode if prop change remains false', (done) => {
+    const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = (
       <button>Trigger</button>
     )
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
+    const o = wrapper.find('button')
+    o.node.onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     setTimeout(() => {
-      expect(document.activeElement.isEqualNode(wrapper.node.triggerNode)).toBeTruthy()
+      expect(spy).not.toHaveBeenCalled()
       done()
-    }, 100)
+    }, 40)
   })
 
   test('Focuses triggerNode on isOpen prop change to false', (done) => {
+    const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = (
       <button>Trigger</button>
     )
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
+    const o = wrapper.find('button')
+    o.node.onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     setTimeout(() => {
-      expect(document.activeElement.isEqualNode(wrapper.node.triggerNode)).toBeTruthy()
-      document.activeElement.blur()
+      expect(spy).toHaveBeenCalled()
       done()
-    }, 100)
+    }, 40)
   })
 
   test('Allows for ref', () => {

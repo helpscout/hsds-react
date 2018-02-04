@@ -115,12 +115,12 @@ class Input extends Component {
 
   forceAutoFocus () {
     const { forceAutoFocusTimeout } = this.props
-    /* istanbul ignore else */
-    if (this.inputNode) {
-      setTimeout(() => {
+    setTimeout(() => {
+      /* istanbul ignore else */
+      if (this.inputNode) {
         this.inputNode.focus()
-      }, forceAutoFocusTimeout)
-    }
+      }
+    }, forceAutoFocusTimeout)
   }
 
   handleOnChange (e) {
