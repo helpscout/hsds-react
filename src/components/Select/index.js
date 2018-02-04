@@ -112,12 +112,12 @@ class Select extends Component {
 
   forceAutoFocus () {
     const { forceAutoFocusTimeout } = this.props
-    /* istanbul ignore else */
-    if (this.selectNode) {
-      setTimeout(() => {
+    setTimeout(() => {
+      /* istanbul ignore else */
+      if (this.selectNode) {
         this.selectNode.focus()
-      }, forceAutoFocusTimeout)
-    }
+      }
+    }, forceAutoFocusTimeout)
   }
 
   handleOnChange (e) {

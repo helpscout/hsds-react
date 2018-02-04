@@ -108,8 +108,10 @@ class Modal extends Component {
       const offset = hasContentOverflowY(scrollNode)
         ? /* istanbul ignore next */ `${scrollbarWidth + defaultOffset}px`
         : `${defaultOffset}px`
-
-      this.closeNode.style.right = offset
+      /* istanbul ignore else */
+      if (this.closeNode) {
+        this.closeNode.style.right = offset
+      }
     }, delay)
   }
 

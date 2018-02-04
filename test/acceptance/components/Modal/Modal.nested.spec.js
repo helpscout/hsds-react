@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, Modal } from '../../../../src/index'
+import { Button, Input, Modal, Portal } from '../../../../src/index'
 import Keys from '../../../../src/constants/Keys'
 import { wait, waitForSelectors } from '../../test-helpers'
 
@@ -71,42 +71,45 @@ class NestedModalComponent extends React.Component {
     )
 
     return (
-      <Modal
-        cardClassName='outerModal'
-        isOpen={showOuterModal}
-        trigger={
-          <button className='outerTrigger'>Open</button>
-        }
-        timeout={0}
-      >
-        <Modal.Body>
-          <Modal.Content>
-            <Modal
-              cardClassName='innerModal'
-              closeIcon={false}
-              isOpen={showModal}
-              trigger={triggerMarkup}
-              onOpen={this.handleOnModalOpen}
-              onClose={this.handleOnModalClose}
-              timeout={0}
-            >
-              <Modal.Body>
-                <Modal.Content>
-                  <Input
-                    autoFocus
-                    multiline={3}
-                    onChange={this.handleOnInputChange}
-                    value={value}
-                  />
-                  <Button className='submit' onClick={this.handleOnSubmit} primary>
-                    Submit
-                  </Button>
-                </Modal.Content>
-              </Modal.Body>
-            </Modal>
-          </Modal.Content>
-        </Modal.Body>
-      </Modal>
+      <div>
+        <Modal
+          cardClassName='outerModal'
+          isOpen={showOuterModal}
+          trigger={
+            <button className='outerTrigger'>Open</button>
+          }
+          timeout={0}
+        >
+          <Modal.Body>
+            <Modal.Content>
+              <Modal
+                cardClassName='innerModal'
+                closeIcon={false}
+                isOpen={showModal}
+                trigger={triggerMarkup}
+                onOpen={this.handleOnModalOpen}
+                onClose={this.handleOnModalClose}
+                timeout={0}
+              >
+                <Modal.Body>
+                  <Modal.Content>
+                    <Input
+                      autoFocus
+                      multiline={3}
+                      onChange={this.handleOnInputChange}
+                      value={value}
+                    />
+                    <Button className='submit' onClick={this.handleOnSubmit} primary>
+                      Submit
+                    </Button>
+                  </Modal.Content>
+                </Modal.Body>
+              </Modal>
+            </Modal.Content>
+          </Modal.Body>
+        </Modal>
+        <Portal.Container />
+      </div>
     )
   }
 }
