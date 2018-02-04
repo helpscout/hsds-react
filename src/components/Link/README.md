@@ -25,6 +25,7 @@ You're my boy, <Link fetch={fetchBlueData} to="/blue">Blue</Link>!
 | external | `bool` | Opens link in a new tab. |
 | fetch | `function`| function which returns a promise, will be invoked before routing the `to` route |
 | href | `string` | Address for the link. Default is `#`. |
+| nodeRef | `func` | Callback function to retrieve the component's DOM node. |
 | onBlur | `function` | Callback function when the component is blurred. |
 | onClick | `function` | Callback function when the component is clicked. |
 | onFocus | `function` | Callback function when the component is focused. |

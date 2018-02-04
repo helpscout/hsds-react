@@ -14,6 +14,7 @@ export const propTypes = Object.assign({}, linkPropTypes, {
   fullHeight: PropTypes.bool,
   hover: PropTypes.bool,
   href: PropTypes.string,
+  nodeRef: PropTypes.func,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
@@ -27,6 +28,7 @@ const defaultProps = {
   floating: false,
   fullHeight: false,
   hover: false,
+  nodeRef: noop,
   onBlur: noop,
   onClick: noop,
   onFocus: noop,
@@ -35,6 +37,15 @@ const defaultProps = {
 }
 
 class Card extends Component {
+  constructor () {
+    super()
+    this.node = null
+  }
+
+  componentWillUnmount () {
+    this.node = null
+  }
+
   render () {
     const {
       autoWordWrap,
@@ -46,6 +57,7 @@ class Card extends Component {
       fullHeight,
       hover,
       href,
+      nodeRef,
       onClick,
       seamless,
       selector,
@@ -76,6 +88,7 @@ class Card extends Component {
         onClick={onClick}
         href={href}
         to={to}
+        nodeRef={nodeRef}
         {...rest}
       >
         {children}
@@ -86,7 +99,8 @@ class Card extends Component {
         ...rest,
         className: componentClassName,
         href,
-        onClick
+        onClick,
+        ref: nodeRef
       },
       children
     )

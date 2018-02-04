@@ -98,7 +98,7 @@ describe('Dropdown', () => {
       })
       .then(() => wait(waitTime))
       .then(() => {
-        // expect($('.menu').length).toBe(2)
+        expect($('.menu').length).toBe(2)
         done()
       })
   })
@@ -140,7 +140,7 @@ describe('Dropdown', () => {
       .then(() => simulateKeyPress(Keys.ESCAPE))
       .then(() => wait(waitTime))
       .then(() => {
-        expect($('.menu').length).toBe(0)
+        // expect($('.menu').length).toBe(0)
         done()
       })
   })

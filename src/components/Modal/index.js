@@ -196,7 +196,7 @@ class Modal extends Component {
     })
 
     const modalContentMarkup = !seamless ? (
-      <Card className={cardComponentClassName} seamless role='dialog'>
+      <Card className={cardComponentClassName} seamless role='dialog' nodeRef={node => { this.cardNode = node }}>
         {closeMarkup}
         {parsedChildren}
       </Card>

@@ -76,23 +76,33 @@ class StatefulComponent extends React.Component {
 
     return (
       <Modal
-        closeIcon={false}
-        isOpen={showModal}
-        trigger={triggerMarkup}
-        onOpen={this.handleOnModalOpen}
-        onClose={this.handleOnModalClose}
+        trigger={
+          <button>Open</button>
+        }
       >
         <Modal.Body>
           <Modal.Content>
-            <Input
-              autoFocus
-              multiline={3}
-              onChange={this.handleOnInputChange}
-              value={value}
-            />
-            <Button onClick={this.handleOnSubmit} primary>
-              Submit
-            </Button>
+            <Modal
+              closeIcon={false}
+              isOpen={showModal}
+              trigger={triggerMarkup}
+              onOpen={this.handleOnModalOpen}
+              onClose={this.handleOnModalClose}
+            >
+              <Modal.Body>
+                <Modal.Content>
+                  <Input
+                    autoFocus
+                    multiline={3}
+                    onChange={this.handleOnInputChange}
+                    value={value}
+                  />
+                  <Button onClick={this.handleOnSubmit} primary>
+                    Submit
+                  </Button>
+                </Modal.Content>
+              </Modal.Body>
+            </Modal>
           </Modal.Content>
         </Modal.Body>
       </Modal>
