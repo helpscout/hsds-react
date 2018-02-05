@@ -59,7 +59,7 @@ import './Toolbar'
 import './Truncate'
 import './VisuallyHidden'
 
-import './Colors'
+import './Color'
 
 // Performance testing
 window.Perf = Perf

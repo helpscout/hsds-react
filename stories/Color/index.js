@@ -4,9 +4,9 @@ import {
   darken as darkenFn,
   lighten as lightenFn,
   optimalTextColor
-} from '../../src/utilities/colors'
+} from '../../src/utilities/color'
 
-const stories = storiesOf('Utilities/Colors', module)
+const stories = storiesOf('Utilities/Color', module)
 
 const Color = props => {
   const {
