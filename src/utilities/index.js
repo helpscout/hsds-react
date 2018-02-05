@@ -1,6 +1,7 @@
 import * as animationUtils from './animation'
 import * as classNamesUtils from './classNames'
 import * as componentUtils from './component'
+import * as colorUtils from './color'
 import * as easingUtils from './easing'
 import * as focusUtils from './focus'
 import * as globalManagerUtils from './globalManager'
@@ -15,6 +16,7 @@ import * as typesUtils from './types'
 
 export const animation = animationUtils
 export const classNames = classNamesUtils
+export const color = colorUtils
 export const component = componentUtils
 export const easing = easingUtils
 export const focus = focusUtils
@@ -32,6 +34,7 @@ export default {
   animation,
   classNames,
   component,
+  color,
   easing,
   focus,
   globalManager,
