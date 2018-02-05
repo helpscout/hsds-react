@@ -10,6 +10,7 @@ stories.add('Illo', () => {
     'chatListBlankSlate',
     'chat',
     'cross',
+    'cross-white',
     'lock',
     'plane',
     'tick'
