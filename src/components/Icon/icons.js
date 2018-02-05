@@ -24,6 +24,7 @@ import imageAdd from '../../icons/image-add.svg'
 import image from '../../icons/image.svg'
 import link from '../../icons/link.svg'
 import meatball from '../../icons/meatball.svg'
+import minimize from '../../icons/minimize.svg'
 import search from '../../icons/search.svg'
 import star from '../../icons/star.svg'
 import tag from '../../icons/tag.svg'
@@ -61,6 +62,7 @@ const ICONS = {
   image,
   link,
   meatball,
+  minimize,
   'option-dots': meatball,
   search,
   star,
