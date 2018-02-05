@@ -30,6 +30,7 @@ stories.add('icons', () => {
     'image',
     'link',
     'meatball',
+    'minimize',
     'search',
     'star',
     'tag',
