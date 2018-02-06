@@ -37,16 +37,14 @@
   transition: background-color 0.3s ease;
   width: $size;
 
-  &:hover {
-    background-color: rgba(black, 0.04);
-    color: _color(grey, 700);
-  }
+  &:hover,
   &:focus {
-    background-color: rgba(black, 0.04);
+    color: _color(grey, 800);
     outline: none;
   }
   &:active {
-    background-color: rgba(black, 0.08);
+    color: _color(charcoal, 200);
+    outline: none;
   }
 
   &__icon {
@@ -63,30 +61,6 @@
     }
   }
 
-  &:before {
-    background-color: currentColor;
-    border-radius: 50%;
-    content: "";
-    display: none;
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    transform: translateZ(0);
-    transition: opacity 0.2s ease;
-    width: 100%;
-  }
-  &:hover:before {
-    opacity: 0.04;
-  }
-  &:focus:before {
-    opacity: 0.04;
-  }
-  &:active:before {
-    opacity: 0.08;
-  }
-
   // Modifiers
   &.is-seamless {
     background-color: transparent;
@@ -97,10 +71,6 @@
     &:focus {
       background-color: transparent;
       color: currentColor;
-    }
-
-    &:before {
-      display: block;
     }
   }
 

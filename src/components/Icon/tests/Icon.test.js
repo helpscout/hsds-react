@@ -15,6 +15,14 @@ describe('ClassName', () => {
 
     expect(wrapper.prop('className')).toContain(className)
   })
+
+  test('Applies icon name className', () => {
+    const className = 'channel-4'
+    const wrapper = shallow(<Icon name='emoji' className={className} />)
+
+    expect(wrapper.hasClass(className)).toBeTruthy()
+    expect(wrapper.hasClass('is-iconName-emoji')).toBeTruthy()
+  })
 })
 
 describe('Interactions', () => {
