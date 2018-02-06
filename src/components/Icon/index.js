@@ -61,6 +61,7 @@ const Icon = props => {
     !clickable && ignoreClick && 'is-noInteract',
     faint && 'is-faint',
     inline && 'is-inline',
+    name && `is-iconName-${name}`,
     muted && 'is-muted',
     shade && `is-${shade}`,
     subtle && 'is-subtle',

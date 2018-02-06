@@ -102,7 +102,7 @@ class Modal extends Component {
       ? closeIconRepositionDelay
       : modalAnimationDelay
 
-    const defaultOffset = 8
+    const defaultOffset = 9
 
     setTimeout(() => {
       const offset = hasContentOverflowY(scrollNode)
