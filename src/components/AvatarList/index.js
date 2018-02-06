@@ -48,7 +48,9 @@ class AvatarList extends Component {
       .filter(child => child.type && child.type === Avatar)
 
     const totalAvatarCount = avatars.length
-    const avatarList = max ? avatars.slice(0, max) : avatars
+    const avatarList = max && totalAvatarCount > max
+      ? avatars.slice(0, (max - 1))
+      : avatars
     const additionalAvatarCount = totalAvatarCount - avatarList.length
 
     const componentClassName = classNames(
