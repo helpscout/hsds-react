@@ -4,7 +4,7 @@ import { Avatar, AvatarStack } from '../../src/index.js'
 import AvatarSpec from '../AvatarGrid/specs/Avatar'
 
 const stories = storiesOf('AvatarStack', module)
-const fixtures = AvatarSpec.generate(20)
+const fixtures = AvatarSpec.generate(5)
 
 const avatarsMarkup = fixtures.map(avatar => {
   const {
@@ -38,7 +38,7 @@ class TestComponent extends Component {
     console.log(`AvatarStack: TestComponent: render(${this.state.someProp})`)
     return (
       <div>
-        <AvatarStack max={4}>
+        <AvatarStack max={5}>
           {avatarsMarkup}
         </AvatarStack>
         <button onClick={this.updateState}>Update: State</button>
@@ -48,7 +48,7 @@ class TestComponent extends Component {
 }
 
 stories.add('default', () => (
-  <AvatarStack max={4}>
+  <AvatarStack max={5}>
     {avatarsMarkup}
   </AvatarStack>
 ))
