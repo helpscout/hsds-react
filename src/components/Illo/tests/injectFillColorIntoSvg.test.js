@@ -11,7 +11,7 @@ test('Returns empty string if invalid arguments', () => {
 describe('replace', () => {
   test('Replaces prop color with color name', () => {
     const markup = `
-      <svg><path data-path-primary></path></svg>
+      <svg><path data-path-primary=""></path></svg>
     `
     const props = {
       primary: 'red'
@@ -24,7 +24,7 @@ describe('replace', () => {
 
   test('Replaces prop color with hex', () => {
     const markup = `
-      <svg><path data-path-primary></path></svg>
+      <svg><path data-path-primary=""></path></svg>
     `
     const props = {
       primary: '#ff9900'
@@ -37,7 +37,7 @@ describe('replace', () => {
 
   test('Replaces prop color with rgb', () => {
     const markup = `
-      <svg><path data-path-primary></path></svg>
+      <svg><path data-path-primary=""></path></svg>
     `
     const props = {
       primary: 'rgb(0,0,0)'
@@ -50,7 +50,7 @@ describe('replace', () => {
 
   test('Replaces prop color with rgba', () => {
     const markup = `
-      <svg><path data-path-primary></path></svg>
+      <svg><path data-path-primary=""></path></svg>
     `
     const props = {
       primary: 'rgba(0,0,0)'
@@ -66,13 +66,13 @@ describe('color', () => {
   test('Injects specified color', () => {
     const markup = `
       <svg>
-        <path data-path-primary></path>
-        <path data-path-secondary></path>
-        <path data-path-ui></path>
-        <path data-path-uiDark></path>
-        <path data-path-uiLight></path>
-        <path data-path-uiTransparent></path>
-        <path data-path-uiWhite></path>
+        <path data-path-primary=""></path>
+        <path data-path-secondary=""></path>
+        <path data-path-ui=""></path>
+        <path data-path-uiDark=""></path>
+        <path data-path-uiLight=""></path>
+        <path data-path-uiTransparent=""></path>
+        <path data-path-uiWhite=""></path>
       </svg>
     `
     const props = {

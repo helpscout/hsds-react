@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
   <g fill="none" fill-rule="evenodd">
-    <circle cx="36" cy="36" r="26" fill="#FFF" data-path-uiWhite />
-    <path class="c-Illo__pathFill c-Illo__pathFillUILight" data-path-uiLight d="M36 72C16.118 72 0 55.882 0 36S16.118 0 36 0s36 16.118 36 36-16.118 36-36 36zm0-10c14.36 0 26-11.64 26-26S50.36 10 36 10 10 21.64 10 36s11.64 26 26 26z"/>
-    <path class="c-Illo__pathFill c-Illo__pathFillUI" data-path-ui d="M37.414 36l3.89 3.89a1 1 0 0 1-1.415 1.413L36 37.414l-3.89 3.89a1 1 0 0 1-1.413-1.415L34.586 36l-3.89-3.89a1 1 0 1 1 1.415-1.413L36 34.586l3.89-3.89a1 1 0 0 1 1.413 1.415L37.414 36zM36 62c-14.36 0-26-11.64-26-26s11.64-26 26-26 26 11.64 26 26-11.64 26-26 26zm0-2c13.255 0 24-10.745 24-24S49.255 12 36 12 12 22.745 12 36s10.745 24 24 24z"/>
+    <circle cx="36" cy="36" r="26" fill="#FFF" data-path-uiWhite="" />
+    <path class="c-Illo__pathFill c-Illo__pathFillUILight" data-path-uiLight="" d="M36 72C16.118 72 0 55.882 0 36S16.118 0 36 0s36 16.118 36 36-16.118 36-36 36zm0-10c14.36 0 26-11.64 26-26S50.36 10 36 10 10 21.64 10 36s11.64 26 26 26z"/>
+    <path class="c-Illo__pathFill c-Illo__pathFillUI" data-path-ui="" d="M37.414 36l3.89 3.89a1 1 0 0 1-1.415 1.413L36 37.414l-3.89 3.89a1 1 0 0 1-1.413-1.415L34.586 36l-3.89-3.89a1 1 0 1 1 1.415-1.413L36 34.586l3.89-3.89a1 1 0 0 1 1.413 1.415L37.414 36zM36 62c-14.36 0-26-11.64-26-26s11.64-26 26-26 26 11.64 26 26-11.64 26-26 26zm0-2c13.255 0 24-10.745 24-24S49.255 12 36 12 12 22.745 12 36s10.745 24 24 24z"/>
   </g>
 </svg>

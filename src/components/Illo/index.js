@@ -118,13 +118,13 @@ export const injectFillColorIntoSvg = (svgHTML, props = {
     ? `style="fill: ${color};"` : null
 
   return svgHTML
-    .replace('data-path-primary', makeStyle(primary))
-    .replace('data-path-secondary', makeStyle(secondary))
-    .replace('data-path-ui', makeStyle(ui))
-    .replace('data-path-uiDark', makeStyle(uiDark))
-    .replace('data-path-uiLight', makeStyle(uiLight))
-    .replace('data-path-uiTransparent', makeStyle(uiTransparent))
-    .replace('data-path-uiWhite', makeStyle(uiWhite))
+    .replace('data-path-primary=""', makeStyle(primary))
+    .replace('data-path-secondary=""', makeStyle(secondary))
+    .replace('data-path-ui=""', makeStyle(ui))
+    .replace('data-path-uiDark=""', makeStyle(uiDark))
+    .replace('data-path-uiLight=""', makeStyle(uiLight))
+    .replace('data-path-uiTransparent=""', makeStyle(uiTransparent))
+    .replace('data-path-uiWhite=""', makeStyle(uiWhite))
 }
 
 Illo.propTypes = propTypes
