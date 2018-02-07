@@ -21,9 +21,12 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
-const simulateKeyPress = (keyCode) => {
-  const event = new Event('keyup')
+const simulateKeyPress = (keyCode, eventType = 'keyup', modifier) => {
+  const event = new Event(eventType)
   event.keyCode = keyCode
+  if (modifier) {
+    event[modifier] = true
+  }
 
   document.dispatchEvent(event)
 }
@@ -701,5 +704,124 @@ describe('modalAnimation', () => {
     const o = wrapper.find('.c-Modal__Card-container')
 
     expect(o.prop('easing')).toBe('fakeBounce')
+  })
+})
+
+describe('Keyboard: Tab', () => {
+  test('handleOnTab fires if Tab is pressed', () => {
+    const wrapper = mount(
+      <ModalComponent isOpen />
+    )
+    const spy = jest.spyOn(wrapper.instance(), 'handleOnTab')
+    wrapper.instance().forceUpdate()
+
+    simulateKeyPress(Keys.TAB, 'keydown')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('prevents tab from focusing next node, if current node is last focusable node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <ModalComponent isOpen>
+        <button className='one'>one</button>
+        <button className='two'>two</button>
+        <button className='three'>three</button>
+      </ModalComponent>
+    )
+    const o = wrapper.find('.three').node
+
+    wrapper.instance().handleOnTab({
+      target: o,
+      preventDefault: spy
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('pressing tab on non-last focusable child nodes does not preventDefault', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <ModalComponent isOpen>
+        <button className='one'>one</button>
+        <button className='two'>two</button>
+        <button className='three'>three</button>
+      </ModalComponent>
+    )
+    const o = wrapper.find('.two').node
+
+    wrapper.instance().handleOnTab({
+      target: o,
+      preventDefault: spy
+    })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('handleOnShiftTab fires if Tab + shift is pressed', () => {
+    const wrapper = mount(
+      <ModalComponent isOpen />
+    )
+    const spy = jest.spyOn(wrapper.instance(), 'handleOnShiftTab')
+    wrapper.instance().forceUpdate()
+
+    simulateKeyPress(Keys.TAB, 'keydown', 'shiftKey')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('prevents shift and tab from focusing prev node, if current node is first focusable node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <ModalComponent isOpen>
+        <button className='one'>one</button>
+        <button className='two'>two</button>
+        <button className='three'>three</button>
+      </ModalComponent>
+    )
+    const o = wrapper.find('.one').node
+
+    wrapper.instance().handleOnShiftTab({
+      target: o,
+      preventDefault: spy
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('pressing tab on non-first focusable child nodes does not preventDefault', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <ModalComponent isOpen>
+        <button className='one'>one</button>
+        <button className='two'>two</button>
+        <button className='three'>three</button>
+      </ModalComponent>
+    )
+    const o = wrapper.find('.two').node
+
+    wrapper.instance().handleOnShiftTab({
+      target: o,
+      preventDefault: spy
+    })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('Card: Focus', () => {
+  test('Autofocuses card on mount', (done) => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <ModalComponent />
+    )
+    const o = wrapper.instance().cardNode
+    o.onfocus = spy
+    wrapper.setProps({ isOpen: true })
+
+    setTimeout(() => {
+      expect(spy).toHaveBeenCalled()
+      done()
+    }, 350)
   })
 })

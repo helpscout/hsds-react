@@ -31,6 +31,7 @@ A Modal component presents content within a container on top of the application'
 | Prop | Type | Description |
 | --- | --- | --- |
 | cardClassName | `string` | Custom class names to be added to the child [Card](../Card) component. |
+| containTabKeyPress | `bool` | Prevents tab/shift+tab focus from leaving the Modal. Default `true`. |
 | className | `string` | Custom class names to be added to the component. |
 | closeIcon | `bool` | Shows/hides the component's close icon UI. |
 | closeIconRepositionDelay | `number ` | Amount of time before the [CloseButton](../../CloseButton) gets repositioned. |
@@ -41,6 +42,7 @@ A Modal component presents content within a container on top of the application'
 | modalAnimationDuration | `number` | Custom [animation](../Animate) duration for the child [Card](../Card) component. |
 | modalAnimationEasing | `string` | Custom [animation](../Animate) easing for the child [Card](../Card) component. |
 | modalAnimationSequence | `array`/`string` | Custom [animation](../Animate) sequence for the child [Card](../Card) component. |
+| modalFocusTimeout | `number` | Amount of time (`ms`) before the Modal force focuses. |
 | overlayClassName | `string` | Custom class names to be added to the child [Overlay](../Overlay) component. |
 | overlayAnimationDelay | `number` | Custom [animation](../Animate) delay for the child [Overlay](../Overlay) component. |
 | overlayAnimationDuration | `number` | Custom [animation](../Animate) duration for the child [Overlay](../Overlay) component. |

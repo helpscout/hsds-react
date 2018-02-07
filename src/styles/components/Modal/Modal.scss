@@ -33,6 +33,10 @@
     min-height: 0;
   }
 
+  &__Card {
+    outline: none;
+  }
+
   & {
     #{$block}__Card { // Increase specificity on this style
       display: flex;

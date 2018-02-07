@@ -390,3 +390,23 @@ stories.add('stateful example', () => (
     <StatefulComponent />
   </div>
 ))
+
+stories.add('tabbing', () => (
+  <Modal isOpen trigger={<Link>Clicky</Link>}>
+    <Modal.Content>
+      <Modal.Body>
+        <Heading>Title</Heading>
+        <button>One</button>
+        {ContentSpec.generate(6).map(({id, content}) => (
+          <p key={id}>{content}</p>
+        ))}
+        <button>Two</button>
+        <button>Three</button>
+        {ContentSpec.generate(6).map(({id, content}) => (
+          <p key={id}>{content}</p>
+        ))}
+        <button>Four</button>
+      </Modal.Body>
+    </Modal.Content>
+  </Modal>
+))

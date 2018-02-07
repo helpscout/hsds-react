@@ -1,4 +1,5 @@
 import React, {PureComponent as Component} from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Body from './Body'
 import Content from './Content'
@@ -8,18 +9,26 @@ import Animate from '../Animate'
 import Card from '../Card'
 import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
+import KeypressListener from '../KeypressListener'
 import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
+import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { propTypes as portalTypes } from '../Portal'
-import { isNodeElement, hasContentOverflowY } from '../../utilities/node'
+import { findFocusableNodes } from '../../utilities/focus'
+import {
+  getClosestDocument,
+  isNodeElement,
+  hasContentOverflowY
+} from '../../utilities/node'
 import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 
 export const propTypes = Object.assign({}, portalTypes, {
   cardClassName: PropTypes.string,
   closeIcon: PropTypes.bool,
   closeIconRepositionDelay: PropTypes.number,
+  containTabKeyPress: PropTypes.bool,
   modalAnimationDelay: PropTypes.number,
   modalAnimationDuration: PropTypes.number,
   modalAnimationEasing: PropTypes.string,
@@ -27,6 +36,7 @@ export const propTypes = Object.assign({}, portalTypes, {
     PropTypes.number,
     PropTypes.string
   ]),
+  modalFocusTimeout: PropTypes.number,
   overlayAnimationDelay: PropTypes.number,
   overlayAnimationDuration: PropTypes.number,
   overlayAnimationEasing: PropTypes.string,
@@ -46,10 +56,12 @@ const defaultProps = {
   seamless: false,
   isOpen: false,
   closeIconRepositionDelay: 50,
+  containTabKeyPress: true,
   modalAnimationDelay: 0,
   modalAnimationDuration: 200,
   modalAnimationEasing: 'bounce',
   modalAnimationSequence: 'fade down',
+  modalFocusTimeout: 90,
   overlayAnimationDelay: 0,
   overlayAnimationDuration: 200,
   overlayAnimationEasing: 'ease',
@@ -74,19 +86,68 @@ const scrollbarWidth = getScrollbarWidth()
 class Modal extends Component {
   constructor () {
     super()
+
+    this.documentNode = null
+    this.cardNode = null
     this.closeNode = null
     this.scrollableNode = null
     this.handleOnResize = this.handleOnResize.bind(this)
+    this.handleOnTab = this.handleOnTab.bind(this)
+    this.handleOnShiftTab = this.handleOnShiftTab.bind(this)
     this.positionCloseNode = this.positionCloseNode.bind(this)
+  }
+
+  componentWillMount () {
+    this.documentNode = getClosestDocument(ReactDOM.findDOMNode(this))
   }
 
   componentDidMount () {
     this.positionCloseNode()
+    this.focusModalCard()
+  }
+
+  componentWillUnmount () {
+    this.documentNode = null
+    this.cardNode = null
+    this.closeNode = null
+    this.scrollableNode = null
   }
 
   /* istanbul ignore next */
   handleOnResize () {
     this.positionCloseNode()
+  }
+
+  handleOnTab (event) {
+    const { containTabKeyPress } = this.props
+    if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
+    const focusedNode = event.target
+    const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
+    const focusedNodeIndex = Array.prototype.indexOf.call(focusableNodes, focusedNode)
+
+    if (focusedNodeIndex === (focusableNodes.length - 1)) {
+      event.preventDefault()
+    }
+  }
+
+  handleOnShiftTab (event) {
+    const { containTabKeyPress } = this.props
+    if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
+    const focusedNode = event.target
+    const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
+    const focusedNodeIndex = Array.prototype.indexOf.call(focusableNodes, focusedNode)
+
+    if (focusedNodeIndex === 0) {
+      event.preventDefault()
+    }
+  }
+
+  focusModalCard () {
+    const { modalFocusTimeout } = this.props
+    if (!this.cardNode) return
+    setTimeout(() => {
+      this.cardNode.focus()
+    }, modalFocusTimeout)
   }
 
   positionCloseNode (scrollableNode) {
@@ -129,12 +190,14 @@ class Modal extends Component {
       closeIcon,
       closeIconRepositionDelay,
       closePortal,
+      containTabKeyPress,
       exact,
       isOpen,
       modalAnimationDelay,
       modalAnimationDuration,
       modalAnimationEasing,
       modalAnimationSequence,
+      modalFocusTimeout,
       onClose,
       onScroll,
       openPortal,
@@ -176,7 +239,7 @@ class Modal extends Component {
         className='c-Modal__close'
         ref={node => { this.closeNode = node }}
       >
-        <CloseButton onClick={closePortal} />
+        <CloseButton onClick={closePortal} tabIndex='-1' />
       </div>
     ) : null
 
@@ -198,7 +261,13 @@ class Modal extends Component {
     })
 
     const modalContentMarkup = !seamless ? (
-      <Card className={cardComponentClassName} seamless role='dialog' nodeRef={node => { this.cardNode = node }}>
+      <Card
+        className={cardComponentClassName}
+        seamless
+        role='dialog'
+        nodeRef={node => { this.cardNode = node }}
+        tabIndex='-1'
+      >
         {closeMarkup}
         {parsedChildren}
       </Card>
@@ -210,6 +279,8 @@ class Modal extends Component {
 
     return (
       <div className={componentClassName} role='document' style={modalStyle} {...rest}>
+        <KeypressListener keyCode={Keys.TAB} handler={this.handleOnTab} type='keydown' />
+        <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={this.handleOnShiftTab} type='keydown' />
         <EventListener event='resize' handler={handleOnResize} />
         <div className='c-Modal__innerWrapper'>
           <Animate
