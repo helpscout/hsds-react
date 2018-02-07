@@ -38,7 +38,7 @@ stories.add('colors', () => {
   ].map(i => (
     <div style={{display: 'inline-block', margin: 12, textAlign: 'center'}}>
       <Centralize>
-        <Illo name='tick' key={i} color={i} />
+        <Illo name='plane' key={i} color={i} />
       </Centralize>
       <Text muted size='13'>{i}</Text>
       <br />
@@ -47,6 +47,20 @@ stories.add('colors', () => {
 
   return (<div>{icons}</div>)
 })
+
+stories.add('custom colors', () => (
+  <div style={{background: '#ff9900', display: 'inline-block', margin: 12, textAlign: 'center'}}>
+    <Centralize>
+      <Illo
+        name='plane'
+        color='rgba(0, 0, 0, 0.9)'
+        colorSecondary='rgba(255, 255, 255, 0.5)'
+      />
+    </Centralize>
+    <Text muted size='13'>Plane</Text>
+    <br />
+  </div>
+))
 
 stories.add('sizes', () => {
   const icons = [
