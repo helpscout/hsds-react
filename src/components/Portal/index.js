@@ -2,6 +2,7 @@ import {PureComponent as Component} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { default as Container, ID as portalContainerId } from './Container'
+import { isNodeElement } from '../../utilities/node'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -66,9 +67,12 @@ class Portal extends Component {
 
   getMountSelector () {
     const { renderTo } = this.props
+    let mountSelector
     // 1. Prioritize renderTo selector
-    let mountSelector = (typeof renderTo === 'string' && renderTo) ? document.querySelector(renderTo) : false
-    mountSelector = (typeof renderTo === 'object' && renderTo.tagName) ? renderTo : mountSelector
+    if (renderTo) {
+      mountSelector = (typeof renderTo === 'string') ? document.querySelector(renderTo) : false
+      mountSelector = (typeof renderTo === 'object' && isNodeElement(renderTo)) ? renderTo : mountSelector
+    }
     // 2. Fallback to <Portal.Container />
     mountSelector = mountSelector || document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body
