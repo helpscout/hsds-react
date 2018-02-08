@@ -76,7 +76,7 @@ class Portal extends Component {
     // 2. Fallback to <Portal.Container />
     mountSelector = mountSelector || document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body
-    return mountSelector || document.body // fallback
+    return mountSelector || window.document.body // fallback
   }
 
   renderPortalContent (props) {
