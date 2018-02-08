@@ -3,7 +3,8 @@ import { storiesOf } from '@storybook/react'
 import {
   darken as darkenFn,
   lighten as lightenFn,
-  optimalTextColor
+  optimalTextColor,
+  getColorShade
 } from '../../src/utilities/color'
 
 const stories = storiesOf('Utilities/Color', module)
@@ -38,6 +39,59 @@ const Color = props => {
     <div style={styles}>
       {background}<br />
       ({amount})
+    </div>
+  )
+}
+
+const Shade = props => {
+  const {
+    color,
+    lighten,
+    darken
+  } = props
+
+  const hex = color.indexOf('#') === 0 ? color : `#${color}`
+
+  const background = lighten
+    ? lightenFn(hex, lighten) : darken
+    ? darkenFn(hex, darken)
+    : hex
+
+  const styles = {
+    background,
+    borderLeft: `10px solid ${lightenFn(background, 10)}`,
+    borderRight: `10px solid ${darkenFn(background, 10)}`,
+    boxSizing: 'border-box',
+    color: optimalTextColor(background),
+    display: 'inline-block',
+    margin: 5,
+    padding: 5,
+    width: 80,
+    textAlign: 'center'
+  }
+
+  return (
+    <div style={styles}>
+      {background}<br />
+      ({getColorShade(background)})
+    </div>
+  )
+}
+
+const ShadeList = props => {
+  const { color } = props
+  return (
+    <div>
+      {[...Array(201)].map((c, index) => {
+        return (
+          <Shade color={color} lighten={((201 - index) / 2)} key={`c-l-${index}`} />
+        )
+      })}
+      {[...Array(201)].map((c, index) => {
+        return (
+          <Shade color={color} darken={(index / 2)} key={`c-${index}`} />
+        )
+      })}
     </div>
   )
 }
@@ -99,6 +153,22 @@ stories.add('darken', () => {
           <Color color='ffdd44' darken={index} key={`c-${index}`} />
         )
       })}
+    </div>
+  )
+})
+
+stories.add('shades', () => {
+  return (
+    <div>
+      <ShadeList color='#D0021B' />
+      <ShadeList color='#F8E71C' />
+      <ShadeList color='#F5A623' />
+      <ShadeList color='#7ED321' />
+      <ShadeList color='#50E3C2' />
+      <ShadeList color='#4A90E2' />
+      <ShadeList color='#BD10E0' />
+      <ShadeList color='#999999' />
+      <ShadeList color='#7e80e7' />
     </div>
   )
 })
