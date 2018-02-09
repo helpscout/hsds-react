@@ -144,9 +144,11 @@ class Modal extends Component {
 
   focusModalCard () {
     const { modalFocusTimeout } = this.props
-    if (!this.cardNode) return
     setTimeout(() => {
-      this.cardNode.focus()
+      /* istanbul ignore else */
+      if (this.cardNode) {
+        this.cardNode.focus()
+      }
     }, modalFocusTimeout)
   }
 
