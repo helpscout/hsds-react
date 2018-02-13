@@ -2,6 +2,11 @@ const isHex = hex => (hex && typeof hex === 'string')
 const isNumber = value => (typeof value === 'number')
 
 const lightThreshold = 0.61
+const optimalTextColorValues = {
+  r: 129,
+  g: 522,
+  b: 49
+}
 
 // Source
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
@@ -41,14 +46,23 @@ export const hexToHsl = (hex) => {
   return rgbToHsl(rgb.r, rgb.g, rgb.b)
 }
 
-export const optimalTextColor = (backgroundHex) => {
+export const optimalTextColor = (
+  backgroundHex,
+  propValues = optimalTextColorValues
+) => {
   if (!isHex(backgroundHex)) return null
+  // Defaults from original formula:
+  // r: 299
+  // g: 587
+  // b: 114
+  const defaultPropValues = optimalTextColorValues
+  const { r, g, b } = Object.assign({}, defaultPropValues, propValues)
   const backgroundRgb = hexToRgb(backgroundHex)
   const shade = Math.round(
     (
-      (backgroundRgb.r * 179) + // Default: 299
-      (backgroundRgb.g * 557) + // Default: 587
-      (backgroundRgb.b * 74)    // Default: 114
+      (backgroundRgb.r * r) +
+      (backgroundRgb.g * g) +
+      (backgroundRgb.b * b)
     ) / 1000
   )
 
@@ -133,11 +147,11 @@ export const darken = (hex, value = 20) => {
   return lightenDarkenColor(hex, ((value * 2.55) * -1))
 }
 
-export const getColorShade = (hex) => {
+export const getColorShade = (hex, propValues = optimalTextColorValues) => {
   if (!isHex(hex)) return null
   const hsl = hexToHsl(hex)
   const l = hsl.l
-  const isDarkText = optimalTextColor(hex) === 'black'
+  const isDarkText = optimalTextColor(hex, propValues) === 'black'
 
   if (l >= 0.9) {
     return 'lightest'
