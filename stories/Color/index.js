@@ -160,6 +160,7 @@ stories.add('darken', () => {
 stories.add('shades', () => {
   return (
     <div>
+      <ShadeList color='#8db058' />
       <ShadeList color='#D0021B' />
       <ShadeList color='#F8E71C' />
       <ShadeList color='#F5A623' />

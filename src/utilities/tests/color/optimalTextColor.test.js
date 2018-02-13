@@ -24,3 +24,12 @@ test('Returns black, if backgroundColor is too bright', () => {
   expect(optimalTextColor('#d9d9dd')).toEqual('black')
   expect(optimalTextColor('#c1cbd4')).toEqual('black')
 })
+
+test('Can provide custom RGB prop values', () => {
+  const customValues = {
+    r: 999,
+    g: 999,
+    b: 999
+  }
+  expect(optimalTextColor('#ff6688'), customValues).toEqual('white')
+})
