@@ -53,4 +53,28 @@ button.#{$seed-button-namespace} {
       @include generate-button-styles($config);
     }
   }
+  // Theme: Pill
+  &--pill.c-Button {
+    background-color: white;
+    border-radius: 9999px;
+    color: _color(charcoal, 200);
+    font-size: 12px;
+    font-weight: 500;
+    height: 18px;
+    line-height: 1;
+    padding: 0 8px;
+
+    &:hover {
+      color: _color(charcoal, 300);
+      border-color: _color(grey, 800);
+    }
+    &:active {
+      background-color: _color(grey, 300);
+    }
+    &:active,
+    &:focus {
+      border-color: _color(grey, 800);
+      box-shadow: 0 0 0 1px _color(grey, 800);
+    }
+  }
 }

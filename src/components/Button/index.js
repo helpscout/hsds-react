@@ -24,7 +24,6 @@ export const propTypes = {
 }
 
 const defaultProps = {
-  accessibilityLabel: '',
   block: false,
   disabled: false,
   onBlur: noop,
@@ -33,8 +32,6 @@ const defaultProps = {
   outline: false,
   plain: false,
   primary: false,
-  size: '',
-  state: '',
   submit: false
 }
 
