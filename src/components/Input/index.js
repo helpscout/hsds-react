@@ -223,15 +223,15 @@ class Input extends Component {
       </div>
       : null
 
-    const helpTextMarkup = helpText
-      ? <HelpText state={state}>
-        {helpText}
+    const hintTextMarkup = hintText
+      ? <HelpText className='c-Input__hintText' muted>
+        {hintText}
       </HelpText>
       : null
 
-    const hintTextMarkup = hintText
-      ? <HelpText state={state}>
-        {hintText}
+    const helpTextMarkup = helpText
+      ? <HelpText className='c-Input__helpText' state={state}>
+        {helpText}
       </HelpText>
       : null
 
