@@ -192,6 +192,12 @@ describe('Multiline', () => {
 })
 
 describe('HelpText', () => {
+  test('Does not render by default', () => {
+    const wrapper = mount(<Input />)
+    const o = wrapper.find('.c-Input__helpText')
+    expect(o.length).not.toBeTruthy()
+  })
+
   test('Adds helpText if specified', () => {
     const wrapper = mount(<Input helpText='Help text' />)
     const helpText = wrapper.find('div').last()
@@ -201,11 +207,23 @@ describe('HelpText', () => {
 })
 
 describe('HintText', () => {
+  test('Does not render by default', () => {
+    const wrapper = mount(<Input />)
+    const o = wrapper.find('.c-Input__hintText')
+    expect(o.length).not.toBeTruthy()
+  })
+
   test('Adds hintText if specified', () => {
     const wrapper = mount(<Input hintText='Hint text' />)
     const hintText = wrapper.find('div').first()
     expect(hintText.exists()).toBeTruthy()
     expect(hintText.text()).toBe('Hint text')
+  })
+
+  test('Does not pass state to hintText', () => {
+    const wrapper = mount(<Input hintText='Hint text' state='error' />)
+    const o = wrapper.find('.c-Input__hintText')
+    expect(o.props().state).not.toBeTruthy()
   })
 })
 

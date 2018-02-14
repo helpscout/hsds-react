@@ -29,6 +29,7 @@ export const propTypes = {
   disabled: PropTypes.bool,
   forceAutoFocusTimeout: PropTypes.number,
   helpText: PropTypes.string,
+  hintText: PropTypes.string,
   id: PropTypes.string,
   isFocused: PropTypes.bool,
   label: PropTypes.string,
@@ -149,6 +150,7 @@ class Select extends Component {
       disabled,
       forceAutoFocusTimeout,
       helpText,
+      hintText,
       id,
       isFocused,
       label,
@@ -239,8 +241,14 @@ class Select extends Component {
       </div>
       : null
 
+    const hintTextMarkup = hintText
+      ? <HelpText className='c-Select__hintText' muted>
+        {hintText}
+      </HelpText>
+      : null
+
     const helpTextMarkup = helpText
-      ? <HelpText state={state}>
+      ? <HelpText className='c-Select__helpText' state={state}>
         {helpText}
       </HelpText>
       : null
@@ -250,6 +258,7 @@ class Select extends Component {
     return (
       <div className='c-InputWrapper' style={styleProp}>
         {labelMarkup}
+        {hintTextMarkup}
         <div className={componentClassName}>
           {prefixMarkup}
           <select

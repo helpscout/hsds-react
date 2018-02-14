@@ -202,6 +202,42 @@ describe('Prefix', () => {
   })
 })
 
+describe('HelpText', () => {
+  test('Does not render by default', () => {
+    const wrapper = mount(<Select />)
+    const o = wrapper.find('.c-Select__helpText')
+    expect(o.length).not.toBeTruthy()
+  })
+
+  test('Adds helpText if specified', () => {
+    const wrapper = mount(<Select helpText='Help text' />)
+    const o = wrapper.find('.c-Select__helpText')
+    expect(o.exists()).toBeTruthy()
+    expect(o.text()).toBe('Help text')
+  })
+})
+
+describe('HintText', () => {
+  test('Does not render by default', () => {
+    const wrapper = mount(<Select />)
+    const o = wrapper.find('.c-Select__hintText')
+    expect(o.length).not.toBeTruthy()
+  })
+
+  test('Adds hintText if specified', () => {
+    const wrapper = mount(<Select hintText='Hint text' />)
+    const o = wrapper.find('.c-Select__hintText')
+    expect(o.exists()).toBeTruthy()
+    expect(o.text()).toBe('Hint text')
+  })
+
+  test('Does not pass state to hintText', () => {
+    const wrapper = mount(<Select hintText='Hint text' state='error' />)
+    const o = wrapper.find('.c-Select__hintText')
+    expect(o.props().state).not.toBeTruthy()
+  })
+})
+
 describe('States', () => {
   test('Disables select if disabled prop is true', () => {
     const wrapper = shallow(<Select disabled />)
