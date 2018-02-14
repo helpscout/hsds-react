@@ -40,5 +40,7 @@ stories.add('themes', () => (
   <div>
     <Button theme='editing' block size='lg'>Block</Button><br />
     <Button theme='editing' block disabled>Block</Button><br />
+    <Button theme='pill' size='lg'>Pill Button</Button><br />
+    <Button theme='pill' disabled>Pill Button</Button><br />
   </div>
 ))
