@@ -1,9 +1,31 @@
 import {
+  isString,
   isWord,
   nameToInitials,
   wordHasSpaces,
   truncateMiddle
 } from '../strings'
+
+describe('isString', () => {
+  test('Returns false for non-strings', () => {
+    expect(isString()).toBe(false)
+    expect(isString(0)).toBe(false)
+    expect(isString(1)).toBe(false)
+    expect(isString([])).toBe(false)
+    expect(isString({})).toBe(false)
+    expect(isString(undefined)).toBe(false)
+    expect(isString(null)).toBe(false)
+    expect(isString(null)).toBe(false)
+    expect(isString(/g/g)).toBe(false)
+  })
+
+  test('Returns true for strings', () => {
+    expect(isString('')).toBe(true)
+    expect(isString('word')).toBe(true)
+    expect(isString('   word')).toBe(true)
+    expect(isString('   word word2 ')).toBe(true)
+  })
+})
 
 describe('nameToInitials', () => {
   test('Returns empty string if no args are passed', () => {

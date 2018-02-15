@@ -4,6 +4,7 @@ import classNames from '../../utilities/classNames'
 import Text from '../Text'
 import { sizeTypes } from '../Text/propTypes'
 import { stateTypes } from '../../constants/propTypes'
+import { isString } from '../../utilities/strings'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -33,9 +34,15 @@ const HelpText = props => {
     className
   )
 
+  const contentMarkup = isString(children) ? (
+    <Text className='c-HelpText__text' size={size}>
+      {children}
+    </Text>
+  ) : children
+
   return (
     <div className={componentClassName} {...rest}>
-      <Text size={size}>{children}</Text>
+      {contentMarkup}
     </div>
   )
 }

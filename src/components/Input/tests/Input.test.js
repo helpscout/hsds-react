@@ -3,6 +3,12 @@ import { mount, shallow } from 'enzyme'
 import Input from '..'
 import Resizer from '../Resizer'
 
+const ui = {
+  helpText: '.c-Input__helpText',
+  hintText: '.c-Input__hintText',
+  label: '.c-Input__label'
+}
+
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Input />)
@@ -194,46 +200,79 @@ describe('Multiline', () => {
 describe('HelpText', () => {
   test('Does not render by default', () => {
     const wrapper = mount(<Input />)
-    const o = wrapper.find('.c-Input__helpText')
+    const o = wrapper.find(ui.helpText)
     expect(o.length).not.toBeTruthy()
   })
 
   test('Adds helpText if specified', () => {
     const wrapper = mount(<Input helpText='Help text' />)
-    const helpText = wrapper.find('div').last()
-    expect(helpText.exists()).toBeTruthy()
-    expect(helpText.text()).toBe('Help text')
+    const o = wrapper.find(ui.helpText)
+    expect(o.exists()).toBeTruthy()
+    expect(o.text()).toBe('Help text')
+  })
+
+  test('Accepts React components', () => {
+    const custom = (<div className='custom'>Custom text</div>)
+    const wrapper = mount(<Input helpText={custom} />)
+    const o = wrapper.find(ui.helpText)
+    const c = o.find('.custom')
+
+    expect(o.exists()).toBeTruthy()
+    expect(c.exists()).toBeTruthy()
+    expect(c.text()).toBe('Custom text')
   })
 })
 
 describe('HintText', () => {
   test('Does not render by default', () => {
     const wrapper = mount(<Input />)
-    const o = wrapper.find('.c-Input__hintText')
+    const o = wrapper.find(ui.hintText)
     expect(o.length).not.toBeTruthy()
   })
 
   test('Adds hintText if specified', () => {
     const wrapper = mount(<Input hintText='Hint text' />)
-    const hintText = wrapper.find('div').first()
-    expect(hintText.exists()).toBeTruthy()
-    expect(hintText.text()).toBe('Hint text')
+    const o = wrapper.find(ui.hintText)
+    expect(o.exists()).toBeTruthy()
+    expect(o.text()).toBe('Hint text')
   })
 
   test('Does not pass state to hintText', () => {
     const wrapper = mount(<Input hintText='Hint text' state='error' />)
-    const o = wrapper.find('.c-Input__hintText')
+    const o = wrapper.find(ui.hintText)
     expect(o.props().state).not.toBeTruthy()
+  })
+
+  test('Accepts React components', () => {
+    const custom = (<div className='custom'>Custom text</div>)
+    const wrapper = mount(<Input hintText={custom} />)
+    const o = wrapper.find(ui.hintText)
+    const c = o.find('.custom')
+
+    expect(o.exists()).toBeTruthy()
+    expect(c.exists()).toBeTruthy()
+    expect(c.text()).toBe('Custom text')
   })
 })
 
 describe('Label', () => {
   test('Adds label if specified', () => {
     const wrapper = mount(<Input label='Channel' />)
-    const label = wrapper.find('Label')
+    const label = wrapper.find(ui.label)
 
     expect(label.exists()).toBeTruthy()
     expect(label.text()).toBe('Channel')
+  })
+
+  test('Accepts React components', () => {
+    const custom = (<div className='custom'>Custom text</div>)
+    const wrapper = mount(<Input label={custom} />)
+    const o = wrapper.find(ui.label)
+    const c = o.find('.custom')
+
+    expect(o.exists()).toBeTruthy()
+    expect(c.exists()).toBeTruthy()
+    expect(c.text()).toBe('Custom text')
   })
 })
 

@@ -17,6 +17,18 @@ describe('Content', () => {
 
     expect(wrapper.html()).toContain('Gator')
   })
+
+  test('Renders React Component as content', () => {
+    const wrapper = shallow(
+      <HelpText>
+        <div className='gator'>Gator</div>
+      </HelpText>
+    )
+    const o = wrapper.find('.gator')
+
+    expect(o.length).toBe(1)
+    expect(o.html()).toContain('Gator')
+  })
 })
 
 describe('Styles', () => {
