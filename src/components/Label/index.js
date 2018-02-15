@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from '../../utilities/classNames'
 import Text from '../Text'
 import { stateTypes } from '../../constants/propTypes'
+import classNames from '../../utilities/classNames'
+import { isString } from '../../utilities/strings'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -13,6 +14,7 @@ export const propTypes = {
 const Label = props => {
   const {
     className,
+    children,
     for: htmlFor,
     state,
     ...rest
@@ -24,11 +26,15 @@ const Label = props => {
     className
   )
 
+  const contentMarkup = isString(children) ? (
+    <Text className='c-Label__text' faint>
+      {children}
+    </Text>
+  ) : children
+
   return (
     <label className={componentClassName} htmlFor={htmlFor} {...rest}>
-      <Text faint>
-        {props.children}
-      </Text>
+      {contentMarkup}
     </label>
   )
 }

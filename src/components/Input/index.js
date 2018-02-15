@@ -14,13 +14,14 @@ export const propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  hintText: PropTypes.string,
-  modalhelpText: PropTypes.string,
   forceAutoFocusTimeout: PropTypes.number,
+  helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   id: PropTypes.string,
   inputRef: PropTypes.func,
   isFocused: PropTypes.bool,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  modalhelpText: PropTypes.string,
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   name: PropTypes.string,
   onBlur: PropTypes.func,
@@ -190,7 +191,11 @@ class Input extends Component {
       className
     )
 
-    const fieldClassName = classNames('c-InputField', size && `is-${size}`)
+    const fieldClassName = classNames(
+      'c-Input__inputField',
+      'c-InputField',
+      size && `is-${size}`
+    )
 
     // Ignoring as height calculation isn't possible with JSDOM
     // (which is what Enzyme uses for tests)
@@ -208,7 +213,7 @@ class Input extends Component {
         : null
 
     const labelMarkup = label
-      ? <Label for={inputID}>{label}</Label>
+      ? <Label className='c-Input__label' for={inputID}>{label}</Label>
       : null
 
     const prefixMarkup = prefix
@@ -264,7 +269,12 @@ class Input extends Component {
           {prefixMarkup}
           {inputElement}
           {suffixMarkup}
-          <Backdrop disabled={disabled} readOnly={readOnly} state={state} />
+          <Backdrop
+            className='c-Input__backdrop'
+            disabled={disabled}
+            readOnly={readOnly}
+            state={state}
+          />
           {resizer}
         </div>
         {helpTextMarkup}

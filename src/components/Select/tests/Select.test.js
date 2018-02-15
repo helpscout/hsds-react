@@ -2,6 +2,12 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Select from '..'
 
+const ui = {
+  helpText: '.c-Select__helpText',
+  hintText: '.c-Select__hintText',
+  label: '.c-Select__label'
+}
+
 describe('Placeholder', () => {
   test('Renders a placeholder if defined', () => {
     const placeholder = 'Choose your co-anchor…'
@@ -172,7 +178,7 @@ describe('Events', () => {
 describe('Label', () => {
   test('Adds label if specified', () => {
     const wrapper = mount(<Select label='Channel' />)
-    const label = wrapper.find('Label')
+    const label = wrapper.find(ui.label)
 
     expect(label.exists()).toBeTruthy()
     expect(label.text()).toBe('Channel')
@@ -181,12 +187,23 @@ describe('Label', () => {
   test('Sets ID on the select element', () => {
     const id = 'channel'
     const wrapper = mount(<Select label='Channel' id={id} />)
-    const label = wrapper.find('Label')
+    const label = wrapper.find(ui.label)
     const select = wrapper.find('select')
 
     expect(label.text()).toBe('Channel')
-    expect(label.prop('for')).toBe(id)
+    expect(label.prop('htmlFor')).toBe(id)
     expect(select.prop('id')).toBe(id)
+  })
+
+  test('Accepts React components', () => {
+    const custom = (<div className='custom'>Custom text</div>)
+    const wrapper = mount(<Select label={custom} />)
+    const o = wrapper.find(ui.label)
+    const c = o.find('.custom')
+
+    expect(o.exists()).toBeTruthy()
+    expect(c.exists()).toBeTruthy()
+    expect(c.text()).toBe('Custom text')
   })
 })
 
@@ -205,36 +222,58 @@ describe('Prefix', () => {
 describe('HelpText', () => {
   test('Does not render by default', () => {
     const wrapper = mount(<Select />)
-    const o = wrapper.find('.c-Select__helpText')
+    const o = wrapper.find(ui.helpText)
     expect(o.length).not.toBeTruthy()
   })
 
   test('Adds helpText if specified', () => {
     const wrapper = mount(<Select helpText='Help text' />)
-    const o = wrapper.find('.c-Select__helpText')
+    const o = wrapper.find(ui.helpText)
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Help text')
+  })
+
+  test('Accepts React components', () => {
+    const custom = (<div className='custom'>Custom text</div>)
+    const wrapper = mount(<Select helpText={custom} />)
+    const o = wrapper.find(ui.helpText)
+    const c = o.find('.custom')
+
+    expect(o.exists()).toBeTruthy()
+    expect(c.exists()).toBeTruthy()
+    expect(c.text()).toBe('Custom text')
   })
 })
 
 describe('HintText', () => {
   test('Does not render by default', () => {
     const wrapper = mount(<Select />)
-    const o = wrapper.find('.c-Select__hintText')
+    const o = wrapper.find(ui.hintText)
     expect(o.length).not.toBeTruthy()
   })
 
   test('Adds hintText if specified', () => {
     const wrapper = mount(<Select hintText='Hint text' />)
-    const o = wrapper.find('.c-Select__hintText')
+    const o = wrapper.find(ui.hintText)
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Hint text')
   })
 
   test('Does not pass state to hintText', () => {
     const wrapper = mount(<Select hintText='Hint text' state='error' />)
-    const o = wrapper.find('.c-Select__hintText')
+    const o = wrapper.find(ui.hintText)
     expect(o.props().state).not.toBeTruthy()
+  })
+
+  test('Accepts React components', () => {
+    const custom = (<div className='custom'>Custom text</div>)
+    const wrapper = mount(<Select hintText={custom} />)
+    const o = wrapper.find(ui.hintText)
+    const c = o.find('.custom')
+
+    expect(o.exists()).toBeTruthy()
+    expect(c.exists()).toBeTruthy()
+    expect(c.text()).toBe('Custom text')
   })
 })
 

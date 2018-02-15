@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Button, Input } from '../src/index.js'
+import { Button, Icon, Input } from '../src/index.js'
 
 const stories = storiesOf('Input', module)
 
@@ -25,11 +25,17 @@ stories.add('autocomplete', () => (
 ))
 
 stories.add('helpText', () => (
-  <Input helpText='This text appears below the input' />
+  <div>
+    <Input helpText='This text appears below the input' /><br />
+    <Input helpText={<div>This is custom text <Icon name='emoji' inline /></div>} />
+  </div>
 ))
 
 stories.add('hintText', () => (
-  <Input hintText='This text appears above the input' />
+  <div>
+    <Input hintText='This text appears above the input' /><br />
+    <Input hintText={<div>This is custom text <Icon name='emoji' inline /></div>} />
+  </div>
 ))
 
 stories.add('multiline', () => (

@@ -1,3 +1,7 @@
+export const isString = (string) => {
+  return typeof string === 'string'
+}
+
 export const nameToInitials = (name = '') => {
   if (!name || !name.length) return ''
 
@@ -9,7 +13,7 @@ export const nameToInitials = (name = '') => {
 }
 
 export const isWordString = (word) => {
-  return typeof word === 'string' && word.length
+  return isString(word) && word.length
 }
 
 export const isWord = (word) => {

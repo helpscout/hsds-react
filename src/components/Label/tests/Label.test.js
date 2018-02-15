@@ -25,6 +25,18 @@ describe('Content', () => {
     expect(text.exists()).toBeTruthy()
     expect(text.text()).toBe('Channel 4')
   })
+
+  test('Renders React Component as content', () => {
+    const wrapper = shallow(
+      <Label>
+        <div className='gator'>Gator</div>
+      </Label>
+    )
+    const o = wrapper.find('.gator')
+
+    expect(o.length).toBe(1)
+    expect(o.html()).toContain('Gator')
+  })
 })
 
 describe('For', () => {

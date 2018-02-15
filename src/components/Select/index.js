@@ -28,11 +28,11 @@ export const propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   forceAutoFocusTimeout: PropTypes.number,
-  helpText: PropTypes.string,
-  hintText: PropTypes.string,
+  helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   id: PropTypes.string,
   isFocused: PropTypes.bool,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   name: PropTypes.string,
   options: PropTypes.oneOfType([
     groupType,
@@ -183,7 +183,12 @@ class Select extends Component {
       className
     )
 
-    const fieldClassName = classNames('c-InputField', size && `is-${size}`)
+    const fieldClassName = classNames(
+      'c-Select__inputField',
+      'c-InputField',
+      size && `is-${size}`
+    )
+    const optionClassName = 'c-Select__option'
 
     const renderOptions = option => {
       // HTML <optgroup> only allows for single level nesting
@@ -194,7 +199,7 @@ class Select extends Component {
         const label = option.label
         // Recursion!
         return (
-          <optgroup label={label} key={label}>
+          <optgroup className='c-Select__optGroup' label={label} key={label}>
             {option.value.map(renderOptions)}
           </optgroup>
         )
@@ -202,7 +207,7 @@ class Select extends Component {
       // Option
       if (typeof option === 'string') {
         return (
-          <option key={option} value={option}>
+          <option className={optionClassName} key={option} value={option}>
             {option}
           </option>
         )
@@ -210,6 +215,7 @@ class Select extends Component {
         return (
           <option
             key={option.value}
+            className={optionClassName}
             value={option.value}
             disabled={option.disabled}
           >
@@ -223,6 +229,7 @@ class Select extends Component {
 
     const placeholderMarkup = placeholder ? (
       <option
+        className={optionClassName}
         label={placeholder}
         value={PLACEHOLDER_VALUE}
         disabled
@@ -232,7 +239,7 @@ class Select extends Component {
     ) : null
 
     const labelMarkup = label
-      ? <Label for={id}>{label}</Label>
+      ? <Label className='c-Select__label' for={id}>{label}</Label>
       : null
 
     const prefixMarkup = prefix
@@ -275,7 +282,7 @@ class Select extends Component {
             {optionsMarkup}
           </select>
           <div className='c-SelectIcon' />
-          <Backdrop disabled={disabled} state={state} />
+          <Backdrop className='c-Select__backdrop' disabled={disabled} state={state} />
         </div>
         {helpTextMarkup}
       </div>
