@@ -181,6 +181,7 @@ describe('Events', () => {
 
     expect(spy).toHaveBeenCalledWith('Value', true)
 
+    wrapper.setProps({ checked: false })
     input.simulate('change')
 
     expect(spy).toHaveBeenCalledWith('Value', false)
