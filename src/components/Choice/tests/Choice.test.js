@@ -179,7 +179,11 @@ describe('Events', () => {
 
     input.simulate('change')
 
-    expect(spy).toHaveBeenCalledWith('Value')
+    expect(spy).toHaveBeenCalledWith('Value', true)
+
+    input.simulate('change')
+
+    expect(spy).toHaveBeenCalledWith('Value', false)
     wrapper.unmount()
   })
 })

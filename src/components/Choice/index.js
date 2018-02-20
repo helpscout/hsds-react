@@ -68,7 +68,7 @@ class Choice extends Component {
 
   handleOnChange (value, checked) {
     this.setState({ checked })
-    this.props.onChange(value)
+    this.props.onChange(value, checked)
   }
 
   render () {
