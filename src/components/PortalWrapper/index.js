@@ -62,6 +62,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       this.closePortal = this.closePortal.bind(this)
       this.openPortal = this.openPortal.bind(this)
       this.handleOnClose = this.handleOnClose.bind(this)
+      this.handleOnEsc = this.handleOnEsc.bind(this)
       this.triggerComponent = null
       this.triggerNode = null
       this._isMounted = false
@@ -174,6 +175,13 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       requestAnimationFrame(() => onClose())
     }
 
+    handleOnEsc (event) {
+      if (this.state.isOpen) {
+        event.stopPropagation()
+        this.handleOnClose()
+      }
+    }
+
     handleOnClose (onClose) {
       const { onBeforeClose } = this.props
 
@@ -221,6 +229,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       const openPortal = this.openPortal
       const handleOnClose = this.handleOnClose
+      const handleOnEsc = this.handleOnEsc
 
       const uniqueIndex = getUniqueIndex(id, options.id)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
@@ -288,7 +297,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       return (
         <div className='c-PortalWrapper'>
-          <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnClose} />
+          <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnEsc} />
           {triggerMarkup}
           {portalContainerMarkup}
         </div>
