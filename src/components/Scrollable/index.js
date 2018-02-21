@@ -2,8 +2,6 @@ import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import ScrollLock from '../ScrollLock'
 import classNames from '../../utilities/classNames'
-import { hasContentOverflowY } from '../../utilities/node'
-import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 import { getFadeTopStyles, getFadeBottomStyles } from '../../utilities/scrollFade'
 import { noop } from '../../utilities/other'
 
@@ -26,8 +24,6 @@ const defaultProps = {
   isScrollLocked: true
 }
 
-const scrollbarWidth = getScrollbarWidth()
-
 class Scrollable extends Component {
   constructor () {
     super()
@@ -36,7 +32,6 @@ class Scrollable extends Component {
     this.faderNodeBottom = null
     this.containerNode = null
     this.handleOnScroll = this.handleOnScroll.bind(this)
-    this.scrollbarWidth = scrollbarWidth
   }
 
   componentDidMount () {
@@ -73,10 +68,12 @@ class Scrollable extends Component {
   }
 
   applyFadeStyleOffset (node) {
-    const offset = (hasContentOverflowY(this.containerNode))
-      ? /* istanbul ignore next */ `${this.scrollbarWidth}px`
-      : 0
-    node.style.right = offset
+    /* istanbul ignore else */
+    // Guard, just in case the node element is removed.
+    if (node) {
+      const offset = `${this.containerNode.offsetWidth - this.containerNode.scrollWidth}px`
+      node.style.right = offset
+    }
   }
 
   handleOnScroll (event) {

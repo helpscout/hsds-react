@@ -176,6 +176,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     handleOnEsc (event) {
+      /* istanbul ignore else */
       if (this.state.isOpen) {
         event.stopPropagation()
         this.handleOnClose()

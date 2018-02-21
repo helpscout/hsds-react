@@ -19,10 +19,8 @@ import { propTypes as portalTypes } from '../Portal'
 import { findFocusableNodes } from '../../utilities/focus'
 import {
   getClosestDocument,
-  isNodeElement,
-  hasContentOverflowY
+  isNodeElement
 } from '../../utilities/node'
-import getScrollbarWidth from '../../vendors/getScrollbarWidth'
 
 export const propTypes = Object.assign({}, portalTypes, {
   cardClassName: PropTypes.string,
@@ -80,8 +78,6 @@ const portalOptions = {
   id: 'Modal',
   zIndex: modalBaseZIndex
 }
-
-const scrollbarWidth = getScrollbarWidth()
 
 class Modal extends Component {
   constructor () {
@@ -153,29 +149,16 @@ class Modal extends Component {
   }
 
   positionCloseNode (scrollableNode) {
-    const { modalAnimationDelay, closeIconRepositionDelay } = this.props
     const scrollNode = scrollableNode || this.scrollableNode
     if (
       !this.closeNode ||
       !isNodeElement(scrollNode)
     ) return
 
-    /* istanbul ignore next */
-    const delay = modalAnimationDelay < closeIconRepositionDelay
-      ? closeIconRepositionDelay
-      : modalAnimationDelay
-
     const defaultOffset = 9
+    const offset = `${(scrollNode.offsetWidth - scrollNode.scrollWidth) + defaultOffset}px`
 
-    setTimeout(() => {
-      const offset = hasContentOverflowY(scrollNode)
-        ? /* istanbul ignore next */ `${scrollbarWidth + defaultOffset}px`
-        : `${defaultOffset}px`
-      /* istanbul ignore else */
-      if (this.closeNode) {
-        this.closeNode.style.right = offset
-      }
-    }, delay)
+    this.closeNode.style.right = offset
   }
 
   getChildContext () {
