@@ -28,6 +28,19 @@ class StatefulComponent extends React.Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this)
     this.handleOnModalOpen = this.handleOnModalOpen.bind(this)
     this.handleOnModalClose = this.handleOnModalClose.bind(this)
+    this.handleOnKeyUp = this.handleOnKeyUp.bind(this)
+  }
+
+  componentWillMount () {
+    window.addEventListener('keyup', this.handleOnKeyUp)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('keyup', this.handleOnKeyUp)
+  }
+
+  handleOnKeyUp (event) {
+    console.log(event)
   }
 
   handleOnButtonClick () {

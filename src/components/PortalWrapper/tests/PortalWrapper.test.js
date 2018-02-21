@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import PortalWrapper from '..'
+import Keys from '../../../constants/Keys'
 import classNames from '../../../utilities/classNames'
 import wait from '../../../tests/helpers/wait'
 
@@ -365,5 +366,49 @@ describe('Trigger', () => {
     o.simulate('click')
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Esc keypress', () => {
+  test('Prevents event from bubbling when open', () => {
+    const globalSpy = jest.fn()
+    const event = new Event('keyup')
+    event.keyCode = Keys.ESCAPE
+
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = (
+      <div className='trigger'>Trigger</div>
+    )
+    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
+
+    setTimeout(() => {
+      window.addEventListener('keyup', globalSpy)
+      window.dispatchEvent(event)
+
+      expect(globalSpy).not.toHaveBeenCalled()
+      wrapper.unmount()
+      window.removeEventListener('keyup', globalSpy)
+    }, 20)
+  })
+
+  test('Prevents event from bubbling when closed', () => {
+    const globalSpy = jest.fn()
+    const event = new Event('keyup')
+    event.keyCode = Keys.ESCAPE
+
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = (
+      <div className='trigger'>Trigger</div>
+    )
+    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
+
+    setTimeout(() => {
+      window.addEventListener('keyup', globalSpy)
+      window.dispatchEvent(event)
+
+      expect(globalSpy).toHaveBeenCalled()
+      wrapper.unmount()
+      window.removeEventListener('keyup', globalSpy)
+    }, 20)
   })
 })
