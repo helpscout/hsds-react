@@ -173,16 +173,18 @@ export const getClosestDocument = (node) => {
 }
 
 export const hasContentOverflowX = (node) => {
+  // Cannot be tested in JSDOM (missing measurements for props)
+  /* istanbul ignore else */
   if (!isNodeElement(node)) return false
   /* istanbul ignore next */
-  // Cannot be tested in JSDOM (missing measurements for props)
   return node.clientWidth < node.scrollWidth
 }
 
 export const hasContentOverflowY = (node) => {
+  // Cannot be tested in JSDOM (missing measurements for props)
+  /* istanbul ignore else */
   if (!isNodeElement(node)) return false
   /* istanbul ignore next */
-  // Cannot be tested in JSDOM (missing measurements for props)
   return node.clientHeight < node.scrollHeight
 }
 
