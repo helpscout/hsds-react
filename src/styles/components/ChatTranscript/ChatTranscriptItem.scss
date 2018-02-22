@@ -1,0 +1,79 @@
+@import "pack/seed-this/__index";
+@import "../../mixins/linkStyles";
+
+.c-ChatTranscriptItem {
+  @import "../../configs/color";
+  @import "../../resets/base";
+  $block: this();
+  $colorMuted: _color(grey, 800);
+  position: relative;
+  margin-bottom: 20px;
+
+  &__header {
+    margin-bottom: 5px;
+  }
+
+  &__contentWrapper {
+    position: relative;
+  }
+
+  &__content {
+    font-size: 14px;
+    // Types
+    &.is-line_item {
+      color: $colorMuted;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    // Link
+    a {
+      @include linkStyles;
+    }
+  }
+
+  &__privateNote,
+  &__timestamp {
+    color: $colorMuted;
+  }
+
+  &__attachmentList {
+    margin-top: 10px;
+  }
+
+  // Types
+  &.is-line_item {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.is-note {
+    $bdrWidth: 3px;
+    padding-top: 2px;
+
+    &:before {
+      background-color: _color(yellow, 500);
+      border-radius: 9999px;
+      content: "";
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: $bdrWidth;
+    }
+
+    #{$block}__contentWrapper {
+      margin-left: 10px + $bdrWidth;
+    }
+  }
+}

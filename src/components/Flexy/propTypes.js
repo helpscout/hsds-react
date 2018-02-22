@@ -13,6 +13,7 @@ export const gapTypes = PropTypes.oneOf([
   'md',
   'sm',
   'xs',
+  'none',
   ''
 ])
 
