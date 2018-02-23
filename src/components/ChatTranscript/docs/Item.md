@@ -30,6 +30,7 @@ A ChatTranscript.Item component is a list-item component for a [ChatTranscript](
 | onDownloadAllAttachmentClick | `function` | The callback when the [Download All attachment](../../AttachmentList) UI is clicked. |
 | params | `any` | Param data of the chat item. |
 | showDownloadAllAttachments | `bool` | Show/hide the "Download All" attachment UI. Default `true`. |
+| timestamp | `string` | The timestamp to show when hovering the `createdAt` UI. |
 | type | `string` | The type of chat item. |
 
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import LineItem from './LineItem'
 import Attachment from '../Attachment'
 import AttachmentList from '../AttachmentList'
 import Flexy from '../Flexy'
@@ -26,6 +27,7 @@ export const propTypes = {
   onDownloadAllAttachmentClick: PropTypes.func,
   params: PropTypes.any,
   showDownloadAllAttachments: PropTypes.bool,
+  timestamp: PropTypes.string,
   type: PropTypes.oneOf([
     ITEM_TYPES.lineItem,
     ITEM_TYPES.message,
@@ -60,6 +62,7 @@ const Item = props => {
     onDownloadAllAttachmentClick,
     params,
     showDownloadAllAttachments,
+    timestamp,
     type,
     ...rest
   } = props
@@ -75,6 +78,20 @@ const Item = props => {
     className
   )
 
+  if (maybeLineItem) {
+    const lineItemProps = {
+      body,
+      createdAt,
+      className: componentClassName,
+      timestamp,
+      ...rest
+    }
+    return (
+      <LineItem {...lineItemProps}>
+        {children}
+      </LineItem>
+    )
+  }
   const contentClassName = classNames(
     'c-ChatTranscriptItem__content',
     type && `is-${type}`
@@ -108,17 +125,18 @@ const Item = props => {
   const timestampMarkup = createdAt ? (
     <Flexy.Item>
       <Text
-        className='c-ChatTranscriptItem__timestamp'
+        className='c-ChatTranscriptItem__createdAt'
         block
         lineHeightReset
         size='12'
+        title={timestamp}
       >
         {createdAt}
       </Text>
     </Flexy.Item>
   ) : null
 
-  const headerMarkup = !maybeLineItem ? (
+  const headerMarkup = (
     <div className='c-ChatTranscriptItem__header'>
       <Flexy align='bottom' gap='xs' just='left'>
         {authorMarkup}
@@ -126,7 +144,7 @@ const Item = props => {
         {timestampMarkup}
       </Flexy>
     </div>
-  ) : null
+  )
 
   const contentMarkup = body ? (
     <div
@@ -139,7 +157,7 @@ const Item = props => {
     </div>
   )
 
-  const attachmentMarkup = !maybeLineItem && attachments.length ? (
+  const attachmentMarkup = attachments.length ? (
     <AttachmentList
       className='c-ChatTranscriptItem__attachmentList'
       onDownloadAllClick={onDownloadAllAttachmentClick}
@@ -171,5 +189,6 @@ const Item = props => {
 Item.propTypes = propTypes
 Item.defaultProps = defaultProps
 Item.displayName = 'ChatTranscript.Item'
+Item.LineItem = LineItem
 
 export default Item

@@ -8,9 +8,9 @@ const ui = {
   author: '.c-ChatTranscriptItem__author',
   content: '.c-ChatTranscriptItem__content',
   contentWrapper: '.c-ChatTranscriptItem__contentWrapper',
+  createdAt: '.c-ChatTranscriptItem__createdAt',
   header: '.c-ChatTranscriptItem__header',
-  privateNote: '.c-ChatTranscriptItem__privateNote',
-  timestamp: '.c-ChatTranscriptItem__timestamp'
+  privateNote: '.c-ChatTranscriptItem__privateNote'
 }
 
 describe('ClassName', () => {
@@ -142,19 +142,19 @@ describe('Timestamp', () => {
     const wrapper = shallow(
       <Item {...props} />
     )
-    const o = wrapper.find(ui.timestamp)
+    const o = wrapper.find(ui.createdAt)
 
     expect(o.length).toBe(0)
   })
 
-  test('Renders timestamp, if provided', () => {
+  test('Renders createdAt, if provided', () => {
     const props = {
       createdAt: '9:41pm'
     }
     const wrapper = shallow(
       <Item {...props} />
     )
-    const o = wrapper.find(ui.timestamp)
+    const o = wrapper.find(ui.createdAt)
 
     expect(o.length).toBe(1)
     expect(o.html()).toContain(props.createdAt)
@@ -168,7 +168,7 @@ describe('Timestamp', () => {
       <Item {...props} />
     )
     const h = wrapper.find(ui.header)
-    const o = h.find(ui.timestamp)
+    const o = h.find(ui.createdAt)
 
     expect(h.length).toBe(1)
     expect(o.length).toBe(1)
@@ -186,7 +186,7 @@ describe('Type', () => {
       expect(wrapper.hasClass('is-line_item')).toBeTruthy()
     })
 
-    test('Does not render Header', () => {
+    test('Renders a LineItem component instead', () => {
       const props = {
         author: {
           name: 'Derek'
@@ -194,9 +194,9 @@ describe('Type', () => {
         type: ITEM_TYPES.lineItem
       }
       const wrapper = shallow(<Item {...props} />)
-      const h = wrapper.find(ui.header)
+      const o = wrapper.find(Item.LineItem)
 
-      expect(h.length).toBe(0)
+      expect(o.length).toBe(1)
     })
   })
 
