@@ -1,0 +1,38 @@
+@import "pack/seed-this/__index";
+@import "../mixins/linkStyles";
+
+.c-Attachment {
+  @import "../configs/color";
+  @import "../resets/base";
+  @include linkStyles;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  $block: this();
+  background-color: white;
+  border: 1px solid _color(grey, 500);
+  border-radius: 9999px;
+  display: inline-block;
+  line-height: 1;
+  padding: 4px 10px;
+  text-decoration: none;
+
+  &:hover {
+    border-color: _color(grey, 600);
+    text-decoration: none;
+
+    #{$block}__name {
+      color: _color(blue, 500);
+      text-decoration: underline;
+    }
+  }
+
+  &__size {
+    color: _color(charcoal, 200);
+    margin-left: 5px;
+  }
+
+  &.is-action {
+    #{$block}__name {
+      text-decoration: none;
+    }
+  }
+}
