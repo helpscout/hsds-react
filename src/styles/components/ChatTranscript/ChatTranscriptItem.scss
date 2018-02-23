@@ -19,22 +19,14 @@
 
   &__content {
     font-size: 14px;
-    // Types
-    &.is-line_item {
-      color: $colorMuted;
-      font-size: 12px;
-      font-weight: 600;
-      text-align: center;
-    }
-
     // Link
     a {
       @include linkStyles;
     }
   }
 
-  &__privateNote,
-  &__timestamp {
+  &__createdAt,
+  &__privateNote {
     color: $colorMuted;
   }
 
@@ -43,20 +35,6 @@
   }
 
   // Types
-  &.is-line_item {
-    margin-bottom: 20px;
-    margin-top: 20px;
-    text-align: center;
-
-    &:first-child {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
   &.is-note {
     $bdrWidth: 3px;
     padding-top: 2px;

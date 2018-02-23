@@ -83,6 +83,8 @@ stories.add('types', () => {
       <ChatTranscript.Item
         body='Something happened (This is a line_item)'
         type='line_item'
+        createdAt='10:45pm'
+        timestamp='Monday, 10:45pm'
       />
 
       <ChatTranscript.Item
