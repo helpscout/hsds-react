@@ -60,6 +60,7 @@ const HoverWrapper = ComposedComponent => {
 
   WrappedComponent.propTypes = propTypes
   WrappedComponent.defaultProps = defaultProps
+  WrappedComponent.contextTypes = ComposedComponent.contextTypes
   WrappedComponent.displayName = ComposedComponent.displayName
 
   return WrappedComponent

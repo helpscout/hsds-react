@@ -15,6 +15,7 @@ const Content = props => {
     to,
     read,
     timestamp,
+    type,
     ...rest
   } = props
 

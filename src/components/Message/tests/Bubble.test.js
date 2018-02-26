@@ -144,3 +144,13 @@ describe('Styles', () => {
     expect(wrapper.hasClass('is-typing')).toBeTruthy()
   })
 })
+
+describe('Context', () => {
+  test('Adds className based on context.theme', () => {
+    const wrapper = shallow(
+      <Bubble />
+    , {context: {theme: 'embed'}})
+
+    expect(wrapper.hasClass('is-theme-embed')).toBe(true)
+  })
+})

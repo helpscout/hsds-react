@@ -6,11 +6,12 @@ import Bubble from './Bubble'
 import HoverWrapper from '../HoverWrapper'
 import Timestamp from '../Timestamp'
 import classNames from '../../utilities/classNames'
-import { chatTypes } from './propTypes'
+import {chatTypes, providerContextTypes} from './propTypes'
 
 export const propTypes = chatTypes
+const contextTypes = providerContextTypes
 
-const ChatBlock = props => {
+const ChatBlock = (props, context) => {
   const {
     children,
     className,
@@ -21,13 +22,17 @@ const ChatBlock = props => {
     isHovered,
     timestamp,
     to,
+    type,
     ...rest
   } = props
+  const {theme} = context
 
   const componentClassName = classNames(
     'c-MessageChatBlock',
     from && 'is-from',
     to && 'is-to',
+    theme && `is-theme-${theme}`,
+    type && `is-type-${type}`,
     className
   )
 
@@ -69,6 +74,7 @@ const ChatBlock = props => {
 }
 
 ChatBlock.propTypes = propTypes
+ChatBlock.contextTypes = contextTypes
 ChatBlock.displayName = 'ChatBlock'
 
 export default HoverWrapper(ChatBlock)

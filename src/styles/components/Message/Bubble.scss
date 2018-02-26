@@ -85,4 +85,9 @@
       color: currentColor;
     }
   }
+
+  // Themes
+  &.is-theme-embed {
+    padding: 12px 15px;
+  }
 }

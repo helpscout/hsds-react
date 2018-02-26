@@ -1,10 +1,27 @@
 import PropTypes from 'prop-types'
 
+export const themeTypes = PropTypes.oneOf([
+  'admin',
+  'embed',
+  ''
+])
+
+export const typeTypes = PropTypes.oneOf([
+  'action',
+  'message',
+  ''
+])
+
+export const providerContextTypes = {
+  theme: themeTypes
+}
+
 export const messageTypes = {
   from: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
   ltr: PropTypes.bool,
   rtl: PropTypes.bool,
-  to: PropTypes.oneOfType([PropTypes.node, PropTypes.bool])
+  to: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
+  type: typeTypes
 }
 
 export const chatTypes = Object.assign({}, messageTypes, {

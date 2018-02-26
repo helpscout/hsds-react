@@ -21,6 +21,7 @@ const Chat = props => {
     title,
     to,
     typing,
+    type,
     ...rest
   } = props
 
@@ -29,27 +30,30 @@ const Chat = props => {
     className
   )
 
+  const chatProps = {
+    from,
+    ltr,
+    rtl,
+    timestamp,
+    to,
+    type
+  }
+
   return (
     <ChatBlock
       className={componentClassName}
-      from={from}
-      ltr={ltr}
       read={read}
-      rtl={rtl}
-      timestamp={timestamp}
-      to={to}
+      {...chatProps}
       {...rest}
     >
       <Bubble
-        from={from}
+        {...chatProps}
         isNote={isNote}
-        ltr={ltr}
         primary={primary}
-        rtl={rtl}
         size={size}
         title={title}
-        to={to}
         typing={typing}
+        type={type}
       >
         {children}
       </Bubble>

@@ -147,3 +147,13 @@ describe('To/From', () => {
     expect(o.props().just).toBe('right')
   })
 })
+
+describe('Context', () => {
+  test('Adds className based on context.theme', () => {
+    const wrapper = mount(
+      <ChatBlock />
+    , {context: {theme: 'embed'}})
+
+    expect(wrapper.hasClass('is-theme-embed')).toBe(true)
+  })
+})
