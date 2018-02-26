@@ -18,4 +18,5 @@ Message provides a collection of smaller components:
 * [ChatBlock](./docs/ChatBlock.md)
 * [Content](./docs/Content.md)
 * [Media](./docs/Media.md)
+* [Provider](./docs/Provider.md)
 * [Question](./docs/Question.md)

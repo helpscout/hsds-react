@@ -5,11 +5,12 @@ import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { isWord } from '../../utilities/strings'
 import { isNativeSpanType } from '../../utilities/types'
-import { bubbleTypes } from './propTypes'
+import {bubbleTypes, providerContextTypes} from './propTypes'
 
 export const propTypes = bubbleTypes
+const contextTypes = providerContextTypes
 
-const Bubble = props => {
+const Bubble = (props, context) => {
   const {
     children,
     className,
@@ -23,8 +24,10 @@ const Bubble = props => {
     title,
     to,
     typing,
+    type,
     ...rest
   } = props
+  const {theme} = context
 
   const componentClassName = classNames(
     'c-MessageBubble',
@@ -34,6 +37,7 @@ const Bubble = props => {
     size && `is-${size}`,
     (ltr && !rtl) && 'is-ltr',
     (!ltr && rtl) && 'is-rtl',
+    theme && `is-theme-${theme}`,
     to && 'is-to',
     typing && 'is-typing',
     className
@@ -68,5 +72,6 @@ const Bubble = props => {
 }
 
 Bubble.propTypes = propTypes
+Bubble.contextTypes = contextTypes
 
 export default Bubble

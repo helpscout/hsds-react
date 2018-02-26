@@ -28,6 +28,7 @@ const Media = props => {
     timestamp,
     title,
     to,
+    type,
     ...rest
   } = props
 

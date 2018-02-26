@@ -7,8 +7,9 @@ import Bubble from './Bubble'
 import Chat from './Chat'
 import Content from './Content'
 import Media from './Media'
+import Provider from './Provider'
 import Question from './Question'
-import { messageTypes } from './propTypes'
+import {messageTypes, providerContextTypes} from './propTypes'
 
 export const propTypes = Object.assign({}, messageTypes, {
   showAvatar: PropTypes.bool
@@ -18,7 +19,9 @@ const defaultProps = {
   showAvatar: true
 }
 
-const Message = props => {
+const contextTypes = providerContextTypes
+
+const Message = (props, context) => {
   const {
     avatar,
     children,
@@ -30,12 +33,21 @@ const Message = props => {
     to,
     ...rest
   } = props
+  const {theme} = context
 
   const componentClassName = classNames(
     'c-Message',
     from && 'is-from',
     to && 'is-to',
+    theme && `is-theme-${theme}`,
     className
+  )
+
+  const isThemeEmbed = theme === 'embed'
+  const maybeShowAvatar = (
+    isThemeEmbed
+    ? ((from && showAvatar) || false)
+    : showAvatar
   )
 
   const isChatType = child => {
@@ -58,11 +70,11 @@ const Message = props => {
 
   const avatarMarkup = avatar
     ? React.cloneElement(avatar, {
-      shape: 'rounded',
+      shape: isThemeEmbed ? 'circle' : 'rounded',
       size: 'sm'
     }) : null
 
-  const avatarBlockMarkup = showAvatar ? (
+  const avatarBlockMarkup = maybeShowAvatar ? (
     <Flexy.Item className='c-Message__avatar-block'>
       {avatarMarkup}
     </Flexy.Item>
@@ -83,11 +95,13 @@ const Message = props => {
 
 Message.propTypes = propTypes
 Message.defaultProps = defaultProps
+Message.contextTypes = contextTypes
 Message.Action = Action
 Message.Bubble = Bubble
 Message.Chat = Chat
 Message.Content = Content
 Message.Media = Media
+Message.Provider = Provider
 Message.Question = Question
 
 export default Message

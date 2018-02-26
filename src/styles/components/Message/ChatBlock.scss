@@ -1,5 +1,7 @@
+@import "pack/seed-this/__index";
 .c-MessageChatBlock {
   @import "../../resets/base";
+  $block: this();
   $timestamp-size: 60px;
   display: block;
   margin: 0 0 2px;
@@ -14,5 +16,20 @@
 
   &__block {
     max-width: calc(100% - #{$timestamp-size});
+  }
+
+  // Themes
+  &.is-theme-embed {
+    #{$block}__block {
+      max-width: 100%;
+    }
+  }
+
+  // Types
+  &.is-type-action {
+    #{$block}__block {
+      margin: auto;
+      max-width: 100%;
+    }
   }
 }

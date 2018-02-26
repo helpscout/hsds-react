@@ -10,6 +10,9 @@ import Question from '../Question'
 import { Avatar } from '../../'
 
 const cx = 'c-Message'
+const ui = {
+  avatar: `.${cx}__avatar-block`
+}
 
 describe('ClassNames', () => {
   test('Has default className', () => {
@@ -106,14 +109,59 @@ describe('Sub-components', () => {
 
 describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
-    const wrapper = shallow(<Bubble from />)
+    const wrapper = shallow(<Message from />)
 
     expect(wrapper.hasClass('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
-    const wrapper = shallow(<Bubble to />)
+    const wrapper = shallow(<Message to />)
 
     expect(wrapper.hasClass('is-to')).toBeTruthy()
+  })
+})
+
+describe('Context', () => {
+  test('Adds className based on context.theme', () => {
+    const wrapper = shallow(
+      <Message />
+    , {context: {theme: 'embed'}})
+
+    expect(wrapper.hasClass('is-theme-embed')).toBe(true)
+  })
+
+  describe('Theme: Embed', () => {
+    test('Can show Avatar for "from" message', () => {
+      const a = (<Avatar name='Mugatu' />)
+      const wrapper = shallow(
+        <Message avatar={a} showAvatar from />
+      , {context: {theme: 'embed'}})
+
+      const o = wrapper.find(ui.avatar)
+
+      expect(o.length).toBe(1)
+    })
+
+    test('Always hide avatar for "to" message', () => {
+      const a = (<Avatar name='Mugatu' />)
+      const wrapper = shallow(
+        <Message avatar={a} showAvatar to />
+      , {context: {theme: 'embed'}})
+
+      const o = wrapper.find(ui.avatar)
+
+      expect(o.length).toBe(0)
+    })
+
+    test('Always render Circle avatars for embed', () => {
+      const a = (<Avatar name='Mugatu' shape='square' />)
+      const wrapper = shallow(
+        <Message avatar={a} showAvatar from />
+      , {context: {theme: 'embed'}})
+
+      const o = wrapper.find(Avatar)
+
+      expect(o.prop('shape')).toBe('circle')
+    })
   })
 })

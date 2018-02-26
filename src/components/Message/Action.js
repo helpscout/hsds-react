@@ -2,11 +2,12 @@ import React from 'react'
 import Text from '../Text'
 import ChatBlock from './ChatBlock'
 import classNames from '../../utilities/classNames'
-import { chatTypes } from './propTypes'
+import {chatTypes, providerContextTypes} from './propTypes'
 
 export const propTypes = chatTypes
+const contextTypes = providerContextTypes
 
-const Action = props => {
+const Action = (props, context) => {
   const {
     children,
     className,
@@ -16,13 +17,20 @@ const Action = props => {
     to,
     read,
     timestamp,
+    type,
     ...rest
   } = props
+  const {theme} = context
 
   const componentClassName = classNames(
     'c-MessageAction',
+    theme && `is-theme-${theme}`,
     className
   )
+
+  const isThemeEmbed = theme === 'embed'
+  const textSize = isThemeEmbed ? '11' : '13'
+  const textShade = isThemeEmbed ? 'faint' : 'muted'
 
   return (
     <ChatBlock
@@ -32,9 +40,14 @@ const Action = props => {
       rtl={rtl}
       timestamp={timestamp}
       to={to}
+      type='action'
     >
       <div className={componentClassName} {...rest}>
-        <Text muted size='13'>
+        <Text
+          className='c-MessageAction__text'
+          shade={textShade}
+          size={textSize}
+        >
           {children}
         </Text>
       </div>
@@ -43,5 +56,6 @@ const Action = props => {
 }
 
 Action.propTypes = propTypes
+Action.contextTypes = contextTypes
 
 export default Action
