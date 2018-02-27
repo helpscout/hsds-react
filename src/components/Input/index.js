@@ -1,10 +1,11 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Backdrop from './Backdrop'
-import HelpText from '../HelpText'
-import Label from '../Label'
 import Resizer from './Resizer'
 import Static from './Static'
+import HelpText from '../HelpText'
+import Label from '../Label'
+import { scrollLockY } from '../ScrollLock'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
@@ -23,11 +24,12 @@ export const propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   modalhelpText: PropTypes.string,
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  maxHeight: PropTypes.number,
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   name: PropTypes.string,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
+  onWheel: PropTypes.func,
   placeholder: PropTypes.string,
   prefix: PropTypes.string,
   readOnly: PropTypes.bool,
@@ -51,6 +53,7 @@ const defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+  onWheel: noop,
   readOnly: false,
   removeStateStylesOnFocus: false,
   resizable: false,
@@ -73,6 +76,7 @@ class Input extends Component {
     this.inputNode = null
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnInputFocus = this.handleOnInputFocus.bind(this)
+    this.handleOnWheel = this.handleOnWheel.bind(this)
     this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
 
@@ -140,6 +144,13 @@ class Input extends Component {
     onFocus(e)
   }
 
+  handleOnWheel (event) {
+    const { onWheel } = this.props
+    const stopPropagation = true
+    scrollLockY(event, stopPropagation)
+    onWheel(event)
+  }
+
   handleExpandingResize (height) {
     this.setState({ height })
   }
@@ -161,6 +172,7 @@ class Input extends Component {
       name,
       onBlur,
       onFocus,
+      onWheel,
       placeholder,
       prefix,
       readOnly,
@@ -179,6 +191,7 @@ class Input extends Component {
 
     const handleOnChange = this.handleOnChange
     const handleOnInputFocus = this.handleOnInputFocus
+    const handleOnWheel = this.handleOnWheel
     const handleExpandingResize = this.handleExpandingResize
 
     const componentClassName = classNames(
@@ -260,6 +273,7 @@ class Input extends Component {
       name,
       onBlur,
       onFocus: handleOnInputFocus,
+      onWheel: handleOnWheel,
       placeholder,
       readOnly,
       style,

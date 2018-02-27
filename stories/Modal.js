@@ -107,6 +107,7 @@ class StatefulComponent extends React.Component {
                   <Input
                     autoFocus
                     multiline={3}
+                    maxHeight={140}
                     onChange={this.handleOnInputChange}
                     value={value}
                   />

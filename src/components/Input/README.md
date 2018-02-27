@@ -31,7 +31,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | id | `string` | ID for the input. |
 | isFocused | `string` | Determines if the component is focused. |
 | label | `string`/`component` | Label for the input. |
-| maxHeight | `number` | Sets the `max-height` for the input. Used with `multiline`. |
+| maxHeight | `number`/`string` | Sets the `max-height` for the input. Used with `multiline`. |
 | multiline | `bool`/`number` | Transforms input into an auto-expanding textarea. |
 | name | `string` | Name for the input. |
 | onBlur | `function` | Callback when input is blurred. |
