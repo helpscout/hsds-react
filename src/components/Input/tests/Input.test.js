@@ -4,16 +4,18 @@ import Input from '..'
 import Resizer from '../Resizer'
 
 const ui = {
+  field: '.c-InputField',
   helpText: '.c-Input__helpText',
   hintText: '.c-Input__hintText',
+  input: '.c-Input',
   label: '.c-Input__label'
 }
 
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Input />)
-    const input = wrapper.find('.c-Input')
-    const field = wrapper.find('.c-InputField')
+    const input = wrapper.find(ui.input)
+    const field = wrapper.find(ui.field)
     const backdrop = wrapper.find('.c-InputBackdrop')
 
     expect(input.exists()).toBeTruthy()
@@ -145,21 +147,21 @@ describe('ID', () => {
 describe('Multiline', () => {
   test('Default selector is an input', () => {
     const wrapper = shallow(<Input />)
-    const o = wrapper.find('.c-InputField')
+    const o = wrapper.find(ui.field)
 
     expect(o.node.type).toBe('input')
   })
 
   test('Selector becomes a textarea if multiline is defined', () => {
     const wrapper = shallow(<Input multiline />)
-    const o = wrapper.find('.c-InputField')
+    const o = wrapper.find(ui.field)
 
     expect(o.node.type).toBe('textarea')
   })
 
   test('Accepts number argument', () => {
     const wrapper = mount(<Input multiline={5} />)
-    const o = wrapper.find('.c-InputField')
+    const o = wrapper.find(ui.field)
 
     expect(o.node.type).toBe('textarea')
   })
@@ -172,14 +174,14 @@ describe('Multiline', () => {
 
   test('Applies resizable styles if specified', () => {
     const wrapper = shallow(<Input multiline resizable />)
-    const o = wrapper.find('.c-Input')
+    const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-resizable')
   })
 
   test('Has regular height without multiline', () => {
     const wrapper = shallow(<Input />)
-    const o = wrapper.find('.c-InputField')
+    const o = wrapper.find(ui.field)
 
     expect(o.prop('style')).toBe(null)
   })
@@ -194,6 +196,27 @@ describe('Multiline', () => {
     // The height should be 0, which is what JSDOM returns.
 
     expect(wrapper.state()).not.toBe(null)
+  })
+
+  test('Does not set maxHeight on multiline by default', () => {
+    const wrapper = mount(<Input multiline={3} />)
+    const o = wrapper.find(ui.field)
+
+    expect(o.prop('style').maxHeight).toBeFalsy()
+  })
+
+  test('Sets maxHeight on multiline, if specified', () => {
+    const wrapper = mount(<Input multiline={3} maxHeight={50} />)
+    const o = wrapper.find(ui.field)
+
+    expect(o.prop('style').maxHeight).toBe(50)
+  })
+
+  test('Adds maxHeight styles, if specified', () => {
+    const wrapper = mount(<Input multiline={3} maxHeight={50} />)
+    const o = wrapper.find(ui.input)
+
+    expect(o.hasClass('has-maxHeight')).toBeTruthy()
   })
 })
 
@@ -299,14 +322,14 @@ describe('Prefix/Suffix', () => {
 describe('Styles', () => {
   test('Applies seamless styles if specified', () => {
     const wrapper = shallow(<Input seamless />)
-    const o = wrapper.find('.c-Input')
+    const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-seamless')
   })
 
   test('Applies sizing styles if specified', () => {
     const wrapper = shallow(<Input size='sm' />)
-    const o = wrapper.find('.c-InputField')
+    const o = wrapper.find(ui.field)
 
     expect(o.prop('className')).toContain('is-sm')
   })
@@ -321,7 +344,7 @@ describe('Styles', () => {
 describe('States', () => {
   test('Applies disabled styles if specified', () => {
     const wrapper = shallow(<Input disabled />)
-    const o = wrapper.find('.c-Input')
+    const o = wrapper.find(ui.input)
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-disabled')
@@ -330,7 +353,7 @@ describe('States', () => {
 
   test('Applies readOnly styles if specified', () => {
     const wrapper = shallow(<Input readOnly />)
-    const o = wrapper.find('.c-Input')
+    const o = wrapper.find(ui.input)
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-readonly')
@@ -339,28 +362,28 @@ describe('States', () => {
 
   test('Applies error styles if specified', () => {
     const wrapper = shallow(<Input state='error' />)
-    const o = wrapper.find('.c-Input')
+    const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
     const wrapper = shallow(<Input state='success' />)
-    const o = wrapper.find('.c-Input')
+    const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
     const wrapper = shallow(<Input state='warning' />)
-    const o = wrapper.find('.c-Input')
+    const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-warning')
   })
 
   test('Updates state.state on prop change', () => {
     const wrapper = mount(<Input state='warning' />)
-    const input = wrapper.find('.c-Input')
+    const input = wrapper.find(ui.input)
 
     wrapper.setProps({ state: 'success' })
 
@@ -387,7 +410,7 @@ describe('Stateful helper label', () => {
 describe('removeStateStylesOnFocus', () => {
   test('Does not remove state style on focus, by default', () => {
     const wrapper = mount(<Input state='error' />)
-    const input = wrapper.find('.c-Input')
+    const input = wrapper.find(ui.input)
     const o = wrapper.find('input')
 
     o.simulate('focus')
@@ -398,7 +421,7 @@ describe('removeStateStylesOnFocus', () => {
 
   test('Removes state style on focus, by specified', () => {
     const wrapper = mount(<Input state='error' removeStateStylesOnFocus />)
-    const input = wrapper.find('.c-Input')
+    const input = wrapper.find(ui.input)
     const o = wrapper.find('input')
 
     o.simulate('focus')

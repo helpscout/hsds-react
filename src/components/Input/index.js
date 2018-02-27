@@ -23,6 +23,7 @@ export const propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   modalhelpText: PropTypes.string,
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  maxHeight: PropTypes.number,
   name: PropTypes.string,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
@@ -155,6 +156,7 @@ class Input extends Component {
       inputRef,
       isFocused,
       label,
+      maxHeight,
       multiline,
       name,
       onBlur,
@@ -182,6 +184,7 @@ class Input extends Component {
     const componentClassName = classNames(
       'c-Input',
       disabled && 'is-disabled',
+      maxHeight && 'has-maxHeight',
       multiline && 'is-multiline',
       readOnly && 'is-readonly',
       resizable && 'is-resizable',
@@ -200,7 +203,10 @@ class Input extends Component {
     // Ignoring as height calculation isn't possible with JSDOM
     // (which is what Enzyme uses for tests)
     /* istanbul ignore next */
-    const style = multiline && height ? { height } : null
+    const style = multiline ? {
+      height,
+      maxHeight
+    } : null
 
     const resizer =
       multiline != null
