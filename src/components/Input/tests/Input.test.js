@@ -90,6 +90,28 @@ describe('Events', () => {
 
     expect(spy).toHaveBeenCalledWith(value)
   })
+
+  test('onWheel callback can be triggered', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onWheel={spy} />)
+    const input = wrapper.find('input')
+
+    input.simulate('wheel')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onWheel callback stops event from bubbling', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input />)
+    const input = wrapper.find('input')
+
+    input.simulate('wheel', {
+      stopPropagation: spy
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('value', () => {
@@ -217,6 +239,13 @@ describe('Multiline', () => {
     const o = wrapper.find(ui.input)
 
     expect(o.hasClass('has-maxHeight')).toBeTruthy()
+  })
+
+  test('maxHeight Accepts string values', () => {
+    const wrapper = mount(<Input multiline={3} maxHeight='50vh' />)
+    const o = wrapper.find(ui.field)
+
+    expect(o.prop('style').maxHeight).toBe('50vh')
   })
 })
 

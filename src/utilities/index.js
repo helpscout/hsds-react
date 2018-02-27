@@ -1,4 +1,5 @@
 import * as animationUtils from './animation'
+import * as browserUtils from './browser'
 import * as classNamesUtils from './classNames'
 import * as componentUtils from './component'
 import * as colorUtils from './color'
@@ -15,6 +16,7 @@ import * as stringsUtils from './strings'
 import * as typesUtils from './types'
 
 export const animation = animationUtils
+export const browser = browserUtils
 export const classNames = classNamesUtils
 export const color = colorUtils
 export const component = componentUtils
@@ -32,6 +34,7 @@ export const types = typesUtils
 
 export default {
   animation,
+  browser,
   classNames,
   component,
   color,

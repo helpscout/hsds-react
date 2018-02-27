@@ -1,5 +1,6 @@
 import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
+import { isFirefox } from '../../utilities/browser'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
@@ -50,7 +51,11 @@ function handleWheelEvent (event, direction, stopPropagation) {
   }
 }
 
-function scrollLockX (event, stopPropagation) {
+export function scrollLockX (event, stopPropagation) {
+  // Disabled for Firefox
+  /* istanbul ignore if */
+  // Can't test this function in JSDOM
+  if (isFirefox()) return
   const { deltaX } = event
   const scrollNode = event.currentTarget
   const { clientWidth, scrollWidth, scrollLeft } = scrollNode
@@ -68,7 +73,11 @@ function scrollLockX (event, stopPropagation) {
   }
 }
 
-function scrollLockY (event, stopPropagation) {
+export function scrollLockY (event, stopPropagation) {
+  // Disabled for Firefox
+  /* istanbul ignore if */
+  // Can't test this function in JSDOM
+  if (isFirefox()) return
   const scrollNode = event.currentTarget
   const { clientHeight, scrollHeight, scrollTop } = scrollNode
   const { deltaY } = event
