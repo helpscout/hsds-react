@@ -1,7 +1,7 @@
 import React from 'react'
-import classNames from '../../utilities/classNames'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
+import Text from '../Text'
 import Action from './Action'
 import Bubble from './Bubble'
 import Chat from './Chat'
@@ -9,6 +9,7 @@ import Content from './Content'
 import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
+import classNames from '../../utilities/classNames'
 import {messageTypes, providerContextTypes} from './propTypes'
 
 export const propTypes = Object.assign({}, messageTypes, {
@@ -37,13 +38,16 @@ const Message = (props, context) => {
 
   const componentClassName = classNames(
     'c-Message',
+    avatar && 'has-avatar',
     from && 'is-from',
-    to && 'is-to',
     theme && `is-theme-${theme}`,
+    to && 'is-to',
     className
   )
 
   const isThemeEmbed = theme === 'embed'
+  const fromName = from && typeof from === 'string' ? from : null
+
   const maybeShowAvatar = (
     isThemeEmbed
     ? ((from && showAvatar) || false)
@@ -80,8 +84,23 @@ const Message = (props, context) => {
     </Flexy.Item>
   ) : null
 
+  const fromMarkup = isThemeEmbed && fromName ? (
+    <div className='c-Message__from'>
+      <Text
+        className='c-Message__fromText'
+        block
+        lineHeightReset
+        shade='faint'
+        size='11'
+      >
+        {fromName}
+      </Text>
+    </div>
+  ) : null
+
   return (
     <div className={componentClassName} {...rest}>
+      {fromMarkup}
       <Flexy align='top' gap='sm'>
         {from && avatarBlockMarkup}
         <Flexy.Block className='c-Message__block'>
