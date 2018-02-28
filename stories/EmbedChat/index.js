@@ -9,7 +9,7 @@ stories.add('default', () => {
     <div style={{background: '#f9fafa', width: 330, padding: 10}}>
       <Message.Provider theme='embed'>
         <Message
-          from
+          from='Help Bot'
           avatar={
             <Avatar
               borderColor='#f9fafa'
@@ -37,7 +37,7 @@ stories.add('default', () => {
         </Message>
 
         <Message
-          from
+          from='Help Bot'
           avatar={
             <Avatar
               borderColor='#f9fafa'

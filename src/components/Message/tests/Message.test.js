@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import Message from '..'
 import Action from '../Action'
 import Bubble from '../Bubble'
@@ -11,7 +11,8 @@ import { Avatar } from '../../'
 
 const cx = 'c-Message'
 const ui = {
-  avatar: `.${cx}__avatar-block`
+  avatar: `.${cx}__avatar-block`,
+  from: `.${cx}__from`
 }
 
 describe('ClassNames', () => {
@@ -53,6 +54,13 @@ describe('Avatar', () => {
 
     expect(o.length).toBeTruthy()
     expect(o.find(Avatar).length).toBeTruthy()
+  })
+
+  test('Adds className if avatat is provided', () => {
+    const a = (<Avatar name='Mugatu' />)
+    const wrapper = shallow(<Message className='mugatu' from avatar={a} />)
+
+    expect(wrapper.hasClass('has-avatar')).toBeTruthy()
   })
 })
 
@@ -163,5 +171,57 @@ describe('Context', () => {
 
       expect(o.prop('shape')).toBe('circle')
     })
+  })
+})
+
+describe('From', () => {
+  test('Does not render by default', () => {
+    const wrapper = shallow(<Message from />)
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Does not render, unless using context.theme.embed', () => {
+    const wrapper = mount(
+      <Message.Provider theme='embed'>
+        <Message from='Blue' />
+      </Message.Provider>
+    )
+
+    let o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(1)
+    expect(o.html()).toContain('Blue')
+
+    wrapper.setProps({ theme: 'admin' })
+
+    o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Does not render if set to true', () => {
+    const wrapper = mount(
+      <Message.Provider theme='embed'>
+        <Message from />
+      </Message.Provider>
+    )
+
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Does not render if from is empty string', () => {
+    const wrapper = mount(
+      <Message.Provider theme='embed'>
+        <Message from='' />
+      </Message.Provider>
+    )
+
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
   })
 })
