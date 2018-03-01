@@ -62,6 +62,9 @@
     color: white;
     line-height: 1;
     text-transform: uppercase;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
   }
 
   &__status {

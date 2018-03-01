@@ -1,6 +1,11 @@
 import { isNodeElement } from './node'
-import { easeInOutCubic } from './easing'
 import { requestAnimationFrame } from './other'
+
+// Source:
+// https://gist.github.com/gre/1650294
+const easeInOutCubic = (t) => {
+  return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+}
 
 // Source
 // https://jsfiddle.net/s61x7c4e/

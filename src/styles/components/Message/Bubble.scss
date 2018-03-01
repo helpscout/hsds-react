@@ -21,6 +21,10 @@
   max-width: 500px;
   text-align: left;
 
+  &__body {
+    word-break: break-word;
+  }
+
   &__title {
     margin-bottom: 2px;
   }
