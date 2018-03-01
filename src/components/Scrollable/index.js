@@ -8,6 +8,7 @@ import { noop } from '../../utilities/other'
 export const propTypes = {
   backgroundColor: PropTypes.string,
   className: PropTypes.string,
+  contentClassName: PropTypes.string,
   fade: PropTypes.bool,
   fadeBottom: PropTypes.bool,
   onScroll: PropTypes.func,
@@ -87,6 +88,7 @@ class Scrollable extends Component {
       backgroundColor,
       children,
       className,
+      contentClassName,
       fade,
       fadeBottom,
       onRef,
@@ -104,6 +106,11 @@ class Scrollable extends Component {
       fade && 'has-fade',
       rounded && 'is-rounded',
       className
+    )
+
+    const componentContentClassName = classNames(
+      'c-Scrollable__content',
+      contentClassName
     )
 
     const faderTopMarkup = (
@@ -134,7 +141,7 @@ class Scrollable extends Component {
         {faderTopMarkup}
         <ScrollLock isDisabled={!isScrollLocked}>
           <div
-            className='c-Scrollable__content'
+            className={componentContentClassName}
             onScroll={handleOnScroll}
             ref={node => {
               this.containerNode = node

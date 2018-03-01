@@ -45,6 +45,7 @@ describe('Bubble', () => {
   test('Passes correct props to Bubble', () => {
     const wrapper = shallow(
       <Chat
+        body='body'
         from
         isNote
         ltr
@@ -58,6 +59,7 @@ describe('Bubble', () => {
     )
     const props = wrapper.find(Bubble).node.props
 
+    expect(props.body).toBeTruthy()
     expect(props.from).toBeTruthy()
     expect(props.isNote).toBeTruthy()
     expect(props.ltr).toBeTruthy()

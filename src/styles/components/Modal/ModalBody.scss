@@ -1,18 +1,26 @@
+@import "pack/seed-this/__index";
+
 .c-ModalBody {
   @import "../../resets/base";
+  $block: this();
   display: flex;
   flex: 1;
   height: 100%;
   max-width: 100%;
   min-height: 0;
 
-  &__scrollable {
-    & > .c-Scrollable__content {
-      padding: 20px;
-    }
+  &__scrollableContent {
+    padding: 20px;
   }
 
+  // Modifiers
   &.is-not-scrollable {
     padding: 20px;
+  }
+
+  &.is-seamless {
+    #{$block}__scrollableContent {
+      padding: 0;
+    }
   }
 }

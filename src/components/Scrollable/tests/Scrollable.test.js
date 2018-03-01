@@ -3,6 +3,10 @@ import { mount, shallow } from 'enzyme'
 import Scrollable from '..'
 import wait from '../../../tests/helpers/wait'
 
+const ui = {
+  content: '.c-Scrollable__content'
+}
+
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = shallow(<Scrollable />)
@@ -91,6 +95,30 @@ describe('Fade', () => {
       expect(o.faderNodeBottom.style.transform).toContain('scaleY')
       done()
     })
+  })
+})
+
+describe('Content', () => {
+  test('Renders content within the content node', () => {
+    const wrapper = shallow(
+      <Scrollable>
+        <div className='mugatu'>Mugatu</div>
+      </Scrollable>
+    )
+    const o = wrapper.find(ui.content)
+
+    expect(o.length).toBe(1)
+    expect(o.html()).toContain('mugatu')
+    expect(o.html()).toContain('Mugatu')
+  })
+
+  test('Can provide content with custom className', () => {
+    const wrapper = shallow(
+      <Scrollable contentClassName='mugatu' />
+    )
+    const o = wrapper.find(ui.content)
+
+    expect(o.hasClass('mugatu')).toBeTruthy()
   })
 })
 

@@ -112,3 +112,17 @@ describe('Context', () => {
     expect(spy.mock.calls[0][0]).toBeTruthy()
   })
 })
+
+describe('Styles', () => {
+  test('Does not have seamless styles by default', () => {
+    const wrapper = shallow(<Body />)
+
+    expect(wrapper.hasClass('is-seamless')).not.toBeTruthy()
+  })
+
+  test('Applies isSeamless styles, if applied', () => {
+    const wrapper = shallow(<Body isSeamless />)
+
+    expect(wrapper.hasClass('is-seamless')).toBeTruthy()
+  })
+})
