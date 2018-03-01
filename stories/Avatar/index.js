@@ -117,7 +117,14 @@ stories.add('sizes', () => (
 ))
 
 stories.add('border', () => (
-  <div>
-    <Avatar name={fixture.name} size='lg' borderColor='red' />
+  <div style={{ background: 'orangered', padding: 20 }}>
+    <Avatar
+      borderColor='orangered'
+      outerBorderColor='white'
+      name={fixture.name}
+      showStatusBorderColor
+      size='lg'
+      status='online'
+    />
   </div>
 ))

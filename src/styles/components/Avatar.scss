@@ -6,6 +6,7 @@
   @import "../configs/color";
   @import "../resets/base";
   $block: this();
+  $bdrWidth: 2px;
   $sizes: (
     lg: (
       size: 52px,
@@ -92,6 +93,12 @@
       height: $sz;
       font-size: _get($values, font-size);
       width: $sz;
+
+      &.has-outerBorderColor {
+        $sz: _get($values, size) + ($bdrWidth * 2);
+        height: $sz;
+        width: $sz;
+      }
     }
   }
 
