@@ -43,6 +43,15 @@ const RouteWrapper = (WrappedComponent) => {
     start: PropTypes.func,
     to: PropTypes.string
   }
+
+  const componentName = (
+    WrappedComponent.displayName ||
+    WrappedComponent.name ||
+    /* istanbul ignore next */
+    'Component'
+  )
+  Component.displayName = `withRoute(${componentName})`
+
   return Component
 }
 

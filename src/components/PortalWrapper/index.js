@@ -312,7 +312,14 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   PortalWrapper.propTypes = propTypes
   PortalWrapper.defaultProps = defaultProps
   PortalWrapper.contextTypes = contextTypes
-  PortalWrapper.displayName = 'PortalWrapper'
+
+  const componentName = (
+    ComposedComponent.displayName ||
+    ComposedComponent.name ||
+    /* istanbul ignore next */
+    'Component'
+  )
+  PortalWrapper.displayName = `withPortal(${componentName})`
 
   return PortalWrapper
 }

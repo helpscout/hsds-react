@@ -61,7 +61,14 @@ const HoverWrapper = ComposedComponent => {
   WrappedComponent.propTypes = propTypes
   WrappedComponent.defaultProps = defaultProps
   WrappedComponent.contextTypes = ComposedComponent.contextTypes
-  WrappedComponent.displayName = ComposedComponent.displayName
+
+  const componentName = (
+    ComposedComponent.displayName ||
+    ComposedComponent.name ||
+    /* istanbul ignore next */
+    'Component'
+  )
+  WrappedComponent.displayName = `withHover(${componentName})`
 
   return WrappedComponent
 }

@@ -90,6 +90,14 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
   Drop.propTypes = propTypes
   Drop.defaultProps = defaultProps
 
+  const componentName = (
+    ComposedComponent.displayName ||
+    ComposedComponent.name ||
+    /* istanbul ignore next */
+    'Component'
+  )
+  Drop.displayName = `withDrop(${componentName})`
+
   return Drop
 }
 
