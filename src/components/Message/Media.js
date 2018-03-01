@@ -14,6 +14,7 @@ export const propTypes = Object.assign({}, bubbleTypes, {
 
 const Media = props => {
   const {
+    body,
     children,
     className,
     caption,
@@ -44,23 +45,25 @@ const Media = props => {
   ) : null
 
   const mediaMarkup = imageUrl ? (
-    <Image
-      block
-      className='c-MessageMedia__media'
-      src={imageUrl}
-      shape='rounded'
-    />
+    <div className='c-MessageMedia__media'>
+      <Image
+        block
+        className='c-MessageMedia__mediaImage'
+        src={imageUrl}
+        shape='rounded'
+      />
+    </div>
   ) : null
 
   const mediaContainerMarkup = imageUrl ? (
     <div className='c-MessageMedia__media-container'>
-      <Modal trigger={mediaMarkup} scrollFade={false}>
-        <Modal.Content>
-          <div>
+      <Modal trigger={mediaMarkup}>
+        <Modal.Body scrollFade={false} isSeamless>
+          <Modal.Content>
             {mediaMarkup}
-          </div>
-          {captionMarkup}
-        </Modal.Content>
+            {captionMarkup}
+          </Modal.Content>
+        </Modal.Body>
       </Modal>
     </div>
   ) : null

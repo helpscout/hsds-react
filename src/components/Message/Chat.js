@@ -8,6 +8,7 @@ export const propTypes = bubbleTypes
 
 const Chat = props => {
   const {
+    body,
     children,
     className,
     read,
@@ -31,6 +32,8 @@ const Chat = props => {
   )
 
   const chatProps = {
+    body,
+    children,
     from,
     ltr,
     rtl,
@@ -54,9 +57,7 @@ const Chat = props => {
         title={title}
         typing={typing}
         type={type}
-      >
-        {children}
-      </Bubble>
+      />
     </ChatBlock>
   )
 }

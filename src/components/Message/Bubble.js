@@ -12,6 +12,7 @@ const contextTypes = providerContextTypes
 
 const Bubble = (props, context) => {
   const {
+    body,
     children,
     className,
     from,
@@ -45,11 +46,20 @@ const Bubble = (props, context) => {
 
   const childrenMarkup = React.Children.map(children, child => {
     return isWord(child) || isNativeSpanType(child) ? (
-      <Text wordWrap>
-        {child}
-      </Text>
+      <span className='c-MessageBubble__body'>
+        <Text wordWrap>
+          {child}
+        </Text>
+      </span>
     ) : child
   })
+
+  const bodyMarkup = body ? (
+    <span
+      className='c-MessageBubble__body'
+      dangerouslySetInnerHTML={{__html: body}}
+    />
+  ) : childrenMarkup
 
   const titleMarkup = title ? (
     <Heading className='c-MessageBubble__title' size='small'>
@@ -61,7 +71,7 @@ const Bubble = (props, context) => {
     <div className='c-MessageBubble__typing'>
       <LoadingDots />
     </div>
-  ) : childrenMarkup
+  ) : bodyMarkup
 
   return (
     <div className={componentClassName} {...rest}>

@@ -20,6 +20,7 @@ A Scrollable component is light-weight wrapper that enables scrolling for conten
 | --- | --- | --- |
 | backgroundColor | `string` | Background color for the fade elements. |
 | className | `string` | Custom class names to be added to the component. |
+| contentClassName | `string` | Custom class names for the component's content DOM node. |
 | fade | `bool` | Adds a "fade-to-white" visual experience while scrolling. Appears at the top. |
 | fadeBottom | `bool` | Adds a "fade-to-white" visual experience while scrolling. Appears at the bottom. |
 | onScroll | `function` | Callback function when component is scrolled. |

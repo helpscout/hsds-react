@@ -4,8 +4,12 @@ import Bubble from '../Bubble'
 import { Heading, LoadingDots, Text } from '../../'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
+const cx = 'c-MessageBubble'
 const baseComponentOptions = {
-  className: 'c-MessageBubble'
+  className: cx
+}
+const ui = {
+  body: `.${cx}__body`
 }
 
 baseComponentTest(Bubble, baseComponentOptions)
@@ -92,6 +96,40 @@ describe('Content', () => {
 
     expect(o.length).toBe(0)
     expect(wrapper.html()).toContain('Mugatu')
+  })
+
+  test('Renders body if defined', () => {
+    const wrapper = shallow(
+      <Bubble body='Mugatu' />
+    )
+    const o = wrapper.find(ui.body)
+
+    expect(o.length).toBe(1)
+    expect(wrapper.html()).toContain('Mugatu')
+  })
+
+  test('Renders body instead of children, if defined', () => {
+    const wrapper = shallow(
+      <Bubble body='Mugatu'>
+        Zoolander
+      </Bubble>
+    )
+    const o = wrapper.find(ui.body)
+
+    expect(o.length).toBe(1)
+    expect(wrapper.html()).toContain('Mugatu')
+    expect(wrapper.html()).not.toContain('Zoolander')
+  })
+
+  test('Renders body as HTML', () => {
+    const html = '<div>Mugatu<br /></div>'
+    const wrapper = shallow(
+      <Bubble body={html} />
+    )
+    const o = wrapper.find(ui.body)
+
+    expect(o.length).toBe(1)
+    expect(wrapper.html()).toContain(html)
   })
 })
 

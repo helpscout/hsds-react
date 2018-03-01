@@ -13,6 +13,7 @@ const contextTypes = providerContextTypes
 
 const ChatBlock = (props, context) => {
   const {
+    body,
     children,
     className,
     ltr,

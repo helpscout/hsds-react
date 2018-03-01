@@ -105,19 +105,23 @@ stories.add('action', () => (
   </Message>
 ))
 
-stories.add('chat', () => (
-  <Message to avatar={<Avatar name='Buddy' />}>
-    <Message.Chat read timestamp='9:41am'>
-      :sob:
-      <br />
-      omgomgomg
-      {1}
-    </Message.Chat>
-    <Message.Chat read timestamp='9:41am'>
-      <strong>*Frantically running through North pole*</strong>
-    </Message.Chat>
-  </Message>
-))
+stories.add('chat', () => {
+  const htmlBody = `
+    :sob:
+    <br />
+    <br />
+    omgomgomg
+    <br />
+  `
+  return (
+    <Message to avatar={<Avatar name='Buddy' />}>
+      <Message.Chat read timestamp='9:41am' body={htmlBody} />
+      <Message.Chat read timestamp='9:41am'>
+        <strong>*Frantically running through North pole*</strong>
+      </Message.Chat>
+    </Message>
+  )
+})
 
 stories.add('content', () => (
   <Message to avatar={<Avatar name='Buddy' />}>

@@ -5,6 +5,7 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
+  isSeamless: PropTypes.bool,
   onScroll: PropTypes.func,
   scrollable: PropTypes.bool,
   scrollableRef: PropTypes.func,
@@ -12,6 +13,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
+  isSeamless: false,
   onScroll: noop,
   scrollable: true,
   scrollableRef: noop,
@@ -46,6 +48,7 @@ class Body extends Component {
     const {
       className,
       children,
+      isSeamless,
       onScroll,
       scrollable,
       scrollFade,
@@ -55,6 +58,7 @@ class Body extends Component {
 
     const componentClassName = classNames(
       'c-ModalBody',
+      isSeamless && 'is-seamless',
       scrollable ? 'is-scrollable' : 'is-not-scrollable',
       className
     )
@@ -62,6 +66,7 @@ class Body extends Component {
     const childrenContent = scrollable ? (
       <Scrollable
         className='c-ModalBody__scrollable'
+        contentClassName='c-ModalBody__scrollableContent'
         fade={scrollFade}
         rounded
         onScroll={onScroll}
