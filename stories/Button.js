@@ -11,14 +11,24 @@ stories.add('types', () => (
     <Button>Regular</Button>
     <Button primary>Primary</Button>
     <Button plain>Plain</Button>
+    <Button outline>Outline Button</Button>
   </div>
 ))
 
 stories.add('sizes', () => (
   <div>
-    <Button size='lg'>Large</Button>
-    <Button size='md'>Medium</Button>
-    <Button size='sm'>Small</Button>
+    <div>
+      <Button size='lg'>Large</Button>
+      <Button size='md'>Medium</Button>
+      <Button size='sm'>Small</Button>
+      <Button size='xs'>Extra Small</Button>
+    </div>
+    <div>
+      <Button size='lg' outline>Large</Button>
+      <Button size='md' outline>Medium</Button>
+      <Button size='sm' outline>Small</Button>
+      <Button size='xs' outline>Extra Small</Button>
+    </div>
   </div>
 ))
 
@@ -32,7 +42,7 @@ stories.add('states', () => (
 
 stories.add('disabled', () => (
   <div>
-    <Button disabled>Can't touch this!</Button>
+    <Button disabled>Cant touch this!</Button>
   </div>
 ))
 

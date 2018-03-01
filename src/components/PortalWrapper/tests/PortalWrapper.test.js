@@ -412,3 +412,51 @@ describe('Esc keypress', () => {
     }, 20)
   })
 })
+
+describe('displayName', () => {
+  test('Uses a ComposedComponent.name', () => {
+    const Derek = () => (
+      <div />
+    )
+    const WrappedComponent = PortalWrapper()(Derek)
+
+    expect(WrappedComponent.displayName).toContain('with')
+    expect(WrappedComponent.displayName).toContain('Derek')
+  })
+
+  test('Uses a ComposedComponent.displayName', () => {
+    const Composed = () => (
+      <div />
+    )
+    Composed.displayName = 'Derek'
+    const WrappedComponent = PortalWrapper()(Composed)
+
+    expect(WrappedComponent.displayName).toContain('with')
+    expect(WrappedComponent.displayName).toContain('Derek')
+  })
+
+  test('Works with React.Component', () => {
+    class Derek extends React.Component {
+      render () {
+        return (<div />)
+      }
+    }
+    const WrappedComponent = PortalWrapper()(Derek)
+
+    expect(WrappedComponent.displayName).toContain('with')
+    expect(WrappedComponent.displayName).toContain('Derek')
+  })
+
+  test('Works with React.Component.displayName', () => {
+    class Composed extends React.Component {
+      render () {
+        return (<div />)
+      }
+    }
+    Composed.displayName = 'Derek'
+    const WrappedComponent = PortalWrapper()(Composed)
+
+    expect(WrappedComponent.displayName).toContain('with')
+    expect(WrappedComponent.displayName).toContain('Derek')
+  })
+})

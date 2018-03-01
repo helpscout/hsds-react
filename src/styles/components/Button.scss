@@ -11,6 +11,47 @@ button.#{$seed-button-namespace} {
 
 .c-Button {
   @import "../configs/color";
+
+  &:before {
+    border-radius: 2px;
+    bottom: 0;
+    content: "";
+    display: none;
+    left: 0;
+    opacity: 0.3;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &--outline {
+    border-color: currentColor;
+    background-color: transparent;
+    box-shadow: 0 0 0 1px currentColor inset;
+    position: relative;
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus:active {
+      border-color: currentColor;
+      background-color: transparent;
+      box-shadow: 0 0 0 1px currentColor inset;
+    }
+    &:focus,
+    &:focus:active {
+      &:before {
+        box-shadow: 0 0 0 3px currentColor;
+        display: block;
+      }
+    }
+    &:focus:active {
+      &:before {
+        opacity: 0.45;
+      }
+    }
+  }
+
   $themes: (
     editing: (
       _generate-states: false,

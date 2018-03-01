@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
-import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
+import { stateTypes } from '../../constants/propTypes'
 
 export const propTypes = {
   accessibilityLabel: PropTypes.string,
@@ -17,7 +17,13 @@ export const propTypes = {
   outline: PropTypes.bool,
   plain: PropTypes.bool,
   primary: PropTypes.bool,
-  size: standardSizeTypes,
+  size: PropTypes.oneOf([
+    'lg',
+    'md',
+    'sm',
+    'xs',
+    ''
+  ]),
   state: stateTypes,
   submit: PropTypes.bool,
   theme: PropTypes.string
