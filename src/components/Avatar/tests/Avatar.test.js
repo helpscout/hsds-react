@@ -152,6 +152,55 @@ describe('Border color', () => {
 
     expect(style).not.toBeTruthy()
   })
+
+  test('Adds a style class to the component', () => {
+    const wrapper = shallow(<Avatar name='Buddy' borderColor='red' />)
+
+    expect(wrapper.hasClass('has-borderColor')).toBeTruthy()
+  })
+
+  test('Does not pass borderColor as outerBorderColor to StatusDot, by default', () => {
+    const wrapper = shallow(
+      <Avatar name='Buddy' borderColor='red' status='online' />
+    )
+    const o = wrapper.find(StatusDot)
+
+    expect(o.prop('outerBorderColor')).not.toBe('red')
+  })
+
+  test('Passes borderColor as outerBorderColor to StatusDot, if specified', () => {
+    const wrapper = shallow(
+      <Avatar name='Buddy' borderColor='red' status='online' showStatusBorderColor />
+    )
+    const o = wrapper.find(StatusDot)
+
+    expect(o.prop('outerBorderColor')).toBe('red')
+  })
+})
+
+describe('Outer border color', () => {
+  test('Does not apply outerBorderColor by default', () => {
+    const wrapper = shallow(<Avatar name='Buddy' />)
+    const crop = wrapper.find(classNames.crop)
+    const style = crop.props().style
+
+    expect(style).not.toBeTruthy()
+  })
+
+  test('Can apply outerBorderColor', () => {
+    const wrapper = shallow(<Avatar name='Buddy' outerBorderColor='green' />)
+    const crop = wrapper.find(classNames.crop)
+    const style = crop.props().style
+
+    expect(style).toBeTruthy()
+    expect(style.boxShadow).toContain('green')
+  })
+
+  test('Adds a style class to the component', () => {
+    const wrapper = shallow(<Avatar name='Buddy' outerBorderColor='red' />)
+
+    expect(wrapper.hasClass('has-outerBorderColor')).toBeTruthy()
+  })
 })
 
 describe('Size', () => {
@@ -180,6 +229,16 @@ describe('StatusDot', () => {
     expect(wrapper.hasClass('is-online'))
     expect(statusMarkup.length).toBe(1)
     expect(o.length).toBe(1)
+  })
+
+  test('Adjust the size of StatusDot based on size of Avatar', () => {
+    const wrapper = shallow(<Avatar status='online' size='md' />)
+
+    expect(wrapper.find(StatusDot).prop('size')).toBe('md')
+
+    wrapper.setProps({size: 'sm'})
+
+    expect(wrapper.find(StatusDot).prop('size')).toBe('sm')
   })
 
   test('Renders an icon in StatusDot, if defined', () => {

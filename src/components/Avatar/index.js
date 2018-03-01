@@ -16,6 +16,8 @@ export const propTypes = {
   initials: PropTypes.string,
   light: PropTypes.bool,
   name: PropTypes.string.isRequired,
+  outerBorderColor: PropTypes.string,
+  showStatusBorderColor: PropTypes.bool,
   shape: shapeTypes,
   size: standardSizeTypes,
   statusIcon: PropTypes.string,
@@ -25,6 +27,7 @@ export const propTypes = {
 const defaultProps = {
   light: false,
   name: '',
+  showStatusBorderColor: false,
   size: 'md',
   shape: 'circle'
 }
@@ -55,6 +58,8 @@ class Avatar extends Component {
       name,
       light,
       initials,
+      outerBorderColor,
+      showStatusBorderColor,
       size,
       shape,
       status,
@@ -67,8 +72,10 @@ class Avatar extends Component {
 
     const componentClassName = classNames(
       'c-Avatar',
+      borderColor && 'has-borderColor',
       hasImage && 'has-image',
       light && 'is-light',
+      outerBorderColor && 'has-outerBorderColor',
       shape && `is-${shape}`,
       size && `is-${size}`,
       status && `is-${status}`,
@@ -76,7 +83,6 @@ class Avatar extends Component {
     )
 
     const imageStyle = hasImage ? { backgroundImage: `url('${image}')` } : null
-
     const text = count || initials || nameToInitials(name)
 
     const contentMarkup = hasImage
@@ -94,9 +100,10 @@ class Avatar extends Component {
         {text}
       </div>
 
-    let styles = borderColor ? {
-      border: '2px solid',
-      borderColor
+    let styles = (borderColor || outerBorderColor) ? {
+      border: borderColor ? '2px solid' : undefined,
+      borderColor,
+      boxShadow: outerBorderColor ? `0 0 0 2px ${outerBorderColor}` : undefined
     } : {}
 
     hasImage && Object.assign(styles, {
@@ -107,7 +114,12 @@ class Avatar extends Component {
 
     const statusMarkup = status ? (
       <div className='c-Avatar__status'>
-        <StatusDot status={status} icon={statusIcon} />
+        <StatusDot
+          icon={statusIcon}
+          outerBorderColor={showStatusBorderColor ? borderColor : undefined}
+          size={size === 'sm' ? 'sm' : 'md'}
+          status={status}
+        />
       </div>
     ) : null
 
