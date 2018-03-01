@@ -100,6 +100,8 @@ class Modal extends Component {
   componentDidMount () {
     this.positionCloseNode()
     this.focusModalCard()
+    /* istanbul ignore next */
+    setTimeout(this.positionCloseNode, this.props.modalAnimationDuration)
   }
 
   componentWillUnmount () {
