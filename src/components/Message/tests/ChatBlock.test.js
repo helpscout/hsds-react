@@ -132,20 +132,6 @@ describe('To/From', () => {
 
     expect(o.hasClass('is-to')).toBeTruthy()
   })
-
-  test('Aligns to left if from', () => {
-    const wrapper = mount(<ChatBlock from />)
-    const o = wrapper.find(Flexy)
-
-    expect(o.props().just).toBe('left')
-  })
-
-  test('Aligns to right if to', () => {
-    const wrapper = mount(<ChatBlock to />)
-    const o = wrapper.find(Flexy)
-
-    expect(o.props().just).toBe('right')
-  })
 })
 
 describe('Context', () => {

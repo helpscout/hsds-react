@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 export const themeTypes = PropTypes.oneOf([
   'admin',
   'embed',
+  'notifications',
   ''
 ])
 

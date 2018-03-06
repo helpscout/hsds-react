@@ -37,8 +37,6 @@ const ChatBlock = (props, context) => {
     className
   )
 
-  const itemAlign = from ? 'left' : 'right'
-
   const timestampMarkup = timestamp ? (
     <Flexy.Item className='c-MessageChatBlock__timestamp'>
       <Animate in={isHovered} sequence='fade' animateOnMount={false}>
@@ -63,7 +61,7 @@ const ChatBlock = (props, context) => {
     <div className={componentClassName}
       {...rest}
     >
-      <Flexy just={itemAlign} gap='sm'>
+      <Flexy className='c-MessageChatBlock__flexy' gap='sm'>
         {to && timestampMarkup}
         <Flexy.Item className='c-MessageChatBlock__block'>
           {childrenMarkup}

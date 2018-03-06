@@ -1,6 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import Bubble from '../Bubble'
+import Message from '../Message'
 import { Heading, LoadingDots, Text } from '../../'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
@@ -9,7 +10,8 @@ const baseComponentOptions = {
   className: cx
 }
 const ui = {
-  body: `.${cx}__body`
+  body: `.${cx}__body`,
+  from: `.${cx}__from`
 }
 
 baseComponentTest(Bubble, baseComponentOptions)
@@ -190,5 +192,48 @@ describe('Context', () => {
     , {context: {theme: 'embed'}})
 
     expect(wrapper.hasClass('is-theme-embed')).toBe(true)
+  })
+})
+
+describe('From', () => {
+  test('It does not render a from name, by default', () => {
+    const wrapper = mount(<Bubble from='Mugatu' />)
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Does not render from name, if theme is notifications, but from is not provided', () => {
+    const wrapper = mount(
+      <Message.Provider theme='notifications'>
+        <Bubble />
+      </Message.Provider>
+    )
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Does not renders from name, if theme is notifications and from is not a string', () => {
+    const wrapper = mount(
+      <Message.Provider theme='notifications'>
+        <Bubble from />
+      </Message.Provider>
+    )
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders from name, if theme is notifications and from is a string', () => {
+    const wrapper = mount(
+      <Message.Provider theme='notifications'>
+        <Bubble from='Mugatu' />
+      </Message.Provider>
+    )
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(1)
+    expect(o.html()).toContain('Mugatu')
   })
 })
