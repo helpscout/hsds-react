@@ -1,6 +1,6 @@
 # NotificationStack
 
-A NotificationStack component displays an array of [Notifications](../Notification). This component acts as a container for child Notifications, and provides extra functionality such as limiting and dismissal paushing.
+A NotificationStack component displays an array of [Notifications](../Notification). This component acts as a container for child Notifications, and provides extra functionality such as limiting and dismissal pausing.
 
 ## Example
 
