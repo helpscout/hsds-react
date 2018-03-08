@@ -30,6 +30,9 @@ const Bubble = (props, context) => {
   } = props
   const {theme} = context
 
+  const isThemeNotifications = theme === 'notifications'
+  const fromName = from && typeof from === 'string' ? from : null
+
   const componentClassName = classNames(
     'c-MessageBubble',
     from && 'is-from',
@@ -54,12 +57,17 @@ const Bubble = (props, context) => {
     ) : child
   })
 
-  const bodyMarkup = body ? (
-    <span
-      className='c-MessageBubble__body'
-      dangerouslySetInnerHTML={{__html: body}}
-    />
-  ) : childrenMarkup
+  const fromMarkup = (isThemeNotifications && fromName) ? (
+    <div className='c-MessageBubble__from'>
+      <Text
+        className='c-MessageBubble__fromText'
+        lineHeightReset
+        size='11'
+      >
+        {fromName}
+      </Text>
+    </div>
+  ) : null
 
   const titleMarkup = title ? (
     <Heading className='c-MessageBubble__title' size='small'>
@@ -67,6 +75,12 @@ const Bubble = (props, context) => {
     </Heading>
   ) : null
 
+  const bodyMarkup = body ? (
+    <span
+      className='c-MessageBubble__body'
+      dangerouslySetInnerHTML={{__html: body}}
+    />
+  ) : childrenMarkup
   const contentMarkup = typing ? (
     <div className='c-MessageBubble__typing'>
       <LoadingDots />
@@ -75,6 +89,7 @@ const Bubble = (props, context) => {
 
   return (
     <div className={componentClassName} {...rest}>
+      {fromMarkup}
       {titleMarkup}
       {contentMarkup}
     </div>

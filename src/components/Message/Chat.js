@@ -1,10 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Bubble from './Bubble'
 import ChatBlock from './ChatBlock'
 import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 import { bubbleTypes } from './propTypes'
 
-export const propTypes = bubbleTypes
+export const propTypes = {
+  ...bubbleTypes,
+  onBubbleClick: PropTypes.func
+}
+
+const defaultProps = {
+  onBubbleClick: noop
+}
 
 const Chat = props => {
   const {
@@ -15,6 +24,7 @@ const Chat = props => {
     from,
     isNote,
     ltr,
+    onBubbleClick,
     primary,
     rtl,
     size,
@@ -51,6 +61,7 @@ const Chat = props => {
     >
       <Bubble
         {...chatProps}
+        onClick={onBubbleClick}
         isNote={isNote}
         primary={primary}
         size={size}
@@ -63,5 +74,6 @@ const Chat = props => {
 }
 
 Chat.propTypes = propTypes
+Chat.defaultProps = defaultProps
 
 export default Chat

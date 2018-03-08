@@ -49,3 +49,8 @@ export const truncateMiddle = (word, startLen, endLen, ellip) => {
     return word.slice(0, frontLen) + truncateStr + word.slice(wordLen - backLen)
   }
 }
+
+export const stripUrlPrefix = url => {
+  if (!isString(url)) return url
+  return url.replace(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/g, '')
+}

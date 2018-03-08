@@ -18,11 +18,34 @@
     max-width: calc(100% - #{$timestamp-size});
   }
 
+  &.is-from {
+    #{$block}__flexy {
+      justify-content: flex-start;
+    }
+  }
+
+  &.is-to {
+    #{$block}__flexy {
+      justify-content: flex-end;
+    }
+  }
+
   // Themes
   &.is-theme-embed {
     #{$block}__block {
       max-width: 100%;
     }
+  }
+
+  &.is-theme-notifications {
+    #{$block}__flexy {
+      justify-content: flex-end;
+    }
+
+    #{$block}__block {
+      max-width: 100%;
+    }
+    margin-bottom: 5px;
   }
 
   // Types
