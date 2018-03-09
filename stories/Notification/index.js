@@ -7,7 +7,7 @@ import {
 
 const NotificationSpec = createSpec({
   id: faker.random.uuid(),
-  body: faker.lorem.sentence(),
+  body: faker.lorem.paragraph(),
   from: faker.name.firstName()
 })
 
@@ -41,6 +41,26 @@ stories.add('types', () => {
 
       <div style={{textAlign: 'right'}}>Image</div>
       <Notification {...props} body='https://www.helpscout.net/images/blog/2016/feb/release-notes-2016.png' type='image' />
+    </div>
+  )
+})
+
+stories.add('align', () => {
+  const props = () => NotificationSpec.generate()
+
+  return (
+    <div style={{maxWidth: 300}}>
+      <div style={{textAlign: 'right'}}>Right (Default)</div>
+      <div>
+        <Notification {...props()} type='text' />
+        <Notification {...props()} type='text' />
+      </div>
+
+      <div style={{textAlign: 'left'}}>Left</div>
+      <div>
+        <Notification {...props()} align='left' type='text' />
+        <Notification {...props()} align='left' type='text' />
+      </div>
     </div>
   )
 })

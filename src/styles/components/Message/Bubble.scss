@@ -101,28 +101,4 @@
   &.is-theme-embed {
     padding: 12px 15px;
   }
-
-  &.is-theme-notifications {
-    background-color: white;
-    border-color: transparent;
-    border-top-left-radius: $br;
-    border-top-right-radius: $br-sm !important;
-    border-bottom-right-radius: $br-sm;
-    border-bottom-left-radius: $br;
-    box-shadow: 0 0 0 1px rgba(black, 0.1), 0 4px 6px rgba(black, 0.15);
-    cursor: pointer;
-    max-width: 100%;
-    text-align: right;
-    transition: border-radius 200ms ease;
-
-    @include parent("#{$parent-wrapper}:first-child") {
-      border-top-right-radius: $br !important;
-    }
-    @include parent("#{$parent-wrapper}:last-child") {
-      border-bottom-right-radius: $br;
-    }
-    @include parent("#{$parent-wrapper}:only-child") {
-      border-radius: $br !important;
-    }
-  }
 }

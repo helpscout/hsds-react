@@ -1,7 +1,7 @@
 import React from 'react'
 import {mount, shallow} from 'enzyme'
 import Notification from '../index'
-import {Animate} from '../../'
+import {Animate, Truncate} from '../../'
 
 const ui = {
   message: '.c-Notification__message',
@@ -38,6 +38,20 @@ describe('Children', () => {
   })
 })
 
+describe('Align', () => {
+  test('Has default alignment of right', () => {
+    const wrapper = shallow(<Notification />)
+
+    expect(wrapper.hasClass('is-align-right')).toBeTruthy()
+  })
+
+  test('Can change alignment styles, if specified', () => {
+    const wrapper = shallow(<Notification align='left' />)
+
+    expect(wrapper.hasClass('is-align-left')).toBeTruthy()
+  })
+})
+
 describe('AnimationSequence', () => {
   test('Can customize animationSequence', () => {
     const wrapper = shallow(
@@ -50,24 +64,15 @@ describe('AnimationSequence', () => {
 })
 
 describe('Body', () => {
-  test('Renders body content, if provided', () => {
+  test('Does not render body content', () => {
     const wrapper = shallow(
       <Notification body='Santa!' />
     )
     const o = wrapper.find(ui.message)
 
     expect(o.length).toBe(1)
-    expect(o.prop('body')).toBe('Santa!')
-  })
-
-  test('Can render HTML as body content', () => {
-    const wrapper = mount(
-      <Notification body='<h1>Santa!</h1>' />
-    )
-    const o = wrapper.find(ui.message)
-
-    expect(o.length).toBe(1)
-    expect(o.node.querySelector('h1')).toBeTruthy()
+    expect(o.prop('body')).toBeFalsy()
+    expect(o.html()).toContain('Santa!')
   })
 })
 
@@ -214,23 +219,35 @@ describe('Type', () => {
       expect(wrapper.hasClass('is-text')).toBe(true)
     })
 
-    test('Passes body prop to Messages', () => {
+    test('Does not pass body prop to Messages', () => {
       const wrapper = shallow(
         <Notification body='mugatu' />
       )
       const o = wrapper.find(ui.message)
 
-      expect(o.prop('body')).toBe('mugatu')
+      expect(o.prop('body')).not.toBe('mugatu')
     })
 
-    test('Does not pass children prop to Messages', () => {
+    test('Passes body as children prop to Messages', () => {
       const wrapper = shallow(
         <Notification body='mugatu' children='derek' />
       )
       const o = wrapper.find(ui.message)
 
-      expect(o.prop('body')).toBe('mugatu')
-      expect(o.prop('children')).toBeFalsy()
+      expect(o.prop('body')).toBeFalsy()
+      expect(o.html()).toContain('mugatu')
+      expect(wrapper.html()).not.toContain('derek')
+    })
+
+    test('Passes body as truncated content as children prop to Messages', () => {
+      const wrapper = shallow(
+        <Notification body='mugatu' children='derek' />
+      )
+      const o = wrapper.find(ui.message)
+      const t = o.find(Truncate)
+
+      expect(t.length).toBe(1)
+      expect(t.html()).toContain('mugatu')
     })
   })
 
@@ -300,5 +317,16 @@ describe('Type', () => {
       expect(o.prop('children')).toBeTruthy()
       expect(o.html()).toContain(link)
     })
+  })
+})
+
+describe('Truncation', () => {
+  test('Can customize truncation limit', () => {
+    const wrapper = shallow(
+      <Notification body='DEREK!' truncateLimit={3} />
+    )
+    const o = wrapper.find(Truncate)
+
+    expect(o.prop('limit')).toBe(3)
   })
 })

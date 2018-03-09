@@ -12,6 +12,7 @@ A Notification component displays content that requires attention from the user.
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| align | `string` | Alignment of notification content. Default `right`. |
 | animationSequence | `string` | [Animation](../Animate) style for this component. Default `fade upUp`. |
 | body | `string` | Content for the component. |
 | from | `string` | The name/label for the component's `body` content. |
@@ -22,6 +23,15 @@ A Notification component displays content that requires attention from the user.
 | onDismiss | `func` | Callback when component is dismissed and removed from the DOM. |
 | timeout | `number` | Amount of time before the component auto-dismisses. Only applicable if `isDismissable`. Default `5000`. |
 | type | `string` | Determine the type of content for the component. Default `text`. |
+| truncateLimit | `number` | Determines the character count to truncate text. Default `60`. |
+
+
+### Align
+
+| Prop | Description |
+| --- | --- |
+| `left` | Aligns content to the left. |
+| `right` | Aligns content to the right. |
 
 
 ### Types

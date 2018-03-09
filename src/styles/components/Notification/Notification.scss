@@ -1,3 +1,86 @@
+@import "pack/seed-family/__index";
 .c-Notification {
   @import "../../resets/base";
+  $bubbleClassName: ".c-Notification__messageBubble";
+  $br: 8px;
+  $br-sm: 2px;
+
+  #{$bubbleClassName} {
+    background-color: white;
+    border-color: transparent;
+    box-shadow: 0 0 0 1px rgba(black, 0.1), 0 4px 6px rgba(black, 0.15);
+    cursor: pointer;
+    max-width: 100%;
+    text-align: right;
+    transition: border-radius 200ms ease;
+  }
+  &:only-child {
+    #{$bubbleClassName} {
+      border-radius: $br !important;
+    }
+  }
+
+  // Modifiers
+  &.is-align-right {
+    #{$bubbleClassName} {
+      border-top-left-radius: $br;
+      border-top-right-radius: $br-sm;
+      border-bottom-right-radius: $br-sm;
+      border-bottom-left-radius: $br;
+    }
+
+    &:not(:only-child) {
+      #{$bubbleClassName} {
+        border-top-right-radius: $br-sm;
+      }
+    }
+
+    &:first-child:not(:last-child) {
+      #{$bubbleClassName} {
+        border-top-right-radius: $br;
+      }
+    }
+    &:last-child {
+      #{$bubbleClassName} {
+        border-bottom-right-radius: $br;
+      }
+    }
+  }
+
+  &.is-align-left {
+    #{$bubbleClassName} {
+      border-top-left-radius: $br-sm;
+      border-top-right-radius: $br;
+      border-bottom-right-radius: $br;
+      border-bottom-left-radius: $br-sm;
+      text-align: left;
+    }
+
+    .c-MessageChatBlock__flexy {
+      justify-content: flex-start;
+    }
+    .c-MessageBubble__from {
+      text-align: left;
+    }
+
+    &:not(:only-child) {
+      #{$bubbleClassName} {
+        border-top-right-radius: $br;
+        border-bottom-left-radius: $br-sm;
+      }
+    }
+
+    &:first-child:not(:only-child) {
+      #{$bubbleClassName} {
+        border-top-left-radius: $br;
+        border-bottom-left-radius: $br-sm;
+        border-bottom-right-radius: $br;
+      }
+    }
+    &:last-child {
+      #{$bubbleClassName} {
+        border-bottom-left-radius: $br;
+      }
+    }
+  }
 }

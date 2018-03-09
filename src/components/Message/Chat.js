@@ -8,6 +8,7 @@ import { bubbleTypes } from './propTypes'
 
 export const propTypes = {
   ...bubbleTypes,
+  bubbleClassName: PropTypes.string,
   onBubbleClick: PropTypes.func
 }
 
@@ -18,6 +19,7 @@ const defaultProps = {
 const Chat = props => {
   const {
     body,
+    bubbleClassName,
     children,
     className,
     read,
@@ -61,6 +63,7 @@ const Chat = props => {
     >
       <Bubble
         {...chatProps}
+        className={bubbleClassName}
         onClick={onBubbleClick}
         isNote={isNote}
         primary={primary}
