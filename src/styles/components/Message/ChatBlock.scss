@@ -38,6 +38,8 @@
   }
 
   &.is-theme-notifications {
+    margin-bottom: 5px;
+
     #{$block}__flexy {
       justify-content: flex-end;
     }
@@ -45,7 +47,6 @@
     #{$block}__block {
       max-width: 100%;
     }
-    margin-bottom: 5px;
   }
 
   // Types

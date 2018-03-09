@@ -24,6 +24,7 @@ A Chat component provides the UI for the primary content within a [Message](./Me
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| bubbleClassName | `string` | Custom class names for the child [Bubble](./Bubble.md) component. |
 | className | `string` | Custom class names to be added to the component. |
 | from | `node`/`bool` | Provides author information and applies "From" styles. |
 | isNote | `bool` | Applies "note" styles. |

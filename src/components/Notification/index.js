@@ -11,6 +11,10 @@ import {noop} from '../../utilities/other'
 import {stripUrlPrefix} from '../../utilities/strings'
 
 export const propTypes = {
+  align: PropTypes.oneOf([
+    'left',
+    'right'
+  ]),
   animationSequence: PropTypes.string,
   body: PropTypes.string,
   from: PropTypes.string,
@@ -27,17 +31,20 @@ export const propTypes = {
     'image',
     'link',
     'text'
-  ])
+  ]),
+  truncateLimit: PropTypes.number
 }
 
 const defaultProps = {
   animationSequence: 'fade upUp',
+  align: 'right',
   isActive: true,
   isDismissable: false,
   onClick: noop,
   onDismiss: noop,
   timeout: 2000,
-  type: 'text'
+  type: 'text',
+  truncateLimit: 60
 }
 
 class Notification extends Component {
@@ -100,6 +107,7 @@ class Notification extends Component {
 
   render () {
     const {
+      align,
       animationSequence,
       body,
       children,
@@ -111,6 +119,7 @@ class Notification extends Component {
       onClick,
       onDismiss,
       timeout,
+      truncateLimit,
       type,
       ...rest
     } = this.props
@@ -120,12 +129,11 @@ class Notification extends Component {
     const handleOnExited = this.handleOnExited
     const handleOnTimeout = this.handleOnTimeout
 
-    const isText = type === 'text'
-
     const componentClassName = classNames(
       'c-Notification',
       'c-MessageBubbleWrapper',
       isDismissable && 'is-dismissable',
+      align && `is-align-${align}`,
       type && `is-${type}`,
       className
     )
@@ -152,10 +160,18 @@ class Notification extends Component {
           </Flexy.Block>
         </Flexy>
       )
+    } else {
+      messageChildrenProp = (
+        <Text className='c-Notification__text' title={body}>
+          <Truncate limit={truncateLimit} type='end'>
+            {body}
+          </Truncate>
+        </Text>
+      )
     }
 
     const messageProps = {
-      body: isText ? body : null,
+      body: null,
       children: messageChildrenProp,
       from,
       onBubbleClick: handleOnClick
@@ -170,6 +186,7 @@ class Notification extends Component {
       >
         <Message.Provider theme='notifications'>
           <Message.Chat
+            bubbleClassName='c-Notification__messageBubble'
             className='c-Notification__message'
             {...messageProps}
             {...rest}
