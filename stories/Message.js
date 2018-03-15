@@ -139,12 +139,18 @@ stories.add('content', () => (
 ))
 
 stories.add('media', () => (
-  <Message from avatar={<Avatar name='Arctic Puffin' />}>
-    <Message.Chat read timestamp='9:41am'>
-      Hey Buddy!
-    </Message.Chat>
-    <Message.Media imageUrl='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto' caption='image.jpg' timestamp='9:41am' read />
-  </Message>
+  <Message.Provider theme='embed'>
+    <Message from avatar={<Avatar name='Arctic Puffin' />}>
+      <Message.Chat>
+        Hey Buddy!
+      </Message.Chat>
+      <Message.Media imageUrl='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto' caption='image.jpg' />
+    </Message>
+
+    <Message to avatar={<Avatar name='Arctic Puffin' />}>
+      <Message.Media imageUrl='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto' caption='image.jpg' />
+    </Message>
+  </Message.Provider>
 ))
 
 stories.add('note', () => (

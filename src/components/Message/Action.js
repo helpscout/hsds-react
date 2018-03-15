@@ -12,6 +12,7 @@ const Action = (props, context) => {
     children,
     className,
     from,
+    icon,
     ltr,
     rtl,
     to,

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const isComponentOneOfType = (component, types) => {
-  if (!Array.isArray(types) && typeof types !== 'string') return false
+  if (!component || (!Array.isArray(types) && typeof types !== 'string')) return false
   const isArray = Array.isArray(types)
 
   return (

@@ -28,6 +28,10 @@ stories.add('default', () => {
           <Message.Chat>
             Can I get an extension?
           </Message.Chat>
+          <Message.Media imageUrl='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto' caption='image.jpg' />
+          <Message.Chat>
+            Can I get an extension?
+          </Message.Chat>
         </Message>
 
         <Message>
@@ -51,6 +55,10 @@ stories.add('default', () => {
           <Message.Chat>
             Yeah of course! I've gone and added that to your account.
           </Message.Chat>
+          <Message.Attachment
+            filename='puffin.png'
+            url='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
+          />
         </Message>
       </Message.Provider>
     </div>

@@ -25,10 +25,12 @@ A Chat component provides the UI for the primary content within a [Message](./Me
 | Prop | Type | Description |
 | --- | --- | --- |
 | bubbleClassName | `string` | Custom class names for the child [Bubble](./Bubble.md) component. |
+| caption | `string` | Renders a [Caption](./Caption.md). |
 | className | `string` | Custom class names to be added to the component. |
 | from | `node`/`bool` | Provides author information and applies "From" styles. |
 | isNote | `bool` | Applies "note" styles. |
 | ltr | `bool` | Applies left-to-right text styles. |
+| onBubbleClick | `func` | Callback when the Bubble is clicked. |
 | primary | `bool` | Applies "primary" styles. |
 | read | `bool` | Determines if the Message is read. |
 | rtl | `bool` | Applies right-to-left text styles. |

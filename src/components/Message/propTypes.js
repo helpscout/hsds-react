@@ -32,6 +32,7 @@ export const chatTypes = Object.assign({}, messageTypes, {
 
 export const bubbleTypes = Object.assign({}, chatTypes, {
   body: PropTypes.string,
+  icon: PropTypes.string,
   isNote: PropTypes.bool,
   primary: PropTypes.bool,
   title: PropTypes.string,

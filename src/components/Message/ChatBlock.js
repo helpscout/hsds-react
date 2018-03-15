@@ -16,6 +16,7 @@ const ChatBlock = (props, context) => {
     body,
     children,
     className,
+    icon,
     ltr,
     rtl,
     read,
@@ -46,8 +47,9 @@ const ChatBlock = (props, context) => {
   ) : null
 
   const childrenMarkup = React.Children.map(children, child => {
-    return (child.type === Action || child.type === Bubble)
+    return (child && (child.type === Action || child.type === Bubble))
       ? React.cloneElement(child, {
+        icon,
         from,
         ltr,
         rtl,
