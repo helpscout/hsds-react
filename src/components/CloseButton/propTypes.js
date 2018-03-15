@@ -4,5 +4,6 @@ export const sizeTypes = PropTypes.oneOf([
   'md',
   'sm',
   'xs',
+  'tiny',
   ''
 ])

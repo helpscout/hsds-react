@@ -3,6 +3,9 @@ import { mount, shallow } from 'enzyme'
 import Attachment from '../index'
 
 const ui = {
+  content: '.c-Attachment__content',
+  closeButton: '.c-Attachment__closeButton',
+  image: '.c-Attachment__image',
   name: '.c-Attachment__name',
   size: '.c-Attachment__size'
 }
@@ -119,5 +122,107 @@ describe('Type', () => {
     wrapper.setProps({type: 'link'})
     expect(wrapper.hasClass('is-action')).toBeFalsy()
     expect(wrapper.hasClass('is-link')).toBeTruthy()
+  })
+})
+
+describe('Theme', () => {
+  test('Renders default theme styles, if wrapped in Provider', () => {
+    const wrapper = mount(
+      <Attachment.Provider>
+        <Attachment type='action' />
+      </Attachment.Provider>
+    )
+    const o = wrapper.find(Attachment)
+
+    expect(o.length).toBe(1)
+    expect(o.hasClass('is-theme-default')).toBeTruthy()
+  })
+
+  test('Renders theme styles, if provided', () => {
+    const wrapper = mount(
+      <Attachment.Provider theme='preview'>
+        <Attachment type='action' />
+      </Attachment.Provider>
+    )
+    const o = wrapper.find(Attachment)
+
+    expect(o.length).toBe(1)
+    expect(o.hasClass('is-theme-preview')).toBeTruthy()
+  })
+})
+
+describe('Image', () => {
+  test('Adds image className if image is provided', () => {
+    const wrapper = mount(
+      <Attachment imageUrl='image.png' />
+    )
+
+    expect(wrapper.hasClass('has-image')).toBeTruthy()
+  })
+})
+
+describe('Content', () => {
+  test('Renders text within content block, by default', () => {
+    const wrapper = shallow(
+      <Attachment truncateLimit={10} name='mr-mr-mr-mugatu.png' />
+    )
+    const o = wrapper.find(ui.content)
+    const n = o.find(ui.name)
+    const i = o.find(ui.image)
+
+    expect(o.length).toBe(1)
+    expect(n.length).toBe(1)
+    expect(i.length).toBe(0)
+  })
+
+  test('Renders image within content block, if defined', () => {
+    const wrapper = shallow(
+      <Attachment imageUrl='image.png' />
+    )
+    const o = wrapper.find(ui.content)
+    const n = o.find(ui.name)
+    const i = o.find(ui.image)
+
+    expect(o.length).toBe(1)
+    expect(n.length).toBe(0)
+    expect(i.length).toBe(1)
+  })
+})
+
+describe('CloseButton', () => {
+  test('Does not render by default', () => {
+    const wrapper = mount(
+      <Attachment imageUrl='image.png' />
+    )
+    const o = wrapper.find(ui.closeButton)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders if the theme is preview', () => {
+    const wrapper = mount(
+      <Attachment.Provider theme='preview'>
+        <Attachment imageUrl='image.png' />
+      </Attachment.Provider>
+    )
+    const o = wrapper.find(ui.closeButton)
+
+    expect(o.length).toBe(1)
+  })
+
+  test('onRemoveClick callback fires when clicked', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Attachment.Provider theme='preview'>
+        <Attachment imageUrl='image.png' onRemoveClick={spy} id='1' />
+      </Attachment.Provider>
+    )
+    const o = wrapper.find(ui.closeButton)
+
+    o.simulate('click')
+
+    expect(o.length).toBe(1)
+    expect(spy).toHaveBeenCalled()
+    expect(spy.mock.calls[0][1].id).toBe('1')
   })
 })

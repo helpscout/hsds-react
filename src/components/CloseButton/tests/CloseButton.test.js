@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import CloseButton from '..'
+import {Icon} from '../../'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -77,5 +78,28 @@ describe('Styles', () => {
     const wrapper = shallow(<CloseButton size='sm' />)
 
     expect(wrapper.hasClass('is-sm')).toBeTruthy()
+  })
+})
+
+describe('Icon', () => {
+  test('Renders an icon', () => {
+    const wrapper = shallow(<CloseButton />)
+    const o = wrapper.find(Icon)
+
+    expect(o.length).toBeTruthy()
+  })
+
+  test('Renders a large close icon by default', () => {
+    const wrapper = shallow(<CloseButton />)
+    const o = wrapper.find(Icon)
+
+    expect(o.prop('name')).toBe('cross-large')
+  })
+
+  test('Renders a small close icon, if size is tiny', () => {
+    const wrapper = shallow(<CloseButton size='tiny' />)
+    const o = wrapper.find(Icon)
+
+    expect(o.prop('name')).toBe('cross-small')
   })
 })

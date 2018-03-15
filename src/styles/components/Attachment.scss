@@ -1,4 +1,6 @@
+@import "pack/seed-family/__index";
 @import "pack/seed-this/__index";
+@import "../mixins/cardStyles";
 @import "../mixins/linkStyles";
 
 .c-Attachment {
@@ -13,6 +15,7 @@
   display: inline-block;
   line-height: 1;
   padding: 4px 10px;
+  position: relative;
   text-decoration: none;
 
   &:hover {
@@ -30,9 +33,55 @@
     margin-left: 5px;
   }
 
+  &__image {
+    border-radius: 2px;
+    height: 37px;
+    max-height: 37px;
+    max-width: initial;
+    width: auto;
+  }
+
+  #{$block}__closeButton {
+    @include cardSubtleStyles;
+    display: none;
+    border-radius: 9999px !important;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(50%, -50%);
+    z-index: 1;
+  }
+  &:hover {
+    #{$block}__closeButton {
+      display: block;
+    }
+  }
+
+  // Modifiers
   &.is-action {
     #{$block}__name {
       text-decoration: none;
+    }
+  }
+
+  // Themes
+  &.is-theme-preview {
+    @include cardSubtleStyles;
+    border: none;
+    display: block;
+    font-weight: 500;
+    padding: 15px 17px;
+
+    &.has-image {
+      padding: 3px;
+    }
+  }
+}
+
+.c-AttachmentWrapper {
+  &:hover {
+    .c-Attachment__closeButton {
+      display: block;
     }
   }
 }
