@@ -11,7 +11,10 @@ const baseComponentOptions = {
 }
 const ui = {
   body: `.${cx}__body`,
-  from: `.${cx}__from`
+  bodyWrapper: `.${cx}__bodyWrapper`,
+  from: `.${cx}__from`,
+  iconWrapper: `.${cx}__iconWrapper`,
+  icon: `.${cx}__icon`
 }
 
 baseComponentTest(Bubble, baseComponentOptions)
@@ -235,5 +238,30 @@ describe('From', () => {
 
     expect(o.length).toBe(1)
     expect(o.html()).toContain('Mugatu')
+  })
+})
+
+describe('Icon', () => {
+  test('Does not render an icon by default', () => {
+    const wrapper = mount(
+      <Bubble body='derek' />
+    )
+    const o = wrapper.find(ui.icon)
+    const w = wrapper.find(ui.iconWrapper)
+
+    expect(o.length).toBe(0)
+    expect(w.length).toBe(0)
+  })
+
+  test('Renders an icon, if specified', () => {
+    const wrapper = shallow(
+      <Bubble body='derek' icon='attachment' />
+    )
+    const o = wrapper.find(ui.icon)
+    const w = wrapper.find(ui.iconWrapper)
+
+    expect(o.length).toBe(1)
+    expect(w.length).toBe(1)
+    expect(o.prop('name')).toBe('attachment')
   })
 })

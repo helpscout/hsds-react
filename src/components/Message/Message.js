@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Text from '../Text'
 import Action from './Action'
+import Attachment from './Attachment'
 import Bubble from './Bubble'
+import Caption from './Caption'
 import Chat from './Chat'
 import Content from './Content'
 import Media from './Media'
@@ -55,7 +57,14 @@ const Message = (props, context) => {
   )
 
   const isChatType = child => {
-    const chatTypes = [Action, Chat, Content, Media, Question]
+    const chatTypes = [
+      Action,
+      Attachment,
+      Chat,
+      Content,
+      Media,
+      Question
+    ]
     return chatTypes.some(type => {
       return typeof child.type === 'function' && child.type === type
     })
@@ -116,7 +125,9 @@ Message.propTypes = propTypes
 Message.defaultProps = defaultProps
 Message.contextTypes = contextTypes
 Message.Action = Action
+Message.Attachment = Attachment
 Message.Bubble = Bubble
+Message.Caption = Caption
 Message.Chat = Chat
 Message.Content = Content
 Message.Media = Media

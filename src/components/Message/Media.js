@@ -1,94 +1,109 @@
-import React from 'react'
+import React, {PureComponent as Component} from 'react'
 import PropTypes from 'prop-types'
 import Image from '../Image'
 import Modal from '../Modal'
-import Text from '../Text'
 import Chat from './Chat'
+import Caption from './Caption'
 import classNames from '../../utilities/classNames'
-import { bubbleTypes } from './propTypes'
+import { noop } from '../../utilities/other'
+import { bubbleTypes, providerContextTypes } from './propTypes'
 
 export const propTypes = Object.assign({}, bubbleTypes, {
   caption: PropTypes.string,
-  imageUrl: PropTypes.string
+  imageAlt: PropTypes.string,
+  imageUrl: PropTypes.string,
+  onMediaClick: PropTypes.func,
+  openMediaInModal: PropTypes.bool
 })
 
-const Media = props => {
-  const {
-    body,
-    children,
-    className,
-    caption,
-    from,
-    imageUrl,
-    isNote,
-    ltr,
-    primary,
-    read,
-    rtl,
-    size,
-    timestamp,
-    title,
-    to,
-    type,
-    ...rest
-  } = props
+const defaultProps = {
+  onMediaClick: noop,
+  openMediaInModal: true
+}
 
-  const componentClassName = classNames(
-    'c-MessageMedia',
-    className
-  )
+const contextTypes = providerContextTypes
 
-  const captionMarkup = caption ? (
-    <div className='c-MessageMedia__caption'>
-      <Text muted size='13'>{caption}</Text>
-    </div>
-  ) : null
+class Media extends Component {
+  render () {
+    const {
+      body,
+      children,
+      className,
+      caption,
+      imageUrl,
+      imageAlt,
+      onMediaClick,
+      openMediaInModal,
+      type,
+      ...rest
+    } = this.props
 
-  const mediaMarkup = imageUrl ? (
-    <div className='c-MessageMedia__media'>
-      <Image
-        block
-        className='c-MessageMedia__mediaImage'
-        src={imageUrl}
-        shape='rounded'
-      />
-    </div>
-  ) : null
+    const {theme} = this.context
 
-  const mediaContainerMarkup = imageUrl ? (
-    <div className='c-MessageMedia__media-container'>
-      <Modal trigger={mediaMarkup}>
-        <Modal.Body scrollFade={false} isSeamless>
-          <Modal.Content>
-            {mediaMarkup}
-            {captionMarkup}
-          </Modal.Content>
-        </Modal.Body>
-      </Modal>
-    </div>
-  ) : null
+    const isThemeEmbed = theme === 'embed'
+    const maybeOpenMediaInModal = !isThemeEmbed && openMediaInModal
 
-  return (
-    <Chat
-      className={componentClassName}
-      from={from}
-      isNote={isNote}
-      ltr={ltr}
-      primary={primary}
-      read={read}
-      rtl={rtl}
-      size='sm'
-      timestamp={timestamp}
-      title={title}
-      to={to}
-      {...rest}
-    >
-      {mediaContainerMarkup}
-      {captionMarkup}
-    </Chat>
-  )
+    const componentClassName = classNames(
+      'c-MessageMedia',
+      className
+    )
+
+    const mediaMarkup = imageUrl ? (
+      <div className='c-MessageMedia__media'>
+        <Image
+          alt={imageAlt || null}
+          block
+          className='c-MessageMedia__mediaImage'
+          onClick={onMediaClick}
+          src={imageUrl}
+          title={imageAlt || null}
+          shape='rounded'
+        />
+      </div>
+    ) : null
+
+    const captionMarkup = (!isThemeEmbed && caption) ? (
+      <div className='c-MessageMedia__caption'>
+        <Caption>
+          {caption}
+        </Caption>
+      </div>
+    ) : null
+
+    const mediaContainerMarkup = imageUrl ? maybeOpenMediaInModal ? (
+      <div className='c-MessageMedia__mediaContainer'>
+        <Modal trigger={mediaMarkup}>
+          <Modal.Body scrollFade={false} isSeamless>
+            <Modal.Content>
+              {mediaMarkup}
+              {captionMarkup}
+            </Modal.Content>
+          </Modal.Body>
+        </Modal>
+      </div>
+    ) : (
+      <div className='c-MessageMedia__mediaContainer'>
+        {mediaMarkup}
+      </div>
+    ) : null
+
+    return (
+      <Chat
+        {...rest}
+        bubbleClassName='c-MessageMedia__bubble'
+        caption={isThemeEmbed ? caption : undefined}
+        className={componentClassName}
+        size='sm'
+      >
+        {mediaContainerMarkup}
+        {captionMarkup}
+      </Chat>
+    )
+  }
 }
 
 Media.propTypes = propTypes
+Media.defaultProps = defaultProps
+Media.contextTypes = contextTypes
 
 export default Media

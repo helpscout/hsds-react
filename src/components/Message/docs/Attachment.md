@@ -1,16 +1,16 @@
-# Media
+# Attachment
 
-A Media component provides the UI to render media-based content within a [Message](./Message.md).
+A Attachment component provides the UI to render caption text within a [Message](./Message.md). This component is typically used within other Message sub-components.
 
 
 ## Example
 
 ```jsx
 <Message from avatar={<Avatar name='Arctic Puffin' />}>
-  <Message.Chat read timestamp='9:41am'>
-    Hey Buddy!
-  </Message.Chat>
-  <Message.Media imageUrl='...' caption='image.jpg' timestamp='9:41am' read />
+  <Message.Attachment
+    filename='image.png'
+    url='https://.../image.png'
+  />
 </Message>
 ```
 
@@ -19,16 +19,15 @@ A Media component provides the UI to render media-based content within a [Messag
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| caption | `string` | Description of the media. |
 | className | `string` | Custom class names to be added to the component. |
+| download | `bool` | Determines if the file can be downloaded on click. Default `true`. |
+| filename | `string` | The name of the file. |
 | from | `node`/`bool` | Provides author information and applies "From" styles. |
-| imageAlt | `string` | Alt/title of the media image. |
-| imageUrl | `string` | URL of the media image. |
-| onMediaClick | `func` | Callback when the media image is clicked. |
-| openMediaInModal | `bool` | Opens the media image in a Modal when clicked. Default `true`. |
+| onClick | `func` | Callback when the file is clicked. |
 | ltr | `bool` | Applies left-to-right text styles. |
 | ltr | `bool` | Applies left-to-right text styles. |
 | read | `bool` | Determines if the Message is read. |
 | rtl | `bool` | Applies right-to-left text styles. |
 | timestamp | `string` | Timestamp for the Message. |
 | to | `node`/`bool` | Provides author information and applies "To" styles. |
+| url | `string` | The URL of the file. |

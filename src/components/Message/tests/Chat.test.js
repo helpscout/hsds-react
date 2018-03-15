@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import Bubble from '../Bubble'
 import ChatBlock from '../ChatBlock'
 import Chat from '../Chat'
+import Caption from '../Caption'
 
 const cx = 'c-MessageChat'
 
@@ -106,5 +107,22 @@ describe('ChatBlock', () => {
     expect(props.ltr).toBeTruthy()
     expect(props.rtl).toBeTruthy()
     expect(props.timestamp).toBeTruthy()
+  })
+})
+
+describe('Caption', () => {
+  test('Does not render a Caption by default', () => {
+    const wrapper = shallow(<Chat />)
+    const o = wrapper.find(Caption)
+
+    expect(o.length).not.toBeTruthy()
+  })
+
+  test('Renders a caption, if one is provided', () => {
+    const wrapper = shallow(<Chat caption='Derek' />)
+    const o = wrapper.find(Caption)
+
+    expect(o.length).toBeTruthy()
+    expect(o.prop('children')).toBe('Derek')
   })
 })

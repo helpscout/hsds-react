@@ -1,6 +1,8 @@
 import React from 'react'
+import Flexy from '../Flexy'
 import Heading from '../Heading'
 import LoadingDots from '../LoadingDots'
+import Icon from '../Icon'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { isWord } from '../../utilities/strings'
@@ -16,6 +18,7 @@ const Bubble = (props, context) => {
     children,
     className,
     from,
+    icon,
     isNote,
     ltr,
     primary,
@@ -69,6 +72,17 @@ const Bubble = (props, context) => {
     </div>
   ) : null
 
+  const iconMarkup = icon ? (
+    <Flexy.Item className='c-MessageBubble__iconWrapper'>
+      <Icon
+        className='c-MessageBubble__icon'
+        name={icon}
+        size='20'
+        shade='extraMuted'
+      />
+    </Flexy.Item>
+  ) : null
+
   const titleMarkup = title ? (
     <Heading className='c-MessageBubble__title' size='small'>
       {title}
@@ -81,11 +95,20 @@ const Bubble = (props, context) => {
       dangerouslySetInnerHTML={{__html: body}}
     />
   ) : childrenMarkup
-  const contentMarkup = typing ? (
+  const innerContentMarkup = typing ? (
     <div className='c-MessageBubble__typing'>
       <LoadingDots />
     </div>
   ) : bodyMarkup
+
+  const contentMarkup = (
+    <Flexy className='c-MessageBubble__content' align='top' gap='xs'>
+      {iconMarkup}
+      <Flexy.Block className='c-MessageBubble__bodyWrapper'>
+        {innerContentMarkup}
+      </Flexy.Block>
+    </Flexy>
+  )
 
   return (
     <div className={componentClassName} {...rest}>

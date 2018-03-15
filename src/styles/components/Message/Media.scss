@@ -3,16 +3,44 @@
 .c-MessageMedia {
   @import "../../resets/base";
   $block: this();
+  margin-bottom: 10px;
+  margin-top: 10px;
 
   &__caption {
     padding: 8px;
   }
 
-  &__media-container {
+  &__mediaContainer {
     padding-bottom: 4px;
 
     #{$block}__media {
       cursor: pointer;
+    }
+  }
+
+  // Themes
+  &.is-theme-embed {
+    #{$block}__bubble {
+      background-color: white;
+      border: none;
+      border-radius: 8px !important;
+      box-shadow: #{
+        0 0 0 1px rgba(black, 0.16) inset,
+        0 2px 3px rgba(black, 0.08),
+        };
+      padding: 3px;
+      transition: all 200ms linear;
+
+      &:hover {
+        box-shadow: #{
+          0 0 0 1px rgba(black, 0.216) inset,
+          0 3px 12px rgba(black, 0.08),
+          };
+      }
+    }
+
+    #{$block}__mediaContainer {
+      padding-bottom: 0;
     }
   }
 }
