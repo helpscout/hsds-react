@@ -31,6 +31,8 @@ const CloseButton = props => {
     ...rest
   } = props
 
+  const isTiny = size === 'tiny'
+
   const componentClassName = classNames(
     'c-CloseButton',
     seamless && 'is-seamless',
@@ -38,13 +40,15 @@ const CloseButton = props => {
     className
   )
 
+  const iconName = !isTiny ? 'cross-large' : 'cross-small'
+
   return (
     <button className={componentClassName} {...rest} aria-label='Close' title={title}>
       <Icon
         center
         className='c-CloseButton__icon'
         ignoreClick
-        name='cross-large'
+        name={iconName}
         title='Close'
       />
     </button>

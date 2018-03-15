@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
+import Overflow from '../Overflow'
 import classNames from '../../utilities/classNames'
 import {noop} from '../../utilities/other'
+import {providerContextTypes} from '../Attachment/propTypes'
 
 export const propTypes = {
   downloadAllLabel: PropTypes.string,
@@ -18,7 +20,9 @@ const defaultProps = {
   showDownloadAll: true
 }
 
-const AttachmentList = props => {
+const contextTypes = providerContextTypes
+
+const AttachmentList = (props, context) => {
   const {
     children,
     className,
@@ -27,9 +31,15 @@ const AttachmentList = props => {
     showDownloadAll,
     ...rest
   } = props
+  const {
+    theme
+  } = context
+
+  const isThemePreview = theme === 'preview'
 
   const componentClassName = classNames(
     'c-AttachmentList',
+    theme && `is-theme-${theme}`,
     className
   )
 
@@ -42,7 +52,10 @@ const AttachmentList = props => {
       const key = id || `${name}-${index}`
 
       return (
-        <Inline.Item className='c-AttachmentList__inlineListItem' key={key}>
+        <Inline.Item
+          className='c-AttachmentList__inlineListItem c-AttachmentWrapper'
+          key={key}
+        >
           {React.cloneElement(child, {
             ...child.props
           })}
@@ -62,20 +75,32 @@ const AttachmentList = props => {
       </Inline.Item>
     ) : null
 
+  const contentMarkup = isThemePreview ? (
+    <Overflow className='c-AttachmentList__content'>
+      <div className='c-AttachmentList__overflowContent'>
+        {childrenMarkup}
+      </div>
+    </Overflow>
+  ) : (
+    <Inline className='c-AttachmentList__content c-AttachmentList__inlineList'>
+      <Inline.Item>
+        <Icon className='c-AttachmentList__icon' name='attachment' shade='faint' />
+      </Inline.Item>
+      {childrenMarkup}
+      {downloadAllMarkup}
+    </Inline>
+  )
+
   return (
     <div className={componentClassName} {...rest}>
-      <Inline className='c-AttachmentList__inlineList'>
-        <Inline.Item>
-          <Icon className='c-AttachmentList__icon' name='attachment' shade='faint' />
-        </Inline.Item>
-        {childrenMarkup}
-        {downloadAllMarkup}
-      </Inline>
+      {contentMarkup}
     </div>
   )
 }
 
 AttachmentList.propTypes = propTypes
 AttachmentList.defaultProps = defaultProps
+AttachmentList.contextTypes = contextTypes
+AttachmentList.displayName = 'AttachmentList'
 
 export default AttachmentList

@@ -1,9 +1,11 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import {mount, shallow} from 'enzyme'
 import AttachmentList from '../index'
-import {Attachment, Icon} from '../../index'
+import {Attachment, Icon, Overflow} from '../../index'
 
 const ui = {
+  content: '.c-AttachmentList__content',
+  overflowContent: '.c-AttachmentList__overflowContent',
   list: {
     item: '.c-AttachmentList__inlineListItem',
     download: '.c-AttachmentList__inlineListItemDownloadAll'
@@ -126,5 +128,63 @@ describe('Icon', () => {
 
     expect(o.prop('name')).toBe('attachment')
     expect(o.length).toBe(1)
+  })
+})
+
+describe('Theme', () => {
+  test('Renders default theme styles, if wrapped in Provider', () => {
+    const wrapper = mount(
+      <Attachment.Provider>
+        <AttachmentList />
+      </Attachment.Provider>
+    )
+    const o = wrapper.find(AttachmentList)
+
+    expect(o.length).toBe(1)
+    expect(o.hasClass('is-theme-default')).toBeTruthy()
+  })
+
+  test('Renders theme styles, if provided', () => {
+    const wrapper = mount(
+      <Attachment.Provider theme='preview'>
+        <AttachmentList />
+      </Attachment.Provider>
+    )
+    const o = wrapper.find(AttachmentList)
+
+    expect(o.length).toBe(1)
+    expect(o.hasClass('is-theme-preview')).toBeTruthy()
+  })
+})
+
+describe('Overflow', () => {
+  test('Does not render by default', () => {
+    const wrapper = mount(
+      <AttachmentList />
+    )
+    const c = wrapper.find(ui.content)
+    const o = wrapper.find(Overflow)
+
+    expect(c.length).toBe(1)
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders content in Overflow, if theme is preview', () => {
+    const wrapper = mount(
+      <Attachment.Provider theme='preview'>
+        <AttachmentList>
+          <Attachment />
+        </AttachmentList>
+      </Attachment.Provider>
+    )
+    const c = wrapper.find(ui.content)
+    const o = wrapper.find(Overflow)
+    const oc = wrapper.find(ui.overflowContent)
+    const a = oc.find(Attachment)
+
+    expect(c.length).toBe(1)
+    expect(o.length).toBe(1)
+    expect(oc.length).toBe(1)
+    expect(a.length).toBe(1)
   })
 })

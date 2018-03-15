@@ -1,0 +1,13 @@
+@import "pack/seed-this/__index";
+
+.c-AttachmentList {
+  @import "../resets/base";
+  $block: this();
+
+  // Themes
+  &.is-theme-preview {
+    #{$block}__inlineListItem {
+      padding-top: 10px;
+    }
+  }
+}
