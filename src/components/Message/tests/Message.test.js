@@ -2,6 +2,7 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Message from '..'
 import Action from '../Action'
+import Attachment from '../Attachment'
 import Bubble from '../Bubble'
 import Chat from '../Chat'
 import Content from '../Content'
@@ -89,7 +90,7 @@ describe('Content', () => {
     })
   }
 
-  const chatTypes = [Action, Chat, Content, Media, Question]
+  const chatTypes = [Action, Attachment, Chat, Content, Media, Question]
   chatTypes.forEach(type => { makeContentTest(type) })
 
   test('Can render non-Message child components', () => {
@@ -102,11 +103,52 @@ describe('Content', () => {
 
     expect(o.length).toBeTruthy()
   })
+
+  test('Does not break when provided with null content', () => {
+    const wrapper = mount(
+      <Message>
+        {null}
+      </Message>
+    )
+
+    expect(wrapper).toBeTruthy()
+  })
+
+  test('Does not break when provided with undefined content', () => {
+    const wrapper = mount(
+      <Message>
+        {undefined}
+      </Message>
+    )
+
+    expect(wrapper).toBeTruthy()
+  })
+
+  test('Does not break when provided with empty content', () => {
+    const wrapper = mount(
+      <Message>
+        {[]}
+      </Message>
+    )
+
+    expect(wrapper).toBeTruthy()
+  })
+
+  test('Does not break when provided with an array of empty content', () => {
+    const wrapper = mount(
+      <Message>
+        {[null, undefined, null, null]}
+      </Message>
+    )
+
+    expect(wrapper).toBeTruthy()
+  })
 })
 
 describe('Sub-components', () => {
   test('Exports sub-components', () => {
     expect(Message.Action).toBe(Action)
+    expect(Message.Attachment).toBe(Attachment)
     expect(Message.Bubble).toBe(Bubble)
     expect(Message.Chat).toBe(Chat)
     expect(Message.Content).toBe(Content)
