@@ -66,7 +66,12 @@ const Message = (props, context) => {
       Question
     ]
     return chatTypes.some(type => {
-      return typeof child.type === 'function' && child.type === type
+      return (
+        child &&
+        child.type &&
+        typeof child.type === 'function' &&
+        child.type === type
+      )
     })
   }
 

@@ -6,6 +6,10 @@
   margin-bottom: 10px;
   margin-top: 10px;
 
+  &:first-child {
+    margin-top: 0;
+  }
+
   &__caption {
     padding: 8px;
   }
