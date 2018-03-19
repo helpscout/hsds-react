@@ -43,7 +43,7 @@ const LineItem = props => {
     </span>
   ) : null
 
-  const contentMarkup = body || children
+  const contentMarkup = (<span dangerouslySetInnerHTML={{__html: body}} />) || children
 
   return (
     <div className={componentClassName} {...rest}>
