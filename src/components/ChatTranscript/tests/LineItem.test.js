@@ -30,6 +30,12 @@ describe('Children', () => {
 
     expect(el.text()).toContain('Hello')
   })
+
+  test('Renders dangerously-set body HTML', () => {
+    const body = '<h1 class="dangerous">Dangerous!</h1>'
+    const wrapper = mount(<LineItem body={body} />)
+    expect(wrapper.html()).toContain(body)
+  })
 })
 
 describe('CreatedAt', () => {
