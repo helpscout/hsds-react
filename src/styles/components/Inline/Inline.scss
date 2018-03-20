@@ -28,7 +28,6 @@
   @each $size, $value in $spacing {
     &.is-#{$size} {
       margin-bottom: -($value);
-      margin-right: -($value);
 
       &:last-child {
         margin-bottom: -($value);
