@@ -52,6 +52,10 @@
     border-bottom-right-radius: $br;
     border-bottom-left-radius: $br-sm;
 
+    @include parent("#{$parent-block} ~ #{$parent-block}") {
+      border-top-right-radius: $br;
+    }
+
     @include parent("#{$parent-block}:last-child") {
       border-top-right-radius: $br;
       border-bottom-left-radius: $br;

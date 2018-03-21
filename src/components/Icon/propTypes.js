@@ -9,5 +9,7 @@ export const sizeTypes = PropTypes.oneOf([
   '16',
   '18',
   '20',
-  '24'
+  '24',
+  '32',
+  '48'
 ])

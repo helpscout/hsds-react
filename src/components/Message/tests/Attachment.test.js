@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Attachment from '../Attachment'
+import Chat from '../Chat'
 
 const cx = 'c-MessageAttachment'
 
@@ -82,5 +83,57 @@ describe('Download', () => {
 
     expect(o.prop('title')).toBeTruthy()
     expect(o.prop('title')).toContain('file.png')
+  })
+})
+
+describe('Uploading', () => {
+  test('Does not render uploading spinner by default', () => {
+    const wrapper = shallow(
+      <Attachment />
+    )
+    const o = wrapper.find(Chat)
+
+    expect(o.prop('caption')).not.toBeTruthy()
+    expect(o.prop('isLoading')).not.toBeTruthy()
+  })
+
+  test('Can render Uploading UI, via Chat component, if specified', () => {
+    const wrapper = shallow(
+      <Attachment isUploading />
+    )
+    const o = wrapper.find(Chat)
+
+    expect(o.prop('caption')).toBeTruthy()
+    expect(o.prop('isLoading')).toBeTruthy()
+  })
+
+  test('Has default Uploading caption', () => {
+    const wrapper = shallow(
+      <Attachment isUploading />
+    )
+    const o = wrapper.find(Chat)
+
+    expect(o.prop('caption')).toContain('Uploading')
+    expect(o.prop('isLoading')).toBeTruthy()
+  })
+
+  test('Uploading caption can be customized', () => {
+    const wrapper = shallow(
+      <Attachment isUploading uploadingMessage='Yoyoyo' />
+    )
+    const o = wrapper.find(Chat)
+
+    expect(o.prop('caption')).toContain('Yoyoyo')
+    expect(o.prop('isLoading')).toBeTruthy()
+  })
+
+  test('Setting uploading message does not render uploading UI', () => {
+    const wrapper = shallow(
+      <Attachment uploadingMessage='Yoyoyo' />
+    )
+    const o = wrapper.find(Chat)
+
+    expect(o.prop('caption')).not.toBeTruthy()
+    expect(o.prop('isLoading')).not.toBeTruthy()
   })
 })

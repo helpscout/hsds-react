@@ -22,8 +22,12 @@ A Media component provides the UI to render media-based content within a [Messag
 | caption | `string` | Description of the media. |
 | className | `string` | Custom class names to be added to the component. |
 | from | `node`/`bool` | Provides author information and applies "From" styles. |
+| error | `bool`/`string` | Renders the error caption. Default `false`. |
+| errorMessage | `string` | Customizes the error caption. |
 | imageAlt | `string` | Alt/title of the media image. |
 | imageUrl | `string` | URL of the media image. |
+| isUploading | `bool` | Renders the uploading spinner UI. Default `false`. |
+
 | onMediaClick | `func` | Callback when the media image is clicked. |
 | openMediaInModal | `bool` | Opens the media image in a Modal when clicked. Default `true`. |
 | ltr | `bool` | Applies left-to-right text styles. |

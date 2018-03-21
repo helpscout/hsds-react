@@ -1,8 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Avatar, Link, Message, PreviewCard } from '../src/index.js'
+import { Avatar, Link, Message, PreviewCard } from '../../src/index.js'
 
 const stories = storiesOf('Message', module)
+
 stories.add('default', () => (
   <div>
     <Message from avatar={<Avatar name='Arctic Puffin' />}>
@@ -87,82 +88,4 @@ stories.add('default', () => (
       <Message.Chat typing />
     </Message>
   </div>
-))
-
-stories.add('question', () => (
-  <Message from avatar={<Avatar name='Arctic Puffin' />}>
-    <Message.Question read timestamp='9:41am'>
-      How's it goin'?
-    </Message.Question>
-  </Message>
-))
-
-stories.add('action', () => (
-  <Message to>
-    <Message.Action read timestamp='9:41am'>
-      Buddy became upset. <a href='#'>Find out what happened</a>
-    </Message.Action>
-  </Message>
-))
-
-stories.add('chat', () => {
-  const htmlBody = `
-    :sob:
-    <br />
-    <br />
-    omgomgomg
-    <br />
-  `
-  return (
-    <Message to avatar={<Avatar name='Buddy' />}>
-      <Message.Chat read timestamp='9:41am' body={htmlBody} />
-      <Message.Chat read timestamp='9:41am'>
-        <strong>*Frantically running through North pole*</strong>
-      </Message.Chat>
-    </Message>
-  )
-})
-
-stories.add('content', () => (
-  <Message to avatar={<Avatar name='Buddy' />}>
-    <Message.Chat read timestamp='9:41am'>
-      <Link href='https://en.wikipedia.org/wiki/Elf_(film)'>https://en.wikipedia.org/wiki/Elf_(film)</Link>
-    </Message.Chat>
-    <Message.Content>
-      <PreviewCard
-        href='https://en.wikipedia.org/wiki/Elf_(film)'
-        title='Wikipedia: Elf (film)'
-        target='_blank'
-      >Elf is a 2003 American Christmas fantasy comedy film directed by Jon Favreau and written by David Berenbaum. It stars Will Ferrell, James Caan, Zooey Deschanel, Mary Steenburgen, Daniel Tay, Edward Asner, and Bob Newhart...</PreviewCard>
-    </Message.Content>
-  </Message>
-))
-
-stories.add('media', () => (
-  <Message.Provider theme='embed'>
-    <Message from avatar={<Avatar name='Arctic Puffin' />}>
-      <Message.Chat>
-        Hey Buddy!
-      </Message.Chat>
-      <Message.Media imageUrl='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto' caption='image.jpg' />
-    </Message>
-
-    <Message to avatar={<Avatar name='Arctic Puffin' />}>
-      <Message.Media imageUrl='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto' caption='image.jpg' />
-    </Message>
-  </Message.Provider>
-))
-
-stories.add('note', () => (
-  <Message to avatar={<Avatar name='Buddy' />}>
-    <Message.Chat isNote read timestamp='9:41am'>
-      Note: SAAAAAAANTAAAAAAAA!
-    </Message.Chat>
-  </Message>
-))
-
-stories.add('typing', () => (
-  <Message from avatar={<Avatar name='Arctic Puffin' />}>
-    <Message.Chat typing />
-  </Message>
 ))

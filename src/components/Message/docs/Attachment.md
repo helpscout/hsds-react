@@ -1,6 +1,6 @@
 # Attachment
 
-A Attachment component provides the UI to render caption text within a [Message](./Message.md). This component is typically used within other Message sub-components.
+An Attachment component provides the UI to render caption text within a [Message](./Message.md). This component is typically used within other Message sub-components.
 
 
 ## Example
@@ -21,9 +21,13 @@ A Attachment component provides the UI to render caption text within a [Message]
 | --- | --- | --- |
 | className | `string` | Custom class names to be added to the component. |
 | download | `bool` | Determines if the file can be downloaded on click. Default `true`. |
+| error | `bool`/`string` | Renders the error caption. Default `false`. |
+| errorMessage | `string` | Customizes the error caption. |
 | filename | `string` | The name of the file. |
 | from | `node`/`bool` | Provides author information and applies "From" styles. |
 | onClick | `func` | Callback when the file is clicked. |
+| isUploading | `bool` | Renders the uploading spinner UI. Default `false`. |
+| uploadingMessage | `string` | Customizes the uploading message text. |
 | ltr | `bool` | Applies left-to-right text styles. |
 | ltr | `bool` | Applies left-to-right text styles. |
 | read | `bool` | Determines if the Message is read. |

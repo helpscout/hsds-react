@@ -201,3 +201,23 @@ describe('Modal', () => {
     expect(o.length).toBeTruthy()
   })
 })
+
+describe('Uploading', () => {
+  test('Does not render uploading spinner by default', () => {
+    const wrapper = shallow(
+      <Media />
+    )
+    const o = wrapper.find(Chat)
+
+    expect(o.prop('isLoading')).not.toBeTruthy()
+  })
+
+  test('Can render Uploading UI, via Chat component, if specified', () => {
+    const wrapper = shallow(
+      <Media isUploading />
+    )
+    const o = wrapper.find(Chat)
+
+    expect(o.prop('isLoading')).toBeTruthy()
+  })
+})

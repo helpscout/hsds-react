@@ -8,14 +8,23 @@ import { noop } from '../../utilities/other'
 import { bubbleTypes, providerContextTypes } from './propTypes'
 
 export const propTypes = Object.assign({}, bubbleTypes, {
+  errorMessage: PropTypes.string,
+  error: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
   filename: PropTypes.string,
   download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  onClick: PropTypes.func
+  isUploading: PropTypes.bool,
+  onClick: PropTypes.func,
+  uploadingMessage: PropTypes.string
 })
 
 const defaultProps = {
   download: true,
-  onClick: noop
+  onClick: noop,
+  isUploading: false,
+  uploadingMessage: 'Uploading…'
 }
 
 const contextTypes = providerContextTypes
@@ -27,8 +36,10 @@ const Attachment = (props, context) => {
     className,
     download,
     filename,
+    isUploading,
     onClick,
     size,
+    uploadingMessage,
     url,
     type,
     ...rest
@@ -62,8 +73,10 @@ const Attachment = (props, context) => {
     <Chat
       {...rest}
       bubbleClassName='c-MessageMedia__bubble'
+      caption={isUploading ? uploadingMessage : null}
       className={componentClassName}
       icon='attachment'
+      isLoading={isUploading}
       size='sm'
     >
       {filenameMarkup}

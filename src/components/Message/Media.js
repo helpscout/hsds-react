@@ -10,15 +10,22 @@ import { bubbleTypes, providerContextTypes } from './propTypes'
 
 export const propTypes = Object.assign({}, bubbleTypes, {
   caption: PropTypes.string,
+  errorMessage: PropTypes.string,
+  error: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
   imageAlt: PropTypes.string,
   imageUrl: PropTypes.string,
+  isUploading: PropTypes.bool,
   onMediaClick: PropTypes.func,
   openMediaInModal: PropTypes.bool
 })
 
 const defaultProps = {
   onMediaClick: noop,
-  openMediaInModal: true
+  openMediaInModal: true,
+  isUploading: false
 }
 
 const contextTypes = providerContextTypes
@@ -32,6 +39,7 @@ class Media extends Component {
       caption,
       imageUrl,
       imageAlt,
+      isUploading,
       onMediaClick,
       openMediaInModal,
       type,
@@ -93,6 +101,7 @@ class Media extends Component {
         bubbleClassName='c-MessageMedia__bubble'
         caption={isThemeEmbed ? caption : undefined}
         className={componentClassName}
+        isLoading={isUploading}
         size='sm'
       >
         {mediaContainerMarkup}

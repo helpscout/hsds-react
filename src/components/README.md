@@ -68,6 +68,7 @@ Below is a list of documentation for our Components:
 * [SidebarCollapsibleCard](./SidebarCollapsibleCard)
 * [Skeleton](./Skeleton)
 * [Sortable](./Sortable)
+* [Spinner](./Spinner)
 * [StatusBadge](./StatusBadge)
 * [StatusBar](./StatusBar)
 * [StatusDot](./StatusDot)
