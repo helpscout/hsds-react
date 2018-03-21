@@ -6,6 +6,12 @@ import Chat from '../Chat'
 import Caption from '../Caption'
 
 const cx = 'c-MessageChat'
+const ui = {
+  caption: `.${cx}__caption`,
+  error: `.${cx}__error`,
+  metaState: `.${cx}__metaState`,
+  loadingSpinner: `.${cx}__loadingSpinner`
+}
 
 describe('ClassNames', () => {
   test('Has default className', () => {
@@ -124,5 +130,71 @@ describe('Caption', () => {
 
     expect(o.length).toBeTruthy()
     expect(o.prop('children')).toBe('Derek')
+  })
+})
+
+describe('Error', () => {
+  test('Does not render error by default', () => {
+    const wrapper = shallow(<Chat />)
+    const o = wrapper.find(ui.error)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders error, if specified (bool)', () => {
+    const wrapper = shallow(<Chat error />)
+    const o = wrapper.find(ui.error)
+
+    expect(o.length).toBe(1)
+  })
+
+  test('Renders error, if specified (string)', () => {
+    const wrapper = shallow(<Chat error='nope' />)
+    const o = wrapper.find(ui.error)
+
+    expect(o.length).toBe(1)
+    expect(o.html()).toContain('nope')
+  })
+
+  test('Can customize the default error message', () => {
+    const wrapper = shallow(<Chat error errorMessage='nope' />)
+    const o = wrapper.find(ui.error)
+
+    expect(o.length).toBe(1)
+    expect(o.html()).toContain('nope')
+  })
+})
+
+describe('Loading', () => {
+  test('Does not render by default', () => {
+    const wrapper = shallow(<Chat />)
+    const o = wrapper.find(ui.metaState)
+    const s = wrapper.find(ui.loadingSpinner)
+
+    expect(o.length).toBe(0)
+    expect(s.length).toBe(0)
+  })
+
+  test('Renders, if specified', () => {
+    const wrapper = shallow(<Chat isLoading />)
+    const o = wrapper.find(ui.metaState)
+    const s = wrapper.find(ui.loadingSpinner)
+
+    expect(o.length).toBe(1)
+    expect(s.length).toBe(1)
+    expect(o.find(ui.loadingSpinner).length).toBe(1)
+  })
+
+  test('Does not interfere with rendering of meta content', () => {
+    const wrapper = shallow(<Chat isLoading caption='derek.jpg' error />)
+    const o = wrapper.find(ui.metaState)
+    const l = wrapper.find(ui.loadingSpinner)
+    const c = wrapper.find(ui.caption)
+    const e = wrapper.find(ui.error)
+
+    expect(o.length).toBe(1)
+    expect(l.length).toBe(1)
+    expect(c.length).toBe(1)
+    expect(e.length).toBe(1)
   })
 })

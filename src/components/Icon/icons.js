@@ -26,6 +26,7 @@ import link from '../../icons/link.svg'
 import meatball from '../../icons/meatball.svg'
 import minimize from '../../icons/minimize.svg'
 import search from '../../icons/search.svg'
+import spinner from '../../icons/spinner.svg'
 import star from '../../icons/star.svg'
 import tag from '../../icons/tag.svg'
 import tickLarge from '../../icons/tick-large.svg'
@@ -65,6 +66,7 @@ const ICONS = {
   minimize,
   'option-dots': meatball,
   search,
+  spinner,
   star,
   tag,
   tick: tickLarge,
