@@ -32,6 +32,7 @@
         0 0 0 1px rgba(black, 0.16) inset,
         0 2px 3px rgba(black, 0.08),
         };
+      display: inline-block;
       padding: 3px;
       transition: all 200ms linear;
 
@@ -40,6 +41,7 @@
           0 0 0 1px rgba(black, 0.216) inset,
           0 3px 12px rgba(black, 0.08),
           };
+        display: inline-block;
       }
     }
 
