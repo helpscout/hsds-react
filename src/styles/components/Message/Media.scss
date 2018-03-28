@@ -34,15 +34,6 @@
         };
       display: inline-block;
       padding: 3px;
-      transition: all 200ms linear;
-
-      &:hover {
-        box-shadow: #{
-          0 0 0 1px rgba(black, 0.216) inset,
-          0 3px 12px rgba(black, 0.08),
-          };
-        display: inline-block;
-      }
     }
 
     #{$block}__mediaContainer {
