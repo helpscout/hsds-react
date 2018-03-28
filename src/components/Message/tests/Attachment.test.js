@@ -56,6 +56,14 @@ describe('Content', () => {
     expect(l.length).toBeTruthy()
     expect(l.html()).toContain('file.png')
   })
+
+  test('Renders text with has-noUrl styles, if url is not defined', () => {
+    const wrapper = shallow(<Attachment filename='file.png' />)
+    const t = wrapper.find(ui.text)
+
+    expect(wrapper.hasClass('has-noUrl')).toBeTruthy()
+    expect(t.hasClass('has-noUrl')).toBeTruthy()
+  })
 })
 
 describe('Download', () => {
