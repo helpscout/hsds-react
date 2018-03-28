@@ -48,8 +48,13 @@ const Attachment = (props, context) => {
 
   const componentClassName = classNames(
     'c-MessageAttachment',
+    !url && 'has-noUrl',
     theme && `is-theme-${theme}`,
     className
+  )
+  const textClassName = classNames(
+    'c-MessageAttachment__text',
+    !url && 'has-noUrl'
   )
 
   const title = download ? `Download ${filename}` : null
@@ -64,7 +69,7 @@ const Attachment = (props, context) => {
       {filename}
     </Link>
   ) : (
-    <Text className='c-MessageAttachment__text'>
+    <Text className={textClassName}>
       {filename}
     </Text>
   )

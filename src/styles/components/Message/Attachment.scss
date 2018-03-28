@@ -1,0 +1,9 @@
+.c-MessageAttachment {
+  @import "../../resets/base";
+
+  &__text {
+    &.has-noUrl {
+      opacity: 0.4;
+    }
+  }
+}

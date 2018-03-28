@@ -31,6 +31,9 @@ stories.add('states', () => (
         isUploading
         url={imageUrl}
       />
+      <Message.Attachment
+        filename='no-url.png'
+      />
     </Message>
   </Message.Provider>
 ))
