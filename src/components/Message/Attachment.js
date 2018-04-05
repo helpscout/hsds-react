@@ -66,10 +66,12 @@ const Attachment = (props, context) => {
       href={url}
       title={title}
     >
-      {filename}
+      <Text truncate className='c-MessageAttachment__linkText'>
+        {filename}
+      </Text>
     </Link>
   ) : (
-    <Text className={textClassName}>
+    <Text className={textClassName} truncate>
       {filename}
     </Text>
   )
