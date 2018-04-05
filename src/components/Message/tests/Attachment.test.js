@@ -7,6 +7,7 @@ const cx = 'c-MessageAttachment'
 
 const ui = {
   link: `.${cx}__link`,
+  linkText: `.${cx}__linkText`,
   text: `.${cx}__text`
 }
 
@@ -57,12 +58,27 @@ describe('Content', () => {
     expect(l.html()).toContain('file.png')
   })
 
+  test('Renders truncated text within link', () => {
+    const wrapper = shallow(<Attachment filename='file.png' url='url' />)
+    const t = wrapper.find(ui.linkText)
+
+    expect(t.html()).toContain('file.png')
+    expect(t.prop('truncate')).toEqual(true)
+  })
+
   test('Renders text with has-noUrl styles, if url is not defined', () => {
     const wrapper = shallow(<Attachment filename='file.png' />)
     const t = wrapper.find(ui.text)
 
     expect(wrapper.hasClass('has-noUrl')).toBeTruthy()
     expect(t.hasClass('has-noUrl')).toBeTruthy()
+  })
+
+  test('Renders truncated text within non-link', () => {
+    const wrapper = shallow(<Attachment filename='file.png' />)
+    const t = wrapper.find(ui.text)
+
+    expect(t.prop('truncate')).toEqual(true)
   })
 })
 
