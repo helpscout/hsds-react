@@ -64,6 +64,7 @@ const Attachment = (props, context) => {
       className='c-MessageAttachment__link'
       download={download}
       href={url}
+      onClick={onClick}
       title={title}
     >
       <Text truncate className='c-MessageAttachment__linkText'>
