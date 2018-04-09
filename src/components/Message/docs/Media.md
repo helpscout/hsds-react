@@ -27,8 +27,8 @@ A Media component provides the UI to render media-based content within a [Messag
 | imageAlt | `string` | Alt/title of the media image. |
 | imageUrl | `string` | URL of the media image. |
 | isUploading | `bool` | Renders the uploading spinner UI. Default `false`. |
-
 | onMediaClick | `func` | Callback when the media image is clicked. |
+| onMediaLoad | `func` | Callback when the media image is loaded. |
 | openMediaInModal | `bool` | Opens the media image in a Modal when clicked. Default `true`. |
 | ltr | `bool` | Applies left-to-right text styles. |
 | ltr | `bool` | Applies left-to-right text styles. |
