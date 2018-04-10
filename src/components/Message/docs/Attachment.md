@@ -25,13 +25,14 @@ An Attachment component provides the UI to render caption text within a [Message
 | errorMessage | `string` | Customizes the error caption. |
 | filename | `string` | The name of the file. |
 | from | `node`/`bool` | Provides author information and applies "From" styles. |
-| onClick | `func` | Callback when the file is clicked. |
 | isUploading | `bool` | Renders the uploading spinner UI. Default `false`. |
-| uploadingMessage | `string` | Customizes the uploading message text. |
 | ltr | `bool` | Applies left-to-right text styles. |
 | ltr | `bool` | Applies left-to-right text styles. |
+| onClick | `func` | Callback when the file is clicked. |
+| openDownloadInNewTab | `bool` | Opens downloadable links in new tab. Default `true`. |
 | read | `bool` | Determines if the Message is read. |
 | rtl | `bool` | Applies right-to-left text styles. |
 | timestamp | `string` | Timestamp for the Message. |
 | to | `node`/`bool` | Provides author information and applies "To" styles. |
+| uploadingMessage | `string` | Customizes the uploading message text. |
 | url | `string` | The URL of the file. |
