@@ -17,12 +17,14 @@ export const propTypes = Object.assign({}, bubbleTypes, {
   download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   isUploading: PropTypes.bool,
   onClick: PropTypes.func,
+  openDownloadInNewTab: PropTypes.bool,
   uploadingMessage: PropTypes.string
 })
 
 const defaultProps = {
   download: true,
   onClick: noop,
+  openDownloadInNewTab: true,
   isUploading: false,
   uploadingMessage: 'Uploading…'
 }
@@ -38,6 +40,7 @@ const Attachment = (props, context) => {
     filename,
     isUploading,
     onClick,
+    openDownloadInNewTab,
     size,
     uploadingMessage,
     url,
@@ -65,6 +68,7 @@ const Attachment = (props, context) => {
       download={download}
       href={url}
       onClick={onClick}
+      target={openDownloadInNewTab ? '_blank' : null}
       title={title}
     >
       <Text truncate className='c-MessageAttachment__linkText'>

@@ -108,6 +108,30 @@ describe('Download', () => {
     expect(o.prop('title')).toBeTruthy()
     expect(o.prop('title')).toContain('file.png')
   })
+
+  test('Provides download link with title', () => {
+    const wrapper = shallow(<Attachment filename='file.png' url='url' />)
+    const o = wrapper.find(ui.link)
+
+    expect(o.prop('title')).toBeTruthy()
+    expect(o.prop('title')).toContain('file.png')
+  })
+
+  test('Links should open in new tab, by default', () => {
+    const wrapper = shallow(<Attachment filename='file.png' url='url' />)
+    const o = wrapper.find(ui.link)
+
+    expect(o.prop('target')).toBe('_blank')
+  })
+
+  test('Links should not open in new tab, if specified', () => {
+    const wrapper = shallow(
+      <Attachment filename='file.png' url='url' openDownloadInNewTab={false} />
+    )
+    const o = wrapper.find(ui.link)
+
+    expect(o.prop('target')).not.toBe('_blank')
+  })
 })
 
 describe('onClick', () => {
