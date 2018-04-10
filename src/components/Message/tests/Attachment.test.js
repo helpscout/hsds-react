@@ -134,6 +134,30 @@ describe('Download', () => {
   })
 })
 
+describe('onClick', () => {
+  test('Callback fires when link is clicked', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(
+      <Attachment filename='file.png' url='url' onClick={spy} />
+    )
+    const o = wrapper.find(ui.link)
+    o.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Callback is not passed to text (non-link)', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(
+      <Attachment filename='file.png' onClick={spy} />
+    )
+    const o = wrapper.find(ui.text)
+    o.simulate('click')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
 describe('Uploading', () => {
   test('Does not render uploading spinner by default', () => {
     const wrapper = shallow(

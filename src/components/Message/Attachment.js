@@ -67,6 +67,7 @@ const Attachment = (props, context) => {
       className='c-MessageAttachment__link'
       download={download}
       href={url}
+      onClick={onClick}
       target={openDownloadInNewTab ? '_blank' : null}
       title={title}
     >

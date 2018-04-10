@@ -4,6 +4,7 @@ import { Avatar, Message } from '../../src/index.js'
 
 const stories = storiesOf('Message/Media', module)
 const imageUrl = 'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
+const onMediaLoad = (event) => console.log(event.target)
 
 stories.add('default', () => (
   <Message.Provider theme='embed'>
@@ -11,7 +12,7 @@ stories.add('default', () => (
       <Message.Chat>
         Hey Buddy!
       </Message.Chat>
-      <Message.Media imageUrl={imageUrl} caption='image.jpg' />
+      <Message.Media imageUrl={imageUrl} caption='image.jpg' onMediaLoad={onMediaLoad} />
     </Message>
 
     <Message to avatar={<Avatar name='Arctic Puffin' />}>

@@ -19,11 +19,13 @@ export const propTypes = Object.assign({}, bubbleTypes, {
   imageUrl: PropTypes.string,
   isUploading: PropTypes.bool,
   onMediaClick: PropTypes.func,
+  onMediaLoad: PropTypes.func,
   openMediaInModal: PropTypes.bool
 })
 
 const defaultProps = {
   onMediaClick: noop,
+  onMediaLoad: noop,
   openMediaInModal: true,
   isUploading: false
 }
@@ -41,6 +43,7 @@ class Media extends Component {
       imageAlt,
       isUploading,
       onMediaClick,
+      onMediaLoad,
       openMediaInModal,
       type,
       ...rest
@@ -63,6 +66,7 @@ class Media extends Component {
           block
           className='c-MessageMedia__mediaImage'
           onClick={onMediaClick}
+          onLoad={onMediaLoad}
           src={imageUrl}
           title={imageAlt || null}
           shape='rounded'

@@ -148,6 +148,17 @@ describe('Image', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('onMediaLoad callback is fired when image is loaded', () => {
+    const spy = jest.fn()
+    const url = './mugatu.png'
+    const wrapper = shallow(<Media imageUrl={url} onMediaLoad={spy} />)
+    const o = wrapper.find(Image)
+
+    o.simulate('load')
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('Modal', () => {
