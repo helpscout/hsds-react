@@ -226,3 +226,35 @@ describe('CloseButton', () => {
     expect(spy.mock.calls[0][1].id).toBe('1')
   })
 })
+
+describe('Download', () => {
+  test('Autofills download attributes if url is provided', () => {
+    const wrapper = shallow(<Attachment url='file.pdf' />)
+    const link = wrapper.find('a')
+
+    expect(link.prop('download')).toBe(true)
+    expect(link.prop('target')).toBe('_blank')
+  })
+
+  test('Does not provide valid download attributes if url is not provided', () => {
+    const wrapper = shallow(<Attachment />)
+    const link = wrapper.find('a')
+
+    expect(link.prop('download')).toBeFalsy()
+    expect(link.prop('target')).toBeFalsy()
+  })
+
+  test('Does not swallow props.download if url is provided', () => {
+    const wrapper = shallow(<Attachment url='file.pdf' download={false} />)
+    const link = wrapper.find('a')
+
+    expect(link.prop('download')).toBe(false)
+  })
+
+  test('Does not swallow props.target if url is provided', () => {
+    const wrapper = shallow(<Attachment url='file.pdf' target='_self' />)
+    const link = wrapper.find('a')
+
+    expect(link.prop('target')).toBe('_self')
+  })
+})
