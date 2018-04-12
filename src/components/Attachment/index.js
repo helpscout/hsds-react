@@ -10,6 +10,7 @@ import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
 
 export const propTypes = {
+  download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   imageUrl: PropTypes.string,
   mime: PropTypes.string,
@@ -17,6 +18,7 @@ export const propTypes = {
   onClick: PropTypes.func,
   onRemoveClick: PropTypes.func,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  target: PropTypes.string,
   truncateLimit: PropTypes.number,
   type: PropTypes.oneOf([
     'action',
@@ -40,6 +42,7 @@ const Attachment = (props, context) => {
   const {
     children,
     className,
+    download,
     id,
     imageUrl,
     mime,
@@ -47,6 +50,7 @@ const Attachment = (props, context) => {
     onClick,
     onRemoveClick,
     size,
+    target,
     truncateLimit,
     type,
     url,
@@ -115,11 +119,17 @@ const Attachment = (props, context) => {
     />
   ) : null
 
+  const downloadProps = {
+    download: download !== undefined ? download : (url ? true : null),
+    target: target !== undefined ? target : (url ? '_blank' : null)
+  }
+
   return (
     <a
       className={componentClassName}
       href={url}
       onClick={handleOnClick}
+      {...downloadProps}
       {...rest}
     >
       {contentMarkup}

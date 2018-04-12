@@ -15,6 +15,7 @@ An Attachment component provides UI for file attachments, typically found in [Ch
 | Prop | Type | Description |
 | --- | --- | --- |
 | className | `string` | Custom class names to be added to the component. |
+| download | `bool`/`string` | Enables file downloaded. Allowed by default if `url` is provided. |
 | id | `number`/`string` | The id of the attachment. |
 | imageUrl | `string` | The URL of the an image attachment to render. |
 | mime | `string` | The file type of the attachment. |
@@ -22,6 +23,7 @@ An Attachment component provides UI for file attachments, typically found in [Ch
 | onClick | `function` | The callback when the component is clicked. |
 | onRemoveClick | `function` | The callback when the component's [CloseButton](../../CloseButton) UI is clicked. |
 | size | `string` | The size of the attachment. |
+| target | `string` | Determines the link target. Set to `_blank` by default if `url` is provided. |
 | truncateLimit | `number` | The amount of characters to truncate the file name. |
 | type | `string` | The type of UI for the component. |
 | url | `string` | The URL of the attachment. |
