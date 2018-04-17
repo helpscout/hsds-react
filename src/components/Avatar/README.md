@@ -21,6 +21,8 @@ An Avatar component displays a user's avatar image, or their initials if an imag
 | light | `bool` | Applies a "light" style to the component. |
 | initials | `string` | Custom initials to display. |
 | name | `string` | Name of the user. Required. |
+| onError | `function` | Callback when avatar image fails to load. |
+| onLoad | `function` | Callback when avatar image loads. |
 | outerBorderColor | `string` | Color for the Avatar's outer border. |
 | shape | `string` | Shape of the avatar. |
 | size | `string` | Size of the avatar. |
