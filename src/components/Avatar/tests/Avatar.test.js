@@ -248,3 +248,23 @@ describe('StatusDot', () => {
     expect(o.props().icon).toBe('tick')
   })
 })
+
+describe('onError', () => {
+  test('onError handler gets called when there is an error loading the avatar image', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Avatar name='Buddy' image='buddy.jpg' onError={spy} />)
+    const img = wrapper.find('img').first()
+    img.simulate('error')
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('onLoad', () => {
+  test('onLoad handler gets called when the avatar image loads', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Avatar name='Buddy' image='buddy.jpg' onLoad={spy} />)
+    const img = wrapper.find('img').first()
+    img.simulate('load')
+    expect(spy).toHaveBeenCalled()
+  })
+})

@@ -16,6 +16,8 @@ export const propTypes = {
   initials: PropTypes.string,
   light: PropTypes.bool,
   name: PropTypes.string.isRequired,
+  onLoad: PropTypes.func,
+  onError: PropTypes.func,
   outerBorderColor: PropTypes.string,
   showStatusBorderColor: PropTypes.bool,
   shape: shapeTypes,
@@ -47,6 +49,7 @@ class Avatar extends Component {
     this.setState({
       imageLoaded: false
     })
+    this.props.onError && this.props.onError()
   }
 
   render () {
@@ -58,6 +61,7 @@ class Avatar extends Component {
       name,
       light,
       initials,
+      onLoad,
       outerBorderColor,
       showStatusBorderColor,
       size,
@@ -92,7 +96,7 @@ class Avatar extends Component {
             <VisuallyHidden>
               {name}
             </VisuallyHidden>
-            <img alt='' onError={this.onImageLoadedError} src={image} style={{display: 'none'}} />
+            <img alt='' onError={this.onImageLoadedError} onLoad={onLoad} src={image} style={{display: 'none'}} />
           </div>
         </div>
       )
