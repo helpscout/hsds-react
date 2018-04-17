@@ -69,12 +69,20 @@ describe('Image', () => {
     expect(crop.prop('style').backgroundColor).toEqual('transparent')
   })
 
-  test('Render image if image prop is specified', () => {
+  test('Do not render image if image prop is specified but image is loading', () => {
     const src = 'buddy.jpg'
     const wrapper = mount(<Avatar name='Buddy the Elf' image={src} />)
     const image = wrapper.find(classNames.image)
 
     expect(image.exists()).toBeTruthy()
+    expect(image.prop('style')).toBe(null) // Style prop does not get set.
+  })
+
+  test('Render image if image prop is specified and image has finished loading', () => {
+    const src = 'buddy.jpg'
+    const wrapper = mount(<Avatar name='Buddy the Elf' image={src} />)
+    const image = wrapper.find(classNames.image)
+    wrapper.find('img').first().simulate('load')
     expect(image.prop('style').backgroundImage).toContain(src)
   })
 

@@ -34,22 +34,36 @@ const defaultProps = {
   shape: 'circle'
 }
 
+export const IMAGE_STATES = {
+  loading: 'loading',
+  loaded: 'loaded',
+  failed: 'failed'
+}
+
 class Avatar extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      // Assume image will load so that we only re-render on error
-      imageLoaded: true
+      // Assume image is loading so that we only re-render on error
+      imageLoaded: IMAGE_STATES.loading
     }
     this.onImageLoadedError = this.onImageLoadedError.bind(this)
+    this.onImageLoadedSuccess = this.onImageLoadedSuccess.bind(this)
   }
 
   onImageLoadedError () {
     this.setState({
-      imageLoaded: false
+      imageLoaded: IMAGE_STATES.failed
     })
     this.props.onError && this.props.onError()
+  }
+
+  onImageLoadedSuccess () {
+    this.setState({
+      imageLoaded: IMAGE_STATES.loaded
+    })
+    this.props.onLoad && this.props.onLoad()
   }
 
   render () {
@@ -72,7 +86,8 @@ class Avatar extends Component {
     } = this.props
 
     const { imageLoaded } = this.state
-    const hasImage = image && imageLoaded
+    const hasImage = image && [IMAGE_STATES.loading, IMAGE_STATES.loaded].indexOf(imageLoaded) >= 0
+    const isImageLoaded = image && imageLoaded === IMAGE_STATES.loaded
 
     const componentClassName = classNames(
       'c-Avatar',
@@ -86,7 +101,7 @@ class Avatar extends Component {
       className
     )
 
-    const imageStyle = hasImage ? { backgroundImage: `url('${image}')` } : null
+    const imageStyle = isImageLoaded ? { backgroundImage: `url('${image}')` } : null
     const text = count || initials || nameToInitials(name)
 
     const contentMarkup = hasImage
@@ -96,7 +111,7 @@ class Avatar extends Component {
             <VisuallyHidden>
               {name}
             </VisuallyHidden>
-            <img alt='' onError={this.onImageLoadedError} onLoad={onLoad} src={image} style={{display: 'none'}} />
+            <img alt='' onError={this.onImageLoadedError} onLoad={this.onImageLoadedSuccess} src={image} style={{display: 'none'}} />
           </div>
         </div>
       )
