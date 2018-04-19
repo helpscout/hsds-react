@@ -20,7 +20,7 @@ describe('Avatar/Collapse', () => {
     expect(o.length).toBe(1)
   })
 
-  test('Renders avatars instead of icon, when collapsed', () => {
+  test('Renders icon instead of avatar, when collapsed', () => {
     const wrapper = shallow(
       <Header
         avatars={avatars}
@@ -32,11 +32,11 @@ describe('Avatar/Collapse', () => {
     const ava = o.find('.avatar-stub')
     const icon = o.find(Icon)
 
-    expect(ava.length).toBe(1)
-    expect(icon.length).toBe(0)
+    expect(ava.length).toBe(0)
+    expect(icon.length).toBe(1)
   })
 
-  test('Renders collape icon instead of avatars, when expanded', () => {
+  test('Renders avatar instead of icon, when expanded', () => {
     const wrapper = shallow(
       <Header
         avatars={avatars}
@@ -47,8 +47,8 @@ describe('Avatar/Collapse', () => {
     const ava = o.find('.avatar-stub')
     const icon = o.find(Icon)
 
-    expect(ava.length).toBe(0)
-    expect(icon.length).toBe(1)
+    expect(ava.length).toBe(1)
+    expect(icon.length).toBe(0)
   })
 })
 
@@ -68,6 +68,13 @@ describe('Count', () => {
     expect(count.length).toBe(1)
     expect(o.length).toBe(1)
     expect(o.html()).toContain('55')
+  })
+
+  test('Does not render a count, if count is zero (0)', () => {
+    const wrapper = shallow(<Header count={0} />)
+    const o = wrapper.find('.c-ChatInboxHeader__count')
+
+    expect(o.length).toBe(0)
   })
 })
 

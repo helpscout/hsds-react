@@ -11,7 +11,7 @@
     red: _color(red, 500)
   );
 
-  background-color: transparent;
+  background-color: white;
   border-radius: 3px;
   border: 1px solid currentColor;
   color: _color(charcoal, 200);
@@ -21,6 +21,9 @@
 
   &.is-pulsing {
     animation: _Blue_Tag_Blink 4s infinite both;
+    backface-visibility: hidden;
+    filter: blur(0);
+    -webkit-filter: blur(0);
   }
 
   // Display

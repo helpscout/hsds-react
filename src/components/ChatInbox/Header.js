@@ -16,6 +16,7 @@ export const propTypes = {
 }
 
 const defaultProps = {
+  count: 0,
   isCollapsible: false,
   isCollapsed: false,
   onClick: noop
@@ -38,7 +39,7 @@ const Header = props => {
     className
   )
 
-  const countMarkup = count !== undefined ? (
+  const countMarkup = count ? (
     <Flexy.Item className='c-ChatInboxHeader__count'>
       <Heading light size='small'>
         ({count})
@@ -53,7 +54,7 @@ const Header = props => {
   )
 
   const actionMarkup = isCollapsible
-    ? (!isCollapsed ? collapseMarkup : avatarsMarkup)
+    ? (isCollapsed ? collapseMarkup : avatarsMarkup)
     : avatarsMarkup
 
   const dividerMarkup = (<Hr size='none' />)

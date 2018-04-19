@@ -10,7 +10,7 @@ const fixtures = ChatSpec.generate(8)
 
 const itemMarkup = fixtures.map((item, index) => {
   const avatar = (
-    <Avatar image={avatars[4].image} name={avatars[4].name} size='sm' shape='rounded' />
+    <Avatar image={avatars[4].image} name={avatars[4].name} size='xs' shape='rounded' />
   )
 
   return (

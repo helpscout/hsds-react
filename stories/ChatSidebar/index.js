@@ -27,7 +27,6 @@ class SampleComponent extends Component {
   constructor () {
     super()
     this.state = {
-      chatAvatars: avatars,
       chats: [
         ChatSpec.generate(),
         ChatSpec.generate(),
@@ -56,7 +55,6 @@ class SampleComponent extends Component {
 
   render () {
     const {
-      chatAvatars,
       chats,
       isShowStatusBar
     } = this.state
@@ -68,7 +66,8 @@ class SampleComponent extends Component {
         <Avatar
           image={avatars[4].image}
           name={avatars[4].name}
-          size='sm' shape='rounded'
+          shape='rounded'
+          size='xs'
         />
       )
 
@@ -91,6 +90,13 @@ class SampleComponent extends Component {
     })
 
     const newMessageCount = chats.length
+    const avatarListMarkup = (
+      <AvatarList max={3}>
+        {avatars.map(({image, name}) => (
+          <Avatar {...{image, name}} key='name' shape='rounded' size='xs' />
+        ))}
+      </AvatarList>
+    )
 
     const sidebarMarkup = (
       <div style={{width: 300, height: '100vh'}}>
@@ -100,12 +106,7 @@ class SampleComponent extends Component {
           isShowStatusBar={isShowStatusBar}
         >
           <ChatInbox>
-            <ChatInbox.Header
-              avatars={
-                <AvatarList avatars={chatAvatars} max={3} />
-              }
-              count={chats.length}
-            >
+            <ChatInbox.Header count={chats.length}>
               Chats
             </ChatInbox.Header>
             <ChatInbox.Content>
@@ -117,9 +118,7 @@ class SampleComponent extends Component {
 
           <ChatInbox isCollapsible>
             <ChatInbox.Header
-              avatars={
-                <AvatarList avatars={chatAvatars} max={3} />
-              }
+              avatars={avatarListMarkup}
               count={7}
             >
               Assigned

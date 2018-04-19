@@ -20,6 +20,10 @@
       size: 30px,
       font-size: 10px,
     ),
+    xs: (
+      size: 28px,
+      font-size: 10px,
+    ),
   );
   $default-size: _get($sizes, md, size);
   color: _color(brand, primary);

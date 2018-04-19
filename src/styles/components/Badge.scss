@@ -14,7 +14,8 @@
   $styles: (
     count: (
       font-weight: 400,
-      padding: 3px
+      min-width: 20px,
+      padding: 4px
     ),
     square: (
       background-color: _color(grey, 200),

@@ -31,7 +31,7 @@ const BlankSlate = props => {
 
   const illoMarkup = illoName ? (
     <div className='c-ChatListBlankSlate__illo'>
-      <Illo name={illoName} />
+      <Illo name={illoName} size='80' />
     </div>
   ) : null
 

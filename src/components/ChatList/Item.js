@@ -78,6 +78,8 @@ const Item = props => {
     className
   )
 
+  const canShowViewing = isViewing && !isFocused
+
   const headingMarkup = !isLoading ? (
     <Heading size='h5' className='c-ChatListItem__title'>
       <Truncate>
@@ -88,7 +90,7 @@ const Item = props => {
     <Skeleton.Text width='95%' />
   )
 
-  const viewingMarkup = isViewing ? (
+  const viewingMarkup = canShowViewing ? (
     <div className='c-ChatListItem__viewing'>
       <Animate sequence='fade' delay={100} duration={200}>
         <div className='c-ChatListItem__viewingFlag' title='Is being viewed' />
@@ -119,7 +121,7 @@ const Item = props => {
       </div>
     ) : (
       <Text faint size='13'>
-        <Truncate type='end' limit={messageLimit} ellipsis=''>
+        <Truncate type='end' limit={messageLimit} ellipsis='…'>
           {message}
         </Truncate>
       </Text>
