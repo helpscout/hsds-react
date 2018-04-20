@@ -59,6 +59,7 @@ class AvatarList extends Component {
       'c-List--inline',
       'c-List--xs',
       'is-display-flex',
+      'is-inline-sm',
       className
     )
 

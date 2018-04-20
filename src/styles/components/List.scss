@@ -9,7 +9,9 @@ $seed-list-namespace: "c-List";
   margin-bottom: 0;
   margin-top: 0;
 
-
+  /**
+   * Modifiers
+   */
   &.is-display-block {
     display: block;
   }
@@ -20,6 +22,28 @@ $seed-list-namespace: "c-List";
   &--inline {
     #{$block}__item {
       vertical-align: middle;
+    }
+
+    &.is-inline-sm > {
+      #{$block}__item,
+      li {
+        padding-left: 3px;
+
+        &:first-child {
+          padding-left: 0;
+        }
+      }
+    }
+
+    &.is-inline-xs > {
+      #{$block}__item,
+      li {
+        padding-left: 2px;
+
+        &:first-child {
+          padding-left: 0;
+        }
+      }
     }
   }
 }

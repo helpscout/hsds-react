@@ -152,7 +152,7 @@ const Item = props => {
     <Flexy.Item>
       <div className='c-ChatListItem__tags'>
         <Overflow>
-          <List type='inline' size='xs'>
+          <List type='inline' size='xs' inlineSize='xs'>
             {tagListMarkup}
           </List>
         </Overflow>
