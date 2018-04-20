@@ -49,6 +49,14 @@ describe('nameToInitials', () => {
     expect(nameToInitials('Tom Graham')).toBe('TG')
   })
 
+  test('Returns initials string if name is passed with extra whitespace', () => {
+    expect(nameToInitials('Tom  Graham')).toBe('TG')
+  })
+
+  test('Returns initials string if name is passed with leading whitespace', () => {
+    expect(nameToInitials(' Tom Graham')).toBe('TG')
+  })
+
   test('Returns initials string if name is passed with trailing whitespace', () => {
     expect(nameToInitials('Tom Graham ')).toBe('TG')
   })

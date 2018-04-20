@@ -15,6 +15,7 @@ export const nameToInitials = (name = '') => {
   }
 
   const words = name.split(' ')
+    .filter(w => w !== '')
     .map(w => w[0])
     .map(w => w.toUpperCase())
 
