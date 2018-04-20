@@ -3,7 +3,16 @@ export const isString = (string) => {
 }
 
 export const nameToInitials = (name = '') => {
-  if (!name || !name.length) return ''
+  // Returning early if undefined to avoid casting undefined to "undefined"
+  if (!name) {
+    return ''
+  }
+
+  // Trim trailing whitespace
+  name = (name + '').trim()
+  if (!name.length) {
+    return ''
+  }
 
   const words = name.split(' ')
     .map(w => w[0])
