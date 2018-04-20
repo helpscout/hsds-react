@@ -5,8 +5,7 @@ import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { statusTypes } from '../StatusDot/propTypes'
 import { nameToInitials } from '../../utilities/strings'
-import { standardSizeTypes } from '../../constants/propTypes'
-import { shapeTypes } from './propTypes'
+import { sizeTypes, shapeTypes } from './propTypes'
 
 export const propTypes = {
   borderColor: PropTypes.string,
@@ -21,7 +20,7 @@ export const propTypes = {
   outerBorderColor: PropTypes.string,
   showStatusBorderColor: PropTypes.bool,
   shape: shapeTypes,
-  size: standardSizeTypes,
+  size: sizeTypes,
   statusIcon: PropTypes.string,
   status: statusTypes
 }

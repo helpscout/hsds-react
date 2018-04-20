@@ -26,6 +26,8 @@ A List component is a presentational component, and is an enhanced version of th
 | border | `string` | Border style for the items. `dot` or `line`. |
 | className | `string` | Custom class names to be added to the component. |
 | display | `string` | Changes the component's CSS `display`. `block`/`flex`. |
+
+| inlineSize | `string` | Size style for spacing between the items. `xs`, `sm`, `md`. |
 | role | `string` | Aria-role for the component. Default is `list`. |
 | size | `string` | Size style for the items. `xs`, `sm`, `md`, or `lg`. |
 | type | `string` | List style style for the items. `bullet`, `inline`, or `number`. |

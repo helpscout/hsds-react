@@ -1,8 +1,9 @@
+@import "../../configs/constants";
 .c-ChatInboxHeader {
   @import "../../resets/base";
 
   &__content {
-    min-height: 50px;
+    min-height: $UI_TOOLBAR_HEIGHT;
     padding: 12px 20px;
   }
 

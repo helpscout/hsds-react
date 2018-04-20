@@ -40,7 +40,7 @@ class ChatListItemStateExample extends Component {
       <Avatar
         image={avatarFixture.image}
         name={avatarFixture.name}
-        size='sm'
+        size='xs'
         shape='rounded'
       />
     )

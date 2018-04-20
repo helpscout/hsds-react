@@ -10,6 +10,11 @@ export const propTypes = {
     'block',
     'flex'
   ]),
+  inlineSize: PropTypes.oneOf([
+    'xs',
+    'sm',
+    'md'
+  ]),
   size: PropTypes.oneOf([
     'xs',
     'sm',
@@ -27,6 +32,7 @@ export const propTypes = {
 
 const defaultProps = {
   display: 'block',
+  inlineSize: 'md',
   role: 'list'
 }
 
@@ -36,6 +42,7 @@ const List = props => {
     children,
     className,
     display,
+    inlineSize,
     role,
     size,
     type,
@@ -47,6 +54,7 @@ const List = props => {
     border === 'dot' && 'c-List--dotted',
     border === 'line' && 'c-List--bordered',
     display && `is-display-${display}`,
+    inlineSize && `is-inline-${inlineSize}`,
     size && `c-List--${size}`,
     type && `c-List--${type}`,
     className

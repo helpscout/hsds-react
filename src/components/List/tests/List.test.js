@@ -71,6 +71,14 @@ describe('Inline', () => {
   })
 })
 
+describe('InlineSize', () => {
+  test('Renders an inlineSize style, if defined', () => {
+    const wrapper = shallow(<List inlineSize='xs' />)
+
+    expect(wrapper.hasClass('is-inline-xs')).toBeTruthy()
+  })
+})
+
 describe('Number', () => {
   test('Renders a ol if type is "number"', () => {
     const wrapper = shallow(<List type='number' />)

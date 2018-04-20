@@ -5,3 +5,11 @@ export const shapeTypes = PropTypes.oneOf([
   'rounded',
   'circle'
 ])
+
+export const sizeTypes = PropTypes.oneOf([
+  'lg',
+  'md',
+  'sm',
+  'xs',
+  ''
+])
