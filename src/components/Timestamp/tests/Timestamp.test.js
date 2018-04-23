@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import Timestamp from '..'
 import { Icon, Text } from '../../'
 
@@ -40,6 +40,58 @@ describe('Content', () => {
     expect(o.length).toBeTruthy()
     expect(t).toBeTruthy()
     expect(t.html()).toContain('noon')
+  })
+
+  describe('Live update', () => {
+    let originalTimeout
+    beforeEach(function () {
+      originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 3000
+    })
+
+    afterEach(function () {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout
+    })
+
+    test('Timestamp is updated after a period of time', (done) => {
+      const timestamp = (new Date()).toISOString()
+
+      const formatter = jest.fn()
+      const formattedTimestamp = 'some time ago'
+      formatter.mockReturnValue(formattedTimestamp)
+
+      const wrapper = mount(
+        <Timestamp timestamp={timestamp} formatter={formatter} live />
+      )
+
+      setTimeout(() => {
+        expect(wrapper.html()).toContain(formattedTimestamp)
+        expect(formatter).toHaveBeenCalledTimes(2)
+        done()
+      }, 2000)
+    })
+
+    test('Clears timeout when unmounted', (done) => {
+      const timestamp = (new Date()).toISOString()
+
+      const formatter = jest.fn()
+      const formattedTimestamp = 'some time ago'
+      formatter.mockReturnValue(formattedTimestamp)
+
+      const wrapper = mount(
+        <Timestamp timestamp={timestamp} formatter={formatter} live />
+      )
+
+      setTimeout(() => {
+        wrapper.unmount()
+
+        // Wait another 2 seconds after unmounting
+        setTimeout(() => {
+          expect(formatter).toHaveBeenCalledTimes(1)
+          done()
+        }, 2000)
+      }, 500)
+    })
   })
 })
 

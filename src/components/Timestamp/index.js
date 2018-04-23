@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from '../../utilities/classNames'
+import { calculateTimeoutPeriod } from '../../utilities/timestamp'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
@@ -60,35 +61,17 @@ class Timestamp extends Component {
   }
 
   tick (refresh) {
-    const { live } = this.props
+    const { live, timestamp } = this.props
 
     if (!this.mounted || !live) {
       return
     }
 
-    // const then = dateParser(this.props.date).valueOf()
-    // if (!then) {
-    //   console.warn('[react-timeago] Invalid Date provided')
-    //   return
-    // }
-    //
-    // const now = this.props.now()
-    // const seconds = Math.round(Math.abs(now - then) / 1000)
-    //
-    // const unboundPeriod =
-    //   seconds < MINUTE
-    //     ? 1000
-    //     : seconds < HOUR
-    //     ? 1000 * MINUTE
-    //     : seconds < DAY
-    //       ? 1000 * HOUR
-    //       : 0
-    // const period = Math.min(
-    //   Math.max(unboundPeriod, this.props.minPeriod * 1000),
-    //   this.props.maxPeriod * 1000,
-    // )
+    const period = calculateTimeoutPeriod(timestamp)
 
-    this.timeoutId = setTimeout(this.tick, 60000)
+    if (period > 0) {
+      this.timeoutId = setTimeout(this.tick.bind(this), period)
+    }
 
     if (!refresh) {
       this.forceUpdate()
@@ -97,8 +80,10 @@ class Timestamp extends Component {
 
   render () {
     const {
+      children,
       className,
       formatter,
+      live,
       muted,
       read,
       timestamp,

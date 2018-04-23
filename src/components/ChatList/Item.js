@@ -31,7 +31,7 @@ export const propTypes = Object.assign({}, linkTypes, {
   newMessageCount: PropTypes.number,
   tags: tagTypes,
   timestamp: PropTypes.string,
-  timestampFormatter: PropTypes.func,
+  timestampFormatter: PropTypes.func
 })
 
 const defaultProps = {
@@ -43,7 +43,7 @@ const defaultProps = {
   messageLimit: 70,
   newMessageCount: 0,
   tags: [],
-  timestampFormatter: timestamp => timestamp,
+  timestampFormatter: timestamp => timestamp
 }
 
 const Item = props => {
