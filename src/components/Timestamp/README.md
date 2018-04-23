@@ -15,6 +15,6 @@ A Timestamp component renders the UI for the time and read status, typicaly used
 | Prop | Type | Description |
 | --- | --- | --- |
 | className | `string` | Custom class names to be added to the component. |
-| formatter | `function` | A function to format the timestamp string. Defaults to a function that returns the timestamp. |
+| formatter | `function` | A function to format the timestamp, which defaults to returning the timestamp string. |
 | read | `bool` | Determines if the Message is read. |
 | timestamp | `string` | Timestamp for the Message. |

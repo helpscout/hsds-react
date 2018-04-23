@@ -47,6 +47,6 @@ This component will automatically render [Skeleton UI](../../Skeleton) if the `n
 | newMessageCount | `number` | Number of new/unread chat messages. |
 | tags | `array` | A collection of [Tags](../../Tag). |
 | timestamp | `string` | [Timestamp](../../Timestamp) to render. |
-| timestampFormatter | `function` | A function to format the timestamp, defaults to returning the timestamp string. |
+| timestampFormatter | `function` | A function to format the timestamp, which defaults to returning the timestamp string. |
 
 This component renders using [Link](../../Link) as a container. Check out [Link's documentation](../../Link) for additional prop details.
