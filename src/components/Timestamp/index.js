@@ -34,6 +34,7 @@ class Timestamp extends Component {
     this._isMounted = true
 
     if (live) {
+      // Start the tick
       this.tick(true)
     }
   }
@@ -44,9 +45,12 @@ class Timestamp extends Component {
 
     if (live !== lastLive || timestamp !== lastTimestamp) {
       if (!live && this.timeoutId) {
+        // Clear the timeout if now not live
         clearTimeout(this.timeoutId)
+        this.timeoutId = undefined
       }
 
+      // Tick to update the timestamp
       this.tick()
     }
   }
@@ -56,7 +60,6 @@ class Timestamp extends Component {
 
     if (this.timeoutId) {
       clearTimeout(this.timeoutId)
-
       this.timeoutId = undefined
     }
   }

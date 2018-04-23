@@ -46,7 +46,7 @@ describe('Content', () => {
     let originalTimeout
     beforeEach(function () {
       originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 3000
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 4000
     })
 
     afterEach(function () {
@@ -68,7 +68,56 @@ describe('Content', () => {
         expect(wrapper.html()).toContain(formattedTimestamp)
         expect(formatter).toHaveBeenCalledTimes(2)
         done()
-      }, 2000)
+      }, 1100)
+    })
+
+    test('Clears timeout when live prop disabled', (done) => {
+      const timestamp = (new Date()).toISOString()
+
+      const formatter = jest.fn()
+      const formattedTimestamp = 'some time ago'
+      formatter.mockReturnValue(formattedTimestamp)
+
+      const wrapper = mount(
+        <Timestamp timestamp={timestamp} formatter={formatter} live />
+      )
+
+      setTimeout(() => {
+        wrapper.setProps({
+          live: false
+        })
+      }, 500)
+
+      setTimeout(() => {
+        expect(formatter).toHaveBeenCalledTimes(2)
+        done()
+      }, 1100)
+    })
+
+    test('Clears timeout when timestamp prop updated', (done) => {
+      const timestamp = (new Date()).toISOString()
+      let newTimestamp
+
+      const formatter = jest.fn()
+      const formattedTimestamp = 'some time ago'
+      formatter.mockReturnValue(formattedTimestamp)
+
+      const wrapper = mount(
+        <Timestamp timestamp={timestamp} formatter={formatter} live />
+      )
+
+      setTimeout(() => {
+        newTimestamp = (new Date()).toISOString()
+
+        wrapper.setProps({
+          timestamp: newTimestamp
+        })
+      }, 500)
+
+      setTimeout(() => {
+        expect(formatter).toHaveBeenCalledWith(newTimestamp)
+        done()
+      }, 1100)
     })
 
     test('Clears timeout when unmounted', (done) => {
@@ -84,12 +133,25 @@ describe('Content', () => {
 
       setTimeout(() => {
         wrapper.unmount()
+      }, 500)
 
-        // Wait another 2 seconds after unmounting
-        setTimeout(() => {
-          expect(formatter).toHaveBeenCalledTimes(1)
-          done()
-        }, 2000)
+      setTimeout(() => {
+        expect(formatter).toHaveBeenCalledTimes(1)
+        done()
+      }, 1100)
+    })
+  })
+
+  describe('Static', () => {
+    test('Unmount', (done) => {
+      const timestamp = (new Date()).toISOString()
+      const wrapper = mount(
+        <Timestamp timestamp={timestamp} formatter={() => undefined} live={false} />
+      )
+
+      setTimeout(() => {
+        wrapper.unmount()
+        done()
       }, 500)
     })
   })
