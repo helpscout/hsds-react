@@ -4,11 +4,10 @@ import { Timestamp } from '../src/index.js'
 
 const stories = storiesOf('Timestamp', module)
 
-let count = 0
 const customFormatter = timestamp => {
   const now = (new Date()).toISOString()
 
-  return `${timestamp} (update ${count++} at ${now})`
+  return `${timestamp} (updated at ${now})`
 }
 
 stories.add('default', () => (
