@@ -25,12 +25,13 @@ class Timestamp extends Component {
   constructor (props) {
     super(props)
 
-    this.mounted = false
+    this.timeoutId = undefined
+    this._isMounted = false
   }
 
   componentDidMount () {
     const { live } = this.props
-    this.mounted = true
+    this._isMounted = true
 
     if (live) {
       this.tick(true)
@@ -51,7 +52,7 @@ class Timestamp extends Component {
   }
 
   componentWillUnmount () {
-    this.mounted = false
+    this._isMounted = false
 
     if (this.timeoutId) {
       clearTimeout(this.timeoutId)
@@ -63,7 +64,7 @@ class Timestamp extends Component {
   tick (refresh) {
     const { live, timestamp } = this.props
 
-    if (!this.mounted || !live) {
+    if (!this._isMounted || !live) {
       return
     }
 
