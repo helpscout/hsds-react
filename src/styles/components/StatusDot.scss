@@ -16,7 +16,7 @@
     sm: 6px,
   );
 
-  $borderWidth: 3px;
+  $borderWidth: 2px;
   $dotSize: 6px;
   $size: ceil($borderWidth * 2) + $dotSize;
   $defaultColor: _color(grey, 600);

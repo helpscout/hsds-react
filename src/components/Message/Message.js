@@ -88,8 +88,9 @@ const Message = (props, context) => {
 
   const avatarMarkup = avatar
     ? React.cloneElement(avatar, {
+      borderColor: null,
       shape: isThemeEmbed ? 'circle' : 'rounded',
-      size: 'sm'
+      size: isThemeEmbed ? 'xxs' : 'xs'
     }) : null
 
   const avatarBlockMarkup = maybeShowAvatar ? (
@@ -115,7 +116,7 @@ const Message = (props, context) => {
   return (
     <div className={componentClassName} {...rest}>
       {fromMarkup}
-      <Flexy align='top' gap='sm'>
+      <Flexy align='top' gap='xs'>
         {from && avatarBlockMarkup}
         <Flexy.Block className='c-Message__block'>
           {childrenMarkup}

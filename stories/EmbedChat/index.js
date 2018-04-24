@@ -6,14 +6,14 @@ const stories = storiesOf('EmbedChat', module)
 
 stories.add('default', () => {
   return (
-    <div style={{background: '#f9fafa', width: 330, padding: 10}}>
+    <div style={{background: '#f9fafa', width: 330, padding: '20px 17px'}}>
       <Message.Provider theme='embed'>
         <Message
           from='Help Bot'
           avatar={
             <Avatar
-              borderColor='#f9fafa'
               name='Help Bot'
+              image='https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
             />
           }
         >
@@ -44,7 +44,6 @@ stories.add('default', () => {
           from='Help Bot'
           avatar={
             <Avatar
-              borderColor='#f9fafa'
               name='Arctic Puffin'
             />
           }

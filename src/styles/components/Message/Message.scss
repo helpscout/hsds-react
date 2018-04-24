@@ -13,7 +13,7 @@
   }
 
   &__from {
-    margin-bottom: 5px;
+    margin-bottom: 7px;
     margin-left: 14px;
   }
 
@@ -33,13 +33,17 @@
   // Modifiers
   &.has-avatar {
     #{$block}__from {
-      padding-left: 38px;
+      padding-left: 18px;
     }
   }
 
   // Themes
   &.is-theme-embed {
     min-width: initial;
+
+    #{$block}__avatar-block {
+      margin-top: 8px;
+    }
   }
   &.is-theme-notifications {
     margin-bottom: 0;
