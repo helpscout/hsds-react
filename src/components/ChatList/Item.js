@@ -30,7 +30,8 @@ export const propTypes = Object.assign({}, linkTypes, {
   name: PropTypes.string,
   newMessageCount: PropTypes.number,
   tags: tagTypes,
-  timestamp: PropTypes.string
+  timestamp: PropTypes.string,
+  timestampFormatter: PropTypes.func
 })
 
 const defaultProps = {
@@ -41,14 +42,14 @@ const defaultProps = {
   isTyping: false,
   messageLimit: 70,
   newMessageCount: 0,
-  tags: []
+  tags: [],
+  timestampFormatter: timestamp => timestamp
 }
 
 const Item = props => {
   const {
     avatar,
     className,
-    children,
     isAssigned,
     isFocused,
     isTyping,
@@ -60,6 +61,7 @@ const Item = props => {
     newMessageCount,
     tags,
     timestamp,
+    timestampFormatter,
     ...rest
   } = props
 
@@ -161,7 +163,7 @@ const Item = props => {
   ) : null
 
   const timestampMarkup = !isLoading ? (
-    <Timestamp timestamp={timestamp} muted />
+    <Timestamp formatter={timestampFormatter} timestamp={timestamp} live muted />
   ) : null
 
   const avatarMarkup = avatar ? (

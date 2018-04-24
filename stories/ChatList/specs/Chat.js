@@ -11,5 +11,5 @@ export default createSpec({
   name: () => `${faker.name.firstName()()} ${faker.name.lastName()()}`,
   newMessageCount: faker.random.number({min: 0, max: 2}),
   tags: () => TagSpec.generate(1, 10),
-  timestamp: '22 min'
+  timestamp: (new Date()).toISOString()
 })
