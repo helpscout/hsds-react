@@ -211,6 +211,17 @@ describe('Modal', () => {
     expect(m.length).not.toBeTruthy()
     expect(o.length).toBeTruthy()
   })
+
+  test('Accepts custom wrapperClassName for modal', () => {
+    const url = './mugatu.png'
+    let wrapper = shallow(<Media imageUrl={url} />)
+    let c = wrapper.find(Modal)
+    expect(c.props().wrapperClassName).toEqual(undefined)
+
+    wrapper = shallow(<Media imageUrl={url} modalWrapperClassName='custom' />)
+    c = wrapper.find(Modal)
+    expect(c.props().wrapperClassName).toEqual('custom')
+  })
 })
 
 describe('Uploading', () => {

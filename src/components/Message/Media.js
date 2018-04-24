@@ -18,6 +18,7 @@ export const propTypes = Object.assign({}, bubbleTypes, {
   imageAlt: PropTypes.string,
   imageUrl: PropTypes.string,
   isUploading: PropTypes.bool,
+  modalWrapperClassName: PropTypes.string,
   onMediaClick: PropTypes.func,
   onMediaLoad: PropTypes.func,
   openMediaInModal: PropTypes.bool
@@ -42,6 +43,7 @@ class Media extends Component {
       imageUrl,
       imageAlt,
       isUploading,
+      modalWrapperClassName,
       onMediaClick,
       onMediaLoad,
       openMediaInModal,
@@ -84,7 +86,7 @@ class Media extends Component {
 
     const mediaContainerMarkup = imageUrl ? maybeOpenMediaInModal ? (
       <div className='c-MessageMedia__mediaContainer'>
-        <Modal trigger={mediaMarkup}>
+        <Modal trigger={mediaMarkup} wrapperClassName={modalWrapperClassName}>
           <Modal.Body scrollFade={false} isSeamless>
             <Modal.Content>
               {mediaMarkup}
