@@ -8,7 +8,7 @@
   $parent-wrapper: ".c-MessageBubbleWrapper";
   $parent-block: ".c-MessageChat";
   $br: 8px;
-  $br-sm: 2px;
+  $br-sm: 3px;
   $default-padding: 12px 20px 12px;
 
   background-color: _color(grey, 400);
@@ -23,6 +23,8 @@
   text-align: left;
 
   &__body {
+    color: _color(charcoal, 500);
+    font-size: 13px;
     word-break: break-word;
   }
 

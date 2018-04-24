@@ -87,7 +87,7 @@ describe('Context', () => {
     expect(o.hasClass('is-theme-embed')).toBe(true)
   })
 
-  test('Change text props based on context.theme', () => {
+  test('Does not Change text props based on context.theme', () => {
     const wrapper = shallow(
       <Action />
     , {context: {theme: 'embed'}})
@@ -99,7 +99,7 @@ describe('Context', () => {
     wrapper.setContext({theme: 'admin'})
     o = wrapper.find(ui.text)
 
-    expect(o.props().size).toBe('13')
+    expect(o.props().size).toBe('11')
     expect(o.props().shade).toBe('muted')
   })
 })

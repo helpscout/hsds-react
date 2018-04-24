@@ -2,7 +2,7 @@ import React from 'react'
 import Text from '../Text'
 import ChatBlock from './ChatBlock'
 import classNames from '../../utilities/classNames'
-import {chatTypes, providerContextTypes} from './propTypes'
+import { chatTypes, providerContextTypes } from './propTypes'
 
 export const propTypes = chatTypes
 const contextTypes = providerContextTypes
@@ -21,7 +21,7 @@ const Action = (props, context) => {
     type,
     ...rest
   } = props
-  const {theme} = context
+  const { theme } = context
 
   const componentClassName = classNames(
     'c-MessageAction',
@@ -30,7 +30,7 @@ const Action = (props, context) => {
   )
 
   const isThemeEmbed = theme === 'embed'
-  const textSize = isThemeEmbed ? '11' : '13'
+  const textSize = '11'
   const textShade = isThemeEmbed ? 'faint' : 'muted'
 
   return (

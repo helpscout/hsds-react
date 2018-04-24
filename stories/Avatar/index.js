@@ -15,7 +15,7 @@ stories.add('fallback', () => (
 ))
 
 stories.add('status', () => (
-  <div>
+  <div style={{ background: 'dodgerblue', padding: 20 }}>
     <Flexy just='left'>
       <Avatar
         name={fixture.name}
@@ -25,10 +25,13 @@ stories.add('status', () => (
         size='lg'
       />
       <Avatar
-        name={fixture.name}
+        borderColor='transparent'
         image={fixture.image}
-        status='offline'
+        name={fixture.name}
+        outerBorderColor='white'
+        showStatusBorderColor
         size='lg'
+        status='offline'
       />
       <Avatar
         name={fixture.name}

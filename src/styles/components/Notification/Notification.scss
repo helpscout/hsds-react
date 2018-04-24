@@ -14,10 +14,10 @@
     text-align: right;
     transition: border-radius 200ms ease;
   }
-  &:only-child {
-    #{$bubbleClassName} {
-      border-radius: $br !important;
-    }
+
+  &__text {
+    color: _color(charcoal, 500);
+    font-size: 13px;
   }
 
   // Modifiers
@@ -38,11 +38,6 @@
     &:first-child:not(:last-child) {
       #{$bubbleClassName} {
         border-top-right-radius: $br;
-      }
-    }
-    &:last-child {
-      #{$bubbleClassName} {
-        border-bottom-right-radius: $br;
       }
     }
   }
@@ -75,11 +70,6 @@
         border-top-left-radius: $br;
         border-bottom-left-radius: $br-sm;
         border-bottom-right-radius: $br;
-      }
-    }
-    &:last-child {
-      #{$bubbleClassName} {
-        border-bottom-left-radius: $br;
       }
     }
   }
