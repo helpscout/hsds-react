@@ -239,7 +239,7 @@ describe('StatusDot', () => {
     expect(o.length).toBe(1)
   })
 
-  test('Does not adjust the size of StatusDot based on size of Avatar', () => {
+  test('Does not adjust the size of StatusDot, if the Avatar is md or smaller', () => {
     const wrapper = shallow(<Avatar status='online' size='md' />)
 
     expect(wrapper.find(StatusDot).prop('size')).toBe('sm')
@@ -247,6 +247,12 @@ describe('StatusDot', () => {
     wrapper.setProps({size: 'sm'})
 
     expect(wrapper.find(StatusDot).prop('size')).toBe('sm')
+  })
+
+  test('Adjusts the size of StatusDot if Avatar is lg', () => {
+    const wrapper = shallow(<Avatar status='online' size='lg' />)
+
+    expect(wrapper.find(StatusDot).prop('size')).toBe('md')
   })
 
   test('Renders an icon in StatusDot, if defined', () => {

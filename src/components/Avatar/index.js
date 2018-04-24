@@ -135,7 +135,7 @@ class Avatar extends Component {
         <StatusDot
           icon={statusIcon}
           outerBorderColor={showStatusBorderColor ? borderColor : undefined}
-          size='sm'
+          size={size === 'lg' ? 'md' : 'sm'}
           status={status}
         />
       </div>
