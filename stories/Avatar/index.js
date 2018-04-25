@@ -85,28 +85,6 @@ stories.add('status', () => (
   </div>
 ))
 
-stories.add('status:icon', () => (
-  <div>
-    <Avatar
-      name={fixture.name}
-      image={fixture.image}
-      status='online'
-      statusIcon='tick'
-      shape='square'
-      size='lg'
-    />
-    <br />
-    <Avatar
-      name={fixture.name}
-      image={fixture.image}
-      status='offline'
-      statusIcon='cross'
-      shape='square'
-      size='lg'
-    />
-  </div>
-))
-
 stories.add('initials', () => (
   <Avatar name={fixture.name} />
 ))

@@ -9,6 +9,7 @@ export const shapeTypes = PropTypes.oneOf([
 export const sizeTypes = PropTypes.oneOf([
   'lg',
   'md',
+  'smmd',
   'sm',
   'xs',
   'xxs',

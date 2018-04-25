@@ -60,7 +60,7 @@ const StatusDot = props => {
   const iconMarkup = icon ? (
     <Centralize>
       <div className='c-StatusDot__icon'>
-        <Icon name={icon} size='10' />
+        <Icon name={icon} size='20' />
       </div>
     </Centralize>
   ) : null

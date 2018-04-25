@@ -7,7 +7,7 @@ import {
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
-import { standardSizeTypes } from '../../constants/propTypes'
+import { sizeTypes } from '../Avatar/propTypes'
 
 export const propTypes = {
   animationEasing: PropTypes.string,
@@ -16,7 +16,7 @@ export const propTypes = {
   avatarsClassName: PropTypes.string,
   max: PropTypes.number,
   shape: avatarTypes.shape,
-  size: standardSizeTypes
+  size: sizeTypes
 }
 
 const defaultProps = {
