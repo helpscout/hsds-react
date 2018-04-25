@@ -7,8 +7,10 @@ const stories = storiesOf('Icon', module)
 stories.add('icons', () => {
   const icons = [
     'alert',
+    'arrow-down-huge',
     'arrow-left',
     'arrow-right',
+    'arrow-up-huge',
     'attachment',
     'caret-down',
     'caret-left',

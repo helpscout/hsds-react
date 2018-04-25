@@ -92,6 +92,7 @@ class Avatar extends Component {
       'c-Avatar',
       borderColor && 'has-borderColor',
       hasImage && 'has-image',
+      statusIcon && 'has-statusIcon',
       light && 'is-light',
       outerBorderColor && 'has-outerBorderColor',
       shape && `is-${shape}`,

@@ -1,6 +1,8 @@
 import alert from '../../icons/alert.svg'
+import arrowDownHuge from '../../icons/arrow-down-huge.svg'
 import arrowLeft from '../../icons/arrow-left.svg'
 import arrowRight from '../../icons/arrow-right.svg'
+import arrowUpHuge from '../../icons/arrow-up-huge.svg'
 import attachment from '../../icons/attachment.svg'
 import caretDown from '../../icons/caret-down.svg'
 import caretLeft from '../../icons/caret-left.svg'
@@ -36,8 +38,10 @@ import video from '../../icons/video.svg'
 
 const ICONS = {
   alert,
+  'arrow-down-huge': arrowDownHuge,
   'arrow-left': arrowLeft,
   'arrow-right': arrowRight,
+  'arrow-up-huge': arrowUpHuge,
   attachment,
   'caret-down': caretDown,
   'caret-left': caretLeft,
