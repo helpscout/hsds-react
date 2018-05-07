@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+viewBox="0 0 26 26" style="enable-background:new 0 0 26 26;" xml:space="preserve">
+<circle id="Head" class="c-Emoticon__pathHead" cx="13" cy="13" r="13"/>
+<path id="Face" class="c-Emoticon__pathFace" d="M8,15c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S9.1,15,8,15z M18,15c-1.1,0-2-0.9-2-2s0.9-2,2-2
+s2,0.9,2,2S19.1,15,18,15z M17,20.4c-0.2,0-0.5-0.1-0.7-0.2c-1.8-1.5-4.7-1.5-6.6,0c-0.4,0.4-1.1,0.3-1.5-0.1
+c-0.4-0.4-0.3-1.1,0.1-1.4c1.3-1,2.9-1.6,4.6-1.6s3.3,0.6,4.6,1.6c0.4,0.4,0.5,1,0.1,1.4C17.6,20.2,17.3,20.4,17,20.4z"/>
+</svg>

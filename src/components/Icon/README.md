@@ -13,9 +13,11 @@ An Icon component renders an SVG icon.
 
 | Prop | Type | Description |
 | --- | --- | --- |
+| center | `bool` | Center aligns component. |
 | className | `string` | Custom class names to be added to the component. |
 | clickable | `bool` | Enables the component to be clickable. |
 | ignoreClick | `bool` | Ignores click events. Bubbles click event to parent component. |
+| inline | `bool` | Displays the component as `inline-block`. |
 | muted | `bool` | Applies muted styles. |
 | name | `string` | Determines the SVG image. Required. |
 | onClick | `function` | Callback function when component is clicked. |
