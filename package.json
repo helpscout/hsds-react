@@ -50,7 +50,7 @@
     "react-dom": "^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "0.6.5",
+    "@helpscout/fancy": "0.6.6",
     "@shopify/javascript-utilities": "2.0.0",
     "closest": "0.0.1",
     "emoji-mart": "^1.0.1",
