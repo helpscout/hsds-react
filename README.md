@@ -1,4 +1,4 @@
-# Blue 🔷 [![Build Status](https://travis-ci.org/helpscout/blue.svg?branch=master)](https://travis-ci.org/helpscout/blue) [![Coverage Status](https://coveralls.io/repos/github/helpscout/blue/badge.svg?branch=master)](https://coveralls.io/github/helpscout/blue?branch=master) [![npm version](https://badge.fury.io/js/%40helpscout%2Fblue.svg)](https://badge.fury.io/js/%40helpscout%2Fblue)
+# 🔷 Blue [![Build Status](https://travis-ci.org/helpscout/blue.svg?branch=master)](https://travis-ci.org/helpscout/blue) [![Coverage Status](https://coveralls.io/repos/github/helpscout/blue/badge.svg?branch=master)](https://coveralls.io/github/helpscout/blue?branch=master) [![npm version](https://badge.fury.io/js/%40helpscout%2Fblue.svg)](https://badge.fury.io/js/%40helpscout%2Fblue)
 
 
 Help Scout's React component library
