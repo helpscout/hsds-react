@@ -28,6 +28,11 @@ stories.add('default', () => (
       </Message.Chat>
     </Message>
 
+    <Message from>
+      <Message.Action read timestamp='9:41am'>
+        Puffin joined.
+      </Message.Action>
+    </Message>
     <Message from avatar={<Avatar name='Arctic Puffin' />}>
       <Message.Chat read timestamp='9:41am'>
         Hey Buddy!
@@ -64,9 +69,13 @@ stories.add('default', () => (
       <Message.Action read timestamp='9:41am'>
         Buddy left the North Pole.
       </Message.Action>
+    </Message>
+    <Message to>
       <Message.Action read timestamp='9:41am'>
         Buddy came back to the North Pole.
       </Message.Action>
+    </Message>
+    <Message to>
       <Message.Action read timestamp='9:41am'>
         Marked as important.
       </Message.Action>
