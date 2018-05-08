@@ -24,10 +24,20 @@
       display: flex;
       align-self: flex-end;
     }
+
+    #{$block}__block {
+      padding-bottom: 1px;
+      padding-right: 1px;
+    }
   }
 
   &.is-from {
     text-align: left;
+
+    #{$block}__block {
+      padding-left: 1px;
+      padding-top: 1px;
+    }
   }
 
   // Modifiers

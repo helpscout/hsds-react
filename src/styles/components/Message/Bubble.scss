@@ -9,7 +9,7 @@
   $parent-block: ".c-MessageChat";
   $br: 8px;
   $br-sm: 3px;
-  $default-padding: 12px 20px 12px;
+  $default-padding: 13px 20px 13px;
 
   background-color: _color(grey, 400);
   border: 1px solid _color(grey, 400);
@@ -39,7 +39,9 @@
   }
 
   &__typing {
-    padding: 4px 0;
+    margin-left: -5px;
+    margin-right: -5px;
+    padding: 7px 0;
   }
 
   @include parent("#{$parent-block} ~ #{$parent-block}") {
@@ -94,9 +96,9 @@
   }
 
   &.is-note {
-    background-color: _color(yellow, 200);
-    border-color: _color(yellow, 400);
-    color: _color(yellow, 800);
+    background-color: _color(yellow, 300);
+    border-color: _color(yellow, 300);
+    color: _color(yellow, 900);
 
     * {
       color: currentColor;
@@ -107,5 +109,10 @@
   &.is-theme-embed {
     padding: 12px 15px;
     max-width: 100%;
+
+    #{$block}__typing {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }
