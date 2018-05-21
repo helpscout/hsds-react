@@ -151,3 +151,20 @@ describe('stripUrlPrefix', () => {
     expect(stripUrlPrefix('http://www.site.com')).toBe('site.com')
   })
 })
+
+describe('newlineToHTML', () => {
+  test('Returns string, untouched, if there are no newlines', () => {
+    const string = 'word1 word2'
+    expect(newlineToHTML(string)).toEqual(string)
+  })
+
+  test('Replaces newline with <br /> tag', () => {
+    const string = 'word1\nword2'
+    expect(newlineToHTML(string)).toEqual('word1<br />word2')
+  })
+
+  test('Replaces multiple newline with multiple <br /> tag', () => {
+    const string = 'word1\nword2\nword3'
+    expect(newlineToHTML(string)).toEqual('word1<br />word2<br />word3')
+  })
+})
