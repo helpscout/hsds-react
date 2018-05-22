@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
+import { newlineToHTML } from '../../utilities/strings'
 
 export const propTypes = {
   body: PropTypes.string,
@@ -43,7 +44,7 @@ const LineItem = props => {
     </span>
   ) : null
 
-  const contentMarkup = body ? (<span dangerouslySetInnerHTML={{__html: body}} />) : children
+  const contentMarkup = body ? (<span dangerouslySetInnerHTML={{__html: newlineToHTML(body)}} />) : children
 
   return (
     <div className={componentClassName} {...rest}>

@@ -36,6 +36,12 @@ describe('Children', () => {
     const wrapper = mount(<LineItem body={body} />)
     expect(wrapper.html()).toContain(body)
   })
+
+  test('Converts newlines to line break elements', () => {
+    const body = 'Hello\n\nGoodbye'
+    const wrapper = mount(<LineItem body={body} />)
+    expect(wrapper.html()).toContain('Hello<br><br>Goodbye')
+  })
 })
 
 describe('CreatedAt', () => {
