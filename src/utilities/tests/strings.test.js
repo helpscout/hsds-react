@@ -2,6 +2,7 @@ import {
   isString,
   isWord,
   nameToInitials,
+  newlineToHTML,
   wordHasSpaces,
   stripUrlPrefix,
   truncateMiddle
@@ -160,11 +161,11 @@ describe('newlineToHTML', () => {
 
   test('Replaces newline with <br /> tag', () => {
     const string = 'word1\nword2'
-    expect(newlineToHTML(string)).toEqual('word1<br />word2')
+    expect(newlineToHTML(string)).toEqual('word1<br>word2')
   })
 
   test('Replaces multiple newline with multiple <br /> tag', () => {
     const string = 'word1\nword2\nword3'
-    expect(newlineToHTML(string)).toEqual('word1<br />word2<br />word3')
+    expect(newlineToHTML(string)).toEqual('word1<br>word2<br>word3')
   })
 })
