@@ -4,10 +4,7 @@
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import {
-  addEventListener,
-  removeEventListener,
-} from '@shopify/javascript-utilities/events'
+import { addEventListener, removeEventListener } from '../../utilities/events'
 import { getClosestDocument } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 

@@ -1,9 +1,6 @@
 import { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  addEventListener,
-  removeEventListener,
-} from '@shopify/javascript-utilities/events'
+import { addEventListener, removeEventListener } from '../../utilities/events'
 
 const propTypes = {
   event: PropTypes.string,

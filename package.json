@@ -53,12 +53,12 @@
   },
   "dependencies": {
     "@helpscout/fancy": "0.7.0",
-    "@shopify/javascript-utilities": "2.0.0",
     "closest": "0.0.1",
     "emoji-mart": "^1.0.1",
     "lodash.camelcase": "4.3.0",
     "lodash.includes": "4.3.0",
     "object-assign": "4.1.1",
+    "object-values": "2.0.0",
     "prop-types": "15.6.0",
     "prop-types-extra": "1.0.1",
     "react-router-dom": "^4",

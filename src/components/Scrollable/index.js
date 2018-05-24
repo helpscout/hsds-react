@@ -113,6 +113,7 @@ class Scrollable extends Component {
     )
 
     const componentContentClassName = classNames(
+      'c-ScrollableNode',
       'c-Scrollable__content',
       contentClassName
     )
