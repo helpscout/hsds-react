@@ -1,5 +1,3 @@
-import 'object.values'
-
 /**
  * Determines if something is defined.
  *
