@@ -5,6 +5,14 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "license": "MIT",
+  "description": "Help Scout's React component library",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helpscout/blue.git"
+  },
+  "authors": [
+    "ItsJonQ <hello@jonquach.com>"
+  ],
   "scripts": {
     "build-storybook": "build-storybook",
     "build:css": "node scripts/sass.js",
