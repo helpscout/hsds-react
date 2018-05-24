@@ -58,6 +58,7 @@
     "lodash.camelcase": "4.3.0",
     "lodash.includes": "4.3.0",
     "object-assign": "4.1.1",
+    "object.values": "1.0.4",
     "prop-types": "15.6.0",
     "prop-types-extra": "1.0.1",
     "react-router-dom": "^4",
