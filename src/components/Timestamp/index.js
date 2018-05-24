@@ -11,25 +11,25 @@ export const propTypes = {
   live: PropTypes.bool,
   read: PropTypes.bool,
   muted: PropTypes.bool,
-  timestamp: PropTypes.string
+  timestamp: PropTypes.string,
 }
 
 const defaultProps = {
   formatter: timestamp => timestamp,
   live: false,
   read: false,
-  timestamp: '9:41am'
+  timestamp: '9:41am',
 }
 
 class Timestamp extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.timeoutId = undefined
     this._isMounted = false
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { live } = this.props
     this._isMounted = true
 
@@ -39,7 +39,7 @@ class Timestamp extends Component {
     }
   }
 
-  componentDidUpdate (lastProps) {
+  componentDidUpdate(lastProps) {
     const { live: lastLive, timestamp: lastTimestamp } = lastProps
     const { live, timestamp } = this.props
 
@@ -55,7 +55,7 @@ class Timestamp extends Component {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._isMounted = false
 
     if (this.timeoutId) {
@@ -64,7 +64,7 @@ class Timestamp extends Component {
     }
   }
 
-  tick (refresh) {
+  tick(refresh) {
     const { live, timestamp } = this.props
 
     if (!this._isMounted || !live) {
@@ -82,7 +82,7 @@ class Timestamp extends Component {
     }
   }
 
-  render () {
+  render() {
     const {
       children,
       className,
@@ -101,20 +101,18 @@ class Timestamp extends Component {
     )
 
     const readMarkup = read ? (
-      <Icon name='tick-large' size='12' faint title='Read' />
+      <Icon name="tick-large" size="12" faint title="Read" />
     ) : null
 
     return (
       <div className={componentClassName} {...rest}>
-        <Flexy gap='xs' just='left'>
+        <Flexy gap="xs" just="left">
           <Flexy.Item>
-            <Text size='12' faint disableSelect noWrap>
+            <Text size="12" faint disableSelect noWrap>
               <time dateTime={timestamp}>{formatter(timestamp)}</time>
             </Text>
           </Flexy.Item>
-          <Flexy.Item>
-            {readMarkup}
-          </Flexy.Item>
+          <Flexy.Item>{readMarkup}</Flexy.Item>
         </Flexy>
       </div>
     )

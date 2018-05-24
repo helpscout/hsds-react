@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import PortalWrapper from '../PortalWrapper'
 import Positioner from './Positioner'
@@ -8,12 +8,12 @@ import { propTypes as portalTypes } from '../Portal'
 export const propTypes = Object.assign({}, portalTypes, {
   trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
   direction: PropTypes.string,
-  wrapperClassName: PropTypes.string
+  wrapperClassName: PropTypes.string,
 })
 
 const defaultProps = {
   direction: 'down',
-  wrapperClassName: 'c-DropWrapper'
+  wrapperClassName: 'c-DropWrapper',
 }
 
 const popoverWrapperBaseZIndex = 1020
@@ -23,14 +23,16 @@ const defaultOptions = {
   id: 'Drop',
   offset: 4,
   timeout: 0,
-  zIndex: popoverWrapperBaseZIndex
+  zIndex: popoverWrapperBaseZIndex,
 }
 
-export const DropComponent = (/* istanbul ignore next */ options = defaultOptions) => ComposedComponent => {
+export const DropComponent = (
+  /* istanbul ignore next */ options = defaultOptions
+) => ComposedComponent => {
   const portalOptions = Object.assign({}, defaultOptions, options)
 
   class Drop extends Component {
-    render () {
+    render() {
       const {
         className,
         closePortal,
@@ -53,15 +55,9 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
         ...rest
       } = this.props
 
-      const {
-        autoPosition,
-        offset,
-        zIndex
-      } = portalOptions
+      const { autoPosition, offset, zIndex } = portalOptions
 
-      const componentClassName = classNames(
-        'c-Drop'
-      )
+      const componentClassName = classNames('c-Drop')
 
       return (
         <div className={componentClassName}>
@@ -90,12 +86,11 @@ export const DropComponent = (/* istanbul ignore next */ options = defaultOption
   Drop.propTypes = propTypes
   Drop.defaultProps = defaultProps
 
-  const componentName = (
+  const componentName =
     ComposedComponent.displayName ||
     ComposedComponent.name ||
     /* istanbul ignore next */
     'Component'
-  )
   Drop.displayName = `withDrop(${componentName})`
 
   return Drop

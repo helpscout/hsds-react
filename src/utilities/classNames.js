@@ -1,7 +1,5 @@
 export const classNames = (...classes) => {
-  return classes
-    .filter(name => name && typeof name !== 'boolean')
-    .join(' ')
+  return classes.filter(name => name && typeof name !== 'boolean').join(' ')
 }
 
 export const variantClassNames = (className, variant = '') => {

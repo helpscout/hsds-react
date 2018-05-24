@@ -4,17 +4,11 @@ import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   fluid: PropTypes.bool,
-  responsive: PropTypes.bool
+  responsive: PropTypes.bool,
 }
 
 const Container = props => {
-  const {
-    className,
-    children,
-    fluid,
-    responsive,
-    ...rest
-  } = props
+  const { className, children, fluid, responsive, ...rest } = props
 
   const componentClassName = classNames(
     'c-Container',

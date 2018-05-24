@@ -7,11 +7,11 @@ const Spec = createSpec({
     'grey',
     'orange',
     'purple',
-    'red'
+    'red',
   ]),
   id: faker.random.uuid(),
   filled: faker.random.boolean(),
-  value: faker.lorem.word()
+  value: faker.lorem.word(),
 })
 
 export default Spec

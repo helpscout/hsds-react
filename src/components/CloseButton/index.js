@@ -12,24 +12,18 @@ export const propTypes = {
   onFocus: PropTypes.func,
   seamless: PropTypes.bool,
   size: sizeTypes,
-  title: PropTypes.string
+  title: PropTypes.string,
 }
 
 const defaultProps = {
   onBlur: noop,
   onClick: noop,
   onFocus: noop,
-  title: 'Close'
+  title: 'Close',
 }
 
 const CloseButton = props => {
-  const {
-    className,
-    seamless,
-    size,
-    title,
-    ...rest
-  } = props
+  const { className, seamless, size, title, ...rest } = props
 
   const isTiny = size === 'tiny'
 
@@ -43,13 +37,18 @@ const CloseButton = props => {
   const iconName = !isTiny ? 'cross-large' : 'cross-small'
 
   return (
-    <button className={componentClassName} {...rest} aria-label='Close' title={title}>
+    <button
+      className={componentClassName}
+      {...rest}
+      aria-label="Close"
+      title={title}
+    >
       <Icon
         center
-        className='c-CloseButton__icon'
+        className="c-CloseButton__icon"
         ignoreClick
         name={iconName}
-        title='Close'
+        title="Close"
       />
     </button>
   )

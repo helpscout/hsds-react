@@ -23,8 +23,8 @@ export const listTypes = {
     PropTypes.string,
     PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    )
+    ),
   ]),
   getContainer: PropTypes.func,
-  getHelperDimensions: PropTypes.func
+  getHelperDimensions: PropTypes.func,
 }

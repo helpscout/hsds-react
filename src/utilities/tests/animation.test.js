@@ -20,6 +20,9 @@ test('Handles white space before/after', () => {
 })
 
 test('Returns an array of names, if argument is array', () => {
-  expect(getSequenceNames(['fade', 'up', 'down']))
-    .toEqual(['fade', 'up', 'down'])
+  expect(getSequenceNames(['fade', 'up', 'down'])).toEqual([
+    'fade',
+    'up',
+    'down',
+  ])
 })

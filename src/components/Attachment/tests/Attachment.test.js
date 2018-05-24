@@ -7,7 +7,7 @@ const ui = {
   closeButton: '.c-Attachment__closeButton',
   image: '.c-Attachment__image',
   name: '.c-Attachment__name',
-  size: '.c-Attachment__size'
+  size: '.c-Attachment__size',
 }
 
 describe('ClassName', () => {
@@ -27,7 +27,7 @@ describe('ClassName', () => {
 
 describe('Custom attributes', () => {
   test('Can render custom HTML attributes', () => {
-    const wrapper = shallow(<Attachment data-tie='piano-key' />)
+    const wrapper = shallow(<Attachment data-tie="piano-key" />)
     const html = wrapper.html()
 
     expect(html).toContain('data-tie')
@@ -39,7 +39,7 @@ describe('Children', () => {
   test('Does not render child content', () => {
     const wrapper = shallow(
       <Attachment>
-        <div className='child'>Hello</div>
+        <div className="child">Hello</div>
       </Attachment>
     )
     const o = wrapper.find('div.child')
@@ -60,7 +60,7 @@ describe('Events', () => {
 
   test('onClick callback provides Attachment prop data', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Attachment name='file.png' onClick={spy} />)
+    const wrapper = shallow(<Attachment name="file.png" onClick={spy} />)
 
     wrapper.simulate('click')
     const callbackData = spy.mock.calls[0][1]
@@ -92,7 +92,7 @@ describe('TruncateLimit', () => {
   test('Can provide custom truncate limit', () => {
     const name = 'mr-mr-mr-mugatu.png'
     const wrapper = mount(
-      <Attachment truncateLimit={10} name='mr-mr-mr-mugatu.png' />
+      <Attachment truncateLimit={10} name="mr-mr-mr-mugatu.png" />
     )
     const o = wrapper.find(ui.name)
     const t = o.text()
@@ -105,7 +105,7 @@ describe('TruncateLimit', () => {
   test('Does not truncate with a higher truncate limit', () => {
     const name = 'mr-mr-mr-mugatu.png'
     const wrapper = mount(
-      <Attachment truncateLimit={100} name='mr-mr-mr-mugatu.png' />
+      <Attachment truncateLimit={100} name="mr-mr-mr-mugatu.png" />
     )
     const o = wrapper.find(ui.name)
     const t = o.text()
@@ -116,10 +116,10 @@ describe('TruncateLimit', () => {
 
 describe('Type', () => {
   test('Renders type-based style', () => {
-    const wrapper = shallow(<Attachment type='action' />)
+    const wrapper = shallow(<Attachment type="action" />)
 
     expect(wrapper.hasClass('is-action')).toBeTruthy()
-    wrapper.setProps({type: 'link'})
+    wrapper.setProps({ type: 'link' })
     expect(wrapper.hasClass('is-action')).toBeFalsy()
     expect(wrapper.hasClass('is-link')).toBeTruthy()
   })
@@ -129,7 +129,7 @@ describe('Theme', () => {
   test('Renders default theme styles, if wrapped in Provider', () => {
     const wrapper = mount(
       <Attachment.Provider>
-        <Attachment type='action' />
+        <Attachment type="action" />
       </Attachment.Provider>
     )
     const o = wrapper.find(Attachment)
@@ -140,8 +140,8 @@ describe('Theme', () => {
 
   test('Renders theme styles, if provided', () => {
     const wrapper = mount(
-      <Attachment.Provider theme='preview'>
-        <Attachment type='action' />
+      <Attachment.Provider theme="preview">
+        <Attachment type="action" />
       </Attachment.Provider>
     )
     const o = wrapper.find(Attachment)
@@ -153,9 +153,7 @@ describe('Theme', () => {
 
 describe('Image', () => {
   test('Adds image className if image is provided', () => {
-    const wrapper = mount(
-      <Attachment imageUrl='image.png' />
-    )
+    const wrapper = mount(<Attachment imageUrl="image.png" />)
 
     expect(wrapper.hasClass('has-image')).toBeTruthy()
   })
@@ -164,7 +162,7 @@ describe('Image', () => {
 describe('Content', () => {
   test('Renders text within content block, by default', () => {
     const wrapper = shallow(
-      <Attachment truncateLimit={10} name='mr-mr-mr-mugatu.png' />
+      <Attachment truncateLimit={10} name="mr-mr-mr-mugatu.png" />
     )
     const o = wrapper.find(ui.content)
     const n = o.find(ui.name)
@@ -176,9 +174,7 @@ describe('Content', () => {
   })
 
   test('Renders image within content block, if defined', () => {
-    const wrapper = shallow(
-      <Attachment imageUrl='image.png' />
-    )
+    const wrapper = shallow(<Attachment imageUrl="image.png" />)
     const o = wrapper.find(ui.content)
     const n = o.find(ui.name)
     const i = o.find(ui.image)
@@ -191,9 +187,7 @@ describe('Content', () => {
 
 describe('CloseButton', () => {
   test('Does not render by default', () => {
-    const wrapper = mount(
-      <Attachment imageUrl='image.png' />
-    )
+    const wrapper = mount(<Attachment imageUrl="image.png" />)
     const o = wrapper.find(ui.closeButton)
 
     expect(o.length).toBe(0)
@@ -201,8 +195,8 @@ describe('CloseButton', () => {
 
   test('Renders if the theme is preview', () => {
     const wrapper = mount(
-      <Attachment.Provider theme='preview'>
-        <Attachment imageUrl='image.png' />
+      <Attachment.Provider theme="preview">
+        <Attachment imageUrl="image.png" />
       </Attachment.Provider>
     )
     const o = wrapper.find(ui.closeButton)
@@ -213,8 +207,8 @@ describe('CloseButton', () => {
   test('onRemoveClick callback fires when clicked', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Attachment.Provider theme='preview'>
-        <Attachment imageUrl='image.png' onRemoveClick={spy} id='1' />
+      <Attachment.Provider theme="preview">
+        <Attachment imageUrl="image.png" onRemoveClick={spy} id="1" />
       </Attachment.Provider>
     )
     const o = wrapper.find(ui.closeButton)
@@ -229,7 +223,7 @@ describe('CloseButton', () => {
 
 describe('Download', () => {
   test('Autofills download attributes if url is provided', () => {
-    const wrapper = shallow(<Attachment url='file.pdf' />)
+    const wrapper = shallow(<Attachment url="file.pdf" />)
     const link = wrapper.find('a')
 
     expect(link.prop('download')).toBe(true)
@@ -245,14 +239,14 @@ describe('Download', () => {
   })
 
   test('Does not swallow props.download if url is provided', () => {
-    const wrapper = shallow(<Attachment url='file.pdf' download={false} />)
+    const wrapper = shallow(<Attachment url="file.pdf" download={false} />)
     const link = wrapper.find('a')
 
     expect(link.prop('download')).toBe(false)
   })
 
   test('Does not swallow props.target if url is provided', () => {
-    const wrapper = shallow(<Attachment url='file.pdf' target='_self' />)
+    const wrapper = shallow(<Attachment url="file.pdf" target="_self" />)
     const link = wrapper.find('a')
 
     expect(link.prop('target')).toBe('_self')

@@ -7,13 +7,16 @@ test('Renders fixture data into Blue component', () => {
   const fixture = createSpec({
     id: faker.random.uuid(),
     name: faker.fake('{{name.firstName}} {{name.lastName}}'),
-    text: faker.lorem.sentence()
+    text: faker.lorem.sentence(),
   }).generate()
 
   const wrapper = shallow(
     <Card id={fixture.id}>
-      <Text className='name' muted>{fixture.name} said…</Text><br />
-      <Text className='message'>"{fixture.text}"</Text>
+      <Text className="name" muted>
+        {fixture.name} said…
+      </Text>
+      <br />
+      <Text className="message">"{fixture.text}"</Text>
     </Card>
   )
 

@@ -5,7 +5,7 @@ import Message from '../Message'
 
 test('Provides child components with props as context', () => {
   const wrapper = mount(
-    <Provider theme='embed'>
+    <Provider theme="embed">
       <Message />
     </Provider>
   )

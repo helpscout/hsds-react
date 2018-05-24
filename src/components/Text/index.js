@@ -21,7 +21,7 @@ export const propTypes = {
   state: stateTypes,
   subtle: PropTypes.bool,
   truncate: PropTypes.bool,
-  wordWrap: PropTypes.bool
+  wordWrap: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -29,7 +29,7 @@ const defaultProps = {
   disableSelect: false,
   linkStyle: false,
   selector: 'span',
-  truncate: false
+  truncate: false,
 }
 
 const Text = props => {
@@ -80,7 +80,7 @@ const Text = props => {
     selector,
     {
       ...rest,
-      className: componentClassName
+      className: componentClassName,
     },
     children
   )

@@ -8,18 +8,11 @@ export const propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
-  state: stateTypes
+  state: stateTypes,
 }
 
 const Backdrop = props => {
-  const {
-    className,
-    checkbox,
-    disabled,
-    readOnly,
-    state,
-    ...rest
-  } = props
+  const { className, checkbox, disabled, readOnly, state, ...rest } = props
 
   const componentClassName = classNames(
     'c-InputBackdrop',
@@ -30,9 +23,7 @@ const Backdrop = props => {
     className
   )
 
-  return (
-    <div className={componentClassName} role='presentation' {...rest} />
-  )
+  return <div className={componentClassName} role="presentation" {...rest} />
 }
 
 Backdrop.propTypes = propTypes

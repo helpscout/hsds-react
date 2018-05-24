@@ -4,15 +4,13 @@ import { createSpec, faker } from '@helpscout/helix'
 import { DetailList, Text } from '../src/index.js'
 
 const fixture = createSpec({
-  text: faker.lorem.sentence()
+  text: faker.lorem.sentence(),
 }).generate(7)
 
 const ItemsMarkup = fixture.map(o => {
   return (
     <DetailList.Item key={o.text}>
-      <Text>
-        {o.text}
-      </Text>
+      <Text>{o.text}</Text>
     </DetailList.Item>
   )
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import {default as Item, ITEM_TYPES} from '../Item'
-import {Attachment} from '../../index'
+import { default as Item, ITEM_TYPES } from '../Item'
+import { Attachment } from '../../index'
 
 const ui = {
   attachments: '.c-ChatTranscriptItem__attachmentList',
@@ -10,7 +10,7 @@ const ui = {
   contentWrapper: '.c-ChatTranscriptItem__contentWrapper',
   createdAt: '.c-ChatTranscriptItem__createdAt',
   header: '.c-ChatTranscriptItem__header',
-  privateNote: '.c-ChatTranscriptItem__privateNote'
+  privateNote: '.c-ChatTranscriptItem__privateNote',
 }
 
 describe('ClassName', () => {
@@ -32,7 +32,7 @@ describe('Children', () => {
   test('Renders child content', () => {
     const wrapper = shallow(
       <Item>
-        <div className='child'>Hello</div>
+        <div className="child">Hello</div>
       </Item>
     )
     const o = wrapper.find(ui.content)
@@ -44,7 +44,7 @@ describe('Children', () => {
   test('Renders within the contentWrapper', () => {
     const wrapper = shallow(
       <Item>
-        <div className='child'>Hello</div>
+        <div className="child">Hello</div>
       </Item>
     )
     const w = wrapper.find(ui.contentWrapper)
@@ -59,20 +59,14 @@ describe('Children', () => {
 
 describe('Body', () => {
   test('Renders body content', () => {
-    const wrapper = mount(
-      <Item body='Mugatu' />
-    )
+    const wrapper = mount(<Item body="Mugatu" />)
     const o = wrapper.find(ui.content)
 
     expect(o.text()).toContain('Mugatu')
   })
 
   test('Renders body content over children', () => {
-    const wrapper = mount(
-      <Item body='Mugatu'>
-        Zoolander
-      </Item>
-    )
+    const wrapper = mount(<Item body="Mugatu">Zoolander</Item>)
     const o = wrapper.find(ui.content)
 
     expect(o.text()).toContain('Mugatu')
@@ -80,9 +74,7 @@ describe('Body', () => {
 
   test('Injects HTML from body content', () => {
     const html = '<a href="#">Derek</a>'
-    const wrapper = mount(
-      <Item body={html} />
-    )
+    const wrapper = mount(<Item body={html} />)
     const o = wrapper.find(ui.content)
 
     expect(o.html()).toContain(html)
@@ -93,12 +85,10 @@ describe('Author', () => {
   test('Does not render author, if author.name is not provided', () => {
     const props = {
       author: {
-        id: 123
-      }
+        id: 123,
+      },
     }
-    const wrapper = shallow(
-      <Item {...props} />
-    )
+    const wrapper = shallow(<Item {...props} />)
     const o = wrapper.find(ui.author)
 
     expect(o.length).toBe(0)
@@ -107,12 +97,10 @@ describe('Author', () => {
   test('Renders author, if author.name is provided', () => {
     const props = {
       author: {
-        name: 'Mugatu'
-      }
+        name: 'Mugatu',
+      },
     }
-    const wrapper = shallow(
-      <Item {...props} />
-    )
+    const wrapper = shallow(<Item {...props} />)
     const o = wrapper.find(ui.author)
 
     expect(o.length).toBe(1)
@@ -122,12 +110,10 @@ describe('Author', () => {
   test('Renders within header', () => {
     const props = {
       author: {
-        name: 'Mugatu'
-      }
+        name: 'Mugatu',
+      },
     }
-    const wrapper = shallow(
-      <Item {...props} />
-    )
+    const wrapper = shallow(<Item {...props} />)
     const h = wrapper.find(ui.header)
     const o = h.find(ui.author)
 
@@ -139,9 +125,7 @@ describe('Author', () => {
 describe('Timestamp', () => {
   test('Does not render timestamp by default', () => {
     const props = {}
-    const wrapper = shallow(
-      <Item {...props} />
-    )
+    const wrapper = shallow(<Item {...props} />)
     const o = wrapper.find(ui.createdAt)
 
     expect(o.length).toBe(0)
@@ -149,11 +133,9 @@ describe('Timestamp', () => {
 
   test('Renders createdAt, if provided', () => {
     const props = {
-      createdAt: '9:41pm'
+      createdAt: '9:41pm',
     }
-    const wrapper = shallow(
-      <Item {...props} />
-    )
+    const wrapper = shallow(<Item {...props} />)
     const o = wrapper.find(ui.createdAt)
 
     expect(o.length).toBe(1)
@@ -162,11 +144,9 @@ describe('Timestamp', () => {
 
   test('Renders within header', () => {
     const props = {
-      createdAt: '9:41pm'
+      createdAt: '9:41pm',
     }
-    const wrapper = shallow(
-      <Item {...props} />
-    )
+    const wrapper = shallow(<Item {...props} />)
     const h = wrapper.find(ui.header)
     const o = h.find(ui.createdAt)
 
@@ -179,7 +159,7 @@ describe('Type', () => {
   describe('LineItem', () => {
     test('Adds associated className', () => {
       const props = {
-        type: ITEM_TYPES.lineItem
+        type: ITEM_TYPES.lineItem,
       }
       const wrapper = shallow(<Item {...props} />)
 
@@ -189,9 +169,9 @@ describe('Type', () => {
     test('Renders a LineItem component instead', () => {
       const props = {
         author: {
-          name: 'Derek'
+          name: 'Derek',
         },
-        type: ITEM_TYPES.lineItem
+        type: ITEM_TYPES.lineItem,
       }
       const wrapper = shallow(<Item {...props} />)
       const o = wrapper.find(Item.LineItem)
@@ -203,7 +183,7 @@ describe('Type', () => {
   describe('Message', () => {
     test('Adds associated className', () => {
       const props = {
-        type: ITEM_TYPES.message
+        type: ITEM_TYPES.message,
       }
       const wrapper = shallow(<Item {...props} />)
 
@@ -213,9 +193,9 @@ describe('Type', () => {
     test('Does render header', () => {
       const props = {
         author: {
-          name: 'Derek'
+          name: 'Derek',
         },
-        type: ITEM_TYPES.message
+        type: ITEM_TYPES.message,
       }
       const wrapper = shallow(<Item {...props} />)
       const h = wrapper.find(ui.header)
@@ -227,7 +207,7 @@ describe('Type', () => {
   describe('Note', () => {
     test('Adds associated className', () => {
       const props = {
-        type: ITEM_TYPES.note
+        type: ITEM_TYPES.note,
       }
       const wrapper = shallow(<Item {...props} />)
 
@@ -237,9 +217,9 @@ describe('Type', () => {
     test('Does render header', () => {
       const props = {
         author: {
-          name: 'Derek'
+          name: 'Derek',
         },
-        type: ITEM_TYPES.note
+        type: ITEM_TYPES.note,
       }
       const wrapper = shallow(<Item {...props} />)
       const h = wrapper.find(ui.header)
@@ -250,9 +230,9 @@ describe('Type', () => {
     test('Renders "Private Note" text', () => {
       const props = {
         author: {
-          name: 'Derek'
+          name: 'Derek',
         },
-        type: ITEM_TYPES.note
+        type: ITEM_TYPES.note,
       }
       const wrapper = shallow(<Item {...props} />)
       const o = wrapper.find(ui.privateNote)
@@ -266,9 +246,9 @@ describe('Attachments', () => {
   test('Does not render by default', () => {
     const props = {
       author: {
-        name: 'Derek'
+        name: 'Derek',
       },
-      type: ITEM_TYPES.note
+      type: ITEM_TYPES.note,
     }
     const wrapper = shallow(<Item {...props} />)
     const o = wrapper.find(ui.attachments)
@@ -280,16 +260,16 @@ describe('Attachments', () => {
     const props = {
       attachments: [
         {
-          name: 'one.jpg'
+          name: 'one.jpg',
         },
         {
-          name: 'two.jpg'
-        }
+          name: 'two.jpg',
+        },
       ],
       author: {
-        name: 'Derek'
+        name: 'Derek',
       },
-      type: ITEM_TYPES.note
+      type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
     const o = wrapper.find(ui.attachments)
@@ -303,16 +283,16 @@ describe('Attachments', () => {
     const props = {
       attachments: [
         {
-          name: 'one.jpg'
+          name: 'one.jpg',
         },
         {
-          name: 'two.jpg'
-        }
+          name: 'two.jpg',
+        },
       ],
       author: {
-        name: 'Derek'
+        name: 'Derek',
       },
-      type: ITEM_TYPES.note
+      type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
     const o = wrapper.find(ui.attachments)
@@ -327,17 +307,17 @@ describe('Attachments', () => {
       attachments: [
         {
           id: '001',
-          name: 'one.jpg'
+          name: 'one.jpg',
         },
         {
           id: '002',
-          name: 'two.jpg'
-        }
+          name: 'two.jpg',
+        },
       ],
       author: {
-        name: 'Derek'
+        name: 'Derek',
       },
-      type: ITEM_TYPES.note
+      type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
     const o = wrapper.find(ui.attachments)
@@ -350,17 +330,17 @@ describe('Attachments', () => {
     const props = {
       attachments: [
         {
-          name: 'one.jpg'
+          name: 'one.jpg',
         },
         {
-          name: 'two.jpg'
-        }
+          name: 'two.jpg',
+        },
       ],
       author: {
-        name: 'Derek'
+        name: 'Derek',
       },
       showDownloadAllAttachments: false,
-      type: ITEM_TYPES.note
+      type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
     const o = wrapper.find(ui.attachments)
@@ -374,17 +354,17 @@ describe('Attachments', () => {
     const props = {
       attachments: [
         {
-          name: 'one.jpg'
+          name: 'one.jpg',
         },
         {
-          name: 'two.jpg'
-        }
+          name: 'two.jpg',
+        },
       ],
       author: {
-        name: 'Derek'
+        name: 'Derek',
       },
       onAttachmentClick: jest.fn(),
-      type: ITEM_TYPES.note
+      type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
     const o = wrapper.find(Attachment).first()
@@ -398,17 +378,17 @@ describe('Attachments', () => {
     const props = {
       attachments: [
         {
-          name: 'one.jpg'
+          name: 'one.jpg',
         },
         {
-          name: 'two.jpg'
-        }
+          name: 'two.jpg',
+        },
       ],
       author: {
-        name: 'Derek'
+        name: 'Derek',
       },
       onDownloadAllAttachmentClick: jest.fn(),
-      type: ITEM_TYPES.note
+      type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
     const o = wrapper.find(Attachment).last()

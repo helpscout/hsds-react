@@ -1,10 +1,10 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { Avatar, ChatList, List, Button } from '../../src/index.js'
 import AvatarSpec from '../Avatar/specs/Avatar'
 import ChatSpec from './specs/Chat'
 
 class ChatListItemStateExample extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       ...ChatSpec.generate(),
@@ -15,7 +15,7 @@ class ChatListItemStateExample extends Component {
       isFocused: false,
       isWaiting: false,
       isViewing: false,
-      newMessageCount: 0
+      newMessageCount: 0,
     }
     this.toggleAssigned = this.toggleAssigned.bind(this)
     this.toggleCount = this.toggleCount.bind(this)
@@ -26,61 +26,61 @@ class ChatListItemStateExample extends Component {
     this.handleOnClick = this.handleOnClick.bind(this)
   }
 
-  handleOnClick () {
+  handleOnClick() {
     if (this.state.isFocused) {
       this.setState({
-        newMessageCount: 0
+        newMessageCount: 0,
       })
     }
   }
 
-  toggleAssigned () {
+  toggleAssigned() {
     const avatarFixture = AvatarSpec.generate()
     const avatar = (
       <Avatar
         image={avatarFixture.image}
         name={avatarFixture.name}
-        size='xs'
-        shape='rounded'
+        size="xs"
+        shape="rounded"
       />
     )
     this.setState({
       isAssigned: !this.state.isAssigned,
-      avatar: this.state.avatar ? undefined : avatar
+      avatar: this.state.avatar ? undefined : avatar,
     })
   }
 
-  toggleCount () {
+  toggleCount() {
     this.setState({
-      newMessageCount: this.state.newMessageCount ? 0 : 3
+      newMessageCount: this.state.newMessageCount ? 0 : 3,
     })
   }
 
-  toggleFocused () {
+  toggleFocused() {
     this.setState({
-      isFocused: !this.state.isFocused
+      isFocused: !this.state.isFocused,
     })
   }
 
-  toggleTyping () {
+  toggleTyping() {
     this.setState({
-      isTyping: !this.state.isTyping
+      isTyping: !this.state.isTyping,
     })
   }
 
-  toggleViewing () {
+  toggleViewing() {
     this.setState({
-      isViewing: !this.state.isViewing
+      isViewing: !this.state.isViewing,
     })
   }
 
-  toggleWaiting () {
+  toggleWaiting() {
     this.setState({
-      isWaiting: !this.state.isWaiting
+      isWaiting: !this.state.isWaiting,
     })
   }
 
-  render () {
+  render() {
     const item = this.state
     const handleOnClick = this.handleOnClick
     const toggleAssigned = this.toggleAssigned

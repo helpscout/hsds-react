@@ -3,21 +3,21 @@ import { storiesOf } from '@storybook/react'
 import { Animate, Card, Heading, Text } from '../src/index.js'
 
 class AnimateOutExample extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
-      show: false
+      show: false,
     }
     this.toggleIn = this.toggleIn.bind(this)
   }
 
-  toggleIn () {
+  toggleIn() {
     this.setState({
-      show: !this.state.show
+      show: !this.state.show,
     })
   }
 
-  render () {
+  render() {
     const { show } = this.state
     const toggleIn = this.toggleIn
 
@@ -25,13 +25,13 @@ class AnimateOutExample extends Component {
       <div>
         <button onClick={toggleIn}>Toggle Animation</button>
         <br />
-        <div style={{width: 300}}>
+        <div style={{ width: 300 }}>
           <Animate
             animateOnMount={false}
             duration={200}
-            easing='bounce'
+            easing="bounce"
             in={show}
-            sequence='fade down'
+            sequence="fade down"
             unmountOnExit
           >
             <Card>
@@ -49,7 +49,7 @@ storiesOf('Animate', module)
   .add('default', () => (
     <div>
       <p>No delay</p>
-      <Animate sequence='fade down'>
+      <Animate sequence="fade down">
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>
@@ -60,7 +60,7 @@ storiesOf('Animate', module)
   .add('custom delay/duration', () => (
     <div>
       <p>Tiny tiny delay</p>
-      <Animate sequence='fade scale' delay={300} easing='bounce'>
+      <Animate sequence="fade scale" delay={300} easing="bounce">
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>
@@ -68,7 +68,7 @@ storiesOf('Animate', module)
       </Animate>
       <br />
       <p>delay 1 second… (duration: 400ms)</p>
-      <Animate sequence='fade down' delay={1000} duration={400}>
+      <Animate sequence="fade down" delay={1000} duration={400}>
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>
@@ -76,7 +76,7 @@ storiesOf('Animate', module)
       </Animate>
       <br />
       <p>Suupperr slow (duration: 3000ms)</p>
-      <Animate sequence='fade down' duration={3000}>
+      <Animate sequence="fade down" duration={3000}>
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>
@@ -85,6 +85,4 @@ storiesOf('Animate', module)
       <br />
     </div>
   ))
-  .add('animateOut', () => (
-    <AnimateOutExample />
-  ))
+  .add('animateOut', () => <AnimateOutExample />)

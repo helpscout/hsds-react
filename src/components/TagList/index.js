@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import Inline from '../Inline'
@@ -9,17 +9,17 @@ import { noop } from '../../utilities/other'
 export const propTypes = {
   onRemove: PropTypes.func,
   overflowFade: PropTypes.bool,
-  isRemovable: PropTypes.bool
+  isRemovable: PropTypes.bool,
 }
 
 const defaultProps = {
   onRemove: noop,
   overflowFade: false,
-  isRemovable: false
+  isRemovable: false,
 }
 
 class TagList extends Component {
-  render () {
+  render() {
     const {
       className,
       children,
@@ -29,12 +29,9 @@ class TagList extends Component {
       ...rest
     } = this.props
 
-    const componentClassName = classNames(
-      'c-TagList',
-      className
-    )
+    const componentClassName = classNames('c-TagList', className)
 
-    const handleOnRemove = (value) => {
+    const handleOnRemove = value => {
       onRemove(value)
     }
 
@@ -46,23 +43,21 @@ class TagList extends Component {
           {React.cloneElement(tag, {
             ...tag.props,
             isRemovable,
-            onRemove: handleOnRemove
+            onRemove: handleOnRemove,
           })}
         </Inline.Item>
       )
     })
 
-    const componentMarkup = (
-      <Inline size='xs'>
-        {childrenMarkup}
-      </Inline>
-    )
+    const componentMarkup = <Inline size="xs">{childrenMarkup}</Inline>
 
     return (
       <div className={componentClassName} {...rest}>
         {overflowFade ? (
           <Overflow>{componentMarkup}</Overflow>
-        ) : componentMarkup}
+        ) : (
+          componentMarkup
+        )}
       </div>
     )
   }

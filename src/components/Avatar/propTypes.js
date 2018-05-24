@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types'
 
-export const shapeTypes = PropTypes.oneOf([
-  'square',
-  'rounded',
-  'circle'
-])
+export const shapeTypes = PropTypes.oneOf(['square', 'rounded', 'circle'])
 
 export const sizeTypes = PropTypes.oneOf([
   'lg',
@@ -13,5 +9,5 @@ export const sizeTypes = PropTypes.oneOf([
   'sm',
   'xs',
   'xxs',
-  ''
+  '',
 ])

@@ -4,7 +4,7 @@ import { emojiIndex, Picker } from 'emoji-mart'
 import classNames from '../../utilities/classNames'
 
 export const propTypes = Object.assign(Picker.propTypes, {
-  showPreview: PropTypes.bool
+  showPreview: PropTypes.bool,
 })
 
 const defaultProps = {
@@ -13,16 +13,11 @@ const defaultProps = {
   set: 'apple',
   skin: 1,
   title: 'Pick an emoji',
-  showPreview: false
+  showPreview: false,
 }
 
 const EmojiPicker = props => {
-  const {
-    className,
-    showPreview,
-    style,
-    ...rest
-  } = props
+  const { className, showPreview, style, ...rest } = props
 
   const componentClassName = classNames(
     'c-EmojiPicker',

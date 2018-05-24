@@ -1,40 +1,31 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
-import {noop} from '../../utilities/other'
+import { noop } from '../../utilities/other'
 
 const propTypes = {
   isRunning: PropTypes.bool,
   onTimerEnd: PropTypes.func,
-  timeout: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  timeout: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 const defaultProps = {
   isRunning: true,
   onTimerEnd: noop,
-  timeout: 5000
+  timeout: 5000,
 }
 
 class Timer extends Component {
-  render () {
-    const {
-      className,
-      isRunning,
-      onTimerEnd,
-      style,
-      timeout
-    } = this.props
+  render() {
+    const { className, isRunning, onTimerEnd, style, timeout } = this.props
 
-    const componentClassName = classNames(
-      'c-NotificationTimer',
-      className
-    )
+    const componentClassName = classNames('c-NotificationTimer', className)
 
     const duration = typeof timeout === 'number' ? `${timeout}ms` : timeout
 
     const styles = Object.assign({}, style, {
       animationDuration: duration,
-      animationPlayState: isRunning ? 'running' : 'paused'
+      animationPlayState: isRunning ? 'running' : 'paused',
     })
 
     return (

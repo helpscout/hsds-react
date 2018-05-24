@@ -32,8 +32,8 @@ export const propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.bool
-  ]).isRequired
+    PropTypes.bool,
+  ]).isRequired,
 }
 
 const defaultProps = {
@@ -42,36 +42,36 @@ const defaultProps = {
   onFocus: noop,
   inputRef: noop,
   type: 'checkbox',
-  value: ''
+  value: '',
 }
 
 const uniqueID = createUniqueIDFactory('Choice')
 
 class Choice extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
 
     this.state = {
       checked: props.checked,
-      id: props.id || uniqueID(props.componentID || 'Choice')
+      id: props.id || uniqueID(props.componentID || 'Choice'),
     }
 
     this.handleOnChange = this.handleOnChange.bind(this)
   }
 
-  componentWillReceiveProps (newProps) {
+  componentWillReceiveProps(newProps) {
     this.setState({
       checked: newProps.checked,
-      id: newProps.id || this.state.id
+      id: newProps.id || this.state.id,
     })
   }
 
-  handleOnChange (value, checked) {
+  handleOnChange(value, checked) {
     this.setState({ checked })
     this.props.onChange(value, checked)
   }
 
-  render () {
+  render() {
     const {
       align,
       children,
@@ -112,28 +112,29 @@ class Choice extends Component {
       <Text muted={disabled}>{label}</Text>
     )
 
-    const labelMarkup = children || label ? (
-      <Flexy.Block>
-        <span className='c-Choice__label-text'>
-          {children || labelTextMarkup}
-        </span>
-      </Flexy.Block>
-    ) : null
+    const labelMarkup =
+      children || label ? (
+        <Flexy.Block>
+          <span className="c-Choice__label-text">
+            {children || labelTextMarkup}
+          </span>
+        </Flexy.Block>
+      ) : null
 
-    const helpTextMarkup = helpText
-      ? <div className='c-Choice__help-text'>
+    const helpTextMarkup = helpText ? (
+      <div className="c-Choice__help-text">
         <HelpText state={state} muted>
           {helpText}
         </HelpText>
       </div>
-      : null
+    ) : null
 
     return (
       <div className={componentClassName} {...rest}>
-        <label htmlFor={choiceID} className='c-Choice__label'>
-          <Flexy just='left' gap='sm' align={align}>
+        <label htmlFor={choiceID} className="c-Choice__label">
+          <Flexy just="left" gap="sm" align={align}>
             <Flexy.Item>
-              <span className='c-Choice__control'>
+              <span className="c-Choice__control">
                 <Input
                   align={align}
                   checked={checked}

@@ -1,6 +1,4 @@
-import {
-  focusNextFocusableNode
-} from '../../focus'
+import { focusNextFocusableNode } from '../../focus'
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -8,7 +6,9 @@ afterEach(() => {
 
 test('Focuses next node, and returns next node', () => {
   let count = 0
-  const focusCheck = () => { count = count + 1 }
+  const focusCheck = () => {
+    count = count + 1
+  }
 
   document.body.innerHTML = `
     <span>Nope</span>
@@ -34,7 +34,9 @@ test('Focuses next node, and returns next node', () => {
 
 test('Focuses next node within scope', () => {
   let count = 0
-  const focusCheck = () => { count = count + 1 }
+  const focusCheck = () => {
+    count = count + 1
+  }
 
   document.body.innerHTML = `
     <span>Nope</span>
@@ -64,7 +66,9 @@ test('Focuses next node within scope', () => {
 
 test('Focuses first focusable node if there are no next nodes', () => {
   let count = 0
-  const focusCheck = () => { count = count + 1 }
+  const focusCheck = () => {
+    count = count + 1
+  }
 
   document.body.innerHTML = `
     <input type='text' value='NEXT' />

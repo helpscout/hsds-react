@@ -4,7 +4,7 @@ import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   align: PropTypes.oneOf(['left', 'center', 'right', '']),
-  className: PropTypes.string
+  className: PropTypes.string,
 }
 
 const LoadingDots = props => {
@@ -17,9 +17,9 @@ const LoadingDots = props => {
 
   return (
     <div className={componentClassName} {...rest}>
-      <div className='c-LoadingDots__dot c-LoadingDots__dot--one' />
-      <div className='c-LoadingDots__dot c-LoadingDots__dot--two' />
-      <div className='c-LoadingDots__dot c-LoadingDots__dot--three' />
+      <div className="c-LoadingDots__dot c-LoadingDots__dot--one" />
+      <div className="c-LoadingDots__dot c-LoadingDots__dot--two" />
+      <div className="c-LoadingDots__dot c-LoadingDots__dot--three" />
     </div>
   )
 }

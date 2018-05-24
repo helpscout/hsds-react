@@ -1,8 +1,10 @@
 import { createUniqueIDFactory } from './id'
 
 export const setupManager = (namespace = '') => {
-  const ns = (typeof namespace !== 'string' || !namespace.length)
-  ? createUniqueIDFactory('BlueGlobalManager')() : namespace
+  const ns =
+    typeof namespace !== 'string' || !namespace.length
+      ? createUniqueIDFactory('BlueGlobalManager')()
+      : namespace
 
   window[ns] = window[ns] || []
 
@@ -15,7 +17,7 @@ export const setupManager = (namespace = '') => {
     remove: remove(window[ns]),
     first: first(window[ns]),
     last: last(window[ns]),
-    max: max(window[ns])
+    max: max(window[ns]),
   }
 }
 

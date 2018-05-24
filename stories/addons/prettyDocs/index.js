@@ -3,7 +3,7 @@ import Story from './components/Story'
 
 const addPrettyDocs = (storyFn, context, infoOptions) => {
   const props = {
-    context
+    context,
   }
   return <Story {...props}>{storyFn(context)}</Story>
 }

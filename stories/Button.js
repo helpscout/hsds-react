@@ -18,25 +18,33 @@ stories.add('types', () => (
 stories.add('sizes', () => (
   <div>
     <div>
-      <Button size='lg'>Large</Button>
-      <Button size='md'>Medium</Button>
-      <Button size='sm'>Small</Button>
-      <Button size='xs'>Extra Small</Button>
+      <Button size="lg">Large</Button>
+      <Button size="md">Medium</Button>
+      <Button size="sm">Small</Button>
+      <Button size="xs">Extra Small</Button>
     </div>
     <div>
-      <Button size='lg' outline>Large</Button>
-      <Button size='md' outline>Medium</Button>
-      <Button size='sm' outline>Small</Button>
-      <Button size='xs' outline>Extra Small</Button>
+      <Button size="lg" outline>
+        Large
+      </Button>
+      <Button size="md" outline>
+        Medium
+      </Button>
+      <Button size="sm" outline>
+        Small
+      </Button>
+      <Button size="xs" outline>
+        Extra Small
+      </Button>
     </div>
   </div>
 ))
 
 stories.add('states', () => (
   <div>
-    <Button state='success'>Success</Button>
-    <Button state='error'>Error</Button>
-    <Button state='warning'>Warning</Button>
+    <Button state="success">Success</Button>
+    <Button state="error">Error</Button>
+    <Button state="warning">Warning</Button>
   </div>
 ))
 
@@ -48,9 +56,21 @@ stories.add('disabled', () => (
 
 stories.add('themes', () => (
   <div>
-    <Button theme='editing' block size='lg'>Block</Button><br />
-    <Button theme='editing' block disabled>Block</Button><br />
-    <Button theme='pill' size='lg'>Pill Button</Button><br />
-    <Button theme='pill' disabled>Pill Button</Button><br />
+    <Button theme="editing" block size="lg">
+      Block
+    </Button>
+    <br />
+    <Button theme="editing" block disabled>
+      Block
+    </Button>
+    <br />
+    <Button theme="pill" size="lg">
+      Pill Button
+    </Button>
+    <br />
+    <Button theme="pill" disabled>
+      Pill Button
+    </Button>
+    <br />
   </div>
 ))

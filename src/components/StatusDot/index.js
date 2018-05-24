@@ -14,14 +14,14 @@ export const propTypes = {
   size: sizeTypes,
   status: statusTypes,
   style: PropTypes.object,
-  title: PropTypes.string
+  title: PropTypes.string,
 }
 
 const defaultProps = {
   isUnread: false,
   size: 'sm',
   status: 'online',
-  style: {}
+  style: {},
 }
 
 const StatusDot = props => {
@@ -52,15 +52,15 @@ const StatusDot = props => {
 
   const componentStyle = Object.assign(style, {
     borderColor: borderColor || null,
-    boxShadow: outerBorderColor ? `0 0 0 2px ${outerBorderColor}` : null
+    boxShadow: outerBorderColor ? `0 0 0 2px ${outerBorderColor}` : null,
   })
 
   const tooltipTitle = title || `Is ${status}`
 
   const iconMarkup = icon ? (
     <Centralize>
-      <div className='c-StatusDot__icon'>
-        <Icon name={icon} size='20' />
+      <div className="c-StatusDot__icon">
+        <Icon name={icon} size="20" />
       </div>
     </Centralize>
   ) : null

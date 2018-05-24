@@ -4,17 +4,17 @@ import base from '../../../styles/resets/base.css'
 const colors = {
   on: {
     head: '#FFE8B5',
-    face: '#d79400'
+    face: '#d79400',
   },
   off: {
     head: '#e3e8eb',
-    face: '#a5b2bd'
-  }
+    face: '#a5b2bd',
+  },
 }
 const sizes = {
   default: '26px',
   md: '26px',
-  sm: '16px'
+  sm: '16px',
 }
 
 // Styles

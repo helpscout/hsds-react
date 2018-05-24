@@ -1,9 +1,6 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  default as Avatar,
-  propTypes as avatarTypes
-} from '../Avatar'
+import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
@@ -16,7 +13,7 @@ export const propTypes = {
   avatarsClassName: PropTypes.string,
   max: PropTypes.number,
   shape: avatarTypes.shape,
-  size: sizeTypes
+  size: sizeTypes,
 }
 
 const defaultProps = {
@@ -25,11 +22,11 @@ const defaultProps = {
   animationStagger: 10,
   max: 4,
   shape: 'rounded',
-  size: 'sm'
+  size: 'sm',
 }
 
 class AvatarList extends Component {
-  render () {
+  render() {
     const {
       animationEasing,
       animationSequence,
@@ -43,14 +40,13 @@ class AvatarList extends Component {
       ...rest
     } = this.props
 
-    const avatars = React.Children
-      .toArray(children)
-      .filter(child => child.type && child.type === Avatar)
+    const avatars = React.Children.toArray(children).filter(
+      child => child.type && child.type === Avatar
+    )
 
     const totalAvatarCount = avatars.length
-    const avatarList = max && totalAvatarCount > max
-      ? avatars.slice(0, (max - 1))
-      : avatars
+    const avatarList =
+      max && totalAvatarCount > max ? avatars.slice(0, max - 1) : avatars
     const additionalAvatarCount = totalAvatarCount - avatarList.length
 
     const componentClassName = classNames(
@@ -65,8 +61,8 @@ class AvatarList extends Component {
 
     const additionalAvatarMarkup = additionalAvatarCount ? (
       <Animate
-        key='AvatarList__additionalAvatarMarkup'
-        className='c-AvatarList__item c-List__item'
+        key="AvatarList__additionalAvatarMarkup"
+        className="c-AvatarList__item c-List__item"
         easing={animationEasing}
         sequence={animationSequence}
       >
@@ -81,15 +77,15 @@ class AvatarList extends Component {
       </Animate>
     ) : null
 
-    const avatarMarkup = avatarList.map((avatar) => {
+    const avatarMarkup = avatarList.map(avatar => {
       const composedAvatar = React.cloneElement(avatar, {
         className: classNames(avatar.props.className, avatarsClassName),
         shape,
-        size
+        size,
       })
       return (
         <Animate
-          className='c-AvatarList__item c-List__item'
+          className="c-AvatarList__item c-List__item"
           easing={animationEasing}
           key={avatar.key}
           sequence={animationSequence}

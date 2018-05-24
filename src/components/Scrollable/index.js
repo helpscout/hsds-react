@@ -1,8 +1,11 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import ScrollLock from '../ScrollLock'
 import classNames from '../../utilities/classNames'
-import { getFadeTopStyles, getFadeBottomStyles } from '../../utilities/scrollFade'
+import {
+  getFadeTopStyles,
+  getFadeBottomStyles,
+} from '../../utilities/scrollFade'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {
@@ -14,7 +17,7 @@ export const propTypes = {
   onScroll: PropTypes.func,
   rounded: PropTypes.bool,
   scrollableRef: PropTypes.func,
-  isScrollLocked: PropTypes.bool
+  isScrollLocked: PropTypes.bool,
 }
 const defaultProps = {
   backgroundColor: 'white',
@@ -22,11 +25,11 @@ const defaultProps = {
   fadeBottom: false,
   onScroll: noop,
   scrollableRef: noop,
-  isScrollLocked: true
+  isScrollLocked: true,
 }
 
 class Scrollable extends Component {
-  constructor () {
+  constructor() {
     super()
     this.faderSize = 28
     this.faderNodeTop = null
@@ -35,21 +38,21 @@ class Scrollable extends Component {
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.applyFade()
   }
 
-  applyFade () {
+  applyFade() {
     const containerNode = this.containerNode
     /* istanbul ignore else */
     if (containerNode) {
       this.applyFadeStyles({
-        currentTarget: containerNode
+        currentTarget: containerNode,
       })
     }
   }
 
-  applyFadeStyles (event) {
+  applyFadeStyles(event) {
     const { fade, fadeBottom } = this.props
     const offset = this.faderSize
 
@@ -68,22 +71,23 @@ class Scrollable extends Component {
     }
   }
 
-  applyFadeStyleOffset (node) {
+  applyFadeStyleOffset(node) {
     /* istanbul ignore else */
     // Guard, just in case the node element is removed.
     if (node) {
-      const offset = `${this.containerNode.offsetWidth - this.containerNode.scrollWidth}px`
+      const offset = `${this.containerNode.offsetWidth -
+        this.containerNode.scrollWidth}px`
       node.style.right = offset
     }
   }
 
-  handleOnScroll (event) {
+  handleOnScroll(event) {
     const { onScroll } = this.props
     this.applyFadeStyles(event)
     onScroll(event)
   }
 
-  render () {
+  render() {
     const {
       backgroundColor,
       children,
@@ -115,23 +119,23 @@ class Scrollable extends Component {
 
     const faderTopMarkup = (
       <div
-        className='c-Scrollable__fader is-top'
+        className="c-Scrollable__fader is-top"
         ref={node => (this.faderNodeTop = node)}
-        role='presentation'
+        role="presentation"
         style={{
-          color: backgroundColor
+          color: backgroundColor,
         }}
       />
     )
 
     const faderBottomMarkup = (
       <div
-        className='c-Scrollable__fader is-bottom'
+        className="c-Scrollable__fader is-bottom"
         ref={node => (this.faderNodeBottom = node)}
-        role='presentation'
+        role="presentation"
         style={{
           color: backgroundColor,
-          transform: fadeBottom ? 'scaleY(1)' : 'scaleY(0)'
+          transform: fadeBottom ? 'scaleY(1)' : 'scaleY(0)',
         }}
       />
     )
@@ -147,7 +151,7 @@ class Scrollable extends Component {
               this.containerNode = node
               scrollableRef(node)
             }}
-            >
+          >
             {children}
           </div>
         </ScrollLock>

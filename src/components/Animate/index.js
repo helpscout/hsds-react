@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 import { getSequenceNames } from '../../utilities/animation'
@@ -27,7 +27,7 @@ export const propTypes = {
   sequence: sequencesType,
   timeout: PropTypes.number,
   transitionProperty: PropTypes.string,
-  unmountOnExit: PropTypes.bool
+  unmountOnExit: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -45,20 +45,20 @@ const defaultProps = {
   onExiting: noop,
   sequence: ['fade'],
   transitionProperty: 'all',
-  unmountOnExit: true
+  unmountOnExit: true,
 }
 
 class Animate extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.node = null
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.node = null
   }
 
-  render () {
+  render() {
     const {
       animateOnMount,
       block,
@@ -91,7 +91,7 @@ class Animate extends Component {
       transitionProperty: transitionProperty,
       transitionDuration: `${duration}ms`,
       transitionDelay: `${delay}ms`,
-      transitionTimingFunction: getEasingTiming(easing)
+      transitionTimingFunction: getEasingTiming(easing),
     })
 
     const sequenceClassNames = getSequenceNames(sequence)
@@ -107,21 +107,24 @@ class Animate extends Component {
         in={transitionIn}
         timeout={{
           enter: 0,
-          exit: timeout !== undefined ? timeout : (duration + delay)
+          exit: timeout !== undefined ? timeout : duration + delay,
         }}
-      >{(transitionState) => (
-        <div
-          className={classNames(
-            componentClassName,
-            sequenceClassNames,
-            `ax-${transitionState}`
-          )}
-          ref={node => { this.node = node }}
-          style={{...componentStyles}}
-        >
-          {children}
-        </div>
-      )}
+      >
+        {transitionState => (
+          <div
+            className={classNames(
+              componentClassName,
+              sequenceClassNames,
+              `ax-${transitionState}`
+            )}
+            ref={node => {
+              this.node = node
+            }}
+            style={{ ...componentStyles }}
+          >
+            {children}
+          </div>
+        )}
       </Transition>
     )
   }

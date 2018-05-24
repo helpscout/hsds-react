@@ -4,7 +4,9 @@ const DAY = HOUR * 24
 
 export const calculateTimeoutPeriod = timestamp => {
   // Calculate the time passed since the timestamp in seconds
-  const diff = Math.round(Math.abs(Date.now() - new Date(timestamp).valueOf()) / 1000)
+  const diff = Math.round(
+    Math.abs(Date.now() - new Date(timestamp).valueOf()) / 1000
+  )
 
   if (diff < MINUTE) {
     // Once every second

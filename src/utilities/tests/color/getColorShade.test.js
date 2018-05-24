@@ -1,6 +1,4 @@
-import {
-  getColorShade
-} from '../../color'
+import { getColorShade } from '../../color'
 
 test('Returns null, if invalid arguments', () => {
   expect(getColorShade()).toBe(null)
@@ -56,12 +54,12 @@ test('Can provide custom RGB prop values', () => {
   const darkValues = {
     r: 9,
     g: 9,
-    b: 9
+    b: 9,
   }
   const lightValues = {
     r: 999,
     g: 999,
-    b: 999
+    b: 999,
   }
   expect(getColorShade('#ff6688', darkValues)).toEqual('dark')
   expect(getColorShade('#ff6688', lightValues)).toEqual('light')

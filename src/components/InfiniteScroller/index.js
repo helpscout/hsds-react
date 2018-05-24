@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { componentOrElement } from 'prop-types-extra'
@@ -15,38 +15,38 @@ export const propTypes = {
   isLoading: PropTypes.bool,
   onLoading: PropTypes.func,
   onLoaded: PropTypes.func,
-  scrollParent: componentOrElement
+  scrollParent: componentOrElement,
 }
 const defaultProps = {
   getScrollParent: noop,
   offset: 0,
   isLoading: false,
   onLoading: noop,
-  onLoaded: noop
+  onLoaded: noop,
 }
 
 class InfiniteScroller extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       isLoading: props.isLoading,
-      nodeScope: window
+      nodeScope: window,
     }
     this._isMounted = null
     this.node = null
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._isMounted = true
     this.setParentNode()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._isMounted = false
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     /* istanbul ignore else */
     if (nextProps.isLoading && !this.state.isLoading) {
       this.handleOnLoading()
@@ -63,14 +63,14 @@ class InfiniteScroller extends Component {
   // has been thoroughly tested elsewhere.
   // The handleOnLoading method has been abstracted to be tested in
   // isolation.
-  handleOnScroll (event) {
+  handleOnScroll(event) {
     const { offset } = this.props
     const { isLoading, nodeScope } = this.state
     const isVisible = isNodeVisible({
       node: this.node,
       scope: nodeScope,
       offset,
-      complete: true
+      complete: true,
     })
 
     if (isLoading || !isVisible) return
@@ -78,17 +78,19 @@ class InfiniteScroller extends Component {
     this.handleOnLoading()
   }
 
-  handleOnLoading () {
+  handleOnLoading() {
     const { onLoading } = this.props
     if (this._isMounted) {
       this.setState({
-        isLoading: true
+        isLoading: true,
       })
     }
-    onLoading(() => { this.handleOnLoaded() })
+    onLoading(() => {
+      this.handleOnLoaded()
+    })
   }
 
-  handleOnLoaded () {
+  handleOnLoaded() {
     const { onLoaded } = this.props
     // Prevents scrollable area for unexpectedly scrolling after
     // new items are injected.
@@ -99,12 +101,12 @@ class InfiniteScroller extends Component {
     /* istanbul ignore else */
     if (this._isMounted && this.state.isLoading) {
       this.setState({
-        isLoading: false
+        isLoading: false,
       })
     }
   }
 
-  getNodeScrollTop () {
+  getNodeScrollTop() {
     const { nodeScope } = this.state
     /* istanbul ignore next */
     if (nodeScope !== window && nodeScope.scrollTop !== undefined) {
@@ -114,7 +116,7 @@ class InfiniteScroller extends Component {
     }
   }
 
-  normalizeNodeScrollScroll (scrollTop) {
+  normalizeNodeScrollScroll(scrollTop) {
     const { nodeScope } = this.state
     /* istanbul ignore if */
     if (typeof scrollTop !== 'number') return
@@ -127,7 +129,7 @@ class InfiniteScroller extends Component {
     }
   }
 
-  setParentNode () {
+  setParentNode() {
     const { getScrollParent, scrollParent } = this.props
     let nodeScope = getScrollParent()
     nodeScope = isNodeElement(nodeScope) ? nodeScope : null
@@ -151,7 +153,7 @@ class InfiniteScroller extends Component {
     this.setState({ nodeScope })
   }
 
-  render () {
+  render() {
     const {
       className,
       children,
@@ -173,19 +175,19 @@ class InfiniteScroller extends Component {
       className
     )
 
-    const loadingMarkup = loading || (
-      <LoadingDots align='center' />
-    )
+    const loadingMarkup = loading || <LoadingDots align="center" />
     const contentMarkup = isLoading ? loadingMarkup : children
 
     return (
       <div
         className={componentClassName}
-        ref={node => { this.node = node }}
+        ref={node => {
+          this.node = node
+        }}
         {...rest}
       >
         <EventListener
-          event='scroll'
+          event="scroll"
           handler={handleOnScroll}
           scope={nodeScope}
         />

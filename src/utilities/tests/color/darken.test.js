@@ -1,6 +1,4 @@
-import {
-  darken
-} from '../../color'
+import { darken } from '../../color'
 
 test('Returns null, if invalid arguments', () => {
   expect(darken()).toEqual(null)

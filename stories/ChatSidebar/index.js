@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import {
   Avatar,
@@ -7,15 +7,15 @@ import {
   ChatInbox,
   ChatList,
   ChatSidebar,
-  Flexy
+  Flexy,
 } from '../../src/index.js'
 import AvatarSpec from '../Avatar/specs/Avatar'
 import ChatSpec from '../ChatList/specs/Chat'
 
-ChatSpec.afterGenerate(({isTyping, ...rest}) => {
+ChatSpec.afterGenerate(({ isTyping, ...rest }) => {
   return {
     ...rest,
-    isTyping: false
+    isTyping: false,
   }
 })
 
@@ -24,40 +24,37 @@ const avatars = AvatarSpec.generate(8)
 const stories = storiesOf('ChatSidebar', module)
 
 class SampleComponent extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       chats: [
         ChatSpec.generate(),
         ChatSpec.generate(),
         ChatSpec.generate(),
-        ChatSpec.generate()
+        ChatSpec.generate(),
       ],
-      isShowStatusBar: false
+      isShowStatusBar: false,
     }
     this.handleOnAddMessage = this.handleOnAddMessage.bind(this)
     this.handleOnHideStatusBar = this.handleOnHideStatusBar.bind(this)
   }
 
-  handleOnAddMessage () {
+  handleOnAddMessage() {
     const { chats } = this.state
     this.setState({
       chats: [...chats, ChatSpec.generate()],
-      isShowStatusBar: true
+      isShowStatusBar: true,
     })
   }
 
-  handleOnHideStatusBar (value) {
+  handleOnHideStatusBar(value) {
     this.setState({
-      isShowStatusBar: false
+      isShowStatusBar: false,
     })
   }
 
-  render () {
-    const {
-      chats,
-      isShowStatusBar
-    } = this.state
+  render() {
+    const { chats, isShowStatusBar } = this.state
     const handleOnAddMessage = this.handleOnAddMessage
     const handleOnHideStatusBar = this.handleOnHideStatusBar
 
@@ -66,8 +63,8 @@ class SampleComponent extends Component {
         <Avatar
           image={avatars[4].image}
           name={avatars[4].name}
-          shape='rounded'
-          size='xs'
+          shape="rounded"
+          size="xs"
         />
       )
 
@@ -92,35 +89,28 @@ class SampleComponent extends Component {
     const newMessageCount = chats.length
     const avatarListMarkup = (
       <AvatarList max={3}>
-        {avatars.map(({image, name}) => (
-          <Avatar {...{image, name}} key='name' shape='rounded' size='xs' />
+        {avatars.map(({ image, name }) => (
+          <Avatar {...{ image, name }} key="name" shape="rounded" size="xs" />
         ))}
       </AvatarList>
     )
 
     const sidebarMarkup = (
-      <div style={{width: 300, height: '100vh'}}>
+      <div style={{ width: 300, height: '100vh' }}>
         <ChatSidebar
           newMessageCount={newMessageCount}
           onHideStatusBar={handleOnHideStatusBar}
           isShowStatusBar={isShowStatusBar}
         >
           <ChatInbox>
-            <ChatInbox.Header count={chats.length}>
-              Chats
-            </ChatInbox.Header>
+            <ChatInbox.Header count={chats.length}>Chats</ChatInbox.Header>
             <ChatInbox.Content>
-              <ChatList>
-                {messageMarkup}
-              </ChatList>
+              <ChatList>{messageMarkup}</ChatList>
             </ChatInbox.Content>
           </ChatInbox>
 
           <ChatInbox isCollapsible>
-            <ChatInbox.Header
-              avatars={avatarListMarkup}
-              count={7}
-            >
+            <ChatInbox.Header avatars={avatarListMarkup} count={7}>
               Assigned
             </ChatInbox.Header>
             <ChatInbox.Content>
@@ -139,10 +129,8 @@ class SampleComponent extends Component {
       </div>
     )
     return (
-      <Flexy align='top'>
-        <Flexy.Item>
-          {sidebarMarkup}
-        </Flexy.Item>
+      <Flexy align="top">
+        <Flexy.Item>{sidebarMarkup}</Flexy.Item>
         <Flexy.Block>
           <Button onClick={handleOnAddMessage}>Add New Message</Button>
         </Flexy.Block>
@@ -151,6 +139,4 @@ class SampleComponent extends Component {
   }
 }
 
-stories.add('default', () => (
-  <SampleComponent />
-))
+stories.add('default', () => <SampleComponent />)

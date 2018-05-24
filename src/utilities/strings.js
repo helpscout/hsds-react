@@ -1,4 +1,4 @@
-export const isString = (string) => {
+export const isString = string => {
   return typeof string === 'string'
 }
 
@@ -14,7 +14,8 @@ export const nameToInitials = (name = '') => {
     return ''
   }
 
-  const words = name.split(' ')
+  const words = name
+    .split(' ')
     .filter(w => w !== '')
     .map(w => w[0])
     .map(w => w.toUpperCase())
@@ -22,15 +23,15 @@ export const nameToInitials = (name = '') => {
   return words.length === 1 ? words[0] : words[0] + words[words.length - 1]
 }
 
-export const isWordString = (word) => {
+export const isWordString = word => {
   return isString(word) && word.length
 }
 
-export const isWord = (word) => {
+export const isWord = word => {
   return typeof word === 'number' || isWordString(word)
 }
 
-export const wordHasSpaces = (word) => {
+export const wordHasSpaces = word => {
   return isWordString(word) && word.trim().indexOf(' ') > 0
 }
 
@@ -48,9 +49,9 @@ export const truncateMiddle = (word, startLen, endLen, ellip) => {
 
   if (
     (frontLen === 0 && backLen === 0) ||
-    (frontLen >= wordLen) ||
-    (backLen >= wordLen) ||
-    ((frontLen + backLen) >= wordLen)
+    frontLen >= wordLen ||
+    backLen >= wordLen ||
+    frontLen + backLen >= wordLen
   ) {
     return word
   } else if (backLen === 0) {
@@ -62,10 +63,12 @@ export const truncateMiddle = (word, startLen, endLen, ellip) => {
 
 export const stripUrlPrefix = url => {
   if (!isString(url)) return url
-  return url.replace(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/g, '')
+  return url.replace(
+    /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/g,
+    ''
+  )
 }
 
 export const newlineToHTML = string => {
-  return string.trim()
-    .replace(/\r?\n/g, '<br>')
+  return string.trim().replace(/\r?\n/g, '<br>')
 }

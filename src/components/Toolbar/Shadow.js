@@ -3,20 +3,15 @@ import classNames from '../../utilities/classNames'
 import { placementTypes } from './propTypes'
 
 export const propTypes = {
-  placement: placementTypes
+  placement: placementTypes,
 }
 
 const defaultProps = {
-  placement: 'top'
+  placement: 'top',
 }
 
 const Shadow = props => {
-  const {
-    className,
-    children,
-    placement,
-    ...rest
-  } = props
+  const { className, children, placement, ...rest } = props
 
   const componentClassName = classNames(
     'c-ToolbarShadow',
@@ -24,9 +19,7 @@ const Shadow = props => {
     className
   )
 
-  return (
-    <div className={componentClassName} {...rest} />
-  )
+  return <div className={componentClassName} {...rest} />
 }
 
 Shadow.propTypes = propTypes

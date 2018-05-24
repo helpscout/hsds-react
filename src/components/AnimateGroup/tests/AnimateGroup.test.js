@@ -23,8 +23,12 @@ describe('Staggering', () => {
     const staggerDelay = 200
     const wrapper = shallow(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
-        <Animate><div className='ron'>Ron</div></Animate>
-        <Animate><div className='champ'>Champ</div></Animate>
+        <Animate>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate>
+          <div className="champ">Champ</div>
+        </Animate>
       </AnimateGroup>
     )
 
@@ -40,8 +44,12 @@ describe('Staggering', () => {
     const staggerDelay = 700
     const wrapper = shallow(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
-        <Animate><div className='ron'>Ron</div></Animate>
-        <Animate><div className='champ'>Champ</div></Animate>
+        <Animate>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate>
+          <div className="champ">Champ</div>
+        </Animate>
       </AnimateGroup>
     )
 
@@ -57,8 +65,12 @@ describe('Staggering', () => {
     const staggerDelay = 700
     const wrapper = shallow(
       <AnimateGroup staggerDelay={staggerDelay}>
-        <Animate><div className='ron'>Ron</div></Animate>
-        <Animate><div className='champ'>Champ</div></Animate>
+        <Animate>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate>
+          <div className="champ">Champ</div>
+        </Animate>
       </AnimateGroup>
     )
 
@@ -74,8 +86,12 @@ describe('Staggering', () => {
     const staggerDelay = 700
     const wrapper = shallow(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
-        <Animate delay={100}><div className='ron'>Ron</div></Animate>
-        <Animate delay={200}><div className='champ'>Champ</div></Animate>
+        <Animate delay={100}>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate delay={200}>
+          <div className="champ">Champ</div>
+        </Animate>
       </AnimateGroup>
     )
 
@@ -91,10 +107,13 @@ describe('Staggering', () => {
     const staggerDelay = 700
     const wrapper = shallow(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
-        <Animate duration={30}><div className='ron'>Ron</div></Animate>
-        <Animate duration={30}><div className='champ'>Champ</div></Animate>
+        <Animate duration={30}>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate duration={30}>
+          <div className="champ">Champ</div>
+        </Animate>
       </AnimateGroup>
-
     )
 
     const o = wrapper.find(Animate)
@@ -107,13 +126,13 @@ describe('Staggering', () => {
 })
 
 describe('Children', () => {
-  test('Don\'t render non-compatible children, with stagger', () => {
+  test("Don't render non-compatible children, with stagger", () => {
     const wrapper = mount(
       <AnimateGroup stagger>
         <Animate duration={30}>
-          <div className='champ'>Champ</div>
+          <div className="champ">Champ</div>
         </Animate>
-        <div className='ron'>Ron</div>
+        <div className="ron">Ron</div>
       </AnimateGroup>
     )
     const o = wrapper.find('.champ')
@@ -125,16 +144,12 @@ describe('Children', () => {
 
   test('Filter out null children', () => {
     const children = [
-      (<Animate duration={30} key={11}>
-        <div className='champ'>Champ</div>
-      </Animate>),
-      null
+      <Animate duration={30} key={11}>
+        <div className="champ">Champ</div>
+      </Animate>,
+      null,
     ]
-    const wrapper = mount(
-      <AnimateGroup stagger>
-        {children}
-      </AnimateGroup>
-    )
+    const wrapper = mount(<AnimateGroup stagger>{children}</AnimateGroup>)
 
     expect(wrapper.children().length).toBe(1)
   })
@@ -149,7 +164,7 @@ describe('className', () => {
   })
 
   test('Can accept custom className', () => {
-    const wrapper = mount(<AnimateGroup className='channel4' />)
+    const wrapper = mount(<AnimateGroup className="channel4" />)
     const o = wrapper.find('.channel4')
 
     expect(o.length).toBeTruthy()
@@ -184,7 +199,7 @@ describe('sequence', () => {
   test('Does not set sequence by default', () => {
     const wrapper = shallow(
       <AnimateGroup>
-        <Animate sequence='down' />
+        <Animate sequence="down" />
       </AnimateGroup>
     )
     const o = wrapper.find(Animate)

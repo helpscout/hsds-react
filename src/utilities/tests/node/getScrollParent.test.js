@@ -1,6 +1,4 @@
-import {
-  getScrollParent
-} from '../../node'
+import { getScrollParent } from '../../node'
 
 test('Returns null for invalid arguments', () => {
   expect(getScrollParent()).toBe(null)

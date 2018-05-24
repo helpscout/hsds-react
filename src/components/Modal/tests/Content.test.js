@@ -19,18 +19,18 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<Content><div className='child'>Hello</div></Content>)
+    const wrapper = shallow(
+      <Content>
+        <div className="child">Hello</div>
+      </Content>
+    )
     const el = wrapper.find('div.child')
 
     expect(el.text()).toContain('Hello')
   })
 
   test('Can handle null content', () => {
-    const wrapper = shallow(
-      <Content>
-        {[null]}
-      </Content>
-    )
+    const wrapper = shallow(<Content>{[null]}</Content>)
 
     expect(wrapper).toBeTruthy()
   })

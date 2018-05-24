@@ -7,7 +7,7 @@ import { Text } from '../../'
 const cx = 'c-MessageAction'
 const ui = {
   action: `.${cx}`,
-  text: `.${cx}__text`
+  text: `.${cx}__text`,
 }
 
 describe('ClassNames', () => {
@@ -19,7 +19,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Action className='mugatu' />)
+    const wrapper = shallow(<Action className="mugatu" />)
     const o = wrapper.find(ui.action)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -42,16 +42,7 @@ describe('ChatBlock', () => {
   })
 
   test('Passes correct props to ChatBlock', () => {
-    const wrapper = shallow(
-      <Action
-        from
-        to
-        read
-        ltr
-        rtl
-        timestamp='time'
-      />
-    )
+    const wrapper = shallow(<Action from to read ltr rtl timestamp="time" />)
     const props = wrapper.find(ChatBlock).node.props
 
     expect(props.from).toBeTruthy()
@@ -65,11 +56,7 @@ describe('ChatBlock', () => {
 
 describe('Content', () => {
   test('Wraps children in a Text component', () => {
-    const wrapper = shallow(
-      <Action>
-        Relax
-      </Action>
-    )
+    const wrapper = shallow(<Action>Relax</Action>)
     const o = wrapper.find(Text)
 
     expect(o.length).toBeTruthy()
@@ -79,24 +66,20 @@ describe('Content', () => {
 
 describe('Context', () => {
   test('Adds className based on context.theme', () => {
-    const wrapper = shallow(
-      <Action />
-    , {context: {theme: 'embed'}})
+    const wrapper = shallow(<Action />, { context: { theme: 'embed' } })
     const o = wrapper.find(ui.action)
 
     expect(o.hasClass('is-theme-embed')).toBe(true)
   })
 
   test('Does not Change text props based on context.theme', () => {
-    const wrapper = shallow(
-      <Action />
-    , {context: {theme: 'embed'}})
+    const wrapper = shallow(<Action />, { context: { theme: 'embed' } })
     let o = wrapper.find(ui.text)
 
     expect(o.props().size).toBe('11')
     expect(o.props().shade).toBe('faint')
 
-    wrapper.setContext({theme: 'admin'})
+    wrapper.setContext({ theme: 'admin' })
     o = wrapper.find(ui.text)
 
     expect(o.props().size).toBe('11')

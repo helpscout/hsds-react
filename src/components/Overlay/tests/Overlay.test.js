@@ -18,7 +18,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<Overlay className='not-metro-man' />)
+    const wrapper = shallow(<Overlay className="not-metro-man" />)
 
     expect(wrapper.prop('className')).toContain('not-metro-man')
   })
@@ -33,10 +33,8 @@ describe('Content', () => {
 
   test('Render child components', () => {
     const wrapper = mount(
-      <Overlay className='mega'>
-        <Overlay className='mind'>
-          Megamind
-        </Overlay>
+      <Overlay className="mega">
+        <Overlay className="mind">Megamind</Overlay>
       </Overlay>
     )
 
@@ -51,7 +49,9 @@ describe('Content', () => {
 describe('Click', () => {
   test('Can trigger onClick callback', () => {
     let value = false
-    const onClick = () => { value = true }
+    const onClick = () => {
+      value = true
+    }
     const wrapper = shallow(<Overlay onClick={onClick} />)
 
     wrapper.simulate('click')
@@ -63,7 +63,7 @@ describe('Click', () => {
 describe('Styles', () => {
   test('Renders inline-styles, if specified', () => {
     const style = {
-      background: 'blue'
+      background: 'blue',
     }
     const wrapper = mount(<Overlay style={style} />)
 

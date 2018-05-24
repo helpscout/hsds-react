@@ -16,7 +16,11 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = mount(<ChoiceGroup><Radio /></ChoiceGroup>)
+    const wrapper = mount(
+      <ChoiceGroup>
+        <Radio />
+      </ChoiceGroup>
+    )
     const el = wrapper.find(Radio)
 
     expect(el.length).toBeTruthy()
@@ -67,7 +71,10 @@ describe('Events', () => {
         <Radio />
       </ChoiceGroup>
     )
-    const input = wrapper.find('.c-Radio').first().find('input')
+    const input = wrapper
+      .find('.c-Radio')
+      .first()
+      .find('input')
 
     input.simulate('blur')
 
@@ -84,7 +91,10 @@ describe('Events', () => {
         <Radio />
       </ChoiceGroup>
     )
-    const input = wrapper.find('.c-Radio').first().find('input')
+    const input = wrapper
+      .find('.c-Radio')
+      .first()
+      .find('input')
 
     input.simulate('focus')
 
@@ -96,12 +106,15 @@ describe('Events', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <ChoiceGroup onChange={spy}>
-        <Radio value='1' />
-        <Radio value='2' />
-        <Radio value='3' />
+        <Radio value="1" />
+        <Radio value="2" />
+        <Radio value="3" />
       </ChoiceGroup>
     )
-    const input = wrapper.find('.c-Radio').first().find('input')
+    const input = wrapper
+      .find('.c-Radio')
+      .first()
+      .find('input')
 
     input.simulate('change')
 
@@ -113,9 +126,9 @@ describe('Events', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <ChoiceGroup onChange={spy}>
-        <Checkbox value='1' />
-        <Checkbox value='2' />
-        <Checkbox value='3' />
+        <Checkbox value="1" />
+        <Checkbox value="2" />
+        <Checkbox value="3" />
       </ChoiceGroup>
     )
     const input = wrapper.find('input')
@@ -130,10 +143,10 @@ describe('Events', () => {
 describe('MultiSelect', () => {
   test('Has multi-select className, if applicable', () => {
     const wrapper = mount(
-      <ChoiceGroup value='katinka'>
-        <Checkbox value='derek' />
-        <Checkbox value='hansel' />
-        <Checkbox value='mugatu' />
+      <ChoiceGroup value="katinka">
+        <Checkbox value="derek" />
+        <Checkbox value="hansel" />
+        <Checkbox value="mugatu" />
       </ChoiceGroup>
     )
     const o = wrapper.find(ChoiceGroup)
@@ -144,10 +157,10 @@ describe('MultiSelect', () => {
 
   test('Does not have multiSelect className, if applicable', () => {
     const wrapper = mount(
-      <ChoiceGroup value='katinka'>
-        <Radio value='derek' />
-        <Radio value='hansel' />
-        <Radio value='mugatu' />
+      <ChoiceGroup value="katinka">
+        <Radio value="derek" />
+        <Radio value="hansel" />
+        <Radio value="mugatu" />
       </ChoiceGroup>
     )
     const o = wrapper.find(ChoiceGroup)
@@ -158,10 +171,10 @@ describe('MultiSelect', () => {
 
   test('Does not multiSelect for Radio children', () => {
     const wrapper = mount(
-      <ChoiceGroup value='katinka'>
-        <Radio value='derek' />
-        <Radio value='hansel' />
-        <Radio value='mugatu' />
+      <ChoiceGroup value="katinka">
+        <Radio value="derek" />
+        <Radio value="hansel" />
+        <Radio value="mugatu" />
       </ChoiceGroup>
     )
     const o = wrapper.find(ChoiceGroup)
@@ -172,10 +185,10 @@ describe('MultiSelect', () => {
 
   test('Does auto-multiSelect for Checkbox children', () => {
     const wrapper = mount(
-      <ChoiceGroup value='katinka'>
-        <Checkbox value='derek' />
-        <Checkbox value='hansel' />
-        <Checkbox value='mugatu' />
+      <ChoiceGroup value="katinka">
+        <Checkbox value="derek" />
+        <Checkbox value="hansel" />
+        <Checkbox value="mugatu" />
       </ChoiceGroup>
     )
     const o = wrapper.find(ChoiceGroup)
@@ -186,10 +199,10 @@ describe('MultiSelect', () => {
 
   test('Can disable multiSelect for Checbox children, if defined', () => {
     const wrapper = mount(
-      <ChoiceGroup value='katinka' multiSelect={false}>
-        <Checkbox value='derek' />
-        <Checkbox value='hansel' />
-        <Checkbox value='mugatu' />
+      <ChoiceGroup value="katinka" multiSelect={false}>
+        <Checkbox value="derek" />
+        <Checkbox value="hansel" />
+        <Checkbox value="mugatu" />
       </ChoiceGroup>
     )
     const o = wrapper.find(ChoiceGroup)
@@ -202,14 +215,19 @@ describe('MultiSelect', () => {
 describe('Name', () => {
   test('Applies name to child Choice components', () => {
     const wrapper = mount(
-      <ChoiceGroup name='MUGATU'>
+      <ChoiceGroup name="MUGATU">
         <Radio />
         <Radio />
         <Radio />
       </ChoiceGroup>
     )
 
-    expect(wrapper.find(Radio).first().props().name).toBe('MUGATU')
+    expect(
+      wrapper
+        .find(Radio)
+        .first()
+        .props().name
+    ).toBe('MUGATU')
     wrapper.unmount()
   })
 })
@@ -217,10 +235,10 @@ describe('Name', () => {
 describe('Value', () => {
   test('Does not check any Choices if value does not match', () => {
     const wrapper = mount(
-      <ChoiceGroup value='katinka'>
-        <Radio value='derek' />
-        <Radio value='hansel' />
-        <Radio value='mugatu' />
+      <ChoiceGroup value="katinka">
+        <Radio value="derek" />
+        <Radio value="hansel" />
+        <Radio value="mugatu" />
       </ChoiceGroup>
     )
     const radios = wrapper.find(Radio)
@@ -234,10 +252,10 @@ describe('Value', () => {
 
   test('Checks a Choice if value matches', () => {
     const wrapper = mount(
-      <ChoiceGroup value='hansel'>
-        <Radio value='derek' />
-        <Radio value='hansel' />
-        <Radio value='mugatu' />
+      <ChoiceGroup value="hansel">
+        <Radio value="derek" />
+        <Radio value="hansel" />
+        <Radio value="mugatu" />
       </ChoiceGroup>
     )
     const radios = wrapper.find(Radio)
@@ -253,9 +271,9 @@ describe('Value', () => {
     const values = ['derek', 'hansel']
     const wrapper = mount(
       <ChoiceGroup value={values}>
-        <Radio value='derek' />
-        <Radio value='hansel' />
-        <Radio value='mugatu' />
+        <Radio value="derek" />
+        <Radio value="hansel" />
+        <Radio value="mugatu" />
       </ChoiceGroup>
     )
     const radios = wrapper.find(Radio)
@@ -271,9 +289,9 @@ describe('Value', () => {
     const values = ['derek', 'hansel']
     const wrapper = mount(
       <ChoiceGroup value={values}>
-        <Checkbox value='derek' />
-        <Checkbox value='hansel' />
-        <Checkbox value='mugatu' />
+        <Checkbox value="derek" />
+        <Checkbox value="hansel" />
+        <Checkbox value="mugatu" />
       </ChoiceGroup>
     )
     const input = wrapper.find('input')

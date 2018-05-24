@@ -77,7 +77,7 @@ const ICONS = {
   'tick-large': tickLarge,
   'tick-small': tickSmall,
   user,
-  video
+  video,
 }
 
 export default ICONS

@@ -4,6 +4,4 @@ import { Samp } from '../src/index.js'
 
 const stories = storiesOf('Samp', module)
 
-stories.add('default', () => (
-  <Samp>/hansel</Samp>
-))
+stories.add('default', () => <Samp>/hansel</Samp>)

@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import { default as Collapsible, collapsibleTypes } from '../Collapsible'
 import Centralize from '../Centralize'
@@ -11,7 +11,7 @@ import { statusTypes } from '../../constants/propTypes'
 export const propTypes = Object.assign({}, collapsibleTypes, {
   closeOnClick: PropTypes.bool,
   statusTypes,
-  themeTypes
+  themeTypes,
 })
 
 const defaultProps = {
@@ -21,19 +21,19 @@ const defaultProps = {
   onOpen: noop,
   closeOnClick: true,
   status: 'info',
-  theme: 'light'
+  theme: 'light',
 }
 
 class StatusBar extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
-      isOpen: props.isOpen
+      isOpen: props.isOpen,
     }
     this.handleOnClick = this.handleOnClick.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { isOpen } = nextProps
     /* istanbul ignore else */
     if (isOpen !== undefined) {
@@ -41,7 +41,7 @@ class StatusBar extends Component {
     }
   }
 
-  handleOnClick () {
+  handleOnClick() {
     const { closeOnClick, onClick } = this.props
     if (closeOnClick) {
       this.setState({ isOpen: false })
@@ -49,7 +49,7 @@ class StatusBar extends Component {
     onClick()
   }
 
-  render () {
+  render() {
     const {
       className,
       closeOnClick,
@@ -80,9 +80,7 @@ class StatusBar extends Component {
           onClick={handleOnClick}
           {...rest}
         >
-          <div className='c-StatusBar__content'>
-            {children}
-          </div>
+          <div className="c-StatusBar__content">{children}</div>
         </Centralize>
       </Collapsible>
     )

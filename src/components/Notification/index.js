@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import Flexy from '../Flexy'
@@ -7,32 +7,22 @@ import Text from '../Text'
 import Truncate from '../Truncate'
 import Timer from './Timer'
 import classNames from '../../utilities/classNames'
-import {noop} from '../../utilities/other'
-import {stripUrlPrefix} from '../../utilities/strings'
+import { noop } from '../../utilities/other'
+import { stripUrlPrefix } from '../../utilities/strings'
 
 export const propTypes = {
-  align: PropTypes.oneOf([
-    'left',
-    'right'
-  ]),
+  align: PropTypes.oneOf(['left', 'right']),
   animationSequence: PropTypes.string,
   body: PropTypes.string,
   from: PropTypes.string,
   isActive: PropTypes.bool,
   isDismissable: PropTypes.bool,
-  id: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-  ]),
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onClick: PropTypes.func,
   onDismiss: PropTypes.func,
   timeout: PropTypes.number,
-  type: PropTypes.oneOf([
-    'image',
-    'link',
-    'text'
-  ]),
-  truncateLimit: PropTypes.number
+  type: PropTypes.oneOf(['image', 'link', 'text']),
+  truncateLimit: PropTypes.number,
 }
 
 const defaultProps = {
@@ -44,14 +34,14 @@ const defaultProps = {
   onDismiss: noop,
   timeout: 2000,
   type: 'text',
-  truncateLimit: 60
+  truncateLimit: 60,
 }
 
 class Notification extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      isActive: props.isActive
+      isActive: props.isActive,
     }
 
     this.handleOnClick = this.handleOnClick.bind(this)
@@ -61,51 +51,51 @@ class Notification extends Component {
     this._isMounted = false
   }
 
-  componentWillReceiveProps (nextProps) {
-    const {isActive} = nextProps
+  componentWillReceiveProps(nextProps) {
+    const { isActive } = nextProps
     if (isActive === false) {
       this.forceDismiss()
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._isMounted = true
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._isMounted = false
   }
 
-  safeSetState (state) {
+  safeSetState(state) {
     if (this._isMounted) {
       this.setState(state)
     }
   }
 
-  handleOnExited () {
-    const {onDismiss} = this.props
+  handleOnExited() {
+    const { onDismiss } = this.props
     onDismiss(this.props)
   }
 
-  handleOnTimeout () {
+  handleOnTimeout() {
     this.forceDismiss()
   }
 
-  forceDismiss () {
+  forceDismiss() {
     this.safeSetState({
-      isActive: false
+      isActive: false,
     })
   }
 
-  handleOnClick (event) {
-    const {onClick, isDismissable} = this.props
+  handleOnClick(event) {
+    const { onClick, isDismissable } = this.props
     if (isDismissable) {
       this.forceDismiss()
     }
     onClick(event)
   }
 
-  render () {
+  render() {
     const {
       align,
       animationSequence,
@@ -123,7 +113,7 @@ class Notification extends Component {
       type,
       ...rest
     } = this.props
-    const {isActive} = this.state
+    const { isActive } = this.state
 
     const handleOnClick = this.handleOnClick
     const handleOnExited = this.handleOnExited
@@ -141,19 +131,19 @@ class Notification extends Component {
     let messageChildrenProp = null
     if (type === 'link') {
       messageChildrenProp = (
-        <Text className='c-Notification__text' linkStyle truncate title={body}>
+        <Text className="c-Notification__text" linkStyle truncate title={body}>
           {body}
         </Text>
       )
     } else if (type === 'image') {
       messageChildrenProp = (
-        <Flexy gap='xs' className='c-Notification__textWrapper'>
+        <Flexy gap="xs" className="c-Notification__textWrapper">
           <Flexy.Item>
-            <Text className='c-Notification__textPrefix'>New Image:</Text>
+            <Text className="c-Notification__textPrefix">New Image:</Text>
           </Flexy.Item>
           <Flexy.Block>
-            <Text className='c-Notification__text' linkStyle title={body}>
-              <Truncate type='middle' limit={24}>
+            <Text className="c-Notification__text" linkStyle title={body}>
+              <Truncate type="middle" limit={24}>
                 {stripUrlPrefix(body)}
               </Truncate>
             </Text>
@@ -162,8 +152,8 @@ class Notification extends Component {
       )
     } else {
       messageChildrenProp = (
-        <Text className='c-Notification__text' title={body}>
-          <Truncate limit={truncateLimit} type='end'>
+        <Text className="c-Notification__text" title={body}>
+          <Truncate limit={truncateLimit} type="end">
             {body}
           </Truncate>
         </Text>
@@ -174,7 +164,7 @@ class Notification extends Component {
       body: null,
       children: messageChildrenProp,
       from,
-      onBubbleClick: handleOnClick
+      onBubbleClick: handleOnClick,
     }
 
     return (
@@ -184,10 +174,10 @@ class Notification extends Component {
         onExited={handleOnExited}
         sequence={animationSequence}
       >
-        <Message.Provider theme='notifications'>
+        <Message.Provider theme="notifications">
           <Message.Chat
-            bubbleClassName='c-Notification__messageBubble'
-            className='c-Notification__message'
+            bubbleClassName="c-Notification__messageBubble"
+            className="c-Notification__message"
             {...messageProps}
             {...rest}
           />

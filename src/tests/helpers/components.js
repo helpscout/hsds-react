@@ -3,10 +3,13 @@ import { mount, shallow } from 'enzyme'
 
 const baseComponentOptions = {
   className: '',
-  skipChildrenTest: false
+  skipChildrenTest: false,
 }
 
-export const baseComponentTest = (Component, options = baseComponentOptions) => {
+export const baseComponentTest = (
+  Component,
+  options = baseComponentOptions
+) => {
   describe('ClassName', () => {
     test('Has default className', () => {
       const wrapper = mount(<Component />)
@@ -27,7 +30,11 @@ export const baseComponentTest = (Component, options = baseComponentOptions) => 
   if (!options.skipChildrenTest) {
     describe('Children', () => {
       test('Renders child content', () => {
-        const wrapper = shallow(<Component><div className='child'>Hello</div></Component>)
+        const wrapper = shallow(
+          <Component>
+            <div className="child">Hello</div>
+          </Component>
+        )
         const el = wrapper.find('div.child')
 
         expect(el.text()).toContain('Hello')

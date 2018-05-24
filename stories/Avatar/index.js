@@ -11,101 +11,97 @@ stories.add('default', () => (
 ))
 
 stories.add('fallback', () => (
-  <Avatar name={fixture.name} image='https://notfound' />
+  <Avatar name={fixture.name} image="https://notfound" />
 ))
 
 stories.add('status', () => (
   <div style={{ background: 'dodgerblue', padding: 20 }}>
-    <Flexy just='left'>
+    <Flexy just="left">
       <Avatar
         name={fixture.name}
         image={fixture.image}
-        status='online'
-        shape='square'
-        size='lg'
+        status="online"
+        shape="square"
+        size="lg"
       />
       <Avatar
-        borderColor='transparent'
+        borderColor="transparent"
         image={fixture.image}
         name={fixture.name}
-        outerBorderColor='white'
+        outerBorderColor="white"
         showStatusBorderColor
-        size='lg'
-        status='offline'
+        size="lg"
+        status="offline"
       />
       <Avatar
         name={fixture.name}
         image={fixture.image}
-        shape='rounded'
-        status='busy'
-        size='lg'
+        shape="rounded"
+        status="busy"
+        size="lg"
       />
-    </Flexy><br />
-    <Flexy just='left'>
+    </Flexy>
+    <br />
+    <Flexy just="left">
       <Avatar
         name={fixture.name}
         image={fixture.image}
-        status='online'
-        shape='square'
+        status="online"
+        shape="square"
       />
+      <Avatar name={fixture.name} image={fixture.image} status="offline" />
       <Avatar
         name={fixture.name}
         image={fixture.image}
-        status='offline'
+        shape="rounded"
+        status="busy"
       />
+    </Flexy>
+    <br />
+    <Flexy just="left">
       <Avatar
         name={fixture.name}
         image={fixture.image}
-        shape='rounded'
-        status='busy'
-      />
-    </Flexy><br />
-    <Flexy just='left'>
-      <Avatar
-        name={fixture.name}
-        image={fixture.image}
-        status='online'
-        shape='square'
-        size='sm'
+        status="online"
+        shape="square"
+        size="sm"
       />
       <Avatar
         name={fixture.name}
         image={fixture.image}
-        status='offline'
-        size='sm'
+        status="offline"
+        size="sm"
       />
       <Avatar
         name={fixture.name}
         image={fixture.image}
-        shape='rounded'
-        status='busy'
-        size='sm'
+        shape="rounded"
+        status="busy"
+        size="sm"
       />
     </Flexy>
   </div>
 ))
 
-stories.add('initials', () => (
-  <Avatar name={fixture.name} />
-))
+stories.add('initials', () => <Avatar name={fixture.name} />)
 
 stories.add('sizes', () => (
   <div>
-    <Avatar name={fixture.name} size='lg' />
-    <Avatar name={fixture.name} size='md' />
-    <Avatar name={fixture.name} size='sm' />
+    <Avatar name={fixture.name} size="lg" />
+    <Avatar name={fixture.name} size="md" />
+    <Avatar name={fixture.name} size="sm" />
   </div>
 ))
 
 stories.add('border', () => (
   <div style={{ background: 'orangered', padding: 20 }}>
     <Avatar
-      borderColor='orangered'
-      outerBorderColor='white'
+      borderColor="orangered"
+      outerBorderColor="white"
       name={fixture.name}
       showStatusBorderColor
-      size='lg'
-      status='online'
+      size="lg"
+      status="online"
     />
   </div>
 ))

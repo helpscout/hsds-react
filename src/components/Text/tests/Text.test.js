@@ -21,7 +21,7 @@ describe('Content', () => {
 
 describe('Shade', () => {
   test('Add shade styles if applied', () => {
-    const wrapper = shallow(<Text shade='muted' />)
+    const wrapper = shallow(<Text shade="muted" />)
 
     expect(wrapper.prop('className')).toContain('is-muted')
   })
@@ -35,8 +35,8 @@ describe('Styles', () => {
   })
 
   test('Applies sizing styles if specified', () => {
-    const wrapper13 = shallow(<Text size='13' />)
-    const wrapper20 = shallow(<Text size='20' />)
+    const wrapper13 = shallow(<Text size="13" />)
+    const wrapper20 = shallow(<Text size="20" />)
 
     expect(wrapper13.prop('className')).toContain('is-13')
     expect(wrapper20.prop('className')).toContain('is-20')
@@ -105,19 +105,19 @@ describe('Styles', () => {
 
 describe('States', () => {
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<Text state='error' />)
+    const wrapper = shallow(<Text state="error" />)
 
     expect(wrapper.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<Text state='success' />)
+    const wrapper = shallow(<Text state="success" />)
 
     expect(wrapper.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<Text state='warning' />)
+    const wrapper = shallow(<Text state="warning" />)
 
     expect(wrapper.prop('className')).toContain('is-warning')
   })

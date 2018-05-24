@@ -27,7 +27,7 @@ describe('Avatar', () => {
   })
 
   test('Passes props to Avatar', () => {
-    const wrapper = shallow(<StatusAvatar image='hansel.jpg' name='Hansel' />)
+    const wrapper = shallow(<StatusAvatar image="hansel.jpg" name="Hansel" />)
     const el = wrapper.find(Avatar)
 
     expect(el.prop('name')).toBe('Hansel')

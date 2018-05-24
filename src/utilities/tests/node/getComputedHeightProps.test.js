@@ -1,6 +1,4 @@
-import {
-  getComputedHeightProps
-} from '../../node'
+import { getComputedHeightProps } from '../../node'
 
 test('Returns false if node (arg) is invalid', () => {
   expect(getComputedHeightProps()).not.toBeTruthy()

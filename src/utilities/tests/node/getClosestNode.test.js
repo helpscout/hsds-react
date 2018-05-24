@@ -1,6 +1,4 @@
-import {
-  getClosestNode
-} from '../../node'
+import { getClosestNode } from '../../node'
 
 afterEach(() => {
   global.document.innerHTML = ''

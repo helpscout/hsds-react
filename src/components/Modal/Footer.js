@@ -7,34 +7,22 @@ import classNames from '../../utilities/classNames'
 export const propTypes = {
   seamless: PropTypes.bool,
   shadow: PropTypes.bool,
-  size: toolbarSizeTypes
+  size: toolbarSizeTypes,
 }
 
 const defaultProps = {
   seamless: false,
   shadow: false,
-  size: 'lg'
+  size: 'lg',
 }
 
 const Footer = props => {
-  const {
-    className,
-    children,
-    placement,
-    ...rest
-  } = props
+  const { className, children, placement, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-ModalFooter',
-    className
-  )
+  const componentClassName = classNames('c-ModalFooter', className)
 
   return (
-    <Toolbar
-      className={componentClassName}
-      placement='bottom'
-      {...rest}
-    >
+    <Toolbar className={componentClassName} placement="bottom" {...rest}>
       {children}
     </Toolbar>
   )

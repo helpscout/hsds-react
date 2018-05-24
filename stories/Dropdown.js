@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Dropdown, Flexy, Hr, Link } from '../src/index.js'
 
-const logAction = (i) => () => {
+const logAction = i => () => {
   console.log(`Action ${i}`)
 }
 
@@ -31,14 +31,16 @@ const onOpen = () => {
 const stories = storiesOf('Dropdown', module)
 
 stories.add('Default', () => (
-  <div style={{padding: '50px'}}>
-    <Flexy just='left' gap='md'>
+  <div style={{ padding: '50px' }}>
+    <Flexy just="left" gap="md">
       <Flexy.Item>
         <Dropdown>
-          <Dropdown.Trigger>
-            Dropdown
-          </Dropdown.Trigger>
-          <Dropdown.Menu className='menu' onBeforeClose={onBeforeClose} onOpen={onOpen}>
+          <Dropdown.Trigger>Dropdown</Dropdown.Trigger>
+          <Dropdown.Menu
+            className="menu"
+            onBeforeClose={onBeforeClose}
+            onOpen={onOpen}
+          >
             <Dropdown.Header>Header</Dropdown.Header>
             <Dropdown.Item onClick={logAction}>
               Nested
@@ -46,18 +48,14 @@ stories.add('Default', () => (
                 <Dropdown.Item>
                   Nested
                   <Dropdown.Menu enableCycling>
-                    <Dropdown.Item>
-                      Arrow up/down Cycling enabled
-                    </Dropdown.Item>
+                    <Dropdown.Item>Arrow up/down Cycling enabled</Dropdown.Item>
                     {itemsMarkup(4)}
                   </Dropdown.Menu>
                 </Dropdown.Item>
                 {itemsMarkup(4)}
               </Dropdown.Menu>
             </Dropdown.Item>
-            <Dropdown.Item disabled>
-              Disabled Item
-            </Dropdown.Item>
+            <Dropdown.Item disabled>Disabled Item</Dropdown.Item>
             <Dropdown.Divider />
             {itemsMarkup(10)}
           </Dropdown.Menu>
@@ -65,16 +63,12 @@ stories.add('Default', () => (
       </Flexy.Item>
       <Flexy.Item>
         <Dropdown>
-          <Dropdown.Trigger>
-            Another
-          </Dropdown.Trigger>
-          <Dropdown.Menu isOpen>
-            {itemsMarkup(5)}
-          </Dropdown.Menu>
+          <Dropdown.Trigger>Another</Dropdown.Trigger>
+          <Dropdown.Menu isOpen>{itemsMarkup(5)}</Dropdown.Menu>
         </Dropdown>
       </Flexy.Item>
       <Flexy.Item>
-        <a href='#'>Link</a>
+        <a href="#">Link</a>
       </Flexy.Item>
     </Flexy>
   </div>
@@ -82,18 +76,14 @@ stories.add('Default', () => (
 
 stories.add('Item', () => (
   <div style={{ maxWidth: 200 }}>
-    <Dropdown.Item onClick={logAction}>
-      Item
-    </Dropdown.Item>
+    <Dropdown.Item onClick={logAction}>Item</Dropdown.Item>
     <Dropdown.Item onClick={logAction}>
       Nested
       <Dropdown.Menu>
         <Dropdown.Item>
           Nested
           <Dropdown.Menu enableCycling>
-            <Dropdown.Item>
-              Arrow up/down Cycling enabled
-            </Dropdown.Item>
+            <Dropdown.Item>Arrow up/down Cycling enabled</Dropdown.Item>
             {itemsMarkup(4)}
           </Dropdown.Menu>
         </Dropdown.Item>
@@ -106,15 +96,14 @@ stories.add('Item', () => (
 stories.add('Trigger', () => (
   <div>
     <Dropdown>
-      <Dropdown.Trigger>
-        Default
-      </Dropdown.Trigger>
+      <Dropdown.Trigger>Default</Dropdown.Trigger>
       <Dropdown.Menu onBeforeClose={onBeforeClose}>
         {itemsMarkup(10)}
       </Dropdown.Menu>
     </Dropdown>
 
-    <br /><br />
+    <br />
+    <br />
 
     <Dropdown>
       <Dropdown.Trigger>
@@ -128,47 +117,31 @@ stories.add('Trigger', () => (
 ))
 
 stories.add('directions', () => (
-  <div style={{padding: 100}}>
-    <Dropdown direction='down left'>
-      <Dropdown.Trigger>
-        Down (Left)
-      </Dropdown.Trigger>
-      <Dropdown.Menu>
-        {itemsMarkup(3)}
-      </Dropdown.Menu>
+  <div style={{ padding: 100 }}>
+    <Dropdown direction="down left">
+      <Dropdown.Trigger>Down (Left)</Dropdown.Trigger>
+      <Dropdown.Menu>{itemsMarkup(3)}</Dropdown.Menu>
     </Dropdown>
 
     <Hr />
 
-    <Dropdown direction='down right'>
-      <Dropdown.Trigger>
-        Down (Right)
-      </Dropdown.Trigger>
-      <Dropdown.Menu>
-        {itemsMarkup(3)}
-      </Dropdown.Menu>
+    <Dropdown direction="down right">
+      <Dropdown.Trigger>Down (Right)</Dropdown.Trigger>
+      <Dropdown.Menu>{itemsMarkup(3)}</Dropdown.Menu>
     </Dropdown>
 
     <Hr />
 
-    <Dropdown direction='up left'>
-      <Dropdown.Trigger>
-        Up (Left)
-      </Dropdown.Trigger>
-      <Dropdown.Menu>
-        {itemsMarkup(3)}
-      </Dropdown.Menu>
+    <Dropdown direction="up left">
+      <Dropdown.Trigger>Up (Left)</Dropdown.Trigger>
+      <Dropdown.Menu>{itemsMarkup(3)}</Dropdown.Menu>
     </Dropdown>
 
     <Hr />
 
-    <Dropdown direction='up right'>
-      <Dropdown.Trigger>
-        Up (Right)
-      </Dropdown.Trigger>
-      <Dropdown.Menu>
-        {itemsMarkup(3)}
-      </Dropdown.Menu>
+    <Dropdown direction="up right">
+      <Dropdown.Trigger>Up (Right)</Dropdown.Trigger>
+      <Dropdown.Menu>{itemsMarkup(3)}</Dropdown.Menu>
     </Dropdown>
 
     <Hr />

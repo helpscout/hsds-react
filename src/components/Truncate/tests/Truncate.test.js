@@ -8,9 +8,7 @@ const fixture = createSpec(faker.lorem.paragraph())
 describe('default', () => {
   test('Auto truncates by default', () => {
     const words = fixture.generate()
-    const wrapper = mount(
-      <Truncate>{words}</Truncate>
-    )
+    const wrapper = mount(<Truncate>{words}</Truncate>)
 
     expect(wrapper.props().type).toBe('auto')
     expect(wrapper.hasClass('is-auto')).toBeTruthy()
@@ -20,18 +18,14 @@ describe('default', () => {
 describe('className', () => {
   test('Has default className', () => {
     const words = fixture.generate()
-    const wrapper = shallow(
-      <Truncate>{words}</Truncate>
-    )
+    const wrapper = shallow(<Truncate>{words}</Truncate>)
 
     expect(wrapper.hasClass('c-Truncate')).toBeTruthy()
   })
 
   test('Accepts additional className', () => {
     const words = fixture.generate()
-    const wrapper = shallow(
-      <Truncate className='mugatu'>{words}</Truncate>
-    )
+    const wrapper = shallow(<Truncate className="mugatu">{words}</Truncate>)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -42,7 +36,7 @@ describe('ellipsis', () => {
     const words = fixture.generate()
     const ellipsis = 'RELAX!! ++ '
     const wrapper = shallow(
-      <Truncate ellipsis={ellipsis} type='start' limit={20}>
+      <Truncate ellipsis={ellipsis} type="start" limit={20}>
         {words}
       </Truncate>
     )
@@ -54,7 +48,7 @@ describe('ellipsis', () => {
     const words = fixture.generate()
     const ellipsis = 'RELAX!! ++ '
     const wrapper = shallow(
-      <Truncate ellipsis={ellipsis} type='start' limit={20}>
+      <Truncate ellipsis={ellipsis} type="start" limit={20}>
         {words}
       </Truncate>
     )
@@ -67,7 +61,7 @@ describe('ellipsis', () => {
     const words = fixture.generate()
     const ellipsis = '!RELAX!'
     const wrapper = shallow(
-      <Truncate ellipsis={ellipsis} type='middle' limit={10}>
+      <Truncate ellipsis={ellipsis} type="middle" limit={10}>
         {words}
       </Truncate>
     )
@@ -82,7 +76,7 @@ describe('ellipsis', () => {
     const ellipsis = '!RELAX!'
     const limit = 10
     const wrapper = shallow(
-      <Truncate ellipsis={ellipsis} type='end' limit={limit}>
+      <Truncate ellipsis={ellipsis} type="end" limit={limit}>
         {words}
       </Truncate>
     )

@@ -1,5 +1,5 @@
 import React from 'react'
-import {mount, shallow} from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import NotificationStack from '../index'
 import Notification from '../../Notification'
 
@@ -18,7 +18,7 @@ describe('ClassName', () => {
   })
 
   test('Applies theme-based className', () => {
-    const wrapper = shallow(<NotificationStack theme='chat' />)
+    const wrapper = shallow(<NotificationStack theme="chat" />)
 
     expect(wrapper.hasClass('is-theme-chat')).toBe(true)
   })
@@ -31,7 +31,7 @@ describe('Children', () => {
         <Notification />
         <Notification />
         <Notification />
-        <div className='other' />
+        <div className="other" />
       </NotificationStack>
     )
     const n = wrapper.find(Notification)
@@ -57,7 +57,7 @@ describe('Notification', () => {
     expect(n.first().prop('isActive')).toBe(false)
     expect(n.last().prop('isActive')).toBe(true)
 
-    wrapper.setProps({limit: 10})
+    wrapper.setProps({ limit: 10 })
 
     n = wrapper.find(Notification)
 
@@ -68,17 +68,13 @@ describe('Notification', () => {
 
 describe('Dismissable', () => {
   test('Is initially set by props', () => {
-    const wrapper = shallow(
-      <NotificationStack autoDismiss />
-    )
+    const wrapper = shallow(<NotificationStack autoDismiss />)
 
     expect(wrapper.state('isDismissable')).toBe(true)
   })
 
   test('Pauses dismissability on mouseenter/mouseleave', () => {
-    const wrapper = shallow(
-      <NotificationStack autoDismiss />
-    )
+    const wrapper = shallow(<NotificationStack autoDismiss />)
     wrapper.simulate('mouseenter')
 
     expect(wrapper.state('isDismissable')).toBe(false)
@@ -93,9 +89,7 @@ describe('Dismissable', () => {
   })
 
   test('Does not change dismissability on mouse interactions, if not enabled', () => {
-    const wrapper = shallow(
-      <NotificationStack autoDismiss={false} />
-    )
+    const wrapper = shallow(<NotificationStack autoDismiss={false} />)
     wrapper.simulate('mouseenter')
 
     expect(wrapper.state('isDismissable')).toBe(false)
@@ -113,9 +107,7 @@ describe('Dismissable', () => {
 describe('Mouse events', () => {
   test('Mouseenter callback still works', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
-      <NotificationStack onMouseEnter={spy} />
-    )
+    const wrapper = shallow(<NotificationStack onMouseEnter={spy} />)
 
     wrapper.simulate('mouseenter')
 
@@ -124,9 +116,7 @@ describe('Mouse events', () => {
 
   test('Mouseleave callback still works', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
-      <NotificationStack onMouseLeave={spy} />
-    )
+    const wrapper = shallow(<NotificationStack onMouseLeave={spy} />)
 
     wrapper.simulate('mouseleave')
 
@@ -156,10 +146,9 @@ describe('NotificationID', () => {
       </NotificationStack>
     )
 
-    wrapper.setProps({ children: [
-      <Notification id={41} />,
-      <Notification id={42} />
-    ]})
+    wrapper.setProps({
+      children: [<Notification id={41} />, <Notification id={42} />],
+    })
 
     expect(wrapper.node.firstNotificationId).toBe(23)
   })
@@ -174,7 +163,10 @@ describe('NotificationID', () => {
     )
 
     const n = wrapper.find(Notification)
-    n.last().props().onBubbleClick()
+    n
+      .last()
+      .props()
+      .onBubbleClick()
 
     expect(wrapper.node.firstNotificationId).toBeFalsy()
   })
@@ -184,9 +176,9 @@ describe('From', () => {
   test('Only sets from prop on the first notification', () => {
     const wrapper = shallow(
       <NotificationStack limit={2}>
-        <Notification from='a' id={1} />
-        <Notification from='b' id={2} />
-        <Notification from='c' id={3} />
+        <Notification from="a" id={1} />
+        <Notification from="b" id={2} />
+        <Notification from="c" id={3} />
       </NotificationStack>
     )
 

@@ -29,31 +29,32 @@
     "dist": "babel src --out-dir dist --copy-files",
     "karma":
       "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
-    "lint": "npm run lint:es && npm run lint:js && npm run lint:css",
-    "lint:js": "standard 'src/**/*.js' 'stories/**/*.js' 'test/**/*.js'",
+    "lint": "npm run lint:es && npm run lint:css",
     "lint:es":
       "eslint src/**/*.js --cache && echo \"eslint: No lint errors 🙌!\"",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
-    "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
+    "pretty": "npm run lint:css -- -- fix",
     "release:beta": "np --no-yarn --tag=beta --any-branch --no-publish",
     "release:patch": "np patch --no-yarn --no-publish",
     "release:minor": "np minor --no-yarn --no-publish",
     "release:major": "np major --no-yarn --no-publish",
     "release": "npm run release:patch",
-    "start": "npm run pretty && npm run storybook",
+    "start": "npm run storybook",
     "storybook": "start-storybook -p 8900",
     "storybook:build": "build-storybook -c .storybook -o public",
     "storybook:clean": "rimraf public",
     "surge:cname": "echo 'hsblue.surge.sh' > public/CNAME",
     "surge:deploy": "surge ./public",
-    "test": "npm run lint:js -- --fix && npm run test:coverage",
+    "test": "npm run test:coverage",
     "test:acceptance": "npm run karma -- --single-run",
     "test:all": "npm run test && npm run test:acceptance",
     "test:coverage": "npm run test:dev -- --coverage",
     "test:dev": "node scripts/test.js --env=jsdom",
     "version": "npm run build",
     "postversion": "npm publish dist",
-    "prettier": "prettier --write \"src/**/*.js\"",
+    "prettier:base":
+      "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\"",
+    "prettier": "npm run prettier:base -- --write",
     "precommit": "pretty-quick --staged"
   },
   "peerDependencies": {
@@ -163,7 +164,6 @@
     "sass-loader": "6.0.6",
     "seed-barista": "1.0.4",
     "seed-harvester": "0.1.5",
-    "standard": "10.0.2",
     "style-loader": "0.18.2",
     "stylelint": "7.9.0",
     "stylelint-scss": "1.5.1",
@@ -222,29 +222,6 @@
   },
   "babel": {
     "presets": ["react-app"]
-  },
-  "standard": {
-    "ignore": ["dist"],
-    "globals": [
-      "Event",
-      "describe",
-      "context",
-      "before",
-      "beforeEach",
-      "after",
-      "afterEach",
-      "it",
-      "expect",
-      "jasmine",
-      "jest",
-      "React",
-      "react",
-      "requestAnimationFrame",
-      "test",
-      "$mount",
-      "mount",
-      "$"
-    ]
   },
   "eslintConfig": {
     "extends": "react-app"

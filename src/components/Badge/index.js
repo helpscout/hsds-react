@@ -10,11 +10,11 @@ export const propTypes = {
   size: PropTypes.string,
   status: statusTypes,
   isSquare: PropTypes.bool,
-  white: PropTypes.bool
+  white: PropTypes.bool,
 }
 
 const defaultProps = {
-  display: 'inlineBlock'
+  display: 'inlineBlock',
 }
 
 const Badge = props => {

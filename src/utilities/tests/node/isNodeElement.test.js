@@ -1,6 +1,4 @@
-import {
-  isNodeElement
-} from '../../node'
+import { isNodeElement } from '../../node'
 
 test('Returns true for valid node elements', () => {
   const o = document.createElement('div')

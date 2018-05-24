@@ -17,7 +17,7 @@ export const propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   size: sizeTypes,
-  title: PropTypes.string
+  title: PropTypes.string,
 }
 
 const defaultProps = {
@@ -28,7 +28,7 @@ const defaultProps = {
   colorUiLight: '',
   colorUiTransparent: 'transparent',
   colorUiWhite: 'white',
-  size: '60'
+  size: '60',
 }
 
 const Illo = props => {
@@ -68,11 +68,11 @@ const Illo = props => {
     uiDark: colorUiDark,
     uiLight: colorUiLight,
     uiTransparent: colorUiTransparent,
-    uiWhite: colorUiWhite
+    uiWhite: colorUiWhite,
   }
 
   const srcHTML = {
-    __html: injectFillColorIntoSvg(srcRawHTML, svgColorProps)
+    __html: injectFillColorIntoSvg(srcRawHTML, svgColorProps),
   }
 
   return (
@@ -84,7 +84,7 @@ const Illo = props => {
     >
       <Centralize>
         <span
-          className='c-Illo__icon'
+          className="c-Illo__icon"
           dangerouslySetInnerHTML={srcHTML}
           title={iconTitle}
         />
@@ -94,15 +94,18 @@ const Illo = props => {
   )
 }
 
-export const injectFillColorIntoSvg = (svgHTML, props = {
-  primary: '',
-  secondary: '',
-  ui: '',
-  uiLight: '',
-  uiDark: '',
-  uiTransparent: '',
-  uiWhite: ''
-}) => {
+export const injectFillColorIntoSvg = (
+  svgHTML,
+  props = {
+    primary: '',
+    secondary: '',
+    ui: '',
+    uiLight: '',
+    uiDark: '',
+    uiTransparent: '',
+    uiWhite: '',
+  }
+) => {
   if (typeof svgHTML !== 'string' || !svgHTML.length) return ''
   const {
     primary,
@@ -111,11 +114,11 @@ export const injectFillColorIntoSvg = (svgHTML, props = {
     uiLight,
     uiDark,
     uiTransparent,
-    uiWhite
+    uiWhite,
   } = props
 
-  const makeStyle = (color) => color && color.length
-    ? `style="fill: ${color};"` : null
+  const makeStyle = color =>
+    color && color.length ? `style="fill: ${color};"` : null
 
   return svgHTML
     .replace('data-path-primary=""', makeStyle(primary))

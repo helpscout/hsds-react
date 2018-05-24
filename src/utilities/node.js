@@ -1,18 +1,23 @@
 import closest from 'closest'
-import {isNodeEnv} from './other'
+import { isNodeEnv } from './other'
 
 const Element = window.Element
 
-export const isNodeElement = (node) => {
-  return node && (
-    node instanceof Element ||
+export const isNodeElement = node => {
+  return (
+    node &&
+    (node instanceof Element ||
     node.nodeType === 1 || // Thanks Brett! <3
-    node === document
+      node === document)
   )
 }
 
-export const getNodeScope = (nodeScope) => {
-  return nodeScope && isNodeElement(nodeScope) ? nodeScope : nodeScope === window ? window : document
+export const getNodeScope = nodeScope => {
+  return nodeScope && isNodeElement(nodeScope)
+    ? nodeScope
+    : nodeScope === window
+      ? window
+      : document
 }
 
 export const applyStylesToNode = (node, styles = {}) => {
@@ -22,13 +27,14 @@ export const applyStylesToNode = (node, styles = {}) => {
 
   Object.keys(styles).forEach(prop => {
     const value = styles[prop]
-    node.style[prop] = typeof value === 'number' && prop !== 'zIndex' ? `${value}px` : value
+    node.style[prop] =
+      typeof value === 'number' && prop !== 'zIndex' ? `${value}px` : value
   })
 
   return node
 }
 
-export const getComputedHeightProps = (node) => {
+export const getComputedHeightProps = node => {
   if (!isNodeElement(node)) return
   const el = node !== document ? node : document.body
   const height = el.offsetHeight
@@ -37,7 +43,7 @@ export const getComputedHeightProps = (node) => {
     marginTop,
     marginBottom,
     paddingTop,
-    paddingBottom
+    paddingBottom,
   } = window.getComputedStyle(el)
 
   // Adjust for node environments (for testing purposes)
@@ -49,11 +55,11 @@ export const getComputedHeightProps = (node) => {
 
   return {
     height,
-    offset
+    offset,
   }
 }
 
-export const getComputedWidthProps = (node) => {
+export const getComputedWidthProps = node => {
   if (!isNodeElement(node)) return
   const el = node !== document ? node : document.body
   const width = el.offsetWidth
@@ -62,7 +68,7 @@ export const getComputedWidthProps = (node) => {
     marginLeft,
     marginRight,
     paddingLeft,
-    paddingRight
+    paddingRight,
   } = window.getComputedStyle(el)
 
   // Adjust for node environments (for testing purposes)
@@ -74,23 +80,23 @@ export const getComputedWidthProps = (node) => {
 
   return {
     width,
-    offset
+    offset,
   }
 }
 
-export const getComputedOffsetTop = (node) => {
+export const getComputedOffsetTop = node => {
   if (!isNodeElement(node)) return
   const offset = getComputedHeightProps(document).offset
-  return node.getBoundingClientRect().top + (offset / 2)
+  return node.getBoundingClientRect().top + offset / 2
 }
 
-export const getComputedOffsetLeft = (node) => {
+export const getComputedOffsetLeft = node => {
   if (!isNodeElement(node)) return
   const offset = getComputedWidthProps(document).offset
-  return node.getBoundingClientRect().left + (offset / 2)
+  return node.getBoundingClientRect().left + offset / 2
 }
 
-export const getViewportHeight = (scope) => {
+export const getViewportHeight = scope => {
   const node = getNodeScope(scope)
   const { height, offset } = getComputedHeightProps(node)
 
@@ -99,7 +105,7 @@ export const getViewportHeight = (scope) => {
   return height > window.innerHeight ? height : window.innerHeight - offset
 }
 
-export const getViewportWidth = (scope) => {
+export const getViewportWidth = scope => {
   const node = getNodeScope(scope)
   const { width, offset } = getComputedWidthProps(node)
 
@@ -120,14 +126,15 @@ export const getViewportWidth = (scope) => {
  * @option    complete  bool      node must be in complete view, if true
  * @return    bool                True/False if node is in view
  */
-export const isNodeVisible = (options) => {
+export const isNodeVisible = options => {
   if (!options || typeof options !== 'object') return false
   const { node, scope, offset, complete } = options
 
   if (!isNodeElement(node)) return false
 
   let nodeOffset = offset !== undefined ? offset : 0
-  nodeOffset = typeof nodeOffset !== 'number' ? 0 : nodeOffset < 0 ? 0 : nodeOffset
+  nodeOffset =
+    typeof nodeOffset !== 'number' ? 0 : nodeOffset < 0 ? 0 : nodeOffset
 
   const nodeScope = getNodeScope(scope || window)
   const isWindow = nodeScope === window
@@ -138,17 +145,24 @@ export const isNodeVisible = (options) => {
   // Tested, but JSDOM + Istanbul cannot account for offsetTop.
   const offsetTop = isNodeEnv() ? rect.top : node.offsetTop
 
-  const viewportHeight = isWindow ? window.innerHeight : nodeScope.getBoundingClientRect().height
+  const viewportHeight = isWindow
+    ? window.innerHeight
+    : nodeScope.getBoundingClientRect().height
   const viewportTop = isWindow ? window.scrollY : nodeScope.scrollTop
-  const viewportBottom = isWindow ? window.innerHeight : viewportTop + viewportHeight + bufferOffset
+  const viewportBottom = isWindow
+    ? window.innerHeight
+    : viewportTop + viewportHeight + bufferOffset
 
   const bottom = offsetTop + rect.height
   const top = complete && nodeOffset === 0 ? bottom : bottom - nodeOffset
 
-  return parseInt(top, 10) <= parseInt(viewportBottom, 10) && parseInt(bottom, 10) >= parseInt(viewportTop, 10)
+  return (
+    parseInt(top, 10) <= parseInt(viewportBottom, 10) &&
+    parseInt(bottom, 10) >= parseInt(viewportTop, 10)
+  )
 }
 
-export const getScrollParent = (node) => {
+export const getScrollParent = node => {
   /* istanbul ignore else */
   if (!isNodeElement(node)) {
     return null
@@ -162,17 +176,19 @@ export const getScrollParent = (node) => {
   }
 }
 
-export const isNodeScrollable = (node) => {
+export const isNodeScrollable = node => {
   /* istanbul ignore next */
   // Cannot be tested in JSDOM. scrollHeight and clientHeight do not exist.
-  return node && isNodeElement(node) ? node.scrollHeight > node.clientHeight : false
+  return node && isNodeElement(node)
+    ? node.scrollHeight > node.clientHeight
+    : false
 }
 
-export const getClosestDocument = (node) => {
+export const getClosestDocument = node => {
   return node && isNodeElement(node) ? node.ownerDocument : document
 }
 
-export const hasContentOverflowX = (node) => {
+export const hasContentOverflowX = node => {
   // Cannot be tested in JSDOM (missing measurements for props)
   /* istanbul ignore else */
   if (!isNodeElement(node)) return false
@@ -180,7 +196,7 @@ export const hasContentOverflowX = (node) => {
   return node.clientWidth < node.scrollWidth
 }
 
-export const hasContentOverflowY = (node) => {
+export const hasContentOverflowY = node => {
   // Cannot be tested in JSDOM (missing measurements for props)
   /* istanbul ignore else */
   if (!isNodeElement(node)) return false

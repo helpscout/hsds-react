@@ -12,12 +12,12 @@ export const propTypes = {
   scrollableRef: PropTypes.func,
   onScroll: PropTypes.func,
   flex: PropTypes.bool,
-  size: standardSizeTypes
+  size: standardSizeTypes,
 }
 
 const defaultProps = {
   onScroll: noop,
-  scrollableRef: noop
+  scrollableRef: noop,
 }
 
 const Block = props => {
@@ -63,7 +63,9 @@ const Block = props => {
     >
       {contentMarkup}
     </Scrollable>
-  ) : contentMarkup
+  ) : (
+    contentMarkup
+  )
 
   return componentMarkup
 }

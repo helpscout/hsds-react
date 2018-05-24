@@ -3,16 +3,9 @@ import Item from './Item'
 import classNames from '../../utilities/classNames'
 
 const ChatTranscript = props => {
-  const {
-    children,
-    className,
-    ...rest
-  } = props
+  const { children, className, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-ChatTranscript',
-    className
-  )
+  const componentClassName = classNames('c-ChatTranscript', className)
 
   return (
     <div className={componentClassName} {...rest}>

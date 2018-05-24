@@ -23,7 +23,7 @@ describe('ID', () => {
   })
 
   test('Can override default componentID', () => {
-    const wrapper = shallow(<Choice componentID='milk' />)
+    const wrapper = shallow(<Choice componentID="milk" />)
 
     expect(wrapper.state().id).toContain('milk')
     expect(wrapper.state().id).not.toContain('Choice')
@@ -52,7 +52,7 @@ describe('Children', () => {
   test('Can render child component', () => {
     const wrapper = mount(
       <Choice checked>
-        <div className='milk'>Was a bad choice</div>
+        <div className="milk">Was a bad choice</div>
       </Choice>
     )
     const input = wrapper.find('input')
@@ -66,8 +66,8 @@ describe('Children', () => {
 
   test('Can render child component, instead of label', () => {
     const wrapper = mount(
-      <Choice checked label='news-team-assemble'>
-        <div className='milk'>Was a bad choice</div>
+      <Choice checked label="news-team-assemble">
+        <div className="milk">Was a bad choice</div>
       </Choice>
     )
     const input = wrapper.find('input')
@@ -101,7 +101,7 @@ describe('Checked', () => {
 
 describe('HelpText', () => {
   test('Does not render helpText by default', () => {
-    const wrapper = mount(<Choice label='Label' />)
+    const wrapper = mount(<Choice label="Label" />)
     const text = wrapper.find(HelpText)
 
     expect(text.length).toBeFalsy()
@@ -110,7 +110,7 @@ describe('HelpText', () => {
 
   test('Renders helpText if specified', () => {
     const helpText = 'Help Text'
-    const wrapper = mount(<Choice label='Label' helpText={helpText} />)
+    const wrapper = mount(<Choice label="Label" helpText={helpText} />)
     const text = wrapper.find(HelpText)
 
     expect(text.length).toBeTruthy()
@@ -121,7 +121,7 @@ describe('HelpText', () => {
 
 describe('Label', () => {
   test('Renders label if specified', () => {
-    const wrapper = mount(<Choice label='Label' />)
+    const wrapper = mount(<Choice label="Label" />)
     const labelText = wrapper.find('.c-Choice__label-text')
     const label = labelText.find(Text)
 
@@ -131,7 +131,7 @@ describe('Label', () => {
   })
 
   test('Hide label if specified', () => {
-    const wrapper = shallow(<Choice hideLabel label='Label' />)
+    const wrapper = shallow(<Choice hideLabel label="Label" />)
     const labelText = wrapper.find('.c-Choice__label-text')
 
     expect(labelText.find(Text).length).toBeFalsy()
@@ -141,7 +141,7 @@ describe('Label', () => {
 
 describe('Name', () => {
   test('Sets name on input if specified', () => {
-    const wrapper = mount(<Choice name='Brick' />)
+    const wrapper = mount(<Choice name="Brick" />)
     const input = wrapper.find('input')
 
     expect(input.prop('name')).toBe('Brick')
@@ -174,7 +174,7 @@ describe('Events', () => {
 
   test('Can trigger onChange callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Choice onChange={spy} value='Value' checked />)
+    const wrapper = mount(<Choice onChange={spy} value="Value" checked />)
     const input = wrapper.find('input')
 
     input.simulate('change')
@@ -199,7 +199,7 @@ describe('States', () => {
   })
 
   test('Applies checkbox styles if specified', () => {
-    const wrapper = mount(<Choice type='checkbox' />)
+    const wrapper = mount(<Choice type="checkbox" />)
     const o = wrapper.find('.c-Choice')
     const input = wrapper.find('input')
 
@@ -209,7 +209,7 @@ describe('States', () => {
   })
 
   test('Applies radio styles if specified', () => {
-    const wrapper = mount(<Choice type='radio' />)
+    const wrapper = mount(<Choice type="radio" />)
     const o = wrapper.find('.c-Choice')
     const input = wrapper.find('input')
 
@@ -221,7 +221,7 @@ describe('States', () => {
 
 describe('States', () => {
   test('Applies disabled styles if specified', () => {
-    const wrapper = mount(<Choice label='Label' disabled />)
+    const wrapper = mount(<Choice label="Label" disabled />)
     const o = wrapper.find('.c-Choice')
     const input = wrapper.find('input')
     const labelText = wrapper.find(Text)
@@ -233,7 +233,7 @@ describe('States', () => {
   })
 
   test('Applies readOnly styles if specified', () => {
-    const wrapper = mount(<Choice label='Label' readOnly />)
+    const wrapper = mount(<Choice label="Label" readOnly />)
     const o = wrapper.find('.c-Choice')
     const input = wrapper.find('input')
 

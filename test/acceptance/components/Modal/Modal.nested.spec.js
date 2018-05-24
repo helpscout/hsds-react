@@ -3,7 +3,7 @@ import { Button, Input, Modal, Portal } from '../../../../src/index'
 import Keys from '../../../../src/constants/Keys'
 import { wait, waitForSelectors } from '../../test-helpers'
 
-const simulateKeyPress = (keyCode) => {
+const simulateKeyPress = keyCode => {
   const event = new Event('keyup')
   event.keyCode = keyCode
 
@@ -11,11 +11,11 @@ const simulateKeyPress = (keyCode) => {
 }
 
 class NestedModalComponent extends React.Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       showModal: false,
-      value: ''
+      value: '',
     }
     this.handleOnButtonClick = this.handleOnButtonClick.bind(this)
     this.handleOnInputChange = this.handleOnInputChange.bind(this)
@@ -24,45 +24,45 @@ class NestedModalComponent extends React.Component {
     this.handleOnModalClose = this.handleOnModalClose.bind(this)
   }
 
-  handleOnButtonClick () {
+  handleOnButtonClick() {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
-  handleOnInputChange (value) {
+  handleOnInputChange(value) {
     this.setState({
-      value
+      value,
     })
   }
 
-  handleOnModalOpen () {
+  handleOnModalOpen() {
     const inputNode = document.querySelector('input')
     if (inputNode) {
       inputNode.focus()
     }
   }
 
-  handleOnModalClose () {
-    this.setState({
-      showModal: false
-    })
-  }
-
-  handleOnSubmit () {
+  handleOnModalClose() {
     this.setState({
       showModal: false,
-      value: ''
     })
   }
 
-  render () {
+  handleOnSubmit() {
+    this.setState({
+      showModal: false,
+      value: '',
+    })
+  }
+
+  render() {
     const { showOuterModal } = this.props
     const { showModal, value } = this.state
 
     const triggerMarkup = (
       <Button
-        className='innerTrigger'
+        className="innerTrigger"
         onClick={this.handleOnButtonClick}
         theme={value ? 'editing' : null}
       >
@@ -73,17 +73,15 @@ class NestedModalComponent extends React.Component {
     return (
       <div>
         <Modal
-          cardClassName='outerModal'
+          cardClassName="outerModal"
           isOpen={showOuterModal}
-          trigger={
-            <button className='outerTrigger'>Open</button>
-          }
+          trigger={<button className="outerTrigger">Open</button>}
           timeout={0}
         >
           <Modal.Body>
             <Modal.Content>
               <Modal
-                cardClassName='innerModal'
+                cardClassName="innerModal"
                 closeIcon={false}
                 isOpen={showModal}
                 trigger={triggerMarkup}
@@ -99,7 +97,11 @@ class NestedModalComponent extends React.Component {
                       onChange={this.handleOnInputChange}
                       value={value}
                     />
-                    <Button className='submit' onClick={this.handleOnSubmit} primary>
+                    <Button
+                      className="submit"
+                      onClick={this.handleOnSubmit}
+                      primary
+                    >
                       Submit
                     </Button>
                   </Modal.Content>
@@ -115,101 +117,95 @@ class NestedModalComponent extends React.Component {
 }
 
 describe('Outer Modal', () => {
-  it('Can open Modal on click', (done) => {
+  it('Can open Modal on click', done => {
     mount(<NestedModalComponent />)
     const $button = $('.outerTrigger')
 
     $button[0].click()
 
-    waitForSelectors('.outerModal')
-      .then((nodes) => {
-        expect(nodes.length).toBeTruthy()
-        done()
-      })
+    waitForSelectors('.outerModal').then(nodes => {
+      expect(nodes.length).toBeTruthy()
+      done()
+    })
   })
 
-  it('Can open Modal on propChange', (done) => {
+  it('Can open Modal on propChange', done => {
     const wrapper = mount(<NestedModalComponent />)
 
     wrapper.setProps({
-      showOuterModal: true
+      showOuterModal: true,
     })
 
-    waitForSelectors('.outerModal')
-      .then((nodes) => {
-        expect(nodes.length).toBeTruthy()
-        done()
-      })
+    waitForSelectors('.outerModal').then(nodes => {
+      expect(nodes.length).toBeTruthy()
+      done()
+    })
   })
 
-  it('Can close Modal on propChange', (done) => {
+  it('Can close Modal on propChange', done => {
     const wrapper = mount(<NestedModalComponent showOuterModal />)
 
     wrapper.setProps({
-      showOuterModal: false
+      showOuterModal: false,
     })
 
-    wait(300)
-      .then(() => {
-        const o = document.querySelector('.outerModal')
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    wait(300).then(() => {
+      const o = document.querySelector('.outerModal')
+      expect(o).not.toBeTruthy()
+      done()
+    })
   })
 })
 
 describe('Inner Modal', () => {
-  it('Cannot open Modal on isOpen state change without Outer modal open', (done) => {
+  it('Cannot open Modal on isOpen state change without Outer modal open', done => {
     const wrapper = mount(<NestedModalComponent />)
     wrapper.setState({
-      showModal: true
+      showModal: true,
     })
 
-    wait(300)
-      .then(() => {
-        const outer = document.querySelector('.innerModal')
-        const inner = document.querySelector('.innerModal')
+    wait(300).then(() => {
+      const outer = document.querySelector('.innerModal')
+      const inner = document.querySelector('.innerModal')
 
-        expect(outer).not.toBeTruthy()
-        expect(inner).not.toBeTruthy()
-        done()
-      })
+      expect(outer).not.toBeTruthy()
+      expect(inner).not.toBeTruthy()
+      done()
+    })
   })
 
-  it('Opens Modal on isOpen state change', (done) => {
+  it('Opens Modal on isOpen state change', done => {
     const wrapper = mount(<NestedModalComponent showOuterModal />)
     wrapper.setState({
-      showModal: true
+      showModal: true,
     })
 
-    waitForSelectors('.innerModal')
-      .then((nodes) => {
-        expect(nodes.length).toBeTruthy()
-        done()
-      })
+    waitForSelectors('.innerModal').then(nodes => {
+      expect(nodes.length).toBeTruthy()
+      done()
+    })
   })
 
-  it('Closes Modal on isOpen state change', (done) => {
+  it('Closes Modal on isOpen state change', done => {
     const wrapper = mount(<NestedModalComponent showOuterModal />)
     wrapper.setState({
-      showModal: true
+      showModal: true,
     })
     wrapper.setState({
-      showModal: false
+      showModal: false,
     })
 
-    wait(300)
-      .then(() => {
-        const o = document.querySelector('.innerModal')
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    wait(300).then(() => {
+      const o = document.querySelector('.innerModal')
+      expect(o).not.toBeTruthy()
+      done()
+    })
   })
 
-  it('Does not close Modal on non isOpen state change', (done) => {
+  it('Does not close Modal on non isOpen state change', done => {
     const wrapper = mount(<NestedModalComponent showOuterModal />)
     wrapper.setState({
-      showModal: true
+      showModal: true,
     })
 
     waitForSelectors('.innerModal')
@@ -224,10 +220,10 @@ describe('Inner Modal', () => {
       })
   })
 
-  it('Closes Modal, not Outer modal on ESC press', (done) => {
+  it('Closes Modal, not Outer modal on ESC press', done => {
     const wrapper = mount(<NestedModalComponent showOuterModal />)
     wrapper.setState({
-      showModal: true
+      showModal: true,
     })
 
     waitForSelectors('.innerModal')

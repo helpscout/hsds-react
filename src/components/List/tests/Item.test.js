@@ -4,7 +4,7 @@ import Item from '../Item'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: 'c-List__item'
+  className: 'c-List__item',
 }
 
 baseComponentTest(Item, baseComponentOptions)
@@ -25,7 +25,7 @@ describe('Accessibility', () => {
   })
 
   test('Role can be overridden', () => {
-    const wrapper = shallow(<Item role='presentation' />)
+    const wrapper = shallow(<Item role="presentation" />)
 
     expect(wrapper.find('li').props().role).toBe('presentation')
   })

@@ -1,6 +1,9 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import { default as Collapsible, propTypes as collapsibleTypes } from '../Collapsible'
+import {
+  default as Collapsible,
+  propTypes as collapsibleTypes,
+} from '../Collapsible'
 import EventListener from '../EventListener'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
@@ -16,7 +19,7 @@ export const propTypes = Object.assign({}, collapsibleTypes, {
   isOpen: PropTypes.bool,
   sortable: PropTypes.bool,
   onSortStart: PropTypes.func,
-  onSortEnd: PropTypes.func
+  onSortEnd: PropTypes.func,
 })
 
 export const defaultProps = {
@@ -26,17 +29,17 @@ export const defaultProps = {
   isOpen: false,
   onSortStart: noop,
   onSortEnd: noop,
-  sortable: false
+  sortable: false,
 }
 
 const uniqueID = createUniqueIDFactory('SidebarCollapsibleCard')
 
 class SidebarCollapsibleCard extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       id: props.id || uniqueID(),
-      isOpen: props.isOpen
+      isOpen: props.isOpen,
     }
     this._prevIsOpen = props.isOpen
     this.isSorting = false
@@ -45,18 +48,18 @@ class SidebarCollapsibleCard extends Component {
     this.handleOnSortEnd = this.handleOnSortEnd.bind(this)
   }
 
-  componentWillUpdate (nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.handleToggleOpen()
     }
   }
 
-  handleToggleOpen (e) {
+  handleToggleOpen(e) {
     e && e.preventDefault()
     this.setState({ isOpen: !this.state.isOpen })
   }
 
-  handleOnSortStart () {
+  handleOnSortStart() {
     const { onSortStart } = this.props
     this._prevIsOpen = this.state.isOpen
     this.isSorting = true
@@ -64,7 +67,7 @@ class SidebarCollapsibleCard extends Component {
     onSortStart()
   }
 
-  handleOnSortEnd () {
+  handleOnSortEnd() {
     const { onSortEnd } = this.props
     if (!this.isSorting) return
     this.setState({ isOpen: this._prevIsOpen })
@@ -72,7 +75,7 @@ class SidebarCollapsibleCard extends Component {
     onSortEnd()
   }
 
-  render () {
+  render() {
     const {
       children,
       className,
@@ -89,10 +92,7 @@ class SidebarCollapsibleCard extends Component {
       title,
       ...rest
     } = this.props
-    const {
-      isOpen: open,
-      id: cardId
-    } = this.state
+    const { isOpen: open, id: cardId } = this.state
 
     const componentClassName = classNames(
       'c-SidebarCollapsibleCard',
@@ -108,7 +108,11 @@ class SidebarCollapsibleCard extends Component {
       if (header) return header
       if (title) {
         return (
-          <Heading className='c-SidebarCollapsibleCard__title' size='h4' lineHeightReset>
+          <Heading
+            className="c-SidebarCollapsibleCard__title"
+            size="h4"
+            lineHeightReset
+          >
             {title}
           </Heading>
         )
@@ -122,27 +126,41 @@ class SidebarCollapsibleCard extends Component {
     const dragHandleMarkup = sortable ? (
       <Flexy.Item>
         <SortableDragHandle
-          className='c-SidebarCollapsibleCard__drag-handle'
+          className="c-SidebarCollapsibleCard__drag-handle"
           onDragStart={handleOnSortStart}
         />
       </Flexy.Item>
     ) : null
 
     return (
-      <div className={componentClassName} {...rest} role='presentation' id={cardId}>
-        <EventListener event='mouseup' handler={handleOnSortEnd} />
-        <a href='#' className='c-SidebarCollapsibleCard__header' onClick={handleToggleOpen} role='heading' aria-expanded={open} aria-controls={regionId}>
-          <Flexy gap='sm'>
-            <Flexy.Block>
-              {headerMarkup}
-            </Flexy.Block>
+      <div
+        className={componentClassName}
+        {...rest}
+        role="presentation"
+        id={cardId}
+      >
+        <EventListener event="mouseup" handler={handleOnSortEnd} />
+        <a
+          href="#"
+          className="c-SidebarCollapsibleCard__header"
+          onClick={handleToggleOpen}
+          role="heading"
+          aria-expanded={open}
+          aria-controls={regionId}
+        >
+          <Flexy gap="sm">
+            <Flexy.Block>{headerMarkup}</Flexy.Block>
             {dragHandleMarkup}
             <Flexy.Item>
-              <Icon name={iconName} size='14' muted />
+              <Icon name={iconName} size="14" muted />
             </Flexy.Item>
           </Flexy>
         </a>
-        <div className='c-SidebarCollapsibleCard__body' role='region' id={regionId}>
+        <div
+          className="c-SidebarCollapsibleCard__body"
+          role="region"
+          id={regionId}
+        >
           <Collapsible
             duration={duration}
             durationOpen={durationOpen}
@@ -151,9 +169,7 @@ class SidebarCollapsibleCard extends Component {
             onClose={onClose}
             isOpen={open}
           >
-            <div className='c-SidebarCollapsibleCard__content'>
-              {children}
-            </div>
+            <div className="c-SidebarCollapsibleCard__content">{children}</div>
           </Collapsible>
         </div>
       </div>

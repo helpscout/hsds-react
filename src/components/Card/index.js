@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import { default as Link, propTypes as linkPropTypes } from '../Link'
 import Block from './Block'
@@ -19,7 +19,7 @@ export const propTypes = Object.assign({}, linkPropTypes, {
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
   seamless: PropTypes.bool,
-  selector: blockSelectorTagTypes
+  selector: blockSelectorTagTypes,
 })
 
 const defaultProps = {
@@ -33,20 +33,20 @@ const defaultProps = {
   onClick: noop,
   onFocus: noop,
   seamless: false,
-  selector: 'div'
+  selector: 'div',
 }
 
 class Card extends Component {
-  constructor () {
+  constructor() {
     super()
     this.node = null
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.node = null
   }
 
-  render () {
+  render() {
     const {
       autoWordWrap,
       borderless,
@@ -80,30 +80,33 @@ class Card extends Component {
       className
     )
 
-    const element = href || to ? (
-      <Link
-        autoWordWrap={autoWordWrap}
-        block
-        className={componentClassName}
-        onClick={onClick}
-        href={href}
-        to={to}
-        nodeRef={nodeRef}
-        {...rest}
-      >
-        {children}
-      </Link>
-    ) : React.createElement(
-      selector,
-      {
-        ...rest,
-        className: componentClassName,
-        href,
-        onClick,
-        ref: nodeRef
-      },
-      children
-    )
+    const element =
+      href || to ? (
+        <Link
+          autoWordWrap={autoWordWrap}
+          block
+          className={componentClassName}
+          onClick={onClick}
+          href={href}
+          to={to}
+          nodeRef={nodeRef}
+          {...rest}
+        >
+          {children}
+        </Link>
+      ) : (
+        React.createElement(
+          selector,
+          {
+            ...rest,
+            className: componentClassName,
+            href,
+            onClick,
+            ref: nodeRef,
+          },
+          children
+        )
+      )
 
     return element
   }

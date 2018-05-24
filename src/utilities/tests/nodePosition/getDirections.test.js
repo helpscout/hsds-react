@@ -1,11 +1,9 @@
-import {
-  getDirections
-} from '../../nodePosition'
+import { getDirections } from '../../nodePosition'
 
 test('Returns default object for invalid argument', () => {
   const defaultOutput = {
     x: '',
-    y: 'down'
+    y: 'down',
   }
   expect(getDirections()).toEqual(defaultOutput)
   expect(getDirections(10)).toEqual(defaultOutput)
@@ -13,7 +11,10 @@ test('Returns default object for invalid argument', () => {
 })
 
 test('Returns object with specified coordinates', () => {
-  expect(getDirections('up left')).toEqual({x: 'left', y: 'up'})
-  expect(getDirections('down right')).toEqual({x: 'right', y: 'down'})
-  expect(getDirections('down right news teaaaaaaam')).toEqual({x: 'right', y: 'down'})
+  expect(getDirections('up left')).toEqual({ x: 'left', y: 'up' })
+  expect(getDirections('down right')).toEqual({ x: 'right', y: 'down' })
+  expect(getDirections('down right news teaaaaaaam')).toEqual({
+    x: 'right',
+    y: 'down',
+  })
 })

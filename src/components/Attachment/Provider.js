@@ -1,10 +1,10 @@
 import ThemeProvider from '../ThemeProvider'
-import {providerContextTypes} from './propTypes'
+import { providerContextTypes } from './propTypes'
 
 const propTypes = providerContextTypes
 
 const defaultProps = {
-  theme: 'default'
+  theme: 'default',
 }
 
 const childContextTypes = providerContextTypes

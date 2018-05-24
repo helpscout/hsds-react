@@ -5,7 +5,7 @@ import Portal from '..'
 // jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
 const PORTAL_TEST_TIMEOUT = 300
 
-const cleanUp = (wrapper) => {
+const cleanUp = wrapper => {
   if (wrapper) wrapper.unmount()
   global.document.body.innerHTML = ''
 }
@@ -15,7 +15,7 @@ describe('Renders', () => {
     const preMountNodeCount = document.body.childNodes.length
     const wrapper = mount(
       <Portal>
-        <div className='brick'>BRICK</div>
+        <div className="brick">BRICK</div>
       </Portal>
     )
     const portal = document.body.childNodes[0]
@@ -28,10 +28,10 @@ describe('Renders', () => {
     cleanUp(wrapper)
   })
 
-  test('Is removed from the body on unmount', (done) => {
+  test('Is removed from the body on unmount', done => {
     const wrapper = mount(
       <Portal>
-        <div className='brick'>BRICK</div>
+        <div className="brick">BRICK</div>
       </Portal>
     )
 
@@ -46,8 +46,8 @@ describe('Renders', () => {
 
   test('Can add custom className', () => {
     const wrapper = mount(
-      <Portal className='champ'>
-        <div className='brick'>BRICK</div>
+      <Portal className="champ">
+        <div className="brick">BRICK</div>
       </Portal>
     )
 
@@ -58,8 +58,8 @@ describe('Renders', () => {
 
   test('Can add custom ID', () => {
     const wrapper = mount(
-      <Portal id='champ'>
-        <div className='brick'>BRICK</div>
+      <Portal id="champ">
+        <div className="brick">BRICK</div>
       </Portal>
     )
 
@@ -75,13 +75,14 @@ describe('renderTo', () => {
     global.document.body.appendChild(testBody)
 
     const wrapper = mount(
-      <div className='channel4'>
-        <div className='custom' />
-        <Portal id='champ' renderTo='.custom'>
-          <div className='brick'>BRICK</div>
+      <div className="channel4">
+        <div className="custom" />
+        <Portal id="champ" renderTo=".custom">
+          <div className="brick">BRICK</div>
         </Portal>
-      </div>
-      , { attachTo: testBody })
+      </div>,
+      { attachTo: testBody }
+    )
 
     const custom = wrapper.find('.custom').html()
 
@@ -99,13 +100,14 @@ describe('renderTo', () => {
     global.document.body.appendChild(testBody)
 
     const wrapper = mount(
-      <div className='channel4'>
-        <div className='custom' />
-        <Portal id='champ' renderTo={global.document.body}>
-          <div className='brick'>BRICK</div>
+      <div className="channel4">
+        <div className="custom" />
+        <Portal id="champ" renderTo={global.document.body}>
+          <div className="brick">BRICK</div>
         </Portal>
-      </div>
-      , { attachTo: testBody })
+      </div>,
+      { attachTo: testBody }
+    )
 
     const body = global.document.body.innerHTML
 
@@ -123,16 +125,17 @@ describe('renderTo', () => {
     global.document.body.appendChild(testBody)
 
     const wrapper = mount(
-      <div className='channel4'>
-        <Portal id='champ'>
-          <div className='brick'>BRICK</div>
+      <div className="channel4">
+        <Portal id="champ">
+          <div className="brick">BRICK</div>
         </Portal>
         <p>Content</p>
-        <div className='channel4-inner'>
+        <div className="channel4-inner">
           <Portal.Container />
         </div>
-      </div>
-      , { attachTo: testBody })
+      </div>,
+      { attachTo: testBody }
+    )
 
     const custom = wrapper.find(Portal.Container).html()
 
@@ -145,20 +148,21 @@ describe('renderTo', () => {
     cleanUp()
   })
 
-  test('Fallsback to document.body if custom selector doesn\'t exist', () => {
+  test("Fallsback to document.body if custom selector doesn't exist", () => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
     const nodeCount = global.document.body.childNodes.length
 
     const wrapper = mount(
-      <div className='channel4'>
-        <div className='custom' />
-        <Portal id='champ' renderTo='.nope'>
-          <div className='brick'>BRICK</div>
+      <div className="channel4">
+        <div className="custom" />
+        <Portal id="champ" renderTo=".nope">
+          <div className="brick">BRICK</div>
         </Portal>
-      </div>
-      , { attachTo: testBody })
+      </div>,
+      { attachTo: testBody }
+    )
 
     const custom = wrapper.find('.custom').html()
     const postMountNodeCount = global.document.body.childNodes.length
@@ -178,13 +182,13 @@ describe('renderTo', () => {
 describe('Events', () => {
   test('onBeforeOpen callback works', () => {
     const mockCallback = jest.fn()
-    const onBeforeOpen = (open) => {
+    const onBeforeOpen = open => {
       open()
       mockCallback()
     }
     const wrapper = mount(
       <Portal onBeforeOpen={onBeforeOpen} isOpen>
-        <div className='brick'>BRICK</div>
+        <div className="brick">BRICK</div>
       </Portal>
     )
 
@@ -197,7 +201,7 @@ describe('Events', () => {
     const mockCallback = jest.fn()
     const wrapper = mount(
       <Portal onOpen={mockCallback} isOpen>
-        <div className='brick'>BRICK</div>
+        <div className="brick">BRICK</div>
       </Portal>
     )
 
@@ -208,13 +212,13 @@ describe('Events', () => {
 
   test('onBeforeOpen + onOpen callback works', () => {
     const mockCallback = jest.fn()
-    const onBeforeOpen = (open) => {
+    const onBeforeOpen = open => {
       open()
       mockCallback()
     }
     const wrapper = mount(
       <Portal onBeforeOpen={onBeforeOpen} onOpen={mockCallback} isOpen>
-        <div className='brick'>BRICK</div>
+        <div className="brick">BRICK</div>
       </Portal>
     )
 
@@ -223,21 +227,22 @@ describe('Events', () => {
     cleanUp(wrapper)
   })
 
-  test('onBeforeClose callback works', (done) => {
+  test('onBeforeClose callback works', done => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
     const mockCallback = jest.fn()
-    const onBeforeClose = (close) => {
+    const onBeforeClose = close => {
       close()
       mockCallback()
     }
 
     const wrapper = mount(
       <Portal onBeforeClose={onBeforeClose} isOpen>
-        <div className='brick'>BRICK</div>
-      </Portal>
-    , { attachTo: testBody })
+        <div className="brick">BRICK</div>
+      </Portal>,
+      { attachTo: testBody }
+    )
 
     wrapper.unmount()
 
@@ -249,16 +254,17 @@ describe('Events', () => {
     }, PORTAL_TEST_TIMEOUT)
   })
 
-  test('onClose callback works', (done) => {
+  test('onClose callback works', done => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
     const mockCallback = jest.fn()
 
     const wrapper = mount(
       <Portal onClose={mockCallback} isOpen>
-        <div className='brick'>BRICK</div>
-      </Portal>
-    , { attachTo: testBody })
+        <div className="brick">BRICK</div>
+      </Portal>,
+      { attachTo: testBody }
+    )
 
     wrapper.unmount()
 
@@ -270,21 +276,22 @@ describe('Events', () => {
     }, PORTAL_TEST_TIMEOUT)
   })
 
-  test('onBeforeClose + onClose callback works', (done) => {
+  test('onBeforeClose + onClose callback works', done => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
     const mockCallback = jest.fn()
-    const onBeforeClose = (close) => {
+    const onBeforeClose = close => {
       close()
       mockCallback()
     }
 
     const wrapper = mount(
       <Portal onBeforeClose={onBeforeClose} onClose={mockCallback} isOpen>
-        <div className='brick'>BRICK</div>
-      </Portal>
-    , { attachTo: testBody })
+        <div className="brick">BRICK</div>
+      </Portal>,
+      { attachTo: testBody }
+    )
 
     wrapper.unmount()
 

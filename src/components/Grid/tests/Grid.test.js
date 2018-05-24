@@ -12,7 +12,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<Grid className='mugatu' />)
+    const wrapper = shallow(<Grid className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -22,7 +22,7 @@ describe('Children', () => {
   test('Can render child components', () => {
     const wrapper = shallow(
       <Grid>
-        <div className='mugatu' />
+        <div className="mugatu" />
       </Grid>
     )
 
@@ -34,7 +34,7 @@ describe('Children', () => {
   test('Contains Container + Row by default', () => {
     const wrapper = shallow(
       <Grid>
-        <div className='mugatu' />
+        <div className="mugatu" />
       </Grid>
     )
 

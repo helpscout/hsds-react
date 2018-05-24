@@ -9,14 +9,14 @@ import PropTypes from 'prop-types'
  * @return function
  * @constructor
  */
-const RouteWrapper = (WrappedComponent) => {
+const RouteWrapper = WrappedComponent => {
   class Component extends React.PureComponent {
-    render () {
+    render() {
       const { fetch = () => Promise.resolve(), to, ...rest } = this.props
       if (to) {
         if (this.context && this.context.router) {
           const history = this.context.router.history
-          rest.onClick = (e) => {
+          rest.onClick = e => {
             if (e && (e.metaKey || e.ctrlKey)) {
               // Allow ctrl+clicks to function normally
               return
@@ -27,7 +27,9 @@ const RouteWrapper = (WrappedComponent) => {
             })
           }
         } else {
-          console.error('The `to` attribute can only be used in the the context of a React Router.')
+          console.error(
+            'The `to` attribute can only be used in the the context of a React Router.'
+          )
         }
       }
       return <WrappedComponent {...rest} />
@@ -35,21 +37,20 @@ const RouteWrapper = (WrappedComponent) => {
   }
 
   Component.contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
   }
 
   Component.propTypes = {
     fetch: PropTypes.func,
     start: PropTypes.func,
-    to: PropTypes.string
+    to: PropTypes.string,
   }
 
-  const componentName = (
+  const componentName =
     WrappedComponent.displayName ||
     WrappedComponent.name ||
     /* istanbul ignore next */
     'Component'
-  )
   Component.displayName = `withRoute(${componentName})`
 
   return Component

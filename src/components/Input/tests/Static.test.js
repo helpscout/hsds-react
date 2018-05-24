@@ -10,7 +10,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<Static className='mugatu' />)
+    const wrapper = shallow(<Static className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -20,7 +20,7 @@ describe('Children', () => {
   test('Can render child components', () => {
     const wrapper = shallow(
       <Static>
-        <div className='mugatu' />
+        <div className="mugatu" />
       </Static>
     )
 
@@ -43,9 +43,7 @@ describe('Style', () => {
 
 describe('Size', () => {
   test('Can render an additional size', () => {
-    const wrapper = shallow(
-      <Static size='md' />
-    )
+    const wrapper = shallow(<Static size="md" />)
 
     expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
     expect(wrapper.hasClass('is-md')).toBeTruthy()
@@ -54,9 +52,7 @@ describe('Size', () => {
 
 describe('Alignment', () => {
   test('Can be aligned left', () => {
-    const wrapper = shallow(
-      <Static align='left' />
-    )
+    const wrapper = shallow(<Static align="left" />)
 
     expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
     expect(wrapper.hasClass('is-block')).toBeTruthy()
@@ -64,9 +60,7 @@ describe('Alignment', () => {
   })
 
   test('Can be aligned center', () => {
-    const wrapper = shallow(
-      <Static align='center' />
-    )
+    const wrapper = shallow(<Static align="center" />)
 
     expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
     expect(wrapper.hasClass('is-block')).toBeTruthy()
@@ -74,9 +68,7 @@ describe('Alignment', () => {
   })
 
   test('Can be aligned right', () => {
-    const wrapper = shallow(
-      <Static align='right' />
-    )
+    const wrapper = shallow(<Static align="right" />)
 
     expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
     expect(wrapper.hasClass('is-block')).toBeTruthy()

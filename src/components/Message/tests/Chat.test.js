@@ -10,7 +10,7 @@ const ui = {
   caption: `.${cx}__caption`,
   error: `.${cx}__error`,
   metaState: `.${cx}__metaState`,
-  loadingSpinner: `.${cx}__loadingSpinner`
+  loadingSpinner: `.${cx}__loadingSpinner`,
 }
 
 describe('ClassNames', () => {
@@ -21,7 +21,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Chat className='mugatu' />)
+    const wrapper = shallow(<Chat className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -52,14 +52,14 @@ describe('Bubble', () => {
   test('Passes correct props to Bubble', () => {
     const wrapper = shallow(
       <Chat
-        body='body'
+        body="body"
         from
         isNote
         ltr
         primary
         rtl
-        size='sm'
-        title='title'
+        size="sm"
+        title="title"
         to
         typing
       />
@@ -95,16 +95,7 @@ describe('ChatBlock', () => {
   })
 
   test('Passes correct props to ChatBlock', () => {
-    const wrapper = shallow(
-      <Chat
-        from
-        to
-        read
-        ltr
-        rtl
-        timestamp='time'
-      />
-    )
+    const wrapper = shallow(<Chat from to read ltr rtl timestamp="time" />)
     const props = wrapper.find(ChatBlock).node.props
 
     expect(props.from).toBeTruthy()
@@ -125,7 +116,7 @@ describe('Caption', () => {
   })
 
   test('Renders a caption, if one is provided', () => {
-    const wrapper = shallow(<Chat caption='Derek' />)
+    const wrapper = shallow(<Chat caption="Derek" />)
     const o = wrapper.find(Caption)
 
     expect(o.length).toBeTruthy()
@@ -149,7 +140,7 @@ describe('Error', () => {
   })
 
   test('Renders error, if specified (string)', () => {
-    const wrapper = shallow(<Chat error='nope' />)
+    const wrapper = shallow(<Chat error="nope" />)
     const o = wrapper.find(ui.error)
 
     expect(o.length).toBe(1)
@@ -157,7 +148,7 @@ describe('Error', () => {
   })
 
   test('Can customize the default error message', () => {
-    const wrapper = shallow(<Chat error errorMessage='nope' />)
+    const wrapper = shallow(<Chat error errorMessage="nope" />)
     const o = wrapper.find(ui.error)
 
     expect(o.length).toBe(1)
@@ -186,7 +177,7 @@ describe('Loading', () => {
   })
 
   test('Does not interfere with rendering of meta content', () => {
-    const wrapper = shallow(<Chat isLoading caption='derek.jpg' error />)
+    const wrapper = shallow(<Chat isLoading caption="derek.jpg" error />)
     const o = wrapper.find(ui.metaState)
     const l = wrapper.find(ui.loadingSpinner)
     const c = wrapper.find(ui.caption)

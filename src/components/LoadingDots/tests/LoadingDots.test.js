@@ -27,7 +27,7 @@ describe('Align', () => {
   })
 
   test('Can apply alignment class', () => {
-    const wrapper = shallow(<LoadingDots align='center' />)
+    const wrapper = shallow(<LoadingDots align="center" />)
 
     expect(wrapper.hasClass('is-left')).not.toBeTruthy()
     expect(wrapper.hasClass('is-center')).toBeTruthy()

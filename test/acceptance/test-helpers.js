@@ -4,10 +4,7 @@ import { mount } from 'enzyme'
 import jQuery from 'jquery'
 import '../../src/styles/blue.scss'
 import '../../src/styles/blue.hs-app.scss'
-export {
-  default as wait,
-  waitForSelectors
-} from '../../src/tests/helpers/wait'
+export { default as wait, waitForSelectors } from '../../src/tests/helpers/wait'
 
 // require all the test files in the test folder that end with Spec.js or Spec.jsx
 const testsContext = require.context('.', true, /spec.jsx?$/)
@@ -34,14 +31,14 @@ const getMountNode = () => {
   return document.getElementById(mountNodeId)
 }
 
-const mountHelper = (component) => {
+const mountHelper = component => {
   window.BluePortalWrapperGlobalManager = null
   addMountNode()
   const wrapper = mount(component, { attachTo: getMountNode() })
   return wrapper
 }
 
-const $mountHelper = (component) => {
+const $mountHelper = component => {
   const wrapper = mountHelper(component)
   const $wrapper = $(wrapper.getDOMNode())
   return $wrapper

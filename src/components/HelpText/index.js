@@ -10,22 +10,15 @@ export const propTypes = {
   className: PropTypes.string,
   muted: PropTypes.bool,
   size: sizeTypes,
-  state: stateTypes
+  state: stateTypes,
 }
 
 const defaultProps = {
-  size: '13'
+  size: '13',
 }
 
 const HelpText = props => {
-  const {
-    children,
-    className,
-    muted,
-    size,
-    state,
-    ...rest
-  } = props
+  const { children, className, muted, size, state, ...rest } = props
 
   const componentClassName = classNames(
     'c-HelpText',
@@ -35,10 +28,12 @@ const HelpText = props => {
   )
 
   const contentMarkup = isString(children) ? (
-    <Text className='c-HelpText__text' size={size}>
+    <Text className="c-HelpText__text" size={size}>
       {children}
     </Text>
-  ) : children
+  ) : (
+    children
+  )
 
   return (
     <div className={componentClassName} {...rest}>

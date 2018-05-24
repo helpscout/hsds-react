@@ -4,10 +4,10 @@ import Positioner from '../Positioner'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: 'c-DropPositioner'
+  className: 'c-DropPositioner',
 }
 
-const simulateEvent = (eventName) => {
+const simulateEvent = eventName => {
   window.dispatchEvent(new Event(eventName))
 }
 
@@ -21,8 +21,8 @@ describe('Position', () => {
       offsetTop: 10,
       direction: {
         x: 'right',
-        y: 'down'
-      }
+        y: 'down',
+      },
     }
     const wrapper = mount(
       <Positioner position={position}>
@@ -43,8 +43,8 @@ describe('Position', () => {
       left: 100,
       direction: {
         x: 'right',
-        y: 'down'
-      }
+        y: 'down',
+      },
     }
     const wrapper = mount(
       <Positioner position={position}>
@@ -65,8 +65,8 @@ describe('Events', () => {
       left: 100,
       direction: {
         x: 'right',
-        y: 'down'
-      }
+        y: 'down',
+      },
     }
 
     mount(
@@ -85,8 +85,8 @@ describe('Events', () => {
       left: 100,
       direction: {
         x: 'right',
-        y: 'down'
-      }
+        y: 'down',
+      },
     }
 
     mount(
@@ -108,8 +108,8 @@ describe('Direction', () => {
       left: 100,
       direction: {
         x: 'right',
-        y: 'down'
-      }
+        y: 'down',
+      },
     }
     const wrapper = mount(
       <Positioner position={position}>
@@ -127,8 +127,8 @@ describe('Direction', () => {
       left: 100,
       direction: {
         x: 'right',
-        y: 'down'
-      }
+        y: 'down',
+      },
     }
     const wrapper = mount(
       <Positioner position={position}>
@@ -148,8 +148,8 @@ describe('Direction', () => {
       left: 100,
       direction: {
         x: 'right',
-        y: 'down'
-      }
+        y: 'down',
+      },
     }
     const wrapper = mount(
       <Positioner position={position}>
@@ -161,9 +161,9 @@ describe('Direction', () => {
       position: Object.assign({}, position, {
         direction: {
           x: 'left',
-          y: 'up'
-        }
-      })
+          y: 'up',
+        },
+      }),
     })
 
     expect(wrapper.hasClass('is-right')).not.toBeTruthy()

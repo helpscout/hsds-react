@@ -8,9 +8,7 @@ import wait from '../../../tests/helpers/wait'
 
 const MODAL_TEST_TIMEOUT = 400
 
-const trigger = (
-  <a className='trigger'>Trigger</a>
-)
+const trigger = <a className="trigger">Trigger</a>
 
 beforeEach(() => {
   window.BluePortalWrapperGlobalManager = undefined
@@ -49,7 +47,7 @@ describe('Trigger', () => {
 })
 
 describe('Key events', () => {
-  test('Closes modal when ESCAPE is pressed', (done) => {
+  test('Closes modal when ESCAPE is pressed', done => {
     mount(<Modal isOpen trigger={trigger} />)
 
     wait(60)
@@ -71,23 +69,22 @@ describe('Key events', () => {
 })
 
 describe('CloseIcon', () => {
-  test('Does not render closeIcon if specified', (done) => {
+  test('Does not render closeIcon if specified', done => {
     const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} />)
 
-    wait(60)
-      .then(() => {
-        const portal = document.body.childNodes[0]
-        const modal = portal.getElementsByClassName('c-Modal')[0]
-        const closeIcon = modal.getElementsByClassName('c-Modal__close')
+    wait(60).then(() => {
+      const portal = document.body.childNodes[0]
+      const modal = portal.getElementsByClassName('c-Modal')[0]
+      const closeIcon = modal.getElementsByClassName('c-Modal__close')
 
-        expect(modal).toBeTruthy()
-        expect(closeIcon.length).toBeFalsy()
-        wrapper.unmount()
-        done()
-      })
+      expect(modal).toBeTruthy()
+      expect(closeIcon.length).toBeFalsy()
+      wrapper.unmount()
+      done()
+    })
   })
 
-  test('Adjusts CloseButton position on mount', (done) => {
+  test('Adjusts CloseButton position on mount', done => {
     const wrapper = mount(
       <ModalComponent isOpen>
         <Modal.Body />
@@ -95,11 +92,10 @@ describe('CloseIcon', () => {
     )
     const o = wrapper.find('.c-Modal__close')
 
-    wait(200)
-      .then(() => {
-        expect(o.html()).toContain('right:')
-        done()
-      })
+    wait(200).then(() => {
+      expect(o.html()).toContain('right:')
+      done()
+    })
   })
 })
 
@@ -112,70 +108,69 @@ describe('Portal', () => {
     wrapper.unmount()
   })
 
-  test('Renders at the body', (done) => {
+  test('Renders at the body', done => {
     const wrapper = mount(<Modal isOpen trigger={trigger} />)
 
-    wait(60)
-      .then(() => {
-        const portal = document.body.childNodes[0]
-        const modal = portal.getElementsByClassName('c-Modal')[0]
+    wait(60).then(() => {
+      const portal = document.body.childNodes[0]
+      const modal = portal.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeTruthy()
-        expect(document.body.childNodes.length).toBe(1)
-        wrapper.unmount()
-        done()
-      })
+      expect(modal).toBeTruthy()
+      expect(document.body.childNodes.length).toBe(1)
+      wrapper.unmount()
+      done()
+    })
   })
 
-  test('Does not render by default', (done) => {
+  test('Does not render by default', done => {
     const wrapper = mount(<Modal trigger={trigger} />)
 
-    wait(MODAL_TEST_TIMEOUT)
-      .then(() => {
-        expect(document.body.childNodes.length).toBe(0)
-        wrapper.unmount()
-        done()
-      })
+    wait(MODAL_TEST_TIMEOUT).then(() => {
+      expect(document.body.childNodes.length).toBe(0)
+      wrapper.unmount()
+      done()
+    })
   })
 })
 
 describe('Route', () => {
-  test('Automatically opens when a route path is defined', (done) => {
+  test('Automatically opens when a route path is defined', done => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
     const wrapper = mount(
       <Router initialEntries={['/']}>
         <div>
-          <Modal exact path='/' />
+          <Modal exact path="/" />
           <Portal.Container />
         </div>
-      </Router>
-    , { attachTo: testBody })
+      </Router>,
+      { attachTo: testBody }
+    )
 
-    wait(60)
-      .then(() => {
-        const modal = global.document.getElementsByClassName('c-Modal')[0]
+    wait(60).then(() => {
+      const modal = global.document.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeTruthy()
+      expect(modal).toBeTruthy()
 
-        wrapper.detach()
-        done()
-      })
+      wrapper.detach()
+      done()
+    })
   })
 
-  test('Automatically opens when a route path changes', (done) => {
+  test('Automatically opens when a route path changes', done => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
     const wrapper = mount(
       <Router initialEntries={['/new', '/']} initialIndex={1}>
         <div>
-          <Modal exact path='/new' />
+          <Modal exact path="/new" />
           <Portal.Container />
         </div>
-      </Router>
-    , { attachTo: testBody })
+      </Router>,
+      { attachTo: testBody }
+    )
 
     wait()
       .then(() => {
@@ -192,113 +187,120 @@ describe('Route', () => {
       })
   })
 
-  test('Does not open when a route path is defined, but not active', (done) => {
+  test('Does not open when a route path is defined, but not active', done => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
     const wrapper = mount(
       <Router initialEntries={['/path']}>
         <div>
-          <Modal exact path='/' />
+          <Modal exact path="/" />
           <Portal.Container />
         </div>
-      </Router>
-    , { attachTo: testBody })
+      </Router>,
+      { attachTo: testBody }
+    )
 
-    wait(60)
-      .then(() => {
-        const modal = global.document.getElementsByClassName('c-Modal')[0]
+    wait(60).then(() => {
+      const modal = global.document.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeFalsy()
+      expect(modal).toBeFalsy()
 
-        wrapper.detach()
-        done()
-      })
+      wrapper.detach()
+      done()
+    })
   })
 })
 
 describe('Style', () => {
-  test('Can render extra styles', (done) => {
+  test('Can render extra styles', done => {
     const style = { background: 'red' }
     const wrapper = mount(
       <Modal isOpen trigger={trigger} closeIcon={false} style={style} />
     )
 
-    wait(60)
-      .then(() => {
-        const portal = document.body.childNodes[0]
-        const modal = portal.getElementsByClassName('c-Modal')[0]
+    wait(60).then(() => {
+      const portal = document.body.childNodes[0]
+      const modal = portal.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeTruthy()
+      expect(modal).toBeTruthy()
 
-        const html = modal.outerHTML
+      const html = modal.outerHTML
 
-        expect(html).toContain('background')
-        expect(html).toContain('red')
+      expect(html).toContain('background')
+      expect(html).toContain('red')
 
-        wrapper.unmount()
-        done()
-      })
+      wrapper.unmount()
+      done()
+    })
   })
 
-  test('Can render extra styles + zIndex', (done) => {
+  test('Can render extra styles + zIndex', done => {
     const style = { background: 'red' }
-    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} zIndex={2000} />)
+    const wrapper = mount(
+      <Modal
+        isOpen
+        trigger={trigger}
+        closeIcon={false}
+        style={style}
+        zIndex={2000}
+      />
+    )
 
-    wait(60)
-      .then(() => {
-        const portal = document.body.childNodes[0]
-        const modal = portal.getElementsByClassName('c-Modal')[0]
+    wait(60).then(() => {
+      const portal = document.body.childNodes[0]
+      const modal = portal.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeTruthy()
+      expect(modal).toBeTruthy()
 
-        const html = modal.outerHTML
+      const html = modal.outerHTML
 
-        expect(html).toContain('background')
-        expect(html).toContain('red')
-        expect(html).toContain('z-index')
-        expect(html).toContain('2000')
-        wrapper.unmount()
-        done()
-      })
+      expect(html).toContain('background')
+      expect(html).toContain('red')
+      expect(html).toContain('z-index')
+      expect(html).toContain('2000')
+      wrapper.unmount()
+      done()
+    })
   })
 
-  test('Can render zIndex, without style prop', (done) => {
-    const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />)
+  test('Can render zIndex, without style prop', done => {
+    const wrapper = mount(
+      <Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />
+    )
 
-    wait(60)
-      .then(() => {
-        const portal = document.body.childNodes[0]
-        const modal = portal.getElementsByClassName('c-Modal')[0]
+    wait(60).then(() => {
+      const portal = document.body.childNodes[0]
+      const modal = portal.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeTruthy()
+      expect(modal).toBeTruthy()
 
-        const html = modal.outerHTML
+      const html = modal.outerHTML
 
-        expect(html).toContain('z-index')
-        expect(html).toContain('2000')
-        wrapper.unmount()
-        done()
-      })
+      expect(html).toContain('z-index')
+      expect(html).toContain('2000')
+      wrapper.unmount()
+      done()
+    })
   })
 })
 
 describe('PortalWrapper', () => {
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 
-  test('onBeforeClose callback works', (done) => {
+  test('onBeforeClose callback works', done => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
     const mockCallback = jest.fn()
-    const onBeforeClose = (close) => {
+    const onBeforeClose = close => {
       close()
       mockCallback()
     }
 
-    const wrapper = mount(
-      <Modal onBeforeClose={onBeforeClose} isOpen />
-    , { attachTo: testBody })
+    const wrapper = mount(<Modal onBeforeClose={onBeforeClose} isOpen />, {
+      attachTo: testBody,
+    })
 
     wait(60)
       .then(() => {
@@ -317,7 +319,7 @@ describe('Seamless', () => {
   test('Should not be seamless by default', () => {
     const wrapper = mount(
       <ModalComponent>
-        <div className='ron'>RON</div>
+        <div className="ron">RON</div>
       </ModalComponent>
     )
     const o = wrapper.find(Card)
@@ -329,7 +331,7 @@ describe('Seamless', () => {
     const wrapper = mount(
       <ModalComponent seamless>
         <Modal.Content>
-          <div className='ron'>RON</div>
+          <div className="ron">RON</div>
         </Modal.Content>
       </ModalComponent>
     )
@@ -342,7 +344,7 @@ describe('Seamless', () => {
 })
 
 describe('wrapperClassName', () => {
-  test('Adds default wrapperClassName', (done) => {
+  test('Adds default wrapperClassName', done => {
     mount(<Modal isOpen trigger={trigger} />)
 
     wait(60).then(() => {
@@ -352,8 +354,8 @@ describe('wrapperClassName', () => {
     })
   })
 
-  test('Can customize wrapperClassName', (done) => {
-    mount(<Modal isOpen trigger={trigger} wrapperClassName='ron' />)
+  test('Can customize wrapperClassName', done => {
+    mount(<Modal isOpen trigger={trigger} wrapperClassName="ron" />)
 
     wait(60).then(() => {
       const o = document.body.childNodes[0]
@@ -366,9 +368,7 @@ describe('wrapperClassName', () => {
 
 describe('cardClassName', () => {
   test('Can customize the Card className', () => {
-    const wrapper = mount(
-      <ModalComponent cardClassName='mugatu' />
-    )
+    const wrapper = mount(<ModalComponent cardClassName="mugatu" />)
     const o = wrapper.find(Card)
     const m = wrapper.find('.mugatu')
 
@@ -378,9 +378,7 @@ describe('cardClassName', () => {
   })
 
   test('Does not add custom className to seamless Modals', () => {
-    const wrapper = mount(
-      <ModalComponent cardClassName='mugatu' seamless />
-    )
+    const wrapper = mount(<ModalComponent cardClassName="mugatu" seamless />)
     const o = wrapper.find('.mugatu')
 
     expect(o.length).toBe(0)
@@ -389,9 +387,7 @@ describe('cardClassName', () => {
 
 describe('overlayClassName', () => {
   test('Can customize the Overlay className', () => {
-    const wrapper = mount(
-      <ModalComponent overlayClassName='mugatu' />
-    )
+    const wrapper = mount(<ModalComponent overlayClassName="mugatu" />)
     const o = wrapper.find(Overlay)
 
     expect(o.hasClass('c-Modal__Overlay')).toBeTruthy()
@@ -404,7 +400,7 @@ describe('Header', () => {
     const wrapper = shallow(
       <ModalComponent>
         <Modal.Body>
-          <div className='ron'>Burgandy</div>
+          <div className="ron">Burgandy</div>
         </Modal.Body>
       </ModalComponent>
     )
@@ -417,7 +413,7 @@ describe('Header', () => {
     const wrapper = shallow(
       <ModalComponent>
         <Modal.Header />
-        <div className='ron'>Burgandy</div>
+        <div className="ron">Burgandy</div>
       </ModalComponent>
     )
     const o = wrapper.find(Card).find(Modal.Header)
@@ -433,7 +429,7 @@ describe('Footer', () => {
     const wrapper = shallow(
       <ModalComponent>
         <Modal.Body>
-          <div className='ron'>Burgandy</div>
+          <div className="ron">Burgandy</div>
         </Modal.Body>
       </ModalComponent>
     )
@@ -446,7 +442,7 @@ describe('Footer', () => {
     const wrapper = shallow(
       <ModalComponent>
         <Modal.Footer />
-        <div className='ron'>Burgandy</div>
+        <div className="ron">Burgandy</div>
       </ModalComponent>
     )
     const o = wrapper.find(Card).find(Modal.Footer)
@@ -461,9 +457,7 @@ describe('Body', () => {
   test('Can parse plain-text', () => {
     const wrapper = shallow(
       <ModalComponent>
-        <Modal.Body>
-          Ron
-        </Modal.Body>
+        <Modal.Body>Ron</Modal.Body>
       </ModalComponent>
     )
     const body = wrapper.find(Modal.Body)
@@ -486,9 +480,7 @@ describe('Body', () => {
   test('Can render Modal.Body without number content', () => {
     const wrapper = shallow(
       <ModalComponent>
-        <Modal.Body>
-          1
-        </Modal.Body>
+        <Modal.Body>1</Modal.Body>
       </ModalComponent>
     )
     const body = wrapper.find(Modal.Body)
@@ -500,7 +492,7 @@ describe('Body', () => {
     const wrapper = shallow(
       <ModalComponent>
         <Modal.Body>
-          <div className='ron'>Burgandy</div>
+          <div className="ron">Burgandy</div>
         </Modal.Body>
       </ModalComponent>
     )
@@ -516,7 +508,7 @@ describe('Body', () => {
     const wrapper = shallow(
       <ModalComponent>
         <Modal.Body>
-          <div className='ron'>Burgandy</div>
+          <div className="ron">Burgandy</div>
         </Modal.Body>
       </ModalComponent>
     )
@@ -534,7 +526,7 @@ describe('Body', () => {
     const wrapper = mount(
       <ModalComponent>
         <Modal.Body>
-          <div className='ron'>Burgandy</div>
+          <div className="ron">Burgandy</div>
         </Modal.Body>
       </ModalComponent>
     )
@@ -555,9 +547,7 @@ describe('Content', () => {
   test('Does not set the scrollableNode if Modal.Body is absent', () => {
     const wrapper = mount(
       <ModalComponent>
-        <Modal.Content>
-          Ron
-        </Modal.Content>
+        <Modal.Content>Ron</Modal.Content>
       </ModalComponent>
     )
 
@@ -570,9 +560,7 @@ describe('Content', () => {
     const wrapper = mount(
       <ModalComponent>
         <Modal.Content>
-          <Modal.Body>
-            Ron
-          </Modal.Body>
+          <Modal.Body>Ron</Modal.Body>
         </Modal.Content>
       </ModalComponent>
     )
@@ -587,7 +575,7 @@ describe('Children', () => {
   test('Can render non-sub component children', () => {
     const wrapper = shallow(
       <ModalComponent>
-        <div className='ron'>Test</div>
+        <div className="ron">Test</div>
       </ModalComponent>
     )
     const o = wrapper.find('.ron')
@@ -597,17 +585,13 @@ describe('Children', () => {
 
   test('Can render wrapper-like child components', () => {
     const WrapperComponent = props => {
-      return (
-        <Modal.Content>
-          {props.children}
-        </Modal.Content>
-      )
+      return <Modal.Content>{props.children}</Modal.Content>
     }
 
     const wrapper = shallow(
       <ModalComponent>
         <WrapperComponent>
-          <div className='ron'>Test</div>
+          <div className="ron">Test</div>
         </WrapperComponent>
       </ModalComponent>
     )
@@ -617,11 +601,7 @@ describe('Children', () => {
   })
 
   test('Can handle null content', () => {
-    const wrapper = shallow(
-      <ModalComponent>
-        {[null]}
-      </ModalComponent>
-    )
+    const wrapper = shallow(<ModalComponent>{[null]}</ModalComponent>)
 
     expect(wrapper).toBeTruthy()
   })
@@ -644,7 +624,7 @@ describe('Context', () => {
 })
 
 describe('isOpen', () => {
-  test('Can open wrapped component with isOpen prop change to true', (done) => {
+  test('Can open wrapped component with isOpen prop change to true', done => {
     const wrapper = mount(<Modal />)
 
     wait(60)
@@ -662,7 +642,7 @@ describe('isOpen', () => {
       })
   })
 
-  test('Can close wrapped component with isOpen prop change to false', (done) => {
+  test('Can close wrapped component with isOpen prop change to false', done => {
     const wrapper = mount(<Modal isOpen timeout={0} />)
 
     wait()
@@ -680,18 +660,14 @@ describe('isOpen', () => {
 
 describe('modalAnimation', () => {
   test('modalAnimationDelay can be passed to Animate component', () => {
-    const wrapper = shallow(
-      <ModalComponent modalAnimationDelay={66} />
-    )
+    const wrapper = shallow(<ModalComponent modalAnimationDelay={66} />)
     const o = wrapper.find('.c-Modal__Card-container')
 
     expect(o.prop('delay')).toBe(66)
   })
 
   test('modalAnimationDuration can be passed to Animate component', () => {
-    const wrapper = shallow(
-      <ModalComponent modalAnimationDuration={66} />
-    )
+    const wrapper = shallow(<ModalComponent modalAnimationDuration={66} />)
     const o = wrapper.find('.c-Modal__Card-container')
 
     expect(o.prop('duration')).toBe(66)
@@ -699,7 +675,7 @@ describe('modalAnimation', () => {
 
   test('modalAnimationEasing can be passed to Animate component', () => {
     const wrapper = shallow(
-      <ModalComponent modalAnimationEasing='fakeBounce' />
+      <ModalComponent modalAnimationEasing="fakeBounce" />
     )
     const o = wrapper.find('.c-Modal__Card-container')
 
@@ -709,9 +685,7 @@ describe('modalAnimation', () => {
 
 describe('Keyboard: Tab', () => {
   test('handleOnTab fires if Tab is pressed', () => {
-    const wrapper = mount(
-      <ModalComponent isOpen />
-    )
+    const wrapper = mount(<ModalComponent isOpen />)
     const spy = jest.spyOn(wrapper.instance(), 'handleOnTab')
     wrapper.instance().forceUpdate()
 
@@ -724,16 +698,16 @@ describe('Keyboard: Tab', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <ModalComponent isOpen>
-        <button className='one'>one</button>
-        <button className='two'>two</button>
-        <button className='three'>three</button>
+        <button className="one">one</button>
+        <button className="two">two</button>
+        <button className="three">three</button>
       </ModalComponent>
     )
     const o = wrapper.find('.three').node
 
     wrapper.instance().handleOnTab({
       target: o,
-      preventDefault: spy
+      preventDefault: spy,
     })
 
     expect(spy).toHaveBeenCalled()
@@ -743,25 +717,23 @@ describe('Keyboard: Tab', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <ModalComponent isOpen>
-        <button className='one'>one</button>
-        <button className='two'>two</button>
-        <button className='three'>three</button>
+        <button className="one">one</button>
+        <button className="two">two</button>
+        <button className="three">three</button>
       </ModalComponent>
     )
     const o = wrapper.find('.two').node
 
     wrapper.instance().handleOnTab({
       target: o,
-      preventDefault: spy
+      preventDefault: spy,
     })
 
     expect(spy).not.toHaveBeenCalled()
   })
 
   test('handleOnShiftTab fires if Tab + shift is pressed', () => {
-    const wrapper = mount(
-      <ModalComponent isOpen />
-    )
+    const wrapper = mount(<ModalComponent isOpen />)
     const spy = jest.spyOn(wrapper.instance(), 'handleOnShiftTab')
     wrapper.instance().forceUpdate()
 
@@ -774,16 +746,16 @@ describe('Keyboard: Tab', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <ModalComponent isOpen>
-        <button className='one'>one</button>
-        <button className='two'>two</button>
-        <button className='three'>three</button>
+        <button className="one">one</button>
+        <button className="two">two</button>
+        <button className="three">three</button>
       </ModalComponent>
     )
     const o = wrapper.find('.one').node
 
     wrapper.instance().handleOnShiftTab({
       target: o,
-      preventDefault: spy
+      preventDefault: spy,
     })
 
     expect(spy).toHaveBeenCalled()
@@ -793,16 +765,16 @@ describe('Keyboard: Tab', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <ModalComponent isOpen>
-        <button className='one'>one</button>
-        <button className='two'>two</button>
-        <button className='three'>three</button>
+        <button className="one">one</button>
+        <button className="two">two</button>
+        <button className="three">three</button>
       </ModalComponent>
     )
     const o = wrapper.find('.two').node
 
     wrapper.instance().handleOnShiftTab({
       target: o,
-      preventDefault: spy
+      preventDefault: spy,
     })
 
     expect(spy).not.toHaveBeenCalled()
@@ -810,11 +782,9 @@ describe('Keyboard: Tab', () => {
 })
 
 describe('Card: Focus', () => {
-  test('Autofocuses card on mount', (done) => {
+  test('Autofocuses card on mount', done => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <ModalComponent />
-    )
+    const wrapper = mount(<ModalComponent />)
     const o = wrapper.instance().cardNode
     o.onfocus = spy
     wrapper.setProps({ isOpen: true })

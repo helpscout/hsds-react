@@ -9,32 +9,19 @@ describe('classNames', () => {
 
   test('Remove falsy arguments', () => {
     const falsy = 10 > 100
-    const o = classNames(
-      'a',
-      'b',
-      'c',
-      falsy && 'd'
-    )
+    const o = classNames('a', 'b', 'c', falsy && 'd')
 
     expect(o).toBe('a b c')
   })
 
   test('Remove `true` from final output', () => {
-    const o = classNames(
-      'a',
-      'b',
-      true,
-      'c'
-    )
+    const o = classNames('a', 'b', true, 'c')
 
     expect(o).toBe('a b c')
   })
 
   test('Return a string, even if arguments are numbers', () => {
-    const o = classNames(
-      1,
-      2
-    )
+    const o = classNames(1, 2)
 
     expect(typeof o).toBe('string')
     expect(o).toBe('1 2')
@@ -66,7 +53,9 @@ describe('variantClassNames', () => {
   })
 
   test('Combines className + hyphens + underscore with variant, separated by hyphen', () => {
-    expect(variantClassNames('rons_epic-jazz--', 'flute')).toBe('rons_epic-jazz---flute')
+    expect(variantClassNames('rons_epic-jazz--', 'flute')).toBe(
+      'rons_epic-jazz---flute'
+    )
   })
 
   describe('Variations', () => {

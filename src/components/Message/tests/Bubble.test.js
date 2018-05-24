@@ -7,14 +7,14 @@ import { baseComponentTest } from '../../../tests/helpers/components'
 
 const cx = 'c-MessageBubble'
 const baseComponentOptions = {
-  className: cx
+  className: cx,
 }
 const ui = {
   body: `.${cx}__body`,
   bodyWrapper: `.${cx}__bodyWrapper`,
   from: `.${cx}__from`,
   iconWrapper: `.${cx}__iconWrapper`,
-  icon: `.${cx}__icon`
+  icon: `.${cx}__icon`,
 }
 
 baseComponentTest(Bubble, baseComponentOptions)
@@ -28,7 +28,7 @@ describe('Title', () => {
   })
 
   test('Renders a Title if defined', () => {
-    const wrapper = shallow(<Bubble title='Mugatu' primary />)
+    const wrapper = shallow(<Bubble title="Mugatu" primary />)
     const o = wrapper.find(Heading)
 
     expect(o.length).toBe(1)
@@ -63,11 +63,7 @@ describe('Typing', () => {
 
 describe('Content', () => {
   test('Text-based content is contained with a wordWrapped Text component', () => {
-    const wrapper = shallow(
-      <Bubble>
-        Mugatu
-      </Bubble>
-    )
+    const wrapper = shallow(<Bubble>Mugatu</Bubble>)
     const o = wrapper.find(Text)
 
     expect(o.length).toBe(1)
@@ -78,9 +74,7 @@ describe('Content', () => {
   test('Span-based content is contained with a wordWrapped Text component', () => {
     const wrapper = shallow(
       <Bubble>
-        <span>
-          Mugatu
-        </span>
+        <span>Mugatu</span>
       </Bubble>
     )
     const o = wrapper.find(Text)
@@ -92,9 +86,7 @@ describe('Content', () => {
   test('Block-based content is not contained with a Text component', () => {
     const wrapper = shallow(
       <Bubble>
-        <div>
-          Mugatu
-        </div>
+        <div>Mugatu</div>
       </Bubble>
     )
     const o = wrapper.find(Text)
@@ -104,9 +96,7 @@ describe('Content', () => {
   })
 
   test('Renders body if defined', () => {
-    const wrapper = shallow(
-      <Bubble body='Mugatu' />
-    )
+    const wrapper = shallow(<Bubble body="Mugatu" />)
     const o = wrapper.find(ui.body)
 
     expect(o.length).toBe(1)
@@ -114,11 +104,7 @@ describe('Content', () => {
   })
 
   test('Renders body instead of children, if defined', () => {
-    const wrapper = shallow(
-      <Bubble body='Mugatu'>
-        Zoolander
-      </Bubble>
-    )
+    const wrapper = shallow(<Bubble body="Mugatu">Zoolander</Bubble>)
     const o = wrapper.find(ui.body)
 
     expect(o.length).toBe(1)
@@ -128,9 +114,7 @@ describe('Content', () => {
 
   test('Renders body as HTML', () => {
     const html = '<div>Mugatu<br /></div>'
-    const wrapper = shallow(
-      <Bubble body={html} />
-    )
+    const wrapper = shallow(<Bubble body={html} />)
     const o = wrapper.find(ui.body)
 
     expect(o.length).toBe(1)
@@ -164,7 +148,7 @@ describe('Styles', () => {
   })
 
   test('Applies "size" styles, if defined', () => {
-    const wrapper = shallow(<Bubble size='sm' />)
+    const wrapper = shallow(<Bubble size="sm" />)
 
     expect(wrapper.hasClass('is-sm')).toBeTruthy()
   })
@@ -190,9 +174,7 @@ describe('Styles', () => {
 
 describe('Context', () => {
   test('Adds className based on context.theme', () => {
-    const wrapper = shallow(
-      <Bubble />
-    , {context: {theme: 'embed'}})
+    const wrapper = shallow(<Bubble />, { context: { theme: 'embed' } })
 
     expect(wrapper.hasClass('is-theme-embed')).toBe(true)
   })
@@ -200,7 +182,7 @@ describe('Context', () => {
 
 describe('From', () => {
   test('It does not render a from name, by default', () => {
-    const wrapper = mount(<Bubble from='Mugatu' />)
+    const wrapper = mount(<Bubble from="Mugatu" />)
     const o = wrapper.find(ui.from)
 
     expect(o.length).toBe(0)
@@ -208,7 +190,7 @@ describe('From', () => {
 
   test('Does not render from name, if theme is notifications, but from is not provided', () => {
     const wrapper = mount(
-      <Message.Provider theme='notifications'>
+      <Message.Provider theme="notifications">
         <Bubble />
       </Message.Provider>
     )
@@ -219,7 +201,7 @@ describe('From', () => {
 
   test('Does not renders from name, if theme is notifications and from is not a string', () => {
     const wrapper = mount(
-      <Message.Provider theme='notifications'>
+      <Message.Provider theme="notifications">
         <Bubble from />
       </Message.Provider>
     )
@@ -230,8 +212,8 @@ describe('From', () => {
 
   test('Renders from name, if theme is notifications and from is a string', () => {
     const wrapper = mount(
-      <Message.Provider theme='notifications'>
-        <Bubble from='Mugatu' />
+      <Message.Provider theme="notifications">
+        <Bubble from="Mugatu" />
       </Message.Provider>
     )
     const o = wrapper.find(ui.from)
@@ -243,9 +225,7 @@ describe('From', () => {
 
 describe('Icon', () => {
   test('Does not render an icon by default', () => {
-    const wrapper = mount(
-      <Bubble body='derek' />
-    )
+    const wrapper = mount(<Bubble body="derek" />)
     const o = wrapper.find(ui.icon)
     const w = wrapper.find(ui.iconWrapper)
 
@@ -254,9 +234,7 @@ describe('Icon', () => {
   })
 
   test('Renders an icon, if specified', () => {
-    const wrapper = shallow(
-      <Bubble body='derek' icon='attachment' />
-    )
+    const wrapper = shallow(<Bubble body="derek" icon="attachment" />)
     const o = wrapper.find(ui.icon)
     const w = wrapper.find(ui.iconWrapper)
 

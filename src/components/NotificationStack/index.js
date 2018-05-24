@@ -1,8 +1,8 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Notification from '../Notification'
 import classNames from '../../utilities/classNames'
-import {noop} from '../../utilities/other'
+import { noop } from '../../utilities/other'
 
 export const propTypes = {
   autoDismiss: PropTypes.bool,
@@ -10,9 +10,7 @@ export const propTypes = {
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   limit: PropTypes.number,
-  theme: PropTypes.oneOf([
-    'chat'
-  ])
+  theme: PropTypes.oneOf(['chat']),
 }
 
 const defaultProps = {
@@ -21,14 +19,14 @@ const defaultProps = {
   onClick: noop,
   onMouseEnter: noop,
   onMouseLeave: noop,
-  theme: 'chat'
+  theme: 'chat',
 }
 
 class NotificationStack extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      isDismissable: props.autoDismiss
+      isDismissable: props.autoDismiss,
     }
     this.firstNotificationId = null
     this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
@@ -36,39 +34,39 @@ class NotificationStack extends Component {
     this.handleOnNotificationClick = this.handleOnNotificationClick.bind(this)
   }
 
-  handleOnMouseEnter (event) {
-    const {autoDismiss, onMouseEnter} = this.props
+  handleOnMouseEnter(event) {
+    const { autoDismiss, onMouseEnter } = this.props
     if (autoDismiss) {
       this.setState({
-        isDismissable: false
+        isDismissable: false,
       })
     }
     onMouseEnter(event)
   }
 
-  handleOnMouseLeave (event) {
-    const {autoDismiss, onMouseLeave} = this.props
+  handleOnMouseLeave(event) {
+    const { autoDismiss, onMouseLeave } = this.props
     if (autoDismiss) {
       this.setState({
-        isDismissable: true
+        isDismissable: true,
       })
     }
     onMouseLeave(event)
   }
 
-  handleOnNotificationClick (...eventProps) {
-    const {onClick} = this.props
+  handleOnNotificationClick(...eventProps) {
+    const { onClick } = this.props
     this.firstNotificationId = null
     onClick(...eventProps)
   }
 
-  setFirstNotificationId (id) {
+  setFirstNotificationId(id) {
     if (!this.firstNotificationId) {
       this.firstNotificationId = id
     }
   }
 
-  render () {
+  render() {
     const {
       autoDismiss,
       children,
@@ -80,7 +78,7 @@ class NotificationStack extends Component {
       theme,
       ...rest
     } = this.props
-    const {isDismissable} = this.state
+    const { isDismissable } = this.state
 
     const handleOnMouseEnter = this.handleOnMouseEnter
     const handleOnMouseLeave = this.handleOnMouseLeave
@@ -95,9 +93,9 @@ class NotificationStack extends Component {
     const childrenMarkup = React.Children.map(children, (child, index) => {
       if (!child.type || child.type !== Notification) return null
       const count = React.Children.count(children) - index
-      const isActive = count < (limit + 1)
+      const isActive = count < limit + 1
 
-      const {from: fromProp, id} = child.props
+      const { from: fromProp, id } = child.props
       this.setFirstNotificationId(id)
 
       const from = id === this.firstNotificationId ? fromProp : null
@@ -106,7 +104,7 @@ class NotificationStack extends Component {
         from,
         isActive,
         isDismissable,
-        onBubbleClick: handleOnNotificationClick
+        onBubbleClick: handleOnNotificationClick,
       })
     })
 

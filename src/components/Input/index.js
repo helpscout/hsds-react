@@ -40,7 +40,7 @@ export const propTypes = {
   state: stateTypes,
   suffix: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
 }
 
 const defaultProps = {
@@ -59,19 +59,19 @@ const defaultProps = {
   resizable: false,
   seamless: false,
   type: 'text',
-  value: ''
+  value: '',
 }
 
 const uniqueID = createUniqueIDFactory('Input')
 
 class Input extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       id: props.id || uniqueID(),
       height: null,
       state: props.state,
-      value: props.value
+      value: props.value,
     }
     this.inputNode = null
     this.handleOnChange = this.handleOnChange.bind(this)
@@ -80,22 +80,22 @@ class Input extends Component {
     this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.maybeForceAutoFocus()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { isFocused, value, state } = nextProps
     const prevValue = this.state.value
     const prevState = this.state.state
 
     if (value !== prevValue) {
-      this.setState({value})
+      this.setState({ value })
     }
 
     /* istanbul ignore else */
     if (state !== prevState) {
-      this.setState({state})
+      this.setState({ state })
     }
 
     /* istanbul ignore else */
@@ -104,22 +104,19 @@ class Input extends Component {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.inputNode = null
   }
 
-  maybeForceAutoFocus () {
-    const {
-      autoFocus,
-      isFocused
-    } = this.props
+  maybeForceAutoFocus() {
+    const { autoFocus, isFocused } = this.props
 
-    if ((autoFocus || isFocused)) {
+    if (autoFocus || isFocused) {
       this.forceAutoFocus()
     }
   }
 
-  forceAutoFocus () {
+  forceAutoFocus() {
     const { forceAutoFocusTimeout } = this.props
     setTimeout(() => {
       /* istanbul ignore else */
@@ -129,13 +126,13 @@ class Input extends Component {
     }, forceAutoFocusTimeout)
   }
 
-  handleOnChange (e) {
+  handleOnChange(e) {
     const value = e.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
   }
 
-  handleOnInputFocus (e) {
+  handleOnInputFocus(e) {
     const { onFocus, removeStateStylesOnFocus } = this.props
     const { state } = this.state
     if (removeStateStylesOnFocus && state) {
@@ -144,18 +141,18 @@ class Input extends Component {
     onFocus(e)
   }
 
-  handleOnWheel (event) {
+  handleOnWheel(event) {
     const { onWheel } = this.props
     const stopPropagation = true
     scrollLockY(event, stopPropagation)
     onWheel(event)
   }
 
-  handleExpandingResize (height) {
+  handleExpandingResize(height) {
     this.setState({ height })
   }
 
-  render () {
+  render() {
     const {
       autoFocus,
       className,
@@ -216,55 +213,55 @@ class Input extends Component {
     // Ignoring as height calculation isn't possible with JSDOM
     // (which is what Enzyme uses for tests)
     /* istanbul ignore next */
-    const style = multiline ? {
-      height,
-      maxHeight
-    } : null
+    const style = multiline
+      ? {
+          height,
+          maxHeight,
+        }
+      : null
 
     const resizer =
-      multiline != null
-        ? <Resizer
+      multiline != null ? (
+        <Resizer
           contents={value || placeholder}
           currentHeight={height}
           minimumLines={typeof multiline === 'number' ? multiline : 1}
           onResize={handleExpandingResize}
-          />
-        : null
+        />
+      ) : null
 
-    const labelMarkup = label
-      ? <Label className='c-Input__label' for={inputID}>{label}</Label>
-      : null
+    const labelMarkup = label ? (
+      <Label className="c-Input__label" for={inputID}>
+        {label}
+      </Label>
+    ) : null
 
-    const prefixMarkup = prefix
-      ? <div className='c-Input__item c-Input__prefix'>
-        {prefix}
-      </div>
-      : null
+    const prefixMarkup = prefix ? (
+      <div className="c-Input__item c-Input__prefix">{prefix}</div>
+    ) : null
 
-    const suffixMarkup = suffix
-      ? <div className='c-Input__item c-Input__suffix'>
-        {suffix}
-      </div>
-      : null
+    const suffixMarkup = suffix ? (
+      <div className="c-Input__item c-Input__suffix">{suffix}</div>
+    ) : null
 
-    const hintTextMarkup = hintText
-      ? <HelpText className='c-Input__hintText' muted>
+    const hintTextMarkup = hintText ? (
+      <HelpText className="c-Input__hintText" muted>
         {hintText}
       </HelpText>
-      : null
+    ) : null
 
-    const helpTextMarkup = helpText
-      ? <HelpText className='c-Input__helpText' state={state}>
+    const helpTextMarkup = helpText ? (
+      <HelpText className="c-Input__helpText" state={state}>
         {helpText}
       </HelpText>
-      : null
+    ) : null
 
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...rest,
       className: fieldClassName,
       id: inputID,
       onChange: handleOnChange,
-      ref: (node) => {
+      ref: node => {
         this.inputNode = node
         inputRef(node)
       },
@@ -278,11 +275,11 @@ class Input extends Component {
       readOnly,
       style,
       type,
-      value
+      value,
     })
 
     return (
-      <div className='c-InputWrapper' style={styleProp}>
+      <div className="c-InputWrapper" style={styleProp}>
         {labelMarkup}
         {hintTextMarkup}
         <div className={componentClassName}>
@@ -290,7 +287,7 @@ class Input extends Component {
           {inputElement}
           {suffixMarkup}
           <Backdrop
-            className='c-Input__backdrop'
+            className="c-Input__backdrop"
             disabled={disabled}
             readOnly={readOnly}
             state={state}

@@ -14,23 +14,23 @@ stories.add('sizes', () => (
   <div>
     <div>
       xl
-      <Spinner size='xl' />
+      <Spinner size="xl" />
     </div>
     <div>
       lg
-      <Spinner size='lg' />
+      <Spinner size="lg" />
     </div>
     <div>
       md
-      <Spinner size='md' />
+      <Spinner size="md" />
     </div>
     <div>
       sm
-      <Spinner size='sm' />
+      <Spinner size="sm" />
     </div>
     <div>
       xs
-      <Spinner size='xs' />
+      <Spinner size="xs" />
     </div>
   </div>
 ))

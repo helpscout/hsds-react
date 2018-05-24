@@ -5,8 +5,8 @@ describe('StatusDot', () => {
   it('should not align adjacent to sibling node by default', () => {
     mount(
       <div>
-        <StatusDot className='dot' />
-        <span className='text'>Text</span>
+        <StatusDot className="dot" />
+        <span className="text">Text</span>
       </div>
     )
     const dot = $('.dot')
@@ -19,8 +19,8 @@ describe('StatusDot', () => {
   it('should align adjacent to sibling node, if inline', () => {
     mount(
       <div>
-        <StatusDot inline className='dot' />
-        <span className='text'>Text</span>
+        <StatusDot inline className="dot" />
+        <span className="text">Text</span>
       </div>
     )
     const dot = $('.dot')

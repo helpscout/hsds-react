@@ -1,6 +1,4 @@
-import {
-  getNodeScope
-} from '../../node'
+import { getNodeScope } from '../../node'
 
 test('Returns node for valid elements', () => {
   const o = document.createElement('div')

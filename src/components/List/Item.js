@@ -2,21 +2,13 @@ import React from 'react'
 import classNames from '../../utilities/classNames'
 
 const defaultProps = {
-  role: 'listitem'
+  role: 'listitem',
 }
 
 const Item = props => {
-  const {
-    children,
-    className,
-    role,
-    ...rest
-  } = props
+  const { children, className, role, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-List__item',
-    className
-  )
+  const componentClassName = classNames('c-List__item', className)
 
   return (
     <li className={componentClassName} {...rest} role={role}>

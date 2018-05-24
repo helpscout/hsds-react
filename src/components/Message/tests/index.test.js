@@ -1,4 +1,4 @@
-import {default as Message, Provider} from '../index'
+import { default as Message, Provider } from '../index'
 
 test('Message is exported', () => {
   expect(Message).toBeTruthy()

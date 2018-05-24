@@ -28,7 +28,11 @@ describe('Inline', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<Flexy.Item><div className='child'>Hello</div></Flexy.Item>)
+    const wrapper = shallow(
+      <Flexy.Item>
+        <div className="child">Hello</div>
+      </Flexy.Item>
+    )
     const el = wrapper.find('div.child')
 
     expect(el.text()).toContain('Hello')

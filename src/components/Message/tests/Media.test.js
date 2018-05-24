@@ -8,7 +8,7 @@ import { Image, Modal, Text } from '../../'
 const cx = 'c-MessageMedia'
 const ui = {
   caption: `.${cx}__caption`,
-  mediaContainer: `.${cx}__mediaContainer`
+  mediaContainer: `.${cx}__mediaContainer`,
 }
 
 describe('ClassNames', () => {
@@ -20,7 +20,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Media className='mugatu' />)
+    const wrapper = shallow(<Media className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -51,8 +51,8 @@ describe('Chat', () => {
         isNote
         read
         rtl
-        title='title'
-        timestamp='time'
+        title="title"
+        timestamp="time"
         to
       />
     )
@@ -79,7 +79,7 @@ describe('Caption', () => {
   })
 
   test('Renders a caption, if defined', () => {
-    const wrapper = mount(<Media caption='mugatu' />)
+    const wrapper = mount(<Media caption="mugatu" />)
     const o = wrapper.find(ui.caption)
 
     expect(o.length).toBeTruthy()
@@ -88,8 +88,8 @@ describe('Caption', () => {
 
   test('Does not render caption, if theme is embed', () => {
     const wrapper = mount(
-      <Message.Provider theme='embed'>
-        <Media caption='mugatu' />
+      <Message.Provider theme="embed">
+        <Media caption="mugatu" />
       </Message.Provider>
     )
     const o = wrapper.find(ui.caption)
@@ -99,8 +99,8 @@ describe('Caption', () => {
 
   test('Passes caption to Chat component, if theme is embed', () => {
     const wrapper = mount(
-      <Message.Provider theme='embed'>
-        <Media caption='mugatu' />
+      <Message.Provider theme="embed">
+        <Media caption="mugatu" />
       </Message.Provider>
     )
     const o = wrapper.find(Chat)
@@ -112,7 +112,7 @@ describe('Caption', () => {
 
 describe('Image', () => {
   test('Does not render an Image by default', () => {
-    const wrapper = shallow(<Media className='mugatu' />)
+    const wrapper = shallow(<Media className="mugatu" />)
     const o = wrapper.find(Image)
 
     expect(o.length).not.toBeTruthy()
@@ -184,9 +184,7 @@ describe('Modal', () => {
 
   test('Media does not render into a Modal, if specified', () => {
     const url = './mugatu.png'
-    const wrapper = shallow(
-      <Media imageUrl={url} openMediaInModal={false} />
-    )
+    const wrapper = shallow(<Media imageUrl={url} openMediaInModal={false} />)
     const c = wrapper.find(ui.mediaContainer)
     const m = c.find(Modal)
     const o = c.find(Image)
@@ -199,7 +197,7 @@ describe('Modal', () => {
   test('Modal does not render, if theme is embed, even if specified', () => {
     const url = './mugatu.png'
     const wrapper = mount(
-      <Message.Provider theme='embed'>
+      <Message.Provider theme="embed">
         <Media imageUrl={url} openMediaInModal />
       </Message.Provider>
     )
@@ -218,7 +216,7 @@ describe('Modal', () => {
     let c = wrapper.find(Modal)
     expect(c.props().wrapperClassName).toEqual(undefined)
 
-    wrapper = shallow(<Media imageUrl={url} modalWrapperClassName='custom' />)
+    wrapper = shallow(<Media imageUrl={url} modalWrapperClassName="custom" />)
     c = wrapper.find(Modal)
     expect(c.props().wrapperClassName).toEqual('custom')
   })
@@ -226,18 +224,14 @@ describe('Modal', () => {
 
 describe('Uploading', () => {
   test('Does not render uploading spinner by default', () => {
-    const wrapper = shallow(
-      <Media />
-    )
+    const wrapper = shallow(<Media />)
     const o = wrapper.find(Chat)
 
     expect(o.prop('isLoading')).not.toBeTruthy()
   })
 
   test('Can render Uploading UI, via Chat component, if specified', () => {
-    const wrapper = shallow(
-      <Media isUploading />
-    )
+    const wrapper = shallow(<Media isUploading />)
     const o = wrapper.find(Chat)
 
     expect(o.prop('isLoading')).toBeTruthy()

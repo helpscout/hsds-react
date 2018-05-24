@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Block from './Block'
@@ -12,7 +12,7 @@ export const propTypes = {
   shadow: PropTypes.bool,
   seamless: PropTypes.bool,
   size: sizeTypes,
-  theme: themeTypes
+  theme: themeTypes,
 }
 
 const defaultProps = {
@@ -20,11 +20,11 @@ const defaultProps = {
   seamless: false,
   shadow: false,
   size: 'sm',
-  theme: 'default'
+  theme: 'default',
 }
 
 class Toolbar extends Component {
-  render () {
+  render() {
     const {
       children,
       className,
@@ -46,12 +46,10 @@ class Toolbar extends Component {
       className
     )
 
-    const shadowMarkup = shadow ? (
-      <Shadow placement={placement} />
-    ) : null
+    const shadowMarkup = shadow ? <Shadow placement={placement} /> : null
 
     return (
-      <div className='c-ToolbarWrapper'>
+      <div className="c-ToolbarWrapper">
         <Flexy className={componentClassName} {...rest}>
           {children}
         </Flexy>

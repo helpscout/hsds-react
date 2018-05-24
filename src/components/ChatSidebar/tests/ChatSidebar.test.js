@@ -22,7 +22,11 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Can render children content', () => {
-    const wrapper = shallow(<ChatSidebar><div className='child'>Hello</div></ChatSidebar>)
+    const wrapper = shallow(
+      <ChatSidebar>
+        <div className="child">Hello</div>
+      </ChatSidebar>
+    )
     const o = wrapper.find('div.child')
 
     expect(o.length).toBe(1)
@@ -33,7 +37,7 @@ describe('Content', () => {
   test('Content is added within a Scrollable component', () => {
     const wrapper = shallow(
       <ChatSidebar>
-        <div className='derek'>ONE LOOK?!</div>
+        <div className="derek">ONE LOOK?!</div>
       </ChatSidebar>
     )
     const scrollable = wrapper.find(Scrollable)
@@ -81,7 +85,8 @@ describe('StatusBar', () => {
         isShowStatusBar
         statusBarScrollTopOffset={-10}
         newMessageCount={3}
-      />)
+      />
+    )
     const o = wrapper.instance()
     o.handleOnScroll()
 
@@ -96,7 +101,8 @@ describe('StatusBar', () => {
         isShowStatusBar
         statusBarScrollTopOffset={10}
         newMessageCount={3}
-      />)
+      />
+    )
     const o = wrapper.instance()
     o.handleOnScroll()
 
@@ -111,7 +117,8 @@ describe('StatusBar', () => {
         isShowStatusBar
         statusBarScrollTopOffset={10}
         newMessageCount={3}
-      />)
+      />
+    )
     const statusBar = wrapper.find(StatusBar)
     statusBar.props().onClick()
 

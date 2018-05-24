@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types'
 
-export const alignTypes = PropTypes.oneOf([
-  'top',
-  'middle',
-  'bottom',
-  ''
-])
+export const alignTypes = PropTypes.oneOf(['top', 'middle', 'bottom', ''])
 
 export const gapTypes = PropTypes.oneOf([
   'xl',
@@ -14,7 +9,7 @@ export const gapTypes = PropTypes.oneOf([
   'sm',
   'xs',
   'none',
-  ''
+  '',
 ])
 
 export const justTypes = PropTypes.oneOf([
@@ -22,5 +17,5 @@ export const justTypes = PropTypes.oneOf([
   'left',
   'center',
   'right',
-  ''
+  '',
 ])

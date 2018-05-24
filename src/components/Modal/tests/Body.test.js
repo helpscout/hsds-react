@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { mount, shallow } from 'enzyme'
 import Body from '../Body'
 import { Scrollable } from '../../index'
@@ -20,7 +20,11 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<Body><div className='child'>Hello</div></Body>)
+    const wrapper = shallow(
+      <Body>
+        <div className="child">Hello</div>
+      </Body>
+    )
     const el = wrapper.find('div.child')
 
     expect(el.text()).toContain('Hello')
@@ -29,14 +33,16 @@ describe('Children', () => {
 
 describe('Scrollable', () => {
   class MyComponent extends Component {
-    constructor () {
+    constructor() {
       super()
       this.scrollable = null
     }
-    render () {
+    render() {
       return (
         <Body
-          scrollableRef={node => { this.scrollable = node }}
+          scrollableRef={node => {
+            this.scrollable = node
+          }}
           {...this.props}
         />
       )
@@ -104,8 +110,8 @@ describe('Context', () => {
     const spy = jest.fn()
     mount(<Body />, {
       context: {
-        positionCloseNode: spy
-      }
+        positionCloseNode: spy,
+      },
     })
 
     expect(spy).toHaveBeenCalled()

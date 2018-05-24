@@ -24,7 +24,7 @@ describe('Children', () => {
     const wrapper = shallow(
       <TagList>
         <Tag />
-        <div className='child'>Hello</div>
+        <div className="child">Hello</div>
       </TagList>
     )
 
@@ -75,7 +75,7 @@ describe('isRemovable', () => {
 })
 
 describe('onRemove', () => {
-  test('Fires callback from tag, if specified', (done) => {
+  test('Fires callback from tag, if specified', done => {
     const spy = jest.fn()
     const wrapper = mount(
       <TagList onRemove={spy}>
@@ -86,11 +86,10 @@ describe('onRemove', () => {
     const o = wrapper.find(Tag).first()
     o.node.handleOnRemove()
 
-    wait(100)
-      .then(() => {
-        expect(spy).toHaveBeenCalled()
-        done()
-      })
+    wait(100).then(() => {
+      expect(spy).toHaveBeenCalled()
+      done()
+    })
   })
 })
 

@@ -5,7 +5,7 @@ import { baseComponentTest } from '../../../tests/helpers/components'
 import { Illo, Text } from '../../index'
 
 const baseComponentOptions = {
-  className: 'c-ChatListBlankSlate'
+  className: 'c-ChatListBlankSlate',
 }
 
 baseComponentTest(BlankSlate, baseComponentOptions)
@@ -19,7 +19,7 @@ describe('Illo', () => {
   })
 
   test('Does not render an Illo if illoName prop is blank', () => {
-    const wrapper = shallow(<BlankSlate illoName='' />)
+    const wrapper = shallow(<BlankSlate illoName="" />)
     const o = wrapper.find(Illo)
 
     expect(o.length).not.toBeTruthy()

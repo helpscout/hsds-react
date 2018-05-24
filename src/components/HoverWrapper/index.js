@@ -1,48 +1,44 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import { noop } from '../../utilities/other'
 
 const HoverWrapper = ComposedComponent => {
   const propTypes = {
     onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func
+    onMouseLeave: PropTypes.func,
   }
   const defaultProps = {
     onMouseEnter: noop,
-    onMouseLeave: noop
+    onMouseLeave: noop,
   }
   class WrappedComponent extends Component {
-    constructor () {
+    constructor() {
       super()
       this.state = {
-        isHovered: false
+        isHovered: false,
       }
       this.handleMouseEnter = this.handleMouseEnter.bind(this)
       this.handleMouseLeave = this.handleMouseLeave.bind(this)
     }
 
-    handleMouseEnter () {
+    handleMouseEnter() {
       const { onMouseEnter } = this.props
       onMouseEnter()
       this.setState({
-        isHovered: true
+        isHovered: true,
       })
     }
 
-    handleMouseLeave () {
+    handleMouseLeave() {
       const { onMouseLeave } = this.props
       onMouseLeave()
       this.setState({
-        isHovered: false
+        isHovered: false,
       })
     }
 
-    render () {
-      const {
-        onMouseEnter,
-        onMouseLeave,
-        ...rest
-      } = this.props
+    render() {
+      const { onMouseEnter, onMouseLeave, ...rest } = this.props
       const { isHovered } = this.state
       const handleMouseEnter = this.handleMouseEnter
       const handleMouseLeave = this.handleMouseLeave
@@ -62,12 +58,11 @@ const HoverWrapper = ComposedComponent => {
   WrappedComponent.defaultProps = defaultProps
   WrappedComponent.contextTypes = ComposedComponent.contextTypes
 
-  const componentName = (
+  const componentName =
     ComposedComponent.displayName ||
     ComposedComponent.name ||
     /* istanbul ignore next */
     'Component'
-  )
   WrappedComponent.displayName = `withHover(${componentName})`
 
   return WrappedComponent

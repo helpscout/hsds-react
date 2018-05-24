@@ -4,7 +4,7 @@ import Code from '..'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: 'c-Code'
+  className: 'c-Code',
 }
 
 baseComponentTest(Code, baseComponentOptions)

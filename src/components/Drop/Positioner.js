@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
@@ -6,7 +6,7 @@ import classNames from '../../utilities/classNames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
 import {
   getViewportPosition,
-  getDirections
+  getDirections,
 } from '../../utilities/nodePosition'
 import { noop } from '../../utilities/other'
 
@@ -18,14 +18,14 @@ export const propTypes = {
   position: PropTypes.shape({
     direction: PropTypes.shape({
       x: PropTypes.oneOf(['left', 'right', '']),
-      y: PropTypes.oneOf(['up', 'down'])
+      y: PropTypes.oneOf(['up', 'down']),
     }),
     left: PropTypes.number,
     offsetTop: PropTypes.number,
-    top: PropTypes.number
+    top: PropTypes.number,
   }),
   trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
-  zIndex: PropTypes.number
+  zIndex: PropTypes.number,
 }
 
 const defaultProps = {
@@ -33,15 +33,17 @@ const defaultProps = {
   direction: 'down',
   offset: 8,
   onUpdatePosition: noop,
-  zIndex: 1000
+  zIndex: 1000,
 }
 
 class Positioner extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     /* istanbul ignore next */
     this.state = {
-      direction: props.direction ? getDirections(props.direction) : getDirections()
+      direction: props.direction
+        ? getDirections(props.direction)
+        : getDirections(),
     }
 
     this.position = null
@@ -50,30 +52,29 @@ class Positioner extends Component {
     this.updatePosition = this.updatePosition.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setTriggerNode()
     this.updatePosition()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.position !== this.position) {
       this.updatePosition(nextProps.position)
     }
   }
 
-  setTriggerNode () {
+  setTriggerNode() {
     const { trigger } = this.props
     /* istanbul ignore next */
     if (!this.triggerNode) {
-      this.triggerNode = isNodeElement(trigger) ? trigger : ReactDOM.findDOMNode(trigger)
+      this.triggerNode = isNodeElement(trigger)
+        ? trigger
+        : ReactDOM.findDOMNode(trigger)
     }
   }
 
-  getPosition () {
-    const {
-      direction,
-      offset
-    } = this.props
+  getPosition() {
+    const { direction, offset } = this.props
 
     /* istanbul ignore next */
     if (!this.triggerNode || !this.contentNode) return false
@@ -86,18 +87,13 @@ class Positioner extends Component {
       triggerNode: this.triggerNode,
       contentNode: this.contentNode,
       offset: offset,
-      direction: getDirections(direction)
+      direction: getDirections(direction),
     })
   }
 
   /* istanbul ignore next */
-  updatePosition (newPosition) {
-    const {
-      autoPosition,
-      onUpdatePosition,
-      position,
-      zIndex
-    } = this.props
+  updatePosition(newPosition) {
+    const { autoPosition, onUpdatePosition, position, zIndex } = this.props
 
     if (!autoPosition) return
 
@@ -109,7 +105,7 @@ class Positioner extends Component {
     const nodeStyles = {
       display: pos.offsetTop !== undefined ? 'block' : 'none',
       transform: `translate(${pos.left}px, ${pos.top}px)`,
-      zIndex
+      zIndex,
     }
 
     if (this.direction !== pos.direction) {
@@ -123,7 +119,7 @@ class Positioner extends Component {
     onUpdatePosition(pos)
   }
 
-  render () {
+  render() {
     const {
       autoPosition,
       className,
@@ -152,11 +148,18 @@ class Positioner extends Component {
     return (
       <div
         className={componentClassName}
-        ref={node => { this.node = node }}
+        ref={node => {
+          this.node = node
+        }}
         {...rest}
       >
-        <EventListener event='resize' handler={() => updatePosition()} />
-        <div className='c-DropPositioner__content' ref={node => { this.contentNode = node }}>
+        <EventListener event="resize" handler={() => updatePosition()} />
+        <div
+          className="c-DropPositioner__content"
+          ref={node => {
+            this.contentNode = node
+          }}
+        >
           {children}
         </div>
       </div>

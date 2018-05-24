@@ -1,32 +1,32 @@
 import { isNodeEnv } from './other'
 import { isNodeElement, getViewportHeight, getViewportWidth } from './node'
 
-export const getDirectionX = (direction) => {
+export const getDirectionX = direction => {
   const defaultDirection = ''
   if (typeof direction !== 'string') return defaultDirection
   // No defaults
-  return direction.match(/left/) ? 'left'
-    : direction.match(/right/) ? 'right'
-    : ''
+  return direction.match(/left/)
+    ? 'left'
+    : direction.match(/right/)
+      ? 'right'
+      : ''
 }
 
-export const getDirectionY = (direction) => {
+export const getDirectionY = direction => {
   const defaultDirection = 'down'
   if (typeof direction !== 'string') return defaultDirection
   // Default to down
-  return direction.match(/up/) ? 'up'
-    : direction.match(/down/) ? 'down'
-    : ''
+  return direction.match(/up/) ? 'up' : direction.match(/down/) ? 'down' : ''
 }
 
-export const getDirections = (direction) => {
+export const getDirections = direction => {
   return {
     x: getDirectionX(direction),
-    y: getDirectionY(direction)
+    y: getDirectionY(direction),
   }
 }
 
-export const getOptimalViewportPosition = (options) => {
+export const getOptimalViewportPosition = options => {
   if (!options && typeof options !== 'object') return false
 
   const { triggerNode, contentNode, offset, direction } = options
@@ -41,9 +41,17 @@ export const getOptimalViewportPosition = (options) => {
   // ternary outcomes. This is due to a limitation of JSDOM not supporting offsetTop/offsetLeft.
   // Which is why the ternary begins by checking if the environment is node based.
   /* istanbul ignore next */
-  const offsetTop = isNodeEnv() ? pos.top : pos.top > triggerNode.offsetTop ? pos.top : triggerNode.offsetTop
+  const offsetTop = isNodeEnv()
+    ? pos.top
+    : pos.top > triggerNode.offsetTop
+      ? pos.top
+      : triggerNode.offsetTop
   /* istanbul ignore next */
-  const offsetLeft = isNodeEnv() ? pos.left : pos.left > triggerNode.offsetLeft ? pos.left : triggerNode.offsetLeft
+  const offsetLeft = isNodeEnv()
+    ? pos.left
+    : pos.left > triggerNode.offsetLeft
+      ? pos.left
+      : triggerNode.offsetLeft
   const viewportHeight = getViewportHeight()
   const viewportWidth = getViewportWidth()
   const posSize = offsetTop + pos.height
@@ -63,32 +71,42 @@ export const getOptimalViewportPosition = (options) => {
   const totalOffsetHeightDown = posSize + height + totalOffset
   const totalOffsetHeightUp = posSize - height - totalOffset
 
-  directionX = directionX === 'right' && totalOffsetWidthRight > viewportWidth && totalOffsetWidthLeft > 0 ? 'left'
-    : directionX === 'left' && totalOffsetWidthLeft < 0 ? 'right'
-    : directionX
+  directionX =
+    directionX === 'right' &&
+    totalOffsetWidthRight > viewportWidth &&
+    totalOffsetWidthLeft > 0
+      ? 'left'
+      : directionX === 'left' && totalOffsetWidthLeft < 0
+        ? 'right'
+        : directionX
 
-  directionY = directionY === 'down' && totalOffsetHeightDown > viewportHeight && totalOffsetHeightUp > 0 ? 'up'
-    : directionY === 'up' && totalOffsetHeightUp < 0 ? 'down'
-    : directionY
+  directionY =
+    directionY === 'down' &&
+    totalOffsetHeightDown > viewportHeight &&
+    totalOffsetHeightUp > 0
+      ? 'up'
+      : directionY === 'up' && totalOffsetHeightUp < 0
+        ? 'down'
+        : directionY
 
   switch (directionY) {
-    case 'up' :
+    case 'up':
       top = offsetTop - triggerOffset - height
       break
 
-    case 'down' :
+    case 'down':
       top = offsetTop + pos.height + triggerOffset
       break
 
     /* istanbul ignore next */
     // Tested. Top is generated in the next switch case
-    default :
+    default:
       top = null
       break
   }
 
   switch (directionX) {
-    case 'left' :
+    case 'left':
       left = offsetLeft - triggerOffset - nodePos.width
       if (directionY === 'down') {
         top = offsetTop
@@ -97,7 +115,7 @@ export const getOptimalViewportPosition = (options) => {
       }
       break
 
-    case 'right' :
+    case 'right':
       left = offsetLeft + pos.width + triggerOffset
       if (directionY === 'down') {
         top = offsetTop
@@ -106,7 +124,7 @@ export const getOptimalViewportPosition = (options) => {
       }
       break
 
-    default :
+    default:
       left = offsetLeft
       break
   }
@@ -119,8 +137,8 @@ export const getOptimalViewportPosition = (options) => {
     offset: parseInt(totalOffset, 10),
     direction: {
       x: directionX,
-      y: directionY
-    }
+      y: directionY,
+    },
   }
 }
 
@@ -128,7 +146,7 @@ export const getOptimalViewportPosition = (options) => {
 // getOptimalViewportPosition. This function was created to serve the use-case
 // of Dropdown until getOptimalViewportPosition can support 12/16 point
 // positioning.
-export const getViewportPosition = (options) => {
+export const getViewportPosition = options => {
   if (!options && typeof options !== 'object') return false
 
   const { triggerNode, contentNode, offset, direction } = options
@@ -143,9 +161,17 @@ export const getViewportPosition = (options) => {
   // ternary outcomes. This is due to a limitation of JSDOM not supporting offsetTop/offsetLeft.
   // Which is why the ternary begins by checking if the environment is node based.
   /* istanbul ignore next */
-  const offsetTop = isNodeEnv() ? pos.top : pos.top > triggerNode.offsetTop ? pos.top : triggerNode.offsetTop
+  const offsetTop = isNodeEnv()
+    ? pos.top
+    : pos.top > triggerNode.offsetTop
+      ? pos.top
+      : triggerNode.offsetTop
   /* istanbul ignore next */
-  const offsetLeft = isNodeEnv() ? pos.left : pos.left > triggerNode.offsetLeft ? pos.left : triggerNode.offsetLeft
+  const offsetLeft = isNodeEnv()
+    ? pos.left
+    : pos.left > triggerNode.offsetLeft
+      ? pos.left
+      : triggerNode.offsetLeft
   const viewportHeight = getViewportHeight()
   const posSize = offsetTop + pos.height
   /* istanbul ignore next */
@@ -162,23 +188,28 @@ export const getViewportPosition = (options) => {
   const totalOffsetHeightDown = posSize + height + totalOffset
   const totalOffsetHeightUp = posSize - height - totalOffset
 
-  directionY = directionY === 'down' && totalOffsetHeightDown > viewportHeight && totalOffsetHeightUp > 0 ? 'up'
-    : directionY === 'up' && totalOffsetHeightUp < 0 ? 'down'
-    : directionY
+  directionY =
+    directionY === 'down' &&
+    totalOffsetHeightDown > viewportHeight &&
+    totalOffsetHeightUp > 0
+      ? 'up'
+      : directionY === 'up' && totalOffsetHeightUp < 0
+        ? 'down'
+        : directionY
 
   /* istanbul ignore next */
   // Ignoring since this method will be removed once getOptimalViewportPosition
   // has been enhanced.
   switch (directionY) {
-    case 'up' :
+    case 'up':
       top = offsetTop - triggerOffset - height
       break
 
-    case 'down' :
+    case 'down':
       top = offsetTop + pos.height + triggerOffset
       break
 
-    default :
+    default:
       top = offsetTop
       break
   }
@@ -187,17 +218,19 @@ export const getViewportPosition = (options) => {
   // Ignoring since this method will be removed once getOptimalViewportPosition
   // has been enhanced.
   switch (directionX) {
-    case 'left' :
-      left = directionY ? offsetLeft
+    case 'left':
+      left = directionY
+        ? offsetLeft
         : offsetLeft - triggerOffset - nodePos.width
       break
 
-    case 'right' :
-      left = directionY ? offsetLeft - width + pos.width
+    case 'right':
+      left = directionY
+        ? offsetLeft - width + pos.width
         : offsetLeft + pos.width + triggerOffset
       break
 
-    default :
+    default:
       left = offsetLeft
       break
   }
@@ -210,12 +243,12 @@ export const getViewportPosition = (options) => {
     offset: parseInt(totalOffset, 10),
     direction: {
       x: directionX,
-      y: directionY
-    }
+      y: directionY,
+    },
   }
 }
 
-export const getHeightRelativeToViewport = (options) => {
+export const getHeightRelativeToViewport = options => {
   if (!options && typeof options !== 'object') return false
   const { offset, node } = options
   if (!isNodeElement(node)) return false

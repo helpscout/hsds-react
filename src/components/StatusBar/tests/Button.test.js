@@ -22,7 +22,7 @@ describe('Children', () => {
   test('Renders child content', () => {
     const wrapper = shallow(
       <StatusBar.Button>
-        <span className='child'>Hello</span>
+        <span className="child">Hello</span>
       </StatusBar.Button>
     )
     const el = wrapper.find('span.child')
@@ -33,9 +33,7 @@ describe('Children', () => {
 
 describe('Icon', () => {
   test('Does not render an icon by default', () => {
-    const wrapper = shallow(
-      <StatusBar.Button>Hello</StatusBar.Button>
-    )
+    const wrapper = shallow(<StatusBar.Button>Hello</StatusBar.Button>)
     const o = wrapper.find(Icon)
 
     expect(o.length).toBe(0)
@@ -43,7 +41,7 @@ describe('Icon', () => {
 
   test('Can render an Icon if specified', () => {
     const wrapper = shallow(
-      <StatusBar.Button icon='tick'>Hello</StatusBar.Button>
+      <StatusBar.Button icon="tick">Hello</StatusBar.Button>
     )
     const o = wrapper.find(Icon)
 

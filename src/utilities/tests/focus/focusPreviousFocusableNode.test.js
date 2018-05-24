@@ -1,6 +1,4 @@
-import {
-  focusPreviousFocusableNode
-} from '../../focus'
+import { focusPreviousFocusableNode } from '../../focus'
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -8,7 +6,9 @@ afterEach(() => {
 
 test('Focuses previous node, and returns previous node', () => {
   let count = 0
-  const focusCheck = () => { count = count + 1 }
+  const focusCheck = () => {
+    count = count + 1
+  }
 
   document.body.innerHTML = `
     <span>Nope</span>
@@ -34,7 +34,9 @@ test('Focuses previous node, and returns previous node', () => {
 
 test('Focuses previous node within scope', () => {
   let count = 0
-  const focusCheck = () => { count = count + 1 }
+  const focusCheck = () => {
+    count = count + 1
+  }
 
   document.body.innerHTML = `
     <span>Nope</span>
@@ -64,7 +66,9 @@ test('Focuses previous node within scope', () => {
 
 test('Focuses last focusable node if there are no previous nodes', () => {
   let count = 0
-  const focusCheck = () => { count = count + 1 }
+  const focusCheck = () => {
+    count = count + 1
+  }
 
   document.body.innerHTML = `
     <a>Current</a>

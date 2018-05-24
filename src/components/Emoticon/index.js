@@ -52,7 +52,7 @@ Emoticon.propTypes = {
   isActive: PropTypes.bool,
   name: PropTypes.string.isRequired,
   size: sizeTypes,
-  title: PropTypes.string
+  title: PropTypes.string,
 }
 
 Emoticon.defaultProps = {
@@ -61,7 +61,7 @@ Emoticon.defaultProps = {
   isActive: true,
   name: 'happy',
   size: 'md',
-  title: ''
+  title: '',
 }
 
 Emoticon.displayName = 'Emoticon'

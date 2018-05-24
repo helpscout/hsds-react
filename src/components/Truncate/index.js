@@ -10,25 +10,18 @@ const propTypes = {
   limit: PropTypes.number,
   end: PropTypes.number,
   start: PropTypes.number,
-  type: truncateTypes
+  type: truncateTypes,
 }
 
 const defaultProps = {
   children: '',
   ellipsis: '…',
   limit: 0,
-  type: 'auto'
+  type: 'auto',
 }
 
 const Truncate = props => {
-  const {
-    children,
-    className,
-    ellipsis,
-    limit,
-    type,
-    ...rest
-  } = props
+  const { children, className, ellipsis, limit, type, ...rest } = props
 
   const componentClassName = classNames(
     'c-Truncate',
@@ -53,12 +46,10 @@ const Truncate = props => {
       truncateEnd = 0
   }
 
-  const word = type !== 'auto' ? truncateMiddle(
-    children,
-    truncateStart,
-    truncateEnd,
-    ellipsis
-  ) : children
+  const word =
+    type !== 'auto'
+      ? truncateMiddle(children, truncateStart, truncateEnd, ellipsis)
+      : children
 
   return (
     <span className={componentClassName} {...rest} title={children}>

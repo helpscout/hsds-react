@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Block from './Block'
 import Item from './Item'
@@ -9,23 +9,16 @@ export const propTypes = {
   align: alignTypes,
   className: PropTypes.string,
   gap: gapTypes,
-  just: justTypes
+  just: justTypes,
 }
 
 const defaultProps = {
-  gap: 'sm'
+  gap: 'sm',
 }
 
 class Flexy extends Component {
-  render () {
-    const {
-      align,
-      children,
-      className,
-      gap,
-      just,
-      ...rest
-    } = this.props
+  render() {
+    const { align, children, className, gap, just, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-Flexy',

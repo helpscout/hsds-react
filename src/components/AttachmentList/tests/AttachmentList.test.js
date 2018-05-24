@@ -1,15 +1,15 @@
 import React from 'react'
-import {mount, shallow} from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import AttachmentList from '../index'
-import {Attachment, Icon, Overflow} from '../../index'
+import { Attachment, Icon, Overflow } from '../../index'
 
 const ui = {
   content: '.c-AttachmentList__content',
   overflowContent: '.c-AttachmentList__overflowContent',
   list: {
     item: '.c-AttachmentList__inlineListItem',
-    download: '.c-AttachmentList__inlineListItemDownloadAll'
-  }
+    download: '.c-AttachmentList__inlineListItemDownloadAll',
+  },
 }
 
 describe('ClassName', () => {
@@ -29,7 +29,7 @@ describe('ClassName', () => {
 
 describe('Custom attributes', () => {
   test('Can render custom HTML attributes', () => {
-    const wrapper = shallow(<AttachmentList data-tie='piano-key' />)
+    const wrapper = shallow(<AttachmentList data-tie="piano-key" />)
     const html = wrapper.html()
 
     expect(html).toContain('data-tie')
@@ -41,7 +41,7 @@ describe('Children', () => {
   test('Does not render non-Attachment child content', () => {
     const wrapper = shallow(
       <AttachmentList>
-        <div className='child'>Hello</div>
+        <div className="child">Hello</div>
       </AttachmentList>
     )
     const o = wrapper.find('div.child')
@@ -146,7 +146,7 @@ describe('Theme', () => {
 
   test('Renders theme styles, if provided', () => {
     const wrapper = mount(
-      <Attachment.Provider theme='preview'>
+      <Attachment.Provider theme="preview">
         <AttachmentList />
       </Attachment.Provider>
     )
@@ -159,9 +159,7 @@ describe('Theme', () => {
 
 describe('Overflow', () => {
   test('Does not render by default', () => {
-    const wrapper = mount(
-      <AttachmentList />
-    )
+    const wrapper = mount(<AttachmentList />)
     const c = wrapper.find(ui.content)
     const o = wrapper.find(Overflow)
 
@@ -171,7 +169,7 @@ describe('Overflow', () => {
 
   test('Renders content in Overflow, if theme is preview', () => {
     const wrapper = mount(
-      <Attachment.Provider theme='preview'>
+      <Attachment.Provider theme="preview">
         <AttachmentList>
           <Attachment />
         </AttachmentList>

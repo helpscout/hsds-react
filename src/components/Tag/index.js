@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import Centralize from '../Centralize'
@@ -19,7 +19,7 @@ export const propTypes = {
   isRemovable: PropTypes.bool,
   onRemove: PropTypes.func,
   pulsing: PropTypes.bool,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 const defaultProps = {
@@ -28,28 +28,28 @@ const defaultProps = {
   display: 'inlineBlock',
   isRemovable: false,
   onRemove: noop,
-  value: ''
+  value: '',
 }
 
 class Tag extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
-      in: true
+      in: true,
     }
     this.handleOnRemove = this.handleOnRemove.bind(this)
   }
 
-  handleOnRemove () {
+  handleOnRemove() {
     const { animationDuration, id, onRemove, value } = this.props
     this.setState({ in: false })
 
     setTimeout(() => {
-      onRemove({id, value})
+      onRemove({ id, value })
     }, animationDuration)
   }
 
-  render () {
+  render() {
     const {
       allCaps,
       animationDuration,
@@ -80,11 +80,11 @@ class Tag extends Component {
 
     const removeIconMarkup = isRemovable ? (
       <Icon
-        name='cross'
-        size='12'
+        name="cross"
+        size="12"
         clickable
         onClick={handleOnRemove}
-        title='Remove'
+        title="Remove"
       />
     ) : null
 

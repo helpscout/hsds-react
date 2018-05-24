@@ -9,11 +9,7 @@ import classNames from '../../utilities/classNames'
  * Avatar state.
  */
 const StatusAvatar = props => {
-  const {
-    className,
-    isOnline,
-    ...rest
-  } = props
+  const { className, isOnline, ...rest } = props
 
   const componentClassName = classNames(
     'c-StatusAvatar',
@@ -46,13 +42,13 @@ StatusAvatar.propTypes = {
   /**
    * Size of the avatar.
    */
-  size: sizeTypes
+  size: sizeTypes,
 }
 
 StatusAvatar.defaultProps = {
   isOnline: true,
   shape: 'rounded',
-  size: 'smmd'
+  size: 'smmd',
 }
 
 export default StatusAvatar

@@ -6,34 +6,16 @@ import Item from './Item'
 export const propTypes = {
   border: PropTypes.oneOf(['line', 'dot', '']),
   className: PropTypes.string,
-  display: PropTypes.oneOf([
-    'block',
-    'flex'
-  ]),
-  inlineSize: PropTypes.oneOf([
-    'xs',
-    'sm',
-    'md'
-  ]),
-  size: PropTypes.oneOf([
-    'xs',
-    'sm',
-    'md',
-    'lg',
-    ''
-  ]),
-  type: PropTypes.oneOf([
-    'bullet',
-    'inline',
-    'number',
-    ''
-  ])
+  display: PropTypes.oneOf(['block', 'flex']),
+  inlineSize: PropTypes.oneOf(['xs', 'sm', 'md']),
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', '']),
+  type: PropTypes.oneOf(['bullet', 'inline', 'number', '']),
 }
 
 const defaultProps = {
   display: 'block',
   inlineSize: 'md',
-  role: 'list'
+  role: 'list',
 }
 
 const List = props => {
@@ -60,17 +42,13 @@ const List = props => {
     className
   )
 
-  const selectorTag = (
-    type === 'bullet' ? 'ul'
-    : type === 'number' ? 'ol'
-    : 'ul'
-  )
+  const selectorTag = type === 'bullet' ? 'ul' : type === 'number' ? 'ol' : 'ul'
 
   return React.createElement(selectorTag, {
     className: componentClassName,
     children,
     role,
-    ...rest
+    ...rest,
   })
 }
 

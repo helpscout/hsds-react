@@ -6,38 +6,36 @@ import wait from '../../../tests/helpers/wait'
 
 const baseComponentOptions = {
   className: 'c-Collapsible',
-  skipChildrenTest: true
+  skipChildrenTest: true,
 }
 
 baseComponentTest(Collapsible, baseComponentOptions)
 
 describe('onOpen', () => {
-  test('onOpen callback should fire when opened', (done) => {
+  test('onOpen callback should fire when opened', done => {
     const spy = jest.fn()
     const wrapper = mount(<Collapsible onOpen={spy} duration={0} />)
     wrapper.setProps({ isOpen: true })
 
-    wait(200)
-      .then(() => {
-        expect(spy).toHaveBeenCalled()
-        wrapper.unmount()
-        done()
-      })
+    wait(200).then(() => {
+      expect(spy).toHaveBeenCalled()
+      wrapper.unmount()
+      done()
+    })
   })
 })
 
 describe('onClose', () => {
-  test('onClose callback should fire when opened', (done) => {
+  test('onClose callback should fire when opened', done => {
     const spy = jest.fn()
     const wrapper = mount(<Collapsible isOpen onClose={spy} duration={0} />)
     wrapper.setProps({ isOpen: false })
 
-    wait(200)
-      .then(() => {
-        expect(spy).toHaveBeenCalled()
-        wrapper.unmount()
-        done()
-      })
+    wait(200).then(() => {
+      expect(spy).toHaveBeenCalled()
+      wrapper.unmount()
+      done()
+    })
   })
 })
 
@@ -50,7 +48,7 @@ describe('Height', () => {
     wrapper.unmount()
   })
 
-  test('Height set to child element on open', (done) => {
+  test('Height set to child element on open', done => {
     const wrapper = mount(
       <Collapsible duration={0}>
         <div style={{ height: 200 }} />
@@ -61,30 +59,26 @@ describe('Height', () => {
 
     wrapper.setProps({ isOpen: true })
 
-    wait(50)
-      .then(() => {
-        expect(o.style['height']).not.toBe('0px')
-        wrapper.unmount()
-        done()
-      })
+    wait(50).then(() => {
+      expect(o.style['height']).not.toBe('0px')
+      wrapper.unmount()
+      done()
+    })
   })
 
-  test('Height is 0 with no child and when open', (done) => {
-    const wrapper = mount(
-      <Collapsible />
-    )
+  test('Height is 0 with no child and when open', done => {
+    const wrapper = mount(<Collapsible />)
     const o = wrapper.get(0).node
     wrapper.setProps({ isOpen: true })
 
-    wait(50)
-      .then(() => {
-        expect(o.style['height']).toBe('0px')
-        wrapper.unmount()
-        done()
-      })
+    wait(50).then(() => {
+      expect(o.style['height']).toBe('0px')
+      wrapper.unmount()
+      done()
+    })
   })
 
-  test('Height is 0px when collapsed', (done) => {
+  test('Height is 0px when collapsed', done => {
     const wrapper = mount(
       <Collapsible isOpen duration={0}>
         <div style={{ height: 200 }} />
@@ -96,27 +90,26 @@ describe('Height', () => {
 
     wrapper.setProps({ isOpen: false })
 
-    wait(50)
-      .then(() => {
-        expect(o.style['height']).toBe('0px')
-        wrapper.unmount()
-        done()
-      })
+    wait(50).then(() => {
+      expect(o.style['height']).toBe('0px')
+      wrapper.unmount()
+      done()
+    })
   })
 
-//   test('Height is set to auto when animationState is open', (done) => {
-//     const wrapper = mount(<Collapsible />)
-//     const o = wrapper.get(0).node
+  //   test('Height is set to auto when animationState is open', (done) => {
+  //     const wrapper = mount(<Collapsible />)
+  //     const o = wrapper.get(0).node
 
-//     expect(o.style['height']).toBe('0px')
-//     wrapper.setProps({ isOpen: true })
+  //     expect(o.style['height']).toBe('0px')
+  //     wrapper.setProps({ isOpen: true })
 
-//     setTimeout(() => {
-//       expect(o.style['height']).toBe('auto')
-//       wrapper.unmount()
-//       done()
-//     }, 300)
-//   })
+  //     setTimeout(() => {
+  //       expect(o.style['height']).toBe('auto')
+  //       wrapper.unmount()
+  //       done()
+  //     }, 300)
+  //   })
 })
 
 describe('AnimationState', () => {
@@ -149,7 +142,7 @@ describe('Duration', () => {
   test('Duration can be overridden by durationOpen', () => {
     const wrapper = mount(<Collapsible duration={1000} durationOpen={300} />)
     const o = wrapper.instance()
-    wrapper.setState({animationState: 'open'})
+    wrapper.setState({ animationState: 'open' })
 
     expect(o.getTransitionDuration()).toBe(300)
   })
@@ -157,7 +150,7 @@ describe('Duration', () => {
   test('Duration can be overridden by durationClose', () => {
     const wrapper = mount(<Collapsible duration={1000} durationClose={100} />)
     const o = wrapper.instance()
-    wrapper.setState({animationState: 'closing'})
+    wrapper.setState({ animationState: 'closing' })
 
     expect(o.getTransitionDuration()).toBe(100)
   })

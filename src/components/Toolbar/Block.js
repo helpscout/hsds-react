@@ -1,19 +1,12 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import Flexy from '../Flexy'
 import classNames from '../../utilities/classNames'
 
 class Block extends Component {
-  render () {
-    const {
-      className,
-      children,
-      ...rest
-    } = this.props
+  render() {
+    const { className, children, ...rest } = this.props
 
-    const componentClassName = classNames(
-      'c-ToolbarBlock',
-      className
-    )
+    const componentClassName = classNames('c-ToolbarBlock', className)
 
     return (
       <Flexy.Block className={componentClassName} {...rest}>

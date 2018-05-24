@@ -1,6 +1,4 @@
-import {
-  getHeightRelativeToViewport
-} from '../../nodePosition'
+import { getHeightRelativeToViewport } from '../../nodePosition'
 
 test('Returns false for invalid arguments', () => {
   expect(getHeightRelativeToViewport()).toBeFalsy()
@@ -21,7 +19,7 @@ test('Returns height (number) if node is beyond viewport range', () => {
     top: 500,
     left: 8,
     right: 0,
-    bottom: 0
+    bottom: 0,
   })
 
   const options = { node, offset: 0 }
@@ -42,7 +40,7 @@ test('Returns null if node is within viewport range', () => {
     top: 0,
     left: 8,
     right: 0,
-    bottom: 0
+    bottom: 0,
   })
 
   const options = { node, offset: 0 }
@@ -60,7 +58,7 @@ test('Factors in offset', () => {
     top: 300,
     left: 8,
     right: 0,
-    bottom: 0
+    bottom: 0,
   })
 
   const o = getHeightRelativeToViewport({ node })

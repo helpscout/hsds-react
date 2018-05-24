@@ -60,8 +60,8 @@ describe('Children', () => {
   test('Use ID from child as key, if defined', () => {
     const wrapper = shallow(
       <Sortable>
-        <div id='ron'>Ron</div>
-        <div id='champ'>Champ</div>
+        <div id="ron">Ron</div>
+        <div id="champ">Champ</div>
         <div>Brick</div>
       </Sortable>
     )
@@ -165,54 +165,44 @@ describe('Item', () => {
 
 describe('Stateful parent component', () => {
   class ParentComponent extends React.Component {
-    constructor (props) {
+    constructor(props) {
       super()
       this.state = {
-        items: props.items ? props.items : []
+        items: props.items ? props.items : [],
       }
       this.handleOnSort = this.handleOnSort.bind(this)
     }
 
-    handleOnSort () {
+    handleOnSort() {
       this.setState({ items: this.state.items.concat('Brian') })
     }
 
-    render () {
-      const items = this.state.items.map(i => (
-        <div key={i}>{i}</div>
-      ))
+    render() {
+      const items = this.state.items.map(i => <div key={i}>{i}</div>)
 
-      return (
-        <Sortable onSortEnd={this.handleOnSort}>
-          {items}
-        </Sortable>
-      )
+      return <Sortable onSortEnd={this.handleOnSort}>{items}</Sortable>
     }
   }
 
   class ParentComponentTwo extends React.Component {
-    constructor (props) {
+    constructor(props) {
       super()
       this.state = {
         value: 0,
-        items: props.items ? props.items : []
+        items: props.items ? props.items : [],
       }
       this.handleOnSort = this.handleOnSort.bind(this)
     }
 
-    handleOnSort () {
+    handleOnSort() {
       this.setState({
-        value: this.state.value + 1
+        value: this.state.value + 1,
       })
     }
 
-    render () {
-      const {
-        className
-      } = this.props
-      const items = this.state.items.map(i => (
-        <div key={i}>{i}</div>
-      ))
+    render() {
+      const { className } = this.props
+      const items = this.state.items.map(i => <div key={i}>{i}</div>)
 
       return (
         <Sortable onSortEnd={this.handleOnSort} className={className}>
@@ -267,7 +257,7 @@ describe('onSortEnd', () => {
     const wrapper = shallow(<Sortable onSortEnd={spy} />)
     const o = wrapper.instance()
 
-    o.onSortEnd({oldIndex: 1, newIndex: 2})
+    o.onSortEnd({ oldIndex: 1, newIndex: 2 })
 
     expect(spy).toHaveBeenCalled()
   })

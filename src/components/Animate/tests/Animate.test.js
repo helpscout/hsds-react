@@ -32,51 +32,45 @@ describe('Content', () => {
 })
 
 describe('AnimateOnMount', () => {
-  test('Automatically animates by default', (done) => {
+  test('Automatically animates by default', done => {
     const wrapper = mount(
-      <Animate duration={2} sequence='fade'>
+      <Animate duration={2} sequence="fade">
         <div>Blue</div>
       </Animate>
     )
 
-    wait(200)
-      .then(() => {
-        expect(wrapper.html()).toContain('ax-entered')
-        wrapper.unmount()
-        done()
-      })
+    wait(200).then(() => {
+      expect(wrapper.html()).toContain('ax-entered')
+      wrapper.unmount()
+      done()
+    })
   })
 })
 
 describe('Unmounting', () => {
-  test('Unmounts from DOM by default', (done) => {
+  test('Unmounts from DOM by default', done => {
     const wrapper = mount(
       <Animate in duration={8}>
-        <div className='your'>
-          <div className='my-boy'>
-            Blue
-          </div>
+        <div className="your">
+          <div className="my-boy">Blue</div>
         </div>
       </Animate>
     )
 
     wrapper.setProps({ in: false })
 
-    wait(120)
-      .then(() => {
-        expect(wrapper.html()).toBe(null)
-        wrapper.unmount()
-        done()
-      })
+    wait(120).then(() => {
+      expect(wrapper.html()).toBe(null)
+      wrapper.unmount()
+      done()
+    })
   })
 
-  test('Does not unmounts from DOM if specified', (done) => {
+  test('Does not unmounts from DOM if specified', done => {
     const wrapper = mount(
       <Animate unmountOnExit={false} in duration={8}>
-        <div className='your'>
-          <div className='my-boy'>
-            Blue
-          </div>
+        <div className="your">
+          <div className="my-boy">Blue</div>
         </div>
       </Animate>
     )
@@ -96,21 +90,21 @@ describe('Unmounting', () => {
 
 describe('Styles', () => {
   test('Can render block style className, if applied', () => {
-    const wrapper = mount(<Animate block sequence='fade' />)
+    const wrapper = mount(<Animate block sequence="fade" />)
     const o = wrapper.find('.c-Animate')
 
     expect(o.hasClass('is-block')).toBe(true)
   })
 
   test('Can render inline style className, if applied', () => {
-    const wrapper = mount(<Animate inline sequence='fade' />)
+    const wrapper = mount(<Animate inline sequence="fade" />)
     const o = wrapper.find('.c-Animate')
 
     expect(o.hasClass('is-inline')).toBe(true)
   })
 
   test('Can render inline-block style className, if applied', () => {
-    const wrapper = mount(<Animate inlineBlock sequence='fade' />)
+    const wrapper = mount(<Animate inlineBlock sequence="fade" />)
     const o = wrapper.find('.c-Animate')
 
     expect(o.hasClass('is-inlineBlock')).toBe(true)

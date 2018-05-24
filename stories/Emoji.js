@@ -4,6 +4,4 @@ import { Emoji } from '../src/index.js'
 
 const stories = storiesOf('Emoji', module)
 
-stories.add('default', () => (
-  <Emoji emoji=':santa:' />
-))
+stories.add('default', () => <Emoji emoji=":santa:" />)

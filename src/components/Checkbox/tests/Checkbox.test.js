@@ -5,7 +5,7 @@ import Choice from '../../Choice'
 
 describe('Checkbox', () => {
   test('Renders a checkbox Choice component', () => {
-    const wrapper = shallow(<Checkbox value='check' />)
+    const wrapper = shallow(<Checkbox value="check" />)
     const choice = wrapper.find(Choice)
 
     expect(choice.length).toBeTruthy()

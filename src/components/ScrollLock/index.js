@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import { isFirefox } from '../../utilities/browser'
 import { noop } from '../../utilities/other'
@@ -7,23 +7,23 @@ export const propTypes = {
   isDisabled: PropTypes.bool,
   direction: PropTypes.oneOf(['x', 'y']),
   stopPropagation: PropTypes.bool,
-  onWheel: PropTypes.func
+  onWheel: PropTypes.func,
 }
 const defaultProps = {
   isDisabled: false,
   direction: 'y',
   stopPropagation: false,
-  onWheel: noop
+  onWheel: noop,
 }
 
 class ScrollLock extends Component {
-  render () {
+  render() {
     const {
       children,
       direction,
       isDisabled,
       onWheel,
-      stopPropagation
+      stopPropagation,
     } = this.props
 
     if (!children) {
@@ -36,14 +36,14 @@ class ScrollLock extends Component {
         handleWheelEvent(event, direction, stopPropagation)
         onWheel(event)
         if (child.props.onWheel) child.props.onWheel(event)
-      }
+      },
     }
 
     return isDisabled ? child : React.cloneElement(child, events)
   }
 }
 
-function handleWheelEvent (event, direction, stopPropagation) {
+function handleWheelEvent(event, direction, stopPropagation) {
   if (direction === 'x') {
     return scrollLockX(event, stopPropagation)
   } else {
@@ -51,7 +51,7 @@ function handleWheelEvent (event, direction, stopPropagation) {
   }
 }
 
-export function scrollLockX (event, stopPropagation) {
+export function scrollLockX(event, stopPropagation) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM
@@ -73,7 +73,7 @@ export function scrollLockX (event, stopPropagation) {
   }
 }
 
-export function scrollLockY (event, stopPropagation) {
+export function scrollLockY(event, stopPropagation) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM

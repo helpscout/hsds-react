@@ -1,11 +1,15 @@
 import React from 'react'
-import { isComponentOneOfType, isNativeSpanType, isNativeBlockType } from '../types'
+import {
+  isComponentOneOfType,
+  isNativeSpanType,
+  isNativeBlockType,
+} from '../types'
 
 describe('isComponentOneOfType', () => {
   test('Returns false for non-React elements', () => {
     expect(isComponentOneOfType(true)).toBeFalsy()
     expect(isComponentOneOfType({})).toBeFalsy()
-    expect(isComponentOneOfType({type: 'a'})).toBeFalsy()
+    expect(isComponentOneOfType({ type: 'a' })).toBeFalsy()
   })
 
   test('Returns false if React element does not contain type/does not match', () => {
@@ -27,16 +31,7 @@ describe('isComponentOneOfType', () => {
 
 describe('isNativeSpanType', () => {
   test('Can recognize span React elements', () => {
-    const types = [
-      'a',
-      'b',
-      'bold',
-      'em',
-      'i',
-      'span',
-      'strong',
-      'u'
-    ]
+    const types = ['a', 'b', 'bold', 'em', 'i', 'span', 'strong', 'u']
 
     types.forEach(type => {
       const o = React.createElement(type)
@@ -48,11 +43,20 @@ describe('isNativeSpanType', () => {
 describe('isNativeBlockType', () => {
   test('Can recognize block React elements', () => {
     const types = [
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'p', 'blockquote',
-      'header', 'main', 'section', 'aside',
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6',
+      'p',
+      'blockquote',
+      'header',
+      'main',
+      'section',
+      'aside',
       'figure',
-      'div'
+      'div',
     ]
 
     types.forEach(type => {

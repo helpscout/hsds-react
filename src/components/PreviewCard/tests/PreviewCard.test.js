@@ -5,7 +5,7 @@ import { baseComponentTest } from '../../../tests/helpers/components'
 import { Card, Heading, Text } from '../../'
 
 const baseComponentOptions = {
-  className: 'c-PreviewCard'
+  className: 'c-PreviewCard',
 }
 
 baseComponentTest(PreviewCard, baseComponentOptions)
@@ -31,7 +31,7 @@ describe('Title', () => {
   })
 
   test('Renders a title, if defined', () => {
-    const wrapper = shallow(<PreviewCard title='Mugatu' />)
+    const wrapper = shallow(<PreviewCard title="Mugatu" />)
     const o = wrapper.find(Heading)
 
     expect(o.length).toBeTruthy()
@@ -42,11 +42,7 @@ describe('Title', () => {
 
 describe('Text', () => {
   test('Renders children in a Text component', () => {
-    const wrapper = shallow(
-      <PreviewCard title='Mugatu'>
-        Relax
-      </PreviewCard>
-    )
+    const wrapper = shallow(<PreviewCard title="Mugatu">Relax</PreviewCard>)
     const o = wrapper.find(Text)
 
     expect(o.length).toBeTruthy()

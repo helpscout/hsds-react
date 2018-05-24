@@ -8,17 +8,11 @@ import { isString } from '../../utilities/strings'
 export const propTypes = {
   className: PropTypes.string,
   for: PropTypes.string,
-  state: stateTypes
+  state: stateTypes,
 }
 
 const Label = props => {
-  const {
-    className,
-    children,
-    for: htmlFor,
-    state,
-    ...rest
-  } = props
+  const { className, children, for: htmlFor, state, ...rest } = props
 
   const componentClassName = classNames(
     'c-Label',
@@ -27,10 +21,12 @@ const Label = props => {
   )
 
   const contentMarkup = isString(children) ? (
-    <Text className='c-Label__text' faint>
+    <Text className="c-Label__text" faint>
       {children}
     </Text>
-  ) : children
+  ) : (
+    children
+  )
 
   return (
     <label className={componentClassName} htmlFor={htmlFor} {...rest}>

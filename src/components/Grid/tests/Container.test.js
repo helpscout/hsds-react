@@ -10,7 +10,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<Container className='mugatu' />)
+    const wrapper = shallow(<Container className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -20,7 +20,7 @@ describe('Children', () => {
   test('Can render child components', () => {
     const wrapper = shallow(
       <Container>
-        <div className='mugatu' />
+        <div className="mugatu" />
       </Container>
     )
 

@@ -1,6 +1,4 @@
-import {
-  getDirectionY
-} from '../../nodePosition'
+import { getDirectionY } from '../../nodePosition'
 
 test('Returns false for invalid arguments', () => {
   expect(getDirectionY()).toBe('down')

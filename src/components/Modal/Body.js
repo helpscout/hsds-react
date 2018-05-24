@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Scrollable from '../Scrollable'
 import classNames from '../../utilities/classNames'
@@ -9,7 +9,7 @@ export const propTypes = {
   onScroll: PropTypes.func,
   scrollable: PropTypes.bool,
   scrollableRef: PropTypes.func,
-  scrollFade: PropTypes.bool
+  scrollFade: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -17,34 +17,34 @@ const defaultProps = {
   onScroll: noop,
   scrollable: true,
   scrollableRef: noop,
-  scrollFade: true
+  scrollFade: true,
 }
 
 const contextTypes = {
-  positionCloseNode: PropTypes.func
+  positionCloseNode: PropTypes.func,
 }
 
 class Body extends Component {
-  constructor () {
+  constructor() {
     super()
     this.scrollableNode = null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.positionCloseNode()
   }
 
-  positionCloseNode () {
+  positionCloseNode() {
     if (this.context.positionCloseNode) {
       this.context.positionCloseNode(this.scrollableNode)
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.scrollableNode = null
   }
 
-  render () {
+  render() {
     const {
       className,
       children,
@@ -65,8 +65,8 @@ class Body extends Component {
 
     const childrenContent = scrollable ? (
       <Scrollable
-        className='c-ModalBody__scrollable'
-        contentClassName='c-ModalBody__scrollableContent'
+        className="c-ModalBody__scrollable"
+        contentClassName="c-ModalBody__scrollableContent"
         fade={scrollFade}
         rounded
         onScroll={onScroll}
@@ -77,7 +77,9 @@ class Body extends Component {
       >
         {children}
       </Scrollable>
-    ) : children
+    ) : (
+      children
+    )
 
     return (
       <div className={componentClassName} {...rest}>

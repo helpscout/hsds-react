@@ -5,12 +5,10 @@ import HoverWrapper from '..'
 const Component = props => {
   const { children, isHovered, ...rest } = props
   const hoverContent = isHovered ? (
-    <div className='c-Component__hoverOnly'>
-      Hover only
-    </div>
+    <div className="c-Component__hoverOnly">Hover only</div>
   ) : null
   return (
-    <div className='c-Component' {...rest}>
+    <div className="c-Component" {...rest}>
       {hoverContent}
       {children}
     </div>
@@ -87,8 +85,8 @@ describe('Props', () => {
   test('Correctly passes all props to ComposedComponent', () => {
     const wrapper = shallow(
       <TestComponent
-        aria-role='presentation'
-        data-attr='Attribute'
+        aria-role="presentation"
+        data-attr="Attribute"
         style={{ background: 'red' }}
       />
     )
@@ -100,9 +98,7 @@ describe('Props', () => {
 
 describe('displayName', () => {
   test('Uses a ComposedComponent.name', () => {
-    const Derek = () => (
-      <div />
-    )
+    const Derek = () => <div />
     const WrappedComponent = HoverWrapper(Derek)
 
     expect(WrappedComponent.displayName).toContain('with')
@@ -110,9 +106,7 @@ describe('displayName', () => {
   })
 
   test('Uses a ComposedComponent.displayName', () => {
-    const Composed = () => (
-      <div />
-    )
+    const Composed = () => <div />
     Composed.displayName = 'Derek'
     const WrappedComponent = HoverWrapper(Composed)
 
@@ -122,8 +116,8 @@ describe('displayName', () => {
 
   test('Works with React.Component', () => {
     class Derek extends React.Component {
-      render () {
-        return (<div />)
+      render() {
+        return <div />
       }
     }
     const WrappedComponent = HoverWrapper(Derek)
@@ -134,8 +128,8 @@ describe('displayName', () => {
 
   test('Works with React.Component.displayName', () => {
     class Composed extends React.Component {
-      render () {
-        return (<div />)
+      render() {
+        return <div />
       }
     }
     Composed.displayName = 'Derek'

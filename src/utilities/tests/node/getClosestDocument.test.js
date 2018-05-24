@@ -1,6 +1,4 @@
-import {
-  getClosestDocument
-} from '../../node'
+import { getClosestDocument } from '../../node'
 
 afterEach(() => {
   global.document.innerHTML = ''

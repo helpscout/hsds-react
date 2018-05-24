@@ -9,7 +9,7 @@ const ENTITIES_TO_REPLACE = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
-  '\n': '<br>'
+  '\n': '<br>',
 }
 const REPLACE_REGEX = /[\n&<>]/g
 
@@ -17,33 +17,33 @@ export const propTypes = {
   contents: PropTypes.string,
   currentHeight: PropTypes.number,
   minimumLines: PropTypes.number,
-  onResize: PropTypes.func
+  onResize: PropTypes.func,
 }
 
 const defaultProps = {
   contents: '',
   currentHeight: null,
   minimumLines: 1,
-  onResize: noop
+  onResize: noop,
 }
 
 class Resizer extends Component {
-  constructor () {
+  constructor() {
     super()
     this.handleOnResize = this.handleOnResize.bind(this)
   }
-  componentDidMount () {
+  componentDidMount() {
     this.handleOnResize()
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this.handleOnResize()
   }
 
   // Ignoring as height calculation isn't possible with JSDOM
   // (which is what Enzyme uses for tests)
   /* istanbul ignore next */
-  handleOnResize () {
+  handleOnResize() {
     const contentHeight = this.contentNode.offsetHeight
     const minimumHeight = this.minimumLinesNode
       ? this.minimumLinesNode.offsetHeight
@@ -57,11 +57,11 @@ class Resizer extends Component {
     }
   }
 
-  replaceEntity (entity) {
+  replaceEntity(entity) {
     return ENTITIES_TO_REPLACE[entity] || /* istanbul ignore next */ entity
   }
 
-  getContentsForMinimumLines (minimumLines) {
+  getContentsForMinimumLines(minimumLines) {
     let content = ''
     for (let line = 0; line < minimumLines; line++) {
       content += '<br>'
@@ -70,32 +70,32 @@ class Resizer extends Component {
     return content
   }
 
-  getFinalContents (contents) {
+  getFinalContents(contents) {
     return contents
       ? `${contents.replace(REPLACE_REGEX, this.replaceEntity)}<br>`
       : '<br>'
   }
 
-  render () {
+  render() {
     const { contents, minimumLines } = this.props
     const handleOnResize = this.handleOnResize
 
-    const minimumLinesMarkup = minimumLines
-      ? <div
+    const minimumLinesMarkup = minimumLines ? (
+      <div
         ref={node => (this.minimumLinesNode = node)}
-        className='c-InputGhost'
+        className="c-InputGhost"
         dangerouslySetInnerHTML={{
-          __html: this.getContentsForMinimumLines(minimumLines)
+          __html: this.getContentsForMinimumLines(minimumLines),
         }}
-        />
-      : null
+      />
+    ) : null
 
     return (
-      <div aria-hidden className='c-InputResizer'>
-        <EventListener event='resize' handler={handleOnResize} />
+      <div aria-hidden className="c-InputResizer">
+        <EventListener event="resize" handler={handleOnResize} />
         <div
           ref={node => (this.contentNode = node)}
-          className='c-InputGhost'
+          className="c-InputGhost"
           dangerouslySetInnerHTML={{ __html: this.getFinalContents(contents) }}
         />
         {minimumLinesMarkup}

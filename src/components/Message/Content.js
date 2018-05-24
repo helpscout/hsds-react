@@ -22,8 +22,8 @@ const Content = props => {
   const componentClassName = classNames(
     'c-MessageContent',
     from && 'is-from',
-    (ltr && !rtl) && 'is-ltr',
-    (!ltr && rtl) && 'is-rtl',
+    ltr && !rtl && 'is-ltr',
+    !ltr && rtl && 'is-rtl',
     to && 'is-to',
     className
   )

@@ -2,7 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
-import { Button, EmojiPicker, Heading, Modal, Link, Input, Toolbar } from '../src/index.js'
+import {
+  Button,
+  EmojiPicker,
+  Heading,
+  Modal,
+  Link,
+  Input,
+  Toolbar,
+} from '../src/index.js'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
@@ -13,15 +21,15 @@ const stories = storiesOf('Modal', module)
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
-  id: faker.random.uuid()
+  id: faker.random.uuid(),
 })
 
 class StatefulComponent extends React.Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       showModal: false,
-      value: ''
+      value: '',
     }
     this.handleOnButtonClick = this.handleOnButtonClick.bind(this)
     this.handleOnInputChange = this.handleOnInputChange.bind(this)
@@ -31,51 +39,51 @@ class StatefulComponent extends React.Component {
     this.handleOnKeyUp = this.handleOnKeyUp.bind(this)
   }
 
-  componentWillMount () {
+  componentWillMount() {
     window.addEventListener('keyup', this.handleOnKeyUp)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('keyup', this.handleOnKeyUp)
   }
 
-  handleOnKeyUp (event) {
+  handleOnKeyUp(event) {
     console.log(event)
   }
 
-  handleOnButtonClick () {
+  handleOnButtonClick() {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
-  handleOnInputChange (value) {
+  handleOnInputChange(value) {
     this.setState({
-      value
+      value,
     })
   }
 
-  handleOnModalOpen () {
+  handleOnModalOpen() {
     const inputNode = document.querySelector('input')
     if (inputNode) {
       inputNode.focus()
     }
   }
 
-  handleOnModalClose () {
-    this.setState({
-      showModal: false
-    })
-  }
-
-  handleOnSubmit () {
+  handleOnModalClose() {
     this.setState({
       showModal: false,
-      value: ''
     })
   }
 
-  render () {
+  handleOnSubmit() {
+    this.setState({
+      showModal: false,
+      value: '',
+    })
+  }
+
+  render() {
     const { showModal, value } = this.state
 
     const triggerMarkup = (
@@ -88,11 +96,7 @@ class StatefulComponent extends React.Component {
     )
 
     return (
-      <Modal
-        trigger={
-          <button>Open</button>
-        }
-      >
+      <Modal trigger={<button>Open</button>}>
         <Modal.Body>
           <Modal.Content>
             <Modal
@@ -132,7 +136,7 @@ stories.add('default', () => (
   <Modal trigger={<Link>Open dis modal</Link>}>
     <Modal.Body>
       <Heading>Title</Heading>
-      {ContentSpec.generate(8).map(({id, content}) => (
+      {ContentSpec.generate(8).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
     </Modal.Body>
@@ -144,7 +148,7 @@ stories.add('open', () => (
     <Modal.Content>
       <Modal.Body>
         <Heading>Title</Heading>
-        {ContentSpec.generate(12).map(({id, content}) => (
+        {ContentSpec.generate(12).map(({ id, content }) => (
           <p key={id}>{content}</p>
         ))}
       </Modal.Body>
@@ -154,35 +158,27 @@ stories.add('open', () => (
 
 stories.add('header/footer', () => (
   <Modal isOpen trigger={<Link>Clicky</Link>}>
-    <Modal.Header>
-      Header
-    </Modal.Header>
+    <Modal.Header>Header</Modal.Header>
     <Modal.Body>
       <Heading>Title</Heading>
-      {ContentSpec.generate(8).map(({id, content}) => (
+      {ContentSpec.generate(8).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
     </Modal.Body>
-    <Modal.Footer>
-      Footer
-    </Modal.Footer>
+    <Modal.Footer>Footer</Modal.Footer>
   </Modal>
 ))
 
 stories.add('header/footer styles', () => (
   <Modal isOpen trigger={<Link>Clicky</Link>}>
-    <Modal.Header seamless>
-      Header
-    </Modal.Header>
+    <Modal.Header seamless>Header</Modal.Header>
     <Modal.Body>
       <Heading>Title</Heading>
-      {ContentSpec.generate(8).map(({id, content}) => (
+      {ContentSpec.generate(8).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
     </Modal.Body>
-    <Modal.Footer shadow>
-      Footer
-    </Modal.Footer>
+    <Modal.Footer shadow>Footer</Modal.Footer>
   </Modal>
 ))
 
@@ -191,7 +187,7 @@ stories.add('header/footer with items', () => (
     <Modal.Content>
       <Modal.Header>
         <Toolbar.Item>
-          <Heading size='h4'>Heading</Heading>
+          <Heading size="h4">Heading</Heading>
         </Toolbar.Item>
         <Toolbar.Block />
         <Toolbar.Item>
@@ -199,8 +195,8 @@ stories.add('header/footer with items', () => (
         </Toolbar.Item>
       </Modal.Header>
       <Modal.Body>
-        <Heading size='h4'>Inner Heading</Heading>
-        {ContentSpec.generate(8).map(({id, content}) => (
+        <Heading size="h4">Inner Heading</Heading>
+        {ContentSpec.generate(8).map(({ id, content }) => (
           <p key={id}>{content}</p>
         ))}
       </Modal.Body>
@@ -222,7 +218,7 @@ stories.add('header/footer with items', () => (
 
 stories.add('custom close trigger', () => {
   class Contents extends React.Component {
-    render () {
+    render() {
       return (
         <p>
           <button onClick={this.context.closePortal}>Close me</button>
@@ -232,7 +228,7 @@ stories.add('custom close trigger', () => {
   }
 
   Contents.contextTypes = {
-    closePortal: PropTypes.func
+    closePortal: PropTypes.func,
   }
 
   return (
@@ -254,28 +250,27 @@ stories.add('nested', () => (
   <Modal trigger={<Link>Clicky</Link>}>
     <Modal.Body>
       <Heading>Title</Heading>
-      {ContentSpec.generate(2).map(({id, content}) => (
+      {ContentSpec.generate(2).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
 
       <Modal trigger={<Link>Level 2</Link>}>
         <Modal.Body>
           <Heading>Level 2</Heading>
-          {ContentSpec.generate(2).map(({id, content}) => (
+          {ContentSpec.generate(2).map(({ id, content }) => (
             <p key={id}>{content}</p>
           ))}
 
           <Modal trigger={<Link>Level 3</Link>}>
             <Modal.Body>
               <Heading>Level 3</Heading>
-              {ContentSpec.generate(2).map(({id, content}) => (
+              {ContentSpec.generate(2).map(({ id, content }) => (
                 <p key={id}>{content}</p>
               ))}
             </Modal.Body>
           </Modal>
         </Modal.Body>
       </Modal>
-
     </Modal.Body>
   </Modal>
 ))
@@ -284,12 +279,12 @@ stories.add('custom mounting selector', () => {
   return (
     <div>
       <p>Render modal here:</p>
-      <div className='render-modal-here' />
+      <div className="render-modal-here" />
 
-      <Modal trigger={<Link>Clicky</Link>} renderTo='.render-modal-here'>
+      <Modal trigger={<Link>Clicky</Link>} renderTo=".render-modal-here">
         <Modal.Body>
           <Heading>Title</Heading>
-          {ContentSpec.generate(2).map(({id, content}) => (
+          {ContentSpec.generate(2).map(({ id, content }) => (
             <p key={id}>{content}</p>
           ))}
         </Modal.Body>
@@ -299,13 +294,13 @@ stories.add('custom mounting selector', () => {
 })
 
 stories.add('lifecycle events', () => {
-  const onBeforeOpen = (modalOpen) => {
+  const onBeforeOpen = modalOpen => {
     console.log('Before open!')
     setTimeout(() => {
       modalOpen()
     }, 500)
   }
-  const onBeforeClose = (modalClose) => {
+  const onBeforeClose = modalClose => {
     console.log('Before close!')
     setTimeout(() => {
       modalClose()
@@ -316,14 +311,14 @@ stories.add('lifecycle events', () => {
       <p>onBeforeOpen: 500 delay</p>
       <p>onBeforeClose: 500 delay</p>
       <Modal
-        className='weee'
+        className="weee"
         onBeforeOpen={onBeforeOpen}
         onBeforeClose={onBeforeClose}
         trigger={<Link>Clicky</Link>}
       >
         <Modal.Body>
           <Heading>Title</Heading>
-          {ContentSpec.generate(2).map(({id, content}) => (
+          {ContentSpec.generate(2).map(({ id, content }) => (
             <p key={id}>{content}</p>
           ))}
         </Modal.Body>
@@ -338,61 +333,68 @@ stories.add('routes', () => {
       <h1>Routes</h1>
       <ul>
         <li>
-          <Link to='/'>Home</Link>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to='/team'>Team</Link>
+          <Link to="/team">Team</Link>
         </li>
         <li>
-          <Link to='/team/brick'>Brick</Link>
+          <Link to="/team/brick">Brick</Link>
         </li>
       </ul>
 
-      <Modal path='/team'>
+      <Modal path="/team">
         <Modal.Body>
           <h1>Team Modal: A</h1>
           <p>Modal content</p>
         </Modal.Body>
       </Modal>
 
-      <Modal path='/team/brick'>
+      <Modal path="/team/brick">
         <Modal.Body>
           <h1>Team Modal: B</h1>
           <p>Modal inner content</p>
         </Modal.Body>
       </Modal>
 
-      <Modal path='/team/brick'>
+      <Modal path="/team/brick">
         <Modal.Body>
           <h1>Team Modal: C</h1>
           <p>Modal inner content</p>
         </Modal.Body>
       </Modal>
 
-      <Modal path='/team/brick'>
+      <Modal path="/team/brick">
         <Modal.Body>
           <h1>Team Modal: D</h1>
           <p>Modal inner content</p>
         </Modal.Body>
       </Modal>
 
-      <Modal path='/team/brick'>
+      <Modal path="/team/brick">
         <Modal.Body>
           <h1>Team Modal: E</h1>
           <p>Modal inner content</p>
         </Modal.Body>
       </Modal>
 
-      <Route exact path='/' render={props => (
-        <div>
-          <h1>HOME PAGE</h1>
-        </div>
-      )} />
-      <Route path='/team' render={props => (
-        <div>
-          <h1>TEAM PAGE</h1>
-        </div>
-      )} />
+      <Route
+        exact
+        path="/"
+        render={props => (
+          <div>
+            <h1>HOME PAGE</h1>
+          </div>
+        )}
+      />
+      <Route
+        path="/team"
+        render={props => (
+          <div>
+            <h1>TEAM PAGE</h1>
+          </div>
+        )}
+      />
     </div>
   )
 })
@@ -411,12 +413,12 @@ stories.add('tabbing', () => (
       <Modal.Body>
         <Heading>Title</Heading>
         <button>One</button>
-        {ContentSpec.generate(6).map(({id, content}) => (
+        {ContentSpec.generate(6).map(({ id, content }) => (
           <p key={id}>{content}</p>
         ))}
         <button>Two</button>
         <button>Three</button>
-        {ContentSpec.generate(6).map(({id, content}) => (
+        {ContentSpec.generate(6).map(({ id, content }) => (
           <p key={id}>{content}</p>
         ))}
         <button>Four</button>

@@ -10,7 +10,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<Col className='mugatu' />)
+    const wrapper = shallow(<Col className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -20,7 +20,7 @@ describe('Children', () => {
   test('Can render child components', () => {
     const wrapper = shallow(
       <Col>
-        <div className='mugatu' />
+        <div className="mugatu" />
       </Col>
     )
 
@@ -43,18 +43,14 @@ describe('Style', () => {
 
 describe('Size', () => {
   test('Can render an additional size', () => {
-    const wrapper = shallow(
-      <Col size='8' />
-    )
+    const wrapper = shallow(<Col size="8" />)
 
     expect(wrapper.hasClass('c-Col')).toBeTruthy()
     expect(wrapper.hasClass('c-Col-8')).toBeTruthy()
   })
 
   test('Can render additional sizes, separated by space', () => {
-    const wrapper = shallow(
-      <Col size='8 6@md 4@lg' />
-    )
+    const wrapper = shallow(<Col size="8 6@md 4@lg" />)
 
     expect(wrapper.hasClass('c-Col')).toBeTruthy()
     expect(wrapper.hasClass('c-Col-8')).toBeTruthy()
@@ -63,9 +59,7 @@ describe('Size', () => {
   })
 
   test('Can render additional sizes, separated by comma', () => {
-    const wrapper = shallow(
-      <Col size='8,6@md, 4@lg' />
-    )
+    const wrapper = shallow(<Col size="8,6@md, 4@lg" />)
 
     expect(wrapper.hasClass('c-Col')).toBeTruthy()
     expect(wrapper.hasClass('c-Col-8')).toBeTruthy()
@@ -74,9 +68,7 @@ describe('Size', () => {
   })
 
   test('Can render additional sizes, separated by comma + space', () => {
-    const wrapper = shallow(
-      <Col size='8,6@md     4@lg' />
-    )
+    const wrapper = shallow(<Col size="8,6@md     4@lg" />)
 
     expect(wrapper.hasClass('c-Col')).toBeTruthy()
     expect(wrapper.hasClass('c-Col-8')).toBeTruthy()

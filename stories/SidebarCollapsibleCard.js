@@ -5,23 +5,21 @@ import { Sortable, SidebarCollapsibleCard } from '../src/index.js'
 storiesOf('SidebarCollapsibleCard', module)
   .add('default', () => (
     <div>
-      <SidebarCollapsibleCard title='Profile'>
+      <SidebarCollapsibleCard title="Profile">
         Buddy the Elf
       </SidebarCollapsibleCard>
 
-      <SidebarCollapsibleCard title='Status'>
-        Happy!
-      </SidebarCollapsibleCard>
+      <SidebarCollapsibleCard title="Status">Happy!</SidebarCollapsibleCard>
     </div>
   ))
   .add('open', () => (
-    <SidebarCollapsibleCard title='Profile' isOpen>
+    <SidebarCollapsibleCard title="Profile" isOpen>
       Buddy the Elf
     </SidebarCollapsibleCard>
   ))
   .add('custom heading', () => {
     const headerMarkup = (
-      <div style={{fontSize: 40}}>Giant Custom Header!</div>
+      <div style={{ fontSize: 40 }}>Giant Custom Header!</div>
     )
     return (
       <SidebarCollapsibleCard header={headerMarkup} isOpen>
@@ -33,10 +31,10 @@ storiesOf('SidebarCollapsibleCard', module)
     <Sortable
       useDragHandle
       hideDragHandles
-      style={{padding: 10, background: '#f1f3f5'}}
+      style={{ padding: 10, background: '#f1f3f5' }}
       pressDelay={100}
     >
-      <SidebarCollapsibleCard title='Zoolander 2' id='001'>
+      <SidebarCollapsibleCard title="Zoolander 2" id="001">
         <dl>
           <dt>Character</dt>
           <dd>Jacobim Mugatu</dd>
@@ -44,7 +42,7 @@ storiesOf('SidebarCollapsibleCard', module)
           <dd>2016</dd>
         </dl>
       </SidebarCollapsibleCard>
-      <SidebarCollapsibleCard title='The Lego Movie' id='002'>
+      <SidebarCollapsibleCard title="The Lego Movie" id="002">
         <dl>
           <dt>Character</dt>
           <dd>Lord Business</dd>
@@ -52,7 +50,7 @@ storiesOf('SidebarCollapsibleCard', module)
           <dd>2014</dd>
         </dl>
       </SidebarCollapsibleCard>
-      <SidebarCollapsibleCard title='Step Brothers' id='003'>
+      <SidebarCollapsibleCard title="Step Brothers" id="003">
         <dl>
           <dt>Character</dt>
           <dd>Brennan Huff</dd>

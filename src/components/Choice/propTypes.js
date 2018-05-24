@@ -1,12 +1,5 @@
 import PropTypes from 'prop-types'
 
-export const alignTypes = PropTypes.oneOf([
-  'top',
-  ''
-])
+export const alignTypes = PropTypes.oneOf(['top', ''])
 
-export const typeTypes = PropTypes.oneOf([
-  'checkbox',
-  'radio',
-  ''
-])
+export const typeTypes = PropTypes.oneOf(['checkbox', 'radio', ''])

@@ -21,7 +21,7 @@ export const propTypes = {
   size: sizeTypes,
   subtle: PropTypes.bool,
   title: PropTypes.string,
-  withCaret: PropTypes.bool
+  withCaret: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -32,7 +32,7 @@ const defaultProps = {
   name: null,
   onClick: noop,
   size: '20',
-  withCaret: false
+  withCaret: false,
 }
 
 const Icon = props => {
@@ -75,9 +75,9 @@ const Icon = props => {
 
   const caretMarkup = withCaret ? (
     <span
-      className='c-Icon__icon is-caret'
-      dangerouslySetInnerHTML={{__html: ICONS['caret-down']}}
-      title='Caret'
+      className="c-Icon__icon is-caret"
+      dangerouslySetInnerHTML={{ __html: ICONS['caret-down'] }}
+      title="Caret"
     />
   ) : null
 
@@ -89,7 +89,7 @@ const Icon = props => {
       {...rest}
     >
       <span
-        className='c-Icon__icon'
+        className="c-Icon__icon"
         dangerouslySetInnerHTML={src}
         title={iconTitle}
       />

@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import StatusDot from '../StatusDot'
 import VisuallyHidden from '../VisuallyHidden'
@@ -22,7 +22,7 @@ export const propTypes = {
   shape: shapeTypes,
   size: sizeTypes,
   statusIcon: PropTypes.string,
-  status: statusTypes
+  status: statusTypes,
 }
 
 const defaultProps = {
@@ -30,42 +30,42 @@ const defaultProps = {
   name: '',
   showStatusBorderColor: false,
   size: 'md',
-  shape: 'circle'
+  shape: 'circle',
 }
 
 export const IMAGE_STATES = {
   loading: 'loading',
   loaded: 'loaded',
-  failed: 'failed'
+  failed: 'failed',
 }
 
 class Avatar extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
       // Assume image is loading so that we only re-render on error
-      imageLoaded: IMAGE_STATES.loading
+      imageLoaded: IMAGE_STATES.loading,
     }
     this.onImageLoadedError = this.onImageLoadedError.bind(this)
     this.onImageLoadedSuccess = this.onImageLoadedSuccess.bind(this)
   }
 
-  onImageLoadedError () {
+  onImageLoadedError() {
     this.setState({
-      imageLoaded: IMAGE_STATES.failed
+      imageLoaded: IMAGE_STATES.failed,
     })
     this.props.onError && this.props.onError()
   }
 
-  onImageLoadedSuccess () {
+  onImageLoadedSuccess() {
     this.setState({
-      imageLoaded: IMAGE_STATES.loaded
+      imageLoaded: IMAGE_STATES.loaded,
     })
     this.props.onLoad && this.props.onLoad()
   }
 
-  render () {
+  render() {
     const {
       borderColor,
       className,
@@ -85,7 +85,9 @@ class Avatar extends Component {
     } = this.props
 
     const { imageLoaded } = this.state
-    const hasImage = image && [IMAGE_STATES.loading, IMAGE_STATES.loaded].indexOf(imageLoaded) >= 0
+    const hasImage =
+      image &&
+      [IMAGE_STATES.loading, IMAGE_STATES.loaded].indexOf(imageLoaded) >= 0
     const isImageLoaded = image && imageLoaded === IMAGE_STATES.loaded
 
     const componentClassName = classNames(
@@ -101,38 +103,48 @@ class Avatar extends Component {
       className
     )
 
-    const imageStyle = isImageLoaded ? { backgroundImage: `url('${image}')` } : null
+    const imageStyle = isImageLoaded
+      ? { backgroundImage: `url('${image}')` }
+      : null
     const text = count || initials || nameToInitials(name)
 
-    const contentMarkup = hasImage
-      ? (
-        <div className='c-Avatar__image' style={imageStyle}>
-          <div className='c-Avatar__name'>
-            <VisuallyHidden>
-              {name}
-            </VisuallyHidden>
-            <img alt='' onError={this.onImageLoadedError} onLoad={this.onImageLoadedSuccess} src={image} style={{display: 'none'}} />
-          </div>
+    const contentMarkup = hasImage ? (
+      <div className="c-Avatar__image" style={imageStyle}>
+        <div className="c-Avatar__name">
+          <VisuallyHidden>{name}</VisuallyHidden>
+          <img
+            alt=""
+            onError={this.onImageLoadedError}
+            onLoad={this.onImageLoadedSuccess}
+            src={image}
+            style={{ display: 'none' }}
+          />
         </div>
-      )
-      : <div className='c-Avatar__title'>
-        {text}
       </div>
+    ) : (
+      <div className="c-Avatar__title">{text}</div>
+    )
 
-    let styles = (borderColor || outerBorderColor) ? {
-      border: borderColor ? '2px solid' : undefined,
-      borderColor,
-      boxShadow: outerBorderColor ? `0 0 0 2px ${outerBorderColor}` : undefined
-    } : {}
+    let styles =
+      borderColor || outerBorderColor
+        ? {
+            border: borderColor ? '2px solid' : undefined,
+            borderColor,
+            boxShadow: outerBorderColor
+              ? `0 0 0 2px ${outerBorderColor}`
+              : undefined,
+          }
+        : {}
 
-    hasImage && Object.assign(styles, {
-      backgroundColor: 'transparent'
-    })
+    hasImage &&
+      Object.assign(styles, {
+        backgroundColor: 'transparent',
+      })
 
     styles = Object.keys(styles).length ? styles : null
 
     const statusMarkup = status ? (
-      <div className='c-Avatar__status'>
+      <div className="c-Avatar__status">
         <StatusDot
           icon={statusIcon}
           outerBorderColor={showStatusBorderColor ? borderColor : undefined}
@@ -144,7 +156,7 @@ class Avatar extends Component {
 
     return (
       <div className={componentClassName} title={name} {...rest}>
-        <div className='c-Avatar__crop' style={styles}>
+        <div className="c-Avatar__crop" style={styles}>
           {contentMarkup}
         </div>
         {statusMarkup}

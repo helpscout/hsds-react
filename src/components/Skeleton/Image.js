@@ -3,19 +3,11 @@ import Block from './Block'
 import classNames from '../../utilities/classNames'
 
 const Image = props => {
-  const {
-    className,
-    ...rest
-  } = props
+  const { className, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-SkeletonImage',
-    className
-  )
+  const componentClassName = classNames('c-SkeletonImage', className)
 
-  return (
-    <Block className={componentClassName} {...rest} />
-  )
+  return <Block className={componentClassName} {...rest} />
 }
 
 Image.displayName = 'SkeletonImage'

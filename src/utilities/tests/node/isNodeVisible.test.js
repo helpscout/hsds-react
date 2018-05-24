@@ -1,6 +1,4 @@
-import {
-  isNodeVisible
-} from '../../node'
+import { isNodeVisible } from '../../node'
 
 test('Returns false for invalid arguments', () => {
   const o = document.createElement('div')
@@ -16,17 +14,17 @@ test('Returns true if Node is visible', () => {
   const node = document.createElement('div')
 
   scope.getBoundingClientRect = () => ({
-    height: 300
+    height: 300,
   })
   node.getBoundingClientRect = () => ({
     height: 10,
-    top: 400
+    top: 400,
   })
   scope.scrollTop = 400
 
   const options = {
     node,
-    scope
+    scope,
   }
 
   expect(isNodeVisible(options)).toBeTruthy()
@@ -37,17 +35,17 @@ test('Returns false if Node is not visible', () => {
   const node = document.createElement('div')
 
   scope.getBoundingClientRect = () => ({
-    height: 300
+    height: 300,
   })
   node.getBoundingClientRect = () => ({
     height: 10,
-    top: 400
+    top: 400,
   })
   scope.scrollTop = 0
 
   const options = {
     node,
-    scope
+    scope,
   }
 
   expect(isNodeVisible(options)).not.toBeTruthy()
@@ -59,14 +57,14 @@ describe('Window', () => {
 
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 400
+      top: 400,
     })
 
     window.scrollY = 400
 
     const options = {
       node,
-      window
+      window,
     }
 
     expect(isNodeVisible(options)).toBeTruthy()
@@ -77,14 +75,14 @@ describe('Window', () => {
 
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 400
+      top: 400,
     })
 
     window.scrollY = 0
 
     const options = {
       node,
-      window
+      window,
     }
 
     expect(isNodeVisible(options)).toBeTruthy()
@@ -97,18 +95,18 @@ describe('Offset', () => {
     const node = document.createElement('div')
 
     scope.getBoundingClientRect = () => ({
-      height: 300
+      height: 300,
     })
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 400
+      top: 400,
     })
     scope.scrollTop = 300
 
     const options = {
       node,
       scope,
-      offset: 100
+      offset: 100,
     }
 
     expect(isNodeVisible(options)).toBeTruthy()
@@ -119,18 +117,18 @@ describe('Offset', () => {
     const node = document.createElement('div')
 
     scope.getBoundingClientRect = () => ({
-      height: 300
+      height: 300,
     })
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 400
+      top: 400,
     })
     scope.scrollTop = 400
 
     const options = {
       node,
       scope,
-      offset: 'derlict'
+      offset: 'derlict',
     }
 
     expect(isNodeVisible(options)).toBeTruthy()
@@ -141,18 +139,18 @@ describe('Offset', () => {
     const node = document.createElement('div')
 
     scope.getBoundingClientRect = () => ({
-      height: 100
+      height: 100,
     })
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 400
+      top: 400,
     })
     scope.scrollTop = 10
 
     const options = {
       node,
       scope,
-      offset: 0
+      offset: 0,
     }
 
     expect(isNodeVisible(options)).not.toBeTruthy()
@@ -163,18 +161,18 @@ describe('Offset', () => {
     const node = document.createElement('div')
 
     scope.getBoundingClientRect = () => ({
-      height: 100
+      height: 100,
     })
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 400
+      top: 400,
     })
     scope.scrollTop = 10
 
     const options = {
       node,
       scope,
-      offset: -100000
+      offset: -100000,
     }
 
     expect(isNodeVisible(options)).not.toBeTruthy()
@@ -187,11 +185,11 @@ describe('Complete', () => {
     const node = document.createElement('div')
 
     scope.getBoundingClientRect = () => ({
-      height: 300
+      height: 300,
     })
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 300
+      top: 300,
     })
     scope.scrollTop = 200
 
@@ -199,7 +197,7 @@ describe('Complete', () => {
       node,
       scope,
       offset: 0,
-      complete: true
+      complete: true,
     }
 
     expect(isNodeVisible(options)).toBeTruthy()
@@ -210,11 +208,11 @@ describe('Complete', () => {
     const node = document.createElement('div')
 
     scope.getBoundingClientRect = () => ({
-      height: 400
+      height: 400,
     })
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 500
+      top: 500,
     })
     scope.scrollTop = 10
 
@@ -222,7 +220,7 @@ describe('Complete', () => {
       node,
       scope,
       offset: 0,
-      complete: true
+      complete: true,
     }
 
     expect(isNodeVisible(options)).not.toBeTruthy()
@@ -233,11 +231,11 @@ describe('Complete', () => {
     const node = document.createElement('div')
 
     scope.getBoundingClientRect = () => ({
-      height: 300
+      height: 300,
     })
     node.getBoundingClientRect = () => ({
       height: 10,
-      top: 400
+      top: 400,
     })
     scope.scrollTop = 300
 
@@ -245,7 +243,7 @@ describe('Complete', () => {
       node,
       scope,
       offset: 100,
-      complete: true
+      complete: true,
     }
 
     expect(isNodeVisible(options)).toBeTruthy()

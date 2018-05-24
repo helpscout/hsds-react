@@ -1,6 +1,4 @@
-import {
-  findCurrentFocusedNodeIndex
-} from '../../focus'
+import { findCurrentFocusedNodeIndex } from '../../focus'
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -30,7 +28,7 @@ test('Returns index of current focused node', () => {
   expect(findCurrentFocusedNodeIndex(n)).toBe(index)
 })
 
-test('Returns false if current node isn\'t focusable', () => {
+test("Returns false if current node isn't focusable", () => {
   document.body.innerHTML = `
     <span class="nope">Nope</span>
     <a>Yes</a>

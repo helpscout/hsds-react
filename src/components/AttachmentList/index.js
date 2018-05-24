@@ -5,19 +5,19 @@ import Icon from '../Icon'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
 import classNames from '../../utilities/classNames'
-import {noop} from '../../utilities/other'
-import {providerContextTypes} from '../Attachment/propTypes'
+import { noop } from '../../utilities/other'
+import { providerContextTypes } from '../Attachment/propTypes'
 
 export const propTypes = {
   downloadAllLabel: PropTypes.string,
   onDownloadAllClick: PropTypes.func,
-  showDownloadAll: PropTypes.bool
+  showDownloadAll: PropTypes.bool,
 }
 
 const defaultProps = {
   downloadAllLabel: 'Download All',
   onDownloadAllClick: noop,
-  showDownloadAll: true
+  showDownloadAll: true,
 }
 
 const contextTypes = providerContextTypes
@@ -31,9 +31,7 @@ const AttachmentList = (props, context) => {
     showDownloadAll,
     ...rest
   } = props
-  const {
-    theme
-  } = context
+  const { theme } = context
 
   const isThemePreview = theme === 'preview'
 
@@ -43,48 +41,51 @@ const AttachmentList = (props, context) => {
     className
   )
 
-  const attachmentChildren = React.Children.toArray(children)
-    .filter(child => child.type && child.type === Attachment)
+  const attachmentChildren = React.Children.toArray(children).filter(
+    child => child.type && child.type === Attachment
+  )
 
   const childrenMarkup = attachmentChildren.length
     ? attachmentChildren.map((child, index) => {
-      const { id, name } = child.props
-      const key = id || `${name}-${index}`
+        const { id, name } = child.props
+        const key = id || `${name}-${index}`
 
-      return (
-        <Inline.Item
-          className='c-AttachmentList__inlineListItem c-AttachmentWrapper'
-          key={key}
-        >
-          {React.cloneElement(child, {
-            ...child.props
-          })}
-        </Inline.Item>
-      )
-    }) : null
+        return (
+          <Inline.Item
+            className="c-AttachmentList__inlineListItem c-AttachmentWrapper"
+            key={key}
+          >
+            {React.cloneElement(child, {
+              ...child.props,
+            })}
+          </Inline.Item>
+        )
+      })
+    : null
 
   const downloadAllMarkup =
-    (showDownloadAll && attachmentChildren.length > 1)
-    ? (
-      <Inline.Item className='c-AttachmentList__inlineListItemDownloadAll'>
+    showDownloadAll && attachmentChildren.length > 1 ? (
+      <Inline.Item className="c-AttachmentList__inlineListItemDownloadAll">
         <Attachment
           name={downloadAllLabel}
           onClick={onDownloadAllClick}
-          type='action'
+          type="action"
         />
       </Inline.Item>
     ) : null
 
   const contentMarkup = isThemePreview ? (
-    <Overflow className='c-AttachmentList__content'>
-      <div className='c-AttachmentList__overflowContent'>
-        {childrenMarkup}
-      </div>
+    <Overflow className="c-AttachmentList__content">
+      <div className="c-AttachmentList__overflowContent">{childrenMarkup}</div>
     </Overflow>
   ) : (
-    <Inline className='c-AttachmentList__content c-AttachmentList__inlineList'>
+    <Inline className="c-AttachmentList__content c-AttachmentList__inlineList">
       <Inline.Item>
-        <Icon className='c-AttachmentList__icon' name='attachment' shade='faint' />
+        <Icon
+          className="c-AttachmentList__icon"
+          name="attachment"
+          shade="faint"
+        />
       </Inline.Item>
       {childrenMarkup}
       {downloadAllMarkup}

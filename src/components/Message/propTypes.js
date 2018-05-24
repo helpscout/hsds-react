@@ -4,17 +4,13 @@ export const themeTypes = PropTypes.oneOf([
   'admin',
   'embed',
   'notifications',
-  ''
+  '',
 ])
 
-export const typeTypes = PropTypes.oneOf([
-  'action',
-  'message',
-  ''
-])
+export const typeTypes = PropTypes.oneOf(['action', 'message', ''])
 
 export const providerContextTypes = {
-  theme: themeTypes
+  theme: themeTypes,
 }
 
 export const messageTypes = {
@@ -22,12 +18,12 @@ export const messageTypes = {
   ltr: PropTypes.bool,
   rtl: PropTypes.bool,
   to: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
-  type: typeTypes
+  type: typeTypes,
 }
 
 export const chatTypes = Object.assign({}, messageTypes, {
   read: PropTypes.bool,
-  timestamp: PropTypes.string
+  timestamp: PropTypes.string,
 })
 
 export const bubbleTypes = Object.assign({}, chatTypes, {
@@ -37,5 +33,5 @@ export const bubbleTypes = Object.assign({}, chatTypes, {
   primary: PropTypes.bool,
   title: PropTypes.string,
   size: PropTypes.oneOf(['md', 'sm', '']),
-  typing: PropTypes.bool
+  typing: PropTypes.bool,
 })

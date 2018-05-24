@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
 import {
@@ -8,7 +8,7 @@ import {
   InfiniteScroller,
   Modal,
   Scrollable,
-  Text
+  Text,
 } from '../src/index.js'
 
 window.Perf = Perf
@@ -19,13 +19,13 @@ const stories = storiesOf('InfiniteScroller', module)
 const makeStoryItems = (count, start = 0) => {
   const collection = []
   const badHash = () => Math.random() * (100 - 1) + 1
-  const uniq = () => `${Math.round((new Date()).getTime() / 1000)}-${badHash()}`
+  const uniq = () => `${Math.round(new Date().getTime() / 1000)}-${badHash()}`
 
   for (let i = 0, len = count; i < len; i++) {
     const index = start + i
     collection.push(
-      <Animate sequence='fade'>
-        <Card style={{margin: 8}} key={`item-${uniq()}-${i}`}>
+      <Animate sequence="fade">
+        <Card style={{ margin: 8 }} key={`item-${uniq()}-${i}`}>
           Item {index + 1}
         </Card>
       </Animate>
@@ -35,50 +35,45 @@ const makeStoryItems = (count, start = 0) => {
 }
 
 class StoryComponent extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       isLoading: false,
-      items: makeStoryItems(15)
+      items: makeStoryItems(15),
     }
     this.onLoading = this.onLoading.bind(this)
     this.onLoaded = this.onLoaded.bind(this)
   }
 
-  onLoading (onLoaded) {
+  onLoading(onLoaded) {
     this.setState({ isLoading: true })
     console.log('Loading!')
     setTimeout(() => {
       this.setState({
-        isLoading: false
+        isLoading: false,
       })
       onLoaded()
     }, 500)
   }
 
-  onLoaded () {
+  onLoaded() {
     const { items } = this.state
     this.setState({
-      items: items.concat(makeStoryItems(5, items.length))
+      items: items.concat(makeStoryItems(5, items.length)),
     })
     console.log('Loaded!')
   }
 
-  render () {
-    const {
-      isLoading,
-      items
-    } = this.state
+  render() {
+    const { isLoading, items } = this.state
 
     const onLoaded = this.onLoaded
     const onLoading = this.onLoading
 
     return (
-      <Card style={{minWidth: 600, height: 320, margin: 'auto'}} seamless>
+      <Card style={{ minWidth: 600, height: 320, margin: 'auto' }} seamless>
         <Scrollable>
-          <AnimateGroup>
-            {items}
-          </AnimateGroup>
+          <AnimateGroup>{items}</AnimateGroup>
           <InfiniteScroller
             onLoading={onLoading}
             onLoaded={onLoaded}
@@ -94,9 +89,7 @@ class StoryComponent extends Component {
 }
 
 // Stories
-stories.add('default', () => (
-  <StoryComponent />
-))
+stories.add('default', () => <StoryComponent />)
 
 stories.add('modal', () => (
   <Modal trigger={<a>Click</a>} isOpen>

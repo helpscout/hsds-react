@@ -14,7 +14,11 @@ describe('FormGroupChoice', () => {
 
   describe('Children', () => {
     test('Renders child content', () => {
-      const wrapper = shallow(<FormGroupChoice><div className='child'>Hello</div></FormGroupChoice>)
+      const wrapper = shallow(
+        <FormGroupChoice>
+          <div className="child">Hello</div>
+        </FormGroupChoice>
+      )
       const el = wrapper.find('div.child')
 
       expect(el.text()).toContain('Hello')
