@@ -28,6 +28,7 @@ describe('anyDefined', () => {
   })
 
   test('Returns false if undefined', () => {
+    expect(anyDefined()).toBe(false)
     expect(anyDefined([null, null])).toBe(false)
     expect(anyDefined([undefined, undefined])).toBe(false)
     expect(anyDefined({ a: undefined, b: undefined })).toBe(false)
@@ -41,6 +42,7 @@ describe('allDefined', () => {
   })
 
   test('Returns false if undefined', () => {
+    expect(allDefined()).toBe(false)
     expect(allDefined([1, null, 3])).toBe(false)
     expect(allDefined([1, false, null])).toBe(false)
     expect(allDefined([1, undefined, false])).toBe(false)

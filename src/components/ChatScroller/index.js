@@ -7,9 +7,12 @@ import { allDefined } from '../../utilities/check'
 import { noop } from '../../utilities/other'
 
 class ChatScroller extends Component {
-  childNodeRef = 'childNode'
-  childNode = null
-  scrollableNode = null
+  constructor() {
+    super()
+    this.childNodeRef = 'childNode'
+    this.childNode = null
+    this.scrollableNode = null
+  }
 
   componentDidMount() {
     this.setNodes()
@@ -26,7 +29,7 @@ class ChatScroller extends Component {
     }
   }
 
-  setNodes = () => {
+  setNodes() {
     const childNode = this.refs[this.childNodeRef]
     if (!childNode) return
 
@@ -40,7 +43,7 @@ class ChatScroller extends Component {
     )
   }
 
-  getLatestMessageNode = () => {
+  getLatestMessageNode() {
     if (!this.scrollableNode) return
     const messageChatNodes = this.scrollableNode.querySelectorAll(
       this.props.messageSelectors
@@ -49,7 +52,7 @@ class ChatScroller extends Component {
     return last(messageChatNodes)
   }
 
-  autoScrollToLatestMessage = () => {
+  autoScrollToLatestMessage() {
     const {
       distanceForAutoScroll,
       offsetThreshold,
@@ -86,7 +89,7 @@ class ChatScroller extends Component {
     }
   }
 
-  forceScrollToBottom = () => {
+  forceScrollToBottom() {
     const { smoothScrollDuration } = this.props
     if (!this.scrollableNode) return
 
@@ -97,7 +100,7 @@ class ChatScroller extends Component {
     })
   }
 
-  handleScroll = scrollProps => {
+  handleScroll(scrollProps) {
     if (!this.scrollableNode) return
 
     smoothScrollTo(scrollProps)
