@@ -18,6 +18,7 @@ Below is a list of documentation for our Components:
 * [ChatInbox](./ChatInbox)
 * [ChatList](./ChatList)
 * [ChatSidebar](./ChatSidebar)
+* [ChatScroller](./ChatScroller)
 * [ChatTranscript](./ChatTranscript)
 * [Checkbox](./Checkbox)
 * [Choice](./Choice)

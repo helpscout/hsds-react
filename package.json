@@ -53,7 +53,6 @@
   },
   "dependencies": {
     "@helpscout/fancy": "0.7.0",
-    "@shopify/javascript-utilities": "2.0.0",
     "closest": "0.0.1",
     "emoji-mart": "^1.0.1",
     "lodash.camelcase": "4.3.0",
