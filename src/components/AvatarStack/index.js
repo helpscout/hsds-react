@@ -1,9 +1,6 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  default as Avatar,
-  propTypes as avatarTypes
-} from '../Avatar'
+import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
@@ -17,7 +14,7 @@ export const propTypes = {
   borderColor: PropTypes.string,
   max: PropTypes.number,
   shape: avatarTypes.shape,
-  size: standardSizeTypes
+  size: standardSizeTypes,
 }
 
 const defaultProps = {
@@ -27,11 +24,11 @@ const defaultProps = {
   borderColor: 'white',
   max: 5,
   shape: 'circle',
-  size: 'md'
+  size: 'md',
 }
 
 class AvatarStack extends Component {
-  render () {
+  render() {
     const {
       animationEasing,
       animationSequence,
@@ -46,28 +43,24 @@ class AvatarStack extends Component {
       ...rest
     } = this.props
 
-    const avatars = React.Children
-      .toArray(children)
-      .filter(child => child.type && child.type === Avatar)
+    const avatars = React.Children.toArray(children).filter(
+      child => child.type && child.type === Avatar
+    )
 
     const totalAvatarCount = avatars.length
-    const avatarList = max && totalAvatarCount > max
-      ? avatars.slice(0, (max - 1))
-      : avatars
+    const avatarList =
+      max && totalAvatarCount > max ? avatars.slice(0, max - 1) : avatars
     const additionalAvatarCount = totalAvatarCount - avatarList.length
 
-    const componentClassName = classNames(
-      'c-AvatarStack',
-      className
-    )
+    const componentClassName = classNames('c-AvatarStack', className)
 
     const additionalAvatarMarkup = additionalAvatarCount ? (
       <Animate
-        key='AvatarGrid__additionalAvatarMarkup'
+        key="AvatarGrid__additionalAvatarMarkup"
         easing={animationEasing}
         sequence={animationSequence}
       >
-        <div className='c-AvatarStack__item is-additional'>
+        <div className="c-AvatarStack__item is-additional">
           <Avatar
             borderColor={borderColor}
             className={avatarsClassName}
@@ -81,12 +74,12 @@ class AvatarStack extends Component {
     ) : null
 
     const avatarMarkup = avatarList.map((avatar, index) => {
-      const zIndex = (avatarList.length - index) + 1
+      const zIndex = avatarList.length - index + 1
       const composedAvatar = React.cloneElement(avatar, {
         borderColor,
         className: classNames(avatar.props.className, avatarsClassName),
         shape,
-        size
+        size,
       })
 
       return (
@@ -94,11 +87,9 @@ class AvatarStack extends Component {
           key={avatar.key}
           easing={animationEasing}
           sequence={animationSequence}
-          style={{...avatar.style, zIndex}}
+          style={{ ...avatar.style, zIndex }}
         >
-          <div className='c-AvatarStack__item'>
-            {composedAvatar}
-          </div>
+          <div className="c-AvatarStack__item">{composedAvatar}</div>
         </Animate>
       )
     })

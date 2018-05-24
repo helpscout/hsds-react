@@ -12,16 +12,8 @@ stories.add('default', () => (
 
 stories.add('status:icon', () => (
   <div>
-    <StatusAvatar
-      name={fixture.name}
-      image={fixture.image}
-      isOnline
-    />
+    <StatusAvatar name={fixture.name} image={fixture.image} isOnline />
     <br />
-    <StatusAvatar
-      name={fixture.name}
-      image={fixture.image}
-      isOnline={false}
-    />
+    <StatusAvatar name={fixture.name} image={fixture.image} isOnline={false} />
   </div>
 ))

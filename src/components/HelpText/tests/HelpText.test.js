@@ -21,7 +21,7 @@ describe('Content', () => {
   test('Renders React Component as content', () => {
     const wrapper = shallow(
       <HelpText>
-        <div className='gator'>Gator</div>
+        <div className="gator">Gator</div>
       </HelpText>
     )
     const o = wrapper.find('.gator')
@@ -47,19 +47,19 @@ describe('Styles', () => {
 
 describe('States', () => {
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<HelpText state='error' />)
+    const wrapper = shallow(<HelpText state="error" />)
 
     expect(wrapper.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<HelpText state='success' />)
+    const wrapper = shallow(<HelpText state="success" />)
 
     expect(wrapper.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<HelpText state='warning' />)
+    const wrapper = shallow(<HelpText state="warning" />)
 
     expect(wrapper.prop('className')).toContain('is-warning')
   })

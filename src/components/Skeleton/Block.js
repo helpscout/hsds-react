@@ -2,20 +2,11 @@ import React from 'react'
 import classNames from '../../utilities/classNames'
 
 const Block = props => {
-  const {
-    className,
-    children,
-    ...rest
-  } = props
+  const { className, children, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-SkeletonBlock',
-    className
-  )
+  const componentClassName = classNames('c-SkeletonBlock', className)
 
-  return (
-    <div className={componentClassName} {...rest} role='presentation' />
-  )
+  return <div className={componentClassName} {...rest} role="presentation" />
 }
 
 Block.displayName = 'SkeletonBlock'

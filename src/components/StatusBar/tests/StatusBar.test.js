@@ -22,7 +22,11 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Can render children', () => {
-    const wrapper = shallow(<StatusBar isOpen><Text>Hello</Text></StatusBar>)
+    const wrapper = shallow(
+      <StatusBar isOpen>
+        <Text>Hello</Text>
+      </StatusBar>
+    )
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Hello')
@@ -93,7 +97,9 @@ describe('Collapsible', () => {
 
   test('Close on click can be disabled', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<StatusBar isOpen onClose={spy} closeOnClick={false} />)
+    const wrapper = shallow(
+      <StatusBar isOpen onClose={spy} closeOnClick={false} />
+    )
     const o = wrapper.find('.c-StatusBar')
 
     o.simulate('click')

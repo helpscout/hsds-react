@@ -21,7 +21,7 @@ describe('Input', () => {
 
 describe('Prefix/Suffix', () => {
   test('Should be dimmed by default', () => {
-    const markup = shallow(<Input prefix='Prefix' />).html()
+    const markup = shallow(<Input prefix="Prefix" />).html()
     styles.html(markup)
 
     const o = styles.$('.c-Input__prefix')
@@ -30,7 +30,7 @@ describe('Prefix/Suffix', () => {
   })
 
   test('Should be full opacity if input has value', () => {
-    const markup = shallow(<Input prefix='Prefix' value='Value' />).html()
+    const markup = shallow(<Input prefix="Prefix" value="Value" />).html()
     styles.html(markup)
 
     const o = styles.$('.c-Input__prefix')
@@ -39,7 +39,7 @@ describe('Prefix/Suffix', () => {
   })
 
   test('Should prevent text-wrapping', () => {
-    const markup = shallow(<Input prefix='Prefix' />).html()
+    const markup = shallow(<Input prefix="Prefix" />).html()
     styles.html(markup)
 
     const o = styles.$('.c-Input__prefix')

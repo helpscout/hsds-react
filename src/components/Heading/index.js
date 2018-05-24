@@ -11,14 +11,14 @@ export const propTypes = {
   lineHeightReset: PropTypes.bool,
   linkStyle: PropTypes.bool,
   selector: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  size: sizeTypes
+  size: sizeTypes,
 }
 
 const defaultProps = {
   center: false,
   disableSelect: false,
   linkStyle: false,
-  selector: false
+  selector: false,
 }
 
 const Heading = props => {
@@ -52,7 +52,7 @@ const Heading = props => {
     selectorTag,
     {
       ...rest,
-      className: componentClassName
+      className: componentClassName,
     },
     children
   )

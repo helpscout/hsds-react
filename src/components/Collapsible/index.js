@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
@@ -9,93 +9,95 @@ export const propTypes = {
   durationClose: PropTypes.number,
   isOpen: PropTypes.bool,
   onOpen: PropTypes.func,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
 }
 const defaultProps = {
   duration: 300,
   isOpen: false,
   onOpen: noop,
-  onClose: noop
+  onClose: noop,
 }
 
 class Collapsible extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       height: null,
-      animationState: 'idle'
+      animationState: 'idle',
     }
     this._isMounted = false
     this.node = null
     this.heightNode = null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._isMounted = true
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._isMounted = false
   }
 
-  componentWillReceiveProps ({isOpen: willOpen}) {
-    const {isOpen} = this.props
+  componentWillReceiveProps({ isOpen: willOpen }) {
+    const { isOpen } = this.props
 
     /* istanbul ignore next */
     if (isOpen !== willOpen) {
-      this.safeSetState({animationState: 'measuring'})
+      this.safeSetState({ animationState: 'measuring' })
     }
   }
 
-  componentDidUpdate ({isOpen: wasOpen}) {
+  componentDidUpdate({ isOpen: wasOpen }) {
     this.handleAnimation(wasOpen)
     this.handleAnimationStateCallback()
   }
 
-  safeSetState (state) {
+  safeSetState(state) {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state)
     }
   }
 
-  handleAnimation (wasOpen) {
-    const {animationState} = this.state
-    const {duration} = this.props
+  handleAnimation(wasOpen) {
+    const { animationState } = this.state
+    const { duration } = this.props
 
     requestAnimationFrame(() => {
       switch (animationState) {
         case 'measuring':
           this.safeSetState({
             animationState: wasOpen ? 'closingStart' : 'openingStart',
-            height: wasOpen && this.heightNode ? this.heightNode.scrollHeight : 0
+            height:
+              wasOpen && this.heightNode ? this.heightNode.scrollHeight : 0,
           })
           break
         case 'closingStart':
           this.safeSetState({
             animationState: 'closing',
-            height: 0
+            height: 0,
           })
           break
         case 'closing':
           setTimeout(() => {
             this.safeSetState({
-              animationState: 'closed'
+              animationState: 'closed',
             })
           }, duration)
           break
         case 'openingStart':
           this.safeSetState({
             animationState: 'opening',
-            height: this.heightNode ? this.heightNode.scrollHeight
-            /* istanbul ignore next */
-            : 0
+            height: this.heightNode
+              ? this.heightNode.scrollHeight
+              : /* istanbul ignore next */
+                0,
           })
           break
         case 'opening':
           setTimeout(() => {
             this.safeSetState({
-              animationState: 'opened'
+              animationState: 'opened',
             })
           }, duration)
           break
@@ -105,9 +107,9 @@ class Collapsible extends Component {
     })
   }
 
-  handleAnimationStateCallback () {
-    const {animationState} = this.state
-    const {onOpen, onClose} = this.props
+  handleAnimationStateCallback() {
+    const { animationState } = this.state
+    const { onOpen, onClose } = this.props
 
     switch (animationState) {
       case 'opened':
@@ -121,11 +123,12 @@ class Collapsible extends Component {
     }
   }
 
-  collapsibleHeight (isOpen, animationState, height) {
+  collapsibleHeight(isOpen, animationState, height) {
     if (animationState === 'idle' && isOpen) {
-      return isOpen ? 'auto'
-      /* istanbul ignore next */
-      : null
+      return isOpen
+        ? 'auto'
+        : /* istanbul ignore next */
+          null
     }
 
     if (animationState === 'measuring') {
@@ -139,9 +142,9 @@ class Collapsible extends Component {
     return `${height || 0}px`
   }
 
-  getTransitionDuration () {
-    const {duration, durationOpen, durationClose} = this.props
-    const {animationState} = this.state
+  getTransitionDuration() {
+    const { duration, durationOpen, durationClose } = this.props
+    const { animationState } = this.state
     const openDuration = durationOpen !== undefined ? durationOpen : duration
     const closeDuration = durationClose !== undefined ? durationClose : duration
     const isOpening = animationState.indexOf('closing') < 0
@@ -149,7 +152,7 @@ class Collapsible extends Component {
     return isOpening ? openDuration : closeDuration
   }
 
-  render () {
+  render() {
     const {
       className,
       children,
@@ -162,7 +165,7 @@ class Collapsible extends Component {
       style,
       ...rest
     } = this.props
-    const {animationState, height} = this.state
+    const { animationState, height } = this.state
 
     const animating = animationState !== 'idle'
 
@@ -175,25 +178,31 @@ class Collapsible extends Component {
 
     const displayHeight = this.collapsibleHeight(isOpen, animationState, height)
 
-    const content = animating || isOpen
-      ? children
-      : null
+    const content = animating || isOpen ? children : null
 
     const collapseStyle = {
       height: displayHeight,
-      transitionDuration: `${this.getTransitionDuration()}ms`
+      transitionDuration: `${this.getTransitionDuration()}ms`,
     }
-    const componentStyle = style ? Object.assign({}, style, collapseStyle) : collapseStyle
+    const componentStyle = style
+      ? Object.assign({}, style, collapseStyle)
+      : collapseStyle
 
     return (
       <div
         aria-hidden={!isOpen}
         style={componentStyle}
         className={componentClassName}
-        ref={node => { this.node = node }}
+        ref={node => {
+          this.node = node
+        }}
         {...rest}
       >
-        <div ref={node => { this.heightNode = node }}>
+        <div
+          ref={node => {
+            this.heightNode = node
+          }}
+        >
           {content}
         </div>
       </div>

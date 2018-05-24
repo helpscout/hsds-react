@@ -13,7 +13,11 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<FormGroup><div className='child'>Hello</div></FormGroup>)
+    const wrapper = shallow(
+      <FormGroup>
+        <div className="child">Hello</div>
+      </FormGroup>
+    )
     const el = wrapper.find('div.child')
 
     expect(el.text()).toContain('Hello')

@@ -11,7 +11,7 @@ describe('Classname', () => {
   })
 
   test('Can accept custom classNames', () => {
-    const wrapper = shallow(<Dropdown className='ron' />)
+    const wrapper = shallow(<Dropdown className="ron" />)
 
     expect(wrapper.hasClass('ron')).toBeTruthy()
   })
@@ -35,7 +35,7 @@ describe('Children', () => {
   test('Can render a non Trigger/Menu child component', () => {
     const wrapper = mount(
       <Dropdown>
-        <div className='ron'>Ron</div>
+        <div className="ron">Ron</div>
       </Dropdown>
     )
     const o = wrapper.find('.ron')
@@ -107,7 +107,7 @@ describe('Children', () => {
     const wrapper = mount(
       <Dropdown>
         <Dropdown.Trigger />
-        <div className='other'>Other guys</div>
+        <div className="other">Other guys</div>
       </Dropdown>
     )
     const m = wrapper.find(Dropdown.Trigger)
@@ -134,9 +134,7 @@ describe('Children', () => {
 
 describe('Open', () => {
   test('Updates isOpen state on isOpen prop change', () => {
-    const wrapper = mount(
-      <Dropdown />
-    )
+    const wrapper = mount(<Dropdown />)
 
     expect(wrapper.state().isOpen).not.toBeTruthy()
     wrapper.setProps({ isOpen: true })
@@ -151,12 +149,12 @@ describe('Selected', () => {
       <Dropdown onSelect={spy} isOpen>
         <Dropdown.Trigger />
         <MenuComponent>
-          <Dropdown.Item value='Ron' />
+          <Dropdown.Item value="Ron" />
         </MenuComponent>
       </Dropdown>
     )
     const o = wrapper.find(Dropdown.Item)
-    o.node.handleOnClick({stopPropagation: () => {}})
+    o.node.handleOnClick({ stopPropagation: () => {} })
 
     expect(spy).toHaveBeenCalledWith('Ron')
   })
@@ -164,22 +162,18 @@ describe('Selected', () => {
 
 describe('Click events', () => {
   test('Does not open when document.body is clicked', () => {
-    const wrapper = mount(
-      <Dropdown />
-    )
+    const wrapper = mount(<Dropdown />)
     wrapper.instance().handleOnBodyClick({
-      target: document.body
+      target: document.body,
     })
 
     expect(wrapper.state().isOpen).toBeFalsy()
   })
 
   test('Closes when document.body is clicked', () => {
-    const wrapper = mount(
-      <Dropdown isOpen />
-    )
+    const wrapper = mount(<Dropdown isOpen />)
     wrapper.instance().handleOnBodyClick({
-      target: document.body
+      target: document.body,
     })
 
     expect(wrapper.state().isOpen).toBeFalsy()
@@ -194,7 +188,7 @@ describe('Click events', () => {
     const o = wrapper.instance()
 
     o.handleOnBodyClick({
-      target: o.triggerNode
+      target: o.triggerNode,
     })
 
     expect(wrapper.state().isOpen).toBeFalsy()
@@ -209,7 +203,7 @@ describe('Click events', () => {
     const o = wrapper.instance()
 
     o.handleOnBodyClick({
-      target: o.triggerNode
+      target: o.triggerNode,
     })
 
     expect(wrapper.state().isOpen).toBeTruthy()
@@ -243,7 +237,7 @@ describe('SelectedIndex', () => {
 })
 
 describe('Focus', () => {
-  test('Sets internal focus state when Trigger is focused', (done) => {
+  test('Sets internal focus state when Trigger is focused', done => {
     const wrapper = mount(
       <Dropdown isOpen>
         <Dropdown.Trigger />
@@ -285,7 +279,7 @@ describe('Keyboard events', () => {
     const spy = jest.fn()
     const wrapper = mount(<Dropdown isOpen onClose={spy} />)
     const o = wrapper.instance()
-    o.handleTab({preventDefault: () => {}})
+    o.handleTab({ preventDefault: () => {} })
 
     expect(o.state.isOpen).not.toBeTruthy()
     expect(spy).toHaveBeenCalled()
@@ -295,7 +289,7 @@ describe('Keyboard events', () => {
     const spy = jest.fn()
     const wrapper = mount(<Dropdown isOpen onClose={spy} />)
     const o = wrapper.instance()
-    o.handleShiftTab({preventDefault: () => {}})
+    o.handleShiftTab({ preventDefault: () => {} })
 
     expect(o.state.isOpen).not.toBeTruthy()
     expect(spy).toHaveBeenCalled()

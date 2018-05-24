@@ -4,7 +4,9 @@ import ProgressBar from '..'
 
 describe('Accessibility', () => {
   test('Has the correct aria tags', () => {
-    const wrapper = shallow(<ProgressBar value={20} description='Loading stuff!' />)
+    const wrapper = shallow(
+      <ProgressBar value={20} description="Loading stuff!" />
+    )
     const props = wrapper.props()
 
     expect(props['aria-valuenow']).toBe(20)
@@ -14,7 +16,7 @@ describe('Accessibility', () => {
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<ProgressBar className='mugatu' />)
+    const wrapper = shallow(<ProgressBar className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -28,7 +30,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<ProgressBar className='mugatu' />)
+    const wrapper = shallow(<ProgressBar className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -36,14 +38,14 @@ describe('ClassName', () => {
 
 describe('Value', () => {
   test('Accepts a string', () => {
-    const wrapper = shallow(<ProgressBar value='11' />)
+    const wrapper = shallow(<ProgressBar value="11" />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
     expect(bar.prop('style').width).toBe('11%')
   })
 
   test('Accepts a float string', () => {
-    const wrapper = shallow(<ProgressBar value='11.875' />)
+    const wrapper = shallow(<ProgressBar value="11.875" />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
     expect(bar.prop('style').width).toBe('11.875%')
@@ -90,7 +92,7 @@ describe('Events', () => {
 
 describe('Size', () => {
   test('Applies size style', () => {
-    const wrapper = shallow(<ProgressBar value={10} size='md' />)
+    const wrapper = shallow(<ProgressBar value={10} size="md" />)
 
     expect(wrapper.hasClass('is-md')).toBeTruthy()
   })

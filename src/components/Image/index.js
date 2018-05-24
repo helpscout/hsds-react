@@ -10,7 +10,7 @@ export const propTypes = {
   src: PropTypes.string.isRequired,
   shape: PropTypes.oneOf(['rounded', 'square', '']),
   title: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 const Image = props => {
@@ -25,7 +25,7 @@ const Image = props => {
 
   const imageElement = React.createElement('img', {
     ...rest,
-    className: componentClassName
+    className: componentClassName,
   })
 
   return imageElement

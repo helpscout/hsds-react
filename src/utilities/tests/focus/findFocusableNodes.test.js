@@ -1,6 +1,4 @@
-import {
-  findFocusableNodes
-} from '../../focus'
+import { findFocusableNodes } from '../../focus'
 
 const NodeList = window.NodeList
 

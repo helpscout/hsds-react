@@ -24,7 +24,7 @@ describe('Children', () => {
   test('Can render children', () => {
     const wrapper = shallow(
       <Toolbar>
-        <div className='mugatu'>That Hansel!</div>
+        <div className="mugatu">That Hansel!</div>
       </Toolbar>
     )
     const o = wrapper.find('.mugatu')
@@ -43,7 +43,7 @@ describe('Flexy', () => {
   })
 
   test('Passes props to Flexy', () => {
-    const wrapper = shallow(<Toolbar just='right' />)
+    const wrapper = shallow(<Toolbar just="right" />)
     const o = wrapper.find(Flexy)
 
     expect(o.prop('just')).toBe('right')
@@ -60,7 +60,7 @@ describe('Placement', () => {
   })
 
   test('Can define a bottom placement', () => {
-    const wrapper = shallow(<Toolbar placement='bottom' />)
+    const wrapper = shallow(<Toolbar placement="bottom" />)
     const o = wrapper.find('.c-Toolbar')
 
     expect(o.hasClass('is-placement-top')).not.toBe(true)
@@ -84,7 +84,7 @@ describe('Shadow', () => {
   })
 
   test('Passes placement style to shadow ', () => {
-    const wrapper = shallow(<Toolbar shadow placement='bottom' />)
+    const wrapper = shallow(<Toolbar shadow placement="bottom" />)
     const o = wrapper.find(Toolbar.Shadow)
 
     expect(o.html()).toContain('is-placement-bottom')
@@ -117,7 +117,7 @@ describe('Theme', () => {
   })
 
   test('Can define a note theme', () => {
-    const wrapper = shallow(<Toolbar theme='note' />)
+    const wrapper = shallow(<Toolbar theme="note" />)
     const o = wrapper.find('.c-Toolbar')
 
     expect(o.hasClass('is-theme-default')).not.toBe(true)

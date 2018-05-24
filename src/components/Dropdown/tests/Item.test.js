@@ -6,7 +6,7 @@ import Icon from '../../Icon'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: 'c-DropdownItem'
+  className: 'c-DropdownItem',
 }
 const LINK_CLASSNAME = 'c-DropdownItem__link'
 
@@ -150,7 +150,7 @@ describe('Sub menu', () => {
     const wrapper = mount(
       <Item isOpen>
         Nested
-        <Menu direction='down' />
+        <Menu direction="down" />
       </Item>
     )
 
@@ -278,7 +278,7 @@ describe('Events', () => {
 
   test('onSelect should return the value, onClick', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Item onSelect={spy} value='Brick' />)
+    const wrapper = mount(<Item onSelect={spy} value="Brick" />)
     const o = wrapper.find(`.${LINK_CLASSNAME}`)
 
     o.simulate('click')
@@ -288,7 +288,7 @@ describe('Events', () => {
 
   test('Enter keypress should return the value', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Item onSelect={spy} value='Brick' />)
+    const wrapper = mount(<Item onSelect={spy} value="Brick" />)
     const o = wrapper.find(`.${LINK_CLASSNAME}`)
 
     o.simulate('keydown', { keyCode: 13 })

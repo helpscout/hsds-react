@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -17,8 +17,8 @@ export const propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.bool
-  ]).isRequired
+    PropTypes.bool,
+  ]).isRequired,
 }
 
 const defaultProps = {
@@ -27,7 +27,7 @@ const defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
-  value: ''
+  value: '',
 }
 
 const uniqueID = createUniqueIDFactory('Switch')
@@ -37,26 +37,26 @@ export const cx = {
   main: classNamespace,
   input: `${classNamespace}__input`,
   state: `${classNamespace}__state`,
-  toggle: `${classNamespace}-toggle`
+  toggle: `${classNamespace}-toggle`,
 }
 
 class Switch extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       active: props.active,
-      id: props.id || uniqueID()
+      id: props.id || uniqueID(),
     }
     this.handleOnChange = this.handleOnChange.bind(this)
   }
 
-  handleOnChange () {
+  handleOnChange() {
     const { onChange, value } = this.props
     this.setState({ active: !this.state.active })
     onChange(value)
   }
 
-  render () {
+  render() {
     const {
       active: propActive,
       className,
@@ -83,9 +83,7 @@ class Switch extends Component {
       className
     )
 
-    const stateMarkup = state ? (
-      <div className={cx.state} />
-    ) : null
+    const stateMarkup = state ? <div className={cx.state} /> : null
 
     return (
       <label className={componentClassName} {...rest} htmlFor={id}>
@@ -99,8 +97,8 @@ class Switch extends Component {
           onChange={handleOnChange}
           onFocus={onFocus}
           ref={inputRef}
-          role='switch'
-          type='checkbox'
+          role="switch"
+          type="checkbox"
           value={value}
         />
         <span className={cx.toggle} />

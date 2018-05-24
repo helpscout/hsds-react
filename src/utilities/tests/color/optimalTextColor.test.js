@@ -1,6 +1,4 @@
-import {
-  optimalTextColor
-} from '../../color'
+import { optimalTextColor } from '../../color'
 
 test('Returns null, if invalid arguments', () => {
   expect(optimalTextColor()).toEqual(null)
@@ -29,7 +27,7 @@ test('Can provide custom RGB prop values', () => {
   const customValues = {
     r: 999,
     g: 999,
-    b: 999
+    b: 999,
   }
   expect(optimalTextColor('#ff6688'), customValues).toEqual('white')
 })

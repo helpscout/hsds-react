@@ -4,7 +4,7 @@ test('Can create and generate a spec', () => {
   const Spec = createSpec({
     id: faker.random.number(),
     firstName: faker.name.firstName(),
-    lastName: faker.name.lastName()
+    lastName: faker.name.lastName(),
   })
 
   const fixture = Spec.generate()
@@ -18,7 +18,7 @@ test('Can seed fixture results', () => {
   const Spec = createSpec({
     id: faker.random.number(),
     firstName: faker.name.firstName(),
-    lastName: faker.name.lastName()
+    lastName: faker.name.lastName(),
   })
 
   const one = Spec.seed(1).generate()

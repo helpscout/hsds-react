@@ -15,5 +15,5 @@ export default {
   'cross-white': crossWhite,
   lock,
   plane,
-  tick
+  tick,
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Badge from '..'
 
-const statusTestHelper = (status) => {
+const statusTestHelper = status => {
   test(`Applies ${status} styles if applied`, () => {
     const wrapper = shallow(<Badge status={status}>Zoolander</Badge>)
 
@@ -18,7 +18,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<Badge className='zoolander' />)
+    const wrapper = shallow(<Badge className="zoolander" />)
 
     expect(wrapper.prop('className')).toContain('zoolander')
   })
@@ -40,7 +40,7 @@ describe('Styles', () => {
   })
 
   test('Has display styles', () => {
-    const wrapper = shallow(<Badge display='inlineBlock' />)
+    const wrapper = shallow(<Badge display="inlineBlock" />)
 
     expect(wrapper.hasClass('is-display-inlineBlock')).toBeTruthy()
   })
@@ -48,7 +48,7 @@ describe('Styles', () => {
 
 describe('Sizes', () => {
   test(`Applies size styles if applied`, () => {
-    const wrapper = shallow(<Badge size='sm'>Zoolander</Badge>)
+    const wrapper = shallow(<Badge size="sm">Zoolander</Badge>)
 
     expect(wrapper.prop('className')).toContain(`is-sm`)
   })

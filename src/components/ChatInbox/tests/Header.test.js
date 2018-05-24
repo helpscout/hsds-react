@@ -5,13 +5,13 @@ import { Icon, Heading, Hr } from '../../index'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: 'c-ChatInboxHeader'
+  className: 'c-ChatInboxHeader',
 }
 
 baseComponentTest(Header, baseComponentOptions)
 
 describe('Avatar/Collapse', () => {
-  const avatars = (<div className='avatar-stub' />)
+  const avatars = <div className="avatar-stub" />
 
   test('Can render avatars', () => {
     const wrapper = shallow(<Header avatars={avatars} />)
@@ -22,11 +22,7 @@ describe('Avatar/Collapse', () => {
 
   test('Renders icon instead of avatar, when collapsed', () => {
     const wrapper = shallow(
-      <Header
-        avatars={avatars}
-        isCollapsible
-        isCollapsed
-      />
+      <Header avatars={avatars} isCollapsible isCollapsed />
     )
     const o = wrapper.find('.c-ChatInboxHeader__action')
     const ava = o.find('.avatar-stub')
@@ -37,12 +33,7 @@ describe('Avatar/Collapse', () => {
   })
 
   test('Renders avatar instead of icon, when expanded', () => {
-    const wrapper = shallow(
-      <Header
-        avatars={avatars}
-        isCollapsible
-      />
-    )
+    const wrapper = shallow(<Header avatars={avatars} isCollapsible />)
     const o = wrapper.find('.c-ChatInboxHeader__action')
     const ava = o.find('.avatar-stub')
     const icon = o.find(Icon)

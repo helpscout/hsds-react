@@ -25,7 +25,11 @@ describe('Content', () => {
   })
 
   test('Renders child component', () => {
-    const wrapper = shallow(<VisuallyHidden><div>Foamy White Latte</div></VisuallyHidden>)
+    const wrapper = shallow(
+      <VisuallyHidden>
+        <div>Foamy White Latte</div>
+      </VisuallyHidden>
+    )
     const o = wrapper.find('div')
 
     expect(o.text()).toBe('Foamy White Latte')

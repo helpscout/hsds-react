@@ -1,10 +1,10 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { mount, shallow } from 'enzyme'
 import Scrollable from '..'
 import wait from '../../../tests/helpers/wait'
 
 const ui = {
-  content: '.c-Scrollable__content'
+  content: '.c-Scrollable__content',
 }
 
 describe('ClassName', () => {
@@ -24,7 +24,11 @@ describe('ClassName', () => {
 
 describe('Content', () => {
   test('Renders child content', () => {
-    const wrapper = mount(<Scrollable><div className='brick'>BRICK</div></Scrollable>)
+    const wrapper = mount(
+      <Scrollable>
+        <div className="brick">BRICK</div>
+      </Scrollable>
+    )
     const brick = wrapper.find('div.brick')
 
     expect(brick.exists()).toBeTruthy()
@@ -40,7 +44,7 @@ describe('Fade', () => {
     expect(fade.length).toBe(2)
   })
 
-  test('Applies bottom fade styles on mount, if applicable', (done) => {
+  test('Applies bottom fade styles on mount, if applicable', done => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
     const fade = o.faderNodeBottom
@@ -50,7 +54,7 @@ describe('Fade', () => {
     const currentTarget = {
       clientHeight: 100,
       scrollHeight: 200,
-      scrollTop: 30
+      scrollTop: 30,
     }
 
     o.handleOnScroll({ currentTarget })
@@ -61,14 +65,14 @@ describe('Fade', () => {
     })
   })
 
-  test('Applies top fade styles when scrolled', (done) => {
+  test('Applies top fade styles when scrolled', done => {
     const wrapper = mount(<Scrollable fade />)
     const o = wrapper.instance()
 
     const currentTarget = {
       clientHeight: 100,
       scrollHeight: 200,
-      scrollTop: 30
+      scrollTop: 30,
     }
 
     o.handleOnScroll({ currentTarget })
@@ -79,14 +83,14 @@ describe('Fade', () => {
     })
   })
 
-  test('Applies bottom fade styles when scrolled', (done) => {
+  test('Applies bottom fade styles when scrolled', done => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
 
     const currentTarget = {
       clientHeight: 100,
       scrollHeight: 200,
-      scrollTop: 30
+      scrollTop: 30,
     }
 
     o.handleOnScroll({ currentTarget })
@@ -102,7 +106,7 @@ describe('Content', () => {
   test('Renders content within the content node', () => {
     const wrapper = shallow(
       <Scrollable>
-        <div className='mugatu'>Mugatu</div>
+        <div className="mugatu">Mugatu</div>
       </Scrollable>
     )
     const o = wrapper.find(ui.content)
@@ -113,9 +117,7 @@ describe('Content', () => {
   })
 
   test('Can provide content with custom className', () => {
-    const wrapper = shallow(
-      <Scrollable contentClassName='mugatu' />
-    )
+    const wrapper = shallow(<Scrollable contentClassName="mugatu" />)
     const o = wrapper.find(ui.content)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -144,14 +146,16 @@ describe('Events', () => {
 
 describe('scrollableRef', () => {
   class MyComponent extends Component {
-    constructor () {
+    constructor() {
       super()
       this.scrollable = null
     }
-    render () {
+    render() {
       return (
         <Scrollable
-          scrollableRef={node => { this.scrollable = node }}
+          scrollableRef={node => {
+            this.scrollable = node
+          }}
         />
       )
     }

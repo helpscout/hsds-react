@@ -4,17 +4,13 @@ import Block from '../Block'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = shallow(
-      <Block />
-    )
+    const wrapper = shallow(<Block />)
 
     expect(wrapper.hasClass('c-SkeletonBlock')).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(
-      <Block className='ron' />
-    )
+    const wrapper = shallow(<Block className="ron" />)
 
     expect(wrapper.hasClass('c-SkeletonBlock')).toBeTruthy()
     expect(wrapper.hasClass('ron')).toBeTruthy()
@@ -23,9 +19,7 @@ describe('className', () => {
 
 describe('Accessibility', () => {
   test('Has role defined', () => {
-    const wrapper = shallow(
-      <Block />
-    )
+    const wrapper = shallow(<Block />)
 
     expect(wrapper.props().role).toBe('presentation')
   })
@@ -33,9 +27,7 @@ describe('Accessibility', () => {
 
 describe('Styles', () => {
   test('Can render custom styles', () => {
-    const wrapper = shallow(
-      <Block style={{background: 'red'}} />
-    )
+    const wrapper = shallow(<Block style={{ background: 'red' }} />)
 
     expect(wrapper.props().style.background).toBe('red')
   })

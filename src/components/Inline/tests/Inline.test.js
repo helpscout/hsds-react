@@ -20,7 +20,11 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<Inline><div className='child'>Hello</div></Inline>)
+    const wrapper = shallow(
+      <Inline>
+        <div className="child">Hello</div>
+      </Inline>
+    )
     const el = wrapper.find('div.child')
 
     expect(el.text()).toContain('Hello')
@@ -29,7 +33,7 @@ describe('Children', () => {
 
 describe('Size', () => {
   test('Can define custom size styles', () => {
-    const wrapper = shallow(<Inline size='lg' />)
+    const wrapper = shallow(<Inline size="lg" />)
 
     expect(wrapper.hasClass('is-lg')).toBe(true)
   })

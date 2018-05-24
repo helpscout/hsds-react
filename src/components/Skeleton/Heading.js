@@ -6,23 +6,15 @@ export const propTypes = textProps
 
 const defaultProps = {
   style: {},
-  width: '70%'
+  width: '70%',
 }
 
 const Heading = props => {
-  const {
-    className,
-    ...rest
-  } = props
+  const { className, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-SkeletonHeading',
-    className
-  )
+  const componentClassName = classNames('c-SkeletonHeading', className)
 
-  return (
-    <Text className={componentClassName} heading {...rest} />
-  )
+  return <Text className={componentClassName} heading {...rest} />
 }
 
 Heading.propTypes = propTypes

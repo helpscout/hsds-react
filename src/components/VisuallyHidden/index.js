@@ -4,11 +4,11 @@ import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   className: PropTypes.string,
-  focusable: PropTypes.bool
+  focusable: PropTypes.bool,
 }
 
 const defaultProps = {
-  focusable: false
+  focusable: false,
 }
 
 const VisuallyHidden = props => {

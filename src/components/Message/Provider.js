@@ -1,26 +1,20 @@
 import React from 'react'
 import ThemeProvider from '../ThemeProvider'
-import {providerContextTypes} from './propTypes'
+import { providerContextTypes } from './propTypes'
 
 const propTypes = providerContextTypes
 
 const defaultProps = {
-  theme: 'admin'
+  theme: 'admin',
 }
 
 const childContextTypes = providerContextTypes
 
 class Provider extends ThemeProvider {
-  render () {
-    const {
-      children
-    } = this.props
+  render() {
+    const { children } = this.props
 
-    return (
-      <div className='c-MessageProvider'>
-        {children}
-      </div>
-    )
+    return <div className="c-MessageProvider">{children}</div>
   }
 }
 

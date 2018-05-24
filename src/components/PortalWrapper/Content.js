@@ -6,28 +6,26 @@ const managerNamespace = 'BluePortalWrapperGlobalManager'
 
 export const propTypes = {
   manager: PropTypes.object,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 const defaultProps = {
   manager: setupManager(managerNamespace),
-  id: 1000
+  id: 1000,
 }
 
 class Content extends Component {
-  componentDidMount () {
+  componentDidMount() {
     const { id, manager } = this.props
     manager.add(id)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const { id, manager } = this.props
     manager.remove(id)
   }
 
-  render () {
-    const {
-      children
-    } = this.props
+  render() {
+    const { children } = this.props
 
     return children || null
   }

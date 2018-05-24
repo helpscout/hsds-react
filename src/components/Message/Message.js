@@ -12,14 +12,14 @@ import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
 import classNames from '../../utilities/classNames'
-import {messageTypes, providerContextTypes} from './propTypes'
+import { messageTypes, providerContextTypes } from './propTypes'
 
 export const propTypes = Object.assign({}, messageTypes, {
-  showAvatar: PropTypes.bool
+  showAvatar: PropTypes.bool,
 })
 
 const defaultProps = {
-  showAvatar: true
+  showAvatar: true,
 }
 
 const contextTypes = providerContextTypes
@@ -36,7 +36,7 @@ const Message = (props, context) => {
     to,
     ...rest
   } = props
-  const {theme} = context
+  const { theme } = context
 
   const componentClassName = classNames(
     'c-Message',
@@ -50,21 +50,12 @@ const Message = (props, context) => {
   const isThemeEmbed = theme === 'embed'
   const fromName = from && typeof from === 'string' ? from : null
 
-  const maybeShowAvatar = (
-    isThemeEmbed
-    ? ((from && showAvatar) || false)
+  const maybeShowAvatar = isThemeEmbed
+    ? (from && showAvatar) || false
     : showAvatar
-  )
 
   const isChatType = child => {
-    const chatTypes = [
-      Action,
-      Attachment,
-      Chat,
-      Content,
-      Media,
-      Question
-    ]
+    const chatTypes = [Action, Attachment, Chat, Content, Media, Question]
     return chatTypes.some(type => {
       return (
         child &&
@@ -75,52 +66,50 @@ const Message = (props, context) => {
     })
   }
 
-  const childrenMarkup = React.Children.map(children, (child) => {
+  const childrenMarkup = React.Children.map(children, child => {
     return isChatType(child)
       ? React.cloneElement(child, {
-        from,
-        ltr,
-        rtl,
-        to
-      })
+          from,
+          ltr,
+          rtl,
+          to,
+        })
       : child
   })
 
   const avatarMarkup = avatar
     ? React.cloneElement(avatar, {
-      borderColor: null,
-      shape: isThemeEmbed ? 'circle' : 'rounded',
-      size: isThemeEmbed ? 'xxs' : 'xs'
-    }) : null
+        borderColor: null,
+        shape: isThemeEmbed ? 'circle' : 'rounded',
+        size: isThemeEmbed ? 'xxs' : 'xs',
+      })
+    : null
 
   const avatarBlockMarkup = maybeShowAvatar ? (
-    <Flexy.Item className='c-Message__avatar-block'>
-      {avatarMarkup}
-    </Flexy.Item>
+    <Flexy.Item className="c-Message__avatar-block">{avatarMarkup}</Flexy.Item>
   ) : null
 
-  const fromMarkup = isThemeEmbed && fromName ? (
-    <div className='c-Message__from'>
-      <Text
-        className='c-Message__fromText'
-        block
-        lineHeightReset
-        shade='faint'
-        size='11'
-      >
-        {fromName}
-      </Text>
-    </div>
-  ) : null
+  const fromMarkup =
+    isThemeEmbed && fromName ? (
+      <div className="c-Message__from">
+        <Text
+          className="c-Message__fromText"
+          block
+          lineHeightReset
+          shade="faint"
+          size="11"
+        >
+          {fromName}
+        </Text>
+      </div>
+    ) : null
 
   return (
     <div className={componentClassName} {...rest}>
       {fromMarkup}
-      <Flexy align='top' gap='xs'>
+      <Flexy align="top" gap="xs">
         {from && avatarBlockMarkup}
-        <Flexy.Block className='c-Message__block'>
-          {childrenMarkup}
-        </Flexy.Block>
+        <Flexy.Block className="c-Message__block">{childrenMarkup}</Flexy.Block>
         {to && avatarBlockMarkup}
       </Flexy>
     </div>

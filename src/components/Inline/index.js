@@ -1,24 +1,19 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import classNames from '../../utilities/classNames'
 import Item from './Item'
 import { sizeTypes } from './propTypes'
 
 export const propTypes = {
-  size: sizeTypes
+  size: sizeTypes,
 }
 
 const defaultProps = {
-  size: 'sm'
+  size: 'sm',
 }
 
 class Inline extends Component {
-  render () {
-    const {
-      className,
-      children,
-      size,
-      ...rest
-    } = this.props
+  render() {
+    const { className, children, size, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-Inline',
@@ -27,7 +22,7 @@ class Inline extends Component {
     )
 
     return (
-      <div className={componentClassName} {...rest} role='list'>
+      <div className={componentClassName} {...rest} role="list">
         {children}
       </div>
     )

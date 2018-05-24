@@ -7,5 +7,5 @@ export const tagColorTypes = PropTypes.oneOf([
   'gray',
   'orange',
   'purple',
-  'red'
+  'red',
 ]).isRequired

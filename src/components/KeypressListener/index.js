@@ -1,10 +1,13 @@
 // Modified version of:
 // https://github.com/Shopify/polaris/blob/master/src/components/KeypressListener/KeypressListener.tsx
 
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { addEventListener, removeEventListener } from '@shopify/javascript-utilities/events'
+import {
+  addEventListener,
+  removeEventListener,
+} from '@shopify/javascript-utilities/events'
 import { getClosestDocument } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 
@@ -13,25 +16,25 @@ export const propTypes = {
   handler: PropTypes.func,
   modifier: PropTypes.string,
   noModifier: PropTypes.bool,
-  type: PropTypes.oneOf(['keyup', 'keypress', 'keydown'])
+  type: PropTypes.oneOf(['keyup', 'keypress', 'keydown']),
 }
 
 const defaultProps = {
   handler: noop,
   noModifier: true,
   scope: document,
-  type: 'keyup'
+  type: 'keyup',
 }
 
 class KeypressListener extends Component {
-  constructor () {
+  constructor() {
     super()
     this.handleKeyEvent = this.handleKeyEvent.bind(this)
     this.node = null
     this.scope = null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { scope } = this.props
     this.node = ReactDOM.findDOMNode(this)
     this.scope = scope === document ? getClosestDocument(this.node) : scope
@@ -39,19 +42,19 @@ class KeypressListener extends Component {
     addEventListener(this.scope, this.props.type, this.handleKeyEvent)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     removeEventListener(this.scope, this.props.type, this.handleKeyEvent)
 
     this.node = null
     this.scope = null
   }
 
-  shouldComponentUpdate () {
+  shouldComponentUpdate() {
     return false
   }
 
-  handleKeyEvent (event) {
-    const {keyCode, handler, modifier, noModifier} = this.props
+  handleKeyEvent(event) {
+    const { keyCode, handler, modifier, noModifier } = this.props
     let modKey = true
 
     /* istanbul ignore else */
@@ -78,7 +81,8 @@ class KeypressListener extends Component {
           break
       }
     } else if (noModifier) {
-      modKey = !event.shiftKey && !event.altKey && !event.metaKey && !event.ctrlKey
+      modKey =
+        !event.shiftKey && !event.altKey && !event.metaKey && !event.ctrlKey
     }
 
     if (event.keyCode === keyCode && modKey) {
@@ -86,8 +90,8 @@ class KeypressListener extends Component {
     }
   }
 
-  render () {
-    return (<div />)
+  render() {
+    return <div />
   }
 }
 

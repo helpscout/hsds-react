@@ -5,14 +5,16 @@ import Select from '..'
 const ui = {
   helpText: '.c-Select__helpText',
   hintText: '.c-Select__hintText',
-  label: '.c-Select__label'
+  label: '.c-Select__label',
 }
 
 describe('Placeholder', () => {
   test('Renders a placeholder if defined', () => {
     const placeholder = 'Choose your co-anchor…'
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
-    const wrapper = mount(<Select options={options} placeholder={placeholder} />)
+    const wrapper = mount(
+      <Select options={options} placeholder={placeholder} />
+    )
     const select = wrapper.find('select')
     const selectOptions = select.children()
     const option = selectOptions.first()
@@ -24,7 +26,13 @@ describe('Placeholder', () => {
   test('Keeps a placeholder if a value is passed', () => {
     const placeholder = 'Choose your co-anchor…'
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
-    const wrapper = mount(<Select options={options} placeholder={placeholder} value='Brick Tamland' />)
+    const wrapper = mount(
+      <Select
+        options={options}
+        placeholder={placeholder}
+        value="Brick Tamland"
+      />
+    )
     const select = wrapper.find('select')
     const selectOptions = select.children()
 
@@ -80,7 +88,7 @@ describe('Option', () => {
     const options = {
       label: 'Champ Kind',
       value: 'champ',
-      disabled: true
+      disabled: true,
     }
     const wrapper = mount(<Select options={options} />)
     const selectOptions = wrapper.find('select').children()
@@ -96,7 +104,7 @@ describe('Group', () => {
   test('Renders optgroup if the options.value is an array', () => {
     const options = {
       label: 'Group',
-      value: ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
+      value: ['Champ Kind', 'Brian Fantana', 'Brick Tamland'],
     }
     const wrapper = mount(<Select options={options} />)
     const group = wrapper.find('optgroup')
@@ -112,7 +120,7 @@ describe('Group', () => {
   test('Can render an optgroup of one', () => {
     const options = {
       label: 'Group',
-      value: ['Brick Tamland']
+      value: ['Brick Tamland'],
     }
     const wrapper = mount(<Select options={options} />)
     const group = wrapper.find('optgroup')
@@ -128,20 +136,20 @@ describe('Group', () => {
     const options = [
       {
         label: 'Channel 4',
-        value: ['Ron Burgandy', 'Champ Kind', 'Brian Fantana', 'Brick Tamland']
+        value: ['Ron Burgandy', 'Champ Kind', 'Brian Fantana', 'Brick Tamland'],
       },
       {
         label: 'Evening',
-        value: ['Wes Mantooth']
+        value: ['Wes Mantooth'],
       },
       {
         label: 'Channel 2',
-        value: ['Frank Vitchard']
+        value: ['Frank Vitchard'],
       },
       {
         label: 'Spanish Language News',
-        value: ['Arturo Mendez']
-      }
+        value: ['Arturo Mendez'],
+      },
     ]
     const wrapper = mount(<Select options={options} />)
     const groups = wrapper.find('optgroup')
@@ -166,7 +174,9 @@ describe('Value', () => {
 describe('Events', () => {
   test('onChange callback passes selected value', () => {
     let result = ''
-    const onChange = (value) => { result = value }
+    const onChange = value => {
+      result = value
+    }
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
     const wrapper = mount(<Select options={options} onChange={onChange} />)
 
@@ -177,7 +187,7 @@ describe('Events', () => {
 
 describe('Label', () => {
   test('Adds label if specified', () => {
-    const wrapper = mount(<Select label='Channel' />)
+    const wrapper = mount(<Select label="Channel" />)
     const label = wrapper.find(ui.label)
 
     expect(label.exists()).toBeTruthy()
@@ -186,7 +196,7 @@ describe('Label', () => {
 
   test('Sets ID on the select element', () => {
     const id = 'channel'
-    const wrapper = mount(<Select label='Channel' id={id} />)
+    const wrapper = mount(<Select label="Channel" id={id} />)
     const label = wrapper.find(ui.label)
     const select = wrapper.find('select')
 
@@ -196,7 +206,7 @@ describe('Label', () => {
   })
 
   test('Accepts React components', () => {
-    const custom = (<div className='custom'>Custom text</div>)
+    const custom = <div className="custom">Custom text</div>
     const wrapper = mount(<Select label={custom} />)
     const o = wrapper.find(ui.label)
     const c = o.find('.custom')
@@ -211,9 +221,7 @@ describe('Prefix', () => {
   test('Adds prefix if defined', () => {
     const options = ['Champ Kind', 'Brian Fantana', 'Brick Tamland']
     const prefix = 'Pick one'
-    const wrapper = mount(
-      <Select options={options} prefix={prefix} />
-    )
+    const wrapper = mount(<Select options={options} prefix={prefix} />)
 
     expect(wrapper.find('.c-Select__prefix').text()).toBe(prefix)
   })
@@ -227,14 +235,14 @@ describe('HelpText', () => {
   })
 
   test('Adds helpText if specified', () => {
-    const wrapper = mount(<Select helpText='Help text' />)
+    const wrapper = mount(<Select helpText="Help text" />)
     const o = wrapper.find(ui.helpText)
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Help text')
   })
 
   test('Accepts React components', () => {
-    const custom = (<div className='custom'>Custom text</div>)
+    const custom = <div className="custom">Custom text</div>
     const wrapper = mount(<Select helpText={custom} />)
     const o = wrapper.find(ui.helpText)
     const c = o.find('.custom')
@@ -253,20 +261,20 @@ describe('HintText', () => {
   })
 
   test('Adds hintText if specified', () => {
-    const wrapper = mount(<Select hintText='Hint text' />)
+    const wrapper = mount(<Select hintText="Hint text" />)
     const o = wrapper.find(ui.hintText)
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Hint text')
   })
 
   test('Does not pass state to hintText', () => {
-    const wrapper = mount(<Select hintText='Hint text' state='error' />)
+    const wrapper = mount(<Select hintText="Hint text" state="error" />)
     const o = wrapper.find(ui.hintText)
     expect(o.props().state).not.toBeTruthy()
   })
 
   test('Accepts React components', () => {
-    const custom = (<div className='custom'>Custom text</div>)
+    const custom = <div className="custom">Custom text</div>
     const wrapper = mount(<Select hintText={custom} />)
     const o = wrapper.find(ui.hintText)
     const c = o.find('.custom')
@@ -287,7 +295,7 @@ describe('States', () => {
 
   describe('Error', () => {
     test('Applies error styles if error prop is true', () => {
-      const wrapper = shallow(<Select state='error' />)
+      const wrapper = shallow(<Select state="error" />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-error')
@@ -295,7 +303,7 @@ describe('States', () => {
 
     test('Adds error helper text if error prop is a string', () => {
       const message = 'Cannonballlll'
-      const wrapper = mount(<Select state='error' helpText={message} />)
+      const wrapper = mount(<Select state="error" helpText={message} />)
       const o = wrapper.find('.c-HelpText')
 
       expect(o.text()).toContain(message)
@@ -304,7 +312,7 @@ describe('States', () => {
 
   describe('Success', () => {
     test('Applies success styles if success prop is true', () => {
-      const wrapper = shallow(<Select state='success' />)
+      const wrapper = shallow(<Select state="success" />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-success')
@@ -312,7 +320,7 @@ describe('States', () => {
 
     test('Adds success helper text if success prop is a string', () => {
       const message = 'Cannonballlll'
-      const wrapper = mount(<Select state='success' helpText={message} />)
+      const wrapper = mount(<Select state="success" helpText={message} />)
       const o = wrapper.find('.c-HelpText')
 
       expect(o.text()).toContain(message)
@@ -321,7 +329,7 @@ describe('States', () => {
 
   describe('Warning', () => {
     test('Applies warning styles if warning prop is true', () => {
-      const wrapper = shallow(<Select state='warning' />)
+      const wrapper = shallow(<Select state="warning" />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-warning')
@@ -329,7 +337,7 @@ describe('States', () => {
 
     test('Adds warning helper text if warning prop is a string', () => {
       const message = 'Cannonballlll'
-      const wrapper = mount(<Select state='warning' helpText={message} />)
+      const wrapper = mount(<Select state="warning" helpText={message} />)
       const o = wrapper.find('.c-HelpText')
 
       expect(o.text()).toContain(message)
@@ -337,7 +345,7 @@ describe('States', () => {
   })
 
   test('Updates state.state on prop change', () => {
-    const wrapper = mount(<Select state='warning' />)
+    const wrapper = mount(<Select state="warning" />)
     const select = wrapper.find('.c-Select')
 
     wrapper.setProps({ state: 'success' })
@@ -361,14 +369,14 @@ describe('Styles', () => {
   })
 
   test('Adds sizing styles if defined', () => {
-    const wrapper = mount(<Select size='sm' />)
+    const wrapper = mount(<Select size="sm" />)
     const o = wrapper.find('.c-InputField')
 
     expect(o.prop('className')).toContain('is-sm')
   })
 
   test('Passes style prop to wrapper', () => {
-    const wrapper = shallow(<Select style={{background: 'red'}} />)
+    const wrapper = shallow(<Select style={{ background: 'red' }} />)
 
     expect(wrapper.prop('style').background).toBe('red')
   })
@@ -376,7 +384,7 @@ describe('Styles', () => {
 
 describe('removeStateStylesOnFocus', () => {
   test('Does not remove state style on focus, by default', () => {
-    const wrapper = mount(<Select state='error' />)
+    const wrapper = mount(<Select state="error" />)
     const select = wrapper.find('.c-Select')
     const o = wrapper.find('select')
 
@@ -387,7 +395,7 @@ describe('removeStateStylesOnFocus', () => {
   })
 
   test('Removes state style on focus, by specified', () => {
-    const wrapper = mount(<Select state='error' removeStateStylesOnFocus />)
+    const wrapper = mount(<Select state="error" removeStateStylesOnFocus />)
     const select = wrapper.find('.c-Select')
     const o = wrapper.find('select')
 
@@ -414,7 +422,7 @@ describe('selectNode', () => {
 })
 
 describe('isFocused', () => {
-  test('Can focus select using isFocused prop', (done) => {
+  test('Can focus select using isFocused prop', done => {
     const spy = jest.fn()
     const wrapper = mount(<Select isFocused />)
     const o = wrapper.node.selectNode
@@ -426,14 +434,9 @@ describe('isFocused', () => {
     }, 160)
   })
 
-  test('Can focus select using custom timeout', (done) => {
+  test('Can focus select using custom timeout', done => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <Select
-        isFocused
-        forceAutoFocusTimeout={20}
-      />
-    )
+    const wrapper = mount(<Select isFocused forceAutoFocusTimeout={20} />)
     const o = wrapper.node.selectNode
     o.onfocus = spy
 
@@ -445,19 +448,15 @@ describe('isFocused', () => {
     }, 40)
   })
 
-  test('Can toggle isFocused', (done) => {
+  test('Can toggle isFocused', done => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Select
-        onFocus={spy}
-        isFocused={false}
-        forceAutoFocusTimeout={20}
-      />
+      <Select onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
     )
     const o = wrapper.node.selectNode
     o.onfocus = spy
 
-    wrapper.setProps({isFocused: true})
+    wrapper.setProps({ isFocused: true })
 
     setTimeout(() => {
       expect(spy).toHaveBeenCalled()

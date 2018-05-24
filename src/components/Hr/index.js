@@ -4,24 +4,18 @@ import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   role: PropTypes.string,
-  size: PropTypes.oneOf(['md', 'sm', 'xs', 'none'])
+  size: PropTypes.oneOf(['md', 'sm', 'xs', 'none']),
 }
 const defaultProps = {
   role: 'separator',
-  size: 'md'
+  size: 'md',
 }
 
 const Hr = props => {
   const { className, role, size, ...rest } = props
-  const componentClassName = classNames(
-    'c-Hr',
-    size && `is-${size}`,
-    className
-  )
+  const componentClassName = classNames('c-Hr', size && `is-${size}`, className)
 
-  return (
-    <hr className={componentClassName} {...rest} role={role} />
-  )
+  return <hr className={componentClassName} {...rest} role={role} />
 }
 
 Hr.propTypes = propTypes

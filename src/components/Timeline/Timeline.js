@@ -3,19 +3,12 @@ import Item from './Item'
 import classNames from '../../utilities/classNames'
 
 const Timeline = props => {
-  const {
-    children,
-    className,
-    ...rest
-  } = props
+  const { children, className, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-Timeline',
-    className
-  )
+  const componentClassName = classNames('c-Timeline', className)
 
   return (
-    <div className={componentClassName} {...rest} role='list'>
+    <div className={componentClassName} {...rest} role="list">
       {children}
     </div>
   )

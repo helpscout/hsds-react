@@ -1,12 +1,9 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
-import {
-  default as Avatar,
-  propTypes as avatarTypes
-} from '../Avatar'
+import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
 import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
@@ -16,7 +13,7 @@ export const propTypes = {
   center: PropTypes.bool,
   max: PropTypes.number,
   shape: avatarTypes.shape,
-  size: standardSizeTypes
+  size: standardSizeTypes,
 }
 
 const defaultProps = {
@@ -26,11 +23,11 @@ const defaultProps = {
   center: true,
   max: 9,
   shape: 'rounded',
-  size: 'md'
+  size: 'md',
 }
 
 class AvatarGrid extends Component {
-  render () {
+  render() {
     const {
       animationEasing,
       animationSequence,
@@ -44,32 +41,28 @@ class AvatarGrid extends Component {
       ...rest
     } = this.props
 
-    const avatars = React.Children
-      .toArray(children)
-      .filter(child => child.type && child.type === Avatar)
+    const avatars = React.Children.toArray(children).filter(
+      child => child.type && child.type === Avatar
+    )
 
     const totalAvatarCount = avatars.length
-    const avatarList = max && totalAvatarCount > max
-      ? avatars.slice(0, (max - 1))
-      : avatars
+    const avatarList =
+      max && totalAvatarCount > max ? avatars.slice(0, max - 1) : avatars
     const additionalAvatarCount = totalAvatarCount - avatarList.length
 
     const componentWrapperClassName = classNames(
       'c-AvatarGridWrapper',
       center && 'is-center'
     )
-    const componentClassName = classNames(
-      'c-AvatarGrid',
-      className
-    )
+    const componentClassName = classNames('c-AvatarGrid', className)
 
     const additionalAvatarMarkup = additionalAvatarCount ? (
       <Animate
-        key='AvatarGrid__additionalAvatarMarkup'
+        key="AvatarGrid__additionalAvatarMarkup"
         easing={animationEasing}
         sequence={animationSequence}
       >
-        <div className='c-AvatarGrid__item is-additional'>
+        <div className="c-AvatarGrid__item is-additional">
           <Avatar
             count={`+${additionalAvatarCount}`}
             light
@@ -81,10 +74,10 @@ class AvatarGrid extends Component {
       </Animate>
     ) : null
 
-    const avatarMarkup = avatarList.map((avatar) => {
+    const avatarMarkup = avatarList.map(avatar => {
       const composedAvatar = React.cloneElement(avatar, {
         shape,
-        size
+        size,
       })
 
       return (
@@ -93,16 +86,14 @@ class AvatarGrid extends Component {
           easing={animationEasing}
           sequence={animationSequence}
         >
-          <div className='c-AvatarGrid__item'>
-            {composedAvatar}
-          </div>
+          <div className="c-AvatarGrid__item">{composedAvatar}</div>
         </Animate>
       )
     })
 
     return (
       <div className={componentWrapperClassName}>
-        <div className='c-AvatarGridContainer'>
+        <div className="c-AvatarGridContainer">
           <AnimateGroup
             className={componentClassName}
             stagger

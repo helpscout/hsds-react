@@ -33,7 +33,7 @@ describe('Selector', () => {
   })
 
   test('Renders a custom selector, if specified', () => {
-    const wrapper = shallow(<Heading selector='span' />)
+    const wrapper = shallow(<Heading selector="span" />)
 
     expect(wrapper.node.type).toBe('span')
   })
@@ -41,8 +41,8 @@ describe('Selector', () => {
 
 describe('Styles', () => {
   test('Applies sizing styles if specified', () => {
-    const wrapper1 = shallow(<Heading size='h1' />)
-    const wrapperSm = shallow(<Heading size='small' />)
+    const wrapper1 = shallow(<Heading size="h1" />)
+    const wrapperSm = shallow(<Heading size="small" />)
 
     expect(wrapper1.prop('className')).toContain('is-h1')
     expect(wrapperSm.prop('className')).toContain('is-small')

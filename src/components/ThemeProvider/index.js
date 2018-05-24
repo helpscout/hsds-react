@@ -1,27 +1,27 @@
-import {PureComponent as Component} from 'react'
+import { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 
 const propTypes = {
-  theme: PropTypes.string
+  theme: PropTypes.string,
 }
 
 const defaultProps = {
-  theme: 'default'
+  theme: 'default',
 }
 
 const childContextTypes = {
-  theme: PropTypes.any
+  theme: PropTypes.any,
 }
 
 class ThemeProvider extends Component {
-  getChildContext () {
-    const {theme} = this.props
+  getChildContext() {
+    const { theme } = this.props
     return {
-      theme
+      theme,
     }
   }
 
-  render () {
+  render() {
     return this.props.children
   }
 }

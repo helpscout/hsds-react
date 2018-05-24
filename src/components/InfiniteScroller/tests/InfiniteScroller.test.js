@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
 import InfiniteScroller from '..'
 import LoadingDots from '../../LoadingDots'
@@ -42,7 +42,7 @@ describe('isMounted', () => {
 describe('Node Scope', () => {
   test('Auto sets the node scope to parent node by default', () => {
     const wrapper = mount(
-      <div className='derlict'>
+      <div className="derlict">
         <InfiniteScroller />
       </div>
     )
@@ -56,7 +56,7 @@ describe('Node Scope', () => {
 describe('scrollParent', () => {
   test('Undefined scrollParent will default to parentnode', () => {
     const wrapper = mount(
-      <div className='derlict'>
+      <div className="derlict">
         <InfiniteScroller />
       </div>
     )
@@ -71,7 +71,7 @@ describe('scrollParent', () => {
     node.id = 'hansel'
 
     const wrapper = mount(
-      <div className='derlict'>
+      <div className="derlict">
         <InfiniteScroller scrollParent={node} />
       </div>
     )
@@ -83,20 +83,25 @@ describe('scrollParent', () => {
 
   test('getScrollParent can retrieve a DOM node', () => {
     class CustomModal extends Component {
-      getScrollParent () {
+      getScrollParent() {
         return this.node
       }
-      render () {
+      render() {
         const getScrollParent = this.getScrollParent.bind(this)
         return (
           <ModalComponent>
             <Modal.Body>
-              <div className='outer'>
+              <div className="outer">
                 <div
-                  className='custom-scroller'
-                  ref={node => { this.node = node }}
+                  className="custom-scroller"
+                  ref={node => {
+                    this.node = node
+                  }}
                 />
-                <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
+                <InfiniteScroller
+                  onLoading={spy}
+                  getScrollParent={getScrollParent}
+                />
               </div>
             </Modal.Body>
           </ModalComponent>
@@ -104,9 +109,7 @@ describe('scrollParent', () => {
       }
     }
     const spy = jest.fn()
-    const wrapper = mount(
-      <CustomModal />
-    )
+    const wrapper = mount(<CustomModal />)
 
     const o = wrapper.find('.custom-scroller')
     const n = wrapper.find(InfiniteScroller).node
@@ -119,20 +122,25 @@ describe('scrollParent', () => {
 
   test('getScrollParent falls back to direct parentNode if falsy', () => {
     class CustomModal extends Component {
-      getScrollParent () {
+      getScrollParent() {
         return false
       }
-      render () {
+      render() {
         const getScrollParent = this.getScrollParent.bind(this)
         return (
           <ModalComponent>
             <Modal.Body>
-              <div className='outer'>
+              <div className="outer">
                 <div
-                  className='custom-scroller'
-                  ref={node => { this.node = node }}
+                  className="custom-scroller"
+                  ref={node => {
+                    this.node = node
+                  }}
                 />
-                <InfiniteScroller onLoading={spy} getScrollParent={getScrollParent} />
+                <InfiniteScroller
+                  onLoading={spy}
+                  getScrollParent={getScrollParent}
+                />
               </div>
             </Modal.Body>
           </ModalComponent>
@@ -140,9 +148,7 @@ describe('scrollParent', () => {
       }
     }
     const spy = jest.fn()
-    const wrapper = mount(
-      <CustomModal />
-    )
+    const wrapper = mount(<CustomModal />)
 
     const o = wrapper.find('.outer')
     const n = wrapper.find(InfiniteScroller).node
@@ -162,9 +168,7 @@ describe('Loading', () => {
   })
 
   test('Renders LoadingDots by default when isLoading', () => {
-    const wrapper = mount(
-      <InfiniteScroller isLoading />
-    )
+    const wrapper = mount(<InfiniteScroller isLoading />)
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(1)
@@ -183,9 +187,7 @@ describe('Loading', () => {
   })
 
   test('Can change isLoading state by prop change', () => {
-    const wrapper = mount(
-      <InfiniteScroller />
-    )
+    const wrapper = mount(<InfiniteScroller />)
 
     expect(wrapper.state().isLoading).not.toBeTruthy()
     wrapper.setProps({ isLoading: true })
@@ -217,9 +219,9 @@ describe('Callbacks', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onLoading callback can fire onLoaded callback', (done) => {
+  test('onLoading callback can fire onLoaded callback', done => {
     const spy = jest.fn()
-    const onLoading = (onLoaded) => {
+    const onLoading = onLoaded => {
       spy()
       onLoaded()
     }
@@ -237,9 +239,7 @@ describe('Callbacks', () => {
 
   test('Does not fire onLoading callback when isLoading is set', () => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <InfiniteScroller isLoading onLoading={spy} />
-    )
+    const wrapper = mount(<InfiniteScroller isLoading onLoading={spy} />)
     const o = wrapper.instance()
 
     o.handleOnScroll()
@@ -247,7 +247,7 @@ describe('Callbacks', () => {
     expect(spy).not.toHaveBeenCalled()
   })
 
-  test('onLoaded callback can be fired when triggered', (done) => {
+  test('onLoaded callback can be fired when triggered', done => {
     const spy = jest.fn()
     const wrapper = mount(<InfiniteScroller onLoaded={spy} isLoading />)
     const o = wrapper.instance()
@@ -281,7 +281,7 @@ describe('Callbacks', () => {
     const spy = jest.fn()
     const wrapper = mount(<InfiniteScroller onLoading={spy} />)
 
-    wrapper.setProps({isLoading: true})
+    wrapper.setProps({ isLoading: true })
 
     expect(spy).toHaveBeenCalled()
     expect(wrapper.state().isLoading).toBeTruthy()
@@ -291,8 +291,8 @@ describe('Callbacks', () => {
     const spy = jest.fn()
     const wrapper = mount(<InfiniteScroller isLoading />)
 
-    wrapper.setProps({onLoading: spy})
-    wrapper.setProps({isLoading: true})
+    wrapper.setProps({ onLoading: spy })
+    wrapper.setProps({ isLoading: true })
 
     expect(spy).not.toHaveBeenCalled()
     expect(wrapper.state().isLoading).toBeTruthy()
@@ -302,7 +302,7 @@ describe('Callbacks', () => {
     const spy = jest.fn()
     const wrapper = mount(<InfiniteScroller onLoaded={spy} isLoading />)
 
-    wrapper.setProps({isLoading: false})
+    wrapper.setProps({ isLoading: false })
 
     expect(spy).toHaveBeenCalled()
     expect(wrapper.state().isLoading).not.toBeTruthy()
@@ -312,8 +312,8 @@ describe('Callbacks', () => {
     const spy = jest.fn()
     const wrapper = mount(<InfiniteScroller />)
 
-    wrapper.setProps({onLoaded: spy})
-    wrapper.setProps({isLoading: false})
+    wrapper.setProps({ onLoaded: spy })
+    wrapper.setProps({ isLoading: false })
 
     expect(spy).not.toHaveBeenCalled()
     expect(wrapper.state().isLoading).not.toBeTruthy()

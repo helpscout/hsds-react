@@ -6,24 +6,16 @@ import Text from '../Text'
 import classNames from '../../utilities/classNames'
 
 export const propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
 }
 
 const PreviewCard = props => {
-  const {
-    children,
-    className,
-    title,
-    ...rest
-  } = props
+  const { children, className, title, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-PreviewCard',
-    className
-  )
+  const componentClassName = classNames('c-PreviewCard', className)
 
   const titleMarkup = title ? (
-    <Heading className='c-PreviewCard__title' size='h5'>
+    <Heading className="c-PreviewCard__title" size="h5">
       {title}
     </Heading>
   ) : null
@@ -31,7 +23,7 @@ const PreviewCard = props => {
   return (
     <Card className={componentClassName} {...rest}>
       {titleMarkup}
-      <Text muted className='c-PreviewCard__content'>
+      <Text muted className="c-PreviewCard__content">
         {children}
       </Text>
     </Card>

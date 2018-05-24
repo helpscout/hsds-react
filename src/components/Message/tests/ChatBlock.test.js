@@ -15,7 +15,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<ChatBlock className='mugatu' />)
+    const wrapper = shallow(<ChatBlock className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -23,7 +23,7 @@ describe('ClassNames', () => {
 
 describe('Timestamp', () => {
   test('Renders timestamp on mouseenter', () => {
-    const wrapper = mount(<ChatBlock timestamp='time' to />)
+    const wrapper = mount(<ChatBlock timestamp="time" to />)
     const o = wrapper.find(Animate)
 
     wrapper.simulate('mouseenter')
@@ -33,7 +33,7 @@ describe('Timestamp', () => {
   })
 
   test('Hides timestamp on mouseleave', () => {
-    const wrapper = mount(<ChatBlock timestamp='time' to />)
+    const wrapper = mount(<ChatBlock timestamp="time" to />)
     const o = wrapper.find(Animate)
 
     wrapper.simulate('mouseenter')
@@ -46,14 +46,14 @@ describe('Timestamp', () => {
   })
 
   test('Renders as first child, if to props is set', () => {
-    const wrapper = mount(<ChatBlock timestamp='time' to />)
+    const wrapper = mount(<ChatBlock timestamp="time" to />)
     const f = wrapper.find(Flexy)
 
     expect(f.children().nodes[0].props.className).toContain(`${cx}__timestamp`)
   })
 
   test('Renders as last child, if to props is set', () => {
-    const wrapper = mount(<ChatBlock timestamp='time' from />)
+    const wrapper = mount(<ChatBlock timestamp="time" from />)
     const f = wrapper.find(Flexy)
 
     expect(f.children().nodes[1].props.className).toContain(`${cx}__timestamp`)
@@ -71,13 +71,7 @@ describe('Content', () => {
 
   test('Enhances Action child component', () => {
     const wrapper = mount(
-      <ChatBlock
-        to
-        from
-        ltr
-        rtl
-        timestamp='time'
-      >
+      <ChatBlock to from ltr rtl timestamp="time">
         <Action />
       </ChatBlock>
     )
@@ -95,13 +89,7 @@ describe('Content', () => {
 
   test('Enhances Bubble child component', () => {
     const wrapper = mount(
-      <ChatBlock
-        to
-        from
-        ltr
-        rtl
-        timestamp='time'
-      >
+      <ChatBlock to from ltr rtl timestamp="time">
         <Bubble />
       </ChatBlock>
     )
@@ -136,9 +124,7 @@ describe('To/From', () => {
 
 describe('Context', () => {
   test('Adds className based on context.theme', () => {
-    const wrapper = mount(
-      <ChatBlock />
-    , {context: {theme: 'embed'}})
+    const wrapper = mount(<ChatBlock />, { context: { theme: 'embed' } })
 
     expect(wrapper.hasClass('is-theme-embed')).toBe(true)
   })

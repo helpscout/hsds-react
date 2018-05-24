@@ -5,7 +5,7 @@ import { Timestamp } from '../../..'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: 'c-TimelineItem'
+  className: 'c-TimelineItem',
 }
 baseComponentTest(Item, baseComponentOptions)
 
@@ -17,14 +17,14 @@ test('Does not show Timestamp by default', () => {
 })
 
 test('Renders timestamp wrapper if defined', () => {
-  const wrapper = mount(<Item timestamp='9:41am' />)
+  const wrapper = mount(<Item timestamp="9:41am" />)
   const o = wrapper.find('.c-TimelineItem__timestamp')
 
   expect(o.length).toBeTruthy()
 })
 
 test('Renders timestamp when hovered', () => {
-  const wrapper = mount(<Item timestamp='9:41am' />)
+  const wrapper = mount(<Item timestamp="9:41am" />)
   wrapper.simulate('mouseenter')
   const o = wrapper.find(Timestamp)
 

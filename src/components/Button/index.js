@@ -17,16 +17,10 @@ export const propTypes = {
   outline: PropTypes.bool,
   plain: PropTypes.bool,
   primary: PropTypes.bool,
-  size: PropTypes.oneOf([
-    'lg',
-    'md',
-    'sm',
-    'xs',
-    ''
-  ]),
+  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs', '']),
   state: stateTypes,
   submit: PropTypes.bool,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 }
 
 const defaultProps = {
@@ -38,7 +32,7 @@ const defaultProps = {
   outline: false,
   plain: false,
   primary: false,
-  submit: false
+  submit: false,
 }
 
 const Button = props => {

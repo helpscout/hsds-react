@@ -4,7 +4,10 @@ import RouteWrapper from '..'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
-const wrap = (...args) => shallow(...args).first().shallow()
+const wrap = (...args) =>
+  shallow(...args)
+    .first()
+    .shallow()
 
 describe('Route fetching', () => {
   let options
@@ -18,16 +21,16 @@ describe('Route fetching', () => {
     history = { push }
     options = {
       context: {
-        router: { history }
-      }
+        router: { history },
+      },
     }
     preventDefault = jest.fn()
     clickEvent = { preventDefault }
   })
 
   class SomePig extends Component {
-    render () {
-      return (<div {...this.props}>Some pig!</div>)
+    render() {
+      return <div {...this.props}>Some pig!</div>
     }
   }
   const RouteWrappedPig = RouteWrapper(SomePig)
@@ -72,9 +75,7 @@ describe('Route fetching', () => {
 
 describe('displayName', () => {
   test('Uses a ComposedComponent.name', () => {
-    const Derek = () => (
-      <div />
-    )
+    const Derek = () => <div />
     const WrappedComponent = RouteWrapper(Derek)
 
     expect(WrappedComponent.displayName).toContain('with')
@@ -82,9 +83,7 @@ describe('displayName', () => {
   })
 
   test('Uses a ComposedComponent.displayName', () => {
-    const Composed = () => (
-      <div />
-    )
+    const Composed = () => <div />
     Composed.displayName = 'Derek'
     const WrappedComponent = RouteWrapper(Composed)
 
@@ -94,8 +93,8 @@ describe('displayName', () => {
 
   test('Works with React.Component', () => {
     class Derek extends React.Component {
-      render () {
-        return (<div />)
+      render() {
+        return <div />
       }
     }
     const WrappedComponent = RouteWrapper(Derek)
@@ -106,8 +105,8 @@ describe('displayName', () => {
 
   test('Works with React.Component.displayName', () => {
     class Composed extends React.Component {
-      render () {
-        return (<div />)
+      render() {
+        return <div />
       }
     }
     Composed.displayName = 'Derek'

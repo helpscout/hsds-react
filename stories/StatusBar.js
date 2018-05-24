@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import { StatusBar } from '../src/index.js'
 
@@ -12,32 +12,32 @@ stories.add('styles', () => (
   <div>
     Light
     <div>
-      <StatusBar isOpen closeOnClick={false} status='info' theme='light'>
+      <StatusBar isOpen closeOnClick={false} status="info" theme="light">
         Info (light). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
-      <StatusBar isOpen closeOnClick={false} status='error' theme='light'>
+      <StatusBar isOpen closeOnClick={false} status="error" theme="light">
         Error (light). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
-      <StatusBar isOpen closeOnClick={false} status='success' theme='light'>
+      <StatusBar isOpen closeOnClick={false} status="success" theme="light">
         Success (light). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
-      <StatusBar isOpen closeOnClick={false} status='warning' theme='light'>
+      <StatusBar isOpen closeOnClick={false} status="warning" theme="light">
         Warning (light). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
     </div>
     <br />
     Bold
     <div>
-      <StatusBar isOpen closeOnClick={false} status='info' theme='bold'>
+      <StatusBar isOpen closeOnClick={false} status="info" theme="bold">
         Info (bold). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
-      <StatusBar isOpen closeOnClick={false} status='error' theme='bold'>
+      <StatusBar isOpen closeOnClick={false} status="error" theme="bold">
         Error (bold). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
-      <StatusBar isOpen closeOnClick={false} status='success' theme='bold'>
+      <StatusBar isOpen closeOnClick={false} status="success" theme="bold">
         Success (bold). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
-      <StatusBar isOpen closeOnClick={false} status='warning' theme='bold'>
+      <StatusBar isOpen closeOnClick={false} status="warning" theme="bold">
         Warning (bold). <StatusBar.Button>Button</StatusBar.Button>
       </StatusBar>
     </div>
@@ -53,32 +53,33 @@ stories.add('closeOnClick: Disabled', () => (
 
 stories.add('custom click to close', () => {
   class TestComponent extends Component {
-    constructor () {
+    constructor() {
       super()
       this.state = {
-        showStatusBar: true
+        showStatusBar: true,
       }
       this.toggleShow = this.toggleShow.bind(this)
     }
 
-    toggleShow () {
+    toggleShow() {
       this.setState({
-        showStatusBar: !this.state.showStatusBar
+        showStatusBar: !this.state.showStatusBar,
       })
     }
 
-    render () {
+    render() {
       const { showStatusBar } = this.state
       const toggleShow = this.toggleShow
       return (
         <StatusBar isOpen={showStatusBar} closeOnClick={false}>
-          Status message. <StatusBar.Button onClick={toggleShow} icon='tick'>Accept</StatusBar.Button>
+          Status message.{' '}
+          <StatusBar.Button onClick={toggleShow} icon="tick">
+            Accept
+          </StatusBar.Button>
         </StatusBar>
       )
     }
   }
 
-  return (
-    <TestComponent />
-  )
+  return <TestComponent />
 })

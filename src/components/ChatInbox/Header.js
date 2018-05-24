@@ -12,14 +12,14 @@ export const propTypes = {
   count: PropTypes.number,
   isCollapsed: PropTypes.bool,
   isCollapsible: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 const defaultProps = {
   count: 0,
   isCollapsible: false,
   isCollapsed: false,
-  onClick: noop
+  onClick: noop,
 }
 
 const Header = props => {
@@ -40,8 +40,8 @@ const Header = props => {
   )
 
   const countMarkup = count ? (
-    <Flexy.Item className='c-ChatInboxHeader__count'>
-      <Heading light size='small'>
+    <Flexy.Item className="c-ChatInboxHeader__count">
+      <Heading light size="small">
         ({count})
       </Heading>
     </Flexy.Item>
@@ -49,23 +49,23 @@ const Header = props => {
 
   const avatarsMarkup = avatars || null
 
-  const collapseMarkup = (
-    <Icon name='collapse' muted />
-  )
+  const collapseMarkup = <Icon name="collapse" muted />
 
   const actionMarkup = isCollapsible
-    ? (isCollapsed ? collapseMarkup : avatarsMarkup)
+    ? isCollapsed
+      ? collapseMarkup
+      : avatarsMarkup
     : avatarsMarkup
 
-  const dividerMarkup = (<Hr size='none' />)
+  const dividerMarkup = <Hr size="none" />
 
   return (
     <div className={componentClassName} {...rest}>
-      <Flexy className='c-ChatInboxHeader__content' gap='md'>
+      <Flexy className="c-ChatInboxHeader__content" gap="md">
         <Flexy.Block>
-          <Flexy just='left' gap='xs'>
+          <Flexy just="left" gap="xs">
             <Flexy.Item>
-              <Heading className='c-ChatInboxHeader__title' size='small'>
+              <Heading className="c-ChatInboxHeader__title" size="small">
                 {children}
               </Heading>
             </Flexy.Item>
@@ -73,15 +73,10 @@ const Header = props => {
           </Flexy>
         </Flexy.Block>
         <Flexy.Item>
-          <div className='c-ChatInboxHeader__action'>
-            {actionMarkup}
-          </div>
+          <div className="c-ChatInboxHeader__action">{actionMarkup}</div>
         </Flexy.Item>
       </Flexy>
-      {isCollapsible
-        ? (isCollapsed ? dividerMarkup : null)
-        : dividerMarkup
-      }
+      {isCollapsible ? (isCollapsed ? dividerMarkup : null) : dividerMarkup}
     </div>
   )
 }

@@ -13,9 +13,10 @@ describe('onResize', () => {
 
 describe('ReplaceEntity', () => {
   test('Converts greater/less than characters', () => {
-    const wrapper = shallow(<Resizer contents='<strong>News team!</strong>' />)
+    const wrapper = shallow(<Resizer contents="<strong>News team!</strong>" />)
     const o = wrapper.find('.c-InputGhost').first()
-    const html = o.html()
+    const html = o
+      .html()
       .replace('<div class="c-InputGhost">', '')
       .replace('</div>', '')
 
@@ -28,7 +29,8 @@ describe('ReplaceEntity', () => {
   test('Converts \\n characters to <br>', () => {
     const wrapper = shallow(<Resizer contents={`\nSan Diego\n`} />)
     const o = wrapper.find('.c-InputGhost').first()
-    const html = o.html()
+    const html = o
+      .html()
       .replace('<div class="c-InputGhost">', '')
       .replace('</div>', '')
 
@@ -37,9 +39,10 @@ describe('ReplaceEntity', () => {
   })
 
   test('Converts & characters to &amp;', () => {
-    const wrapper = shallow(<Resizer contents='San & Diego' />)
+    const wrapper = shallow(<Resizer contents="San & Diego" />)
     const o = wrapper.find('.c-InputGhost').first()
-    const html = o.html()
+    const html = o
+      .html()
       .replace('<div class="c-InputGhost">', '')
       .replace('</div>', '')
       .replace('<br>', '')
@@ -48,9 +51,10 @@ describe('ReplaceEntity', () => {
   })
 
   test('Does not convert if content does not contain special characters', () => {
-    const wrapper = shallow(<Resizer contents='San Diego' />)
+    const wrapper = shallow(<Resizer contents="San Diego" />)
     const o = wrapper.find('.c-InputGhost').first()
-    const html = o.html()
+    const html = o
+      .html()
       .replace('<div class="c-InputGhost">', '')
       .replace('</div>', '')
       .replace('<br>', '')

@@ -5,7 +5,7 @@ import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
   className: 'c-EmojiPicker',
-  skipChildrenTest: true
+  skipChildrenTest: true,
 }
 
 baseComponentTest(EmojiPicker, baseComponentOptions)

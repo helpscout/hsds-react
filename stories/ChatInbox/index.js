@@ -6,12 +6,10 @@ import AvatarSpec from '../Avatar/specs/Avatar'
 const stories = storiesOf('ChatInbox', module)
 
 stories.add('default', () => (
-  <div style={{width: 300}}>
+  <div style={{ width: 300 }}>
     <ChatInbox>
       <ChatInbox.Header
-        avatars={
-          <AvatarList avatars={AvatarSpec.generate(4)} max={3} />
-        }
+        avatars={<AvatarList avatars={AvatarSpec.generate(4)} max={3} />}
         count={1}
       >
         Chats
@@ -25,9 +23,7 @@ stories.add('default', () => (
 
     <ChatInbox isCollapsible>
       <ChatInbox.Header
-        avatars={
-          <AvatarList avatars={AvatarSpec.generate(4)} max={3} />
-        }
+        avatars={<AvatarList avatars={AvatarSpec.generate(4)} max={3} />}
         count={2}
       >
         Assigned

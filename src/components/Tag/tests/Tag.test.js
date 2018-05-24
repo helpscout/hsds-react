@@ -15,7 +15,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Tag className='mugatu' />)
+    const wrapper = shallow(<Tag className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -41,9 +41,7 @@ describe('Animate', () => {
 
 describe('Content', () => {
   test('Wraps children components in <Text> ', () => {
-    const wrapper = shallow(
-      <Tag>Mugatu</Tag>
-    )
+    const wrapper = shallow(<Tag>Mugatu</Tag>)
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Mugatu')
@@ -52,29 +50,27 @@ describe('Content', () => {
 })
 
 describe('Remove', () => {
-  test('Is not removable by default', (done) => {
+  test('Is not removable by default', done => {
     const wrapper = mount(<Tag />)
 
-    wait()
-      .then(() => {
-        const icon = wrapper.find(Icon)
-        expect(icon.length).toBe(0)
-        done()
-      })
+    wait().then(() => {
+      const icon = wrapper.find(Icon)
+      expect(icon.length).toBe(0)
+      done()
+    })
   })
 
-  test('Renders remove Icon if isRemovable', (done) => {
+  test('Renders remove Icon if isRemovable', done => {
     const wrapper = mount(<Tag isRemovable />)
 
-    wait()
-      .then(() => {
-        const icon = wrapper.find(Icon)
-        expect(icon.length).toBe(1)
-        done()
-      })
+    wait().then(() => {
+      const icon = wrapper.find(Icon)
+      expect(icon.length).toBe(1)
+      done()
+    })
   })
 
-  test('Does not fire callback on unmount', (done) => {
+  test('Does not fire callback on unmount', done => {
     const spy = jest.fn()
     const wrapper = mount(<Tag onRemove={spy} />)
 
@@ -89,9 +85,9 @@ describe('Remove', () => {
       })
   })
 
-  test('Fires callback on remove click', (done) => {
+  test('Fires callback on remove click', done => {
     const spy = jest.fn()
-    const wrapper = mount(<Tag isRemovable onRemove={spy} id={1} value='Ron' />)
+    const wrapper = mount(<Tag isRemovable onRemove={spy} id={1} value="Ron" />)
 
     wait()
       .then(() => {
@@ -118,13 +114,13 @@ describe('Styles', () => {
   })
 
   test('Has color styles', () => {
-    const wrapper = shallow(<Tag color='red' />)
+    const wrapper = shallow(<Tag color="red" />)
 
     expect(wrapper.hasClass('is-red')).toBeTruthy()
   })
 
   test('Has display styles', () => {
-    const wrapper = shallow(<Tag display='inlineBlock' />)
+    const wrapper = shallow(<Tag display="inlineBlock" />)
 
     expect(wrapper.hasClass('is-display-inlineBlock')).toBeTruthy()
   })
@@ -144,14 +140,14 @@ describe('Styles', () => {
 
 describe('Value', () => {
   test('Renders value as text', () => {
-    const wrapper = shallow(<Tag value='Ron' />)
+    const wrapper = shallow(<Tag value="Ron" />)
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Ron')
   })
 
   test('Renders value instead of children, if defined', () => {
-    const wrapper = shallow(<Tag value='Ron'>Champ</Tag>)
+    const wrapper = shallow(<Tag value="Ron">Champ</Tag>)
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Ron')

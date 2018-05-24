@@ -11,7 +11,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<Card className='not-metro-man' />)
+    const wrapper = shallow(<Card className="not-metro-man" />)
 
     expect(wrapper.prop('className')).toContain('not-metro-man')
   })
@@ -28,11 +28,9 @@ describe('Block', () => {
   test('Can render a Card.Block', () => {
     const wrapper = shallow(
       <Card>
-        <Card.Block>
-          MegaMind
-        </Card.Block>
+        <Card.Block>MegaMind</Card.Block>
       </Card>
-      )
+    )
     const o = wrapper.find(Card.Block)
 
     expect(o.length).toBe(1)
@@ -42,14 +40,10 @@ describe('Block', () => {
   test('Can render a multiple Card.Block', () => {
     const wrapper = shallow(
       <Card>
-        <Card.Block>
-          Mega
-        </Card.Block>
-        <Card.Block>
-          Mind
-        </Card.Block>
+        <Card.Block>Mega</Card.Block>
+        <Card.Block>Mind</Card.Block>
       </Card>
-      )
+    )
     const o = wrapper.find(Card.Block)
 
     expect(o.length).toBe(2)
@@ -65,10 +59,8 @@ describe('Content', () => {
 
   test('Render child components', () => {
     const wrapper = mount(
-      <Card className='mega'>
-        <Card className='mind'>
-          Megamind
-        </Card>
+      <Card className="mega">
+        <Card className="mind">Megamind</Card>
       </Card>
     )
 
@@ -137,9 +129,7 @@ describe('Link', () => {
 
   test('onBlur fires for a Link', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
-      <Card href={link} onBlur={spy} />
-    )
+    const wrapper = shallow(<Card href={link} onBlur={spy} />)
     wrapper.simulate('blur')
 
     expect(spy).toHaveBeenCalled()
@@ -147,9 +137,7 @@ describe('Link', () => {
 
   test('onClick fires for a Link', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
-      <Card href={link} onClick={spy} />
-    )
+    const wrapper = shallow(<Card href={link} onClick={spy} />)
     wrapper.simulate('click')
 
     expect(spy).toHaveBeenCalled()
@@ -157,9 +145,7 @@ describe('Link', () => {
 
   test('onFocus fires for a Link', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
-      <Card href={link} onFocus={spy} />
-    )
+    const wrapper = shallow(<Card href={link} onFocus={spy} />)
     wrapper.simulate('focus')
 
     expect(spy).toHaveBeenCalled()
@@ -183,7 +169,9 @@ describe('Link', () => {
 describe('Click', () => {
   test('Can trigger onClick callback', () => {
     let value = false
-    const onClick = () => { value = true }
+    const onClick = () => {
+      value = true
+    }
     const wrapper = shallow(<Card onClick={onClick} />)
 
     wrapper.simulate('click')
@@ -207,7 +195,7 @@ describe('Selector', () => {
   })
 
   test('Renders a custom selector, if specified', () => {
-    const wrapper = shallow(<Card selector='span' />)
+    const wrapper = shallow(<Card selector="span" />)
 
     expect(wrapper.node.type).toBe('span')
   })

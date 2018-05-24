@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
@@ -10,7 +10,10 @@ import Trigger from './Trigger'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
-import { focusNextFocusableNode, focusPreviousFocusableNode } from '../../utilities/focus'
+import {
+  focusNextFocusableNode,
+  focusPreviousFocusableNode,
+} from '../../utilities/focus'
 import { isNodeElement } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 
@@ -20,20 +23,20 @@ export const propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
-  selectedIndex: PropTypes.number
+  selectedIndex: PropTypes.number,
 }
 const defaultProps = {
   closeMenuOnClick: true,
   direction: 'down',
-  onClose: noop
+  onClose: noop,
 }
 
 class Dropdown extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       isOpen: props.isOpen,
-      selectedIndex: props.selectedIndex
+      selectedIndex: props.selectedIndex,
     }
 
     this.isFocused = false
@@ -49,36 +52,38 @@ class Dropdown extends Component {
     this.handleShiftTab = this.handleShiftTab.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._isMounted = true
     this.setTriggerNode()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._isMounted = false
   }
 
-  safeSetState (newState) {
+  safeSetState(newState) {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(newState)
     }
   }
-  componentWillUpdate (nextProps) {
+  componentWillUpdate(nextProps) {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.safeSetState({ isOpen: nextProps.isOpen })
     }
   }
 
-  setTriggerNode () {
+  setTriggerNode() {
     const trigger = this.refs.trigger
     /* istanbul ignore next */
     if (!this.triggerNode) {
-      this.triggerNode = isNodeElement(trigger) ? trigger : ReactDOM.findDOMNode(trigger)
+      this.triggerNode = isNodeElement(trigger)
+        ? trigger
+        : ReactDOM.findDOMNode(trigger)
     }
   }
 
-  handleOnBodyClick (event) {
+  handleOnBodyClick(event) {
     const clickNode = event.target
     if (this.state.isOpen) {
       if (clickNode !== this.triggerNode) {
@@ -94,18 +99,18 @@ class Dropdown extends Component {
     }
   }
 
-  handleOnTriggerClick () {
+  handleOnTriggerClick() {
     this.safeSetState({ isOpen: !this.state.isOpen })
     this.isFocused = true
   }
 
-  handleOnTriggerFocus () {
+  handleOnTriggerFocus() {
     setTimeout(() => {
       this.isFocused = true
     }, 0)
   }
 
-  handleOnMenuClose () {
+  handleOnMenuClose() {
     const { onClose } = this.props
     this.safeSetState({ selectedIndex: null, isOpen: false })
     this.isFocused = false
@@ -113,14 +118,14 @@ class Dropdown extends Component {
     onClose()
   }
 
-  handleDownArrow () {
+  handleDownArrow() {
     const { isOpen } = this.state
     if (!isOpen && this.isFocused) {
       this.safeSetState({ isOpen: true, selectedIndex: 0 })
     }
   }
 
-  handleTab (event) {
+  handleTab(event) {
     this.isFocused = false
     /* istanbul ignore else */
     if (this.state.isOpen) {
@@ -137,7 +142,7 @@ class Dropdown extends Component {
     }
   }
 
-  handleShiftTab (event) {
+  handleShiftTab(event) {
     this.isFocused = false
     /* istanbul ignore else */
     if (this.state.isOpen) {
@@ -154,7 +159,7 @@ class Dropdown extends Component {
     }
   }
 
-  render () {
+  render() {
     const {
       children,
       className,
@@ -166,10 +171,7 @@ class Dropdown extends Component {
       selectedIndex: propsSelectedIndex,
       ...rest
     } = this.props
-    const {
-      isOpen,
-      selectedIndex
-    } = this.state
+    const { isOpen, selectedIndex } = this.state
 
     const handleOnBodyClick = this.handleOnBodyClick
     const handleOnTriggerFocus = this.handleOnTriggerFocus
@@ -189,28 +191,33 @@ class Dropdown extends Component {
           ref: 'trigger',
           onFocus: handleOnTriggerFocus,
           'aria-haspopup': true,
-          'aria-expanded': isOpen
+          'aria-expanded': isOpen,
         }
         if (child.type === Trigger) {
           // TODO: Allow for dynamic directions
           triggerProps = Object.assign({}, triggerProps, {
-            direction: 'down'
+            direction: 'down',
           })
         }
         return React.cloneElement(child, triggerProps)
       }
 
       if (child.type === Menu || child.type === MenuComponent) {
-        return isOpen ? React.cloneElement(child, {
-          closeMenuOnClick,
-          direction,
-          isOpen,
-          onClose: handleOnMenuClose,
-          onSelect: onSelect || child.props.onSelect,
-          ref: 'menu',
-          trigger: this.triggerNode,
-          selectedIndex: child.props.selectedIndex !== undefined ? child.props.selectedIndex : selectedIndex
-        }) : null
+        return isOpen
+          ? React.cloneElement(child, {
+              closeMenuOnClick,
+              direction,
+              isOpen,
+              onClose: handleOnMenuClose,
+              onSelect: onSelect || child.props.onSelect,
+              ref: 'menu',
+              trigger: this.triggerNode,
+              selectedIndex:
+                child.props.selectedIndex !== undefined
+                  ? child.props.selectedIndex
+                  : selectedIndex,
+            })
+          : null
       }
 
       return child
@@ -218,10 +225,24 @@ class Dropdown extends Component {
 
     return (
       <div className={componentClassName} {...rest}>
-        <EventListener event='click' handler={handleOnBodyClick} />
-        <KeypressListener keyCode={Keys.TAB} handler={handleTab} noModifier type='keydown' />
-        <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={handleShiftTab} type='keydown' />
-        <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
+        <EventListener event="click" handler={handleOnBodyClick} />
+        <KeypressListener
+          keyCode={Keys.TAB}
+          handler={handleTab}
+          noModifier
+          type="keydown"
+        />
+        <KeypressListener
+          keyCode={Keys.TAB}
+          modifier="shift"
+          handler={handleShiftTab}
+          type="keydown"
+        />
+        <KeypressListener
+          keyCode={Keys.DOWN_ARROW}
+          handler={handleDownArrow}
+          type="keydown"
+        />
         {childrenMarkup}
       </div>
     )

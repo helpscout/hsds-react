@@ -1,6 +1,4 @@
-import {
-  getComputedWidthProps
-} from '../../node'
+import { getComputedWidthProps } from '../../node'
 
 test('Returns false if node (arg) is invalid', () => {
   expect(getComputedWidthProps()).not.toBeTruthy()

@@ -4,16 +4,9 @@ import Choice from './Choice'
 import Grid from './Grid'
 
 const FormGroup = props => {
-  const {
-    className,
-    children,
-    ...rest
-  } = props
+  const { className, children, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-FormGroup',
-    className
-  )
+  const componentClassName = classNames('c-FormGroup', className)
 
   return (
     <div className={componentClassName} {...rest}>

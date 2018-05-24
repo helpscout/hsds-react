@@ -8,7 +8,7 @@ export const getFadeTopStyles = (event, offset = offsetX) => {
 
   if (scrollTop > 0) {
     const size = scrollTop < offset ? scrollTop : offset
-    const amount = offset ? (size / offset) : 1
+    const amount = offset ? size / offset : 1
     transform = `scaleY(${amount})`
   } else {
     transform = `scaleY(0)`
@@ -25,7 +25,7 @@ export const getFadeBottomStyles = (event, offset = offsetX) => {
 
   if (scrollBottom > 0) {
     const size = scrollBottom < offset ? scrollBottom : offset
-    const amount = offset ? (size / offset) : 1
+    const amount = offset ? size / offset : 1
     transform = `scaleY(${amount})`
   } else {
     transform = `scaleY(0)`
@@ -41,7 +41,7 @@ export const getFadeLeftStyles = (event, offset = offsetY) => {
 
   if (scrollLeft > 0) {
     const size = scrollLeft < offset ? scrollLeft : offset
-    const amount = offset ? (size / offset) : 1
+    const amount = offset ? size / offset : 1
     transform = `scaleX(${amount})`
   } else {
     transform = `scaleX(0)`
@@ -58,7 +58,7 @@ export const getFadeRightStyles = (event, offset = offsetY) => {
 
   if (scrollRight > 0) {
     const size = scrollRight < offset ? scrollRight : offset
-    const amount = offset ? (size / offset) : 1
+    const amount = offset ? size / offset : 1
     transform = `scaleX(${amount})`
   } else {
     transform = `scaleX(0)`

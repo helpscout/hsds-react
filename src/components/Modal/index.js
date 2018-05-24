@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Body from './Body'
@@ -17,10 +17,7 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { propTypes as portalTypes } from '../Portal'
 import { findFocusableNodes } from '../../utilities/focus'
-import {
-  getClosestDocument,
-  isNodeElement
-} from '../../utilities/node'
+import { getClosestDocument, isNodeElement } from '../../utilities/node'
 
 export const propTypes = Object.assign({}, portalTypes, {
   cardClassName: PropTypes.string,
@@ -32,7 +29,7 @@ export const propTypes = Object.assign({}, portalTypes, {
   modalAnimationEasing: PropTypes.string,
   modalAnimationSequence: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.string
+    PropTypes.string,
   ]),
   modalFocusTimeout: PropTypes.number,
   overlayAnimationDelay: PropTypes.number,
@@ -40,13 +37,13 @@ export const propTypes = Object.assign({}, portalTypes, {
   overlayAnimationEasing: PropTypes.string,
   overlayAnimationSequence: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.string
+    PropTypes.string,
   ]),
   overlayClassName: PropTypes.string,
   seamless: PropTypes.bool,
   trigger: PropTypes.element,
   timeout: PropTypes.number,
-  wrapperClassName: PropTypes.string
+  wrapperClassName: PropTypes.string,
 })
 
 const defaultProps = {
@@ -66,21 +63,21 @@ const defaultProps = {
   overlayAnimationSequence: 'fade',
   onScroll: noop,
   timeout: 80,
-  wrapperClassName: 'c-ModalWrapper'
+  wrapperClassName: 'c-ModalWrapper',
 }
 
 const childContextTypes = {
-  positionCloseNode: PropTypes.func
+  positionCloseNode: PropTypes.func,
 }
 
 const modalBaseZIndex = 1040
 const portalOptions = {
   id: 'Modal',
-  zIndex: modalBaseZIndex
+  zIndex: modalBaseZIndex,
 }
 
 class Modal extends Component {
-  constructor () {
+  constructor() {
     super()
 
     this.documentNode = null
@@ -93,18 +90,18 @@ class Modal extends Component {
     this.positionCloseNode = this.positionCloseNode.bind(this)
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.documentNode = getClosestDocument(ReactDOM.findDOMNode(this))
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.positionCloseNode()
     this.focusModalCard()
     /* istanbul ignore next */
     setTimeout(this.positionCloseNode, this.props.modalAnimationDuration)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.documentNode = null
     this.cardNode = null
     this.closeNode = null
@@ -112,35 +109,41 @@ class Modal extends Component {
   }
 
   /* istanbul ignore next */
-  handleOnResize () {
+  handleOnResize() {
     this.positionCloseNode()
   }
 
-  handleOnTab (event) {
+  handleOnTab(event) {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
     const focusedNode = event.target
     const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
-    const focusedNodeIndex = Array.prototype.indexOf.call(focusableNodes, focusedNode)
+    const focusedNodeIndex = Array.prototype.indexOf.call(
+      focusableNodes,
+      focusedNode
+    )
 
-    if (focusedNodeIndex === (focusableNodes.length - 1)) {
+    if (focusedNodeIndex === focusableNodes.length - 1) {
       event.preventDefault()
     }
   }
 
-  handleOnShiftTab (event) {
+  handleOnShiftTab(event) {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
     const focusedNode = event.target
     const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
-    const focusedNodeIndex = Array.prototype.indexOf.call(focusableNodes, focusedNode)
+    const focusedNodeIndex = Array.prototype.indexOf.call(
+      focusableNodes,
+      focusedNode
+    )
 
     if (focusedNodeIndex === 0) {
       event.preventDefault()
     }
   }
 
-  focusModalCard () {
+  focusModalCard() {
     const { modalFocusTimeout } = this.props
     setTimeout(() => {
       /* istanbul ignore else */
@@ -150,26 +153,25 @@ class Modal extends Component {
     }, modalFocusTimeout)
   }
 
-  positionCloseNode (scrollableNode) {
+  positionCloseNode(scrollableNode) {
     const scrollNode = scrollableNode || this.scrollableNode
-    if (
-      !this.closeNode ||
-      !isNodeElement(scrollNode)
-    ) return
+    if (!this.closeNode || !isNodeElement(scrollNode)) return
 
     const defaultOffset = 9
-    const offset = `${(scrollNode.offsetWidth - scrollNode.scrollWidth) + defaultOffset}px`
+    const offset = `${scrollNode.offsetWidth -
+      scrollNode.scrollWidth +
+      defaultOffset}px`
 
     this.closeNode.style.right = offset
   }
 
-  getChildContext () {
+  getChildContext() {
     return {
-      positionCloseNode: this.positionCloseNode
+      positionCloseNode: this.positionCloseNode,
     }
   }
 
-  render () {
+  render() {
     const {
       cardClassName,
       children,
@@ -212,10 +214,7 @@ class Modal extends Component {
       isOpen && 'is-open',
       className
     )
-    const cardComponentClassName = classNames(
-      'c-Modal__Card',
-      cardClassName
-    )
+    const cardComponentClassName = classNames('c-Modal__Card', cardClassName)
     const overlayComponentClassName = classNames(
       'c-Modal__Overlay',
       overlayClassName
@@ -223,24 +222,28 @@ class Modal extends Component {
 
     const closeMarkup = closeIcon ? (
       <div
-        className='c-Modal__close'
-        ref={node => { this.closeNode = node }}
+        className="c-Modal__close"
+        ref={node => {
+          this.closeNode = node
+        }}
       >
-        <CloseButton onClick={closePortal} tabIndex='-1' />
+        <CloseButton onClick={closePortal} tabIndex="-1" />
       </div>
     ) : null
 
-    const modalStyle = style ? Object.assign({}, style, {
-      zIndex
-    }) : { zIndex }
+    const modalStyle = style
+      ? Object.assign({}, style, {
+          zIndex,
+        })
+      : { zIndex }
 
     const parsedChildren = React.Children.map(children, child => {
       if (child && (child.type === Content || child.type === Body)) {
         return React.cloneElement(child, {
-          scrollableRef: (node) => {
+          scrollableRef: node => {
             this.scrollableNode = node
             child.props.scrollableRef(node)
-          }
+          },
         })
       }
 
@@ -251,27 +254,43 @@ class Modal extends Component {
       <Card
         className={cardComponentClassName}
         seamless
-        role='dialog'
-        nodeRef={node => { this.cardNode = node }}
-        tabIndex='-1'
+        role="dialog"
+        nodeRef={node => {
+          this.cardNode = node
+        }}
+        tabIndex="-1"
       >
         {closeMarkup}
         {parsedChildren}
       </Card>
     ) : (
-      <div className='c-Modal__innerContent' role='dialog'>
+      <div className="c-Modal__innerContent" role="dialog">
         {parsedChildren}
       </div>
     )
 
     return (
-      <div className={componentClassName} role='document' style={modalStyle} {...rest}>
-        <KeypressListener keyCode={Keys.TAB} handler={this.handleOnTab} type='keydown' />
-        <KeypressListener keyCode={Keys.TAB} modifier='shift' handler={this.handleOnShiftTab} type='keydown' />
-        <EventListener event='resize' handler={handleOnResize} />
-        <div className='c-Modal__innerWrapper'>
+      <div
+        className={componentClassName}
+        role="document"
+        style={modalStyle}
+        {...rest}
+      >
+        <KeypressListener
+          keyCode={Keys.TAB}
+          handler={this.handleOnTab}
+          type="keydown"
+        />
+        <KeypressListener
+          keyCode={Keys.TAB}
+          modifier="shift"
+          handler={this.handleOnShiftTab}
+          type="keydown"
+        />
+        <EventListener event="resize" handler={handleOnResize} />
+        <div className="c-Modal__innerWrapper">
           <Animate
-            className='c-Modal__Card-container'
+            className="c-Modal__Card-container"
             delay={modalAnimationDelay}
             duration={modalAnimationDuration}
             easing={modalAnimationEasing}
@@ -287,7 +306,11 @@ class Modal extends Component {
           in={portalIsOpen}
           sequence={overlayAnimationSequence}
         >
-          <Overlay className={overlayComponentClassName} onClick={closePortal} role='presentation' />
+          <Overlay
+            className={overlayComponentClassName}
+            onClick={closePortal}
+            role="presentation"
+          />
         </Animate>
       </div>
     )

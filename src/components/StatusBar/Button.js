@@ -4,29 +4,16 @@ import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 
 export const propTypes = {
-  icon: PropTypes.string
+  icon: PropTypes.string,
 }
 
 const Button = props => {
-  const {
-    children,
-    className,
-    icon,
-    ...rest
-  } = props
+  const { children, className, icon, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-StatusBarButton',
-    className
-  )
+  const componentClassName = classNames('c-StatusBarButton', className)
 
   const iconMarkup = icon ? (
-    <Icon
-      className='c-StatusBarButton__icon'
-      inline
-      name={icon}
-      size='12'
-    />
+    <Icon className="c-StatusBarButton__icon" inline name={icon} size="12" />
   ) : null
 
   return (

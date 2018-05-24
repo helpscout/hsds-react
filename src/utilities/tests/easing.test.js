@@ -2,7 +2,7 @@ import {
   defaultEasingTiming,
   customCubicBezier,
   cubicBezierCSSProp,
-  getEasingTiming
+  getEasingTiming,
 } from '../easing'
 
 describe('cubicBezierCSSProp', () => {
@@ -11,8 +11,9 @@ describe('cubicBezierCSSProp', () => {
   })
 
   test('Returns bezier curve as a CSS Prop', () => {
-    expect(cubicBezierCSSProp(customCubicBezier.easeInQuad))
-      .toContain(customCubicBezier.easeInQuad)
+    expect(cubicBezierCSSProp(customCubicBezier.easeInQuad)).toContain(
+      customCubicBezier.easeInQuad
+    )
   })
 })
 
@@ -30,13 +31,15 @@ describe('getEasingTiming', () => {
   })
 
   test('Returns bezier curves, if exists', () => {
-    expect(getEasingTiming('easeInSine'))
-      .toContain(customCubicBezier.easeInSine)
+    expect(getEasingTiming('easeInSine')).toContain(
+      customCubicBezier.easeInSine
+    )
   })
 
   test('Returns (snake-case) bezier curves, if exists', () => {
-    expect(getEasingTiming('ease-in-sine'))
-      .toContain(customCubicBezier.easeInSine)
+    expect(getEasingTiming('ease-in-sine')).toContain(
+      customCubicBezier.easeInSine
+    )
   })
 
   test('Returns custom bezier curves', () => {

@@ -33,7 +33,7 @@ const getScrollBarWidth = () => {
 
   document.body.removeChild(outer)
 
-  window[namespace] = (w1 - w2)
+  window[namespace] = w1 - w2
 
   return window[namespace]
 }

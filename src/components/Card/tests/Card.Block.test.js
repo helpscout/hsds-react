@@ -11,7 +11,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<CardBlock className='not-metro-man' />)
+    const wrapper = shallow(<CardBlock className="not-metro-man" />)
 
     expect(wrapper.hasClass('not-metro-man')).toBeTruthy()
   })
@@ -26,10 +26,8 @@ describe('Content', () => {
 
   test('Render child components', () => {
     const wrapper = shallow(
-      <CardBlock className='mega'>
-        <CardBlock className='mind'>
-          Megamind
-        </CardBlock>
+      <CardBlock className="mega">
+        <CardBlock className="mind">Megamind</CardBlock>
       </CardBlock>
     )
     const o = wrapper.find('.mind')
@@ -104,7 +102,7 @@ describe('Styles', () => {
   })
 
   test('Renders size styles, if specified', () => {
-    const wrapper = shallow(<CardBlock size='sm' />)
+    const wrapper = shallow(<CardBlock size="sm" />)
 
     expect(wrapper.prop('className')).toContain('c-Card__block--sm')
   })

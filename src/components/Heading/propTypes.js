@@ -9,5 +9,5 @@ export const sizeTypes = PropTypes.oneOf([
   'h6',
   'big',
   'small',
-  ''
+  '',
 ])

@@ -1,6 +1,4 @@
-import {
-  findFirstFocusableNode
-} from '../../focus'
+import { findFirstFocusableNode } from '../../focus'
 
 afterEach(() => {
   document.body.innerHTML = ''

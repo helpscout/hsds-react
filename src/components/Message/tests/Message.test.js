@@ -13,7 +13,7 @@ import { Avatar } from '../../'
 const cx = 'c-Message'
 const ui = {
   avatar: `.${cx}__avatar-block`,
-  from: `.${cx}__from`
+  from: `.${cx}__from`,
 }
 
 describe('ClassNames', () => {
@@ -25,7 +25,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Message className='mugatu' />)
+    const wrapper = shallow(<Message className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -34,7 +34,7 @@ describe('ClassNames', () => {
 
 describe('Avatar', () => {
   test('Renders avatar block by default, but no Avatar', () => {
-    const wrapper = shallow(<Message className='mugatu' from />)
+    const wrapper = shallow(<Message className="mugatu" from />)
     const o = wrapper.find(`.${cx}__avatar-block`)
 
     expect(o.length).toBeTruthy()
@@ -42,15 +42,17 @@ describe('Avatar', () => {
   })
 
   test('Can remove avatar block', () => {
-    const wrapper = shallow(<Message className='mugatu' from showAvatar={false} />)
+    const wrapper = shallow(
+      <Message className="mugatu" from showAvatar={false} />
+    )
     const o = wrapper.find(`.${cx}__avatar-block`)
 
     expect(o.length).not.toBeTruthy()
   })
 
   test('Can render an Avatar', () => {
-    const a = (<Avatar name='Mugatu' />)
-    const wrapper = shallow(<Message className='mugatu' from avatar={a} />)
+    const a = <Avatar name="Mugatu" />
+    const wrapper = shallow(<Message className="mugatu" from avatar={a} />)
     const o = wrapper.find(`.${cx}__avatar-block`)
 
     expect(o.length).toBeTruthy()
@@ -58,23 +60,18 @@ describe('Avatar', () => {
   })
 
   test('Adds className if avatat is provided', () => {
-    const a = (<Avatar name='Mugatu' />)
-    const wrapper = shallow(<Message className='mugatu' from avatar={a} />)
+    const a = <Avatar name="Mugatu" />
+    const wrapper = shallow(<Message className="mugatu" from avatar={a} />)
 
     expect(wrapper.hasClass('has-avatar')).toBeTruthy()
   })
 })
 
 describe('Content', () => {
-  const makeContentTest = (ComponentName) => {
+  const makeContentTest = ComponentName => {
     test(`Enhances ${ComponentName.name} child component`, () => {
       const wrapper = shallow(
-        <Message
-          from
-          ltr
-          rtl
-          to
-        >
+        <Message from ltr rtl to>
           {React.createElement(ComponentName)}
         </Message>
       )
@@ -91,12 +88,14 @@ describe('Content', () => {
   }
 
   const chatTypes = [Action, Attachment, Chat, Content, Media, Question]
-  chatTypes.forEach(type => { makeContentTest(type) })
+  chatTypes.forEach(type => {
+    makeContentTest(type)
+  })
 
   test('Can render non-Message child components', () => {
     const wrapper = shallow(
       <Message>
-        <div className='mugatu'>Mugatu</div>
+        <div className="mugatu">Mugatu</div>
       </Message>
     )
     const o = wrapper.find('.mugatu')
@@ -105,41 +104,25 @@ describe('Content', () => {
   })
 
   test('Does not break when provided with null content', () => {
-    const wrapper = mount(
-      <Message>
-        {null}
-      </Message>
-    )
+    const wrapper = mount(<Message>{null}</Message>)
 
     expect(wrapper).toBeTruthy()
   })
 
   test('Does not break when provided with undefined content', () => {
-    const wrapper = mount(
-      <Message>
-        {undefined}
-      </Message>
-    )
+    const wrapper = mount(<Message>{undefined}</Message>)
 
     expect(wrapper).toBeTruthy()
   })
 
   test('Does not break when provided with empty content', () => {
-    const wrapper = mount(
-      <Message>
-        {[]}
-      </Message>
-    )
+    const wrapper = mount(<Message>{[]}</Message>)
 
     expect(wrapper).toBeTruthy()
   })
 
   test('Does not break when provided with an array of empty content', () => {
-    const wrapper = mount(
-      <Message>
-        {[null, undefined, null, null]}
-      </Message>
-    )
+    const wrapper = mount(<Message>{[null, undefined, null, null]}</Message>)
 
     expect(wrapper).toBeTruthy()
   })
@@ -173,19 +156,17 @@ describe('Styles', () => {
 
 describe('Context', () => {
   test('Adds className based on context.theme', () => {
-    const wrapper = shallow(
-      <Message />
-    , {context: {theme: 'embed'}})
+    const wrapper = shallow(<Message />, { context: { theme: 'embed' } })
 
     expect(wrapper.hasClass('is-theme-embed')).toBe(true)
   })
 
   describe('Theme: Embed', () => {
     test('Can show Avatar for "from" message', () => {
-      const a = (<Avatar name='Mugatu' />)
-      const wrapper = shallow(
-        <Message avatar={a} showAvatar from />
-      , {context: {theme: 'embed'}})
+      const a = <Avatar name="Mugatu" />
+      const wrapper = shallow(<Message avatar={a} showAvatar from />, {
+        context: { theme: 'embed' },
+      })
 
       const o = wrapper.find(ui.avatar)
 
@@ -193,10 +174,10 @@ describe('Context', () => {
     })
 
     test('Always hide avatar for "to" message', () => {
-      const a = (<Avatar name='Mugatu' />)
-      const wrapper = shallow(
-        <Message avatar={a} showAvatar to />
-      , {context: {theme: 'embed'}})
+      const a = <Avatar name="Mugatu" />
+      const wrapper = shallow(<Message avatar={a} showAvatar to />, {
+        context: { theme: 'embed' },
+      })
 
       const o = wrapper.find(ui.avatar)
 
@@ -204,10 +185,10 @@ describe('Context', () => {
     })
 
     test('Always render Circle avatars for embed', () => {
-      const a = (<Avatar name='Mugatu' shape='square' />)
-      const wrapper = shallow(
-        <Message avatar={a} showAvatar from />
-      , {context: {theme: 'embed'}})
+      const a = <Avatar name="Mugatu" shape="square" />
+      const wrapper = shallow(<Message avatar={a} showAvatar from />, {
+        context: { theme: 'embed' },
+      })
 
       const o = wrapper.find(Avatar)
 
@@ -226,8 +207,8 @@ describe('From', () => {
 
   test('Does not render, unless using context.theme.embed', () => {
     const wrapper = mount(
-      <Message.Provider theme='embed'>
-        <Message from='Blue' />
+      <Message.Provider theme="embed">
+        <Message from="Blue" />
       </Message.Provider>
     )
 
@@ -245,7 +226,7 @@ describe('From', () => {
 
   test('Does not render if set to true', () => {
     const wrapper = mount(
-      <Message.Provider theme='embed'>
+      <Message.Provider theme="embed">
         <Message from />
       </Message.Provider>
     )
@@ -257,8 +238,8 @@ describe('From', () => {
 
   test('Does not render if from is empty string', () => {
     const wrapper = mount(
-      <Message.Provider theme='embed'>
-        <Message from='' />
+      <Message.Provider theme="embed">
+        <Message from="" />
       </Message.Provider>
     )
 

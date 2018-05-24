@@ -20,11 +20,8 @@ export const propTypes = {
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   target: PropTypes.string,
   truncateLimit: PropTypes.number,
-  type: PropTypes.oneOf([
-    'action',
-    'link'
-  ]),
-  url: PropTypes.string
+  type: PropTypes.oneOf(['action', 'link']),
+  url: PropTypes.string,
 }
 
 const defaultProps = {
@@ -33,7 +30,7 @@ const defaultProps = {
   onClick: noop,
   onRemoveClick: noop,
   truncateLimit: 30,
-  type: 'link'
+  type: 'link',
 }
 
 const contextTypes = providerContextTypes
@@ -56,9 +53,7 @@ const Attachment = (props, context) => {
     url,
     ...rest
   } = props
-  const {
-    theme
-  } = context
+  const { theme } = context
 
   const isThemePreview = theme === 'preview'
 
@@ -68,14 +63,14 @@ const Attachment = (props, context) => {
     mime,
     name,
     size,
-    url
+    url,
   }
 
-  const handleOnClick = (event) => {
+  const handleOnClick = event => {
     onClick(event, attachmentProps)
   }
 
-  const handleOnRemoveClick = (event) => {
+  const handleOnRemoveClick = event => {
     onRemoveClick(event, attachmentProps)
   }
 
@@ -88,23 +83,21 @@ const Attachment = (props, context) => {
   )
 
   const sizeMarkup = size ? (
-    <Text className='c-Attachment__size' lineHeightReset>
+    <Text className="c-Attachment__size" lineHeightReset>
       {size}
     </Text>
   ) : null
 
   const contentMarkup = imageUrl ? (
-    <span className='c-Attachment__content'>
-      <Image
-        block
-        className='c-Attachment__image'
-        src={imageUrl}
-      />
+    <span className="c-Attachment__content">
+      <Image block className="c-Attachment__image" src={imageUrl} />
     </span>
   ) : (
-    <span className='c-Attachment__content'>
-      <Text className='c-Attachment__name' lineHeightReset>
-        <Truncate limit={truncateLimit} type='middle'>{name}</Truncate>
+    <span className="c-Attachment__content">
+      <Text className="c-Attachment__name" lineHeightReset>
+        <Truncate limit={truncateLimit} type="middle">
+          {name}
+        </Truncate>
       </Text>
       {sizeMarkup}
     </span>
@@ -112,16 +105,16 @@ const Attachment = (props, context) => {
 
   const closeMarkup = isThemePreview ? (
     <CloseButton
-      className='c-Attachment__closeButton'
+      className="c-Attachment__closeButton"
       onClick={handleOnRemoveClick}
-      size='tiny'
-      title='Remove'
+      size="tiny"
+      title="Remove"
     />
   ) : null
 
   const downloadProps = {
-    download: download !== undefined ? download : (url ? true : null),
-    target: target !== undefined ? target : (url ? '_blank' : null)
+    download: download !== undefined ? download : url ? true : null,
+    target: target !== undefined ? target : url ? '_blank' : null,
   }
 
   return (

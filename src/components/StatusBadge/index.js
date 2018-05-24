@@ -2,18 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import Badge from '../Badge'
-import { default as StatusDot, propTypes as statusDotPropTypes } from '../StatusDot'
+import {
+  default as StatusDot,
+  propTypes as statusDotPropTypes,
+} from '../StatusDot'
 import { statusTypes } from './propTypes'
 import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   ...statusDotPropTypes,
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  status: statusTypes
+  status: statusTypes,
 }
 
 const defaultProps = {
-  count: 0
+  count: 0,
 }
 
 const StatusBadge = props => {
@@ -35,23 +38,16 @@ const StatusBadge = props => {
   const statusDotProps = {
     borderColor,
     outerBorderColor,
-    title
+    title,
   }
 
-  const componentClassName = classNames(
-    'c-StatusBadge',
-    className
-  )
+  const componentClassName = classNames('c-StatusBadge', className)
 
   const hasStatus = status !== null && status !== undefined
 
   const statusDotMarkup = (
-    <div className='c-StatusBadge__statusDot'>
-      <Animate
-        duration={100}
-        in={hasStatus}
-        sequence='scale fade'
-      >
+    <div className="c-StatusBadge__statusDot">
+      <Animate duration={100} in={hasStatus} sequence="scale fade">
         <StatusDot {...statusDotProps} status={status} />
       </Animate>
     </div>
@@ -60,7 +56,7 @@ const StatusBadge = props => {
   return (
     <div className={componentClassName} {...rest}>
       {statusDotMarkup}
-      <Badge isSquare className='c-StatusBadge__badge'>
+      <Badge isSquare className="c-StatusBadge__badge">
         {count}
       </Badge>
     </div>

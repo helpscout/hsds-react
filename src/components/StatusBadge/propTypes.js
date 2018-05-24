@@ -7,5 +7,5 @@ export const statusTypes = PropTypes.oneOf([
   'new',
   'active',
   'inactive',
-  ''
+  '',
 ])

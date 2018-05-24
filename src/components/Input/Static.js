@@ -5,17 +5,11 @@ import { staticAlignTypes } from './propTypes'
 
 export const propTypes = {
   align: staticAlignTypes,
-  size: standardSizeTypes
+  size: standardSizeTypes,
 }
 
 const Static = props => {
-  const {
-    align,
-    className,
-    children,
-    size,
-    ...rest
-  } = props
+  const { align, className, children, size, ...rest } = props
 
   const componentClassName = classNames(
     'c-InputStatic',

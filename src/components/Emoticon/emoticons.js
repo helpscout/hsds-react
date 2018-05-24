@@ -11,7 +11,7 @@ const ICONS = {
    */
   happy: happyLarge,
   meh: mehLarge,
-  sad: sadLarge
+  sad: sadLarge,
 }
 
 export default ICONS

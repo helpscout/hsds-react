@@ -2,24 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
-import {providerContextTypes} from './propTypes'
+import { providerContextTypes } from './propTypes'
 
 const propTypes = {
-  wordWrap: PropTypes.bool
+  wordWrap: PropTypes.bool,
 }
 const defaultProps = {
-  wordWrap: true
+  wordWrap: true,
 }
 const contextTypes = providerContextTypes
 
 const Caption = (props, context) => {
-  const {
-    className,
-    children,
-    wordWrap,
-    ...rest
-  } = props
-  const {theme} = context
+  const { className, children, wordWrap, ...rest } = props
+  const { theme } = context
   const isThemeEmbed = theme === 'embed'
 
   const componentClassName = classNames(
@@ -33,9 +28,9 @@ const Caption = (props, context) => {
   return (
     <div className={componentClassName} {...rest}>
       <Text
-        className='c-MessageCaption__text'
+        className="c-MessageCaption__text"
         size={textSize}
-        shade='faint'
+        shade="faint"
         wordWrap={wordWrap}
       >
         {children}

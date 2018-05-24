@@ -7,16 +7,15 @@ import wait from '../../../tests/helpers/wait'
 
 const TestButton = props => {
   const { className } = props
-  const componentClassName = classNames(
-    'button',
-    className
-  )
+  const componentClassName = classNames('button', className)
   const handleClick = () => {
     console.log('wee')
   }
   return (
     <div>
-      <button className={componentClassName} onClick={handleClick}>Click</button>
+      <button className={componentClassName} onClick={handleClick}>
+        Click
+      </button>
     </div>
   )
 }
@@ -31,17 +30,17 @@ afterEach(() => {
 })
 
 const options = {
-  timeout: 0
+  timeout: 0,
 }
 
 const context = {
   context: {
-    router: {}
-  }
+    router: {},
+  },
 }
 
 describe('HOC', () => {
-  test('Can create a component as a HOC', (done) => {
+  test('Can create a component as a HOC', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
 
@@ -54,9 +53,9 @@ describe('HOC', () => {
 })
 
 describe('ClassName', () => {
-  test('Can pass className to composed component', (done) => {
+  test('Can pass className to composed component', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent className='ron' isOpen />, context)
+    mount(<TestComponent className="ron" isOpen />, context)
 
     wait().then(() => {
       const o = document.querySelector('.button')
@@ -67,7 +66,7 @@ describe('ClassName', () => {
 })
 
 describe('ID', () => {
-  test('Adds default ID', (done) => {
+  test('Adds default ID', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
 
@@ -78,10 +77,10 @@ describe('ID', () => {
     })
   })
 
-  test('Override default ID with options', (done) => {
+  test('Override default ID with options', done => {
     const options = {
       id: 'Brick',
-      timeout: 0
+      timeout: 0,
     }
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
@@ -95,14 +94,15 @@ describe('ID', () => {
 })
 
 describe('Manager', () => {
-  test('Can close last Manage item ', (done) => {
+  test('Can close last Manage item ', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const wrapper = mount(
       <div>
         <TestComponent isOpen />
         <TestComponent isOpen />
-      </div>
-    , context)
+      </div>,
+      context
+    )
 
     const o = wrapper.find(TestComponent).last()
 
@@ -123,8 +123,9 @@ describe('Manager', () => {
       <div>
         <TestComponent isOpen />
         <TestComponent isOpen />
-      </div>
-    , context)
+      </div>,
+      context
+    )
     const o = wrapper.find(TestComponent).first()
 
     o.node.closePortal()
@@ -133,7 +134,7 @@ describe('Manager', () => {
 })
 
 describe('wrapperClassName', () => {
-  test('Does not add a wrapperClassName to portal', (done) => {
+  test('Does not add a wrapperClassName to portal', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
 
@@ -144,9 +145,9 @@ describe('wrapperClassName', () => {
     })
   })
 
-  test('Can customize wrapperClassName', (done) => {
+  test('Can customize wrapperClassName', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen wrapperClassName='blue' />, context)
+    mount(<TestComponent isOpen wrapperClassName="blue" />, context)
 
     wait().then(() => {
       const c = document.body.childNodes[0]
@@ -157,7 +158,7 @@ describe('wrapperClassName', () => {
 })
 
 describe('isOpen', () => {
-  test('Can open wrapped component with isOpen prop change to true', (done) => {
+  test('Can open wrapped component with isOpen prop change to true', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const wrapper = mount(<TestComponent />, context)
 
@@ -176,7 +177,7 @@ describe('isOpen', () => {
       })
   })
 
-  test('Can close wrapped component with isOpen prop change to false', (done) => {
+  test('Can close wrapped component with isOpen prop change to false', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const wrapper = mount(<TestComponent isOpen timeout={0} />, context)
 
@@ -194,78 +195,74 @@ describe('isOpen', () => {
 })
 
 describe('Router', () => {
-  test('Does not render if path is provided, but no context', (done) => {
+  test('Does not render if path is provided, but no context', done => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent path='/test' timeout={0} />)
+    mount(<TestComponent path="/test" timeout={0} />)
 
-    wait(10)
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    wait(10).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o).not.toBeTruthy()
+      done()
+    })
   })
 
-  test('Does not render if the router shape is in valid', (done) => {
+  test('Does not render if the router shape is in valid', done => {
     const context = {
       context: {
         router: {
           history: {},
-          location: { pathname: '/different' }
-        }
-      }
+          location: { pathname: '/different' },
+        },
+      },
     }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent path='/diff' timeout={0} />, context)
+    mount(<TestComponent path="/diff" timeout={0} />, context)
 
-    wait(100)
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    wait(100).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o).not.toBeTruthy()
+      done()
+    })
   })
 
-  test('Does not render if the route path does not match', (done) => {
+  test('Does not render if the route path does not match', done => {
     const context = {
       context: {
         router: {
           history: {
-            location: { pathname: '/different' }
-          }
-        }
-      }
+            location: { pathname: '/different' },
+          },
+        },
+      },
     }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent path='/diff' timeout={0} />, context)
+    mount(<TestComponent path="/diff" timeout={0} />, context)
 
-    wait(100)
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    wait(100).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o).not.toBeTruthy()
+      done()
+    })
   })
 
-  test('Renders if path matches router', (done) => {
+  test('Renders if path matches router', done => {
     const context = {
       context: {
         router: {
           history: {
-            location: { pathname: '/test' }
-          }
-        }
-      }
+            location: { pathname: '/test' },
+          },
+        },
+      },
     }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent path='/test' timeout={0} />, context)
+    mount(<TestComponent path="/test" timeout={0} />, context)
 
-    wait(10)
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).toBeTruthy()
-        done()
-      })
+    wait(10).then(() => {
+      const o = document.body.childNodes[0]
+      expect(o).toBeTruthy()
+      done()
+    })
   })
 })
 
@@ -286,9 +283,7 @@ describe('Mounting', () => {
 describe('Trigger', () => {
   test('Sets triggerNode on mount', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = (
-      <button>Trigger</button>
-    )
+    const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
     const o = wrapper.node
 
@@ -298,9 +293,7 @@ describe('Trigger', () => {
 
   test('Unsets triggerNode on unmount', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = (
-      <button>Trigger</button>
-    )
+    const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
     const o = wrapper.node
 
@@ -309,12 +302,10 @@ describe('Trigger', () => {
     expect(o.triggerNode).not.toBeTruthy()
   })
 
-  test('Does not focus triggerNode if prop change remains false', (done) => {
+  test('Does not focus triggerNode if prop change remains false', done => {
     const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = (
-      <button>Trigger</button>
-    )
+    const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
     const o = wrapper.find('button')
     o.node.onfocus = spy
@@ -326,13 +317,13 @@ describe('Trigger', () => {
     }, 40)
   })
 
-  test('Focuses triggerNode on isOpen prop change to false', (done) => {
+  test('Focuses triggerNode on isOpen prop change to false', done => {
     const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = (
-      <button>Trigger</button>
+    const trigger = <button>Trigger</button>
+    const wrapper = mount(
+      <TestComponent timeout={0} trigger={trigger} isOpen />
     )
-    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
     const o = wrapper.find('button')
     o.node.onfocus = spy
     wrapper.setProps({ isOpen: false })
@@ -347,7 +338,13 @@ describe('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     let refNode = null
     const trigger = (
-      <div ref={node => { refNode = node }}>Trigger</div>
+      <div
+        ref={node => {
+          refNode = node
+        }}
+      >
+        Trigger
+      </div>
     )
     mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
 
@@ -358,9 +355,13 @@ describe('Trigger', () => {
     const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = (
-      <div onClick={spy} className='trigger'>Trigger</div>
+      <div onClick={spy} className="trigger">
+        Trigger
+      </div>
     )
-    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
+    const wrapper = mount(
+      <TestComponent timeout={0} trigger={trigger} isOpen />
+    )
     const o = wrapper.find('.trigger')
 
     o.simulate('click')
@@ -376,10 +377,10 @@ describe('Esc keypress', () => {
     event.keyCode = Keys.ESCAPE
 
     const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = (
-      <div className='trigger'>Trigger</div>
+    const trigger = <div className="trigger">Trigger</div>
+    const wrapper = mount(
+      <TestComponent timeout={0} trigger={trigger} isOpen />
     )
-    const wrapper = mount(<TestComponent timeout={0} trigger={trigger} isOpen />)
 
     setTimeout(() => {
       window.addEventListener('keyup', globalSpy)
@@ -397,9 +398,7 @@ describe('Esc keypress', () => {
     event.keyCode = Keys.ESCAPE
 
     const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = (
-      <div className='trigger'>Trigger</div>
-    )
+    const trigger = <div className="trigger">Trigger</div>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
 
     setTimeout(() => {
@@ -415,9 +414,7 @@ describe('Esc keypress', () => {
 
 describe('displayName', () => {
   test('Uses a ComposedComponent.name', () => {
-    const Derek = () => (
-      <div />
-    )
+    const Derek = () => <div />
     const WrappedComponent = PortalWrapper()(Derek)
 
     expect(WrappedComponent.displayName).toContain('with')
@@ -425,9 +422,7 @@ describe('displayName', () => {
   })
 
   test('Uses a ComposedComponent.displayName', () => {
-    const Composed = () => (
-      <div />
-    )
+    const Composed = () => <div />
     Composed.displayName = 'Derek'
     const WrappedComponent = PortalWrapper()(Composed)
 
@@ -437,8 +432,8 @@ describe('displayName', () => {
 
   test('Works with React.Component', () => {
     class Derek extends React.Component {
-      render () {
-        return (<div />)
+      render() {
+        return <div />
       }
     }
     const WrappedComponent = PortalWrapper()(Derek)
@@ -449,8 +444,8 @@ describe('displayName', () => {
 
   test('Works with React.Component.displayName', () => {
     class Composed extends React.Component {
-      render () {
-        return (<div />)
+      render() {
+        return <div />
       }
     }
     Composed.displayName = 'Derek'

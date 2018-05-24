@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
 import Item from './Item'
@@ -12,10 +12,7 @@ import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { incrementFocusIndex } from '../../utilities/focus'
 import { noop } from '../../utilities/other'
-import {
-  applyStylesToNode,
-  isNodeScrollable
-} from '../../utilities/node'
+import { applyStylesToNode, isNodeScrollable } from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
 
 export const propTypes = {
@@ -25,7 +22,7 @@ export const propTypes = {
   onClose: PropTypes.func,
   onOpen: PropTypes.func,
   onSelect: PropTypes.func,
-  selectedIndex: PropTypes.number
+  selectedIndex: PropTypes.number,
 }
 
 const defaultProps = {
@@ -34,27 +31,28 @@ const defaultProps = {
   isOpen: false,
   onClose: noop,
   onOpen: noop,
-  onSelect: noop
+  onSelect: noop,
 }
 
 const contextTypes = {
   parentMenu: PropTypes.element,
-  parentMenuClose: PropTypes.func
+  parentMenuClose: PropTypes.func,
 }
 
 const dropOptions = {
   autoPosition: true,
   id: 'Dropdown',
   openOnArrowDown: true,
-  timeout: 0
+  timeout: 0,
 }
 
 class Menu extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
-      focusIndex: props.selectedIndex !== undefined ? props.selectedIndex : null,
-      hoverIndex: null
+      focusIndex:
+        props.selectedIndex !== undefined ? props.selectedIndex : null,
+      hoverIndex: null,
     }
     this.items = []
     this.isFocused = props.isOpen ? props.isOpen : false
@@ -85,7 +83,7 @@ class Menu extends Component {
     this._isMounted = false
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.mapRefsToItems()
     this.setMenuFocus()
     this._isMounted = true
@@ -94,34 +92,34 @@ class Menu extends Component {
     }, 0)
   }
 
-  componentWillUpdate (nextProps) {
+  componentWillUpdate(nextProps) {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.mapRefsToItems()
       this.isFocused = nextProps.isOpen
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.mapRefsToItems()
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._isMounted = false
   }
 
-  safeSetState (newState) {
+  safeSetState(newState) {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(newState)
     }
   }
 
-  handleOnResize () {
+  handleOnResize() {
     const height = getHeightRelativeToViewport({
       node: this.listNode,
-      offset: 20
+      offset: 20,
     })
 
     if (height !== this.height) {
@@ -131,11 +129,11 @@ class Menu extends Component {
     }
   }
 
-  setMenuFocus () {
+  setMenuFocus() {
     this.isFocused = true
   }
 
-  mapRefsToItems () {
+  mapRefsToItems() {
     this.items = []
     Object.keys(this.refs).forEach((key, index) => {
       /* istanbul ignore else */
@@ -146,11 +144,11 @@ class Menu extends Component {
     })
   }
 
-  getIndexFromItem (item) {
+  getIndexFromItem(item) {
     return item.props.itemIndex
   }
 
-  incrementFocusIndex (direction) {
+  incrementFocusIndex(direction) {
     const { enableCycling } = this.props
     const { focusIndex } = this.state
     const itemCount = this.items.length - 1
@@ -159,30 +157,30 @@ class Menu extends Component {
       currentIndex: focusIndex,
       direction,
       enableCycling,
-      itemCount
+      itemCount,
     })
 
     this.safeSetState({
       focusIndex: newFocusIndex,
-      hoverIndex: null
+      hoverIndex: null,
     })
   }
 
-  handleUpArrow (event) {
+  handleUpArrow(event) {
     event.preventDefault()
     if (!this.isFocused) return
     this.incrementFocusIndex('up')
     this.handleFocusItemNode()
   }
 
-  handleDownArrow (event) {
+  handleDownArrow(event) {
     event.preventDefault()
     if (!this.isFocused) return
     this.incrementFocusIndex('down')
     this.handleFocusItemNode()
   }
 
-  handleLeftArrow (event) {
+  handleLeftArrow(event) {
     event.preventDefault()
     if (!this.isFocused) return
     const { parentMenu } = this.context
@@ -191,7 +189,7 @@ class Menu extends Component {
     }
   }
 
-  handleRightArrow (event) {
+  handleRightArrow(event) {
     event.preventDefault()
     const { focusIndex } = this.state
     if (!this.isFocused) return
@@ -205,11 +203,11 @@ class Menu extends Component {
     }
   }
 
-  handleEscape (event) {
+  handleEscape(event) {
     this.handleOnClose()
   }
 
-  handleFocusItemNode () {
+  handleFocusItemNode() {
     /* istanbul ignore if */
     // Tested, but not being picked up by Istanbul
     if (!this.isFocused) return
@@ -228,19 +226,19 @@ class Menu extends Component {
     }
   }
 
-  handleItemOnClick () {
+  handleItemOnClick() {
     const { closeMenuOnClick } = this.props
 
     if (!closeMenuOnClick) return
     this.handleOnCloseParent()
   }
 
-  handleItemOnFocus (event, reactEvent, item) {
+  handleItemOnFocus(event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
     this.safeSetState({ focusIndex })
   }
 
-  handleItemOnMouseEnter (event, reactEvent, item) {
+  handleItemOnMouseEnter(event, reactEvent, item) {
     const focusIndex = this.getIndexFromItem(item)
     const hoverIndex = focusIndex
     this.safeSetState({ focusIndex, hoverIndex })
@@ -249,7 +247,7 @@ class Menu extends Component {
     }
   }
 
-  handleItemOnMenuClose () {
+  handleItemOnMenuClose() {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.isFocused = true
@@ -257,12 +255,12 @@ class Menu extends Component {
     }
   }
 
-  handleOnClose () {
+  handleOnClose() {
     const { onClose } = this.props
     onClose()
   }
 
-  handleOnCloseParent () {
+  handleOnCloseParent() {
     const { parentMenuClose } = this.context
     this.handleOnClose()
 
@@ -271,11 +269,11 @@ class Menu extends Component {
     }
   }
 
-  handleOnMenuClick (event) {
+  handleOnMenuClick(event) {
     event.stopPropagation()
   }
 
-  render () {
+  render() {
     const {
       children,
       className,
@@ -293,14 +291,9 @@ class Menu extends Component {
       ...rest
     } = this.props
 
-    const {
-      focusIndex,
-      hoverIndex
-    } = this.state
+    const { focusIndex, hoverIndex } = this.state
 
-    const {
-      parentMenu
-    } = this.context
+    const { parentMenu } = this.context
 
     const handleUpArrow = this.handleUpArrow
     const handleDownArrow = this.handleDownArrow
@@ -324,22 +317,24 @@ class Menu extends Component {
       const index = itemIndexCounter
       const itemRef = `item-${index}`
 
-      return child.type === Item ? React.cloneElement(child, {
-        ref: itemRef,
-        itemIndex: index,
-        isOpen: hoverIndex === index,
-        isHover: hoverIndex === index,
-        isFocused: focusIndex === index,
-        onFocus: handleItemOnFocus,
-        onClick: () => {
-          child.props.onClick()
-          handleItemOnClick()
-        },
-        onMouseEnter: handleItemOnMouseEnter,
-        onMenuClose: handleItemOnMenuClose,
-        onParentMenuClose: handleOnCloseParent,
-        onSelect
-      }) : child
+      return child.type === Item
+        ? React.cloneElement(child, {
+            ref: itemRef,
+            itemIndex: index,
+            isOpen: hoverIndex === index,
+            isHover: hoverIndex === index,
+            isFocused: focusIndex === index,
+            onFocus: handleItemOnFocus,
+            onClick: () => {
+              child.props.onClick()
+              handleItemOnClick()
+            },
+            onMouseEnter: handleItemOnMouseEnter,
+            onMenuClose: handleItemOnMenuClose,
+            onParentMenuClose: handleOnCloseParent,
+            onSelect,
+          })
+        : child
     })
 
     const componentClassName = classNames(
@@ -350,35 +345,61 @@ class Menu extends Component {
 
     return (
       <div
-        className='c-DropdownMenuWrapper'
-        ref={node => { this.wrapperNode = node }}
+        className="c-DropdownMenuWrapper"
+        ref={node => {
+          this.wrapperNode = node
+        }}
         onClick={handleOnMenuClick}
       >
         <div
           className={componentClassName}
-          ref={node => { this.node = node }}
+          ref={node => {
+            this.node = node
+          }}
           {...rest}
         >
-          <EventListener event='resize' handler={handleOnResize} />
-          <KeypressListener keyCode={Keys.UP_ARROW} handler={handleUpArrow} type='keydown' />
-          <KeypressListener keyCode={Keys.DOWN_ARROW} handler={handleDownArrow} type='keydown' />
-          <KeypressListener keyCode={Keys.LEFT_ARROW} handler={handleLeftArrow} type='keydown' />
-          <KeypressListener keyCode={Keys.RIGHT_ARROW} handler={handleRightArrow} type='keydown' />
+          <EventListener event="resize" handler={handleOnResize} />
+          <KeypressListener
+            keyCode={Keys.UP_ARROW}
+            handler={handleUpArrow}
+            type="keydown"
+          />
+          <KeypressListener
+            keyCode={Keys.DOWN_ARROW}
+            handler={handleDownArrow}
+            type="keydown"
+          />
+          <KeypressListener
+            keyCode={Keys.LEFT_ARROW}
+            handler={handleLeftArrow}
+            type="keydown"
+          />
+          <KeypressListener
+            keyCode={Keys.RIGHT_ARROW}
+            handler={handleRightArrow}
+            type="keydown"
+          />
           <KeypressListener keyCode={Keys.ESCAPE} handler={handleEscape} />
-          <Animate sequence='fade down' in={isOpen} duration={160} timeout={80}>
+          <Animate sequence="fade down" in={isOpen} duration={160} timeout={80}>
             <Card seamless floating>
               <div
-                className='c-DropdownMenu__content'
-                ref={node => { this.contentNode = node }}
-                style={{height: this.height}}
+                className="c-DropdownMenu__content"
+                ref={node => {
+                  this.contentNode = node
+                }}
+                style={{ height: this.height }}
               >
                 <Scrollable
-                  scrollableRef={node => { this.scrollableNode = node }}
+                  scrollableRef={node => {
+                    this.scrollableNode = node
+                  }}
                 >
                   <div
-                    className='c-DropdownMenu__list'
-                    ref={node => { this.listNode = node }}
-                    role='menu'
+                    className="c-DropdownMenu__list"
+                    ref={node => {
+                      this.listNode = node
+                    }}
+                    role="menu"
                   >
                     {childrenMarkup}
                   </div>

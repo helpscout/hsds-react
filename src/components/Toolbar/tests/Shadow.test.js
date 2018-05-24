@@ -21,7 +21,7 @@ describe('Children', () => {
   test('Does not render children', () => {
     const wrapper = shallow(
       <Shadow>
-        <div className='mugatu'>That Hansel!</div>
+        <div className="mugatu">That Hansel!</div>
       </Shadow>
     )
     const o = wrapper.find('.mugatu')
@@ -39,7 +39,7 @@ describe('Placement', () => {
   })
 
   test('Can define a bottom placement', () => {
-    const wrapper = shallow(<Shadow placement='bottom' />)
+    const wrapper = shallow(<Shadow placement="bottom" />)
 
     expect(wrapper.hasClass('is-placement-top')).not.toBe(true)
     expect(wrapper.hasClass('is-placement-bottom')).toBe(true)

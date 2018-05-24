@@ -12,25 +12,23 @@ stories.add('default', () => (
   <div>
     <p>
       Auto:<br />
-      <Truncate>
-        {fixture.generate()}
-      </Truncate>
+      <Truncate>{fixture.generate()}</Truncate>
     </p>
     <p>
       Start:<br />
-      <Truncate type='start' limit={limit}>
+      <Truncate type="start" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
       Middle:<br />
-      <Truncate type='middle' limit={limit}>
+      <Truncate type="middle" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
       End:<br />
-      <Truncate type='end' limit={limit}>
+      <Truncate type="end" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>

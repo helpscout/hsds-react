@@ -5,8 +5,8 @@ describe('StatusBar', () => {
   it('should have light/bold themes that look different', () => {
     mount(
       <div>
-        <StatusBar className='light' theme='light' isOpen />
-        <StatusBar className='bold' theme='bold' isOpen />
+        <StatusBar className="light" theme="light" isOpen />
+        <StatusBar className="bold" theme="bold" isOpen />
       </div>
     )
     const light = $('.light')
@@ -18,11 +18,11 @@ describe('StatusBar', () => {
   it('should adjust background-color based on status', () => {
     mount(
       <div>
-        <StatusBar className='info' status='info' isOpen>
-          <span className='content'>Content</span>
+        <StatusBar className="info" status="info" isOpen>
+          <span className="content">Content</span>
         </StatusBar>
-        <StatusBar className='success' status='success' isOpen>
-          <span className='content'>Content</span>
+        <StatusBar className="success" status="success" isOpen>
+          <span className="content">Content</span>
         </StatusBar>
       </div>
     )
@@ -35,8 +35,8 @@ describe('StatusBar', () => {
 
   it('should align content in the center', () => {
     mount(
-      <StatusBar className='bar' theme='light' isOpen>
-        <div className='content'>Content</div>
+      <StatusBar className="bar" theme="light" isOpen>
+        <div className="content">Content</div>
       </StatusBar>
     )
 
@@ -51,9 +51,9 @@ describe('StatusBar', () => {
   describe('Button', () => {
     it('should align with text content', () => {
       mount(
-        <StatusBar className='bar' theme='light' isOpen>
-          <span className='content'>Content</span>
-          <StatusBar.Button className='button'>Action</StatusBar.Button>
+        <StatusBar className="bar" theme="light" isOpen>
+          <span className="content">Content</span>
+          <StatusBar.Button className="button">Action</StatusBar.Button>
         </StatusBar>
       )
 
@@ -66,13 +66,13 @@ describe('StatusBar', () => {
     it('should adjust background-color based on theme', () => {
       mount(
         <div>
-          <StatusBar className='light' theme='light' isOpen>
-            <span className='content'>Content</span>
-            <StatusBar.Button className='button'>Action</StatusBar.Button>
+          <StatusBar className="light" theme="light" isOpen>
+            <span className="content">Content</span>
+            <StatusBar.Button className="button">Action</StatusBar.Button>
           </StatusBar>
-          <StatusBar className='bold' theme='bold' isOpen>
-            <span className='content'>Content</span>
-            <StatusBar.Button className='button'>Action</StatusBar.Button>
+          <StatusBar className="bold" theme="bold" isOpen>
+            <span className="content">Content</span>
+            <StatusBar.Button className="button">Action</StatusBar.Button>
           </StatusBar>
         </div>
       )
@@ -86,13 +86,13 @@ describe('StatusBar', () => {
     it('should adjust background-color based on status', () => {
       mount(
         <div>
-          <StatusBar className='info' status='info' isOpen>
-            <span className='content'>Content</span>
-            <StatusBar.Button className='button'>Action</StatusBar.Button>
+          <StatusBar className="info" status="info" isOpen>
+            <span className="content">Content</span>
+            <StatusBar.Button className="button">Action</StatusBar.Button>
           </StatusBar>
-          <StatusBar className='success' status='success' isOpen>
-            <span className='content'>Content</span>
-            <StatusBar.Button className='button'>Action</StatusBar.Button>
+          <StatusBar className="success" status="success" isOpen>
+            <span className="content">Content</span>
+            <StatusBar.Button className="button">Action</StatusBar.Button>
           </StatusBar>
         </div>
       )

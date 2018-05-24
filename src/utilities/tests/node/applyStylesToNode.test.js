@@ -1,6 +1,4 @@
-import {
-  applyStylesToNode
-} from '../../node'
+import { applyStylesToNode } from '../../node'
 
 test('Returns false if node (arg) is invalid', () => {
   expect(applyStylesToNode()).not.toBeTruthy()
@@ -23,7 +21,7 @@ test('Returns node with updated styles with valid styles (arg)', () => {
   const o = document.createElement('div')
   const styles = {
     background: 'red',
-    padding: '10px'
+    padding: '10px',
   }
   expect(applyStylesToNode(o, styles).style.background).toBe('red')
   expect(applyStylesToNode(o, styles).style.padding).toBe('10px')
@@ -32,7 +30,7 @@ test('Returns node with updated styles with valid styles (arg)', () => {
 test('Style argument can resolve numbers', () => {
   const o = document.createElement('div')
   const styles = {
-    padding: 10
+    padding: 10,
   }
   expect(applyStylesToNode(o, styles).style.padding).toBe('10px')
 })
@@ -40,7 +38,7 @@ test('Style argument can resolve numbers', () => {
 test('Style argument can resolve z-index numbers', () => {
   const o = document.createElement('div')
   const styles = {
-    zIndex: 10
+    zIndex: 10,
   }
   expect(applyStylesToNode(o, styles).style.zIndex).toBe('10')
 })

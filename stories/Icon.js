@@ -39,44 +39,50 @@ stories.add('icons', () => {
     'tick-large',
     'tick-small',
     'video',
-    'user'
+    'user',
   ].map(i => (
-    <div style={{display: 'inline-block', margin: 12, textAlign: 'center'}}>
+    <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
       <Icon name={i} key={i} center />
-      <Text muted size='sm'>{i}</Text>
+      <Text muted size="sm">
+        {i}
+      </Text>
       <br />
     </div>
   ))
 
-  return (<div>{icons}</div>)
+  return <div>{icons}</div>
 })
 
 stories.add('sizes', () => {
-  const icons = [
-    '14', '16', '18', '24'
-  ].map(i => (
-    <div style={{display: 'inline-block', margin: 12, textAlign: 'center'}}>
-      <Icon name='emoji' size={i} key={i} center />
-      <Text muted size='sm'>{i}</Text>
+  const icons = ['14', '16', '18', '24'].map(i => (
+    <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
+      <Icon name="emoji" size={i} key={i} center />
+      <Text muted size="sm">
+        {i}
+      </Text>
       <br />
     </div>
   ))
 
-  return (<div>{icons}</div>)
+  return <div>{icons}</div>
 })
 
 stories.add('colors', () => {
   return (
     <div>
       <div>
-        <Icon name='emoji' />
-        <Text muted size='sm'>Regular</Text>
+        <Icon name="emoji" />
+        <Text muted size="sm">
+          Regular
+        </Text>
         <br />
       </div>
       <br />
       <div>
-        <Icon name='emoji' muted />
-        <Text muted size='sm'>Muted</Text>
+        <Icon name="emoji" muted />
+        <Text muted size="sm">
+          Muted
+        </Text>
         <br />
       </div>
     </div>
@@ -87,32 +93,42 @@ stories.add('shades', () => {
   return (
     <div>
       <div>
-        <Icon name='emoji' />
-        <Text muted size='sm'>Regular</Text>
+        <Icon name="emoji" />
+        <Text muted size="sm">
+          Regular
+        </Text>
         <br />
       </div>
       <br />
       <div>
-        <Icon name='emoji' shade='subtle' />
-        <Text muted size='sm'>Subtle</Text>
+        <Icon name="emoji" shade="subtle" />
+        <Text muted size="sm">
+          Subtle
+        </Text>
         <br />
       </div>
       <br />
       <div>
-        <Icon name='emoji' shade='muted' />
-        <Text muted size='sm'>Muted</Text>
+        <Icon name="emoji" shade="muted" />
+        <Text muted size="sm">
+          Muted
+        </Text>
         <br />
       </div>
       <br />
       <div>
-        <Icon name='emoji' shade='faint' />
-        <Text muted size='sm'>Faint</Text>
+        <Icon name="emoji" shade="faint" />
+        <Text muted size="sm">
+          Faint
+        </Text>
         <br />
       </div>
       <br />
       <div>
-        <Icon name='emoji' shade='extraMuted' />
-        <Text muted size='sm'>Extra Muted</Text>
+        <Icon name="emoji" shade="extraMuted" />
+        <Text muted size="sm">
+          Extra Muted
+        </Text>
         <br />
       </div>
     </div>
@@ -120,42 +136,48 @@ stories.add('shades', () => {
 })
 
 stories.add('withCaret', () => {
-  const icons = [
-    '14', '16', '18', '24'
-  ].map(i => (
-    <div style={{display: 'inline-block', margin: 12, textAlign: 'center'}}>
-      <Icon name='user' size={i} key={i} center withCaret />
-      <Text muted size='sm'>{i}</Text>
+  const icons = ['14', '16', '18', '24'].map(i => (
+    <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
+      <Icon name="user" size={i} key={i} center withCaret />
+      <Text muted size="sm">
+        {i}
+      </Text>
       <br />
     </div>
   ))
 
   return (
     <div>
-      <Flexy just='left'>
+      <Flexy just="left">
         <Flexy.Item>
-          <Icon name='user' withCaret />
+          <Icon name="user" withCaret />
         </Flexy.Item>
         <Flexy.Item>
-          <Text muted size='sm'>With Caret</Text>
-        </Flexy.Item>
-      </Flexy>
-
-      <Flexy just='left'>
-        <Flexy.Item>
-          <Icon name='user' withCaret muted />
-        </Flexy.Item>
-        <Flexy.Item>
-          <Text muted size='sm'>Muted + Caret</Text>
+          <Text muted size="sm">
+            With Caret
+          </Text>
         </Flexy.Item>
       </Flexy>
 
-      <Flexy just='left' style={{color: 'red'}}>
+      <Flexy just="left">
         <Flexy.Item>
-          <Icon name='user' withCaret />
+          <Icon name="user" withCaret muted />
         </Flexy.Item>
         <Flexy.Item>
-          <Text muted size='sm'>Caret + Custom color</Text>
+          <Text muted size="sm">
+            Muted + Caret
+          </Text>
+        </Flexy.Item>
+      </Flexy>
+
+      <Flexy just="left" style={{ color: 'red' }}>
+        <Flexy.Item>
+          <Icon name="user" withCaret />
+        </Flexy.Item>
+        <Flexy.Item>
+          <Text muted size="sm">
+            Caret + Custom color
+          </Text>
         </Flexy.Item>
       </Flexy>
 

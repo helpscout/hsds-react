@@ -14,7 +14,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Timestamp className='mugatu' />)
+    const wrapper = shallow(<Timestamp className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -23,17 +23,13 @@ describe('ClassNames', () => {
 
 describe('Content', () => {
   test('Does not render children components', () => {
-    const wrapper = shallow(
-      <Timestamp>Mugatu</Timestamp>
-    )
+    const wrapper = shallow(<Timestamp>Mugatu</Timestamp>)
 
     expect(wrapper.html()).not.toContain('Mugatu')
   })
 
   test('Wraps timestamp in a Text component', () => {
-    const wrapper = shallow(
-      <Timestamp timestamp='noon' />
-    )
+    const wrapper = shallow(<Timestamp timestamp="noon" />)
     const o = wrapper.find(Text)
     const t = o.find('time')
 
@@ -44,17 +40,17 @@ describe('Content', () => {
 
   describe('Live update', () => {
     let originalTimeout
-    beforeEach(function () {
+    beforeEach(function() {
       originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
       jasmine.DEFAULT_TIMEOUT_INTERVAL = 4000
     })
 
-    afterEach(function () {
+    afterEach(function() {
       jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout
     })
 
-    test('Timestamp is updated after a period of time', (done) => {
-      const timestamp = (new Date()).toISOString()
+    test('Timestamp is updated after a period of time', done => {
+      const timestamp = new Date().toISOString()
 
       const formatter = jest.fn()
       const formattedTimestamp = 'some time ago'
@@ -71,8 +67,8 @@ describe('Content', () => {
       }, 1100)
     })
 
-    test('Clears timeout when live prop disabled', (done) => {
-      const timestamp = (new Date()).toISOString()
+    test('Clears timeout when live prop disabled', done => {
+      const timestamp = new Date().toISOString()
 
       const formatter = jest.fn()
       const formattedTimestamp = 'some time ago'
@@ -84,7 +80,7 @@ describe('Content', () => {
 
       setTimeout(() => {
         wrapper.setProps({
-          live: false
+          live: false,
         })
       }, 500)
 
@@ -94,8 +90,8 @@ describe('Content', () => {
       }, 1100)
     })
 
-    test('Clears timeout when timestamp prop updated', (done) => {
-      const timestamp = (new Date()).toISOString()
+    test('Clears timeout when timestamp prop updated', done => {
+      const timestamp = new Date().toISOString()
       let newTimestamp
 
       const formatter = jest.fn()
@@ -107,10 +103,10 @@ describe('Content', () => {
       )
 
       setTimeout(() => {
-        newTimestamp = (new Date()).toISOString()
+        newTimestamp = new Date().toISOString()
 
         wrapper.setProps({
-          timestamp: newTimestamp
+          timestamp: newTimestamp,
         })
       }, 500)
 
@@ -120,8 +116,8 @@ describe('Content', () => {
       }, 1100)
     })
 
-    test('Clears timeout when unmounted', (done) => {
-      const timestamp = (new Date()).toISOString()
+    test('Clears timeout when unmounted', done => {
+      const timestamp = new Date().toISOString()
 
       const formatter = jest.fn()
       const formattedTimestamp = 'some time ago'
@@ -143,10 +139,14 @@ describe('Content', () => {
   })
 
   describe('Static', () => {
-    test('Unmount', (done) => {
-      const timestamp = (new Date()).toISOString()
+    test('Unmount', done => {
+      const timestamp = new Date().toISOString()
       const wrapper = mount(
-        <Timestamp timestamp={timestamp} formatter={() => undefined} live={false} />
+        <Timestamp
+          timestamp={timestamp}
+          formatter={() => undefined}
+          live={false}
+        />
       )
 
       setTimeout(() => {
@@ -159,18 +159,14 @@ describe('Content', () => {
 
 describe('Icon', () => {
   test('Does not show read icon by default', () => {
-    const wrapper = shallow(
-      <Timestamp timestamp='noon' />
-    )
+    const wrapper = shallow(<Timestamp timestamp="noon" />)
     const o = wrapper.find(Icon)
 
     expect(o.length).not.toBeTruthy()
   })
 
   test('Does shows read icon if read', () => {
-    const wrapper = shallow(
-      <Timestamp timestamp='noon' read />
-    )
+    const wrapper = shallow(<Timestamp timestamp="noon" read />)
     const o = wrapper.find(Icon)
 
     expect(o.length).toBeTruthy()

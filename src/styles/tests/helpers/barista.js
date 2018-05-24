@@ -1,6 +1,6 @@
 import barista from 'seed-barista'
 
-const styles = (content) => {
+const styles = content => {
   const b = barista({ content }).mount()
   const css = b.css
 

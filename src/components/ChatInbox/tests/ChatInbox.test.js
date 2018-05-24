@@ -7,7 +7,7 @@ import { Collapsible } from '../../index'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: 'c-ChatInbox'
+  className: 'c-ChatInbox',
 }
 
 baseComponentTest(ChatInbox, baseComponentOptions)

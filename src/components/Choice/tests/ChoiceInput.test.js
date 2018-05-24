@@ -65,7 +65,7 @@ describe('Events', () => {
 
   test('Can trigger onChange callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input onChange={spy} checked value='Value' />)
+    const wrapper = mount(<Input onChange={spy} checked value="Value" />)
     const input = wrapper.find('input')
 
     input.simulate('change')
@@ -97,19 +97,19 @@ describe('States', () => {
   })
 
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<Input state='error' />)
+    const wrapper = shallow(<Input state="error" />)
 
     expect(wrapper.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<Input state='success' />)
+    const wrapper = shallow(<Input state="success" />)
 
     expect(wrapper.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<Input state='warning' />)
+    const wrapper = shallow(<Input state="warning" />)
 
     expect(wrapper.prop('className')).toContain('is-warning')
   })
@@ -127,7 +127,7 @@ describe('Type', () => {
   })
 
   test('Applies checkbox styles if specified', () => {
-    const wrapper = mount(<Input type='checkbox' />)
+    const wrapper = mount(<Input type="checkbox" />)
     const o = wrapper.find('.c-ChoiceInput')
     const input = wrapper.find('input')
 
@@ -137,7 +137,7 @@ describe('Type', () => {
   })
 
   test('Applies checkbox styles if specified', () => {
-    const wrapper = mount(<Input type='radio' />)
+    const wrapper = mount(<Input type="radio" />)
     const o = wrapper.find('.c-ChoiceInput')
     const input = wrapper.find('input')
 
@@ -149,7 +149,7 @@ describe('Type', () => {
 
 describe('Styles', () => {
   test('Can apply align styles', () => {
-    const wrapper = mount(<Input align='top' />)
+    const wrapper = mount(<Input align="top" />)
     const o = wrapper.find(Flexy)
 
     expect(o.hasClass('is-top')).toBeTruthy()

@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Collapsible from '../Collapsible'
 import Header from './Header'
@@ -7,25 +7,25 @@ import classNames from '../../utilities/classNames'
 
 export const propTypes = {
   isCollapsible: PropTypes.bool,
-  isCollapsed: PropTypes.bool
+  isCollapsed: PropTypes.bool,
 }
 
 const defaultProps = {
   isCollapsible: false,
-  isCollapsed: false
+  isCollapsed: false,
 }
 
 class ChatInbox extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
-      isCollapsed: props.isCollapsed
+      isCollapsed: props.isCollapsed,
     }
     this._selfManageCollapse = props.isCollapsed !== undefined
     this.handleOnClickHeader = this.handleOnClickHeader.bind(this)
   }
 
-  handleOnClickHeader (event, onClick) {
+  handleOnClickHeader(event, onClick) {
     const { isCollapsible } = this.props
     /* istanbul ignore else */
     if (isCollapsible) {
@@ -34,7 +34,7 @@ class ChatInbox extends Component {
     onClick(event)
   }
 
-  render () {
+  render() {
     const {
       className,
       children,
@@ -46,10 +46,7 @@ class ChatInbox extends Component {
 
     const handleOnClickHeader = this.handleOnClickHeader
 
-    const componentClassName = classNames(
-      'c-ChatInbox',
-      className
-    )
+    const componentClassName = classNames('c-ChatInbox', className)
 
     const contentMarkup = React.Children.map(children, (child, index) => {
       const childProps = child.props
@@ -59,9 +56,9 @@ class ChatInbox extends Component {
           key: index,
           isCollapsed,
           isCollapsible,
-          onClick: (event) => {
+          onClick: event => {
             handleOnClickHeader(event, childProps.onClick)
-          }
+          },
         })
       }
 

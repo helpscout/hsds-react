@@ -10,7 +10,9 @@ afterEach(() => {
 describe('Children', () => {
   test('Can render children', () => {
     const wrapper = mount(
-      <Content><div className='ron' /></Content>
+      <Content>
+        <div className="ron" />
+      </Content>
     )
     const o = wrapper.find('div.ron')
 

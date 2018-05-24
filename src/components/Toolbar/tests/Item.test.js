@@ -22,7 +22,7 @@ describe('Children', () => {
   test('Can render children', () => {
     const wrapper = shallow(
       <Item>
-        <div className='mugatu'>That Hansel!</div>
+        <div className="mugatu">That Hansel!</div>
       </Item>
     )
     const o = wrapper.find('.mugatu')

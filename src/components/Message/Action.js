@@ -41,11 +41,11 @@ const Action = (props, context) => {
       rtl={rtl}
       timestamp={timestamp}
       to={to}
-      type='action'
+      type="action"
     >
       <div className={componentClassName} {...rest}>
         <Text
-          className='c-MessageAction__text'
+          className="c-MessageAction__text"
           shade={textShade}
           size={textSize}
         >

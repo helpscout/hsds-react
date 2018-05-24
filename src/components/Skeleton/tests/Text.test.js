@@ -4,17 +4,13 @@ import Text from '../Text'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = shallow(
-      <Text />
-    )
+    const wrapper = shallow(<Text />)
 
     expect(wrapper.hasClass('c-SkeletonText')).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(
-      <Text className='ron' />
-    )
+    const wrapper = shallow(<Text className="ron" />)
 
     expect(wrapper.hasClass('c-SkeletonText')).toBeTruthy()
     expect(wrapper.hasClass('ron')).toBeTruthy()
@@ -23,17 +19,13 @@ describe('className', () => {
 
 describe('Heading', () => {
   test('Does not have heading styles by default', () => {
-    const wrapper = mount(
-      <Text />
-    )
+    const wrapper = mount(<Text />)
 
     expect(wrapper.hasClass('is-heading')).not.toBeTruthy()
   })
 
   test('Can render heading styles', () => {
-    const wrapper = mount(
-      <Text heading />
-    )
+    const wrapper = mount(<Text heading />)
 
     expect(wrapper.hasClass('is-heading')).toBeTruthy()
   })
@@ -41,33 +33,25 @@ describe('Heading', () => {
 
 describe('Width', () => {
   test('Has a default width', () => {
-    const wrapper = mount(
-      <Text />
-    )
+    const wrapper = mount(<Text />)
 
     expect(wrapper.props().width).toBeTruthy()
   })
 
   test('Can set a (number) width', () => {
-    const wrapper = mount(
-      <Text width={50} />
-    )
+    const wrapper = mount(<Text width={50} />)
 
     expect(wrapper.props().width).toBe(50)
   })
 
   test('Can set a (string) width', () => {
-    const wrapper = mount(
-      <Text width='85rem' />
-    )
+    const wrapper = mount(<Text width="85rem" />)
 
     expect(wrapper.props().width).toBe('85rem')
   })
 
   test('Width prop is used in styles', () => {
-    const wrapper = mount(
-      <Text width='85rem' />
-    )
+    const wrapper = mount(<Text width="85rem" />)
     const o = wrapper.find('.c-SkeletonText')
 
     expect(o.props().style.width).toBe('85rem')

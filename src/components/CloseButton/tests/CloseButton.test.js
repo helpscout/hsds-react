@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import CloseButton from '..'
-import {Icon} from '../../'
+import { Icon } from '../../'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -32,7 +32,7 @@ describe('Accessibility', () => {
   })
 
   test('Can modify title', () => {
-    const wrapper = shallow(<CloseButton title='CLOSE DIS THING' />)
+    const wrapper = shallow(<CloseButton title="CLOSE DIS THING" />)
 
     expect(wrapper.prop('title')).toBe('CLOSE DIS THING')
   })
@@ -75,7 +75,7 @@ describe('Styles', () => {
   })
 
   test('Applies size styles, if specified', () => {
-    const wrapper = shallow(<CloseButton size='sm' />)
+    const wrapper = shallow(<CloseButton size="sm" />)
 
     expect(wrapper.hasClass('is-sm')).toBeTruthy()
   })
@@ -97,7 +97,7 @@ describe('Icon', () => {
   })
 
   test('Renders a small close icon, if size is tiny', () => {
-    const wrapper = shallow(<CloseButton size='tiny' />)
+    const wrapper = shallow(<CloseButton size="tiny" />)
     const o = wrapper.find(Icon)
 
     expect(o.prop('name')).toBe('cross-small')

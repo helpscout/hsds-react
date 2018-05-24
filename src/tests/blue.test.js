@@ -1,6 +1,6 @@
 import * as components from '..'
 
-const componentTestHelper = (component) => {
+const componentTestHelper = component => {
   test(component.name, () => {
     expect(component).toBeTruthy()
     expect(typeof component).toBe('function')

@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
@@ -20,7 +20,7 @@ export const propTypes = {
   onMouseLeave: PropTypes.func,
   onMenuClose: PropTypes.func,
   onParentMenuClose: PropTypes.func,
-  value: PropTypes.node
+  value: PropTypes.node,
 }
 
 const defaultProps = {
@@ -32,22 +32,22 @@ const defaultProps = {
   onMouseLeave: noop,
   onMenuClose: noop,
   onParentMenuClose: noop,
-  onSelect: noop
+  onSelect: noop,
 }
 
 const childContextTypes = {
   parentMenu: PropTypes.element,
-  parentMenuClose: PropTypes.func
+  parentMenuClose: PropTypes.func,
 }
 
 class Item extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
 
     this.state = {
       isOpen: props.isOpen,
       isHover: props.isHover,
-      isFocused: props.isFocused
+      isFocused: props.isFocused,
     }
 
     this.handleOnBlur = this.handleOnBlur.bind(this)
@@ -61,49 +61,50 @@ class Item extends Component {
     this._isMounted = false
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.menu = this.getMenuFromChildren()
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._isMounted = true
   }
 
-  getChildContext () {
+  getChildContext() {
     const { onParentMenuClose } = this.props
     return {
       parentMenu: this.menu,
-      parentMenuClose: onParentMenuClose
+      parentMenuClose: onParentMenuClose,
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { isFocused, isHover, isOpen } = this.state
-    if (nextProps.isFocused !== isFocused ||
-        nextProps.isOpen !== isOpen ||
-        nextProps.isHover !== isHover
-      ) {
+    if (
+      nextProps.isFocused !== isFocused ||
+      nextProps.isOpen !== isOpen ||
+      nextProps.isHover !== isHover
+    ) {
       this.setState({
         isFocused: nextProps.isFocused,
         isOpen: nextProps.isHover,
-        isHover: nextProps.isHover
+        isHover: nextProps.isHover,
       })
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._isMounted = false
   }
 
-  handleOnBlur (event, reactEvent) {
+  handleOnBlur(event, reactEvent) {
     const { onBlur } = this.props
     onBlur(event, reactEvent, this)
     this.setState({
-      isFocused: false
+      isFocused: false,
     })
   }
 
-  handleOnEnter (event, reactEvent) {
+  handleOnEnter(event, reactEvent) {
     event.stopPropagation()
     /* istanbul ignore else */
     if (event.keyCode === Keys.ENTER) {
@@ -115,7 +116,7 @@ class Item extends Component {
     }
   }
 
-  handleOnClick (event, reactEvent) {
+  handleOnClick(event, reactEvent) {
     const { disabled, onClick, onSelect, value } = this.props
 
     if (event) event.stopPropagation()
@@ -127,48 +128,48 @@ class Item extends Component {
       onSelect(value)
     } else {
       this.setState({
-        isOpen: !this.state.isOpen
+        isOpen: !this.state.isOpen,
       })
     }
   }
 
-  handleOnFocus (event, reactEvent) {
+  handleOnFocus(event, reactEvent) {
     const { onFocus } = this.props
     onFocus(event, reactEvent, this)
     this.setState({
-      isFocused: true
+      isFocused: true,
     })
   }
 
-  handleOnMouseEnter (event, reactEvent) {
+  handleOnMouseEnter(event, reactEvent) {
     const { onMouseEnter } = this.props
     onMouseEnter(event, reactEvent, this)
     this.setState({
-      isHover: true
+      isHover: true,
     })
   }
 
-  handleOnMouseLeave (event, reactEvent) {
+  handleOnMouseLeave(event, reactEvent) {
     const { onMouseLeave } = this.props
     onMouseLeave(event, reactEvent, this)
     this.setState({
-      isHover: false
+      isHover: false,
     })
   }
 
   /* istanbul ignore next */
   // Works in the browser, but JSDOM isn't picking this up
-  handleOnMenuClose () {
+  handleOnMenuClose() {
     const { onMenuClose } = this.props
     onMenuClose()
   }
 
-  getMenu (child) {
+  getMenu(child) {
     if (!React.isValidElement(child)) return null
-    return (child.type && (child.type === Menu || child.type === MenuComponent))
+    return child.type && (child.type === Menu || child.type === MenuComponent)
   }
 
-  getMenuFromChildren () {
+  getMenuFromChildren() {
     const { children } = this.props
     if (Array.isArray(children)) {
       return children.find(child => this.getMenu(child))
@@ -177,7 +178,7 @@ class Item extends Component {
     }
   }
 
-  removeMenuFromChildren () {
+  removeMenuFromChildren() {
     const { children } = this.props
     if (this.menu && Array.isArray(children)) {
       return children.filter(child => !this.getMenu(child))
@@ -186,7 +187,7 @@ class Item extends Component {
     }
   }
 
-  render () {
+  render() {
     const {
       children,
       className,
@@ -224,32 +225,34 @@ class Item extends Component {
 
     const itemMarkup = this.removeMenuFromChildren()
 
-    const menuMarkup = !disabled && this.menu && isOpen ? (
-      <div className='c-DropdownItem__menu'>
-        {React.cloneElement(this.menu, {
-          isOpen,
-          selectedIndex: this.menu.props.selectedIndex !== undefined ? this.menu.props.selectedIndex : 0,
-          onClose: handleOnMenuClose,
-          trigger: this.node,
-          direction: this.menu.props.direction ? this.menu.props.direction : 'right'
-        })}
-      </div>
-    ) : null
+    const menuMarkup =
+      !disabled && this.menu && isOpen ? (
+        <div className="c-DropdownItem__menu">
+          {React.cloneElement(this.menu, {
+            isOpen,
+            selectedIndex:
+              this.menu.props.selectedIndex !== undefined
+                ? this.menu.props.selectedIndex
+                : 0,
+            onClose: handleOnMenuClose,
+            trigger: this.node,
+            direction: this.menu.props.direction
+              ? this.menu.props.direction
+              : 'right',
+          })}
+        </div>
+      ) : null
 
     const menuIndicatorMarkup = this.menu ? (
-      <Flexy.Item className='c-DropdownItem__submenu-icon'>
-        <Icon name='caret-right' muted size='12' />
+      <Flexy.Item className="c-DropdownItem__submenu-icon">
+        <Icon name="caret-right" muted size="12" />
       </Flexy.Item>
     ) : null
 
     return (
-      <div
-        className={componentClassName}
-        role='presentation'
-        {...rest}
-      >
+      <div className={componentClassName} role="presentation" {...rest}>
         <div
-          className='c-DropdownItem__link'
+          className="c-DropdownItem__link"
           onBlur={handleOnBlur}
           onClick={handleOnClick}
           onFocus={handleOnFocus}
@@ -257,14 +260,16 @@ class Item extends Component {
           onMouseLeave={handleOnMouseLeave}
           onKeyDown={handleOnEnter}
           tabIndex={-1}
-          ref={node => { this.node = node }}
-          role='menuitem'
+          ref={node => {
+            this.node = node
+          }}
+          role="menuitem"
           aria-haspopup={!!this.menu}
           aria-expanded={!!(this.menu && isOpen)}
           aria-disabled={disabled}
         >
           <Flexy>
-            <Flexy.Block className='c-DropdownItem__content'>
+            <Flexy.Block className="c-DropdownItem__content">
               {itemMarkup}
             </Flexy.Block>
             {menuIndicatorMarkup}

@@ -4,16 +4,9 @@ import Title from './Title'
 import classNames from '../../utilities/classNames'
 
 const DetailList = props => {
-  const {
-    children,
-    className,
-    ...rest
-  } = props
+  const { children, className, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-DetailList',
-    className
-  )
+  const componentClassName = classNames('c-DetailList', className)
 
   return (
     <dl className={componentClassName} {...rest}>

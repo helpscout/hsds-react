@@ -8,47 +8,36 @@ export const propTypes = {
   description: PropTypes.string,
   onChange: PropTypes.func,
   size: standardSizeTypes,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 const defaultProps = {
   onChange: noop,
-  value: 0
+  value: 0,
 }
 
 class ProgressBar extends Component {
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { onChange } = this.props
     const value = this.getValueAsPercent(nextProps.value)
     onChange(value)
   }
 
-  getValue (val) {
+  getValue(val) {
     const value = val !== null ? val : this.props.value
     const barValue = parseFloat(value)
     const normalizedBarValue =
-      barValue > 100 ? 100
-      : barValue < 0 ? 0
-      : barValue
+      barValue > 100 ? 100 : barValue < 0 ? 0 : barValue
 
     return normalizedBarValue
   }
 
-  getValueAsPercent (val = null) {
+  getValueAsPercent(val = null) {
     return `${this.getValue(val)}%`
   }
 
-  render () {
-    const {
-      className,
-      description,
-      size,
-      value,
-      ...rest
-    } = this.props
+  render() {
+    const { className, description, size, value, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-ProgressBar',
@@ -56,20 +45,20 @@ class ProgressBar extends Component {
       className
     )
     const progresBarStyle = {
-      width: this.getValueAsPercent()
+      width: this.getValueAsPercent(),
     }
 
     return (
       <div
         className={componentClassName}
-        role='progressbar'
+        role="progressbar"
         aria-valuenow={value}
-        aria-valuemin='0'
-        aria-valuemax='100'
+        aria-valuemin="0"
+        aria-valuemax="100"
         aria-valuetext={description}
         {...rest}
       >
-        <div className='c-ProgressBar__bar' style={progresBarStyle} />
+        <div className="c-ProgressBar__bar" style={progresBarStyle} />
       </div>
     )
   }

@@ -32,7 +32,11 @@ describe('Active', () => {
   })
 
   test('Adds active className to non-text child, if set', () => {
-    const wrapper = shallow(<Trigger isActive><a>Link</a></Trigger>)
+    const wrapper = shallow(
+      <Trigger isActive>
+        <a>Link</a>
+      </Trigger>
+    )
     const o = wrapper.find('a')
 
     expect(o.hasClass('is-active')).toBeTruthy()
@@ -50,7 +54,7 @@ describe('Children', () => {
 
   test('Can render a non-text-node child, while preserving props', () => {
     const wrapper = shallow(
-      <Trigger className='buddy-link' style={{background: 'red'}}>
+      <Trigger className="buddy-link" style={{ background: 'red' }}>
         <a>Link</a>
       </Trigger>
     )
@@ -67,12 +71,13 @@ describe('Children', () => {
   })
 
   test('Only accepts a single child component', () => {
-    const wrapper = () => shallow(
-      <Trigger className='buddy-link' style={{background: 'red'}}>
-        <a>Link</a>
-        <a>Link Two</a>
-      </Trigger>
-    )
+    const wrapper = () =>
+      shallow(
+        <Trigger className="buddy-link" style={{ background: 'red' }}>
+          <a>Link</a>
+          <a>Link Two</a>
+        </Trigger>
+      )
 
     expect(wrapper).toThrow(Error, /React.Children.only/)
   })
@@ -116,7 +121,7 @@ describe('Direction', () => {
   })
 
   test('Can set custom direction', () => {
-    const wrapper = shallow(<Trigger direction='up' />)
+    const wrapper = shallow(<Trigger direction="up" />)
 
     expect(wrapper.hasClass('is-down')).not.toBeTruthy()
     expect(wrapper.hasClass('is-up')).toBeTruthy()

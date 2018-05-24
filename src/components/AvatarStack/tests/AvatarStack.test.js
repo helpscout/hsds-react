@@ -61,7 +61,7 @@ describe('Animation', () => {
 
   test('Can set custom Animate sequences', () => {
     const wrapper = shallow(
-      <AvatarStack animationSequence='fade'>
+      <AvatarStack animationSequence="fade">
         <Avatar />
       </AvatarStack>
     )

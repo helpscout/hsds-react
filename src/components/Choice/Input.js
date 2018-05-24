@@ -19,13 +19,13 @@ const propTypes = {
   readOnly: PropTypes.bool,
   state: stateTypes,
   type: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
 }
 const defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
-  type: 'checkbox'
+  type: 'checkbox',
 }
 
 const Input = props => {
@@ -42,7 +42,7 @@ const Input = props => {
     name,
     state,
     type,
-    value
+    value,
   } = props
 
   const className = classNames(
@@ -55,21 +55,20 @@ const Input = props => {
     props.className
   )
 
-  const handleOnChange = (event) => {
-    const {currentTarget} = event
+  const handleOnChange = event => {
+    const { currentTarget } = event
     onChange(value, currentTarget.checked, id)
   }
 
-  const iconTypeMarkup = type === 'radio' ? (
-    <div className='c-ChoiceInput__radio' />
-  ) : (
-    <Icon name='check' size='12' />
-  )
+  const iconTypeMarkup =
+    type === 'radio' ? (
+      <div className="c-ChoiceInput__radio" />
+    ) : (
+      <Icon name="check" size="12" />
+    )
 
   const iconMarkup = checked ? (
-    <div className='c-ChoiceInput__icon'>
-      {iconTypeMarkup}
-    </div>
+    <div className="c-ChoiceInput__icon">{iconTypeMarkup}</div>
   ) : null
 
   return (
@@ -90,7 +89,12 @@ const Input = props => {
         type={type}
         value={value}
       />
-      <Backdrop checkbox disabled={disabled} readOnly={readOnly} state={state} />
+      <Backdrop
+        checkbox
+        disabled={disabled}
+        readOnly={readOnly}
+        state={state}
+      />
       {iconMarkup}
     </div>
   )

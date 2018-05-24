@@ -1,5 +1,5 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import { shallow } from 'enzyme'
 import Timer from '../Timer'
 
 describe('ClassName', () => {
@@ -25,7 +25,7 @@ describe('Timeout', () => {
   })
 
   test('Accepts a string', () => {
-    const wrapper = shallow(<Timer timeout='251ms' />)
+    const wrapper = shallow(<Timer timeout="251ms" />)
 
     expect(wrapper.prop('style').animationDuration).toBe('251ms')
   })

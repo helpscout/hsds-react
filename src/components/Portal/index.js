@@ -1,4 +1,4 @@
-import {PureComponent as Component} from 'react'
+import { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { default as Container, ID as portalContainerId } from './Container'
@@ -8,28 +8,25 @@ export const propTypes = {
   className: PropTypes.string,
   exact: PropTypes.bool,
   id: PropTypes.string,
-  renderTo: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
+  renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onBeforeOpen: PropTypes.func,
   onOpen: PropTypes.func,
   onBeforeClose: PropTypes.func,
   onClose: PropTypes.func,
   path: PropTypes.string,
-  timeout: PropTypes.number
+  timeout: PropTypes.number,
 }
 
 const types = Object.assign({}, propTypes, {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 })
 
 const defaultProps = {
-  timeout: 0
+  timeout: 0,
 }
 
 class Portal extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.node = null
     this.portal = null
@@ -41,17 +38,17 @@ class Portal extends Component {
     this.unmountPortal = this.unmountPortal.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.mountSelector = this.getMountSelector()
     this.openPortal(this.props)
   }
 
-  componentWillUpdate (nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     this.mountPortal(nextProps)
   }
 
   /* istanbul ignore next */
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
       this.node.className = nextProps.className
     }
@@ -59,30 +56,33 @@ class Portal extends Component {
     this.openPortal(nextProps)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     setTimeout(() => {
       this.closePortal(this.props)
     }, this.props.timeout)
   }
 
-  getMountSelector () {
+  getMountSelector() {
     const { renderTo } = this.props
     let mountSelector
     // 1. Prioritize renderTo selector
     if (renderTo) {
-      mountSelector = (typeof renderTo === 'string') ? document.querySelector(renderTo) : false
-      mountSelector = (typeof renderTo === 'object' && isNodeElement(renderTo)) ? renderTo : mountSelector
+      mountSelector =
+        typeof renderTo === 'string' ? document.querySelector(renderTo) : false
+      mountSelector =
+        typeof renderTo === 'object' && isNodeElement(renderTo)
+          ? renderTo
+          : mountSelector
     }
     // 2. Fallback to <Portal.Container />
-    mountSelector = mountSelector || document.querySelector(`#${portalContainerId}`)
+    mountSelector =
+      mountSelector || document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body
     return mountSelector || window.document.body // fallback
   }
 
-  renderPortalContent (props) {
-    const {
-      children
-    } = props
+  renderPortalContent(props) {
+    const { children } = props
 
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
@@ -91,12 +91,8 @@ class Portal extends Component {
     )
   }
 
-  mountPortal (props) {
-    const {
-      className,
-      id,
-      onOpen
-    } = props
+  mountPortal(props) {
+    const { className, id, onOpen } = props
 
     if (this.node) {
       this.renderPortalContent(props)
@@ -120,13 +116,11 @@ class Portal extends Component {
     this.isOpen = true
   }
 
-  unmountPortal (props) {
+  unmountPortal(props) {
     /* istanbul ignore next */
     if (!this.node) return
 
-    const {
-      onClose
-    } = props
+    const { onClose } = props
 
     ReactDOM.unmountComponentAtNode(this.node)
     // Unmount from specified target, instead of document
@@ -140,10 +134,8 @@ class Portal extends Component {
     this.isOpen = false
   }
 
-  openPortal (props) {
-    const {
-      onBeforeOpen
-    } = props
+  openPortal(props) {
+    const { onBeforeOpen } = props
 
     const mountPortal = this.mountPortal
 
@@ -151,7 +143,9 @@ class Portal extends Component {
       /* istanbul ignore next */
       if (!this.isOpening && !this.isOpen) {
         this.isOpening = true
-        onBeforeOpen(() => { mountPortal(props) })
+        onBeforeOpen(() => {
+          mountPortal(props)
+        })
       }
     } else {
       this.isOpening = true
@@ -159,10 +153,8 @@ class Portal extends Component {
     }
   }
 
-  closePortal (props) {
-    const {
-      onBeforeClose
-    } = props
+  closePortal(props) {
+    const { onBeforeClose } = props
 
     const unmountPortal = this.unmountPortal
 
@@ -170,7 +162,9 @@ class Portal extends Component {
       /* istanbul ignore next */
       if (!this.isClosing) {
         this.isClosing = true
-        onBeforeClose(() => { unmountPortal(props) })
+        onBeforeClose(() => {
+          unmountPortal(props)
+        })
       }
     } else {
       this.isClosing = true
@@ -178,7 +172,7 @@ class Portal extends Component {
     }
   }
 
-  render () {
+  render() {
     return null
   }
 }

@@ -7,12 +7,12 @@ import Flexy from '../Flexy'
 import Heading from '../Heading'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
-import {noop} from '../../utilities/other'
+import { noop } from '../../utilities/other'
 
 export const ITEM_TYPES = {
   lineItem: 'line_item',
   message: 'message',
-  note: 'note'
+  note: 'note',
 }
 
 export const propTypes = {
@@ -31,20 +31,20 @@ export const propTypes = {
   type: PropTypes.oneOf([
     ITEM_TYPES.lineItem,
     ITEM_TYPES.message,
-    ITEM_TYPES.note
-  ]).isRequired
+    ITEM_TYPES.note,
+  ]).isRequired,
 }
 
 const defaultProps = {
   attachments: [],
   author: {
-    name: 'Name'
+    name: 'Name',
   },
   createdAt: '',
   onAttachmentClick: noop,
   onDownloadAllAttachmentClick: noop,
   showDownloadAllAttachments: true,
-  type: 'message'
+  type: 'message',
 }
 
 const Item = props => {
@@ -84,13 +84,9 @@ const Item = props => {
       createdAt,
       className: componentClassName,
       timestamp,
-      ...rest
+      ...rest,
     }
-    return (
-      <LineItem {...lineItemProps}>
-        {children}
-      </LineItem>
-    )
+    return <LineItem {...lineItemProps}>{children}</LineItem>
   }
   const contentClassName = classNames(
     'c-ChatTranscriptItem__content',
@@ -100,9 +96,9 @@ const Item = props => {
   const authorMarkup = maybeHasAuthor ? (
     <Flexy.Item>
       <Heading
-        className='c-ChatTranscriptItem__author'
+        className="c-ChatTranscriptItem__author"
         lineHeightReset
-        size='h5'
+        size="h5"
       >
         {author.name}
       </Heading>
@@ -112,10 +108,10 @@ const Item = props => {
   const privateNoteMarkup = maybeNote ? (
     <Flexy.Item>
       <Text
-        className='c-ChatTranscriptItem__privateNote'
+        className="c-ChatTranscriptItem__privateNote"
         block
         lineHeightReset
-        size='12'
+        size="12"
       >
         Private Note
       </Text>
@@ -125,10 +121,10 @@ const Item = props => {
   const timestampMarkup = createdAt ? (
     <Flexy.Item>
       <Text
-        className='c-ChatTranscriptItem__createdAt'
+        className="c-ChatTranscriptItem__createdAt"
         block
         lineHeightReset
-        size='12'
+        size="12"
         title={timestamp}
       >
         {createdAt}
@@ -137,8 +133,8 @@ const Item = props => {
   ) : null
 
   const headerMarkup = (
-    <div className='c-ChatTranscriptItem__header'>
-      <Flexy align='bottom' gap='xs' just='left'>
+    <div className="c-ChatTranscriptItem__header">
+      <Flexy align="bottom" gap="xs" just="left">
         {authorMarkup}
         {privateNoteMarkup}
         {timestampMarkup}
@@ -149,17 +145,15 @@ const Item = props => {
   const contentMarkup = body ? (
     <div
       className={contentClassName}
-      dangerouslySetInnerHTML={{__html: body}}
+      dangerouslySetInnerHTML={{ __html: body }}
     />
   ) : (
-    <div className={contentClassName}>
-      {children}
-    </div>
+    <div className={contentClassName}>{children}</div>
   )
 
   const attachmentMarkup = attachments.length ? (
     <AttachmentList
-      className='c-ChatTranscriptItem__attachmentList'
+      className="c-ChatTranscriptItem__attachmentList"
       onDownloadAllClick={onDownloadAllAttachmentClick}
       showDownloadAll={showDownloadAllAttachments}
     >
@@ -177,7 +171,7 @@ const Item = props => {
 
   return (
     <div className={componentClassName} {...rest}>
-      <div className='c-ChatTranscriptItem__contentWrapper'>
+      <div className="c-ChatTranscriptItem__contentWrapper">
         {headerMarkup}
         {contentMarkup}
         {attachmentMarkup}

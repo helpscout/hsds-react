@@ -26,7 +26,7 @@ describe('Children', () => {
   })
 
   test('Renders string with commas', () => {
-    const wrapper = mount(<StatusBadge count='123,456' />)
+    const wrapper = mount(<StatusBadge count="123,456" />)
 
     expect(wrapper.text()).toBe('123,456')
   })
@@ -40,13 +40,13 @@ describe('Children', () => {
 
 describe('Count', () => {
   test('Renders string', () => {
-    const wrapper = mount(<StatusBadge count='123' />)
+    const wrapper = mount(<StatusBadge count="123" />)
 
     expect(wrapper.text()).toBe('123')
   })
 
   test('Renders string with commas', () => {
-    const wrapper = mount(<StatusBadge count='123,456' />)
+    const wrapper = mount(<StatusBadge count="123,456" />)
 
     expect(wrapper.text()).toBe('123,456')
   })
@@ -60,14 +60,14 @@ describe('Count', () => {
 
 describe('Badge', () => {
   test('Renders count into a Badge', () => {
-    const wrapper = mount(<StatusBadge count='123' />)
+    const wrapper = mount(<StatusBadge count="123" />)
     const o = wrapper.find(Badge)
 
     expect(o.text()).toBe('123')
   })
 
   test('Badge has appropriate styles', () => {
-    const wrapper = mount(<StatusBadge count='123' />)
+    const wrapper = mount(<StatusBadge count="123" />)
     const o = wrapper.find(Badge)
 
     expect(o.props().isSquare).toBeTruthy()
@@ -93,7 +93,7 @@ describe('StatusDot', () => {
 
   describe('BorderColor', () => {
     test('Does not have custom borderColor by default', () => {
-      const wrapper = shallow(<StatusBadge status='new' />)
+      const wrapper = shallow(<StatusBadge status="new" />)
       const o = wrapper.find(StatusDot)
 
       expect(o.props().borderColor).toBeFalsy()
@@ -101,7 +101,7 @@ describe('StatusDot', () => {
     })
 
     test('Can customize borderColor style', () => {
-      const wrapper = shallow(<StatusBadge borderColor='red' status='new' />)
+      const wrapper = shallow(<StatusBadge borderColor="red" status="new" />)
       const o = wrapper.find(StatusDot)
 
       expect(o.props().borderColor).toBe('red')
@@ -110,7 +110,7 @@ describe('StatusDot', () => {
 
   describe('OuterBorderColor', () => {
     test('Does not have custom outerBorderColor by default', () => {
-      const wrapper = mount(<StatusBadge status='new' />)
+      const wrapper = mount(<StatusBadge status="new" />)
       const o = wrapper.find(StatusDot)
 
       expect(o.props().outerBorderColor).toBeFalsy()
@@ -118,7 +118,7 @@ describe('StatusDot', () => {
     })
 
     test('Can customize outerBorderColor style', () => {
-      const wrapper = mount(<StatusBadge outerBorderColor='red' status='new' />)
+      const wrapper = mount(<StatusBadge outerBorderColor="red" status="new" />)
       const o = wrapper.find(StatusDot)
 
       expect(o.props().outerBorderColor).toBe('red')
@@ -126,7 +126,7 @@ describe('StatusDot', () => {
     })
 
     test('Can customize outerBorderColor style + add custom style', () => {
-      const wrapper = mount(<StatusBadge outerBorderColor='red' status='new' />)
+      const wrapper = mount(<StatusBadge outerBorderColor="red" status="new" />)
       const o = wrapper.find(StatusDot)
 
       expect(o.props().outerBorderColor).toBe('red')
@@ -136,7 +136,7 @@ describe('StatusDot', () => {
 
   describe('Status', () => {
     test('Can render status styles, if defined', () => {
-      const wrapper = mount(<StatusBadge status='offline' />)
+      const wrapper = mount(<StatusBadge status="offline" />)
       const o = wrapper.find(StatusDot)
 
       expect(o.hasClass('is-offline')).toBeTruthy()

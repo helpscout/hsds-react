@@ -5,7 +5,7 @@ import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
   className: 'c-Hr',
-  skipChildrenTest: true
+  skipChildrenTest: true,
 }
 
 baseComponentTest(Hr, baseComponentOptions)
@@ -19,7 +19,7 @@ describe('Accessibility', () => {
   })
 
   test('Can set custom role', () => {
-    const wrapper = shallow(<Hr role='presentation' />)
+    const wrapper = shallow(<Hr role="presentation" />)
     const o = wrapper.find('hr').props()
 
     expect(o['role']).toBe('presentation')
@@ -28,7 +28,7 @@ describe('Accessibility', () => {
 
 describe('Styles', () => {
   test('Can render size styles, if applicable', () => {
-    const wrapper = shallow(<Hr size='sm' />)
+    const wrapper = shallow(<Hr size="sm" />)
 
     expect(wrapper.hasClass('is-sm')).toBeTruthy()
   })

@@ -14,7 +14,7 @@ describe('ClassNames', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Content className='mugatu' />)
+    const wrapper = shallow(<Content className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -37,16 +37,7 @@ describe('ChatBlock', () => {
   })
 
   test('Passes correct props to ChatBlock', () => {
-    const wrapper = shallow(
-      <Content
-        from
-        to
-        read
-        ltr
-        rtl
-        timestamp='time'
-      />
-    )
+    const wrapper = shallow(<Content from to read ltr rtl timestamp="time" />)
     const props = wrapper.find(ChatBlock).node.props
 
     expect(props.from).toBeTruthy()

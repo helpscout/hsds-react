@@ -6,22 +6,16 @@ import { shapeTypes } from '../Avatar/propTypes'
 
 export const propTypes = {
   shape: shapeTypes,
-  size: standardSizeTypes
+  size: standardSizeTypes,
 }
 
 const defaultProps = {
   size: 'md',
-  shape: 'circle'
+  shape: 'circle',
 }
 
 const Avatar = props => {
-  const {
-    className,
-    children,
-    shape,
-    size,
-    ...rest
-  } = props
+  const { className, children, shape, size, ...rest } = props
 
   const componentClassName = classNames(
     'c-SkeletonAvatar',
@@ -30,9 +24,7 @@ const Avatar = props => {
     className
   )
 
-  return (
-    <Block className={componentClassName} {...rest} />
-  )
+  return <Block className={componentClassName} {...rest} />
 }
 
 Avatar.propTypes = propTypes

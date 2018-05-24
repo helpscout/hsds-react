@@ -3,7 +3,7 @@ import { Heading } from '../../src/index'
 
 describe('Karma', () => {
   it('should render Blue component via Enzyme into the DOM', () => {
-    const wrapper = $mount(<Heading className='first'>Test</Heading>)
+    const wrapper = $mount(<Heading className="first">Test</Heading>)
 
     expect(wrapper).toBeTruthy()
     expect(wrapper.height()).toBeGreaterThan(0)
@@ -13,7 +13,7 @@ describe('Karma', () => {
   })
 
   it('should self clean', () => {
-    const wrapper = $mount(<Heading className='new'>Test</Heading>)
+    const wrapper = $mount(<Heading className="new">Test</Heading>)
     const body = wrapper.closest('body')
 
     expect(body.find('.first').length).toBe(0)

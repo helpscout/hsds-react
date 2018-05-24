@@ -10,7 +10,7 @@ describe('ClassName', () => {
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<Row className='mugatu' />)
+    const wrapper = shallow(<Row className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -20,7 +20,7 @@ describe('Children', () => {
   test('Can render child components', () => {
     const wrapper = shallow(
       <Row>
-        <div className='mugatu' />
+        <div className="mugatu" />
       </Row>
     )
 
@@ -32,9 +32,7 @@ describe('Children', () => {
 
 describe('Flex', () => {
   test('Can render flex version of Row', () => {
-    const wrapper = shallow(
-      <Row flex />
-    )
+    const wrapper = shallow(<Row flex />)
 
     expect(wrapper.hasClass('c-Row-flex')).toBeTruthy()
     expect(wrapper.hasClass('c-Row')).not.toBeTruthy()
@@ -54,18 +52,14 @@ describe('Style', () => {
 
 describe('Size', () => {
   test('Can render an additional size', () => {
-    const wrapper = shallow(
-      <Row size='md' />
-    )
+    const wrapper = shallow(<Row size="md" />)
 
     expect(wrapper.hasClass('c-Row')).toBeTruthy()
     expect(wrapper.hasClass('c-Row--md')).toBeTruthy()
   })
 
   test('Can render additional responsive sizes', () => {
-    const wrapper = shallow(
-      <Row size='md, sm@lg' />
-    )
+    const wrapper = shallow(<Row size="md, sm@lg" />)
 
     expect(wrapper.hasClass('c-Row')).toBeTruthy()
     expect(wrapper.hasClass('c-Row--md')).toBeTruthy()
@@ -73,9 +67,7 @@ describe('Size', () => {
   })
 
   test('Can render sizes with flex variant', () => {
-    const wrapper = shallow(
-      <Row flex size='md' />
-    )
+    const wrapper = shallow(<Row flex size="md" />)
 
     expect(wrapper.hasClass('c-Row-flex')).toBeTruthy()
     expect(wrapper.hasClass('c-Row-flex--md')).toBeTruthy()

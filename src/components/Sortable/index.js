@@ -1,5 +1,5 @@
-import React, {PureComponent as Component} from 'react'
-import {arrayMove} from 'react-sortable-hoc'
+import React, { PureComponent as Component } from 'react'
+import { arrayMove } from 'react-sortable-hoc'
 import classNames from '../../utilities/classNames'
 import includes from 'lodash.includes'
 import DragHandle from './DragHandle'
@@ -13,23 +13,23 @@ export const propTypes = listTypes
 const defaultProps = {
   onSortStart: noop,
   onSortMove: noop,
-  onSortEnd: noop
+  onSortEnd: noop,
 }
 
 class Sortable extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
-      items: []
+      items: [],
     }
     this.onSortEnd = this.onSortEnd.bind(this)
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.remapChildrenToState()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     /* istanbul ignore next */
     /* Note: There are tests for this, but for some reason, Istanbul isn't
      * picking it up */
@@ -38,21 +38,25 @@ class Sortable extends Component {
     }
   }
 
-  remapChildrenToState (children = this.props.children) {
+  remapChildrenToState(children = this.props.children) {
     if (!children) return
 
     const items = React.Children.map(children, (child, index) => {
-      const sortableElement = includes(child.type.displayName, 'sortableElement')
+      const sortableElement = includes(
+        child.type.displayName,
+        'sortableElement'
+      )
       const key = child.props.id ? child.props.id : `item-${index}`
 
       if (sortableElement) {
         return React.cloneElement(child, {
           index,
-          key
+          key,
         })
       }
 
-      const childProps = child.props.sortable !== undefined ? { sortable: true } : {}
+      const childProps =
+        child.props.sortable !== undefined ? { sortable: true } : {}
       return (
         <Item key={key} index={index}>
           {React.cloneElement(child, childProps)}
@@ -65,18 +69,18 @@ class Sortable extends Component {
   // Based on the implementation of react-sortable-hoc
   // https://github.com/clauderic/react-sortable-hoc/#basic-example
   /* istanbul ignore next */
-  onSortEnd ({oldIndex, newIndex, collection}, event) {
+  onSortEnd({ oldIndex, newIndex, collection }, event) {
     /* istanbul ignore next */
     this.setState({
-      items: arrayMove(this.state.items, oldIndex, newIndex)
+      items: arrayMove(this.state.items, oldIndex, newIndex),
     })
     /* istanbul ignore next */
     if (this.props.onSortEnd) {
-      this.props.onSortEnd({oldIndex, newIndex, collection}, event)
+      this.props.onSortEnd({ oldIndex, newIndex, collection }, event)
     }
   }
 
-  render () {
+  render() {
     const {
       className,
       children,
@@ -85,18 +89,10 @@ class Sortable extends Component {
       onSortEnd,
       ...rest
     } = this.props
-    const {
-      items
-    } = this.state
+    const { items } = this.state
 
-    const componentClassName = classNames(
-      'c-Sortable',
-      className
-    )
-    const helperClassName = classNames(
-      'is-sorting',
-      helperClass
-    )
+    const componentClassName = classNames('c-Sortable', className)
+    const helperClassName = classNames('is-sorting', helperClass)
 
     return (
       <div className={componentClassName}>

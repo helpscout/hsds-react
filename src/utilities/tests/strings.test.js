@@ -5,7 +5,7 @@ import {
   newlineToHTML,
   wordHasSpaces,
   stripUrlPrefix,
-  truncateMiddle
+  truncateMiddle,
 } from '../strings'
 
 describe('isString', () => {
@@ -101,13 +101,11 @@ describe('wordHasSpaces', () => {
 
 describe('truncateMiddle', () => {
   test('should perform a basic test', () => {
-    expect(truncateMiddle('the quick brown', 5, 5, '...'))
-      .toBe('the q...brown')
+    expect(truncateMiddle('the quick brown', 5, 5, '...')).toBe('the q...brown')
   })
 
   it('should perform auto fill in ellipses', () => {
-    expect(truncateMiddle('the quick brown', 5, 5))
-      .toBe('the q…brown')
+    expect(truncateMiddle('the quick brown', 5, 5)).toBe('the q…brown')
   })
 
   it('should have return empty string when null', () => {
@@ -119,13 +117,11 @@ describe('truncateMiddle', () => {
   })
 
   it('should have handle no backLength', () => {
-    expect(truncateMiddle('the quick brown', 5, 0))
-      .toBe('the q…')
+    expect(truncateMiddle('the quick brown', 5, 0)).toBe('the q…')
   })
 
   it('should have handle 0 backLength, 0 frontLength', () => {
-    expect(truncateMiddle('the quick brown', 0, 0))
-      .toBe('the quick brown')
+    expect(truncateMiddle('the quick brown', 0, 0)).toBe('the quick brown')
   })
 })
 

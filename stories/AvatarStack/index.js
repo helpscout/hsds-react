@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, AvatarStack } from '../../src/index.js'
 import AvatarSpec from '../AvatarGrid/specs/Avatar'
@@ -7,66 +7,52 @@ const stories = storiesOf('AvatarStack', module)
 const fixtures = AvatarSpec.generate(5)
 
 const avatarsMarkup = fixtures.map(avatar => {
-  const {
-    name,
-    image,
-    status
-  } = avatar
+  const { name, image, status } = avatar
   return (
     <Avatar
       image={image}
       key={name}
       name={name}
-      shape='rounded'
+      shape="rounded"
       status={status}
     />
   )
 })
 
 class TestComponent extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = { someProp: 0 }
     this.updateState = this.updateState.bind(this)
   }
-  updateState () {
+  updateState() {
     this.setState({
-      someProp: this.state.someProp + 1
+      someProp: this.state.someProp + 1,
     })
   }
-  render () {
+  render() {
     console.log(`AvatarStack: TestComponent: render(${this.state.someProp})`)
     return (
       <div>
-        <AvatarStack max={5}>
-          {avatarsMarkup}
-        </AvatarStack>
+        <AvatarStack max={5}>{avatarsMarkup}</AvatarStack>
         <button onClick={this.updateState}>Update: State</button>
       </div>
     )
   }
 }
 
-stories.add('default', () => (
-  <AvatarStack max={5}>
-    {avatarsMarkup}
-  </AvatarStack>
-))
+stories.add('default', () => <AvatarStack max={5}>{avatarsMarkup}</AvatarStack>)
 
 stories.add('animation: easing', () => (
-  <AvatarStack
-    animationEasing='bounce'
-    animationSequence='fade scale'
-    max={4}
-  >
+  <AvatarStack animationEasing="bounce" animationSequence="fade scale" max={4}>
     {avatarsMarkup}
   </AvatarStack>
 ))
 
 stories.add('animation: staggering', () => (
   <AvatarStack
-    animationEasing='bounce'
-    animationSequence='fade scale'
+    animationEasing="bounce"
+    animationSequence="fade scale"
     animationStagger={100}
     max={4}
   >
@@ -74,6 +60,4 @@ stories.add('animation: staggering', () => (
   </AvatarStack>
 ))
 
-stories.add('test: render', () => (
-  <TestComponent />
-))
+stories.add('test: render', () => <TestComponent />)

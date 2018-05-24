@@ -11,16 +11,16 @@ export const optionType = PropTypes.oneOfType([
   PropTypes.shape({
     disabled: PropTypes.bool,
     label: PropTypes.string,
-    value: PropTypes.string
+    value: PropTypes.string,
   }),
-  PropTypes.string
+  PropTypes.string,
 ])
 
 export const optionsType = PropTypes.arrayOf(optionType)
 
 export const groupType = PropTypes.shape({
   label: PropTypes.string,
-  value: optionsType
+  value: optionsType,
 })
 
 export const propTypes = {
@@ -39,7 +39,7 @@ export const propTypes = {
     optionType,
     optionsType,
     PropTypes.array,
-    PropTypes.string
+    PropTypes.string,
   ]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
@@ -49,7 +49,7 @@ export const propTypes = {
   removeStateStylesOnFocus: PropTypes.bool,
   size: standardSizeTypes,
   state: stateTypes,
-  value: PropTypes.string
+  value: PropTypes.string,
 }
 
 const defaultProps = {
@@ -61,33 +61,33 @@ const defaultProps = {
   onFocus: noop,
   options: [],
   removeStateStylesOnFocus: false,
-  value: ''
+  value: '',
 }
 
 const PLACEHOLDER_VALUE = '__placeholder__'
 
 class Select extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       state: props.state,
-      value: props.value
+      value: props.value,
     }
     this.handleOnFocus = this.handleOnFocus.bind(this)
     this.selectNode = null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.maybeForceAutoFocus()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { isFocused, state } = nextProps
     const prevState = this.state.state
 
     /* istanbul ignore else */
     if (state !== prevState) {
-      this.setState({state})
+      this.setState({ state })
     }
 
     /* istanbul ignore else */
@@ -96,22 +96,19 @@ class Select extends Component {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.selectNode = null
   }
 
-  maybeForceAutoFocus () {
-    const {
-      autoFocus,
-      isFocused
-    } = this.props
+  maybeForceAutoFocus() {
+    const { autoFocus, isFocused } = this.props
 
-    if ((autoFocus || isFocused)) {
+    if (autoFocus || isFocused) {
       this.forceAutoFocus()
     }
   }
 
-  forceAutoFocus () {
+  forceAutoFocus() {
     const { forceAutoFocusTimeout } = this.props
     setTimeout(() => {
       /* istanbul ignore else */
@@ -121,16 +118,16 @@ class Select extends Component {
     }, forceAutoFocusTimeout)
   }
 
-  handleOnChange (e) {
+  handleOnChange(e) {
     const value = e.currentTarget.value
     this.props.onChange(value)
 
     this.setState({
-      value
+      value,
     })
   }
 
-  handleOnFocus (e) {
+  handleOnFocus(e) {
     const { onFocus, removeStateStylesOnFocus } = this.props
     const { state } = this.state
     if (removeStateStylesOnFocus && state) {
@@ -139,11 +136,11 @@ class Select extends Component {
     onFocus(e)
   }
 
-  hasPlaceholder () {
+  hasPlaceholder() {
     return this.state.value === '' && this.props.placeholder
   }
 
-  render () {
+  render() {
     const {
       children,
       className,
@@ -199,7 +196,7 @@ class Select extends Component {
         const label = option.label
         // Recursion!
         return (
-          <optgroup className='c-Select__optGroup' label={label} key={label}>
+          <optgroup className="c-Select__optGroup" label={label} key={label}>
             {option.value.map(renderOptions)}
           </optgroup>
         )
@@ -225,7 +222,11 @@ class Select extends Component {
       }
     }
 
-    const optionsMarkup = children || (Array.isArray(options) ? options.map(renderOptions) : renderOptions(options))
+    const optionsMarkup =
+      children ||
+      (Array.isArray(options)
+        ? options.map(renderOptions)
+        : renderOptions(options))
 
     const placeholderMarkup = placeholder ? (
       <option
@@ -238,32 +239,32 @@ class Select extends Component {
       </option>
     ) : null
 
-    const labelMarkup = label
-      ? <Label className='c-Select__label' for={id}>{label}</Label>
-      : null
+    const labelMarkup = label ? (
+      <Label className="c-Select__label" for={id}>
+        {label}
+      </Label>
+    ) : null
 
-    const prefixMarkup = prefix
-      ? <div className='c-Select__item c-Select__prefix'>
-        {prefix}
-      </div>
-      : null
+    const prefixMarkup = prefix ? (
+      <div className="c-Select__item c-Select__prefix">{prefix}</div>
+    ) : null
 
-    const hintTextMarkup = hintText
-      ? <HelpText className='c-Select__hintText' muted>
+    const hintTextMarkup = hintText ? (
+      <HelpText className="c-Select__hintText" muted>
         {hintText}
       </HelpText>
-      : null
+    ) : null
 
-    const helpTextMarkup = helpText
-      ? <HelpText className='c-Select__helpText' state={state}>
+    const helpTextMarkup = helpText ? (
+      <HelpText className="c-Select__helpText" state={state}>
         {helpText}
       </HelpText>
-      : null
+    ) : null
 
     const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
     return (
-      <div className='c-InputWrapper' style={styleProp}>
+      <div className="c-InputWrapper" style={styleProp}>
         {labelMarkup}
         {hintTextMarkup}
         <div className={componentClassName}>
@@ -274,15 +275,21 @@ class Select extends Component {
             id={id}
             onChange={e => this.handleOnChange(e)}
             onFocus={handleOnFocus}
-            ref={node => { this.selectNode = node }}
+            ref={node => {
+              this.selectNode = node
+            }}
             value={selectedValue}
             {...rest}
           >
             {placeholderMarkup}
             {optionsMarkup}
           </select>
-          <div className='c-SelectIcon' />
-          <Backdrop className='c-Select__backdrop' disabled={disabled} state={state} />
+          <div className="c-SelectIcon" />
+          <Backdrop
+            className="c-Select__backdrop"
+            disabled={disabled}
+            state={state}
+          />
         </div>
         {helpTextMarkup}
       </div>

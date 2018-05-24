@@ -1,17 +1,17 @@
-const isHex = hex => (hex && typeof hex === 'string')
-const isNumber = value => (typeof value === 'number')
+const isHex = hex => hex && typeof hex === 'string'
+const isNumber = value => typeof value === 'number'
 
 const lightThreshold = 0.61
 const optimalTextColorValues = {
   r: 129,
   g: 522,
-  b: 49
+  b: 49,
 }
 
 // Source
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 
-export const componentToHex = (c) => {
+export const componentToHex = c => {
   if (!c || typeof c !== 'number') return '00'
   const hex = c.toString(16)
   /* istanbul ignore next */
@@ -28,11 +28,13 @@ export const hexToRgb = hex => {
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
   /* istanbul ignore next */
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
+    : null
 }
 
 export const rgbToHex = (r, g, b) => {
@@ -40,7 +42,7 @@ export const rgbToHex = (r, g, b) => {
   return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`
 }
 
-export const hexToHsl = (hex) => {
+export const hexToHsl = hex => {
   if (!isHex(hex)) return null
   const rgb = hexToRgb(hex)
   return rgbToHsl(rgb.r, rgb.g, rgb.b)
@@ -59,14 +61,10 @@ export const optimalTextColor = (
   const { r, g, b } = Object.assign({}, defaultPropValues, propValues)
   const backgroundRgb = hexToRgb(backgroundHex)
   const shade = Math.round(
-    (
-      (backgroundRgb.r * r) +
-      (backgroundRgb.g * g) +
-      (backgroundRgb.b * b)
-    ) / 1000
+    (backgroundRgb.r * r + backgroundRgb.g * g + backgroundRgb.b * b) / 1000
   )
 
-  return (shade >= 128) ? 'black' : 'white'
+  return shade >= 128 ? 'black' : 'white'
 }
 
 export const rgbToHsl = (red, green, blue) => {
@@ -87,25 +85,29 @@ export const rgbToHsl = (red, green, blue) => {
     s = 0
   } else {
     const d = max - min
-    s = l > 0.5
-      ? d / (2 - max - min)
-      : d / (max + min)
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
 
     /* istanbul ignore next */
     /*eslint-disable */
     switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break
-      case g: h = (b - r) / d + 2; break
-      case b: h = (r - g) / d + 4; break
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
     }
     /*eslint-enable */
     h /= 6
   }
 
   return {
-    h: h % 1 !== 0 ? (Math.round(h * 1e2) / 1e2) : h,
-    s: s % 1 !== 0 ? (Math.round(s * 1e2) / 1e2) : s,
-    l: l % 1 !== 0 ? (Math.round(l * 1e2) / 1e2) : l
+    h: h % 1 !== 0 ? Math.round(h * 1e2) / 1e2 : h,
+    s: s % 1 !== 0 ? Math.round(s * 1e2) / 1e2 : s,
+    l: l % 1 !== 0 ? Math.round(l * 1e2) / 1e2 : l,
   }
 }
 
@@ -128,11 +130,11 @@ export const lightenDarkenColor = (color, value) => {
   if (r > 255) r = 255
   else if (r < 0) r = 0
 
-  let b = ((num >> 8) & 0x00FF) + value
+  let b = ((num >> 8) & 0x00ff) + value
   if (b > 255) b = 255
   else if (b < 0) b = 0
 
-  let g = (num & 0x0000FF) + value
+  let g = (num & 0x0000ff) + value
   if (g > 255) g = 255
   else if (g < 0) g = 0
 
@@ -146,7 +148,7 @@ export const lighten = (hex, value = 20) => {
 
 export const darken = (hex, value = 20) => {
   if (!isHex(hex) || typeof value !== 'number') return null
-  return lightenDarkenColor(hex, ((value * 2.55) * -1))
+  return lightenDarkenColor(hex, value * 2.55 * -1)
 }
 
 export const getColorShade = (hex, propValues = optimalTextColorValues) => {

@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -7,15 +7,15 @@ export const propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   fixed: PropTypes.bool,
-  transparent: PropTypes.bool
+  transparent: PropTypes.bool,
 }
 
 const defaultProps = {
-  onClick: noop
+  onClick: noop,
 }
 
 class Overlay extends Component {
-  render () {
+  render() {
     const {
       children,
       className,
@@ -33,7 +33,12 @@ class Overlay extends Component {
     )
 
     return (
-      <div className={componentClassName} role='dialog' onClick={onClick} {...rest}>
+      <div
+        className={componentClassName}
+        role="dialog"
+        onClick={onClick}
+        {...rest}
+      >
         {children}
       </div>
     )

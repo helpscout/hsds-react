@@ -5,7 +5,7 @@ import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
   className: cx.main,
-  skipChildrenTest: true
+  skipChildrenTest: true,
 }
 
 baseComponentTest(Switch, baseComponentOptions)
@@ -70,7 +70,7 @@ describe('Events', () => {
 
   test('onChange callback can be triggered', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Switch onChange={spy} value='Mugatu' />)
+    const wrapper = shallow(<Switch onChange={spy} value="Mugatu" />)
     const input = wrapper.find('input')
 
     input.simulate('change')
@@ -100,7 +100,7 @@ describe('ID', () => {
   })
 
   test('Can accept custom ID', () => {
-    const wrapper = shallow(<Switch id='Mugatu' />)
+    const wrapper = shallow(<Switch id="Mugatu" />)
     const o = wrapper.find('input')
 
     expect(o.props().id).toBe('Mugatu')
@@ -109,7 +109,7 @@ describe('ID', () => {
 
 describe('State', () => {
   test('Can render error styles', () => {
-    const wrapper = shallow(<Switch state='error' />)
+    const wrapper = shallow(<Switch state="error" />)
 
     expect(wrapper.hasClass('is-error')).toBeTruthy()
   })
@@ -117,7 +117,7 @@ describe('State', () => {
 
 describe('Styles', () => {
   test('Can render size styles, if applicable', () => {
-    const wrapper = shallow(<Switch size='sm' />)
+    const wrapper = shallow(<Switch size="sm" />)
 
     expect(wrapper.hasClass(`${cx.main}--sm`)).toBeTruthy()
   })

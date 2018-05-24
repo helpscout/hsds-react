@@ -1,55 +1,58 @@
-import {PureComponent as Component} from 'react'
+import { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import {addEventListener, removeEventListener} from '@shopify/javascript-utilities/events'
+import {
+  addEventListener,
+  removeEventListener,
+} from '@shopify/javascript-utilities/events'
 
 const propTypes = {
   event: PropTypes.string,
   capture: PropTypes.bool,
   passive: PropTypes.bool,
-  handler: PropTypes.func
+  handler: PropTypes.func,
 }
 
 const defaultProps = {
-  scope: window
+  scope: window,
 }
 
 // see https://github.com/oliviertassinari/react-event-listener/
 class EventListener extends Component {
-  constructor () {
+  constructor() {
     super()
     this.attachListener = this.attachListener.bind(this)
     this.detachListener = this.detachListener.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.attachListener()
   }
 
   /* istanbul ignore next */
-  componentWillUpdate () {
+  componentWillUpdate() {
     this.detachListener()
   }
 
   /* istanbul ignore next */
-  componentDidUpdate () {
+  componentDidUpdate() {
     this.attachListener()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.detachListener()
   }
 
-  attachListener () {
-    const {event, handler, capture, passive, scope} = this.props
-    addEventListener(scope, event, handler, {capture, passive})
+  attachListener() {
+    const { event, handler, capture, passive, scope } = this.props
+    addEventListener(scope, event, handler, { capture, passive })
   }
 
-  detachListener () {
-    const {event, handler, capture, scope} = this.props
+  detachListener() {
+    const { event, handler, capture, scope } = this.props
     removeEventListener(scope, event, handler, capture)
   }
 
-  render () {
+  render() {
     return null
   }
 }

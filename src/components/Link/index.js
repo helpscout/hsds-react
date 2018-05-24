@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -17,7 +17,7 @@ export const propTypes = {
   onFocus: PropTypes.func,
   noUnderline: PropTypes.bool,
   to: PropTypes.string,
-  wordWrap: PropTypes.bool
+  wordWrap: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -27,33 +27,33 @@ const defaultProps = {
   nodeRef: noop,
   onBlur: noop,
   onClick: noop,
-  onFocus: noop
+  onFocus: noop,
 }
 
 class Link extends Component {
-  render () {
+  render() {
     const {
-    autoWordWrap,
-    block,
-    children,
-    className,
-    external,
-    href,
-    nodeRef,
-    noUnderline,
-    wordWrap,
-    ...rest
-  } = this.props
+      autoWordWrap,
+      block,
+      children,
+      className,
+      external,
+      href,
+      nodeRef,
+      noUnderline,
+      wordWrap,
+      ...rest
+    } = this.props
 
     const forceWordWrap = wordWrap || (autoWordWrap && !wordHasSpaces(children))
 
     const componentClassName = classNames(
-    'c-Link',
-    block && 'is-block',
-    forceWordWrap && 'is-word-wrap',
-    noUnderline && 'is-no-underline',
-    className
-  )
+      'c-Link',
+      block && 'is-block',
+      forceWordWrap && 'is-word-wrap',
+      noUnderline && 'is-no-underline',
+      className
+    )
 
     const target = external ? '_blank' : undefined
     const rel = external ? 'noopener noreferrer' : undefined

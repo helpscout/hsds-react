@@ -2,16 +2,9 @@ import React from 'react'
 import classNames from '../../utilities/classNames'
 
 const Title = props => {
-  const {
-    children,
-    className,
-    ...rest
-  } = props
+  const { children, className, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-DetailListTitle',
-    className
-  )
+  const componentClassName = classNames('c-DetailListTitle', className)
 
   return (
     <dt className={componentClassName} {...rest}>

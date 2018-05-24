@@ -1,4 +1,4 @@
-import {injectFillColorIntoSvg} from '../index'
+import { injectFillColorIntoSvg } from '../index'
 
 test('Returns empty string if invalid arguments', () => {
   expect(injectFillColorIntoSvg()).toBe('')
@@ -14,7 +14,7 @@ describe('replace', () => {
       <svg><path data-path-primary=""></path></svg>
     `
     const props = {
-      primary: 'red'
+      primary: 'red',
     }
 
     expect(injectFillColorIntoSvg(markup, props)).toContain('style')
@@ -27,7 +27,7 @@ describe('replace', () => {
       <svg><path data-path-primary=""></path></svg>
     `
     const props = {
-      primary: '#ff9900'
+      primary: '#ff9900',
     }
 
     expect(injectFillColorIntoSvg(markup, props)).toContain('style')
@@ -40,7 +40,7 @@ describe('replace', () => {
       <svg><path data-path-primary=""></path></svg>
     `
     const props = {
-      primary: 'rgb(0,0,0)'
+      primary: 'rgb(0,0,0)',
     }
 
     expect(injectFillColorIntoSvg(markup, props)).toContain('style')
@@ -53,7 +53,7 @@ describe('replace', () => {
       <svg><path data-path-primary=""></path></svg>
     `
     const props = {
-      primary: 'rgba(0,0,0)'
+      primary: 'rgba(0,0,0)',
     }
 
     expect(injectFillColorIntoSvg(markup, props)).toContain('style')
@@ -82,7 +82,7 @@ describe('color', () => {
       uiDark: 'purple',
       uiLight: 'yellow',
       uiTransparent: 'black',
-      uiWhite: 'white'
+      uiWhite: 'white',
     }
 
     expect(injectFillColorIntoSvg(markup, props)).toContain('style')

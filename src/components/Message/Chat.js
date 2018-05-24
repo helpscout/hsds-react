@@ -14,19 +14,16 @@ export const propTypes = {
   bubbleClassName: PropTypes.string,
   caption: PropTypes.string,
   errorMessage: PropTypes.string,
-  error: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string
-  ]),
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   isLoading: PropTypes.bool,
-  onBubbleClick: PropTypes.func
+  onBubbleClick: PropTypes.func,
 }
 
 const defaultProps = {
   onBubbleClick: noop,
   error: false,
-  errorMessage: 'Couldn\'t send.',
-  isLoading: false
+  errorMessage: "Couldn't send.",
+  isLoading: false,
 }
 
 const Chat = props => {
@@ -56,10 +53,7 @@ const Chat = props => {
     ...rest
   } = props
 
-  const componentClassName = classNames(
-    'c-MessageChat',
-    className
-  )
+  const componentClassName = classNames('c-MessageChat', className)
 
   const chatProps = {
     body,
@@ -70,31 +64,31 @@ const Chat = props => {
     rtl,
     timestamp,
     to,
-    type
+    type,
   }
 
   const captionMarkup = caption ? (
-    <Caption className='c-MessageChat__caption'>{caption}</Caption>
+    <Caption className="c-MessageChat__caption">{caption}</Caption>
   ) : null
 
   const loadingMarkup = isLoading ? (
-    <Flexy.Item className='c-MessageChat__metaState'>
-      <Spinner className='c-MessageChat__loadingSpinner' size='xs' />
+    <Flexy.Item className="c-MessageChat__metaState">
+      <Spinner className="c-MessageChat__loadingSpinner" size="xs" />
     </Flexy.Item>
   ) : null
 
   const errorMarkup = error ? (
-    <div className='c-MessageChat__error'>
-      <Caption className='c-MessageChat__errorMessage'>
+    <div className="c-MessageChat__error">
+      <Caption className="c-MessageChat__errorMessage">
         {typeof error === 'string' ? error : errorMessage}
       </Caption>
     </div>
   ) : null
 
   const metaMarkup = (
-    <Flexy className='c-MessageChat__meta' gap='xs'>
+    <Flexy className="c-MessageChat__meta" gap="xs">
       {loadingMarkup}
-      <Flexy.Block className='c-MessageChat__metaBlock'>
+      <Flexy.Block className="c-MessageChat__metaBlock">
         {captionMarkup}
         {errorMarkup}
       </Flexy.Block>

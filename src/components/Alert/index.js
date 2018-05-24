@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Badge from '../Badge'
 import Animate from '../Animate'
@@ -16,12 +16,12 @@ export const propTypes = {
   icon: PropTypes.bool,
   onDismiss: PropTypes.func,
   noMargin: PropTypes.bool,
-  status: statusTypes
+  status: statusTypes,
 }
 
 const defaultProps = {
   onDismiss: noop,
-  status: 'warning'
+  status: 'warning',
 }
 
 export const classNameSpace = 'c-Alert'
@@ -32,27 +32,27 @@ export const cx = {
   block: `${classNameSpace}__block`,
   closeButton: `${classNameSpace}__closeButton`,
   content: `${classNameSpace}__content`,
-  icon: `${classNameSpace}__icon`
+  icon: `${classNameSpace}__icon`,
 }
 
 class Alert extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
-      dismissed: false
+      dismissed: false,
     }
     this.handleOnDismiss = this.handleOnDismiss.bind(this)
   }
 
-  handleOnDismiss () {
+  handleOnDismiss() {
     const { onDismiss } = this.props
     this.setState({
-      dismissed: true
+      dismissed: true,
     })
     onDismiss()
   }
 
-  render () {
+  render() {
     const {
       actionRight,
       badge,
@@ -82,9 +82,7 @@ class Alert extends Component {
     )
 
     const actionRightMarkup = actionRight ? (
-      <div className={cx.actionRight}>
-        {actionRight}
-      </div>
+      <div className={cx.actionRight}>{actionRight}</div>
     ) : null
 
     const leftMarkup = badge ? (
@@ -93,27 +91,21 @@ class Alert extends Component {
       </div>
     ) : icon ? (
       <div className={cx.icon}>
-        <Icon name='alert' size='20' />
+        <Icon name="alert" size="20" />
       </div>
     ) : null
 
     const closeButtonMarkup = dismissible ? (
       <div className={cx.closeButton}>
-        <CloseButton
-          onClick={handleOnDismiss}
-          seamless
-          size='sm'
-        />
+        <CloseButton onClick={handleOnDismiss} seamless size="sm" />
       </div>
     ) : null
 
     const componentMarkup = (
-      <div className={componentClassName} {...rest} role='alert'>
+      <div className={componentClassName} {...rest} role="alert">
         <div className={cx.content}>
           {leftMarkup}
-          <div className={cx.block}>
-            {children}
-          </div>
+          <div className={cx.block}>{children}</div>
           {actionRightMarkup}
           {closeButtonMarkup}
         </div>
@@ -126,7 +118,9 @@ class Alert extends Component {
           {componentMarkup}
         </Animate>
       </Collapsible>
-    ) : componentMarkup
+    ) : (
+      componentMarkup
+    )
   }
 }
 

@@ -11,7 +11,7 @@ describe('ClassName', () => {
   })
 
   test('Can accept custom className', () => {
-    const wrapper = shallow(<Alert className='buddy' />)
+    const wrapper = shallow(<Alert className="buddy" />)
 
     expect(wrapper.hasClass('buddy')).toBeTruthy()
   })
@@ -118,7 +118,11 @@ describe('Action right', () => {
 
 describe('Content', () => {
   test('Can render child content', () => {
-    const wrapper = shallow(<Alert><div className='buddy'>Buddy</div></Alert>)
+    const wrapper = shallow(
+      <Alert>
+        <div className="buddy">Buddy</div>
+      </Alert>
+    )
     const o = wrapper.find(`.${cx.block}`)
     const d = o.find('.buddy')
 
@@ -137,7 +141,7 @@ describe('Badge', () => {
   })
 
   test('Renders an alert Badge, if specified', () => {
-    const wrapper = shallow(<Alert badge='Badge' />)
+    const wrapper = shallow(<Alert badge="Badge" />)
     const d = wrapper.find(`.${cx.badge}`)
     const o = wrapper.find(Badge)
 

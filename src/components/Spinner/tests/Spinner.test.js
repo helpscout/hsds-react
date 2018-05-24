@@ -36,7 +36,9 @@ describe('Accessibility', () => {
 describe('Children', () => {
   test('Does not render children', () => {
     const wrapper = shallow(
-      <Spinner><div className='child'>Hello</div></Spinner>
+      <Spinner>
+        <div className="child">Hello</div>
+      </Spinner>
     )
     const el = wrapper.find('div.child')
 
@@ -46,9 +48,7 @@ describe('Children', () => {
 
 describe('Icon', () => {
   test('Renders a spinner Icon', () => {
-    const wrapper = shallow(
-      <Spinner />
-    )
+    const wrapper = shallow(<Spinner />)
     const o = wrapper.find(Icon)
 
     expect(o.length).toBe(1)
@@ -56,9 +56,7 @@ describe('Icon', () => {
   })
 
   test('Can render a different size', () => {
-    const wrapper = shallow(
-      <Spinner size='xs' />
-    )
+    const wrapper = shallow(<Spinner size="xs" />)
     const o = wrapper.find(Icon)
 
     expect(o.length).toBe(1)

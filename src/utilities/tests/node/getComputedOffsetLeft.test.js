@@ -1,7 +1,4 @@
-import {
-  getComputedWidthProps,
-  getComputedOffsetLeft
-} from '../../node'
+import { getComputedWidthProps, getComputedOffsetLeft } from '../../node'
 
 test('Returns false if node (arg) is invalid', () => {
   expect(getComputedOffsetLeft()).not.toBeTruthy()

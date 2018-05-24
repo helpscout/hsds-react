@@ -11,39 +11,36 @@ export const propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
+    PropTypes.element,
   ]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   multiSelect: PropTypes.bool,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.arrayOf(valueTypes),
-    valueTypes
-  ])
+  value: PropTypes.oneOfType([PropTypes.arrayOf(valueTypes), valueTypes]),
 }
 
 const defaultProps = {
   onBlur: noop,
   onChange: noop,
-  onFocus: noop
+  onFocus: noop,
 }
 
 const uniqueID = createUniqueIDFactory('ChoiceGroup')
 
 class ChoiceGroup extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       id: uniqueID(),
-      selectedValue: props.value ? [].concat(props.value) : []
+      selectedValue: props.value ? [].concat(props.value) : [],
     }
     this.multiSelect = true
     this.handleOnChange = this.handleOnChange.bind(this)
   }
 
-  componentWillMount () {
+  componentWillMount() {
     const child = this.props.children ? this.props.children[0] : false
     let multiSelect
 
@@ -51,13 +48,16 @@ class ChoiceGroup extends Component {
       multiSelect = child.type.name.toLowerCase() !== 'radio' // false for radio
     }
     // Override auto-setting based on children
-    multiSelect = this.props.multiSelect !== undefined ? this.props.multiSelect : multiSelect
+    multiSelect =
+      this.props.multiSelect !== undefined
+        ? this.props.multiSelect
+        : multiSelect
 
     this.setState({ multiSelect })
     this.multiSelect = multiSelect
   }
 
-  getMultiSelectValue (value) {
+  getMultiSelectValue(value) {
     const { selectedValue } = this.state
     const valueIndex = selectedValue.indexOf(value)
 
@@ -69,17 +69,19 @@ class ChoiceGroup extends Component {
     return selectedValue
   }
 
-  handleOnChange (value, checked) {
+  handleOnChange(value, checked) {
     if (typeof value === 'object' && value.target) return
 
     const { multiSelect } = this.state
-    const selectedValue = multiSelect ? this.getMultiSelectValue(value) : [value]
+    const selectedValue = multiSelect
+      ? this.getMultiSelectValue(value)
+      : [value]
 
     this.setState({ selectedValue })
     this.props.onChange(selectedValue)
   }
 
-  render () {
+  render() {
     const {
       className,
       children,
@@ -98,19 +100,21 @@ class ChoiceGroup extends Component {
     )
     const handleOnChange = this.handleOnChange
 
-    const choiceMarkup = children ? React.Children.map(children, (child, index) => {
-      return (
-        <FormGroup.Choice key={`${id}-${index}`}>
-          {React.cloneElement(child, {
-            checked: includes(selectedValue, child.props.value),
-            onBlur,
-            onChange: handleOnChange,
-            onFocus,
-            name
-          })}
-        </FormGroup.Choice>
-      )
-    }) : null
+    const choiceMarkup = children
+      ? React.Children.map(children, (child, index) => {
+          return (
+            <FormGroup.Choice key={`${id}-${index}`}>
+              {React.cloneElement(child, {
+                checked: includes(selectedValue, child.props.value),
+                onBlur,
+                onChange: handleOnChange,
+                onFocus,
+                name,
+              })}
+            </FormGroup.Choice>
+          )
+        })
+      : null
 
     return (
       <div className={componentClassName} id={id} {...rest}>

@@ -1,6 +1,4 @@
-import {
-  incrementFocusIndex
-} from '../../focus'
+import { incrementFocusIndex } from '../../focus'
 
 test('Returns false for invalid arguments', () => {
   expect(incrementFocusIndex()).toBeFalsy()
@@ -8,21 +6,29 @@ test('Returns false for invalid arguments', () => {
   expect(incrementFocusIndex('up')).toBeFalsy()
   expect(incrementFocusIndex({})).not.toBe(false) // Objects accepted, but filled with defaults
 
-  expect(incrementFocusIndex({
-    currentIndex: true
-  })).toBeFalsy()
+  expect(
+    incrementFocusIndex({
+      currentIndex: true,
+    })
+  ).toBeFalsy()
 
-  expect(incrementFocusIndex({
-    direction: true
-  })).toBeFalsy()
+  expect(
+    incrementFocusIndex({
+      direction: true,
+    })
+  ).toBeFalsy()
 
-  expect(incrementFocusIndex({
-    enableCycling: 'yup'
-  })).toBeFalsy()
+  expect(
+    incrementFocusIndex({
+      enableCycling: 'yup',
+    })
+  ).toBeFalsy()
 
-  expect(incrementFocusIndex({
-    itemCount: 'lots'
-  })).toBeFalsy()
+  expect(
+    incrementFocusIndex({
+      itemCount: 'lots',
+    })
+  ).toBeFalsy()
 })
 
 describe('direction: down', () => {
@@ -30,7 +36,7 @@ describe('direction: down', () => {
     const o = {
       direction: 'down',
       currentIndex: 4,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(5)
@@ -40,7 +46,7 @@ describe('direction: down', () => {
     const o = {
       direction: 'down',
       currentIndex: 6,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(6)
@@ -50,7 +56,7 @@ describe('direction: down', () => {
     const o = {
       direction: 'down',
       currentIndex: null,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(0)
@@ -62,7 +68,7 @@ describe('direction: up', () => {
     const o = {
       direction: 'up',
       currentIndex: 4,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(3)
@@ -72,7 +78,7 @@ describe('direction: up', () => {
     const o = {
       direction: 'up',
       currentIndex: 0,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(0)
@@ -82,7 +88,7 @@ describe('direction: up', () => {
     const o = {
       direction: 'up',
       currentIndex: null,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(0)
@@ -95,7 +101,7 @@ describe('enableCycling', () => {
       direction: 'up',
       enableCycling: true,
       currentIndex: 0,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(6)
@@ -106,7 +112,7 @@ describe('enableCycling', () => {
       direction: 'up',
       enableCycling: true,
       currentIndex: 4,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(3)
@@ -117,7 +123,7 @@ describe('enableCycling', () => {
       direction: 'up',
       enableCycling: true,
       currentIndex: null,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(0)
@@ -128,7 +134,7 @@ describe('enableCycling', () => {
       direction: 'down',
       enableCycling: true,
       currentIndex: 6,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(0)
@@ -139,7 +145,7 @@ describe('enableCycling', () => {
       direction: 'down',
       enableCycling: true,
       currentIndex: 4,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(5)
@@ -150,7 +156,7 @@ describe('enableCycling', () => {
       direction: 'down',
       enableCycling: true,
       currentIndex: null,
-      itemCount: 6
+      itemCount: 6,
     }
 
     expect(incrementFocusIndex(o)).toBe(0)

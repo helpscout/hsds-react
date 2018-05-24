@@ -1,4 +1,4 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import { mount, shallow } from 'enzyme'
 import Overflow from '..'
 import wait from '../../../tests/helpers/wait'
@@ -22,7 +22,7 @@ describe('Content', () => {
   test('Renders child content', () => {
     const wrapper = mount(
       <Overflow>
-        <div className='brick'>BRICK</div>
+        <div className="brick">BRICK</div>
       </Overflow>
     )
     const brick = wrapper.find('div.brick')
@@ -48,23 +48,22 @@ describe('Fade', () => {
     expect(fade.style.transform).toBe('scaleX(1)')
   })
 
-  test('Applies left fade styles when scrolled', (done) => {
+  test('Applies left fade styles when scrolled', done => {
     const wrapper = mount(<Overflow />)
     const o = wrapper.instance()
 
     const currentTarget = {
       clientWidth: 100,
       scrollWidth: 200,
-      scrollLeft: 40
+      scrollLeft: 40,
     }
 
     o.handleOnScroll({ currentTarget })
 
-    wait(20)
-      .then(() => {
-        expect(o.faderNodeLeft.style.transform).toContain('scaleX')
-        done()
-      })
+    wait(20).then(() => {
+      expect(o.faderNodeLeft.style.transform).toContain('scaleX')
+      done()
+    })
   })
 
   test('Applies right fade styles when scrolled', () => {
@@ -74,7 +73,7 @@ describe('Fade', () => {
     const currentTarget = {
       clientHeight: 100,
       scrollHeight: 200,
-      scrollLeft: 40
+      scrollLeft: 40,
     }
 
     o.handleOnScroll({ currentTarget })
@@ -89,7 +88,7 @@ describe('Fade', () => {
     const currentTarget = {
       clientHeight: 100,
       scrollHeight: 200,
-      scrollLeft: 40
+      scrollLeft: 40,
     }
 
     o.handleOnScroll({ currentTarget })
@@ -108,7 +107,7 @@ describe('Fade', () => {
   })
 
   test('Can apply custom background colors', () => {
-    const wrapper = mount(<Overflow backgroundColor='red' />)
+    const wrapper = mount(<Overflow backgroundColor="red" />)
     const o = wrapper.instance()
     const faderLeft = o.faderNodeLeft
     const faderRight = o.faderNodeLeft
@@ -127,7 +126,7 @@ describe('Events', () => {
     const currentTarget = {
       clientWidth: 100,
       scrollWidth: 200,
-      scrollLeft: 40
+      scrollLeft: 40,
     }
 
     o.handleOnScroll({ currentTarget })
@@ -137,7 +136,7 @@ describe('Events', () => {
 })
 
 describe('adjustHeight', () => {
-  test('Method fires on mount', (done) => {
+  test('Method fires on mount', done => {
     const wrapper = mount(<Overflow />)
     const instance = wrapper.instance()
     const spy = jest.spyOn(instance, 'adjustHeight')
@@ -155,14 +154,16 @@ describe('adjustHeight', () => {
 
 describe('scrollableRef', () => {
   class MyComponent extends Component {
-    constructor () {
+    constructor() {
       super()
       this.scrollable = null
     }
-    render () {
+    render() {
       return (
         <Overflow
-          scrollableRef={node => { this.scrollable = node }}
+          scrollableRef={node => {
+            this.scrollable = node
+          }}
         />
       )
     }

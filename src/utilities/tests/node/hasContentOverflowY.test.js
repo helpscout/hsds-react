@@ -1,6 +1,4 @@
-import {
-  hasContentOverflowY
-} from '../../node'
+import { hasContentOverflowY } from '../../node'
 
 test('Returns false for invalid elements', () => {
   expect(hasContentOverflowY()).not.toBeTruthy()

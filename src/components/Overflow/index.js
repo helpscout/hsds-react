@@ -1,10 +1,13 @@
-import React, {PureComponent as Component} from 'react'
+import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import { hasContentOverflowX } from '../../utilities/node'
-import { getFadeLeftStyles, getFadeRightStyles } from '../../utilities/scrollFade'
+import {
+  getFadeLeftStyles,
+  getFadeRightStyles,
+} from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 
 export const propTypes = {
@@ -12,21 +15,21 @@ export const propTypes = {
   initialHeightAdjustDelay: PropTypes.number,
   isScrollable: PropTypes.bool,
   onScroll: PropTypes.func,
-  scrollableRef: PropTypes.func
+  scrollableRef: PropTypes.func,
 }
 
 const defaultProps = {
   initialHeightAdjustDelay: 30,
   isScrollable: true,
   onScroll: noop,
-  scrollableRef: noop
+  scrollableRef: noop,
 }
 
 class Overflow extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
-      shouldFadeOnMount: false
+      shouldFadeOnMount: false,
     }
     this.faderSize = 32
     this.faderNodeLeft = null
@@ -36,7 +39,7 @@ class Overflow extends Component {
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { initialHeightAdjustDelay } = this.props
     this.adjustHeight()
     setTimeout(() => {
@@ -46,14 +49,14 @@ class Overflow extends Component {
     }, initialHeightAdjustDelay)
   }
 
-  adjustHeight () {
+  adjustHeight() {
     const node = ReactDOM.findDOMNode(this)
     const containerNode = this.containerNode
     const height = containerNode.clientHeight
     const heightOffset = 20
 
     this.setState({
-      shouldFadeOnMount: hasContentOverflowX(containerNode)
+      shouldFadeOnMount: hasContentOverflowX(containerNode),
     })
 
     /* istanbul ignore next */
@@ -62,7 +65,7 @@ class Overflow extends Component {
     node.style.height = height ? `${height - heightOffset}px` : null
   }
 
-  applyFadeStyles (event) {
+  applyFadeStyles(event) {
     const { isScrollable } = this.props
     const offset = this.faderSize
 
@@ -77,13 +80,13 @@ class Overflow extends Component {
     })
   }
 
-  handleOnScroll (event) {
+  handleOnScroll(event) {
     const { onScroll } = this.props
     this.applyFadeStyles(event)
     onScroll(event)
   }
 
-  render () {
+  render() {
     const {
       backgroundColor,
       className,
@@ -108,23 +111,23 @@ class Overflow extends Component {
 
     const faderLeftMarkup = (
       <div
-        className='c-Overflow__fader is-left'
+        className="c-Overflow__fader is-left"
         ref={node => (this.faderNodeLeft = node)}
-        role='presentation'
+        role="presentation"
         style={{
-          color: backgroundColor
+          color: backgroundColor,
         }}
       />
     )
 
     const faderRightMarkup = (
       <div
-        className='c-Overflow__fader is-right'
+        className="c-Overflow__fader is-right"
         ref={node => (this.faderNodeRight = node)}
-        role='presentation'
+        role="presentation"
         style={{
           color: backgroundColor,
-          transform: shouldFadeOnMount ? 'scaleX(1)' : 'scaleX(0)'
+          transform: shouldFadeOnMount ? 'scaleX(1)' : 'scaleX(0)',
         }}
       />
     )
@@ -133,19 +136,17 @@ class Overflow extends Component {
       <div className={componentClassName} {...rest}>
         {faderLeftMarkup}
         <div
-          className='c-Overflow__container'
+          className="c-Overflow__container"
           ref={node => {
             this.containerNode = node
             scrollableRef(node)
           }}
           onScroll={handleOnScroll}
         >
-          <div className='c-Overflow__content'>
-            {children}
-          </div>
+          <div className="c-Overflow__content">{children}</div>
         </div>
         {faderRightMarkup}
-        <EventListener event='resize' handler={adjustHeight} />
+        <EventListener event="resize" handler={adjustHeight} />
       </div>
     )
   }

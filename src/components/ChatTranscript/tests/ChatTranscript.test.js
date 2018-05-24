@@ -19,7 +19,11 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<ChatTranscript><div className='child'>Hello</div></ChatTranscript>)
+    const wrapper = shallow(
+      <ChatTranscript>
+        <div className="child">Hello</div>
+      </ChatTranscript>
+    )
     const el = wrapper.find('div.child')
 
     expect(el.text()).toContain('Hello')

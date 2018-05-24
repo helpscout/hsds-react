@@ -7,52 +7,42 @@ import { newlineToHTML } from '../../utilities/strings'
 export const propTypes = {
   body: PropTypes.string,
   createdAt: PropTypes.string,
-  timestamp: PropTypes.string
+  timestamp: PropTypes.string,
 }
 
 const defaultProps = {
   body: '',
-  createdAt: ''
+  createdAt: '',
 }
 
 const LineItem = props => {
-  const {
-    body,
-    children,
-    className,
-    createdAt,
-    timestamp,
-    ...rest
-  } = props
+  const { body, children, className, createdAt, timestamp, ...rest } = props
 
-  const componentClassName = classNames(
-    'c-ChatTranscriptLineItem',
-    className
-  )
+  const componentClassName = classNames('c-ChatTranscriptLineItem', className)
 
   const timestampMarkup = createdAt ? (
-    <span
-      className='c-ChatTranscriptLineItem__createdAt'
-    >
-      {' '}at{' '}
-      <span
-        className='c-ChatTranscriptLineItem__timestamp'
-        title={timestamp}
-      >
+    <span className="c-ChatTranscriptLineItem__createdAt">
+      {' '}
+      at{' '}
+      <span className="c-ChatTranscriptLineItem__timestamp" title={timestamp}>
         {createdAt}
       </span>
     </span>
   ) : null
 
-  const contentMarkup = body ? (<span dangerouslySetInnerHTML={{__html: newlineToHTML(body)}} />) : children
+  const contentMarkup = body ? (
+    <span dangerouslySetInnerHTML={{ __html: newlineToHTML(body) }} />
+  ) : (
+    children
+  )
 
   return (
     <div className={componentClassName} {...rest}>
       <Text
-        className='c-ChatTranscriptLineItem__content'
+        className="c-ChatTranscriptLineItem__content"
         block
         lineHeightReset
-        size='12'
+        size="12"
       >
         {contentMarkup}
         {timestampMarkup}

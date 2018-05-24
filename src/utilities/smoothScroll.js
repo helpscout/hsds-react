@@ -3,7 +3,7 @@ import { requestAnimationFrame } from './other'
 
 // Source:
 // https://gist.github.com/gre/1650294
-const easeInOutCubic = (t) => {
+const easeInOutCubic = t => {
   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
 }
 
@@ -33,7 +33,7 @@ export const smoothScrollTo = ({ node, position, duration }) => {
 
   if (!diff) return
 
-  const step = (timestamp) => {
+  const step = timestamp => {
     if (!start) start = timestamp
     // Elapsed miliseconds since start of scrolling.
     const time = timestamp - start

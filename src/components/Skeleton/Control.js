@@ -4,19 +4,15 @@ import classNames from '../../utilities/classNames'
 import { standardSizeTypes } from '../../constants/propTypes'
 
 export const propTypes = {
-  sizes: standardSizeTypes
+  sizes: standardSizeTypes,
 }
 
 const defaultProps = {
-  size: 'md'
+  size: 'md',
 }
 
 const Control = props => {
-  const {
-    className,
-    size,
-    ...rest
-  } = props
+  const { className, size, ...rest } = props
 
   const componentClassName = classNames(
     'c-SkeletonControl',
@@ -24,9 +20,7 @@ const Control = props => {
     className
   )
 
-  return (
-    <Block className={componentClassName} {...rest} />
-  )
+  return <Block className={componentClassName} {...rest} />
 }
 
 Control.propTypes = propTypes

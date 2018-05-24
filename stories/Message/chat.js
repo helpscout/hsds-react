@@ -13,9 +13,9 @@ stories.add('default', () => {
     <br />
   `
   return (
-    <Message to avatar={<Avatar name='Buddy' />}>
-      <Message.Chat read timestamp='9:41am' body={htmlBody} />
-      <Message.Chat read timestamp='9:41am'>
+    <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat read timestamp="9:41am" body={htmlBody} />
+      <Message.Chat read timestamp="9:41am">
         <strong>*Frantically running through North pole*</strong>
       </Message.Chat>
     </Message>
@@ -24,19 +24,11 @@ stories.add('default', () => {
 
 stories.add('states', () => {
   return (
-    <Message to avatar={<Avatar name='Buddy' />}>
-      <Message.Chat
-        read
-        timestamp='9:41am'
-        error
-      >
+    <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat read timestamp="9:41am" error>
         Error state, with default message.
       </Message.Chat>
-      <Message.Chat
-        read
-        timestamp='9:41am'
-        error='Something went wrong!'
-      >
+      <Message.Chat read timestamp="9:41am" error="Something went wrong!">
         Error state, with custom message.
       </Message.Chat>
     </Message>

@@ -1,7 +1,4 @@
-import {
-  createUniqueIDFactory,
-  createUniqueIndexFactory
-} from '../id'
+import { createUniqueIDFactory, createUniqueIndexFactory } from '../id'
 
 describe('createUniqueIDFactory', () => {
   test('Generates an numerical ID (string), without arguments', () => {

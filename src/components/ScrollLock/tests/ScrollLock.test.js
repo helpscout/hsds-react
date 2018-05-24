@@ -6,7 +6,9 @@ describe('Direction: Y', () => {
   test('Permits scrolling within extent', () => {
     const wrapper = shallow(
       <ScrollLock>
-        <div style={{overflow: 'auto', height: '12px'}}>Hi<br />Hello<br />Hi</div>
+        <div style={{ overflow: 'auto', height: '12px' }}>
+          Hi<br />Hello<br />Hi
+        </div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -14,13 +16,13 @@ describe('Direction: Y', () => {
     const currentTarget = {
       clientHeight: 12,
       scrollTop: 0,
-      scrollHeight: 30
+      scrollHeight: 30,
     }
 
     hi.simulate('wheel', {
       deltaY: 12,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).not.toBeCalled()
 
@@ -28,7 +30,7 @@ describe('Direction: Y', () => {
     hi.simulate('wheel', {
       deltaY: -12,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).not.toBeCalled()
   })
@@ -36,7 +38,9 @@ describe('Direction: Y', () => {
   test('Prevents scrolling past extent', () => {
     const wrapper = shallow(
       <ScrollLock>
-        <div style={{overflow: 'auto', height: '12px'}}>Hi<br />Hello<br />Hi</div>
+        <div style={{ overflow: 'auto', height: '12px' }}>
+          Hi<br />Hello<br />Hi
+        </div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -44,13 +48,13 @@ describe('Direction: Y', () => {
     const currentTarget = {
       clientHeight: 12,
       scrollTop: 0,
-      scrollHeight: 30
+      scrollHeight: 30,
     }
 
     hi.simulate('wheel', {
       deltaY: 24,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).toBeCalled()
     expect(currentTarget.scrollTop).toBe(30)
@@ -59,7 +63,7 @@ describe('Direction: Y', () => {
     hi.simulate('wheel', {
       deltaY: -20,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).toBeCalled()
     expect(currentTarget.scrollTop).toBe(0)
@@ -69,10 +73,8 @@ describe('Direction: Y', () => {
 describe('Direction: X', () => {
   test('Permits scrolling within extent', () => {
     const wrapper = shallow(
-      <ScrollLock direction='x'>
-        <div style={{overflow: 'auto', width: 12}}>
-          Hi. Hello. Hi.
-        </div>
+      <ScrollLock direction="x">
+        <div style={{ overflow: 'auto', width: 12 }}>Hi. Hello. Hi.</div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -80,13 +82,13 @@ describe('Direction: X', () => {
     const currentTarget = {
       clientWidth: 12,
       scrollLeft: 0,
-      scrollWidth: 30
+      scrollWidth: 30,
     }
 
     hi.simulate('wheel', {
       deltaX: 12,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).not.toBeCalled()
 
@@ -94,17 +96,15 @@ describe('Direction: X', () => {
     hi.simulate('wheel', {
       deltaX: -12,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).not.toBeCalled()
   })
 
   test('Prevents scrolling past extent', () => {
     const wrapper = shallow(
-      <ScrollLock direction='x'>
-        <div style={{overflow: 'auto', width: 12}}>
-          Hi. Hello. Hi.
-        </div>
+      <ScrollLock direction="x">
+        <div style={{ overflow: 'auto', width: 12 }}>Hi. Hello. Hi.</div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -112,13 +112,13 @@ describe('Direction: X', () => {
     const currentTarget = {
       clientWidth: 12,
       scrollLeft: 0,
-      scrollWidth: 30
+      scrollWidth: 30,
     }
 
     hi.simulate('wheel', {
       deltaX: 24,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).toBeCalled()
     expect(currentTarget.scrollLeft).toBe(30)
@@ -127,7 +127,7 @@ describe('Direction: X', () => {
     hi.simulate('wheel', {
       deltaX: -20,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).toBeCalled()
     expect(currentTarget.scrollLeft).toBe(0)
@@ -138,7 +138,9 @@ describe('Normal usage', () => {
   test('Clones child node instead of wrapping it', () => {
     const wrapper = shallow(
       <ScrollLock>
-        <div className='hi' style={{overflow: 'auto', height: '2px'}}>Hi</div>
+        <div className="hi" style={{ overflow: 'auto', height: '2px' }}>
+          Hi
+        </div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -150,12 +152,13 @@ describe('Normal usage', () => {
   })
 
   test('Requires a single child element', () => {
-    const wrapper = () => shallow(
-      <ScrollLock>
-        <div />
-        <div />
-      </ScrollLock>
-    )
+    const wrapper = () =>
+      shallow(
+        <ScrollLock>
+          <div />
+          <div />
+        </ScrollLock>
+      )
 
     expect(wrapper).toThrow(Error, /React.Children.only/)
   })
@@ -165,7 +168,9 @@ describe('Disabled', () => {
   test('Permits scrolling past extent', () => {
     const wrapper = shallow(
       <ScrollLock isDisabled>
-        <div style={{overflow: 'auto', height: '12px'}}>Hi<br />Hello<br />Hi</div>
+        <div style={{ overflow: 'auto', height: '12px' }}>
+          Hi<br />Hello<br />Hi
+        </div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -173,13 +178,13 @@ describe('Disabled', () => {
     const currentTarget = {
       clientHeight: 12,
       scrollTop: 0,
-      scrollHeight: 30
+      scrollHeight: 30,
     }
 
     hi.simulate('wheel', {
       deltaY: 24,
       preventDefault,
-      currentTarget
+      currentTarget,
     })
     expect(preventDefault).not.toBeCalled()
   })
@@ -202,7 +207,7 @@ describe('Direction', () => {
   })
 
   test('Can set direction of x', () => {
-    const wrapper = mount(<ScrollLock direction='x' />)
+    const wrapper = mount(<ScrollLock direction="x" />)
 
     expect(wrapper.props().direction).toBe('x')
   })
@@ -211,10 +216,8 @@ describe('Direction', () => {
 describe('Events', () => {
   test('can stop propagation for directionY, if defined', () => {
     const wrapper = shallow(
-      <ScrollLock stopPropagation direction='y'>
-        <div style={{overflow: 'auto', height: '12px'}}>
-          Hi
-        </div>
+      <ScrollLock stopPropagation direction="y">
+        <div style={{ overflow: 'auto', height: '12px' }}>Hi</div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -223,13 +226,13 @@ describe('Events', () => {
     const currentTarget = {
       clientHeight: 12,
       scrollTop: 0,
-      scrollHeight: 30
+      scrollHeight: 30,
     }
     const event = {
       deltaY: 24,
       preventDefault,
       stopPropagation,
-      currentTarget
+      currentTarget,
     }
 
     hi.simulate('wheel', event)
@@ -239,10 +242,8 @@ describe('Events', () => {
 
   test('can stop propagation for directionX, if defined', () => {
     const wrapper = shallow(
-      <ScrollLock stopPropagation direction='x'>
-        <div style={{overflow: 'auto', height: '12px'}}>
-          Hi
-        </div>
+      <ScrollLock stopPropagation direction="x">
+        <div style={{ overflow: 'auto', height: '12px' }}>Hi</div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -251,13 +252,13 @@ describe('Events', () => {
     const currentTarget = {
       clientHeight: 12,
       scrollTop: 0,
-      scrollHeight: 30
+      scrollHeight: 30,
     }
     const event = {
       deltaY: 24,
       preventDefault,
       stopPropagation,
-      currentTarget
+      currentTarget,
     }
 
     hi.simulate('wheel', event)
@@ -269,9 +270,7 @@ describe('Events', () => {
     const spy = jest.fn()
     const wrapper = shallow(
       <ScrollLock onWheel={spy}>
-        <div style={{overflow: 'auto', height: '12px'}}>
-          Hi
-        </div>
+        <div style={{ overflow: 'auto', height: '12px' }}>Hi</div>
       </ScrollLock>
     )
     const hi = wrapper.find('div')
@@ -279,12 +278,12 @@ describe('Events', () => {
     const currentTarget = {
       clientHeight: 12,
       scrollTop: 0,
-      scrollHeight: 30
+      scrollHeight: 30,
     }
     const event = {
       deltaY: 24,
       preventDefault,
-      currentTarget
+      currentTarget,
     }
 
     hi.simulate('wheel', event)
@@ -296,7 +295,7 @@ describe('Events', () => {
     const spy = jest.fn()
     const wrapper = shallow(
       <ScrollLock>
-        <div style={{overflow: 'auto', height: '12px'}} onWheel={spy}>
+        <div style={{ overflow: 'auto', height: '12px' }} onWheel={spy}>
           Hi
         </div>
       </ScrollLock>
@@ -306,12 +305,12 @@ describe('Events', () => {
     const currentTarget = {
       clientHeight: 12,
       scrollTop: 0,
-      scrollHeight: 30
+      scrollHeight: 30,
     }
     const event = {
       deltaY: 24,
       preventDefault,
-      currentTarget
+      currentTarget,
     }
 
     hi.simulate('wheel', event)

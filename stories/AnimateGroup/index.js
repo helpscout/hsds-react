@@ -8,16 +8,16 @@ stories.add('default', () => (
   <div>
     <p>Stagger fade in</p>
     <AnimateGroup stagger>
-      <Animate sequence='fade'>
+      <Animate sequence="fade">
         <div>Fade in</div>
       </Animate>
-      <Animate sequence='fade left'>
+      <Animate sequence="fade left">
         <div>Fade in + left</div>
       </Animate>
-      <Animate sequence='fade'>
+      <Animate sequence="fade">
         <div>Fade in</div>
       </Animate>
-      <Animate sequence='fade left'>
+      <Animate sequence="fade left">
         <div>Fade in + left</div>
       </Animate>
     </AnimateGroup>
@@ -27,32 +27,32 @@ stories.add('default', () => (
 stories.add('expand', () => (
   <div>
     <p>Stagger fade in</p>
-    <div style={{margin: 'auto', width: '80%'}}>
+    <div style={{ margin: 'auto', width: '80%' }}>
       <Card>
         <div>Card</div>
       </Card>
       <AnimateGroup stagger>
-        <Animate sequence='fade up'>
+        <Animate sequence="fade up">
           <Card>
             <div>Expand, Up</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade scale'>
+        <Animate sequence="expand fade scale">
           <Card>
             <div>Expand, Fade, Scale</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade left'>
+        <Animate sequence="expand fade left">
           <Card>
             <div>Expand, Fade, Left</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade right'>
+        <Animate sequence="expand fade right">
           <Card>
             <div>Expand, Fade, Right</div>
           </Card>
         </Animate>
-        <Animate sequence='expand fade down'>
+        <Animate sequence="expand fade down">
           <Card>
             <div>Expand, Fade, Down</div>
           </Card>
@@ -68,7 +68,7 @@ stories.add('expand', () => (
 stories.add('sequence', () => (
   <div>
     <p>Sequence defined by Group</p>
-    <AnimateGroup stagger sequence='fade left'>
+    <AnimateGroup stagger sequence="fade left">
       <Animate>
         <div>Element</div>
       </Animate>

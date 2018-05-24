@@ -4,11 +4,14 @@ import Button from '..'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
-const wrap = (...args) => shallow(...args).first().shallow()
+const wrap = (...args) =>
+  shallow(...args)
+    .first()
+    .shallow()
 
 describe('ClassNames', () => {
   test('Accepts custom className', () => {
-    const wrapper = wrap(<Button className='foo bar baz'>Click Me</Button>)
+    const wrapper = wrap(<Button className="foo bar baz">Click Me</Button>)
     const classNames = wrapper.prop('className')
 
     expect(classNames).toContain('c-Button')
@@ -40,7 +43,11 @@ describe('Types', () => {
   })
 
   test('Can create block buttons, if specified', () => {
-    const o = wrap(<Button primary block>Primary</Button>)
+    const o = wrap(
+      <Button primary block>
+        Primary
+      </Button>
+    )
 
     expect(o.hasClass('c-Button--block')).toBeTruthy()
   })
@@ -48,9 +55,9 @@ describe('Types', () => {
 
 describe('Sizes', () => {
   test('Adds the respective classNames', () => {
-    const lg = wrap(<Button size='lg'>Large</Button>)
-    const md = wrap(<Button size='md'>Medium</Button>)
-    const sm = wrap(<Button size='sm'>Small</Button>)
+    const lg = wrap(<Button size="lg">Large</Button>)
+    const md = wrap(<Button size="md">Medium</Button>)
+    const sm = wrap(<Button size="sm">Small</Button>)
 
     expect(lg.prop('className')).toContain('c-Button--lg')
     expect(md.prop('className')).toContain('c-Button--md')
@@ -60,9 +67,9 @@ describe('Sizes', () => {
 
 describe('States', () => {
   test('Adds the respective classNames', () => {
-    const success = wrap(<Button state='success'>Success</Button>)
-    const error = wrap(<Button state='error'>Error</Button>)
-    const warning = wrap(<Button state='warning'>Warning</Button>)
+    const success = wrap(<Button state="success">Success</Button>)
+    const error = wrap(<Button state="error">Error</Button>)
+    const warning = wrap(<Button state="warning">Warning</Button>)
 
     expect(success.prop('className')).toContain('is-success')
     expect(error.prop('className')).toContain('is-error')
@@ -77,7 +84,11 @@ describe('States', () => {
 
   test('Disables the button', () => {
     const callback = jest.fn()
-    const disabledButton = mount(<Button disabled onClick={callback}>Disabled</Button>)
+    const disabledButton = mount(
+      <Button disabled onClick={callback}>
+        Disabled
+      </Button>
+    )
     disabledButton.simulate('click')
 
     expect(disabledButton.prop('disabled')).toBe(true)
@@ -107,7 +118,7 @@ describe('Themes', () => {
   })
 
   test('Can add theme className', () => {
-    const o = wrap(<Button theme='editing' />)
+    const o = wrap(<Button theme="editing" />)
 
     expect(o.hasClass('c-Button--editing')).toBeTruthy()
   })
@@ -125,8 +136,8 @@ describe('RouteWrapper', () => {
     history = { push }
     options = {
       context: {
-        router: { history }
-      }
+        router: { history },
+      },
     }
     preventDefault = jest.fn()
     clickEvent = { preventDefault }
@@ -172,7 +183,12 @@ describe('RouteWrapper', () => {
   test('Can fetch data and trigger a route asynchronously', done => {
     const fetch = () => Promise.resolve()
     const to = 'some/route'
-    const wrapper = wrap(<Button fetch={fetch} to={to} >Gator</Button>, options)
+    const wrapper = wrap(
+      <Button fetch={fetch} to={to}>
+        Gator
+      </Button>,
+      options
+    )
     expect(wrapper.node.type).toBe('button')
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()

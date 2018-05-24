@@ -3,13 +3,13 @@ import { mount, shallow } from 'enzyme'
 import SidebarCollapsibleCard from '..'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
-const simulateEvent = (eventName) => {
+const simulateEvent = eventName => {
   window.dispatchEvent(new Event(eventName))
 }
 
 const baseComponentOptions = {
   className: 'c-SidebarCollapsibleCard',
-  skipChildrenTest: true
+  skipChildrenTest: true,
 }
 
 baseComponentTest(SidebarCollapsibleCard, baseComponentOptions)
@@ -69,7 +69,7 @@ describe('Header/Title', () => {
   })
 
   test('Should render a Heading if title is defined', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard title='Ron' />)
+    const wrapper = shallow(<SidebarCollapsibleCard title="Ron" />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__title')
 
     expect(o.length).toBe(1)
@@ -77,9 +77,7 @@ describe('Header/Title', () => {
   })
 
   test('Can render a custom header (component)', () => {
-    const Header = (
-      <div className='milk'>Bad Choice</div>
-    )
+    const Header = <div className="milk">Bad Choice</div>
     const wrapper = shallow(<SidebarCollapsibleCard header={Header} />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__title')
     const n = wrapper.find('.milk')
@@ -90,10 +88,10 @@ describe('Header/Title', () => {
   })
 
   test('Custom header (component) is prioritized over title', () => {
-    const Header = (
-      <div className='milk'>Bad Choice</div>
+    const Header = <div className="milk">Bad Choice</div>
+    const wrapper = shallow(
+      <SidebarCollapsibleCard header={Header} title="Ron" />
     )
-    const wrapper = shallow(<SidebarCollapsibleCard header={Header} title='Ron' />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__title')
     const n = wrapper.find('.milk')
 
@@ -103,7 +101,7 @@ describe('Header/Title', () => {
   })
 
   test('Clicking the header expands/collapses the card', () => {
-    const wrapper = mount(<SidebarCollapsibleCard title='Ron' />)
+    const wrapper = mount(<SidebarCollapsibleCard title="Ron" />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__header')
 
     expect(wrapper.state().isOpen).not.toBeTruthy()
@@ -177,18 +175,14 @@ describe('Collapsible', () => {
 
 describe('Sortable', () => {
   test('Not sortable by default', () => {
-    const wrapper = shallow(
-      <SidebarCollapsibleCard />
-    )
+    const wrapper = shallow(<SidebarCollapsibleCard />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
 
     expect(o.length).toBe(0)
   })
 
   test('Adds Sortable.DragHandle if sortable', () => {
-    const wrapper = shallow(
-      <SidebarCollapsibleCard sortable />
-    )
+    const wrapper = shallow(<SidebarCollapsibleCard sortable />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
 
     expect(o.length).toBe(1)
@@ -196,9 +190,7 @@ describe('Sortable', () => {
 
   test('onSortStart callback can fire when sort begins', () => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <SidebarCollapsibleCard sortable onSortStart={spy} />
-    )
+    const wrapper = mount(<SidebarCollapsibleCard sortable onSortStart={spy} />)
     const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
     h.simulate('mousedown')
 
@@ -221,9 +213,7 @@ describe('Sortable', () => {
 
   test('onSortEnd callback can fire when sort ends', () => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <SidebarCollapsibleCard sortable onSortEnd={spy} />
-    )
+    const wrapper = mount(<SidebarCollapsibleCard sortable onSortEnd={spy} />)
     const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
     h.simulate('mousedown')
     simulateEvent('mouseup')
@@ -233,9 +223,7 @@ describe('Sortable', () => {
 
   test('onSortEnd callback can only fire when isSorting', () => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <SidebarCollapsibleCard sortable onSortEnd={spy} />
-    )
+    const wrapper = mount(<SidebarCollapsibleCard sortable onSortEnd={spy} />)
     const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
     simulateEvent('mouseup')
     simulateEvent('mouseup')

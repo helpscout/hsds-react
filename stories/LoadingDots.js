@@ -7,12 +7,12 @@ storiesOf('LoadingDots', module)
   .add('align', () => (
     <div>
       <Text>Left:</Text>
-      <LoadingDots align='left' />
+      <LoadingDots align="left" />
       <br />
       <Text>Center:</Text>
-      <LoadingDots align='center' />
+      <LoadingDots align="center" />
       <br />
       <Text>Left:</Text>
-      <LoadingDots align='right' />
+      <LoadingDots align="right" />
     </div>
   ))

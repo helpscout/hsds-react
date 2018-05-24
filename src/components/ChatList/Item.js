@@ -31,7 +31,7 @@ export const propTypes = Object.assign({}, linkTypes, {
   newMessageCount: PropTypes.number,
   tags: tagTypes,
   timestamp: PropTypes.string,
-  timestampFormatter: PropTypes.func
+  timestampFormatter: PropTypes.func,
 })
 
 const defaultProps = {
@@ -43,7 +43,7 @@ const defaultProps = {
   messageLimit: 70,
   newMessageCount: 0,
   tags: [],
-  timestampFormatter: timestamp => timestamp
+  timestampFormatter: timestamp => timestamp,
 }
 
 const Item = props => {
@@ -65,10 +65,7 @@ const Item = props => {
     ...rest
   } = props
 
-  const isLoading = (
-    (message === undefined || name === undefined) &&
-    !isTyping
-  )
+  const isLoading = (message === undefined || name === undefined) && !isTyping
 
   const componentClassName = classNames(
     'c-ChatListItem',
@@ -83,78 +80,76 @@ const Item = props => {
   const canShowViewing = isViewing && !isFocused
 
   const headingMarkup = !isLoading ? (
-    <Heading size='h5' className='c-ChatListItem__title'>
-      <Truncate>
-        {name}
-      </Truncate>
+    <Heading size="h5" className="c-ChatListItem__title">
+      <Truncate>{name}</Truncate>
     </Heading>
   ) : (
-    <Skeleton.Text width='95%' />
+    <Skeleton.Text width="95%" />
   )
 
   const viewingMarkup = canShowViewing ? (
-    <div className='c-ChatListItem__viewing'>
-      <Animate sequence='fade' delay={100} duration={200}>
-        <div className='c-ChatListItem__viewingFlag' title='Is being viewed' />
+    <div className="c-ChatListItem__viewing">
+      <Animate sequence="fade" delay={100} duration={200}>
+        <div className="c-ChatListItem__viewingFlag" title="Is being viewed" />
       </Animate>
     </div>
   ) : null
 
   const newMessageCountMarkup = newMessageCount ? (
-    <Flexy.Item className='c-ChatListItem__messageCount'>
-      <Animate sequence='fade scale' delay={100} duration={200}>
-        <Badge status='success' count display='block'>{newMessageCount}</Badge>
+    <Flexy.Item className="c-ChatListItem__messageCount">
+      <Animate sequence="fade scale" delay={100} duration={200}>
+        <Badge status="success" count display="block">
+          {newMessageCount}
+        </Badge>
       </Animate>
     </Flexy.Item>
   ) : null
 
   const waitingMarkup = isWaiting ? (
-    <Flexy.Item className='c-ChatListItem__waiting'>
-      <Animate sequence='fade scale' delay={100} duration={200}>
-        <Tag color='red' pulsing allCaps display='block'>Waiting</Tag>
+    <Flexy.Item className="c-ChatListItem__waiting">
+      <Animate sequence="fade scale" delay={100} duration={200}>
+        <Tag color="red" pulsing allCaps display="block">
+          Waiting
+        </Tag>
       </Animate>
     </Flexy.Item>
   ) : null
 
-  const messageMarkup = !isLoading
-    ? isTyping ? (
-      <div className='c-ChatListItem__typing'>
+  const messageMarkup = !isLoading ? (
+    isTyping ? (
+      <div className="c-ChatListItem__typing">
         <LoadingDots />
       </div>
     ) : (
-      <Text faint size='13'>
-        <Truncate type='end' limit={messageLimit} ellipsis='…'>
+      <Text faint size="13">
+        <Truncate type="end" limit={messageLimit} ellipsis="…">
           {message}
         </Truncate>
       </Text>
-    ) : (
-      <div>
-        <Skeleton.Text width='70%' />
-        <Skeleton.Text width='80%' />
-        <Skeleton.Text width='10%' />
-      </div>
     )
+  ) : (
+    <div>
+      <Skeleton.Text width="70%" />
+      <Skeleton.Text width="80%" />
+      <Skeleton.Text width="10%" />
+    </div>
+  )
 
   const tagListMarkup = tags.map((tag, index) => {
-    const {
-      children,
-      ...tagProps
-    } = tag
+    const { children, ...tagProps } = tag
 
     return (
       <List.Item key={index}>
-        <Tag {...tagProps}>
-          {children}
-        </Tag>
+        <Tag {...tagProps}>{children}</Tag>
       </List.Item>
     )
   })
 
   const tagsMarkup = tags.length ? (
     <Flexy.Item>
-      <div className='c-ChatListItem__tags'>
+      <div className="c-ChatListItem__tags">
         <Overflow>
-          <List type='inline' size='xs' inlineSize='xs'>
+          <List type="inline" size="xs" inlineSize="xs">
             {tagListMarkup}
           </List>
         </Overflow>
@@ -163,16 +158,18 @@ const Item = props => {
   ) : null
 
   const timestampMarkup = !isLoading ? (
-    <Timestamp formatter={timestampFormatter} timestamp={timestamp} live muted />
+    <Timestamp
+      formatter={timestampFormatter}
+      timestamp={timestamp}
+      live
+      muted
+    />
   ) : null
 
   const avatarMarkup = avatar ? (
     <Flexy.Item>
-      <div className='c-ChatListItem__avatar'>
-        <Animate
-          sequence='scale fade'
-          delay={100}
-        >
+      <div className="c-ChatListItem__avatar">
+        <Animate sequence="scale fade" delay={100}>
           {avatar}
         </Animate>
       </div>
@@ -180,15 +177,9 @@ const Item = props => {
   ) : null
 
   const metaMarkup = !isLoading ? (
-    <Flexy
-      className='c-ChatListItem__meta'
-      gap='sm'
-      align='bottom'
-    >
+    <Flexy className="c-ChatListItem__meta" gap="sm" align="bottom">
       <Flexy.Block>
-        <div className='c-ChatListItem__timestamp'>
-          {timestampMarkup}
-        </div>
+        <div className="c-ChatListItem__timestamp">{timestampMarkup}</div>
       </Flexy.Block>
       {tagsMarkup}
       {avatarMarkup}
@@ -196,27 +187,20 @@ const Item = props => {
   ) : null
 
   return (
-    <Animate sequence='fade'>
-      <div className='c-ChatListItemWrapper'>
+    <Animate sequence="fade">
+      <div className="c-ChatListItemWrapper">
         <Link className={componentClassName} {...rest} block noUnderline>
           {viewingMarkup}
-          <Card.Block className='c-ChatListItem__block'>
-            <Flexy
-              className='c-ChatListItem__heading'
-              gap='md'
-            >
-              <Flexy.Block>
-                {headingMarkup}
-              </Flexy.Block>
+          <Card.Block className="c-ChatListItem__block">
+            <Flexy className="c-ChatListItem__heading" gap="md">
+              <Flexy.Block>{headingMarkup}</Flexy.Block>
               {waitingMarkup}
               {newMessageCountMarkup}
             </Flexy>
-            <div className='c-ChatListItem__message'>
-              {messageMarkup}
-            </div>
+            <div className="c-ChatListItem__message">{messageMarkup}</div>
             {metaMarkup}
           </Card.Block>
-          <Hr className='c-ChatListItem__divider' size='none' />
+          <Hr className="c-ChatListItem__divider" size="none" />
         </Link>
       </div>
     </Animate>

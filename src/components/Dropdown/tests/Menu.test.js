@@ -26,7 +26,7 @@ describe('Classname', () => {
   })
 
   test('Can accept custom classNames', () => {
-    const wrapper = shallow(<MenuComponent className='ron' />)
+    const wrapper = shallow(<MenuComponent className="ron" />)
     const o = wrapper.find('.c-DropdownMenu')
 
     expect(o.hasClass('ron')).toBeTruthy()
@@ -34,24 +34,27 @@ describe('Classname', () => {
 })
 
 describe('Nodes', () => {
-  test('Has a reference to DOM nodes', (done) => {
+  test('Has a reference to DOM nodes', done => {
     const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.node
 
-    wait()
-      .then(() => {
-        expect(o.node).toBeTruthy()
-        expect(o.wrapperNode).toBeTruthy()
-        expect(o.contentNode).toBeTruthy()
-        expect(o.listNode).toBeTruthy()
-        done()
-      })
+    wait().then(() => {
+      expect(o.node).toBeTruthy()
+      expect(o.wrapperNode).toBeTruthy()
+      expect(o.contentNode).toBeTruthy()
+      expect(o.listNode).toBeTruthy()
+      done()
+    })
   })
 })
 
 describe('Items', () => {
   test('Can render a single item', () => {
-    const wrapper = shallow(<Menu><Item /></Menu>)
+    const wrapper = shallow(
+      <Menu>
+        <Item />
+      </Menu>
+    )
     const o = wrapper.find(Item)
 
     expect(o.length).toBe(1)
@@ -76,11 +79,7 @@ describe('Items', () => {
     for (let i = 0, len = 4; i < len; i++) {
       items.push(<Item key={i} />)
     }
-    const wrapper = shallow(
-      <Menu>
-        {items}
-      </Menu>
-    )
+    const wrapper = shallow(<Menu>{items}</Menu>)
     const o = wrapper.find(Item)
 
     expect(o.length).toBe(4)
@@ -90,9 +89,7 @@ describe('Items', () => {
     const wrapper = shallow(
       <Menu>
         <Item>
-          <div className='brick'>
-            Hello
-          </div>
+          <div className="brick">Hello</div>
         </Item>
       </Menu>
     )
@@ -110,7 +107,7 @@ describe('Items', () => {
     const wrapper = mount(
       <MenuComponent isOpen>
         {items}
-        <div className='brick'>Brick</div>
+        <div className="brick">Brick</div>
       </MenuComponent>
     )
     const n = wrapper.node
@@ -132,7 +129,10 @@ describe('Items', () => {
 
     expect(wrapper.state().focusIndex).not.toBe(3)
 
-    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    const o = wrapper
+      .find(Item)
+      .last()
+      .find('.c-DropdownItem__link')
     o.simulate('focus')
 
     expect(wrapper.state().focusIndex).toBe(3)
@@ -151,7 +151,10 @@ describe('Items', () => {
     expect(wrapper.state().focusIndex).not.toBe(3)
     expect(wrapper.state().hoverIndex).not.toBe(3)
 
-    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    const o = wrapper
+      .find(Item)
+      .last()
+      .find('.c-DropdownItem__link')
     o.simulate('mouseenter')
 
     expect(wrapper.state().focusIndex).toBe(3)
@@ -165,11 +168,14 @@ describe('Items', () => {
         <Item />
         <Item />
         <Item />
-        <Item value='Brick' />
+        <Item value="Brick" />
       </MenuComponent>
     )
 
-    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    const o = wrapper
+      .find(Item)
+      .last()
+      .find('.c-DropdownItem__link')
     o.simulate('click')
 
     expect(spy).toHaveBeenCalledWith('Brick')
@@ -186,7 +192,10 @@ describe('Items', () => {
       </MenuComponent>
     )
 
-    const o = wrapper.find(Item).first().find('.c-DropdownItem__link')
+    const o = wrapper
+      .find(Item)
+      .first()
+      .find('.c-DropdownItem__link')
     o.simulate('click')
 
     expect(spy).toHaveBeenCalled()
@@ -204,7 +213,10 @@ describe('Items', () => {
       </MenuComponent>
     )
 
-    const o = wrapper.find(Item).first().find('.c-DropdownItem__link')
+    const o = wrapper
+      .find(Item)
+      .first()
+      .find('.c-DropdownItem__link')
     o.simulate('click')
 
     expect(spy).toHaveBeenCalled()
@@ -214,7 +226,12 @@ describe('Items', () => {
   test('Does not close menu on click, if specified', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <MenuComponent selectedIndex={0} isOpen onClose={spy} closeMenuOnClick={false}>
+      <MenuComponent
+        selectedIndex={0}
+        isOpen
+        onClose={spy}
+        closeMenuOnClick={false}
+      >
         <Item />
         <Item />
         <Item />
@@ -222,17 +239,18 @@ describe('Items', () => {
       </MenuComponent>
     )
 
-    const o = wrapper.find(Item).first().find('.c-DropdownItem__link')
+    const o = wrapper
+      .find(Item)
+      .first()
+      .find('.c-DropdownItem__link')
     o.simulate('click')
 
     expect(spy).not.toHaveBeenCalled()
   })
 
-  test('Can trigger onBeforeClose callback', (done) => {
+  test('Can trigger onBeforeClose callback', done => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <Menu selectedIndex={0} isOpen onBeforeClose={spy} />
-    )
+    const wrapper = mount(<Menu selectedIndex={0} isOpen onBeforeClose={spy} />)
 
     wait()
       .then(() => {
@@ -269,11 +287,15 @@ describe('Items', () => {
       </MenuComponent>
     )
 
-    const o = wrapper.find(Item).first()
+    const o = wrapper
+      .find(Item)
+      .first()
       .find(MenuComponent)
-      .find(Item).first()
+      .find(Item)
+      .first()
       .find(MenuComponent)
-      .find(Item).first()
+      .find(Item)
+      .first()
       .find('.c-DropdownItem__link')
 
     o.simulate('click')
@@ -314,7 +336,7 @@ describe('Selected', () => {
 })
 
 describe('Height', () => {
-  test('Adjusts height on mount, if Menu will be outside of Viewport', (done) => {
+  test('Adjusts height on mount, if Menu will be outside of Viewport', done => {
     const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.node
     const initialHeight = o.height
@@ -325,7 +347,7 @@ describe('Height', () => {
       top: 400,
       left: 8,
       right: 0,
-      bottom: 0
+      bottom: 0,
     })
 
     expect(o.contentNode.style.height).toBeFalsy()
@@ -339,7 +361,7 @@ describe('Height', () => {
     }, 1)
   })
 
-  test('Keeps height at null if Menu is within viewport', (done) => {
+  test('Keeps height at null if Menu is within viewport', done => {
     const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.node
 
@@ -349,7 +371,7 @@ describe('Height', () => {
       top: 0,
       left: 8,
       right: 0,
-      bottom: 0
+      bottom: 0,
     })
 
     setTimeout(() => {
@@ -520,12 +542,13 @@ describe('Keyboard Arrows: Left/Right', () => {
         <Item />
         <Item />
         <Item />
-      </MenuComponent>
-      , {
+      </MenuComponent>,
+      {
         context: {
-          parentMenu: (<div />)
-        }
-      })
+          parentMenu: <div />,
+        },
+      }
+    )
 
     simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
 
@@ -720,7 +743,10 @@ describe('Focus', () => {
     expect(wrapper.state().focusIndex).not.toBe(3)
     expect(wrapper.state().hoverIndex).not.toBe(3)
 
-    const o = wrapper.find(Item).last().find('.c-DropdownItem__link')
+    const o = wrapper
+      .find(Item)
+      .last()
+      .find('.c-DropdownItem__link')
     o.simulate('mouseenter')
 
     expect(wrapper.state().focusIndex).toBe(3)
@@ -729,9 +755,7 @@ describe('Focus', () => {
   })
 
   test('Resets focus when sub-menu is closed, and if menu is mounted', () => {
-    const wrapper = mount(
-      <MenuComponent selectedIndex={0} isOpen />
-    )
+    const wrapper = mount(<MenuComponent selectedIndex={0} isOpen />)
     const o = wrapper.instance()
     o.isFocused = false
 
@@ -742,9 +766,7 @@ describe('Focus', () => {
   })
 
   test('Only resets focus when sub-menu is closed, and if menu is mounted', () => {
-    const wrapper = mount(
-      <MenuComponent selectedIndex={0} isOpen />
-    )
+    const wrapper = mount(<MenuComponent selectedIndex={0} isOpen />)
     const o = wrapper.instance()
     o.isFocused = false
     o._isMounted = false

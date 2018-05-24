@@ -28,7 +28,7 @@ const includePaths = pathfinder([
   hr,
   list,
   seedSwitch,
-  seedThis
+  seedThis,
 ])
 
 export default includePaths
