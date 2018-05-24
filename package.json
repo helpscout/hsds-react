@@ -8,22 +8,31 @@
   "scripts": {
     "build-storybook": "build-storybook",
     "build:css": "node scripts/sass.js",
-    "build:es2015": "cross-env NODE_ENV=production babel ./src --ignore *.test.js,tests --out-dir ./dist",
-    "build:es2015modules": "cross-env NODE_ENV=production BABEL_ENV=modules babel ./src/index.js --out-file ./dist/index.es.js",
-    "build:es2015modulesSCSS": "cross-env NODE_ENV=production BABEL_ENV=modules babel ./src/styles/includePaths.js --out-file ./dist/styles/includePaths.es.js",
+    "build:es2015":
+      "cross-env NODE_ENV=production babel ./src --ignore *.test.js,tests --out-dir ./dist",
+    "build:es2015modules":
+      "cross-env NODE_ENV=production BABEL_ENV=modules babel ./src/index.js --out-file ./dist/index.es.js",
+    "build:es2015modulesSCSS":
+      "cross-env NODE_ENV=production BABEL_ENV=modules babel ./src/styles/includePaths.js --out-file ./dist/styles/includePaths.es.js",
     "build:copy-files": "babel-node ./scripts/copy-files",
-    "build:js": "npm run build:es2015 && npm run build:es2015modules && npm run build:es2015modulesSCSS && npm run build:copy-files",
-    "build": "npm run lint:es && npm run pretty && npm run clean && npm run copy:css && npm run build:css && npm run build:js",
+    "build:js":
+      "npm run build:es2015 && npm run build:es2015modules && npm run build:es2015modulesSCSS && npm run build:copy-files",
+    "build":
+      "npm run lint:es && npm run pretty && npm run clean && npm run copy:css && npm run build:css && npm run build:js",
     "copy:css": "cpx 'src/styles/**/*.scss' 'dist/styles'",
-    "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
+    "coverage":
+      "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
     "clean": "rimraf public && rimraf dist && mkdir dist",
     "dev": "npm run test:dev",
-    "deploy": "npm run storybook:clean && npm run storybook:build && npm run surge:cname && npm run surge:deploy",
+    "deploy":
+      "npm run storybook:clean && npm run storybook:build && npm run surge:cname && npm run surge:deploy",
     "dist": "babel src --out-dir dist --copy-files",
-    "karma": "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
+    "karma":
+      "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
     "lint": "npm run lint:es && npm run lint:js && npm run lint:css",
     "lint:js": "standard 'src/**/*.js' 'stories/**/*.js' 'test/**/*.js'",
-    "lint:es": "eslint src/**/*.js --cache && echo \"eslint: No lint errors 🙌!\"",
+    "lint:es":
+      "eslint src/**/*.js --cache && echo \"eslint: No lint errors 🙌!\"",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:js -- --fix && npm run lint:css -- -- fix",
     "release:beta": "np --no-yarn --tag=beta --any-branch --no-publish",
@@ -43,7 +52,9 @@
     "test:coverage": "npm run test:dev -- --coverage",
     "test:dev": "node scripts/test.js --env=jsdom",
     "version": "npm run build",
-    "postversion": "npm publish dist"
+    "postversion": "npm publish dist",
+    "prettier": "prettier --write \"src/**/*.js\"",
+    "precommit": "pretty-quick --staged"
   },
   "peerDependencies": {
     "react": "^15",
@@ -132,6 +143,8 @@
     "node-sass": "4.5.3",
     "np": "2.16.0",
     "nyc": "11.1.0",
+    "prettier": "1.12.1",
+    "pretty-quick": "^1.4.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
     "postcss-scss": "1.0.2",
@@ -201,29 +214,17 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx"
-    ]
+    "moduleFileExtensions": ["web.js", "js", "json", "web.jsx", "jsx"]
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   },
   "standard": {
-    "ignore": [
-      "dist"
-    ],
+    "ignore": ["dist"],
     "globals": [
       "Event",
       "describe",
@@ -249,13 +250,9 @@
     "extends": "react-app"
   },
   "stylelint": {
-    "plugins": [
-      "stylelint-scss"
-    ],
+    "plugins": ["stylelint-scss"],
     "rules": {
-      "indentation": [
-        2
-      ]
+      "indentation": [2]
     }
   }
 }
