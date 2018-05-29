@@ -51,7 +51,12 @@ class Popper extends Component<Props> {
               onClick={this.handleOnClick}
               ref={ref}
               role="tooltip"
-              style={makeStyles({ arrowSize, offset, placement, style })}
+              style={makeStyles({
+                arrowSize,
+                offset,
+                placement,
+                style,
+              })}
               {...rest}
             >
               <Animate {...animateProps}>

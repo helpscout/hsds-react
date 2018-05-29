@@ -1,6 +1,7 @@
 const css = props => {
   const { color, placement, size } = props
   const sizePx = `${size}px`
+  const dblSizePx = `${size * 2}px`
 
   const borderColor = color
     ? `
@@ -23,6 +24,13 @@ const css = props => {
         border-bottom-color: transparent;
         bottom: -${sizePx};
         left: calc(50% - ${sizePx});
+
+        &.is-start {
+          left: calc(0% + ${dblSizePx});
+        }
+        &.is-end {
+          left: calc(100% - ${dblSizePx});
+        }
       }
 
       &.is-bottom {
@@ -32,6 +40,13 @@ const css = props => {
         border-top-color: transparent;
         top: -${sizePx};
         left: calc(50% - ${sizePx});
+
+        &.is-start {
+          left: calc(0% + ${dblSizePx});
+        }
+        &.is-end {
+          left: calc(100% - ${dblSizePx});
+        }
       }
 
       &.is-left {
@@ -41,6 +56,13 @@ const css = props => {
         border-bottom-color: transparent;
         right: -${sizePx};
         top: calc(50% - ${sizePx});
+
+        &.is-start {
+          top: calc(0% + ${dblSizePx});
+        }
+        &.is-end {
+          top: calc(100% - ${dblSizePx});
+        }
       }
 
       &.is-right {
@@ -50,6 +72,13 @@ const css = props => {
         border-bottom-color: transparent;
         left: -${sizePx};
         top: calc(50% - ${sizePx});
+
+        &.is-start {
+          top: calc(0% + ${dblSizePx});
+        }
+        &.is-end {
+          top: calc(100% - ${dblSizePx});
+        }
       }
     }
   `

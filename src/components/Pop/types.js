@@ -35,7 +35,7 @@ export type Props = {
   closeOnEscPress: boolean,
   display: string,
   isOpen: boolean,
-  placement: SimplePlacements,
+  placement: Placements,
   renderContent: () => void,
   triggerOn: 'click' | 'hover',
   showArrow: boolean
