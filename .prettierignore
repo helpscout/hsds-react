@@ -2,3 +2,5 @@ package.json
 package-lock.json
 dist/
 coverage/
+src/**/*/types.js
+src/**/*/*.types.js

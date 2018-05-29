@@ -6,11 +6,9 @@
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
 
-const paths = require('../config/paths');
-const harvester = require('seed-harvester');
-const includePaths = harvester([
-  './src/scss'
-]);
+const paths = require('../config/paths')
+const harvester = require('seed-harvester')
+const includePaths = harvester(['./src/scss'])
 
 module.exports = {
   plugins: [
@@ -18,26 +16,39 @@ module.exports = {
   ],
   module: {
     rules: [
+      // Process JS with Babel.
+      {
+        test: /\.(js|jsx)$/,
+        include: paths.appSrc,
+        loader: require.resolve('babel-loader'),
+        options: {
+          cacheDirectory: true,
+        },
+      },
       // Sass
       {
         test: /\.scss$/,
         include: paths.appSrc,
-        use: [{
-          loader: "style-loader"
-        }, {
-          loader: "css-loader"
-        }, {
-          loader: "sass-loader",
-          options: {
-            includePaths,
-          }
-        }]
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths,
+            },
+          },
+        ],
       },
       // SVG
       {
         test: /\.svg$/,
-        loader: 'raw-loader'
-      }
-    ]
+        loader: 'raw-loader',
+      },
+    ],
   },
-};
+}

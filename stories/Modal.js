@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
 import {
   Button,
@@ -14,8 +13,6 @@ import {
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
-
-window.Perf = Perf
 
 const stories = storiesOf('Modal', module)
 

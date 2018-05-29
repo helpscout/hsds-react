@@ -1,5 +1,4 @@
 import React, { PureComponent as Component } from 'react'
-import Perf from 'react-addons-perf'
 import { storiesOf } from '@storybook/react'
 import {
   Animate,
@@ -10,8 +9,6 @@ import {
   Scrollable,
   Text,
 } from '../src/index.js'
-
-window.Perf = Perf
 
 const stories = storiesOf('InfiniteScroller', module)
 
