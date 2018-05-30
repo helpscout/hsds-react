@@ -12,6 +12,7 @@ import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
+import { getTextAreaLineCurrent, getTextAreaLineTotal } from './helpers'
 
 export const propTypes = {
   autoFocus: PropTypes.bool,
@@ -138,7 +139,15 @@ class Input extends Component {
     /**
      * Skipping this test, due to lack of JSDOM DOM property support.
      */
-    this.inputNode.scrollTo(0, this.inputNode.scrollHeight)
+    /* istanbul ignore next */
+    const currentLine = getTextAreaLineCurrent(this.inputNode)
+    /* istanbul ignore next */
+    const totalLines = getTextAreaLineTotal(this.inputNode)
+
+    /* istanbul ignore next */
+    if (currentLine === totalLines) {
+      this.inputNode.scrollTo(0, this.inputNode.scrollHeight)
+    }
   }
 
   handleOnEnter() {
