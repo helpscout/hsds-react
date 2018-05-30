@@ -75,9 +75,7 @@ const AttachmentList = (props, context) => {
     ) : null
 
   const contentMarkup = isThemePreview ? (
-    <Overflow className="c-AttachmentList__content">
-      <div className="c-AttachmentList__overflowContent">{childrenMarkup}</div>
-    </Overflow>
+    <div className="c-AttachmentList__content">{childrenMarkup}</div>
   ) : (
     <Inline className="c-AttachmentList__content c-AttachmentList__inlineList">
       <Inline.Item>

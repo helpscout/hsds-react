@@ -1,11 +1,10 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import AttachmentList from '../index'
-import { Attachment, Icon, Overflow } from '../../index'
+import { Attachment, Icon } from '../../index'
 
 const ui = {
   content: '.c-AttachmentList__content',
-  overflowContent: '.c-AttachmentList__overflowContent',
   list: {
     item: '.c-AttachmentList__inlineListItem',
     download: '.c-AttachmentList__inlineListItemDownloadAll',
@@ -154,35 +153,5 @@ describe('Theme', () => {
 
     expect(o.length).toBe(1)
     expect(o.hasClass('is-theme-preview')).toBeTruthy()
-  })
-})
-
-describe('Overflow', () => {
-  test('Does not render by default', () => {
-    const wrapper = mount(<AttachmentList />)
-    const c = wrapper.find(ui.content)
-    const o = wrapper.find(Overflow)
-
-    expect(c.length).toBe(1)
-    expect(o.length).toBe(0)
-  })
-
-  test('Renders content in Overflow, if theme is preview', () => {
-    const wrapper = mount(
-      <Attachment.Provider theme="preview">
-        <AttachmentList>
-          <Attachment />
-        </AttachmentList>
-      </Attachment.Provider>
-    )
-    const c = wrapper.find(ui.content)
-    const o = wrapper.find(Overflow)
-    const oc = wrapper.find(ui.overflowContent)
-    const a = oc.find(Attachment)
-
-    expect(c.length).toBe(1)
-    expect(o.length).toBe(1)
-    expect(oc.length).toBe(1)
-    expect(a.length).toBe(1)
   })
 })
