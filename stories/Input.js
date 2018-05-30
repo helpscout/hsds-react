@@ -71,10 +71,11 @@ stories.add('multiline + resizable', () => (
 stories.add('multiline + maxHeight', () => (
   <Input
     autoFocus
-    multiline={3}
+    multiline={1}
     resizable
     maxHeight={150}
     placeholder="This is a resizable textarea with maxHeight!"
+    offsetAmount={8}
   />
 ))
 

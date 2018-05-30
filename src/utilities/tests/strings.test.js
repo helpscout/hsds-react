@@ -3,9 +3,10 @@ import {
   isWord,
   nameToInitials,
   newlineToHTML,
-  wordHasSpaces,
+  repeat,
   stripUrlPrefix,
   truncateMiddle,
+  wordHasSpaces,
 } from '../strings'
 
 describe('isString', () => {
@@ -163,5 +164,19 @@ describe('newlineToHTML', () => {
   test('Replaces multiple newline with multiple <br /> tag', () => {
     const string = 'word1\nword2\nword3'
     expect(newlineToHTML(string)).toEqual('word1<br>word2<br>word3')
+  })
+})
+
+describe('repeat', () => {
+  test('Repeats characters to specified amount', () => {
+    expect(repeat('a', 5)).toBe('aaaaa')
+  })
+
+  test('Repeats characters to 1', () => {
+    expect(repeat('a', 1)).toBe('a')
+  })
+
+  test('Repeats characters to 0', () => {
+    expect(repeat('a', 0)).toBe('')
   })
 })

@@ -72,3 +72,20 @@ export const stripUrlPrefix = url => {
 export const newlineToHTML = string => {
   return string.trim().replace(/\r?\n/g, '<br>')
 }
+
+/**
+ * Fast way to repeat a string character.
+ * @param   {string} pattern
+ * @param   {number} count
+ * @returns {string}
+ */
+export const repeat = (pattern, count) => {
+  if (count < 1) return ''
+  let result = ''
+  while (count > 1) {
+    if (count & 1) result += pattern
+    ;(count >>= 1), (pattern += pattern)
+  }
+
+  return result + pattern
+}
