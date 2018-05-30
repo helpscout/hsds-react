@@ -5,11 +5,14 @@ import Resizer from './Resizer'
 import Static from './Static'
 import HelpText from '../HelpText'
 import Label from '../Label'
+import KeypressListener from '../KeypressListener'
 import { scrollLockY } from '../ScrollLock'
+import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
+import { getTextAreaLineCurrent, getTextAreaLineTotal } from './helpers'
 
 export const propTypes = {
   autoFocus: PropTypes.bool,
@@ -26,6 +29,7 @@ export const propTypes = {
   multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   name: PropTypes.string,
+  offsetAmount: PropTypes.number,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -50,6 +54,7 @@ const defaultProps = {
   inputRef: noop,
   isFocused: false,
   multiline: null,
+  offsetAmount: 0,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
@@ -76,6 +81,7 @@ class Input extends Component {
     this.inputNode = null
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnInputFocus = this.handleOnInputFocus.bind(this)
+    this.handleOnEnter = this.handleOnEnter.bind(this)
     this.handleOnWheel = this.handleOnWheel.bind(this)
     this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
@@ -126,6 +132,29 @@ class Input extends Component {
     }, forceAutoFocusTimeout)
   }
 
+  scrollToBottom() {
+    /* istanbul ignore next */
+    if (!this.inputNode || !this.inputNode.scrollTo) return
+    /* istanbul ignore next */
+    /**
+     * Skipping this test, due to lack of JSDOM DOM property support.
+     */
+    /* istanbul ignore next */
+    const currentLine = getTextAreaLineCurrent(this.inputNode)
+    /* istanbul ignore next */
+    const totalLines = getTextAreaLineTotal(this.inputNode)
+
+    /* istanbul ignore next */
+    if (currentLine === totalLines) {
+      this.inputNode.scrollTo(0, this.inputNode.scrollHeight)
+    }
+  }
+
+  handleOnEnter() {
+    if (!this.props.multiline) return
+    this.scrollToBottom()
+  }
+
   handleOnChange(e) {
     const value = e.currentTarget.value
     this.setState({ value })
@@ -150,6 +179,7 @@ class Input extends Component {
 
   handleExpandingResize(height) {
     this.setState({ height })
+    this.forceAutoFocus()
   }
 
   render() {
@@ -167,6 +197,7 @@ class Input extends Component {
       maxHeight,
       multiline,
       name,
+      offsetAmount,
       onBlur,
       onFocus,
       onWheel,
@@ -226,7 +257,9 @@ class Input extends Component {
           contents={value || placeholder}
           currentHeight={height}
           minimumLines={typeof multiline === 'number' ? multiline : 1}
+          offsetAmount={offsetAmount}
           onResize={handleExpandingResize}
+          seamless={seamless}
         />
       ) : null
 
@@ -280,6 +313,18 @@ class Input extends Component {
 
     return (
       <div className="c-InputWrapper" style={styleProp}>
+        <KeypressListener
+          keyCode={Keys.ENTER}
+          handler={this.handleOnEnter}
+          noModifier
+          type="keyup"
+        />
+        <KeypressListener
+          keyCode={Keys.ENTER}
+          handler={this.handleOnEnter}
+          modifier="shift"
+          type="keyup"
+        />
         {labelMarkup}
         {hintTextMarkup}
         <div className={componentClassName}>

@@ -47,7 +47,7 @@ describe('ReplaceEntity', () => {
       .replace('</div>', '')
       .replace('<br>', '')
 
-    expect(html).toBe('San &amp; Diego')
+    expect(html).toContain('San &amp; Diego')
   })
 
   test('Does not convert if content does not contain special characters', () => {
@@ -59,7 +59,7 @@ describe('ReplaceEntity', () => {
       .replace('</div>', '')
       .replace('<br>', '')
 
-    expect(html).toBe('San Diego')
+    expect(html).toContain('San Diego')
   })
 })
 
@@ -84,5 +84,41 @@ describe('InputGhost', () => {
     const o = wrapper.find('.c-InputGhost')
 
     expect(o.length).toBe(1)
+  })
+})
+
+describe('Styles', () => {
+  test('Applies seamless styles to child components, if specified', () => {
+    const wrapper = mount(<Resizer seamless />)
+    const o = wrapper.find('.c-InputGhost').first()
+    const p = wrapper.find('.c-InputGhost').last()
+
+    expect(o.hasClass('is-seamless')).toBeTruthy()
+    expect(p.hasClass('is-seamless')).toBeTruthy()
+  })
+
+  test('Does not apply seamless styles to child components, if not specified', () => {
+    const wrapper = mount(<Resizer seamless={false} />)
+    const o = wrapper.find('.c-InputGhost').first()
+    const p = wrapper.find('.c-InputGhost').last()
+
+    expect(o.hasClass('is-seamless')).not.toBeTruthy()
+    expect(p.hasClass('is-seamless')).not.toBeTruthy()
+  })
+})
+
+describe('offsetAmount', () => {
+  test('Adds offsetChars, if specified', () => {
+    const wrapper = mount(<Resizer offsetAmount={5} />)
+    const chars = wrapper.node.getFinalContents('words')
+
+    expect(chars).toContain('RRRRR')
+  })
+
+  test('Does not add offsetChars, if specified', () => {
+    const wrapper = mount(<Resizer offsetAmount={0} />)
+    const chars = wrapper.node.getFinalContents('words')
+
+    expect(chars).not.toContain('R')
   })
 })

@@ -4,4 +4,12 @@
   line-height: normal;
   white-space: pre-wrap;
   word-wrap: break-word;
+
+  /**
+   * Modifiers
+   */
+  &.is-seamless {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
