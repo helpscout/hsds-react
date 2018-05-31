@@ -5,7 +5,6 @@ import Resizer from './Resizer'
 import Static from './Static'
 import HelpText from '../HelpText'
 import Label from '../Label'
-import KeypressListener from '../KeypressListener'
 import { scrollLockY } from '../ScrollLock'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
@@ -81,7 +80,6 @@ class Input extends Component {
     this.inputNode = null
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnInputFocus = this.handleOnInputFocus.bind(this)
-    this.handleOnEnter = this.handleOnEnter.bind(this)
     this.handleOnWheel = this.handleOnWheel.bind(this)
     this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
@@ -134,7 +132,8 @@ class Input extends Component {
 
   scrollToBottom() {
     /* istanbul ignore next */
-    if (!this.inputNode || !this.inputNode.scrollTo) return
+    if (!this.props.multiline || !this.inputNode || !this.inputNode.scrollTo)
+      return
     /* istanbul ignore next */
     /**
      * Skipping this test, due to lack of JSDOM DOM property support.
@@ -150,15 +149,11 @@ class Input extends Component {
     }
   }
 
-  handleOnEnter() {
-    if (!this.props.multiline) return
-    this.scrollToBottom()
-  }
-
   handleOnChange(e) {
     const value = e.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
+    this.scrollToBottom()
   }
 
   handleOnInputFocus(e) {
@@ -254,7 +249,7 @@ class Input extends Component {
     const resizer =
       multiline != null ? (
         <Resizer
-          contents={value || placeholder}
+          contents={value}
           currentHeight={height}
           minimumLines={typeof multiline === 'number' ? multiline : 1}
           offsetAmount={offsetAmount}
@@ -313,18 +308,6 @@ class Input extends Component {
 
     return (
       <div className="c-InputWrapper" style={styleProp}>
-        <KeypressListener
-          keyCode={Keys.ENTER}
-          handler={this.handleOnEnter}
-          noModifier
-          type="keyup"
-        />
-        <KeypressListener
-          keyCode={Keys.ENTER}
-          handler={this.handleOnEnter}
-          modifier="shift"
-          type="keyup"
-        />
         {labelMarkup}
         {hintTextMarkup}
         <div className={componentClassName}>
