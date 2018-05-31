@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import fancy from '@helpscout/fancy'
 import EMOTICONS from './emoticons'
 import css from './styles/Emoticon.css'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { sizeTypes } from './propTypes'
 
@@ -17,6 +17,7 @@ const Component = props => {
     title,
     size,
     styles,
+    theme,
     ...rest
   } = props
 
@@ -43,7 +44,7 @@ const Component = props => {
   )
 }
 
-const Emoticon = fancy(css)(Component)
+const Emoticon = styled(Component)(css)
 
 Emoticon.propTypes = {
   center: PropTypes.bool,

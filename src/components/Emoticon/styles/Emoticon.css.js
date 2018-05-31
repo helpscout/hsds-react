@@ -41,10 +41,10 @@ const css = `
     }
   }
 
-  &__pathHead {
+  .c-Emoticon__pathHead {
     fill: ${colors.off.head};
   }
-  &__pathFace {
+  .c-Emoticon__pathFace {
     fill: ${colors.off.face};
   }
 
