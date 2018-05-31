@@ -69,6 +69,7 @@ Below is a list of documentation for our Components:
 * [Scrollable](./Scrollable)
 * [SidebarCollapsibleCard](./SidebarCollapsibleCard)
 * [Skeleton](./Skeleton)
+* [SleepDetector](./SleepDetector)
 * [Sortable](./Sortable)
 * [Spinner](./Spinner)
 * [StatusAvatar](./StatusAvatar)
