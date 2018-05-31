@@ -522,23 +522,3 @@ describe('isFocused', () => {
     }, 40)
   })
 })
-
-describe('Enter keypress', () => {
-  test('Attempts to scroll to botton on enter keypress, if multiline', () => {
-    const spy = jest.spyOn(Input.prototype, 'scrollToBottom')
-    const wrapper = mount(<Input multiline />)
-    wrapper.instance().handleOnEnter()
-
-    expect(spy).toHaveBeenCalled()
-    spy.mockRestore()
-  })
-
-  test('Does not to scroll to botton on enter keypress, if not multiline', () => {
-    const spy = jest.spyOn(Input.prototype, 'scrollToBottom')
-    const wrapper = mount(<Input />)
-    wrapper.instance().handleOnEnter()
-
-    expect(spy).not.toHaveBeenCalled()
-    spy.mockRestore()
-  })
-})
