@@ -9,6 +9,26 @@ const css = props => {
   `
     : ''
 
+  const verticalStartEnd = `
+    left: calc(50% - ${sizePx});
+    &.is-start {
+      left: calc(0% + ${dblSizePx});
+    }
+    &.is-end {
+      left: calc(100% - ${dblSizePx} - ${sizePx});
+    }
+  `
+
+  const horizontalStartEnd = `
+    top: calc(50% - ${sizePx});
+    &.is-start {
+      top: calc(0% + ${dblSizePx});
+    }
+    &.is-end {
+      top: calc(100% - ${dblSizePx} - ${sizePx});
+    }
+  `
+
   return `
     .c-PopArrow {
       ${borderColor}
@@ -23,14 +43,7 @@ const css = props => {
         border-right-color: transparent;
         border-bottom-color: transparent;
         bottom: -${sizePx};
-        left: calc(50% - ${sizePx});
-
-        &.is-start {
-          left: calc(0% + ${dblSizePx});
-        }
-        &.is-end {
-          left: calc(100% - ${dblSizePx} - ${dblSizePx});
-        }
+        ${verticalStartEnd}
       }
 
       &.is-bottom {
@@ -39,14 +52,7 @@ const css = props => {
         border-right-color: transparent;
         border-top-color: transparent;
         top: -${sizePx};
-        left: calc(50% - ${sizePx});
-
-        &.is-start {
-          left: calc(0% + ${dblSizePx});
-        }
-        &.is-end {
-          left: calc(100% - ${dblSizePx} - ${dblSizePx});
-        }
+        ${verticalStartEnd}
       }
 
       &.is-left {
@@ -55,14 +61,7 @@ const css = props => {
         border-right-color: transparent;
         border-bottom-color: transparent;
         right: -${sizePx};
-        top: calc(50% - ${sizePx});
-
-        &.is-start {
-          top: calc(0% + ${dblSizePx});
-        }
-        &.is-end {
-          top: calc(100% - ${dblSizePx} - ${dblSizePx});
-        }
+        ${horizontalStartEnd}
       }
 
       &.is-right {
@@ -71,14 +70,7 @@ const css = props => {
         border-left-color: transparent;
         border-bottom-color: transparent;
         left: -${sizePx};
-        top: calc(50% - ${sizePx});
-
-        &.is-start {
-          top: calc(0% + ${dblSizePx});
-        }
-        &.is-end {
-          top: calc(100% - ${dblSizePx} - ${dblSizePx});
-        }
+        ${horizontalStartEnd}
       }
     }
   `

@@ -83,8 +83,12 @@ export const repeat = (pattern, count) => {
   if (count < 1) return ''
   let result = ''
   while (count > 1) {
-    if (count & 1) result += pattern
-    ;(count >>= 1), (pattern += pattern)
+    if (count & 1) {
+      result += pattern
+    }
+    count >>= 1
+    if (count <= 0) break
+    pattern += pattern
   }
 
   return result + pattern

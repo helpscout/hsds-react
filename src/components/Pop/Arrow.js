@@ -1,11 +1,11 @@
 // @flow
 import React from 'react'
-import fancy from '@helpscout/fancy'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import css from './styles/PopArrow.css'
 
 const ArrowComponent = props => {
-  const { className, placement, offset, size, styles, ...rest } = props
+  const { className, placement, offset, size, styles, theme, ...rest } = props
 
   const position = getPosition(placement)
 
@@ -38,7 +38,7 @@ const getPosition = (placement: string) => {
   return placement.split('-')[1]
 }
 
-const Arrow = fancy(css)(ArrowComponent)
+const Arrow = styled(ArrowComponent)(css)
 
 Arrow.defaultProps = {
   offset: 0,

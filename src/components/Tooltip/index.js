@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import fancy from '@helpscout/fancy'
+import styled from '../styled'
 import Animate from '../Animate'
 import Pop from '../Pop'
 import type { Props } from './types'
@@ -16,6 +16,7 @@ class Tooltip extends Component<Props> {
       placement,
       renderContent,
       styles,
+      theme,
       title,
       triggerOn,
       ...rest
@@ -43,7 +44,7 @@ class Tooltip extends Component<Props> {
         <Pop.Reference className="c-Tooltip__reference">
           {children}
         </Pop.Reference>
-        <Pop.Popper arrowClassName="c-TooltipPopper__arrow">
+        <Pop.Popper arrowClassName={styles['c-Tooltip__arrow']}>
           <Popper>{contentMarkup}</Popper>
         </Pop.Popper>
       </Pop>
@@ -60,4 +61,4 @@ Tooltip.defaultProps = {
   triggerOn: 'hover',
 }
 
-export default fancy(css)(Tooltip)
+export default styled(Tooltip)(css)

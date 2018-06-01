@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import fancy from '@helpscout/fancy'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import css from './styles/TooltipPopper.css'
 
 class PopperComponent extends Component {
   render() {
-    const { children, className, styles } = this.props
+    const { children, className, styles, theme, ...rest } = this.props
 
     const componentClassName = classNames(
       styles['c-TooltipPopper'],
@@ -13,11 +13,15 @@ class PopperComponent extends Component {
       className
     )
 
-    return <div className={componentClassName}>{children}</div>
+    return (
+      <div className={componentClassName} {...rest}>
+        {children}
+      </div>
+    )
   }
 }
 
-const Popper = fancy(css)(PopperComponent)
+const Popper = styled(PopperComponent)(css)
 Popper.displayName = 'Tooltip.Popper'
 
 export default Popper

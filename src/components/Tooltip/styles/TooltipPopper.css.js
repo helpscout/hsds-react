@@ -1,9 +1,5 @@
 import baseStyles from '../../../styles/resets/baseStyles.css'
-
-const color = {
-  background: '#253540',
-  text: 'white',
-}
+import { color } from './variables.css'
 
 const css = `
 .c-TooltipPopper {
@@ -13,10 +9,6 @@ const css = `
   color: ${color.text};
   font-size: 12px;
   padding: 6px 8px;
-
-  &__arrow {
-    border-color: ${color.background};
-  }
 }
 `
 
