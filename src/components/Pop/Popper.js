@@ -9,7 +9,14 @@ import { noop } from '../../utilities/other'
 import type { Props } from './types'
 
 class Popper extends Component<Props> {
+  portal = null
+
+  componentWillUnmount = () => {
+    this.portal = null
+  }
+
   handleOnClick = event => {
+    /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
   }
@@ -27,6 +34,7 @@ class Popper extends Component<Props> {
       children,
       offset,
       onClick,
+      positionFixed,
       placement,
       showArrow,
       zIndex,
@@ -43,8 +51,8 @@ class Popper extends Component<Props> {
     }
 
     return (
-      <Portal>
-        <ReactPopper placement={placement} positionFixed>
+      <Portal ref={ref => (this.portal = ref)}>
+        <ReactPopper placement={placement} positionFixed={positionFixed}>
           {({ ref, style, placement, arrowProps }) => (
             <div
               className={componentClassName}
@@ -53,7 +61,7 @@ class Popper extends Component<Props> {
               ref={ref}
               role="tooltip"
               style={{
-                ...makeStyles({
+                ...enhancePopperStyles({
                   arrowSize,
                   offset,
                   placement,
@@ -84,8 +92,21 @@ class Popper extends Component<Props> {
   }
 }
 
-const makeStyles = ({ arrowSize, offset, placement, style }) => {
-  if (!placement) return style
+/**
+ * Adjust styles for the Popper HTML element.
+ *
+ * @param   {object} props
+ * @returns {object}
+ */
+export const enhancePopperStyles = (props = {}) => {
+  const options = {
+    arrowSize: props.arrowSize || 5,
+    offset: props.offset || 0,
+    placement: props.placement || 'top',
+    style: props.style || {},
+  }
+
+  const { arrowSize, offset, placement, style } = options
 
   if (placement.indexOf('top') >= 0) {
     return {
@@ -111,6 +132,8 @@ const makeStyles = ({ arrowSize, offset, placement, style }) => {
       left: `${(arrowSize * 2 + offset) * 1}px`,
     }
   }
+
+  return style
 }
 
 Popper.defaultProps = {
@@ -122,6 +145,7 @@ Popper.defaultProps = {
   offset: 0,
   onClick: noop,
   placement: 'auto',
+  positionFixed: false,
   showArrow: true,
   zIndex: 1000,
 }

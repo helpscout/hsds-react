@@ -87,6 +87,7 @@ export const repeat = (pattern, count) => {
       result += pattern
     }
     count >>= 1
+    /* istanbul ignore next */
     if (count <= 0) break
     pattern += pattern
   }

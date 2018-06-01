@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import warning from 'warning'
 import { ManagerContext } from './Manager'
 import { safeInvoke, unwrapArray } from './utils'
 
@@ -23,10 +22,6 @@ class InnerReference extends React.Component<
   }
 
   render() {
-    warning(
-      this.props.getReferenceRef,
-      '`Reference` should not be used outside of a `Manager` component.'
-    )
     return unwrapArray(this.props.children)({ ref: this.refHandler })
   }
 }

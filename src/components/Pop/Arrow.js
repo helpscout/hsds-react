@@ -5,7 +5,16 @@ import classNames from '../../utilities/classNames'
 import css from './styles/PopArrow.css'
 
 const ArrowComponent = props => {
-  const { className, placement, offset, size, styles, theme, ...rest } = props
+  const {
+    className,
+    children,
+    placement,
+    offset,
+    size,
+    styles,
+    theme,
+    ...rest
+  } = props
 
   const position = getPosition(placement)
 
@@ -26,13 +35,25 @@ const ArrowComponent = props => {
   )
 }
 
-const getPlacement = (placement: string) => {
+/**
+ * Gets the top|right|bottom|left label from a Popper placement
+ *
+ * @param   {string} placement
+ * @returns {string}
+ */
+export const getPlacement = (placement: string) => {
   if (!placement) return ''
 
   return placement.split('-')[0]
 }
 
-const getPosition = (placement: string) => {
+/**
+ * Gets the start|end label from a Popper placement
+ *
+ * @param   {string} placement
+ * @returns {string}
+ */
+export const getPosition = (placement: string) => {
   if (!placement || placement.indexOf('-') < 0) return ''
 
   return placement.split('-')[1]

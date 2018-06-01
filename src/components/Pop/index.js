@@ -75,6 +75,11 @@ class Pop extends Component<Props> {
   }
 
   toggleOpen = () => {
+    if (this.state.isOpen) {
+      this.props.onClose(this)
+    } else {
+      this.props.onOpen(this)
+    }
     this.setState({ isOpen: !this.state.isOpen })
   }
 
@@ -113,6 +118,10 @@ class Pop extends Component<Props> {
           : null
     )
 
+    /* istanbul ignore next */
+    /**
+     * Too difficult to text in Enzyme, due to createContext + Portal + cloning.
+     */
     const popperMarkup = React.Children.map(
       children,
       child =>

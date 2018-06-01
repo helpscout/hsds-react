@@ -4,18 +4,16 @@ import ReactPopperReference from '../Popper/Reference'
 
 class Reference extends Component {
   render() {
-    const { children } = this.props
-
     return (
       <ReactPopperReference>
         {({ ref }) => (
-          <span className="c-PopReference" ref={ref}>
-            {children}
-          </span>
+          <span className="c-PopReference" ref={ref} {...this.props} />
         )}
       </ReactPopperReference>
     )
   }
 }
+
+Reference.displayName = 'Pop.Reference'
 
 export default Reference

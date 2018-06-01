@@ -16,5 +16,5 @@ export const getComponentDefaultProp = (
  * Naive way of determining if a child is a React component
  */
 export const isComponent = (child: any) => {
-  return (child && typeof child === 'object') || typeof child === 'function'
+  return !!(child && (typeof child === 'object' || typeof child === 'function'))
 }
