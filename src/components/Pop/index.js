@@ -86,11 +86,11 @@ class Pop extends Component<Props> {
       animationSequence,
       children,
       className,
-      closeOnEscPress,
       id: idProp,
       placement,
       display,
       showArrow,
+      zIndex,
     } = this.props
 
     if (!children) return null
@@ -125,6 +125,7 @@ class Pop extends Component<Props> {
               id,
               placement,
               showArrow,
+              zIndex,
             })
           : null
     )
@@ -158,6 +159,7 @@ Pop.defaultProps = {
   onClose: noop,
   showArrow: true,
   triggerOn: 'click',
+  zIndex: 1000,
 }
 
 Pop.Arrow = Arrow

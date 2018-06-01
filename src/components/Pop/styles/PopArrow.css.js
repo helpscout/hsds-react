@@ -29,7 +29,7 @@ const css = props => {
           left: calc(0% + ${dblSizePx});
         }
         &.is-end {
-          left: calc(100% - ${dblSizePx});
+          left: calc(100% - ${dblSizePx} - ${dblSizePx});
         }
       }
 
@@ -45,7 +45,7 @@ const css = props => {
           left: calc(0% + ${dblSizePx});
         }
         &.is-end {
-          left: calc(100% - ${dblSizePx});
+          left: calc(100% - ${dblSizePx} - ${dblSizePx});
         }
       }
 
@@ -61,7 +61,7 @@ const css = props => {
           top: calc(0% + ${dblSizePx});
         }
         &.is-end {
-          top: calc(100% - ${dblSizePx});
+          top: calc(100% - ${dblSizePx} - ${dblSizePx});
         }
       }
 
@@ -77,7 +77,7 @@ const css = props => {
           top: calc(0% + ${dblSizePx});
         }
         &.is-end {
-          top: calc(100% - ${dblSizePx});
+          top: calc(100% - ${dblSizePx} - ${dblSizePx});
         }
       }
     }

@@ -16,7 +16,11 @@ const List = () => (
 )
 stories.add('default', () => (
   <div style={{ padding: '20%' }}>
-    <Tooltip triggerOn="click" renderContent={() => <List />} placement="top">
+    <Tooltip
+      triggerOn="click"
+      renderContent={() => <List />}
+      placement="top-start"
+    >
       Custom Top
     </Tooltip>
     <br />
@@ -35,7 +39,7 @@ stories.add('default', () => (
     <Tooltip
       triggerOn="click"
       title="Lots and lots and lots of words"
-      placement="top-start"
+      placement="top-end"
     >
       Top Right
     </Tooltip>

@@ -29,6 +29,7 @@ class Popper extends Component<Props> {
       onClick,
       placement,
       showArrow,
+      zIndex,
       ...rest
     } = this.props
 
@@ -51,21 +52,21 @@ class Popper extends Component<Props> {
               onClick={this.handleOnClick}
               ref={ref}
               role="tooltip"
-              style={makeStyles({
-                arrowSize,
-                offset,
-                placement,
-                style,
-              })}
+              style={{
+                ...makeStyles({
+                  arrowSize,
+                  offset,
+                  placement,
+                  style,
+                }),
+                zIndex,
+              }}
               {...rest}
             >
               <Animate {...animateProps}>
                 {children}
                 {showArrow && (
-                  <div
-                    className="c-PopPopper__arrowWrapper"
-                    ref={arrowProps.ref}
-                  >
+                  <div className="c-PopPopper__arrowWrapper">
                     <Arrow
                       color={arrowColor}
                       className={arrowClassName}
@@ -122,6 +123,7 @@ Popper.defaultProps = {
   onClick: noop,
   placement: 'auto',
   showArrow: true,
+  zIndex: 1000,
 }
 
 export default Popper
