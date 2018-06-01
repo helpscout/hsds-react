@@ -28,6 +28,13 @@ class Tooltip extends Component<Props> {
       className
     )
 
+    /**
+     * Pop, which uses Popper.js, uses document.createRange. Enzyme/JSDOM
+     * doesn't like it when this function fires from a (grand)parent component.
+     * The rendering of both content types have been manually tested in
+     * Storybook.
+     */
+    /* istanbul ignore next */
     const contentMarkup =
       renderContent && typeof renderContent === 'function'
         ? renderContent({ placement, title })
