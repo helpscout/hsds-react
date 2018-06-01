@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { Reference as ReactPopperReference } from 'react-popper'
+import ReactPopperReference from '../Popper/Reference'
 
 class Reference extends Component {
   render() {
@@ -8,7 +8,11 @@ class Reference extends Component {
 
     return (
       <ReactPopperReference>
-        {({ ref }) => <span ref={ref}>{children}</span>}
+        {({ ref }) => (
+          <span className="c-PopReference" ref={ref}>
+            {children}
+          </span>
+        )}
       </ReactPopperReference>
     )
   }

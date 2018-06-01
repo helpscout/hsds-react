@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { Popper as ReactPopper } from 'react-popper'
+import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from '../Portal'
 import Arrow from './Arrow'

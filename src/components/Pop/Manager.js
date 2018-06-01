@@ -1,3 +1,3 @@
-import { Manager } from 'react-popper'
+import Manager from '../Popper/Manager'
 
 export default Manager
