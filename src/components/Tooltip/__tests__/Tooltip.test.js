@@ -15,7 +15,7 @@ describe('classNames', () => {
     const wrapper = mount(<Tooltip />)
     const styles = wrapper.instance().styles
 
-    expect(wrapper.hasClass(styles['c-Tooltip'])).toBe(true)
+    expect(wrapper.hasClass(styles.Tooltip)).toBe(true)
   })
 })
 

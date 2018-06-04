@@ -8,7 +8,7 @@ class PopperComponent extends Component {
     const { children, className, styles, theme, ...rest } = this.props
 
     const componentClassName = classNames(
-      styles['c-TooltipPopper'],
+      styles.TooltipPopper,
       'c-TooltipPopper',
       className
     )

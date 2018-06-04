@@ -13,7 +13,7 @@ describe('classNames', () => {
     const wrapper = mount(<Popper />)
     const styles = wrapper.instance().styles
 
-    expect(wrapper.hasClass(styles['c-TooltipPopper'])).toBe(true)
+    expect(wrapper.hasClass(styles.TooltipPopper)).toBe(true)
   })
 })
 
