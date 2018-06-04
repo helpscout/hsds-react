@@ -2,7 +2,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { color } from './variables.css'
 
 const css = `
-.c-TooltipPopper {
+.TooltipPopper {
   ${baseStyles}
   background-color: ${color.background};
   border-radius: 3px;

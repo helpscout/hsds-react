@@ -22,6 +22,7 @@
     },
     "production": {
       "plugins": [
+        "transform-flow-strip-types",
         "transform-class-properties",
         "inline-svg"
       ]

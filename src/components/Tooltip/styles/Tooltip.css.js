@@ -2,7 +2,7 @@ import base from '../../../styles/resets/base.css'
 import { color } from './variables.css'
 
 const css = `
-.c-Tooltip {
+.Tooltip {
   ${base}
 
   &__arrow {

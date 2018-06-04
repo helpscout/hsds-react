@@ -19,7 +19,7 @@ const ArrowComponent = props => {
   const position = getPosition(placement)
 
   const componentClassName = classNames(
-    styles['c-PopArrow'],
+    styles.PopArrow,
     'c-PopArrow',
     placement && `is-${getPlacement(placement)}`,
     position && `is-${position}`,

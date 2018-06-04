@@ -30,7 +30,7 @@ const css = props => {
   `
 
   return `
-    .c-PopArrow {
+    .PopArrow {
       ${borderColor}
       border-style: solid;
       height: 0;

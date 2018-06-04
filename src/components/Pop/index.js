@@ -11,7 +11,6 @@ import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import type { Props } from './types'
 
 const uniqueID = createUniqueIDFactory('Pop')
 
@@ -156,6 +155,38 @@ class Pop extends Component<Props> {
       </Manager>
     )
   }
+}
+
+type Placements =
+  | 'auto-start'
+  | 'auto'
+  | 'auto-end'
+  | 'top-start'
+  | 'top'
+  | 'top-end'
+  | 'right-start'
+  | 'right'
+  | 'right-end'
+  | 'bottom-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'left-end'
+  | 'left'
+  | 'left-start'
+
+type Props = {
+  animationDelay: number | string,
+  animationDuration: number | string,
+  animationEasing: string,
+  animationSequence: string | Array<string>,
+  arrowClassName: string,
+  closeOnBodyClick: boolean,
+  closeOnEscPress: boolean,
+  display: string,
+  isOpen: boolean,
+  placement: Placements,
+  triggerOn: 'click' | 'hover',
+  showArrow: boolean,
 }
 
 Pop.defaultProps = {

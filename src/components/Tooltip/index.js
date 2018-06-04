@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from '../styled'
 import Animate from '../Animate'
 import Pop from '../Pop'
-import type { Props } from './types'
 import Popper from './Popper'
 import classNames from '../../utilities/classNames'
 import css from './styles/Tooltip.css'
@@ -23,7 +22,7 @@ class Tooltip extends Component<Props> {
     } = this.props
 
     const componentClassName = classNames(
-      styles['c-Tooltip'],
+      styles.Tooltip,
       'c-Tooltip',
       className
     )
@@ -51,12 +50,45 @@ class Tooltip extends Component<Props> {
         <Pop.Reference className="c-Tooltip__reference">
           {children}
         </Pop.Reference>
-        <Pop.Popper arrowClassName={styles['c-Tooltip__arrow']}>
+        <Pop.Popper arrowClassName={styles.Tooltip__arrow}>
           <Popper>{contentMarkup}</Popper>
         </Pop.Popper>
       </Pop>
     )
   }
+}
+
+type Placements =
+  | 'auto-start'
+  | 'auto'
+  | 'auto-end'
+  | 'top-start'
+  | 'top'
+  | 'top-end'
+  | 'right-start'
+  | 'right'
+  | 'right-end'
+  | 'bottom-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'left-end'
+  | 'left'
+  | 'left-start'
+
+type Props = {
+  animationDelay: number | string,
+  animationDuration: number | string,
+  animationEasing: string,
+  animationSequence: string | Array<string>,
+  arrowClassName: string,
+  closeOnBodyClick: boolean,
+  closeOnEscPress: boolean,
+  display: string,
+  isOpen: boolean,
+  placement: Placements,
+  renderContent: () => void,
+  triggerOn: 'click' | 'hover',
+  showArrow: boolean,
 }
 
 Tooltip.defaultProps = {
