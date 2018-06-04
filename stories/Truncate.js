@@ -35,3 +35,31 @@ stories.add('default', () => (
     <br />
   </div>
 ))
+
+stories.add('tooltip', () => (
+  <div>
+    <p>
+      Auto:<br />
+      <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
+    </p>
+    <p>
+      Start:<br />
+      <Truncate showTooltipOnTruncate type="start" limit={limit}>
+        {fixture.generate()}
+      </Truncate>
+    </p>
+    <p>
+      Middle:<br />
+      <Truncate showTooltipOnTruncate type="middle" limit={limit}>
+        {fixture.generate()}
+      </Truncate>
+    </p>
+    <p>
+      End:<br />
+      <Truncate showTooltipOnTruncate type="end" limit={limit}>
+        {fixture.generate()}
+      </Truncate>
+    </p>
+    <br />
+  </div>
+))

@@ -8,6 +8,7 @@ const css = `
   border-radius: 3px;
   color: ${color.text};
   font-size: 12px;
+  max-width: 300px;
   padding: 6px 8px;
 }
 `

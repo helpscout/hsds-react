@@ -1,7 +1,7 @@
-@import "../mixins/linkStyles";
+@import '../mixins/linkStyles';
 
 .c-Link {
-  @import "../resets/base";
+  @import '../resets/base';
   @include linkStyles();
 
   &:focus {
@@ -22,6 +22,6 @@
   }
 
   &.is-word-wrap {
-    word-break: break-all;
+    word-break: break-word;
   }
 }
