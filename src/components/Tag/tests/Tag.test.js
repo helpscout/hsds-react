@@ -37,6 +37,16 @@ describe('Animate', () => {
 
     expect(o.props().duration).toBe(1000)
   })
+
+  test('Passes "in" state, to Animate', () => {
+    const wrapper = shallow(<Tag />)
+
+    wrapper.setState({ in: true })
+    expect(wrapper.find(Animate).props().in).toBe(true)
+
+    wrapper.setState({ in: false })
+    expect(wrapper.find(Animate).props().in).toBe(false)
+  })
 })
 
 describe('Content', () => {

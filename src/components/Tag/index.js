@@ -1,46 +1,20 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import Centralize from '../Centralize'
+import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Text from '../Text'
-import { tagColorTypes } from './propTypes'
+import Truncate from '../Truncate'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-export const propTypes = {
-  animationDuration: PropTypes.number,
-  allCaps: PropTypes.bool,
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  color: tagColorTypes,
-  display: PropTypes.oneOf(['block', 'inlineBlock']),
-  filled: PropTypes.bool,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isRemovable: PropTypes.bool,
-  onRemove: PropTypes.func,
-  pulsing: PropTypes.bool,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
-
-const defaultProps = {
-  animationDuration: 100,
-  color: 'grey',
-  display: 'inlineBlock',
-  isRemovable: false,
-  onRemove: noop,
-  value: '',
-}
-
-class Tag extends Component {
-  constructor() {
-    super()
-    this.state = {
-      in: true,
-    }
-    this.handleOnRemove = this.handleOnRemove.bind(this)
+class Tag extends Component<Props> {
+  state = {
+    in: true,
   }
 
-  handleOnRemove() {
+  handleOnRemove = () => {
     const { animationDuration, id, onRemove, value } = this.props
     this.setState({ in: false })
 
@@ -62,6 +36,7 @@ class Tag extends Component {
       isRemovable,
       onRemove,
       pulsing,
+      showTooltipOnTruncate,
       value,
       ...rest
     } = this.props
@@ -79,13 +54,15 @@ class Tag extends Component {
     )
 
     const removeIconMarkup = isRemovable ? (
-      <Icon
-        name="cross"
-        size="12"
-        clickable
-        onClick={handleOnRemove}
-        title="Remove"
-      />
+      <Flexy.Item className="c-Tag__iconWrapper">
+        <Icon
+          name="cross"
+          size="12"
+          clickable
+          onClick={handleOnRemove}
+          title="Remove"
+        />
+      </Flexy.Item>
     ) : null
 
     const child = value || (children || null)
@@ -100,23 +77,63 @@ class Tag extends Component {
         {...rest}
       >
         <Centralize>
-          <Text
-            allCaps={allCaps}
-            block
-            size={allCaps ? '10' : '12'}
-            lineHeightReset
-          >
-            {child}
-          </Text>
-          {removeIconMarkup}
+          <Flexy className="c-Tag__body" gap="xs">
+            <Flexy.Block className="c-Tag__contentWrapper">
+              <Text
+                allCaps={allCaps}
+                block
+                size={allCaps ? '10' : '12'}
+                lineHeightReset
+              >
+                <Truncate
+                  className="c-Tag__textWrapper"
+                  showTooltipOnTruncate={showTooltipOnTruncate}
+                >
+                  {child}
+                </Truncate>
+              </Text>
+            </Flexy.Block>
+            {removeIconMarkup}
+          </Flexy>
         </Centralize>
       </Animate>
     )
   }
 }
 
-Tag.propTypes = propTypes
-Tag.defaultProps = defaultProps
+type tagColorTypes =
+  | 'blue'
+  | 'green'
+  | 'grey'
+  | 'gray'
+  | 'orange'
+  | 'purple'
+  | 'red'
+
+type Props = {
+  animationDuration: number,
+  allCaps: boolean,
+  children: string | number,
+  color: tagColorTypes,
+  display: 'block' | 'inlineBlock',
+  filled: boolean,
+  id: string | number,
+  isRemovable: boolean,
+  onRemove: () => void,
+  pulsing: boolean,
+  showTooltipOnTruncate: boolean,
+  value: string | number,
+}
+
+Tag.defaultProps = {
+  animationDuration: 100,
+  color: 'grey',
+  display: 'inlineBlock',
+  isRemovable: false,
+  onRemove: noop,
+  showTooltipOnTruncate: true,
+  value: '',
+}
 Tag.displayName = 'Tag'
 
 export default Tag

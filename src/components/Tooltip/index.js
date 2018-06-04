@@ -14,6 +14,7 @@ class Tooltip extends Component<Props> {
       isOpen,
       placement,
       renderContent,
+      maxWidth,
       styles,
       theme,
       title,
@@ -51,7 +52,7 @@ class Tooltip extends Component<Props> {
           {children}
         </Pop.Reference>
         <Pop.Popper arrowClassName={styles.Tooltip__arrow}>
-          <Popper>{contentMarkup}</Popper>
+          <Popper style={{ maxWidth }}>{contentMarkup}</Popper>
         </Pop.Popper>
       </Pop>
     )
@@ -85,6 +86,7 @@ type Props = {
   closeOnEscPress: boolean,
   display: string,
   isOpen: boolean,
+  maxWidth: number,
   placement: Placements,
   renderContent: () => void,
   triggerOn: 'click' | 'hover',

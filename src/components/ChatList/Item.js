@@ -40,7 +40,7 @@ const defaultProps = {
   isViewing: false,
   isWaiting: false,
   isTyping: false,
-  messageLimit: 70,
+  messageLimit: 65,
   newMessageCount: 0,
   tags: [],
   timestampFormatter: timestamp => timestamp,

@@ -11,7 +11,7 @@ const Spec = createSpec({
   ]),
   id: faker.random.uuid(),
   filled: faker.random.boolean(),
-  value: faker.lorem.word(),
+  value: faker.lorem.sentence(),
 })
 
 export default Spec

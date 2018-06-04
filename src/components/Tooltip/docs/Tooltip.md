@@ -13,6 +13,7 @@ A Toolbar component is UI component that provides the user with additional conte
 | Prop          | Type       | Description                                                         |
 | ------------- | ---------- | ------------------------------------------------------------------- |
 | className     | `string`   | Custom class names to be added to the component.                    |
+| maxWidth      | `number`   | Max width for the component.                                        |
 | renderContent | `function` | Renders a component within the Tooltip. Is prioritized over `title` |
 | title         | `string`   | Text to display within the Tooltip.                                 |
 

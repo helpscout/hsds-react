@@ -19,7 +19,7 @@ const sizes = {
 
 // Styles
 const css = `
-.c-Emoticon {
+.Emoticon {
   ${base}
   color: currentColor;
   cursor: pointer;

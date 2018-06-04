@@ -1,12 +1,12 @@
-@import "pack/seed-family/_index";
-@import "pack/seed-this/_index";
-@import "../../configs/color";
+@import 'pack/seed-family/_index';
+@import 'pack/seed-this/_index';
+@import '../../configs/color';
 
 .c-MessageBubble {
-  @import "../../resets/base";
+  @import '../../resets/base';
   $block: this();
-  $parent-wrapper: ".c-MessageBubbleWrapper";
-  $parent-block: ".c-MessageChat";
+  $parent-wrapper: '.c-MessageBubbleWrapper';
+  $parent-block: '.c-MessageChat';
   $br: 8px;
   $br-sm: 3px;
   $default-padding: 13px 20px 13px;
@@ -21,6 +21,7 @@
   padding: $default-padding;
   max-width: 500px;
   text-align: left;
+  word-break: break-word;
 
   &__body {
     color: _color(charcoal, 500);
@@ -44,7 +45,7 @@
     padding: 7px 0;
   }
 
-  @include parent("#{$parent-block} ~ #{$parent-block}") {
+  @include parent('#{$parent-block} ~ #{$parent-block}') {
     border-top-right-radius: $br-sm;
   }
 
@@ -56,11 +57,11 @@
     border-bottom-right-radius: $br;
     border-bottom-left-radius: $br-sm;
 
-    @include parent("#{$parent-block} ~ #{$parent-block}") {
+    @include parent('#{$parent-block} ~ #{$parent-block}') {
       border-top-right-radius: $br;
     }
 
-    @include parent("#{$parent-block}:last-child") {
+    @include parent('#{$parent-block}:last-child') {
       border-top-right-radius: $br;
       border-bottom-left-radius: $br;
     }

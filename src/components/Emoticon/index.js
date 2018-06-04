@@ -23,7 +23,7 @@ const Component = props => {
 
   const src = { __html: EMOTICONS[name] }
   const componentClassName = classNames(
-    styles['c-Emoticon'],
+    styles.Emoticon,
     'c-Emoticon',
     !clickable && 'is-noInteract',
     center && 'is-center',
