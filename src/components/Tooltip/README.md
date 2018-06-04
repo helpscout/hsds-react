@@ -1,7 +1,10 @@
-# Tooltip
+# Toolbar
 
-## Specs (ideas)
+A Toolbar component is UI component that provides the user with additional context when engaged.
 
-* should automatically be directionally aware
-* should be mounted at the `<body>` root level
-* should reposition when resized
+## Components
+
+The Toolbar component is comprised of smaller components:
+
+* [Tooltip](./docs/Tooltip.md)
+* [Popper](./docs/Popper.md)

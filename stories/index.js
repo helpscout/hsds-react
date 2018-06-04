@@ -1,5 +1,4 @@
 import '../src/styles/blue.scss'
-import Perf from 'react-addons-perf'
 // import '../src/styles/blue.hs-app.scss'
 
 import './Alert'
@@ -67,10 +66,8 @@ import './Text'
 import './Timeline'
 import './Timestamp'
 import './Toolbar'
+import './Tooltip'
 import './Truncate'
 import './VisuallyHidden'
 
 import './Color'
-
-// Performance testing
-window.Perf = Perf

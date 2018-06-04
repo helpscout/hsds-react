@@ -1,15 +1,29 @@
 {
   "presets": [
     "./scripts/babel-preset-env",
+    "flow",
     "react",
     "stage-1"
   ],
+  "plugins": [
+    "transform-class-properties"
+  ],
   "env": {
     "development": {
-      "presets": ["es2015"],
+      "presets": [
+        "es2015",
+        "flow",
+        "react",
+        "stage-1"
+      ],
+      "plugins": [
+        "transform-class-properties"
+      ]
     },
     "production": {
       "plugins": [
+        "transform-flow-strip-types",
+        "transform-class-properties",
         "inline-svg"
       ]
     }
