@@ -38,10 +38,10 @@ stories.add('default', () => (
     <br />
     <Tooltip
       triggerOn="click"
-      title="Lots and lots and lots of words"
-      placement="top-end"
+      title="lotsssssssssofffffffffwordddddddddddddddddsssssssssssssssssssssssss"
+      placement="top-start"
     >
-      Top Right
+      Top Left, lots of words
     </Tooltip>
   </div>
 ))
