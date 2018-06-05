@@ -10,6 +10,7 @@ const css = `
   font-size: 12px;
   max-width: 300px;
   padding: 6px 8px;
+  word-break: break-word;
 }
 `
 
