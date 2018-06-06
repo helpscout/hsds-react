@@ -1,5 +1,5 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import LineItem from './LineItem'
 import Attachment from '../Attachment'
 import AttachmentList from '../AttachmentList'
@@ -15,39 +15,23 @@ export const ITEM_TYPES = {
   note: 'note',
 }
 
-export const propTypes = {
-  action: PropTypes.string,
-  attachments: PropTypes.array,
-  author: PropTypes.object,
-  body: PropTypes.string,
-  chatId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  createdAt: PropTypes.string,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onAttachmentClick: PropTypes.func,
-  onDownloadAllAttachmentClick: PropTypes.func,
-  params: PropTypes.any,
-  showDownloadAllAttachments: PropTypes.bool,
-  timestamp: PropTypes.string,
-  type: PropTypes.oneOf([
-    ITEM_TYPES.lineItem,
-    ITEM_TYPES.message,
-    ITEM_TYPES.note,
-  ]).isRequired,
+type Props = {
+  action: string,
+  attachments: Array,
+  author: Object,
+  body: string,
+  chatId: number | string,
+  createdAt: string,
+  id: number | string,
+  onAttachmentClick: () => void,
+  onDownloadAllAttachmentClick: () => void,
+  params: any,
+  showDownloadAllAttachments: boolean,
+  timestamp: string,
+  type: ITEM_TYPES.lineItem | ITEM_TYPES.message | ITEM_TYPES.note,
 }
 
-const defaultProps = {
-  attachments: [],
-  author: {
-    name: 'Name',
-  },
-  createdAt: '',
-  onAttachmentClick: noop,
-  onDownloadAllAttachmentClick: noop,
-  showDownloadAllAttachments: true,
-  type: 'message',
-}
-
-const Item = props => {
+const Item = (props: Props) => {
   const {
     action,
     attachments,
@@ -180,8 +164,17 @@ const Item = props => {
   )
 }
 
-Item.propTypes = propTypes
-Item.defaultProps = defaultProps
+Item.defaultProps = {
+  attachments: [],
+  author: {
+    name: 'Name',
+  },
+  createdAt: '',
+  onAttachmentClick: noop,
+  onDownloadAllAttachmentClick: noop,
+  showDownloadAllAttachments: true,
+  type: 'message',
+}
 Item.displayName = 'ChatTranscript.Item'
 Item.LineItem = LineItem
 

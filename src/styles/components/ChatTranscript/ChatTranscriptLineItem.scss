@@ -1,13 +1,13 @@
 .c-ChatTranscriptLineItem {
-  @import "../../configs/color";
-  @import "../../resets/base";
+  @import '../../configs/color';
+  @import '../../resets/base';
 
   color: _color(grey, 800);
   font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  text-align: center;
+  font-weight: 400;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  text-align: left;
 
   &:first-child {
     margin-top: 0;
