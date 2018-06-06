@@ -1,6 +1,6 @@
 // Place your settings in this file to overwrite default and user settings
 {
-  "editor.rulers": [80,120],
+  "editor.rulers": [80, 120],
   "editor.tabSize": 2,
   "files.exclude": {
     "lib/**/*": true,
@@ -16,4 +16,6 @@
     "**/bower_components": true,
     "**/dist": true
   },
+  "javascript.validate.enable": false,
+  "prettier.eslintIntegration": true
 }

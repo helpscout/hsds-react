@@ -1,7 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { componentOrElement } from 'prop-types-extra'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import LoadingDots from '../LoadingDots'
@@ -15,7 +14,6 @@ export const propTypes = {
   isLoading: PropTypes.bool,
   onLoading: PropTypes.func,
   onLoaded: PropTypes.func,
-  scrollParent: componentOrElement,
 }
 const defaultProps = {
   getScrollParent: noop,
