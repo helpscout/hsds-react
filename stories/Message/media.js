@@ -24,6 +24,16 @@ stories.add('default', () => (
   </Message.Provider>
 ))
 
+stories.add('image:large', () => (
+  <Message to avatar={<Avatar name="Arctic Puffin" />}>
+    <Message.Chat>Agent Chat</Message.Chat>
+    <Message.Media
+      imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
+      caption="image.jpg"
+    />
+  </Message>
+))
+
 stories.add('states', () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
