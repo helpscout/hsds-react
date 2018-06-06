@@ -3,12 +3,13 @@ import { mount, shallow } from 'enzyme'
 import Chat from '../Chat'
 import Media from '../Media'
 import Message from '../Message'
-import { Image, Modal, Text } from '../../'
+import { Image, Modal, Text } from '../../index'
 
 const cx = 'c-MessageMedia'
 const ui = {
   caption: `.${cx}__caption`,
   mediaContainer: `.${cx}__mediaContainer`,
+  media: `.${cx}__media`,
 }
 
 describe('ClassNames', () => {
@@ -80,10 +81,9 @@ describe('Caption', () => {
 
   test('Renders a caption, if defined', () => {
     const wrapper = mount(<Media caption="mugatu" />)
-    const o = wrapper.find(ui.caption)
+    const o = wrapper.find(Chat)
 
-    expect(o.length).toBeTruthy()
-    expect(o.find(Text).length).toBeTruthy()
+    expect(o.prop('caption')).toBe('mugatu')
   })
 
   test('Does not render caption, if theme is embed', () => {
@@ -116,6 +116,14 @@ describe('Image', () => {
     const o = wrapper.find(Image)
 
     expect(o.length).not.toBeTruthy()
+  })
+
+  test('Can set a maxWidth for the media', () => {
+    const url = './mugatu.png'
+    const wrapper = shallow(<Media imageUrl={url} maxWidth={123} />)
+    const o = wrapper.find(ui.media)
+
+    expect(o.prop('style').maxWidth).toBe(123)
   })
 
   test('Renders an image if imageUrl is defined', () => {
@@ -210,15 +218,32 @@ describe('Modal', () => {
     expect(o.length).toBeTruthy()
   })
 
+  test('Accepts custom className for modal', () => {
+    const url = './mugatu.png'
+    const wrapper = shallow(<Media imageUrl={url} modalClassName="custom" />)
+    const c = wrapper.find(Modal)
+
+    expect(c.props().className).toContain('custom')
+  })
+
+  test('Accepts custom cardClassName for modal', () => {
+    const url = './mugatu.png'
+    const wrapper = shallow(
+      <Media imageUrl={url} modalCardClassName="custom" />
+    )
+    const c = wrapper.find(Modal)
+
+    expect(c.props().cardClassName).toContain('custom')
+  })
+
   test('Accepts custom wrapperClassName for modal', () => {
     const url = './mugatu.png'
-    let wrapper = shallow(<Media imageUrl={url} />)
-    let c = wrapper.find(Modal)
-    expect(c.props().wrapperClassName).toEqual(undefined)
+    const wrapper = shallow(
+      <Media imageUrl={url} modalWrapperClassName="custom" />
+    )
+    const c = wrapper.find(Modal)
 
-    wrapper = shallow(<Media imageUrl={url} modalWrapperClassName="custom" />)
-    c = wrapper.find(Modal)
-    expect(c.props().wrapperClassName).toEqual('custom')
+    expect(c.props().wrapperClassName).toContain('custom')
   })
 })
 

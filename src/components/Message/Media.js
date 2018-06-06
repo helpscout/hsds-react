@@ -8,28 +8,6 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { bubbleTypes, providerContextTypes } from './propTypes'
 
-export const propTypes = Object.assign({}, bubbleTypes, {
-  caption: PropTypes.string,
-  errorMessage: PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  imageAlt: PropTypes.string,
-  imageUrl: PropTypes.string,
-  isUploading: PropTypes.bool,
-  modalWrapperClassName: PropTypes.string,
-  onMediaClick: PropTypes.func,
-  onMediaLoad: PropTypes.func,
-  openMediaInModal: PropTypes.bool,
-})
-
-const defaultProps = {
-  onMediaClick: noop,
-  onMediaLoad: noop,
-  openMediaInModal: true,
-  isUploading: false,
-}
-
-const contextTypes = providerContextTypes
-
 class Media extends Component {
   render() {
     const {
@@ -40,6 +18,9 @@ class Media extends Component {
       imageUrl,
       imageAlt,
       isUploading,
+      maxWidth,
+      modalClassName,
+      modalCardClassName,
       modalWrapperClassName,
       onMediaClick,
       onMediaLoad,
@@ -56,7 +37,7 @@ class Media extends Component {
     const componentClassName = classNames('c-MessageMedia', className)
 
     const mediaMarkup = imageUrl ? (
-      <div className="c-MessageMedia__media">
+      <div className="c-MessageMedia__media" style={{ maxWidth }}>
         <Image
           alt={imageAlt || null}
           block
@@ -80,7 +61,18 @@ class Media extends Component {
     const mediaContainerMarkup = imageUrl ? (
       maybeOpenMediaInModal ? (
         <div className="c-MessageMedia__mediaContainer">
-          <Modal trigger={mediaMarkup} wrapperClassName={modalWrapperClassName}>
+          <Modal
+            trigger={mediaMarkup}
+            className={classNames('c-MessageMedia__modal', modalClassName)}
+            cardClassName={classNames(
+              'c-MessageMedia__modalCard',
+              modalCardClassName
+            )}
+            wrapperClassName={classNames(
+              'c-MessageMedia__modalWrapper',
+              modalWrapperClassName
+            )}
+          >
             <Modal.Body scrollFade={false} isSeamless>
               <Modal.Content>
                 {mediaMarkup}
@@ -98,20 +90,42 @@ class Media extends Component {
       <Chat
         {...rest}
         bubbleClassName="c-MessageMedia__bubble"
-        caption={isThemeEmbed ? caption : undefined}
+        caption={caption}
+        captionSize="11"
         className={componentClassName}
         isLoading={isUploading}
         size="sm"
       >
         {mediaContainerMarkup}
-        {captionMarkup}
       </Chat>
     )
   }
 }
 
-Media.propTypes = propTypes
-Media.defaultProps = defaultProps
-Media.contextTypes = contextTypes
+Media.propTypes = Object.assign({}, bubbleTypes, {
+  caption: PropTypes.string,
+  errorMessage: PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  imageAlt: PropTypes.string,
+  imageUrl: PropTypes.string,
+  isUploading: PropTypes.bool,
+  maxWidth: PropTypes.number,
+  modalClassName: PropTypes.string,
+  modalCardClassName: PropTypes.string,
+  modalWrapperClassName: PropTypes.string,
+  onMediaClick: PropTypes.func,
+  onMediaLoad: PropTypes.func,
+  openMediaInModal: PropTypes.bool,
+})
+
+Media.defaultProps = {
+  onMediaClick: noop,
+  onMediaLoad: noop,
+  openMediaInModal: true,
+  maxWidth: 1080,
+  isUploading: false,
+}
+
+Media.contextTypes = providerContextTypes
 
 export default Media

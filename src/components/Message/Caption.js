@@ -1,19 +1,17 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { providerContextTypes } from './propTypes'
 
-const propTypes = {
-  wordWrap: PropTypes.bool,
+type Props = {
+  size: string,
+  wordWrap: boolean,
 }
-const defaultProps = {
-  wordWrap: true,
-}
-const contextTypes = providerContextTypes
 
 const Caption = (props, context) => {
-  const { className, children, wordWrap, ...rest } = props
+  const { className, children, size, wordWrap, ...rest } = props
   const { theme } = context
   const isThemeEmbed = theme === 'embed'
 
@@ -23,7 +21,7 @@ const Caption = (props, context) => {
     className
   )
 
-  const textSize = isThemeEmbed ? '11' : '13'
+  const textSize = size ? size : isThemeEmbed ? '11' : '13'
 
   return (
     <div className={componentClassName} {...rest}>
@@ -39,9 +37,10 @@ const Caption = (props, context) => {
   )
 }
 
-Caption.propTypes = propTypes
-Caption.defaultProps = defaultProps
-Caption.contextTypes = contextTypes
+Caption.defaultProps = {
+  wordWrap: true,
+}
+Caption.contextTypes = providerContextTypes
 Caption.displayName = 'MessageCaption'
 
 export default Caption

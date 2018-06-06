@@ -12,6 +12,7 @@ import { bubbleTypes } from './propTypes'
 export const propTypes = {
   ...bubbleTypes,
   bubbleClassName: PropTypes.string,
+  captionSize: PropTypes.string,
   caption: PropTypes.string,
   errorMessage: PropTypes.string,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -31,6 +32,7 @@ const Chat = props => {
     body,
     bubbleClassName,
     caption,
+    captionSize,
     children,
     className,
     error,
@@ -68,7 +70,9 @@ const Chat = props => {
   }
 
   const captionMarkup = caption ? (
-    <Caption className="c-MessageChat__caption">{caption}</Caption>
+    <Caption className="c-MessageChat__caption" size={captionSize}>
+      {caption}
+    </Caption>
   ) : null
 
   const loadingMarkup = isLoading ? (
