@@ -1,21 +1,16 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { newlineToHTML } from '../../utilities/strings'
 
-export const propTypes = {
-  body: PropTypes.string,
-  createdAt: PropTypes.string,
-  timestamp: PropTypes.string,
+type Props = {
+  body: string,
+  createdAt: string,
+  timestamp: string,
 }
 
-const defaultProps = {
-  body: '',
-  createdAt: '',
-}
-
-const LineItem = props => {
+const LineItem = (props: Props) => {
   const { body, children, className, createdAt, timestamp, ...rest } = props
 
   const componentClassName = classNames('c-ChatTranscriptLineItem', className)
@@ -51,8 +46,10 @@ const LineItem = props => {
   )
 }
 
-LineItem.propTypes = propTypes
-LineItem.defaultProps = defaultProps
+LineItem.defaultProps = {
+  body: '',
+  createdAt: '',
+}
 LineItem.displayName = 'ChatTranscript.Item.LineItem'
 
 export default LineItem

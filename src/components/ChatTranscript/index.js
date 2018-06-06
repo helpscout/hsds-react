@@ -1,17 +1,25 @@
-import React from 'react'
+// @flow
+import React, { PureComponent as Component } from 'react'
 import Item from './Item'
 import classNames from '../../utilities/classNames'
 
-const ChatTranscript = props => {
-  const { children, className, ...rest } = props
+type Props = {
+  className: string,
+  children: any,
+}
 
-  const componentClassName = classNames('c-ChatTranscript', className)
+class ChatTranscript extends Component<Props> {
+  render() {
+    const { children, className, ...rest } = this.props
 
-  return (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
+    const componentClassName = classNames('c-ChatTranscript', className)
+
+    return (
+      <div className={componentClassName} {...rest}>
+        {children}
+      </div>
+    )
+  }
 }
 
 ChatTranscript.Item = Item
