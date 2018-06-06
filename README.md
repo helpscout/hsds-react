@@ -1,17 +1,14 @@
 # 🔷 Blue [![Build Status](https://travis-ci.org/helpscout/blue.svg?branch=master)](https://travis-ci.org/helpscout/blue) [![Coverage Status](https://coveralls.io/repos/github/helpscout/blue/badge.svg?branch=master)](https://coveralls.io/github/helpscout/blue?branch=master) [![npm version](https://badge.fury.io/js/%40helpscout%2Fblue.svg)](https://badge.fury.io/js/%40helpscout%2Fblue)
 
-
 Help Scout's React component library
 
 <img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
-
 
 ## Install
 
 ```
 npm install @helpscout/blue --save-dev
 ```
-
 
 ## Getting Started
 
@@ -29,7 +26,6 @@ npm start
 
 Check out Blue's Storybook at http://localhost:8900/ in your browser!
 
-
 ## Testing
 
 To run Jest in watch mode, run:
@@ -44,8 +40,6 @@ To execute all the tests (with Coverage reporting), run:
 npm run test
 ```
 
-
-
 ## Publishing
 
 To publish and release a new version of Blue, run the following command:
@@ -58,13 +52,11 @@ That's it! The script will take care of the rest (from testing to publishing). T
 
 #### Additional options
 
-| Command | Description|
-| --- | --- |
+| Command                 | Description                                           |
+| ----------------------- | ----------------------------------------------------- |
 | `npm run release:major` | Publish with a major version bump. `1.0.0` -> `2.0.0` |
-| `npm run release:minor` | Publish with a minor version bump. `0.1.0` -> `0.2.0`|
+| `npm run release:minor` | Publish with a minor version bump. `0.1.0` -> `0.2.0` |
 | `npm run release:patch` | Publish with a patch version bump. `0.0.1` -> `0.0.1` |
-
-
 
 ## Deploying Storybook
 
@@ -73,13 +65,6 @@ To deploy the Storybook, run the following command:
 ```
 npm run deploy
 ```
-
-
-
-## Todos
-
-**[Check out our ever-changing Todos notes here](./todos)**.
-
 
 ## Extras
 
