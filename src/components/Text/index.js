@@ -16,7 +16,7 @@ type Props = {
   linkStyle?: boolean,
   muted?: boolean,
   noWrap?: boolean,
-  selector?: string,
+  selector: string,
   shade?: TextShades,
   size?: Sizes,
   state?: UIStates,

@@ -15,10 +15,14 @@ export const ITEM_TYPES = {
   note: 'note',
 }
 
+type Author = {
+  name?: string,
+}
+
 type Props = {
   action?: string,
-  attachments?: Array<Object>,
-  author?: Object,
+  attachments: Array<Object>,
+  author?: Author,
   body?: string,
   chatId?: number | string,
   children?: any,

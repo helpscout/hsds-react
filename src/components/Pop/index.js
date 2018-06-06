@@ -12,9 +12,69 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
 
+type Placements =
+  | 'auto-start'
+  | 'auto'
+  | 'auto-end'
+  | 'top-start'
+  | 'top'
+  | 'top-end'
+  | 'right-start'
+  | 'right'
+  | 'right-end'
+  | 'bottom-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'left-end'
+  | 'left'
+  | 'left-start'
+
+type Props = {
+  animationDelay: number | string,
+  animationDuration: number | string,
+  animationEasing: string,
+  animationSequence: string | Array<string>,
+  arrowClassName: string,
+  children?: any,
+  className?: string,
+  closeOnBodyClick: boolean,
+  closeOnEscPress: boolean,
+  display: string,
+  id?: string,
+  isOpen: boolean,
+  onClose: (Pop: Object) => void,
+  onOpen: (Pop: Object) => void,
+  placement: Placements,
+  triggerOn: 'click' | 'hover',
+  showArrow: boolean,
+  zIndex?: number,
+}
+
+type State = {
+  id: string,
+  isOpen: boolean,
+}
+
 const uniqueID = createUniqueIDFactory('Pop')
 
-class Pop extends Component<Props> {
+class Pop extends Component<Props, State> {
+  static defaultProps = {
+    closeOnBodyClick: false,
+    closeOnEscPress: true,
+    display: 'inline-block',
+    placement: 'auto',
+    isOpen: false,
+    onOpen: noop,
+    onClose: noop,
+    showArrow: true,
+    triggerOn: 'click',
+    zIndex: 1000,
+  }
+  static Arrow = Arrow
+  static Manager = Manager
+  static Popper = Popper
+  static Reference = Reference
+
   node = null
 
   state = {
@@ -22,7 +82,7 @@ class Pop extends Component<Props> {
     isOpen: this.props.isOpen || false,
   }
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps = (nextProps: Object) => {
     if (nextProps.isOpen !== this.state.isOpen) {
       this.setState({
         isOpen: nextProps.isOpen,
@@ -44,13 +104,13 @@ class Pop extends Component<Props> {
     this.close()
   }
 
-  handleClick = event => {
+  handleClick = (event: Object) => {
     if (this.shouldHandleHover()) return
     if (event) event.stopPropagation()
     this.toggleOpen()
   }
 
-  handleOnBodyClick = event => {
+  handleOnBodyClick = (event: Object) => {
     if (!this.props.closeOnBodyClick) return
     if (!event || event.target === this.node) return
     this.close()
@@ -156,55 +216,5 @@ class Pop extends Component<Props> {
     )
   }
 }
-
-type Placements =
-  | 'auto-start'
-  | 'auto'
-  | 'auto-end'
-  | 'top-start'
-  | 'top'
-  | 'top-end'
-  | 'right-start'
-  | 'right'
-  | 'right-end'
-  | 'bottom-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'left-end'
-  | 'left'
-  | 'left-start'
-
-type Props = {
-  animationDelay: number | string,
-  animationDuration: number | string,
-  animationEasing: string,
-  animationSequence: string | Array<string>,
-  arrowClassName: string,
-  closeOnBodyClick: boolean,
-  closeOnEscPress: boolean,
-  display: string,
-  isOpen: boolean,
-  placement: Placements,
-  triggerOn: 'click' | 'hover',
-  showArrow: boolean,
-}
-
-Pop.defaultProps = {
-  closeOnBodyClick: false,
-  closeOnEscPress: true,
-  display: 'inline-block',
-  placement: 'auto',
-  isOpen: false,
-  onOpen: noop,
-  onClose: noop,
-  showArrow: true,
-  triggerOn: 'click',
-  zIndex: 1000,
-}
-
-Pop.Arrow = Arrow
-Pop.Manager = Manager
-Pop.Popper = Popper
-Pop.Reference = Reference
 
 export default Pop

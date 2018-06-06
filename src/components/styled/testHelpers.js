@@ -5,6 +5,7 @@ import styled from './index'
  * Removes style tags from the <head> and resets styled StyleSheets.
  */
 export const resetStyles = () => {
+  //$FlowFixMe
   document.head.innerHTML = ''
   if (styled && styled.StyleSheet) {
     styled.StyleSheet.__dangerouslyResetStyleSheet()
@@ -26,6 +27,7 @@ export const getCSS = (el: ?HTMLElement) => el && window.getComputedStyle(el)
  * @param   {string} prop
  * @returns {string}
  */
-export const getCSSProp = (el: ?HTMLElement, prop: string) => {
+export const getCSSProp = (el: ?HTMLElement, prop?: string) => {
+  //$FlowFixMe
   return prop ? getCSS(el)[prop] : ''
 }

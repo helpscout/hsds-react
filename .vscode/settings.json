@@ -17,5 +17,6 @@
     "**/dist": true
   },
   "javascript.validate.enable": false,
-  "prettier.eslintIntegration": true
+  "prettier.eslintIntegration": true,
+  "eslint.enable": false
 }
