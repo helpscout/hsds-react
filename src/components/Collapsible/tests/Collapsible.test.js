@@ -12,30 +12,30 @@ const baseComponentOptions = {
 baseComponentTest(Collapsible, baseComponentOptions)
 
 describe('onOpen', () => {
-  test('onOpen callback should fire when opened', done => {
+  test('onOpen callback should fire when opened', () => {
     const spy = jest.fn()
     const wrapper = mount(<Collapsible onOpen={spy} duration={0} />)
     wrapper.setProps({ isOpen: true })
+    wrapper.setState({ animationState: 'opened' })
+    wrapper.instance().handleAnimationStateCallback()
 
-    wait(200).then(() => {
-      expect(spy).toHaveBeenCalled()
-      wrapper.unmount()
-      done()
-    })
+    expect(spy).toHaveBeenCalled()
+    wrapper.unmount()
   })
 })
 
 describe('onClose', () => {
-  test('onClose callback should fire when opened', done => {
+  test('onClose callback should fire when opened', () => {
     const spy = jest.fn()
     const wrapper = mount(<Collapsible isOpen onClose={spy} duration={0} />)
     wrapper.setProps({ isOpen: false })
 
-    wait(200).then(() => {
-      expect(spy).toHaveBeenCalled()
-      wrapper.unmount()
-      done()
-    })
+    wrapper.setProps({ isOpen: true })
+    wrapper.setState({ animationState: 'closed' })
+    wrapper.instance().handleAnimationStateCallback()
+
+    expect(spy).toHaveBeenCalled()
+    wrapper.unmount()
   })
 })
 

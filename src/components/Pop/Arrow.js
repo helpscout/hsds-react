@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'

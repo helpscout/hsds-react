@@ -15,20 +15,26 @@ export const ITEM_TYPES = {
   note: 'note',
 }
 
+type Author = {
+  name?: string,
+}
+
 type Props = {
-  action: string,
-  attachments: Array,
-  author: Object,
-  body: string,
-  chatId: number | string,
-  createdAt: string,
-  id: number | string,
-  onAttachmentClick: () => void,
-  onDownloadAllAttachmentClick: () => void,
-  params: any,
-  showDownloadAllAttachments: boolean,
-  timestamp: string,
-  type: ITEM_TYPES.lineItem | ITEM_TYPES.message | ITEM_TYPES.note,
+  action?: string,
+  attachments: Array<Object>,
+  author?: Author,
+  body?: string,
+  chatId?: number | string,
+  children?: any,
+  className?: string,
+  createdAt?: string,
+  id?: number | string,
+  onAttachmentClick?: () => void,
+  onDownloadAllAttachmentClick?: () => void,
+  params?: any,
+  showDownloadAllAttachments?: boolean,
+  timestamp?: string,
+  type?: 'line_item' | 'message' | 'note',
 }
 
 const Item = (props: Props) => {
@@ -175,7 +181,9 @@ Item.defaultProps = {
   showDownloadAllAttachments: true,
   type: 'message',
 }
+
 Item.displayName = 'ChatTranscript.Item'
+
 Item.LineItem = LineItem
 
 export default Item

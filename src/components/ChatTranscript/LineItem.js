@@ -5,9 +5,11 @@ import classNames from '../../utilities/classNames'
 import { newlineToHTML } from '../../utilities/strings'
 
 type Props = {
-  body: string,
-  createdAt: string,
-  timestamp: string,
+  body?: string,
+  children?: any,
+  className?: string,
+  createdAt?: string,
+  timestamp?: string,
 }
 
 const LineItem = (props: Props) => {
@@ -50,6 +52,7 @@ LineItem.defaultProps = {
   body: '',
   createdAt: '',
 }
+
 LineItem.displayName = 'ChatTranscript.Item.LineItem'
 
 export default LineItem

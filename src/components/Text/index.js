@@ -1,38 +1,31 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
-import { sizeTypes } from './propTypes'
 import classNames from '../../utilities/classNames'
-import { stateTypes, textShadeTypes } from '../../constants/propTypes'
+import type { Sizes } from './types'
+import type { TextShades, UIStates } from '../../constants/types'
 
-export const propTypes = {
-  allCaps: PropTypes.bool,
-  block: PropTypes.bool,
-  className: PropTypes.string,
-  center: PropTypes.bool,
-  disableSelect: PropTypes.bool,
-  faint: PropTypes.bool,
-  lineHeightReset: PropTypes.bool,
-  linkStyle: PropTypes.bool,
-  muted: PropTypes.bool,
-  noWrap: PropTypes.bool,
-  selector: PropTypes.oneOf(['span', 'pre', 'samp']),
-  shade: textShadeTypes,
-  size: sizeTypes,
-  state: stateTypes,
-  subtle: PropTypes.bool,
-  truncate: PropTypes.bool,
-  wordWrap: PropTypes.bool,
+type Props = {
+  allCaps?: boolean,
+  block?: boolean,
+  children: any,
+  className?: string,
+  center?: boolean,
+  disableSelect?: boolean,
+  faint?: boolean,
+  lineHeightReset?: boolean,
+  linkStyle?: boolean,
+  muted?: boolean,
+  noWrap?: boolean,
+  selector: string,
+  shade?: TextShades,
+  size?: Sizes,
+  state?: UIStates,
+  subtle?: boolean,
+  truncate?: boolean,
+  wordWrap?: boolean,
 }
 
-const defaultProps = {
-  center: false,
-  disableSelect: false,
-  linkStyle: false,
-  selector: 'span',
-  truncate: false,
-}
-
-const Text = props => {
+const Text = (props: Props) => {
   const {
     allCaps,
     block,
@@ -86,7 +79,14 @@ const Text = props => {
   )
 }
 
-Text.propTypes = propTypes
-Text.defaultProps = defaultProps
+Text.defaultProps = {
+  center: false,
+  disableSelect: false,
+  linkStyle: false,
+  selector: 'span',
+  size: 'default',
+  state: 'default',
+  truncate: false,
+}
 
 export default Text

@@ -6,11 +6,13 @@ import classNames from '../../utilities/classNames'
 import { providerContextTypes } from './propTypes'
 
 type Props = {
+  className?: string,
+  children?: any,
   size: string,
   wordWrap: boolean,
 }
 
-const Caption = (props, context) => {
+const Caption = (props: Props, context) => {
   const { className, children, size, wordWrap, ...rest } = props
   const { theme } = context
   const isThemeEmbed = theme === 'embed'

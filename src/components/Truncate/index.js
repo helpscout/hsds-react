@@ -6,14 +6,39 @@ import classNames from '../../utilities/classNames'
 import { truncateMiddle } from '../../utilities/strings'
 import { truncateTypes } from './propTypes'
 
-class Truncate extends Component<Props> {
-  constructor(props) {
+type Props = {
+  children?: any,
+  className?: string,
+  ellipsis?: string,
+  limit: number,
+  end?: number,
+  start?: number,
+  showTooltipOnTruncate: boolean,
+  title?: string,
+  tooltipPlacement: string,
+  type: 'auto' | 'start' | 'middle' | 'end',
+}
+
+type State = {
+  isTruncated: boolean,
+}
+
+class Truncate extends Component<Props, State> {
+  static defaultProps = {
+    children: '',
+    ellipsis: '…',
+    limit: 0,
+    showTooltipOnTruncate: false,
+    tooltipPlacement: 'top-start',
+    type: 'auto',
+  }
+  node = null
+
+  constructor(props: Object) {
     super(props)
     this.state = {
       isTruncated: props.type,
     }
-
-    this.node = null
   }
 
   componentDidMount() {
@@ -28,7 +53,7 @@ class Truncate extends Component<Props> {
     this.node = null
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Object) {
     if (nextProps.type !== this.props.type) {
       this.setState({
         isTruncated: this.isTruncated(nextProps.props),
@@ -45,7 +70,7 @@ class Truncate extends Component<Props> {
     this.setState({ isTruncated })
   }
 
-  isTruncated = (props = {}) => {
+  isTruncated = (props: Object = {}) => {
     if (props.type !== 'auto') return true
     /* istanbul ignore next */
     if (!this.node) return false
@@ -114,24 +139,6 @@ class Truncate extends Component<Props> {
       </span>
     )
   }
-}
-
-type Props = {
-  limit: number,
-  end: number,
-  start: number,
-  showTooltipOnTruncate: boolean,
-  tooltipPlacement: string,
-  type: 'auto' | 'start' | 'middle' | 'end',
-}
-
-Truncate.defaultProps = {
-  children: '',
-  ellipsis: '…',
-  limit: 0,
-  showTooltipOnTruncate: false,
-  tooltipPlacement: 'top-start',
-  type: 'auto',
 }
 
 export default Truncate

@@ -1,23 +1,20 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import Text from '../Text'
-import { sizeTypes } from '../Text/propTypes'
-import { stateTypes } from '../../constants/propTypes'
 import { isString } from '../../utilities/strings'
+import type { Sizes } from '../Text/types'
+import type { UIStates } from '../../constants/types'
 
-export const propTypes = {
-  className: PropTypes.string,
-  muted: PropTypes.bool,
-  size: sizeTypes,
-  state: stateTypes,
+type Props = {
+  children: any,
+  className?: string,
+  muted?: boolean,
+  size?: Sizes,
+  state?: UIStates,
 }
 
-const defaultProps = {
-  size: '13',
-}
-
-const HelpText = props => {
+const HelpText = (props: Props) => {
   const { children, className, muted, size, state, ...rest } = props
 
   const componentClassName = classNames(
@@ -42,7 +39,9 @@ const HelpText = props => {
   )
 }
 
-HelpText.propTypes = propTypes
-HelpText.defaultProps = defaultProps
+HelpText.defaultProps = {
+  size: '13',
+  state: 'default',
+}
 
 export default HelpText

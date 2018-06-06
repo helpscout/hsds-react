@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react'
 import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
@@ -6,9 +5,22 @@ import Portal from '../Portal'
 import Arrow from './Arrow'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import type { Props } from './types'
 
-class Popper extends Component<Props> {
+class Popper extends Component {
+  static defaultProps = {
+    animationDelay: 0,
+    animationDuration: 0,
+    animationEasing: 'ease',
+    animationSequence: 'fade',
+    arrowSize: 5,
+    offset: 0,
+    onClick: noop,
+    placement: 'auto',
+    positionFixed: false,
+    showArrow: true,
+    zIndex: 1000,
+  }
+
   portal = null
 
   componentWillUnmount = () => {
@@ -134,20 +146,6 @@ export const enhancePopperStyles = (props = {}) => {
   }
 
   return style
-}
-
-Popper.defaultProps = {
-  animationDelay: 0,
-  animationDuration: 0,
-  animationEasing: 'ease',
-  animationSequence: 'fade',
-  arrowSize: 5,
-  offset: 0,
-  onClick: noop,
-  placement: 'auto',
-  positionFixed: false,
-  showArrow: true,
-  zIndex: 1000,
 }
 
 export default Popper

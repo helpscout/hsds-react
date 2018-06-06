@@ -9,7 +9,46 @@ import Truncate from '../Truncate'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-class Tag extends Component<Props> {
+type tagColorTypes =
+  | 'blue'
+  | 'green'
+  | 'grey'
+  | 'gray'
+  | 'orange'
+  | 'purple'
+  | 'red'
+
+type Props = {
+  animationDuration?: number,
+  allCaps?: boolean,
+  children?: string | number,
+  className?: string,
+  color?: tagColorTypes,
+  display?: 'block' | 'inlineBlock',
+  filled?: boolean,
+  id?: string | number,
+  isRemovable?: boolean,
+  onRemove: (props: any) => void,
+  pulsing?: boolean,
+  showTooltipOnTruncate: boolean,
+  value?: string | number,
+}
+
+type State = {
+  in: boolean,
+}
+
+class Tag extends Component<Props, State> {
+  static defaultProps = {
+    animationDuration: 100,
+    color: 'grey',
+    display: 'inlineBlock',
+    isRemovable: false,
+    onRemove: noop,
+    showTooltipOnTruncate: true,
+    value: '',
+  }
+
   state = {
     in: true,
   }
@@ -100,40 +139,5 @@ class Tag extends Component<Props> {
     )
   }
 }
-
-type tagColorTypes =
-  | 'blue'
-  | 'green'
-  | 'grey'
-  | 'gray'
-  | 'orange'
-  | 'purple'
-  | 'red'
-
-type Props = {
-  animationDuration: number,
-  allCaps: boolean,
-  children: string | number,
-  color: tagColorTypes,
-  display: 'block' | 'inlineBlock',
-  filled: boolean,
-  id: string | number,
-  isRemovable: boolean,
-  onRemove: () => void,
-  pulsing: boolean,
-  showTooltipOnTruncate: boolean,
-  value: string | number,
-}
-
-Tag.defaultProps = {
-  animationDuration: 100,
-  color: 'grey',
-  display: 'inlineBlock',
-  isRemovable: false,
-  onRemove: noop,
-  showTooltipOnTruncate: true,
-  value: '',
-}
-Tag.displayName = 'Tag'
 
 export default Tag

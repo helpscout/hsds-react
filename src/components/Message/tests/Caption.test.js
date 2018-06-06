@@ -41,10 +41,10 @@ describe('Text', () => {
   })
 
   test('Can set text size', () => {
-    const wrapper = shallow(<Caption size="16">hello</Caption>)
+    const wrapper = shallow(<Caption size="20">hello</Caption>)
     const o = wrapper.find(ui.text)
 
-    expect(o.prop('size')).toBe('16')
+    expect(o.prop('size')).toBe('20')
   })
 
   test('Reduces text size for embed themed Captions', () => {

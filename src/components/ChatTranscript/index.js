@@ -4,11 +4,13 @@ import Item from './Item'
 import classNames from '../../utilities/classNames'
 
 type Props = {
-  className: string,
-  children: any,
+  className?: string,
+  children?: any,
 }
 
 class ChatTranscript extends Component<Props> {
+  static Item = Item
+
   render() {
     const { children, className, ...rest } = this.props
 
@@ -21,7 +23,5 @@ class ChatTranscript extends Component<Props> {
     )
   }
 }
-
-ChatTranscript.Item = Item
 
 export default ChatTranscript
