@@ -14,8 +14,9 @@ export const calculateTimeoutPeriod = timestamp => {
   }
 
   if (diff < HOUR) {
-    // Once every minute
-    return 1000 * MINUTE
+    // Once every 15 seconds
+    // NB: Not every minute as we had problems with multiple timestamp components updating on different intervals
+    return 1000 * 15
   }
 
   if (diff < DAY) {

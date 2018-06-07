@@ -23,3 +23,11 @@ stories.add('formatter', () => (
     formatter={customFormatter}
   />
 ))
+
+stories.add('Time', () => (
+  <Timestamp.Time
+    timestamp={new Date().toISOString()}
+    live
+    formatter={customFormatter}
+  />
+))
