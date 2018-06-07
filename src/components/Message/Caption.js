@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { providerContextTypes } from './propTypes'

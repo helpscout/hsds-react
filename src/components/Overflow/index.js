@@ -1,7 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import { hasContentOverflowX } from '../../utilities/node'
