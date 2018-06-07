@@ -15,11 +15,11 @@ describe('calculateTimeoutPeriod', () => {
     expect(calculateTimeoutPeriod(timestamp)).toEqual(60 * 60 * 1000)
   })
 
-  test('returns a minute (in ms) when the difference is more than an minute', () => {
+  test('returns 15 seconds (in ms) when the difference is more than an minute', () => {
     const timestamp = new Date()
     timestamp.setTime(Date.now() - 60 * 3 * 1000)
 
-    expect(calculateTimeoutPeriod(timestamp)).toEqual(60 * 1000)
+    expect(calculateTimeoutPeriod(timestamp)).toEqual(15 * 1000)
   })
 
   test('returns a second (in ms) when the difference is less than an minute', () => {

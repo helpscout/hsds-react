@@ -31,7 +31,7 @@ describe('Content', () => {
   test('Wraps timestamp in a Text component', () => {
     const wrapper = shallow(<Timestamp timestamp="noon" />)
     const o = wrapper.find(Text)
-    const t = o.find('time')
+    const t = o.find(Timestamp.Time)
 
     expect(o.length).toBeTruthy()
     expect(t).toBeTruthy()
