@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import createContext, { type Context } from 'create-react-context'
+import type { Node } from 'react'
 
 export const ManagerContext: Context<{
   getReferenceRef?: (?HTMLElement) => void,
@@ -8,7 +9,7 @@ export const ManagerContext: Context<{
 }> = createContext({ getReferenceRef: undefined, referenceNode: undefined })
 
 export type ManagerProps = {
-  children: React.Node,
+  children: Node,
 }
 type ManagerState = {
   context: {

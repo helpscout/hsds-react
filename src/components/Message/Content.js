@@ -1,11 +1,13 @@
+// @flow
 import React from 'react'
 import ChatBlock from './ChatBlock'
 import classNames from '../../utilities/classNames'
 import { chatTypes } from './propTypes'
+import type { Chat } from './types'
 
-export const propTypes = chatTypes
+type Props = Chat
 
-const Content = props => {
+const Content = (props: Props) => {
   const {
     children,
     className,
@@ -19,31 +21,33 @@ const Content = props => {
     ...rest
   } = props
 
-  const componentClassName = classNames(
-    'c-MessageContent',
+  const componentClassName = classNames('c-MessageContent', className)
+
+  const innerComponentClassName = classNames(
+    'c-MessageContent__content',
     from && 'is-from',
     ltr && !rtl && 'is-ltr',
     !ltr && rtl && 'is-rtl',
-    to && 'is-to',
-    className
+    to && 'is-to'
   )
 
+  const chatProps = {
+    from,
+    ltr,
+    read,
+    rtl,
+    type,
+    timestamp,
+    to,
+  }
+
   return (
-    <ChatBlock
-      from={from}
-      ltr={ltr}
-      read={read}
-      rtl={rtl}
-      timestamp={timestamp}
-      to={to}
-    >
-      <div className={componentClassName} {...rest}>
+    <ChatBlock {...chatProps} className={componentClassName}>
+      <div className={innerComponentClassName} {...rest}>
         {children}
       </div>
     </ChatBlock>
   )
 }
-
-Content.propTypes = propTypes
 
 export default Content

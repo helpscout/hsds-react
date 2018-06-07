@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { providerContextTypes } from './propTypes'
+import type { ThemeContext } from './types'
 
 type Props = {
   className?: string,
@@ -12,7 +13,9 @@ type Props = {
   wordWrap: boolean,
 }
 
-const Caption = (props: Props, context) => {
+type Context = ThemeContext
+
+const Caption = (props: Props, context: Context) => {
   const { className, children, size, wordWrap, ...rest } = props
   const { theme } = context
   const isThemeEmbed = theme === 'embed'

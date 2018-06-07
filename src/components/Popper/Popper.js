@@ -9,6 +9,7 @@ import PopperJS, {
 } from 'popper.js'
 import { ManagerContext } from './Manager'
 import { safeInvoke, unwrapArray } from './utils'
+import type { Node } from 'react'
 
 type getRefFn = (?HTMLElement) => void
 type ReferenceElement = ReferenceObject | HTMLElement | null
@@ -27,7 +28,7 @@ export type PopperChildrenProps = {|
   scheduleUpdate: () => void,
   arrowProps: PopperArrowProps,
 |}
-export type PopperChildren = PopperChildrenProps => React.Node
+export type PopperChildren = PopperChildrenProps => Node
 
 export type PopperProps = {
   children: PopperChildren,

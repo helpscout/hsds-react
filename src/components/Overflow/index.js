@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
@@ -10,48 +11,55 @@ import {
 } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 
-export const propTypes = {
-  backgroundColor: PropTypes.string,
-  initialHeightAdjustDelay: PropTypes.number,
-  isScrollable: PropTypes.bool,
-  onScroll: PropTypes.func,
-  scrollableRef: PropTypes.func,
+type Props = {
+  backgroundColor?: string,
+  className?: string,
+  children?: any,
+  initialHeightAdjustDelay?: number,
+  isScrollable?: boolean,
+  onScroll: (event: Event) => void,
+  scrollableRef: (ref: ?HTMLElement) => void,
 }
 
-const defaultProps = {
-  initialHeightAdjustDelay: 30,
-  isScrollable: true,
-  onScroll: noop,
-  scrollableRef: noop,
+type State = {
+  shouldFadeOnMount: boolean,
 }
 
-class Overflow extends Component {
-  constructor() {
-    super()
-    this.state = {
-      shouldFadeOnMount: false,
-    }
-    this.faderSize = 32
-    this.faderNodeLeft = null
-    this.faderNodeRight = null
-    this.containerNode = null
-    this.adjustHeight = this.adjustHeight.bind(this)
-    this.handleOnScroll = this.handleOnScroll.bind(this)
+class Overflow extends Component<Props, State> {
+  static defaultProps = {
+    initialHeightAdjustDelay: 30,
+    isScrollable: true,
+    onScroll: noop,
+    scrollableRef: noop,
   }
+
+  state = {
+    shouldFadeOnMount: false,
+  }
+
+  faderSize: number = 32
+  faderNodeLeft: ?HTMLElement = null
+  faderNodeRight: ?HTMLElement = null
+  containerNode: ?HTMLElement = null
 
   componentDidMount() {
     const { initialHeightAdjustDelay } = this.props
     this.adjustHeight()
+    /* istanbul ignore next */
     setTimeout(() => {
+      /* istanbul ignore next */
+      // Initial adjustHeight has been tested. Ignoring due to fragility
+      // of JSDOM + timeouts.
       requestAnimationFrame(() => {
         this.adjustHeight()
       })
     }, initialHeightAdjustDelay)
   }
 
-  adjustHeight() {
+  adjustHeight = () => {
     const node = ReactDOM.findDOMNode(this)
     const containerNode = this.containerNode
+    //$FlowFixMe
     const height = containerNode.clientHeight
     const heightOffset = 20
 
@@ -62,10 +70,11 @@ class Overflow extends Component {
     /* istanbul ignore next */
     // JSDOM does not provide node.clientHeight, which prevents
     // us from testing this calculation
+    //$FlowFixMe
     node.style.height = height ? `${height - heightOffset}px` : null
   }
 
-  applyFadeStyles(event) {
+  applyFadeStyles = (event: Event) => {
     const { isScrollable } = this.props
     const offset = this.faderSize
 
@@ -75,12 +84,14 @@ class Overflow extends Component {
     const transformRight = getFadeRightStyles(event, offset)
 
     requestAnimationFrame(() => {
+      //$FlowFixMe
       this.faderNodeLeft.style.transform = transformLeft
+      //$FlowFixMe
       this.faderNodeRight.style.transform = transformRight
     })
   }
 
-  handleOnScroll(event) {
+  handleOnScroll = (event: Event) => {
     const { onScroll } = this.props
     this.applyFadeStyles(event)
     onScroll(event)
@@ -151,9 +162,5 @@ class Overflow extends Component {
     )
   }
 }
-
-Overflow.propTypes = propTypes
-Overflow.defaultProps = defaultProps
-Overflow.displayName = 'Overflow'
 
 export default Overflow
