@@ -4,6 +4,10 @@ import ChatBlock from '../ChatBlock'
 import Content from '../Content'
 
 const cx = 'c-MessageContent'
+const ui = {
+  main: `.${cx}`,
+  content: '.c-MessageContent__content',
+}
 
 describe('ClassNames', () => {
   test('Has default className', () => {
@@ -29,11 +33,11 @@ describe('ChatBlock', () => {
     expect(o.length).toBeTruthy()
   })
 
-  test('ChatBlock does not inherit component classNames', () => {
+  test('ChatBlock does inherits component classNames', () => {
     const wrapper = shallow(<Content />)
     const o = wrapper.find(ChatBlock)
 
-    expect(o.hasClass(cx)).not.toBeTruthy()
+    expect(o.hasClass(cx)).toBeTruthy()
   })
 
   test('Passes correct props to ChatBlock', () => {
@@ -52,28 +56,28 @@ describe('ChatBlock', () => {
 describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
     const wrapper = shallow(<Content from />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
     const wrapper = shallow(<Content to />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-to')).toBeTruthy()
   })
 
   test('Applies "ltr" styles, if defined', () => {
     const wrapper = shallow(<Content ltr />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-ltr')).toBeTruthy()
   })
 
   test('Applies "rtl" styles, if defined', () => {
     const wrapper = shallow(<Content rtl />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-rtl')).toBeTruthy()
   })

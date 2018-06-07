@@ -137,10 +137,12 @@ describe('Events', () => {
 
 describe('adjustHeight', () => {
   test('Method fires on mount', () => {
-    const spy = jest.spyOn(Overflow.prototype, 'adjustHeight')
     const wrapper = mount(<Overflow />)
+    const spy = jest.fn()
+    wrapper.node.adjustHeight = spy
 
-    wrapper.mount()
+    wrapper.instance().componentDidMount()
+
     expect(spy).toHaveBeenCalled()
     spy.mockReset()
     spy.mockRestore()

@@ -22,7 +22,7 @@ type Author = {
 type Props = {
   action?: string,
   attachments: Array<Object>,
-  author?: Author,
+  author: Author,
   body?: string,
   chatId?: number | string,
   children?: any,

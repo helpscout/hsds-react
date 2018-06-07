@@ -2,10 +2,11 @@
 import React from 'react'
 import { ManagerContext } from './Manager'
 import { safeInvoke, unwrapArray } from './utils'
+import type { Node } from 'react'
 
 export type ReferenceChildrenProps = { ref: (?HTMLElement) => void }
 export type ReferenceProps = {
-  children: ReferenceChildrenProps => React.Node,
+  children: ReferenceChildrenProps => Node,
   innerRef?: (?HTMLElement) => void,
 }
 

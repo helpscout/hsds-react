@@ -1,15 +1,19 @@
-@import "pack/seed-family/_index";
-@import "pack/seed-this/_index";
-@import "../../configs/color";
+@import 'pack/seed-family/_index';
+@import 'pack/seed-this/_index';
+@import '../../configs/color';
 
 .c-MessageContent {
-  @import "../../resets/base";
-  max-width: 500px;
-  text-align: left;
+  @import '../../resets/base';
+  margin-bottom: 20px;
 
-  // Direction
-  &.is-rtl {
-    direction: rtl;
-    text-align: right;
+  &__content {
+    max-width: 500px;
+    text-align: left;
+
+    // Direction
+    &.is-rtl {
+      direction: rtl;
+      text-align: right;
+    }
   }
 }

@@ -7,8 +7,8 @@ type Props = {
   children?: any,
   className?: string,
   duration: number,
-  durationOpen?: ?number,
-  durationClose?: ?number,
+  durationOpen?: number,
+  durationClose?: number,
   isOpen: boolean,
   onOpen: () => void,
   onClose: () => void,
@@ -100,7 +100,8 @@ class Collapsible extends Component<Props, State> {
           this.safeSetState({
             animationState: 'opening',
             height: this.heightNode
-              ? this.heightNode.scrollHeight
+              ? /* istanbul ignore next */
+                this.heightNode.scrollHeight
               : /* istanbul ignore next */
                 0,
           })
