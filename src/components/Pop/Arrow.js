@@ -1,9 +1,20 @@
+// @flow
 import React from 'react'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
-import css from './styles/PopArrow.css'
+import css from './styles/PopArrow.css.js'
 
-const ArrowComponent = props => {
+type Props = {
+  className?: string,
+  children?: any,
+  placement: string,
+  offset: number,
+  size: number,
+  styles: Object,
+  theme: Object | string,
+}
+
+const ArrowComponent = (props: Props) => {
   const {
     className,
     children,
@@ -62,6 +73,7 @@ const Arrow = styled(ArrowComponent)(css)
 
 Arrow.defaultProps = {
   offset: 0,
+  placement: 'top',
   size: 5,
 }
 

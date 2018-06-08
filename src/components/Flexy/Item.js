@@ -1,12 +1,19 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-export const propTypes = {
-  inline: PropTypes.bool,
+type Props = {
+  children?: any,
+  className?: string,
+  inline: boolean,
 }
 
-class Item extends Component {
+class Item extends Component<Props> {
+  static defaultProps = {
+    inline: false,
+  }
+  static displayName = 'Flexy.Item'
+
   render() {
     const { children, className, inline, ...rest } = this.props
 
@@ -22,8 +29,5 @@ class Item extends Component {
     )
   }
 }
-
-Item.propTypes = propTypes
-Item.displayName = 'FlexyItem'
 
 export default Item

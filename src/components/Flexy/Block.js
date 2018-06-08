@@ -1,7 +1,15 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import classNames from '../../utilities/classNames'
 
-class Block extends Component {
+type Props = {
+  children?: any,
+  className?: string,
+}
+
+class Block extends Component<Props> {
+  static displayName = 'Flexy.Block'
+
   render() {
     const { children, className, ...rest } = this.props
 
@@ -14,7 +22,5 @@ class Block extends Component {
     )
   }
 }
-
-Block.displayName = 'FlexyBlock'
 
 export default Block

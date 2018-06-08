@@ -1,17 +1,14 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-export const propTypes = {
-  className: PropTypes.string,
-  focusable: PropTypes.bool,
+type Props = {
+  children?: any,
+  className?: string,
+  focusable: boolean,
 }
 
-const defaultProps = {
-  focusable: false,
-}
-
-const VisuallyHidden = props => {
+const VisuallyHidden = (props: Props) => {
   const { children, className, focusable, ...rest } = props
 
   const componentClassName = classNames(
@@ -29,7 +26,8 @@ const VisuallyHidden = props => {
   )
 }
 
-VisuallyHidden.propTypes = propTypes
-VisuallyHidden.defaultProps = defaultProps
+VisuallyHidden.defaultProps = {
+  focusable: false,
+}
 
 export default VisuallyHidden

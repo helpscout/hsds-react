@@ -1,8 +1,9 @@
-export const isString = string => {
+// @flow
+export const isString = (string: string): boolean => {
   return typeof string === 'string'
 }
 
-export const nameToInitials = (name = '') => {
+export const nameToInitials = (name: string = ''): string => {
   // Returning early if undefined to avoid casting undefined to "undefined"
   if (!name) {
     return ''
@@ -23,21 +24,26 @@ export const nameToInitials = (name = '') => {
   return words.length === 1 ? words[0] : words[0] + words[words.length - 1]
 }
 
-export const isWordString = word => {
-  return isString(word) && word.length
+export const isWordString = (word: string | any): boolean => {
+  return !!(isString(word) && word.length)
 }
 
-export const isWord = word => {
+export const isWord = (word: string | any): boolean => {
   return typeof word === 'number' || isWordString(word)
 }
 
-export const wordHasSpaces = word => {
-  return isWordString(word) && word.trim().indexOf(' ') > 0
+export const wordHasSpaces = (word: string | any): boolean => {
+  return !!(isWordString(word) && word.trim().indexOf(' ') > 0)
 }
 
 // Source
 // https://github.com/kahwee/truncate-middle
-export const truncateMiddle = (word, startLen, endLen, ellip) => {
+export const truncateMiddle = (
+  word: string | any,
+  startLen: number,
+  endLen: number,
+  ellip: string | any
+): string => {
   if (!isWordString(word)) {
     return ''
   }
@@ -61,7 +67,7 @@ export const truncateMiddle = (word, startLen, endLen, ellip) => {
   }
 }
 
-export const stripUrlPrefix = url => {
+export const stripUrlPrefix = (url: string): string => {
   if (!isString(url)) return url
   return url.replace(
     /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/g,
@@ -69,7 +75,7 @@ export const stripUrlPrefix = url => {
   )
 }
 
-export const newlineToHTML = string => {
+export const newlineToHTML = (string: string): string => {
   return string.trim().replace(/\r?\n/g, '<br>')
 }
 
@@ -79,7 +85,7 @@ export const newlineToHTML = string => {
  * @param   {number} count
  * @returns {string}
  */
-export const repeat = (pattern, count) => {
+export const repeat = (pattern: string, count: number): string => {
   if (count < 1) return ''
   let result = ''
   while (count > 1) {

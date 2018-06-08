@@ -1,12 +1,29 @@
+// @flow
 import React, { Component } from 'react'
 import styled from '../styled'
 import Animate from '../Animate'
 import Pop from '../Pop'
 import Popper from './Popper'
 import classNames from '../../utilities/classNames'
-import css from './styles/Tooltip.css'
+import css from './styles/Tooltip.css.js'
+import type { PopProps, Placements } from '../Pop/types'
+
+type Props = {|
+  ...PopProps,
+  renderContent: () => void,
+  title?: any,
+|}
 
 class Tooltip extends Component<Props> {
+  static defaultProps = {
+    animationDelay: 100,
+    animationDuration: 200,
+    animationSequence: 'fade up',
+    isOpen: false,
+    placement: 'top',
+    triggerOn: 'hover',
+  }
+
   render() {
     const {
       className,
@@ -57,49 +74,6 @@ class Tooltip extends Component<Props> {
       </Pop>
     )
   }
-}
-
-type Placements =
-  | 'auto-start'
-  | 'auto'
-  | 'auto-end'
-  | 'top-start'
-  | 'top'
-  | 'top-end'
-  | 'right-start'
-  | 'right'
-  | 'right-end'
-  | 'bottom-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'left-end'
-  | 'left'
-  | 'left-start'
-
-type Props = {
-  animationDelay: number | string,
-  animationDuration: number | string,
-  animationEasing: string,
-  animationSequence: string | Array<string>,
-  arrowClassName: string,
-  closeOnBodyClick: boolean,
-  closeOnEscPress: boolean,
-  display: string,
-  isOpen: boolean,
-  maxWidth: number,
-  placement: Placements,
-  renderContent: () => void,
-  triggerOn: 'click' | 'hover',
-  showArrow: boolean,
-}
-
-Tooltip.defaultProps = {
-  animationDelay: 100,
-  animationDuration: 200,
-  animationSequence: 'fade up',
-  isOpen: false,
-  placement: 'top',
-  triggerOn: 'hover',
 }
 
 export default styled(Tooltip)(css)

@@ -16,7 +16,7 @@ type Props = {
   showTooltipOnTruncate: boolean,
   title?: string,
   tooltipPlacement: string,
-  type: 'auto' | 'start' | 'middle' | 'end',
+  type?: 'auto' | 'start' | 'middle' | 'end',
 }
 
 type State = {
@@ -34,10 +34,10 @@ class Truncate extends Component<Props, State> {
   }
   node = null
 
-  constructor(props: Object) {
+  constructor(props: Props) {
     super(props)
     this.state = {
-      isTruncated: props.type,
+      isTruncated: !!props.type,
     }
   }
 
@@ -53,10 +53,10 @@ class Truncate extends Component<Props, State> {
     this.node = null
   }
 
-  componentWillReceiveProps(nextProps: Object) {
+  componentWillReceiveProps(nextProps: Props) {
     if (nextProps.type !== this.props.type) {
       this.setState({
-        isTruncated: this.isTruncated(nextProps.props),
+        isTruncated: this.isTruncated(nextProps),
       })
     }
   }
@@ -70,7 +70,7 @@ class Truncate extends Component<Props, State> {
     this.setState({ isTruncated })
   }
 
-  isTruncated = (props: Object = {}) => {
+  isTruncated = (props: Props) => {
     if (props.type !== 'auto') return true
     /* istanbul ignore next */
     if (!this.node) return false
