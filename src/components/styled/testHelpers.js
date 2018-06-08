@@ -5,7 +5,7 @@ import styled from './index'
  * Removes style tags from the <head> and resets styled StyleSheets.
  */
 export const resetStyles = () => {
-  //$FlowFixMe
+  // $FlowFixMe
   document.head.innerHTML = ''
   if (styled && styled.StyleSheet) {
     styled.StyleSheet.__dangerouslyResetStyleSheet()
@@ -28,6 +28,6 @@ export const getCSS = (el: ?HTMLElement) => el && window.getComputedStyle(el)
  * @returns {string}
  */
 export const getCSSProp = (el: ?HTMLElement, prop?: string) => {
-  //$FlowFixMe
+  // $FlowFixMe
   return prop ? getCSS(el)[prop] : ''
 }

@@ -1,20 +1,24 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-export const propTypes = {
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  fixed: PropTypes.bool,
-  transparent: PropTypes.bool,
+type Props = {
+  children?: any,
+  className?: string,
+  onClick: () => void,
+  fixed: boolean,
+  transparent: boolean,
 }
 
-const defaultProps = {
-  onClick: noop,
-}
+class Overlay extends Component<Props> {
+  static defaultProps = {
+    onClick: noop,
+    fixed: false,
+    transparent: false,
+  }
 
-class Overlay extends Component {
   render() {
     const {
       children,
@@ -44,8 +48,5 @@ class Overlay extends Component {
     )
   }
 }
-
-Overlay.propTypes = propTypes
-Overlay.defaultProps = defaultProps
 
 export default Overlay

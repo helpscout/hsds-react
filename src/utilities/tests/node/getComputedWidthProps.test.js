@@ -1,7 +1,7 @@
 import { getComputedWidthProps } from '../../node'
 
 test('Returns false if node (arg) is invalid', () => {
-  expect(getComputedWidthProps()).not.toBeTruthy()
+  expect(getComputedWidthProps()).toEqual({})
 })
 
 test('Accepts document as a node prop', () => {

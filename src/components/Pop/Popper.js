@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
@@ -5,8 +6,11 @@ import Portal from '../Portal'
 import Arrow from './Arrow'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import type { PopProps, Placement, PopperStyles } from './types'
 
-class Popper extends Component {
+type Props = PopProps
+
+class Popper extends Component<Props> {
   static defaultProps = {
     animationDelay: 0,
     animationDuration: 0,
@@ -27,7 +31,7 @@ class Popper extends Component {
     this.portal = null
   }
 
-  handleOnClick = event => {
+  handleOnClick = (event: Event) => {
     /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
@@ -110,7 +114,7 @@ class Popper extends Component {
  * @param   {object} props
  * @returns {object}
  */
-export const enhancePopperStyles = (props = {}) => {
+export const enhancePopperStyles = (props: PopperStyles = {}) => {
   const options = {
     arrowSize: props.arrowSize || 5,
     offset: props.offset || 0,

@@ -1,9 +1,12 @@
+// @flow
 import closest from 'closest'
 import { isNodeEnv } from './other'
 
+type Node = HTMLElement | any
+type Scope = Node | Document
 const Element = window.Element
 
-export const isNodeElement = node => {
+export const isNodeElement = (node: Scope): boolean => {
   return (
     node &&
     (node instanceof Element ||
@@ -12,7 +15,7 @@ export const isNodeElement = node => {
   )
 }
 
-export const getNodeScope = nodeScope => {
+export const getNodeScope = (nodeScope: Scope): Scope => {
   return nodeScope && isNodeElement(nodeScope)
     ? nodeScope
     : nodeScope === window
@@ -20,13 +23,14 @@ export const getNodeScope = nodeScope => {
       : document
 }
 
-export const applyStylesToNode = (node, styles = {}) => {
+export const applyStylesToNode = (node: Node, styles: Object = {}): Node => {
   if (!node) return false
   if (!isNodeElement(node)) return node
   if (typeof styles !== 'object') return node
 
-  Object.keys(styles).forEach(prop => {
+  Object.keys(styles).forEach((prop: number | string) => {
     const value = styles[prop]
+    // $FlowFixMe
     node.style[prop] =
       typeof value === 'number' && prop !== 'zIndex' ? `${value}px` : value
   })
@@ -34,9 +38,12 @@ export const applyStylesToNode = (node, styles = {}) => {
   return node
 }
 
-export const getComputedHeightProps = node => {
-  if (!isNodeElement(node)) return
+export const getComputedHeightProps = (
+  node: Node
+): Object | { height: number, offset: number } => {
+  if (!isNodeElement(node)) return {}
   const el = node !== document ? node : document.body
+  // $FlowFixMe
   const height = el.offsetHeight
 
   const {
@@ -59,9 +66,12 @@ export const getComputedHeightProps = node => {
   }
 }
 
-export const getComputedWidthProps = node => {
-  if (!isNodeElement(node)) return
+export const getComputedWidthProps = (
+  node: Node
+): Object | { width: number, offset: number } => {
+  if (!isNodeElement(node)) return {}
   const el = node !== document ? node : document.body
+  // $FlowFixMe
   const width = el.offsetWidth
 
   const {
@@ -84,19 +94,19 @@ export const getComputedWidthProps = node => {
   }
 }
 
-export const getComputedOffsetTop = node => {
-  if (!isNodeElement(node)) return
+export const getComputedOffsetTop = (node: Node): number => {
+  if (!isNodeElement(node)) return 0
   const offset = getComputedHeightProps(document).offset
   return node.getBoundingClientRect().top + offset / 2
 }
 
-export const getComputedOffsetLeft = node => {
-  if (!isNodeElement(node)) return
+export const getComputedOffsetLeft = (node: Node): number => {
+  if (!isNodeElement(node)) return 0
   const offset = getComputedWidthProps(document).offset
   return node.getBoundingClientRect().left + offset / 2
 }
 
-export const getViewportHeight = scope => {
+export const getViewportHeight = (scope: Scope): number => {
   const node = getNodeScope(scope)
   const { height, offset } = getComputedHeightProps(node)
 
@@ -105,7 +115,7 @@ export const getViewportHeight = scope => {
   return height > window.innerHeight ? height : window.innerHeight - offset
 }
 
-export const getViewportWidth = scope => {
+export const getViewportWidth = (scope: Scope): number => {
   const node = getNodeScope(scope)
   const { width, offset } = getComputedWidthProps(node)
 
@@ -126,7 +136,12 @@ export const getViewportWidth = scope => {
  * @option    complete  bool      node must be in complete view, if true
  * @return    bool                True/False if node is in view
  */
-export const isNodeVisible = options => {
+export const isNodeVisible = (options: {
+  node: Node,
+  scope: Scope,
+  offset: number,
+  complete: boolean,
+}) => {
   if (!options || typeof options !== 'object') return false
   const { node, scope, offset, complete } = options
 
@@ -147,7 +162,9 @@ export const isNodeVisible = options => {
 
   const viewportHeight = isWindow
     ? window.innerHeight
-    : nodeScope.getBoundingClientRect().height
+    : // $FlowFixMe
+      nodeScope.getBoundingClientRect().height
+  // $FlowFixMe
   const viewportTop = isWindow ? window.scrollY : nodeScope.scrollTop
   const viewportBottom = isWindow
     ? window.innerHeight
@@ -162,7 +179,7 @@ export const isNodeVisible = options => {
   )
 }
 
-export const getScrollParent = node => {
+export const getScrollParent = (node: Node): Node => {
   /* istanbul ignore else */
   if (!isNodeElement(node)) {
     return null
@@ -176,7 +193,7 @@ export const getScrollParent = node => {
   }
 }
 
-export const isNodeScrollable = node => {
+export const isNodeScrollable = (node: Node): boolean => {
   /* istanbul ignore next */
   // Cannot be tested in JSDOM. scrollHeight and clientHeight do not exist.
   return node && isNodeElement(node)
@@ -184,11 +201,11 @@ export const isNodeScrollable = node => {
     : false
 }
 
-export const getClosestDocument = node => {
+export const getClosestDocument = (node: Node): Node => {
   return node && isNodeElement(node) ? node.ownerDocument : document
 }
 
-export const hasContentOverflowX = node => {
+export const hasContentOverflowX = (node: Node): boolean => {
   // Cannot be tested in JSDOM (missing measurements for props)
   /* istanbul ignore else */
   if (!isNodeElement(node)) return false
@@ -196,7 +213,7 @@ export const hasContentOverflowX = node => {
   return node.clientWidth < node.scrollWidth
 }
 
-export const hasContentOverflowY = node => {
+export const hasContentOverflowY = (node: Node): boolean => {
   // Cannot be tested in JSDOM (missing measurements for props)
   /* istanbul ignore else */
   if (!isNodeElement(node)) return false
@@ -204,7 +221,7 @@ export const hasContentOverflowY = node => {
   return node.clientHeight < node.scrollHeight
 }
 
-export const getClosestNode = (node, selector) => {
+export const getClosestNode = (node: Node, selector: string): Node => {
   if (!isNodeElement(node)) return null
   if (typeof selector !== 'string') return null
   return closest(node, selector)

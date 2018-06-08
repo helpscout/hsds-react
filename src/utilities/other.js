@@ -1,10 +1,11 @@
-export function noop() {}
+// @flow
+export const noop = () => {}
 
-export const requestAnimationFrame = callback => {
+export const requestAnimationFrame = (callback: () => void): mixed => {
   // This method was mostly created for node testing.
   // JSDOM (used by Enzyme) doesn't support requestAnimationFrame.
   /* istanbul ignore next */
-  window.requestAnimationFrame
+  return window.requestAnimationFrame
     ? window.requestAnimationFrame(callback)
     : callback()
 }

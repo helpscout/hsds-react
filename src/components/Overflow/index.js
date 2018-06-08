@@ -37,9 +37,9 @@ class Overflow extends Component<Props, State> {
   }
 
   faderSize: number = 32
-  faderNodeLeft: ?HTMLElement = null
-  faderNodeRight: ?HTMLElement = null
-  containerNode: ?HTMLElement = null
+  faderNodeLeft: ?HTMLElement
+  faderNodeRight: ?HTMLElement
+  containerNode: HTMLElement
 
   componentDidMount() {
     const { initialHeightAdjustDelay } = this.props
@@ -58,7 +58,6 @@ class Overflow extends Component<Props, State> {
   adjustHeight = () => {
     const node = ReactDOM.findDOMNode(this)
     const containerNode = this.containerNode
-    //$FlowFixMe
     const height = containerNode.clientHeight
     const heightOffset = 20
 
@@ -69,7 +68,7 @@ class Overflow extends Component<Props, State> {
     /* istanbul ignore next */
     // JSDOM does not provide node.clientHeight, which prevents
     // us from testing this calculation
-    //$FlowFixMe
+    // $FlowFixMe
     node.style.height = height ? `${height - heightOffset}px` : null
   }
 
@@ -83,9 +82,9 @@ class Overflow extends Component<Props, State> {
     const transformRight = getFadeRightStyles(event, offset)
 
     requestAnimationFrame(() => {
-      //$FlowFixMe
+      // $FlowFixMe
       this.faderNodeLeft.style.transform = transformLeft
-      //$FlowFixMe
+      // $FlowFixMe
       this.faderNodeRight.style.transform = transformRight
     })
   }
@@ -147,7 +146,7 @@ class Overflow extends Component<Props, State> {
         {faderLeftMarkup}
         <div
           className="c-Overflow__container"
-          ref={node => {
+          ref={(node: any) => {
             this.containerNode = node
             scrollableRef(node)
           }}

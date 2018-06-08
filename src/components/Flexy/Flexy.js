@@ -1,22 +1,26 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import Block from './Block'
 import Item from './Item'
 import classNames from '../../utilities/classNames'
-import { alignTypes, gapTypes, justTypes } from './propTypes'
+import type { Align, Gap, Just } from './types.js'
 
-export const propTypes = {
-  align: alignTypes,
-  className: PropTypes.string,
-  gap: gapTypes,
-  just: justTypes,
+type Props = {
+  align: Align,
+  children?: any,
+  className?: string,
+  gap: Gap,
+  just: Just,
 }
 
-const defaultProps = {
-  gap: 'sm',
-}
+class Flexy extends Component<Props> {
+  static defaultProps = {
+    gap: 'sm',
+  }
 
-class Flexy extends Component {
+  static Block = Block
+  static Item = Item
+
   render() {
     const { align, children, className, gap, just, ...rest } = this.props
 
@@ -35,11 +39,5 @@ class Flexy extends Component {
     )
   }
 }
-
-Flexy.propTypes = propTypes
-Flexy.defaultProps = defaultProps
-Flexy.Block = Block
-Flexy.Item = Item
-Flexy.displayName = 'Flexy'
 
 export default Flexy

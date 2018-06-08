@@ -1,24 +1,22 @@
+// @flow
 import React, { Component } from 'react'
 import { calculateTimeoutPeriod } from '../../utilities/timestamp'
-import PropTypes from 'prop-types'
+import type { Timestamp } from './types'
 
-export const propTypes = {
-  formatter: PropTypes.func,
-  live: PropTypes.bool,
+type Props = {
+  className?: string,
+  formatter: (timestamp: Timestamp) => string,
+  live: boolean,
+  timestamp: Timestamp,
 }
 
-const defaultProps = {
-  formatter: timestamp => timestamp,
-  live: false,
-}
-
-class Time extends Component {
-  constructor(props) {
-    super(props)
-
-    this.timeoutId = undefined
-    this._isMounted = false
+class Time extends Component<Props> {
+  static defaultProps = {
+    formatter: (timestamp: Timestamp) => timestamp,
+    live: false,
   }
+  timeoutId = undefined
+  _isMounted = false
 
   componentDidMount() {
     const { live } = this.props
@@ -30,8 +28,8 @@ class Time extends Component {
     }
   }
 
-  componentDidUpdate(lastProps) {
-    const { live: lastLive, timestamp: lastTimestamp } = lastProps
+  componentDidUpdate(prevProps: Props) {
+    const { live: lastLive, timestamp: lastTimestamp } = prevProps
     const { live, timestamp } = this.props
 
     if (live !== lastLive || timestamp !== lastTimestamp) {
@@ -55,7 +53,7 @@ class Time extends Component {
     }
   }
 
-  tick(refresh) {
+  tick(refresh: any) {
     const { live, timestamp } = this.props
 
     if (!this._isMounted || !live) {
@@ -83,8 +81,5 @@ class Time extends Component {
     )
   }
 }
-
-Time.propTypes = propTypes
-Time.defaultProps = defaultProps
 
 export default Time

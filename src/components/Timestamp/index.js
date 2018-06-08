@@ -1,25 +1,28 @@
+// @flow
 import React, { Component } from 'react'
 import classNames from '../../utilities/classNames'
-import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Text from '../Text'
 import Time from './Time'
 
-export const propTypes = {
-  formatter: PropTypes.func,
-  live: PropTypes.bool,
-  read: PropTypes.bool,
-  muted: PropTypes.bool,
-  timestamp: PropTypes.string,
+type Props = {
+  children?: any,
+  className?: string,
+  formatter?: () => string,
+  live: boolean,
+  muted: boolean,
+  read: boolean,
+  timestamp: string | number,
 }
 
-const defaultProps = {
-  read: false,
-  timestamp: '9:41am',
-}
+class Timestamp extends Component<Props> {
+  static defaultProps = {
+    read: false,
+    timestamp: '9:41am',
+  }
+  static Time = Time
 
-class Timestamp extends Component {
   render() {
     const {
       children,
@@ -56,9 +59,5 @@ class Timestamp extends Component {
     )
   }
 }
-
-Timestamp.propTypes = propTypes
-Timestamp.defaultProps = defaultProps
-Timestamp.Time = Time
 
 export default Timestamp

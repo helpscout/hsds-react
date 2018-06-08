@@ -9,21 +9,14 @@ import Truncate from '../Truncate'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-type tagColorTypes =
-  | 'blue'
-  | 'green'
-  | 'grey'
-  | 'gray'
-  | 'orange'
-  | 'purple'
-  | 'red'
+type Color = 'blue' | 'green' | 'grey' | 'gray' | 'orange' | 'purple' | 'red'
 
 type Props = {
   animationDuration?: number,
   allCaps?: boolean,
   children?: string | number,
   className?: string,
-  color?: tagColorTypes,
+  color?: Color,
   display?: 'block' | 'inlineBlock',
   filled?: boolean,
   id?: string | number,
