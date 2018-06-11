@@ -8,6 +8,7 @@ import Heading from '../Heading'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { newlineToHTML } from '../../utilities/strings'
 
 export const ITEM_TYPES = {
   lineItem: 'line_item',
@@ -135,7 +136,7 @@ const Item = (props: Props) => {
   const contentMarkup = body ? (
     <div
       className={contentClassName}
-      dangerouslySetInnerHTML={{ __html: body }}
+      dangerouslySetInnerHTML={{ __html: newlineToHTML(body) }}
     />
   ) : (
     <div className={contentClassName}>{children}</div>
