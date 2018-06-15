@@ -116,3 +116,9 @@ stories.add('sizes', () => (
     <Input size="sm" autoFocus placeholder="Small" />
   </div>
 ))
+
+stories.add('value', () => (
+  <div>
+    <Input autoFocus placeholder="Regular" value="Derek Zoolander" />
+  </div>
+))

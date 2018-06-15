@@ -1,5 +1,5 @@
 // @flow
-export const isString = (string: string): boolean => {
+export const isString = (string: string | any): boolean => {
   return typeof string === 'string'
 }
 

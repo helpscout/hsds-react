@@ -1,22 +1,25 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import { isFirefox } from '../../utilities/browser'
 import { noop } from '../../utilities/other'
 
-export const propTypes = {
-  isDisabled: PropTypes.bool,
-  direction: PropTypes.oneOf(['x', 'y']),
-  stopPropagation: PropTypes.bool,
-  onWheel: PropTypes.func,
-}
-const defaultProps = {
-  isDisabled: false,
-  direction: 'y',
-  stopPropagation: false,
-  onWheel: noop,
+type Props = {
+  children?: any,
+  direction: 'x' | 'y',
+  isDisabled: boolean,
+  stopPropagation: boolean,
+  onWheel: (event: Event) => void,
 }
 
-class ScrollLock extends Component {
+class ScrollLock extends Component<Props> {
+  static defaultProps = {
+    isDisabled: false,
+    direction: 'y',
+    stopPropagation: false,
+    onWheel: noop,
+  }
+
   render() {
     const {
       children,
@@ -32,7 +35,7 @@ class ScrollLock extends Component {
 
     const child = React.Children.only(children)
     const events = {
-      onWheel: event => {
+      onWheel: (event: Event) => {
         handleWheelEvent(event, direction, stopPropagation)
         onWheel(event)
         if (child.props.onWheel) child.props.onWheel(event)
@@ -43,7 +46,11 @@ class ScrollLock extends Component {
   }
 }
 
-function handleWheelEvent(event, direction, stopPropagation) {
+function handleWheelEvent(
+  event: Event,
+  direction: 'x' | 'y',
+  stopPropagation: boolean
+) {
   if (direction === 'x') {
     return scrollLockX(event, stopPropagation)
   } else {
@@ -51,7 +58,7 @@ function handleWheelEvent(event, direction, stopPropagation) {
   }
 }
 
-export function scrollLockX(event, stopPropagation) {
+export function scrollLockX(event: Event, stopPropagation: boolean) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM
@@ -73,7 +80,7 @@ export function scrollLockX(event, stopPropagation) {
   }
 }
 
-export function scrollLockY(event, stopPropagation) {
+export function scrollLockY(event: Event, stopPropagation: boolean) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM
@@ -94,8 +101,5 @@ export function scrollLockY(event, stopPropagation) {
     event.preventDefault()
   }
 }
-
-ScrollLock.propTypes = propTypes
-ScrollLock.defaultProps = defaultProps
 
 export default ScrollLock

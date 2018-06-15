@@ -1,5 +1,5 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import Backdrop from './Backdrop'
 import Resizer from './Resizer'
 import Static from './Static'
@@ -9,67 +9,92 @@ import { scrollLockY } from '../ScrollLock'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
-import { standardSizeTypes, stateTypes } from '../../constants/propTypes'
-import { getTextAreaLineCurrent, getTextAreaLineTotal } from './helpers'
-
-export const propTypes = {
-  autoFocus: PropTypes.bool,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  forceAutoFocusTimeout: PropTypes.number,
-  helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  id: PropTypes.string,
-  inputRef: PropTypes.func,
-  isFocused: PropTypes.bool,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  modalhelpText: PropTypes.string,
-  multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  name: PropTypes.string,
-  offsetAmount: PropTypes.number,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onWheel: PropTypes.func,
-  placeholder: PropTypes.string,
-  prefix: PropTypes.string,
-  readOnly: PropTypes.bool,
-  removeStateStylesOnFocus: PropTypes.bool,
-  resizable: PropTypes.bool,
-  seamless: PropTypes.bool,
-  size: standardSizeTypes,
-  state: stateTypes,
-  suffix: PropTypes.string,
-  type: PropTypes.string,
-  value: PropTypes.string,
-}
-
-const defaultProps = {
-  autoFocus: false,
-  disabled: false,
-  forceAutoFocusTimeout: 120,
-  inputRef: noop,
-  isFocused: false,
-  multiline: null,
-  offsetAmount: 0,
-  onBlur: noop,
-  onChange: noop,
-  onFocus: noop,
-  onWheel: noop,
-  readOnly: false,
-  removeStateStylesOnFocus: false,
-  resizable: false,
-  seamless: false,
-  type: 'text',
-  value: '',
-}
+import { noop, requestAnimationFrame } from '../../utilities/other'
+import {
+  getTextAreaLineCurrent,
+  getTextAreaLineTotal,
+  moveCursorToEnd,
+} from './helpers'
+import type { UISizes, UIStates } from '../../constants/types'
 
 const uniqueID = createUniqueIDFactory('Input')
 
-class Input extends Component {
-  constructor(props) {
+type Props = {
+  autoFocus: boolean,
+  className: string,
+  disabled: boolean,
+  forceAutoFocusTimeout: number,
+  helpText: any,
+  hintText: any,
+  id: string,
+  inputRef: (ref: HTMLElement) => void,
+  isFocused: boolean,
+  label: any,
+  modalhelpText: string,
+  moveCursorToEnd: boolean,
+  multiline: boolean | number,
+  maxHeight: number | string,
+  name: string,
+  offsetAmount: number,
+  onBlur: (event: Event) => void,
+  onChange: (event: Event) => void,
+  onFocus: (event: Event) => void,
+  onWheel: (event: Event) => void,
+  placeholder: string,
+  prefix: string,
+  readOnly: boolean,
+  removeStateStylesOnFocus: boolean,
+  resizable: boolean,
+  seamless: boolean,
+  size: UISizes,
+  state: UIStates,
+  style: Object,
+  suffix: string,
+  type: string,
+  value: string,
+}
+
+type State = {
+  id: string,
+  height: number | null,
+  state: string | null,
+  value: string,
+}
+
+type InputNode =
+  | HTMLDivElement
+  | HTMLElement
+  | HTMLInputElement
+  | HTMLTextAreaElement
+  | null
+
+class Input extends Component<Props, State> {
+  static defaultProps = {
+    autoFocus: false,
+    disabled: false,
+    forceAutoFocusTimeout: 120,
+    inputRef: noop,
+    isFocused: false,
+    moveCursorToEnd: true,
+    multiline: null,
+    offsetAmount: 0,
+    onBlur: noop,
+    onChange: noop,
+    onFocus: noop,
+    onWheel: noop,
+    readOnly: false,
+    removeStateStylesOnFocus: false,
+    resizable: false,
+    seamless: false,
+    type: 'text',
+    value: '',
+  }
+  static Backdrop = Backdrop
+  static Resizer = Resizer
+  static Static = Static
+  inputNode: InputNode = null
+
+  constructor(props: Props) {
     super()
     this.state = {
       id: props.id || uniqueID(),
@@ -77,18 +102,13 @@ class Input extends Component {
       state: props.state,
       value: props.value,
     }
-    this.inputNode = null
-    this.handleOnChange = this.handleOnChange.bind(this)
-    this.handleOnInputFocus = this.handleOnInputFocus.bind(this)
-    this.handleOnWheel = this.handleOnWheel.bind(this)
-    this.handleExpandingResize = this.handleExpandingResize.bind(this)
   }
 
   componentDidMount() {
     this.maybeForceAutoFocus()
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     const { isFocused, value, state } = nextProps
     const prevValue = this.state.value
     const prevState = this.state.state
@@ -117,6 +137,7 @@ class Input extends Component {
 
     if (autoFocus || isFocused) {
       this.forceAutoFocus()
+      this.moveCursorToEnd()
     }
   }
 
@@ -149,32 +170,43 @@ class Input extends Component {
     }
   }
 
-  handleOnChange(e) {
-    const value = e.currentTarget.value
+  handleOnChange = (event: Event) => {
+    const value = event.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
     this.scrollToBottom()
   }
 
-  handleOnInputFocus(e) {
+  handleOnInputFocus = (event: Event) => {
     const { onFocus, removeStateStylesOnFocus } = this.props
     const { state } = this.state
     if (removeStateStylesOnFocus && state) {
       this.setState({ state: null })
     }
-    onFocus(e)
+    this.moveCursorToEnd()
+    onFocus(event)
   }
 
-  handleOnWheel(event) {
+  handleOnWheel = (event: Event) => {
     const { onWheel } = this.props
     const stopPropagation = true
     scrollLockY(event, stopPropagation)
     onWheel(event)
   }
 
-  handleExpandingResize(height) {
+  handleExpandingResize = (height: number) => {
     this.setState({ height })
     this.forceAutoFocus()
+  }
+
+  moveCursorToEnd = () => {
+    /* istanbul ignore next */
+    // Not reliably testable in JSDOM + Enzyme
+    if (!this.inputNode || !this.props.moveCursorToEnd) return
+    requestAnimationFrame(() => {
+      /* istanbul ignore next */
+      moveCursorToEnd(this.inputNode)
+    })
   }
 
   render() {
@@ -190,6 +222,7 @@ class Input extends Component {
       isFocused,
       label,
       maxHeight,
+      moveCursorToEnd,
       multiline,
       name,
       offsetAmount,
@@ -286,6 +319,7 @@ class Input extends Component {
 
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...rest,
+      autoFocus,
       className: fieldClassName,
       id: inputID,
       onChange: handleOnChange,
@@ -293,7 +327,6 @@ class Input extends Component {
         this.inputNode = node
         inputRef(node)
       },
-      autoFocus,
       disabled,
       name,
       onBlur,
@@ -327,11 +360,5 @@ class Input extends Component {
     )
   }
 }
-
-Input.propTypes = propTypes
-Input.defaultProps = defaultProps
-Input.Backdrop = Backdrop
-Input.Resizer = Resizer
-Input.Static = Static
 
 export default Input

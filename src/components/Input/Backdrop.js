@@ -1,17 +1,18 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { stateTypes } from '../../constants/propTypes'
+import type { UIStates } from '../../constants/types'
 
-export const propTypes = {
-  checkbox: PropTypes.bool,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  state: stateTypes,
+type Props = {
+  checkbox?: boolean,
+  className?: string,
+  disabled: boolean,
+  readOnly: boolean,
+  state: UIStates,
 }
 
-const Backdrop = props => {
+const Backdrop = (props: Props) => {
   const { className, checkbox, disabled, readOnly, state, ...rest } = props
 
   const componentClassName = classNames(
@@ -26,6 +27,10 @@ const Backdrop = props => {
   return <div className={componentClassName} role="presentation" {...rest} />
 }
 
-Backdrop.propTypes = propTypes
+Backdrop.defaultProps = {
+  disabled: false,
+  readOnly: false,
+  state: 'default',
+}
 
 export default Backdrop

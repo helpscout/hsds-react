@@ -1,5 +1,5 @@
 // @flow
-export const noop = () => {}
+export const noop = (): void => {}
 
 export const requestAnimationFrame = (callback: () => void): mixed => {
   // This method was mostly created for node testing.
@@ -10,7 +10,7 @@ export const requestAnimationFrame = (callback: () => void): mixed => {
     : callback()
 }
 
-export const isNodeEnv = () => {
+export const isNodeEnv = (): boolean => {
   return (
     typeof process !== 'undefined' &&
     process.title &&

@@ -1,5 +1,4 @@
 // @flow
-
 /**
  * Tiny implementation of the classnames library.
  *

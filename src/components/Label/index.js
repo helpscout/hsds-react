@@ -1,17 +1,19 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import Text from '../Text'
 import { stateTypes } from '../../constants/propTypes'
 import classNames from '../../utilities/classNames'
 import { isString } from '../../utilities/strings'
+import type { UIStates } from '../../constants/types'
 
-export const propTypes = {
-  className: PropTypes.string,
-  for: PropTypes.string,
-  state: stateTypes,
+type Props = {
+  className?: string,
+  children?: any,
+  for: string,
+  state: UIStates,
 }
 
-const Label = props => {
+const Label = (props: Props) => {
   const { className, children, for: htmlFor, state, ...rest } = props
 
   const componentClassName = classNames(
@@ -34,7 +36,5 @@ const Label = props => {
     </label>
   )
 }
-
-Label.propTypes = propTypes
 
 export default Label
