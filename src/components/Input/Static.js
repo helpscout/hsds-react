@@ -1,14 +1,16 @@
+// @flow
 import React from 'react'
 import classNames from '../../utilities/classNames'
-import { standardSizeTypes } from '../../constants/propTypes'
-import { staticAlignTypes } from './propTypes'
+import type { UISizes } from '../../constants/types'
 
-export const propTypes = {
-  align: staticAlignTypes,
-  size: standardSizeTypes,
+type Props = {
+  align: 'left' | 'center' | 'right' | '',
+  children?: any,
+  className?: string,
+  size: UISizes,
 }
 
-const Static = props => {
+const Static = (props: Props) => {
   const { align, className, children, size, ...rest } = props
 
   const componentClassName = classNames(
@@ -25,7 +27,5 @@ const Static = props => {
     </div>
   )
 }
-
-Static.propTypes = propTypes
 
 export default Static

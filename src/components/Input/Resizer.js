@@ -1,7 +1,6 @@
+// @flow
 // See: https://github.com/Shopify/polaris/blob/master/src/components/TextField/Resizer.tsx
-
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -18,29 +17,28 @@ const ENTITIES_TO_REPLACE = {
 }
 const REPLACE_REGEX = /[\n&<>]/g
 
-export const propTypes = {
-  contents: PropTypes.string,
-  currentHeight: PropTypes.number,
-  minimumLines: PropTypes.number,
-  offsetAmount: PropTypes.number,
-  onResize: PropTypes.func,
-  seamless: PropTypes.bool,
+type Props = {
+  className?: string,
+  contents: string,
+  currentHeight: number,
+  minimumLines: number,
+  offsetAmount: number,
+  onResize: (size: number) => void,
+  seamless: boolean,
 }
 
-const defaultProps = {
-  contents: '',
-  currentHeight: null,
-  minimumLines: 1,
-  offsetAmount: 0,
-  onResize: noop,
-  seamless: false,
-}
-
-class Resizer extends Component {
-  constructor() {
-    super()
-    this.handleOnResize = this.handleOnResize.bind(this)
+class Resizer extends Component<Props> {
+  static defaultProps = {
+    contents: '',
+    currentHeight: null,
+    minimumLines: 1,
+    offsetAmount: 0,
+    onResize: noop,
+    seamless: false,
   }
+  contentNode: HTMLDivElement
+  minimumLinesNode: HTMLDivElement
+
   componentDidMount() {
     this.handleOnResize()
   }
@@ -52,7 +50,7 @@ class Resizer extends Component {
   // Ignoring as height calculation isn't possible with JSDOM
   // (which is what Enzyme uses for tests)
   /* istanbul ignore next */
-  handleOnResize() {
+  handleOnResize = () => {
     const contentHeight = this.contentNode.offsetHeight
     const minimumHeight = this.minimumLinesNode
       ? this.minimumLinesNode.offsetHeight
@@ -66,11 +64,11 @@ class Resizer extends Component {
     }
   }
 
-  replaceEntity(entity) {
+  replaceEntity(entity: string): string {
     return ENTITIES_TO_REPLACE[entity] || /* istanbul ignore next */ entity
   }
 
-  getContentsForMinimumLines(minimumLines) {
+  getContentsForMinimumLines(minimumLines: number): string {
     let content = ''
     for (let line = 0; line < minimumLines; line++) {
       content += '<br>'
@@ -79,7 +77,7 @@ class Resizer extends Component {
     return content
   }
 
-  getFinalContents(contents) {
+  getFinalContents(contents: string): string {
     const charOffset = repeat(OFFSET_CHAR, this.props.offsetAmount)
     return contents
       ? `${contents
@@ -96,7 +94,7 @@ class Resizer extends Component {
 
     const minimumLinesMarkup = minimumLines ? (
       <div
-        ref={node => (this.minimumLinesNode = node)}
+        ref={(node: HTMLDivElement) => (this.minimumLinesNode = node)}
         className={classNames(
           'c-InputGhost',
           'c-InputGhost--lineBreak',
@@ -112,7 +110,7 @@ class Resizer extends Component {
       <div aria-hidden className={componentClassName}>
         <EventListener event="resize" handler={handleOnResize} />
         <div
-          ref={node => (this.contentNode = node)}
+          ref={(node: HTMLDivElement) => (this.contentNode = node)}
           className={classNames(
             'c-InputGhost',
             'c-InputGhost--characters',
@@ -125,8 +123,5 @@ class Resizer extends Component {
     )
   }
 }
-
-Resizer.propTypes = propTypes
-Resizer.defaultProps = defaultProps
 
 export default Resizer

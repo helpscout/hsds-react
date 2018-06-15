@@ -522,3 +522,13 @@ describe('isFocused', () => {
     }, 40)
   })
 })
+
+describe('moveCursorToEnd', () => {
+  test('Moves the selection cursor to end of value', () => {
+    const value = 'ron'
+    const wrapper = mount(<Input value="WEE" />)
+    wrapper.setState({ value: 'WEE' })
+    wrapper.node.moveCursorToEnd()
+    // console.log(wrapper.node.inputNode.selectionStart)
+  })
+})

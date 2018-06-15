@@ -7,7 +7,7 @@ import type { Sizes } from '../Text/types'
 import type { UIStates } from '../../constants/types'
 
 type Props = {
-  children: any,
+  children?: any,
   className?: string,
   muted?: boolean,
   size?: Sizes,
