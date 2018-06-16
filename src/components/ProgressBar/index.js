@@ -1,29 +1,33 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { standardSizeTypes } from '../../constants/propTypes'
+import type { UISizes } from '../../constants/types'
 
-export const propTypes = {
-  description: PropTypes.string,
-  onChange: PropTypes.func,
-  size: standardSizeTypes,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+type Props = {
+  className?: string,
+  description?: string,
+  onChange: (value: Value) => void,
+  size?: UISizes,
+  value: Value,
 }
 
-const defaultProps = {
-  onChange: noop,
-  value: 0,
-}
+type Value = number | string | null
 
-class ProgressBar extends Component {
-  componentWillReceiveProps(nextProps) {
+class ProgressBar extends Component<Props> {
+  static defaultProps = {
+    onChange: noop,
+    value: 0,
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
     const { onChange } = this.props
     const value = this.getValueAsPercent(nextProps.value)
     onChange(value)
   }
 
-  getValue(val) {
+  getValue(val: Value): number {
     const value = val !== null ? val : this.props.value
     const barValue = parseFloat(value)
     const normalizedBarValue =
@@ -32,7 +36,7 @@ class ProgressBar extends Component {
     return normalizedBarValue
   }
 
-  getValueAsPercent(val = null) {
+  getValueAsPercent(val: Value = null): string {
     return `${this.getValue(val)}%`
   }
 
@@ -63,8 +67,5 @@ class ProgressBar extends Component {
     )
   }
 }
-
-ProgressBar.propTypes = propTypes
-ProgressBar.defaultProps = defaultProps
 
 export default ProgressBar

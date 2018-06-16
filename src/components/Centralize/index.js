@@ -1,7 +1,13 @@
+// @flow
 import React from 'react'
 import classNames from '../../utilities/classNames'
 
-const Centralize = props => {
+type Props = {
+  className?: string,
+  children?: any,
+}
+
+const Centralize = (props: Props) => {
   const { className, children, ...rest } = props
 
   const componentClassName = classNames('c-Centralize', className)
@@ -12,7 +18,5 @@ const Centralize = props => {
     </div>
   )
 }
-
-Centralize.displayName = 'Centralize'
 
 export default Centralize

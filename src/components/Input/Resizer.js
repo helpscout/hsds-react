@@ -27,6 +27,8 @@ type Props = {
   seamless: boolean,
 }
 
+type RefNode = HTMLDivElement | null
+
 class Resizer extends Component<Props> {
   static defaultProps = {
     contents: '',
@@ -36,8 +38,8 @@ class Resizer extends Component<Props> {
     onResize: noop,
     seamless: false,
   }
-  contentNode: HTMLDivElement
-  minimumLinesNode: HTMLDivElement
+  contentNode: RefNode
+  minimumLinesNode: RefNode
 
   componentDidMount() {
     this.handleOnResize()
@@ -51,10 +53,11 @@ class Resizer extends Component<Props> {
   // (which is what Enzyme uses for tests)
   /* istanbul ignore next */
   handleOnResize = () => {
+    if (!this.contentNode || !this.minimumLinesNode) return
     const contentHeight = this.contentNode.offsetHeight
     const minimumHeight = this.minimumLinesNode
       ? this.minimumLinesNode.offsetHeight
-      : 0
+      : /* istanbul ignore next */ 0
     const newHeight = Math.max(contentHeight, minimumHeight)
 
     const { currentHeight, onResize } = this.props
@@ -94,7 +97,7 @@ class Resizer extends Component<Props> {
 
     const minimumLinesMarkup = minimumLines ? (
       <div
-        ref={(node: HTMLDivElement) => (this.minimumLinesNode = node)}
+        ref={(node: RefNode) => (this.minimumLinesNode = node)}
         className={classNames(
           'c-InputGhost',
           'c-InputGhost--lineBreak',
@@ -110,7 +113,7 @@ class Resizer extends Component<Props> {
       <div aria-hidden className={componentClassName}>
         <EventListener event="resize" handler={handleOnResize} />
         <div
-          ref={(node: HTMLDivElement) => (this.contentNode = node)}
+          ref={(node: RefNode) => (this.contentNode = node)}
           className={classNames(
             'c-InputGhost',
             'c-InputGhost--characters',

@@ -1,15 +1,17 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import Card from '../Card'
 import Heading from '../Heading'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 
-export const propTypes = {
-  title: PropTypes.string,
+type Props = {
+  children?: any,
+  className?: string,
+  title?: string,
 }
 
-const PreviewCard = props => {
+const PreviewCard = (props: Props) => {
   const { children, className, title, ...rest } = props
 
   const componentClassName = classNames('c-PreviewCard', className)
@@ -29,7 +31,5 @@ const PreviewCard = props => {
     </Card>
   )
 }
-
-PreviewCard.propTypes = propTypes
 
 export default PreviewCard

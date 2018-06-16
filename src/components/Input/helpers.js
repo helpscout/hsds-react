@@ -1,11 +1,6 @@
 // @flow
 
-type InputNode =
-  | HTMLDivElement
-  | HTMLElement
-  | HTMLInputElement
-  | HTMLTextAreaElement
-  | null
+type InputNode = HTMLInputElement | HTMLTextAreaElement
 
 /**
  * Get the total number of lines (rows) of a textarea
@@ -13,7 +8,7 @@ type InputNode =
  * @param   {InputNode} textarea
  * @returns {number}
  */
-export const getTextAreaLineTotal = (textarea: InputNode): number => {
+export const getTextAreaLineTotal = (textarea: HTMLTextAreaElement): number => {
   if (!textarea) return 0
   return textarea.value.split(/\r*\n/).length
 }
@@ -24,7 +19,9 @@ export const getTextAreaLineTotal = (textarea: InputNode): number => {
  * @param   {InputNode} textarea
  * @returns {number}
  */
-export const getTextAreaLineCurrent = (textarea: InputNode): number => {
+export const getTextAreaLineCurrent = (
+  textarea: HTMLTextAreaElement
+): number => {
   if (!textarea) return 0
   return textarea.value.substr(0, textarea.selectionStart).split('\n').length
 }
@@ -35,12 +32,12 @@ export const getTextAreaLineCurrent = (textarea: InputNode): number => {
  *
  * @param   {InputNode} inputNode
  */
-export const moveCursorToEnd = (inputNode: InputNode) => {
-  if (typeof inputNode.selectionStart === 'number') {
-    inputNode.selectionStart = inputNode.selectionEnd = inputNode.value.length
-  } else if (typeof inputNode.createTextRange !== 'undefined') {
-    inputNode.focus()
-    let range = inputNode.createTextRange()
+export const moveCursorToEnd = (input: HTMLInputElement) => {
+  if (typeof input.selectionStart === 'number') {
+    input.selectionStart = input.selectionEnd = input.value.length
+  } else if (typeof input.createTextRange !== 'undefined') {
+    input.focus()
+    let range = input.createTextRange()
     range.collapse(false)
     range.select()
   }

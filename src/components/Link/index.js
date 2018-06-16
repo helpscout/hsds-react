@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
@@ -5,32 +6,35 @@ import { noop } from '../../utilities/other'
 import { wordHasSpaces } from '../../utilities/strings'
 import RouteWrapper from '../RouteWrapper'
 
-export const propTypes = {
-  autoWordWrap: PropTypes.bool,
-  block: PropTypes.bool,
-  className: PropTypes.string,
-  external: PropTypes.bool,
-  href: PropTypes.string,
-  nodeRef: PropTypes.func,
-  onBlur: PropTypes.func,
-  onClick: PropTypes.func,
-  onFocus: PropTypes.func,
-  noUnderline: PropTypes.bool,
-  to: PropTypes.string,
-  wordWrap: PropTypes.bool,
+type Props = {
+  autoWordWrap: boolean,
+  block: boolean,
+  className?: string,
+  children?: any,
+  external: boolean,
+  href: string,
+  nodeRef: () => void,
+  onBlur: () => void,
+  onClick: () => void,
+  onFocus: () => void,
+  rel: string,
+  noUnderline: boolean,
+  to: string,
+  wordWrap: boolean,
 }
 
-const defaultProps = {
-  autoWordWrap: true,
-  external: false,
-  href: '#',
-  nodeRef: noop,
-  onBlur: noop,
-  onClick: noop,
-  onFocus: noop,
-}
+class Link extends Component<Props> {
+  static defaultProps = {
+    autoWordWrap: true,
+    block: false,
+    external: false,
+    href: '#',
+    nodeRef: noop,
+    onBlur: noop,
+    onClick: noop,
+    onFocus: noop,
+  }
 
-class Link extends Component {
   render() {
     const {
       autoWordWrap,
@@ -72,8 +76,5 @@ class Link extends Component {
     )
   }
 }
-
-Link.propTypes = propTypes
-Link.defaultProps = defaultProps
 
 export default RouteWrapper(Link)

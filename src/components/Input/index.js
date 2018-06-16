@@ -61,12 +61,7 @@ type State = {
   value: string,
 }
 
-type InputNode =
-  | HTMLDivElement
-  | HTMLElement
-  | HTMLInputElement
-  | HTMLTextAreaElement
-  | null
+type InputNode = HTMLInputElement | HTMLTextAreaElement
 
 class Input extends Component<Props, State> {
   static defaultProps = {
@@ -92,7 +87,7 @@ class Input extends Component<Props, State> {
   static Backdrop = Backdrop
   static Resizer = Resizer
   static Static = Static
-  inputNode: InputNode = null
+  inputNode: InputNode
 
   constructor(props: Props) {
     super()
@@ -209,6 +204,11 @@ class Input extends Component<Props, State> {
     })
   }
 
+  setInputNodeRef = (node: InputNode) => {
+    this.inputNode = node
+    this.props.inputRef(node)
+  }
+
   render() {
     const {
       autoFocus,
@@ -323,10 +323,7 @@ class Input extends Component<Props, State> {
       className: fieldClassName,
       id: inputID,
       onChange: handleOnChange,
-      ref: node => {
-        this.inputNode = node
-        inputRef(node)
-      },
+      ref: this.setInputNodeRef,
       disabled,
       name,
       onBlur,
