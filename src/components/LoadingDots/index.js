@@ -1,13 +1,13 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 
-export const propTypes = {
-  align: PropTypes.oneOf(['left', 'center', 'right', '']),
-  className: PropTypes.string,
+type Props = {
+  align: 'left' | 'center' | 'right' | '',
+  className?: string,
 }
 
-const LoadingDots = props => {
+const LoadingDots = (props: Props) => {
   const { align, className, ...rest } = props
   const componentClassName = classNames(
     'c-LoadingDots',
@@ -23,7 +23,5 @@ const LoadingDots = props => {
     </div>
   )
 }
-
-LoadingDots.propTypes = propTypes
 
 export default LoadingDots

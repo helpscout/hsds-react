@@ -6,7 +6,9 @@
  * @returns {string}
  */
 export const classNames = (...classes: any): string => {
-  return classes.filter(name => name && typeof name !== 'boolean').join(' ')
+  return classes
+    .filter((name: string | boolean) => name && typeof name !== 'boolean')
+    .join(' ')
 }
 
 /**

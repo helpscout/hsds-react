@@ -1,7 +1,13 @@
+// @flow
 import React from 'react'
 import classNames from '../../utilities/classNames'
 
-const Code = props => {
+type Props = {
+  className?: string,
+  children?: any,
+}
+
+const Code = (props: Props) => {
   const { className, children, ...rest } = props
 
   const componentClassName = classNames('c-Code', className)

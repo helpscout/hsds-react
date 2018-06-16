@@ -9,7 +9,15 @@ type Props = {
   direction: 'x' | 'y',
   isDisabled: boolean,
   stopPropagation: boolean,
-  onWheel: (event: Event) => void,
+  onWheel: (event: ScrollWheelEvent) => void,
+}
+
+type ScrollWheelEvent = {
+  currentTarget: HTMLDivElement,
+  deltaX: number,
+  deltaY: number,
+  preventDefault: () => void,
+  stopPropagation: () => void,
 }
 
 class ScrollLock extends Component<Props> {
@@ -35,7 +43,7 @@ class ScrollLock extends Component<Props> {
 
     const child = React.Children.only(children)
     const events = {
-      onWheel: (event: Event) => {
+      onWheel: (event: ScrollWheelEvent) => {
         handleWheelEvent(event, direction, stopPropagation)
         onWheel(event)
         if (child.props.onWheel) child.props.onWheel(event)
@@ -47,7 +55,7 @@ class ScrollLock extends Component<Props> {
 }
 
 function handleWheelEvent(
-  event: Event,
+  event: ScrollWheelEvent,
   direction: 'x' | 'y',
   stopPropagation: boolean
 ) {
@@ -58,7 +66,7 @@ function handleWheelEvent(
   }
 }
 
-export function scrollLockX(event: Event, stopPropagation: boolean) {
+export function scrollLockX(event: ScrollWheelEvent, stopPropagation: boolean) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM
@@ -80,7 +88,7 @@ export function scrollLockX(event: Event, stopPropagation: boolean) {
   }
 }
 
-export function scrollLockY(event: Event, stopPropagation: boolean) {
+export function scrollLockY(event: ScrollWheelEvent, stopPropagation: boolean) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM
