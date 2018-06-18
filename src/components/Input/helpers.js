@@ -1,5 +1,4 @@
 // @flow
-
 type InputNode = HTMLInputElement | HTMLTextAreaElement
 
 /**
@@ -8,7 +7,7 @@ type InputNode = HTMLInputElement | HTMLTextAreaElement
  * @param   {InputNode} textarea
  * @returns {number}
  */
-export const getTextAreaLineTotal = (textarea: HTMLTextAreaElement): number => {
+export const getTextAreaLineTotal = (textarea: ?InputNode): number => {
   if (!textarea) return 0
   return textarea.value.split(/\r*\n/).length
 }
@@ -19,9 +18,7 @@ export const getTextAreaLineTotal = (textarea: HTMLTextAreaElement): number => {
  * @param   {InputNode} textarea
  * @returns {number}
  */
-export const getTextAreaLineCurrent = (
-  textarea: HTMLTextAreaElement
-): number => {
+export const getTextAreaLineCurrent = (textarea: ?InputNode): number => {
   if (!textarea) return 0
   return textarea.value.substr(0, textarea.selectionStart).split('\n').length
 }
@@ -32,7 +29,9 @@ export const getTextAreaLineCurrent = (
  *
  * @param   {InputNode} inputNode
  */
-export const moveCursorToEnd = (input: HTMLInputElement) => {
+export const moveCursorToEnd = (input: ?HTMLInputElement) => {
+  // Extra failsafe guard
+  if (!input) return
   if (typeof input.selectionStart === 'number') {
     input.selectionStart = input.selectionEnd = input.value.length
   } else if (typeof input.createTextRange !== 'undefined') {

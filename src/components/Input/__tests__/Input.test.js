@@ -91,10 +91,20 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalledWith(value)
   })
 
-  test('onWheel callback can be triggered', () => {
+  test('onWheel callback does not trigger for non-multiline inputs', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input onWheel={spy} />)
+    const wrapper = mount(<Input onWheel={spy} multiline={false} />)
     const input = wrapper.find('input')
+
+    input.simulate('wheel')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('onWheel callback only triggers for multiline + scrollLock enabled inputs', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onWheel={spy} multiline={true} scrollLock />)
+    const input = wrapper.find('textarea')
 
     input.simulate('wheel')
 
@@ -103,8 +113,8 @@ describe('Events', () => {
 
   test('onWheel callback stops event from bubbling', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input />)
-    const input = wrapper.find('input')
+    const wrapper = mount(<Input multiline={true} scrollLock />)
+    const input = wrapper.find('textarea')
 
     input.simulate('wheel', {
       stopPropagation: spy,

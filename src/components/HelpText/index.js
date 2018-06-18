@@ -11,7 +11,7 @@ type Props = {
   className?: string,
   muted?: boolean,
   size?: Sizes,
-  state?: UIStates,
+  state?: ?UIStates,
 }
 
 const HelpText = (props: Props) => {

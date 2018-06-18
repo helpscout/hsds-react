@@ -46,8 +46,9 @@ type Props = {
   removeStateStylesOnFocus: boolean,
   resizable: boolean,
   seamless: boolean,
+  scrollLock: boolean,
   size: UISizes,
-  state: UIStates,
+  state?: ?UIStates,
   style: Object,
   suffix: string,
   type: string,
@@ -67,7 +68,7 @@ class Input extends Component<Props, State> {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
-    forceAutoFocusTimeout: 120,
+    forceAutoFocusTimeout: 0,
     inputRef: noop,
     isFocused: false,
     moveCursorToEnd: true,
@@ -80,14 +81,16 @@ class Input extends Component<Props, State> {
     readOnly: false,
     removeStateStylesOnFocus: false,
     resizable: false,
+    scrollLock: false,
     seamless: false,
+    state: '',
     type: 'text',
     value: '',
   }
   static Backdrop = Backdrop
   static Resizer = Resizer
   static Static = Static
-  inputNode: InputNode
+  inputNode: ?InputNode
 
   constructor(props: Props) {
     super()
@@ -182,8 +185,10 @@ class Input extends Component<Props, State> {
     onFocus(event)
   }
 
-  handleOnWheel = (event: Event) => {
-    const { onWheel } = this.props
+  handleOnWheel = (event: WheelEvent) => {
+    const { multiline, onWheel, scrollLock } = this.props
+    if (!multiline || !scrollLock) return
+
     const stopPropagation = true
     scrollLockY(event, stopPropagation)
     onWheel(event)
@@ -235,6 +240,7 @@ class Input extends Component<Props, State> {
       removeStateStylesOnFocus,
       resizable,
       seamless,
+      scrollLock,
       size,
       state: stateProp,
       style: styleProp,
