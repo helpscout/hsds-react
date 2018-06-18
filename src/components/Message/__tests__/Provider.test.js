@@ -9,11 +9,11 @@ test('Provides child components with props as context', () => {
       <Message />
     </Provider>
   )
-  let o = wrapper.find(Message).node
+  let o = wrapper.find(Message).getNode()
   expect(o.context.theme).toBe('embed')
 
   wrapper.setProps({ theme: 'admin' })
-  o = wrapper.find(Message).node
+  o = wrapper.find(Message).getNode()
 
   expect(o.context.theme).toBe('admin')
 })

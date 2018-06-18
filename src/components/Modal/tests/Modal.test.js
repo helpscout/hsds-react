@@ -174,7 +174,7 @@ describe('Route', () => {
 
     wait()
       .then(() => {
-        wrapper.node.history.goBack()
+        wrapper.getNode().history.goBack()
       })
       .then(() => wait(60))
       .then(() => {
@@ -703,7 +703,7 @@ describe('Keyboard: Tab', () => {
         <button className="three">three</button>
       </ModalComponent>
     )
-    const o = wrapper.find('.three').node
+    const o = wrapper.find('.three').getNode()
 
     wrapper.instance().handleOnTab({
       target: o,
@@ -722,7 +722,7 @@ describe('Keyboard: Tab', () => {
         <button className="three">three</button>
       </ModalComponent>
     )
-    const o = wrapper.find('.two').node
+    const o = wrapper.find('.two').getNode()
 
     wrapper.instance().handleOnTab({
       target: o,
@@ -751,7 +751,7 @@ describe('Keyboard: Tab', () => {
         <button className="three">three</button>
       </ModalComponent>
     )
-    const o = wrapper.find('.one').node
+    const o = wrapper.find('.one').getNode()
 
     wrapper.instance().handleOnShiftTab({
       target: o,
@@ -770,7 +770,7 @@ describe('Keyboard: Tab', () => {
         <button className="three">three</button>
       </ModalComponent>
     )
-    const o = wrapper.find('.two').node
+    const o = wrapper.find('.two').getNode()
 
     wrapper.instance().handleOnShiftTab({
       target: o,

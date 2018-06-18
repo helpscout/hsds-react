@@ -91,10 +91,20 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalledWith(value)
   })
 
-  test('onWheel callback can be triggered', () => {
+  test('onWheel callback does not trigger for non-multiline inputs', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input onWheel={spy} />)
+    const wrapper = mount(<Input onWheel={spy} multiline={false} />)
     const input = wrapper.find('input')
+
+    input.simulate('wheel')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('onWheel callback only triggers for multiline + scrollLock enabled inputs', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onWheel={spy} multiline={true} scrollLock />)
+    const input = wrapper.find('textarea')
 
     input.simulate('wheel')
 
@@ -103,8 +113,8 @@ describe('Events', () => {
 
   test('onWheel callback stops event from bubbling', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input />)
-    const input = wrapper.find('input')
+    const wrapper = mount(<Input multiline={true} scrollLock />)
+    const input = wrapper.find('textarea')
 
     input.simulate('wheel', {
       stopPropagation: spy,
@@ -179,21 +189,21 @@ describe('Multiline', () => {
     const wrapper = shallow(<Input />)
     const o = wrapper.find(ui.field)
 
-    expect(o.node.type).toBe('input')
+    expect(o.getNode().type).toBe('input')
   })
 
   test('Selector becomes a textarea if multiline is defined', () => {
     const wrapper = shallow(<Input multiline />)
     const o = wrapper.find(ui.field)
 
-    expect(o.node.type).toBe('textarea')
+    expect(o.getNode().type).toBe('textarea')
   })
 
   test('Accepts number argument', () => {
     const wrapper = mount(<Input multiline={5} />)
     const o = wrapper.find(ui.field)
 
-    expect(o.node.type).toBe('textarea')
+    expect(o.getNode().type).toBe('textarea')
   })
 
   test('Adds Resizer component if multiline is defined', () => {
@@ -254,6 +264,17 @@ describe('Multiline', () => {
     const o = wrapper.find(ui.field)
 
     expect(o.prop('style').maxHeight).toBe('50vh')
+  })
+
+  test('Does not focus input on resize', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input multiline={3} maxHeight="50vh" />)
+    const o = wrapper.find(ui.field)
+    o.getNode().onfocus = spy
+
+    wrapper.instance().handleExpandingResize()
+
+    expect(spy).not.toHaveBeenCalled()
   })
 })
 
@@ -468,14 +489,14 @@ describe('inputNode', () => {
   test('Sets inputNode on mount', () => {
     const wrapper = mount(<Input />)
 
-    expect(wrapper.node.inputNode).toBeTruthy()
+    expect(wrapper.getNode().inputNode).toBeTruthy()
   })
 
   test('Unsets inputNode on unmount', () => {
     const wrapper = mount(<Input />)
     wrapper.unmount()
 
-    expect(wrapper.node.inputNode).not.toBeTruthy()
+    expect(wrapper.getNode().inputNode).not.toBeTruthy()
   })
 })
 
@@ -483,7 +504,7 @@ describe('isFocused', () => {
   test('Can focus input using isFocused prop', done => {
     const spy = jest.fn()
     const wrapper = mount(<Input isFocused />)
-    const o = wrapper.node.inputNode
+    const o = wrapper.getNode().inputNode
     o.onfocus = spy
 
     setTimeout(() => {
@@ -495,7 +516,7 @@ describe('isFocused', () => {
   test('Can focus input using custom timeout', done => {
     const spy = jest.fn()
     const wrapper = mount(<Input isFocused forceAutoFocusTimeout={20} />)
-    const o = wrapper.node.inputNode
+    const o = wrapper.getNode().inputNode
     o.onfocus = spy
 
     expect(spy).not.toHaveBeenCalled()
@@ -511,7 +532,7 @@ describe('isFocused', () => {
     const wrapper = mount(
       <Input onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
     )
-    const o = wrapper.node.inputNode
+    const o = wrapper.getNode().inputNode
     o.onfocus = spy
 
     wrapper.setProps({ isFocused: true })
@@ -528,7 +549,7 @@ describe('moveCursorToEnd', () => {
     const value = 'ron'
     const wrapper = mount(<Input value="WEE" />)
     wrapper.setState({ value: 'WEE' })
-    wrapper.node.moveCursorToEnd()
-    // console.log(wrapper.node.inputNode.selectionStart)
+    wrapper.getNode().moveCursorToEnd()
+    // console.log(wrapper.getNode().inputNode.selectionStart)
   })
 })

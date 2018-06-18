@@ -50,6 +50,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | readOnly                 | `bool`               | Disable editing of the input.                                             |
 | removeStateStylesOnFocus | `bool`               | Removes the `state` styles on input focus. Default `false`.               |
 | resizable                | `bool`               | Enables resizing for the textarea (only enabled for `multiline`).         |
+| scrollLock               | `bool`               | Enables scrollLock for component. Default `false`.                        |
 | seamless                 | `bool`               | Removes the border around the input.                                      |
 | size                     | `string`             | Determines the size of the input.                                         |
 | state                    | `string`             | Change input to state color.                                              |

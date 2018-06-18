@@ -34,7 +34,7 @@ describe('Block', () => {
     const o = wrapper.find(Card.Block)
 
     expect(o.length).toBe(1)
-    expect(o.node.props.children).toBe('MegaMind')
+    expect(o.getNode().props.children).toBe('MegaMind')
   })
 
   test('Can render a multiple Card.Block', () => {
@@ -87,8 +87,8 @@ describe('Link', () => {
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
-    expect(o.node.props.block).toBeTruthy()
-    expect(o.node.props.href).toBe(link)
+    expect(o.getNode().props.block).toBeTruthy()
+    expect(o.getNode().props.href).toBe(link)
   })
 
   test('Renders a Link component if to is defined', () => {
@@ -96,14 +96,14 @@ describe('Link', () => {
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
-    expect(o.node.props.block).toBeTruthy()
-    expect(o.node.props.to).toBe(link)
+    expect(o.getNode().props.block).toBeTruthy()
+    expect(o.getNode().props.to).toBe(link)
   })
 
   test('Renders a Link component with target="_blank"', () => {
     const wrapper = shallow(<Card href={link} external />)
     const o = wrapper.find(Link)
-    const p = o.node.props
+    const p = o.getNode().props
 
     expect(o.length).toBe(1)
     expect(p.block).toBeTruthy()
@@ -122,7 +122,7 @@ describe('Link', () => {
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
-    expect(o.node.props.children.type).toBe(Card.Block)
+    expect(o.getNode().props.children.type).toBe(Card.Block)
     expect(b.length).toBe(1)
     expect(b.node.props.children).toBe('MegaMind')
   })
@@ -191,13 +191,13 @@ describe('Selector', () => {
   test('Renders a div selector by default', () => {
     const wrapper = shallow(<Card />)
 
-    expect(wrapper.node.type).toBe('div')
+    expect(wrapper.getNode().type).toBe('div')
   })
 
   test('Renders a custom selector, if specified', () => {
     const wrapper = shallow(<Card selector="span" />)
 
-    expect(wrapper.node.type).toBe('span')
+    expect(wrapper.getNode().type).toBe('span')
   })
 })
 

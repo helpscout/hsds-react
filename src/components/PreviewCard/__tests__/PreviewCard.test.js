@@ -36,7 +36,7 @@ describe('Title', () => {
 
     expect(o.length).toBeTruthy()
     expect(o.hasClass('c-PreviewCard__title')).toBeTruthy()
-    expect(o.node.props.children).toBe('Mugatu')
+    expect(o.getNode().props.children).toBe('Mugatu')
   })
 })
 
@@ -47,6 +47,6 @@ describe('Text', () => {
 
     expect(o.length).toBeTruthy()
     expect(o.hasClass('c-PreviewCard__content')).toBeTruthy()
-    expect(o.node.props.children).toBe('Relax')
+    expect(o.getNode().props.children).toBe('Relax')
   })
 })

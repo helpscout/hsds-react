@@ -33,7 +33,7 @@ describe('Title', () => {
 
     expect(o.length).toBe(1)
     expect(o.hasClass('c-MessageBubble__title')).toBeTruthy()
-    expect(o.node.props.children).toContain('Mugatu')
+    expect(o.getNode().props.children).toContain('Mugatu')
   })
 })
 
@@ -67,8 +67,8 @@ describe('Content', () => {
     const o = wrapper.find(Text)
 
     expect(o.length).toBe(1)
-    expect(o.node.props.wordWrap).toBeTruthy()
-    expect(o.node.props.children).toBe('Mugatu')
+    expect(o.getNode().props.wordWrap).toBeTruthy()
+    expect(o.getNode().props.children).toBe('Mugatu')
   })
 
   test('Span-based content is contained with a wordWrapped Text component', () => {

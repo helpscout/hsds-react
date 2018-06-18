@@ -179,7 +179,7 @@ describe('MultiSelect', () => {
     )
     const o = wrapper.find(ChoiceGroup)
 
-    expect(o.node.multiSelect).toBeFalsy()
+    expect(o.getNode().multiSelect).toBeFalsy()
     wrapper.unmount()
   })
 
@@ -193,7 +193,7 @@ describe('MultiSelect', () => {
     )
     const o = wrapper.find(ChoiceGroup)
 
-    expect(o.node.multiSelect).toBeTruthy()
+    expect(o.getNode().multiSelect).toBeTruthy()
     wrapper.unmount()
   })
 
@@ -207,7 +207,7 @@ describe('MultiSelect', () => {
     )
     const o = wrapper.find(ChoiceGroup)
 
-    expect(o.node.multiSelect).not.toBeTruthy()
+    expect(o.getNode().multiSelect).not.toBeTruthy()
     wrapper.unmount()
   })
 })

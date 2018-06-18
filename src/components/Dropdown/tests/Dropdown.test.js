@@ -154,7 +154,7 @@ describe('Selected', () => {
       </Dropdown>
     )
     const o = wrapper.find(Dropdown.Item)
-    o.node.handleOnClick({ stopPropagation: () => {} })
+    o.getNode().handleOnClick({ stopPropagation: () => {} })
 
     expect(spy).toHaveBeenCalledWith('Ron')
   })
@@ -248,7 +248,7 @@ describe('Focus', () => {
     o.simulate('focus')
 
     setTimeout(() => {
-      expect(wrapper.node.isFocused).toBeTruthy()
+      expect(wrapper.instance().isFocused).toBeTruthy()
       done()
     }, 1)
   })

@@ -109,11 +109,29 @@ stories.add('states', () => (
   </div>
 ))
 
+stories.add('scrollock', () => (
+  <Input
+    multiline={3}
+    resizable
+    autoFocus
+    scrollLock
+    placeholder="This is a resizable textarea with scrollLock!"
+    maxHeight={150}
+  />
+))
+
 stories.add('sizes', () => (
   <div>
     <Input autoFocus placeholder="Regular" />
     <br />
-    <Input size="sm" autoFocus placeholder="Small" />
+    <Input size="sm" placeholder="Small" />
+    <br />
+    <Input
+      multiline={3}
+      resizable
+      placeholder="This is a resizable textarea with scrollLock!"
+      maxHeight={150}
+    />
   </div>
 ))
 

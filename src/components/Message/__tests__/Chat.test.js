@@ -46,7 +46,7 @@ describe('Bubble', () => {
     const wrapper = shallow(<Chat>Mugatu</Chat>)
     const o = wrapper.find(Bubble)
 
-    expect(o.node.props.children).toBe('Mugatu')
+    expect(o.getNode().props.children).toBe('Mugatu')
   })
 
   test('Passes correct props to Bubble', () => {
@@ -64,7 +64,7 @@ describe('Bubble', () => {
         typing
       />
     )
-    const props = wrapper.find(Bubble).node.props
+    const props = wrapper.find(Bubble).getNode().props
 
     expect(props.body).toBeTruthy()
     expect(props.from).toBeTruthy()
@@ -96,7 +96,7 @@ describe('ChatBlock', () => {
 
   test('Passes correct props to ChatBlock', () => {
     const wrapper = shallow(<Chat from to read ltr rtl timestamp="time" />)
-    const props = wrapper.find(ChatBlock).node.props
+    const props = wrapper.find(ChatBlock).getNode().props
 
     expect(props.from).toBeTruthy()
     expect(props.to).toBeTruthy()

@@ -78,7 +78,7 @@ describe('Scrollable', () => {
     const wrapper = shallow(<CardBlock scrollable onScroll={spy} />)
     const o = wrapper.find(Scrollable)
 
-    o.node.props.onScroll()
+    o.getNode().props.onScroll()
 
     expect(spy).toHaveBeenCalled()
   })

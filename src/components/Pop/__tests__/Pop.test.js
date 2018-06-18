@@ -80,11 +80,11 @@ describe('Pop', () => {
         </Pop>
       )
 
-      expect(wrapper.node.node).toBeTruthy()
+      expect(wrapper.getNode().node).toBeTruthy()
 
       wrapper.unmount()
 
-      expect(wrapper.node.node).toBeFalsy()
+      expect(wrapper.getNode().node).toBeFalsy()
     })
   })
 

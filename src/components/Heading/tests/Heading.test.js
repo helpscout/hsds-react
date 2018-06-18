@@ -29,13 +29,13 @@ describe('Selector', () => {
   test('Renders a div selector by default', () => {
     const wrapper = shallow(<Heading />)
 
-    expect(wrapper.node.type).toBe('div')
+    expect(wrapper.getNode().type).toBe('div')
   })
 
   test('Renders a custom selector, if specified', () => {
     const wrapper = shallow(<Heading selector="span" />)
 
-    expect(wrapper.node.type).toBe('span')
+    expect(wrapper.getNode().type).toBe('span')
   })
 })
 

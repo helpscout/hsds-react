@@ -20,7 +20,7 @@ const REPLACE_REGEX = /[\n&<>]/g
 type Props = {
   className?: string,
   contents: string,
-  currentHeight: number,
+  currentHeight: ?number,
   minimumLines: number,
   offsetAmount: number,
   onResize: (size: number) => void,

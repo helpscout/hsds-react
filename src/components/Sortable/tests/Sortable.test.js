@@ -216,7 +216,7 @@ describe('Stateful parent component', () => {
     const items = ['Ron', 'Brick', 'Champ']
     const wrapper = mount(<ParentComponent items={items} />)
     const o = wrapper.find(Sortable)
-    const oldState = o.node.state
+    const oldState = o.getNode().state
 
     expect(wrapper.find('.c-SortableItem').length).toBe(3)
     o.props().onSortEnd()
@@ -224,7 +224,7 @@ describe('Stateful parent component', () => {
     o.props().onSortEnd()
     expect(wrapper.find('.c-SortableItem').length).toBe(5)
 
-    expect(oldState.items).not.toEqual(o.node.state.items)
+    expect(oldState.items).not.toEqual(o.getNode().state.items)
 
     wrapper.unmount()
   })
@@ -234,7 +234,7 @@ describe('Stateful parent component', () => {
     const wrapper = mount(<ParentComponentTwo items={items} />)
     const o = wrapper.find(Sortable)
     const oldWrapperState = wrapper.state()
-    const oldState = o.node.state
+    const oldState = o.getNode().state
 
     expect(wrapper.find('.c-SortableItem').length).toBe(3)
     o.props().onSortEnd()
@@ -245,7 +245,7 @@ describe('Stateful parent component', () => {
     wrapper.setProps({ className: 'news-team' })
 
     expect(oldWrapperState).not.toEqual(wrapper.state())
-    expect(oldState.items).toEqual(o.node.state.items)
+    expect(oldState.items).toEqual(o.getNode().state.items)
 
     wrapper.unmount()
   })
@@ -267,6 +267,6 @@ describe('onSortEnd', () => {
     const wrapper = shallow(<Sortable onSortEnd={spy} />)
     const o = wrapper.find(List)
 
-    expect(o.node.props.onSortEnd).not.toBe(spy)
+    expect(o.getNode().props.onSortEnd).not.toBe(spy)
   })
 })

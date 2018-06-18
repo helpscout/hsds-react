@@ -10,7 +10,7 @@ type Props = {
   className?: string,
   children?: any,
   for: string,
-  state: UIStates,
+  state?: UIStates,
 }
 
 const Label = (props: Props) => {

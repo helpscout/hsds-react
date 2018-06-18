@@ -148,7 +148,7 @@ describe('RouteWrapper', () => {
       </Link>,
       options
     )
-    expect(wrapper.node.type).toBe('a')
+    expect(wrapper.getNode().type).toBe('a')
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()
     setTimeout(() => {
