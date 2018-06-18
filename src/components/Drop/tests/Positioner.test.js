@@ -29,7 +29,7 @@ describe('Position', () => {
         <div>Ron B</div>
       </Positioner>
     )
-    const o = wrapper.find('.c-DropPositioner').node.style
+    const o = wrapper.find('.c-DropPositioner').getNode().style
 
     // Can only test display, unfortunately.
     // Cannot test transform style in JSDOM :'(
@@ -51,7 +51,7 @@ describe('Position', () => {
         <div>Ron B</div>
       </Positioner>
     )
-    const o = wrapper.find('.c-DropPositioner').node.style
+    const o = wrapper.find('.c-DropPositioner').getNode().style
 
     expect(o.display).toBe('none')
   })

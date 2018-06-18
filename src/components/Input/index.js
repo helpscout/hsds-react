@@ -196,7 +196,6 @@ class Input extends Component<Props, State> {
 
   handleExpandingResize = (height: number) => {
     this.setState({ height })
-    this.forceAutoFocus()
   }
 
   moveCursorToEnd = () => {

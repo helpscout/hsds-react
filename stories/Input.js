@@ -124,7 +124,14 @@ stories.add('sizes', () => (
   <div>
     <Input autoFocus placeholder="Regular" />
     <br />
-    <Input size="sm" autoFocus placeholder="Small" />
+    <Input size="sm" placeholder="Small" />
+    <br />
+    <Input
+      multiline={3}
+      resizable
+      placeholder="This is a resizable textarea with scrollLock!"
+      maxHeight={150}
+    />
   </div>
 ))
 

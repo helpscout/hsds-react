@@ -85,7 +85,7 @@ describe('Open/Close', () => {
         expect($('.modal').length).toBe(1)
       })
       .then(() => {
-        wrapper.node.history.goBack()
+        wrapper.getNode().history.goBack()
       })
       .then(() => wait(100))
       .then(() => {
@@ -106,7 +106,7 @@ describe('Open/Close', () => {
       </Router>
     )
 
-    wrapper.node.history.goBack()
+    wrapper.getNode().history.goBack()
 
     wait(100)
       .then(() => {

@@ -20,15 +20,6 @@ describe('TabIndex', () => {
   })
 })
 
-describe('Nodes', () => {
-  test('Has a reference to this.node', () => {
-    const wrapper = mount(<Item />)
-    const o = wrapper.node
-
-    expect(o.node).toBeTruthy()
-  })
-})
-
 describe('Styles', () => {
   test('Adds isHover className if applicable', () => {
     const wrapper = shallow(<Item isHover />)
@@ -75,7 +66,7 @@ describe('Sub menu', () => {
         <Menu />
       </Item>
     )
-    const o = wrapper.node
+    const o = wrapper.getNode()
 
     expect(o.menu).toBeTruthy()
   })

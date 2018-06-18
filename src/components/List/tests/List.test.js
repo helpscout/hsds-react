@@ -13,7 +13,7 @@ describe('Defaults', () => {
   test('Renders an ul by default', () => {
     const wrapper = shallow(<List />)
 
-    expect(wrapper.node.type).toBe('ul')
+    expect(wrapper.getNode().type).toBe('ul')
   })
 })
 
@@ -57,7 +57,7 @@ describe('Bullet', () => {
   test('Renders a ol if type is "bullet"', () => {
     const wrapper = shallow(<List type="bullet" />)
 
-    expect(wrapper.node.type).toBe('ul')
+    expect(wrapper.getNode().type).toBe('ul')
     expect(wrapper.hasClass('c-List--bullet')).toBeTruthy()
   })
 })
@@ -66,7 +66,7 @@ describe('Inline', () => {
   test('Renders a ul if type is "inline"', () => {
     const wrapper = shallow(<List type="inline" />)
 
-    expect(wrapper.node.type).toBe('ul')
+    expect(wrapper.getNode().type).toBe('ul')
     expect(wrapper.hasClass('c-List--inline')).toBeTruthy()
   })
 })
@@ -83,7 +83,7 @@ describe('Number', () => {
   test('Renders a ol if type is "number"', () => {
     const wrapper = shallow(<List type="number" />)
 
-    expect(wrapper.node.type).toBe('ol')
+    expect(wrapper.getNode().type).toBe('ol')
     expect(wrapper.hasClass('c-List--number')).toBeTruthy()
   })
 })

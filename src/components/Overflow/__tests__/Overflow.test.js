@@ -139,7 +139,7 @@ describe('adjustHeight', () => {
   test('Method fires on mount', () => {
     const wrapper = mount(<Overflow />)
     const spy = jest.fn()
-    wrapper.node.adjustHeight = spy
+    wrapper.getNode().adjustHeight = spy
 
     wrapper.instance().componentDidMount()
 
@@ -168,7 +168,7 @@ describe('scrollableRef', () => {
 
   test('Can pass scrollableRef to parent', () => {
     const wrapper = mount(<MyComponent />)
-    const n = wrapper.find('.c-Overflow__container').node
+    const n = wrapper.find('.c-Overflow__container').getNode()
     const o = wrapper.instance()
 
     expect(o.scrollable).toBe(n)

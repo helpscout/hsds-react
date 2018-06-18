@@ -163,7 +163,7 @@ describe('scrollableRef', () => {
 
   test('Can pass scrollableRef to parent', () => {
     const wrapper = mount(<MyComponent />)
-    const n = wrapper.find('.c-Scrollable__content').node
+    const n = wrapper.find('.c-Scrollable__content').getNode()
     const o = wrapper.instance()
 
     expect(o.scrollable).toBe(n)

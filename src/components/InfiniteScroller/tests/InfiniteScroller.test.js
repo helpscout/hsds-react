@@ -46,8 +46,8 @@ describe('Node Scope', () => {
         <InfiniteScroller />
       </div>
     )
-    const o = wrapper.find(InfiniteScroller).node
-    const d = wrapper.find('.derlict').node
+    const o = wrapper.find(InfiniteScroller).getNode()
+    const d = wrapper.find('.derlict').getNode()
 
     expect(o.state.nodeScope).toBe(d)
   })
@@ -60,8 +60,8 @@ describe('scrollParent', () => {
         <InfiniteScroller />
       </div>
     )
-    const o = wrapper.find(InfiniteScroller).node
-    const d = wrapper.find('.derlict').node
+    const o = wrapper.find(InfiniteScroller).getNode()
+    const d = wrapper.find('.derlict').getNode()
 
     expect(o.state.nodeScope).toBe(d)
   })
@@ -75,7 +75,7 @@ describe('scrollParent', () => {
         <InfiniteScroller scrollParent={node} />
       </div>
     )
-    const o = wrapper.find(InfiniteScroller).node
+    const o = wrapper.find(InfiniteScroller).getNode()
 
     expect(o.state.nodeScope).toBe(node)
     expect(o.state.nodeScope.id).toBe('hansel')
@@ -112,9 +112,9 @@ describe('scrollParent', () => {
     const wrapper = mount(<CustomModal />)
 
     const o = wrapper.find('.custom-scroller')
-    const n = wrapper.find(InfiniteScroller).node
+    const n = wrapper.find(InfiniteScroller).getNode()
 
-    o.node.dispatchEvent(scrollEvent)
+    o.getNode().dispatchEvent(scrollEvent)
 
     expect(n.state.nodeScope).toBe(o.node)
     expect(spy).toHaveBeenCalled()
@@ -151,9 +151,9 @@ describe('scrollParent', () => {
     const wrapper = mount(<CustomModal />)
 
     const o = wrapper.find('.outer')
-    const n = wrapper.find(InfiniteScroller).node
+    const n = wrapper.find(InfiniteScroller).getNode()
 
-    o.node.dispatchEvent(scrollEvent)
+    o.getNode().dispatchEvent(scrollEvent)
 
     expect(n.state.nodeScope).toBe(o.node)
     expect(spy).toHaveBeenCalled()
@@ -172,7 +172,7 @@ describe('Loading', () => {
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(1)
-    expect(o.node.props.align).toBe('center')
+    expect(o.getNode().props.align).toBe('center')
   })
 
   test('Can render custom loading markup', () => {
@@ -332,7 +332,7 @@ describe('Integration: Modal', () => {
     )
     const o = wrapper.find('.c-Scrollable__content')
 
-    o.node.dispatchEvent(scrollEvent)
+    o.getNode().dispatchEvent(scrollEvent)
 
     expect(spy).toHaveBeenCalled()
   })

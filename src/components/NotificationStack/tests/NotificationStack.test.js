@@ -134,7 +134,7 @@ describe('NotificationID', () => {
       </NotificationStack>
     )
 
-    expect(wrapper.node.firstNotificationId).toBe(23)
+    expect(wrapper.getNode().firstNotificationId).toBe(23)
   })
 
   test('Keeps Notification ID, even if children are removed', () => {
@@ -150,7 +150,7 @@ describe('NotificationID', () => {
       children: [<Notification id={41} />, <Notification id={42} />],
     })
 
-    expect(wrapper.node.firstNotificationId).toBe(23)
+    expect(wrapper.getNode().firstNotificationId).toBe(23)
   })
 
   test('Clears Notification ID onNotificationClick', () => {
@@ -168,7 +168,7 @@ describe('NotificationID', () => {
       .props()
       .onBubbleClick()
 
-    expect(wrapper.node.firstNotificationId).toBeFalsy()
+    expect(wrapper.getNode().firstNotificationId).toBeFalsy()
   })
 })
 

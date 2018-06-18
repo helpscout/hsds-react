@@ -84,7 +84,7 @@ describe('onRemove', () => {
       </TagList>
     )
     const o = wrapper.find(Tag).first()
-    o.node.handleOnRemove()
+    o.getNode().handleOnRemove()
 
     wait(100).then(() => {
       expect(spy).toHaveBeenCalled()

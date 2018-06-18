@@ -160,7 +160,7 @@ describe('setState', () => {
     const wrapper = mount(<Notification />)
     wrapper.unmount()
 
-    expect(wrapper.node._isMounted).toBe(false)
+    expect(wrapper.getNode()._isMounted).toBe(false)
   })
 
   test('Only sets state if mounted', () => {

@@ -110,14 +110,14 @@ describe('Styles', () => {
 describe('offsetAmount', () => {
   test('Adds offsetChars, if specified', () => {
     const wrapper = mount(<Resizer offsetAmount={5} />)
-    const chars = wrapper.node.getFinalContents('words')
+    const chars = wrapper.instance().getFinalContents('words')
 
     expect(chars).toContain('RRRRR')
   })
 
   test('Does not add offsetChars, if specified', () => {
     const wrapper = mount(<Resizer offsetAmount={0} />)
-    const chars = wrapper.node.getFinalContents('words')
+    const chars = wrapper.instance().getFinalContents('words')
 
     expect(chars).not.toContain('R')
   })

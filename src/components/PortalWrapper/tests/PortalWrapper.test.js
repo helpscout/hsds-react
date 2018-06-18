@@ -108,11 +108,11 @@ describe('Manager', () => {
 
     wait()
       .then(() => {
-        o.node.closePortal()
+        o.getNode().closePortal()
       })
       .then(() => wait())
       .then(() => {
-        expect(o.node.state.isOpen).toBe(false)
+        expect(o.getNode().state.isOpen).toBe(false)
         done()
       })
   })
@@ -128,8 +128,8 @@ describe('Manager', () => {
     )
     const o = wrapper.find(TestComponent).first()
 
-    o.node.closePortal()
-    expect(o.node.state.isOpen).toBe(true)
+    o.getNode().closePortal()
+    expect(o.getNode().state.isOpen).toBe(true)
   })
 })
 
@@ -285,7 +285,7 @@ describe('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.node
+    const o = wrapper.getNode()
 
     expect(o.triggerComponent).toBeTruthy()
     expect(o.triggerNode).toBeTruthy()
@@ -295,7 +295,7 @@ describe('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.node
+    const o = wrapper.getNode()
 
     wrapper.unmount()
 
@@ -308,7 +308,7 @@ describe('Trigger', () => {
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
     const o = wrapper.find('button')
-    o.node.onfocus = spy
+    o.getNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     setTimeout(() => {
@@ -325,7 +325,7 @@ describe('Trigger', () => {
       <TestComponent timeout={0} trigger={trigger} isOpen />
     )
     const o = wrapper.find('button')
-    o.node.onfocus = spy
+    o.getNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     setTimeout(() => {

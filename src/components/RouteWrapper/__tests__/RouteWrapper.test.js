@@ -41,7 +41,7 @@ describe('Route fetching', () => {
     }
     const to = 'some/route'
     const wrapper = wrap(<RouteWrappedPig fetch={fetch} to={to} />, options)
-    expect(wrapper.node.type).toBe('div')
+    expect(wrapper.getNode().type).toBe('div')
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()
     setTimeout(() => {
@@ -53,7 +53,7 @@ describe('Route fetching', () => {
   test('Specifying a `to` but no `fetch()` routes correctly', done => {
     const to = 'some/other/route'
     const wrapper = wrap(<RouteWrappedPig to={to} />, options)
-    expect(wrapper.node.type).toBe('div')
+    expect(wrapper.getNode().type).toBe('div')
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()
     setTimeout(() => {

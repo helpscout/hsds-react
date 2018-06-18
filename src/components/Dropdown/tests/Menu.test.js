@@ -36,7 +36,7 @@ describe('Classname', () => {
 describe('Nodes', () => {
   test('Has a reference to DOM nodes', done => {
     const wrapper = mount(<MenuComponent isOpen />)
-    const o = wrapper.node
+    const o = wrapper.instance()
 
     wait().then(() => {
       expect(o.node).toBeTruthy()
@@ -110,7 +110,7 @@ describe('Items', () => {
         <div className="brick">Brick</div>
       </MenuComponent>
     )
-    const n = wrapper.node
+    const n = wrapper.instance()
     const o = wrapper.find('.brick')
 
     expect(n.items.length).toBe(4)
@@ -338,7 +338,7 @@ describe('Selected', () => {
 describe('Height', () => {
   test('Adjusts height on mount, if Menu will be outside of Viewport', done => {
     const wrapper = mount(<MenuComponent isOpen />)
-    const o = wrapper.node
+    const o = wrapper.getNode()
     const initialHeight = o.height
 
     o.listNode.getBoundingClientRect = () => ({
@@ -363,7 +363,7 @@ describe('Height', () => {
 
   test('Keeps height at null if Menu is within viewport', done => {
     const wrapper = mount(<MenuComponent isOpen />)
-    const o = wrapper.node
+    const o = wrapper.getNode()
 
     o.listNode.getBoundingClientRect = () => ({
       width: 200,
@@ -495,7 +495,7 @@ describe('Keyboard Arrows: Up/Down', () => {
         <Item />
       </MenuComponent>
     )
-    wrapper.node.isFocused = false
+    wrapper.getNode().isFocused = false
 
     simulateKeyPress(Keys.UP_ARROW, 'keydown')
     expect(wrapper.state().focusIndex).toBe(3)
@@ -510,7 +510,7 @@ describe('Keyboard Arrows: Up/Down', () => {
         <Item />
       </MenuComponent>
     )
-    wrapper.node.isFocused = false
+    wrapper.getNode().isFocused = false
 
     simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
     expect(wrapper.state().focusIndex).toBe(3)
@@ -565,7 +565,7 @@ describe('Keyboard Arrows: Left/Right', () => {
         <Item />
       </MenuComponent>
     )
-    wrapper.node.isFocused = false
+    wrapper.getNode().isFocused = false
 
     simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
 
@@ -585,7 +585,7 @@ describe('Keyboard Arrows: Left/Right', () => {
         <Item />
       </MenuComponent>
     )
-    const o = wrapper.node
+    const o = wrapper.getNode()
     const previousHoverIndex = wrapper.state().hoverIndex
 
     simulateKeyPress(Keys.RIGHT_ARROW, 'keydown')
@@ -605,7 +605,7 @@ describe('Keyboard Arrows: Left/Right', () => {
         <Item />
       </MenuComponent>
     )
-    const o = wrapper.node
+    const o = wrapper.getNode()
 
     expect(o.isFocused).toBeTruthy()
 
@@ -625,7 +625,7 @@ describe('Keyboard Arrows: Left/Right', () => {
         <Item />
       </MenuComponent>
     )
-    const o = wrapper.node
+    const o = wrapper.getNode()
 
     expect(o.isFocused).toBeTruthy()
 
@@ -648,7 +648,7 @@ describe('Keyboard Arrows: Left/Right', () => {
         <Item />
       </MenuComponent>
     )
-    wrapper.node.isFocused = false
+    wrapper.getNode().isFocused = false
 
     simulateKeyPress(Keys.LEFT_ARROW, 'keydown')
 
@@ -663,7 +663,7 @@ describe('Open state', () => {
         <Item />
       </MenuComponent>
     )
-    const o = wrapper.node
+    const o = wrapper.getNode()
     wrapper.setProps({ isOpen: true })
 
     expect(o.isFocused).toBe(true)
@@ -704,7 +704,7 @@ describe('Focus', () => {
     simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
 
     expect(wrapper.state().focusIndex).toBe(3)
-    expect(wrapper.node.items[3].node).toBe(document.activeElement)
+    expect(wrapper.getNode().items[3].node).toBe(document.activeElement)
   })
 
   test('Does not focuses item on key down arrow, if menu is unfocused', () => {
@@ -716,14 +716,14 @@ describe('Focus', () => {
         <Item />
       </MenuComponent>
     )
-    const o = wrapper.node
+    const o = wrapper.getNode()
     o.isFocused = false
 
     simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
     simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
     simulateKeyPress(Keys.DOWN_ARROW, 'keydown')
 
-    expect(wrapper.node.items[3].node).not.toBe(document.activeElement)
+    expect(wrapper.getNode().items[3].node).not.toBe(document.activeElement)
   })
 
   test('Removes this.isFocused when item with sub-menu is hovered', () => {
@@ -739,7 +739,7 @@ describe('Focus', () => {
       </MenuComponent>
     )
 
-    expect(wrapper.node.isFocused).toBeTruthy()
+    expect(wrapper.getNode().isFocused).toBeTruthy()
     expect(wrapper.state().focusIndex).not.toBe(3)
     expect(wrapper.state().hoverIndex).not.toBe(3)
 
@@ -751,7 +751,7 @@ describe('Focus', () => {
 
     expect(wrapper.state().focusIndex).toBe(3)
     expect(wrapper.state().hoverIndex).toBe(3)
-    expect(wrapper.node.isFocused).not.toBeTruthy()
+    expect(wrapper.getNode().isFocused).not.toBeTruthy()
   })
 
   test('Resets focus when sub-menu is closed, and if menu is mounted', () => {
@@ -806,8 +806,8 @@ describe('Unmounting', () => {
       </MenuComponent>
     )
 
-    expect(wrapper.node._isMounted).not.toBeFalsy()
+    expect(wrapper.getNode()._isMounted).not.toBeFalsy()
     wrapper.unmount()
-    expect(wrapper.node._isMounted).toBeFalsy()
+    expect(wrapper.getNode()._isMounted).toBeFalsy()
   })
 })

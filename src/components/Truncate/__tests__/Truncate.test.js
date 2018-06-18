@@ -91,14 +91,14 @@ describe('node', () => {
   test('References node on mount', () => {
     const wrapper = mount(<Truncate />)
 
-    expect(wrapper.node.node).toBeTruthy()
+    expect(wrapper.getNode().node).toBeTruthy()
   })
 
   test('Nullifies node on unmount', () => {
     const wrapper = mount(<Truncate />)
     wrapper.unmount()
 
-    expect(wrapper.node.node).not.toBeTruthy()
+    expect(wrapper.getNode().node).not.toBeTruthy()
   })
 })
 
@@ -107,17 +107,17 @@ describe('Truncate: Check', () => {
     const props = { type: 'auto' }
     const wrapper = mount(<Truncate>Words</Truncate>)
 
-    wrapper.node.node = {
+    wrapper.getNode().node = {
       offsetWidth: 100,
       scrollWidth: 1000,
     }
-    expect(wrapper.node.isTruncated(props)).toBe(true)
+    expect(wrapper.getNode().isTruncated(props)).toBe(true)
 
-    wrapper.node.node = {
+    wrapper.getNode().node = {
       offsetWidth: 1000,
       scrollWidth: 100,
     }
-    expect(wrapper.node.isTruncated(props)).toBe(false)
+    expect(wrapper.getNode().isTruncated(props)).toBe(false)
   })
 
   test('Recalculates on appropriate prop change', () => {
@@ -134,9 +134,9 @@ describe('Truncate: Check', () => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
     wrapper.setState({ isTruncated: false })
     // Stub
-    wrapper.node.isTruncated = () => true
+    wrapper.getNode().isTruncated = () => true
 
-    wrapper.node.handleOnResize()
+    wrapper.getNode().handleOnResize()
 
     expect(wrapper.state().isTruncated).toBe(true)
   })
@@ -148,9 +148,9 @@ describe('Truncate: Check', () => {
     )
     wrapper.setState({ isTruncated: true })
     // Stub
-    wrapper.node.isTruncated = () => true
-    wrapper.node.setState = spy
-    wrapper.node.handleOnResize()
+    wrapper.getNode().isTruncated = () => true
+    wrapper.getNode().setState = spy
+    wrapper.getNode().handleOnResize()
 
     expect(spy).not.toHaveBeenCalled()
   })
@@ -160,15 +160,15 @@ describe('Truncate: Check', () => {
     const wrapper = mount(
       <Truncate showTooltipOnTruncate={false}>Words</Truncate>
     )
-    wrapper.node.setState = spy
-    wrapper.node.handleOnResize()
+    wrapper.getNode().setState = spy
+    wrapper.getNode().handleOnResize()
 
     expect(spy).not.toHaveBeenCalled()
   })
 
   test('Check returns false, if node is somehow not defined', () => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
-    wrapper.node.node = null
+    wrapper.getNode().node = null
 
     expect(wrapper.state().isTruncated).toBe(false)
   })
