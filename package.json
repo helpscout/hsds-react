@@ -37,7 +37,7 @@
     "release:patch": "np patch --no-yarn --no-publish",
     "release:minor": "np minor --no-yarn --no-publish",
     "release:major": "np major --no-yarn --no-publish",
-    "release": "npm run release:patch",
+    "release": "npm install && npm run release:patch",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 8900",
     "storybook:build": "build-storybook -c .storybook -o public",
