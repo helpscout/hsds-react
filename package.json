@@ -14,6 +14,8 @@
     "ItsJonQ <hello@jonquach.com>"
   ],
   "scripts": {
+    "check:npm": "node scripts/check-npm.js",
+    "prestart": "npm run check:npm",
     "build-storybook": "build-storybook",
     "build:css": "node scripts/sass.js",
     "build:es2015": "cross-env NODE_ENV=production babel ./src --ignore *.test.js,tests --out-dir ./dist",
@@ -25,7 +27,7 @@
     "copy:css": "cpx 'src/styles/**/*.scss' 'dist/styles'",
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
     "clean": "rimraf public && rimraf dist && mkdir dist",
-    "dev": "npm run test:dev",
+    "dev": "npm run check:npm && npm run test:dev",
     "deploy": "npm run storybook:clean && npm run storybook:build && npm run surge:cname && npm run surge:deploy",
     "dist": "babel src --out-dir dist --copy-files",
     "karma": "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
@@ -114,6 +116,7 @@
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chai": "4.1.2",
     "chalk": "1.1.3",
+    "check-dependencies": "1.1.0",
     "coveralls": "3.0.1",
     "cpx": "1.5.0",
     "cross-env": "5.1.0",
