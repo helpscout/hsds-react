@@ -308,3 +308,62 @@ describe('Mounting', () => {
     expect(o._isMounted).toBe(false)
   })
 })
+
+describe('Tab Navigation', () => {
+  test('Is not enabled by default', () => {
+    const spy = jest.fn()
+    const spyEvent = jest.fn()
+    const mockEvent = {
+      preventDefault: spyEvent,
+    }
+
+    const wrapper = mount(<Dropdown isOpen />)
+
+    const o = wrapper.instance()
+    o.handleOnMenuClose = spy
+
+    o.handleTab(mockEvent)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spyEvent).toHaveBeenCalledTimes(1)
+
+    o.handleShiftTab(mockEvent)
+    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spyEvent).toHaveBeenCalledTimes(2)
+  })
+
+  test('Does not close menu, if enabled', () => {
+    const spy = jest.fn()
+    const spyEvent = jest.fn()
+    const mockEvent = {
+      preventDefault: spyEvent,
+    }
+
+    const wrapper = mount(<Dropdown isOpen enableTabNavigation />)
+
+    const o = wrapper.instance()
+    o.handleOnMenuClose = spy
+
+    o.handleTab(mockEvent)
+    expect(spy).not.toHaveBeenCalled()
+    expect(spyEvent).not.toHaveBeenCalled()
+
+    o.handleShiftTab(mockEvent)
+    expect(spy).not.toHaveBeenCalled()
+    expect(spyEvent).not.toHaveBeenCalled()
+  })
+
+  test('Refocuses the trigger when closed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Dropdown isOpen enableTabNavigation />)
+
+    const o = wrapper.instance()
+    o.triggerNode = {
+      focus: spy,
+    }
+
+    o.handleOnMenuClose()
+
+    expect(spy).toHaveBeenCalled()
+    expect(o.isFocused).toBe(true)
+  })
+})

@@ -336,31 +336,6 @@ describe('Selected', () => {
 })
 
 describe('Height', () => {
-  test('Adjusts height on mount, if Menu will be outside of Viewport', done => {
-    const wrapper = mount(<MenuComponent isOpen />)
-    const o = wrapper.getNode()
-    const initialHeight = o.height
-
-    o.listNode.getBoundingClientRect = () => ({
-      width: 200,
-      height: 400,
-      top: 400,
-      left: 8,
-      right: 0,
-      bottom: 0,
-    })
-
-    expect(o.contentNode.style.height).toBeFalsy()
-
-    setTimeout(() => {
-      expect(initialHeight).not.toBe(o.height)
-      expect(typeof o.height).toBe('number')
-      expect(o.height).toBeGreaterThan(0)
-      expect(parseInt(o.contentNode.style.height)).toBe(o.height)
-      done()
-    }, 1)
-  })
-
   test('Keeps height at null if Menu is within viewport', done => {
     const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.getNode()
@@ -809,5 +784,35 @@ describe('Unmounting', () => {
     expect(wrapper.getNode()._isMounted).not.toBeFalsy()
     wrapper.unmount()
     expect(wrapper.getNode()._isMounted).toBeFalsy()
+  })
+})
+
+describe('Tab navigation', () => {
+  test('Is not enabled by default', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuComponent />)
+    const o = wrapper.instance()
+    o.handleDownArrow = spy
+    o.handleUpArrow = spy
+
+    o.handleTab()
+    expect(spy).not.toHaveBeenCalled()
+
+    o.handleShiftTab()
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Fires arrow functions, if enabled', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuComponent enableTabNavigation />)
+    const o = wrapper.instance()
+    o.handleDownArrow = spy
+    o.handleUpArrow = spy
+
+    o.handleTab()
+    expect(spy).toHaveBeenCalled()
+
+    o.handleShiftTab()
+    expect(spy).toHaveBeenCalled()
   })
 })

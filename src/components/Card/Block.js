@@ -1,26 +1,25 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import Scrollable from '../Scrollable'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { standardSizeTypes } from '../../constants/propTypes'
+import type { UISize } from '../../constants/types'
 
-export const propTypes = {
-  bgMuted: PropTypes.bool,
-  className: PropTypes.string,
-  scrollable: PropTypes.bool,
-  scrollableRef: PropTypes.func,
-  onScroll: PropTypes.func,
-  flex: PropTypes.bool,
-  size: standardSizeTypes,
+type Props = {
+  bgMuted: boolean,
+  children?: any,
+  className?: string,
+  flex?: boolean,
+  scrollable: boolean,
+  scrollableRef: () => void,
+  onScroll: () => void,
+  flex: boolean,
+  size?: UISize,
 }
 
-const defaultProps = {
-  onScroll: noop,
-  scrollableRef: noop,
-}
-
-const Block = props => {
+const Block = (props: Props) => {
   const {
     bgMuted,
     className,
@@ -70,7 +69,9 @@ const Block = props => {
   return componentMarkup
 }
 
-Block.propTypes = propTypes
-Block.defaultProps = defaultProps
+Block.defaultProps = {
+  onScroll: noop,
+  scrollableRef: noop,
+}
 
 export default Block

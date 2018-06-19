@@ -226,3 +226,18 @@ export const getClosestNode = (node: Node, selector: string): Node => {
   if (typeof selector !== 'string') return null
   return closest(node, selector)
 }
+
+/**
+ * Enhanced wrapper for Node.scrollIntoViewIfNeeded()
+ *
+ * @param   {Node} node
+ * @returns {Node}
+ */
+export const scrollIntoView = (node: Node) => {
+  if (!isNodeElement(node)) return
+  // $FlowFixMe
+  if (node['scrollIntoViewIfNeeded']) return node.scrollIntoViewIfNeeded()
+  /* istanbul ignore else */
+  // $FlowFixMe
+  if (node['scrollIntoView']) return node.scrollIntoView()
+}

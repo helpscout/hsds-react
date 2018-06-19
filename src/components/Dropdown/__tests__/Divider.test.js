@@ -3,7 +3,7 @@ import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
   className: 'c-DropdownDivider',
-  skipChildren: true,
+  skipChildrenTest: true,
 }
 
 baseComponentTest(Divider, baseComponentOptions)

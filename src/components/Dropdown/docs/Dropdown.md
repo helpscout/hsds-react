@@ -2,7 +2,6 @@
 
 A Dropdown component is provides the UI to contain a series of actions, presented in a menu overlay.
 
-
 ## Example
 
 ```jsx
@@ -18,15 +17,15 @@ A Dropdown component is provides the UI to contain a series of actions, presente
 </Dropdown>
 ```
 
-
 ## Props
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| className | `string` | Custom class names to be added to the component. |
-| closeMenuOnClick | `bool` | Closes component when item is clicked. Default is `true`. |
-| direction | `string` | Determines the preferred "drop" direction. Accepts `left`, `right`, `up`, `down`, or a combination of horizontal/vertical directions. |
-| isOpen | `bool` | Determines if component is open/rendered. |
-| onClose | `function` | Callback when component is closed. |
-| onSelect | `function` | Callback when item is selected. |
-| selectedIndex | `number` | Pre-select an item based on it's index number. |
+| Prop                | Type       | Description                                                                                                                           |
+| ------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| className           | `string`   | Custom class names to be added to the component.                                                                                      |
+| closeMenuOnClick    | `bool`     | Closes component when item is clicked. Default is `true`.                                                                             |
+| direction           | `string`   | Determines the preferred "drop" direction. Accepts `left`, `right`, `up`, `down`, or a combination of horizontal/vertical directions. |
+| enableTabNavigation | `bool`     | Enables `tab` keypress to navigation up/down the menu. Default `false`.                                                               |
+| isOpen              | `bool`     | Determines if component is open/rendered.                                                                                             |
+| onClose             | `function` | Callback when component is closed.                                                                                                    |
+| onSelect            | `function` | Callback when item is selected.                                                                                                       |
+| selectedIndex       | `number`   | Pre-select an item based on it's index number.                                                                                        |

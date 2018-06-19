@@ -1,41 +1,39 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from '../Button'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { dropdownDirectionTypes } from './propTypes'
+import type { DropdownDirection } from './types'
 
-export const propTypes = {
-  children: PropTypes.node.isRequired,
-  direction: dropdownDirectionTypes,
-  onClick: PropTypes.func,
-}
-const defaultProps = {
-  children: 'Dropdown',
-  direction: 'down',
-  onClick: noop,
+type Props = {
+  children?: any,
+  className?: string,
+  direction: DropdownDirection,
+  isActive: boolean,
+  onClick: (event: Event) => void,
 }
 
-class Trigger extends Component {
-  constructor() {
-    super()
-    this.handleOnClick = this.handleOnClick.bind(this)
+class Trigger extends Component<Props> {
+  static defaultProps = {
+    children: 'Dropdown',
+    direction: 'down',
+    onClick: noop,
+    isActive: false,
   }
+  node: ?HTMLElement = null
 
   /* istanbul ignore next */
   // Tested, but Istanbul isn't picking it up
-  handleOnClick(event) {
-    const { onClick } = this.props
-    if (event) event.preventDefault()
-    onClick(event)
+  handleOnClick = (event: Event) => {
+    event && event.preventDefault()
+    this.props.onClick(event)
   }
 
   render() {
     const { isActive, children, className, direction, ...rest } = this.props
-
     const handleOnClick = this.handleOnClick
-
     const child =
       typeof children !== 'object' ? children : React.Children.only(children)
 
@@ -83,8 +81,5 @@ class Trigger extends Component {
     return triggerMarkup
   }
 }
-
-Trigger.propTypes = propTypes
-Trigger.defaultProps = defaultProps
 
 export default Trigger

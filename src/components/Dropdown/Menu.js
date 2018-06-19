@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import includes from 'lodash.includes'
@@ -11,32 +12,32 @@ import Scrollable from '../Scrollable'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { incrementFocusIndex } from '../../utilities/focus'
-import { noop } from '../../utilities/other'
+import { noop, requestAnimationFrame } from '../../utilities/other'
+import { enhanceComponentMethod } from '../../utilities/react'
 import { applyStylesToNode, isNodeScrollable } from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
+import type { DropdownDirection } from './types'
 
-export const propTypes = {
-  closeMenuOnClick: PropTypes.bool,
-  enableCycling: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  onOpen: PropTypes.func,
-  onSelect: PropTypes.func,
-  selectedIndex: PropTypes.number,
+type Props = {
+  children?: any,
+  className?: string,
+  closeMenuOnClick: boolean,
+  closePortal: () => void,
+  enableCycling: boolean,
+  enableTabNavigation: boolean,
+  isOpen: boolean,
+  onBeforeClose: () => void,
+  onBeforeOpen: () => void,
+  onClose: () => void,
+  onOpen: () => void,
+  onSelect: () => void,
+  selectedIndex: number,
+  trigger?: ?HTMLElement,
 }
 
-const defaultProps = {
-  closeMenuOnClick: true,
-  enableCycling: false,
-  isOpen: false,
-  onClose: noop,
-  onOpen: noop,
-  onSelect: noop,
-}
-
-const contextTypes = {
-  parentMenu: PropTypes.element,
-  parentMenuClose: PropTypes.func,
+type State = {
+  focusIndex: ?number,
+  hoverIndex: ?number,
 }
 
 const dropOptions = {
@@ -46,18 +47,45 @@ const dropOptions = {
   timeout: 0,
 }
 
-class Menu extends Component {
-  constructor(props) {
+class Menu extends Component<Props, State> {
+  static defaultProps = {
+    closeMenuOnClick: true,
+    enableCycling: false,
+    enableTabNavigation: false,
+    isOpen: false,
+    onClose: noop,
+    onOpen: noop,
+    onSelect: noop,
+  }
+  static contextTypes = {
+    parentMenu: PropTypes.element,
+    parentMenuClose: PropTypes.func,
+  }
+
+  items: Array<?any> = []
+  isFocused: boolean = false
+  height: ?number = null
+
+  node: ?HTMLElement = null
+  wrapperNode: ?HTMLElement = null
+  contentNode: ?HTMLElement = null
+  scrollableNode: ?HTMLElement = null
+  listNode: ?HTMLElement = null
+  _isMounted: boolean = false
+
+  constructor(props: Props) {
     super()
     this.state = {
       focusIndex:
-        props.selectedIndex !== undefined ? props.selectedIndex : null,
+        typeof props.selectedIndex === 'number' ? props.selectedIndex : null,
       hoverIndex: null,
     }
     this.items = []
     this.isFocused = props.isOpen ? props.isOpen : false
     this.height = null
 
+    this.handleTab = this.handleTab.bind(this)
+    this.handleShiftTab = this.handleShiftTab.bind(this)
     this.handleUpArrow = this.handleUpArrow.bind(this)
     this.handleDownArrow = this.handleDownArrow.bind(this)
     this.handleLeftArrow = this.handleLeftArrow.bind(this)
@@ -73,50 +101,42 @@ class Menu extends Component {
     this.handleOnClose = this.handleOnClose.bind(this)
     this.handleOnCloseParent = this.handleOnCloseParent.bind(this)
     this.handleOnMenuClick = this.handleOnMenuClick.bind(this)
-
-    this.node = null
-    this.wrapperNode = null
-    this.contentNode = null
-    this.scrollableNode = null
-    this.listNode = null
-    // https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
-    this._isMounted = false
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.mapRefsToItems()
     this.setMenuFocus()
     this._isMounted = true
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       this.handleOnResize()
-    }, 0)
+    })
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps: Props) {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.mapRefsToItems()
       this.isFocused = nextProps.isOpen
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.mapRefsToItems()
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this._isMounted = false
   }
 
-  safeSetState(newState) {
+  safeSetState(newState: Object) {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(newState)
     }
   }
 
-  handleOnResize() {
+  handleOnResize = () => {
     const height = getHeightRelativeToViewport({
       node: this.listNode,
       offset: 20,
@@ -129,11 +149,11 @@ class Menu extends Component {
     }
   }
 
-  setMenuFocus() {
+  setMenuFocus = () => {
     this.isFocused = true
   }
 
-  mapRefsToItems() {
+  mapRefsToItems = () => {
     this.items = []
     Object.keys(this.refs).forEach((key, index) => {
       /* istanbul ignore else */
@@ -144,11 +164,11 @@ class Menu extends Component {
     })
   }
 
-  getIndexFromItem(item) {
+  getIndexFromItem = (item: any) => {
     return item.props.itemIndex
   }
 
-  incrementFocusIndex(direction) {
+  incrementFocusIndex = (direction: DropdownDirection) => {
     const { enableCycling } = this.props
     const { focusIndex } = this.state
     const itemCount = this.items.length - 1
@@ -166,22 +186,32 @@ class Menu extends Component {
     })
   }
 
-  handleUpArrow(event) {
-    event.preventDefault()
+  handleTab = (event: KeyboardEvent) => {
+    if (!this.props.enableTabNavigation) return
+    this.handleDownArrow(event)
+  }
+
+  handleShiftTab = (event: KeyboardEvent) => {
+    if (!this.props.enableTabNavigation) return
+    this.handleUpArrow(event)
+  }
+
+  handleUpArrow = (event: KeyboardEvent) => {
+    event.preventDefault && event.preventDefault()
     if (!this.isFocused) return
     this.incrementFocusIndex('up')
     this.handleFocusItemNode()
   }
 
-  handleDownArrow(event) {
-    event.preventDefault()
+  handleDownArrow = (event: KeyboardEvent) => {
+    event.preventDefault && event.preventDefault()
     if (!this.isFocused) return
     this.incrementFocusIndex('down')
     this.handleFocusItemNode()
   }
 
-  handleLeftArrow(event) {
-    event.preventDefault()
+  handleLeftArrow = (event: KeyboardEvent) => {
+    event.preventDefault && event.preventDefault()
     if (!this.isFocused) return
     const { parentMenu } = this.context
     if (parentMenu) {
@@ -189,8 +219,8 @@ class Menu extends Component {
     }
   }
 
-  handleRightArrow(event) {
-    event.preventDefault()
+  handleRightArrow = (event: KeyboardEvent) => {
+    event.preventDefault && event.preventDefault()
     const { focusIndex } = this.state
     if (!this.isFocused) return
 
@@ -203,15 +233,17 @@ class Menu extends Component {
     }
   }
 
-  handleEscape(event) {
+  handleEscape = (event: KeyboardEvent) => {
     this.handleOnClose()
   }
 
-  handleFocusItemNode() {
+  handleFocusItemNode = () => {
     /* istanbul ignore if */
     // Tested, but not being picked up by Istanbul
     if (!this.isFocused) return
     const { focusIndex } = this.state
+    if (typeof focusIndex !== 'number') return
+
     const focusItem = this.items[focusIndex]
     if (focusItem) {
       const node = focusItem.node
@@ -226,19 +258,19 @@ class Menu extends Component {
     }
   }
 
-  handleItemOnClick() {
+  handleItemOnClick = () => {
     const { closeMenuOnClick } = this.props
 
     if (!closeMenuOnClick) return
     this.handleOnCloseParent()
   }
 
-  handleItemOnFocus(event, reactEvent, item) {
+  handleItemOnFocus = (event: Event, reactEvent: Event, item: any) => {
     const focusIndex = this.getIndexFromItem(item)
     this.safeSetState({ focusIndex })
   }
 
-  handleItemOnMouseEnter(event, reactEvent, item) {
+  handleItemOnMouseEnter = (event: Event, reactEvent: Event, item: any) => {
     const focusIndex = this.getIndexFromItem(item)
     const hoverIndex = focusIndex
     this.safeSetState({ focusIndex, hoverIndex })
@@ -247,7 +279,7 @@ class Menu extends Component {
     }
   }
 
-  handleItemOnMenuClose() {
+  handleItemOnMenuClose = () => {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.isFocused = true
@@ -255,12 +287,11 @@ class Menu extends Component {
     }
   }
 
-  handleOnClose() {
-    const { onClose } = this.props
-    onClose()
+  handleOnClose = () => {
+    this.props.onClose()
   }
 
-  handleOnCloseParent() {
+  handleOnCloseParent = () => {
     const { parentMenuClose } = this.context
     this.handleOnClose()
 
@@ -269,7 +300,7 @@ class Menu extends Component {
     }
   }
 
-  handleOnMenuClick(event) {
+  handleOnMenuClick = (event: Event) => {
     event.stopPropagation()
   }
 
@@ -280,6 +311,7 @@ class Menu extends Component {
       closePortal,
       closeMenuOnClick,
       enableCycling,
+      enableTabNavigation,
       isOpen,
       onBeforeClose,
       onBeforeOpen,
@@ -319,16 +351,16 @@ class Menu extends Component {
 
       return child.type === Item
         ? React.cloneElement(child, {
+            enableTabNavigation,
             ref: itemRef,
             itemIndex: index,
             isOpen: hoverIndex === index,
             isHover: hoverIndex === index,
             isFocused: focusIndex === index,
             onFocus: handleItemOnFocus,
-            onClick: () => {
-              child.props.onClick()
-              handleItemOnClick()
-            },
+            onClick: enhanceComponentMethod(child, 'onClick')(
+              handleItemOnClick
+            ),
             onMouseEnter: handleItemOnMouseEnter,
             onMenuClose: handleItemOnMenuClose,
             onParentMenuClose: handleOnCloseParent,
@@ -359,6 +391,18 @@ class Menu extends Component {
           {...rest}
         >
           <EventListener event="resize" handler={handleOnResize} />
+          <KeypressListener
+            keyCode={Keys.TAB}
+            handler={this.handleTab}
+            noModifier
+            type="keydown"
+          />
+          <KeypressListener
+            keyCode={Keys.TAB}
+            modifier="shift"
+            handler={this.handleShiftTab}
+            type="keydown"
+          />
           <KeypressListener
             keyCode={Keys.UP_ARROW}
             handler={handleUpArrow}
@@ -412,10 +456,6 @@ class Menu extends Component {
     )
   }
 }
-
-Menu.propTypes = propTypes
-Menu.defaultProps = defaultProps
-Menu.contextTypes = contextTypes
 
 export const MenuComponent = Menu
 export default Drop(dropOptions)(Menu)

@@ -22,3 +22,10 @@ export type UISize =
 | 'lg'
 | ''
 | null
+
+export type BlockSelectorTag =
+| 'div'
+| 'span'
+| 'a'
+| 'p'
+| ''
