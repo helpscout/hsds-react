@@ -1,14 +1,21 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import Avatar from '../Avatar'
-import { shapeTypes, sizeTypes } from '../Avatar/propTypes'
 import classNames from '../../utilities/classNames'
+import type { AvatarShape, AvatarSize } from '../Avatar/types'
+
+type Props = {
+  className?: string,
+  isOnline: boolean,
+  shape: AvatarShape,
+  size: AvatarSize,
+}
 
 /**
  * A enhanced wrapper that for Avatar, allowing for an easier way to indicate
  * Avatar state.
  */
-const StatusAvatar = props => {
+const StatusAvatar = (props: Props) => {
   const { className, isOnline, ...rest } = props
 
   const componentClassName = classNames(
@@ -28,21 +35,6 @@ const StatusAvatar = props => {
       statusIcon={statusIcon}
     />
   )
-}
-
-StatusAvatar.propTypes = {
-  /**
-   * Determines the status icon, and represents Avatar online state.
-   */
-  isOnline: PropTypes.bool,
-  /**
-   * Shape of the avatar.
-   */
-  shape: shapeTypes,
-  /**
-   * Size of the avatar.
-   */
-  size: sizeTypes,
 }
 
 StatusAvatar.defaultProps = {

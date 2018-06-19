@@ -1,13 +1,13 @@
 // @flow
 import React from 'react'
 import classNames from '../../utilities/classNames'
-import type { UISizes } from '../../constants/types'
+import type { UISize } from '../../constants/types'
 
 type Props = {
   align: 'left' | 'center' | 'right' | '',
   children?: any,
   className?: string,
-  size: UISizes,
+  size: UISize,
 }
 
 const Static = (props: Props) => {

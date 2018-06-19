@@ -1,33 +1,36 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
-import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
+import Avatar from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
 import { standardSizeTypes } from '../../constants/propTypes'
+import type { AvatarShape, AvatarSize } from '../Avatar/types'
 
-export const propTypes = {
-  animationEasing: PropTypes.string,
-  animationSequence: PropTypes.string,
-  animationStagger: PropTypes.number,
-  avatarsClassName: PropTypes.string,
-  borderColor: PropTypes.string,
-  max: PropTypes.number,
-  shape: avatarTypes.shape,
-  size: standardSizeTypes,
+type Props = {
+  animationEasing: string,
+  animationSequence: string,
+  animationStagger: number,
+  avatarsClassName: string,
+  borderColor: string,
+  children?: any,
+  className?: string,
+  max: number,
+  shape: AvatarShape,
+  size: AvatarSize,
 }
 
-const defaultProps = {
-  animationEasing: 'ease',
-  animationSequence: 'fade',
-  animationStagger: 0,
-  borderColor: 'white',
-  max: 5,
-  shape: 'circle',
-  size: 'md',
-}
+class AvatarStack extends Component<Props> {
+  static defaultProps = {
+    animationEasing: 'ease',
+    animationSequence: 'fade',
+    animationStagger: 0,
+    borderColor: 'white',
+    max: 5,
+    shape: 'circle',
+    size: 'md',
+  }
 
-class AvatarStack extends Component {
   render() {
     const {
       animationEasing,
@@ -107,8 +110,5 @@ class AvatarStack extends Component {
     )
   }
 }
-
-AvatarStack.propTypes = propTypes
-AvatarStack.defaultProps = defaultProps
 
 export default AvatarStack

@@ -1,4 +1,24 @@
 // @flow
-export type TextShades = 'default' | 'subtle' | 'muted' | 'faint' | 'extraMuted' | ''
-export type UIStates = 'default' | 'error' | 'success' | 'warning' | ''
-export type UISizes = '' | 'sm' | 'md' | 'lg'
+export type TextShade =
+| 'default'
+| 'subtle'
+| 'muted'
+| 'faint'
+| 'extraMuted'
+| ''
+| null
+
+export type UIState =
+| 'default'
+| 'error'
+| 'success'
+| 'warning'
+| ''
+| null
+
+export type UISize =
+| 'sm'
+| 'md'
+| 'lg'
+| ''
+| null

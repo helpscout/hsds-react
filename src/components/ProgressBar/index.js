@@ -3,13 +3,13 @@ import React, { PureComponent as Component } from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { standardSizeTypes } from '../../constants/propTypes'
-import type { UISizes } from '../../constants/types'
+import type { UISize } from '../../constants/types'
 
 type Props = {
   className?: string,
   description?: string,
   onChange: (value: Value) => void,
-  size?: UISizes,
+  size?: UISize,
   value: Value,
 }
 

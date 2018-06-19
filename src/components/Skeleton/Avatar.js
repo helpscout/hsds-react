@@ -1,20 +1,17 @@
+// @flow
 import React from 'react'
 import Block from './Block'
 import classNames from '../../utilities/classNames'
-import { standardSizeTypes } from '../../constants/propTypes'
-import { shapeTypes } from '../Avatar/propTypes'
+import type { AvatarShape, AvatarSize } from '../Avatar/types'
 
-export const propTypes = {
-  shape: shapeTypes,
-  size: standardSizeTypes,
+type Props = {
+  className?: string,
+  children?: any,
+  shape: AvatarShape,
+  size: AvatarSize,
 }
 
-const defaultProps = {
-  size: 'md',
-  shape: 'circle',
-}
-
-const Avatar = props => {
+const Avatar = (props: Props) => {
   const { className, children, shape, size, ...rest } = props
 
   const componentClassName = classNames(
@@ -27,8 +24,11 @@ const Avatar = props => {
   return <Block className={componentClassName} {...rest} />
 }
 
-Avatar.propTypes = propTypes
-Avatar.defaultProps = defaultProps
-Avatar.displayName = 'SkeletonAvatar'
+Avatar.defaultProps = {
+  size: 'md',
+  shape: 'circle',
+}
+
+Avatar.displayName = 'Skeleton.Avatar'
 
 export default Avatar

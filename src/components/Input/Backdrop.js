@@ -2,14 +2,14 @@
 import React from 'react'
 import classNames from '../../utilities/classNames'
 import { stateTypes } from '../../constants/propTypes'
-import type { UIStates } from '../../constants/types'
+import type { UIState } from '../../constants/types'
 
 type Props = {
   checkbox?: boolean,
   className?: string,
   disabled: boolean,
   readOnly: boolean,
-  state: UIStates,
+  state?: ?UIState,
 }
 
 const Backdrop = (props: Props) => {

@@ -1,36 +1,32 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import StatusDot from '../StatusDot'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
-import { statusTypes } from '../StatusDot/propTypes'
 import { nameToInitials } from '../../utilities/strings'
-import { sizeTypes, shapeTypes } from './propTypes'
+import type { StatusDotStatus } from '../StatusDot/types'
+import type { AvatarShape, AvatarSize } from './types'
 
-export const propTypes = {
-  borderColor: PropTypes.string,
-  className: PropTypes.string,
-  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  image: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  initials: PropTypes.string,
-  light: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  onLoad: PropTypes.func,
-  onError: PropTypes.func,
-  outerBorderColor: PropTypes.string,
-  showStatusBorderColor: PropTypes.bool,
-  shape: shapeTypes,
-  size: sizeTypes,
-  statusIcon: PropTypes.string,
-  status: statusTypes,
+type Props = {
+  borderColor?: string,
+  className?: string,
+  count?: number | string,
+  image?: string,
+  initials?: string,
+  light: boolean,
+  name: string,
+  onLoad?: () => void,
+  onError?: () => void,
+  outerBorderColor?: string,
+  showStatusBorderColor: boolean,
+  shape: AvatarShape,
+  size: AvatarSize,
+  statusIcon?: string,
+  status?: StatusDotStatus,
 }
 
-const defaultProps = {
-  light: false,
-  name: '',
-  showStatusBorderColor: false,
-  size: 'md',
-  shape: 'circle',
+type State = {
+  imageLoaded: string,
 }
 
 export const IMAGE_STATES = {
@@ -39,26 +35,32 @@ export const IMAGE_STATES = {
   failed: 'failed',
 }
 
-class Avatar extends Component {
-  constructor(props) {
+class Avatar extends Component<Props, State> {
+  static defaultProps = {
+    light: false,
+    name: '',
+    showStatusBorderColor: false,
+    size: 'md',
+    shape: 'circle',
+  }
+
+  constructor(props: Props) {
     super(props)
 
     this.state = {
       // Assume image is loading so that we only re-render on error
       imageLoaded: IMAGE_STATES.loading,
     }
-    this.onImageLoadedError = this.onImageLoadedError.bind(this)
-    this.onImageLoadedSuccess = this.onImageLoadedSuccess.bind(this)
   }
 
-  onImageLoadedError() {
+  onImageLoadedError = () => {
     this.setState({
       imageLoaded: IMAGE_STATES.failed,
     })
     this.props.onError && this.props.onError()
   }
 
-  onImageLoadedSuccess() {
+  onImageLoadedSuccess = () => {
     this.setState({
       imageLoaded: IMAGE_STATES.loaded,
     })
@@ -103,9 +105,8 @@ class Avatar extends Component {
       className
     )
 
-    const imageStyle = isImageLoaded
-      ? { backgroundImage: `url('${image}')` }
-      : null
+    const imageStyle =
+      image && isImageLoaded ? { backgroundImage: `url('${image}')` } : null
     const text = count || initials || nameToInitials(name)
 
     const contentMarkup = hasImage ? (
@@ -136,10 +137,12 @@ class Avatar extends Component {
           }
         : {}
 
-    hasImage &&
-      Object.assign(styles, {
+    if (hasImage) {
+      styles = {
+        ...styles,
         backgroundColor: 'transparent',
-      })
+      }
+    }
 
     styles = Object.keys(styles).length ? styles : null
 
@@ -164,9 +167,5 @@ class Avatar extends Component {
     )
   }
 }
-
-Avatar.propTypes = propTypes
-Avatar.defaultProps = defaultProps
-Avatar.displayName = 'Avatar'
 
 export default Avatar

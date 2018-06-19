@@ -1,19 +1,19 @@
 .c-AvatarGridWrapper {
-  @import "../resets/base";
+  @import '../resets/base';
   &.is-center {
     text-align: center;
   }
 }
 
 .c-AvatarGridContainer {
-  @import "../resets/base";
+  @import '../resets/base';
   display: inline-block;
   min-width: 32px;
-  max-width: 240px;
+  max-width: 260px;
 }
 
 .c-AvatarGrid {
-  @import "../resets/base";
+  @import '../resets/base';
 
   align-items: center;
   -ms-display: flex;
