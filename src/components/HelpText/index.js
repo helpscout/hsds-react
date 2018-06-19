@@ -4,14 +4,14 @@ import classNames from '../../utilities/classNames'
 import Text from '../Text'
 import { isString } from '../../utilities/strings'
 import type { Sizes } from '../Text/types'
-import type { UIStates } from '../../constants/types'
+import type { UIState } from '../../constants/types'
 
 type Props = {
   children?: any,
   className?: string,
   muted?: boolean,
   size?: Sizes,
-  state?: ?UIStates,
+  state?: ?UIState,
 }
 
 const HelpText = (props: Props) => {

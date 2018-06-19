@@ -1,32 +1,35 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
-import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
-import { standardSizeTypes } from '../../constants/propTypes'
+import Avatar from '../Avatar'
+import type { AvatarShape, AvatarSize } from '../Avatar/types'
 
-export const propTypes = {
-  animationEasing: PropTypes.string,
-  animationSequence: PropTypes.string,
-  animationStagger: PropTypes.number,
-  center: PropTypes.bool,
-  max: PropTypes.number,
-  shape: avatarTypes.shape,
-  size: standardSizeTypes,
+type Props = {
+  animationEasing: string,
+  animationSequence: string,
+  animationStagger: number,
+  center: boolean,
+  children?: any,
+  className?: string,
+  max: number,
+  shape: AvatarShape,
+  size: AvatarSize,
 }
 
-const defaultProps = {
-  animationEasing: 'bounce',
-  animationSequence: 'fade',
-  animationStagger: 20,
-  center: true,
-  max: 9,
-  shape: 'rounded',
-  size: 'md',
-}
+class AvatarGrid extends Component<Props> {
+  static defaultProps = {
+    animationEasing: 'bounce',
+    animationSequence: 'fade',
+    animationStagger: 20,
+    center: true,
+    max: 9,
+    shape: 'rounded',
+    size: 'md',
+  }
 
-class AvatarGrid extends Component {
   render() {
     const {
       animationEasing,
@@ -108,9 +111,5 @@ class AvatarGrid extends Component {
     )
   }
 }
-
-AvatarGrid.propTypes = propTypes
-AvatarGrid.defaultProps = defaultProps
-AvatarGrid.displayName = 'AvatarGrid'
 
 export default AvatarGrid

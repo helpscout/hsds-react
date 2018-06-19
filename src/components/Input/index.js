@@ -15,7 +15,7 @@ import {
   getTextAreaLineTotal,
   moveCursorToEnd,
 } from './helpers'
-import type { UISizes, UIStates } from '../../constants/types'
+import type { UISize, UIState } from '../../constants/types'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -47,8 +47,8 @@ type Props = {
   resizable: boolean,
   seamless: boolean,
   scrollLock: boolean,
-  size: UISizes,
-  state?: ?UIStates,
+  size: UISize,
+  state?: ?UIState,
   style: Object,
   suffix: string,
   type: string,
@@ -57,8 +57,8 @@ type Props = {
 
 type State = {
   id: string,
-  height: number | null,
-  state: string | null,
+  height: ?number,
+  state: ?string,
   value: string,
 }
 

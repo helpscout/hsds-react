@@ -12,15 +12,13 @@ type Props = {
   onWheel: (event: ScrollWheelEvent) => void,
 }
 
-type ScrollWheelEvent =
-  | {
-      currentTarget: HTMLDivElement,
-      deltaX: number,
-      deltaY: number,
-      preventDefault: () => void,
-      stopPropagation: () => void,
-    }
-  | WheelEvent
+type ScrollWheelEvent = {
+  currentTarget: HTMLDivElement,
+  deltaX: number,
+  deltaY: number,
+  preventDefault: () => void,
+  stopPropagation: () => void,
+}
 
 class ScrollLock extends Component<Props> {
   static defaultProps = {

@@ -1,27 +1,21 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
-import { sizeTypes } from './propTypes'
+import type { HeadingSize } from './types'
 
-export const propTypes = {
-  center: PropTypes.bool,
-  className: PropTypes.string,
-  disableSelect: PropTypes.bool,
-  light: PropTypes.bool,
-  lineHeightReset: PropTypes.bool,
-  linkStyle: PropTypes.bool,
-  selector: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  size: sizeTypes,
+type Props = {
+  center: boolean,
+  className?: string,
+  children?: any,
+  disableSelect: boolean,
+  light?: boolean,
+  lineHeightReset?: boolean,
+  linkStyle?: boolean,
+  selector?: string,
+  size: HeadingSize,
 }
 
-const defaultProps = {
-  center: false,
-  disableSelect: false,
-  linkStyle: false,
-  selector: false,
-}
-
-const Heading = props => {
+const Heading = (props: Props) => {
   const {
     center,
     children,
@@ -60,7 +54,10 @@ const Heading = props => {
   return element
 }
 
-Heading.propTypes = propTypes
-Heading.defaultProps = defaultProps
+Heading.defaultProps = {
+  center: false,
+  disableSelect: false,
+  linkStyle: false,
+}
 
 export default Heading

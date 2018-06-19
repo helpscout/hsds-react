@@ -1,31 +1,33 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
-import { default as Avatar, propTypes as avatarTypes } from '../Avatar'
+import Avatar from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
-import { sizeTypes } from '../Avatar/propTypes'
+import type { AvatarShape, AvatarSize } from '../Avatar/types'
 
-export const propTypes = {
-  animationEasing: PropTypes.string,
-  animationSequence: PropTypes.string,
-  animationStagger: PropTypes.number,
-  avatarsClassName: PropTypes.string,
-  max: PropTypes.number,
-  shape: avatarTypes.shape,
-  size: sizeTypes,
+type Props = {
+  animationEasing: string,
+  animationSequence: string,
+  animationStagger: number,
+  avatarsClassName: string,
+  children?: any,
+  className?: string,
+  max: number,
+  shape: AvatarShape,
+  size: AvatarSize,
 }
 
-const defaultProps = {
-  animationEasing: 'ease',
-  animationSequence: 'fade',
-  animationStagger: 10,
-  max: 4,
-  shape: 'rounded',
-  size: 'sm',
-}
+class AvatarList extends Component<Props> {
+  static defaultProps = {
+    animationEasing: 'ease',
+    animationSequence: 'fade',
+    animationStagger: 10,
+    max: 4,
+    shape: 'rounded',
+    size: 'sm',
+  }
 
-class AvatarList extends Component {
   render() {
     const {
       animationEasing,
@@ -108,9 +110,5 @@ class AvatarList extends Component {
     )
   }
 }
-
-AvatarList.propTypes = propTypes
-AvatarList.defaultProps = defaultProps
-AvatarList.displayName = 'AvatarList'
 
 export default AvatarList

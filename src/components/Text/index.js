@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from '../../utilities/classNames'
 import type { Sizes } from './types'
-import type { TextShades, UIStates } from '../../constants/types'
+import type { TextShade, UIState } from '../../constants/types'
 
 type Props = {
   allCaps?: boolean,
@@ -17,9 +17,9 @@ type Props = {
   muted?: boolean,
   noWrap?: boolean,
   selector: string,
-  shade?: TextShades,
+  shade?: TextShade,
   size?: Sizes,
-  state?: UIStates,
+  state?: UIState,
   subtle?: boolean,
   truncate?: boolean,
   wordWrap?: boolean,

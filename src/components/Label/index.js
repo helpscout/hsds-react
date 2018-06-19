@@ -4,13 +4,13 @@ import Text from '../Text'
 import { stateTypes } from '../../constants/propTypes'
 import classNames from '../../utilities/classNames'
 import { isString } from '../../utilities/strings'
-import type { UIStates } from '../../constants/types'
+import type { UIState } from '../../constants/types'
 
 type Props = {
   className?: string,
   children?: any,
   for: string,
-  state?: UIStates,
+  state?: UIState,
 }
 
 const Label = (props: Props) => {
