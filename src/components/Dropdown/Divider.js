@@ -1,8 +1,14 @@
+// @flow
 import React from 'react'
 import classNames from '../../utilities/classNames'
 
-const Divider = props => {
-  const { className, ...rest } = props
+type Props = {
+  children?: any,
+  className?: string,
+}
+
+const Divider = (props: Props) => {
+  const { className, children, ...rest } = props
 
   const componentClassName = classNames('c-DropdownDivider', className)
 

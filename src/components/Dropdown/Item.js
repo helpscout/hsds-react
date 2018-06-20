@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
@@ -7,41 +8,57 @@ import { default as Menu, MenuComponent } from './Menu'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-export const propTypes = {
-  disabled: PropTypes.bool,
-  isHover: PropTypes.bool,
-  isFocused: PropTypes.bool,
-  itemIndex: PropTypes.number,
-  onBlur: PropTypes.func,
-  onClick: PropTypes.func,
-  onSelect: PropTypes.func,
-  onFocus: PropTypes.func,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  onMenuClose: PropTypes.func,
-  onParentMenuClose: PropTypes.func,
-  value: PropTypes.node,
+type Props = {
+  children?: any,
+  className?: string,
+  disabled: boolean,
+  enableTabNavigation: boolean,
+  isHover?: boolean,
+  isFocused?: boolean,
+  isOpen?: boolean,
+  itemIndex: number,
+  itemRef: (ref: any) => void,
+  onBlur: (event: Event, reactEvent: Event, instance: Object) => void,
+  onClick: (event: Event, reactEvent: Event, instance: Object) => void,
+  onSelect: (value: any) => void,
+  onFocus: (event: Event, reactEvent: Event, instance: Object) => void,
+  onMouseEnter: (event: Event, reactEvent: Event, instance: Object) => void,
+  onMouseLeave: (event: Event, reactEvent: Event, instance: Object) => void,
+  onMenuClose: () => void,
+  onParentMenuClose: () => void,
+  value?: any,
 }
 
-const defaultProps = {
-  disabled: false,
-  onBlur: noop,
-  onClick: noop,
-  onFocus: noop,
-  onMouseEnter: noop,
-  onMouseLeave: noop,
-  onMenuClose: noop,
-  onParentMenuClose: noop,
-  onSelect: noop,
+type State = {
+  isOpen: ?boolean,
+  isHover: ?boolean,
+  isFocused: ?boolean,
 }
 
-const childContextTypes = {
-  parentMenu: PropTypes.element,
-  parentMenuClose: PropTypes.func,
-}
+class Item extends Component<Props, State> {
+  static defaultProps = {
+    disabled: false,
+    enableTabNavigation: false,
+    onBlur: noop,
+    onClick: noop,
+    onFocus: noop,
+    onMouseEnter: noop,
+    onMouseLeave: noop,
+    onMenuClose: noop,
+    onParentMenuClose: noop,
+    onSelect: noop,
+  }
 
-class Item extends Component {
-  constructor(props) {
+  static childContextTypes = {
+    parentMenu: PropTypes.element,
+    parentMenuClose: PropTypes.func,
+  }
+
+  node: ?HTMLElement = null
+  menu: ?any = null
+  _isMounted: boolean = false
+
+  constructor(props: Props) {
     super()
 
     this.state = {
@@ -57,19 +74,17 @@ class Item extends Component {
     this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
     this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
     this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
-    this.node = null
-    this._isMounted = false
   }
 
-  componentWillMount() {
+  componentWillMount = () => {
     this.menu = this.getMenuFromChildren()
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this._isMounted = true
   }
 
-  getChildContext() {
+  getChildContext = () => {
     const { onParentMenuClose } = this.props
     return {
       parentMenu: this.menu,
@@ -77,7 +92,7 @@ class Item extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps: Props) => {
     const { isFocused, isHover, isOpen } = this.state
     if (
       nextProps.isFocused !== isFocused ||
@@ -92,11 +107,11 @@ class Item extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this._isMounted = false
   }
 
-  handleOnBlur(event, reactEvent) {
+  handleOnBlur = (event: Event, reactEvent: Event) => {
     const { onBlur } = this.props
     onBlur(event, reactEvent, this)
     this.setState({
@@ -104,7 +119,7 @@ class Item extends Component {
     })
   }
 
-  handleOnEnter(event, reactEvent) {
+  handleOnEnter = (event: KeyboardEvent, reactEvent: Event) => {
     event.stopPropagation()
     /* istanbul ignore else */
     if (event.keyCode === Keys.ENTER) {
@@ -116,7 +131,7 @@ class Item extends Component {
     }
   }
 
-  handleOnClick(event, reactEvent) {
+  handleOnClick = (event: Event, reactEvent: Event) => {
     const { disabled, onClick, onSelect, value } = this.props
 
     if (event) event.stopPropagation()
@@ -133,7 +148,7 @@ class Item extends Component {
     }
   }
 
-  handleOnFocus(event, reactEvent) {
+  handleOnFocus = (event: Event, reactEvent: Event) => {
     const { onFocus } = this.props
     onFocus(event, reactEvent, this)
     this.setState({
@@ -141,7 +156,7 @@ class Item extends Component {
     })
   }
 
-  handleOnMouseEnter(event, reactEvent) {
+  handleOnMouseEnter = (event: Event, reactEvent: Event) => {
     const { onMouseEnter } = this.props
     onMouseEnter(event, reactEvent, this)
     this.setState({
@@ -149,7 +164,7 @@ class Item extends Component {
     })
   }
 
-  handleOnMouseLeave(event, reactEvent) {
+  handleOnMouseLeave = (event: Event, reactEvent: Event) => {
     const { onMouseLeave } = this.props
     onMouseLeave(event, reactEvent, this)
     this.setState({
@@ -159,17 +174,17 @@ class Item extends Component {
 
   /* istanbul ignore next */
   // Works in the browser, but JSDOM isn't picking this up
-  handleOnMenuClose() {
+  handleOnMenuClose = () => {
     const { onMenuClose } = this.props
     onMenuClose()
   }
 
-  getMenu(child) {
+  getMenu = (child: any) => {
     if (!React.isValidElement(child)) return null
     return child.type && (child.type === Menu || child.type === MenuComponent)
   }
 
-  getMenuFromChildren() {
+  getMenuFromChildren = () => {
     const { children } = this.props
     if (Array.isArray(children)) {
       return children.find(child => this.getMenu(child))
@@ -178,7 +193,7 @@ class Item extends Component {
     }
   }
 
-  removeMenuFromChildren() {
+  removeMenuFromChildren = () => {
     const { children } = this.props
     if (this.menu && Array.isArray(children)) {
       return children.filter(child => !this.getMenu(child))
@@ -192,6 +207,7 @@ class Item extends Component {
       children,
       className,
       disabled,
+      enableTabNavigation,
       itemRef,
       isFocused: propIsFocused,
       isHover: propIsHover,
@@ -229,6 +245,7 @@ class Item extends Component {
       !disabled && this.menu && isOpen ? (
         <div className="c-DropdownItem__menu">
           {React.cloneElement(this.menu, {
+            enableTabNavigation,
             isOpen,
             selectedIndex:
               this.menu.props.selectedIndex !== undefined
@@ -280,9 +297,5 @@ class Item extends Component {
     )
   }
 }
-
-Item.propTypes = propTypes
-Item.defaultProps = defaultProps
-Item.childContextTypes = childContextTypes
 
 export default Item

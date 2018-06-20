@@ -135,3 +135,23 @@ describe('Style', () => {
     expect(wrapper.props().style.padding).toBe(200)
   })
 })
+
+describe('Click', () => {
+  test('Prevents defaultEvent on click', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Trigger />)
+
+    wrapper.instance().handleOnClick({ preventDefault: spy })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onClick callback', () => {
+    const spy = jest.fn()
+    const wrapper = shallow(<Trigger onClick={spy} />)
+
+    wrapper.instance().handleOnClick()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})

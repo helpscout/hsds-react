@@ -147,3 +147,12 @@ stories.add('directions', () => (
     <Hr />
   </div>
 ))
+
+stories.add('tab navigation', () => (
+  <div style={{ padding: 100 }}>
+    <Dropdown direction="down left" enableTabNavigation>
+      <Dropdown.Trigger>Down (Left)</Dropdown.Trigger>
+      <Dropdown.Menu>{itemsMarkup(3)}</Dropdown.Menu>
+    </Dropdown>
+  </div>
+))

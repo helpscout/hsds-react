@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
@@ -16,32 +17,48 @@ import {
 } from '../../utilities/focus'
 import { isNodeElement } from '../../utilities/node'
 import { noop } from '../../utilities/other'
+import type { DropdownDirection } from './types'
 
-export const propTypes = {
-  closeMenuOnClick: PropTypes.bool,
-  direction: PropTypes.string,
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  onSelect: PropTypes.func,
-  selectedIndex: PropTypes.number,
-}
-const defaultProps = {
-  closeMenuOnClick: true,
-  direction: 'down',
-  onClose: noop,
+type Props = {
+  children?: any,
+  className?: string,
+  closeMenuOnClick: boolean,
+  direction: DropdownDirection,
+  enableTabNavigation: boolean,
+  isOpen: boolean,
+  onClose: () => void,
+  onSelect: () => void,
+  selectedIndex: number,
 }
 
-class Dropdown extends Component {
-  constructor(props) {
+type State = {
+  isOpen: boolean,
+  selectedIndex: number,
+}
+
+class Dropdown extends Component<Props, State> {
+  static defaultProps = {
+    closeMenuOnClick: true,
+    enableTabNavigation: false,
+    direction: 'down',
+    onClose: noop,
+  }
+  static Divider = Divider
+  static Header = Header
+  static Item = Item
+  static Menu = Menu
+  static Trigger = Trigger
+
+  isFocused: boolean = false
+  triggerNode: ?HTMLElement | ?Element = null
+  _isMounted: boolean = false
+
+  constructor(props: Props) {
     super()
     this.state = {
       isOpen: props.isOpen,
       selectedIndex: props.selectedIndex,
     }
-
-    this.isFocused = false
-    this.triggerNode = null
-    this._isMounted = false
 
     this.handleOnBodyClick = this.handleOnBodyClick.bind(this)
     this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
@@ -52,38 +69,39 @@ class Dropdown extends Component {
     this.handleShiftTab = this.handleShiftTab.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this._isMounted = true
     this.setTriggerNode()
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this._isMounted = false
   }
 
-  safeSetState(newState) {
+  safeSetState = (newState: Object) => {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(newState)
     }
   }
-  componentWillUpdate(nextProps) {
+  componentWillUpdate = (nextProps: Props) => {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.safeSetState({ isOpen: nextProps.isOpen })
     }
   }
 
-  setTriggerNode() {
+  setTriggerNode = () => {
     const trigger = this.refs.trigger
     /* istanbul ignore next */
     if (!this.triggerNode) {
       this.triggerNode = isNodeElement(trigger)
         ? trigger
-        : ReactDOM.findDOMNode(trigger)
+        : // $FlowFixMe
+          ReactDOM.findDOMNode(trigger)
     }
   }
 
-  handleOnBodyClick(event) {
+  handleOnBodyClick = (event: Event) => {
     const clickNode = event.target
     if (this.state.isOpen) {
       if (clickNode !== this.triggerNode) {
@@ -99,37 +117,42 @@ class Dropdown extends Component {
     }
   }
 
-  handleOnTriggerClick() {
+  handleOnTriggerClick = () => {
     this.safeSetState({ isOpen: !this.state.isOpen })
     this.isFocused = true
   }
 
-  handleOnTriggerFocus() {
-    setTimeout(() => {
-      this.isFocused = true
-    }, 0)
+  handleOnTriggerFocus = () => {
+    this.isFocused = true
   }
 
-  handleOnMenuClose() {
-    const { onClose } = this.props
+  handleOnMenuClose = () => {
     this.safeSetState({ selectedIndex: null, isOpen: false })
-    this.isFocused = false
 
-    onClose()
+    this.props.onClose()
+
+    if (this.props.enableTabNavigation && this.triggerNode) {
+      // $FlowFixMe
+      this.triggerNode.focus()
+      this.isFocused = true
+    } else {
+      this.isFocused = false
+    }
   }
 
-  handleDownArrow() {
+  handleDownArrow = () => {
     const { isOpen } = this.state
     if (!isOpen && this.isFocused) {
       this.safeSetState({ isOpen: true, selectedIndex: 0 })
     }
   }
 
-  handleTab(event) {
+  handleTab = (event: KeyboardEvent) => {
     this.isFocused = false
+    if (this.props.enableTabNavigation) return
     /* istanbul ignore else */
     if (this.state.isOpen) {
-      event.preventDefault()
+      event.preventDefault && event.preventDefault()
       this.handleOnMenuClose()
       /* istanbul ignore next */
       if (this.triggerNode) {
@@ -142,11 +165,12 @@ class Dropdown extends Component {
     }
   }
 
-  handleShiftTab(event) {
+  handleShiftTab = (event: KeyboardEvent) => {
     this.isFocused = false
+    if (this.props.enableTabNavigation) return
     /* istanbul ignore else */
     if (this.state.isOpen) {
-      event.preventDefault()
+      event.preventDefault && event.preventDefault()
       this.handleOnMenuClose()
       /* istanbul ignore next */
       if (this.triggerNode) {
@@ -165,6 +189,7 @@ class Dropdown extends Component {
       className,
       closeMenuOnClick,
       direction,
+      enableTabNavigation,
       onClose,
       onSelect,
       isOpen: propsisOpen,
@@ -207,6 +232,7 @@ class Dropdown extends Component {
           ? React.cloneElement(child, {
               closeMenuOnClick,
               direction,
+              enableTabNavigation,
               isOpen,
               onClose: handleOnMenuClose,
               onSelect: onSelect || child.props.onSelect,
@@ -248,13 +274,5 @@ class Dropdown extends Component {
     )
   }
 }
-
-Dropdown.propTypes = propTypes
-Dropdown.defaultProps = defaultProps
-Dropdown.Divider = Divider
-Dropdown.Header = Header
-Dropdown.Item = Item
-Dropdown.Menu = Menu
-Dropdown.Trigger = Trigger
 
 export default Dropdown

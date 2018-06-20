@@ -58,7 +58,7 @@ type Props = {
 type State = {
   id: string,
   height: ?number,
-  state: ?string,
+  state: ?UIState,
   value: string,
 }
 
@@ -151,7 +151,7 @@ class Input extends Component<Props, State> {
 
   scrollToBottom() {
     /* istanbul ignore next */
-    if (!this.props.multiline || !this.inputNode || !this.inputNode.scrollTo)
+    if (!this.props.multiline || !this.inputNode || !this.inputNode['scrollTo'])
       return
     /* istanbul ignore next */
     /**

@@ -1,46 +1,47 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
-import { default as Link, propTypes as linkPropTypes } from '../Link'
+import Link from '../Link'
 import Block from './Block'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { blockSelectorTagTypes } from '../../constants/propTypes'
+import type { BlockSelectorTag } from '../../constants/types'
 
-export const propTypes = Object.assign({}, linkPropTypes, {
-  borderless: PropTypes.bool,
-  className: PropTypes.string,
-  floating: PropTypes.bool,
-  flex: PropTypes.bool,
-  fullHeight: PropTypes.bool,
-  hover: PropTypes.bool,
-  href: PropTypes.string,
-  nodeRef: PropTypes.func,
-  onBlur: PropTypes.func,
-  onClick: PropTypes.func,
-  onFocus: PropTypes.func,
-  seamless: PropTypes.bool,
-  selector: blockSelectorTagTypes,
-})
-
-const defaultProps = {
-  borderless: false,
-  flex: false,
-  floating: false,
-  fullHeight: false,
-  hover: false,
-  nodeRef: noop,
-  onBlur: noop,
-  onClick: noop,
-  onFocus: noop,
-  seamless: false,
-  selector: 'div',
+type Props = {
+  autoWordWrap?: boolean,
+  borderless?: boolean,
+  className?: string,
+  children?: any,
+  floating: boolean,
+  flex: boolean,
+  fullHeight: boolean,
+  hover: boolean,
+  href?: string,
+  nodeRef: () => void,
+  onBlur: (event: Event) => void,
+  onClick: (event: Event) => void,
+  onFocus: (event: Event) => void,
+  seamless: boolean,
+  selector: BlockSelectorTag,
+  to?: string,
 }
 
-class Card extends Component {
-  constructor() {
-    super()
-    this.node = null
+class Card extends Component<Props> {
+  static defaultProps = {
+    borderless: false,
+    flex: false,
+    floating: false,
+    fullHeight: false,
+    hover: false,
+    nodeRef: noop,
+    onBlur: noop,
+    onClick: noop,
+    onFocus: noop,
+    seamless: false,
+    selector: 'div',
   }
+  static Block = Block
+  node = null
 
   componentWillUnmount() {
     this.node = null
@@ -111,9 +112,5 @@ class Card extends Component {
     return element
   }
 }
-
-Card.propTypes = propTypes
-Card.defaultProps = defaultProps
-Card.Block = Block
 
 export default Card
