@@ -60,7 +60,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    wait(20).then(() => {
+    wait(80).then(() => {
       expect(o.faderNodeLeft.style.transform).toContain('scaleX')
       done()
     })
@@ -172,5 +172,32 @@ describe('scrollableRef', () => {
     const o = wrapper.instance()
 
     expect(o.scrollable).toBe(n)
+  })
+})
+
+describe('Mount', () => {
+  test('Sets internal mount state to true once mounted', () => {
+    const wrapper = mount(<Overflow />)
+
+    expect(wrapper.instance()._isMounted).toBe(true)
+  })
+
+  test('Sets internal mount state to false once unmounted', () => {
+    const wrapper = mount(<Overflow />)
+    const o = wrapper.instance()
+    wrapper.unmount()
+
+    expect(o._isMounted).toBe(false)
+  })
+
+  test('Cannot adjustHeight if unmounted', () => {
+    const wrapper = mount(<Overflow />)
+    const o = wrapper.instance()
+    wrapper.setState({ shouldFadeOnMount: 'stub' })
+    wrapper.unmount()
+
+    o.adjustHeight()
+
+    expect(o.state.shouldFadeOnMount).toBe('stub')
   })
 })
