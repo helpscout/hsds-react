@@ -36,27 +36,40 @@ class Overflow extends Component<Props, State> {
     shouldFadeOnMount: false,
   }
 
+  _isMounted: boolean = false
   faderSize: number = 32
   faderNodeLeft: ?HTMLElement
   faderNodeRight: ?HTMLElement
   containerNode: HTMLElement
+  node: ?HTMLElement = null
 
-  componentDidMount() {
-    const { initialHeightAdjustDelay } = this.props
+  componentDidMount = () => {
+    this._isMounted = true
+
+    this.setNodes()
     this.adjustHeight()
+
     /* istanbul ignore next */
-    setTimeout(() => {
-      /* istanbul ignore next */
-      // Initial adjustHeight has been tested. Ignoring due to fragility
-      // of JSDOM + timeouts.
-      requestAnimationFrame(() => {
-        this.adjustHeight()
-      })
-    }, initialHeightAdjustDelay)
+    // Initial adjustHeight has been tested. Ignoring due to fragility
+    // of JSDOM + timeouts.
+    requestAnimationFrame(() => {
+      this.adjustHeight()
+    })
+  }
+
+  componentWillUnmount = () => {
+    this._isMounted = false
+  }
+
+  setNodes = () => {
+    if (this.node || !this._isMounted) return
+    // $FlowFixMe
+    this.node = ReactDOM.findDOMNode(this)
   }
 
   adjustHeight = () => {
-    const node = ReactDOM.findDOMNode(this)
+    if (!this._isMounted || !this.node) return
+
     const containerNode = this.containerNode
     const height = containerNode.clientHeight
     const heightOffset = 20
@@ -69,7 +82,7 @@ class Overflow extends Component<Props, State> {
     // JSDOM does not provide node.clientHeight, which prevents
     // us from testing this calculation
     // $FlowFixMe
-    node.style.height = height ? `${height - heightOffset}px` : null
+    this.node.style.height = height ? `${height - heightOffset}px` : null
   }
 
   applyFadeStyles = (event: Event) => {
