@@ -354,6 +354,18 @@ describe('Height', () => {
       done()
     }, 1)
   })
+
+  test('Attempts to update height on resize', () => {
+    const wrapper = mount(<MenuComponent isOpen />)
+    const o = wrapper.instance()
+    o.height = 10
+    // Mock the HTMLDivElement height
+    o.contentNode.style.height = '100px'
+    o.handleOnResize()
+
+    expect(o.height).not.toBe(10)
+    expect(window.getComputedStyle(o.contentNode).height).not.toContain(100)
+  })
 })
 
 describe('Keyboard Arrows: Up/Down', () => {

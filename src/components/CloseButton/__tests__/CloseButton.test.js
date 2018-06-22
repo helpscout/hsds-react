@@ -18,6 +18,14 @@ describe('ClassName', () => {
   })
 })
 
+describe('Children', () => {
+  test('Does not render children', () => {
+    const wrapper = shallow(<CloseButton>Hallo</CloseButton>)
+
+    expect(wrapper.html()).not.toContain('Hallo')
+  })
+})
+
 describe('Accessibility', () => {
   test('Has proper aria-role', () => {
     const wrapper = shallow(<CloseButton />)

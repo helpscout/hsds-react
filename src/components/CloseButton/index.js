@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
