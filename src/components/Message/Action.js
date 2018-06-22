@@ -1,13 +1,18 @@
+// @flow
 import React from 'react'
 import Text from '../Text'
 import ChatBlock from './ChatBlock'
 import classNames from '../../utilities/classNames'
-import { chatTypes, providerContextTypes } from './propTypes'
+import { providerContextTypes } from './propTypes'
+import type { MessageChat, MessageThemeContext } from './types'
 
-export const propTypes = chatTypes
-const contextTypes = providerContextTypes
+type Props = MessageChat & {
+  className?: string,
+  icon?: string,
+}
+type Context = MessageThemeContext
 
-const Action = (props, context) => {
+const Action = (props: Props, context: Context) => {
   const {
     children,
     className,
@@ -56,7 +61,7 @@ const Action = (props, context) => {
   )
 }
 
-Action.propTypes = propTypes
-Action.contextTypes = contextTypes
+Action.contextTypes = providerContextTypes
+Action.displayName = 'Message.Action'
 
 export default Action

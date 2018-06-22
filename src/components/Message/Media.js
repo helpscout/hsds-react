@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Image from '../Image'
@@ -7,8 +8,35 @@ import Caption from './Caption'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { bubbleTypes, providerContextTypes } from './propTypes'
+import type { MessageBubble } from './types'
 
-class Media extends Component {
+type Props = MessageBubble & {
+  caption?: string,
+  errorMessage?: string,
+  error?: boolean | string,
+  imageAlt?: string,
+  imageUrl?: string,
+  isUploading?: boolean,
+  maxWidth?: number,
+  modalClassName?: string,
+  modalCardClassName?: string,
+  modalWrapperClassName?: string,
+  onMediaClick: (event: Event) => void,
+  onMediaLoad: () => void,
+  openMediaInModal?: boolean,
+}
+
+class Media extends Component<Props> {
+  static defaultProps = {
+    onMediaClick: noop,
+    onMediaLoad: noop,
+    openMediaInModal: true,
+    maxWidth: 1080,
+    isUploading: false,
+  }
+  static contextTypes = providerContextTypes
+  static displayName = 'Message.Media'
+
   render() {
     const {
       body,
@@ -101,31 +129,5 @@ class Media extends Component {
     )
   }
 }
-
-Media.propTypes = Object.assign({}, bubbleTypes, {
-  caption: PropTypes.string,
-  errorMessage: PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  imageAlt: PropTypes.string,
-  imageUrl: PropTypes.string,
-  isUploading: PropTypes.bool,
-  maxWidth: PropTypes.number,
-  modalClassName: PropTypes.string,
-  modalCardClassName: PropTypes.string,
-  modalWrapperClassName: PropTypes.string,
-  onMediaClick: PropTypes.func,
-  onMediaLoad: PropTypes.func,
-  openMediaInModal: PropTypes.bool,
-})
-
-Media.defaultProps = {
-  onMediaClick: noop,
-  onMediaLoad: noop,
-  openMediaInModal: true,
-  maxWidth: 1080,
-  isUploading: false,
-}
-
-Media.contextTypes = providerContextTypes
 
 export default Media

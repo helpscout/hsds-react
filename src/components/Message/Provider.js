@@ -1,26 +1,19 @@
+// @flow
 import React from 'react'
 import ThemeProvider from '../ThemeProvider'
 import { providerContextTypes } from './propTypes'
 
-const propTypes = providerContextTypes
-
-const defaultProps = {
-  theme: 'admin',
-}
-
-const childContextTypes = providerContextTypes
-
 class Provider extends ThemeProvider {
-  render() {
-    const { children } = this.props
+  static propTypes = providerContextTypes
+  static defaultProps = {
+    theme: 'admin',
+  }
+  static childContextTypes = providerContextTypes
+  static displayName = 'MessageProvider'
 
-    return <div className="c-MessageProvider">{children}</div>
+  render() {
+    return <div className="c-MessageProvider">{this.props.children}</div>
   }
 }
-
-Provider.propTypes = propTypes
-Provider.defaultProps = defaultProps
-Provider.childContextTypes = childContextTypes
-Provider.displayName = 'MessageProvider'
 
 export default Provider

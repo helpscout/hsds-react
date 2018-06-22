@@ -3,9 +3,9 @@ import React from 'react'
 import ChatBlock from './ChatBlock'
 import classNames from '../../utilities/classNames'
 import { chatTypes } from './propTypes'
-import type { Chat } from './types'
+import type { MessageChat } from './types'
 
-type Props = Chat
+type Props = MessageChat
 
 const Content = (props: Props) => {
   const {
@@ -49,5 +49,7 @@ const Content = (props: Props) => {
     </ChatBlock>
   )
 }
+
+Content.displayName = 'Message.Content'
 
 export default Content

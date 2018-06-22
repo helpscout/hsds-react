@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
@@ -7,12 +8,13 @@ import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { isWord } from '../../utilities/strings'
 import { isNativeSpanType } from '../../utilities/types'
-import { bubbleTypes, providerContextTypes } from './propTypes'
+import { providerContextTypes } from './propTypes'
+import type { MessageBubble, MessageThemeContext } from './types'
 
-export const propTypes = bubbleTypes
-const contextTypes = providerContextTypes
+type Props = MessageBubble
+type Context = MessageThemeContext
 
-const Bubble = (props, context) => {
+const Bubble = (props: Props, context: Context) => {
   const {
     body,
     children,
@@ -120,7 +122,7 @@ const Bubble = (props, context) => {
   )
 }
 
-Bubble.propTypes = propTypes
-Bubble.contextTypes = contextTypes
+Bubble.contextTypes = providerContextTypes
+Bubble.displayName = 'Message.Bubble'
 
 export default Bubble

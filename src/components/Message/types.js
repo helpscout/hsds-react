@@ -11,14 +11,32 @@ export type Message = {
   type?: MessageType,
 }
 
-export type Chat = Message & {
+export type MessageChat = Message & {
   read?: boolean,
   timestamp?: string
 }
 
+export type MessageBubbleSize =
+| 'md'
+| 'sm'
+| ''
 
-export type Theme = 'admin' | 'embed' | 'notifications' | ''
+export type MessageBubble = MessageChat & {
+  body?: string,
+  icon?: string,
+  isNote?: boolean,
+  primary?: boolean,
+  title?: string,
+  size?: MessageBubbleSize,
+  typing?: boolean,
+}
 
-export type ThemeContext = {
-  theme: Theme
+export type MessageTheme =
+| 'admin'
+| 'embed'
+| 'notifications'
+| ''
+
+export type MessageThemeContext = {
+  theme: MessageTheme
 }
