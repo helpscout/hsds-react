@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
@@ -13,18 +14,15 @@ import Provider from './Provider'
 import Question from './Question'
 import classNames from '../../utilities/classNames'
 import { messageTypes, providerContextTypes } from './propTypes'
+import type { Message, MessageThemeContext } from './types'
 
-export const propTypes = Object.assign({}, messageTypes, {
-  showAvatar: PropTypes.bool,
-})
-
-const defaultProps = {
-  showAvatar: true,
+type Props = Message & {
+  avatar?: any,
+  showAvatar?: boolean,
 }
+type Context = MessageThemeContext
 
-const contextTypes = providerContextTypes
-
-const Message = (props, context) => {
+const MessageComponent = (props: Props, context: Context) => {
   const {
     avatar,
     children,
@@ -116,17 +114,20 @@ const Message = (props, context) => {
   )
 }
 
-Message.propTypes = propTypes
-Message.defaultProps = defaultProps
-Message.contextTypes = contextTypes
-Message.Action = Action
-Message.Attachment = Attachment
-Message.Bubble = Bubble
-Message.Caption = Caption
-Message.Chat = Chat
-Message.Content = Content
-Message.Media = Media
-Message.Provider = Provider
-Message.Question = Question
+MessageComponent.defaultProps = {
+  showAvatar: true,
+}
+MessageComponent.contextTypes = providerContextTypes
+MessageComponent.displayName = 'Message'
 
-export default Message
+MessageComponent.Action = Action
+MessageComponent.Attachment = Attachment
+MessageComponent.Bubble = Bubble
+MessageComponent.Caption = Caption
+MessageComponent.Chat = Chat
+MessageComponent.Content = Content
+MessageComponent.Media = Media
+MessageComponent.Provider = Provider
+MessageComponent.Question = Question
+
+export default MessageComponent

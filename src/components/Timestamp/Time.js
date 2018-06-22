@@ -6,8 +6,8 @@ import type { Timestamp } from './types'
 type Props = {
   className?: string,
   formatter: (timestamp: Timestamp) => string,
-  live: boolean,
-  timestamp: Timestamp,
+  live?: boolean,
+  timestamp?: Timestamp,
 }
 
 class Time extends Component<Props> {

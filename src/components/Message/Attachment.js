@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '../Link'
@@ -6,29 +7,22 @@ import Chat from './Chat'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { bubbleTypes, providerContextTypes } from './propTypes'
+import type { MessageBubble, MessageThemeContext } from './types'
 
-export const propTypes = Object.assign({}, bubbleTypes, {
-  errorMessage: PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  filename: PropTypes.string,
-  download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  isUploading: PropTypes.bool,
-  onClick: PropTypes.func,
-  openDownloadInNewTab: PropTypes.bool,
-  uploadingMessage: PropTypes.string,
-})
-
-const defaultProps = {
-  download: true,
-  onClick: noop,
-  openDownloadInNewTab: true,
-  isUploading: false,
-  uploadingMessage: 'Uploading…',
+type Props = MessageBubble & {
+  errorMessage?: string,
+  error?: boolean | string,
+  filename?: string,
+  download?: boolean | string,
+  isUploading?: boolean,
+  onClick?: (event?: Event) => void,
+  openDownloadInNewTab?: boolean,
+  uploadingMessage?: string,
+  url?: string,
 }
+type Context = MessageThemeContext
 
-const contextTypes = providerContextTypes
-
-const Attachment = (props, context) => {
+const Attachment = (props: Props, context: Context) => {
   const {
     body,
     children,
@@ -57,7 +51,7 @@ const Attachment = (props, context) => {
     !url && 'has-noUrl'
   )
 
-  const title = download ? `Download ${filename}` : null
+  const title = download && filename ? `Download ${filename}` : null
 
   const filenameMarkup = url ? (
     <Link
@@ -93,8 +87,14 @@ const Attachment = (props, context) => {
   )
 }
 
-Attachment.propTypes = propTypes
-Attachment.defaultProps = defaultProps
-Attachment.contextTypes = contextTypes
+Attachment.defaultProps = {
+  download: true,
+  onClick: noop,
+  openDownloadInNewTab: true,
+  isUploading: false,
+  uploadingMessage: 'Uploading…',
+}
+Attachment.contextTypes = providerContextTypes
+Attachment.displayName = 'Message.Attachment'
 
 export default Attachment

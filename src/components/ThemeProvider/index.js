@@ -1,20 +1,21 @@
-import { PureComponent as Component } from 'react'
+// @flow
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 
-const propTypes = {
-  theme: PropTypes.string,
+type Props = {
+  children?: any,
+  theme: string,
 }
 
-const defaultProps = {
-  theme: 'default',
-}
+class ThemeProvider extends Component<Props> {
+  static defaultProps = {
+    theme: 'default',
+  }
+  static childContextTypes = {
+    theme: PropTypes.any,
+  }
 
-const childContextTypes = {
-  theme: PropTypes.any,
-}
-
-class ThemeProvider extends Component {
-  getChildContext() {
+  getChildContext = () => {
     const { theme } = this.props
     return {
       theme,
@@ -25,10 +26,5 @@ class ThemeProvider extends Component {
     return this.props.children
   }
 }
-
-ThemeProvider.propTypes = propTypes
-ThemeProvider.defaultProps = defaultProps
-ThemeProvider.childContextTypes = childContextTypes
-ThemeProvider.displayName = 'ThemeProvider'
 
 export default ThemeProvider

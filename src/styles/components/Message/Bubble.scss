@@ -91,6 +91,10 @@
       color: currentColor;
     }
 
+    a {
+      text-decoration: underline;
+    }
+
     #{$block}__title {
       opacity: 0.6;
     }

@@ -3,16 +3,16 @@ import React from 'react'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { providerContextTypes } from './propTypes'
-import type { ThemeContext } from './types'
+import type { MessageThemeContext } from './types'
 
 type Props = {
   className?: string,
   children?: any,
-  size: string,
+  size?: string,
   wordWrap: boolean,
 }
 
-type Context = ThemeContext
+type Context = MessageThemeContext
 
 const Caption = (props: Props, context: Context) => {
   const { className, children, size, wordWrap, ...rest } = props
@@ -45,6 +45,6 @@ Caption.defaultProps = {
   wordWrap: true,
 }
 Caption.contextTypes = providerContextTypes
-Caption.displayName = 'MessageCaption'
+Caption.displayName = 'Message.Caption'
 
 export default Caption

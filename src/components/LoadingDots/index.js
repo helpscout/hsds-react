@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from '../../utilities/classNames'
 
 type Props = {
-  align: 'left' | 'center' | 'right' | '',
+  align?: 'left' | 'center' | 'right' | '',
   className?: string,
 }
 

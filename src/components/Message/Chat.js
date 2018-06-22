@@ -1,4 +1,5 @@
-import React from 'react'
+// @flow
+import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Bubble from './Bubble'
 import Caption from './Caption'
@@ -8,121 +9,121 @@ import Spinner from '../Spinner'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { bubbleTypes } from './propTypes'
+import type { MessageBubble } from './types'
 
-export const propTypes = {
-  ...bubbleTypes,
-  bubbleClassName: PropTypes.string,
-  captionSize: PropTypes.string,
-  caption: PropTypes.string,
-  errorMessage: PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  isLoading: PropTypes.bool,
-  onBubbleClick: PropTypes.func,
+type Props = MessageBubble & {
+  bubbleClassName?: string,
+  captionSize?: string,
+  caption?: ?string,
+  errorMessage?: string,
+  error?: boolean | string,
+  isLoading?: boolean,
+  onBubbleClick: (event: Event) => void,
 }
 
-const defaultProps = {
-  onBubbleClick: noop,
-  error: false,
-  errorMessage: "Couldn't send.",
-  isLoading: false,
-}
-
-const Chat = props => {
-  const {
-    body,
-    bubbleClassName,
-    caption,
-    captionSize,
-    children,
-    className,
-    error,
-    errorMessage,
-    read,
-    from,
-    icon,
-    isLoading,
-    isNote,
-    ltr,
-    onBubbleClick,
-    primary,
-    rtl,
-    size,
-    timestamp,
-    title,
-    to,
-    typing,
-    type,
-    ...rest
-  } = props
-
-  const componentClassName = classNames('c-MessageChat', className)
-
-  const chatProps = {
-    body,
-    children,
-    from,
-    icon,
-    ltr,
-    rtl,
-    timestamp,
-    to,
-    type,
+class Chat extends Component<Props> {
+  static defaultProps = {
+    onBubbleClick: noop,
+    error: false,
+    errorMessage: "Couldn't send.",
+    isLoading: false,
   }
+  static displayName = 'Message.Chat'
 
-  const captionMarkup = caption ? (
-    <Caption className="c-MessageChat__caption" size={captionSize}>
-      {caption}
-    </Caption>
-  ) : null
+  render() {
+    const {
+      body,
+      bubbleClassName,
+      caption,
+      captionSize,
+      children,
+      className,
+      error,
+      errorMessage,
+      read,
+      from,
+      icon,
+      isLoading,
+      isNote,
+      ltr,
+      onBubbleClick,
+      primary,
+      rtl,
+      size,
+      timestamp,
+      title,
+      to,
+      typing,
+      type,
+      ...rest
+    } = this.props
 
-  const loadingMarkup = isLoading ? (
-    <Flexy.Item className="c-MessageChat__metaState">
-      <Spinner className="c-MessageChat__loadingSpinner" size="xs" />
-    </Flexy.Item>
-  ) : null
+    const componentClassName = classNames('c-MessageChat', className)
 
-  const errorMarkup = error ? (
-    <div className="c-MessageChat__error">
-      <Caption className="c-MessageChat__errorMessage">
-        {typeof error === 'string' ? error : errorMessage}
+    const chatProps = {
+      body,
+      children,
+      from,
+      icon,
+      ltr,
+      rtl,
+      timestamp,
+      to,
+      type,
+    }
+
+    const captionMarkup = caption ? (
+      <Caption className="c-MessageChat__caption" size={captionSize}>
+        {caption}
       </Caption>
-    </div>
-  ) : null
+    ) : null
 
-  const metaMarkup = (
-    <Flexy className="c-MessageChat__meta" gap="xs">
-      {loadingMarkup}
-      <Flexy.Block className="c-MessageChat__metaBlock">
-        {captionMarkup}
-        {errorMarkup}
-      </Flexy.Block>
-    </Flexy>
-  )
+    const loadingMarkup = isLoading ? (
+      <Flexy.Item className="c-MessageChat__metaState">
+        <Spinner className="c-MessageChat__loadingSpinner" size="xs" />
+      </Flexy.Item>
+    ) : null
 
-  return (
-    <ChatBlock
-      className={componentClassName}
-      read={read}
-      {...chatProps}
-      {...rest}
-    >
-      <Bubble
+    const errorMarkup = error ? (
+      <div className="c-MessageChat__error">
+        <Caption className="c-MessageChat__errorMessage">
+          {typeof error === 'string' ? error : errorMessage}
+        </Caption>
+      </div>
+    ) : null
+
+    const metaMarkup = (
+      <Flexy className="c-MessageChat__meta" gap="xs">
+        {loadingMarkup}
+        <Flexy.Block className="c-MessageChat__metaBlock">
+          {captionMarkup}
+          {errorMarkup}
+        </Flexy.Block>
+      </Flexy>
+    )
+
+    return (
+      <ChatBlock
+        className={componentClassName}
+        read={read}
         {...chatProps}
-        className={bubbleClassName}
-        onClick={onBubbleClick}
-        isNote={isNote}
-        primary={primary}
-        size={size}
-        title={title}
-        typing={typing}
-        type={type}
-      />
-      {metaMarkup}
-    </ChatBlock>
-  )
+        {...rest}
+      >
+        <Bubble
+          {...chatProps}
+          className={bubbleClassName}
+          onClick={onBubbleClick}
+          isNote={isNote}
+          primary={primary}
+          size={size}
+          title={title}
+          typing={typing}
+          type={type}
+        />
+        {metaMarkup}
+      </ChatBlock>
+    )
+  }
 }
-
-Chat.propTypes = propTypes
-Chat.defaultProps = defaultProps
 
 export default Chat

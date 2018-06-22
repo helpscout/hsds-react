@@ -10,14 +10,15 @@ type Props = {
   children?: any,
   className?: string,
   formatter?: () => string,
-  live: boolean,
-  muted: boolean,
+  live?: boolean,
+  muted?: boolean,
   read: boolean,
-  timestamp: string | number,
+  timestamp?: string | number,
 }
 
 class Timestamp extends Component<Props> {
   static defaultProps = {
+    live: false,
     read: false,
     timestamp: '9:41am',
   }

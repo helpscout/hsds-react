@@ -1,18 +1,20 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { sizeTypes } from './propTypes'
+import { CloseButtonSize } from './types'
 
-export const propTypes = {
-  className: PropTypes.string,
-  onBlur: PropTypes.func,
-  onClick: PropTypes.func,
-  onFocus: PropTypes.func,
-  seamless: PropTypes.bool,
-  size: sizeTypes,
-  title: PropTypes.string,
+type Props = {
+  className?: string,
+  children?: any,
+  onBlur: () => void,
+  onClick: () => void,
+  onFocus: () => void,
+  seamless?: boolean,
+  size?: CloseButtonSize,
+  title?: string,
 }
 
 const defaultProps = {
@@ -22,8 +24,8 @@ const defaultProps = {
   title: 'Close',
 }
 
-const CloseButton = props => {
-  const { className, seamless, size, title, ...rest } = props
+const CloseButton = (props: Props) => {
+  const { children, className, seamless, size, title, ...rest } = props
 
   const isTiny = size === 'tiny'
 
@@ -54,8 +56,11 @@ const CloseButton = props => {
   )
 }
 
-CloseButton.propTypes = propTypes
-CloseButton.defaultProps = defaultProps
-CloseButton.displayName = 'CloseButton'
+CloseButton.defaultProps = {
+  onBlur: noop,
+  onClick: noop,
+  onFocus: noop,
+  title: 'Close',
+}
 
 export default CloseButton

@@ -8,7 +8,7 @@ stories.add('default', () => (
   <div>
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Question read timestamp="9:41am">
-        How's it goin'?
+        How's it <a>goin</a>'?
       </Message.Question>
     </Message>
     <Message to>
