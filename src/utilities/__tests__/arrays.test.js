@@ -1,4 +1,4 @@
-import { first, last } from '../arrays'
+import { first, last, random } from '../arrays'
 
 describe('first', () => {
   test('Returns undefined if empty', () => {
@@ -17,5 +17,16 @@ describe('last', () => {
 
   test('Returns first item', () => {
     expect(last([1, 2, 3])).toBe(3)
+  })
+})
+
+describe('Random', () => {
+  test('Returns undefined if empty', () => {
+    expect(random()).toBeFalsy()
+  })
+
+  test('Returns a random item', () => {
+    const array = [1, 2, 3]
+    expect(array).toContain(random(array))
   })
 })

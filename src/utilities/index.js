@@ -1,7 +1,9 @@
+import * as arraysUtils from './arrays'
 import * as animationUtils from './animation'
 import * as browserUtils from './browser'
 import * as classNamesUtils from './classNames'
 import * as componentUtils from './component'
+import * as collectionUtils from './collection'
 import * as colorUtils from './color'
 import * as easingUtils from './easing'
 import * as focusUtils from './focus'
@@ -15,10 +17,12 @@ import * as smoothScrollUtils from './smoothScroll'
 import * as stringsUtils from './strings'
 import * as typesUtils from './types'
 
+export const arrays = arraysUtils
 export const animation = animationUtils
 export const browser = browserUtils
 export const classNames = classNamesUtils
 export const color = colorUtils
+export const collection = collectionUtils
 export const component = componentUtils
 export const easing = easingUtils
 export const focus = focusUtils
@@ -33,9 +37,11 @@ export const strings = stringsUtils
 export const types = typesUtils
 
 export default {
+  arrays,
   animation,
   browser,
   classNames,
+  collection,
   component,
   color,
   easing,
