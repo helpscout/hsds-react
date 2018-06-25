@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ILLOS from './illos'
-import classNames from '../../utilities/classNames'
 import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
+import classNames from '../../utilities/classNames'
 import { sizeTypes } from './propTypes'
 
 export const propTypes = {
