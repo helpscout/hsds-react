@@ -5,6 +5,7 @@ import cross from '../../illos/cross.svg'
 import crossWhite from '../../illos/cross-white.svg'
 import lock from '../../illos/lock.svg'
 import plane from '../../illos/plane.svg'
+import search from '../../illos/search.svg'
 import tick from '../../illos/tick.svg'
 
 export default {
@@ -15,5 +16,6 @@ export default {
   'cross-white': crossWhite,
   lock,
   plane,
+  search,
   tick,
 }
