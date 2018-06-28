@@ -1,37 +1,28 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import ILLOS from './illos'
 import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
-import { sizeTypes } from './propTypes'
+import type { IlloSize } from './types'
 
-export const propTypes = {
-  color: PropTypes.string,
-  colorSecondary: PropTypes.string,
-  colorUi: PropTypes.string,
-  colorUiDark: PropTypes.string,
-  colorUiLight: PropTypes.string,
-  colorUiTransparent: PropTypes.string,
-  colorUiWhite: PropTypes.string,
-  className: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  size: sizeTypes,
-  title: PropTypes.string,
+type Props = {
+  color?: string,
+  colorSecondary?: string,
+  colorUi?: string,
+  colorUiDark?: string,
+  colorUiLight?: string,
+  colorUiTransparent?: string,
+  colorUiWhite?: string,
+  className?: string,
+  name: string,
+  size: IlloSize,
+  style?: Object,
+  title?: string,
 }
 
-const defaultProps = {
-  color: '',
-  colorSecondary: '',
-  colorUi: '',
-  colorUiDark: '',
-  colorUiLight: '',
-  colorUiTransparent: 'transparent',
-  colorUiWhite: 'white',
-  size: '60',
-}
-
-const Illo = props => {
+const Illo = (props: Props) => {
   const {
     className,
     color,
@@ -58,7 +49,7 @@ const Illo = props => {
 
   const src = { __html: ILLOS[name] }
   const iconTitle = title || name
-  const componentStyle = Object.assign({}, style, { color })
+  const componentStyle = { ...style, color }
   const srcRawHTML = src.__html
 
   const svgColorProps = {
@@ -130,7 +121,15 @@ export const injectFillColorIntoSvg = (
     .replace('data-path-uiWhite=""', makeStyle(uiWhite))
 }
 
-Illo.propTypes = propTypes
-Illo.defaultProps = defaultProps
+Illo.defaultProps = {
+  color: '',
+  colorSecondary: '',
+  colorUi: '',
+  colorUiDark: '',
+  colorUiLight: '',
+  colorUiTransparent: 'transparent',
+  colorUiWhite: 'white',
+  size: '60',
+}
 
 export default Illo

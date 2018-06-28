@@ -1,20 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Centralize, Illo, Text } from '../src/index.js'
+import illosData from '../src/components/Illo/illos'
 
 const stories = storiesOf('Illo', module)
 
 stories.add('Illo', () => {
-  const icons = [
-    'bulb',
-    'chatListBlankSlate',
-    'chat',
-    'cross',
-    'cross-white',
-    'lock',
-    'plane',
-    'tick',
-  ].map(i => (
+  const icons = Object.keys(illosData).map(i => (
     <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
       <Centralize>
         <Illo name={i} key={i} color="#116ce1" />

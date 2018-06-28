@@ -5,6 +5,8 @@ const css = `
   ${base}
   display: block;
   height: 120px;
+  margin-left: auto;
+  margin-right: auto;
   width: 120px;
 
   > svg {
