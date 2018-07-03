@@ -4,7 +4,7 @@ import styled from '../styled'
 import Animate from '../Animate'
 import Pop from '../Pop'
 import Popper from './Popper'
-import classNames from '../../utilities/classNames'
+import classNames, { BEM } from '../../utilities/classNames'
 import css from './styles/Tooltip.css.js'
 import type { PopProps, Placements } from '../Pop/types'
 
@@ -32,18 +32,14 @@ class Tooltip extends Component<Props> {
       placement,
       renderContent,
       maxWidth,
-      styles,
       theme,
       title,
       triggerOn,
       ...rest
     } = this.props
 
-    const componentClassName = classNames(
-      styles.Tooltip,
-      'c-Tooltip',
-      className
-    )
+    const componentClassName = classNames('c-Tooltip', className)
+    const arrowClassName = BEM(className).element('arrow')
 
     /**
      * Pop, which uses Popper.js, uses document.createRange. Enzyme/JSDOM
@@ -68,7 +64,7 @@ class Tooltip extends Component<Props> {
         <Pop.Reference className="c-Tooltip__reference">
           {children}
         </Pop.Reference>
-        <Pop.Popper arrowClassName={styles.Tooltip__arrow}>
+        <Pop.Popper arrowClassName={arrowClassName}>
           <Popper style={{ maxWidth }}>{contentMarkup}</Popper>
         </Pop.Popper>
       </Pop>

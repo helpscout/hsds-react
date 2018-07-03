@@ -1,7 +1,4 @@
-import styled, { ThemeProvider } from '@helpscout/fancy'
+import styled from '@helpscout/fancy'
 
-const Style = styled.Style
-
+export * from '@helpscout/fancy'
 export default styled
-
-export { Style, ThemeProvider }

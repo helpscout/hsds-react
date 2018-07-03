@@ -27,18 +27,9 @@ class Huzzah extends Component<Props> {
   }
 
   render() {
-    const {
-      children,
-      className,
-      isRandom,
-      name,
-      size,
-      styles,
-      ...rest
-    } = this.props
+    const { children, className, isRandom, name, size, ...rest } = this.props
 
     const componentClassName = classNames(
-      styles.Huzzah,
       'c-Huzzah',
       size && `is-${size}`,
       className
@@ -47,7 +38,7 @@ class Huzzah extends Component<Props> {
     const huzzahSVG = isRandom ? sample(HUZZAHS) : getHuzzah(name)
 
     return (
-      <span
+      <div
         className={componentClassName}
         dangerouslySetInnerHTML={{ __html: huzzahSVG }}
         title={name}

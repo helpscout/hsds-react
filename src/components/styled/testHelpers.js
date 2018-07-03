@@ -7,9 +7,6 @@ import styled from './index'
 export const resetStyles = () => {
   // $FlowFixMe
   document.head.innerHTML = ''
-  if (styled && styled.StyleSheet) {
-    styled.StyleSheet.__dangerouslyResetStyleSheet()
-  }
 }
 
 /**

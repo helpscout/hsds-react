@@ -1,12 +1,25 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import EMOTICONS from './emoticons'
 import css from './styles/Emoticon.css'
 import styled from '../styled'
-import classNames from '../../utilities/classNames'
+import classNames, { BEM } from '../../utilities/classNames'
 import { sizeTypes } from './propTypes'
+import type { EmotionSize } from './types'
 
-const Component = props => {
+type Props = {
+  className?: string,
+  center: boolean,
+  clickable: boolean,
+  isActive: boolean,
+  inline: boolean,
+  name: string,
+  title?: string,
+  size?: EmotionSize,
+}
+
+const Component = (props: Props) => {
   const {
     className,
     center,
@@ -16,14 +29,11 @@ const Component = props => {
     name,
     title,
     size,
-    styles,
-    theme,
     ...rest
   } = props
 
   const src = { __html: EMOTICONS[name] }
   const componentClassName = classNames(
-    styles.Emoticon,
     'c-Emoticon',
     !clickable && 'is-noInteract',
     center && 'is-center',
@@ -33,10 +43,15 @@ const Component = props => {
     className
   )
 
+  const iconClassName = classNames(
+    BEM(className).element('icon'),
+    'c-Emoticon__icon'
+  )
+
   return (
     <span className={componentClassName} {...rest}>
       <span
-        className={classNames(styles['c-Emoticon__icon'], 'c-Emoticon__icon')}
+        className={iconClassName}
         dangerouslySetInnerHTML={src}
         title={title}
       />
@@ -46,19 +61,10 @@ const Component = props => {
 
 const Emoticon = styled(Component)(css)
 
-Emoticon.propTypes = {
-  center: PropTypes.bool,
-  clickable: PropTypes.bool,
-  inline: PropTypes.bool,
-  isActive: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  size: sizeTypes,
-  title: PropTypes.string,
-}
-
 Emoticon.defaultProps = {
   center: false,
   clickable: true,
+  inline: false,
   isActive: true,
   name: 'happy',
   size: 'md',

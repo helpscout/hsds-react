@@ -10,26 +10,15 @@ type Props = {
   placement: string,
   offset: number,
   size: number,
-  styles: Object,
   theme: Object | string,
 }
 
 const ArrowComponent = (props: Props) => {
-  const {
-    className,
-    children,
-    placement,
-    offset,
-    size,
-    styles,
-    theme,
-    ...rest
-  } = props
+  const { className, children, placement, offset, size, theme, ...rest } = props
 
   const position = getPosition(placement)
 
   const componentClassName = classNames(
-    styles.PopArrow,
     'c-PopArrow',
     placement && `is-${getPlacement(placement)}`,
     position && `is-${position}`,
