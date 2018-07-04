@@ -44,7 +44,7 @@ const Component = (props: Props) => {
   )
 
   const iconClassName = classNames(
-    BEM(className).element('icon'),
+    BEM(componentClassName).element('icon'),
     'c-Emoticon__icon'
   )
 

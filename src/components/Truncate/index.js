@@ -3,8 +3,10 @@ import React, { PureComponent as Component } from 'react'
 import EventListener from '../EventListener'
 import Tooltip from '../Tooltip'
 import classNames from '../../utilities/classNames'
+import styled from '../styled'
 import { truncateMiddle } from '../../utilities/strings'
 import { truncateTypes } from './propTypes'
+import css from './styles/Truncate.css.js'
 
 type Props = {
   children?: any,
@@ -23,7 +25,8 @@ type State = {
   isTruncated: boolean,
 }
 
-class Truncate extends Component<Props, State> {
+export class BaseComponent extends Component<Props, State> {
+  static displayName = 'Truncate'
   static defaultProps = {
     children: '',
     ellipsis: '…',
@@ -141,4 +144,4 @@ class Truncate extends Component<Props, State> {
   }
 }
 
-export default Truncate
+export default styled(BaseComponent)(css)

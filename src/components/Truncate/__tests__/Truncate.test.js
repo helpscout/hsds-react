@@ -2,7 +2,7 @@ import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { mount, shallow } from 'enzyme'
 import Tooltip from '../../Tooltip'
-import Truncate from '../index'
+import { BaseComponent as Truncate } from '../index'
 
 const fixture = createSpec(faker.lorem.paragraph())
 

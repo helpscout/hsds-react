@@ -1,4 +1,8 @@
-import { getTextAreaLineCurrent, getTextAreaLineTotal } from '../helpers'
+import {
+  getTextAreaLineCurrent,
+  getTextAreaLineTotal,
+  isTextArea,
+} from '../helpers'
 
 describe('getTextAreaLineCurrent', () => {
   test('Retrieves the correct line number for a single line', () => {
@@ -47,5 +51,20 @@ describe('getTextAreaLineTotal', () => {
 
   test('Returns 0 if textarea is not defined', () => {
     expect(getTextAreaLineTotal()).toBe(0)
+  })
+})
+
+describe('isTextArea', () => {
+  test('Returns true for textarea node', () => {
+    const node = document.createElement('textarea')
+
+    expect(isTextArea(node)).toBe(true)
+  })
+
+  test('Returns false for non textarea node', () => {
+    const node = document.createElement('input')
+
+    expect(isTextArea()).toBe(false)
+    expect(isTextArea(node)).toBe(false)
   })
 })

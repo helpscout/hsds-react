@@ -1,11 +1,2 @@
-.c-Truncate {
-  box-sizing: border-box;
-  will-change: contents;
-
-  &.is-auto {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

@@ -86,8 +86,8 @@ const Illo = (props: Props) => {
 }
 
 export const injectFillColorIntoSvg = (
-  svgHTML,
-  props = {
+  svgHTML: string,
+  props: Object = {
     primary: '',
     secondary: '',
     ui: '',
