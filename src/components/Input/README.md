@@ -38,7 +38,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | isFocused                | `string`             | Determines if the component is focused.                                   |
 | label                    | `string`/`component` | Label for the input.                                                      |
 | maxHeight                | `number`/`string`    | Sets the `max-height` for the input. Used with `multiline`.               |
-| moveCursorToEnd          | `boolean`            | Moves the selection cursor to the end, on focus. Default `true`.          |
+| moveCursorToEnd          | `boolean`            | Moves the selection cursor to the end, on focus. Default `false`.         |
 | multiline                | `bool`/`number`      | Transforms input into an auto-expanding textarea.                         |
 | name                     | `string`             | Name for the input.                                                       |
 | offsetAmount             | `number`             | Number of characters to offset (bottom-right) for multiline resizing.     |

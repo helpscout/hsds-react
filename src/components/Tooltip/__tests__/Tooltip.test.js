@@ -10,13 +10,6 @@ describe('classNames', () => {
 
     expect(wrapper.hasClass('derek')).toBe(true)
   })
-
-  test('Has unique styled className', () => {
-    const wrapper = mount(<Tooltip />)
-    const styles = wrapper.instance().styles
-
-    expect(wrapper.hasClass(styles.Tooltip)).toBe(true)
-  })
 })
 
 describe('Children', () => {

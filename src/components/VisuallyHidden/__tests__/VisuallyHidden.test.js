@@ -1,31 +1,31 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import VisuallyHidden from '..'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<VisuallyHidden />)
+    const wrapper = mount(<VisuallyHidden />)
 
-    expect(wrapper.prop('className')).toContain('c-VisuallyHidden')
+    expect(wrapper.hasClass('c-VisuallyHidden')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<VisuallyHidden className={customClass} />)
+    const wrapper = mount(<VisuallyHidden className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.hasClass(customClass)).toBe(true)
   })
 })
 
 describe('Content', () => {
   test('Renders child text', () => {
-    const wrapper = shallow(<VisuallyHidden>Foamy White Latte</VisuallyHidden>)
+    const wrapper = mount(<VisuallyHidden>Foamy White Latte</VisuallyHidden>)
 
     expect(wrapper.text()).toBe('Foamy White Latte')
   })
 
   test('Renders child component', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <VisuallyHidden>
         <div>Foamy White Latte</div>
       </VisuallyHidden>
@@ -38,9 +38,9 @@ describe('Content', () => {
 
 describe('States', () => {
   test('Adds focusable styles if applied', () => {
-    const wrapper = shallow(<VisuallyHidden focusable />)
+    const wrapper = mount(<VisuallyHidden focusable />)
 
-    expect(wrapper.prop('className')).toContain('is-focusable')
-    expect(wrapper.prop('tabIndex')).toBe(1)
+    expect(wrapper.hasClass('is-focusable')).toBe(true)
+    expect(wrapper.html()).toContain('tabindex')
   })
 })

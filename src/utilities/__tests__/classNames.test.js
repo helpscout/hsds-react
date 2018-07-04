@@ -1,4 +1,4 @@
-import { classNames, variantClassNames } from '../classNames'
+import { BEM, classNames, variantClassNames } from '../classNames'
 
 describe('classNames', () => {
   test('Consolidate arguments into a single string, separated by spaces', () => {
@@ -81,5 +81,33 @@ describe('variantClassNames', () => {
     test('Generates className + hyphen for every variant, separated by comma + space mixture', () => {
       expect(variantClassNames('a-', '1,2        3')).toBe('a--1 a--2 a--3')
     })
+  })
+})
+
+describe('BEM', () => {
+  test('Sets the className as a block', () => {
+    const b = BEM('class')
+
+    expect(b.block).toBe('class')
+  })
+
+  test('Plucks the last className to use as block', () => {
+    const b = BEM('one two three class')
+
+    expect(b.block).toBe('class')
+  })
+
+  test('Can generate an BEM element className', () => {
+    const b = BEM('class')
+
+    expect(b.element('el')).toBe('class__el')
+    expect(b.e('el')).toBe('class__el')
+  })
+
+  test('Can generate an BEM modifier className', () => {
+    const b = BEM('class')
+
+    expect(b.modifier('mod')).toBe('class--mod')
+    expect(b.m('mod')).toBe('class--mod')
   })
 })

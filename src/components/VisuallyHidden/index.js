@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import css from './styles/VisuallyHidden.css.js'
 
 type Props = {
   children?: any,
@@ -30,4 +32,4 @@ VisuallyHidden.defaultProps = {
   focusable: false,
 }
 
-export default VisuallyHidden
+export default styled(VisuallyHidden)(css)

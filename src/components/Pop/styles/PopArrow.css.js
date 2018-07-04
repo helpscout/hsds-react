@@ -30,48 +30,46 @@ const css = props => {
   `
 
   return `
-    .PopArrow {
-      ${borderColor}
-      border-style: solid;
-      height: 0;
-      position: absolute;
-      width: 0;
+    ${borderColor}
+    border-style: solid;
+    height: 0;
+    position: absolute;
+    width: 0;
 
-      &.is-top {
-        border-width: ${sizePx} ${sizePx} 0 ${sizePx};
-        border-left-color: transparent;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-        bottom: -${sizePx};
-        ${verticalStartEnd}
-      }
+    &.is-top {
+      border-width: ${sizePx} ${sizePx} 0 ${sizePx};
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      bottom: -${sizePx};
+      ${verticalStartEnd}
+    }
 
-      &.is-bottom {
-        border-width: 0 ${sizePx} ${sizePx} ${sizePx};
-        border-left-color: transparent;
-        border-right-color: transparent;
-        border-top-color: transparent;
-        top: -${sizePx};
-        ${verticalStartEnd}
-      }
+    &.is-bottom {
+      border-width: 0 ${sizePx} ${sizePx} ${sizePx};
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      top: -${sizePx};
+      ${verticalStartEnd}
+    }
 
-      &.is-left {
-        border-width: ${sizePx} 0 ${sizePx} ${sizePx};
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-        right: -${sizePx};
-        ${horizontalStartEnd}
-      }
+    &.is-left {
+      border-width: ${sizePx} 0 ${sizePx} ${sizePx};
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      right: -${sizePx};
+      ${horizontalStartEnd}
+    }
 
-      &.is-right {
-        border-width: ${sizePx} ${sizePx} ${sizePx} 0;
-        border-top-color: transparent;
-        border-left-color: transparent;
-        border-bottom-color: transparent;
-        left: -${sizePx};
-        ${horizontalStartEnd}
-      }
+    &.is-right {
+      border-width: ${sizePx} ${sizePx} ${sizePx} 0;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      left: -${sizePx};
+      ${horizontalStartEnd}
     }
   `
 }

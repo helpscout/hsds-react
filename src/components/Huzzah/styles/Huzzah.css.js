@@ -1,7 +1,6 @@
 import base from '../../../styles/resets/base.css'
 
 const css = `
-.Huzzah {
   ${base}
   display: block;
   height: 120px;
@@ -28,7 +27,6 @@ const css = `
     height: 80px;
     width: 80px;
   }
-}
 `
 
 export default css

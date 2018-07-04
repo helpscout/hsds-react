@@ -14,6 +14,7 @@ import {
   getTextAreaLineCurrent,
   getTextAreaLineTotal,
   moveCursorToEnd,
+  isTextArea,
 } from './helpers'
 import type { UISize, UIState } from '../../constants/types'
 
@@ -71,7 +72,7 @@ class Input extends Component<Props, State> {
     forceAutoFocusTimeout: 0,
     inputRef: noop,
     isFocused: false,
-    moveCursorToEnd: true,
+    moveCursorToEnd: false,
     multiline: null,
     offsetAmount: 0,
     onBlur: noop,
@@ -90,7 +91,7 @@ class Input extends Component<Props, State> {
   static Backdrop = Backdrop
   static Resizer = Resizer
   static Static = Static
-  inputNode: ?InputNode
+  inputNode: InputNode
 
   constructor(props: Props) {
     super()
@@ -126,10 +127,6 @@ class Input extends Component<Props, State> {
     }
   }
 
-  componentWillUnmount() {
-    this.inputNode = null
-  }
-
   maybeForceAutoFocus() {
     const { autoFocus, isFocused } = this.props
 
@@ -151,7 +148,7 @@ class Input extends Component<Props, State> {
 
   scrollToBottom() {
     /* istanbul ignore next */
-    if (!this.props.multiline || !this.inputNode || !this.inputNode['scrollTo'])
+    if (!this.props.multiline || !this.inputNode || !isTextArea(this.inputNode))
       return
     /* istanbul ignore next */
     /**
@@ -201,7 +198,13 @@ class Input extends Component<Props, State> {
   moveCursorToEnd = () => {
     /* istanbul ignore next */
     // Not reliably testable in JSDOM + Enzyme
-    if (!this.inputNode || !this.props.moveCursorToEnd) return
+    if (
+      !this.props.moveCursorToEnd ||
+      !this.inputNode ||
+      !isTextArea(this.inputNode)
+    )
+      return
+    /* istanbul ignore next */
     requestAnimationFrame(() => {
       /* istanbul ignore next */
       moveCursorToEnd(this.inputNode)

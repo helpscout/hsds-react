@@ -19,7 +19,6 @@ const sizes = {
 
 // Styles
 const css = `
-.Emoticon {
   ${base}
   color: currentColor;
   cursor: pointer;
@@ -31,11 +30,12 @@ const css = `
   &__icon {
     color: currentColor;
     display: block;
+    height: 100%;
     pointer-events: none;
 
     svg {
       display: block;
-      height: auto;
+      height: 100%;
       max-width: 100%;
       width: 100%;
     }
@@ -86,7 +86,6 @@ const css = `
     height: ${sizes.sm};
     width: ${sizes.sm};
   }
-}
 `
 
 export default css

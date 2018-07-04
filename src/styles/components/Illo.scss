@@ -1,8 +1,13 @@
-@import "pack/seed-dash/_index";
+@import 'pack/seed-dash/_index';
 
 .c-Illo {
-  @import "../configs/color";
-  $sizes: (40, 60, 72, 80);
+  @import '../configs/color';
+  $sizes: (
+    40,
+    60,
+    72,
+    80
+  );
   $default-size: 40;
 
   box-sizing: border-box;
@@ -24,11 +29,12 @@
   // SVG
   &__icon {
     display: block;
+    height: 100%;
     pointer-events: none;
 
     svg {
       display: block;
-      height: auto;
+      height: 100%;
       max-width: 100%;
       width: 100%;
     }

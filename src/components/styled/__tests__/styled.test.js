@@ -4,13 +4,13 @@ import styled, { ThemeProvider } from '../index'
 import { resetStyles } from '../testHelpers'
 
 describe('styled integration', () => {
-  afterEach(() => {
+  afterAll(() => {
     resetStyles()
   })
 
   describe('Components', () => {
     test('Can create a primitive component', () => {
-      const Ron = styled.div`
+      const Ron = styled('div')`
         color: red;
         padding: 20px;
       `
@@ -34,7 +34,7 @@ describe('styled integration', () => {
     })
 
     test('Supports css interpolationg with props', () => {
-      const Ron = styled.div`
+      const Ron = styled('div')`
         color: red;
         padding: ${props => `${props['data-padding']}px;`};
       `
@@ -47,13 +47,13 @@ describe('styled integration', () => {
 
   describe('Theming', () => {
     test('ThemeProvider can pass data down to styled components', () => {
-      const Ron = styled.div`
-        color: ${props => (props.theme === 'dark' ? 'black' : 'white')};
+      const Ron = styled('div')`
+        color: ${props => (props.theme.dark ? 'black' : 'white')};
         padding: 20px;
       `
       const wrapper = mount(
         <div>
-          <ThemeProvider theme="dark">
+          <ThemeProvider theme={{ dark: true }}>
             <Ron />
           </ThemeProvider>
         </div>

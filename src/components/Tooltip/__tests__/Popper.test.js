@@ -1,25 +1,18 @@
 import React from 'react'
 import Popper from '../Popper'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 describe('classNames', () => {
   test('Can accept custom className', () => {
-    const wrapper = shallow(<Popper className="derek" />)
+    const wrapper = mount(<Popper className="derek" />)
 
     expect(wrapper.hasClass('derek')).toBe(true)
-  })
-
-  test('Has unique styled className', () => {
-    const wrapper = mount(<Popper />)
-    const styles = wrapper.instance().styles
-
-    expect(wrapper.hasClass(styles.TooltipPopper)).toBe(true)
   })
 })
 
 describe('Children', () => {
   test('Can render children', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Popper>
         <div className="ron" />
       </Popper>
