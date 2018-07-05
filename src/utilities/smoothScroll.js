@@ -21,12 +21,17 @@ const easeInOutCubic = t => {
 //
 // For now, this method has been extensively tested manually
 // within Storybook.
-export const smoothScrollTo = ({ node, position, duration }) => {
+export const smoothScrollTo = ({ node, position, duration, direction }) => {
   const scrollNode = isNodeElement(node) ? node : window
   const isWindow = scrollNode === window
   const scrollDuration = duration || 500
+  const scrollDirection = direction || 'y'
+  const isHorizontalScroll = scrollDirection === 'x'
 
-  const currentScrollPosition = isWindow ? window.scrollY : scrollNode.scrollTop
+  let currentScrollPosition = isWindow ? window.scrollY : scrollNode.scrollTop
+  if (isHorizontalScroll) {
+    currentScrollPosition = isWindow ? window.scrollX : scrollNode.scrollLeft
+  }
 
   let diff = currentScrollPosition - position
   let start
@@ -41,7 +46,11 @@ export const smoothScrollTo = ({ node, position, duration }) => {
     const percent = easeInOutCubic(Math.min(time / scrollDuration, 1))
     const scrollToPosition = currentScrollPosition - diff * percent
 
-    node.scrollTo(0, scrollToPosition)
+    if (isHorizontalScroll) {
+      node.scrollTo(scrollToPosition, 0)
+    } else {
+      node.scrollTo(0, scrollToPosition)
+    }
 
     // Proceed with animation as long as we wanted it to.
     if (time < scrollDuration) {

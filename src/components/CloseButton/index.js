@@ -8,9 +8,9 @@ import { CloseButtonSize } from './types'
 type Props = {
   className?: string,
   children?: any,
-  onBlur: () => void,
-  onClick: () => void,
-  onFocus: () => void,
+  onBlur: (event: Event) => void,
+  onClick: (event: Event) => void,
+  onFocus: (event: Event) => void,
   seamless?: boolean,
   size?: CloseButtonSize,
   title?: string,

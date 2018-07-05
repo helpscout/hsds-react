@@ -20,6 +20,7 @@ class Tooltip extends Component<Props> {
     animationDuration: 200,
     animationSequence: 'fade up',
     isOpen: false,
+    modifiers: {},
     placement: 'top',
     triggerOn: 'hover',
   }
@@ -32,11 +33,14 @@ class Tooltip extends Component<Props> {
       placement,
       renderContent,
       maxWidth,
+      modifiers,
       theme,
       title,
       triggerOn,
       ...rest
     } = this.props
+
+    if (!title) return children || null
 
     const componentClassName = classNames('c-Tooltip', className)
     const arrowClassName = BEM(className).element('arrow')
@@ -57,6 +61,7 @@ class Tooltip extends Component<Props> {
       <Pop
         className={componentClassName}
         isOpen={isOpen}
+        modifiers={modifiers}
         placement={placement}
         triggerOn={triggerOn}
         {...rest}

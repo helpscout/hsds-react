@@ -1,140 +1,173 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Provider from './Provider'
+// @flow
+import React, { PureComponent as Component } from 'react'
+import AttachmentProvider from './Provider'
 import CloseButton from '../CloseButton'
 import Image from '../Image'
 import Text from '../Text'
-import Truncate from '../Truncate'
+import Tooltip from '../Tooltip'
+import Truncate, { getTruncatedContent } from '../Truncate'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
+import css from './styles/Attachment.css.js'
+import type { AttachmentProp, AttachmentContext } from './types'
 
-export const propTypes = {
-  download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  imageUrl: PropTypes.string,
-  mime: PropTypes.string,
-  name: PropTypes.string,
-  onClick: PropTypes.func,
-  onRemoveClick: PropTypes.func,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  target: PropTypes.string,
-  truncateLimit: PropTypes.number,
-  type: PropTypes.oneOf(['action', 'link']),
-  url: PropTypes.string,
+export const Provider = AttachmentProvider
+
+type Props = {
+  children?: any,
+  className?: string,
+  download: boolean | string,
+  id: number | string,
+  imageUrl: string,
+  mime: string,
+  name: string,
+  onClick: (event: Event, attachmentProp: AttachmentProp) => void,
+  onRemoveClick: (event: Event, attachmentProp: AttachmentProp) => void,
+  size: number | string,
+  target: string,
+  truncateLimit: number,
+  type: 'action' | 'link',
+  url: string,
 }
 
-const defaultProps = {
-  mime: 'image/png',
-  name: 'image.png',
-  onClick: noop,
-  onRemoveClick: noop,
-  truncateLimit: 30,
-  type: 'link',
-}
-
-const contextTypes = providerContextTypes
-
-const Attachment = (props, context) => {
-  const {
-    children,
-    className,
-    download,
-    id,
-    imageUrl,
-    mime,
-    name,
-    onClick,
-    onRemoveClick,
-    size,
-    target,
-    truncateLimit,
-    type,
-    url,
-    ...rest
-  } = props
-  const { theme } = context
-
-  const isThemePreview = theme === 'preview'
-
-  const attachmentProps = {
-    id,
-    imageUrl,
-    mime,
-    name,
-    size,
-    url,
+export class Attachment extends Component<Props> {
+  static defaultProps = {
+    mime: 'image/png',
+    name: 'image.png',
+    onClick: noop,
+    onRemoveClick: noop,
+    truncateLimit: 20,
+    type: 'link',
   }
+  static contextTypes = providerContextTypes
 
-  const handleOnClick = event => {
-    onClick(event, attachmentProps)
-  }
+  render() {
+    const {
+      children,
+      className,
+      download,
+      id,
+      imageUrl,
+      mime,
+      name,
+      onClick,
+      onRemoveClick,
+      size,
+      target,
+      truncateLimit,
+      type,
+      url,
+      ...rest
+    } = this.props
+    const { theme } = this.context
 
-  const handleOnRemoveClick = event => {
-    onRemoveClick(event, attachmentProps)
-  }
+    const isThemePreview = theme === 'preview'
 
-  const componentClassName = classNames(
-    'c-Attachment',
-    imageUrl && 'has-image',
-    type && `is-${type}`,
-    theme && `is-theme-${theme}`,
-    className
-  )
+    const attachmentProps = {
+      id,
+      imageUrl,
+      mime,
+      name,
+      size,
+      url,
+    }
 
-  const sizeMarkup = size ? (
-    <Text className="c-Attachment__size" lineHeightReset>
-      {size}
-    </Text>
-  ) : null
+    const handleOnClick = (event: Event) => {
+      onClick(event, attachmentProps)
+    }
 
-  const contentMarkup = imageUrl ? (
-    <span className="c-Attachment__content">
-      <Image block className="c-Attachment__image" src={imageUrl} />
-    </span>
-  ) : (
-    <span className="c-Attachment__content">
-      <Text className="c-Attachment__name" lineHeightReset>
-        <Truncate limit={truncateLimit} type="middle">
-          {name}
-        </Truncate>
+    const handleOnRemoveClick = (event: Event) => {
+      onRemoveClick(event, attachmentProps)
+    }
+
+    const isTruncated =
+      getTruncatedContent({
+        ellipsis: '...',
+        limit: truncateLimit,
+        type: 'middle',
+        text: name,
+      }) !== name
+
+    const tooltipName = imageUrl ? name : isTruncated ? name : ''
+
+    const tooltipProps = {
+      title: name,
+      modifiers: {
+        preventOverflow: {
+          boundariesElement: window,
+        },
+      },
+      placement: 'top',
+    }
+
+    const componentClassName = classNames(
+      'c-Attachment',
+      imageUrl && 'has-image',
+      type && `is-${type}`,
+      theme && `is-theme-${theme}`,
+      className
+    )
+
+    const sizeMarkup = size ? (
+      <Text className="c-Attachment__size" lineHeightReset>
+        {size}
       </Text>
-      {sizeMarkup}
-    </span>
-  )
+    ) : null
 
-  const closeMarkup = isThemePreview ? (
-    <CloseButton
-      className="c-Attachment__closeButton"
-      onClick={handleOnRemoveClick}
-      size="tiny"
-      title="Remove"
-    />
-  ) : null
+    const contentMarkup = imageUrl ? (
+      <span className="c-Attachment__content">
+        <Image
+          block
+          className="c-Attachment__image"
+          src={imageUrl}
+          alt={name}
+        />
+      </span>
+    ) : (
+      <span className="c-Attachment__content">
+        <Text className="c-Attachment__name" lineHeightReset>
+          <Truncate limit={truncateLimit} text={name} type="middle">
+            {name}
+          </Truncate>
+        </Text>
+        {sizeMarkup}
+      </span>
+    )
 
-  const downloadProps = {
-    download: download !== undefined ? download : url ? true : null,
-    target: target !== undefined ? target : url ? '_blank' : null,
+    const closeMarkup = isThemePreview ? (
+      <CloseButton
+        className="c-Attachment__closeButton"
+        onClick={handleOnRemoveClick}
+        size="tiny"
+        title="Remove"
+      />
+    ) : null
+
+    const downloadProps = {
+      download: download !== undefined ? download : url ? true : null,
+      target: target !== undefined ? target : url ? '_blank' : null,
+    }
+
+    return (
+      <a
+        className={componentClassName}
+        href={url}
+        onClick={handleOnClick}
+        title={name}
+        {...downloadProps}
+        {...rest}
+      >
+        {contentMarkup}
+        {closeMarkup}
+      </a>
+    )
   }
-
-  return (
-    <a
-      className={componentClassName}
-      href={url}
-      onClick={handleOnClick}
-      {...downloadProps}
-      {...rest}
-    >
-      {contentMarkup}
-      {closeMarkup}
-    </a>
-  )
 }
 
-Attachment.propTypes = propTypes
-Attachment.defaultProps = defaultProps
-Attachment.contextTypes = contextTypes
-Attachment.displayName = 'Attachment'
-Attachment.Provider = Provider
+const StyledAttachment = styled(Attachment)(css)
 
-export default Attachment
+StyledAttachment.Provider = AttachmentProvider
+
+export default StyledAttachment

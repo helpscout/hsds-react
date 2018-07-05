@@ -29,6 +29,7 @@ class Pop extends Component<Props, State> {
     display: 'inline-block',
     placement: 'auto',
     isOpen: false,
+    modifiers: {},
     onOpen: noop,
     onClose: noop,
     showArrow: true,
@@ -118,6 +119,7 @@ class Pop extends Component<Props, State> {
       id: idProp,
       placement,
       display,
+      modifiers,
       showArrow,
       zIndex,
     } = this.props
@@ -156,6 +158,7 @@ class Pop extends Component<Props, State> {
               animationEasing,
               animationSequence,
               id,
+              modifiers,
               placement,
               showArrow,
               zIndex,

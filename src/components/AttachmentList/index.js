@@ -1,34 +1,34 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import css from './styles/AttachmentList.css.js'
 import { providerContextTypes } from '../Attachment/propTypes'
+import type { AttachmentContext } from '../Attachment/types'
 
-export const propTypes = {
-  downloadAllLabel: PropTypes.string,
-  onDownloadAllClick: PropTypes.func,
-  showDownloadAll: PropTypes.bool,
+type Props = {
+  children?: any,
+  className?: string,
+  downloadAllLabel: string,
+  onDownloadAllClick: () => void,
+  showDownloadAll: boolean,
+  withOverflow: boolean,
 }
 
-const defaultProps = {
-  downloadAllLabel: 'Download All',
-  onDownloadAllClick: noop,
-  showDownloadAll: true,
-}
-
-const contextTypes = providerContextTypes
-
-const AttachmentList = (props, context) => {
+export const AttachmentList = (props: Props, context: AttachmentContext) => {
   const {
     children,
     className,
     downloadAllLabel,
     onDownloadAllClick,
     showDownloadAll,
+    withOverflow,
     ...rest
   } = props
   const { theme } = context
@@ -38,6 +38,7 @@ const AttachmentList = (props, context) => {
   const componentClassName = classNames(
     'c-AttachmentList',
     theme && `is-theme-${theme}`,
+    withOverflow && 'is-withOverflow',
     className
   )
 
@@ -90,16 +91,27 @@ const AttachmentList = (props, context) => {
     </Inline>
   )
 
+  const wrappedContentMarkup =
+    withOverflow && isThemePreview ? (
+      <Overflow remapScrollDirections>{contentMarkup}</Overflow>
+    ) : (
+      contentMarkup
+    )
+
   return (
     <div className={componentClassName} {...rest}>
-      {contentMarkup}
+      {wrappedContentMarkup}
     </div>
   )
 }
 
-AttachmentList.propTypes = propTypes
-AttachmentList.defaultProps = defaultProps
-AttachmentList.contextTypes = contextTypes
 AttachmentList.displayName = 'AttachmentList'
+AttachmentList.defaultProps = {
+  downloadAllLabel: 'Download All',
+  onDownloadAllClick: noop,
+  showDownloadAll: true,
+  withOverflow: true,
+}
+AttachmentList.contextTypes = providerContextTypes
 
-export default AttachmentList
+export default styled(AttachmentList)(css)

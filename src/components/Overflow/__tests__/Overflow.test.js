@@ -1,7 +1,13 @@
 import React, { PureComponent as Component } from 'react'
 import { mount, shallow } from 'enzyme'
-import Overflow from '..'
+import { Overflow } from '..'
 import wait from '../../../tests/helpers/wait'
+
+const ui = {
+  container: '.c-Overflow__container',
+  faderLeft: '.c-Overflow__fader.is-left',
+  faderRight: '.c-Overflow__fader.is-right',
+}
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -133,13 +139,23 @@ describe('Events', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('Fires onWheel callback when scrolled by wheel', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Overflow onWheel={spy} />)
+    const o = wrapper.find(ui.container)
+
+    o.simulate('wheel')
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
-describe('adjustHeight', () => {
+describe('Height adjustments', () => {
   test('Method fires on mount', () => {
     const wrapper = mount(<Overflow />)
     const spy = jest.fn()
-    wrapper.getNode().adjustHeight = spy
+    wrapper.getNode().handleOnResize = spy
 
     wrapper.instance().componentDidMount()
 
@@ -199,5 +215,66 @@ describe('Mount', () => {
     o.adjustHeight()
 
     expect(o.state.shouldFadeOnMount).toBe('stub')
+  })
+})
+
+describe('Scroll', () => {
+  test('Scrolls the container left when fader (left) is clicked', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Overflow />)
+    const o = wrapper.instance()
+    o.scrollContainerView = spy
+
+    wrapper.find(ui.faderLeft).simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Does not scroll the container left when fader (left) is clicked,. if specified', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Overflow scrollOnClickFade={false} />)
+    const o = wrapper.instance()
+    o.scrollContainerView = spy
+
+    wrapper.find(ui.faderLeft).simulate('click')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Scrolls the container left when fader (Right) is clicked', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Overflow />)
+    const o = wrapper.instance()
+    o.scrollContainerView = spy
+
+    wrapper.find(ui.faderRight).simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Does not scroll the container left when fader (Right) is clicked,. if specified', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Overflow scrollOnClickFade={false} />)
+    const o = wrapper.instance()
+    o.scrollContainerView = spy
+
+    wrapper.find(ui.faderRight).simulate('click')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('remapScrollDirections can fire', () => {
+    const wrapper = mount(<Overflow />)
+    wrapper.instance().remapScrollDirections()
+  })
+
+  test('scrollContainerView can fire with value', () => {
+    const wrapper = mount(<Overflow />)
+    wrapper.instance().scrollContainerView(40)
+  })
+
+  test('scrollContainerView can fire without value', () => {
+    const wrapper = mount(<Overflow />)
+    wrapper.instance().scrollContainerView()
   })
 })

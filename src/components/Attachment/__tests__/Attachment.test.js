@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import Attachment from '../index'
+import { Attachment, Provider } from '../index'
 
 const ui = {
   content: '.c-Attachment__content',
@@ -128,9 +128,9 @@ describe('Type', () => {
 describe('Theme', () => {
   test('Renders default theme styles, if wrapped in Provider', () => {
     const wrapper = mount(
-      <Attachment.Provider>
+      <Provider>
         <Attachment type="action" />
-      </Attachment.Provider>
+      </Provider>
     )
     const o = wrapper.find(Attachment)
 
@@ -140,9 +140,9 @@ describe('Theme', () => {
 
   test('Renders theme styles, if provided', () => {
     const wrapper = mount(
-      <Attachment.Provider theme="preview">
+      <Provider theme="preview">
         <Attachment type="action" />
-      </Attachment.Provider>
+      </Provider>
     )
     const o = wrapper.find(Attachment)
 
@@ -195,9 +195,9 @@ describe('CloseButton', () => {
 
   test('Renders if the theme is preview', () => {
     const wrapper = mount(
-      <Attachment.Provider theme="preview">
+      <Provider theme="preview">
         <Attachment imageUrl="image.png" />
-      </Attachment.Provider>
+      </Provider>
     )
     const o = wrapper.find(ui.closeButton)
 
@@ -207,9 +207,9 @@ describe('CloseButton', () => {
   test('onRemoveClick callback fires when clicked', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Attachment.Provider theme="preview">
+      <Provider theme="preview">
         <Attachment imageUrl="image.png" onRemoveClick={spy} id="1" />
-      </Attachment.Provider>
+      </Provider>
     )
     const o = wrapper.find(ui.closeButton)
 

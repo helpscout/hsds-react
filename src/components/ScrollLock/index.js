@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { isFirefox } from '../../utilities/browser'
 import { noop } from '../../utilities/other'
 
-type ScrollWheelEvent = WheelEvent & { currentTarget: HTMLElement }
+type ScrollWheelEvent = SyntheticWheelEvent<HTMLElement>
 
 type Props = {
   children?: any,

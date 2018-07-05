@@ -28,6 +28,7 @@ export type PopProps = {
   display: string,
   id?: string,
   isOpen: boolean,
+  modifiers: Object,
   onClose: (Pop: Object) => void,
   onOpen: (Pop: Object) => void,
   placement: Placements,
