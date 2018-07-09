@@ -15,6 +15,17 @@ describe('classNames', () => {
 describe('Children', () => {
   test('Can render children', () => {
     const wrapper = shallow(
+      <Tooltip title="Pop">
+        <div className="ron" />
+      </Tooltip>
+    )
+    const el = wrapper.find('.ron')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Can render children, without title', () => {
+    const wrapper = shallow(
       <Tooltip>
         <div className="ron" />
       </Tooltip>
@@ -26,8 +37,15 @@ describe('Children', () => {
 })
 
 describe('Pop', () => {
-  test('Renders a Pop component', () => {
+  test('Does not render a Pop component, without title', () => {
     const wrapper = mount(<Tooltip />)
+    const pop = wrapper.find(Pop)
+
+    expect(pop.length).not.toBeTruthy()
+  })
+
+  test('Renders a Pop component', () => {
+    const wrapper = mount(<Tooltip title="Pop" />)
     const pop = wrapper.find(Pop)
 
     expect(pop.length).toBeTruthy()
@@ -40,6 +58,7 @@ describe('Pop', () => {
       animationSequence: 'fade',
       placement: 'bottom',
       triggerOn: 'click',
+      title: 'Pop',
     }
     const wrapper = mount(<Tooltip {...props} />)
     const pop = wrapper.find(Pop).props()
@@ -52,7 +71,7 @@ describe('Pop', () => {
   })
 
   test('Renders children (string) into Pop.Reference', () => {
-    const wrapper = mount(<Tooltip>Ron</Tooltip>)
+    const wrapper = mount(<Tooltip title="Pop">Ron</Tooltip>)
     const pop = wrapper.find(Pop.Reference)
 
     expect(pop.props().children).toContain('Ron')
@@ -60,7 +79,7 @@ describe('Pop', () => {
 
   test('Renders children (HTML Element) into Pop.Reference', () => {
     const wrapper = mount(
-      <Tooltip>
+      <Tooltip title="Pop">
         <div className="ron">Ron</div>
       </Tooltip>
     )

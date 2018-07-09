@@ -2,13 +2,17 @@
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import { remapScrollingPlane } from '../../utilities/scrolling'
+import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { hasContentOverflowX } from '../../utilities/node'
 import {
   getFadeLeftStyles,
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
+import css from './styles/Overflow.css.js'
 
 type Props = {
   backgroundColor?: string,
@@ -17,19 +21,25 @@ type Props = {
   initialHeightAdjustDelay?: number,
   isScrollable?: boolean,
   onScroll: (event: Event) => void,
+  onWheel: (event: SyntheticWheelEvent<HTMLDivElement>) => void,
+  remapScrollDirections: boolean,
   scrollableRef: (ref: ?HTMLElement) => void,
+  scrollOnClickFade: boolean,
 }
 
 type State = {
   shouldFadeOnMount: boolean,
 }
 
-class Overflow extends Component<Props, State> {
+export class Overflow extends Component<Props, State> {
   static defaultProps = {
     initialHeightAdjustDelay: 30,
     isScrollable: true,
     onScroll: noop,
+    onWheel: noop,
+    remapScrollDirections: false,
     scrollableRef: noop,
+    scrollOnClickFade: true,
   }
 
   state = {
@@ -42,19 +52,14 @@ class Overflow extends Component<Props, State> {
   faderNodeRight: ?HTMLElement
   containerNode: HTMLElement
   node: ?HTMLElement = null
+  scrollAmount = 0.7
+  smoothScrollDuration = 200
 
   componentDidMount = () => {
     this._isMounted = true
 
     this.setNodes()
-    this.adjustHeight()
-
-    /* istanbul ignore next */
-    // Initial adjustHeight has been tested. Ignoring due to fragility
-    // of JSDOM + timeouts.
-    requestAnimationFrame(() => {
-      this.adjustHeight()
-    })
+    this.handleOnResize()
   }
 
   componentWillUnmount = () => {
@@ -85,7 +90,7 @@ class Overflow extends Component<Props, State> {
     this.node.style.height = height ? `${height - heightOffset}px` : null
   }
 
-  applyFadeStyles = (event: Event) => {
+  applyFadeStyles = (event: Event | Object) => {
     const { isScrollable } = this.props
     const offset = this.faderSize
 
@@ -108,6 +113,76 @@ class Overflow extends Component<Props, State> {
     onScroll(event)
   }
 
+  handleOnResize = () => {
+    /* istanbul ignore next */
+    // Initial adjustHeight has been tested. Ignoring due to fragility
+    // of JSDOM + timeouts.
+    requestAnimationFrame(() => {
+      this.adjustHeight()
+      this.applyFadeStyles({
+        currentTarget: this.containerNode,
+      })
+    })
+  }
+
+  /**
+   * Remaps vertical scrolling to horizontal scrolling. This provides a more
+   * intuitive experience for mouse users during an Overflow.
+   *
+   * @param   {WheelEvent} event
+   */
+  /* istanbul ignore next */
+  remapScrollDirections = (event: SyntheticWheelEvent<HTMLDivElement>) => {
+    /* istanbul ignore next */
+    if (this.props.remapScrollDirections) {
+      remapScrollingPlane(event)
+    }
+    this.props.onWheel(event)
+  }
+
+  /**
+   * Scrolls the Overflow container to the left.
+   */
+  scrollLeft = () => {
+    if (!this.props.scrollOnClickFade) return
+
+    const scrollValue =
+      this.containerNode.scrollWidth * (this.scrollAmount * -1)
+
+    this.scrollContainerView(scrollValue)
+  }
+
+  /**
+   * Scrolls the Overflow container to the right.
+   */
+  scrollRight = () => {
+    if (!this.props.scrollOnClickFade) return
+
+    const scrollValue = this.containerNode.scrollWidth * (this.scrollAmount * 1)
+
+    this.scrollContainerView(scrollValue)
+  }
+
+  /**
+   * Scrolls the container view by a specified amount (px).
+   *
+   * @param {number} amount The amount to scroll by.
+   */
+  /* istanbul ignore next */
+  scrollContainerView = (amount: number = 0) => {
+    /* istanbul ignore next */
+    if (!this.containerNode) return
+
+    /* istanbul ignore next */
+    // Cannot be reliably + neatly tested in JSDOM.
+    smoothScrollTo({
+      node: this.containerNode,
+      position: amount,
+      direction: 'x',
+      duration: this.smoothScrollDuration,
+    })
+  }
+
   render() {
     const {
       backgroundColor,
@@ -116,13 +191,13 @@ class Overflow extends Component<Props, State> {
       initialHeightAdjustDelay,
       isScrollable,
       onScroll,
+      remapScrollDirections,
       scrollableRef,
+      scrollOnClickFade,
       ...rest
     } = this.props
 
     const { shouldFadeOnMount } = this.state
-    const adjustHeight = this.adjustHeight
-    const handleOnScroll = this.handleOnScroll
 
     const componentClassName = classNames(
       'c-Overflow',
@@ -135,6 +210,7 @@ class Overflow extends Component<Props, State> {
       <div
         className="c-Overflow__fader is-left"
         ref={node => (this.faderNodeLeft = node)}
+        onClick={this.scrollLeft}
         role="presentation"
         style={{
           color: backgroundColor,
@@ -145,6 +221,7 @@ class Overflow extends Component<Props, State> {
     const faderRightMarkup = (
       <div
         className="c-Overflow__fader is-right"
+        onClick={this.scrollRight}
         ref={node => (this.faderNodeRight = node)}
         role="presentation"
         style={{
@@ -163,15 +240,16 @@ class Overflow extends Component<Props, State> {
             this.containerNode = node
             scrollableRef(node)
           }}
-          onScroll={handleOnScroll}
+          onScroll={this.handleOnScroll}
+          onWheel={this.remapScrollDirections}
         >
           <div className="c-Overflow__content">{children}</div>
         </div>
         {faderRightMarkup}
-        <EventListener event="resize" handler={adjustHeight} />
+        <EventListener event="resize" handler={this.handleOnResize} />
       </div>
     )
   }
 }
 
-export default Overflow
+export default styled(Overflow)(css)

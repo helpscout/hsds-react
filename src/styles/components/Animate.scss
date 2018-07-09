@@ -1,7 +1,7 @@
 .c-Animate {
-  @import "../resets/base";
+  @import '../resets/base';
   visibility: hidden;
-  transition-timing-function: "ease-in-out";
+  transition-timing-function: 'ease-in-out';
 
   // Sequences
   &.is-entering {
@@ -17,7 +17,7 @@
     visibility: hidden;
   }
 
-  // Modifers
+  // Modifiers
   &.is-block {
     display: block;
   }

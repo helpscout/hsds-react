@@ -20,6 +20,9 @@ import type { UISize, UIState } from '../../constants/types'
 
 const uniqueID = createUniqueIDFactory('Input')
 
+type InputNode = HTMLInputElement | HTMLTextAreaElement
+type WheelEvent = SyntheticWheelEvent<InputNode>
+
 type Props = {
   autoFocus: boolean,
   className: string,
@@ -37,10 +40,10 @@ type Props = {
   maxHeight: number | string,
   name: string,
   offsetAmount: number,
-  onBlur: (event: Event) => void,
-  onChange: (event: Event) => void,
-  onFocus: (event: Event) => void,
-  onWheel: (event: Event) => void,
+  onBlur: (event: WheelEvent) => void,
+  onChange: (event: WheelEvent) => void,
+  onFocus: (event: WheelEvent) => void,
+  onWheel: (event: WheelEvent) => void,
   placeholder: string,
   prefix: string,
   readOnly: boolean,
@@ -62,8 +65,6 @@ type State = {
   state: ?UIState,
   value: string,
 }
-
-type InputNode = HTMLInputElement | HTMLTextAreaElement
 
 class Input extends Component<Props, State> {
   static defaultProps = {
@@ -182,7 +183,7 @@ class Input extends Component<Props, State> {
     onFocus(event)
   }
 
-  handleOnWheel = (event: WheelEvent) => {
+  handleOnWheel = (event: SyntheticWheelEvent<InputNode>) => {
     const { multiline, onWheel, scrollLock } = this.props
     if (!multiline || !scrollLock) return
 

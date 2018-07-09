@@ -1,3 +1,4 @@
+// @flow
 import ThemeProvider from '../ThemeProvider'
 import { providerContextTypes } from './propTypes'
 

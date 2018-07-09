@@ -125,6 +125,7 @@ describe('Truncate: Check', () => {
 
     expect(wrapper.state().isTruncated).toBe(false)
 
+    wrapper.getNode().isTruncated = () => true
     wrapper.setProps({ type: 'middle' })
 
     expect(wrapper.state().isTruncated).toBe(true)
@@ -171,6 +172,12 @@ describe('Truncate: Check', () => {
     wrapper.getNode().node = null
 
     expect(wrapper.state().isTruncated).toBe(false)
+  })
+
+  test('Check returns false, if content does not change', () => {
+    const wrapper = mount(<Truncate type="middle">Words</Truncate>)
+
+    expect(wrapper.instance().isTruncated()).toBe(false)
   })
 })
 

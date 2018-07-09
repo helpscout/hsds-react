@@ -17,6 +17,7 @@ class Popper extends Component<Props> {
     animationEasing: 'ease',
     animationSequence: 'fade',
     arrowSize: 5,
+    modifiers: {},
     offset: 0,
     onClick: noop,
     placement: 'auto',
@@ -50,6 +51,7 @@ class Popper extends Component<Props> {
       children,
       offset,
       onClick,
+      modifiers,
       positionFixed,
       placement,
       showArrow,
@@ -68,7 +70,11 @@ class Popper extends Component<Props> {
 
     return (
       <Portal ref={ref => (this.portal = ref)}>
-        <ReactPopper placement={placement} positionFixed={positionFixed}>
+        <ReactPopper
+          modifiers={modifiers}
+          placement={placement}
+          positionFixed={positionFixed}
+        >
           {({ ref, style, placement, arrowProps }) => (
             <div
               className={componentClassName}

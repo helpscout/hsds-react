@@ -16,8 +16,11 @@ type Props = {
   end?: number,
   start?: number,
   showTooltipOnTruncate: boolean,
+  text?: string,
   title?: string,
+  tooltipProps: Object,
   tooltipPlacement: string,
+  tooltipModifiers: Object,
   type?: 'auto' | 'start' | 'middle' | 'end',
 }
 
@@ -28,11 +31,12 @@ type State = {
 export class BaseComponent extends Component<Props, State> {
   static displayName = 'Truncate'
   static defaultProps = {
-    children: '',
     ellipsis: '…',
     limit: 0,
     showTooltipOnTruncate: false,
+    tooltipModifiers: {},
     tooltipPlacement: 'top-start',
+    tooltipProps: {},
     type: 'auto',
   }
   node = null
@@ -73,11 +77,22 @@ export class BaseComponent extends Component<Props, State> {
     this.setState({ isTruncated })
   }
 
-  isTruncated = (props: Props) => {
-    if (props.type !== 'auto') return true
-    /* istanbul ignore next */
-    if (!this.node) return false
-    return this.node.offsetWidth < this.node.scrollWidth
+  isTruncated = (props: Props = this.props) => {
+    if (props.type !== 'auto') {
+      return this.getText(props) !== this.getTruncatedContent(props)
+    } else {
+      /* istanbul ignore next */
+      if (!this.node) return false
+      return this.node.offsetWidth < this.node.scrollWidth
+    }
+  }
+
+  getText = (props: Props = this.props) => {
+    return this.props.text || this.props.children
+  }
+
+  getTruncatedContent = (props: Props = this.props) => {
+    return getTruncatedContent({ ...props, text: this.getText(props) })
   }
 
   render() {
@@ -88,7 +103,10 @@ export class BaseComponent extends Component<Props, State> {
       limit,
       showTooltipOnTruncate,
       tooltipPlacement,
+      tooltipProps,
+      tooltipModifiers,
       title,
+      text,
       type,
       ...rest
     } = this.props
@@ -100,32 +118,15 @@ export class BaseComponent extends Component<Props, State> {
     )
 
     const shouldShowTooltip = showTooltipOnTruncate && this.state.isTruncated
-
-    let truncateStart
-    let truncateEnd
-
-    switch (type) {
-      case 'start':
-        truncateStart = 0
-        truncateEnd = limit
-        break
-      case 'middle':
-        truncateStart = Math.floor(limit / 2)
-        truncateEnd = Math.floor(limit / 2)
-        break
-      default:
-        truncateStart = limit
-        truncateEnd = 0
-    }
-
-    const word =
-      type !== 'auto'
-        ? truncateMiddle(children, truncateStart, truncateEnd, ellipsis)
-        : children
+    const word = this.getTruncatedContent()
 
     const content = shouldShowTooltip ? (
-      <Tooltip placement={tooltipPlacement} title={title || children}>
-        {word}
+      <Tooltip
+        {...tooltipProps}
+        placement={tooltipPlacement}
+        title={title || this.getText()}
+      >
+        <span className="c-Truncate__content">{word}</span>
       </Tooltip>
     ) : (
       word
@@ -142,6 +143,40 @@ export class BaseComponent extends Component<Props, State> {
       </span>
     )
   }
+}
+
+/**
+ * Generates the truncated content based on props.
+ *
+ * @param   {Object} props Component props.
+ * @returns {string} The truncated content.
+ */
+export function getTruncatedContent(props: Object): string {
+  const { ellipsis, limit, type, text } = props
+
+  let truncateStart
+  let truncateEnd
+
+  switch (type) {
+    case 'start':
+      truncateStart = 0
+      truncateEnd = limit
+      break
+    case 'middle':
+      truncateStart = Math.floor(limit / 2)
+      truncateEnd = Math.floor(limit / 2)
+      break
+    default:
+      truncateStart = limit
+      truncateEnd = 0
+  }
+
+  const word =
+    type !== 'auto'
+      ? truncateMiddle(text, truncateStart, truncateEnd, ellipsis)
+      : text
+
+  return word
 }
 
 export default styled(BaseComponent)(css)

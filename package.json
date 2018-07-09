@@ -202,6 +202,7 @@
       "!src/**/?(*.)types.{js,jsx}",
       "!src/**/?(*.)helpers.{js,jsx}",
       "!src/**/?(*.)testHelpers.{js,jsx}",
+      "!src/styles/tests/helpers/**/*.{js,jsx}",
       "!src/**/?(*.)css.{js,jsx}",
       "!src/index.{js,jsx}",
       "!src/components/Popper/**/*.{js,jsx}",
