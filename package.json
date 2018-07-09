@@ -45,6 +45,7 @@
     "test:acceptance": "npm run karma -- --single-run",
     "test:all": "npm run test && npm run test:acceptance",
     "test:coverage": "npm run test:dev -- --coverage",
+    "test:dev": "node scripts/test.js --env=jsdom",
     "version": "npm run build",
     "postversion": "npm publish dist",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
