@@ -121,6 +121,14 @@ describe('Fade', () => {
     expect(faderLeft.style.color).toBe('red')
     expect(faderRight.style.color).toBe('red')
   })
+
+  test('Passes resize function to refApplyFade', () => {
+    let testMethod = null
+    const stubMethod = ref => (testMethod = ref)
+    const wrapper = mount(<Overflow refApplyFade={stubMethod} />)
+
+    expect(typeof testMethod).toBe('function')
+  })
 })
 
 describe('Events', () => {
@@ -276,5 +284,18 @@ describe('Scroll', () => {
   test('scrollContainerView can fire without value', () => {
     const wrapper = mount(<Overflow />)
     wrapper.instance().scrollContainerView()
+  })
+
+  test('scrollToEnd can fire without value', () => {
+    const wrapper = mount(<Overflow />)
+    wrapper.instance().scrollToEnd()
+  })
+
+  test('Passes scrollToEnd function to refScrollToEnd', () => {
+    let testMethod = null
+    const stubMethod = ref => (testMethod = ref)
+    const wrapper = mount(<Overflow refScrollToEnd={stubMethod} />)
+
+    expect(typeof testMethod).toBe('function')
   })
 })

@@ -8,6 +8,11 @@ import { getColor } from '../../../styles/utilities/color'
 
 const bem = BEM('.c-Attachment')
 
+const config = {
+  imageSize: '37px',
+  imageMaxWidth: '80px',
+}
+
 const css = `
   ${linkStyles()}
   ${baseStyles}
@@ -63,9 +68,11 @@ const css = `
 
   ${bem.element('image')} {
     border-radius: 2px;
-    height: 37px;
-    max-height: 37px;
-    max-width: initial;
+    height: ${config.imageSize};
+    object-fit: cover;
+    max-height: ${config.imageSize};
+    max-width: ${config.imageMaxWidth};
+    min-width: ${config.imageSize};
     width: auto;
   }
 

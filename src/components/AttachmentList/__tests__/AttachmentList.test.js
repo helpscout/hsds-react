@@ -155,3 +155,58 @@ describe('Theme', () => {
     expect(o.hasClass('is-theme-preview')).toBeTruthy()
   })
 })
+
+describe('New attachments', () => {
+  test('Determines if new attachments are added on prop change', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<AttachmentList />)
+    wrapper.instance().didAddNewAttachment = spy
+    wrapper.setProps({ children: ['one'] })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Checker returns false if this.props.children is undefined', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<AttachmentList />)
+    wrapper.setProps({ children: undefined })
+
+    expect(wrapper.instance().didAddNewAttachment({ title: 'gogo' })).toBe(
+      false
+    )
+  })
+
+  test('Checker defaults to this.props for arg', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<AttachmentList />)
+    wrapper.setProps({ children: ['one'] })
+
+    expect(wrapper.instance().didAddNewAttachment()).toBe(false)
+  })
+
+  test('Can correctly handles new attachments with action', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<AttachmentList />)
+    wrapper.setProps({ children: ['one'] })
+    wrapper.instance().handleOnAddNewAttachment = spy
+
+    wrapper.setProps({ children: ['one'] })
+    expect(spy).not.toHaveBeenCalled()
+
+    wrapper.setProps({ children: ['one', 'two'] })
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Scrolls to end when a new attachment is added', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<AttachmentList />)
+    wrapper.setProps({ children: ['one'] })
+    wrapper.instance().handleScrollToEnd = spy
+
+    wrapper.setProps({ children: ['one'] })
+    expect(spy).not.toHaveBeenCalled()
+
+    wrapper.setProps({ children: ['one', 'two'] })
+    expect(spy).toHaveBeenCalled()
+  })
+})

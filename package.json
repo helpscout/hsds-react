@@ -46,6 +46,7 @@
     "test:all": "npm run test && npm run test:acceptance",
     "test:coverage": "npm run test:dev -- --coverage",
     "test:dev": "node scripts/test.js --env=jsdom",
+    "test:coverage:fast": "npm run test:coverage -- --onlyChanged",
     "version": "npm run build",
     "postversion": "npm publish dist",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
