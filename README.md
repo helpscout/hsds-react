@@ -48,15 +48,8 @@ To publish and release a new version of Blue, run the following command:
 npm run release
 ```
 
-That's it! The script will take care of the rest (from testing to publishing). This will patch bump the version on Github and npm.
-
-#### Additional options
-
-| Command                 | Description                                           |
-| ----------------------- | ----------------------------------------------------- |
-| `npm run release:major` | Publish with a major version bump. `1.0.0` -> `2.0.0` |
-| `npm run release:minor` | Publish with a minor version bump. `0.1.0` -> `0.2.0` |
-| `npm run release:patch` | Publish with a patch version bump. `0.0.1` -> `0.0.1` |
+You'll be presented with a CLI prompt with options.
+Pick the one you want, and that's it! The script will take care of the rest (from testing to publishing).
 
 ## Deploying Storybook
 
