@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from '../../utilities/classNames'
 import Text from '../Text'
-import { isString } from '../../utilities/strings'
+import { isString } from '../../utilities/is'
 import type { Sizes } from '../Text/types'
 import type { UIState } from '../../constants/types'
 
