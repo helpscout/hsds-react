@@ -24,14 +24,55 @@ stories.add('default', () => (
   </Message.Provider>
 ))
 
+const onErrorTryAgainClick = () => console.log('Try again!')
+
 stories.add('image:large', () => (
-  <Message to avatar={<Avatar name="Arctic Puffin" />}>
-    <Message.Chat>Agent Chat</Message.Chat>
-    <Message.Media
-      imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
-      caption="image.jpg"
-    />
-  </Message>
+  <div>
+    <Message to avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Chat>Agent Chat</Message.Chat>
+      <Message.Media imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg" />
+      <Message.Media
+        imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
+        caption="image.jpg"
+      />
+      <Message.Media
+        imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
+        caption="image.jpg"
+        error
+        onErrorTryAgainClick={onErrorTryAgainClick}
+      />
+    </Message>
+
+    <Message to avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Media
+        imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
+        caption="image.jpg"
+        isNote
+      />
+      <Message.Media
+        imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
+        caption="image.jpg"
+        error
+        onErrorTryAgainClick={onErrorTryAgainClick}
+        isNote
+      />
+      <Message.Media
+        imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
+        caption="image.jpg"
+        error
+        onErrorTryAgainClick={onErrorTryAgainClick}
+        isNote
+        isUploading
+      />
+    </Message>
+
+    <Message from avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Media
+        imageUrl="https://images.apple.com/v/imac-with-retina/a/images/overview/5k_image.jpg"
+        caption="image.jpg"
+      />
+    </Message>
+  </div>
 ))
 
 stories.add('states', () => (

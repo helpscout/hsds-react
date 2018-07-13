@@ -3,7 +3,7 @@ import React from 'react'
 import Text from '../Text'
 import { stateTypes } from '../../constants/propTypes'
 import classNames from '../../utilities/classNames'
-import { isString } from '../../utilities/strings'
+import { isString } from '../../utilities/is'
 import type { UIState } from '../../constants/types'
 
 type Props = {

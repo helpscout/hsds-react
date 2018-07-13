@@ -1,7 +1,5 @@
 // @flow
-export const isString = (string: string | any): boolean => {
-  return typeof string === 'string'
-}
+import { isString } from './is'
 
 export const nameToInitials = (name: string = ''): string => {
   // Returning early if undefined to avoid casting undefined to "undefined"
