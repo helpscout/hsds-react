@@ -1,5 +1,4 @@
 [ignore]
-.*/node_modules/css-mq-parser/.*
 .*/__tests__/.*
 
 [include]

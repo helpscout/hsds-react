@@ -18,6 +18,8 @@ type Props = {
   backgroundColor?: string,
   className?: string,
   children?: any,
+  refApplyFade: (() => void) => void,
+  refScrollToEnd: (() => void) => void,
   initialHeightAdjustDelay?: number,
   isScrollable?: boolean,
   onScroll: (event: Event) => void,
@@ -37,6 +39,8 @@ export class Overflow extends Component<Props, State> {
     isScrollable: true,
     onScroll: noop,
     onWheel: noop,
+    refApplyFade: noop,
+    refScrollToEnd: noop,
     remapScrollDirections: false,
     scrollableRef: noop,
     scrollOnClickFade: true,
@@ -60,6 +64,7 @@ export class Overflow extends Component<Props, State> {
 
     this.setNodes()
     this.handleOnResize()
+    this.bindPropMethods()
   }
 
   componentWillUnmount = () => {
@@ -70,6 +75,11 @@ export class Overflow extends Component<Props, State> {
     if (this.node || !this._isMounted) return
     // $FlowFixMe
     this.node = ReactDOM.findDOMNode(this)
+  }
+
+  bindPropMethods = () => {
+    this.props.refApplyFade(this.handleOnResize)
+    this.props.refScrollToEnd(this.scrollToEnd)
   }
 
   adjustHeight = () => {
@@ -146,8 +156,9 @@ export class Overflow extends Component<Props, State> {
   scrollLeft = () => {
     if (!this.props.scrollOnClickFade) return
 
-    const scrollValue =
-      this.containerNode.scrollWidth * (this.scrollAmount * -1)
+    const currentScrollAmount = this.containerNode.scrollLeft
+    const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
+    const scrollValue = currentScrollAmount - scrollAmount
 
     this.scrollContainerView(scrollValue)
   }
@@ -158,7 +169,20 @@ export class Overflow extends Component<Props, State> {
   scrollRight = () => {
     if (!this.props.scrollOnClickFade) return
 
-    const scrollValue = this.containerNode.scrollWidth * (this.scrollAmount * 1)
+    const currentScrollAmount = this.containerNode.scrollLeft
+    const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
+    const scrollValue = currentScrollAmount + scrollAmount
+
+    this.scrollContainerView(scrollValue)
+  }
+
+  /**
+   * Scrolls the Overflow container to the end (right).
+   */
+  scrollToEnd = () => {
+    /* istanbul ignore next */
+    if (!this.containerNode) return
+    const scrollValue = this.containerNode.scrollWidth
 
     this.scrollContainerView(scrollValue)
   }
@@ -188,6 +212,8 @@ export class Overflow extends Component<Props, State> {
       backgroundColor,
       className,
       children,
+      refApplyFade,
+      refScrollToEnd,
       initialHeightAdjustDelay,
       isScrollable,
       onScroll,
