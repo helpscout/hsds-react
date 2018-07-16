@@ -605,7 +605,7 @@ describe('Typing events', () => {
     expect(clearTimeout).toHaveBeenCalledTimes(1)
   })
 
-  test.only('If the delay is less than 3000ms reset the timeout than fire it if time advances past 3000ms', () => {
+  test('If the delay is less than 3000ms reset the timeout than fire it if time advances past 3000ms', () => {
     wrapper.find('input').simulate('change')
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
     jest.runTimersToTime(2100)
@@ -624,5 +624,12 @@ describe('Typing events', () => {
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(3)
     expect(clearTimeout).toHaveBeenCalledTimes(3)
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+  })
+
+  test('Should clear timeout on componentWillUnMount', () => {
+    wrapper.find('input').simulate('change')
+    wrapper.unmount()
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(clearTimeout).toHaveBeenCalledTimes(1)
   })
 })

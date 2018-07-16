@@ -138,7 +138,7 @@ class Input extends Component<Props, State> {
 
   componentWillUnmount() {
     this.inputNode = null
-    this.clearTypingTimeout()
+    this.props.withTypingEvent && this.clearTypingTimeout()
   }
 
   maybeForceAutoFocus() {
