@@ -552,3 +552,88 @@ describe('moveCursorToEnd', () => {
     wrapper.getNode().moveCursorToEnd()
   })
 })
+
+describe('Typing events', () => {
+  let spies, wrapper
+
+  beforeEach(() => {
+    jest.useFakeTimers()
+    spies = {
+      callStartTyping: jest.spyOn(Input.prototype, 'callStartTyping'),
+      callStopTyping: jest.spyOn(Input.prototype, 'callStopTyping'),
+      clearTypingTimeout: jest.spyOn(Input.prototype, 'clearTypingTimeout'),
+      onStartTyping: jest.fn(),
+      onStopTyping: jest.fn(),
+      setTypingTimeout: jest.spyOn(Input.prototype, 'setTypingTimeout'),
+      typingEvent: jest.spyOn(Input.prototype, 'typingEvent'),
+    }
+
+    wrapper = mount(
+      <Input
+        onStartTyping={spies.onStartTyping}
+        onStopTyping={spies.onStopTyping}
+        typingTimeoutDelay={3000}
+        withTypingEvent={true}
+      />
+    )
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+    jest.clearAllTimers()
+  })
+
+  afterAll(() => {
+    jest.useRealTimers()
+  })
+
+  test(`On start typing should call start typing events and make a timeout`, () => {
+    wrapper.find('input').simulate('change')
+    expect(spies.typingEvent).toHaveBeenCalledTimes(1)
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    expect(spies.setTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(spies.onStartTyping).toHaveBeenCalledTimes(1)
+    expect(setTimeout).toHaveBeenCalledTimes(1)
+  })
+
+  test('After a delay of 3000ms and no more typing events, should call stop typing events and clear timeout', () => {
+    expect(wrapper.props().typingTimeoutDelay).toBe(3000)
+    wrapper.find('input').simulate('change')
+    expect(wrapper.state().typingTimeout).toBeDefined()
+    wrapper.find('input').simulate('change')
+    jest.runTimersToTime(5000)
+    expect(wrapper.state.typingTimeout).not.toBeDefined()
+    expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+    expect(clearTimeout).toHaveBeenCalledTimes(2)
+  })
+
+  test('If the delay is less than 3000ms reset the timeout than fire it if time advances past 3000ms', () => {
+    wrapper.find('input').simulate('change')
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    jest.runTimersToTime(2100)
+    wrapper.find('input').simulate('change')
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    expect(spies.callStopTyping).not.toHaveBeenCalled()
+    expect(spies.onStopTyping).not.toHaveBeenCalled()
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(clearTimeout).toHaveBeenCalledTimes(1)
+    wrapper.find('input').simulate('change')
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+    expect(clearTimeout).toHaveBeenCalledTimes(2)
+    jest.runTimersToTime(4999)
+    expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(3)
+    expect(clearTimeout).toHaveBeenCalledTimes(3)
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+  })
+
+  test('Should clear timeout on componentWillUnMount', () => {
+    wrapper.find('input').simulate('change')
+    wrapper.unmount()
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(clearTimeout).toHaveBeenCalledTimes(1)
+  })
+})
