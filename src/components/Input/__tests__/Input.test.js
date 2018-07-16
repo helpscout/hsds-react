@@ -620,11 +620,11 @@ describe('Typing events', () => {
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
     expect(clearTimeout).toHaveBeenCalledTimes(1)
     wrapper.find('input').simulate('change')
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+    expect(clearTimeout).toHaveBeenCalledTimes(2)
     jest.runTimersToTime(4999)
     expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
     expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
-    // should be called 3 times, because timer gets reset twice, than one last
-    // when it clears because stop typing has finished
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(3)
     expect(clearTimeout).toHaveBeenCalledTimes(3)
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)

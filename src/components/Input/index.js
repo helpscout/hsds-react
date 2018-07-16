@@ -93,7 +93,7 @@ class Input extends Component<Props, State> {
     seamless: false,
     state: '',
     type: 'text',
-    typingTimeoutDelay: 2200,
+    typingTimeoutDelay: 5000,
     value: '',
     withTypingEvent: false,
   }
@@ -108,6 +108,7 @@ class Input extends Component<Props, State> {
       id: props.id || uniqueID(),
       height: null,
       state: props.state,
+      typingTimeout: number,
       value: props.value,
     }
   }
@@ -211,14 +212,6 @@ class Input extends Component<Props, State> {
     const now = Date.now()
     if (!this.state.typingTimeout) {
       this.callStartTyping(now)
-      /* istanbul ignore next */
-    } else if (
-      this.state.typingStartTime + this.props.typingTimeoutDelay <
-      now
-    ) {
-      /* istanbul ignore next */
-      /* it doesn't seem to pick up that the test passes for this in coverage */
-      this.callStopTyping()
     } else {
       this.clearTypingTimeout()
       this.setTypingTimeout(now)
