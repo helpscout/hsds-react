@@ -108,7 +108,7 @@ class Input extends Component<Props, State> {
       id: props.id || uniqueID(),
       height: null,
       state: props.state,
-      typingTimeout: number,
+      typingTimeout: null,
       value: props.value,
     }
   }
