@@ -51,12 +51,12 @@ describe('Autofocus', () => {
 describe('Events', () => {
   test('Can trigger onBlur callback', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Input onBlur={spy} />)
+    const wrapper = mount(<Input onBlur={spy} />)
     const input = wrapper.find('input')
 
-    // input.simulate('onChange')
+    input.simulate('blur')
 
-    // expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalled()
   })
 
   test('Can trigger onClick callback', () => {
