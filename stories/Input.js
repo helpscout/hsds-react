@@ -140,3 +140,16 @@ stories.add('value', () => (
     <Input autoFocus placeholder="Regular" value="Derek Zoolander" />
   </div>
 ))
+
+stories.add('onStartTyping', () => (
+  <div>
+    <Input
+      autoFocus
+      onStartTyping={() => console.log('typing started')}
+      onStopTyping={() => console.log('typing stopped')}
+      placeholder="Regular"
+      typingTimeoutDelay={1000}
+      withTypingEvent={true}
+    />
+  </div>
+))

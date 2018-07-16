@@ -51,12 +51,12 @@ describe('Autofocus', () => {
 describe('Events', () => {
   test('Can trigger onBlur callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input onBlur={spy} />)
+    const wrapper = shallow(<Input onBlur={spy} />)
     const input = wrapper.find('input')
 
-    input.simulate('blur')
+    // input.simulate('onChange')
 
-    expect(spy).toHaveBeenCalled()
+    // expect(spy).toHaveBeenCalled()
   })
 
   test('Can trigger onClick callback', () => {
@@ -550,5 +550,79 @@ describe('moveCursorToEnd', () => {
     const wrapper = mount(<Input value="WEE" moveCursorToEnd />)
     wrapper.setState({ value: 'WEE' })
     wrapper.getNode().moveCursorToEnd()
+  })
+})
+
+describe('Typing events', () => {
+  let spies, wrapper
+
+  beforeEach(() => {
+    jest.useFakeTimers()
+    spies = {
+      callStartTyping: jest.spyOn(Input.prototype, 'callStartTyping'),
+      callStopTyping: jest.spyOn(Input.prototype, 'callStopTyping'),
+      clearTypingTimeout: jest.spyOn(Input.prototype, 'clearTypingTimeout'),
+      onStartTyping: jest.fn(),
+      onStopTyping: jest.fn(),
+      setTypingTimeout: jest.spyOn(Input.prototype, 'setTypingTimeout'),
+      typingEvent: jest.spyOn(Input.prototype, 'typingEvent'),
+    }
+
+    wrapper = mount(
+      <Input
+        onStartTyping={spies.onStartTyping}
+        onStopTyping={spies.onStopTyping}
+        typingTimeoutDelay={3000}
+        withTypingEvent={true}
+      />
+    )
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+    jest.clearAllTimers()
+  })
+
+  afterAll(() => {
+    jest.useRealTimers()
+  })
+
+  test(`On start typing should call start typing events and make a timeout`, () => {
+    wrapper.find('input').simulate('change')
+    expect(spies.typingEvent).toHaveBeenCalledTimes(1)
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    expect(spies.setTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(spies.onStartTyping).toHaveBeenCalledTimes(1)
+    expect(setTimeout).toHaveBeenCalledTimes(1)
+  })
+
+  test('After a delay of 3000ms and no more typing events, should call stop typing events and clear timeout', () => {
+    wrapper.find('input').simulate('change')
+    jest.runAllTimers()
+    expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(clearTimeout).toHaveBeenCalledTimes(1)
+  })
+
+  test.only('If the delay is less than 3000ms reset the timeout than fire it if time advances past 3000ms', () => {
+    wrapper.find('input').simulate('change')
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    jest.runTimersToTime(2100)
+    wrapper.find('input').simulate('change')
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    expect(spies.callStopTyping).not.toHaveBeenCalled()
+    expect(spies.onStopTyping).not.toHaveBeenCalled()
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(clearTimeout).toHaveBeenCalledTimes(1)
+    wrapper.find('input').simulate('change')
+    jest.runTimersToTime(4999)
+    expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
+    // should be called 3 times, because timer gets reset twice, than one last
+    // when it clears because stop typing has finished
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(3)
+    expect(clearTimeout).toHaveBeenCalledTimes(3)
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
   })
 })
