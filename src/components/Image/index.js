@@ -1,20 +1,26 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
+import { calculateAspectRatioFit } from '../../utilities/images'
+import { allPropsDefined } from '../../utilities/is'
 
-export const propTypes = {
-  alt: PropTypes.string,
-  block: PropTypes.bool,
-  className: PropTypes.string,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  src: PropTypes.string.isRequired,
-  shape: PropTypes.oneOf(['rounded', 'square', '']),
-  title: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+type ImageShape = 'rounded' | 'square' | ''
+type Props = {
+  alt?: string,
+  block: boolean,
+  className?: string,
+  height?: number,
+  maxHeight?: number,
+  maxWidth?: number,
+  src: string,
+  shape?: ImageShape,
+  style: Object,
+  title?: string,
+  width?: number,
 }
 
-const Image = props => {
-  const { className, block, shape, ...rest } = props
+const Image = (props: Props) => {
+  const { className, block, maxHeight, maxWidth, shape, style, ...rest } = props
 
   const componentClassName = classNames(
     'c-Image',
@@ -23,14 +29,43 @@ const Image = props => {
     className
   )
 
+  const enhancedStyle = enhanceStyleWithSize(props)
+
   const imageElement = React.createElement('img', {
     ...rest,
     className: componentClassName,
+    style: enhancedStyle,
   })
 
   return imageElement
 }
 
-Image.propTypes = propTypes
+Image.defaultProps = {
+  shape: '',
+  style: {},
+}
+
+/**
+ * Enhances the inline style of the <img> component with aspect ratio
+ * sizing, if applicable.
+ *
+ * @param   {Object} props The component props.
+ * @returns {Object} The updated styles.
+ */
+export function enhanceStyleWithSize(props: Props): Object {
+  const { maxWidth, maxHeight, width, height, style } = props
+  const imageProps = { maxWidth, maxHeight, width, height }
+
+  if (!allPropsDefined(imageProps)) return style
+
+  // $FlowFixMe
+  const aspect = calculateAspectRatioFit(imageProps)
+
+  return {
+    ...style,
+    height: aspect.height,
+    width: aspect.width,
+  }
+}
 
 export default Image

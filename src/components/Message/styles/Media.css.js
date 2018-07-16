@@ -20,8 +20,9 @@ const css = `
 
   ${bem.element('mediaImage')} {
     max-height: 250px;
-    max-width: 300px;
-    object-fit: fill;
+    max-width: 100%;
+    min-width: 100%;
+    object-fit: cover;
     opacity: 1;
     transition: opacity 200ms linear;
   }
@@ -35,6 +36,7 @@ const css = `
       0 2px 3px rgba(0,0,0, 0.08);
     color: ${getColor('charcoal', 200)};
     display: inline-block;
+    max-width: 300px;
     padding: 3px;
 
     .c-MessageCaption__text {

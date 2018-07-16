@@ -109,12 +109,15 @@ describe('Image', () => {
     expect(o.length).not.toBeTruthy()
   })
 
-  test('Can set a maxWidth for the media', () => {
+  test('Can set a maxHeight/maxWidth for the media', () => {
     const url = './mugatu.png'
-    const wrapper = mount(<Media imageUrl={url} maxWidth={123} />)
-    const o = wrapper.find(ui.media)
+    const wrapper = mount(
+      <Media imageUrl={url} maxWidth={123} maxHeight={456} />
+    )
+    const o = wrapper.find('Image')
 
-    expect(o.prop('style').maxWidth).toBe(123)
+    expect(o.props().maxHeight).toBe(456)
+    expect(o.props().maxWidth).toBe(123)
   })
 
   test('Can pass width/height props to Image', () => {
@@ -166,6 +169,15 @@ describe('Image', () => {
     o.simulate('load')
 
     expect(spy).toHaveBeenCalled()
+  })
+
+  test('getMediaMarkup does not pass maxHeight/maxWidth, unless defined', () => {
+    const wrapper = mount(<Media imageUrl="m.jpg" width={100} height={50} />)
+    const markup = wrapper.instance().getMediaMarkup()
+    const o = mount(markup).find('img')
+
+    expect(o.prop('style').width).toBe(undefined)
+    expect(o.prop('style').height).toBe(undefined)
   })
 })
 

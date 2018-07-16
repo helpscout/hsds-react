@@ -10,7 +10,7 @@ const breakpoints = {
 
 type BreakpointValue = number | 'xs' | 'sm' | 'md' | 'lg'
 
-type BreakpointStyles = () => void | string
+type BreakpointStyles = () => string | string
 
 /**
  * Generates a mobile-first @media query CSS rule.
@@ -34,6 +34,9 @@ export function breakpoint(
   const compiledStyles = isFunction(styles) ? styles() : styles
 
   return `@media (min-width: ${minWidth}) {
-    ${compiledStyles}
+    ${
+      // $FlowFixMe
+      compiledStyles
+    }
   }`
 }
