@@ -597,12 +597,16 @@ describe('Typing events', () => {
   })
 
   test('After a delay of 3000ms and no more typing events, should call stop typing events and clear timeout', () => {
+    expect(wrapper.props().typingTimeoutDelay).toBe(3000)
     wrapper.find('input').simulate('change')
-    jest.runAllTimers()
+    expect(wrapper.state().typingTimeout).toBeDefined()
+    wrapper.find('input').simulate('change')
+    jest.runTimersToTime(5000)
+    expect(wrapper.state.typingTimeout).not.toBeDefined()
     expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
     expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
-    expect(clearTimeout).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+    expect(clearTimeout).toHaveBeenCalledTimes(2)
   })
 
   test('If the delay is less than 3000ms reset the timeout than fire it if time advances past 3000ms', () => {

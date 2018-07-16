@@ -210,7 +210,10 @@ class Input extends Component<Props, State> {
     const now = Date.now()
     if (!this.state.typingTimeout) {
       this.callStartTyping(now)
-    } else if (this.state.typingStartTime + this.props.typingTimeout < now) {
+    } else if (
+      this.state.typingStartTime + this.props.typingTimeoutDelay <
+      now
+    ) {
       this.callStopTyping()
     } else {
       this.clearTypingTimeout()
