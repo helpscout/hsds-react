@@ -23,9 +23,10 @@ type Props = MessageBubble & {
   error?: boolean | string,
   imageAlt?: string,
   imageUrl?: string,
-  height?: number | string,
+  height?: number,
   isUploading?: boolean,
-  maxWidth?: number,
+  maxHeight: number,
+  maxWidth: number,
   modalClassName?: string,
   modalCardClassName?: string,
   modalWrapperClassName?: string,
@@ -35,7 +36,7 @@ type Props = MessageBubble & {
   openMediaInModal?: boolean,
   showErrorTryAgainLink: boolean,
   tryAgainLabel: string,
-  width?: number | string,
+  width?: number,
 }
 
 export class Media extends Component<Props> {
@@ -46,7 +47,8 @@ export class Media extends Component<Props> {
     onMediaClick: noop,
     onMediaLoad: noop,
     openMediaInModal: true,
-    maxWidth: 1080,
+    maxHeight: 250,
+    maxWidth: 350,
     showErrorTryAgainLink: true,
     tryAgainLabel: 'Try again',
     isUploading: false,
@@ -98,6 +100,41 @@ export class Media extends Component<Props> {
     )
   }
 
+  getMediaMarkup = ({
+    maxHeight,
+    maxWidth,
+  }: { maxHeight?: number, maxWidth?: number } = {}) => {
+    const {
+      imageUrl,
+      height,
+      onMediaClick,
+      onMediaLoad,
+      imageAlt,
+      width,
+    } = this.props
+
+    if (!imageUrl) return null
+
+    return (
+      <div className="c-MessageMedia__media">
+        <Image
+          alt={imageAlt}
+          block
+          className="c-MessageMedia__mediaImage"
+          height={height}
+          onClick={onMediaClick}
+          onLoad={onMediaLoad}
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          src={imageUrl}
+          title={imageAlt}
+          shape="rounded"
+          width={width}
+        />
+      </div>
+    )
+  }
+
   getTryAgainMarkup = () => {
     const { error, showErrorTryAgainLink, tryAgainLabel } = this.props
 
@@ -142,6 +179,7 @@ export class Media extends Component<Props> {
       imageUrl,
       imageAlt,
       isUploading,
+      maxHeight,
       maxWidth,
       modalClassName,
       modalCardClassName,
@@ -177,22 +215,14 @@ export class Media extends Component<Props> {
 
     const inlineCaptionMarkup = this.getCaptionMarkup()
 
-    const mediaMarkup = imageUrl ? (
-      <div className="c-MessageMedia__media" style={{ maxWidth }}>
-        <Image
-          alt={imageAlt || null}
-          block
-          className="c-MessageMedia__mediaImage"
-          height={height}
-          onClick={onMediaClick}
-          onLoad={onMediaLoad}
-          src={imageUrl}
-          title={imageAlt || null}
-          shape="rounded"
-          width={width}
-        />
-      </div>
-    ) : null
+    const mediaMarkup = this.getMediaMarkup({
+      maxWidth,
+      maxHeight,
+    })
+    const modalMediaMarkup = this.getMediaMarkup({
+      maxWidth: 980,
+      maxHeight: 820,
+    })
 
     const mediaContainerMarkup = imageUrl ? (
       maybeOpenMediaInModal ? (
@@ -217,7 +247,7 @@ export class Media extends Component<Props> {
           >
             <Modal.Body scrollFade={false} isSeamless>
               <Modal.Content>
-                {mediaMarkup}
+                {modalMediaMarkup}
                 {captionMarkup}
               </Modal.Content>
             </Modal.Body>

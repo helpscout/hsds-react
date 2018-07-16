@@ -21,7 +21,10 @@ import type { UISize, UIState } from '../../constants/types'
 const uniqueID = createUniqueIDFactory('Input')
 
 type InputNode = HTMLInputElement | HTMLTextAreaElement
+type InputEvent = SyntheticEvent<InputNode>
 type WheelEvent = SyntheticWheelEvent<InputNode>
+type AnyInputEvent = InputEvent | WheelEvent | Event
+type InputValue = string
 
 type Props = {
   autoFocus: boolean,
@@ -40,10 +43,10 @@ type Props = {
   maxHeight: number | string,
   name: string,
   offsetAmount: number,
-  onBlur: (event: WheelEvent) => void,
-  onChange: (event: WheelEvent) => void,
-  onFocus: (event: WheelEvent) => void,
-  onWheel: (event: WheelEvent) => void,
+  onBlur: (event: AnyInputEvent) => void,
+  onChange: (value: InputValue) => void,
+  onFocus: (event: AnyInputEvent) => void,
+  onWheel: (event: AnyInputEvent) => void,
   placeholder: string,
   prefix: string,
   readOnly: boolean,
@@ -56,14 +59,14 @@ type Props = {
   style: Object,
   suffix: string,
   type: string,
-  value: string,
+  value: InputValue,
 }
 
 type State = {
   id: string,
   height: ?number,
   state: ?UIState,
-  value: string,
+  value: InputValue,
 }
 
 class Input extends Component<Props, State> {
@@ -162,18 +165,19 @@ class Input extends Component<Props, State> {
 
     /* istanbul ignore next */
     if (currentLine === totalLines) {
+      // $FlowFixMe
       this.inputNode.scrollTo(0, this.inputNode.scrollHeight)
     }
   }
 
-  handleOnChange = (event: Event) => {
+  handleOnChange = (event: InputEvent) => {
     const value = event.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
     this.scrollToBottom()
   }
 
-  handleOnInputFocus = (event: Event) => {
+  handleOnInputFocus = (event: InputEvent) => {
     const { onFocus, removeStateStylesOnFocus } = this.props
     const { state } = this.state
     if (removeStateStylesOnFocus && state) {

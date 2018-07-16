@@ -26,6 +26,7 @@ A Media component provides the UI to render media-based content within a [Messag
 | imageAlt              | `string`        | Alt/title of the media image.                                  |
 | imageUrl              | `string`        | URL of the media image.                                        |
 | isUploading           | `bool`          | Renders the uploading spinner UI. Default `false`.             |
+| maxHeight             | `number`        | Max-height of the media content.                               |
 | maxWidth              | `number`        | Max-width of the media content.                                |
 | modalClassName        | `string`        | Custom class names for the [Modal](../Modal).                  |
 | modalCardClassName    | `string`        | Custom class names for the [Modal](../Modal) card.             |
