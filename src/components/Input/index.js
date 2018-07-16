@@ -47,6 +47,8 @@ type Props = {
   onChange: (value: InputValue) => void,
   onFocus: (event: AnyInputEvent) => void,
   onWheel: (event: AnyInputEvent) => void,
+  onStartTyping: (event: Event) => void,
+  onStopTyping: (event: Event) => void,
   placeholder: string,
   prefix: string,
   readOnly: boolean,
@@ -59,7 +61,9 @@ type Props = {
   style: Object,
   suffix: string,
   type: string,
+  typingTimeoutDelay: number,
   value: InputValue,
+  withTypingEvent: false,
 }
 
 type State = {
@@ -82,6 +86,8 @@ class Input extends Component<Props, State> {
     onBlur: noop,
     onChange: noop,
     onFocus: noop,
+    onStartTyping: noop,
+    onStopTyping: noop,
     onWheel: noop,
     readOnly: false,
     removeStateStylesOnFocus: false,
@@ -90,7 +96,9 @@ class Input extends Component<Props, State> {
     seamless: false,
     state: '',
     type: 'text',
+    typingTimeoutDelay: 5000,
     value: '',
+    withTypingEvent: false,
   }
   static Backdrop = Backdrop
   static Resizer = Resizer
@@ -103,6 +111,7 @@ class Input extends Component<Props, State> {
       id: props.id || uniqueID(),
       height: null,
       state: props.state,
+      typingTimeout: null,
       value: props.value,
     }
   }
@@ -129,6 +138,11 @@ class Input extends Component<Props, State> {
     if (isFocused) {
       this.forceAutoFocus()
     }
+  }
+
+  componentWillUnmount() {
+    this.inputNode = null
+    this.props.withTypingEvent && this.clearTypingTimeout()
   }
 
   maybeForceAutoFocus() {
@@ -170,7 +184,46 @@ class Input extends Component<Props, State> {
     }
   }
 
-  handleOnChange = (event: InputEvent) => {
+  callStartTyping(now) {
+    this.props.onStartTyping()
+    this.setTypingTimeout(now)
+  }
+
+  callStopTyping() {
+    this.props.onStopTyping()
+    this.clearTypingTimeout()
+  }
+
+  clearTypingTimeout() {
+    /* istanbul ignore next */
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout)
+      this.setState({ typingTimeout: undefined })
+    }
+  }
+
+  setTypingTimeout(now) {
+    this.setState({
+      typingTimeout: setTimeout(
+        this.callStopTyping.bind(this),
+        this.props.typingTimeoutDelay
+      ),
+      typingStartTime: now,
+    })
+  }
+
+  typingEvent() {
+    const now = Date.now()
+    if (!this.state.typingTimeout) {
+      this.callStartTyping(now)
+    } else {
+      this.clearTypingTimeout()
+      this.setTypingTimeout(now)
+    }
+  }
+
+  handleOnChange = (event: Event) => {
+    if (this.props.withTypingEvent) this.typingEvent()
     const value = event.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
@@ -240,6 +293,8 @@ class Input extends Component<Props, State> {
       offsetAmount,
       onBlur,
       onFocus,
+      onStartTyping,
+      onStopTyping,
       onWheel,
       placeholder,
       prefix,
@@ -253,6 +308,8 @@ class Input extends Component<Props, State> {
       style: styleProp,
       suffix,
       type,
+      typingTimeoutDelay,
+      withTypingEvent,
       ...rest
     } = this.props
 
