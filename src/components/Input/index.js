@@ -190,6 +190,7 @@ class Input extends Component<Props, State> {
   }
 
   clearTypingTimeout() {
+    /* istanbul ignore next */
     if (this.state.typingTimeout) {
       clearTimeout(this.state.typingTimeout)
       this.setState({ typingTimeout: undefined })
@@ -210,6 +211,7 @@ class Input extends Component<Props, State> {
     const now = Date.now()
     if (!this.state.typingTimeout) {
       this.callStartTyping(now)
+      /* istanbul ignore next */
     } else if (
       this.state.typingStartTime + this.props.typingTimeoutDelay <
       now
