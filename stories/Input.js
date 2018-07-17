@@ -141,15 +141,21 @@ stories.add('value', () => (
   </div>
 ))
 
-stories.add('onStartTyping', () => (
-  <div>
-    <Input
-      autoFocus
-      onStartTyping={() => console.log('typing started')}
-      onStopTyping={() => console.log('typing stopped')}
-      placeholder="Regular"
-      typingTimeoutDelay={1000}
-      withTypingEvent={true}
-    />
-  </div>
-))
+let applySubmit
+
+stories.add('onStartTyping', () => {
+  return (
+    <div>
+      <Input
+        autoFocus
+        onStartTyping={() => console.log('typing started')}
+        onStopTyping={() => console.log('typing stopped')}
+        placeholder="Regular"
+        refApplySubmit={fn => (applySubmit = fn)}
+        typingTimeoutDelay={4000}
+        withTypingEvent={true}
+      />
+      <Button onClick={() => applySubmit()}>Apply Submit</Button>
+    </div>
+  )
+})

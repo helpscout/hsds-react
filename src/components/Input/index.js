@@ -52,6 +52,7 @@ type Props = {
   placeholder: string,
   prefix: string,
   readOnly: boolean,
+  refApplySubmit: (event: SubmitEvent) => void,
   removeStateStylesOnFocus: boolean,
   resizable: boolean,
   seamless: boolean,
@@ -90,6 +91,7 @@ class Input extends Component<Props, State> {
     onStopTyping: noop,
     onWheel: noop,
     readOnly: false,
+    refApplySubmit: noop,
     removeStateStylesOnFocus: false,
     resizable: false,
     scrollLock: false,
@@ -118,6 +120,8 @@ class Input extends Component<Props, State> {
 
   componentDidMount() {
     this.maybeForceAutoFocus()
+    this.props.withTypingEvent &&
+      this.props.refApplySubmit(this.callStopTyping.bind(this))
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -299,6 +303,7 @@ class Input extends Component<Props, State> {
       placeholder,
       prefix,
       readOnly,
+      refApplySubmit,
       removeStateStylesOnFocus,
       resizable,
       seamless,
