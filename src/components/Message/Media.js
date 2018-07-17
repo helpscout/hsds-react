@@ -34,6 +34,7 @@ type Props = MessageBubble & {
   onMediaClick: (event: Event) => void,
   onMediaLoad: () => void,
   openMediaInModal?: boolean,
+  thumbnailImageUrl?: string,
   showErrorTryAgainLink: boolean,
   tryAgainLabel: string,
   width?: number,
@@ -101,19 +102,22 @@ export class Media extends Component<Props> {
   }
 
   getMediaMarkup = ({
+    src,
     maxHeight,
     maxWidth,
-  }: { maxHeight?: number, maxWidth?: number } = {}) => {
+  }: { src?: string, maxHeight?: number, maxWidth?: number } = {}) => {
     const {
-      imageUrl,
       height,
       onMediaClick,
       onMediaLoad,
       imageAlt,
+      imageUrl,
       width,
     } = this.props
 
-    if (!imageUrl) return null
+    const imageSrc = src || imageUrl
+
+    if (!imageSrc) return null
 
     return (
       <div className="c-MessageMedia__media">
@@ -126,7 +130,7 @@ export class Media extends Component<Props> {
           onLoad={onMediaLoad}
           maxHeight={maxHeight}
           maxWidth={maxWidth}
-          src={imageUrl}
+          src={imageSrc}
           title={imageAlt}
           shape="rounded"
           width={width}
@@ -189,6 +193,7 @@ export class Media extends Component<Props> {
       onMediaLoad,
       openMediaInModal,
       showErrorTryAgainLink,
+      thumbnailImageUrl,
       tryAgainLabel,
       type,
       width,
@@ -216,6 +221,7 @@ export class Media extends Component<Props> {
     const inlineCaptionMarkup = this.getCaptionMarkup()
 
     const mediaMarkup = this.getMediaMarkup({
+      src: thumbnailImageUrl || imageUrl,
       maxWidth,
       maxHeight,
     })

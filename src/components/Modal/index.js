@@ -159,7 +159,7 @@ class Modal extends Component {
 
     const defaultOffset = 9
     const offset = `${scrollNode.offsetWidth -
-      scrollNode.scrollWidth +
+      scrollNode.clientWidth +
       defaultOffset}px`
 
     this.closeNode.style.right = offset

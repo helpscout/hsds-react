@@ -5,6 +5,12 @@ import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageMedia')
 
+const mediaImageStyles = `
+  max-width: 100%;
+  min-width: 100%;
+  object-fit: cover;
+`
+
 const css = `
   ${baseStyles}
   margin-bottom: 10px;
@@ -19,10 +25,8 @@ const css = `
   }
 
   ${bem.element('mediaImage')} {
+    ${mediaImageStyles}
     max-height: 250px;
-    max-width: 100%;
-    min-width: 100%;
-    object-fit: cover;
     opacity: 1;
     transition: opacity 200ms linear;
   }
@@ -89,6 +93,10 @@ const css = `
       img {
         border-radius: 0px;
       }
+    }
+
+    ${bem.element('mediaImage')} {
+      ${mediaImageStyles}
     }
 
     ${bem.element('caption')} {

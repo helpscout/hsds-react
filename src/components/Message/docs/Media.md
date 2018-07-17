@@ -39,6 +39,7 @@ A Media component provides the UI to render media-based content within a [Messag
 | read                  | `bool`          | Determines if the Message is read.                             |
 | rtl                   | `bool`          | Applies right-to-left text styles.                             |
 | showErrorTryAgainLink | `bool`          | Shows the "Try again" action, if error. Default `true`.        |
+| thumbnailImage        | `string`        | URL of the media image (thumbnail).                            |
 | timestamp             | `string`        | Timestamp for the Message.                                     |
 | tryAgainLabel         | `string`        | Label for the "Try Again" action, on error.                    |
 | to                    | `node`/`bool`   | Provides author information and applies "To" styles.           |

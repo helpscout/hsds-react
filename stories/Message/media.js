@@ -4,7 +4,7 @@ import { Avatar, Message } from '../../src/index.js'
 
 const stories = storiesOf('Message/Media', module)
 
-const dimensions = { width: 100, height: 500 }
+const dimensions = { width: 1800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${
   dimensions.height
 }`
