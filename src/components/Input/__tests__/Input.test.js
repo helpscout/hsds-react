@@ -554,10 +554,14 @@ describe('moveCursorToEnd', () => {
 })
 
 describe('Typing events', () => {
-  let spies, wrapper
+  let refs, spies, wrapper
 
   beforeEach(() => {
     jest.useFakeTimers()
+    refs = {
+      applySubmit: () => {},
+    }
+
     spies = {
       callStartTyping: jest.spyOn(Input.prototype, 'callStartTyping'),
       callStopTyping: jest.spyOn(Input.prototype, 'callStopTyping'),
@@ -572,6 +576,7 @@ describe('Typing events', () => {
       <Input
         onStartTyping={spies.onStartTyping}
         onStopTyping={spies.onStopTyping}
+        refApplySubmit={fn => (refs.applySubmit = fn)}
         typingTimeoutDelay={3000}
         withTypingEvent={true}
       />
@@ -635,5 +640,14 @@ describe('Typing events', () => {
     wrapper.unmount()
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
     expect(clearTimeout).toHaveBeenCalledTimes(1)
+  })
+
+  test('Should call callStopTyping on refApplySubmit', () => {
+    wrapper.find('input').simulate('change')
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(0)
+    refs.applySubmit()
+    expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
   })
 })
