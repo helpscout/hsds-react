@@ -155,7 +155,7 @@ stories.add('onStartTyping', () => {
         typingTimeoutDelay={4000}
         withTypingEvent={true}
       />
-      <Button onClick={applySubmit}>Apply Submit</Button>
+      <Button onClick={() => applySubmit()}>Apply Submit</Button>
     </div>
   )
 })
