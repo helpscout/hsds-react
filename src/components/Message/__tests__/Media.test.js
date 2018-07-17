@@ -179,6 +179,13 @@ describe('Image', () => {
     expect(o.prop('style').width).toBe(undefined)
     expect(o.prop('style').height).toBe(undefined)
   })
+
+  test('Renders a thumbnailImageUrl, if defined', () => {
+    const wrapper = mount(<Media imageUrl="m.jpg" thumbnailImageUrl="t.jpg" />)
+    const o = wrapper.find(Image)
+
+    expect(o.prop('src')).toBe('t.jpg')
+  })
 })
 
 describe('Modal', () => {
