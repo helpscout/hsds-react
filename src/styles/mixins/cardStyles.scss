@@ -1,32 +1,32 @@
-@import "../configs/color";
+@import '../configs/color';
 
-@mixin cardBaseStyles ($subtle: false) {
+@mixin cardBaseStyles($subtle: false) {
   $color: if($subtle, _color(grey, 500), _color(grey, 600));
   $colorHover: if($subtle, _color(grey, 600), _color(grey, 700));
-  $hoverShadow: if($subtle, #{0 2px 4px 0 rgba(black, 0.1)}, #{0 3px 12px 0 rgba(black, 0.1)});
+  $hoverShadow: if(
+    $subtle,
+    #{0 2px 4px 0 rgba(black, 0.1)},
+    #{0 3px 12px 0 rgba(black, 0.1)}
+  );
   background-color: white;
   border-radius: 3px;
-  box-shadow: #{
-    0 1px 3px 0 rgba(black, 0.1),
-    inset 0 0 0 1px rgba($color, 0.7),
-    inset 0 -1px 0 0 #c1cbd4
-    };
-  transition: all 200ms linear;
+  border: none;
+  box-shadow: #{0 1px 3px 0 rgba(black, 0.1), inset 0 0 0 1px rgba($color, 0.7),
+    inset 0 -1px 0 0 _color(grey, 600)};
+  transition: box-shadow 200ms linear;
+  will-change: box-shadow;
 
   &:hover {
-    box-shadow: #{
-      $hoverShadow,
-      inset 0 0 0 1px rgba($colorHover, 0.7),
-      inset 0 -1px 0 0 #c1cbd4
-      };
+    box-shadow: #{$hoverShadow, inset 0 0 0 1px rgba($colorHover, 0.7),
+      inset 0 -1px 0 0 _color(grey, 600)};
   }
 }
 
-@mixin cardStyles () {
+@mixin cardStyles() {
   @include cardBaseStyles;
 }
 
-@mixin cardSubtleStyles () {
+@mixin cardSubtleStyles() {
   $subtle: true;
   @include cardBaseStyles($subtle);
 }

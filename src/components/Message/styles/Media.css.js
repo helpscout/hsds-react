@@ -13,12 +13,6 @@ const mediaImageStyles = `
 
 const css = `
   ${baseStyles}
-  margin-bottom: 10px;
-  margin-top: 10px;
-
-  &:first-child {
-    margin-top: 0;
-  }
 
   ${bem.element('caption')} {
     padding: 8px;
@@ -34,10 +28,10 @@ const css = `
   ${bem.element('bubble')}.c-MessageBubble {
     background-color: white;
     border: none;
-    border-radius: 8px !important;
     box-shadow:
-      0 0 0 1px rgba(0,0,0, 0.16) inset,
-      0 2px 3px rgba(0,0,0, 0.08);
+      0px 1px 3px 0px rgba(0,0,0,0.1),
+      0px 0px 0px 1px rgba(193,203,212,.7) inset,
+      0px -1px 0px 0px ${getColor('grey', 600)} inset;
     color: ${getColor('charcoal', 200)};
     display: inline-block;
     max-width: 300px;
@@ -50,8 +44,8 @@ const css = `
     &.is-note {
       background-color: ${getColor('yellow', 300)};
       box-shadow:
-        0 0 0 1px ${getColor('yellow', 400)} inset,
-        0 2px 3px rgba(0,0,0, 0.08);
+        0px 1px 3px 0px rgba(179, 113, 0, 0.2),
+        0px 0px 0px 1px ${getColor('yellow', 400)} inset;
       color: ${getColor('yellow', 800)};
     }
 

@@ -4,7 +4,7 @@ import { Avatar, Message } from '../../src/index.js'
 
 const stories = storiesOf('Message/Media', module)
 
-const dimensions = { width: 1800, height: 500 }
+const dimensions = { width: 800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${
   dimensions.height
 }`
@@ -73,6 +73,44 @@ stories.add('image:large', () => {
 
       <Message from avatar={<Avatar name="Arctic Puffin" />}>
         <Message.Media imageUrl={imageUrl} caption="image.jpg" />
+      </Message>
+    </div>
+  )
+})
+
+stories.add('image:left-right', () => {
+  const imageProps = {
+    ...dimensions,
+    imageUrl: imageUrlSlow,
+  }
+  return (
+    <div>
+      <Message to avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Chat>Agent Chat</Message.Chat>
+        <Message.Media {...imageProps} caption="image.jpg" />
+      </Message>
+
+      <Message from avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Media {...imageProps} caption="image.jpg" />
+      </Message>
+
+      <Message to avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Chat>Another message</Message.Chat>
+      </Message>
+
+      <Message from avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Media {...imageProps} caption="image.jpg" />
+        <Message.Chat>Follow-up message</Message.Chat>
+      </Message>
+
+      <Message to avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Chat isNote>First message</Message.Chat>
+        <Message.Media {...imageProps} caption="image.jpg" isNote />
+        <Message.Chat isNote>Second message</Message.Chat>
+      </Message>
+
+      <Message to avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Media {...imageProps} caption="image.jpg" />
       </Message>
     </div>
   )
