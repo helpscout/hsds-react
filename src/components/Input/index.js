@@ -190,8 +190,11 @@ class Input extends Component<Props, State> {
   }
 
   callStopTyping() {
-    this.props.onStopTyping()
-    this.clearTypingTimeout()
+    /* istanbul ignore next */
+    if (this.state.typingTimeout) {
+      this.props.onStopTyping()
+      this.clearTypingTimeout()
+    }
   }
 
   clearTypingTimeout() {
