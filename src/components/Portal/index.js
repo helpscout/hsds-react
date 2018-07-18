@@ -124,7 +124,9 @@ class Portal extends Component {
 
     ReactDOM.unmountComponentAtNode(this.node)
     // Unmount from specified target, instead of document
-    this.mountSelector.removeChild(this.node)
+    if (this.mountSelector && this.node.parentNode === this.mountSelector) {
+      this.mountSelector.removeChild(this.node)
+    }
 
     if (onClose) onClose(this)
 
