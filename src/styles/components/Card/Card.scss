@@ -1,16 +1,15 @@
-@import "../../configs/_color";
-$seed-card-namespace: "c-Card";
+@import '../../configs/_color';
+@import '../../mixins/cardStyles';
+$seed-card-namespace: 'c-Card';
 $seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
 // Import Seed Pack
-@import "pack/seed-card/_index";
+@import 'pack/seed-card/_index';
 
 .#{$seed-card-namespace} {
-  @import "../../resets/base";
+  @import '../../resets/base';
   $background-color: white;
 
-  box-shadow: #{
-    0 0 0 0 rgba(black, 0)
-    };
+  box-shadow: #{0 0 0 0 rgba(black, 0)};
   background-color: $background-color;
   color: currentColor;
   display: block;
@@ -31,9 +30,7 @@ $seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
   }
 
   &.is-floating {
-    box-shadow: #{
-      0 1px 3px 0 rgba(black, 0.1),
-      };
+    box-shadow: #{0 1px 3px 0 rgba(black, 0.1), };
   }
 
   &.is-flex {
@@ -48,18 +45,7 @@ $seed-card-border: 1px solid rgba(_color(border, ui, dark), 0.7);
   }
 
   &.is-hoverable {
-    box-shadow: #{
-      0 1px 3px 0 rgba(black, 0.1),
-      };
-    transition: box-shadow 0.2s ease;
-    will-change: box-shadow;
-
-    &:hover {
-      border-color: _color(grey, 700);
-      box-shadow: #{
-        0 3px 12px 0 rgba(black, 0.15),
-        };
-    }
+    @include cardStyles();
   }
 
   &.is-seamless {
