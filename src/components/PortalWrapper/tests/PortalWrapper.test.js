@@ -5,6 +5,8 @@ import Keys from '../../../constants/Keys'
 import classNames from '../../../utilities/classNames'
 import wait from '../../../tests/helpers/wait'
 
+jest.useFakeTimers()
+
 const TestButton = props => {
   const { className } = props
   const componentClassName = classNames('button', className)
@@ -40,44 +42,35 @@ const context = {
 }
 
 describe('HOC', () => {
-  test('Can create a component as a HOC', done => {
+  test('Can create a component as a HOC', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
 
-    wait().then(() => {
-      const c = document.body.childNodes[0]
-      expect(c.querySelector('button')).toBeTruthy()
-      done()
-    })
+    const c = document.body.childNodes[0]
+    expect(c.querySelector('button')).toBeTruthy()
   })
 })
 
 describe('ClassName', () => {
-  test('Can pass className to composed component', done => {
+  test('Can pass className to composed component', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent className="ron" isOpen />, context)
 
-    wait().then(() => {
-      const o = document.querySelector('.button')
-      expect(o.classList.contains('ron')).toBeTruthy()
-      done()
-    })
+    const o = document.querySelector('.button')
+    expect(o.classList.contains('ron')).toBeTruthy()
   })
 })
 
 describe('ID', () => {
-  test('Adds default ID', done => {
+  test('Adds default ID', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
 
-    wait().then(() => {
-      const c = document.body.childNodes[0]
-      expect(c.id).toContain('PortalWrapper')
-      done()
-    })
+    const c = document.body.childNodes[0]
+    expect(c.id).toContain('PortalWrapper')
   })
 
-  test('Override default ID with options', done => {
+  test('Override default ID with options', () => {
     const options = {
       id: 'Brick',
       timeout: 0,
@@ -85,16 +78,13 @@ describe('ID', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
 
-    wait().then(() => {
-      const c = document.body.childNodes[0]
-      expect(c.id).toContain('Brick')
-      done()
-    })
+    const c = document.body.childNodes[0]
+    expect(c.id).toContain('Brick')
   })
 })
 
 describe('Manager', () => {
-  test('Can close last Manage item ', done => {
+  test('Can close last Manage item ', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const wrapper = mount(
       <div>
@@ -106,15 +96,8 @@ describe('Manager', () => {
 
     const o = wrapper.find(TestComponent).last()
 
-    wait()
-      .then(() => {
-        o.getNode().closePortal()
-      })
-      .then(() => wait())
-      .then(() => {
-        expect(o.getNode().state.isOpen).toBe(false)
-        done()
-      })
+    o.getNode().closePortal()
+    expect(o.getNode().state.isOpen).toBe(false)
   })
 
   test('Cannot close Component that is not last in Manage list', () => {
@@ -134,79 +117,60 @@ describe('Manager', () => {
 })
 
 describe('wrapperClassName', () => {
-  test('Does not add a wrapperClassName to portal', done => {
+  test('Does not add a wrapperClassName to portal', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen />, context)
 
-    wait().then(() => {
-      const c = document.body.childNodes[0]
-      expect(c.className).toBeFalsy()
-      done()
-    })
+    const c = document.body.childNodes[0]
+    expect(c.className).toBeFalsy()
   })
 
-  test('Can customize wrapperClassName', done => {
+  test('Can customize wrapperClassName', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent isOpen wrapperClassName="blue" />, context)
 
-    wait().then(() => {
-      const c = document.body.childNodes[0]
-      expect(c.className).toContain('blue')
-      done()
-    })
+    const c = document.body.childNodes[0]
+    expect(c.className).toContain('blue')
   })
 })
 
 describe('isOpen', () => {
-  test('Can open wrapped component with isOpen prop change to true', done => {
+  test('Can open wrapped component with isOpen prop change to true', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const wrapper = mount(<TestComponent />, context)
 
-    wait()
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
 
-        wrapper.setProps({ isOpen: true })
-      })
-      .then(() => wait(10))
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).toBeTruthy()
-        done()
-      })
+    wrapper.setProps({ isOpen: true })
+
+    const o2 = document.body.childNodes[0]
+    expect(o2).toBeTruthy()
   })
 
-  test('Can close wrapped component with isOpen prop change to false', done => {
+  test('Can close wrapped component with isOpen prop change to false', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const wrapper = mount(<TestComponent isOpen timeout={0} />, context)
+    const wrapper = mount(<TestComponent isOpen={false} timeout={0} />, context)
 
-    wait()
-      .then(() => {
-        wrapper.setProps({ isOpen: false })
-      })
-      .then(() => wait(500))
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    wrapper.setProps({ isOpen: true })
+    wrapper.setProps({ isOpen: false })
+    jest.runAllTimers()
+
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
   })
 })
 
 describe('Router', () => {
-  test('Does not render if path is provided, but no context', done => {
+  test('Does not render if path is provided, but no context', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent path="/test" timeout={0} />)
 
-    wait(10).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o).not.toBeTruthy()
-      done()
-    })
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
   })
 
-  test('Does not render if the router shape is in valid', done => {
+  test('Does not render if the router shape is in valid', () => {
     const context = {
       context: {
         router: {
@@ -218,14 +182,11 @@ describe('Router', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent path="/diff" timeout={0} />, context)
 
-    wait(100).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o).not.toBeTruthy()
-      done()
-    })
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
   })
 
-  test('Does not render if the route path does not match', done => {
+  test('Does not render if the route path does not match', () => {
     const context = {
       context: {
         router: {
@@ -238,14 +199,11 @@ describe('Router', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent path="/diff" timeout={0} />, context)
 
-    wait(100).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o).not.toBeTruthy()
-      done()
-    })
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
   })
 
-  test('Renders if path matches router', done => {
+  test('Renders if path matches router', () => {
     const context = {
       context: {
         router: {
@@ -258,11 +216,8 @@ describe('Router', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     mount(<TestComponent path="/test" timeout={0} />, context)
 
-    wait(10).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o).toBeTruthy()
-      done()
-    })
+    const o = document.body.childNodes[0]
+    expect(o).toBeTruthy()
   })
 })
 
@@ -302,7 +257,7 @@ describe('Trigger', () => {
     expect(o.triggerNode).not.toBeTruthy()
   })
 
-  test('Does not focus triggerNode if prop change remains false', done => {
+  test('Does not focus triggerNode if prop change remains false', () => {
     const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
@@ -311,13 +266,10 @@ describe('Trigger', () => {
     o.getNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
-    setTimeout(() => {
-      expect(spy).not.toHaveBeenCalled()
-      done()
-    }, 40)
+    expect(spy).not.toHaveBeenCalled()
   })
 
-  test('Focuses triggerNode on isOpen prop change to false', done => {
+  test('Focuses triggerNode on isOpen prop change to false', () => {
     const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
@@ -328,10 +280,7 @@ describe('Trigger', () => {
     o.getNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 40)
+    expect(spy).toHaveBeenCalled()
   })
 
   test('Allows for ref', () => {

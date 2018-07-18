@@ -4,11 +4,10 @@ import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '..'
 import { Card, Portal, Overlay, Scrollable } from '../../index'
 import Keys from '../../../constants/Keys'
-import wait from '../../../tests/helpers/wait'
-
-const MODAL_TEST_TIMEOUT = 400
 
 const trigger = <a className="trigger">Trigger</a>
+
+jest.useFakeTimers()
 
 beforeEach(() => {
   window.BluePortalWrapperGlobalManager = undefined
@@ -47,44 +46,35 @@ describe('Trigger', () => {
 })
 
 describe('Key events', () => {
-  test('Closes modal when ESCAPE is pressed', done => {
+  test('Closes modal when ESCAPE is pressed', () => {
     mount(<Modal isOpen trigger={trigger} />)
 
-    wait(60)
-      .then(() => {
-        const portal = document.body.childNodes[0]
-        const modal = portal.getElementsByClassName('c-Modal')[0]
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeTruthy()
-      })
-      .then(() => {
-        simulateKeyPress(Keys.ESCAPE)
-      })
-      .then(() => wait(MODAL_TEST_TIMEOUT + 200))
-      .then(() => {
-        expect(document.querySelectorAll('.c-Modal').length).toBe(0)
-        done()
-      })
+    expect(modal).toBeTruthy()
+
+    simulateKeyPress(Keys.ESCAPE)
+    jest.runAllTimers()
+
+    expect(document.querySelectorAll('.c-Modal').length).toBe(0)
   })
 })
 
 describe('CloseIcon', () => {
-  test('Does not render closeIcon if specified', done => {
+  test('Does not render closeIcon if specified', () => {
     const wrapper = mount(<Modal isOpen trigger={trigger} closeIcon={false} />)
 
-    wait(60).then(() => {
-      const portal = document.body.childNodes[0]
-      const modal = portal.getElementsByClassName('c-Modal')[0]
-      const closeIcon = modal.getElementsByClassName('c-Modal__close')
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
+    const closeIcon = modal.getElementsByClassName('c-Modal__close')
 
-      expect(modal).toBeTruthy()
-      expect(closeIcon.length).toBeFalsy()
-      wrapper.unmount()
-      done()
-    })
+    expect(modal).toBeTruthy()
+    expect(closeIcon.length).toBeFalsy()
+    wrapper.unmount()
   })
 
-  test('Adjusts CloseButton position on mount', done => {
+  test('Adjusts CloseButton position on mount', () => {
     const wrapper = mount(
       <ModalComponent isOpen>
         <Modal.Body />
@@ -92,10 +82,7 @@ describe('CloseIcon', () => {
     )
     const o = wrapper.find('.c-Modal__close')
 
-    wait(200).then(() => {
-      expect(o.html()).toContain('right:')
-      done()
-    })
+    expect(o.html()).toContain('right:')
   })
 })
 
@@ -108,33 +95,25 @@ describe('Portal', () => {
     wrapper.unmount()
   })
 
-  test('Renders at the body', done => {
+  test('Renders at the body', () => {
     const wrapper = mount(<Modal isOpen trigger={trigger} />)
 
-    wait(60).then(() => {
-      const portal = document.body.childNodes[0]
-      const modal = portal.getElementsByClassName('c-Modal')[0]
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
 
-      expect(modal).toBeTruthy()
-      expect(document.body.childNodes.length).toBe(1)
-      wrapper.unmount()
-      done()
-    })
+    expect(modal).toBeTruthy()
+    expect(document.body.childNodes.length).toBe(1)
   })
 
-  test('Does not render by default', done => {
+  test('Does not render by default', () => {
     const wrapper = mount(<Modal trigger={trigger} />)
 
-    wait(MODAL_TEST_TIMEOUT).then(() => {
-      expect(document.body.childNodes.length).toBe(0)
-      wrapper.unmount()
-      done()
-    })
+    expect(document.body.childNodes.length).toBe(0)
   })
 })
 
 describe('Route', () => {
-  test('Automatically opens when a route path is defined', done => {
+  test('Automatically opens when a route path is defined', () => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
@@ -148,17 +127,14 @@ describe('Route', () => {
       { attachTo: testBody }
     )
 
-    wait(60).then(() => {
-      const modal = global.document.getElementsByClassName('c-Modal')[0]
+    const modal = global.document.getElementsByClassName('c-Modal')[0]
 
-      expect(modal).toBeTruthy()
+    expect(modal).toBeTruthy()
 
-      wrapper.detach()
-      done()
-    })
+    wrapper.detach()
   })
 
-  test('Automatically opens when a route path changes', done => {
+  test('Automatically opens when a route path changes', () => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
@@ -172,22 +148,15 @@ describe('Route', () => {
       { attachTo: testBody }
     )
 
-    wait()
-      .then(() => {
-        wrapper.getNode().history.goBack()
-      })
-      .then(() => wait(60))
-      .then(() => {
-        const modal = global.document.getElementsByClassName('c-Modal')[0]
+    wrapper.getNode().history.goBack()
+    const modal = global.document.getElementsByClassName('c-Modal')[0]
 
-        expect(modal).toBeTruthy()
+    expect(modal).toBeTruthy()
 
-        wrapper.detach()
-        done()
-      })
+    wrapper.detach()
   })
 
-  test('Does not open when a route path is defined, but not active', done => {
+  test('Does not open when a route path is defined, but not active', () => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
@@ -201,41 +170,33 @@ describe('Route', () => {
       { attachTo: testBody }
     )
 
-    wait(60).then(() => {
-      const modal = global.document.getElementsByClassName('c-Modal')[0]
+    const modal = global.document.getElementsByClassName('c-Modal')[0]
 
-      expect(modal).toBeFalsy()
+    expect(modal).toBeFalsy()
 
-      wrapper.detach()
-      done()
-    })
+    wrapper.detach()
   })
 })
 
 describe('Style', () => {
-  test('Can render extra styles', done => {
+  test('Can render extra styles', () => {
     const style = { background: 'red' }
     const wrapper = mount(
       <Modal isOpen trigger={trigger} closeIcon={false} style={style} />
     )
 
-    wait(60).then(() => {
-      const portal = document.body.childNodes[0]
-      const modal = portal.getElementsByClassName('c-Modal')[0]
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
 
-      expect(modal).toBeTruthy()
+    expect(modal).toBeTruthy()
 
-      const html = modal.outerHTML
+    const html = modal.outerHTML
 
-      expect(html).toContain('background')
-      expect(html).toContain('red')
-
-      wrapper.unmount()
-      done()
-    })
+    expect(html).toContain('background')
+    expect(html).toContain('red')
   })
 
-  test('Can render extra styles + zIndex', done => {
+  test('Can render extra styles + zIndex', () => {
     const style = { background: 'red' }
     const wrapper = mount(
       <Modal
@@ -247,48 +208,38 @@ describe('Style', () => {
       />
     )
 
-    wait(60).then(() => {
-      const portal = document.body.childNodes[0]
-      const modal = portal.getElementsByClassName('c-Modal')[0]
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
 
-      expect(modal).toBeTruthy()
+    expect(modal).toBeTruthy()
 
-      const html = modal.outerHTML
+    const html = modal.outerHTML
 
-      expect(html).toContain('background')
-      expect(html).toContain('red')
-      expect(html).toContain('z-index')
-      expect(html).toContain('2000')
-      wrapper.unmount()
-      done()
-    })
+    expect(html).toContain('background')
+    expect(html).toContain('red')
+    expect(html).toContain('z-index')
+    expect(html).toContain('2000')
   })
 
-  test('Can render zIndex, without style prop', done => {
+  test('Can render zIndex, without style prop', () => {
     const wrapper = mount(
       <Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />
     )
 
-    wait(60).then(() => {
-      const portal = document.body.childNodes[0]
-      const modal = portal.getElementsByClassName('c-Modal')[0]
+    const portal = document.body.childNodes[0]
+    const modal = portal.getElementsByClassName('c-Modal')[0]
 
-      expect(modal).toBeTruthy()
+    expect(modal).toBeTruthy()
 
-      const html = modal.outerHTML
+    const html = modal.outerHTML
 
-      expect(html).toContain('z-index')
-      expect(html).toContain('2000')
-      wrapper.unmount()
-      done()
-    })
+    expect(html).toContain('z-index')
+    expect(html).toContain('2000')
   })
 })
 
 describe('PortalWrapper', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
-
-  test('onBeforeClose callback works', done => {
+  test('onBeforeClose callback works', () => {
     const testBody = global.document.createElement('div')
     global.document.body.appendChild(testBody)
 
@@ -302,16 +253,11 @@ describe('PortalWrapper', () => {
       attachTo: testBody,
     })
 
-    wait(60)
-      .then(() => {
-        wrapper.unmount()
-      })
-      .then(() => wait(MODAL_TEST_TIMEOUT))
-      .then(() => {
-        expect(mockCallback.mock.calls.length).toBe(1)
-        wrapper.detach()
-        done()
-      })
+    wrapper.unmount()
+    jest.runAllTimers()
+
+    expect(mockCallback.mock.calls.length).toBe(1)
+    wrapper.detach()
   })
 })
 
@@ -344,25 +290,19 @@ describe('Seamless', () => {
 })
 
 describe('wrapperClassName', () => {
-  test('Adds default wrapperClassName', done => {
+  test('Adds default wrapperClassName', () => {
     mount(<Modal isOpen trigger={trigger} />)
 
-    wait(60).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o.className).toContain('c-ModalWrapper')
-      done()
-    })
+    const o = document.body.childNodes[0]
+    expect(o.className).toContain('c-ModalWrapper')
   })
 
-  test('Can customize wrapperClassName', done => {
+  test('Can customize wrapperClassName', () => {
     mount(<Modal isOpen trigger={trigger} wrapperClassName="ron" />)
 
-    wait(60).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o.className).toContain('ron')
-      expect(o.className).toContain('c-ModalWrapper')
-      done()
-    })
+    const o = document.body.childNodes[0]
+    expect(o.className).toContain('ron')
+    expect(o.className).toContain('c-ModalWrapper')
   })
 })
 
@@ -624,37 +564,27 @@ describe('Context', () => {
 })
 
 describe('isOpen', () => {
-  test('Can open wrapped component with isOpen prop change to true', done => {
+  test('Can open wrapped component with isOpen prop change to true', () => {
     const wrapper = mount(<Modal />)
 
-    wait(60)
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
 
-        wrapper.setProps({ isOpen: true })
-      })
-      .then(() => wait(MODAL_TEST_TIMEOUT))
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).toBeTruthy()
-        done()
-      })
+    wrapper.setProps({ isOpen: true })
+    jest.runAllTimers()
+
+    const o2 = document.body.childNodes[0]
+    expect(o2).toBeTruthy()
   })
 
-  test('Can close wrapped component with isOpen prop change to false', done => {
+  test('Can close wrapped component with isOpen prop change to false', () => {
     const wrapper = mount(<Modal isOpen timeout={0} />)
 
-    wait()
-      .then(() => {
-        wrapper.setProps({ isOpen: false })
-      })
-      .then(() => wait(MODAL_TEST_TIMEOUT))
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    wrapper.setProps({ isOpen: false })
+    jest.runAllTimers()
+
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
   })
 })
 
@@ -782,16 +712,15 @@ describe('Keyboard: Tab', () => {
 })
 
 describe('Card: Focus', () => {
-  test('Autofocuses card on mount', done => {
+  test('Autofocuses card on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<ModalComponent />)
     const o = wrapper.instance().cardNode
     o.onfocus = spy
     wrapper.setProps({ isOpen: true })
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 350)
+    jest.runAllTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 })
