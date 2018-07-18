@@ -4,7 +4,8 @@ import { default as Menu, MenuComponent } from '../Menu'
 import Divider from '../Divider'
 import Item from '../Item'
 import Keys from '../../../constants/Keys'
-import wait from '../../../tests/helpers/wait'
+
+jest.useFakeTimers()
 
 const simulateKeyPress = (keyCode, eventType = 'keyup') => {
   const event = new Event(eventType)
@@ -34,17 +35,14 @@ describe('Classname', () => {
 })
 
 describe('Nodes', () => {
-  test('Has a reference to DOM nodes', done => {
+  test('Has a reference to DOM nodes', () => {
     const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.instance()
 
-    wait().then(() => {
-      expect(o.node).toBeTruthy()
-      expect(o.wrapperNode).toBeTruthy()
-      expect(o.contentNode).toBeTruthy()
-      expect(o.listNode).toBeTruthy()
-      done()
-    })
+    expect(o.node).toBeTruthy()
+    expect(o.wrapperNode).toBeTruthy()
+    expect(o.contentNode).toBeTruthy()
+    expect(o.listNode).toBeTruthy()
   })
 })
 
@@ -248,20 +246,15 @@ describe('Items', () => {
     expect(spy).not.toHaveBeenCalled()
   })
 
-  test('Can trigger onBeforeClose callback', done => {
+  test('Can trigger onBeforeClose callback', () => {
     const spy = jest.fn()
     const wrapper = mount(<Menu selectedIndex={0} isOpen onBeforeClose={spy} />)
 
-    wait()
-      .then(() => {
-        wrapper.unmount()
-      })
-      .then(() => wait(300))
-      .then(() => {
-        expect(spy).toHaveBeenCalled()
-        wrapper.unmount()
-        done()
-      })
+    wrapper.unmount()
+
+    jest.runAllTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 
   test('Closes ALL menus when a sub-menu item is clicked', () => {
@@ -336,7 +329,7 @@ describe('Selected', () => {
 })
 
 describe('Height', () => {
-  test('Keeps height at null if Menu is within viewport', done => {
+  test('Keeps height at null if Menu is within viewport', () => {
     const wrapper = mount(<MenuComponent isOpen />)
     const o = wrapper.getNode()
 
@@ -349,10 +342,7 @@ describe('Height', () => {
       bottom: 0,
     })
 
-    setTimeout(() => {
-      expect(o.height).toBe(null)
-      done()
-    }, 1)
+    expect(o.height).toBe(null)
   })
 
   test('Attempts to update height on resize', () => {
