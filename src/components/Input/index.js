@@ -47,12 +47,12 @@ type Props = {
   onChange: (value: InputValue) => void,
   onFocus: (event: AnyInputEvent) => void,
   onWheel: (event: AnyInputEvent) => void,
-  onStartTyping: (event: Event) => void,
-  onStopTyping: (event: Event) => void,
+  onStartTyping: (now?: number) => void,
+  onStopTyping: () => void,
   placeholder: string,
   prefix: string,
   readOnly: boolean,
-  refApplyCallStopTyping: (event: SubmitEvent) => void,
+  refApplyCallStopTyping: (fn: () => void) => void,
   removeStateStylesOnFocus: boolean,
   resizable: boolean,
   seamless: boolean,
@@ -71,6 +71,8 @@ type State = {
   id: string,
   height: ?number,
   state: ?UIState,
+  typingStartTime: ?number,
+  typingTimeout: ?number,
   value: InputValue,
 }
 
@@ -113,7 +115,8 @@ class Input extends Component<Props, State> {
       id: props.id || uniqueID(),
       height: null,
       state: props.state,
-      typingTimeout: null,
+      typingStartTime: undefined,
+      typingTimeout: undefined,
       value: props.value,
     }
   }
@@ -145,6 +148,7 @@ class Input extends Component<Props, State> {
   }
 
   componentWillUnmount() {
+    // $FlowFixMe
     this.inputNode = null
     this.props.withTypingEvent && this.clearTypingTimeout()
   }
@@ -188,7 +192,7 @@ class Input extends Component<Props, State> {
     }
   }
 
-  callStartTyping(now) {
+  callStartTyping(now: number) {
     this.props.onStartTyping()
     this.setTypingTimeout(now)
   }
@@ -209,7 +213,7 @@ class Input extends Component<Props, State> {
     }
   }
 
-  setTypingTimeout(now) {
+  setTypingTimeout(now: number) {
     this.setState({
       typingTimeout: setTimeout(
         this.callStopTyping.bind(this),

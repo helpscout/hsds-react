@@ -59,14 +59,10 @@
     "react-dom": "^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "2.0.0",
+    "@helpscout/fancy": "2.0.1",
     "closest": "0.0.1",
     "create-react-context": "0.2.2",
     "emoji-mart": "^1.0.1",
-    "lodash.camelcase": "4.3.0",
-    "lodash.includes": "4.3.0",
-    "object-assign": "4.1.1",
-    "object-values": "2.0.0",
     "popper.js": "1.14.3",
     "prop-types": "15.6.1",
     "react-router-dom": "^4",

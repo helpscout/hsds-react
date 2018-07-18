@@ -98,3 +98,18 @@ export const repeat = (pattern: string, count: number): string => {
 
   return result + pattern
 }
+
+/**
+ * Camelcases a specified string.
+ *
+ * @param   {string} string The string.
+ * @returns {string} The camelCased string.
+ */
+export const camelCase = (string: string): string => {
+  return string
+    .replace(/-/g, ' ')
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) => {
+      if (+match === 0) return '' // or if (/\s+/.test(match)) for white spaces
+      return index == 0 ? match.toLowerCase() : match.toUpperCase()
+    })
+}

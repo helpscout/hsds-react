@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import EMOTICONS from './emoticons'
-import css from './styles/Emoticon.css'
+import css from './styles/Emoticon.css.js'
 import styled from '../styled'
 import classNames, { BEM } from '../../utilities/classNames'
 import { sizeTypes } from './propTypes'

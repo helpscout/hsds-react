@@ -108,8 +108,8 @@ export const injectFillColorIntoSvg = (
     uiWhite,
   } = props
 
-  const makeStyle = color =>
-    color && color.length ? `style="fill: ${color};"` : null
+  const makeStyle = (color: string): string =>
+    color && color.length ? `style="fill: ${color};"` : ''
 
   return svgHTML
     .replace('data-path-primary=""', makeStyle(primary))
