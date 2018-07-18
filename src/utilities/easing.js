@@ -1,4 +1,4 @@
-import camelCase from 'lodash.camelcase'
+import { camelCase } from './strings'
 
 export const defaultEasingTiming = 'ease-in-out'
 export const bounceCubicBezier = '0.680, -0.650, 0.265, 1.650'

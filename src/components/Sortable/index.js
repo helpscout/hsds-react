@@ -1,11 +1,11 @@
 import React, { PureComponent as Component } from 'react'
 import { arrayMove } from 'react-sortable-hoc'
 import classNames from '../../utilities/classNames'
-import includes from 'lodash.includes'
 import DragHandle from './DragHandle'
 import Item from './Item'
 import List from './List'
 import { listTypes } from './propTypes'
+import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 
 export const propTypes = listTypes

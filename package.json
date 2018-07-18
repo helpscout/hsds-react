@@ -31,7 +31,7 @@
     "deploy": "npm run storybook:clean && npm run storybook:build && npm run surge:cname && npm run surge:deploy",
     "karma": "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
     "lint": "npm run lint:es && npm run lint:css",
-    "lint:es": "eslint src/**/*.js --cache && echo \"eslint: No lint errors 🙌!\"",
+    "lint:es": "eslint src/**/*.js --cache",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:css -- -- fix",
     "release": "np --no-yarn --no-publish",
@@ -52,21 +52,17 @@
     "postversion": "npm publish dist",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
     "prettier": "npm run prettier:base -- --write",
-    "precommit": "pretty-quick --staged"
+    "precommit": "npm run lint:es && pretty-quick --staged"
   },
   "peerDependencies": {
     "react": "^15",
     "react-dom": "^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "2.0.0",
+    "@helpscout/fancy": "2.0.1",
     "closest": "0.0.1",
     "create-react-context": "0.2.2",
     "emoji-mart": "^1.0.1",
-    "lodash.camelcase": "4.3.0",
-    "lodash.includes": "4.3.0",
-    "object-assign": "4.1.1",
-    "object-values": "2.0.0",
     "popper.js": "1.14.3",
     "prop-types": "15.6.1",
     "react-router-dom": "^4",
@@ -151,6 +147,8 @@
     "node-sass": "4.9.2",
     "np": "2.16.0",
     "nyc": "12.0.2",
+    "object-assign": "4.1.1",
+    "object-values": "2.0.0",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
     "postcss-scss": "1.0.2",
