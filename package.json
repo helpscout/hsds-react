@@ -31,7 +31,7 @@
     "deploy": "npm run storybook:clean && npm run storybook:build && npm run surge:cname && npm run surge:deploy",
     "karma": "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
     "lint": "npm run lint:es && npm run lint:css",
-    "lint:es": "eslint src/**/*.js --cache && echo \"eslint: No lint errors 🙌!\"",
+    "lint:es": "eslint src/**/*.js --cache",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:css -- -- fix",
     "release": "np --no-yarn --no-publish",
@@ -52,7 +52,7 @@
     "postversion": "npm publish dist",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
     "prettier": "npm run prettier:base -- --write",
-    "precommit": "pretty-quick --staged"
+    "precommit": "npm run lint:es && pretty-quick --staged"
   },
   "peerDependencies": {
     "react": "^15",
