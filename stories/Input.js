@@ -141,7 +141,7 @@ stories.add('value', () => (
   </div>
 ))
 
-let applySubmit
+let applyCallStopTyping
 
 stories.add('onStartTyping', () => {
   return (
@@ -151,11 +151,11 @@ stories.add('onStartTyping', () => {
         onStartTyping={() => console.log('typing started')}
         onStopTyping={() => console.log('typing stopped')}
         placeholder="Regular"
-        refApplySubmit={fn => (applySubmit = fn)}
+        refApplyCallStopTyping={fn => (applyCallStopTyping = fn)}
         typingTimeoutDelay={4000}
         withTypingEvent={true}
       />
-      <Button onClick={() => applySubmit()}>Apply Submit</Button>
+      <Button onClick={() => applyCallStopTyping()}>Apply Stop Typing</Button>
     </div>
   )
 })

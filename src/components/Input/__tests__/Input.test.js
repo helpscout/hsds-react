@@ -576,7 +576,7 @@ describe('Typing events', () => {
       <Input
         onStartTyping={spies.onStartTyping}
         onStopTyping={spies.onStopTyping}
-        refApplySubmit={fn => (refs.applySubmit = fn)}
+        refApplyCallStopTyping={fn => (refs.applySubmit = fn)}
         typingTimeoutDelay={3000}
         withTypingEvent={true}
       />
@@ -642,7 +642,7 @@ describe('Typing events', () => {
     expect(clearTimeout).toHaveBeenCalledTimes(1)
   })
 
-  test('Should call callStopTyping on refApplySubmit', () => {
+  test('Should call callStopTyping on refApplyCallStopTyping', () => {
     wrapper.find('input').simulate('change')
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(0)

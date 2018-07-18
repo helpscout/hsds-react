@@ -50,7 +50,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | placeholder              | `string`             | Placeholder text for the input.                                           |
 | prefix                   | `string`             | Text to appear before the input.                                          |
 | readOnly                 | `bool`               | Disable editing of the input.                                             |
-| refApplySubmit           | `function`           | A function that can be passed from the outside on submit.                 |
+| refApplyCallStopTyping   | `function`           | Exposes `CallStopTyping`, so that it can be called outside itself.        |
 | removeStateStylesOnFocus | `bool`               | Removes the `state` styles on input focus. Default `false`.               |
 | resizable                | `bool`               | Enables resizing for the textarea (only enabled for `multiline`).         |
 | scrollLock               | `bool`               | Enables scrollLock for component. Default `false`.                        |
