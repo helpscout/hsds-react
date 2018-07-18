@@ -35,6 +35,7 @@
     "lint:css": "stylelint 'src/styles/**/*.scss'",
     "pretty": "npm run lint:css -- -- fix",
     "release": "npm install && np --no-yarn --no-publish",
+    "release:patch": "npm run release -- patch",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 8900",
     "storybook:build": "NODE_ENV=production build-storybook -c .storybook -o public",
