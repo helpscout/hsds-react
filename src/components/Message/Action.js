@@ -18,6 +18,7 @@ const Action = (props: Props, context: Context) => {
     className,
     from,
     icon,
+    isNote,
     ltr,
     rtl,
     to,
