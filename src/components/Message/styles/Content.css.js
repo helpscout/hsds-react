@@ -5,7 +5,6 @@ const bem = BEM('.c-MessageContent')
 
 const css = `
   ${baseStyles}
-  margin-bottom: 20px;
 
   ${bem.element('content')} {
     max-width: 500px;
