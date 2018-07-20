@@ -248,3 +248,20 @@ describe('From', () => {
     expect(o.length).toBe(0)
   })
 })
+
+describe('Note', () => {
+  test('Can pass isNote prop to child Message sub-components', () => {
+    const wrapper = mount(
+      <Message isNote>
+        <Message.Chat />
+      </Message>
+    )
+    const o = wrapper.find('Chat').first()
+
+    expect(o.props().isNote).toBe(true)
+
+    wrapper.setProps({ isNote: false })
+
+    expect(o.props().isNote).toBe(false)
+  })
+})

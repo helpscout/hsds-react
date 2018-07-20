@@ -1,5 +1,7 @@
 // @flow
-import React from 'react'
+import type { Node } from 'react'
+import type { Message as MessageType, MessageThemeContext } from './types'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Text from '../Text'
@@ -13,47 +15,41 @@ import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
 import classNames from '../../utilities/classNames'
-import { messageTypes, providerContextTypes } from './propTypes'
-import type { Message, MessageThemeContext } from './types'
+import { isString } from '../../utilities/is'
+import { providerContextTypes } from './propTypes'
 
-type Props = Message & {
+type Props = MessageType & {
   avatar?: any,
   showAvatar?: boolean,
 }
 type Context = MessageThemeContext
 
-const MessageComponent = (props: Props, context: Context) => {
-  const {
-    avatar,
-    children,
-    className,
-    ltr,
-    rtl,
-    from,
-    showAvatar,
-    to,
-    ...rest
-  } = props
-  const { theme } = context
+class Message extends Component<Props> {
+  static defaultProps = {
+    showAvatar: true,
+  }
+  static contextTypes = providerContextTypes
 
-  const componentClassName = classNames(
-    'c-Message',
-    avatar && 'has-avatar',
-    from && 'is-from',
-    theme && `is-theme-${theme}`,
-    to && 'is-to',
-    className
-  )
+  // Sub-components
+  static Action = Action
+  static Attachment = Attachment
+  static Bubble = Bubble
+  static Caption = Caption
+  static Chat = Chat
+  static Content = Content
+  static Media = Media
+  static Provider = Provider
+  static Question = Question
 
-  const isThemeEmbed = theme === 'embed'
-  const fromName = from && typeof from === 'string' ? from : null
+  shouldShowAvatar = (): boolean => {
+    const { from, showAvatar } = this.props
 
-  const maybeShowAvatar = isThemeEmbed
-    ? (from && showAvatar) || false
-    : showAvatar
+    return this.isThemeEmbed() ? (from && showAvatar) || false : !!showAvatar
+  }
 
-  const isChatType = child => {
+  isChatType = (child: any): boolean => {
     const chatTypes = [Action, Attachment, Chat, Content, Media, Question]
+
     return chatTypes.some(type => {
       return (
         child &&
@@ -64,31 +60,55 @@ const MessageComponent = (props: Props, context: Context) => {
     })
   }
 
-  const childrenMarkup = React.Children.map(children, child => {
-    return isChatType(child)
-      ? React.cloneElement(child, {
-          from,
-          ltr,
-          rtl,
-          to,
+  isThemeEmbed = (): boolean => {
+    const { theme } = this.context
+    return theme === 'embed'
+  }
+
+  getAvatarMarkup = () => {
+    const { avatar } = this.props
+    const isThemeEmbed = this.isThemeEmbed()
+
+    if (!this.shouldShowAvatar()) return null
+
+    const avatarMarkup = avatar
+      ? React.cloneElement(avatar, {
+          borderColor: null,
+          shape: isThemeEmbed ? 'circle' : 'rounded',
+          size: isThemeEmbed ? 'xxs' : 'xs',
         })
-      : child
-  })
+      : null
 
-  const avatarMarkup = avatar
-    ? React.cloneElement(avatar, {
-        borderColor: null,
-        shape: isThemeEmbed ? 'circle' : 'rounded',
-        size: isThemeEmbed ? 'xxs' : 'xs',
-      })
-    : null
+    return (
+      <Flexy.Item className="c-Message__avatar-block">
+        {avatarMarkup}
+      </Flexy.Item>
+    )
+  }
 
-  const avatarBlockMarkup = maybeShowAvatar ? (
-    <Flexy.Item className="c-Message__avatar-block">{avatarMarkup}</Flexy.Item>
-  ) : null
+  getChildrenMarkup = (): ?Node => {
+    const { children, from, isNote, ltr, rtl, to } = this.props
 
-  const fromMarkup =
-    isThemeEmbed && fromName ? (
+    return React.Children.map(children, child => {
+      return this.isChatType(child)
+        ? React.cloneElement(child, {
+            from,
+            isNote,
+            ltr,
+            rtl,
+            to,
+          })
+        : child
+    })
+  }
+
+  getFromMarkup = (): ?Node => {
+    const { from } = this.props
+    const fromName = isString(from) ? from : null
+
+    if (!(this.isThemeEmbed() && fromName)) return null
+
+    return (
       <div className="c-Message__from">
         <Text
           className="c-Message__fromText"
@@ -100,34 +120,50 @@ const MessageComponent = (props: Props, context: Context) => {
           {fromName}
         </Text>
       </div>
-    ) : null
+    )
+  }
 
-  return (
-    <div className={componentClassName} {...rest}>
-      {fromMarkup}
-      <Flexy align="top" gap="xs">
-        {from && avatarBlockMarkup}
-        <Flexy.Block className="c-Message__block">{childrenMarkup}</Flexy.Block>
-        {to && avatarBlockMarkup}
-      </Flexy>
-    </div>
-  )
+  render() {
+    const {
+      avatar,
+      children,
+      className,
+      isNote,
+      ltr,
+      rtl,
+      from,
+      showAvatar,
+      to,
+      ...rest
+    } = this.props
+    const { theme } = this.context
+
+    const componentClassName = classNames(
+      'c-Message',
+      avatar && 'has-avatar',
+      from && 'is-from',
+      theme && `is-theme-${theme}`,
+      to && 'is-to',
+      className
+    )
+
+    const avatarMarkup = this.getAvatarMarkup()
+    const childrenMarkup = this.getChildrenMarkup()
+    const fromMarkup = this.getFromMarkup()
+
+    return (
+      <div className={componentClassName} {...rest}>
+        {fromMarkup}
+        <Flexy align="top" gap="xs">
+          {from && avatarMarkup}
+          <Flexy.Block className="c-Message__block">
+            {childrenMarkup}
+          </Flexy.Block>
+          {to && avatarMarkup}
+        </Flexy>
+      </div>
+    )
+  }
 }
 
-MessageComponent.defaultProps = {
-  showAvatar: true,
-}
-MessageComponent.contextTypes = providerContextTypes
-MessageComponent.displayName = 'Message'
-
-MessageComponent.Action = Action
-MessageComponent.Attachment = Attachment
-MessageComponent.Bubble = Bubble
-MessageComponent.Caption = Caption
-MessageComponent.Chat = Chat
-MessageComponent.Content = Content
-MessageComponent.Media = Media
-MessageComponent.Provider = Provider
-MessageComponent.Question = Question
-
-export default MessageComponent
+export default Message

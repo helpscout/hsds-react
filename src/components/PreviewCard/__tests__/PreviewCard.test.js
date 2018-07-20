@@ -1,8 +1,13 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import PreviewCard from '..'
+import { mount } from 'enzyme'
+import PreviewCard from '../index'
+import Context from '../Context'
 import { baseComponentTest } from '../../../tests/helpers/components'
 import { Card, Heading, Text } from '../../'
+
+const ui = {
+  base: '.c-PreviewCard',
+}
 
 const baseComponentOptions = {
   className: 'c-PreviewCard',
@@ -12,7 +17,7 @@ baseComponentTest(PreviewCard, baseComponentOptions)
 
 describe('Card', () => {
   test('Extends Card component', () => {
-    const wrapper = shallow(<PreviewCard />)
+    const wrapper = mount(<PreviewCard />)
     const o = wrapper.find(Card)
 
     expect(o.length).toBeTruthy()
@@ -22,7 +27,7 @@ describe('Card', () => {
 
 describe('Title', () => {
   test('Does not render a title by default', () => {
-    const wrapper = shallow(<PreviewCard />)
+    const wrapper = mount(<PreviewCard />)
     const o = wrapper.find(Heading)
     const p = wrapper.find('.c-PreviewCard__title')
 
@@ -31,7 +36,7 @@ describe('Title', () => {
   })
 
   test('Renders a title, if defined', () => {
-    const wrapper = shallow(<PreviewCard title="Mugatu" />)
+    const wrapper = mount(<PreviewCard title="Mugatu" />)
     const o = wrapper.find(Heading)
 
     expect(o.length).toBeTruthy()
@@ -42,11 +47,28 @@ describe('Title', () => {
 
 describe('Text', () => {
   test('Renders children in a Text component', () => {
-    const wrapper = shallow(<PreviewCard title="Mugatu">Relax</PreviewCard>)
+    const wrapper = mount(<PreviewCard title="Mugatu">Relax</PreviewCard>)
     const o = wrapper.find(Text)
 
     expect(o.length).toBeTruthy()
     expect(o.hasClass('c-PreviewCard__content')).toBeTruthy()
     expect(o.getNode().props.children).toBe('Relax')
+  })
+})
+
+describe('Context', () => {
+  test('Can consume properties from context', () => {
+    const wrapper = mount(
+      <Context.Provider value={{ isNote: true }}>
+        <PreviewCard />
+      </Context.Provider>
+    )
+    const o = wrapper.find(ui.base)
+
+    expect(o.hasClass('is-note')).toBe(true)
+
+    wrapper.setProps({ value: { isNote: false } })
+
+    expect(o.hasClass('is-note')).toBe(false)
   })
 })

@@ -26,25 +26,46 @@ stories.add('action', () => (
 ))
 
 stories.add('content', () => (
-  <Message to avatar={<Avatar name="Buddy" />}>
-    <Message.Chat read timestamp="9:41am">
-      <Link href="https://en.wikipedia.org/wiki/Elf_(film)">
-        https://en.wikipedia.org/wiki/Elf_(film)
-      </Link>
-    </Message.Chat>
-    <Message.Content>
-      <PreviewCard
-        href="https://en.wikipedia.org/wiki/Elf_(film)"
-        title="Wikipedia: Elf (film)"
-        target="_blank"
-      >
-        Elf is a 2003 American Christmas fantasy comedy film directed by Jon
-        Favreau and written by David Berenbaum. It stars Will Ferrell, James
-        Caan, Zooey Deschanel, Mary Steenburgen, Daniel Tay, Edward Asner, and
-        Bob Newhart...
-      </PreviewCard>
-    </Message.Content>
-  </Message>
+  <div>
+    <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat read timestamp="9:41am">
+        <Link href="https://en.wikipedia.org/wiki/Elf_(film)">
+          https://en.wikipedia.org/wiki/Elf_(film)
+        </Link>
+      </Message.Chat>
+      <Message.Content>
+        <PreviewCard
+          href="https://en.wikipedia.org/wiki/Elf_(film)"
+          title="Wikipedia: Elf (film)"
+          target="_blank"
+        >
+          Elf is a 2003 American Christmas fantasy comedy film directed by Jon
+          Favreau and written by David Berenbaum. It stars Will Ferrell, James
+          Caan, Zooey Deschanel, Mary Steenburgen, Daniel Tay, Edward Asner, and
+          Bob Newhart...
+        </PreviewCard>
+      </Message.Content>
+    </Message>
+    <Message to avatar={<Avatar name="Buddy" />} isNote>
+      <Message.Chat read timestamp="9:41am">
+        <Link href="https://en.wikipedia.org/wiki/Elf_(film)">
+          https://en.wikipedia.org/wiki/Elf_(film)
+        </Link>
+      </Message.Chat>
+      <Message.Content>
+        <PreviewCard
+          href="https://en.wikipedia.org/wiki/Elf_(film)"
+          title="Wikipedia: Elf (film)"
+          target="_blank"
+        >
+          Elf is a 2003 American Christmas fantasy comedy film directed by Jon
+          Favreau and written by David Berenbaum. It stars Will Ferrell, James
+          Caan, Zooey Deschanel, Mary Steenburgen, Daniel Tay, Edward Asner, and
+          Bob Newhart...
+        </PreviewCard>
+      </Message.Content>
+    </Message>
+  </div>
 ))
 
 stories.add('note', () => (

@@ -1,24 +1,24 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import ChatBlock from '../ChatBlock'
 import Content from '../Content'
 
 const cx = 'c-MessageContent'
 const ui = {
-  main: `.${cx}`,
+  base: `.${cx}`,
   content: '.c-MessageContent__content',
 }
 
 describe('ClassNames', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Content />)
+    const wrapper = mount(<Content />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.length).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Content className="mugatu" />)
+    const wrapper = mount(<Content className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -27,21 +27,21 @@ describe('ClassNames', () => {
 
 describe('ChatBlock', () => {
   test('Contains a ChatBlock component', () => {
-    const wrapper = shallow(<Content />)
+    const wrapper = mount(<Content />)
     const o = wrapper.find(ChatBlock)
 
     expect(o.length).toBeTruthy()
   })
 
   test('ChatBlock does inherits component classNames', () => {
-    const wrapper = shallow(<Content />)
+    const wrapper = mount(<Content />)
     const o = wrapper.find(ChatBlock)
 
     expect(o.hasClass(cx)).toBeTruthy()
   })
 
   test('Passes correct props to ChatBlock', () => {
-    const wrapper = shallow(<Content from to read ltr rtl timestamp="time" />)
+    const wrapper = mount(<Content from to read ltr rtl timestamp="time" />)
     const props = wrapper.find(ChatBlock).getNode().props
 
     expect(props.from).toBeTruthy()
@@ -55,30 +55,39 @@ describe('ChatBlock', () => {
 
 describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
-    const wrapper = shallow(<Content from />)
+    const wrapper = mount(<Content from />)
     const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
-    const wrapper = shallow(<Content to />)
+    const wrapper = mount(<Content to />)
     const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-to')).toBeTruthy()
   })
 
   test('Applies "ltr" styles, if defined', () => {
-    const wrapper = shallow(<Content ltr />)
+    const wrapper = mount(<Content ltr />)
     const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-ltr')).toBeTruthy()
   })
 
   test('Applies "rtl" styles, if defined', () => {
-    const wrapper = shallow(<Content rtl />)
+    const wrapper = mount(<Content rtl />)
     const o = wrapper.find(ui.content)
 
     expect(o.hasClass('is-rtl')).toBeTruthy()
+  })
+
+  test('Applies "isNote" styles, if defined', () => {
+    const wrapper = mount(<Content isNote />)
+    const b = wrapper.find(ui.base)
+    const o = wrapper.find(ui.content)
+
+    expect(b.hasClass('is-note')).toBeTruthy()
+    expect(o.hasClass('is-note')).toBeTruthy()
   })
 })
