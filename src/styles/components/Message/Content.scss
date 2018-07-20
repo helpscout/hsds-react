@@ -1,19 +1,2 @@
-@import 'pack/seed-family/_index';
-@import 'pack/seed-this/_index';
-@import '../../configs/color';
-
-.c-MessageContent {
-  @import '../../resets/base';
-  margin-bottom: 20px;
-
-  &__content {
-    max-width: 500px;
-    text-align: left;
-
-    // Direction
-    &.is-rtl {
-      direction: rtl;
-      text-align: right;
-    }
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

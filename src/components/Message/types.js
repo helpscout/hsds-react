@@ -5,6 +5,7 @@ export type Message = {
   children?: any,
   className?: string,
   from?: any,
+  isNote?: boolean,
   ltr?: boolean,
   rtl?: boolean,
   to?: any,

@@ -27,6 +27,7 @@ class ChatBlock extends Component<Props> {
       children,
       className,
       icon,
+      isNote,
       ltr,
       rtl,
       read,

@@ -1,5 +1,7 @@
 // @flow
-import React, { PureComponent as Component } from 'react'
+import type { Node } from 'react'
+import type { MessageBubble } from './types'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from '../styled'
 import Flexy from '../Flexy'
@@ -13,7 +15,6 @@ import classNames, { BEM } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { bubbleTypes, providerContextTypes } from './propTypes'
-import type { MessageBubble } from './types'
 import css from './styles/Media.css.js'
 
 type Props = MessageBubble & {
@@ -62,7 +63,7 @@ export class Media extends Component<Props> {
    *
    * @returns {string} The caption text.
    */
-  getCaption = () => {
+  getCaption = (): ?string => {
     const { caption, error, errorMessage } = this.props
 
     let text = caption
@@ -71,10 +72,11 @@ export class Media extends Component<Props> {
       text = isString(error) ? error : errorMessage
     }
 
+    // $FlowFixMe
     return text
   }
 
-  getSpinnerMarkup = () => {
+  getSpinnerMarkup = (): ?Node => {
     return (
       this.props.isUploading && (
         <Spinner className="c-MessageMedia__loadingSpinner" size="xs" />
@@ -82,7 +84,7 @@ export class Media extends Component<Props> {
     )
   }
 
-  getCaptionMarkup = () => {
+  getCaptionMarkup = (): ?Node => {
     const captionText = this.getCaption()
     const spinnerMarkup = this.getSpinnerMarkup()
     const tryAgainMarkup = this.getTryAgainMarkup()
@@ -105,7 +107,7 @@ export class Media extends Component<Props> {
     src,
     maxHeight,
     maxWidth,
-  }: { src?: string, maxHeight?: number, maxWidth?: number } = {}) => {
+  }: { src?: string, maxHeight?: number, maxWidth?: number } = {}): ?Node => {
     const {
       height,
       onMediaClick,
@@ -139,7 +141,7 @@ export class Media extends Component<Props> {
     )
   }
 
-  getTryAgainMarkup = () => {
+  getTryAgainMarkup = (): ?Node => {
     const { error, showErrorTryAgainLink, tryAgainLabel } = this.props
 
     if (!error || !showErrorTryAgainLink) return null

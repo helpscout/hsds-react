@@ -1,35 +1,53 @@
 // @flow
 import React from 'react'
+import Context from './Context'
 import Card from '../Card'
 import Heading from '../Heading'
 import Text from '../Text'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import css from './styles/PreviewCard.css.js'
 
 type Props = {
   children?: any,
   className?: string,
+  isNote?: boolean,
   title?: string,
 }
 
 const PreviewCard = (props: Props) => {
-  const { children, className, title, ...rest } = props
+  const { children, className, isNote, title, ...rest } = props
 
-  const componentClassName = classNames('c-PreviewCard', className)
+  const createMarkup = contextProps => {
+    const { isNote } = contextProps
 
-  const titleMarkup = title ? (
-    <Heading className="c-PreviewCard__title" size="h5">
-      {title}
-    </Heading>
-  ) : null
+    const componentClassName = classNames(
+      'c-PreviewCard',
+      isNote && 'is-note',
+      className
+    )
+
+    const titleMarkup = title ? (
+      <Heading className="c-PreviewCard__title" size="h5">
+        {title}
+      </Heading>
+    ) : null
+
+    return (
+      <Card className={componentClassName} {...rest}>
+        {titleMarkup}
+        <Text muted className="c-PreviewCard__content">
+          {children}
+        </Text>
+      </Card>
+    )
+  }
 
   return (
-    <Card className={componentClassName} {...rest}>
-      {titleMarkup}
-      <Text muted className="c-PreviewCard__content">
-        {children}
-      </Text>
-    </Card>
+    <Context.Consumer>
+      {contextProps => createMarkup(contextProps)}
+    </Context.Consumer>
   )
 }
 
-export default PreviewCard
+export default styled(PreviewCard)(css)

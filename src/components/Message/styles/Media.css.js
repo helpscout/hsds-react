@@ -1,4 +1,5 @@
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
+import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
 import { getColor } from '../../../styles/utilities/color.js'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
@@ -42,10 +43,8 @@ const css = `
     }
 
     &.is-note {
+      ${noteBoxShadow()}
       background-color: ${getColor('yellow', 300)};
-      box-shadow:
-        0px 1px 3px 0px rgba(179, 113, 0, 0.2),
-        0px 0px 0px 1px ${getColor('yellow', 400)} inset;
       color: ${getColor('yellow', 800)};
     }
 
