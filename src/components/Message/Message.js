@@ -1,8 +1,7 @@
 // @flow
 import type { Node } from 'react'
-import type { Message as MessageType, MessageThemeContext } from './types'
+import type { Message as MessageType } from './types'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Text from '../Text'
 import Action from './Action'
@@ -15,14 +14,13 @@ import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
 import classNames from '../../utilities/classNames'
-import { isString } from '../../utilities/is'
+import { isFunction, isString } from '../../utilities/is'
 import { providerContextTypes } from './propTypes'
 
 type Props = MessageType & {
   avatar?: any,
   showAvatar?: boolean,
 }
-type Context = MessageThemeContext
 
 class Message extends Component<Props> {
   static defaultProps = {
@@ -52,10 +50,7 @@ class Message extends Component<Props> {
 
     return chatTypes.some(type => {
       return (
-        child &&
-        child.type &&
-        typeof child.type === 'function' &&
-        child.type === type
+        child && child.type && isFunction(child.type) && child.type === type
       )
     })
   }
@@ -87,13 +82,12 @@ class Message extends Component<Props> {
   }
 
   getChildrenMarkup = (): ?Node => {
-    const { children, from, isNote, ltr, rtl, to } = this.props
+    const { children, from, ltr, rtl, to } = this.props
 
     return React.Children.map(children, child => {
       return this.isChatType(child)
         ? React.cloneElement(child, {
             from,
-            isNote,
             ltr,
             rtl,
             to,
