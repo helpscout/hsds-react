@@ -20,7 +20,8 @@ stories.add('question', () => (
 stories.add('action', () => (
   <Message to>
     <Message.Action read timestamp="9:41am">
-      Buddy became upset. <a href="#">Find out what happened</a>
+      Buddy became upset.{' '}
+      <a href="https://www.helpscout.net/">Find out what happened</a>
     </Message.Action>
   </Message>
 ))
@@ -46,13 +47,13 @@ stories.add('content', () => (
         </PreviewCard>
       </Message.Content>
     </Message>
-    <Message to avatar={<Avatar name="Buddy" />} isNote>
-      <Message.Chat read timestamp="9:41am">
+    <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat read timestamp="9:41am" isNote>
         <Link href="https://en.wikipedia.org/wiki/Elf_(film)">
           https://en.wikipedia.org/wiki/Elf_(film)
         </Link>
       </Message.Chat>
-      <Message.Content>
+      <Message.Content isNote>
         <PreviewCard
           href="https://en.wikipedia.org/wiki/Elf_(film)"
           title="Wikipedia: Elf (film)"

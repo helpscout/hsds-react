@@ -25,6 +25,7 @@ const css = `
 
   &.is-note {
     ${noteBoxShadowWithHover()}
+    border: none;
   }
 `
 

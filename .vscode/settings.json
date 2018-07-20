@@ -18,5 +18,5 @@
   },
   "javascript.validate.enable": false,
   "prettier.eslintIntegration": true,
-  "eslint.enable": false
+  "eslint.enable": true
 }

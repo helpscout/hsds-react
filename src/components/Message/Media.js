@@ -2,9 +2,7 @@
 import type { Node } from 'react'
 import type { MessageBubble } from './types'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from '../styled'
-import Flexy from '../Flexy'
 import Image from '../Image'
 import Link from '../Link'
 import Spinner from '../Spinner'
@@ -14,7 +12,7 @@ import Caption from './Caption'
 import classNames, { BEM } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { bubbleTypes, providerContextTypes } from './propTypes'
+import { providerContextTypes } from './propTypes'
 import css from './styles/Media.css.js'
 
 type Props = MessageBubble & {

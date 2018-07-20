@@ -4,7 +4,6 @@ import ChatBlock from './ChatBlock'
 import styled from '../styled'
 import PreviewCardContext from '../PreviewCard/Context'
 import classNames from '../../utilities/classNames'
-import { chatTypes } from './propTypes'
 import css from './styles/Content.css.js'
 import type { MessageChat } from './types'
 
