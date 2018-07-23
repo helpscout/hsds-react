@@ -1,7 +1,8 @@
 import React, { PureComponent as Component } from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { Overflow } from '..'
-import wait from '../../../tests/helpers/wait'
+
+jest.useFakeTimers()
 
 const ui = {
   container: '.c-Overflow__container',
@@ -11,16 +12,16 @@ const ui = {
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Overflow />)
+    const wrapper = mount(<Overflow />)
 
-    expect(wrapper.prop('className')).toContain('c-Overflow')
+    expect(wrapper.hasClass('c-Overflow')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
-    const wrapper = shallow(<Overflow className={className} />)
+    const wrapper = mount(<Overflow className={className} />)
 
-    expect(wrapper.prop('className')).toContain(className)
+    expect(wrapper.hasClass(className)).toBe(true)
   })
 })
 
@@ -40,7 +41,7 @@ describe('Content', () => {
 
 describe('Fade', () => {
   test('Renders fade elements', () => {
-    const wrapper = shallow(<Overflow />)
+    const wrapper = mount(<Overflow />)
     const fade = wrapper.find('.c-Overflow__fader')
 
     expect(fade.length).toBe(2)
@@ -54,7 +55,7 @@ describe('Fade', () => {
     expect(fade.style.transform).toBe('scaleX(1)')
   })
 
-  test('Applies left fade styles when scrolled', done => {
+  test('Applies left fade styles when scrolled', () => {
     const wrapper = mount(<Overflow />)
     const o = wrapper.instance()
 
@@ -66,10 +67,9 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    wait(80).then(() => {
-      expect(o.faderNodeLeft.style.transform).toContain('scaleX')
-      done()
-    })
+    jest.runOnlyPendingTimers()
+
+    expect(o.faderNodeLeft.style.transform).toContain('scaleX')
   })
 
   test('Applies right fade styles when scrolled', () => {

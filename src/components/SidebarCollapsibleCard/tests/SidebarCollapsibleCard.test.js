@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import SidebarCollapsibleCard from '..'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
@@ -16,13 +16,14 @@ baseComponentTest(SidebarCollapsibleCard, baseComponentOptions)
 
 describe('Accessibility', () => {
   test('Has correct accessibility roles/props', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard />)
-    const id = wrapper.props().id
+    const wrapper = mount(<SidebarCollapsibleCard />)
+    const el = wrapper.find('div').first()
+    const id = el.props().id
     const header = wrapper.find('.c-SidebarCollapsibleCard__header')
     const body = wrapper.find('.c-SidebarCollapsibleCard__body')
 
     expect(id).toContain('SidebarCollapsibleCard')
-    expect(wrapper.props().role).toBe('presentation')
+    expect(el.props().role).toBe('presentation')
     expect(header.props().role).toBe('heading')
     expect(header.props()['aria-expanded']).toBeFalsy()
     expect(header.props()['aria-controls']).toContain(id)
@@ -35,19 +36,19 @@ describe('Accessibility', () => {
 
 describe('Open', () => {
   test('Should apply open styles, if specified', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard isOpen />)
+    const wrapper = mount(<SidebarCollapsibleCard isOpen />)
 
     expect(wrapper.hasClass('is-open')).toBeTruthy()
   })
 
   test('Should not be open by default', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard />)
+    const wrapper = mount(<SidebarCollapsibleCard />)
 
     expect(wrapper.hasClass('is-open')).not.toBeTruthy()
   })
 
   test('Can change state by updating isOpen prop', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard />)
+    const wrapper = mount(<SidebarCollapsibleCard />)
     wrapper.setProps({ isOpen: true })
 
     expect(wrapper.hasClass('is-open')).toBeTruthy()
@@ -62,14 +63,14 @@ describe('Open', () => {
 
 describe('Header/Title', () => {
   test('Should not render a heading by default', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard />)
+    const wrapper = mount(<SidebarCollapsibleCard />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__title')
 
     expect(o.length).toBe(0)
   })
 
   test('Should render a Heading if title is defined', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard title="Ron" />)
+    const wrapper = mount(<SidebarCollapsibleCard title="Ron" />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__title')
 
     expect(o.length).toBe(1)
@@ -78,7 +79,7 @@ describe('Header/Title', () => {
 
   test('Can render a custom header (component)', () => {
     const Header = <div className="milk">Bad Choice</div>
-    const wrapper = shallow(<SidebarCollapsibleCard header={Header} />)
+    const wrapper = mount(<SidebarCollapsibleCard header={Header} />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__title')
     const n = wrapper.find('.milk')
 
@@ -89,7 +90,7 @@ describe('Header/Title', () => {
 
   test('Custom header (component) is prioritized over title', () => {
     const Header = <div className="milk">Bad Choice</div>
-    const wrapper = shallow(
+    const wrapper = mount(
       <SidebarCollapsibleCard header={Header} title="Ron" />
     )
     const o = wrapper.find('.c-SidebarCollapsibleCard__title')
@@ -118,14 +119,14 @@ describe('Header/Title', () => {
 
 describe('Caret', () => {
   test('Should have a default position of down, on close', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard />)
+    const wrapper = mount(<SidebarCollapsibleCard />)
     const o = wrapper.find('Icon')
 
     expect(o.props().name).toContain('down')
   })
 
   test('Should have a position of up, on open', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard isOpen />)
+    const wrapper = mount(<SidebarCollapsibleCard isOpen />)
     const o = wrapper.find('Icon')
 
     expect(o.props().name).toContain('up')
@@ -150,7 +151,7 @@ describe('Caret', () => {
 describe('Collapsible', () => {
   test('Passes props to Collapsible', () => {
     const fn = jest.fn()
-    const wrapper = shallow(
+    const wrapper = mount(
       <SidebarCollapsibleCard
         isOpen
         onOpen={fn}
@@ -175,14 +176,14 @@ describe('Collapsible', () => {
 
 describe('Sortable', () => {
   test('Not sortable by default', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard />)
+    const wrapper = mount(<SidebarCollapsibleCard />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
 
     expect(o.length).toBe(0)
   })
 
   test('Adds Sortable.DragHandle if sortable', () => {
-    const wrapper = shallow(<SidebarCollapsibleCard sortable />)
+    const wrapper = mount(<SidebarCollapsibleCard sortable />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
 
     expect(o.length).toBe(1)

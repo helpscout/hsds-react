@@ -1,8 +1,8 @@
-import base from '../../../styles/resets/base.css'
+import baseStyles from '../../../styles/resets/base.css'
 import { color } from './variables.css'
 
 const css = `
-  ${base}
+  ${baseStyles}
 
   &__arrow {
     border-color: ${color.background};

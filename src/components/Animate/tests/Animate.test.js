@@ -2,7 +2,8 @@ import React from 'react'
 import { Transition } from 'react-transition-group'
 import { mount } from 'enzyme'
 import { default as Animate } from '..'
-import wait from '../../../tests/helpers/wait'
+
+jest.useFakeTimers()
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
@@ -32,23 +33,23 @@ describe('Content', () => {
 })
 
 describe('AnimateOnMount', () => {
-  test('Automatically animates by default', done => {
+  test('Automatically animates by default', () => {
     const wrapper = mount(
       <Animate duration={2} sequence="fade">
         <div>Blue</div>
       </Animate>
     )
 
-    wait(200).then(() => {
-      expect(wrapper.html()).toContain('ax-entered')
-      wrapper.unmount()
-      done()
-    })
+    expect(wrapper.html()).toContain('ax-entering')
+
+    jest.runOnlyPendingTimers()
+
+    expect(wrapper.html()).toContain('ax-entered')
   })
 })
 
 describe('Unmounting', () => {
-  test('Unmounts from DOM by default', done => {
+  test('Unmounts from DOM by default', () => {
     const wrapper = mount(
       <Animate in duration={8}>
         <div className="your">
@@ -59,14 +60,15 @@ describe('Unmounting', () => {
 
     wrapper.setProps({ in: false })
 
-    wait(120).then(() => {
-      expect(wrapper.html()).toBe(null)
-      wrapper.unmount()
-      done()
-    })
+    expect(wrapper.html()).toContain('ax-exiting')
+
+    jest.runOnlyPendingTimers()
+
+    expect(wrapper.html()).toBe(null)
+    wrapper.unmount()
   })
 
-  test('Does not unmounts from DOM if specified', done => {
+  test('Does not unmounts from DOM if specified', () => {
     const wrapper = mount(
       <Animate unmountOnExit={false} in duration={8}>
         <div className="your">
@@ -75,16 +77,9 @@ describe('Unmounting', () => {
       </Animate>
     )
 
-    wait(20)
-      .then(() => {
-        wrapper.setProps({ in: false })
-      })
-      .then(() => wait(200))
-      .then(() => {
-        expect(wrapper.html()).not.toBe(null)
-        wrapper.unmount()
-        done()
-      })
+    wrapper.setProps({ in: false })
+    expect(wrapper.html()).not.toBe(null)
+    wrapper.unmount()
   })
 })
 

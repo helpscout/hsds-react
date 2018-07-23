@@ -1,41 +1,32 @@
+// @flow
+import type { IconSize } from './types'
+import type { TextShade } from '../../constants/types'
 import React from 'react'
-import PropTypes from 'prop-types'
 import ICONS from './icons'
+import styled from '../styled'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { textShadeTypes } from '../../constants/propTypes'
-import { sizeTypes } from './propTypes'
+import css from './styles/Icon.css.js'
 
-export const propTypes = {
-  center: PropTypes.bool,
-  className: PropTypes.string,
-  clickable: PropTypes.bool,
-  ignoreClick: PropTypes.bool,
-  faint: PropTypes.bool,
-  inline: PropTypes.bool,
-  muted: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-  shade: textShadeTypes,
-  size: sizeTypes,
-  subtle: PropTypes.bool,
-  title: PropTypes.string,
-  withCaret: PropTypes.bool,
+type Props = {
+  center: boolean,
+  className?: string,
+  clickable: boolean,
+  ignoreClick: boolean,
+  faint?: boolean,
+  inline?: boolean,
+  muted?: boolean,
+  name: string,
+  onClick: () => void,
+  shade?: TextShade,
+  size: IconSize,
+  subtle?: boolean,
+  title?: string,
+  withCaret: boolean,
 }
 
-const defaultProps = {
-  center: false,
-  clickable: false,
-  ignoreClick: true,
-  muted: false,
-  name: null,
-  onClick: noop,
-  size: '20',
-  withCaret: false,
-}
-
-const Icon = props => {
+const Icon = (props: Props) => {
   const {
     center,
     className,
@@ -99,7 +90,15 @@ const Icon = props => {
   )
 }
 
-Icon.propTypes = propTypes
-Icon.defaultProps = defaultProps
+Icon.defaultProps = {
+  center: false,
+  clickable: false,
+  ignoreClick: true,
+  muted: false,
+  name: null,
+  onClick: noop,
+  size: '20',
+  withCaret: false,
+}
 
-export default Icon
+export default styled(Icon)(css)

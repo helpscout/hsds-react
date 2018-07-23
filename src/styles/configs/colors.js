@@ -1,4 +1,4 @@
-const colors = {
+const palette = {
   blue: {
     '100': '#f7fcfe',
     '200': '#daf1ff',
@@ -92,4 +92,14 @@ const colors = {
   },
 }
 
-export default colors
+const text = {
+  subtle: palette.charcoal['500'],
+  muted: palette.charcoal['300'],
+  faint: palette.charcoal['200'],
+  extraMuted: palette.grey['600'],
+}
+
+export default {
+  ...palette,
+  text,
+}
