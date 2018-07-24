@@ -1,7 +1,9 @@
 // @flow
-import React from 'react'
-import classNames from '../../utilities/classNames'
 import type { HeadingSize } from './types'
+import React from 'react'
+import styled from '../styled'
+import classNames from '../../utilities/classNames'
+import css from './styles/Heading.css.js'
 
 type Props = {
   center: boolean,
@@ -60,4 +62,4 @@ Heading.defaultProps = {
   linkStyle: false,
 }
 
-export default Heading
+export default styled(Heading)(css)

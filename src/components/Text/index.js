@@ -1,8 +1,10 @@
 // @flow
-import React from 'react'
-import classNames from '../../utilities/classNames'
 import type { Sizes } from './types'
 import type { TextShade, UIState } from '../../constants/types'
+import React from 'react'
+import styled from '../styled'
+import classNames from '../../utilities/classNames'
+import css from './styles/Text.css.js'
 
 type Props = {
   allCaps?: boolean,
@@ -89,4 +91,4 @@ Text.defaultProps = {
   truncate: false,
 }
 
-export default Text
+export default styled(Text)(css)

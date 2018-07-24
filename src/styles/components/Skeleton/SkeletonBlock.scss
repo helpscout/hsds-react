@@ -1,7 +1,7 @@
-@import "../../configs/color";
+@import '../../configs/color';
 
 .c-SkeletonBlock {
-  @import "../../resets/base";
+  @import '../../resets/base';
   $bg: _color(grey, 300);
   $shine: _color(grey, 200);
   animation-duration: 1s;
@@ -10,8 +10,20 @@
   animation-name: Blue_Skeleton_Block_shimmer;
   animation-timing-function: linear;
   background: $bg;
-  background-image: -webkit-linear-gradient(left, $bg 0%, $shine 20%, $bg 40%, $bg 100%);
-  background-image: linear-gradient(left, $bg 0%, $shine 20%, $bg 40%, $bg 100%);
+  background-image: -webkit-linear-gradient(
+    to left,
+    $bg 0%,
+    $shine 20%,
+    $bg 40%,
+    $bg 100%
+  );
+  background-image: linear-gradient(
+    to left,
+    $bg 0%,
+    $shine 20%,
+    $bg 40%,
+    $bg 100%
+  );
   background-repeat: no-repeat;
   background-size: 800px 100%;
   height: 20px;
