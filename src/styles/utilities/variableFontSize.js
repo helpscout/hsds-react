@@ -36,10 +36,10 @@ const variableFontSize = (
   return `
     ${variableNameSpace}: calc(
         ${fontSize} / ${baseFontSize} *
-        var(${GLOBAL_FONT_SIZE_NAMESPACE})
+        var(${GLOBAL_FONT_SIZE_NAMESPACE}, ${baseFontSize}px)
       );
     font-size: ${fontSize}px;
-    font-size: var(${variableNameSpace});
+    font-size: var(${variableNameSpace}, ${fontSize}px);
   `
 }
 

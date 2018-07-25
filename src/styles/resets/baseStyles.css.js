@@ -1,5 +1,6 @@
-import base from './base.css'
-import font from './font.css'
+// @flow
+import base from './base.css.js'
+import font from './font.css.js'
 
 export default `
   ${base}
