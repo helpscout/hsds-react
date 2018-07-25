@@ -547,22 +547,6 @@ describe('Children', () => {
   })
 })
 
-describe('Context', () => {
-  describe('positionCloseNode', () => {
-    test('Passes context to Modal.Body', () => {
-      const wrapper = mount(
-        <ModalComponent>
-          <Modal.Body />
-        </ModalComponent>
-      )
-      const o = wrapper.find(Modal.Body).getNode()
-
-      expect(o.context).toBeTruthy()
-      expect(typeof o.context.positionCloseNode).toBe('function')
-    })
-  })
-})
-
 describe('isOpen', () => {
   test('Can open wrapped component with isOpen prop change to true', () => {
     const wrapper = mount(<Modal />)

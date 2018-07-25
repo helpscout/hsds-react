@@ -1,26 +1,26 @@
 import React, { PureComponent as Component } from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Body from '../Body'
 import { Scrollable } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Body />)
+    const wrapper = mount(<Body />)
 
-    expect(wrapper.hasClass('c-ModalBody')).toBeTruthy()
+    expect(wrapper.hasClass('c-ModalBody')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Body className={customClass} />)
+    const wrapper = mount(<Body className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.hasClass(customClass)).toBe(true)
   })
 })
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Body>
         <div className="child">Hello</div>
       </Body>
@@ -50,13 +50,13 @@ describe('Scrollable', () => {
   }
 
   test('Applies scrollable styles by default', () => {
-    const wrapper = shallow(<Body />)
+    const wrapper = mount(<Body />)
 
     expect(wrapper.hasClass('is-scrollable')).toBeTruthy()
   })
 
   test('Removes scrollable styles, if disabled', () => {
-    const wrapper = shallow(<Body scrollable={false} />)
+    const wrapper = mount(<Body scrollable={false} />)
 
     expect(wrapper.hasClass('is-scrollable')).not.toBeTruthy()
     expect(wrapper.hasClass('is-not-scrollable')).toBeTruthy()
@@ -83,17 +83,21 @@ describe('Scrollable', () => {
 
 describe('ScrollableNode', () => {
   test('Sets an internal scrollableNode on mount', () => {
-    const wrapper = mount(<Body />)
+    let node = null
+    const ref = el => (node = el)
+    const wrapper = mount(<Body scrollableRef={ref} />)
 
-    expect(wrapper.instance().scrollableNode).toBeTruthy()
+    expect(node).toBeTruthy()
   })
 
   test('Unsets an internal scrollableNode on unmount', () => {
-    const wrapper = mount(<Body />)
-    const o = wrapper.instance()
+    let node = null
+    const ref = el => (node = el)
+    const wrapper = mount(<Body scrollableRef={ref} />)
+
     wrapper.unmount()
 
-    expect(o.scrollableNode).not.toBeTruthy()
+    expect(node).toBeFalsy()
   })
 
   test('scrollableRef callback prop still works', () => {
@@ -101,33 +105,19 @@ describe('ScrollableNode', () => {
     const wrapper = mount(<Body scrollableRef={spy} />)
     const o = wrapper.instance().scrollableNode
 
-    expect(spy).toHaveBeenCalledWith(o)
-  })
-})
-
-describe('Context', () => {
-  test('Position closeIcon using context', () => {
-    const spy = jest.fn()
-    mount(<Body />, {
-      context: {
-        positionCloseNode: spy,
-      },
-    })
-
     expect(spy).toHaveBeenCalled()
-    expect(spy.mock.calls[0][0]).toBeTruthy()
   })
 })
 
 describe('Styles', () => {
   test('Does not have seamless styles by default', () => {
-    const wrapper = shallow(<Body />)
+    const wrapper = mount(<Body />)
 
     expect(wrapper.hasClass('is-seamless')).not.toBeTruthy()
   })
 
   test('Applies isSeamless styles, if applied', () => {
-    const wrapper = shallow(<Body isSeamless />)
+    const wrapper = mount(<Body isSeamless />)
 
     expect(wrapper.hasClass('is-seamless')).toBeTruthy()
   })
