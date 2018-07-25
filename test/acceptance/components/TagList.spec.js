@@ -44,7 +44,7 @@ describe('TagList', () => {
     const test = $('.test')
 
     wait(400).then(() => {
-      expect(control.height()).toBe(test.height())
+      expect(Math.round(control.height())).toBe(test.height())
       done()
     })
   })
