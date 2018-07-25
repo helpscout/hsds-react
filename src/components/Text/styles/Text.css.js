@@ -10,6 +10,7 @@ import { TEXT_SHADES } from '../../../styles/configs/constants'
 export const VAR_NAMESPACE_SIZE = 'BlueConfigTextFontSize'
 export const BASE_FONT_SIZE = 13
 export const TEXT_SIZES = [10, 11, 12, 13, 14, 15, 16, 20, 48]
+export const TEXT_WEIGHTS = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
 const css = `
   ${baseStyles}
@@ -22,6 +23,7 @@ const css = `
   ${makeShadeStyles()}
   ${makeSizeStyles()}
   ${makeStateColorStyles()}
+  ${makeWeightStyles()}
 
   &.is-truncate {
     display: block;
@@ -88,6 +90,17 @@ function makeSizeStyles(): string {
       })}
     }
   `
+  )
+}
+
+export function makeWeightStyles(): string {
+  return forEach(
+    TEXT_WEIGHTS,
+    weight => `
+    &.is-${weight} {
+      font-weight: ${weight};
+    }
+    `
   )
 }
 

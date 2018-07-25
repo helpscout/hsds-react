@@ -16,6 +16,14 @@ export type UIState =
 | ''
 | null
 
+export type UIStatus =
+| 'error'
+| 'info'
+| 'success'
+| 'warning'
+| ''
+| null
+
 export type UISize =
 | 'sm'
 | 'md'

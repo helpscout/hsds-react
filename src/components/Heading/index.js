@@ -15,6 +15,7 @@ type Props = {
   linkStyle?: boolean,
   selector?: string,
   size: HeadingSize,
+  weight?: number | string,
 }
 
 const Heading = (props: Props) => {
@@ -28,6 +29,7 @@ const Heading = (props: Props) => {
     linkStyle,
     selector,
     size,
+    weight,
     ...rest
   } = props
 
@@ -39,6 +41,7 @@ const Heading = (props: Props) => {
     lineHeightReset && 'is-line-height-reset',
     linkStyle && 'is-linkStyle',
     size && `is-${size}`,
+    weight && `is-${weight}`,
     className
   )
 

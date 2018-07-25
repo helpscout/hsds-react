@@ -4,7 +4,7 @@ import linkStyles from '../../../styles/mixins/linkStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
-import { BASE_FONT_SIZE } from '../../Text/styles/Text.css.js'
+import { BASE_FONT_SIZE, makeWeightStyles } from '../../Text/styles/Text.css.js'
 
 export const VAR_NAMESPACE_SIZE = 'BlueConfigHeadingFontSize'
 export const SHADES = {
@@ -57,6 +57,8 @@ const css = `
   &.is-line-height-reset {
     line-height: 1;
   }
+
+  ${makeWeightStyles()}
 `
 
 function makeShadeStyles(): string {

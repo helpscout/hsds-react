@@ -1,23 +1,23 @@
+// @flow
+import type { UIStatus } from '../../constants/types'
 import React from 'react'
-import PropTypes from 'prop-types'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
-import { statusTypes } from '../../constants/propTypes'
+import css from './styles/Badge.css.js'
 
-export const propTypes = {
-  className: PropTypes.string,
-  count: PropTypes.bool,
-  display: PropTypes.oneOf(['block', 'inlineBlock']),
-  size: PropTypes.string,
-  status: statusTypes,
-  isSquare: PropTypes.bool,
-  white: PropTypes.bool,
+type BadgeDisplay = 'block' | 'inlineBlock'
+type Props = {
+  children?: any,
+  className?: string,
+  count?: boolean,
+  display: BadgeDisplay,
+  size?: string,
+  status?: UIStatus,
+  isSquare?: boolean,
+  white?: boolean,
 }
 
-const defaultProps = {
-  display: 'inlineBlock',
-}
-
-const Badge = props => {
+const Badge = (props: Props) => {
   const {
     children,
     count,
@@ -48,8 +48,9 @@ const Badge = props => {
   )
 }
 
-Badge.propTypes = propTypes
-Badge.defaultProps = defaultProps
+Badge.defaultProps = {
+  display: 'inlineBlock',
+}
 Badge.displayName = 'Badge'
 
-export default Badge
+export default styled(Badge)(css)

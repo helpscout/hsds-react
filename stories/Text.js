@@ -48,6 +48,28 @@ storiesOf('Text', module)
       <br />
     </div>
   ))
+  .add('weights', () => (
+    <div>
+      <Text weight={900}>Font weight: 900</Text>
+      <br />
+      <Text weight={800}>Font weight: 800</Text>
+      <br />
+      <Text weight={700}>Font weight: 700</Text>
+      <br />
+      <Text weight={600}>Font weight: 600</Text>
+      <br />
+      <Text weight={500}>Font weight: 500</Text>
+      <br />
+      <Text weight={400}>Font weight: 400</Text>
+      <br />
+      <Text weight={300}>Font weight: 300</Text>
+      <br />
+      <Text weight={200}>Font weight: 200</Text>
+      <br />
+      <Text weight={100}>Font weight: 100</Text>
+      <br />
+    </div>
+  ))
   .add('truncate', () => (
     <div>
       <Text truncate>

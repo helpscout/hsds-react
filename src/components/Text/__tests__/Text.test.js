@@ -101,6 +101,12 @@ describe('Styles', () => {
 
     expect(wrapper.hasClass('is-word-wrap')).toBe(true)
   })
+
+  test('Applies weight styles if specified', () => {
+    const wrapper = mount(<Text weight={200} />)
+
+    expect(wrapper.hasClass('is-200')).toBe(true)
+  })
 })
 
 describe('States', () => {

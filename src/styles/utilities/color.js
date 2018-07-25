@@ -1,6 +1,6 @@
 // @flow
 import colors from '../configs/colors'
-import { isNumber } from '../../utilities/is'
+import { isNumber, isObject } from '../../utilities/is'
 
 type Color = string
 type ColorArgs = any
@@ -12,7 +12,7 @@ type ColorArgs = any
  */
 export const getColor = (...args: ColorArgs): Color => {
   let path = args.map(arg => (isNumber(arg) ? arg.toString() : arg))
-  const defaultColor = colors.blue['500']
+  const defaultColor = 'currentColor'
   const firstArg = path[0]
 
   // Defaults to Blue "500"
@@ -23,9 +23,9 @@ export const getColor = (...args: ColorArgs): Color => {
   if (firstArg.indexOf('.') >= 0) {
     path = firstArg.split('.')
   }
-  // Default to shade "500"
+  // Default to shade "default"
   if (path.length === 1) {
-    path.push('500')
+    path.push('default')
   }
 
   let index = 0
@@ -33,6 +33,10 @@ export const getColor = (...args: ColorArgs): Color => {
 
   while (color != null && index < path.length) {
     color = color[path[index++]]
+  }
+
+  if (isObject(color)) {
+    color = color['default']
   }
 
   return color || defaultColor
