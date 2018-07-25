@@ -85,7 +85,7 @@ describe('ScrollableNode', () => {
   test('Sets an internal scrollableNode on mount', () => {
     let node = null
     const ref = el => (node = el)
-    const wrapper = mount(<Body scrollableRef={ref} />)
+    mount(<Body scrollableRef={ref} />)
 
     expect(node).toBeTruthy()
   })
@@ -103,7 +103,6 @@ describe('ScrollableNode', () => {
   test('scrollableRef callback prop still works', () => {
     const spy = jest.fn()
     const wrapper = mount(<Body scrollableRef={spy} />)
-    const o = wrapper.instance().scrollableNode
 
     expect(spy).toHaveBeenCalled()
   })
