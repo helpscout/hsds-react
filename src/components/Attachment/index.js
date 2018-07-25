@@ -4,14 +4,13 @@ import AttachmentProvider from './Provider'
 import CloseButton from '../CloseButton'
 import Image from '../Image'
 import Text from '../Text'
-import Tooltip from '../Tooltip'
 import Truncate, { getTruncatedContent } from '../Truncate'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Attachment.css.js'
-import type { AttachmentProp, AttachmentContext } from './types'
+import type { AttachmentProp } from './types'
 
 export const Provider = AttachmentProvider
 

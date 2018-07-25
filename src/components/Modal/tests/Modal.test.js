@@ -96,7 +96,7 @@ describe('Portal', () => {
   })
 
   test('Renders at the body', () => {
-    const wrapper = mount(<Modal isOpen trigger={trigger} />)
+    mount(<Modal isOpen trigger={trigger} />)
 
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -106,7 +106,7 @@ describe('Portal', () => {
   })
 
   test('Does not render by default', () => {
-    const wrapper = mount(<Modal trigger={trigger} />)
+    mount(<Modal trigger={trigger} />)
 
     expect(document.body.childNodes.length).toBe(0)
   })
@@ -181,9 +181,7 @@ describe('Route', () => {
 describe('Style', () => {
   test('Can render extra styles', () => {
     const style = { background: 'red' }
-    const wrapper = mount(
-      <Modal isOpen trigger={trigger} closeIcon={false} style={style} />
-    )
+    mount(<Modal isOpen trigger={trigger} closeIcon={false} style={style} />)
 
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -198,7 +196,7 @@ describe('Style', () => {
 
   test('Can render extra styles + zIndex', () => {
     const style = { background: 'red' }
-    const wrapper = mount(
+    mount(
       <Modal
         isOpen
         trigger={trigger}
@@ -222,9 +220,7 @@ describe('Style', () => {
   })
 
   test('Can render zIndex, without style prop', () => {
-    const wrapper = mount(
-      <Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />
-    )
+    mount(<Modal isOpen trigger={trigger} closeIcon={false} zIndex={2000} />)
 
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
@@ -544,22 +540,6 @@ describe('Children', () => {
     const wrapper = shallow(<ModalComponent>{[null]}</ModalComponent>)
 
     expect(wrapper).toBeTruthy()
-  })
-})
-
-describe('Context', () => {
-  describe('positionCloseNode', () => {
-    test('Passes context to Modal.Body', () => {
-      const wrapper = mount(
-        <ModalComponent>
-          <Modal.Body />
-        </ModalComponent>
-      )
-      const o = wrapper.find(Modal.Body).getNode()
-
-      expect(o.context).toBeTruthy()
-      expect(typeof o.context.positionCloseNode).toBe('function')
-    })
   })
 })
 

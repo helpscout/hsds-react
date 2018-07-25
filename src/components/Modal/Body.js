@@ -1,47 +1,52 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import Scrollable from '../Scrollable'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import css from './styles/Body.css.js'
 
-export const propTypes = {
-  isSeamless: PropTypes.bool,
-  onScroll: PropTypes.func,
-  scrollable: PropTypes.bool,
-  scrollableRef: PropTypes.func,
-  scrollFade: PropTypes.bool,
+type Props = {
+  children?: any,
+  className?: string,
+  isSeamless: boolean,
+  onScroll: (event: Event) => void,
+  scrollable: boolean,
+  scrollableRef: Function,
+  scrollFade: boolean,
 }
 
-const defaultProps = {
-  isSeamless: false,
-  onScroll: noop,
-  scrollable: true,
-  scrollableRef: noop,
-  scrollFade: true,
-}
+export const propTypes = {}
 
-const contextTypes = {
-  positionCloseNode: PropTypes.func,
-}
-
-class Body extends Component {
-  constructor() {
-    super()
-    this.scrollableNode = null
+class Body extends Component<Props> {
+  static defaultProps = {
+    isSeamless: false,
+    onScroll: noop,
+    scrollable: true,
+    scrollableRef: noop,
+    scrollFade: true,
   }
+
+  static contextTypes = {
+    positionCloseNode: noop,
+  }
+
+  static displayName = 'Modal.Body'
+
+  scrollableNode: ?HTMLElement
 
   componentDidMount() {
     this.positionCloseNode()
   }
 
-  positionCloseNode() {
+  componentWillUnmount() {
+    this.scrollableNode = null
+  }
+
+  positionCloseNode = () => {
     if (this.context.positionCloseNode) {
       this.context.positionCloseNode(this.scrollableNode)
     }
-  }
-
-  componentWillUnmount() {
-    this.scrollableNode = null
   }
 
   render() {
@@ -89,9 +94,4 @@ class Body extends Component {
   }
 }
 
-Body.propTypes = propTypes
-Body.defaultProps = defaultProps
-Body.contextTypes = contextTypes
-Body.displayName = 'ModalBody'
-
-export default Body
+export default styled(Body)(css)
