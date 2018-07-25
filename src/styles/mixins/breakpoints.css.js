@@ -10,7 +10,7 @@ const breakpoints = {
 
 type BreakpointValue = number | 'xs' | 'sm' | 'md' | 'lg'
 
-type BreakpointStyles = () => string | string
+type BreakpointStyles = () => string
 
 /**
  * Generates a mobile-first @media query CSS rule.
