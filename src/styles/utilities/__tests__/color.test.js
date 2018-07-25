@@ -1,8 +1,8 @@
 import colors from '../../configs/colors'
 import { getColor } from '../color'
 
-test('Returns Blue 500 as a default', () => {
-  expect(getColor()).toEqual(colors.blue['500'])
+test('Returns currentColor as a default', () => {
+  expect(getColor()).toEqual('currentColor')
 })
 
 test('Can retrieve color values (number)', () => {
@@ -26,10 +26,10 @@ test('Renders default shade of 500', () => {
   expect(getColor('charcoal')).toEqual(colors.charcoal['500'])
 })
 
-test('Returns Blue 500 if colors are invalid', () => {
-  expect(getColor('nope', 1000)).toEqual(colors.blue['500'])
-  expect(getColor('wut')).toEqual(colors.blue['500'])
-  expect(getColor('blue', 99999)).toEqual(colors.blue['500'])
+test('Returns currentColor if colors are invalid', () => {
+  expect(getColor('nope', 1000)).toEqual('currentColor')
+  expect(getColor('wut')).toEqual('currentColor')
+  expect(getColor('blue', 99999)).toEqual('currentColor')
 })
 
 test('Returns nested color', () => {
@@ -46,4 +46,10 @@ test('Can parse dot notation', () => {
   expect(getColor('red.200')).toEqual(colors.red['200'])
   expect(getColor('state.danger.color')).toEqual(colors.state.danger.color)
   expect(getColor('state.success.color')).toEqual(colors.state.success.color)
+})
+
+test('Can fall back to defined defaults', () => {
+  expect(getColor('blue')).toEqual(colors.blue.default)
+  expect(getColor('red')).toEqual(colors.red.default)
+  expect(getColor('border.ui')).toEqual(colors.border.ui.default)
 })

@@ -1,16 +1,14 @@
 // @flow
 type VariableFontSizeProps = {
-  varName: string,
+  varName?: string,
   baseFontSize?: number,
   fontSize: number,
 }
 
 export const GLOBAL_FONT_SIZE_NAMESPACE = '--BlueConfigGlobalFontSize'
-export const VARIABLE_FONT_SIZE_NAMESPACE = 'BlueConfigVariableFontSize'
 export const BASE_FONT_SIZE = 13
 
 export const defaultProps = {
-  varName: VARIABLE_FONT_SIZE_NAMESPACE,
   baseFontSize: BASE_FONT_SIZE,
   fontSize: BASE_FONT_SIZE,
 }
@@ -33,14 +31,23 @@ const variableFontSize = (
   const { varName, baseFontSize, fontSize } = { ...defaultProps, ...props }
   const variableNameSpace = `--${varName}-${fontSize.toString()}`
 
-  return `
-    ${variableNameSpace}: calc(
-        ${fontSize} / ${baseFontSize} *
-        var(${GLOBAL_FONT_SIZE_NAMESPACE}, ${baseFontSize}px)
-      );
-    font-size: ${fontSize}px;
-    font-size: var(${variableNameSpace}, ${fontSize}px);
-  `
+  const dynamicProp = `calc(
+    ${fontSize} / ${baseFontSize} *
+    var(${GLOBAL_FONT_SIZE_NAMESPACE}, ${baseFontSize}px)
+  )`
+
+  if (varName) {
+    return `
+      ${variableNameSpace}: ${dynamicProp};
+      font-size: ${fontSize}px;
+      font-size: var(${variableNameSpace}, ${fontSize}px);
+    `
+  } else {
+    return `
+      font-size: ${fontSize}px;
+      font-size: ${dynamicProp};
+    `
+  }
 }
 
 export default variableFontSize

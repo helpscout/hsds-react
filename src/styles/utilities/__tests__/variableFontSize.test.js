@@ -1,7 +1,6 @@
 import variableFontSize, { defaultProps } from '../variableFontSize'
 
 test('Renders defaultProps if no arguments defined', () => {
-  expect(variableFontSize()).toContain(defaultProps.varName)
   expect(variableFontSize()).toContain(defaultProps.baseFontSize)
   expect(variableFontSize()).toContain(defaultProps.fontSize)
 })

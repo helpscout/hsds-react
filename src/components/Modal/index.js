@@ -50,7 +50,7 @@ const defaultProps = {
   closeIcon: true,
   seamless: false,
   isOpen: false,
-  closeIconRepositionDelay: 50,
+  closeIconRepositionDelay: 0,
   containTabKeyPress: true,
   modalAnimationDelay: 0,
   modalAnimationDuration: 200,
@@ -162,9 +162,7 @@ class Modal extends Component {
     // a Modal.Header.
     // TODO: This is a (semi-naive) work-around.
     /* istanbul ignore next */
-    if (
-      this.scrollableNode.getBoundingClientRect().top > this.closeNode.offsetTop
-    ) {
+    if (scrollNode.getBoundingClientRect().top > this.closeNode.offsetTop) {
       this.closeNode.style.top = `${topOffset}px`
       return
     }

@@ -79,4 +79,10 @@ describe('Styles', () => {
 
     expect(wrapper.hasClass('is-line-height-reset')).toBe(true)
   })
+
+  test('Applies weight styles if specified', () => {
+    const wrapper = mount(<Heading weight={200} />)
+
+    expect(wrapper.hasClass('is-200')).toBe(true)
+  })
 })

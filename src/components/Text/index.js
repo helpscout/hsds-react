@@ -24,6 +24,7 @@ type Props = {
   state?: UIState,
   subtle?: boolean,
   truncate?: boolean,
+  weight?: number | string,
   wordWrap?: boolean,
 }
 
@@ -46,6 +47,7 @@ const Text = (props: Props) => {
     state,
     subtle,
     truncate,
+    weight,
     wordWrap,
     ...rest
   } = props
@@ -67,6 +69,7 @@ const Text = (props: Props) => {
     state && `is-${state}`,
     subtle && 'is-subtle',
     truncate && 'is-truncate',
+    weight && `is-${weight}`,
     wordWrap && 'is-word-wrap',
     className
   )
