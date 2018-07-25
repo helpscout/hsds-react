@@ -59,7 +59,7 @@
     "react-dom": "^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "2.0.3",
+    "@helpscout/fancy": "^2.0.3",
     "closest": "0.0.1",
     "create-react-context": "0.2.2",
     "emoji-mart": "^1.0.1",
@@ -83,7 +83,7 @@
     "seed-this": "0.0.5"
   },
   "devDependencies": {
-    "@helpscout/helix": "0.0.13",
+    "@helpscout/helix": "^0.0.13",
     "@storybook/addon-options": "^3.2.16",
     "@storybook/cli": "^3.2.16",
     "@storybook/react": "^3.2.16",
