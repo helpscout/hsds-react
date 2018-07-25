@@ -99,7 +99,26 @@ const text = {
   extraMuted: palette.grey['600'],
 }
 
+const state = {
+  danger: {
+    color: palette.red['800'],
+  },
+  error: {
+    color: palette.red['800'],
+  },
+  info: {
+    color: palette.blue['800'],
+  },
+  success: {
+    color: palette.green['800'],
+  },
+  warning: {
+    color: palette.yellow['800'],
+  },
+}
+
 export default {
   ...palette,
   text,
+  state,
 }

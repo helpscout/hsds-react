@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { Text, Tooltip } from '../src/components'
+import React from 'react'
+import { Hr, Text, Tooltip } from '../src/components'
 import { storiesOf } from '@storybook/react'
 
 const stories = storiesOf('Tooltip', module)
 
 const List = () => (
   <div style={{ width: 100 }}>
-    <h1>Heading</h1>
+    <h3>Heading</h3>
     <ul>
       <li>One</li>
       <li>Two</li>
@@ -20,18 +20,19 @@ stories.add('default', () => (
       triggerOn="click"
       renderContent={() => <List />}
       placement="top-start"
+      title="Hallo"
     >
       Custom Top
     </Tooltip>
-    <br />
-    <Tooltip title="hello thereeeeee" placement="right">
+    <Hr />
+    <Tooltip placement="right" title="Halloooooo">
       <Text>Right</Text>
     </Tooltip>
     <br />
     <Tooltip title="hello thereeeeee" placement="bottom">
       <Text>Bottom</Text>
     </Tooltip>
-    <br />
+    <Hr />
     <Tooltip title="hello thereeeeee" placement="left">
       <Text>Left</Text>
     </Tooltip>
@@ -43,5 +44,10 @@ stories.add('default', () => (
     >
       Top Left, lots of words
     </Tooltip>
+    <br />
+    <Tooltip placement="right">
+      <Text>No tooltip (missing title)</Text>
+    </Tooltip>
+    <br />
   </div>
 ))

@@ -78,7 +78,6 @@
     "seed-family": "0.0.4",
     "seed-flexy": "0.3.4",
     "seed-grid": "0.4.0",
-    "seed-hr": "0.0.3",
     "seed-list": "0.0.17",
     "seed-switch": "0.0.4",
     "seed-this": "0.0.5"
@@ -136,7 +135,7 @@
     "jest": "20.0.4",
     "jest-cli": "20.0.4",
     "jquery": "3.2.1",
-    "karma": "2.0.4",
+    "karma": "2.0.5",
     "karma-chrome-launcher": "2.2.0",
     "karma-firefox-launcher": "1.0.1",
     "karma-jasmine": "1.1.0",

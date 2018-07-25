@@ -40,8 +40,6 @@ describe('ClassNames', () => {
       <Image src="mugatu.jpg" className="so hot right now" />
     )
 
-    const classNames = wrapper.prop('className')
-
     expect(wrapper.hasClass('c-Image')).toBe(true)
     expect(wrapper.hasClass('so')).toBe(true)
     expect(wrapper.hasClass('hot')).toBe(true)

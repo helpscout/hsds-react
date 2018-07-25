@@ -1,14 +1,15 @@
+// @flow
 import { BEM } from '../../../utilities/classNames'
-import baseStyles from '../../../styles/resets/base.css'
+import baseStyles from '../../../styles/resets/base.css.js'
 import { getColor } from '../../../styles/utilities/color'
+import { TEXT_SHADES } from '../../../styles/configs/constants'
 
 const bem = BEM('.c-Icon')
 
-const shades = ['subtle', 'muted', 'faint', 'extraMuted']
+const ICON_SIZES = [8, 10, 12, 13, 14, 16, 18, 20, 24, 32, 48]
 
 const caretSize = 12
 const defaultSize = 20
-const sizes = [8, 10, 12, 13, 14, 16, 18, 20, 24, 32, 48]
 
 const css = `
   ${baseStyles}
@@ -74,22 +75,19 @@ const css = `
   }
 `
 
-function makeShadeStyles() {
-  return shades
-    .map(
-      shade => `
+function makeShadeStyles(): string {
+  return TEXT_SHADES.map(
+    shade => `
     &.is-${shade} {
       color: ${getColor('text', shade)};
     }
   `
-    )
-    .join('')
+  ).join('')
 }
 
-function makeSizeStyles() {
-  return sizes
-    .map(
-      size => `
+function makeSizeStyles(): string {
+  return ICON_SIZES.map(
+    size => `
     &.is-${size} {
       height: ${size}px;
       width: ${size}px;
@@ -99,8 +97,7 @@ function makeSizeStyles() {
       }
     }
   `
-    )
-    .join('')
+  ).join('')
 }
 
 export default css

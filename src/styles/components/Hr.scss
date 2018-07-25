@@ -1,19 +1,2 @@
-$seed-hr-namespace: "c-Hr";
-@import "pack/seed-hr/_index";
-
-.#{$seed-hr-namespace} {
-  $sizes: (
-    md: 20px,
-    sm: 12px,
-    xs: 8px,
-    none: 0
-  );
-
-  // Modifiers
-  @each $size, $margin in $sizes {
-    &.is-#{$size} {
-      margin-bottom: $margin;
-      margin-top: $margin;
-    }
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

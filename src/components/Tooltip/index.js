@@ -5,12 +5,13 @@ import Animate from '../Animate'
 import Pop from '../Pop'
 import Popper from './Popper'
 import classNames, { BEM } from '../../utilities/classNames'
+import { isFunction } from '../../utilities/is'
 import css from './styles/Tooltip.css.js'
 import type { PopProps, Placements } from '../Pop/types'
 
 type Props = {|
   ...PopProps,
-  renderContent: () => void,
+  renderContent?: () => void,
   title?: any,
 |}
 
@@ -25,8 +26,21 @@ class Tooltip extends Component<Props> {
     triggerOn: 'hover',
   }
 
+  hasRenderContentProp = () => {
+    const { renderContent } = this.props
+
+    return renderContent && isFunction(renderContent)
+  }
+
+  shouldRenderPopper = () => {
+    return this.props.title || this.hasRenderContentProp()
+  }
+
   render() {
     const {
+      animationDelay,
+      animationDuration,
+      animationSequence,
       className,
       children,
       isOpen,
@@ -40,9 +54,16 @@ class Tooltip extends Component<Props> {
       ...rest
     } = this.props
 
-    if (!title) return children || null
-
     const componentClassName = classNames('c-Tooltip', className)
+
+    if (!this.shouldRenderPopper()) {
+      return children ? (
+        <span className={componentClassName} {...rest}>
+          {children}
+        </span>
+      ) : null
+    }
+
     const arrowClassName = BEM(className).element('arrow')
 
     /**
@@ -52,20 +73,22 @@ class Tooltip extends Component<Props> {
      * Storybook.
      */
     /* istanbul ignore next */
-    const contentMarkup =
-      renderContent && typeof renderContent === 'function'
-        ? renderContent({ placement, title })
-        : title
+    const contentMarkup = this.hasRenderContentProp()
+      ? renderContent({ placement, title })
+      : title
+
+    const popProps = {
+      animationDelay,
+      animationDuration,
+      animationSequence,
+      isOpen,
+      modifiers,
+      placement,
+      triggerOn,
+    }
 
     return (
-      <Pop
-        className={componentClassName}
-        isOpen={isOpen}
-        modifiers={modifiers}
-        placement={placement}
-        triggerOn={triggerOn}
-        {...rest}
-      >
+      <Pop className={componentClassName} {...popProps} {...rest}>
         <Pop.Reference className="c-Tooltip__reference">
           {children}
         </Pop.Reference>

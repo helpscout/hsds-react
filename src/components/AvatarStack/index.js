@@ -4,7 +4,6 @@ import Avatar from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
-import { standardSizeTypes } from '../../constants/propTypes'
 import type { AvatarShape, AvatarSize } from '../Avatar/types'
 
 type Props = {

@@ -157,6 +157,18 @@ class Modal extends Component {
     const scrollNode = scrollableNode || this.scrollableNode
     if (!this.closeNode || !isNodeElement(scrollNode)) return
 
+    const topOffset = 11
+    // Adjust closeButton when the scrollableNode is being pushed down by, say,
+    // a Modal.Header.
+    // TODO: This is a (semi-naive) work-around.
+    /* istanbul ignore next */
+    if (
+      this.scrollableNode.getBoundingClientRect().top > this.closeNode.offsetTop
+    ) {
+      this.closeNode.style.top = `${topOffset}px`
+      return
+    }
+
     const defaultOffset = 9
     const offset = `${scrollNode.offsetWidth -
       scrollNode.clientWidth +

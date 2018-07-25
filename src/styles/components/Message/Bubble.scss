@@ -85,7 +85,7 @@
   &.is-primary {
     background-color: _color(blue);
     border-color: _color(blue);
-    color: white;
+    color: white !important;
 
     * {
       color: currentColor;

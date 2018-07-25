@@ -1,8 +1,10 @@
 // @flow
 import React from 'react'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { calculateAspectRatioFit } from '../../utilities/images'
 import { allPropsDefined } from '../../utilities/is'
+import css from './styles/Image.css.js'
 
 type ImageShape = 'rounded' | 'square' | ''
 type Props = {
@@ -68,4 +70,4 @@ export function enhanceStyleWithSize(props: Props): Object {
   }
 }
 
-export default Image
+export default styled(Image)(css)

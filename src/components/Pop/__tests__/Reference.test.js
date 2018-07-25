@@ -2,7 +2,6 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Reference from '../Reference'
 import Manager from '../Manager'
-import PopperReference from '../../Popper/Reference'
 
 describe('Props', () => {
   test('Can pass in props', () => {

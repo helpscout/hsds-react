@@ -31,3 +31,19 @@ test('Returns Blue 500 if colors are invalid', () => {
   expect(getColor('wut')).toEqual(colors.blue['500'])
   expect(getColor('blue', 99999)).toEqual(colors.blue['500'])
 })
+
+test('Returns nested color', () => {
+  expect(getColor('state', 'danger', 'color')).toEqual(
+    colors.state.danger.color
+  )
+  expect(getColor('state', 'success', 'color')).toEqual(
+    colors.state.success.color
+  )
+})
+
+test('Can parse dot notation', () => {
+  expect(getColor('blue.500')).toEqual(colors.blue['500'])
+  expect(getColor('red.200')).toEqual(colors.red['200'])
+  expect(getColor('state.danger.color')).toEqual(colors.state.danger.color)
+  expect(getColor('state.success.color')).toEqual(colors.state.success.color)
+})

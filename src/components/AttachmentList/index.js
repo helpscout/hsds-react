@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
@@ -10,7 +9,6 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import css from './styles/AttachmentList.css.js'
 import { providerContextTypes } from '../Attachment/propTypes'
-import type { AttachmentContext } from '../Attachment/types'
 
 type Props = {
   children: Array<any> | string,

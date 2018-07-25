@@ -1,5 +1,3 @@
-import React from 'react'
-import { mount } from 'enzyme'
 import Manager from '../Manager'
 import PopperManager from '../../Popper/Manager'
 

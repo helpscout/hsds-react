@@ -17,7 +17,7 @@ const css = `
   ${linkStyles()}
   ${baseStyles}
   background-color: white;
-  border: 1px solid ${getColor('grey', 500)};
+  border: 1px solid ${getColor('grey.500')};
   border-radius: 9999px;
   display: inline-block;
   line-height: 1;
@@ -52,17 +52,17 @@ const css = `
   }
 
   &:hover {
-    border-color: ${getColor('grey', 600)};
+    border-color: ${getColor('grey.600')};
     text-decoration: none;
 
     ${bem.element('name')} {
-      color: ${getColor('blue', 500)};
+      color: ${getColor('blue.500')};
       text-decoration: underline;
     }
   }
 
   ${bem.element('size')} {
-    color: ${getColor('charcoal', 200)};
+    color: ${getColor('charcoal.200')};
     margin-left: 5px;
   }
 

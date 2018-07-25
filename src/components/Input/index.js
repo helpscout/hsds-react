@@ -1,4 +1,5 @@
 // @flow
+/* eslint react/no-deprecated: off */
 import React, { PureComponent as Component } from 'react'
 import Backdrop from './Backdrop'
 import Resizer from './Resizer'
@@ -6,7 +7,6 @@ import Static from './Static'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import { scrollLockY } from '../ScrollLock'
-import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop, requestAnimationFrame } from '../../utilities/other'
@@ -71,8 +71,8 @@ type State = {
   id: string,
   height: ?number,
   state: ?UIState,
-  typingStartTime: ?number,
-  typingTimeout: ?number,
+  typingStartTime: any,
+  typingTimeout: any,
   value: InputValue,
 }
 
@@ -233,7 +233,7 @@ class Input extends Component<Props, State> {
     }
   }
 
-  handleOnChange = (event: Event) => {
+  handleOnChange = (event: InputEvent) => {
     if (this.props.withTypingEvent) this.typingEvent()
     const value = event.currentTarget.value
     this.setState({ value })
@@ -251,7 +251,7 @@ class Input extends Component<Props, State> {
     onFocus(event)
   }
 
-  handleOnWheel = (event: SyntheticWheelEvent<InputNode>) => {
+  handleOnWheel = (event: WheelEvent) => {
     const { multiline, onWheel, scrollLock } = this.props
     if (!multiline || !scrollLock) return
 
@@ -405,6 +405,7 @@ class Input extends Component<Props, State> {
       className: fieldClassName,
       id: inputID,
       onChange: handleOnChange,
+      // $FlowFixMe
       ref: this.setInputNodeRef,
       disabled,
       name,
