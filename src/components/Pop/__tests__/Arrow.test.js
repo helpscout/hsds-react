@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Arrow, { getPlacement, getPosition } from '../Arrow'
-import PopperManager from '../../Popper/Manager'
 import { resetStyles } from '../../styled/testHelpers'
 
 describe('Arrow', () => {

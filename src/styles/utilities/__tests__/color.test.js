@@ -40,3 +40,10 @@ test('Returns nested color', () => {
     colors.state.success.color
   )
 })
+
+test('Can parse dot notation', () => {
+  expect(getColor('blue.500')).toEqual(colors.blue['500'])
+  expect(getColor('red.200')).toEqual(colors.red['200'])
+  expect(getColor('state.danger.color')).toEqual(colors.state.danger.color)
+  expect(getColor('state.success.color')).toEqual(colors.state.success.color)
+})

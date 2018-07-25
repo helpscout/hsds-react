@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'

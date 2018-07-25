@@ -3,5 +3,12 @@
   "parser": "babel-eslint",
   "plugins": [
     "flowtype"
-  ]
+  ],
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "15.0"
+    }
+  }
 }

@@ -11,12 +11,17 @@ type ColorArgs = any
  * @returns {string} The fetched color HEX code.
  */
 export const getColor = (...args: ColorArgs): Color => {
-  const path = args.map(arg => (isNumber(arg) ? arg.toString() : arg))
+  let path = args.map(arg => (isNumber(arg) ? arg.toString() : arg))
   const defaultColor = colors.blue['500']
+  const firstArg = path[0]
 
   // Defaults to Blue "500"
   if (path.length === 0) {
     return defaultColor
+  }
+  // Dot notation
+  if (firstArg.indexOf('.') >= 0) {
+    path = firstArg.split('.')
   }
   // Default to shade "500"
   if (path.length === 1) {

@@ -1,12 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Popper, { enhancePopperStyles } from '../Popper'
-import Portal from '../../Portal'
 import ReactPopper from '../../Popper/Popper'
-
-const cx = {
-  node: '.c-PopPopper',
-}
 
 const cleanUp = () => {
   global.document.body.innerHTML = ''

@@ -1,19 +1,19 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Label from '..'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Label />)
+    const wrapper = mount(<Label />)
 
-    expect(wrapper.prop('className')).toContain('c-Label')
+    expect(wrapper.hasClass('c-Label')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
-    const wrapper = shallow(<Label className={className} />)
+    const wrapper = mount(<Label className={className} />)
 
-    expect(wrapper.prop('className')).toContain(className)
+    expect(wrapper.hasClass(className)).toBe(true)
   })
 })
 
@@ -27,7 +27,7 @@ describe('Content', () => {
   })
 
   test('Renders React Component as content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Label>
         <div className="gator">Gator</div>
       </Label>
@@ -49,20 +49,20 @@ describe('For', () => {
 
 describe('States', () => {
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<Label state="error" />)
+    const wrapper = mount(<Label state="error" />)
 
-    expect(wrapper.prop('className')).toContain('is-error')
+    expect(wrapper.hasClass('is-error')).toBe(true)
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<Label state="success" />)
+    const wrapper = mount(<Label state="success" />)
 
-    expect(wrapper.prop('className')).toContain('is-success')
+    expect(wrapper.hasClass('is-success')).toBe(true)
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<Label state="warning" />)
+    const wrapper = mount(<Label state="warning" />)
 
-    expect(wrapper.prop('className')).toContain('is-warning')
+    expect(wrapper.hasClass('is-warning')).toBe(true)
   })
 })

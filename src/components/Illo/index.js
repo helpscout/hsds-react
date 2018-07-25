@@ -1,11 +1,12 @@
 // @flow
+import type { IlloSize } from './types'
 import React from 'react'
-import PropTypes from 'prop-types'
 import ILLOS from './illos'
 import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
-import type { IlloSize } from './types'
+import css from './styles/Illo.css.js'
 
 type Props = {
   color?: string,
@@ -132,4 +133,4 @@ Illo.defaultProps = {
   size: '60',
 }
 
-export default Illo
+export default styled(Illo)(css)

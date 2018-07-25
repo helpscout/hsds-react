@@ -1,9 +1,11 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import linkStyles from '../../../styles/mixins/linkStyles.css.js'
+import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
+import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
-import { STATES, TEXT_SHADES } from '../../../styles/configs/constants'
+import { TEXT_SHADES } from '../../../styles/configs/constants'
 
 export const VAR_NAMESPACE_SIZE = 'BlueConfigTextFontSize'
 export const BASE_FONT_SIZE = 13
@@ -19,7 +21,7 @@ const css = `
 
   ${makeShadeStyles()}
   ${makeSizeStyles()}
-  ${makeStateStyles()}
+  ${makeStateColorStyles()}
 
   &.is-truncate {
     display: block;
@@ -64,17 +66,19 @@ const css = `
 `
 
 function makeShadeStyles(): string {
-  return TEXT_SHADES.map(
+  return forEach(
+    TEXT_SHADES,
     shade => `
     &.is-${shade} {
       color: ${getColor('text', shade)};
     }
   `
-  ).join('')
+  )
 }
 
 function makeSizeStyles(): string {
-  return TEXT_SIZES.map(
+  return forEach(
+    TEXT_SIZES,
     size => `
     &.is-${size} {
       ${variableFontSize({
@@ -84,17 +88,7 @@ function makeSizeStyles(): string {
       })}
     }
   `
-  ).join('')
-}
-
-function makeStateStyles(): string {
-  return STATES.map(
-    state => `
-    &.is-${state} {
-      color: ${getColor('state', state, 'color')};
-    }
-  `
-  ).join('')
+  )
 }
 
 export default css

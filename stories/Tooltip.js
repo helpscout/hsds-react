@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Tooltip } from '../src/components'
+import { Hr, Text, Tooltip } from '../src/components'
 import { storiesOf } from '@storybook/react'
 
 const stories = storiesOf('Tooltip', module)
@@ -24,7 +24,7 @@ stories.add('default', () => (
     >
       Custom Top
     </Tooltip>
-    <br />
+    <Hr />
     <Tooltip placement="right" title="Halloooooo">
       <Text>Right</Text>
     </Tooltip>
@@ -32,7 +32,7 @@ stories.add('default', () => (
     <Tooltip title="hello thereeeeee" placement="bottom">
       <Text>Bottom</Text>
     </Tooltip>
-    <br />
+    <Hr />
     <Tooltip title="hello thereeeeee" placement="left">
       <Text>Left</Text>
     </Tooltip>

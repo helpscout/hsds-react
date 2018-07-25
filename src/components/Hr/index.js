@@ -1,7 +1,8 @@
 // @flow
 import React from 'react'
-import PropTypes from 'prop-types'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import css from './styles/Hr.css.js'
 
 type Props = {
   children?: any,
@@ -22,4 +23,4 @@ Hr.defaultProps = {
   size: 'md',
 }
 
-export default Hr
+export default styled(Hr)(css)

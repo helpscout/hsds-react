@@ -1,12 +1,15 @@
 import React from 'react'
 import Tooltip from '../index'
-import Popper from '../Popper'
 import Pop from '../../Pop'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 describe('classNames', () => {
   test('Can accept custom className', () => {
-    const wrapper = shallow(<Tooltip className="derek" />)
+    const wrapper = mount(
+      <Tooltip className="derek">
+        <div />
+      </Tooltip>
+    )
 
     expect(wrapper.hasClass('derek')).toBe(true)
   })
@@ -14,7 +17,7 @@ describe('classNames', () => {
 
 describe('Children', () => {
   test('Can render children', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Tooltip title="Pop">
         <div className="ron" />
       </Tooltip>
@@ -25,7 +28,7 @@ describe('Children', () => {
   })
 
   test('Can render children, without title', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Tooltip>
         <div className="ron" />
       </Tooltip>
@@ -49,6 +52,24 @@ describe('Pop', () => {
     const pop = wrapper.find(Pop)
 
     expect(pop.length).toBeTruthy()
+  })
+
+  test('Renders a Pop component via renderContent', () => {
+    const wrapper = mount(<Tooltip renderContent={() => <div />} />)
+    const pop = wrapper.find(Pop)
+
+    expect(pop.length).toBeTruthy()
+  })
+
+  test('Does not render Pop if title + renderContent are undefined', () => {
+    const wrapper = mount(
+      <Tooltip>
+        <div />
+      </Tooltip>
+    )
+    const pop = wrapper.find(Pop)
+
+    expect(pop.length).toBeFalsy()
   })
 
   test('Passes props to internal Pop component', () => {

@@ -2,12 +2,13 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import linkStyles from '../../../styles/mixins/linkStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
+import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import { BASE_FONT_SIZE } from '../../Text/styles/Text.css.js'
 
 export const VAR_NAMESPACE_SIZE = 'BlueConfigHeadingFontSize'
 export const SHADES = {
-  light: getColor('charcoal', 200),
+  light: getColor('charcoal.200'),
 }
 export const HEADING_SIZES = {
   h1: 32,
@@ -22,7 +23,7 @@ export const HEADING_SIZES = {
 
 const css = `
   ${baseStyles}
-  color: ${getColor('charcoal', 600)};
+  color: ${getColor('charcoal.600')};
   display: block;
   font-size: ${HEADING_SIZES.h1}px;
   font-weight: 500;
@@ -36,7 +37,7 @@ const css = `
   }
 
   &.is-small {
-    color: ${getColor('charcoal', 500)};
+    color: ${getColor('charcoal.500')};
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
@@ -60,22 +61,23 @@ const css = `
 
 function makeShadeStyles(): string {
   const shades = Object.keys(SHADES)
-  return shades
-    .map(
-      shade => `
+
+  return forEach(
+    shades,
+    shade => `
     &.is-${shade} {
       color: ${SHADES[shade]};
     }
   `
-    )
-    .join('')
+  )
 }
 
 function makeSizeStyles(): string {
   const sizes = Object.keys(HEADING_SIZES)
-  return sizes
-    .map(
-      size => `
+
+  return forEach(
+    sizes,
+    size => `
     &.is-${size} {
       ${variableFontSize({
         varName: VAR_NAMESPACE_SIZE,
@@ -85,8 +87,7 @@ function makeSizeStyles(): string {
       line-height: 1.2;
     }
   `
-    )
-    .join('')
+  )
 }
 
 export default css

@@ -32,8 +32,8 @@ const css = `
     box-shadow:
       0px 1px 3px 0px rgba(0,0,0,0.1),
       0px 0px 0px 1px rgba(193,203,212,.7) inset,
-      0px -1px 0px 0px ${getColor('grey', 600)} inset;
-    color: ${getColor('charcoal', 200)};
+      0px -1px 0px 0px ${getColor('grey.600')} inset;
+    color: ${getColor('charcoal.200')};
     display: inline-block;
     max-width: 300px;
     padding: 3px;
@@ -44,8 +44,8 @@ const css = `
 
     &.is-note {
       ${noteBoxShadow()}
-      background-color: ${getColor('yellow', 300)};
-      color: ${getColor('yellow', 800)};
+      background-color: ${getColor('yellow.300')};
+      color: ${getColor('yellow.800')};
     }
 
     &.is-from {
@@ -104,8 +104,8 @@ const css = `
   // State
   &.is-error {
     ${bem.element('bubble')}.c-MessageBubble {
-      box-shadow: 0 0 0 1px ${getColor('red', 400)} inset;
-      color: ${getColor('red', 500)};
+      box-shadow: 0 0 0 1px ${getColor('red.400')} inset;
+      color: ${getColor('red.500')};
 
       ${bem.element('mediaImage')} {
         opacity: 0.5;

@@ -1,10 +1,11 @@
 // @flow
+import type { UIState } from '../../constants/types'
 import React from 'react'
 import Text from '../Text'
-import { stateTypes } from '../../constants/propTypes'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
-import type { UIState } from '../../constants/types'
+import css from './styles/Label.css.js'
 
 type Props = {
   className?: string,
@@ -37,4 +38,4 @@ const Label = (props: Props) => {
   )
 }
 
-export default Label
+export default styled(Label)(css)
