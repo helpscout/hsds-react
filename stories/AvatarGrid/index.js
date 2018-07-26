@@ -35,20 +35,33 @@ const aFewAvatarsMarkup = AvatarSpec.generate(2).map(avatar => {
 class TestComponent extends Component {
   constructor() {
     super()
-    this.state = { someProp: 0 }
-    this.updateState = this.updateState.bind(this)
+    this.state = { avatars: [], someProp: 0 }
   }
-  updateState() {
+
+  updateState = () => {
+    const avatars = AvatarSpec.generate(30).map(avatar => {
+      const { name, image, status } = avatar
+      return (
+        <Avatar
+          image={image}
+          key={name}
+          name={name}
+          shape="rounded"
+          status={status}
+        />
+      )
+    })
+
     this.setState({
-      someProp: this.state.someProp + 1,
+      avatars,
     })
   }
+
   render() {
-    console.log(`AvatarGrid: TestComponent: render(${this.state.someProp})`)
     return (
       <div>
-        <AvatarGrid max={14}>{avatarsMarkup}</AvatarGrid>
-        <button onClick={this.updateState}>Update: State</button>
+        <button onClick={this.updateState}>(Re)Render avatars</button>
+        <AvatarGrid max={14}>{this.state.avatars}</AvatarGrid>
       </div>
     )
   }

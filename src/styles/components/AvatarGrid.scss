@@ -1,26 +1,2 @@
-.c-AvatarGridWrapper {
-  @import '../resets/base';
-  &.is-center {
-    text-align: center;
-  }
-}
-
-.c-AvatarGridContainer {
-  @import '../resets/base';
-  display: inline-block;
-  min-width: 32px;
-  max-width: 260px;
-}
-
-.c-AvatarGrid {
-  @import '../resets/base';
-
-  align-items: center;
-  -ms-display: flex;
-  display: flex;
-  flex-wrap: wrap;
-
-  > * {
-    margin: 3px;
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.
