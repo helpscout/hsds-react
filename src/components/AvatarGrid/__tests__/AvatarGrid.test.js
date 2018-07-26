@@ -1,11 +1,11 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import AvatarGrid from '..'
-import { AnimateGroup, Animate, Avatar, Text } from '../../index'
+import { Animate, Avatar, Text } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<AvatarGrid />)
+    const wrapper = mount(<AvatarGrid />)
     const o = wrapper.find('.c-AvatarGrid')
 
     expect(o.hasClass('c-AvatarGrid')).toBeTruthy()
@@ -13,7 +13,7 @@ describe('ClassName', () => {
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<AvatarGrid className={customClass} />)
+    const wrapper = mount(<AvatarGrid className={customClass} />)
     const o = wrapper.find('.c-AvatarGrid')
 
     expect(o.prop('className')).toContain(customClass)
@@ -21,46 +21,8 @@ describe('ClassName', () => {
 })
 
 describe('Animation', () => {
-  test('Wraps children in an Animate, within an AnimateGroup', () => {
-    const wrapper = shallow(
-      <AvatarGrid>
-        <Avatar />
-      </AvatarGrid>
-    )
-    const o = wrapper.find(AnimateGroup)
-    const anime = o.find(Animate)
-    const avatar = o.find(Avatar)
-
-    expect(o.length).toBe(1)
-    expect(anime.length).toBe(1)
-    expect(avatar.length).toBe(1)
-  })
-
-  test('Passes staggering props to AnimateGroup', () => {
-    const wrapper = shallow(
-      <AvatarGrid>
-        <Avatar />
-      </AvatarGrid>
-    )
-    const props = wrapper.find(AnimateGroup).props()
-
-    expect(props.stagger).toBe(true)
-    expect(props.staggerDelay).toBeTruthy()
-  })
-
-  test('Can set custom AnimateGroup props', () => {
-    const wrapper = shallow(
-      <AvatarGrid animationStagger={1000}>
-        <Avatar />
-      </AvatarGrid>
-    )
-    const props = wrapper.find(AnimateGroup).props()
-
-    expect(props.staggerDelay).toBe(1000)
-  })
-
   test('Can set custom Animate sequences', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarGrid animationSequence="fade">
         <Avatar />
       </AvatarGrid>
@@ -73,7 +35,7 @@ describe('Animation', () => {
 
 describe('Children', () => {
   test('Discards non-Avatar children', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarGrid>
         <Avatar />
         <Text />
@@ -89,7 +51,7 @@ describe('Children', () => {
 
 describe('Limit', () => {
   test('Can limit the amount of avatars', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarGrid max={2}>
         <Avatar />
         <Avatar />
@@ -106,7 +68,7 @@ describe('Limit', () => {
   })
 
   test('Cannot set limit to zero (0)', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarGrid max={0}>
         <Avatar />
         <Avatar />

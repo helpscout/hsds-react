@@ -1,15 +1,17 @@
 // @flow
+import type { AvatarShape, AvatarSize } from '../Avatar/types'
 import React, { PureComponent as Component } from 'react'
 import classNames from '../../utilities/classNames'
-import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import Avatar from '../Avatar'
-import type { AvatarShape, AvatarSize } from '../Avatar/types'
+import styled from '../styled'
+import avatarGridWrapperCSS from './styles/AvatarGridWrapper.css.js'
+import avatarGridContainerCSS from './styles/AvatarGridContainer.css.js'
+import avatarGridCSS from './styles/AvatarGrid.css.js'
 
 type Props = {
   animationEasing: string,
   animationSequence: string,
-  animationStagger: number,
   center: boolean,
   children?: any,
   className?: string,
@@ -18,11 +20,14 @@ type Props = {
   size: AvatarSize,
 }
 
+const AvatarGridWrapper = styled('div')(avatarGridWrapperCSS)
+const AvatarGridContainer = styled('div')(avatarGridContainerCSS)
+const AvatarGridComponent = styled('div')(avatarGridCSS)
+
 class AvatarGrid extends Component<Props> {
   static defaultProps = {
     animationEasing: 'bounce',
     animationSequence: 'fade',
-    animationStagger: 20,
     center: true,
     max: 9,
     shape: 'rounded',
@@ -33,7 +38,6 @@ class AvatarGrid extends Component<Props> {
     const {
       animationEasing,
       animationSequence,
-      animationStagger,
       center,
       children,
       className,
@@ -94,19 +98,14 @@ class AvatarGrid extends Component<Props> {
     })
 
     return (
-      <div className={componentWrapperClassName}>
-        <div className="c-AvatarGridContainer">
-          <AnimateGroup
-            className={componentClassName}
-            stagger
-            staggerDelay={animationStagger}
-            {...rest}
-          >
+      <AvatarGridWrapper className={componentWrapperClassName}>
+        <AvatarGridContainer className="c-AvatarGridContainer">
+          <AvatarGridComponent className={componentClassName} {...rest}>
             {avatarMarkup}
             {additionalAvatarMarkup}
-          </AnimateGroup>
-        </div>
-      </div>
+          </AvatarGridComponent>
+        </AvatarGridContainer>
+      </AvatarGridWrapper>
     )
   }
 }
