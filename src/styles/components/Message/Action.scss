@@ -1,13 +1,2 @@
-@import "pack/seed-this/__index";
-@import "../../configs/color";
-
-.c-MessageAction {
-  @import "../../resets/base";
-  $block: this();
-  padding-bottom: 4px;
-  padding-top: 4px;
-
-  a {
-    color: _color(charcoal, 400);
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

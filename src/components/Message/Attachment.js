@@ -1,13 +1,14 @@
 // @flow
+import type { MessageBubble, MessageThemeContext } from './types'
 import React from 'react'
-import PropTypes from 'prop-types'
 import Link from '../Link'
 import Text from '../Text'
 import Chat from './Chat'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { bubbleTypes, providerContextTypes } from './propTypes'
-import type { MessageBubble, MessageThemeContext } from './types'
+import { providerContextTypes } from './propTypes'
+import css, { TextCSS } from './styles/Attachment.css.js'
 
 type Props = MessageBubble & {
   errorMessage?: string,
@@ -22,7 +23,9 @@ type Props = MessageBubble & {
 }
 type Context = MessageThemeContext
 
-const Attachment = (props: Props, context: Context) => {
+const MessageAttachmentText = styled(Text)(TextCSS)
+
+export const Attachment = (props: Props, context: Context) => {
   const {
     body,
     children,
@@ -67,9 +70,9 @@ const Attachment = (props: Props, context: Context) => {
       </Text>
     </Link>
   ) : (
-    <Text className={textClassName} truncate>
+    <MessageAttachmentText className={textClassName} truncate>
       {filename}
-    </Text>
+    </MessageAttachmentText>
   )
 
   return (
@@ -97,4 +100,4 @@ Attachment.defaultProps = {
 Attachment.contextTypes = providerContextTypes
 Attachment.displayName = 'Message.Attachment'
 
-export default Attachment
+export default styled(Attachment)(css)

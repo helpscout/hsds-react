@@ -3,8 +3,10 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import linkStyles from '../../../styles/mixins/linkStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
-import variableFontSize from '../../../styles/utilities/variableFontSize'
-import { BASE_FONT_SIZE, makeWeightStyles } from '../../Text/styles/Text.css.js'
+import variableFontSize, {
+  BASE_FONT_SIZE,
+} from '../../../styles/utilities/variableFontSize'
+import { makeWeightStyles } from '../../Text/styles/Text.css.js'
 
 export const VAR_NAMESPACE_SIZE = 'BlueConfigHeadingFontSize'
 export const SHADES = {
@@ -83,7 +85,6 @@ function makeSizeStyles(): string {
     &.is-${size} {
       ${variableFontSize({
         varName: VAR_NAMESPACE_SIZE,
-        baseFontSize: BASE_FONT_SIZE,
         fontSize: HEADING_SIZES[size],
       })}
       line-height: 1.2;

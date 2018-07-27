@@ -13,31 +13,22 @@ import Content from './Content'
 import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { isFunction, isString } from '../../utilities/is'
 import { providerContextTypes } from './propTypes'
+import css from './styles/Message.css.js'
 
 type Props = MessageType & {
   avatar?: any,
   showAvatar?: boolean,
 }
 
-class Message extends Component<Props> {
+export class Message extends Component<Props> {
   static defaultProps = {
     showAvatar: true,
   }
   static contextTypes = providerContextTypes
-
-  // Sub-components
-  static Action = Action
-  static Attachment = Attachment
-  static Bubble = Bubble
-  static Caption = Caption
-  static Chat = Chat
-  static Content = Content
-  static Media = Media
-  static Provider = Provider
-  static Question = Question
 
   shouldShowAvatar = (): boolean => {
     const { from, showAvatar } = this.props
@@ -160,4 +151,17 @@ class Message extends Component<Props> {
   }
 }
 
-export default Message
+const StyledMessage = styled(Message)(css)
+StyledMessage.displayName = 'Message'
+
+StyledMessage.Action = Action
+StyledMessage.Attachment = Attachment
+StyledMessage.Bubble = Bubble
+StyledMessage.Caption = Caption
+StyledMessage.Chat = Chat
+StyledMessage.Content = Content
+StyledMessage.Media = Media
+StyledMessage.Provider = Provider
+StyledMessage.Question = Question
+
+export default StyledMessage

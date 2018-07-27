@@ -1,21 +1,22 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Action from '../Action'
 import ChatBlock from '../ChatBlock'
 import Bubble from '../Bubble'
+import Message from '../Message'
 import { Animate, Flexy, Timestamp } from '../../'
 
 const cx = 'c-MessageChatBlock'
 
 describe('ClassNames', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<ChatBlock />)
+    const wrapper = mount(<ChatBlock />)
 
     expect(wrapper.length).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<ChatBlock className="mugatu" />)
+    const wrapper = mount(<ChatBlock className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -124,8 +125,13 @@ describe('To/From', () => {
 
 describe('Context', () => {
   test('Adds className based on context.theme', () => {
-    const wrapper = mount(<ChatBlock />, { context: { theme: 'embed' } })
+    const wrapper = mount(
+      <Message.Provider theme="embed">
+        <ChatBlock />
+      </Message.Provider>
+    )
+    const el = wrapper.find(`.${cx}`)
 
-    expect(wrapper.hasClass('is-theme-embed')).toBe(true)
+    expect(el.props().className).toContain('is-theme-embed')
   })
 })

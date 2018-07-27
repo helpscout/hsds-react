@@ -1,9 +1,9 @@
 // @flow
+import type { MessageThemeContext } from './types'
 import React from 'react'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { providerContextTypes } from './propTypes'
-import type { MessageThemeContext } from './types'
 
 type Props = {
   className?: string,

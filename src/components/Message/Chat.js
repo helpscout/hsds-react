@@ -1,15 +1,15 @@
 // @flow
+import type { MessageBubble } from './types'
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import Bubble from './Bubble'
 import Caption from './Caption'
 import ChatBlock from './ChatBlock'
 import Flexy from '../Flexy'
 import Spinner from '../Spinner'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { bubbleTypes } from './propTypes'
-import type { MessageBubble } from './types'
+import css from './styles/Chat.css.js'
 
 type Props = MessageBubble & {
   bubbleClassName?: string,
@@ -21,7 +21,7 @@ type Props = MessageBubble & {
   onBubbleClick: (event: Event) => void,
 }
 
-class Chat extends Component<Props> {
+export class Chat extends Component<Props> {
   static defaultProps = {
     onBubbleClick: noop,
     error: false,
@@ -58,7 +58,12 @@ class Chat extends Component<Props> {
       ...rest
     } = this.props
 
-    const componentClassName = classNames('c-MessageChat', className)
+    const componentClassName = classNames(
+      'c-MessageChat',
+      from && 'is-from',
+      to && 'is-to',
+      className
+    )
 
     const chatProps = {
       body,
@@ -126,4 +131,4 @@ class Chat extends Component<Props> {
   }
 }
 
-export default Chat
+export default styled(Chat)(css)

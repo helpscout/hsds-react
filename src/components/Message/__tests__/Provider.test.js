@@ -3,17 +3,19 @@ import { mount } from 'enzyme'
 import Provider from '../Provider'
 import Message from '../Message'
 
+const ui = {
+  message: '.c-Message',
+}
+
 test('Provides child components with props as context', () => {
   const wrapper = mount(
     <Provider theme="embed">
       <Message />
     </Provider>
   )
-  let o = wrapper.find(Message).getNode()
-  expect(o.context.theme).toBe('embed')
+  const o = wrapper.find(ui.message)
+  expect(o.props().className).toContain('is-theme-embed')
 
   wrapper.setProps({ theme: 'admin' })
-  o = wrapper.find(Message).getNode()
-
-  expect(o.context.theme).toBe('admin')
+  expect(o.props().className).toContain('is-theme-admin')
 })

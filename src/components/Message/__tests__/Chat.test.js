@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Bubble from '../Bubble'
 import ChatBlock from '../ChatBlock'
 import Chat from '../Chat'
@@ -15,13 +15,13 @@ const ui = {
 
 describe('ClassNames', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
 
     expect(wrapper.length).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Chat className="mugatu" />)
+    const wrapper = mount(<Chat className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -29,28 +29,28 @@ describe('ClassNames', () => {
 
 describe('Bubble', () => {
   test('Contains Bubble component', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
     const o = wrapper.find(Bubble)
 
     expect(o.length).toBeTruthy()
   })
 
   test('Bubble does not inherit component classNames', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
     const o = wrapper.find(Bubble)
 
     expect(o.hasClass(cx)).not.toBeTruthy()
   })
 
   test('Renders content inside of Bubble', () => {
-    const wrapper = shallow(<Chat>Mugatu</Chat>)
+    const wrapper = mount(<Chat>Mugatu</Chat>)
     const o = wrapper.find(Bubble)
 
     expect(o.getNode().props.children).toBe('Mugatu')
   })
 
   test('Passes correct props to Bubble', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Chat
         body="body"
         from
@@ -81,21 +81,21 @@ describe('Bubble', () => {
 
 describe('ChatBlock', () => {
   test('Contains a ChatBlock component', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
     const o = wrapper.find(ChatBlock)
 
     expect(o.length).toBeTruthy()
   })
 
   test('ChatBlock inherits component classNames', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
     const o = wrapper.find(ChatBlock)
 
     expect(o.hasClass(cx)).toBeTruthy()
   })
 
   test('Passes correct props to ChatBlock', () => {
-    const wrapper = shallow(<Chat from to read ltr rtl timestamp="time" />)
+    const wrapper = mount(<Chat from to read ltr rtl timestamp="time" />)
     const props = wrapper.find(ChatBlock).getNode().props
 
     expect(props.from).toBeTruthy()
@@ -109,14 +109,14 @@ describe('ChatBlock', () => {
 
 describe('Caption', () => {
   test('Does not render a Caption by default', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
     const o = wrapper.find(Caption)
 
     expect(o.length).not.toBeTruthy()
   })
 
   test('Renders a caption, if one is provided', () => {
-    const wrapper = shallow(<Chat caption="Derek" />)
+    const wrapper = mount(<Chat caption="Derek" />)
     const o = wrapper.find(Caption)
 
     expect(o.length).toBeTruthy()
@@ -126,21 +126,21 @@ describe('Caption', () => {
 
 describe('Error', () => {
   test('Does not render error by default', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
     const o = wrapper.find(ui.error)
 
     expect(o.length).toBe(0)
   })
 
   test('Renders error, if specified (bool)', () => {
-    const wrapper = shallow(<Chat error />)
+    const wrapper = mount(<Chat error />)
     const o = wrapper.find(ui.error)
 
     expect(o.length).toBe(1)
   })
 
   test('Renders error, if specified (string)', () => {
-    const wrapper = shallow(<Chat error="nope" />)
+    const wrapper = mount(<Chat error="nope" />)
     const o = wrapper.find(ui.error)
 
     expect(o.length).toBe(1)
@@ -148,7 +148,7 @@ describe('Error', () => {
   })
 
   test('Can customize the default error message', () => {
-    const wrapper = shallow(<Chat error errorMessage="nope" />)
+    const wrapper = mount(<Chat error errorMessage="nope" />)
     const o = wrapper.find(ui.error)
 
     expect(o.length).toBe(1)
@@ -158,7 +158,7 @@ describe('Error', () => {
 
 describe('Loading', () => {
   test('Does not render by default', () => {
-    const wrapper = shallow(<Chat />)
+    const wrapper = mount(<Chat />)
     const o = wrapper.find(ui.metaState)
     const s = wrapper.find(ui.loadingSpinner)
 
@@ -167,7 +167,7 @@ describe('Loading', () => {
   })
 
   test('Renders, if specified', () => {
-    const wrapper = shallow(<Chat isLoading />)
+    const wrapper = mount(<Chat isLoading />)
     const o = wrapper.find(ui.metaState)
     const s = wrapper.find(ui.loadingSpinner)
 
@@ -177,7 +177,7 @@ describe('Loading', () => {
   })
 
   test('Does not interfere with rendering of meta content', () => {
-    const wrapper = shallow(<Chat isLoading caption="derek.jpg" error />)
+    const wrapper = mount(<Chat isLoading caption="derek.jpg" error />)
     const o = wrapper.find(ui.metaState)
     const l = wrapper.find(ui.loadingSpinner)
     const c = wrapper.find(ui.caption)

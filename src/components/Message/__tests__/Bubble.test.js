@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Bubble from '../Bubble'
 import Message from '../Message'
 import { Heading, LoadingDots, Text } from '../../'
@@ -15,45 +15,46 @@ const ui = {
   from: `.${cx}__from`,
   iconWrapper: `.${cx}__iconWrapper`,
   icon: `.${cx}__icon`,
+  title: `.${cx}__title`,
 }
 
 baseComponentTest(Bubble, baseComponentOptions)
 
 describe('Title', () => {
   test('Does not render a Title by default', () => {
-    const wrapper = shallow(<Bubble />)
-    const o = wrapper.find(Heading)
+    const wrapper = mount(<Bubble />)
+    const o = wrapper.find(ui.title)
 
     expect(o.length).toBe(0)
   })
 
   test('Renders a Title if defined', () => {
-    const wrapper = shallow(<Bubble title="Mugatu" primary />)
-    const o = wrapper.find(Heading)
+    const wrapper = mount(<Bubble title="Mugatu" primary />)
+    const o = wrapper.find(ui.title)
 
     expect(o.length).toBe(1)
     expect(o.hasClass('c-MessageBubble__title')).toBeTruthy()
-    expect(o.getNode().props.children).toContain('Mugatu')
+    expect(o.props().children).toContain('Mugatu')
   })
 })
 
 describe('Typing', () => {
   test('Does not render a LoadingDots by default', () => {
-    const wrapper = shallow(<Bubble />)
+    const wrapper = mount(<Bubble />)
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(0)
   })
 
   test('Renders LoadingDots if typing', () => {
-    const wrapper = shallow(<Bubble typing />)
+    const wrapper = mount(<Bubble typing />)
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(1)
   })
 
   test('Renders LoadingDots instead of children if typing', () => {
-    const wrapper = shallow(<Bubble typing>Mugatu</Bubble>)
+    const wrapper = mount(<Bubble typing>Mugatu</Bubble>)
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(1)
@@ -63,7 +64,7 @@ describe('Typing', () => {
 
 describe('Content', () => {
   test('Text-based content is contained with a wordWrapped Text component', () => {
-    const wrapper = shallow(<Bubble>Mugatu</Bubble>)
+    const wrapper = mount(<Bubble>Mugatu</Bubble>)
     const o = wrapper.find(Text)
 
     expect(o.length).toBe(1)
@@ -72,7 +73,7 @@ describe('Content', () => {
   })
 
   test('Span-based content is contained with a wordWrapped Text component', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Bubble>
         <span>Mugatu</span>
       </Bubble>
@@ -84,7 +85,7 @@ describe('Content', () => {
   })
 
   test('Block-based content is not contained with a Text component', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Bubble>
         <div>Mugatu</div>
       </Bubble>
@@ -96,7 +97,7 @@ describe('Content', () => {
   })
 
   test('Renders body if defined', () => {
-    const wrapper = shallow(<Bubble body="Mugatu" />)
+    const wrapper = mount(<Bubble body="Mugatu" />)
     const o = wrapper.find(ui.body)
 
     expect(o.length).toBe(1)
@@ -104,7 +105,7 @@ describe('Content', () => {
   })
 
   test('Renders body instead of children, if defined', () => {
-    const wrapper = shallow(<Bubble body="Mugatu">Zoolander</Bubble>)
+    const wrapper = mount(<Bubble body="Mugatu">Zoolander</Bubble>)
     const o = wrapper.find(ui.body)
 
     expect(o.length).toBe(1)
@@ -114,59 +115,60 @@ describe('Content', () => {
 
   test('Renders body as HTML', () => {
     const html = '<div>Mugatu<br /></div>'
-    const wrapper = shallow(<Bubble body={html} />)
+    const wrapper = mount(<Bubble body={html} />)
     const o = wrapper.find(ui.body)
+    const parsedHTML = '<div>Mugatu<br></div>'
 
     expect(o.length).toBe(1)
-    expect(wrapper.html()).toContain(html)
+    expect(wrapper.html()).toContain(parsedHTML)
   })
 })
 
 describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
-    const wrapper = shallow(<Bubble from />)
+    const wrapper = mount(<Bubble from />)
 
     expect(wrapper.hasClass('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
-    const wrapper = shallow(<Bubble to />)
+    const wrapper = mount(<Bubble to />)
 
     expect(wrapper.hasClass('is-to')).toBeTruthy()
   })
 
   test('Applies "note" styles, if defined', () => {
-    const wrapper = shallow(<Bubble isNote />)
+    const wrapper = mount(<Bubble isNote />)
 
     expect(wrapper.hasClass('is-note')).toBeTruthy()
   })
 
   test('Applies "primary" styles, if defined', () => {
-    const wrapper = shallow(<Bubble primary />)
+    const wrapper = mount(<Bubble primary />)
 
     expect(wrapper.hasClass('is-primary')).toBeTruthy()
   })
 
   test('Applies "size" styles, if defined', () => {
-    const wrapper = shallow(<Bubble size="sm" />)
+    const wrapper = mount(<Bubble size="sm" />)
 
     expect(wrapper.hasClass('is-sm')).toBeTruthy()
   })
 
   test('Applies "ltr" styles, if defined', () => {
-    const wrapper = shallow(<Bubble ltr />)
+    const wrapper = mount(<Bubble ltr />)
 
     expect(wrapper.hasClass('is-ltr')).toBeTruthy()
   })
 
   test('Applies "rtl" styles, if defined', () => {
-    const wrapper = shallow(<Bubble rtl />)
+    const wrapper = mount(<Bubble rtl />)
 
     expect(wrapper.hasClass('is-rtl')).toBeTruthy()
   })
 
   test('Applies "typing" styles, if defined', () => {
-    const wrapper = shallow(<Bubble typing />)
+    const wrapper = mount(<Bubble typing />)
 
     expect(wrapper.hasClass('is-typing')).toBeTruthy()
   })
@@ -174,9 +176,14 @@ describe('Styles', () => {
 
 describe('Context', () => {
   test('Adds className based on context.theme', () => {
-    const wrapper = shallow(<Bubble />, { context: { theme: 'embed' } })
+    const wrapper = mount(
+      <Message.Provider theme="embed">
+        <Bubble />
+      </Message.Provider>
+    )
+    const el = wrapper.find(Bubble)
 
-    expect(wrapper.hasClass('is-theme-embed')).toBe(true)
+    expect(el.hasClass('is-theme-embed')).toBe(true)
   })
 })
 
@@ -234,12 +241,12 @@ describe('Icon', () => {
   })
 
   test('Renders an icon, if specified', () => {
-    const wrapper = shallow(<Bubble body="derek" icon="attachment" />)
+    const wrapper = mount(<Bubble body="derek" icon="attachment" />)
     const o = wrapper.find(ui.icon)
     const w = wrapper.find(ui.iconWrapper)
 
     expect(o.length).toBe(1)
     expect(w.length).toBe(1)
-    expect(o.prop('name')).toBe('attachment')
+    expect(o.props().className).toContain('attachment')
   })
 })

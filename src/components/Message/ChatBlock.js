@@ -1,4 +1,5 @@
 // @flow
+import { providerContextTypes } from './propTypes'
 import React, { PureComponent as Component } from 'react'
 import Animate from '../Animate'
 import Flexy from '../Flexy'
@@ -6,9 +7,10 @@ import Action from './Action'
 import Bubble from './Bubble'
 import HoverWrapper from '../HoverWrapper'
 import Timestamp from '../Timestamp'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
-import { chatTypes, providerContextTypes } from './propTypes'
 import type { MessageChat } from './types'
+import css from './styles/ChatBlock.css.js'
 
 type Props = MessageChat & {
   body?: string,
@@ -17,7 +19,7 @@ type Props = MessageChat & {
   isHovered?: boolean,
 }
 
-class ChatBlock extends Component<Props> {
+export class ChatBlock extends Component<Props> {
   static contextTypes = providerContextTypes
   static displayName = 'Message.ChatBlock'
 
@@ -84,4 +86,4 @@ class ChatBlock extends Component<Props> {
   }
 }
 
-export default HoverWrapper(ChatBlock)
+export default HoverWrapper(styled(ChatBlock)(css))

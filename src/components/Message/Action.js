@@ -1,10 +1,12 @@
 // @flow
+import type { MessageChat, MessageThemeContext } from './types'
 import React from 'react'
 import Text from '../Text'
 import ChatBlock from './ChatBlock'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { providerContextTypes } from './propTypes'
-import type { MessageChat, MessageThemeContext } from './types'
+import css from './styles/Action.css.js'
 
 type Props = MessageChat & {
   className?: string,
@@ -12,7 +14,7 @@ type Props = MessageChat & {
 }
 type Context = MessageThemeContext
 
-const Action = (props: Props, context: Context) => {
+export const Action = (props: Props, context: Context) => {
   const {
     children,
     className,
@@ -65,4 +67,4 @@ const Action = (props: Props, context: Context) => {
 Action.contextTypes = providerContextTypes
 Action.displayName = 'Message.Action'
 
-export default Action
+export default styled(Action)(css)
