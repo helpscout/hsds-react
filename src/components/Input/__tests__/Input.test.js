@@ -565,9 +565,11 @@ describe('Typing events', () => {
     spies = {
       callStartTyping: jest.spyOn(Input.prototype, 'callStartTyping'),
       callStopTyping: jest.spyOn(Input.prototype, 'callStopTyping'),
+      clearThrottler: jest.spyOn(Input.prototype, 'clearThrottler'),
       clearTypingTimeout: jest.spyOn(Input.prototype, 'clearTypingTimeout'),
       onStartTyping: jest.fn(),
       onStopTyping: jest.fn(),
+      setThrottler: jest.spyOn(Input.prototype, 'setThrottler'),
       setTypingTimeout: jest.spyOn(Input.prototype, 'setTypingTimeout'),
       typingEvent: jest.spyOn(Input.prototype, 'typingEvent'),
     }
@@ -594,6 +596,7 @@ describe('Typing events', () => {
 
   test(`On start typing should call start typing events and make a timeout`, () => {
     wrapper.find('input').simulate('change')
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
     expect(spies.typingEvent).toHaveBeenCalledTimes(1)
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
     expect(spies.setTypingTimeout).toHaveBeenCalledTimes(1)
@@ -605,49 +608,58 @@ describe('Typing events', () => {
     expect(wrapper.props().typingTimeoutDelay).toBe(3000)
     wrapper.find('input').simulate('change')
     expect(wrapper.state().typingTimeout).toBeDefined()
+    expect(wrapper.state().typingThrottle).toBeDefined()
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
     wrapper.find('input').simulate('change')
+    expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
     jest.runTimersToTime(5000)
     expect(wrapper.state.typingTimeout).not.toBeDefined()
     expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
     expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(3)
     expect(clearTimeout).toHaveBeenCalledTimes(2)
+    expect(clearInterval).toHaveBeenCalledTimes(1)
   })
 
   test('If the delay is less than 3000ms reset the timeout than fire it if time advances past 3000ms', () => {
     wrapper.find('input').simulate('change')
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
     jest.runTimersToTime(2100)
+    expect(spies.onStartTyping).toHaveBeenCalledTimes(5)
     wrapper.find('input').simulate('change')
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    expect(spies.setThrottler).toHaveBeenCalledTimes(1)
     expect(spies.callStopTyping).not.toHaveBeenCalled()
     expect(spies.onStopTyping).not.toHaveBeenCalled()
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+    // only going to clear timeout if there is one
     expect(clearTimeout).toHaveBeenCalledTimes(1)
     wrapper.find('input').simulate('change')
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(3)
     expect(clearTimeout).toHaveBeenCalledTimes(2)
     jest.runTimersToTime(4999)
+    expect(spies.onStartTyping).toHaveBeenCalledTimes(11)
     expect(spies.callStopTyping).toHaveBeenCalledTimes(1)
     expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(3)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(4)
     expect(clearTimeout).toHaveBeenCalledTimes(3)
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
+    expect(spies.setThrottler).toHaveBeenCalledTimes(1)
   })
 
   test('Should clear timeout on componentWillUnMount', () => {
     wrapper.find('input').simulate('change')
     wrapper.unmount()
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
     expect(clearTimeout).toHaveBeenCalledTimes(1)
   })
 
   test('Should call callStopTyping on refApplyCallStopTyping', () => {
     wrapper.find('input').simulate('change')
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(0)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
     refs.applySubmit()
     expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
-    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(1)
+    expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
   })
 })

@@ -71,7 +71,6 @@ type State = {
   id: string,
   height: ?number,
   state: ?UIState,
-  typingStartTime: any,
   typingTimeout: any,
   value: InputValue,
 }
@@ -101,6 +100,7 @@ class Input extends Component<Props, State> {
     state: '',
     type: 'text',
     typingTimeoutDelay: 5000,
+    typingThrottleInterval: 500,
     value: '',
     withTypingEvent: false,
   }
@@ -115,7 +115,6 @@ class Input extends Component<Props, State> {
       id: props.id || uniqueID(),
       height: null,
       state: props.state,
-      typingStartTime: undefined,
       typingTimeout: undefined,
       value: props.value,
     }
@@ -192,14 +191,18 @@ class Input extends Component<Props, State> {
     }
   }
 
-  callStartTyping(now: number) {
-    this.props.onStartTyping()
-    this.setTypingTimeout(now)
+  callStartTyping() {
+    /* istanbul ignore next */
+    if (this.props.onStartTyping) {
+      this.props.onStartTyping()
+      this.setThrottler()
+    }
   }
 
   callStopTyping() {
     /* istanbul ignore next */
     if (this.state.typingTimeout) {
+      this.clearThrottler()
       this.props.onStopTyping()
       this.clearTypingTimeout()
     }
@@ -213,23 +216,39 @@ class Input extends Component<Props, State> {
     }
   }
 
-  setTypingTimeout(now: number) {
+  setTypingTimeout() {
     this.setState({
-      typingTimeout: setTimeout(
-        this.callStopTyping.bind(this),
-        this.props.typingTimeoutDelay
+      typingTimeout: setTimeout(() => {
+        this.clearThrottler()
+        this.callStopTyping()
+      }, this.props.typingTimeoutDelay),
+    })
+  }
+
+  clearThrottler() {
+    /* istanbul ignore next */
+    if (this.state.typingThrottle) {
+      clearInterval(this.state.typingThrottle)
+      this.setState({ typingThrottle: undefined })
+    }
+  }
+
+  setThrottler() {
+    this.setState({
+      typingThrottle: setInterval(
+        this.props.onStartTyping,
+        this.props.typingThrottleInterval
       ),
-      typingStartTime: now,
     })
   }
 
   typingEvent() {
-    const now = Date.now()
-    if (!this.state.typingTimeout) {
-      this.callStartTyping(now)
-    } else {
-      this.clearTypingTimeout()
-      this.setTypingTimeout(now)
+    // reset the stop debouncer every time a key is pressed
+    this.clearTypingTimeout()
+    this.setTypingTimeout()
+    if (!this.state.typingThrottle) {
+      // if there is no throttler add it
+      this.callStartTyping()
     }
   }
 
@@ -320,6 +339,7 @@ class Input extends Component<Props, State> {
       style: styleProp,
       suffix,
       type,
+      typingThrottleInterval,
       typingTimeoutDelay,
       withTypingEvent,
       ...rest

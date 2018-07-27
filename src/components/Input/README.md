@@ -60,6 +60,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | suffix                   | `string`             | Text to appear after the input.                                           |
 | type                     | `string`             | Determines the input type.                                                |
 | typingTimeoutDelay       | `function`           | Determines the delay of when `onStopTyping` fires after typing stops.     |
+| typingThrottleInterval   | `function`           | Determines the interval for firing `onStartTyping`.                       |
 | value                    | `string`             | Initial value of the input.                                               |
 | withTypingEvent          | `bool`               | Enables typing `onStartTyping` and `onStopTyping` event callbacks.        |
 
