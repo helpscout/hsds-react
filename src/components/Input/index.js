@@ -62,6 +62,7 @@ type Props = {
   style: Object,
   suffix: string,
   type: string,
+  typingThrottleInterval: number,
   typingTimeoutDelay: number,
   value: InputValue,
   withTypingEvent: false,
@@ -71,7 +72,8 @@ type State = {
   id: string,
   height: ?number,
   state: ?UIState,
-  typingTimeout: any,
+  typingThrottle: ?IntervalID,
+  typingTimeout: ?TimeoutID,
   value: InputValue,
 }
 
@@ -99,8 +101,8 @@ class Input extends Component<Props, State> {
     seamless: false,
     state: '',
     type: 'text',
-    typingTimeoutDelay: 5000,
     typingThrottleInterval: 500,
+    typingTimeoutDelay: 5000,
     value: '',
     withTypingEvent: false,
   }
@@ -115,6 +117,7 @@ class Input extends Component<Props, State> {
       id: props.id || uniqueID(),
       height: null,
       state: props.state,
+      typingThrottle: undefined,
       typingTimeout: undefined,
       value: props.value,
     }
