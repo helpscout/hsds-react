@@ -1,18 +1,32 @@
-@import "pack/seed-family/__index";
+@import 'pack/seed-family/__index';
+
 .c-Notification {
-  @import "../../resets/base";
-  $bubbleClassName: ".c-Notification__messageBubble";
+  @import '../../resets/base';
+  $bubbleClassName: '.c-Notification__messageBubble';
   $br: 8px;
   $br-sm: 2px;
 
   #{$bubbleClassName} {
     background-color: white;
-    border-color: transparent;
+    border-color: transparent !important;
     box-shadow: 0 0 0 1px rgba(black, 0.1), 0 4px 6px rgba(black, 0.15);
     cursor: pointer;
     max-width: 100%;
     text-align: right;
     transition: border-radius 200ms ease;
+  }
+
+  & + .c-Notification {
+    #{$bubbleClassName} {
+      border-top-right-radius: 8px !important;
+    }
+  }
+
+  &:last-child {
+    #{$bubbleClassName} {
+      border-top-right-radius: 8px !important;
+      border-bottom-left-radius: 8px !important;
+    }
   }
 
   &__text {
@@ -23,31 +37,37 @@
   // Modifiers
   &.is-align-right {
     #{$bubbleClassName} {
-      border-top-left-radius: $br;
-      border-top-right-radius: $br-sm;
-      border-bottom-right-radius: $br-sm;
-      border-bottom-left-radius: $br;
+      border-top-left-radius: $br !important;
+      border-top-right-radius: $br-sm !important;
+      border-bottom-right-radius: $br-sm !important;
+      border-bottom-left-radius: $br !important;
+    }
+
+    &:only-child {
+      #{$bubbleClassName} {
+        border-top-right-radius: $br !important;
+      }
     }
 
     &:not(:only-child) {
       #{$bubbleClassName} {
-        border-top-right-radius: $br-sm;
+        border-top-right-radius: $br-sm !important;
       }
     }
 
     &:first-child:not(:last-child) {
       #{$bubbleClassName} {
-        border-top-right-radius: $br;
+        border-top-right-radius: $br !important;
       }
     }
   }
 
   &.is-align-left {
     #{$bubbleClassName} {
-      border-top-left-radius: $br-sm;
-      border-top-right-radius: $br;
-      border-bottom-right-radius: $br;
-      border-bottom-left-radius: $br-sm;
+      border-top-left-radius: $br-sm !important;
+      border-top-right-radius: $br !important;
+      border-bottom-right-radius: $br !important;
+      border-bottom-left-radius: $br-sm !important;
       text-align: left;
     }
 
@@ -60,16 +80,16 @@
 
     &:not(:only-child) {
       #{$bubbleClassName} {
-        border-top-right-radius: $br;
-        border-bottom-left-radius: $br-sm;
+        border-top-right-radius: $br !important;
+        border-bottom-left-radius: $br-sm !important;
       }
     }
 
     &:first-child:not(:only-child) {
       #{$bubbleClassName} {
-        border-top-left-radius: $br;
-        border-bottom-left-radius: $br-sm;
-        border-bottom-right-radius: $br;
+        border-top-left-radius: $br !important;
+        border-bottom-left-radius: $br-sm !important;
+        border-bottom-right-radius: $br !important;
       }
     }
   }

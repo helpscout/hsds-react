@@ -1,7 +1,9 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Notification from '../index'
 import { Animate, Truncate } from '../../'
+
+jest.useFakeTimers()
 
 const ui = {
   message: '.c-Notification__message',
@@ -12,14 +14,14 @@ const ui = {
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Notification />)
+    const wrapper = mount(<Notification />)
 
     expect(wrapper.hasClass('c-Notification')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Notification className={customClass} />)
+    const wrapper = mount(<Notification className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -27,7 +29,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Does not renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Notification>
         <div className="child">Hello</div>
       </Notification>
@@ -40,13 +42,13 @@ describe('Children', () => {
 
 describe('Align', () => {
   test('Has default alignment of right', () => {
-    const wrapper = shallow(<Notification />)
+    const wrapper = mount(<Notification />)
 
     expect(wrapper.hasClass('is-align-right')).toBeTruthy()
   })
 
   test('Can change alignment styles, if specified', () => {
-    const wrapper = shallow(<Notification align="left" />)
+    const wrapper = mount(<Notification align="left" />)
 
     expect(wrapper.hasClass('is-align-left')).toBeTruthy()
   })
@@ -54,7 +56,7 @@ describe('Align', () => {
 
 describe('AnimationSequence', () => {
   test('Can customize animationSequence', () => {
-    const wrapper = shallow(<Notification animationSequence="scale" />)
+    const wrapper = mount(<Notification animationSequence="scale" />)
     const o = wrapper.find(Animate)
 
     expect(o.prop('sequence')).toBe('scale')
@@ -63,7 +65,7 @@ describe('AnimationSequence', () => {
 
 describe('Body', () => {
   test('Does not render body content', () => {
-    const wrapper = shallow(<Notification body="Santa!" />)
+    const wrapper = mount(<Notification body="Santa!" />)
     const o = wrapper.find(ui.message)
 
     expect(o.length).toBe(1)
@@ -80,7 +82,7 @@ describe('isDismissable', () => {
   })
 
   test('Cannot be dismissed, if isDismissable is false', () => {
-    const wrapper = shallow(<Notification />)
+    const wrapper = mount(<Notification />)
     wrapper.instance().handleOnClick()
 
     expect(wrapper.state('isActive')).toBe(true)
@@ -101,18 +103,17 @@ describe('isDismissable', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Fires onDismiss callback once dismissed', done => {
+  test('Fires onDismiss callback once dismissed', () => {
     const spy = jest.fn()
     const wrapper = mount(<Notification isDismissable onDismiss={spy} />)
     wrapper.instance().handleOnClick()
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 300)
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 
-  test('Autodismisses, if isDismissable', done => {
+  test('Autodismisses, if isDismissable', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <Notification isDismissable timeout={10} onDismiss={spy} />
@@ -121,17 +122,15 @@ describe('isDismissable', () => {
     expect(spy).not.toHaveBeenCalled()
     // Faking the timer ending
     wrapper.instance().handleOnTimeout()
+    jest.runOnlyPendingTimers()
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 300)
+    expect(spy).toHaveBeenCalled()
   })
 })
 
 describe('isActive', () => {
   test('Is stored as internal state', () => {
-    const wrapper = shallow(<Notification isActive={false} />)
+    const wrapper = mount(<Notification isActive={false} />)
 
     expect(wrapper.state('isActive')).toBe(false)
   })
@@ -192,14 +191,14 @@ describe('Type', () => {
     })
 
     test('Does not pass body prop to Messages', () => {
-      const wrapper = shallow(<Notification body="mugatu" />)
+      const wrapper = mount(<Notification body="mugatu" />)
       const o = wrapper.find(ui.message)
 
       expect(o.prop('body')).not.toBe('mugatu')
     })
 
     test('Passes body as children prop to Messages', () => {
-      const wrapper = shallow(<Notification body="mugatu" children="derek" />)
+      const wrapper = mount(<Notification body="mugatu" children="derek" />)
       const o = wrapper.find(ui.message)
 
       expect(o.prop('body')).toBeFalsy()
@@ -208,7 +207,7 @@ describe('Type', () => {
     })
 
     test('Passes body as truncated content as children prop to Messages', () => {
-      const wrapper = shallow(<Notification body="mugatu" children="derek" />)
+      const wrapper = mount(<Notification body="mugatu" children="derek" />)
       const o = wrapper.find(ui.message)
       const t = o.find(Truncate)
 
@@ -232,14 +231,14 @@ describe('Type', () => {
     })
 
     test('Does not pass body to Message as prop', () => {
-      const wrapper = shallow(<Notification body="mugatu.png" type="image" />)
+      const wrapper = mount(<Notification body="mugatu.png" type="image" />)
       const o = wrapper.find(ui.message)
 
       expect(o.prop('body')).toBeFalsy()
     })
 
     test('Passes image markup as children to Message', () => {
-      const wrapper = shallow(<Notification body="mugatu.png" type="image" />)
+      const wrapper = mount(<Notification body="mugatu.png" type="image" />)
       const o = wrapper.find(ui.message)
 
       expect(o.prop('children')).toBeTruthy()
@@ -256,14 +255,14 @@ describe('Type', () => {
     })
 
     test('Does not pass body to Message as prop', () => {
-      const wrapper = shallow(<Notification body={link} type="link" />)
+      const wrapper = mount(<Notification body={link} type="link" />)
       const o = wrapper.find(ui.message)
 
       expect(o.prop('body')).toBeFalsy()
     })
 
     test('Passes link markup as children to Message', () => {
-      const wrapper = shallow(<Notification body={link} type="link" />)
+      const wrapper = mount(<Notification body={link} type="link" />)
       const o = wrapper.find(ui.message)
 
       expect(o.prop('children')).toBeTruthy()
@@ -274,7 +273,7 @@ describe('Type', () => {
 
 describe('Truncation', () => {
   test('Can customize truncation limit', () => {
-    const wrapper = shallow(<Notification body="DEREK!" truncateLimit={3} />)
+    const wrapper = mount(<Notification body="DEREK!" truncateLimit={3} />)
     const o = wrapper.find(Truncate)
 
     expect(o.prop('limit')).toBe(3)

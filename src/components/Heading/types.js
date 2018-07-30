@@ -6,5 +6,6 @@ export type HeadingSize =
 | 'h5'
 | 'h6'
 | 'big'
+| 'md'
 | 'small'
 | ''

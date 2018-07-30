@@ -1,20 +1,33 @@
 // @flow
+import type { MessageBubble, MessageThemeContext } from './types'
 import React from 'react'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
 import LoadingDots from '../LoadingDots'
 import Icon from '../Icon'
 import Text from '../Text'
+import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { isWord } from '../../utilities/strings'
 import { isNativeSpanType } from '../../utilities/types'
 import { providerContextTypes } from './propTypes'
-import type { MessageBubble, MessageThemeContext } from './types'
+import css, {
+  BodyCSS,
+  FromCSS,
+  TitleCSS,
+  TypingCSS,
+} from './styles/Bubble.css.js'
 
 type Props = MessageBubble
 type Context = MessageThemeContext
 
-const Bubble = (props: Props, context: Context) => {
+// Sub-Components
+const MessageBubbleBody = styled('span')(BodyCSS)
+const MessageBubbleFrom = styled('div')(FromCSS)
+const MessageBubbleTitle = styled(Heading)(TitleCSS)
+const MessageBubbleTyping = styled('div')(TypingCSS)
+
+export const Bubble = (props: Props, context: Context) => {
   const {
     body,
     children,
@@ -54,9 +67,9 @@ const Bubble = (props: Props, context: Context) => {
 
   const childrenMarkup = React.Children.map(children, child => {
     return isWord(child) || isNativeSpanType(child) ? (
-      <span className="c-MessageBubble__body">
+      <MessageBubbleBody className="c-MessageBubble__body">
         <Text wordWrap>{child}</Text>
-      </span>
+      </MessageBubbleBody>
     ) : (
       child
     )
@@ -64,11 +77,11 @@ const Bubble = (props: Props, context: Context) => {
 
   const fromMarkup =
     isThemeNotifications && fromName ? (
-      <div className="c-MessageBubble__from">
+      <MessageBubbleFrom className="c-MessageBubble__from">
         <Text className="c-MessageBubble__fromText" lineHeightReset size="11">
           {fromName}
         </Text>
-      </div>
+      </MessageBubbleFrom>
     ) : null
 
   const iconMarkup = icon ? (
@@ -83,23 +96,24 @@ const Bubble = (props: Props, context: Context) => {
   ) : null
 
   const titleMarkup = title ? (
-    <Heading className="c-MessageBubble__title" size="small">
+    <MessageBubbleTitle className="c-MessageBubble__title" size="small">
       {title}
-    </Heading>
+    </MessageBubbleTitle>
   ) : null
 
   const bodyMarkup = body ? (
-    <span
+    <MessageBubbleBody
       className="c-MessageBubble__body"
       dangerouslySetInnerHTML={{ __html: body }}
     />
   ) : (
     childrenMarkup
   )
+
   const innerContentMarkup = typing ? (
-    <div className="c-MessageBubble__typing">
+    <MessageBubbleTyping className="c-MessageBubble__typing">
       <LoadingDots />
-    </div>
+    </MessageBubbleTyping>
   ) : (
     bodyMarkup
   )
@@ -125,4 +139,4 @@ const Bubble = (props: Props, context: Context) => {
 Bubble.contextTypes = providerContextTypes
 Bubble.displayName = 'Message.Bubble'
 
-export default Bubble
+export default styled(Bubble)(css)

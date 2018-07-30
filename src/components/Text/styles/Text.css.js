@@ -4,11 +4,12 @@ import linkStyles from '../../../styles/mixins/linkStyles.css.js'
 import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
-import variableFontSize from '../../../styles/utilities/variableFontSize'
+import variableFontSize, {
+  BASE_FONT_SIZE,
+} from '../../../styles/utilities/variableFontSize'
 import { TEXT_SHADES } from '../../../styles/configs/constants'
 
 export const VAR_NAMESPACE_SIZE = 'BlueConfigTextFontSize'
-export const BASE_FONT_SIZE = 13
 export const TEXT_SIZES = [10, 11, 12, 13, 14, 15, 16, 20, 48]
 export const TEXT_WEIGHTS = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
@@ -85,7 +86,6 @@ function makeSizeStyles(): string {
     &.is-${size} {
       ${variableFontSize({
         varName: VAR_NAMESPACE_SIZE,
-        baseFontSize: BASE_FONT_SIZE,
         fontSize: size,
       })}
     }
