@@ -20,6 +20,7 @@ export const config = {
 export const BodyCSS = `
   color: ${getColor('charcoal.500')};
   font-size: ${variableFontSize({ fontSize: 13 })};
+  line-height: 1.5;
   word-break: break-word;
 `
 
