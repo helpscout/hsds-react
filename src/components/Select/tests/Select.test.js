@@ -1,12 +1,15 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import Select from '..'
+import { mount } from 'enzyme'
+import Select from '../index'
 
 const ui = {
+  errorIcon: '.c-Select__errorIcon',
   helpText: '.c-Select__helpText',
   hintText: '.c-Select__hintText',
   label: '.c-Select__label',
 }
+
+jest.useFakeTimers()
 
 describe('Placeholder', () => {
   test('Renders a placeholder if defined', () => {
@@ -287,7 +290,7 @@ describe('HintText', () => {
 
 describe('States', () => {
   test('Disables select if disabled prop is true', () => {
-    const wrapper = shallow(<Select disabled />)
+    const wrapper = mount(<Select disabled />)
     const o = wrapper.find('select')
 
     expect(o.prop('disabled')).toBeTruthy()
@@ -295,7 +298,7 @@ describe('States', () => {
 
   describe('Error', () => {
     test('Applies error styles if error prop is true', () => {
-      const wrapper = shallow(<Select state="error" />)
+      const wrapper = mount(<Select state="error" />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-error')
@@ -312,7 +315,7 @@ describe('States', () => {
 
   describe('Success', () => {
     test('Applies success styles if success prop is true', () => {
-      const wrapper = shallow(<Select state="success" />)
+      const wrapper = mount(<Select state="success" />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-success')
@@ -329,7 +332,7 @@ describe('States', () => {
 
   describe('Warning', () => {
     test('Applies warning styles if warning prop is true', () => {
-      const wrapper = shallow(<Select state="warning" />)
+      const wrapper = mount(<Select state="warning" />)
       const o = wrapper.find('.c-Select')
 
       expect(o.prop('className')).toContain('is-warning')
@@ -376,7 +379,7 @@ describe('Styles', () => {
   })
 
   test('Passes style prop to wrapper', () => {
-    const wrapper = shallow(<Select style={{ background: 'red' }} />)
+    const wrapper = mount(<Select style={{ background: 'red' }} />)
 
     expect(wrapper.prop('style').background).toBe('red')
   })
@@ -422,19 +425,18 @@ describe('selectNode', () => {
 })
 
 describe('isFocused', () => {
-  test('Can focus select using isFocused prop', done => {
+  test('Can focus select using isFocused prop', () => {
     const spy = jest.fn()
     const wrapper = mount(<Select isFocused />)
     const o = wrapper.getNode().selectNode
     o.onfocus = spy
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 160)
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 
-  test('Can focus select using custom timeout', done => {
+  test('Can focus select using custom timeout', () => {
     const spy = jest.fn()
     const wrapper = mount(<Select isFocused forceAutoFocusTimeout={20} />)
     const o = wrapper.getNode().selectNode
@@ -442,13 +444,12 @@ describe('isFocused', () => {
 
     expect(spy).not.toHaveBeenCalled()
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 40)
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 
-  test('Can toggle isFocused', done => {
+  test('Can toggle isFocused', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <Select onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
@@ -458,9 +459,32 @@ describe('isFocused', () => {
 
     wrapper.setProps({ isFocused: true })
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 40)
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('ErrorMessage', () => {
+  test('Can render an error Icon ', () => {
+    const wrapper = mount(<Select state="error" />)
+    const error = wrapper.find(ui.errorIcon)
+
+    expect(error.length).toBe(1)
+  })
+
+  test('Renders a Tooltip, if error', () => {
+    const wrapper = mount(<Select state="error" errorMessage="Nope!" />)
+    const el = wrapper.find('Tooltip')
+
+    expect(el.length).toBe(1)
+    expect(el.props().title).toBe('Nope!')
+  })
+
+  test('Can customize error Icon', () => {
+    const wrapper = mount(<Select state="error" errorIcon="chat" />)
+    const el = wrapper.find('Icon')
+
+    expect(el.props().name).toBe('chat')
   })
 })

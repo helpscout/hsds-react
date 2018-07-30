@@ -1,17 +1,18 @@
 // @flow
+import type { PopProps } from './types'
 import React, { Component } from 'react'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
-import Portal from '../Portal'
 import Manager from './Manager'
 import Arrow from './Arrow'
 import Popper from './Popper'
 import Reference from './Reference'
+import styled from '../styled'
 import Keys from '../../constants/Keys'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import type { PopProps } from './types'
+import css from './styles/Pop.css.js'
 
 type Props = PopProps
 
@@ -21,6 +22,8 @@ type State = {
 }
 
 const uniqueID = createUniqueIDFactory('Pop')
+
+const PopUI = styled('span')(css)
 
 class Pop extends Component<Props, State> {
   static defaultProps = {
@@ -140,6 +143,7 @@ class Pop extends Component<Props, State> {
         child.type === Reference
           ? React.cloneElement(child, {
               'aria-describedby': id,
+              display,
             })
           : null
     )
@@ -168,9 +172,9 @@ class Pop extends Component<Props, State> {
 
     return (
       <Manager>
-        <span
+        <PopUI
           className={componentClassName}
-          ref={node => (this.node = node)}
+          innerRef={node => (this.node = node)}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
           onClick={this.handleClick}
@@ -179,7 +183,7 @@ class Pop extends Component<Props, State> {
           <KeypressListener keyCode={Keys.ESCAPE} handler={this.handleOnEsc} />
           {referenceMarkup}
           {shouldShowPopper ? popperMarkup : null}
-        </span>
+        </PopUI>
       </Manager>
     )
   }

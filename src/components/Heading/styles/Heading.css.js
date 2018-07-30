@@ -15,8 +15,8 @@ export const HEADING_SIZES = {
   h2: 24,
   h3: 20,
   h4: 16,
-  h5: BASE_FONT_SIZE,
-  h6: 13,
+  h5: 14,
+  h6: BASE_FONT_SIZE,
   big: 20,
   small: 11,
 }

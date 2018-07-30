@@ -1,6 +1,6 @@
 .c-SelectIcon {
-  @import "../../resets/base";
-  @import "../../configs/color";
+  @import '../../resets/base';
+  @import '../../configs/color';
 
   $arrowOffset: 2px;
   $arrowSize: 3px;
@@ -23,7 +23,7 @@
     border-left: $arrowSize solid transparent;
     border-right: $arrowSize solid transparent;
     bottom: 0;
-    content: "";
+    content: '';
     margin: $arrowOffset;
     position: absolute;
   }
@@ -32,9 +32,13 @@
     border-top: ($arrowSize + 1) solid currentColor;
     border-left: $arrowSize solid transparent;
     border-right: $arrowSize solid transparent;
-    content: "";
+    content: '';
     margin: $arrowOffset;
     position: absolute;
     top: 0;
+  }
+
+  &.is-error {
+    margin-right: 28px;
   }
 }

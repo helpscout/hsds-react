@@ -109,6 +109,19 @@ stories.add('states', () => (
   </div>
 ))
 
+stories.add('state: error', () => (
+  <div>
+    <Input state="error" errorMessage="This is incorrect!" />
+    <br />
+    <Input state="error" suffix=".00" errorMessage="This is incorrect!" />
+    <br />
+    <Input state="error" size="sm" errorMessage="This is incorrect!" />
+    <br />
+    <Input state="error" errorMessage="This is incorrect!" multiline={3} />
+    <br />
+  </div>
+))
+
 stories.add('scrollock', () => (
   <Input
     multiline={3}

@@ -48,6 +48,15 @@ stories.add('states', () => (
   </div>
 ))
 
+stories.add('state: error', () => (
+  <div>
+    <Select state="error" errorMessage="This is error." />
+    <br />
+    <Select state="error" size="sm" errorMessage="This is error." />
+    <br />
+  </div>
+))
+
 stories.add('sizes', () => (
   <div>
     <Select autoFocus placeholder="Regular" />

@@ -1,3 +1,5 @@
+import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 const css = props => {
   const { color, placement, size } = props
   const sizePx = `${size}px`
@@ -30,6 +32,7 @@ const css = props => {
   `
 
   return `
+    ${baseStyles}
     ${borderColor}
     border-style: solid;
     height: 0;

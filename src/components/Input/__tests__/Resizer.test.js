@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Resizer from '../Resizer'
 
 describe('onResize', () => {
@@ -13,7 +13,7 @@ describe('onResize', () => {
 
 describe('ReplaceEntity', () => {
   test('Converts greater/less than characters', () => {
-    const wrapper = shallow(<Resizer contents="<strong>News team!</strong>" />)
+    const wrapper = mount(<Resizer contents="<strong>News team!</strong>" />)
     const o = wrapper.find('.c-InputGhost').first()
     const html = o
       .html()
@@ -27,7 +27,7 @@ describe('ReplaceEntity', () => {
   })
 
   test('Converts \\n characters to <br>', () => {
-    const wrapper = shallow(<Resizer contents={`\nSan Diego\n`} />)
+    const wrapper = mount(<Resizer contents={`\nSan Diego\n`} />)
     const o = wrapper.find('.c-InputGhost').first()
     const html = o
       .html()
@@ -39,7 +39,7 @@ describe('ReplaceEntity', () => {
   })
 
   test('Converts & characters to &amp;', () => {
-    const wrapper = shallow(<Resizer contents="San & Diego" />)
+    const wrapper = mount(<Resizer contents="San & Diego" />)
     const o = wrapper.find('.c-InputGhost').first()
     const html = o
       .html()
@@ -51,7 +51,7 @@ describe('ReplaceEntity', () => {
   })
 
   test('Does not convert if content does not contain special characters', () => {
-    const wrapper = shallow(<Resizer contents="San Diego" />)
+    const wrapper = mount(<Resizer contents="San Diego" />)
     const o = wrapper.find('.c-InputGhost').first()
     const html = o
       .html()
