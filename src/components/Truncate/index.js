@@ -5,7 +5,6 @@ import Tooltip from '../Tooltip'
 import classNames from '../../utilities/classNames'
 import styled from '../styled'
 import { truncateMiddle } from '../../utilities/strings'
-import { truncateTypes } from './propTypes'
 import css from './styles/Truncate.css.js'
 
 type Props = {
@@ -39,7 +38,8 @@ export class BaseComponent extends Component<Props, State> {
     tooltipProps: {},
     type: 'auto',
   }
-  node = null
+  node: ?HTMLSpanElement = null
+  contentNode: ?HTMLSpanElement = null
 
   constructor(props: Props) {
     super(props)
@@ -58,6 +58,7 @@ export class BaseComponent extends Component<Props, State> {
 
   componentWillUnmount() {
     this.node = null
+    this.contentNode = null
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -77,13 +78,23 @@ export class BaseComponent extends Component<Props, State> {
     this.setState({ isTruncated })
   }
 
-  isTruncated = (props: Props = this.props) => {
+  isTruncated = (props: Props = this.props): boolean => {
     if (props.type !== 'auto') {
       return this.getText(props) !== this.getTruncatedContent(props)
     } else {
       /* istanbul ignore next */
-      if (!this.node) return false
-      return this.node.offsetWidth < this.node.scrollWidth
+      if (!this.node || !this.contentNode) return false
+
+      // 1. Normalizes the display to allow for calculation
+      this.contentNode.style.display = 'initial'
+      // 2. Calculate the differences
+      const isContentTruncated =
+        this.contentNode.offsetWidth > this.node.offsetWidth
+      // 3. Resets the display
+      // $FlowFixMe
+      this.contentNode.style.display = null
+
+      return isContentTruncated
     }
   }
 
@@ -120,6 +131,14 @@ export class BaseComponent extends Component<Props, State> {
     const shouldShowTooltip = showTooltipOnTruncate && this.state.isTruncated
     const word = this.getTruncatedContent()
 
+    const wordMarkup = (
+      <span
+        className="c-Truncate__content"
+        ref={ref => (this.contentNode = ref)}
+      >
+        {word}
+      </span>
+    )
     const content = shouldShowTooltip ? (
       <Tooltip
         {...tooltipProps}
@@ -127,10 +146,10 @@ export class BaseComponent extends Component<Props, State> {
         placement={tooltipPlacement}
         title={title || this.getText()}
       >
-        <span className="c-Truncate__content">{word}</span>
+        {wordMarkup}
       </Tooltip>
     ) : (
-      word
+      wordMarkup
     )
 
     return (

@@ -1,7 +1,8 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+// @flow
+import baseStyles from '../../../styles/resets/base.css.js'
 
-const css = props => {
-  const { color, placement, size } = props
+const css = (props: Object) => {
+  const { color, size } = props
   const sizePx = `${size}px`
   const dblSizePx = `${size * 2}px`
 

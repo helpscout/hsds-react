@@ -12,7 +12,7 @@ stories.add('default', () => (
   <div>
     <p>
       Auto:<br />
-      <Truncate>{fixture.generate()}</Truncate>
+      <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
     </p>
     <p>
       Start:<br />
