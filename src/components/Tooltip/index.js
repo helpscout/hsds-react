@@ -1,13 +1,12 @@
 // @flow
 import React, { Component } from 'react'
 import styled from '../styled'
-import Animate from '../Animate'
 import Pop from '../Pop'
 import Popper from './Popper'
 import classNames, { BEM } from '../../utilities/classNames'
 import { isFunction } from '../../utilities/is'
 import css from './styles/Tooltip.css.js'
-import type { PopProps, Placements } from '../Pop/types'
+import type { PopProps } from '../Pop/types'
 
 type Props = {|
   ...PopProps,
@@ -18,7 +17,7 @@ type Props = {|
 class Tooltip extends Component<Props> {
   static defaultProps = {
     animationDelay: 100,
-    animationDuration: 200,
+    animationDuration: 100,
     animationSequence: 'fade up',
     isOpen: false,
     modifiers: {},

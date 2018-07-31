@@ -1,6 +1,6 @@
 // @flow
 import type { IconSize } from './types'
-import type { TextShade } from '../../constants/types'
+import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
 import ICONS from './icons'
 import styled from '../styled'
@@ -20,6 +20,7 @@ type Props = {
   name: string,
   onClick: () => void,
   shade?: TextShade,
+  state?: UIState,
   size: IconSize,
   subtle?: boolean,
   title?: string,
@@ -39,6 +40,7 @@ const Icon = (props: Props) => {
     name,
     shade,
     size,
+    state,
     subtle,
     title,
     withCaret,
@@ -55,6 +57,7 @@ const Icon = (props: Props) => {
     name && `is-iconName-${name}`,
     muted && 'is-muted',
     shade && `is-${shade}`,
+    state && `is-${state}`,
     subtle && 'is-subtle',
     size && `is-${size}`,
     withCaret && 'is-withCaret',

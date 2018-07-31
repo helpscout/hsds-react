@@ -1,8 +1,9 @@
 // @flow
 import { BEM } from '../../../utilities/classNames'
 import baseStyles from '../../../styles/resets/base.css.js'
+import { STATES, TEXT_SHADES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
-import { TEXT_SHADES } from '../../../styles/configs/constants'
+import forEach from '../../../styles/utilities/forEach'
 
 const bem = BEM('.c-Icon')
 
@@ -39,6 +40,7 @@ const css = `
 
   ${makeShadeStyles()}
   ${makeSizeStyles()}
+  ${makeStateColorStyles()}
 
   &.is-withCaret {
     ${bem.element('icon')} {
@@ -76,17 +78,19 @@ const css = `
 `
 
 function makeShadeStyles(): string {
-  return TEXT_SHADES.map(
+  return forEach(
+    TEXT_SHADES,
     shade => `
     &.is-${shade} {
       color: ${getColor('text', shade)};
     }
   `
-  ).join('')
+  )
 }
 
 function makeSizeStyles(): string {
-  return ICON_SIZES.map(
+  return forEach(
+    ICON_SIZES,
     size => `
     &.is-${size} {
       height: ${size}px;
@@ -97,7 +101,18 @@ function makeSizeStyles(): string {
       }
     }
   `
-  ).join('')
+  )
+}
+
+function makeStateColorStyles(): string {
+  return forEach(
+    STATES,
+    state => `
+    &.is-${state} {
+      color: ${getColor('state', state, 'default')};
+    }
+  `
+  )
 }
 
 export default css

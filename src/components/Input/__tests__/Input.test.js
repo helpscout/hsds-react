@@ -1,14 +1,17 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Input from '..'
 import Resizer from '../Resizer'
 
 const ui = {
   field: '.c-InputField',
+  errorIcon: '.c-Input__errorIcon',
   helpText: '.c-Input__helpText',
   hintText: '.c-Input__hintText',
   input: '.c-Input',
   label: '.c-Input__label',
+  suffix: '.c-Input__suffix',
+  tooltip: '.c-Tooltip',
 }
 
 describe('ClassName', () => {
@@ -25,7 +28,7 @@ describe('ClassName', () => {
 
   test('Accepts custom className', () => {
     const className = 'milk-was-a-bad-choice'
-    const wrapper = shallow(<Input className={className} />)
+    const wrapper = mount(<Input className={className} />)
     const o = wrapper.find(`.${className}`)
 
     expect(o.exists()).toBeTruthy()
@@ -34,14 +37,14 @@ describe('ClassName', () => {
 
 describe('Autofocus', () => {
   test('Does not autoFocus by default', () => {
-    const wrapper = shallow(<Input />)
+    const wrapper = mount(<Input />)
     const input = wrapper.find('input')
 
     expect(input.prop('autoFocus')).toBeFalsy()
   })
 
   test('Autofocuses if specified', () => {
-    const wrapper = shallow(<Input autoFocus />)
+    const wrapper = mount(<Input autoFocus />)
     const input = wrapper.find('input')
 
     expect(input.prop('autoFocus')).toBeTruthy()
@@ -186,24 +189,25 @@ describe('ID', () => {
 
 describe('Multiline', () => {
   test('Default selector is an input', () => {
-    const wrapper = shallow(<Input />)
-    const o = wrapper.find(ui.field)
+    const wrapper = mount(<Input />)
+    const o = wrapper.find(ui.field).getNode()
 
-    expect(o.getNode().type).toBe('input')
+    expect(o.tagName.toLowerCase()).toBe('input')
+    expect(o.type).toBe('text')
   })
 
   test('Selector becomes a textarea if multiline is defined', () => {
-    const wrapper = shallow(<Input multiline />)
-    const o = wrapper.find(ui.field)
+    const wrapper = mount(<Input multiline />)
+    const o = wrapper.find(ui.field).getNode()
 
-    expect(o.getNode().type).toBe('textarea')
+    expect(o.type).toBe('textarea')
   })
 
   test('Accepts number argument', () => {
     const wrapper = mount(<Input multiline={5} />)
-    const o = wrapper.find(ui.field)
+    const o = wrapper.find(ui.field).getNode()
 
-    expect(o.getNode().type).toBe('textarea')
+    expect(o.type).toBe('textarea')
   })
 
   test('Adds Resizer component if multiline is defined', () => {
@@ -213,14 +217,14 @@ describe('Multiline', () => {
   })
 
   test('Applies resizable styles if specified', () => {
-    const wrapper = shallow(<Input multiline resizable />)
+    const wrapper = mount(<Input multiline resizable />)
     const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-resizable')
   })
 
   test('Has regular height without multiline', () => {
-    const wrapper = shallow(<Input />)
+    const wrapper = mount(<Input />)
     const o = wrapper.find(ui.field)
 
     expect(o.prop('style')).toBe(null)
@@ -375,21 +379,21 @@ describe('Prefix/Suffix', () => {
 
 describe('Styles', () => {
   test('Applies seamless styles if specified', () => {
-    const wrapper = shallow(<Input seamless />)
+    const wrapper = mount(<Input seamless />)
     const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-seamless')
   })
 
   test('Applies sizing styles if specified', () => {
-    const wrapper = shallow(<Input size="sm" />)
+    const wrapper = mount(<Input size="sm" />)
     const o = wrapper.find(ui.field)
 
     expect(o.prop('className')).toContain('is-sm')
   })
 
   test('Passes style prop to wrapper', () => {
-    const wrapper = shallow(<Input size="sm" style={{ background: 'red' }} />)
+    const wrapper = mount(<Input size="sm" style={{ background: 'red' }} />)
 
     expect(wrapper.prop('style').background).toBe('red')
   })
@@ -397,7 +401,7 @@ describe('Styles', () => {
 
 describe('States', () => {
   test('Applies disabled styles if specified', () => {
-    const wrapper = shallow(<Input disabled />)
+    const wrapper = mount(<Input disabled />)
     const o = wrapper.find(ui.input)
     const input = wrapper.find('input')
 
@@ -406,7 +410,7 @@ describe('States', () => {
   })
 
   test('Applies readOnly styles if specified', () => {
-    const wrapper = shallow(<Input readOnly />)
+    const wrapper = mount(<Input readOnly />)
     const o = wrapper.find(ui.input)
     const input = wrapper.find('input')
 
@@ -415,21 +419,21 @@ describe('States', () => {
   })
 
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<Input state="error" />)
+    const wrapper = mount(<Input state="error" />)
     const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<Input state="success" />)
+    const wrapper = mount(<Input state="success" />)
     const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<Input state="warning" />)
+    const wrapper = mount(<Input state="warning" />)
     const o = wrapper.find(ui.input)
 
     expect(o.prop('className')).toContain('is-warning')
@@ -661,5 +665,42 @@ describe('Typing events', () => {
     refs.applySubmit()
     expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('ErrorMessage', () => {
+  test('Does not render an error Icon if suffix is defined', () => {
+    const wrapper = mount(<Input suffix="Derek" />)
+    const el = wrapper.find(ui.errorIcon)
+
+    expect(el.length).toBe(0)
+  })
+
+  test('Can render an error Icon and suffix', () => {
+    const wrapper = mount(<Input suffix="Derek" state="error" />)
+    const error = wrapper.find(ui.errorIcon)
+    const suffix = wrapper.find(ui.suffix)
+
+    expect(error.length).toBe(1)
+    expect(suffix.length).toBe(2) // Error is rendered within a Suffix
+  })
+
+  test('Renders a Tooltip, if error', () => {
+    const wrapper = mount(
+      <Input suffix="Derek" state="error" errorMessage="Nope!" />
+    )
+    const el = wrapper.find('Tooltip')
+
+    expect(el.length).toBe(1)
+    expect(el.props().title).toBe('Nope!')
+  })
+
+  test('Can customize error Icon', () => {
+    const wrapper = mount(
+      <Input suffix="Derek" state="error" errorIcon="chat" />
+    )
+    const el = wrapper.find('Icon')
+
+    expect(el.props().name).toBe('chat')
   })
 })

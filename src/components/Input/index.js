@@ -1,5 +1,6 @@
 // @flow
 /* eslint react/no-deprecated: off */
+import type { UISize, UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import Backdrop from './Backdrop'
 import Resizer from './Resizer'
@@ -7,6 +8,9 @@ import Static from './Static'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import { scrollLockY } from '../ScrollLock'
+import Icon from '../Icon'
+import Tooltip from '../Tooltip'
+import { STATES } from '../../constants/index'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop, requestAnimationFrame } from '../../utilities/other'
@@ -16,7 +20,6 @@ import {
   moveCursorToEnd,
   isTextArea,
 } from './helpers'
-import type { UISize, UIState } from '../../constants/types'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -31,6 +34,8 @@ type Props = {
   className: string,
   disabled: boolean,
   forceAutoFocusTimeout: number,
+  errorMessage?: string,
+  errorIcon?: string,
   helpText: any,
   hintText: any,
   id: string,
@@ -81,6 +86,7 @@ class Input extends Component<Props, State> {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
+    errorIcon: 'alert',
     forceAutoFocusTimeout: 0,
     inputRef: noop,
     isFocused: false,
@@ -307,11 +313,87 @@ class Input extends Component<Props, State> {
     this.props.inputRef(node)
   }
 
+  makeHelpTextMarkup = () => {
+    const { helpText } = this.props
+
+    return (
+      helpText && (
+        <HelpText className="c-Input__helpText" muted>
+          {helpText}
+        </HelpText>
+      )
+    )
+  }
+
+  makeHintTextMarkup = () => {
+    const { hintText } = this.props
+
+    return (
+      hintText && (
+        <HelpText className="c-Input__hintText" muted>
+          {hintText}
+        </HelpText>
+      )
+    )
+  }
+
+  makeLabelMarkup = () => {
+    const { label } = this.props
+    const { id: inputID } = this.state
+
+    return (
+      label && (
+        <Label className="c-Input__label" for={inputID}>
+          {label}
+        </Label>
+      )
+    )
+  }
+
+  makePrefixMarkup = () => {
+    const { prefix } = this.props
+
+    return (
+      prefix && <div className="c-Input__item c-Input__prefix">{prefix}</div>
+    )
+  }
+
+  makeSuffixMarkup = () => {
+    const { suffix } = this.props
+
+    return (
+      suffix && <div className="c-Input__item c-Input__suffix">{suffix}</div>
+    )
+  }
+
+  makeErrorMarkup = () => {
+    const { errorIcon, errorMessage, state } = this.props
+    const shouldRenderError = state === STATES.error
+
+    if (!shouldRenderError) return null
+
+    return (
+      <div
+        className={classNames('c-Input__item', 'c-Input__suffix', 'is-icon')}
+      >
+        <Tooltip display="block" placement="top-end" title={errorMessage}>
+          <Icon
+            name={errorIcon}
+            state={STATES.error}
+            className="c-Input__errorIcon"
+          />
+        </Tooltip>
+      </div>
+    )
+  }
+
   render() {
     const {
       autoFocus,
       className,
       disabled,
+      errorIcon,
+      errorMessage,
       forceAutoFocusTimeout,
       helpText,
       hintText,
@@ -396,31 +478,12 @@ class Input extends Component<Props, State> {
         />
       ) : null
 
-    const labelMarkup = label ? (
-      <Label className="c-Input__label" for={inputID}>
-        {label}
-      </Label>
-    ) : null
-
-    const prefixMarkup = prefix ? (
-      <div className="c-Input__item c-Input__prefix">{prefix}</div>
-    ) : null
-
-    const suffixMarkup = suffix ? (
-      <div className="c-Input__item c-Input__suffix">{suffix}</div>
-    ) : null
-
-    const hintTextMarkup = hintText ? (
-      <HelpText className="c-Input__hintText" muted>
-        {hintText}
-      </HelpText>
-    ) : null
-
-    const helpTextMarkup = helpText ? (
-      <HelpText className="c-Input__helpText" state={state}>
-        {helpText}
-      </HelpText>
-    ) : null
+    const helpTextMarkup = this.makeHelpTextMarkup()
+    const hintTextMarkup = this.makeHintTextMarkup()
+    const labelMarkup = this.makeLabelMarkup()
+    const prefixMarkup = this.makePrefixMarkup()
+    const suffixMarkup = this.makeSuffixMarkup()
+    const errorMarkup = this.makeErrorMarkup()
 
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...rest,
@@ -450,6 +513,7 @@ class Input extends Component<Props, State> {
           {prefixMarkup}
           {inputElement}
           {suffixMarkup}
+          {errorMarkup}
           <Backdrop
             className="c-Input__backdrop"
             disabled={disabled}

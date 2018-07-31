@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import ReactPopperReference from '../Popper/Reference'
+import styled from '../styled'
 
 type Props = any
 
@@ -9,12 +10,20 @@ class Reference extends Component<Props> {
     return (
       <ReactPopperReference>
         {({ ref }) => (
-          <span className="c-PopReference" ref={ref} {...this.props} />
+          <ReferenceUI
+            className="c-PopReference"
+            innerRef={ref}
+            {...this.props}
+          />
         )}
       </ReactPopperReference>
     )
   }
 }
+
+const ReferenceUI = styled('span')`
+  display: ${props => props.display};
+`
 
 Reference.displayName = 'Pop.Reference'
 

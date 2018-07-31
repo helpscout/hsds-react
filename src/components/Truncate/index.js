@@ -123,6 +123,7 @@ export class BaseComponent extends Component<Props, State> {
     const content = shouldShowTooltip ? (
       <Tooltip
         {...tooltipProps}
+        display="block"
         placement={tooltipPlacement}
         title={title || this.getText()}
       >

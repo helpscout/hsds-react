@@ -1,4 +1,5 @@
 // @flow
+import type { PopProps, PopperStyles } from './types'
 import React, { Component } from 'react'
 import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
@@ -6,7 +7,6 @@ import Portal from '../Portal'
 import Arrow from './Arrow'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import type { PopProps, Placement, PopperStyles } from './types'
 
 type Props = PopProps
 
@@ -66,6 +66,7 @@ class Popper extends Component<Props> {
       duration: animationDuration,
       easing: animationEasing,
       sequence: animationSequence,
+      timeout: 0,
     }
 
     return (
