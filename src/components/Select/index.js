@@ -75,6 +75,7 @@ class Select extends Component<Props, State> {
     value: '',
   }
 
+  optionClassName = 'c-Select__option'
   selectNode: ?HTMLSelectElement = null
 
   constructor(props: Props) {
@@ -126,7 +127,7 @@ class Select extends Component<Props, State> {
     }, forceAutoFocusTimeout)
   }
 
-  handleOnChange(event: SelectEvent) {
+  handleOnChange = (event: SelectEvent) => {
     const value = event.currentTarget.value
     this.props.onChange(value)
 
@@ -215,6 +216,69 @@ class Select extends Component<Props, State> {
     )
   }
 
+  makePlaceholderMarkup = () => {
+    const { placeholder } = this.props
+
+    return (
+      placeholder && (
+        <option
+          className={this.optionClassName}
+          label={placeholder}
+          value={PLACEHOLDER_VALUE}
+          disabled
+        >
+          {placeholder}
+        </option>
+      )
+    )
+  }
+
+  renderOptions = (option: SelectOption) => {
+    // HTML <optgroup> only allows for single level nesting
+    // $FlowFixMe
+    const hasOptions =
+      !isString(option) &&
+      option.hasOwnProperty('value') &&
+      Array.isArray(option.value)
+
+    const optionDisabled = option.disabled
+    const optionLabel = option.label
+    const optionValue = option.value
+
+    // Group
+    if (hasOptions) {
+      // Recursion!
+      return (
+        <optgroup
+          className="c-Select__optGroup"
+          label={optionLabel}
+          key={optionLabel}
+        >
+          {optionValue.map(this.renderOptions)}
+        </optgroup>
+      )
+    }
+    // Option
+    if (isString(option)) {
+      return (
+        <option className={this.optionClassName} key={option} value={option}>
+          {option}
+        </option>
+      )
+    } else {
+      return (
+        <option
+          key={optionValue}
+          className={this.optionClassName}
+          value={optionValue}
+          disabled={optionDisabled}
+        >
+          {optionLabel}
+        </option>
+      )
+    }
+  }
+
   render() {
     const {
       children,
@@ -262,76 +326,19 @@ class Select extends Component<Props, State> {
       'c-InputField',
       size && `is-${size}`
     )
-    const optionClassName = 'c-Select__option'
-
-    const renderOptions = option => {
-      // HTML <optgroup> only allows for single level nesting
-      // $FlowFixMe
-      const hasOptions =
-        !isString(option) &&
-        option.hasOwnProperty('value') &&
-        Array.isArray(option.value)
-
-      const optionDisabled = option.disabled
-      const optionLabel = option.label
-      const optionValue = option.value
-
-      // Group
-      if (hasOptions) {
-        // Recursion!
-        return (
-          <optgroup
-            className="c-Select__optGroup"
-            label={optionLabel}
-            key={optionLabel}
-          >
-            {optionValue.map(renderOptions)}
-          </optgroup>
-        )
-      }
-      // Option
-      if (isString(option)) {
-        return (
-          <option className={optionClassName} key={option} value={option}>
-            {option}
-          </option>
-        )
-      } else {
-        return (
-          <option
-            key={optionValue}
-            className={optionClassName}
-            value={optionValue}
-            disabled={optionDisabled}
-          >
-            {optionLabel}
-          </option>
-        )
-      }
-    }
 
     const optionsMarkup =
       children ||
       (Array.isArray(options)
-        ? options.map(renderOptions)
-        : renderOptions(options))
-
-    const placeholderMarkup = placeholder ? (
-      <option
-        className={optionClassName}
-        label={placeholder}
-        value={PLACEHOLDER_VALUE}
-        disabled
-      >
-        {placeholder}
-      </option>
-    ) : null
+        ? options.map(this.renderOptions)
+        : this.renderOptions(options))
 
     const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
     const helpTextMarkup = this.makeHelpTextMarkup()
     const hintTextMarkup = this.makeHintTextMarkup()
     const labelMarkup = this.makeLabelMarkup()
+    const placeholderMarkup = this.makePlaceholderMarkup()
     const prefixMarkup = this.makePrefixMarkup()
     const errorMarkup = this.makeErrorMarkup()
 
@@ -345,7 +352,7 @@ class Select extends Component<Props, State> {
             className={fieldClassName}
             disabled={disabled}
             id={id}
-            onChange={e => this.handleOnChange(e)}
+            onChange={this.handleOnChange}
             onFocus={handleOnFocus}
             ref={node => {
               this.selectNode = node
