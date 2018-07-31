@@ -1,5 +1,6 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
-import { color } from './variables.css'
+// @flow
+import baseStyles from '../../../styles/resets/base.css.js'
+import { color } from './variables.css.js'
 
 const css = `
   ${baseStyles}

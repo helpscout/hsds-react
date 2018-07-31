@@ -1,6 +1,6 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Tooltip from '../../Tooltip'
 import { BaseComponent as Truncate } from '../index'
 
@@ -19,14 +19,14 @@ describe('default', () => {
 describe('className', () => {
   test('Has default className', () => {
     const words = fixture.generate()
-    const wrapper = shallow(<Truncate>{words}</Truncate>)
+    const wrapper = mount(<Truncate>{words}</Truncate>)
 
     expect(wrapper.hasClass('c-Truncate')).toBeTruthy()
   })
 
   test('Accepts additional className', () => {
     const words = fixture.generate()
-    const wrapper = shallow(<Truncate className="mugatu">{words}</Truncate>)
+    const wrapper = mount(<Truncate className="mugatu">{words}</Truncate>)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -36,7 +36,7 @@ describe('ellipsis', () => {
   test('Can render custom ellipsis', () => {
     const words = fixture.generate()
     const ellipsis = 'RELAX!! ++ '
-    const wrapper = shallow(
+    const wrapper = mount(
       <Truncate ellipsis={ellipsis} type="start" limit={20}>
         {words}
       </Truncate>
@@ -106,22 +106,33 @@ describe('Truncate: Check', () => {
   test('isTruncated can calculate truncation', () => {
     const props = { type: 'auto' }
     const wrapper = mount(<Truncate>Words</Truncate>)
+    const o = wrapper.getNode()
 
-    wrapper.getNode().node = {
+    o.node = {
       offsetWidth: 100,
-      scrollWidth: 1000,
     }
-    expect(wrapper.getNode().isTruncated(props)).toBe(true)
+    o.contentNode = {
+      style: {
+        display: undefined,
+      },
+      offsetWidth: 200,
+    }
+    expect(o.isTruncated(props)).toBe(true)
 
-    wrapper.getNode().node = {
+    o.node = {
       offsetWidth: 1000,
-      scrollWidth: 100,
     }
-    expect(wrapper.getNode().isTruncated(props)).toBe(false)
+    o.contentNode = {
+      style: {
+        display: undefined,
+      },
+      offsetWidth: 200,
+    }
+    expect(o.isTruncated(props)).toBe(false)
   })
 
   test('Recalculates on appropriate prop change', () => {
-    const wrapper = mount(<Truncate>Words</Truncate>)
+    const wrapper = mount(<Truncate type="auto">Words</Truncate>)
 
     expect(wrapper.state().isTruncated).toBe(false)
 

@@ -3,6 +3,7 @@ import { BEM } from '../../../utilities/classNames'
 const bem = BEM('.c-Truncate')
 
 const truncateStyles = `
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -13,7 +14,6 @@ const css = `
   will-change: contents;
 
   &.is-auto {
-    display: block;
     ${truncateStyles}
 
     ${bem.element('content')} {
