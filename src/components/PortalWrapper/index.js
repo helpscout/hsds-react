@@ -2,6 +2,7 @@ import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import { matchPath } from 'react-router'
+import getComponentDefaultProp from '@helpscout/react-utils/dist/getComponentDefaultProp'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
 import { default as Portal, propTypes as portalTypes } from '../Portal'
@@ -10,7 +11,6 @@ import {
   createUniqueIDFactory,
   createUniqueIndexFactory,
 } from '../../utilities/id'
-import { getComponentDefaultProp } from '../../utilities/component'
 import { setupManager } from '../../utilities/globalManager'
 import classNames from '../../utilities/classNames'
 import { requestAnimationFrame } from '../../utilities/other'

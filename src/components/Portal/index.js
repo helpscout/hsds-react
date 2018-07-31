@@ -1,6 +1,7 @@
 import { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { getDocumentFromComponent } from '@helpscout/react-utils'
 import { default as Container, ID as portalContainerId } from './Container'
 import { isNodeElement } from '../../utilities/node'
 
@@ -26,6 +27,8 @@ const defaultProps = {
 }
 
 class Portal extends Component {
+  document: ?Document = null
+
   constructor(props) {
     super()
     this.node = null
@@ -39,6 +42,7 @@ class Portal extends Component {
   }
 
   componentDidMount() {
+    this.document = getDocumentFromComponent(this) || window.document
     this.mountSelector = this.getMountSelector()
     this.openPortal(this.props)
   }
@@ -78,7 +82,7 @@ class Portal extends Component {
     mountSelector =
       mountSelector || document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body
-    return mountSelector || window.document.body // fallback
+    return mountSelector || this.document.body // fallback
   }
 
   renderPortalContent(props) {

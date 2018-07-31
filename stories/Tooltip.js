@@ -10,7 +10,11 @@ const List = () => (
     <ul>
       <li>One</li>
       <li>Two</li>
-      <li>🐝</li>
+      <li>
+        <span role="img" aria-label="Bee">
+          🐝
+        </span>
+      </li>
     </ul>
   </div>
 )
