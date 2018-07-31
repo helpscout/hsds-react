@@ -1,6 +1,9 @@
+// @flow
+import fontFamilyStyles from './fontFamily.css.js'
+
 const css = `
+  ${fontFamilyStyles}
   font-size: 13px;
-  font-family: var(--BlueConfigGlobalFontFamily);
   font-size: var(--BlueConfigGlobalFontSize, 13px);
 `
 

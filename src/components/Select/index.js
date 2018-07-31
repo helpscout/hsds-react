@@ -14,6 +14,7 @@ import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
 import classNames from '../../utilities/classNames'
+import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 
 type SelectEvent = SyntheticEvent<HTMLSelectElement>
@@ -40,13 +41,16 @@ type Props = {
   name: string,
   options: SelectOptionProp,
   onBlur: (event: SelectEvent) => void,
-  onChange: (event: SelectEvent) => void,
+  onChange: (value: SelectValue) => void,
   onFocus: (event: SelectEvent) => void,
   placeholder: string,
   prefix: string,
   removeStateStylesOnFocus: boolean,
+  seamless?: boolean,
+  style?: Object,
   size: UISize,
   state: UIState,
+  success: boolean,
   value: string,
 }
 
@@ -262,20 +266,31 @@ class Select extends Component<Props, State> {
 
     const renderOptions = option => {
       // HTML <optgroup> only allows for single level nesting
+      // $FlowFixMe
       const hasOptions =
-        option.hasOwnProperty('value') && Array.isArray(option.value)
+        !isString(option) &&
+        option.hasOwnProperty('value') &&
+        Array.isArray(option.value)
+
+      const optionDisabled = option.disabled
+      const optionLabel = option.label
+      const optionValue = option.value
+
       // Group
       if (hasOptions) {
-        const label = option.label
         // Recursion!
         return (
-          <optgroup className="c-Select__optGroup" label={label} key={label}>
-            {option.value.map(renderOptions)}
+          <optgroup
+            className="c-Select__optGroup"
+            label={optionLabel}
+            key={optionLabel}
+          >
+            {optionValue.map(renderOptions)}
           </optgroup>
         )
       }
       // Option
-      if (typeof option === 'string') {
+      if (isString(option)) {
         return (
           <option className={optionClassName} key={option} value={option}>
             {option}
@@ -284,12 +299,12 @@ class Select extends Component<Props, State> {
       } else {
         return (
           <option
-            key={option.value}
+            key={optionValue}
             className={optionClassName}
-            value={option.value}
-            disabled={option.disabled}
+            value={optionValue}
+            disabled={optionDisabled}
           >
-            {option.label}
+            {optionLabel}
           </option>
         )
       }

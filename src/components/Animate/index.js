@@ -1,58 +1,59 @@
+// @flow
+import type { AnimationSequences } from './types'
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
+import styled from '../styled'
 import { getSequenceNames } from '../../utilities/animation'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
-import { sequencesType } from './propTypes'
+import css from './styles/Animate.css.js'
 
-export const propTypes = {
-  animateOnMount: PropTypes.bool,
-  block: PropTypes.bool,
-  className: PropTypes.string,
-  delay: PropTypes.number,
-  duration: PropTypes.number,
-  easing: PropTypes.string,
-  in: PropTypes.bool,
-  inline: PropTypes.bool,
-  inlineBlock: PropTypes.bool,
-  mountOnEnter: PropTypes.bool,
-  onEnter: PropTypes.func,
-  onEntered: PropTypes.func,
-  onEntering: PropTypes.func,
-  onExit: PropTypes.func,
-  onExited: PropTypes.func,
-  onExiting: PropTypes.func,
-  sequence: sequencesType,
-  timeout: PropTypes.number,
-  transitionProperty: PropTypes.string,
-  unmountOnExit: PropTypes.bool,
+type Props = {
+  animateOnMount: boolean,
+  block: boolean,
+  children?: any,
+  className: string,
+  delay: number,
+  duration: number,
+  easing: string,
+  in: boolean,
+  inline: boolean,
+  inlineBlock: boolean,
+  mountOnEnter: boolean,
+  onEnter: () => void,
+  onEntered: () => void,
+  onEntering: () => void,
+  onExit: () => void,
+  onExited: () => void,
+  onExiting: () => void,
+  sequence: AnimationSequences,
+  style?: Object,
+  timeout: number,
+  transitionProperty: string,
+  unmountOnExit: boolean,
 }
 
-const defaultProps = {
-  animateOnMount: true,
-  delay: 0,
-  duration: 300,
-  easing: 'ease-in-out',
-  in: true,
-  mountOnEnter: true,
-  onEnter: noop,
-  onEntered: noop,
-  onEntering: noop,
-  onExit: noop,
-  onExited: noop,
-  onExiting: noop,
-  sequence: ['fade'],
-  transitionProperty: 'all',
-  unmountOnExit: true,
-}
-
-class Animate extends Component {
-  constructor(props) {
-    super()
-    this.node = null
+export class Animate extends Component<Props> {
+  static defaultProps = {
+    animateOnMount: true,
+    delay: 0,
+    duration: 300,
+    easing: 'ease-in-out',
+    in: true,
+    mountOnEnter: true,
+    onEnter: noop,
+    onEntered: noop,
+    onEntering: noop,
+    onExit: noop,
+    onExited: noop,
+    onExiting: noop,
+    sequence: ['fade'],
+    transitionProperty: 'all',
+    unmountOnExit: true,
   }
+
+  node: ?HTMLElement = null
 
   componentWillUnmount() {
     this.node = null
@@ -87,12 +88,13 @@ class Animate extends Component {
       className
     )
 
-    const componentStyles = Object.assign({}, defaultStyle, {
+    const componentStyles = {
+      ...defaultStyle,
       transitionProperty: transitionProperty,
       transitionDuration: `${duration}ms`,
       transitionDelay: `${delay}ms`,
       transitionTimingFunction: getEasingTiming(easing),
-    })
+    }
 
     const sequenceClassNames = getSequenceNames(sequence)
       .map(s => `ax-${s}`)
@@ -130,8 +132,4 @@ class Animate extends Component {
   }
 }
 
-Animate.propTypes = propTypes
-Animate.defaultProps = defaultProps
-Animate.displayName = 'Animate'
-
-export default Animate
+export default styled(Animate)(css)

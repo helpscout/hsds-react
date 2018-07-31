@@ -1,3 +1,4 @@
+const css = `
 &.ax-upUp {
   transform: translateY(12px);
 
@@ -11,3 +12,6 @@
     transform: translateY(-12px);
   }
 }
+`
+
+export default css

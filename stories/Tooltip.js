@@ -22,7 +22,7 @@ stories.add('default', () => (
       placement="top-start"
       title="Hallo"
     >
-      Custom Top
+      Custom Top. Not contained in Text.
     </Tooltip>
     <Hr />
     <Tooltip placement="right" title="Halloooooo">
@@ -42,7 +42,7 @@ stories.add('default', () => (
       title="lotsssssssssofffffffffwordddddddddddddddddsssssssssssssssssssssssss"
       placement="top-start"
     >
-      Top Left, lots of words
+      Top Left, lots of words. Not contained in Text.
     </Tooltip>
     <br />
     <Tooltip placement="right">
