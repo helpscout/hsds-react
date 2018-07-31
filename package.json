@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "@helpscout/fancy": "^2.0.3",
+    "@helpscout/react-utils": "0.0.3",
     "closest": "0.0.1",
     "create-react-context": "0.2.2",
     "emoji-mart": "^1.0.1",

@@ -1,4 +1,5 @@
 // @flow
+import { classNames as classNamesUtil } from '@helpscout/react-utils'
 import { last } from './arrays'
 
 /**
@@ -7,11 +8,7 @@ import { last } from './arrays'
  * @param   {any} classes
  * @returns {string}
  */
-export const classNames = (...classes: any): string => {
-  return classes
-    .filter((name: string | boolean) => name && typeof name !== 'boolean')
-    .join(' ')
-}
+export const classNames = classNamesUtil
 
 /**
  * Generate className variations.

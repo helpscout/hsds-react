@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Frame from 'react-frame-component'
-import { Text, Truncate } from '../../src/components/index'
+import { Text, Truncate, Tooltip } from '../../src/components/index'
 import styled, {
   FrameProvider,
   ScopeProvider,
@@ -22,12 +22,14 @@ const Card = styled('div')`
 stories.add('default', () => (
   <Frame>
     <FrameProvider>
-      <ScopeProvider scope="#App">
+      <ScopeProvider scope="html">
         <ThemeProvider theme={{ color: '#eee' }}>
           <div id="App">
             <Card>
               <Text>
-                <Truncate>Buddy!</Truncate>
+                <Tooltip title="Elf!" triggerOn="click">
+                  Buddy!
+                </Tooltip>
               </Text>
             </Card>
           </div>

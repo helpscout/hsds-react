@@ -1,6 +1,7 @@
 // @flow
 import type { MessageBubble, MessageThemeContext } from './types'
 import React from 'react'
+import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
 import LoadingDots from '../LoadingDots'
@@ -9,7 +10,6 @@ import Text from '../Text'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { isWord } from '../../utilities/strings'
-import { isNativeSpanType } from '../../utilities/types'
 import { providerContextTypes } from './propTypes'
 import css, {
   BodyCSS,
