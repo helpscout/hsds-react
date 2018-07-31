@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Frame from 'react-frame-component'
-import { Text, Truncate, Tooltip } from '../../src/components/index'
+import { Text, Tooltip } from '../../src/components/index'
 import styled, {
   FrameProvider,
   ScopeProvider,

@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Portal from '..'
+import Frame from 'react-frame-component'
 
 const cleanUp = () => {
   global.document.body.innerHTML = ''
@@ -16,7 +17,7 @@ describe('Portal', () => {
   describe('Renders', () => {
     test('Renders at the body on mount', () => {
       const preMountNodeCount = document.body.childNodes.length
-      const wrapper = mount(
+      mount(
         <Portal>
           <div className="brick">BRICK</div>
         </Portal>
@@ -43,7 +44,7 @@ describe('Portal', () => {
     })
 
     test('Can add custom className', () => {
-      const wrapper = mount(
+      mount(
         <Portal className="champ">
           <div className="brick">BRICK</div>
         </Portal>
@@ -90,7 +91,7 @@ describe('Portal', () => {
       const testBody = global.document.createElement('div')
       global.document.body.appendChild(testBody)
 
-      const wrapper = mount(
+      mount(
         <div className="channel4">
           <div className="custom" />
           <Portal id="champ" renderTo={global.document.body}>
@@ -165,7 +166,7 @@ describe('Portal', () => {
         open()
         mockCallback()
       }
-      const wrapper = mount(
+      mount(
         <Portal onBeforeOpen={onBeforeOpen} isOpen>
           <div className="brick">BRICK</div>
         </Portal>
@@ -176,7 +177,7 @@ describe('Portal', () => {
 
     test('onOpen callback works', () => {
       const mockCallback = jest.fn()
-      const wrapper = mount(
+      mount(
         <Portal onOpen={mockCallback} isOpen>
           <div className="brick">BRICK</div>
         </Portal>
@@ -191,7 +192,7 @@ describe('Portal', () => {
         open()
         mockCallback()
       }
-      const wrapper = mount(
+      mount(
         <Portal onBeforeOpen={onBeforeOpen} onOpen={mockCallback} isOpen>
           <div className="brick">BRICK</div>
         </Portal>
@@ -263,6 +264,20 @@ describe('Portal', () => {
 
       expect(mockCallback.mock.calls.length).toBe(2)
       wrapper.detach()
+    })
+  })
+
+  describe('iFrame', () => {
+    test('Renders content within an iFrame, not global document', () => {
+      mount(
+        <Frame>
+          <Portal>
+            <div>Derek</div>
+          </Portal>
+        </Frame>
+      )
+
+      expect(document.body.innerHTML).not.toContain('Derek')
     })
   })
 })
