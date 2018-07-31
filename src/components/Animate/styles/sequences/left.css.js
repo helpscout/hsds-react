@@ -1,3 +1,4 @@
+const css = `
 &.ax-right {
   transform: translateX(-12px);
 
@@ -5,3 +6,6 @@
     transform: translateX(0);
   }
 }
+`
+
+export default css

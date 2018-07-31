@@ -1,3 +1,4 @@
+const css = `
 &.ax-fade {
   opacity: 0;
   pointer-events: none;
@@ -16,3 +17,6 @@
     will-change: opacity;
   }
 }
+`
+
+export default css

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Transition } from 'react-transition-group'
 import { mount } from 'enzyme'
-import { default as Animate } from '..'
+import { Animate } from '../index'
 
 jest.useFakeTimers()
 
