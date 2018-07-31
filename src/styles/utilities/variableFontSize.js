@@ -1,4 +1,5 @@
 // @flow
+import { FONT_SIZE } from '../configs/constants'
 type VariableFontSizeProps = {
   varName?: string,
   baseFontSize?: number,
@@ -6,7 +7,7 @@ type VariableFontSizeProps = {
 }
 
 export const GLOBAL_FONT_SIZE_NAMESPACE = '--BlueConfigGlobalFontSize'
-export const BASE_FONT_SIZE = 13
+export const BASE_FONT_SIZE = FONT_SIZE
 
 export const defaultProps = {
   baseFontSize: BASE_FONT_SIZE,
