@@ -5,11 +5,10 @@ import { getValidProps } from '@helpscout/react-utils'
 import styled from '../styled'
 import Pop from '../Pop'
 import Popper from './Popper'
-import { configConnect } from '../ConfigProvider'
+import { configConnect } from '../PropProvider'
 import classNames, { BEM } from '../../utilities/classNames'
 import { isFunction } from '../../utilities/is'
 import css from './styles/Tooltip.css.js'
-import configs from './configs'
 
 type Props = {|
   ...PopProps,
@@ -20,7 +19,6 @@ type Props = {|
 
 class Tooltip extends Component<Props> {
   static defaultProps = {
-    ...configs,
     animationDelay: 100,
     animationDuration: 100,
     animationSequence: 'fade up',
@@ -28,6 +26,7 @@ class Tooltip extends Component<Props> {
     modifiers: {},
     placement: 'top',
     triggerOn: 'hover',
+    zIndex: 999,
   }
 
   hasRenderContentProp = () => {

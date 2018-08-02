@@ -1,5 +1,5 @@
 import React from 'react'
-import { ConfigProvider, Hr, Text, Tooltip } from '../src/components'
+import { PropProvider, Hr, Text, Tooltip } from '../src/components'
 import { storiesOf } from '@storybook/react'
 
 const stories = storiesOf('Tooltip', module)
@@ -19,7 +19,7 @@ const List = () => (
   </div>
 )
 stories.add('default', () => (
-  <ConfigProvider value={{ Tooltip: { zIndex: 10 } }}>
+  <PropProvider value={{ Tooltip: { zIndex: 10 } }}>
     <div style={{ padding: '20%' }}>
       <Tooltip
         triggerOn="click"
@@ -55,5 +55,5 @@ stories.add('default', () => (
       </Tooltip>
       <br />
     </div>
-  </ConfigProvider>
+  </PropProvider>
 ))

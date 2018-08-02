@@ -6,7 +6,7 @@ import { NOOP } from './utils'
 import { isDefined, isString } from '../../utilities/is'
 
 /**
- * "Connects" a component with the ConfigProvider (context). Concept is
+ * "Connects" a component with the PropProvider (context). Concept is
  * similar to Redux's connect higher-order function.
  *
  * @param   {string} name The component's config namespace.

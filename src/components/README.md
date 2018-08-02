@@ -61,6 +61,7 @@ Below is a list of documentation for our Components:
 * [PortalWrapper](./PortalWrapper)
 * [PreviewCard](./PreviewCard)
 * [ProgressBar](./ProgressBar)
+* [PropProvider](./PropProvider)
 * [Radio](./Radio)
 * [RouteWrapper](./RouteWrapper)
 * [Samp](./Samp)

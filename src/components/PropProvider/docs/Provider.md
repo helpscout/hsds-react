@@ -6,7 +6,7 @@ A Provider component provides child Blue components with config values.
 
 ```jsx
 import React from 'react'
-import ConfigProvider from '@helpscout/blue/components/ConfigProvider'
+import PropProvider from '@helpscout/blue/components/PropProvider'
 import Tooltip from '@helpscout/blue/components/Tooltip'
 
 const customConfigs = {
