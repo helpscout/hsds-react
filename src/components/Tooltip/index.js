@@ -1,17 +1,20 @@
 // @flow
+import type { PopProps } from '../Pop/types'
 import React, { Component } from 'react'
+import { getValidProps } from '@helpscout/react-utils'
 import styled from '../styled'
 import Pop from '../Pop'
 import Popper from './Popper'
+import { configConnect } from '../PropProvider'
 import classNames, { BEM } from '../../utilities/classNames'
 import { isFunction } from '../../utilities/is'
 import css from './styles/Tooltip.css.js'
-import type { PopProps } from '../Pop/types'
 
 type Props = {|
   ...PopProps,
   renderContent?: () => void,
   title?: any,
+  zIndex?: number,
 |}
 
 class Tooltip extends Component<Props> {
@@ -23,6 +26,7 @@ class Tooltip extends Component<Props> {
     modifiers: {},
     placement: 'top',
     triggerOn: 'hover',
+    zIndex: 999,
   }
 
   hasRenderContentProp = () => {
@@ -57,7 +61,7 @@ class Tooltip extends Component<Props> {
 
     if (!this.shouldRenderPopper()) {
       return children ? (
-        <span className={componentClassName} {...rest}>
+        <span className={componentClassName} {...getValidProps(rest)}>
           {children}
         </span>
       ) : null
@@ -99,4 +103,6 @@ class Tooltip extends Component<Props> {
   }
 }
 
-export default styled(Tooltip)(css)
+const StyledTooltip = styled(Tooltip)(css)
+
+export default configConnect('Tooltip')(StyledTooltip)
