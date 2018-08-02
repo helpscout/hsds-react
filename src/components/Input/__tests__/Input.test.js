@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Input from '..'
+import Input from '../Input'
 import Resizer from '../Resizer'
 
 const ui = {
@@ -122,6 +122,16 @@ describe('Events', () => {
     input.simulate('wheel', {
       stopPropagation: spy,
     })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onResize callback is called when Input resizes', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input multiline={true} onResize={spy} />)
+    const resizer = wrapper.find('Resizer')
+
+    resizer.getNode().handleOnResize()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -550,7 +560,6 @@ describe('isFocused', () => {
 
 describe('moveCursorToEnd', () => {
   test('Moves the selection cursor to end of value', () => {
-    const value = 'ron'
     const wrapper = mount(<Input value="WEE" moveCursorToEnd />)
     wrapper.setState({ value: 'WEE' })
     wrapper.getNode().moveCursorToEnd()

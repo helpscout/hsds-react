@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import configConnect from '../configConnect'
+import propConnect from '../propConnect'
 import Provider from '../Provider'
 
 describe('Provider', () => {
@@ -10,7 +10,7 @@ describe('Provider', () => {
       noms: 'sugar',
     }
 
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
     const oldConfig = {
       Buddy: {
         noms: 'Fun things',

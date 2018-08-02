@@ -1,22 +1,20 @@
 // @flow
 
-// Fallback config namespace
-export const NOOP = '__NOOP_CONFIG__'
-
-// Collection of supported components
-const COMPONENTS = ['Tooltip', NOOP]
+// Default configs
+export const contextConfig = {}
 
 /**
- * Generates the config.
+ * Attempts to retrieve the specified config props.
  *
- * @returns {Object} The context config.
+ * @param  {Object} config The PropProvider configs.
+ * @param  {string} name The namespace of the config.
+ * @return {Object} The retrieved config props.
  */
-export function makeContextConfig(): Object {
-  return COMPONENTS.reduce((config, component) => {
-    config[component] = {}
+export function getConfigProps(
+  config: Object = contextConfig,
+  name: string = ''
+): Object {
+  const props = config.hasOwnProperty(name) ? config[name] : {}
 
-    return config
-  }, {})
+  return props
 }
-
-export const contextConfig = makeContextConfig()

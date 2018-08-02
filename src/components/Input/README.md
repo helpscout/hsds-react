@@ -47,6 +47,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | onBlur                   | `function`           | Callback when input is blurred.                                            |
 | onChange                 | `function`           | Callback when input value is changed.                                      |
 | onFocus                  | `function`           | Callback when input is focused.                                            |
+| onResize                 | `function`           | Callback when input is resized.                                            |
 | onStartTyping            | `function`           | Callback when user starts typing, rate limited by `typingThrottleInterval` |
 | onStopTyping             | `function`           | Callback when user stops typing after delay of `typingTimeoutDelay`.       |
 | placeholder              | `string`             | Placeholder text for the input.                                            |
