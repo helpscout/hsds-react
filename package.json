@@ -51,8 +51,7 @@
     "version": "npm run build",
     "postversion": "npm publish dist",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
-    "prettier": "npm run prettier:base -- --write",
-    "precommit": "npm run lint:es && pretty-quick --staged"
+    "prettier": "npm run prettier:base -- --write"
   },
   "peerDependencies": {
     "react": "^15",
@@ -129,7 +128,7 @@
     "fs-extra": "3.0.1",
     "hoek": "5.0.3",
     "html-webpack-plugin": "2.29.0",
-    "husky": "0.14.3",
+    "husky": "1.0.0-rc.13",
     "istanbul-api": "1.2.2",
     "istanbul-reports": "1.1.4",
     "jasmine": "2.8.0",
@@ -257,6 +256,11 @@
       "indentation": [
         2
       ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }
