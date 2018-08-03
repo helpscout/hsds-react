@@ -29,3 +29,60 @@ propConnect(name)(Component)
 ## Returns
 
 `Function`: The enhanced "connected" React component.
+
+---
+
+## Connecting multiple props
+
+You can connect your component to **multiple** config props using a variety of methods.
+
+### Array
+
+```js
+const ConnectedDerekComponent = propConnect([
+  'BlueSteel',
+  'Karate',
+  'Modelling',
+  'Magnum',
+])(DerekComponent)
+```
+
+### Function: `remapConfigToProps()`
+
+This works similarly to Redux's [`mapStateToProps`](https://github.com/reduxjs/react-redux/blob/master/docs/api.md)
+
+```js
+const remapConfigToProps = config => {
+  const = {
+    BlueSteel,
+    Karate,
+    Modelling,
+    Magnum
+  } = config
+
+  return {
+    BlueSteel,
+    Karate,
+    Modelling,
+    Magnum
+  }
+}
+
+const ConnectedDerekComponent = propConnect(remapConfigToProps)(DerekComponent)
+```
+
+### Object
+
+If an `Object` is provided, `propConnect` will evaluate keys with **truthy** values.
+
+```js
+const remapConfigToProps = {
+  BlueSteel: true,
+  Hansel: false,
+  Karate: true,
+  Modelling: true,
+  Magnum: true,
+}
+
+const ConnectedDerekComponent = propConnect(remapConfigToProps)(DerekComponent)
+```

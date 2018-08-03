@@ -1,7 +1,7 @@
 // @flow
+import type { ConfigGetter } from './utils'
 import React, { Component } from 'react'
-import { getComponentName } from '@helpscout/react-utils'
-import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
+import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
 import Consumer from './Consumer'
 import { getConfigProps } from './utils'
 import { isDefined, isString } from '../../utilities/is'
@@ -13,7 +13,7 @@ import { isDefined, isString } from '../../utilities/is'
  * @param   {string} name The component's config namespace.
  * @returns {React.Component} The connected React component.
  */
-function propConnect(name?: string) {
+function propConnect(name?: ConfigGetter) {
   // $FlowFixMe
   let namespace: string = isString(name) ? name : ''
 
