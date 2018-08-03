@@ -55,7 +55,12 @@ stories.add('hintText', () => (
 stories.add('multiline', () => (
   <div>
     <Input placeholder="This is an input!" style={{ marginBottom: '5px' }} />
-    <Input autoFocus multiline={3} placeholder="This is a textarea!" />
+    <Input
+      autoFocus
+      multiline={3}
+      placeholder="This is a textarea!"
+      onResize={() => console.log('Resize')}
+    />
   </div>
 ))
 
