@@ -1,12 +1,12 @@
 // @flow
-import React from 'react'
-import createContext, { type Context } from 'create-react-context'
 import type { Node } from 'react'
+import React from 'react'
+import createContext from '@helpscout/react-utils/dist/createContext'
 
-export const ManagerContext: Context<{
-  getReferenceRef?: (?HTMLElement) => void,
-  referenceNode?: ?HTMLElement,
-}> = createContext({ getReferenceRef: undefined, referenceNode: undefined })
+export const ManagerContext = createContext({
+  getReferenceRef: undefined,
+  referenceNode: undefined,
+})
 
 export type ManagerProps = {
   children: Node,

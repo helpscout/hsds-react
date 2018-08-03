@@ -1,12 +1,12 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import configConnect from '../configConnect'
+import propConnect from '../propConnect'
 import Provider from '../Provider'
 
-describe('configConnect', () => {
+describe('propConnect', () => {
   test('Can render without a Provider', () => {
     const Buddy = () => <div />
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
 
     const wrapper = mount(<ConnectedBuddy />)
     const el = wrapper.find('Buddy')
@@ -16,7 +16,7 @@ describe('configConnect', () => {
 
   test('Can render without an invalid namespace', () => {
     const Buddy = () => <div />
-    const ConnectedBuddy = configConnect('BUDDYYYY')(Buddy)
+    const ConnectedBuddy = propConnect('BUDDYYYY')(Buddy)
 
     const wrapper = mount(<ConnectedBuddy />)
     const el = wrapper.find('Buddy')
@@ -26,7 +26,7 @@ describe('configConnect', () => {
 
   test('Can render without an empty namespace', () => {
     const Buddy = () => <div />
-    const ConnectedBuddy = configConnect()(Buddy)
+    const ConnectedBuddy = propConnect()(Buddy)
 
     const wrapper = mount(<ConnectedBuddy />)
     const el = wrapper.find('Buddy')
@@ -36,7 +36,7 @@ describe('configConnect', () => {
 
   test('Passes props to connected component', () => {
     const Buddy = props => <div {...props} />
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
 
     const wrapper = mount(<ConnectedBuddy className="elf" />)
     const el = wrapper.find('Buddy')
@@ -50,7 +50,7 @@ describe('configConnect', () => {
       title: 'Elf',
     }
 
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
 
     const wrapper = mount(<ConnectedBuddy title="Buddy to elf" />)
     const el = wrapper.find('Buddy')
@@ -64,7 +64,7 @@ describe('configConnect', () => {
       title: 'Elf',
     }
 
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
     const config = {
       Buddy: {
         title: 'Buddy to elf',
@@ -87,7 +87,7 @@ describe('configConnect', () => {
       title: 'Elf',
     }
 
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
     const config = {
       Buddy: {
         title: 'Buddy to elf',
@@ -110,7 +110,7 @@ describe('configConnect', () => {
       noms: 'sugar',
     }
 
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
     const config = {
       Buddy: {
         noms: 'ALL THINGS SUGAR',
@@ -133,7 +133,7 @@ describe('configConnect', () => {
       noms: 'sugar',
     }
 
-    const ConnectedBuddy = configConnect()(Buddy)
+    const ConnectedBuddy = propConnect()(Buddy)
     const config = {
       Buddy: {
         noms: 'ALL THINGS SUGAR',
@@ -158,7 +158,7 @@ describe('configConnect', () => {
       },
     }
 
-    const ConnectedBuddy = configConnect('Buddy')(Buddy)
+    const ConnectedBuddy = propConnect('Buddy')(Buddy)
     const config = {
       Buddy: {
         noms: {

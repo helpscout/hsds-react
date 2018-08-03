@@ -1,22 +1,62 @@
 // @flow
+import { isArray, isObject, isFunction, isString } from '../../utilities/is'
 
-// Fallback config namespace
-export const NOOP = '__NOOP_CONFIG__'
+export type ConfigGetter = Array<string> | string | ((config: Object) => {})
 
-// Collection of supported components
-const COMPONENTS = ['Tooltip', NOOP]
+// Default configs
+export const contextConfig = {}
 
 /**
- * Generates the config.
+ * Attempts to retrieve the specified config props.
  *
- * @returns {Object} The context config.
+ * @param  {Object} config The PropProvider configs.
+ * @param  {Array<string> | Function | Object | string} getter The namespace of the config.
+ * @return {Object} The retrieved config props.
  */
-export function makeContextConfig(): Object {
-  return COMPONENTS.reduce((config, component) => {
-    config[component] = {}
+export function getConfigProps(
+  config: Object = contextConfig,
+  getter: ConfigGetter = ''
+): Object {
+  let props = {}
 
-    return config
-  }, {})
+  if (isString(getter)) {
+    props = config.hasOwnProperty(getter) ? config[getter] : {}
+  }
+  if (isFunction(getter)) {
+    // $FlowFixMe
+    props = getter(config)
+  }
+  if (isArray(getter)) {
+    // $FlowFixMe
+    props = getConfigPropsFromArray(config, getter)
+  }
+
+  if (isObject(getter)) {
+    // $FlowFixMe
+    const propKeys = Object.keys(getter).filter(key => getter[key])
+    props = getConfigPropsFromArray(config, propKeys)
+  }
+
+  return props
 }
 
-export const contextConfig = makeContextConfig()
+/**
+ * Retrieves props from a config (Object), given a collection of keys.
+ *
+ * @param   {Object} config The initial config.
+ * @param   {Array<string>} array A collection of keys to get.
+ * @returns {Object} The remapped config.
+ */
+export function getConfigPropsFromArray(
+  config: Object = {},
+  array: Array<string>
+): Object {
+  if (!isObject(config)) return {}
+  if (!isArray(array)) return config
+
+  return array.filter(value => isString(value)).reduce((remappedProps, key) => {
+    remappedProps[key] = config[key]
+
+    return remappedProps
+  }, {})
+}

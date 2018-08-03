@@ -1,5 +1,5 @@
 // @flow
-import createContext from 'create-react-context'
+import createContext from '@helpscout/react-utils/dist/createContext'
 
 export type PreviewCardContext = {
   isNote?: boolean,
