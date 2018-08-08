@@ -58,7 +58,7 @@
     "react-dom": "^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "^2.0.4",
+    "@helpscout/fancy": "^2.0.5",
     "@helpscout/react-utils": "^1.0.0",
     "closest": "0.0.1",
     "emoji-mart": "^1.0.1",

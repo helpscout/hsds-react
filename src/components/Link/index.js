@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { wordHasSpaces } from '../../utilities/strings'
