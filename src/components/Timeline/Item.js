@@ -1,31 +1,36 @@
-import React from 'react'
-import classNames from '../../utilities/classNames'
-import Animate from '../Animate'
+// @flow
+import React, { PureComponent as Component } from 'react'
 import Flexy from '../Flexy'
-import HoverWrapper from '../HoverWrapper'
 import Timestamp from '../Timestamp'
+import classNames from '../../utilities/classNames'
 
-const Item = props => {
-  const { children, className, isHovered, timestamp, ...rest } = props
-
-  const componentClassName = classNames('c-TimelineItem', className)
-
-  const timestampMarkup = timestamp ? (
-    <Flexy.Item className="c-TimelineItem__timestamp">
-      <Animate in={isHovered} sequence="fade" animateOnMount={false}>
-        <Timestamp timestamp={timestamp} />
-      </Animate>
-    </Flexy.Item>
-  ) : null
-
-  return (
-    <div className={componentClassName} {...rest} role="listitem">
-      <Flexy gap="md" just="left">
-        <Flexy.Item className="c-TimelineItem__block">{children}</Flexy.Item>
-        {timestampMarkup}
-      </Flexy>
-    </div>
-  )
+type Props = {
+  children?: any,
+  className?: string,
+  timestamp?: number | string,
 }
 
-export default HoverWrapper(Item)
+class Item extends Component<Props> {
+  render() {
+    const { children, className, timestamp, ...rest } = this.props
+
+    const componentClassName = classNames('c-TimelineItem', className)
+
+    const timestampMarkup = timestamp ? (
+      <Flexy.Item className="c-TimelineItem__timestamp">
+        <Timestamp timestamp={timestamp} />
+      </Flexy.Item>
+    ) : null
+
+    return (
+      <div className={componentClassName} {...rest} role="listitem">
+        <Flexy gap="md" just="left">
+          <Flexy.Item className="c-TimelineItem__block">{children}</Flexy.Item>
+          {timestampMarkup}
+        </Flexy>
+      </div>
+    )
+  }
+}
+
+export default Item

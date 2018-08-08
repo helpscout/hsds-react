@@ -1,7 +1,7 @@
-@import "../../configs/color";
+@import '../../configs/color';
 
 .c-TimelineItem {
-  @import "../../resets/base";
+  @import '../../resets/base';
   // Variables
   $item-padding: 6px;
   $border-offset: 4px;
@@ -24,13 +24,21 @@
 
   &__timestamp {
     min-width: $timestamp-size;
+    opacity: 0;
+    transition: opacity 200ms linear;
+    will-change: opacity;
+  }
+  &:hover {
+    .c-TimelineItem__timestamp {
+      opacity: 1;
+    }
   }
 
   // Border
   &::before {
     background-color: _color(grey, 400);
     bottom: 0;
-    content: "";
+    content: '';
     left: $border-offset;
     position: absolute;
     top: 0;
@@ -43,7 +51,7 @@
     background-color: white;
     border-radius: 50%;
     border: $dot-border-width solid _color(grey, 800);
-    content: "";
+    content: '';
     display: block;
     height: $dot-size;
     left: 0;
@@ -64,7 +72,7 @@
   &:last-child {
     // Border
     &::before {
-      bottom: calc(100% - (#{$dot-offset} + (#{$dot-size}/2)));
+      bottom: calc(100% - (#{$dot-offset} + (#{$dot-size}/ 2)));
       top: 0;
     }
   }

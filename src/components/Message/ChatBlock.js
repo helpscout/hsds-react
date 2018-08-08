@@ -1,11 +1,9 @@
 // @flow
 import { providerContextTypes } from './propTypes'
 import React, { PureComponent as Component } from 'react'
-import Animate from '../Animate'
 import Flexy from '../Flexy'
 import Action from './Action'
 import Bubble from './Bubble'
-import HoverWrapper from '../HoverWrapper'
 import Timestamp from '../Timestamp'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
@@ -16,25 +14,54 @@ type Props = MessageChat & {
   body?: string,
   children?: any,
   icon?: string,
-  isHovered?: boolean,
+  meta?: any,
 }
 
 export class ChatBlock extends Component<Props> {
   static contextTypes = providerContextTypes
   static displayName = 'Message.ChatBlock'
 
+  getChildrenMarkup = () => {
+    const { children, icon, from, ltr, rtl, timestamp, to } = this.props
+
+    return React.Children.map(children, child => {
+      return child && (child.type === Action || child.type === Bubble)
+        ? React.cloneElement(child, {
+            icon,
+            from,
+            ltr,
+            rtl,
+            timestamp,
+            to,
+          })
+        : child
+    })
+  }
+
+  getTimestampMarkup = () => {
+    const { read, timestamp } = this.props
+
+    return (
+      timestamp && (
+        <Flexy.Item className="c-MessageChatBlock__timestamp">
+          <Timestamp timestamp={timestamp} read={read} />
+        </Flexy.Item>
+      )
+    )
+  }
+
   render() {
     const {
       body,
       children,
       className,
+      from,
       icon,
       isNote,
       ltr,
-      rtl,
+      meta,
       read,
-      from,
-      isHovered,
+      rtl,
       timestamp,
       to,
       type,
@@ -51,26 +78,8 @@ export class ChatBlock extends Component<Props> {
       className
     )
 
-    const timestampMarkup = timestamp ? (
-      <Flexy.Item className="c-MessageChatBlock__timestamp">
-        <Animate in={isHovered} sequence="fade" animateOnMount={false}>
-          <Timestamp timestamp={timestamp} read={read} />
-        </Animate>
-      </Flexy.Item>
-    ) : null
-
-    const childrenMarkup = React.Children.map(children, child => {
-      return child && (child.type === Action || child.type === Bubble)
-        ? React.cloneElement(child, {
-            icon,
-            from,
-            ltr,
-            rtl,
-            timestamp,
-            to,
-          })
-        : child
-    })
+    const childrenMarkup = this.getChildrenMarkup()
+    const timestampMarkup = this.getTimestampMarkup()
 
     return (
       <div className={componentClassName} {...rest}>
@@ -81,9 +90,10 @@ export class ChatBlock extends Component<Props> {
           </Flexy.Item>
           {from && timestampMarkup}
         </Flexy>
+        {meta}
       </div>
     )
   }
 }
 
-export default HoverWrapper(styled(ChatBlock)(css))
+export default styled(ChatBlock)(css)

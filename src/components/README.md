@@ -38,7 +38,6 @@ Below is a list of documentation for our Components:
 * [Grid](./Grid)
 * [Heading](./Heading)
 * [HelpText](./HelpText)
-* [HoverWrapper](./HoverWrapper)
 * [Hr](./Hr)
 * [Icon](./Icon)
 * [Illo](./Illo)

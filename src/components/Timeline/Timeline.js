@@ -1,19 +1,27 @@
-import React from 'react'
+// @flow
+import React, { PureComponent as Component } from 'react'
 import Item from './Item'
 import classNames from '../../utilities/classNames'
 
-const Timeline = props => {
-  const { children, className, ...rest } = props
-
-  const componentClassName = classNames('c-Timeline', className)
-
-  return (
-    <div className={componentClassName} {...rest} role="list">
-      {children}
-    </div>
-  )
+type Props = {
+  children?: any,
+  className?: string,
 }
 
-Timeline.Item = Item
+class Timeline extends Component<Props> {
+  static Item = Item
+
+  render() {
+    const { children, className, ...rest } = this.props
+
+    const componentClassName = classNames('c-Timeline', className)
+
+    return (
+      <div className={componentClassName} {...rest} role="list">
+        {children}
+      </div>
+    )
+  }
+}
 
 export default Timeline
