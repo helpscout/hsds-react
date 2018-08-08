@@ -1,4 +1,5 @@
 // @flow
+import type { AttachmentProp } from './types'
 import React, { PureComponent as Component } from 'react'
 import AttachmentProvider from './Provider'
 import CloseButton from '../CloseButton'
@@ -10,7 +11,6 @@ import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Attachment.css.js'
-import type { AttachmentProp } from './types'
 
 export const Provider = AttachmentProvider
 
