@@ -17,6 +17,14 @@ const css = `
 
   ${bem.element('timestamp')} {
     min-width: ${config.timestampSize}px;
+    opacity: 0;
+    transition: opacity 200ms linear;
+    will-change: opacity;
+  }
+  &:hover {
+    ${bem.element('timestamp')} {
+      opacity: 1;
+    }
   }
 
   ${bem.element('block')} {

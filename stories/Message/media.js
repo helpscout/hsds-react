@@ -116,6 +116,24 @@ stories.add('image:left-right', () => {
   )
 })
 
+stories.add('consecutive', () => {
+  const imageProps = {
+    ...dimensions,
+    imageUrl: imageUrlSlow,
+  }
+  return (
+    <div>
+      <Message to avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Chat>Agent Chat</Message.Chat>
+        <Message.Media {...imageProps} caption="image.jpg" />
+        <Message.Media {...imageProps} caption="image.jpg" />
+        <Message.Media {...imageProps} caption="image.jpg" />
+        <Message.Media {...imageProps} caption="image.jpg" />
+      </Message>
+    </div>
+  )
+})
+
 stories.add('states', () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>

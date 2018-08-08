@@ -23,27 +23,10 @@ describe('ClassNames', () => {
 })
 
 describe('Timestamp', () => {
-  test('Renders timestamp on mouseenter', () => {
+  test('Renders timestamp', () => {
     const wrapper = mount(<ChatBlock timestamp="time" to />)
-    const o = wrapper.find(Animate)
-
-    wrapper.simulate('mouseenter')
 
     expect(wrapper.find(Timestamp).length).toBeTruthy()
-    expect(o.props().in).toBeTruthy()
-  })
-
-  test('Hides timestamp on mouseleave', () => {
-    const wrapper = mount(<ChatBlock timestamp="time" to />)
-    const o = wrapper.find(Animate)
-
-    wrapper.simulate('mouseenter')
-
-    expect(wrapper.find(Timestamp).length).toBeTruthy()
-
-    wrapper.simulate('mouseleave')
-
-    expect(o.props().in).toBeFalsy()
   })
 
   test('Renders as first child, if to props is set', () => {

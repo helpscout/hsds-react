@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Bubble from '../Bubble'
 import Message from '../Message'
-import { Heading, LoadingDots, Text } from '../../'
+import { LoadingDots, Text } from '../../index'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const cx = 'c-MessageBubble'

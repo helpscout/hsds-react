@@ -110,6 +110,7 @@ export class Chat extends Component<Props> {
     return (
       <ChatBlock
         className={componentClassName}
+        meta={metaMarkup}
         read={read}
         {...chatProps}
         {...rest}
@@ -125,7 +126,6 @@ export class Chat extends Component<Props> {
           typing={typing}
           type={type}
         />
-        {metaMarkup}
       </ChatBlock>
     )
   }

@@ -16,10 +16,10 @@ const Content = (props: Props) => {
     from,
     isNote,
     ltr,
-    rtl,
-    to,
     read,
+    rtl,
     timestamp,
+    to,
     type,
     ...rest
   } = props

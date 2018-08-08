@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Message from '..'
+import Message from '../Message'
 import Action from '../Action'
 import Attachment from '../Attachment'
 import Bubble from '../Bubble'
@@ -8,7 +8,7 @@ import Chat from '../Chat'
 import Content from '../Content'
 import Media from '../Media'
 import Question from '../Question'
-import { Avatar } from '../../'
+import { Avatar } from '../../index'
 
 const cx = 'c-Message'
 const ui = {
