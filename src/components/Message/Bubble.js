@@ -55,6 +55,7 @@ export const Bubble = (props: Props, context: Context) => {
   const componentClassName = classNames(
     'c-MessageBubble',
     from && 'is-from',
+    icon && 'withIcon',
     isNote && 'is-note',
     primary && 'is-primary',
     size && `is-${size}`,
@@ -63,7 +64,6 @@ export const Bubble = (props: Props, context: Context) => {
     theme && `is-theme-${theme}`,
     to && 'is-to',
     typing && 'is-typing',
-    icon && 'withIcon',
     className
   )
 
