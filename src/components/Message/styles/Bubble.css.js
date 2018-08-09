@@ -11,7 +11,16 @@ export const config = {
     md: 8,
     sm: 3,
   },
+  icon: {
+    left: 14,
+    offset: {
+      md: 20,
+      sm: 32,
+    },
+  },
+  maxWidth: 500,
   padding: {
+    embed: '12px 15px',
     md: '13px 20px 13px',
     sm: '5px',
   },
@@ -28,6 +37,11 @@ export const FromCSS = `
   color: ${getColor('grey.800')};
   margin-bottom: 5px;
   text-align: right;
+`
+
+export const IconWrapperCSS = `
+  left: ${config.icon.left}px;
+  position: absolute;
 `
 
 export const TitleCSS = `
@@ -50,7 +64,8 @@ const css = `
   border-bottom-left-radius: ${config.borderRadius.md}px;
   display: inline-block;
   padding: ${config.padding.md};
-  max-width: 500px;
+  position: relative;
+  max-width: ${config.maxWidth}px;
   text-align: left;
   word-break: break-word;
 
@@ -73,6 +88,11 @@ const css = `
   }
   &.is-sm {
     padding: ${config.padding.sm};
+    &.withIcon {
+      ${bem.element('content')} {
+        margin-left: ${config.icon.offset.sm}px;
+      }
+    }
   }
 
   &.is-note {
@@ -104,15 +124,29 @@ const css = `
     }
   }
 
+  &.withIcon {
+    ${bem.element('content')} {
+      margin-left: ${config.icon.offset.md}px;
+    }
+  }
+
   &.is-theme-embed {
-    padding: 12px 15px;
+    padding: ${config.padding.embed};
     max-width: 100%;
 
     ${bem.element('typing')} {
       margin-left: 0;
       margin-right: 0;
     }
+
+    &.withIcon {
+      ${bem.element('content')} {
+        margin-left: ${config.icon.offset.md}px;
+        padding-left: 4px;
+      }
+    }
   }
+
 `
 
 export default css

@@ -46,10 +46,12 @@ export const smoothScrollTo = ({ node, position, duration, direction }) => {
     const percent = easeInOutCubic(Math.min(time / scrollDuration, 1))
     const scrollToPosition = currentScrollPosition - diff * percent
 
-    if (isHorizontalScroll) {
-      node.scrollTo(scrollToPosition, 0)
-    } else {
-      node.scrollTo(0, scrollToPosition)
+    if (node.scrollTo) {
+      if (isHorizontalScroll) {
+        node.scrollTo(scrollToPosition, 0)
+      } else {
+        node.scrollTo(0, scrollToPosition)
+      }
     }
 
     // Proceed with animation as long as we wanted it to.
