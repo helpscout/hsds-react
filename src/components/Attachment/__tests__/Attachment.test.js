@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { Attachment, Provider } from '../index'
+import { Attachment } from '../Attachment'
+import { Provider } from '../index'
 
 const ui = {
   content: '.c-Attachment__content',

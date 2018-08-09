@@ -1,8 +1,7 @@
 // @flow
+import type { UIState } from '../../constants/types'
 import React from 'react'
 import classNames from '../../utilities/classNames'
-import { stateTypes } from '../../constants/propTypes'
-import type { UIState } from '../../constants/types'
 
 type Props = {
   checkbox?: boolean,

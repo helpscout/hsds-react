@@ -29,6 +29,15 @@ export class Message extends Component<Props> {
     showAvatar: true,
   }
   static contextTypes = providerContextTypes
+  static Action = Action
+  static Attachment = Attachment
+  static Bubble = Bubble
+  static Caption = Caption
+  static Chat = Chat
+  static Content = Content
+  static Media = Media
+  static Provider = Provider
+  static Question = Question
 
   shouldShowAvatar = (): boolean => {
     const { from, showAvatar } = this.props
@@ -151,17 +160,4 @@ export class Message extends Component<Props> {
   }
 }
 
-const StyledMessage = styled(Message)(css)
-StyledMessage.displayName = 'Message'
-
-StyledMessage.Action = Action
-StyledMessage.Attachment = Attachment
-StyledMessage.Bubble = Bubble
-StyledMessage.Caption = Caption
-StyledMessage.Chat = Chat
-StyledMessage.Content = Content
-StyledMessage.Media = Media
-StyledMessage.Provider = Provider
-StyledMessage.Question = Question
-
-export default StyledMessage
+export default styled(Message)(css)
