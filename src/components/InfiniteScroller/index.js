@@ -120,7 +120,7 @@ class InfiniteScroller extends Component {
     if (typeof scrollTop !== 'number') return
 
     /* istanbul ignore next */
-    if (nodeScope === window) {
+    if (nodeScope === window && nodeScope.scrollTo) {
       nodeScope.scrollTo(window.scrollX, scrollTop)
     } else if (nodeScope.scrollTop !== undefined) {
       nodeScope.scrollTop = scrollTop

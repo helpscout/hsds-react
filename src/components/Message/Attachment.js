@@ -83,7 +83,7 @@ export const Attachment = (props: Props, context: Context) => {
       className={componentClassName}
       icon="attachment"
       isLoading={isUploading}
-      size="sm"
+      size={size}
     >
       {filenameMarkup}
     </Chat>
@@ -95,6 +95,7 @@ Attachment.defaultProps = {
   onClick: noop,
   openDownloadInNewTab: true,
   isUploading: false,
+  size: 'md',
   uploadingMessage: 'Uploading…',
 }
 Attachment.contextTypes = providerContextTypes

@@ -2,7 +2,6 @@
 import type { MessageBubble, MessageThemeContext } from './types'
 import React from 'react'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
-import Flexy from '../Flexy'
 import Heading from '../Heading'
 import LoadingDots from '../LoadingDots'
 import Icon from '../Icon'
@@ -14,6 +13,7 @@ import { providerContextTypes } from './propTypes'
 import css, {
   BodyCSS,
   FromCSS,
+  IconWrapperCSS,
   TitleCSS,
   TypingCSS,
 } from './styles/Bubble.css.js'
@@ -24,6 +24,7 @@ type Context = MessageThemeContext
 // Sub-Components
 const MessageBubbleBody = styled('span')(BodyCSS)
 const MessageBubbleFrom = styled('div')(FromCSS)
+const MessageBubbleIconWrapper = styled('div')(IconWrapperCSS)
 const MessageBubbleTitle = styled(Heading)(TitleCSS)
 const MessageBubbleTyping = styled('div')(TypingCSS)
 
@@ -62,6 +63,7 @@ export const Bubble = (props: Props, context: Context) => {
     theme && `is-theme-${theme}`,
     to && 'is-to',
     typing && 'is-typing',
+    icon && 'withIcon',
     className
   )
 
@@ -85,14 +87,14 @@ export const Bubble = (props: Props, context: Context) => {
     ) : null
 
   const iconMarkup = icon ? (
-    <Flexy.Item className="c-MessageBubble__iconWrapper">
+    <MessageBubbleIconWrapper className="c-MessageBubble__iconWrapper">
       <Icon
         className="c-MessageBubble__icon"
         name={icon}
         size="20"
         shade="extraMuted"
       />
-    </Flexy.Item>
+    </MessageBubbleIconWrapper>
   ) : null
 
   const titleMarkup = title ? (
@@ -119,12 +121,10 @@ export const Bubble = (props: Props, context: Context) => {
   )
 
   const contentMarkup = (
-    <Flexy className="c-MessageBubble__content" align="top" gap="xs">
+    <div className="c-MessageBubble__content">
       {iconMarkup}
-      <Flexy.Block className="c-MessageBubble__bodyWrapper">
-        {innerContentMarkup}
-      </Flexy.Block>
-    </Flexy>
+      <div className="c-MessageBubble__bodyWrapper">{innerContentMarkup}</div>
+    </div>
   )
 
   return (
