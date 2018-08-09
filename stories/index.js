@@ -1,3 +1,4 @@
+import { injectGlobal } from '../src/components/styled'
 import '../src/styles/blue.scss'
 // import '../src/styles/blue.hs-app.scss'
 
@@ -47,6 +48,7 @@ import './List'
 import './LoadingDots'
 import './Overlay'
 import './Overflow'
+import './Page'
 import './ProgressBar'
 import './Radio'
 import './Samp'
@@ -73,3 +75,10 @@ import './Truncate'
 import './VisuallyHidden'
 
 import './Color'
+
+injectGlobal`
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+`

@@ -15,7 +15,7 @@ const css = `
   }
 
   // Modifiers
-  &.is-withOverflow.is-theme-preview {
+  &.withOverflow.is-theme-preview {
     .c-AttachmentWrapper {
       padding-top: 10px;
     }

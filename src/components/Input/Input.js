@@ -197,7 +197,10 @@ export class Input extends Component<Props, State> {
     const totalLines = getTextAreaLineTotal(this.inputNode)
 
     /* istanbul ignore next */
-    if (currentLine === totalLines && this.inputNode.scrollTo) {
+    if (
+      currentLine === totalLines &&
+      this.inputNode.hasOwnProperty('scrollTo')
+    ) {
       // $FlowFixMe
       this.inputNode.scrollTo(0, this.inputNode.scrollHeight)
     }

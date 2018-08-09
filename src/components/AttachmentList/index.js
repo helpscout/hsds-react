@@ -83,7 +83,7 @@ export class AttachmentList extends Component<Props> {
     const componentClassName = classNames(
       'c-AttachmentList',
       theme && `is-theme-${theme}`,
-      withOverflow && 'is-withOverflow',
+      withOverflow && 'withOverflow',
       className
     )
 

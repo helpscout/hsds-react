@@ -103,7 +103,7 @@ describe('withCaret', () => {
     const wrapper = mount(<Icon name="emoji" withCaret />)
     const o = wrapper.find(caretClassName)
 
-    expect(wrapper.hasClass('is-withCaret')).toBe(true)
+    expect(wrapper.hasClass('withCaret')).toBe(true)
     expect(o.length).toBe(1)
   })
 })
