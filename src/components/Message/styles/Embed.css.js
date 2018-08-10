@@ -17,7 +17,7 @@ export const css = `
 
   ${bem.element('html')} {
     border-radius: ${config.embedBorderRadius};
-    max-width: ${config.embedMaxWidth};
+    max-width: 100%;
     overflow: hidden;
     width: ${config.embedWidth};
   }
@@ -31,8 +31,10 @@ export const css = `
       0px -1px 0px 0px ${getColor('grey.600')} inset;
     color: ${getColor('charcoal.200')};
     display: inline-block;
+    max-width: ${config.embedMaxWidth};
     overflow: hidden;
     padding: 3px;
+    width: 100%;
 
     &.is-note {
       ${noteBoxShadow()}
