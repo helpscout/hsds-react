@@ -10,6 +10,7 @@ import Bubble from './Bubble'
 import Caption from './Caption'
 import Chat from './Chat'
 import Content from './Content'
+import Embed from './Embed'
 import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
@@ -35,6 +36,7 @@ export class Message extends Component<Props> {
   static Caption = Caption
   static Chat = Chat
   static Content = Content
+  static Embed = Embed
   static Media = Media
   static Provider = Provider
   static Question = Question
@@ -46,7 +48,15 @@ export class Message extends Component<Props> {
   }
 
   isChatType = (child: any): boolean => {
-    const chatTypes = [Action, Attachment, Chat, Content, Media, Question]
+    const chatTypes = [
+      Action,
+      Attachment,
+      Chat,
+      Content,
+      Embed,
+      Media,
+      Question,
+    ]
 
     return chatTypes.some(type => {
       return (
