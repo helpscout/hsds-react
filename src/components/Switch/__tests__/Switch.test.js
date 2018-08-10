@@ -1,10 +1,10 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { default as Switch, cx } from '..'
+import { mount } from 'enzyme'
+import Switch from '../Switch'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {
-  className: cx.main,
+  className: 'c-Switch',
   skipChildrenTest: true,
 }
 
@@ -12,7 +12,7 @@ baseComponentTest(Switch, baseComponentOptions)
 
 describe('Accessibility', () => {
   test('Has proper aria roles', () => {
-    const wrapper = shallow(<Switch />)
+    const wrapper = mount(<Switch />)
     const o = wrapper.find('input').props()
 
     expect(o['aria-checked'] !== undefined).toBeTruthy()
@@ -20,7 +20,7 @@ describe('Accessibility', () => {
   })
 
   test('Has proper ID', () => {
-    const wrapper = shallow(<Switch />)
+    const wrapper = mount(<Switch />)
     const o = wrapper.find('input').props()
 
     expect(o.id).toBe(wrapper.find('label').props().htmlFor)
@@ -29,7 +29,7 @@ describe('Accessibility', () => {
 
 describe('Active', () => {
   test('Is false by default', () => {
-    const wrapper = shallow(<Switch />)
+    const wrapper = mount(<Switch />)
     const o = wrapper.instance()
 
     expect(o.props.active).toBeFalsy()
@@ -38,7 +38,7 @@ describe('Active', () => {
   })
 
   test('Can be set to true', () => {
-    const wrapper = shallow(<Switch active />)
+    const wrapper = mount(<Switch active />)
     const o = wrapper.instance()
 
     expect(o.state.active).toBeTruthy()
@@ -47,7 +47,7 @@ describe('Active', () => {
   })
 
   test('Can be toggled by changing input', () => {
-    const wrapper = shallow(<Switch />)
+    const wrapper = mount(<Switch />)
     const input = wrapper.find('input')
     const o = wrapper.instance()
 
@@ -60,7 +60,7 @@ describe('Active', () => {
 describe('Events', () => {
   test('onBlur callback can be triggered', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Switch onBlur={spy} />)
+    const wrapper = mount(<Switch onBlur={spy} />)
     const input = wrapper.find('input')
 
     input.simulate('blur')
@@ -70,7 +70,7 @@ describe('Events', () => {
 
   test('onChange callback can be triggered', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Switch onChange={spy} value="Mugatu" />)
+    const wrapper = mount(<Switch onChange={spy} value="Mugatu" />)
     const input = wrapper.find('input')
 
     input.simulate('change')
@@ -80,7 +80,7 @@ describe('Events', () => {
 
   test('onFocus callback can be triggered', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Switch onFocus={spy} />)
+    const wrapper = mount(<Switch onFocus={spy} />)
     const input = wrapper.find('input')
 
     input.simulate('focus')
@@ -91,8 +91,8 @@ describe('Events', () => {
 
 describe('ID', () => {
   test('Automatically renders a unique ID', () => {
-    const wrapper = shallow(<Switch />)
-    const wrapper2 = shallow(<Switch />)
+    const wrapper = mount(<Switch />)
+    const wrapper2 = mount(<Switch />)
     const o = wrapper.find('input')
 
     expect(o.props().id).toBeTruthy()
@@ -100,7 +100,7 @@ describe('ID', () => {
   })
 
   test('Can accept custom ID', () => {
-    const wrapper = shallow(<Switch id="Mugatu" />)
+    const wrapper = mount(<Switch id="Mugatu" />)
     const o = wrapper.find('input')
 
     expect(o.props().id).toBe('Mugatu')
@@ -109,7 +109,7 @@ describe('ID', () => {
 
 describe('State', () => {
   test('Can render error styles', () => {
-    const wrapper = shallow(<Switch state="error" />)
+    const wrapper = mount(<Switch state="error" />)
 
     expect(wrapper.hasClass('is-error')).toBeTruthy()
   })
@@ -117,8 +117,8 @@ describe('State', () => {
 
 describe('Styles', () => {
   test('Can render size styles, if applicable', () => {
-    const wrapper = shallow(<Switch size="sm" />)
+    const wrapper = mount(<Switch size="sm" />)
 
-    expect(wrapper.hasClass(`${cx.main}--sm`)).toBeTruthy()
+    expect(wrapper.hasClass('is-sm')).toBeTruthy()
   })
 })

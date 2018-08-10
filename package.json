@@ -70,7 +70,6 @@
     "seed-alert": "0.2.6",
     "seed-button": "0.3.0",
     "seed-card": "0.1.0",
-    "seed-centralize": "0.0.4",
     "seed-color-scheme": "0.3.0",
     "seed-control": "0.1.0",
     "seed-dash": "0.0.2",
@@ -78,7 +77,6 @@
     "seed-flexy": "0.3.4",
     "seed-grid": "0.4.0",
     "seed-list": "0.0.17",
-    "seed-switch": "0.0.4",
     "seed-this": "0.0.5"
   },
   "devDependencies": {
