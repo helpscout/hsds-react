@@ -8,9 +8,10 @@ import Backdrop from './Backdrop'
 import Resizer from './Resizer'
 import Static from './Static'
 import HelpText from '../HelpText'
+import Icon from '../Icon'
 import Label from '../Label'
 import { scrollLockY } from '../ScrollLock'
-import Icon from '../Icon'
+import Text from '../Text'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
 import classNames from '../../utilities/classNames'
@@ -41,6 +42,8 @@ type Props = {
   helpText: any,
   hintText: any,
   id: string,
+  inlinePrefix?: string,
+  inlineSuffix?: string,
   inputRef: (ref: HTMLElement) => void,
   isFocused: boolean,
   label: any,
@@ -358,7 +361,15 @@ export class Input extends Component<Props, State> {
     const { prefix } = this.props
 
     return (
-      prefix && <div className="c-Input__item c-Input__prefix">{prefix}</div>
+      prefix && (
+        <div className="c-Input__item c-Input__prefix">
+          <div className="c-Input__prefixContent">
+            <Text block shade="muted">
+              {prefix}
+            </Text>
+          </div>
+        </div>
+      )
     )
   }
 
@@ -366,7 +377,39 @@ export class Input extends Component<Props, State> {
     const { suffix } = this.props
 
     return (
-      suffix && <div className="c-Input__item c-Input__suffix">{suffix}</div>
+      suffix && (
+        <div className="c-Input__item c-Input__suffix">
+          <div className="c-Input__suffixContent">
+            <Text block shade="muted">
+              {suffix}
+            </Text>
+          </div>
+        </div>
+      )
+    )
+  }
+
+  getInlinePrefixMarkup = () => {
+    const { inlinePrefix } = this.props
+
+    return (
+      inlinePrefix && (
+        <div className="c-Input__item c-Input__inlinePrefix">
+          {inlinePrefix}
+        </div>
+      )
+    )
+  }
+
+  getInlineSuffixMarkup = () => {
+    const { inlineSuffix } = this.props
+
+    return (
+      inlineSuffix && (
+        <div className="c-Input__item c-Input__inlineSuffix">
+          {inlineSuffix}
+        </div>
+      )
     )
   }
 
@@ -378,7 +421,11 @@ export class Input extends Component<Props, State> {
 
     return (
       <div
-        className={classNames('c-Input__item', 'c-Input__suffix', 'is-icon')}
+        className={classNames(
+          'c-Input__item',
+          'c-Input__inlineSuffix',
+          'is-icon'
+        )}
       >
         <Tooltip
           animationDelay={0}
@@ -535,6 +582,8 @@ export class Input extends Component<Props, State> {
     const labelMarkup = this.getLabelMarkup()
     const prefixMarkup = this.getPrefixMarkup()
     const suffixMarkup = this.getSuffixMarkup()
+    const inlinePrefixMarkup = this.getInlinePrefixMarkup()
+    const inlineSuffixMarkup = this.getInlineSuffixMarkup()
     const errorMarkup = this.getErrorMarkup()
 
     const resizerMarkup = this.getResizerMarkup()
@@ -547,7 +596,9 @@ export class Input extends Component<Props, State> {
             {hintTextMarkup}
             <div className={componentClassName}>
               {prefixMarkup}
+              {inlinePrefixMarkup}
               {this.getInputMarkup(props)}
+              {inlineSuffixMarkup}
               {suffixMarkup}
               {errorMarkup}
               <Backdrop

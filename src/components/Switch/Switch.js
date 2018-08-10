@@ -3,10 +3,12 @@ import { SwitchSize, SwitchState, SwitchValue } from './types'
 import React, { PureComponent as Component } from 'react'
 import { getValidProps } from '@helpscout/react-utils'
 import FormLabelContext from '../FormLabel/Context'
+import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import {
+  SwitchWrapperUI,
   SwitchUI,
   SwitchInputUI,
   SwitchStateUI,
@@ -22,6 +24,8 @@ type Props = {
   onBlur: (event: Event) => void,
   onChange: (event: Event) => void,
   onFocus: (event: Event) => void,
+  labelOn: string,
+  labelOff: string,
   size: SwitchSize,
   state: SwitchState,
   value: SwitchValue,
@@ -39,6 +43,8 @@ class Switch extends Component<Props, State> {
   static defaultProps = {
     active: false,
     inputRef: noop,
+    labelOn: 'On',
+    labelOff: 'Off',
     onBlur: noop,
     onChange: noop,
     onFocus: noop,
@@ -106,6 +112,8 @@ class Switch extends Component<Props, State> {
       onBlur,
       onChange,
       onFocus,
+      labelOn,
+      labelOff,
       size,
       state,
       value,
@@ -130,19 +138,23 @@ class Switch extends Component<Props, State> {
     )
 
     const stateMarkup = state && <SwitchStateUI className="c-Switch__state" />
+    const switchLabel = active ? labelOn : labelOff
 
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <SwitchUI
-            {...getValidProps(rest)}
-            className={componentClassName}
-            htmlFor={this.getIdFromContextProps(props)}
-          >
-            {this.getInputMarkup(props)}
-            <SwitchToggleUI className={toggleClassName} />
-            {stateMarkup}
-          </SwitchUI>
+          <SwitchWrapperUI className="c-SwitchWrapper">
+            <SwitchUI
+              {...getValidProps(rest)}
+              className={componentClassName}
+              htmlFor={this.getIdFromContextProps(props)}
+            >
+              {this.getInputMarkup(props)}
+              <SwitchToggleUI className={toggleClassName} />
+              {stateMarkup}
+              <VisuallyHidden>{switchLabel}</VisuallyHidden>
+            </SwitchUI>
+          </SwitchWrapperUI>
         )}
       </FormLabelContext.Consumer>
     )

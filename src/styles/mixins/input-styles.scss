@@ -20,16 +20,44 @@
 
   &__prefix,
   &__suffix {
+    align-self: stretch;
+    align-items: center;
+    background-color: _color(grey, 200);
+    display: flex;
+    margin: 0;
+    padding: 10px;
+  }
+
+  &__prefix {
+    border-right: 1px solid _color(grey, 600);
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    margin-left: -15px;
+    margin-right: 13px;
+    padding-left: 14px;
+  }
+  &__suffix {
+    border-left: 1px solid _color(grey, 600);
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-left: 13px;
+    margin-right: -15px;
+    padding-right: 14px;
+  }
+
+  &__prefixContent,
+  &__suffixContent {
+    display: block;
+  }
+
+  &__inlinePrefix,
+  &__inlineSuffix {
     opacity: 0.3;
     padding-left: 4px;
     padding-right: 4px;
     position: relative;
     top: 0;
     white-space: nowrap;
-
-    @include parent('.has-value >') {
-      opacity: 1;
-    }
 
     &.is-icon {
       opacity: 1;
@@ -48,11 +76,11 @@
     }
   }
 
-  &__prefix.is-icon {
+  &__inlinePrefix.is-icon {
     margin-left: -8px;
   }
 
-  &__suffix.is-icon {
+  &__inlineSuffix.is-icon {
     margin-right: -8px;
   }
 }

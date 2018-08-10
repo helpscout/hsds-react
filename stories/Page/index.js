@@ -1,1 +1,2 @@
-import Card from './Card'
+import './Actions'
+import './Card'

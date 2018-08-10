@@ -1,30 +1,27 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
-import { BEM } from '../../../utilities/classNames'
-
-// const bem = BEM('.c-PageCard')
+import styled from '../../styled'
 
 export const config = {
   borderColor: {
     default: 'rgba(0, 0, 0, 0.1)',
     focused: getColor('grey.500'),
   },
-  minWidth: 480,
+  marginBottom: 20,
   padding: {
     default: '60px 100px',
   },
 }
 
-const css = `
-  ${baseStyles}
-  background-color: white;
+export const CardUI = styled('div')`
+  ${baseStyles} background-color: white;
   border: 1px solid;
   border-color: ${config.borderColor.default};
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   padding: ${config.padding.default};
-  min-width: ${config.minWidth}px;
+  margin-bottom: ${config.marginBottom}px;
   width: 100%;
 
   &:hover {
@@ -32,4 +29,4 @@ const css = `
   }
 `
 
-export default css
+export default CardUI

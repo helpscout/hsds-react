@@ -3,7 +3,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import styled from '../../styled'
 
-const config = {
+export const config = {
   backgroundColor: {
     default: getColor('grey.500'),
     hover: getColor('grey.600'),
@@ -32,6 +32,10 @@ const config = {
     toggle: 'all 200ms ease',
   },
 }
+
+export const SwitchWrapperUI = styled('div')`
+  ${baseStyles} display: inline-block;
+`
 
 export const SwitchUI = styled('label')`
   ${baseStyles} display: block;

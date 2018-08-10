@@ -5,7 +5,6 @@ import Heading from '../Heading'
 import Hr from '../Hr'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import styled from '../styled'
 import { HeaderUI, TitleUI, SubTitleUI } from './styles/Header.css.js'
 
 type Props = {
@@ -19,7 +18,7 @@ type Props = {
 class Header extends Component<Props> {
   static defaultProps = {
     title: 'Title',
-    withBorder: false,
+    withBorder: true,
   }
   static displayName = 'Page.Header'
 

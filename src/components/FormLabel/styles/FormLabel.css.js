@@ -6,4 +6,8 @@ export const FormLabelUI = styled('div')`
   ${baseStyles};
 `
 
+export const FormLabelHelpTextUI = styled('div')`
+  padding-bottom: 4px;
+`
+
 export default FormLabelUI

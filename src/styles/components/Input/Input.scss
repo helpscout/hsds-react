@@ -1,19 +1,19 @@
 // Dependencies
-@import "pack/seed-control/_index";
-@import "pack/seed-dash/_index";
-@import "pack/seed-family/_index";
-@import "pack/seed-this/_index";
-@import "../../configs/constants";
-@import "../../mixins/input-styles";
+@import 'pack/seed-control/_index';
+@import 'pack/seed-dash/_index';
+@import 'pack/seed-family/_index';
+@import 'pack/seed-this/_index';
+@import '../../configs/constants';
+@import '../../mixins/input-styles';
 
 // Component styles
 .c-Input {
-  $InputField: ".c-InputField";
+  $InputField: '.c-InputField';
   $block: this();
   $padding: 16px;
 
-  @import "../../configs/color";
-  @import "../../resets/base";
+  @import '../../configs/color';
+  @import '../../resets/base';
   @include input-styles($padding);
 
   // Modifiers
@@ -43,8 +43,6 @@
     }
 
     &.has-maxHeight {
-      overflow: hidden;
-
       #{$InputField} {
         margin-bottom: 2px;
         margin-left: -($padding - 2px);

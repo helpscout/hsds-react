@@ -2,8 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import styled from '../styled'
-import css from './styles/Card.css.js'
+import { CardUI } from './styles/Card.css.js'
 
 type Props = {
   children?: any,
@@ -19,11 +18,11 @@ class Card extends Component<Props> {
     const componentClassName = classNames('c-PageCard', className)
 
     return (
-      <div className={componentClassName} {...getValidProps(rest)}>
+      <CardUI className={componentClassName} {...getValidProps(rest)}>
         {children}
-      </div>
+      </CardUI>
     )
   }
 }
 
-export default styled(Card)(css)
+export default Card

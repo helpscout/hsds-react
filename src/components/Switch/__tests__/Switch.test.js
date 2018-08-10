@@ -1,14 +1,23 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Switch from '../Switch'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-Switch',
-  skipChildrenTest: true,
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<Switch />)
+    const el = wrapper.find('.c-Switch')
 
-baseComponentTest(Switch, baseComponentOptions)
+    expect(el.length).toBe(1)
+  })
+
+  test('Accepts custom className', () => {
+    const className = 'milk-was-a-bad-choice'
+    const wrapper = mount(<Switch className={className} />)
+    const el = wrapper.find('.c-Switch').getNode()
+
+    expect(el.classList.contains(className)).toBe(true)
+  })
+})
 
 describe('Accessibility', () => {
   test('Has proper aria roles', () => {
@@ -42,7 +51,6 @@ describe('Active', () => {
     const o = wrapper.instance()
 
     expect(o.state.active).toBeTruthy()
-    expect(wrapper.hasClass('is-active')).toBeTruthy()
     expect(wrapper.find('input').props()['aria-checked']).toBeTruthy()
   })
 
@@ -110,15 +118,17 @@ describe('ID', () => {
 describe('State', () => {
   test('Can render error styles', () => {
     const wrapper = mount(<Switch state="error" />)
+    const el = wrapper.find('.c-Switch').getNode()
 
-    expect(wrapper.hasClass('is-error')).toBeTruthy()
+    expect(el.classList.contains('is-error')).toBe(true)
   })
 })
 
 describe('Styles', () => {
   test('Can render size styles, if applicable', () => {
     const wrapper = mount(<Switch size="sm" />)
+    const el = wrapper.find('.c-Switch').getNode()
 
-    expect(wrapper.hasClass('is-sm')).toBeTruthy()
+    expect(el.classList.contains('is-sm')).toBe(true)
   })
 })

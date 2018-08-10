@@ -2,8 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import styled from '../styled'
-import css from './styles/Page.css.js'
+import { PageUI } from './styles/Page.css.js'
 
 type Props = {
   children?: any,
@@ -11,7 +10,9 @@ type Props = {
 }
 
 class Page extends Component<Props> {
-  static displayName = 'Page'
+  static Actions: any
+  static Card: any
+  static Header: any
 
   render() {
     const { children, className, ...rest } = this.props
@@ -19,11 +20,11 @@ class Page extends Component<Props> {
     const componentClassName = classNames('c-Page', className)
 
     return (
-      <div className={componentClassName} {...getValidProps(rest)}>
+      <PageUI className={componentClassName} {...getValidProps(rest)}>
         {children}
-      </div>
+      </PageUI>
     )
   }
 }
 
-export default styled(Page)(css)
+export default Page

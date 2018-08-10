@@ -691,7 +691,7 @@ describe('ErrorMessage', () => {
     const suffix = wrapper.find(ui.suffix)
 
     expect(error.length).toBe(1)
-    expect(suffix.length).toBe(2) // Error is rendered within a Suffix
+    expect(suffix.length).toBe(1)
   })
 
   test('Renders a Tooltip, if error', () => {

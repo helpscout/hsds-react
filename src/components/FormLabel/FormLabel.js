@@ -6,11 +6,12 @@ import HelpText from '../HelpText'
 import Label from '../Label'
 import classNames from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { FormLabelUI } from './styles/FormLabel.css.js'
+import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css.js'
 
 type Props = {
   children?: any,
   className?: string,
+  for?: string,
   id?: string,
   label?: any,
   helpText: any,
@@ -26,7 +27,7 @@ class FormLabel extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      id: props.id || uniqueID(),
+      id: props.for || props.id || uniqueID(),
     }
   }
 
@@ -39,17 +40,37 @@ class FormLabel extends Component<Props, State> {
   getLabelMarkup = () => {
     const { label } = this.props
 
-    return label && <Label for={this.state.id}>{label}</Label>
+    return (
+      label && (
+        <Label className="c-FormLabel__label" for={this.state.id}>
+          {label}
+        </Label>
+      )
+    )
   }
 
   getHelpTextMarkup = () => {
     const { helpText } = this.props
 
-    return helpText && <HelpText isCompact>{helpText}</HelpText>
+    return (
+      helpText && (
+        <FormLabelHelpTextUI className="c-FormLabel__helpTextWrapper">
+          <HelpText isCompact className="c-FormLabel__helpText">
+            {helpText}
+          </HelpText>
+        </FormLabelHelpTextUI>
+      )
+    )
   }
 
   render() {
-    const { className, children, id: idProp, ...rest } = this.props
+    const {
+      className,
+      children,
+      for: htmlFor,
+      id: idProp,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames('c-FormLabel', className)
     const labelMarkup = this.getLabelMarkup()
