@@ -22,14 +22,20 @@ describe('ClassNames', () => {
 })
 
 describe('Context', () => {
+  test('Should not have a theme className by default', () => {
+    const wrapper = mount(<Embed />)
+    const o = wrapper.find(`.${cx}`)
+    expect(o.props().className).not.toContain('is-theme')
+  })
+
   test('Adds className based on context.theme', () => {
     const wrapper = mount(
       <Message.Provider theme="embed">
         <Embed />
       </Message.Provider>
     )
-    const el = wrapper.find(`.${cx}`)
-    expect(el.props().className).toContain('is-theme-embed')
+    const o = wrapper.find(`.${cx}`)
+    expect(o.props().className).toContain('is-theme-embed')
   })
 })
 
