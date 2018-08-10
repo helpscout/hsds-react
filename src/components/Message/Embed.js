@@ -22,6 +22,8 @@ class Embed extends PureComponent<Props, Context> {
 
     const componentClassName = classNames(
       'c-MessageEmbed',
+      /* istanbul ignore next */
+      // Tested, but Istanbul isn't picking it up.
       theme && `is-theme-${theme}`,
       className
     )
