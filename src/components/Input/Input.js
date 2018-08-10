@@ -3,6 +3,7 @@
 import type { UISize, UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import { getValidProps } from '@helpscout/react-utils'
+import FormLabelContext from '../FormLabel/Context'
 import Backdrop from './Backdrop'
 import Resizer from './Resizer'
 import Static from './Static'
@@ -121,7 +122,7 @@ export class Input extends Component<Props, State> {
   inputNode: InputNode
 
   constructor(props: Props) {
-    super()
+    super(props)
     this.state = {
       id: props.id || uniqueID(),
       height: null,
@@ -320,31 +321,27 @@ export class Input extends Component<Props, State> {
     this.props.inputRef(node)
   }
 
-  makeHelpTextMarkup = () => {
+  getHelpTextMarkup = () => {
     const { helpText } = this.props
 
     return (
-      helpText && (
-        <HelpText className="c-Input__helpText" muted>
-          {helpText}
-        </HelpText>
-      )
+      helpText && <HelpText className="c-Input__helpText">{helpText}</HelpText>
     )
   }
 
-  makeHintTextMarkup = () => {
+  getHintTextMarkup = () => {
     const { hintText } = this.props
 
     return (
       hintText && (
-        <HelpText className="c-Input__hintText" muted>
+        <HelpText className="c-Input__hintText" isCompact>
           {hintText}
         </HelpText>
       )
     )
   }
 
-  makeLabelMarkup = () => {
+  getLabelMarkup = () => {
     const { label } = this.props
     const { id: inputID } = this.state
 
@@ -357,7 +354,7 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  makePrefixMarkup = () => {
+  getPrefixMarkup = () => {
     const { prefix } = this.props
 
     return (
@@ -365,7 +362,7 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  makeSuffixMarkup = () => {
+  getSuffixMarkup = () => {
     const { suffix } = this.props
 
     return (
@@ -373,7 +370,7 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  makeErrorMarkup = () => {
+  getErrorMarkup = () => {
     const { errorIcon, errorMessage, state } = this.props
     const shouldRenderError = state === STATES.error
 
@@ -383,7 +380,13 @@ export class Input extends Component<Props, State> {
       <div
         className={classNames('c-Input__item', 'c-Input__suffix', 'is-icon')}
       >
-        <Tooltip display="block" placement="top-end" title={errorMessage}>
+        <Tooltip
+          animationDelay={0}
+          animationDuration={0}
+          display="block"
+          placement="top-end"
+          title={errorMessage}
+        >
           <Icon
             name={errorIcon}
             state={STATES.error}
@@ -394,7 +397,27 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  render() {
+  getResizerMarkup = () => {
+    const { multiline, offsetAmount, seamless } = this.props
+
+    const { height, value } = this.state
+
+    const resizer =
+      multiline != null ? (
+        <Resizer
+          contents={value}
+          currentHeight={height}
+          minimumLines={typeof multiline === 'number' ? multiline : 1}
+          offsetAmount={offsetAmount}
+          onResize={this.handleExpandingResize}
+          seamless={seamless}
+        />
+      ) : null
+
+    return resizer
+  }
+
+  getInputMarkup = (props: Object = {}) => {
     const {
       autoFocus,
       className,
@@ -404,7 +427,6 @@ export class Input extends Component<Props, State> {
       forceAutoFocusTimeout,
       helpText,
       hintText,
-      id,
       inputRef,
       isFocused,
       label,
@@ -438,25 +460,7 @@ export class Input extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { height, id: inputID, value, state } = this.state
-
-    const handleOnChange = this.handleOnChange
-    const handleOnInputFocus = this.handleOnInputFocus
-    const handleOnWheel = this.handleOnWheel
-    const handleExpandingResize = this.handleExpandingResize
-
-    const componentClassName = classNames(
-      'c-Input',
-      disabled && 'is-disabled',
-      maxHeight && 'has-maxHeight',
-      multiline && 'is-multiline',
-      readOnly && 'is-readonly',
-      resizable && 'is-resizable',
-      seamless && 'is-seamless',
-      state && `is-${state}`,
-      value && 'has-value',
-      className
-    )
+    const { height, value } = this.state
 
     const fieldClassName = classNames(
       'c-Input__inputField',
@@ -474,38 +478,21 @@ export class Input extends Component<Props, State> {
         }
       : null
 
-    const resizer =
-      multiline != null ? (
-        <Resizer
-          contents={value}
-          currentHeight={height}
-          minimumLines={typeof multiline === 'number' ? multiline : 1}
-          offsetAmount={offsetAmount}
-          onResize={handleExpandingResize}
-          seamless={seamless}
-        />
-      ) : null
-
-    const helpTextMarkup = this.makeHelpTextMarkup()
-    const hintTextMarkup = this.makeHintTextMarkup()
-    const labelMarkup = this.makeLabelMarkup()
-    const prefixMarkup = this.makePrefixMarkup()
-    const suffixMarkup = this.makeSuffixMarkup()
-    const errorMarkup = this.makeErrorMarkup()
+    const id = props.id || this.state.id
 
     const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...getValidProps(rest),
       autoFocus,
       className: fieldClassName,
-      id: inputID,
-      onChange: handleOnChange,
+      id,
+      onChange: this.handleOnChange,
       // $FlowFixMe
       ref: this.setInputNodeRef,
       disabled,
       name,
       onBlur,
-      onFocus: handleOnInputFocus,
-      onWheel: handleOnWheel,
+      onFocus: this.handleOnInputFocus,
+      onWheel: this.handleOnWheel,
       placeholder,
       readOnly,
       style,
@@ -513,25 +500,68 @@ export class Input extends Component<Props, State> {
       value,
     })
 
+    return inputElement
+  }
+
+  render() {
+    const {
+      className,
+      disabled,
+      maxHeight,
+      multiline,
+      readOnly,
+      resizable,
+      seamless,
+      style: styleProp,
+    } = this.props
+
+    const { value, state } = this.state
+
+    const componentClassName = classNames(
+      'c-Input',
+      disabled && 'is-disabled',
+      maxHeight && 'has-maxHeight',
+      multiline && 'is-multiline',
+      readOnly && 'is-readonly',
+      resizable && 'is-resizable',
+      seamless && 'is-seamless',
+      state && `is-${state}`,
+      value && 'has-value',
+      className
+    )
+
+    const helpTextMarkup = this.getHelpTextMarkup()
+    const hintTextMarkup = this.getHintTextMarkup()
+    const labelMarkup = this.getLabelMarkup()
+    const prefixMarkup = this.getPrefixMarkup()
+    const suffixMarkup = this.getSuffixMarkup()
+    const errorMarkup = this.getErrorMarkup()
+
+    const resizerMarkup = this.getResizerMarkup()
+
     return (
-      <div className="c-InputWrapper" style={styleProp}>
-        {labelMarkup}
-        {hintTextMarkup}
-        <div className={componentClassName}>
-          {prefixMarkup}
-          {inputElement}
-          {suffixMarkup}
-          {errorMarkup}
-          <Backdrop
-            className="c-Input__backdrop"
-            disabled={disabled}
-            readOnly={readOnly}
-            state={state}
-          />
-          {resizer}
-        </div>
-        {helpTextMarkup}
-      </div>
+      <FormLabelContext.Consumer>
+        {(props: Object) => (
+          <div className="c-InputWrapper" style={styleProp}>
+            {labelMarkup}
+            {hintTextMarkup}
+            <div className={componentClassName}>
+              {prefixMarkup}
+              {this.getInputMarkup(props)}
+              {suffixMarkup}
+              {errorMarkup}
+              <Backdrop
+                className="c-Input__backdrop"
+                disabled={disabled}
+                readOnly={readOnly}
+                state={state}
+              />
+              {resizerMarkup}
+            </div>
+            {helpTextMarkup}
+          </div>
+        )}
+      </FormLabelContext.Consumer>
     )
   }
 }

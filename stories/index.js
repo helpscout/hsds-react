@@ -79,6 +79,6 @@ import './Color'
 injectGlobal`
   html, body {
     margin: 0;
-    padding: 0;
+    padding: 20px;
   }
 `

@@ -1,22 +1,2 @@
-@import "pack/seed-family/_index";
-@import "../configs/constants";
-@import "../configs/color";
-
-.c-HelpText {
-  @import "../resets/base";
-  $states: $STATES;
-  color: _color(text, subtle);
-  padding: 4px 0;
-
-  // Modifiers
-  &.is-muted {
-    color: _color(text, muted);
-  }
-
-  // States
-  @each $state in $states {
-    &.is-#{$state} {
-      color: _color(state, $state, border-color);
-    }
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

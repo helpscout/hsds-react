@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { FormGroup, Input, Page, Select } from '../../src/index.js'
+import { FormGroup, FormLabel, Input, Page, Select } from '../../src/index.js'
 import { App } from './decorators'
 
 const stories = storiesOf('Page/Card', module).addDecorator(App)
@@ -14,10 +14,15 @@ stories.add('default', () => (
         withBorder
       />
       <FormGroup>
-        <Input label="Bacon name" hintText="Thing" />
+        <FormLabel label="Bacon name" helpText="Thing">
+          <Input />
+        </FormLabel>
       </FormGroup>
+
       <FormGroup>
-        <Select label="Bacon name" hintText="Thing" />
+        <FormLabel label="Bacon name">
+          <Select />
+        </FormLabel>
       </FormGroup>
     </Page.Card>
   </Page>

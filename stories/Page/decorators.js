@@ -9,6 +9,8 @@ const AppUI = styled('div')`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  min-height: 100vh;
-  min-width: 100vh;
+  padding: 20px;
+  margin: -40px;
+  min-height: calc(100vh);
+  min-width: calc(100vw);
 `

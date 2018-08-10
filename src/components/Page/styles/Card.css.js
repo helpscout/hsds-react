@@ -10,6 +10,7 @@ export const config = {
     default: 'rgba(0, 0, 0, 0.1)',
     focused: getColor('grey.500'),
   },
+  minWidth: 480,
   padding: {
     default: '60px 100px',
   },
@@ -23,6 +24,7 @@ const css = `
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   padding: ${config.padding.default};
+  min-width: ${config.minWidth}px;
   width: 100%;
 
   &:hover {

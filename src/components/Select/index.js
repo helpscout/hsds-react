@@ -7,6 +7,7 @@ import type {
   SelectValue,
 } from './types'
 import React, { PureComponent as Component } from 'react'
+import FormLabelContext from '../FormLabel/Context'
 import Backdrop from '../Input/Backdrop'
 import HelpText from '../HelpText'
 import Label from '../Label'
@@ -14,6 +15,7 @@ import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
 import classNames from '../../utilities/classNames'
+import { createUniqueIDFactory } from '../../utilities/id'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 
@@ -55,11 +57,14 @@ type Props = {
 }
 
 type State = {
+  id?: string,
   state?: UIState,
   value: SelectValue,
 }
 
 const PLACEHOLDER_VALUE = '__placeholder__'
+
+const uniqueID = createUniqueIDFactory('Select')
 
 class Select extends Component<Props, State> {
   static defaultProps = {
@@ -81,6 +86,7 @@ class Select extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
+      id: props.id || uniqueID(),
       state: props.state,
       value: props.value,
     }
@@ -151,31 +157,27 @@ class Select extends Component<Props, State> {
     return this.state.value === '' && this.props.placeholder
   }
 
-  makeHelpTextMarkup = () => {
+  getHelpTextMarkup = () => {
     const { helpText } = this.props
 
     return (
-      helpText && (
-        <HelpText className="c-Select__helpText" muted>
-          {helpText}
-        </HelpText>
-      )
+      helpText && <HelpText className="c-Select__helpText">{helpText}</HelpText>
     )
   }
 
-  makeHintTextMarkup = () => {
+  getHintTextMarkup = () => {
     const { hintText } = this.props
 
     return (
       hintText && (
-        <HelpText className="c-Select__hintText" muted>
+        <HelpText className="c-Select__hintText" isCompact>
           {hintText}
         </HelpText>
       )
     )
   }
 
-  makeLabelMarkup = () => {
+  getLabelMarkup = () => {
     const { id, label } = this.props
 
     return (
@@ -187,7 +189,7 @@ class Select extends Component<Props, State> {
     )
   }
 
-  makePrefixMarkup = () => {
+  getPrefixMarkup = () => {
     const { prefix } = this.props
 
     return (
@@ -195,7 +197,7 @@ class Select extends Component<Props, State> {
     )
   }
 
-  makeErrorMarkup = () => {
+  getErrorMarkup = () => {
     const { errorIcon, errorMessage, state } = this.props
     const shouldRenderError = state === STATES.error
 
@@ -216,7 +218,7 @@ class Select extends Component<Props, State> {
     )
   }
 
-  makePlaceholderMarkup = () => {
+  getPlaceholderMarkup = () => {
     const { placeholder } = this.props
 
     return (
@@ -279,7 +281,7 @@ class Select extends Component<Props, State> {
     }
   }
 
-  render() {
+  getSelectMarkup = (props: Object = {}) => {
     const {
       children,
       className,
@@ -289,7 +291,6 @@ class Select extends Component<Props, State> {
       forceAutoFocusTimeout,
       helpText,
       hintText,
-      id,
       isFocused,
       label,
       onChange,
@@ -307,25 +308,13 @@ class Select extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { state } = this.state
-
-    const handleOnFocus = this.handleOnFocus
-    const hasPlaceholder = this.hasPlaceholder()
-
-    const componentClassName = classNames(
-      'c-Select',
-      disabled && 'is-disabled',
-      hasPlaceholder && 'has-placeholder',
-      seamless && 'is-seamless',
-      state && `is-${state}`,
-      className
-    )
-
     const fieldClassName = classNames(
       'c-Select__inputField',
       'c-InputField',
       size && `is-${size}`
     )
+
+    const placeholderMarkup = this.getPlaceholderMarkup()
 
     const optionsMarkup =
       children ||
@@ -333,46 +322,73 @@ class Select extends Component<Props, State> {
         ? options.map(this.renderOptions)
         : this.renderOptions(options))
 
+    const hasPlaceholder = this.hasPlaceholder()
+
+    const id = props.id || this.state.id
     const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
-    const helpTextMarkup = this.makeHelpTextMarkup()
-    const hintTextMarkup = this.makeHintTextMarkup()
-    const labelMarkup = this.makeLabelMarkup()
-    const placeholderMarkup = this.makePlaceholderMarkup()
-    const prefixMarkup = this.makePrefixMarkup()
-    const errorMarkup = this.makeErrorMarkup()
+    return (
+      <select
+        {...rest}
+        className={fieldClassName}
+        disabled={disabled}
+        id={id}
+        onChange={this.handleOnChange}
+        onFocus={this.handleOnFocus}
+        ref={node => {
+          this.selectNode = node
+        }}
+        value={selectedValue}
+      >
+        {placeholderMarkup}
+        {optionsMarkup}
+      </select>
+    )
+  }
+
+  render() {
+    const { className, disabled, seamless, style: styleProp } = this.props
+
+    const { state } = this.state
+
+    const componentClassName = classNames(
+      'c-Select',
+      disabled && 'is-disabled',
+      this.hasPlaceholder() && 'has-placeholder',
+      seamless && 'is-seamless',
+      state && `is-${state}`,
+      className
+    )
+
+    const helpTextMarkup = this.getHelpTextMarkup()
+    const hintTextMarkup = this.getHintTextMarkup()
+    const labelMarkup = this.getLabelMarkup()
+    const prefixMarkup = this.getPrefixMarkup()
+    const errorMarkup = this.getErrorMarkup()
 
     return (
-      <div className="c-InputWrapper" style={styleProp}>
-        {labelMarkup}
-        {hintTextMarkup}
-        <div className={componentClassName}>
-          {prefixMarkup}
-          <select
-            className={fieldClassName}
-            disabled={disabled}
-            id={id}
-            onChange={this.handleOnChange}
-            onFocus={handleOnFocus}
-            ref={node => {
-              this.selectNode = node
-            }}
-            value={selectedValue}
-            {...rest}
-          >
-            {placeholderMarkup}
-            {optionsMarkup}
-          </select>
-          <div className={classNames('c-SelectIcon', state && `is-${state}`)} />
-          {errorMarkup}
-          <Backdrop
-            className="c-Select__backdrop"
-            disabled={disabled}
-            state={state}
-          />
-        </div>
-        {helpTextMarkup}
-      </div>
+      <FormLabelContext.Consumer>
+        {(props: Object) => (
+          <div className="c-InputWrapper" style={styleProp}>
+            {labelMarkup}
+            {hintTextMarkup}
+            <div className={componentClassName}>
+              {prefixMarkup}
+              {this.getSelectMarkup(props)}
+              <div
+                className={classNames('c-SelectIcon', state && `is-${state}`)}
+              />
+              {errorMarkup}
+              <Backdrop
+                className="c-Select__backdrop"
+                disabled={disabled}
+                state={state}
+              />
+            </div>
+            {helpTextMarkup}
+          </div>
+        )}
+      </FormLabelContext.Consumer>
     )
   }
 }

@@ -1,12 +1,15 @@
 // @flow
+import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import styled from '../../styled'
 import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
 
-const css = `
-  box-sizing: border-box;
-  display: inline-block;
+export const LabelUI = styled('label')`
+  ${baseStyles} display: inline-block;
   margin-bottom: 4px;
 
-  ${makeStateColorStyles()}
+  ${makeStateColorStyles()} &.is-marginless {
+    margin-bottom: 0;
+  }
 `
 
-export default css
+export default LabelUI

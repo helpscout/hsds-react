@@ -1,16 +1,25 @@
-import React from 'react'
+// @flow
+import React, { PureComponent as Component } from 'react'
 import classNames from '../../utilities/classNames'
+import { FormGroupChoiceUI } from './styles/Choice.css.js'
 
-const Choice = props => {
-  const { className, children, ...rest } = props
+type Props = {
+  children?: any,
+  className?: string,
+}
 
-  const componentClassName = classNames('c-FormGroupChoice', className)
+class Choice extends Component<Props> {
+  render() {
+    const { className, children, ...rest } = this.props
 
-  return (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
+    const componentClassName = classNames('c-FormGroupChoice', className)
+
+    return (
+      <FormGroupChoiceUI className={componentClassName} {...rest}>
+        {children}
+      </FormGroupChoiceUI>
+    )
+  }
 }
 
 export default Choice
