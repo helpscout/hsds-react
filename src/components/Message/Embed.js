@@ -1,6 +1,6 @@
 // @flow
 import type { MessageThemeContext } from './types'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import styled from '../styled'
 import Chat from './Chat'
 import classNames from '../../utilities/classNames'
@@ -13,28 +13,32 @@ type Props = {
 
 type Context = MessageThemeContext
 
-export const Embed = (props: Props, context: Context) => {
-  const { className, html, ...rest } = props
-  const { theme } = context
+class Embed extends PureComponent<Props, Context> {
+  static displayName = 'Message.Embed'
 
-  const componentClassName = classNames(
-    'c-MessageEmbed',
-    theme && `is-theme-${theme}`,
-    className
-  )
+  render() {
+    const { className, html, ...rest } = this.props
+    const { theme } = this.context
 
-  return (
-    <Chat
-      {...rest}
-      bubbleClassName="c-MessageEmbed__bubble"
-      className={componentClassName}
-    >
-      <div
-        dangerouslySetInnerHTML={{ __html: html }}
-        className="c-MessageEmbed__html"
-      />
-    </Chat>
-  )
+    const componentClassName = classNames(
+      'c-MessageEmbed',
+      theme && `is-theme-${theme}`,
+      className
+    )
+
+    return (
+      <Chat
+        {...rest}
+        bubbleClassName="c-MessageEmbed__bubble"
+        className={componentClassName}
+      >
+        <div
+          dangerouslySetInnerHTML={{ __html: html }}
+          className="c-MessageEmbed__html"
+        />
+      </Chat>
+    )
+  }
 }
 
 export default styled(Embed)(css)
