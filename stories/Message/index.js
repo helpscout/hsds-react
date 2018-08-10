@@ -5,6 +5,7 @@ import { Avatar, Link, Message, PreviewCard } from '../../src/index.js'
 export { default as defaultStories } from './default'
 export { default as chatStories } from './chat'
 export { default as attachmentStories } from './attachment'
+export { default as embedStories } from './embed'
 export { default as mediaStories } from './media'
 
 const stories = storiesOf('Message', module)
