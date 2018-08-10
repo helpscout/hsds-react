@@ -1,17 +1,17 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Grid from '../Grid'
 import { default as GridComponent } from '../../Grid'
 
 describe('ClassName', () => {
   test('Has the correct CSS class', () => {
-    const wrapper = shallow(<Grid />)
+    const wrapper = mount(<Grid />)
 
-    expect(wrapper.hasClass('c-FormGroup')).toBeTruthy()
+    expect(wrapper.hasClass('c-FormGroupGrid')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<Grid className="mugatu" />)
+    const wrapper = mount(<Grid className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -19,7 +19,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders the Grid component', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Grid>
         <div className="mugatu" />
       </Grid>
@@ -31,7 +31,7 @@ describe('Children', () => {
   })
 
   test('Can render child components', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Grid>
         <div className="mugatu" />
       </Grid>
@@ -46,7 +46,7 @@ describe('Children', () => {
 describe('Style', () => {
   test('Accepts style prop', () => {
     const style = { background: 'red' }
-    const wrapper = shallow(<Grid style={style} />)
+    const wrapper = mount(<Grid style={style} />)
 
     expect(wrapper.html()).toContain('style')
     expect(wrapper.html()).toContain('background')

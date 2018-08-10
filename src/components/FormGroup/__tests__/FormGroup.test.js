@@ -1,11 +1,11 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import FormGroup from '..'
+import { mount } from 'enzyme'
+import FormGroup from '../FormGroup'
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<FormGroup className={customClass} />)
+    const wrapper = mount(<FormGroup className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -13,7 +13,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <FormGroup>
         <div className="child">Hello</div>
       </FormGroup>
