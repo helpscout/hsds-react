@@ -4,7 +4,7 @@ import styled from '../../styled'
 
 export const config = {
   marginBottom: 40,
-  spacing: 5,
+  spacing: 10,
 }
 
 export const ActionsUI = styled('div')`

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import Button from '..'
+import Button from '../Button'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
