@@ -1,6 +1,10 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { config as BubbleConfig } from './Bubble.css.js'
+import { BEM } from '../../../utilities/classNames'
+
+const bem = BEM('.c-MessageChat')
+const MessageBubble = '.c-MessageBubble'
 
 const css = `
   ${baseStyles}
@@ -11,21 +15,21 @@ const css = `
     margin-bottom: 0;
   }
 
-  & ~ & {
-    .c-MessageBubble {
+  & ~ ${bem.block} {
+    ${MessageBubble} {
       border-top-right-radius: ${BubbleConfig.borderRadius.sm}px;
     }
   }
 
   &.is-from {
-    & ~ & {
-      .c-MessageBubble {
+    ${bem.block} ~ ${bem.block} {
+      ${MessageBubble} {
         border-top-right-radius: ${BubbleConfig.borderRadius.md}px;
       }
     }
 
     &:last-child {
-      .c-MessageBubble {
+      ${MessageBubble} {
         border-top-right-radius: ${BubbleConfig.borderRadius.md}px;
         border-bottom-left-radius: ${BubbleConfig.borderRadius.md}px;
       }
