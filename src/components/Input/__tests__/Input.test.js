@@ -10,7 +10,7 @@ const ui = {
   hintText: '.c-Input__hintText',
   input: '.c-Input',
   label: '.c-Input__label',
-  suffix: '.c-Input__suffix',
+  suffix: '.c-Input__inlineSuffix',
   tooltip: '.c-Tooltip',
 }
 
@@ -368,22 +368,6 @@ describe('Label', () => {
     expect(o.exists()).toBeTruthy()
     expect(c.exists()).toBeTruthy()
     expect(c.text()).toBe('Custom text')
-  })
-})
-
-describe('Prefix/Suffix', () => {
-  test('Adds prefix if defined', () => {
-    const text = 'Prefix'
-    const wrapper = mount(<Input prefix={text} />)
-
-    expect(wrapper.find('.c-Input__prefix').text()).toBe(text)
-  })
-
-  test('Adds suffix if defined', () => {
-    const text = 'Prefix'
-    const wrapper = mount(<Input suffix={text} />)
-
-    expect(wrapper.find('.c-Input__suffix').text()).toBe(text)
   })
 })
 
