@@ -18,6 +18,20 @@ stories.add('default', () => (
   </ControlGroup>
 ))
 
+stories.add('button', () => (
+  <ControlGroup>
+    <ControlGroup.Item>
+      <Button>Button</Button>
+    </ControlGroup.Item>
+    <ControlGroup.Item>
+      <Button>Button</Button>
+    </ControlGroup.Item>
+    <ControlGroup.Item>
+      <Button>Button</Button>
+    </ControlGroup.Item>
+  </ControlGroup>
+))
+
 stories.add('input + button', () => (
   <ControlGroup>
     <ControlGroup.Item>

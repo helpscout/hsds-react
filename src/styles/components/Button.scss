@@ -13,6 +13,7 @@ button.#{$seed-button-namespace} {
   @import '../configs/color';
 
   &:focus {
+    position: relative;
     z-index: 2;
   }
 
