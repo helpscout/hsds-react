@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Select from '../index'
+import Select from '../Select'
 
 const ui = {
   errorIcon: '.c-Select__errorIcon',

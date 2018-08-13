@@ -1,7 +1,9 @@
 // @flow
+import type { UISize } from '../../constants/types'
 import React from 'react'
 import classNames from '../../utilities/classNames'
-import type { UISize } from '../../constants/types'
+import { setComponentKey } from '../../utilities/component'
+import { STATIC_COMPONENT_KEY } from './utils'
 
 type Props = {
   align: 'left' | 'center' | 'right' | '',
@@ -27,5 +29,7 @@ const Static = (props: Props) => {
     </div>
   )
 }
+
+setComponentKey(Static, STATIC_COMPONENT_KEY)
 
 export default Static

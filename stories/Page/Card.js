@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import {
   Button,
+  ControlGroup,
   FormGroup,
   FormLabel,
   Input,
@@ -50,13 +51,27 @@ stories.add('Example', () => (
 
       <FormGroup>
         <FormLabel label="Sub-domain">
-          <Input value="dashingdash" suffix=".helpscoutdocs.com" />
+          <ControlGroup>
+            <ControlGroup.Block>
+              <Input value="dashingdash" suffix=".helpscoutdocs.com" />
+            </ControlGroup.Block>
+            <ControlGroup.Item>
+              <Input.AddOn>.helpscoutdocs.com</Input.AddOn>
+            </ControlGroup.Item>
+          </ControlGroup>
         </FormLabel>
       </FormGroup>
 
       <FormGroup>
         <FormLabel label="Custom Domain">
-          <Input value="kitchen.dashingdash.com" prefix="https://" />
+          <ControlGroup>
+            <ControlGroup.Item>
+              <Input.AddOn>https://</Input.AddOn>
+            </ControlGroup.Item>
+            <ControlGroup.Block>
+              <Input value="kitchen.dashingdash.com" prefix="https://" />
+            </ControlGroup.Block>
+          </ControlGroup>
         </FormLabel>
       </FormGroup>
     </Page.Card>

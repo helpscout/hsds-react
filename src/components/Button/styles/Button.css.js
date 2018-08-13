@@ -46,7 +46,24 @@ export const makeButtonUI = (selector: string = 'button') => {
     min-width: ${config.minWidth}px;
     outline: none;
     padding: 0 ${config.padding}px;
+    position: relative;
     text-decoration: none;
+
+    &:focus {
+      z-index: 2;
+    }
+
+    &.is-first {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &.is-notOnly {
+      border-radius: 0;
+    }
+    &.is-last {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
 
     ${props => makePrimaryStyles(props)}
     ${makePlainStyles()}

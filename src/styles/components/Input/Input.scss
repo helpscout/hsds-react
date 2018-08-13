@@ -72,4 +72,8 @@
     padding-left: 0;
     padding-right: 0;
   }
+
+  &.is-focused {
+    z-index: 2;
+  }
 }

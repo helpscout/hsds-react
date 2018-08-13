@@ -1,16 +1,15 @@
-@import "../../configs/constants";
-@import "../../mixins/input-styles";
+@import '../../configs/constants';
+@import '../../mixins/input-styles';
 
 .c-Select {
-  $InputField: ".c-InputField";
+  $InputField: '.c-InputField';
   $arrowSize: 20px;
   $padding: 16px;
   $states: $STATES;
 
-  @import "../../configs/color";
-  @import "../../resets/base";
+  @import '../../configs/color';
+  @import '../../resets/base';
   @include input-styles($padding);
-
 
   // Not necessary with System font.
   // &__prefix,
@@ -40,5 +39,9 @@
     #{$InputField} {
       opacity: 0.3;
     }
+  }
+
+  &.is-focused {
+    z-index: 2;
   }
 }

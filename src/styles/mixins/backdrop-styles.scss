@@ -59,4 +59,16 @@
   &.is-readonly {
     background-color: _color(grey, 300);
   }
+
+  &.is-first {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.is-notOnly {
+    border-radius: 0;
+  }
+  &.is-last {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }

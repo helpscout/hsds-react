@@ -3,9 +3,11 @@ import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
+import { setComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
 import { makeButtonUI } from './styles/Button.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type ButtonSelector = 'a' | 'button' | 'input'
 
@@ -20,6 +22,9 @@ type Props = {
   danger: boolean,
   disabled: boolean,
   isActive: boolean,
+  isFirst: boolean,
+  isNotOnly: boolean,
+  isLast: boolean,
   outline: boolean,
   plain: boolean,
   primary: boolean,
@@ -37,6 +42,9 @@ class Button extends Component<Props> {
     danger: false,
     disable: false,
     isActive: false,
+    isFirst: false,
+    isNotOnly: false,
+    isLast: false,
     outline: false,
     plain: false,
     primary: false,
@@ -55,6 +63,9 @@ class Button extends Component<Props> {
       className,
       danger,
       isActive,
+      isFirst,
+      isNotOnly,
+      isLast,
       outline,
       plain,
       primary,
@@ -70,6 +81,9 @@ class Button extends Component<Props> {
       'c-ButtonV2',
       isActive && 'is-selected',
       block && 'is-block',
+      isFirst && 'is-first',
+      isNotOnly && 'is-notOnly',
+      isLast && 'is-last',
       danger && 'is-danger',
       outline && 'is-outline',
       plain && 'is-plain',
@@ -95,5 +109,7 @@ class Button extends Component<Props> {
     )
   }
 }
+
+setComponentKey(Button, COMPONENT_KEY)
 
 export default RouteWrapper(Button)

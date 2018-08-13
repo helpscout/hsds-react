@@ -90,8 +90,6 @@ stories.add('placeholder', () => <Input placeholder="Hello" autoFocus />)
 
 stories.add('prefix + suffix', () => (
   <div>
-    <Input prefix="$" suffix=".00" value="Prefix/Suffix" />
-    <br />
     <Input inlinePrefix="$" inlineSuffix=".00" value="Inline Prefix/Suffix" />
   </div>
 ))

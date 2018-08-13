@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { setComponentKey } from '../../utilities/component'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
 import { stateTypes } from '../../constants/propTypes'
+import { COMPONENT_KEY } from './utils'
 
 export const propTypes = {
   accessibilityLabel: PropTypes.string,
@@ -44,6 +46,9 @@ const Button = props => {
     className,
     disabled,
     isActive,
+    isFirst,
+    isNotOnly,
+    isLast,
     onBlur,
     onClick,
     onFocus,
@@ -61,6 +66,9 @@ const Button = props => {
     'c-Button',
     isActive && 'is-selected',
     block && 'c-Button--block',
+    isFirst && 'is-first',
+    isNotOnly && 'is-notOnly',
+    isLast && 'is-last',
     outline && 'c-Button--outline',
     plain && 'c-Button--link',
     primary && 'c-Button--primary',
@@ -91,5 +99,7 @@ const Button = props => {
 
 Button.propTypes = propTypes
 Button.defaultProps = defaultProps
+
+setComponentKey(Button, COMPONENT_KEY)
 
 export default RouteWrapper(Button)
