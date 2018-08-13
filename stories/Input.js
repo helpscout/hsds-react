@@ -122,7 +122,12 @@ stories.add('state: error', () => (
     <br />
     <Input state="error" size="sm" errorMessage="This is incorrect!" />
     <br />
-    <Input state="error" errorMessage="This is incorrect!" multiline={3} />
+    <Input
+      state="error"
+      errorMessage="This is incorrect!"
+      multiline={3}
+      maxHeight={180}
+    />
     <br />
   </div>
 ))
