@@ -2,9 +2,11 @@
 import type { UIState } from '../../constants/types'
 import React from 'react'
 import Text from '../Text'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { LabelUI } from './styles/Label.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   className?: string,
@@ -50,5 +52,7 @@ Label.defaultProps = {
   isMarginless: false,
   state: 'default',
 }
+
+namespaceComponent(COMPONENT_KEY)(Label)
 
 export default Label

@@ -8,8 +8,10 @@ import Flexy from '../Flexy'
 import Spinner from '../Spinner'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Chat.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageBubble & {
   bubbleClassName?: string,
@@ -130,5 +132,7 @@ export class Chat extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Chat)(Chat)
 
 export default styled(Chat)(css)

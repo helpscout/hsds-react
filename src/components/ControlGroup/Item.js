@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import {
   isComponentTypeControl,
-  setComponentKey,
+  namespaceComponent,
 } from '../../utilities/component'
 import { ItemUI } from './styles/Item.css.js'
 import { ITEM_COMPONENT_KEY } from './utils'
@@ -70,6 +70,6 @@ class Item extends Component<Props> {
   }
 }
 
-setComponentKey(Item, ITEM_COMPONENT_KEY)
+namespaceComponent(ITEM_COMPONENT_KEY)(Item)
 
 export default Item

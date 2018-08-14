@@ -5,6 +5,7 @@ import { getValidProps } from '@helpscout/react-utils'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import {
@@ -14,6 +15,7 @@ import {
   SwitchStateUI,
   SwitchToggleUI,
 } from './styles/Switch.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   active: boolean,
@@ -160,5 +162,7 @@ class Switch extends Component<Props, State> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY)(Switch)
 
 export default Switch

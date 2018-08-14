@@ -2,6 +2,8 @@
 import React, { PureComponent as Component } from 'react'
 import GridComponent from '../Grid'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   children?: any,
@@ -21,5 +23,7 @@ class Grid extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Grid)(Grid)
 
 export default Grid

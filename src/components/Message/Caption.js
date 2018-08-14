@@ -3,7 +3,9 @@ import type { MessageThemeContext } from './types'
 import React from 'react'
 import Text from '../Text'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { providerContextTypes } from './propTypes'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   className?: string,
@@ -45,6 +47,7 @@ Caption.defaultProps = {
   wordWrap: true,
 }
 Caption.contextTypes = providerContextTypes
-Caption.displayName = 'Message.Caption'
+
+namespaceComponent(COMPONENT_KEY.Caption)(Caption)
 
 export default Caption

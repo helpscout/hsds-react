@@ -10,10 +10,12 @@ import Modal from '../Modal'
 import Chat from './Chat'
 import Caption from './Caption'
 import classNames, { BEM } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Media.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageBubble & {
   className: string,
@@ -283,5 +285,7 @@ export class Media extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Media)(Media)
 
 export default styled(Media)(css)

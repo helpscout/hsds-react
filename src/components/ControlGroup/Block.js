@@ -3,7 +3,7 @@ import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Item'
 import { classNames } from '../../utilities/classNames'
-import { setComponentKey } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component'
 import { ITEM_COMPONENT_KEY } from './utils'
 
 type Props = {}
@@ -14,6 +14,6 @@ class Block extends Component<Props> {
   }
 }
 
-setComponentKey(Block, ITEM_COMPONENT_KEY)
+namespaceComponent(ITEM_COMPONENT_KEY)(Block)
 
 export default Block

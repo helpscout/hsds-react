@@ -2,7 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isComponentKey, setComponentKey } from '../../utilities/component'
+import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import Block from './Block'
 import Item from './Item'
 import { ControlGroupUI } from './styles/ControlGroup.css.js'
@@ -23,7 +23,7 @@ class ControlGroup extends Component<Props> {
     if (!children) return null
 
     return React.Children.map(children, (child, index) => {
-      if (!isComponentKey(child, ITEM_COMPONENT_KEY)) return child
+      if (!isComponentNamed(child, ITEM_COMPONENT_KEY)) return child
 
       return React.cloneElement(child, {
         isFirst: index === 0 && children.length > 1,
@@ -48,6 +48,6 @@ class ControlGroup extends Component<Props> {
   }
 }
 
-setComponentKey(ControlGroup, COMPONENT_KEY)
+namespaceComponent(COMPONENT_KEY)(ControlGroup)
 
 export default ControlGroup

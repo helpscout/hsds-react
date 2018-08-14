@@ -1,7 +1,9 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { FormGroupUI } from './styles/FormGroup.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   children?: any,
@@ -24,5 +26,7 @@ class FormGroup extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.FormGroup)(FormGroup)
 
 export default FormGroup

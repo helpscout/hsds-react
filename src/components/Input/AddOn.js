@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from '../../utilities/classNames'
-import { setComponentKey } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component'
 import { AddOnUI } from './styles/AddOn.css.js'
 import { ADDON_COMPONENT_KEY } from './utils'
 
@@ -36,6 +36,6 @@ AddOn.defaultProps = {
   isLast: false,
 }
 
-setComponentKey(AddOn, ADDON_COMPONENT_KEY)
+namespaceComponent(ADDON_COMPONENT_KEY)(AddOn)
 
 export default AddOn

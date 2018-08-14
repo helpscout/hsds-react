@@ -16,7 +16,7 @@ import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
 import classNames from '../../utilities/classNames'
-import { setComponentKey } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
@@ -436,6 +436,6 @@ class Select extends Component<Props, State> {
   }
 }
 
-setComponentKey(Select, COMPONENT_KEY)
+namespaceComponent(COMPONENT_KEY)(Select)
 
 export default Select

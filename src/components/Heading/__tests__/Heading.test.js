@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Heading from '..'
+import Heading from '../Heading'
 
 describe('ClassName', () => {
   test('Has default component className', () => {

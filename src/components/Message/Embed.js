@@ -4,7 +4,9 @@ import React, { PureComponent } from 'react'
 import styled from '../styled'
 import Chat from './Chat'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Embed.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   className?: string,
@@ -42,5 +44,7 @@ class Embed extends PureComponent<Props, Context> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Embed)(Embed)
 
 export default styled(Embed)(css)

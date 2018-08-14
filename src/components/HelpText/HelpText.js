@@ -3,9 +3,11 @@ import type { Sizes } from '../Text/types'
 import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import Text from '../Text'
 import { isString } from '../../utilities/is'
 import { HelpTextUI } from './styles/HelpText.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   children?: any,
@@ -48,5 +50,7 @@ HelpText.defaultProps = {
   size: '13',
   state: 'default',
 }
+
+namespaceComponent(COMPONENT_KEY)(HelpText)
 
 export default HelpText

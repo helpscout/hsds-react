@@ -3,7 +3,7 @@ import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
-import { setComponentKey } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
 import { makeButtonUI } from './styles/Button.css.js'
@@ -110,6 +110,6 @@ class Button extends Component<Props> {
   }
 }
 
-setComponentKey(Button, COMPONENT_KEY)
+namespaceComponent(COMPONENT_KEY)(Button)
 
 export default RouteWrapper(Button)

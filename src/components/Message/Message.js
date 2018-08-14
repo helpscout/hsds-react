@@ -16,9 +16,14 @@ import Provider from './Provider'
 import Question from './Question'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import {
+  isComponentTypeChat,
+  namespaceComponent,
+} from '../../utilities/component'
 import { isFunction, isString } from '../../utilities/is'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Message.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageType & {
   avatar?: any,
@@ -45,24 +50,6 @@ export class Message extends Component<Props> {
     const { from, showAvatar } = this.props
 
     return this.isThemeEmbed() ? (from && showAvatar) || false : !!showAvatar
-  }
-
-  isChatType = (child: any): boolean => {
-    const chatTypes = [
-      Action,
-      Attachment,
-      Chat,
-      Content,
-      Embed,
-      Media,
-      Question,
-    ]
-
-    return chatTypes.some(type => {
-      return (
-        child && child.type && isFunction(child.type) && child.type === type
-      )
-    })
   }
 
   isThemeEmbed = (): boolean => {
@@ -95,7 +82,7 @@ export class Message extends Component<Props> {
     const { children, from, ltr, rtl, to } = this.props
 
     return React.Children.map(children, child => {
-      return this.isChatType(child)
+      return isComponentTypeChat(child)
         ? React.cloneElement(child, {
             from,
             ltr,
@@ -169,5 +156,7 @@ export class Message extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Message)(Message)
 
 export default styled(Message)(css)

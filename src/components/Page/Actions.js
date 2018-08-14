@@ -2,11 +2,13 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import {
   ActionsUI,
   ActionsBlockUI,
   ActionsItemUI,
 } from './styles/Actions.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type ActionsDirection = 'left' | 'right'
 
@@ -54,5 +56,7 @@ class Actions extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Actions)(Actions)
 
 export default Actions

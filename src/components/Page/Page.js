@@ -2,7 +2,9 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { PageUI } from './styles/Page.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   children?: any,
@@ -26,5 +28,7 @@ class Page extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Page)(Page)
 
 export default Page

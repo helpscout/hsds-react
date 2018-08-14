@@ -15,16 +15,16 @@ import { scrollLockY } from '../ScrollLock'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
 import classNames from '../../utilities/classNames'
-import { setComponentKey } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import {
+  COMPONENT_KEY,
   getTextAreaLineCurrent,
   getTextAreaLineTotal,
   moveCursorToEnd,
   isTextArea,
-} from './helpers'
-import { COMPONENT_KEY } from './utils'
+} from './utils'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -619,6 +619,6 @@ export class Input extends Component<Props, State> {
   }
 }
 
-setComponentKey(Input, COMPONENT_KEY)
+namespaceComponent(COMPONENT_KEY)(Input)
 
 export default Input

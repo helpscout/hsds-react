@@ -1,7 +1,9 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { FormGroupChoiceUI } from './styles/Choice.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   children?: any,
@@ -21,5 +23,7 @@ class Choice extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Choice)(Choice)
 
 export default Choice

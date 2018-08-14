@@ -1,5 +1,5 @@
 // @flow
-import { providerContextTypes } from './propTypes'
+import type { MessageChat } from './types'
 import React, { PureComponent as Component } from 'react'
 import Flexy from '../Flexy'
 import Action from './Action'
@@ -7,8 +7,10 @@ import Bubble from './Bubble'
 import Timestamp from '../Timestamp'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
-import type { MessageChat } from './types'
+import { namespaceComponent } from '../../utilities/component'
+import { providerContextTypes } from './propTypes'
 import css from './styles/ChatBlock.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageChat & {
   body?: string,
@@ -95,5 +97,7 @@ export class ChatBlock extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.ChatBlock)(ChatBlock)
 
 export default styled(ChatBlock)(css)

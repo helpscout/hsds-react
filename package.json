@@ -196,6 +196,7 @@
       "!src/styles/tests/helpers/**/*.{js,jsx}",
       "!src/**/?(*.)css.{js,jsx}",
       "!src/index.{js,jsx}",
+      "!src/components/Input/utils.{js,jsx}",
       "!src/components/Popper/**/*.{js,jsx}",
       "!src/tests/helpers/**/*.{js,jsx}",
       "!src/utilities/browser.{js,jsx}",

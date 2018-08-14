@@ -5,7 +5,9 @@ import Heading from '../Heading'
 import Hr from '../Hr'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { HeaderUI, TitleUI, SubTitleUI } from './styles/Header.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   children?: any,
@@ -65,5 +67,7 @@ class Header extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Header)(Header)
 
 export default Header
