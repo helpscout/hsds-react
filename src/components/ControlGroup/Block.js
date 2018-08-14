@@ -1,16 +1,21 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Item'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { ITEM_COMPONENT_KEY } from './utils'
 
-type Props = {}
+type Props = {
+  className?: string,
+}
 
 class Block extends Component<Props> {
   render() {
-    return <Item {...this.props} isBlock />
+    const { className } = this.props
+
+    const componentClassName = classNames('c-ControlGroupBlock', className)
+
+    return <Item {...this.props} className={componentClassName} isBlock />
   }
 }
 
