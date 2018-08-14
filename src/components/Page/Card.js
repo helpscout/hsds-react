@@ -12,15 +12,13 @@ type Props = {
 }
 
 class Card extends Component<Props> {
-  static displayName = 'Page.Card'
-
   render() {
     const { children, className, ...rest } = this.props
 
     const componentClassName = classNames('c-PageCard', className)
 
     return (
-      <CardUI className={componentClassName} {...getValidProps(rest)}>
+      <CardUI {...getValidProps(rest)} className={componentClassName}>
         {children}
       </CardUI>
     )

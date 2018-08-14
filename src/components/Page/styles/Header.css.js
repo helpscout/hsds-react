@@ -12,7 +12,7 @@ export const HeaderUI = styled('div')`
 `
 
 export const TitleUI = styled('div')`
-  ${baseStyles} margin-top: -8px;
+  ${baseStyles};
 `
 
 export const SubTitleUI = styled('div')`

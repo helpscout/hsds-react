@@ -1,6 +1,9 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Actions from './Actions'
+import Card from './Card'
+import Header from './Header'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { PageUI } from './styles/Page.css.js'
@@ -12,9 +15,9 @@ type Props = {
 }
 
 class Page extends Component<Props> {
-  static Actions: any
-  static Card: any
-  static Header: any
+  static Actions = Actions
+  static Card = Card
+  static Header = Header
 
   render() {
     const { children, className, ...rest } = this.props
@@ -22,7 +25,7 @@ class Page extends Component<Props> {
     const componentClassName = classNames('c-Page', className)
 
     return (
-      <PageUI className={componentClassName} {...getValidProps(rest)}>
+      <PageUI {...getValidProps(rest)} className={componentClassName}>
         {children}
       </PageUI>
     )

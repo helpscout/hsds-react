@@ -16,7 +16,7 @@ const stories = storiesOf('Page/Card', module).addDecorator(App)
 stories.add('default', () => (
   <Page>
     <Page.Card>
-      <Page.Header title="Customize your Bacon" subTitle="Step 1 of 2" />
+      <Page.Header title="Customize your Bacon" subtitle="Step 1 of 2" />
       <FormGroup>
         <FormLabel label="Bacon name" helpText="Thing">
           <Input />
@@ -31,7 +31,7 @@ stories.add('Example', () => (
     <Page.Card>
       <Page.Header
         title="Bacon Settings"
-        subTitle="The story is about one of Santa's elves (Ferrell) who learns he is actually a human and goes to New York City."
+        subtitle="The story is about one of Santa's elves (Ferrell) who learns he is actually a human and goes to New York City."
       />
 
       <FormGroup>

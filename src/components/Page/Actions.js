@@ -25,8 +25,6 @@ class Actions extends Component<Props> {
     direction: 'right',
   }
 
-  static displayName = 'Page.Actions'
-
   render() {
     const {
       className,
@@ -47,7 +45,7 @@ class Actions extends Component<Props> {
     )
 
     return (
-      <ActionsUI className={componentClassName} {...getValidProps(rest)}>
+      <ActionsUI {...getValidProps(rest)} className={componentClassName}>
         <ActionsItemUI>{primary}</ActionsItemUI>
         <ActionsItemUI>{secondary}</ActionsItemUI>
         <ActionsBlockUI />

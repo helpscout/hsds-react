@@ -1,12 +1,9 @@
 // @flow
 import { propConnect } from '../PropProvider'
-import Actions from './Actions'
-import Card from './Card'
 import Page from './Page'
-import Header from './Header'
 
-Page.Actions = propConnect('PageActions')(Actions)
-Page.Card = propConnect('PageCard')(Card)
-Page.Header = propConnect('PageHeader')(Header)
+Page.Actions = propConnect('PageActions')(Page.Actions)
+Page.Card = propConnect('PageCard')(Page.Card)
+Page.Header = propConnect('PageHeader')(Page.Header)
 
 export default propConnect('Page')(Page)

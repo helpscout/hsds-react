@@ -13,7 +13,7 @@ type Props = {
   children?: any,
   className?: string,
   title: string,
-  subTitle?: string,
+  subtitle?: string,
   withBorder: boolean,
 }
 
@@ -22,14 +22,13 @@ class Header extends Component<Props> {
     title: 'Title',
     withBorder: true,
   }
-  static displayName = 'Page.Header'
 
   render() {
     const {
       children,
       className,
       title,
-      subTitle,
+      subtitle,
       withBorder,
       ...rest
     } = this.props
@@ -47,10 +46,10 @@ class Header extends Component<Props> {
         </Heading>
       </TitleUI>
     )
-    const subTitleMarkup = subTitle && (
-      <SubTitleUI className="c-PageHeader__subTitle">
-        <Text className="c-PageHeader__subTitleText" shade="muted">
-          {subTitle}
+    const subtitleMarkup = subtitle && (
+      <SubTitleUI className="c-PageHeader__subtitle">
+        <Text className="c-PageHeader__subtitleText" shade="muted">
+          {subtitle}
         </Text>
       </SubTitleUI>
     )
@@ -59,9 +58,9 @@ class Header extends Component<Props> {
     )
 
     return (
-      <HeaderUI className={componentClassName} {...getValidProps(rest)}>
+      <HeaderUI {...getValidProps(rest)} className={componentClassName}>
         {titleMarkup}
-        {subTitleMarkup}
+        {subtitleMarkup}
         {borderMarkup}
       </HeaderUI>
     )
