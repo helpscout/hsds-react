@@ -23,7 +23,6 @@ install:
   - npm install
 
 script:
-  - npm run pretty
   - npm run build:css
   - npm run test:all
   - npm run build
@@ -32,7 +31,7 @@ after_success:
   - npm run coverage
 
 branches:
-  only: 
+  only:
     - master
 
 deploy:

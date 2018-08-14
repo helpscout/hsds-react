@@ -33,7 +33,7 @@
     "lint": "npm run lint:es",
     "lint:es": "eslint src/**/*.js --cache",
     "lint:css": "stylelint 'src/styles/**/*.scss'",
-    "pretty": "npm run lint:css -- -- fix",
+    "pretty": "npm run prettier:base",
     "release": "np --no-yarn --no-publish",
     "release:patch": "npm run release -- patch",
     "start": "npm run storybook",
