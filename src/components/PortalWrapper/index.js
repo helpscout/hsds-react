@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import { matchPath } from 'react-router'
 import getComponentDefaultProp from '@helpscout/react-utils/dist/getComponentDefaultProp'
+import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
 import { default as Portal, propTypes as portalTypes } from '../Portal'
@@ -321,7 +322,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     'Component'
   PortalWrapper.displayName = `withPortal(${componentName})`
 
-  return PortalWrapper
+  return hoistNonReactStatics(PortalWrapper, ComposedComponent)
 }
 
 const getUniqueIndex = (id, namespace) => {

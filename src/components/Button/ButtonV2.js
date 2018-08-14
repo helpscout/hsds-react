@@ -53,7 +53,7 @@ class Button extends Component<Props> {
     submit: false,
   }
 
-  static displayName = 'Button'
+  static BlueComponentVersion = 2
 
   render() {
     const {

@@ -52,6 +52,8 @@ class Button extends Component<Props> {
     submit: false,
   }
 
+  static BlueComponentVersion = 1
+
   render() {
     const {
       accessibilityLabel,

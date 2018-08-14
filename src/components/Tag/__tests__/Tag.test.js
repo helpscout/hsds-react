@@ -1,45 +1,43 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import Tag from '..'
+import { mount } from 'enzyme'
+import Tag from '../Tag'
 import { Animate, Icon, Text } from '../../index'
-import wait from '../../../tests/helpers/wait'
 
-const cx = 'c-Tag'
+jest.useFakeTimers()
 
 describe('ClassNames', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Tag />)
-    const o = wrapper.find(`.${cx}`)
+    const wrapper = mount(<Tag />)
+    const o = wrapper.find('.c-Tag')
 
     expect(o.length).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Tag className="mugatu" />)
-    const o = wrapper.find(`.${cx}`)
+    const wrapper = mount(<Tag className="mugatu" />)
+    const o = wrapper.find('.c-Tag')
 
     expect(o.hasClass('mugatu')).toBeTruthy()
   })
 })
 
 describe('Animate', () => {
-  test('Is wrapped in an Animate component', () => {
-    const wrapper = shallow(<Tag />)
+  test('Renders an Animate component', () => {
+    const wrapper = mount(<Tag />)
     const o = wrapper.find(Animate)
 
     expect(o.length).toBe(1)
-    expect(o.hasClass(cx)).toBe(true)
   })
 
   test('Animation duration can be defined', () => {
-    const wrapper = shallow(<Tag animationDuration={1000} />)
+    const wrapper = mount(<Tag animationDuration={1000} />)
     const o = wrapper.find(Animate)
 
     expect(o.props().duration).toBe(1000)
   })
 
   test('Passes "in" state, to Animate', () => {
-    const wrapper = shallow(<Tag />)
+    const wrapper = mount(<Tag />)
 
     wrapper.setState({ in: true })
     expect(wrapper.find(Animate).props().in).toBe(true)
@@ -51,7 +49,7 @@ describe('Animate', () => {
 
 describe('Content', () => {
   test('Wraps children components in <Text> ', () => {
-    const wrapper = shallow(<Tag>Mugatu</Tag>)
+    const wrapper = mount(<Tag>Mugatu</Tag>)
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Mugatu')
@@ -60,63 +58,46 @@ describe('Content', () => {
 })
 
 describe('Remove', () => {
-  test('Is not removable by default', done => {
+  test('Is not removable by default', () => {
     const wrapper = mount(<Tag />)
 
-    wait().then(() => {
-      const icon = wrapper.find(Icon)
-      expect(icon.length).toBe(0)
-      done()
-    })
+    const icon = wrapper.find(Icon)
+    expect(icon.length).toBe(0)
   })
 
-  test('Renders remove Icon if isRemovable', done => {
+  test('Renders remove Icon if isRemovable', () => {
     const wrapper = mount(<Tag isRemovable />)
 
-    wait().then(() => {
-      const icon = wrapper.find(Icon)
-      expect(icon.length).toBe(1)
-      done()
-    })
+    const icon = wrapper.find(Icon)
+    expect(icon.length).toBe(1)
   })
 
-  test('Does not fire callback on unmount', done => {
+  test('Does not fire callback on unmount', () => {
     const spy = jest.fn()
     const wrapper = mount(<Tag onRemove={spy} />)
 
-    wait()
-      .then(() => {
-        wrapper.unmount()
-      })
-      .then(() => wait(100))
-      .then(() => {
-        expect(spy).not.toHaveBeenCalled()
-        done()
-      })
+    wrapper.unmount()
+    expect(spy).not.toHaveBeenCalled()
   })
 
-  test('Fires callback on remove click', done => {
+  test('Fires callback on remove click', () => {
     const spy = jest.fn()
     const wrapper = mount(<Tag isRemovable onRemove={spy} id={1} value="Ron" />)
 
-    wait()
-      .then(() => {
-        const icon = wrapper.find(Icon)
-        icon.simulate('click')
-      })
-      .then(() => wait(100))
-      .then(() => {
-        expect(spy).toHaveBeenCalled()
-        expect(spy.mock.calls[0][0].id).toBe(1)
-        expect(spy.mock.calls[0][0].value).toBe('Ron')
-        done()
-      })
+    const icon = wrapper.find(Icon)
+    icon.simulate('click')
+
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy.mock.calls[0][0].id).toBe(1)
+    expect(spy.mock.calls[0][0].value).toBe('Ron')
   })
 })
 
 describe('Styles', () => {
   test('Has allCaps styles', () => {
-    const wrapper = shallow(<Tag allCaps />)
+    const wrapper = mount(<Tag allCaps />)
     const o = wrapper.find(Text)
 
     expect(o.props().allCaps).toBeTruthy()
@@ -124,40 +105,44 @@ describe('Styles', () => {
   })
 
   test('Has color styles', () => {
-    const wrapper = shallow(<Tag color="red" />)
+    const wrapper = mount(<Tag color="red" />)
+    const o = wrapper.find('.c-Tag')
 
-    expect(wrapper.hasClass('is-red')).toBeTruthy()
+    expect(o.hasClass('is-red')).toBeTruthy()
   })
 
   test('Has display styles', () => {
-    const wrapper = shallow(<Tag display="inlineBlock" />)
+    const wrapper = mount(<Tag display="inlineBlock" />)
+    const o = wrapper.find('.c-Tag')
 
-    expect(wrapper.hasClass('is-display-inlineBlock')).toBeTruthy()
+    expect(o.hasClass('is-display-inlineBlock')).toBeTruthy()
   })
 
   test('Has filled styles', () => {
-    const wrapper = shallow(<Tag filled />)
+    const wrapper = mount(<Tag filled />)
+    const o = wrapper.find('.c-Tag')
 
-    expect(wrapper.hasClass('is-filled')).toBeTruthy()
+    expect(o.hasClass('is-filled')).toBeTruthy()
   })
 
   test('Has pulsing styles', () => {
-    const wrapper = shallow(<Tag pulsing />)
+    const wrapper = mount(<Tag pulsing />)
+    const o = wrapper.find('.c-Tag')
 
-    expect(wrapper.hasClass('is-pulsing')).toBeTruthy()
+    expect(o.hasClass('is-pulsing')).toBeTruthy()
   })
 })
 
 describe('Value', () => {
   test('Renders value as text', () => {
-    const wrapper = shallow(<Tag value="Ron" />)
+    const wrapper = mount(<Tag value="Ron" />)
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Ron')
   })
 
   test('Renders value instead of children, if defined', () => {
-    const wrapper = shallow(<Tag value="Ron">Champ</Tag>)
+    const wrapper = mount(<Tag value="Ron">Champ</Tag>)
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Ron')

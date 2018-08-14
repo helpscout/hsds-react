@@ -1,19 +1,20 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import TagList from '..'
+import { mount } from 'enzyme'
+import TagList from '../TagList'
 import { Inline, Overflow, Tag } from '../../index'
-import wait from '../../../tests/helpers/wait'
+
+jest.useFakeTimers()
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<TagList />)
+    const wrapper = mount(<TagList />)
 
     expect(wrapper.hasClass('c-TagList')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<TagList className={customClass} />)
+    const wrapper = mount(<TagList className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -21,7 +22,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Only renders Tag children content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <TagList>
         <Tag />
         <div className="child">Hello</div>
@@ -35,7 +36,7 @@ describe('Children', () => {
 
 describe('Inline', () => {
   test('Renders content within Inline', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <TagList>
         <Tag />
       </TagList>
@@ -52,7 +53,7 @@ describe('Inline', () => {
 
 describe('isRemovable', () => {
   test('Is not enabled by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <TagList>
         <Tag />
       </TagList>
@@ -63,7 +64,7 @@ describe('isRemovable', () => {
   })
 
   test('Makes inner tags removable, if specified', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <TagList isRemovable>
         <Tag />
       </TagList>
@@ -75,7 +76,7 @@ describe('isRemovable', () => {
 })
 
 describe('onRemove', () => {
-  test('Fires callback from tag, if specified', done => {
+  test('Fires callback from tag, if specified', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <TagList onRemove={spy}>
@@ -84,18 +85,18 @@ describe('onRemove', () => {
       </TagList>
     )
     const o = wrapper.find(Tag).first()
-    o.getNode().handleOnRemove()
 
-    wait(100).then(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    })
+    o.getNode().wrappedInstance.handleOnRemove()
+
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 })
 
 describe('Overflow', () => {
   test('Does not contain content in Overflow by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <TagList>
         <Tag />
       </TagList>
@@ -106,7 +107,7 @@ describe('Overflow', () => {
   })
 
   test('Wraps content in Overflow, if specified', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <TagList overflowFade>
         <Tag />
       </TagList>
