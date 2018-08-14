@@ -4,6 +4,7 @@ import styled from '../../styled'
 
 export const config = {
   marginBottom: 100,
+  padding: '12px 0',
   spacing: 5,
 }
 
@@ -13,7 +14,7 @@ export const ActionsUI = styled('div')`
   margin-left: -${config.spacing}px;
   margin-right: -${config.spacing}px;
   margin-bottom: ${config.marginBottom}px;
-  padding: 12px 0;
+  padding: ${config.padding};
 
   &.is-left {
     flex-direction: row;
