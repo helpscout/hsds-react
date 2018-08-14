@@ -368,6 +368,7 @@ class Select extends Component<Props, State> {
           <Backdrop
             className="c-Select__backdrop"
             disabled={disabled}
+            seamless={seamless}
             state={state}
           />
         </div>

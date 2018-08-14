@@ -523,6 +523,7 @@ export class Input extends Component<Props, State> {
             className="c-Input__backdrop"
             disabled={disabled}
             readOnly={readOnly}
+            seamless={seamless}
             state={state}
           />
           {resizer}

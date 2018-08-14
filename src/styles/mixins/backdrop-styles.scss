@@ -1,6 +1,6 @@
-@import "pack/seed-family/_index";
-@import "../configs/color";
-@import "../configs/constants";
+@import 'pack/seed-family/_index';
+@import '../configs/color';
+@import '../configs/constants';
 
 @mixin backdrop-styles($InputField, $color-border-focus) {
   $states: $STATES;
@@ -17,24 +17,25 @@
   transition: box-shadow 0.1s ease;
   top: 0;
 
-  @include parent("#{$InputField}:focus ~ ") {
+  @include parent('#{$InputField}:focus ~ ') {
     border-color: $color-border-focus;
     box-shadow: 0 0 0 1px $color-border-focus inset;
   }
 
   // Styles
-  @include parent(".is-seamless > ") {
+  @include parent('.is-seamless > ') {
     background: transparent;
     border-color: transparent;
     box-shadow: none;
-    @include parent("#{$InputField}:focus ~ ") {
+    @include parent('#{$InputField}:focus ~ ') {
       border-color: transparent;
       box-shadow: none;
     }
   }
 
   &.is-checkbox {
-    box-shadow: 0 0 0 0 rgba(_color(border), 0), 0 0.5px 1px rgba(black, 0.2) inset;
+    box-shadow: 0 0 0 0 rgba(_color(border), 0),
+      0 0.5px 1px rgba(black, 0.2) inset;
   }
 
   // States
@@ -42,12 +43,15 @@
     &.is-#{$state} {
       border-color: _color(state, $state, border-color);
       box-shadow: 0 0 0 1px _color(state, $state, border-color) inset;
-      @include parent("#{$InputField}:focus ~ ") {
+      @include parent('#{$InputField}:focus ~ ') {
         border-color: _color(state, $state, border-color);
-        box-shadow: #{
-          0 0 0 1px _color(state, $state, border-color) inset,
-          0 0 0 2px rgba(_color(state, $state, border-color), 0.2)
-          };
+        box-shadow: #{0 0 0 1px _color(state, $state, border-color) inset,
+          0 0 0 2px rgba(_color(state, $state, border-color), 0.2)};
+      }
+
+      &.is-seamless {
+        border-color: transparent !important;
+        box-shadow: none !important;
       }
     }
   }

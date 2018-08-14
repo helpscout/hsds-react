@@ -129,6 +129,7 @@ stories.add('state: error', () => (
       maxHeight={180}
     />
     <br />
+    <Input seamless state="error" size="sm" errorMessage="This is incorrect!" />
   </div>
 ))
 
