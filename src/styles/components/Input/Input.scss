@@ -50,6 +50,12 @@
         margin-top: 0;
         overflow-y: auto;
       }
+
+      &.is-error {
+        #{$InputField} {
+          margin-right: -(($padding * 2) + 2);
+        }
+      }
     }
 
     &.is-seamless {

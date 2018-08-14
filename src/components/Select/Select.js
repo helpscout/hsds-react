@@ -425,6 +425,7 @@ class Select extends Component<Props, State> {
                 isFirst={isFirst}
                 isNotOnly={isNotOnly}
                 isLast={isLast}
+                seamless={seamless}
                 state={state}
               />
             </div>

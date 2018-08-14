@@ -607,6 +607,7 @@ export class Input extends Component<Props, State> {
                 isNotOnly={isNotOnly}
                 isLast={isLast}
                 readOnly={readOnly}
+                seamless={seamless}
                 state={state}
               />
               {resizerMarkup}

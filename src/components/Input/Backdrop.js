@@ -11,6 +11,7 @@ type Props = {
   isNotOnly: boolean,
   isLast: boolean,
   readOnly: boolean,
+  seamless: boolean,
   state?: ?UIState,
 }
 
@@ -23,6 +24,7 @@ const Backdrop = (props: Props) => {
     isNotOnly,
     isLast,
     readOnly,
+    seamless,
     state,
     ...rest
   } = props
@@ -35,6 +37,7 @@ const Backdrop = (props: Props) => {
     isNotOnly && 'is-notOnly',
     isLast && 'is-last',
     readOnly && 'is-readonly',
+    seamless && 'is-seamless',
     state && `is-${state}`,
     className
   )
@@ -45,6 +48,7 @@ const Backdrop = (props: Props) => {
 Backdrop.defaultProps = {
   disabled: false,
   readOnly: false,
+  seamless: false,
   state: 'default',
 }
 

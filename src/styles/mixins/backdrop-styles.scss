@@ -48,6 +48,11 @@
         box-shadow: #{0 0 0 1px _color(state, $state, border-color) inset,
           0 0 0 2px rgba(_color(state, $state, border-color), 0.2)};
       }
+
+      &.is-seamless {
+        border-color: transparent !important;
+        box-shadow: none !important;
+      }
     }
   }
 
