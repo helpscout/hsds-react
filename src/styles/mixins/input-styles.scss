@@ -50,10 +50,18 @@
 
   &__prefix.is-icon {
     margin-left: -8px;
+
+    @include parent('.is-error.is-seamless > ') {
+      margin-left: 0;
+    }
   }
 
   &__suffix.is-icon {
     margin-right: -8px;
+
+    @include parent('.is-error.is-seamless > ') {
+      margin-right: 0;
+    }
   }
 }
 

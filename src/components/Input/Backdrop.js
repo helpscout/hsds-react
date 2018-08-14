@@ -8,17 +8,27 @@ type Props = {
   className?: string,
   disabled: boolean,
   readOnly: boolean,
+  seamless: boolean,
   state?: ?UIState,
 }
 
 const Backdrop = (props: Props) => {
-  const { className, checkbox, disabled, readOnly, state, ...rest } = props
+  const {
+    className,
+    checkbox,
+    disabled,
+    readOnly,
+    seamless,
+    state,
+    ...rest
+  } = props
 
   const componentClassName = classNames(
     'c-InputBackdrop',
     checkbox && 'is-checkbox',
     disabled && 'is-disabled',
     readOnly && 'is-readonly',
+    seamless && 'is-seamless',
     state && `is-${state}`,
     className
   )
@@ -29,6 +39,7 @@ const Backdrop = (props: Props) => {
 Backdrop.defaultProps = {
   disabled: false,
   readOnly: false,
+  seamless: false,
   state: 'default',
 }
 
