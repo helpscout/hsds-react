@@ -15,8 +15,8 @@ const forEach = (list: List, callback: Function): string => {
     return ''
 
   if (isObject(list)) {
-    // $FlowFixMe
     return (
+      // $FlowFixMe
       Object.keys(list)
         // $FlowFixMe
         .map((key, index) => callback(key, list[key], index))
