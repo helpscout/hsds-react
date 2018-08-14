@@ -80,7 +80,7 @@ class FormLabel extends Component<Props, State> {
 
     return (
       <Context.Provider value={this.getContextProps()}>
-        <FormLabelUI className={componentClassName} {...getValidProps(rest)}>
+        <FormLabelUI {...getValidProps(rest)} className={componentClassName}>
           {labelMarkup}
           {helpTextMarkup}
           <div className="c-FromLabel__content">{children}</div>

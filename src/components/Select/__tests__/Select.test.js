@@ -43,6 +43,15 @@ describe('Placeholder', () => {
   })
 })
 
+describe('Select', () => {
+  test('Can generate an select component', () => {
+    const wrapper = mount(<Select />)
+    const o = wrapper.instance().getSelectMarkup()
+
+    expect(o.type).toBe('select')
+  })
+})
+
 describe('Option', () => {
   test('Renders with a single string', () => {
     const options = 'Brick Tamland'
@@ -462,6 +471,17 @@ describe('isFocused', () => {
     jest.runOnlyPendingTimers()
 
     expect(spy).toHaveBeenCalled()
+  })
+
+  test('Removes focus styles on blur', () => {
+    const wrapper = mount(<Select isFocused={true} />)
+    const o = wrapper.find('.c-Select')
+
+    expect(o.hasClass('is-focused')).toBe(true)
+
+    wrapper.find('select').simulate('blur')
+
+    expect(o.hasClass('is-focused')).toBe(false)
   })
 })
 

@@ -124,6 +124,26 @@ describe('Themes', () => {
   })
 })
 
+describe('Styles', () => {
+  test('Renders isFirst styles', () => {
+    const wrapper = wrap(<Button isFirst />)
+
+    expect(wrapper.hasClass('is-first')).toBe(true)
+  })
+
+  test('Renders isNotOnly styles', () => {
+    const wrapper = wrap(<Button isNotOnly />)
+
+    expect(wrapper.hasClass('is-notOnly')).toBe(true)
+  })
+
+  test('Renders isLast styles', () => {
+    const wrapper = wrap(<Button isLast />)
+
+    expect(wrapper.hasClass('is-last')).toBe(true)
+  })
+})
+
 describe('RouteWrapper', () => {
   let options
   let push

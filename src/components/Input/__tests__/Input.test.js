@@ -35,6 +35,15 @@ describe('ClassName', () => {
   })
 })
 
+describe('Input', () => {
+  test('Can generate an input component', () => {
+    const wrapper = mount(<Input />)
+    const o = wrapper.instance().getInputMarkup()
+
+    expect(o.type).toBe('input')
+  })
+})
+
 describe('Autofocus', () => {
   test('Does not autoFocus by default', () => {
     const wrapper = mount(<Input />)
@@ -695,5 +704,30 @@ describe('ErrorMessage', () => {
     const el = wrapper.find('Icon')
 
     expect(el.props().name).toBe('chat')
+  })
+})
+
+describe('Prefix/Suffix', () => {
+  test('Can render an inline prefix', () => {
+    const wrapper = mount(<Input inlinePrefix="Words" />)
+    const el = wrapper.find('.c-Input__inlinePrefix')
+
+    expect(el.text()).toBe('Words')
+  })
+
+  test('Can render an inline suffix', () => {
+    const wrapper = mount(<Input inlineSuffix="Words" />)
+    const el = wrapper.find('.c-Input__inlineSuffix')
+
+    expect(el.text()).toBe('Words')
+  })
+
+  test('Can render both inline prefix and suffix', () => {
+    const wrapper = mount(<Input inlinePrefix="A lota" inlineSuffix="Words" />)
+    const prefix = wrapper.find('.c-Input__inlinePrefix')
+    const suffix = wrapper.find('.c-Input__inlineSuffix')
+
+    expect(prefix.text()).toBe('A lota')
+    expect(suffix.text()).toBe('Words')
   })
 })

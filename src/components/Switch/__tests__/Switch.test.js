@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Switch from '../Switch'
+import FormLabel from '../../FormLabel'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -16,6 +17,15 @@ describe('ClassName', () => {
     const el = wrapper.find('.c-Switch').getNode()
 
     expect(el.classList.contains(className)).toBe(true)
+  })
+})
+
+describe('Input', () => {
+  test('Renders a styled input', () => {
+    const wrapper = mount(<Switch />)
+    const o = wrapper.instance().getInputMarkup()
+
+    expect(o).toBeTruthy()
   })
 })
 
@@ -112,6 +122,35 @@ describe('ID', () => {
     const o = wrapper.find('input')
 
     expect(o.props().id).toBe('Mugatu')
+  })
+
+  test('FormLabel can generate an ID', () => {
+    const wrapper = mount(
+      <FormLabel>
+        <Switch />
+      </FormLabel>
+    )
+    const o = wrapper.find('input')
+
+    expect(o.prop('id')).toContain('FormControl')
+  })
+
+  test('FormLabel ID is preferred over prop ID', () => {
+    const wrapper = mount(
+      <FormLabel>
+        <Switch id="Buddy" />
+      </FormLabel>
+    )
+    const o = wrapper.find('input')
+
+    expect(o.prop('id')).not.toContain('Buddy')
+  })
+
+  test('Fallsback to auto-generated ID of no context ID is provided', () => {
+    const wrapper = mount(<Switch />)
+    const o = wrapper.instance()
+
+    expect(o.getIdFromContextProps()).toContain('Switch')
   })
 })
 

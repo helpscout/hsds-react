@@ -68,6 +68,7 @@ export const __clearRegisteredComponents = () => {
  * @returns {React.Component} The updated component.
  */
 export const namespaceComponent = (key: string) => (Component: any): any => {
+  /* istanbul ignore else */
   if (Component) {
     // Set the namespace.
     Component[COMPONENT_NAMESPACE_KEY] = key

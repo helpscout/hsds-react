@@ -33,6 +33,7 @@ const AddOn = (props: Props) => {
 
 AddOn.defaultProps = {
   isFirst: false,
+  isNotOnly: false,
   isLast: false,
 }
 

@@ -85,7 +85,7 @@ class Switch extends Component<Props, State> {
   getInputMarkup = (props: Object = {}) => {
     const { active: propActive, inputRef, name, value, ...rest } = this.props
 
-    const { active, isFocused } = this.state
+    const { active } = this.state
 
     const id = this.getIdFromContextProps(props)
 
