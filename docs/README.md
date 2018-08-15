@@ -4,6 +4,7 @@
 * [Quick start](./quick-start/README.md)
   * [Components](./quick-start/components.md)
 * [Contribution](./contribution/README.md)
+  * [Getting started](./contribution/setup.md)
   * [Creating a component](./contribution/creating.md)
   * [Styling](./contribution/styling.md)
   * [Write a story](./contribution/storybook.md)
