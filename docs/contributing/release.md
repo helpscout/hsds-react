@@ -8,7 +8,15 @@ To publish to npm, you **must** have [maintainer access](https://docs.npmjs.com/
 
 ## Publish!
 
-Make sure you're on the latest `master` branch. Once you're ready, run the following command:
+Make sure you're on the latest `master` branch.
+
+Install all the dependencies by running:
+
+```
+npm install
+```
+
+Once you're ready, run the following command:
 
 ```
 npm run release
