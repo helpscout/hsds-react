@@ -67,4 +67,4 @@ Once the migration from `scss` -> CSS-in-JS is complete, you will no longer be r
 
 ## Next
 
-Let's start using some [components](./components.md)!
+Let's start using some [components](components.md)!
