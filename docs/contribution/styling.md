@@ -17,7 +17,7 @@ blue/
           └── Strong.js
 ```
 
-Within `styles/`, create a file named after your component. In our case, `Strong.css.js`:
+Within `styles/`, create a file named after our component. In our case, `Strong.css.js`:
 
 ```
 blue/
@@ -76,6 +76,12 @@ Blue's CSS-in-JS practices favour the use of conventional CSS modifier classes, 
 #### export
 
 We're making our `StrongUI` available as the default export, but also as a named export. The reason for this is incase we need to use the isolated SC in another component.
+
+And that's it 🙏! You've successfully styled our new `Strong` component 💪.
+
+## Next
+
+Let's [write a story](storybook.md) to see this thing in a browser!
 
 ## See also
 

@@ -89,7 +89,7 @@ Whoa 😳! Lots of stuff going on already!
 
 #### `Flow`
 
-Blue uses [Flow](https://flow.org/en/) for typing. To enable Flow type on your component, we have to start off the file with `// @flow`.
+Blue uses [Flow](https://flow.org/en/) for typing. To enable Flow type on our component, we have to start off the file with `// @flow`.
 
 #### `Strong.css.js`
 
@@ -189,7 +189,7 @@ export { default as Strong } from './Strong'
 ...
 ```
 
-And that's it 🙏! You've successfully created, hooked up, and exported your new `Strong` component 💪.
+And that's it 🙏! You've successfully created, hooked up, and exported our new `Strong` component 💪.
 
 ## Next
 
