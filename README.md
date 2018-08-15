@@ -4,11 +4,11 @@
 
 Help Scout's React component library
 
-<img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
+![](https://github.com/helpscout/blue/raw/master/images/Blue.png)
 
 ## Install
 
-```
+```text
 npm install @helpscout/blue --save-dev
 ```
 
@@ -16,29 +16,29 @@ npm install @helpscout/blue --save-dev
 
 After cloning this repo down, run:
 
-```
+```text
 npm install
 ```
 
 Once everything is installed, run:
 
-```
+```text
 npm start
 ```
 
-Check out Blue's Storybook at http://localhost:8900/ in your browser!
+Check out Blue's Storybook at [http://localhost:8900/](http://localhost:8900/) in your browser!
 
 ## Testing
 
 To run Jest in watch mode, run:
 
-```
+```text
 npm run dev
 ```
 
-To execute all the tests (with Coverage reporting), run:
+To execute all the tests \(with Coverage reporting\), run:
 
-```
+```text
 npm run test
 ```
 
@@ -46,23 +46,23 @@ npm run test
 
 To publish and release a new version of Blue, run the following command:
 
-```
+```text
 npm run release
 ```
 
-You'll be presented with a CLI prompt with options.
-Pick the one you want, and that's it! The script will take care of the rest (from testing to publishing).
+You'll be presented with a CLI prompt with options. Pick the one you want, and that's it! The script will take care of the rest \(from testing to publishing\).
 
 ## Deploying Storybook
 
 To deploy the Storybook, run the following command:
 
-```
+```text
 npm run deploy
 ```
 
 ## Extras
 
-![You're my boy, Blue!](./images/yourmyboyblue.gif)
+![You&apos;re my boy, Blue!](.gitbook/assets/yourmyboyblue.gif)
 
 > You're my boy, Blue!
+
