@@ -6,7 +6,7 @@ import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import Block from './Block'
 import Item from './Item'
 import { ControlGroupUI } from './styles/ControlGroup.css.js'
-import { COMPONENT_KEY, ITEM_COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   className?: string,
@@ -23,7 +23,7 @@ class ControlGroup extends Component<Props> {
     if (!children) return null
 
     return React.Children.map(children, (child, index) => {
-      if (!isComponentNamed(child, ITEM_COMPONENT_KEY)) return child
+      if (!isComponentNamed(child, COMPONENT_KEY.Item)) return child
 
       return React.cloneElement(child, {
         isFirst: index === 0 && children.length > 1,
@@ -48,6 +48,6 @@ class ControlGroup extends Component<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(ControlGroup)
+namespaceComponent(COMPONENT_KEY.ControlGroup)(ControlGroup)
 
 export default ControlGroup

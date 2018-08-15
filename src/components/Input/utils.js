@@ -1,9 +1,11 @@
 // @flow
 type InputNode = HTMLInputElement | HTMLTextAreaElement
 
-export const COMPONENT_KEY = 'Input'
-export const ADDON_COMPONENT_KEY = 'Input.AddOn'
-export const STATIC_COMPONENT_KEY = 'Input.Static'
+export const COMPONENT_KEY = {
+  Input: 'Input',
+  AddOn: 'Input.AddOn',
+  Static: 'Input.Static',
+}
 
 /**
  * Get the total number of lines (rows) of a textarea

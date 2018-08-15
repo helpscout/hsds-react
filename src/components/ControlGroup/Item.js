@@ -7,7 +7,7 @@ import {
   namespaceComponent,
 } from '../../utilities/component'
 import { ItemUI } from './styles/Item.css.js'
-import { ITEM_COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   className?: string,
@@ -70,6 +70,6 @@ class Item extends Component<Props> {
   }
 }
 
-namespaceComponent(ITEM_COMPONENT_KEY)(Item)
+namespaceComponent(COMPONENT_KEY.Item)(Item)
 
 export default Item

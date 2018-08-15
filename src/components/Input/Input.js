@@ -134,8 +134,6 @@ export class Input extends Component<Props, State> {
   static Static = Static
   inputNode: InputNode
 
-  static displayName = COMPONENT_KEY
-
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -620,6 +618,6 @@ export class Input extends Component<Props, State> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Input)
+namespaceComponent(COMPONENT_KEY.Input)(Input)
 
 export default Input

@@ -3,7 +3,7 @@ import type { UISize } from '../../constants/types'
 import React from 'react'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { STATIC_COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   align: 'left' | 'center' | 'right' | '',
@@ -30,6 +30,6 @@ const Static = (props: Props) => {
   )
 }
 
-namespaceComponent(STATIC_COMPONENT_KEY)(Static)
+namespaceComponent(COMPONENT_KEY.Static)(Static)
 
 export default Static

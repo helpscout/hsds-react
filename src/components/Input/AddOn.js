@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { AddOnUI } from './styles/AddOn.css.js'
-import { ADDON_COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   children?: any,
@@ -37,6 +37,6 @@ AddOn.defaultProps = {
   isLast: false,
 }
 
-namespaceComponent(ADDON_COMPONENT_KEY)(AddOn)
+namespaceComponent(COMPONENT_KEY.AddOn)(AddOn)
 
 export default AddOn

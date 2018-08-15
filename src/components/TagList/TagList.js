@@ -8,7 +8,7 @@ import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { TagListUI } from './styles/TagList.css.js'
 import { COMPONENT_KEY } from './utils'
-import { COMPONENT_KEY as ITEM_COMPONENT_KEY } from '../Tag/utils'
+import { COMPONENT_KEY as TAG } from '../Tag/utils'
 
 type Props = {
   className?: string,
@@ -42,7 +42,7 @@ class TagList extends Component<Props> {
     }
 
     const childrenMarkup = React.Children.map(children, child => {
-      if (!isComponentNamed(child, ITEM_COMPONENT_KEY)) return null
+      if (!isComponentNamed(child, TAG)) return null
 
       return (
         <Inline.Item extendChild>
