@@ -50,23 +50,34 @@ Add the starting React component boilerplate for `Strong.js`:
 ```jsx
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
+import { StrongUI } from './styles/Strong.css.js'
 
 type Props = {
   children?: any,
   className?: string,
+  isSuperBold: boolean,
 }
 
 class Strong extends Component<Props> {
+  static defaultProps = {
+    isSuperBold: false,
+  }
+
   render() {
     const { children, className, ...rest } = this.props
 
-    const componentClassName = classNames('c-Strong', className)
+    const componentClassName = classNames(
+      'c-Strong',
+      isSuperBold && 'is-superBold',
+      className
+    )
 
     return (
-      <strong {...rest} className={componentClassName}>
+      <StrongUI {...getValidProps(rest)} className={componentClassName}>
         {children}
-      </strong>
+      </StrongUI>
     )
   }
 }
@@ -79,6 +90,10 @@ Whoa 😳! Lots of stuff going on already!
 #### `Flow`
 
 Blue uses [Flow](https://flow.org/en/) for typing. To enable Flow type on your component, we have to start off the file with `// @flow`.
+
+#### `Strong.css.js`
+
+The style `strong` component, using CSS-in-JS techniques. More on that our [styling guide](styling.md).
 
 #### `PureComponent`
 
@@ -109,7 +124,13 @@ The second point is thoughtful architecture. HTML is the foundation to your Reac
 
 Blue follows the [ITCSS](https://developer.helpscout.com/seed/glossary/itcss/) naming architecture, which is why components have a `className` prefix of `c-`.
 
-#### `...rest`
+#### `is-superBold`
+
+Any prop that can modify a components appearance or behaviour is added as a `className` under `componentClassName`. This is to both apply styling and to better communicate a component's state within the DOM (for debugging/testing/targeting).
+
+These modifier classNames should typically be prefixed with words like `is-`, `has-`, `with`.
+
+#### `...getValidProps(rest)`
 
 Blue's components are designed to be used as if they were default HTML elements. The `...rest` pattern allows for users to pass in custom (but HTML-supported) props like:
 
@@ -124,6 +145,8 @@ It also allows for the user to hook into default React props, like:
 * `onMouseEnter`
 * `onClick`
 * `htmlFor`
+
+`getValidProps()` is a special [utility function](https://helpscout.gitbook.io/react-utils) that filters out non-default HTML/React props. This prevents React from throwing errors if non-default props are accidentally passed during the Object spread process.
 
 Wonderful 🙏! You've created the base for `Strong`, that's performant, easy to extend, and Flow typed.
 
@@ -165,3 +188,14 @@ Open that file. You should see a **bunch** of exports listed in **alphabetical o
 export { default as Strong } from './Strong'
 ...
 ```
+
+And that's it 🙏! You've successfully created, hooked up, and exported your new `Strong` component 💪.
+
+## Next
+
+Let's add some [styles](stying.md)!
+
+## See also
+
+* [Flow](https://flow.org/en/)
+* [react-utils](https://helpscout.gitbook.io/react-utils)
