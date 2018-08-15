@@ -4,7 +4,7 @@ In this guide, we'll walk through add submitting for our [fully test](testing.md
 
 ## Create a pull request
 
-After checking in all of your wonderful changes to your `strong-component` git branch. Push it up to [https://github.com/helpscout/blue].
+After checking in all of your wonderful changes to your `strong-component` git branch. Push it up to [Github](https://github.com/helpscout/blue).
 
 [Create a new pull request](https://github.com/helpscout/blue/compare) against the `master` branch!
 
