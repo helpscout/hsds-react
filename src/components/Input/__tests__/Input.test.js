@@ -3,6 +3,8 @@ import { mount } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Resizer'
 
+jest.useFakeTimers()
+
 const ui = {
   field: '.c-InputField',
   errorIcon: '.c-Input__errorIcon',
@@ -508,33 +510,29 @@ describe('inputNode', () => {
 })
 
 describe('isFocused', () => {
-  test('Can focus input using isFocused prop', done => {
+  test('Can focus input using isFocused prop', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input isFocused />)
     const o = wrapper.getNode().inputNode
     o.onfocus = spy
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 160)
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 
-  test('Can focus input using custom timeout', done => {
+  test('Can focus input using custom timeout', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input isFocused forceAutoFocusTimeout={20} />)
     const o = wrapper.getNode().inputNode
     o.onfocus = spy
 
-    expect(spy).not.toHaveBeenCalled()
+    jest.runOnlyPendingTimers()
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 40)
+    expect(spy).toHaveBeenCalled()
   })
 
-  test('Can toggle isFocused', done => {
+  test('Can toggle isFocused', () => {
     const spy = jest.fn()
     const wrapper = mount(
       <Input onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
@@ -544,10 +542,9 @@ describe('isFocused', () => {
 
     wrapper.setProps({ isFocused: true })
 
-    setTimeout(() => {
-      expect(spy).toHaveBeenCalled()
-      done()
-    }, 40)
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
   })
 })
 
