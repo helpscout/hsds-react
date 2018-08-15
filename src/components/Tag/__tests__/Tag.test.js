@@ -113,7 +113,7 @@ describe('Styles', () => {
 
   test('Has display styles', () => {
     const wrapper = mount(<Tag display="inlineBlock" />)
-    const o = wrapper.find('.c-Tag')
+    const o = wrapper.find('.c-TagWrapper')
 
     expect(o.hasClass('is-display-inlineBlock')).toBeTruthy()
   })

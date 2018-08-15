@@ -80,10 +80,14 @@ class Tag extends Component<Props, State> {
     const { in: transitionIn } = this.state
     const handleOnRemove = this.handleOnRemove
 
+    const wrapperClassName = classNames(
+      'c-TagWrapper',
+      display && `is-display-${display}`
+    )
+
     const componentClassName = classNames(
       'c-Tag',
       color && `is-${color}`,
-      display && `is-display-${display}`,
       filled && 'is-filled',
       pulsing && 'is-pulsing',
       className
@@ -104,12 +108,11 @@ class Tag extends Component<Props, State> {
     const child = value || (children || null)
 
     return (
-      <TagWrapperUI className="c-TagWrapper">
+      <TagWrapperUI className={wrapperClassName}>
         <Animate
           className="c-TagWrapper__animate"
           duration={animationDuration}
           in={transitionIn}
-          inlineBlock={display === 'inlineBlock'}
           unmountOnExit
         >
           <TagUI {...getValidProps(rest)} className={componentClassName}>

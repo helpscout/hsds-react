@@ -24,7 +24,15 @@ export const config = {
 }
 
 export const TagWrapperUI = styled('div')`
-  ${baseStyles} max-width: 100%;
+  ${baseStyles} display: inline-block;
+  max-width: 100%;
+
+  &.is-display-block {
+    display: block;
+  }
+  &.is-display-inlineBlock {
+    display: inline-block;
+  }
 
   ${wrapperBEM.element('animate')} {
     max-width: 100%;
@@ -36,7 +44,7 @@ export const TagUI = styled('div')`
   border-radius: ${config.borderRadius}px;
   border: 1px solid currentColor;
   color: ${config.colors.default};
-  display: inline-block;
+  display: block;
   padding: ${config.padding};
   height: ${config.height}px;
   max-width: 100%;
@@ -50,13 +58,6 @@ export const TagUI = styled('div')`
     backface-visibility: hidden;
     filter: blur(0);
     -webkit-filter: blur(0);
-  }
-
-  &.is-display-block {
-    display: block;
-  }
-  &.is-display-inlineBlock {
-    display: inline-block;
   }
 
   @keyframes _Blue_Tag_Blink {
