@@ -14,6 +14,8 @@ blue/
       └── components/
 ```
 
+## Initial files
+
 The first thing we'll need to do is create a dedicated `Strong` directory under `Components/`:
 
 ```
@@ -22,8 +24,6 @@ blue/
       └── components/
           └── Strong/
 ```
-
-## Initial files
 
 Under our newly created `Strong/` directory, we'll need to create 2 files:
 

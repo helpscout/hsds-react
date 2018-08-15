@@ -72,7 +72,7 @@ Amaze 😍! We can see our `Strong` component in Storybook!
 
 ## Next
 
-Let's [write some tests] to make sure `Strong` works as we expect it to. (Just in case!)
+Let's [write some tests](testing.md) to make sure `Strong` works as we expect it to. (Just in case!)
 
 ## See also
 
