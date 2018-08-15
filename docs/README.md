@@ -11,4 +11,4 @@
   * [Writing tests](./contribution/testing.md)
   * [Adding documentation](./contribution/documentation.md)
   * [Submitting for review](./contribution/review.md)
-  * [Publishing a release](release.md)
+  * [Publishing a release](./contribution/release.md)
