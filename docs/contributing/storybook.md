@@ -1,6 +1,6 @@
 # Write a story
 
-In this guide, we'll walk through render our newly [styled](styling.md) [custom `Strong` component.](creating.md) in [Storybook](https://storybook.js.org/).
+In this guide, we'll walk through render our newly [styled](styling.md) [custom `Strong` component](creating.md) in [Storybook](https://storybook.js.org/).
 
 ## Directory
 

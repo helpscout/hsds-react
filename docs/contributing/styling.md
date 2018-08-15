@@ -1,6 +1,6 @@
 # Styling a component
 
-In this guide, we'll walk through styling our newly created [custom `Strong` component.](creating.md).
+In this guide, we'll walk through styling our newly created [custom `Strong` component](creating.md).
 
 ## CSS-in-JS
 

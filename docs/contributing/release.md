@@ -1,6 +1,6 @@
 # Publishing a release
 
-In this guide, we'll walk through publishing for our [newly merged](review.md) [custom `Strong` component.](creating.md) to [npm](https://www.npmjs.com/package/@helpscout/blue).
+In this guide, we'll walk through publishing for our [newly merged](review.md) [custom `Strong` component](creating.md) to [npm](https://www.npmjs.com/package/@helpscout/blue).
 
 ## Log in
 

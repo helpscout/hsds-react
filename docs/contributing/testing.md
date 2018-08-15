@@ -1,6 +1,6 @@
 # Writing tests
 
-In this guide, we'll walk through writing test for our [custom `Strong` component.](creating.md) in [Storybook](https://storybook.js.org/).
+In this guide, we'll walk through writing test for our [custom `Strong` component](creating.md) in [Storybook](https://storybook.js.org/).
 
 Blue uses [Jest](https://jestjs.io/) and [Enzyme](https://github.com/airbnb/enzyme) for testing.
 

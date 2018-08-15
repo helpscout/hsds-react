@@ -1,6 +1,6 @@
 # Adding documentation
 
-In this guide, we'll walk through adding documentation for our [fully test](testing.md) [custom `Strong` component.](creating.md).
+In this guide, we'll walk through adding documentation for our [fully test](testing.md) [custom `Strong` component](creating.md).
 
 ## Directory
 
