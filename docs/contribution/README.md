@@ -11,4 +11,4 @@ In this guide, we'll walk through the process of creating a brand new Blue compo
 * [Writing tests](testing.md)
 * [Adding documentation](documentation.md)
 * [Submitting for review](review.md)
-* [Merge and release](release.md)
+* [Publishing a release](release.md)
