@@ -28,6 +28,8 @@ Great 🌈! You've setup and installed all of Blue's dependencies.
 
 ## Development environment
 
+![Blue's Storybook development environment](../images/storybook.png)
+
 Blue's development environment is powered by [Storybook](https://storybook.js.org/). To fire up Blue's Storybook, run the following command:
 
 ```
