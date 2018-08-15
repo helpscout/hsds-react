@@ -44,6 +44,20 @@ The live version of Blue's Storybook can be seen at [http://hsblue.surge.sh/](ht
 
 Fantastic ✌️! You've got Blue up and running on your computer.
 
+## Code editor
+
+You can use **whatever code editor you like**! Blue is typed using [Flow](https://flow.org/). Because of this, we recommend using [Visual Studio Code](https://code.visualstudio.com/) as it has pretty great [Flow support](https://github.com/flowtype/flow-for-vscode).
+
+Note: You may need to [install Flow globally](https://preview.npmjs.com/package/flow-bin) on your computer.
+
+## Git branch
+
+Create a new `git` branch for your work. You can call it whatever you like (the more descriptive of your work, the better):
+
+```
+git checkout -b strong-component
+```
+
 ## Next
 
 Let's [create our new component](creating.md) in Blue!
