@@ -52,7 +52,10 @@ Add the starting React component boilerplate for `Strong.js`:
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { StrongUI } from './styles/Strong.css.js'
+
+export const COMPONENT_KEY = 'Strong'
 
 type Props = {
   children?: any,
@@ -81,6 +84,8 @@ class Strong extends Component<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY, Strong)
 
 export default Strong
 ```
@@ -149,6 +154,12 @@ It also allows for the user to hook into default React props, like:
 `getValidProps()` is a special [utility function](https://helpscout.gitbook.io/react-utils) that filters out non-default HTML/React props. This prevents React from throwing errors if non-default props are accidentally passed during the Object spread process.
 
 Wonderful 🙏! You've created the base for `Strong`, that's performant, easy to extend, and Flow typed.
+
+#### `namespaceComponent`
+
+This is a Higher-Order component that sets up the internal namespacing within Blue. It allows for Blue components to reliably type-check each other.
+
+`COMPONENT_KEY` is the namespace for the component, in our case, `Strong`. Exporting it allows for other components to use the key for type-checking.
 
 ## Exporting
 
