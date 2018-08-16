@@ -6,6 +6,12 @@ Help Scout's React component library
 
 <img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
 
+## Live Demo
+
+Check out Blue's [Storybook](https://hsblue.surge.sh/):
+
+https://hsblue.surge.sh/
+
 ## Install
 
 ```
