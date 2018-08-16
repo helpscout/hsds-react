@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { default as Hr } from '..'
+import Hr from '../Hr'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {

@@ -6,9 +6,11 @@ import Text from '../Text'
 import Chat from './Chat'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
 import css, { TextCSS } from './styles/Attachment.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageBubble & {
   errorMessage?: string,
@@ -99,6 +101,7 @@ Attachment.defaultProps = {
   uploadingMessage: 'Uploading…',
 }
 Attachment.contextTypes = providerContextTypes
-Attachment.displayName = 'Message.Attachment'
+
+namespaceComponent(COMPONENT_KEY.Attachment)(Attachment)
 
 export default styled(Attachment)(css)

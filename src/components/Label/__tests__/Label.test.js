@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Label from '..'
+import Label from '../Label'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -64,5 +64,13 @@ describe('States', () => {
     const wrapper = mount(<Label state="warning" />)
 
     expect(wrapper.hasClass('is-warning')).toBe(true)
+  })
+})
+
+describe('Styles', () => {
+  test('Applies marginless styles if specified', () => {
+    const wrapper = mount(<Label isMarginless />)
+
+    expect(wrapper.hasClass('is-marginless')).toBe(true)
   })
 })

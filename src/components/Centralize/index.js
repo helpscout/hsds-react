@@ -1,22 +1,5 @@
 // @flow
-import React from 'react'
-import classNames from '../../utilities/classNames'
+import { propConnect } from '../PropProvider'
+import Centralize from './Centralize'
 
-type Props = {
-  className?: string,
-  children?: any,
-}
-
-const Centralize = (props: Props) => {
-  const { className, children, ...rest } = props
-
-  const componentClassName = classNames('c-Centralize', className)
-
-  return (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
-}
-
-export default Centralize
+export default propConnect('Centralize')(Centralize)

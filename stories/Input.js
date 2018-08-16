@@ -89,7 +89,9 @@ stories.add('label', () => <Input label="Labelled" autoFocus />)
 stories.add('placeholder', () => <Input placeholder="Hello" autoFocus />)
 
 stories.add('prefix + suffix', () => (
-  <Input prefix="$" suffix=".00" autoFocus />
+  <div>
+    <Input inlinePrefix="$" inlineSuffix=".00" value="Inline Prefix/Suffix" />
+  </div>
 ))
 
 stories.add('seamless', () => <Input seamless autoFocus />)
@@ -118,7 +120,7 @@ stories.add('state: error', () => (
   <div>
     <Input state="error" errorMessage="This is incorrect!" />
     <br />
-    <Input state="error" suffix=".00" errorMessage="This is incorrect!" />
+    <Input state="error" inlineSuffix=".00" errorMessage="This is incorrect!" />
     <br />
     <Input state="error" size="sm" errorMessage="This is incorrect!" />
     <br />

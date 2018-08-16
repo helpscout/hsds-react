@@ -8,6 +8,7 @@ import Icon from '../Icon'
 import Text from '../Text'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { isWord } from '../../utilities/strings'
 import { providerContextTypes } from './propTypes'
 import css, {
@@ -17,6 +18,7 @@ import css, {
   TitleCSS,
   TypingCSS,
 } from './styles/Bubble.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageBubble
 type Context = MessageThemeContext
@@ -137,6 +139,7 @@ export const Bubble = (props: Props, context: Context) => {
 }
 
 Bubble.contextTypes = providerContextTypes
-Bubble.displayName = 'Message.Bubble'
+
+namespaceComponent(COMPONENT_KEY.Bubble)(Bubble)
 
 export default styled(Bubble)(css)

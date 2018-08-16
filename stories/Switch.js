@@ -71,6 +71,19 @@ stories.add('sizes', () => (
     <Hr size="sm" />
     <Flexy>
       <Flexy.Item>
+        <Text>Relax (Large)</Text>
+        <br />
+        <Text faint size="13">
+          When you want to go to it
+        </Text>
+      </Flexy.Item>
+      <Flexy.Item>
+        <Switch size="lg" />
+      </Flexy.Item>
+    </Flexy>
+    <Hr size="sm" />
+    <Flexy>
+      <Flexy.Item>
         <Text>Relax (Medium)</Text>
         <br />
         <Text faint size="13">
@@ -92,19 +105,6 @@ stories.add('sizes', () => (
       </Flexy.Item>
       <Flexy.Item>
         <Switch size="sm" />
-      </Flexy.Item>
-    </Flexy>
-    <Hr size="sm" />
-    <Flexy>
-      <Flexy.Item>
-        <Text>Relax (Extra small)</Text>
-        <br />
-        <Text faint size="13">
-          When you want to go to it
-        </Text>
-      </Flexy.Item>
-      <Flexy.Item>
-        <Switch size="xs" />
       </Flexy.Item>
     </Flexy>
     <Hr size="sm" />

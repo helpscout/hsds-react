@@ -42,7 +42,7 @@ const css = `
   ${makeSizeStyles()}
   ${makeStateColorStyles()}
 
-  &.is-withCaret {
+  &.withCaret {
     ${bem.element('icon')} {
       width: calc(100% - ${caretSize}px);
     }
@@ -96,7 +96,7 @@ function makeSizeStyles(): string {
       height: ${size}px;
       width: ${size}px;
 
-      &.is-withCaret {
+      &.withCaret {
         width: ${size + caretSize}px;
       }
     }

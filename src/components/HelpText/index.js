@@ -1,47 +1,5 @@
 // @flow
-import React from 'react'
-import classNames from '../../utilities/classNames'
-import Text from '../Text'
-import { isString } from '../../utilities/is'
-import type { Sizes } from '../Text/types'
-import type { UIState } from '../../constants/types'
+import { propConnect } from '../PropProvider'
+import HelpText from './HelpText'
 
-type Props = {
-  children?: any,
-  className?: string,
-  muted?: boolean,
-  size?: Sizes,
-  state?: ?UIState,
-}
-
-const HelpText = (props: Props) => {
-  const { children, className, muted, size, state, ...rest } = props
-
-  const componentClassName = classNames(
-    'c-HelpText',
-    muted && `is-muted`,
-    state && `is-${state}`,
-    className
-  )
-
-  const contentMarkup = isString(children) ? (
-    <Text className="c-HelpText__text" size={size}>
-      {children}
-    </Text>
-  ) : (
-    children
-  )
-
-  return (
-    <div className={componentClassName} {...rest}>
-      {contentMarkup}
-    </div>
-  )
-}
-
-HelpText.defaultProps = {
-  size: '13',
-  state: 'default',
-}
-
-export default HelpText
+export default propConnect('HelpText')(HelpText)

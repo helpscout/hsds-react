@@ -1,17 +1,29 @@
-import React from 'react'
+// @flow
+import React, { PureComponent as Component } from 'react'
+import GridComponent from '../Grid'
 import classNames from '../../utilities/classNames'
-import { default as GridComponent } from '../Grid'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 
-const Grid = props => {
-  const { className, children, ...rest } = props
-
-  const componentClassName = classNames('c-FormGroup', className)
-
-  return (
-    <div className={componentClassName} {...rest}>
-      <GridComponent>{children}</GridComponent>
-    </div>
-  )
+type Props = {
+  children?: any,
+  className?: string,
 }
+
+class Grid extends Component<Props> {
+  render() {
+    const { className, children, ...rest } = this.props
+
+    const componentClassName = classNames('c-FormGroupGrid', className)
+
+    return (
+      <div className={componentClassName} {...rest}>
+        <GridComponent>{children}</GridComponent>
+      </div>
+    )
+  }
+}
+
+namespaceComponent(COMPONENT_KEY.Grid)(Grid)
 
 export default Grid

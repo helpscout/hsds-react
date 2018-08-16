@@ -1,3 +1,4 @@
+import { injectGlobal } from '../src/components/styled'
 import '../src/styles/blue.scss'
 // import '../src/styles/blue.hs-app.scss'
 
@@ -21,6 +22,7 @@ import './ChatTranscript'
 import './Checkbox'
 import './Code'
 import './Collapsible'
+import './ControlGroup'
 import './CloseButton'
 import './DetailList'
 import './Dropdown'
@@ -47,6 +49,7 @@ import './List'
 import './LoadingDots'
 import './Overlay'
 import './Overflow'
+import './Page'
 import './ProgressBar'
 import './Radio'
 import './Samp'
@@ -73,3 +76,10 @@ import './Truncate'
 import './VisuallyHidden'
 
 import './Color'
+
+injectGlobal`
+  html, body {
+    margin: 0;
+    padding: 20px;
+  }
+`

@@ -5,8 +5,10 @@ import Text from '../Text'
 import ChatBlock from './ChatBlock'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Action.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageChat & {
   className?: string,
@@ -65,6 +67,7 @@ export const Action = (props: Props, context: Context) => {
 }
 
 Action.contextTypes = providerContextTypes
-Action.displayName = 'Message.Action'
+
+namespaceComponent(COMPONENT_KEY.Action)(Action)
 
 export default styled(Action)(css)

@@ -60,7 +60,7 @@ const Icon = (props: Props) => {
     state && `is-${state}`,
     subtle && 'is-subtle',
     size && `is-${size}`,
-    withCaret && 'is-withCaret',
+    withCaret && 'withCaret',
     className
   )
 

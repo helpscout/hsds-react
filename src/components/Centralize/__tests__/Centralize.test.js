@@ -1,4 +1,4 @@
-import Centralize from '..'
+import Centralize from '../Centralize'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 const baseComponentOptions = {

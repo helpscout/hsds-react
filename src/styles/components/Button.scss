@@ -1,21 +1,38 @@
-$seed-button-namespace: "c-Button";
+$seed-button-namespace: 'c-Button';
 $seed-button-font-weight: 600;
-@import "../configs/seed-control";
-@import "pack/seed-button/_index";
-@import "pack/seed-dash/_index";
-@import "pack/seed-button/mixins/generate-button-styles";
+@import '../configs/seed-control';
+@import 'pack/seed-button/_index';
+@import 'pack/seed-dash/_index';
+@import 'pack/seed-button/mixins/generate-button-styles';
 
 button.#{$seed-button-namespace} {
-  @import "../resets/base";
+  @import '../resets/base';
 }
 
 .c-Button {
-  @import "../configs/color";
+  @import '../configs/color';
+
+  &:focus {
+    position: relative;
+    z-index: 2;
+  }
+
+  &.is-first {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.is-notOnly {
+    border-radius: 0;
+  }
+  &.is-last {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 
   &:before {
     border-radius: 2px;
     bottom: 0;
-    content: "";
+    content: '';
     display: none;
     left: 0;
     opacity: 0.3;
@@ -53,39 +70,39 @@ button.#{$seed-button-namespace} {
   }
 
   $themes: (
-    editing: (
-      _generate-states: false,
-      background: (
-        default: _color(yellow, 100),
-        hover: _color(yellow, 200),
-        active: darken(_color(yellow, 200), 3%),
-        focus: _color(yellow, 100),
-      ),
-      border: (
-        default: _color(yellow, 600),
-        hover: _color(yellow, 600),
-        active: _color(yellow, 700),
-        focus: darken(_color(yellow, 700), 1%),
-      ),
-      box-shadow: (
-        default: 0 0 0 1px _color(yellow, 600) inset,
-        hover: 0 0 0 1px _color(yellow, 600) inset,
-        active: 0 0 0 1px _color(yellow, 700) inset,
-        focus: 0 0 0 1px darken(_color(yellow, 700), 1%) inset,
-      ),
-      text: (
-        default: _color(yellow, 700),
-        hover: darken(_color(yellow, 700), 5%),
-        active: darken(_color(yellow, 700), 8%),
-        focus: darken(_color(yellow, 700), 5%),
-      ),
-      text-decoration: (
-        default: none,
-        hover: none,
-        active: none,
-        focus: none,
+    editing:
+      (
+        _generate-states: false,
+        background:
+          (
+            default: _color(yellow, 100),
+            hover: _color(yellow, 200),
+            active: darken(_color(yellow, 200), 3%),
+            focus: _color(yellow, 100)
+          ),
+        border:
+          (
+            default: _color(yellow, 600),
+            hover: _color(yellow, 600),
+            active: _color(yellow, 700),
+            focus: darken(_color(yellow, 700), 1%)
+          ),
+        box-shadow:
+          (
+            default: 0 0 0 1px _color(yellow, 600) inset,
+            hover: 0 0 0 1px _color(yellow, 600) inset,
+            active: 0 0 0 1px _color(yellow, 700) inset,
+            focus: 0 0 0 1px darken(_color(yellow, 700), 1%) inset
+          ),
+        text:
+          (
+            default: _color(yellow, 700),
+            hover: darken(_color(yellow, 700), 5%),
+            active: darken(_color(yellow, 700), 8%),
+            focus: darken(_color(yellow, 700), 5%)
+          ),
+        text-decoration: (default: none, hover: none, active: none, focus: none)
       )
-    )
   );
 
   // Themes

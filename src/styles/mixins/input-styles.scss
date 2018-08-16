@@ -18,18 +18,14 @@
     z-index: 1;
   }
 
-  &__prefix,
-  &__suffix {
+  &__inlinePrefix,
+  &__inlineSuffix {
     opacity: 0.3;
     padding-left: 4px;
     padding-right: 4px;
     position: relative;
     top: 0;
     white-space: nowrap;
-
-    @include parent('.has-value >') {
-      opacity: 1;
-    }
 
     &.is-icon {
       opacity: 1;
@@ -48,7 +44,7 @@
     }
   }
 
-  &__prefix.is-icon {
+  &__inlinePrefix.is-icon {
     margin-left: -8px;
 
     @include parent('.is-error.is-seamless > ') {
@@ -56,7 +52,7 @@
     }
   }
 
-  &__suffix.is-icon {
+  &__inlineSuffix.is-icon {
     margin-right: -8px;
 
     @include parent('.is-error.is-seamless > ') {

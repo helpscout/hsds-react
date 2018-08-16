@@ -1,9 +1,10 @@
 // @flow
+import type { UISize } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { standardSizeTypes } from '../../constants/propTypes'
-import type { UISize } from '../../constants/types'
+
+type Value = number | string | null
 
 type Props = {
   className?: string,
@@ -12,8 +13,6 @@ type Props = {
   size?: UISize,
   value: Value,
 }
-
-type Value = number | string | null
 
 class ProgressBar extends Component<Props> {
   static defaultProps = {

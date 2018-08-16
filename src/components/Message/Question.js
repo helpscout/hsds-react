@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
 import Chat from './Chat'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   primary?: boolean,
@@ -13,6 +15,6 @@ const Question = (props: Props) => {
   return <Chat primary title="Question:" {...rest} />
 }
 
-Question.displayName = 'Message.Question'
+namespaceComponent(COMPONENT_KEY.Question)(Question)
 
 export default Question

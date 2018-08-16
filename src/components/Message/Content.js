@@ -1,11 +1,13 @@
 // @flow
+import type { MessageChat } from './types'
 import React from 'react'
 import ChatBlock from './ChatBlock'
 import styled from '../styled'
 import PreviewCardContext from '../PreviewCard/Context'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Content.css.js'
-import type { MessageChat } from './types'
+import { COMPONENT_KEY } from './utils'
 
 type Props = MessageChat
 
@@ -64,6 +66,6 @@ const Content = (props: Props) => {
   )
 }
 
-Content.displayName = 'Message.Content'
+namespaceComponent(COMPONENT_KEY.Content)(Content)
 
 export default styled(Content)(css)

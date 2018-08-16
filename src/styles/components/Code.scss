@@ -1,17 +1,2 @@
-.c-Code {
-  @import "../configs/font";
-  background-color: rgba(black, 0.05);
-  border-radius: 3px;
-  box-sizing: border-box;
-  font-family: $font-family-code;
-  font-size: 85%;
-  margin: 0;
-  padding: 0.2em 0;
-  word-wrap: break-word;
-
-  &::before,
-  &::after {
-    content: "\00a0";
-    letter-spacing: -0.2em;
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

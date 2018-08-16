@@ -1,4 +1,5 @@
 import React from 'react'
+import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import PropTypes from 'prop-types'
 
 /**
@@ -53,7 +54,7 @@ const RouteWrapper = WrappedComponent => {
     'Component'
   Component.displayName = `withRoute(${componentName})`
 
-  return Component
+  return hoistNonReactStatics(Component, WrappedComponent)
 }
 
 export default RouteWrapper

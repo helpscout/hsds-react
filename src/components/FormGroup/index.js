@@ -1,21 +1,10 @@
-import React from 'react'
-import classNames from '../../utilities/classNames'
+// @flow
+import { propConnect } from '../PropProvider'
+import FormGroup from './FormGroup'
 import Choice from './Choice'
 import Grid from './Grid'
 
-const FormGroup = props => {
-  const { className, children, ...rest } = props
+FormGroup.Choice = propConnect('FormGroupChoice')(Choice)
+FormGroup.Grid = propConnect('FormGroupGrid')(Grid)
 
-  const componentClassName = classNames('c-FormGroup', className)
-
-  return (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
-}
-
-FormGroup.Choice = Choice
-FormGroup.Grid = Grid
-
-export default FormGroup
+export default propConnect('FormGroup')(FormGroup)
