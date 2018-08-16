@@ -9,18 +9,20 @@ const bem = BEM('.c-Icon')
 
 const ICON_SIZES = [8, 10, 12, 13, 14, 16, 18, 20, 24, 32, 48]
 
-const caretSize = 12
-const defaultSize = 20
+export const config = {
+  caretSize: 12,
+  offset: 4,
+  size: 20,
+}
 
 const css = `
   ${baseStyles}
   color: currentColor;
   display: block;
-  height: ${defaultSize}px;
+  height: ${config.size}px;
   position: relative;
-  width: ${defaultSize}px;
+  width: ${config.size}px;
 
-  // Modifiers
   &.is-center {
     margin-left: auto;
     margin-right: auto;
@@ -38,13 +40,21 @@ const css = `
     pointer-events: none;
   }
 
+  &.is-offsetLeft {
+    margin-right: ${config.offset}px;
+  }
+
+  &.is-offsetRight {
+    margin-left: ${config.offset}px;
+  }
+
   ${makeShadeStyles()}
   ${makeSizeStyles()}
   ${makeStateColorStyles()}
 
   &.withCaret {
     ${bem.element('icon')} {
-      width: calc(100% - ${caretSize}px);
+      width: calc(100% - ${config.caretSize}px);
     }
   }
 
@@ -68,11 +78,11 @@ const css = `
     }
 
     &.is-caret {
-      height: ${caretSize}px;
+      height: ${config.caretSize}px;
       position: absolute;
       right: 0;
-      top: calc(50% - ${Math.round(caretSize / 2)}px);
-      width: ${caretSize}px;
+      top: calc(50% - ${Math.round(config.caretSize / 2)}px);
+      width: ${config.caretSize}px;
     }
   }
 `
@@ -97,7 +107,7 @@ function makeSizeStyles(): string {
       width: ${size}px;
 
       &.withCaret {
-        width: ${size + caretSize}px;
+        width: ${size + config.caretSize}px;
       }
     }
   `
