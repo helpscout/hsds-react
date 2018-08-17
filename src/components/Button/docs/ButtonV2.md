@@ -30,6 +30,7 @@ Alternatively, [PropProvider](../../PropProvider) can be used to set this prop a
 | disabled  | `bool`     | Disable the button so it can't be clicked.                                      |
 | fetch     | `function` | function which returns a promise, will be invoked before routing the `to` route |
 | isFocused | `bool`     | Renders the focused style.                                                      |
+| isSuffix  | `bool`     | Renders suffix styles.                                                          |
 | onBlur    | `function` | `onBlur` event handler.                                                         |
 | onClick   | `function` | `onClick` event handler.                                                        |
 | onFocus   | `function` | `onFocus` event handler.                                                        |
