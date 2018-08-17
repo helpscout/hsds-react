@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Input from '..'
 import Flexy from '../../Flexy'
 
@@ -14,7 +14,7 @@ describe('ClassName', () => {
 
   test('Accepts custom className', () => {
     const className = 'milk-was-a-bad-choice'
-    const wrapper = shallow(<Input className={className} />)
+    const wrapper = mount(<Input className={className} />)
     const o = wrapper.find(`.${className}`)
 
     expect(o.exists()).toBeTruthy()
@@ -97,19 +97,19 @@ describe('States', () => {
   })
 
   test('Applies error styles if specified', () => {
-    const wrapper = shallow(<Input state="error" />)
+    const wrapper = mount(<Input state="error" />)
 
     expect(wrapper.prop('className')).toContain('is-error')
   })
 
   test('Applies success styles if specified', () => {
-    const wrapper = shallow(<Input state="success" />)
+    const wrapper = mount(<Input state="success" />)
 
     expect(wrapper.prop('className')).toContain('is-success')
   })
 
   test('Applies warning styles if specified', () => {
-    const wrapper = shallow(<Input state="warning" />)
+    const wrapper = mount(<Input state="warning" />)
 
     expect(wrapper.prop('className')).toContain('is-warning')
   })

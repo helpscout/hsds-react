@@ -150,9 +150,18 @@ const state = {
   },
 }
 
+const osx = {
+  control: {
+    default: '#3b99fc',
+    borderColor: '#2b91fc',
+    backgroundColor: '#3b99fc',
+  },
+}
+
 export default {
   ...palette,
   border,
   text,
   state,
+  osx,
 }

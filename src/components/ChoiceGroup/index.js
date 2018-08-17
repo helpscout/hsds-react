@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 import classNames from '../../utilities/classNames'
 import FormGroup from '../FormGroup'
 import { includes } from '../../utilities/arrays'
+import { isComponentNamed } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { valueTypes } from './propTypes'
+import { COMPONENT_KEY as RADIO_KEY } from '../Radio/utils'
+import { COMPONENT_KEY as RADIOCARD_KEY } from '../RadioCard/utils'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -37,15 +40,16 @@ class ChoiceGroup extends Component {
       selectedValue: props.value ? [].concat(props.value) : [],
     }
     this.multiSelect = true
-    this.handleOnChange = this.handleOnChange.bind(this)
   }
 
   componentWillMount() {
     const child = this.props.children ? this.props.children[0] : false
     let multiSelect
 
-    if (child && child.type && child.type.name) {
-      multiSelect = child.type.name.toLowerCase() !== 'radio' // false for radio
+    if (child) {
+      multiSelect =
+        !isComponentNamed(child, RADIO_KEY) &&
+        !isComponentNamed(child, RADIOCARD_KEY)
     }
     // Override auto-setting based on children
     multiSelect =
@@ -69,13 +73,11 @@ class ChoiceGroup extends Component {
     return selectedValue
   }
 
-  handleOnChange(value, checked) {
+  handleOnChange = (value, checked) => {
     if (typeof value === 'object' && value.target) return
 
     const { multiSelect } = this.state
-    const selectedValue = multiSelect
-      ? this.getMultiSelectValue(value)
-      : [value]
+    const selectedValue = multiSelect ? this.getMultiSelectValue(value) : value
 
     this.setState({ selectedValue })
     this.props.onChange(selectedValue)
@@ -86,6 +88,7 @@ class ChoiceGroup extends Component {
       className,
       children,
       onBlur,
+      onChange,
       onFocus,
       multiSelect: multiSelectSetting,
       name,
@@ -98,7 +101,6 @@ class ChoiceGroup extends Component {
       (multiSelectSetting || multiSelect) && 'is-multi-select',
       className
     )
-    const handleOnChange = this.handleOnChange
 
     const choiceMarkup = children
       ? React.Children.map(children, (child, index) => {
@@ -107,7 +109,7 @@ class ChoiceGroup extends Component {
               {React.cloneElement(child, {
                 checked: includes(selectedValue, child.props.value),
                 onBlur,
-                onChange: handleOnChange,
+                onChange: this.handleOnChange,
                 onFocus,
                 name,
               })}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Choice from '..'
 import ChoiceInput from '../Input'
 import HelpText from '../../HelpText'
@@ -9,7 +9,7 @@ import VisuallyHidden from '../../VisuallyHidden'
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Choice className={customClass} />)
+    const wrapper = mount(<Choice className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -17,13 +17,13 @@ describe('ClassName', () => {
 
 describe('ID', () => {
   test('Has default componentID', () => {
-    const wrapper = shallow(<Choice />)
+    const wrapper = mount(<Choice />)
 
     expect(wrapper.state().id).toContain('Choice')
   })
 
   test('Can override default componentID', () => {
-    const wrapper = shallow(<Choice componentID="milk" />)
+    const wrapper = mount(<Choice componentID="milk" />)
 
     expect(wrapper.state().id).toContain('milk')
     expect(wrapper.state().id).not.toContain('Choice')
@@ -131,7 +131,7 @@ describe('Label', () => {
   })
 
   test('Hide label if specified', () => {
-    const wrapper = shallow(<Choice hideLabel label="Label" />)
+    const wrapper = mount(<Choice hideLabel label="Label" />)
     const labelText = wrapper.find('.c-Choice__label-text')
 
     expect(labelText.find(Text).length).toBeFalsy()

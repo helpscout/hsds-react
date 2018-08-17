@@ -1,21 +1,2 @@
-@import "pack/seed-this/_index";
-
-.c-Choice {
-  @import "../../resets/base";
-  $block: this();
-
-  &__label {
-    cursor: pointer;
-  }
-
-  &__help-text {
-    margin-left: 24px;
-  }
-
-  // States
-  &.is-disabled {
-    #{$block}__label {
-      cursor: not-allowed;
-    }
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.
