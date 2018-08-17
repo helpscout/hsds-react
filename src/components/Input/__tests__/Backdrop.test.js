@@ -41,4 +41,10 @@ describe('Styles', () => {
     expect(wrapper.hasClass('is-notOnly')).toBe(false)
     expect(wrapper.hasClass('is-last')).toBe(true)
   })
+
+  test('Can render checkbox styles', () => {
+    const wrapper = mount(<Backdrop checkbox />)
+
+    expect(wrapper.hasClass('is-checkbox')).toBe(true)
+  })
 })

@@ -1,46 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Flexy, Icon, Text } from '../src/index.js'
+import iconList from '../src/components/Icon/icons'
 
 const stories = storiesOf('Icon', module)
 
 stories.add('icons', () => {
-  const icons = [
-    'alert',
-    'arrow-down-huge',
-    'arrow-left',
-    'arrow-right',
-    'arrow-up-huge',
-    'attachment',
-    'caret-down',
-    'caret-left',
-    'caret-right',
-    'caret-up',
-    'chat-active',
-    'chat',
-    'clock-large',
-    'clock-small',
-    'collapse',
-    'cross-large',
-    'cross-medium',
-    'cross-small',
-    'document',
-    'drag',
-    'emoji',
-    'helpscout-logo',
-    'image-add',
-    'image',
-    'link',
-    'meatball',
-    'minimize',
-    'search',
-    'star',
-    'tag',
-    'tick-large',
-    'tick-small',
-    'video',
-    'user',
-  ].map(i => (
+  const icons = Object.keys(iconList).map(i => (
     <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
       <Icon name={i} key={i} center />
       <Text muted size="sm">

@@ -1,14 +1,15 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import ChoiceGroup from '..'
+import { mount } from 'enzyme'
+import ChoiceGroup from '../ChoiceGroup'
 import FormGroup from '../../FormGroup'
 import Checkbox from '../../Checkbox'
 import Radio from '../../Radio'
+import RadioCard from '../../RadioCard'
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<ChoiceGroup className={customClass} />)
+    const wrapper = mount(<ChoiceGroup className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -24,7 +25,6 @@ describe('Children', () => {
     const el = wrapper.find(Radio)
 
     expect(el.length).toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Renders multiple child content', () => {
@@ -40,7 +40,6 @@ describe('Children', () => {
 
     expect(el.length).toBe(3)
     expect(component.hasClass('is-multi-select')).toBeFalsy()
-    wrapper.unmount()
   })
 
   test('Wraps child component in a FormGroup.Choice', () => {
@@ -57,7 +56,22 @@ describe('Children', () => {
     expect(formGroup.length).toBe(3)
     expect(radio.length).toBe(3)
     expect(formGroup.first().find(Radio).length).toBeTruthy()
-    wrapper.unmount()
+  })
+
+  test('Can render RadioCard components', () => {
+    const wrapper = mount(
+      <ChoiceGroup>
+        <RadioCard />
+        <RadioCard />
+        <RadioCard />
+      </ChoiceGroup>
+    )
+    const formGroup = wrapper.find(FormGroup.Choice)
+    const radio = wrapper.find(RadioCard)
+
+    expect(formGroup.length).toBe(3)
+    expect(radio.length).toBe(3)
+    expect(formGroup.first().find(RadioCard).length).toBeTruthy()
   })
 })
 
@@ -79,7 +93,6 @@ describe('Events', () => {
     input.simulate('blur')
 
     expect(spy).toHaveBeenCalled()
-    wrapper.unmount()
   })
 
   test('Can trigger onFocus callback', () => {
@@ -99,7 +112,6 @@ describe('Events', () => {
     input.simulate('focus')
 
     expect(spy).toHaveBeenCalled()
-    wrapper.unmount()
   })
 
   test('Can trigger onChange callback', () => {
@@ -118,8 +130,7 @@ describe('Events', () => {
 
     input.simulate('change')
 
-    expect(spy).toHaveBeenCalledWith(['1'])
-    wrapper.unmount()
+    expect(spy).toHaveBeenCalledWith('1')
   })
 
   test('Can trigger onChange callback for multiSelect', () => {
@@ -135,8 +146,6 @@ describe('Events', () => {
 
     input.last().simulate('change')
     expect(spy).toHaveBeenCalledWith(['3'])
-
-    wrapper.unmount()
   })
 })
 
@@ -152,7 +161,6 @@ describe('MultiSelect', () => {
     const o = wrapper.find(ChoiceGroup)
 
     expect(o.hasClass('is-multi-select')).toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Does not have multiSelect className, if applicable', () => {
@@ -166,7 +174,6 @@ describe('MultiSelect', () => {
     const o = wrapper.find(ChoiceGroup)
 
     expect(o.hasClass('is-multi-select')).not.toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Does not multiSelect for Radio children', () => {
@@ -180,7 +187,6 @@ describe('MultiSelect', () => {
     const o = wrapper.find(ChoiceGroup)
 
     expect(o.getNode().multiSelect).toBeFalsy()
-    wrapper.unmount()
   })
 
   test('Does auto-multiSelect for Checkbox children', () => {
@@ -194,7 +200,6 @@ describe('MultiSelect', () => {
     const o = wrapper.find(ChoiceGroup)
 
     expect(o.getNode().multiSelect).toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Can disable multiSelect for Checbox children, if defined', () => {
@@ -208,7 +213,6 @@ describe('MultiSelect', () => {
     const o = wrapper.find(ChoiceGroup)
 
     expect(o.getNode().multiSelect).not.toBeTruthy()
-    wrapper.unmount()
   })
 })
 
@@ -228,7 +232,6 @@ describe('Name', () => {
         .first()
         .props().name
     ).toBe('MUGATU')
-    wrapper.unmount()
   })
 })
 
@@ -246,8 +249,6 @@ describe('Value', () => {
     expect(radios.get(0).props.checked).toBeFalsy()
     expect(radios.get(1).props.checked).toBeFalsy()
     expect(radios.get(2).props.checked).toBeFalsy()
-
-    wrapper.unmount()
   })
 
   test('Checks a Choice if value matches', () => {
@@ -263,8 +264,6 @@ describe('Value', () => {
     expect(radios.get(0).props.checked).toBeFalsy()
     expect(radios.get(1).props.checked).toBeTruthy()
     expect(radios.get(2).props.checked).toBeFalsy()
-
-    wrapper.unmount()
   })
 
   test('Can check multiple values', () => {
@@ -281,8 +280,6 @@ describe('Value', () => {
     expect(radios.get(0).props.checked).toBeTruthy()
     expect(radios.get(1).props.checked).toBeTruthy()
     expect(radios.get(2).props.checked).toBeFalsy()
-
-    wrapper.unmount()
   })
 
   test('Deselects checked value on click', () => {
@@ -300,7 +297,5 @@ describe('Value', () => {
 
     expect(wrapper.state().selectedValue).not.toContain('derek')
     expect(wrapper.state().selectedValue).toContain('hansel')
-
-    wrapper.unmount()
   })
 })

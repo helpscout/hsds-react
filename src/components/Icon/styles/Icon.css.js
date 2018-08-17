@@ -7,7 +7,7 @@ import forEach from '../../../styles/utilities/forEach'
 
 const bem = BEM('.c-Icon')
 
-const ICON_SIZES = [8, 10, 12, 13, 14, 16, 18, 20, 24, 32, 48]
+const ICON_SIZES = [8, 10, 12, 13, 14, 16, 18, 20, 24, 32, 48, 52]
 
 export const config = {
   caretSize: 12,

@@ -46,22 +46,23 @@ describe('Accessibility', () => {
   })
 })
 
-describe('Active', () => {
+describe('Checked', () => {
   test('Is false by default', () => {
     const wrapper = mount(<Switch />)
     const o = wrapper.instance()
 
-    expect(o.props.active).toBeFalsy()
-    expect(o.state.active).toBeFalsy()
-    expect(wrapper.hasClass('is-active')).not.toBeTruthy()
+    expect(o.props.checked).toBeFalsy()
+    expect(o.state.checked).toBeFalsy()
+    expect(wrapper.hasClass('is-checked')).not.toBeTruthy()
   })
 
   test('Can be set to true', () => {
-    const wrapper = mount(<Switch active />)
+    const wrapper = mount(<Switch checked />)
     const o = wrapper.instance()
 
-    expect(o.state.active).toBeTruthy()
+    expect(o.state.checked).toBeTruthy()
     expect(wrapper.find('input').props()['aria-checked']).toBeTruthy()
+    expect(wrapper.find('input').props().checked).toBeTruthy()
   })
 
   test('Can be toggled by changing input', () => {
@@ -71,7 +72,24 @@ describe('Active', () => {
 
     input.simulate('change')
 
-    expect(o.state.active).toBeTruthy()
+    expect(o.state.checked).toBeTruthy()
+    expect(wrapper.find('input').props().checked).toBeTruthy()
+  })
+
+  test('Can be manually set using checked prop', () => {
+    const wrapper = mount(<Switch checked />)
+    const o = wrapper.instance()
+    const input = wrapper.find('input')
+
+    input.simulate('change')
+
+    expect(o.state.checked).toBe(false)
+    expect(wrapper.find('input').props().checked).toBe(false)
+
+    wrapper.setProps({ checked: true })
+
+    expect(o.state.checked).toBe(true)
+    expect(wrapper.find('input').props().checked).toBe(true)
   })
 })
 
@@ -151,6 +169,20 @@ describe('ID', () => {
     const o = wrapper.instance()
 
     expect(o.getIdFromContextProps()).toContain('Switch')
+  })
+
+  test('Passes ID correctly to label and input', () => {
+    const wrapper = mount(
+      <FormLabel id="Buddy">
+        <Switch />
+      </FormLabel>
+    )
+    const label = wrapper.find('label').first()
+    const o = wrapper.find('input').first()
+
+    expect(label.props().htmlFor).toBe('Buddy')
+    expect(label.props().id).not.toBe('Buddy')
+    expect(o.props().id).toBe('Buddy')
   })
 })
 

@@ -14,12 +14,18 @@ import check from '../../icons/check.svg'
 import clockLarge from '../../icons/clock-large.svg'
 import clockSmall from '../../icons/clock-small.svg'
 import collapse from '../../icons/collapse.svg'
+import copy from '../../icons/copy.svg'
 import crossLarge from '../../icons/cross-large.svg'
 import crossMedium from '../../icons/cross-medium.svg'
 import crossSmall from '../../icons/cross-small.svg'
 import drag from '../../icons/drag.svg'
 import document from '../../icons/document.svg'
 import emoji from '../../icons/emoji.svg'
+import fabAntenna from '../../icons/fab-antenna.svg'
+import fabBuoy from '../../icons/fab-buoy.svg'
+import fabChat from '../../icons/fab-chat.svg'
+import fabQuestion from '../../icons/fab-question.svg'
+import fabSearch from '../../icons/fab-search.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import helpscoutLogo from '../../icons/helpscout-logo.svg'
 import imageAdd from '../../icons/image-add.svg'
@@ -54,6 +60,7 @@ const ICONS = {
   'clock-large': clockLarge,
   'clock-small': clockSmall,
   collapse,
+  copy,
   cross: crossLarge,
   'cross-large': crossLarge,
   'cross-medium': crossMedium,
@@ -61,6 +68,11 @@ const ICONS = {
   drag,
   document,
   emoji,
+  'fab-antenna': fabAntenna,
+  'fab-buoy': fabBuoy,
+  'fab-chat': fabChat,
+  'fab-question': fabQuestion,
+  'fab-search': fabSearch,
   fullscreen,
   'helpscout-logo': helpscoutLogo,
   'image-add': imageAdd,
