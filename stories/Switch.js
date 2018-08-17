@@ -110,3 +110,33 @@ stories.add('sizes', () => (
     <Hr size="sm" />
   </form>
 ))
+
+class App extends React.Component {
+  state = {
+    on: false,
+  }
+
+  handleOnChange = value => {
+    const nextValue = !this.state.on
+    console.log(value, 'toggle', nextValue)
+
+    this.setState({
+      on: nextValue,
+    })
+  }
+
+  render() {
+    return (
+      <Switch
+        value="on"
+        active={this.state.on}
+        onChange={this.handleOnChange}
+        id="Switch"
+      />
+    )
+  }
+}
+
+stories.add('stateful', () => {
+  return <App />
+})

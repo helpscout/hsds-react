@@ -46,10 +46,16 @@ class Actions extends Component<Props> {
 
     return (
       <ActionsUI {...getValidProps(rest)} className={componentClassName}>
-        <ActionsItemUI>{primary}</ActionsItemUI>
-        <ActionsItemUI>{secondary}</ActionsItemUI>
-        <ActionsBlockUI />
-        <ActionsItemUI>{serious}</ActionsItemUI>
+        <ActionsItemUI className="c-PageActions__primary">
+          {primary}
+        </ActionsItemUI>
+        <ActionsItemUI className="c-PageActions__secondary">
+          {secondary}
+        </ActionsItemUI>
+        <ActionsBlockUI className="c-PageActions__block" />
+        <ActionsItemUI className="c-PageActions__serious">
+          {serious}
+        </ActionsItemUI>
       </ActionsUI>
     )
   }

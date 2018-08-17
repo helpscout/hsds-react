@@ -8,14 +8,14 @@ export const config = {
     default: getColor('grey.500'),
     hover: getColor('grey.600'),
   },
-  backgroundColorActive: {
+  backgroundColorChecked: {
     default: getColor('green.500'),
     hover: getColor('green.600'),
   },
   borderRadius: 100,
   color: {
     default: getColor('charcoal.200'),
-    active: 'white',
+    checked: 'white',
   },
   fontSize: 12,
   padding: '0 10px',
@@ -83,9 +83,9 @@ export const SwitchToggleUI = styled('div')`
     background-color: ${config.backgroundColor.hover};
   }
 
-  &.is-active {
-    background-color: ${config.backgroundColorActive.default};
-    color: ${config.color.active};
+  &.is-checked {
+    background-color: ${config.backgroundColorChecked.default};
+    color: ${config.color.checked};
     text-align: left;
 
     &::before {
@@ -94,7 +94,7 @@ export const SwitchToggleUI = styled('div')`
     }
 
     &.is-focused {
-      background-color: ${config.backgroundColorActive.hover};
+      background-color: ${config.backgroundColorChecked.hover};
     }
   }
 

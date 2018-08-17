@@ -18,8 +18,8 @@ import {
 import { COMPONENT_KEY } from './utils'
 
 type Props = {
-  active: boolean,
   className?: string,
+  checked: boolean,
   id: string,
   inputRef: (ref: any) => void,
   name: string,
@@ -34,7 +34,7 @@ type Props = {
 }
 
 type State = {
-  active: boolean,
+  checked: boolean,
   id: string,
   isFocused: boolean,
 }
@@ -43,7 +43,7 @@ const uniqueID = createUniqueIDFactory('Switch')
 
 class Switch extends Component<Props, State> {
   static defaultProps = {
-    active: false,
+    checked: false,
     inputRef: noop,
     labelOn: 'On',
     labelOff: 'Off',
@@ -56,15 +56,24 @@ class Switch extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      active: props.active,
+      checked: props.checked,
       isFocused: false,
       id: props.id || uniqueID(),
     }
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    /* istanbul ignore else */
+    if (nextProps.checked !== this.state.checked) {
+      this.setState({
+        checked: nextProps.checked,
+      })
+    }
+  }
+
   handleOnChange = (event: Event) => {
     const { onChange, value } = this.props
-    this.setState({ active: !this.state.active })
+    this.setState({ checked: !this.state.checked })
     onChange(value)
   }
 
@@ -83,18 +92,18 @@ class Switch extends Component<Props, State> {
   }
 
   getInputMarkup = (props: Object = {}) => {
-    const { active: propActive, inputRef, name, value, ...rest } = this.props
+    const { checked: propActive, inputRef, name, value, ...rest } = this.props
 
-    const { active } = this.state
+    const { checked } = this.state
 
     const id = this.getIdFromContextProps(props)
 
     return (
       <SwitchInputUI
         {...getValidProps(rest)}
-        aria-checked={active}
+        aria-checked={checked}
         className="c-Switch__input"
-        checked={active}
+        checked={checked}
         id={id}
         name={name}
         onBlur={this.handleOnBlur}
@@ -114,6 +123,7 @@ class Switch extends Component<Props, State> {
       onBlur,
       onChange,
       onFocus,
+      id,
       labelOn,
       labelOff,
       size,
@@ -122,11 +132,11 @@ class Switch extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { active, isFocused } = this.state
+    const { checked, isFocused } = this.state
 
     const componentClassName = classNames(
       'c-Switch',
-      active && 'is-active',
+      checked && 'is-checked',
       size && `is-${size}`,
       state && `is-${state}`,
       className
@@ -134,13 +144,13 @@ class Switch extends Component<Props, State> {
 
     const toggleClassName = classNames(
       'c-Switch__toggle',
-      active && 'is-active',
+      checked && 'is-checked',
       isFocused && 'is-focused',
       size && `is-${size}`
     )
 
     const stateMarkup = state && <SwitchStateUI className="c-Switch__state" />
-    const switchLabel = active ? labelOn : labelOff
+    const switchLabel = checked ? labelOn : labelOff
 
     return (
       <FormLabelContext.Consumer>
