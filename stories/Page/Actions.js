@@ -29,20 +29,36 @@ stories.add('directions', () => (
     <Page>
       <Page.Actions
         direction="left"
-        primary={<Button primary>Left</Button>}
-        secondary={<Button plain>Thing</Button>}
+        primary={
+          <Button kind="primary" size="lg">
+            Left
+          </Button>
+        }
+        secondary={
+          <Button kind="secondary" size="lg">
+            Thing
+          </Button>
+        }
         serious={
-          <Button plain danger>
+          <Button state="danger" size="lg">
             Thing
           </Button>
         }
       />
       <Page.Actions
         direction="right"
-        primary={<Button primary>Right</Button>}
-        secondary={<Button plain>Thing</Button>}
+        primary={
+          <Button kind="primary" size="lg">
+            Left
+          </Button>
+        }
+        secondary={
+          <Button kind="secondary" size="lg">
+            Thing
+          </Button>
+        }
         serious={
-          <Button plain danger>
+          <Button state="danger" size="lg">
             Thing
           </Button>
         }

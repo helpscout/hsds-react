@@ -89,3 +89,5 @@ export { default as Toolbar } from './Toolbar'
 export { default as Tooltip } from './Tooltip'
 export { default as Truncate } from './Truncate'
 export { default as VisuallyHidden } from './VisuallyHidden'
+
+export { default as styled } from './styled'
