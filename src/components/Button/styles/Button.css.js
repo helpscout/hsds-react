@@ -341,6 +341,7 @@ export const ButtonContentUI = styled('span')`
   align-items: inherit;
   display: inherit;
   justify-content: inherit;
+  text-decoration: inherit;
   width: 100%;
 `
 
