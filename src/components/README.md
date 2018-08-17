@@ -65,6 +65,7 @@ Below is a list of documentation for our Components:
 * [ProgressBar](./ProgressBar)
 * [PropProvider](./PropProvider)
 * [Radio](./Radio)
+* [RadioCard](./RadioCard)
 * [RouteWrapper](./RouteWrapper)
 * [Samp](./Samp)
 * [Select](./Select)
