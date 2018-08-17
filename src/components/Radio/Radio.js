@@ -1,6 +1,6 @@
 // @flow
 import type { RadioKind } from './types'
-import React from 'react'
+import React, { PureComponent as Component } from 'react'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -11,24 +11,26 @@ type Props = {
   kind: RadioKind,
 }
 
-const Radio = (props: Props) => {
-  const { className, kind, ...rest } = props
+class Radio extends Component<Props> {
+  static defaultProps = {
+    kind: 'default',
+  }
 
-  const componentClassName = classNames('c-Radio', className)
+  render() {
+    const { className, kind, ...rest } = this.props
 
-  return (
-    <Choice
-      {...rest}
-      className={componentClassName}
-      componentID="Radio"
-      kind={kind}
-      type="radio"
-    />
-  )
-}
+    const componentClassName = classNames('c-Radio', className)
 
-Radio.defaultProps = {
-  kind: 'default',
+    return (
+      <Choice
+        {...rest}
+        className={componentClassName}
+        componentID="Radio"
+        kind={kind}
+        type="radio"
+      />
+    )
+  }
 }
 
 namespaceComponent(COMPONENT_KEY)(Radio)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import ChoiceGroup from '..'
 import FormGroup from '../../FormGroup'
 import Checkbox from '../../Checkbox'
@@ -8,7 +8,7 @@ import Radio from '../../Radio'
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<ChoiceGroup className={customClass} />)
+    const wrapper = mount(<ChoiceGroup className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })

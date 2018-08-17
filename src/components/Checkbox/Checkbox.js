@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { PureComponent as Component } from 'react'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -9,19 +9,21 @@ type Props = {
   className?: string,
 }
 
-const Checkbox = (props: Props) => {
-  const { className, ...rest } = props
+class Checkbox extends Component<Props> {
+  render() {
+    const { className, ...rest } = this.props
 
-  const componentClassName = classNames('c-Checkbox', className)
+    const componentClassName = classNames('c-Checkbox')
 
-  return (
-    <Choice
-      className={componentClassName}
-      componentID="Checkbox"
-      type="checkbox"
-      {...rest}
-    />
-  )
+    return (
+      <Choice
+        {...rest}
+        className={componentClassName}
+        componentID="Checkbox"
+        type="checkbox"
+      />
+    )
+  }
 }
 
 namespaceComponent(COMPONENT_KEY)(Checkbox)

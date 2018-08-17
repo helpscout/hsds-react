@@ -22,6 +22,7 @@ export const config = {
     'box-shadow 100ms ease, background-color 100ms ease, border-color 100ms ease',
   custom: {
     backgroundColor: getColor('grey.400'),
+    backgroundColorFocused: getColor('grey.500'),
     borderColor: getColor('grey.400'),
     backgroundColorFill: getColor('green.500'),
     borderColorFill: getColor('green.500'),
@@ -93,6 +94,10 @@ export const BackdropUI = styled('div')`
     background-color: ${config.custom.backgroundColor};
     border-color: ${config.custom.borderColor};
     box-shadow: ${config.custom.boxShadow};
+
+    &.is-focused {
+      background-color: ${config.custom.backgroundColorFocused};
+    }
 
     &.is-filled {
       background-color: ${config.custom.backgroundColorFill};

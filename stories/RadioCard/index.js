@@ -4,12 +4,16 @@ import { ChoiceGroup, RadioCard } from '../../src/index.js'
 
 const stories = storiesOf('RadioCard', module)
 
-const onChange = value => console.log(value)
+const onChange = value => {
+  // console.log(value)
+}
 
 stories.add('default', () => (
-  <ChoiceGroup onChange={onChange}>
-    <RadioCard name="choice" value="derek" />
-    <RadioCard name="choice" value="hansel" />
-    <RadioCard name="choice" value="mugatu" />
+  <ChoiceGroup align="horizontal" onChange={onChange} value="chat">
+    <RadioCard icon="fab-chat" value="chat" />
+    <RadioCard icon="fab-antenna" value="antenna" />
+    <RadioCard icon="fab-buoy" value="buoy" />
+    <RadioCard icon="fab-search" value="search" />
+    <RadioCard icon="fab-question" value="question" />
   </ChoiceGroup>
 ))

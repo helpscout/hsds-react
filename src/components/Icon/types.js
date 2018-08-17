@@ -10,3 +10,4 @@ export type IconSize =
 | '24'
 | '32'
 | '48'
+| '52'

@@ -69,8 +69,10 @@ class Input extends Component<Props, State> {
     const { id, onChange, value } = this.props
     const { currentTarget } = event
 
-    console.log('changegeeeee')
     onChange(value, currentTarget.checked, id)
+
+    // Prevents duplicate firing of onChange event
+    event.stopPropagation()
   }
 
   handleOnFocus = (event: Event) => {
@@ -116,6 +118,7 @@ class Input extends Component<Props, State> {
       disabled,
       helpText,
       id,
+      inputRef,
       kind,
       readOnly,
       name,
@@ -158,6 +161,7 @@ class Input extends Component<Props, State> {
           className={inputClassName}
           disabled={disabled}
           id={id}
+          innerRef={inputRef}
           name={name}
           onBlur={this.handleOnBlur}
           onChange={this.handleOnChange}

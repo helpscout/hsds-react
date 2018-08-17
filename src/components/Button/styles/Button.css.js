@@ -19,7 +19,7 @@ export const config = {
     color: 'white',
     disabledBackgroundColor: getColor('grey.500'),
     disabledBorderColor: getColor('grey.500'),
-    disabledCoor: 'white',
+    disabledColor: 'white',
     fontWeight: 600,
     danger: {
       backgroundColor: getColor('red.500'),
@@ -146,6 +146,20 @@ export const config = {
       padding: 15,
     },
   },
+  suffix: {
+    backgroundColor: getColor('grey.200'),
+    backgroundColorHover: getColor('grey.300'),
+    backgroundColorActive: getColor('grey.400'),
+    borderColor: getColor('grey.700'),
+    borderColorHover: getColor('charcoal.200'),
+    borderColorActive: getColor('charcoal.200'),
+    color: getColor('charcoal.400'),
+    disabledBackgroundColor: getColor('grey.300'),
+    disabledBorderColor: getColor('grey.500'),
+    disabledColor: getColor('grey.600'),
+    minWidth: 'initial',
+    padding: '8px',
+  },
 }
 
 export const ButtonUI = styled('button')`
@@ -194,6 +208,7 @@ export const ButtonUI = styled('button')`
   ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
   ${makeButtonKindStyles('default', config.default)}
   ${makeButtonKindStyles('link', config.link)}
+  ${makeButtonKindStyles('suffix', config.suffix)}
 `
 
 function makePrimaryStyles(props: Object = {}): string {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Button, ControlGroup, Input, Select } from '../../src/index.js'
+import { Button, ControlGroup, Icon, Input, Select } from '../../src/index.js'
 
 const stories = storiesOf('ControlGroup', module)
 
@@ -41,8 +41,8 @@ stories.add('input + button', () => (
       <Input value="HELLO" />
     </ControlGroup.Block>
     <ControlGroup.Item>
-      <Button version={2} kind="primary" size="lg">
-        Button
+      <Button version={2} kind="secondary" size="lg" isSuffix>
+        <Icon name="copy" />
       </Button>
     </ControlGroup.Item>
   </ControlGroup>
