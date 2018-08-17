@@ -1,93 +1,163 @@
 // @flow
+import type { ButtonKind, ButtonSize } from './types'
 import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
-import { makeButtonUI } from './styles/Button.css.js'
+import { ButtonUI, ButtonContentUI, FocusUI } from './styles/Button.css.js'
 import { COMPONENT_KEY } from './utils'
-
-type ButtonSelector = 'a' | 'button' | 'input'
-
-type ButtonSize = 'lg' | 'md' | 'sm' | 'xs'
+import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
 
 type Props = {
-  accessibilityLabel?: string,
-  block: boolean,
   buttonRef: (ref: any) => {},
   children?: any,
   className?: string,
-  danger: boolean,
   disabled: boolean,
+  kind: ButtonKind,
+  innerRef: (ref: any) => {},
   isActive: boolean,
+  isBlock: boolean,
+  isFocused: boolean,
   isFirst: boolean,
   isNotOnly: boolean,
   isLast: boolean,
-  outline: boolean,
-  plain: boolean,
-  primary: boolean,
-  selector: ButtonSelector,
+  onBlur: (event: Event) => {},
+  onFocus: (event: Event) => {},
   size: ButtonSize,
   state?: UIState,
   submit: boolean,
   theme?: string,
 }
 
-class Button extends Component<Props> {
+type State = {
+  isFocused: boolean,
+}
+
+class Button extends Component<Props, State> {
   static defaultProps = {
-    block: false,
     buttonRef: noop,
-    danger: false,
     disable: false,
+    kind: 'default',
+    innerRef: noop,
     isActive: false,
+    isBlock: false,
     isFirst: false,
     isNotOnly: false,
     isLast: false,
-    outline: false,
-    plain: false,
-    primary: false,
-    selector: 'button',
+    onBlur: noop,
+    onFocus: noop,
     size: 'md',
     submit: false,
   }
 
   static BlueComponentVersion = 2
 
+  constructor(props, context) {
+    super(props, context)
+
+    this.state = {
+      isFocused: props.isFocused,
+    }
+  }
+
+  handleOnBlur = event => {
+    this.setState({
+      isFocused: false,
+    })
+    this.props.onBlur(event)
+  }
+
+  handleOnFocus = event => {
+    this.setState({
+      isFocused: true,
+    })
+    this.props.onFocus(event)
+  }
+
+  shouldShowFocus = () => {
+    const paddedButtonKinds = ['primary', 'secondary', 'secondaryAlt']
+    return (
+      this.state.isFocused &&
+      !this.props.disabled &&
+      includes(paddedButtonKinds, this.props.kind)
+    )
+  }
+
+  getFocusMarkup = () => {
+    const { isFirst, isNotOnly, isLast } = this.props
+
+    const focusClassName = classNames(
+      'c-ButtonV2Focus',
+      isFirst && 'is-first',
+      isNotOnly && 'is-notOnly',
+      isLast && 'is-last'
+    )
+
+    return (
+      this.shouldShowFocus() && (
+        <FocusUI className={focusClassName} role="presentation" />
+      )
+    )
+  }
+
+  getNodeRef = ref => {
+    this.props.innerRef(ref)
+    this.props.buttonRef(ref)
+  }
+
+  getChildrenMarkup = () => {
+    const { children } = this.props
+
+    return React.Children.map(children, (child, index) => {
+      if (!isComponentNamed(child, ICON_KEY)) return child
+
+      // $FlowFixMe
+      const len = children.length
+      const isFirst = index === 0
+      const isLast = index === len - 1
+
+      return React.cloneElement(child, {
+        offsetLeft: isFirst,
+        offsetRight: isLast,
+      })
+    })
+  }
+
   render() {
     const {
-      accessibilityLabel,
-      block,
-      buttonRef,
+      children,
       className,
-      danger,
+      kind,
+      innerRef,
       isActive,
+      isBlock,
       isFirst,
       isNotOnly,
       isLast,
-      outline,
-      plain,
-      primary,
-      selector,
       size,
       state,
       submit,
       theme,
+      // Deprecating
+      buttonRef,
       ...rest
     } = this.props
 
+    const { isFocused } = this.state
+
     const componentClassName = classNames(
       'c-ButtonV2',
-      isActive && 'is-selected',
-      block && 'is-block',
+      isActive && 'is-active',
+      isBlock && 'is-block',
       isFirst && 'is-first',
+      isFocused && 'is-focused',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
-      danger && 'is-danger',
-      outline && 'is-outline',
-      plain && 'is-plain',
-      primary && 'is-primary',
+      kind && `is-${kind}`,
       size && `is-${size}`,
       state && `is-${state}`,
       theme && `is-${theme}`,
@@ -95,17 +165,24 @@ class Button extends Component<Props> {
     )
 
     const type = submit ? 'submit' : 'button'
+    const focusMarkup = this.getFocusMarkup()
 
-    const ButtonUI = makeButtonUI(selector)
+    const childrenMarkup = this.getChildrenMarkup()
 
     return (
       <ButtonUI
         {...getValidProps(rest)}
-        aria-label={accessibilityLabel}
         className={componentClassName}
-        innerRef={buttonRef}
+        innerRef={this.getNodeRef}
+        onBlur={this.handleOnBlur}
+        onFocus={this.handleOnFocus}
         type={type}
-      />
+      >
+        <ButtonContentUI className="c-ButtonV2__content">
+          {childrenMarkup}
+        </ButtonContentUI>
+        {focusMarkup}
+      </ButtonUI>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Icon from '..'
+import Icon from '../Icon'
 
 describe('ClassName', () => {
   test('Has default className', () => {
