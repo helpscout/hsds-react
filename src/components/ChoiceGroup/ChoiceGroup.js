@@ -6,7 +6,6 @@ import FormGroup from '../FormGroup'
 import { includes } from '../../utilities/arrays'
 import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { isObject } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { ChoiceGroupUI } from './styles/ChoiceGroup.css.js'
 import { COMPONENT_KEY as RADIO_KEY } from '../Radio/utils'
@@ -87,8 +86,6 @@ class ChoiceGroup extends Component<Props, State> {
   }
 
   handleOnChange = (value: any, checked: boolean) => {
-    if (isObject(value) && value.target) return
-
     const { multiSelect } = this.state
     const selectedValue = multiSelect ? this.getMultiSelectValue(value) : value
 

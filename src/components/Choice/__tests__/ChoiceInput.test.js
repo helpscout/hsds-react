@@ -1,15 +1,14 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Input from '..'
+import Input from '../Input'
 import Flexy from '../../Flexy'
 
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Input />)
-    const backdrop = wrapper.find('.c-InputBackdrop')
+    const backdrop = wrapper.find('Backdrop')
 
     expect(backdrop.exists()).toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Accepts custom className', () => {
@@ -18,7 +17,6 @@ describe('ClassName', () => {
     const o = wrapper.find(`.${className}`)
 
     expect(o.exists()).toBeTruthy()
-    wrapper.unmount()
   })
 })
 
@@ -28,7 +26,6 @@ describe('Autofocus', () => {
     const input = wrapper.find('input')
 
     expect(input.prop('autoFocus')).toBeFalsy()
-    wrapper.unmount()
   })
 
   test('Autofocuses if checked', () => {
@@ -36,7 +33,6 @@ describe('Autofocus', () => {
     const input = wrapper.find('input')
 
     expect(input.prop('autoFocus')).toBeTruthy()
-    wrapper.unmount()
   })
 })
 
@@ -49,7 +45,6 @@ describe('Events', () => {
     input.simulate('blur')
 
     expect(spy).toHaveBeenCalled()
-    wrapper.unmount()
   })
 
   test('Can trigger onFocus callback', () => {
@@ -60,7 +55,6 @@ describe('Events', () => {
     input.simulate('focus')
 
     expect(spy).toHaveBeenCalled()
-    wrapper.unmount()
   })
 
   test('Can trigger onChange callback', () => {
@@ -70,8 +64,7 @@ describe('Events', () => {
 
     input.simulate('change')
 
-    expect(spy).toHaveBeenCalledWith('Value', true)
-    wrapper.unmount()
+    expect(spy).toHaveBeenCalled()
   })
 })
 
@@ -83,7 +76,6 @@ describe('States', () => {
 
     expect(o.prop('className')).toContain('is-disabled')
     expect(input.prop('disabled')).toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Applies readOnly styles if specified', () => {
@@ -93,25 +85,24 @@ describe('States', () => {
 
     expect(o.prop('className')).toContain('is-readonly')
     expect(input.prop('readOnly')).toBeTruthy()
-    wrapper.unmount()
   })
 
   test('Applies error styles if specified', () => {
     const wrapper = mount(<Input state="error" />)
 
-    expect(wrapper.prop('className')).toContain('is-error')
+    expect(wrapper.hasClass('is-error')).toBe(true)
   })
 
   test('Applies success styles if specified', () => {
     const wrapper = mount(<Input state="success" />)
 
-    expect(wrapper.prop('className')).toContain('is-success')
+    expect(wrapper.hasClass('is-success')).toBe(true)
   })
 
   test('Applies warning styles if specified', () => {
     const wrapper = mount(<Input state="warning" />)
 
-    expect(wrapper.prop('className')).toContain('is-warning')
+    expect(wrapper.hasClass('is-warning')).toBe(true)
   })
 })
 
@@ -123,7 +114,6 @@ describe('Type', () => {
 
     expect(o.prop('className')).toContain('is-checkbox')
     expect(input.prop('type')).toBe('checkbox')
-    wrapper.unmount()
   })
 
   test('Applies checkbox styles if specified', () => {
@@ -133,7 +123,6 @@ describe('Type', () => {
 
     expect(o.prop('className')).toContain('is-checkbox')
     expect(input.prop('type')).toBe('checkbox')
-    wrapper.unmount()
   })
 
   test('Applies checkbox styles if specified', () => {
@@ -143,16 +132,53 @@ describe('Type', () => {
 
     expect(o.prop('className')).toContain('is-radio')
     expect(input.prop('type')).toBe('radio')
-    wrapper.unmount()
   })
 })
 
 describe('Styles', () => {
   test('Can apply align styles', () => {
     const wrapper = mount(<Input align="top" />)
-    const o = wrapper.find(Flexy)
 
-    expect(o.hasClass('is-top')).toBeTruthy()
-    wrapper.unmount()
+    expect(wrapper.hasClass('is-top')).toBe(true)
+  })
+})
+
+describe('Icon', () => {
+  test('Renders InputRadioUI, if radio + checked', () => {
+    const wrapper = mount(<Input type="radio" checked />)
+
+    expect(wrapper.find('.c-ChoiceInput__radio').length).toBe(1)
+  })
+
+  test('Does not render InputRadioUI, if radio + unchecked', () => {
+    const wrapper = mount(<Input type="radio" checked={false} />)
+
+    expect(wrapper.find('.c-ChoiceInput__radio').length).toBe(0)
+  })
+
+  test('Renders Icon, if checkbox + checked', () => {
+    const wrapper = mount(<Input type="checkbox" checked={true} />)
+
+    expect(wrapper.find('Icon').length).toBe(1)
+  })
+
+  test('Does not render Icon, if checkbox + unchecked', () => {
+    const wrapper = mount(<Input type="checkbox" checked={false} />)
+
+    expect(wrapper.find('Icon').length).toBe(0)
+  })
+
+  test('Renders placeholder if custom radio + unchecked', () => {
+    const wrapper = mount(<Input type="radio" kind="custom" checked={false} />)
+
+    expect(wrapper.find('.c-ChoiceInput__placeholder').length).toBe(1)
+    expect(wrapper.find('Icon').length).toBe(0)
+  })
+
+  test('Replaces placeholder with Icon, if custom radio + checked', () => {
+    const wrapper = mount(<Input type="radio" kind="custom" checked={true} />)
+
+    expect(wrapper.find('.c-ChoiceInput__placeholder').length).toBe(0)
+    expect(wrapper.find('Icon').length).toBe(1)
   })
 })

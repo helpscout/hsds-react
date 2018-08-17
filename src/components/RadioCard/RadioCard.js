@@ -53,7 +53,9 @@ class RadioCard extends Component<Props, State> {
 
     const iconName = isString(icon) ? icon : this.defaultIcon
 
-    return <Icon name={iconName} size={iconSize} />
+    return (
+      <Icon className="c-RadioCard__icon" name={iconName} size={iconSize} />
+    )
   }
 
   render() {
@@ -62,7 +64,8 @@ class RadioCard extends Component<Props, State> {
 
     const componentClassName = classNames(
       'c-RadioCard',
-      checked && 'is-checked'
+      checked && 'is-checked',
+      className
     )
 
     const iconMarkup = this.getIconMarkup()

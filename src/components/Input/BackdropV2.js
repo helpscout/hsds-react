@@ -39,12 +39,14 @@ const Backdrop = (props: Props) => {
     ...rest
   } = props
 
+  const canShowFocus = !isSeamless && isFocused && showFocus
+
   const componentClassName = classNames(
     'c-InputBackdropV2',
     choiceKind && `is-${choiceKind}`,
     disabled && 'is-disabled',
     isFilled && 'is-filled',
-    isFocused && 'is-focused',
+    canShowFocus && 'is-focused',
     isFirst && 'is-first',
     isNotOnly && 'is-notOnly',
     isLast && 'is-last',
@@ -56,7 +58,6 @@ const Backdrop = (props: Props) => {
   )
 
   const isRadio = choiceKind === 'radio'
-  const canShowFocus = !isSeamless && isFocused && showFocus
 
   const focusMarkup = canShowFocus && (
     <FocusUI className={classNames(isRadio && 'is-radio')} />

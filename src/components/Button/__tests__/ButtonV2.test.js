@@ -85,6 +85,14 @@ describe('States', () => {
   })
 })
 
+describe('Styles', () => {
+  test('Applies suffix styles', () => {
+    const wrapper = mount(<Button isSuffix>Click Me</Button>)
+
+    expect(wrapper.hasClass('is-suffix')).toBe(true)
+  })
+})
+
 describe('Themes', () => {
   test('Does not have a theme className by default', () => {
     const o = mount(<Button />)

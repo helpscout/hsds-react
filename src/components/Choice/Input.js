@@ -93,7 +93,7 @@ class Input extends Component<Props, State> {
       iconMarkup = checked ? (
         <Icon name="tick-small" size="18" />
       ) : (
-        <InputPlaceholderUI />
+        <InputPlaceholderUI className="c-ChoiceInput__placeholder" />
       )
     } else {
       const iconTypeMarkup = isRadio ? (
