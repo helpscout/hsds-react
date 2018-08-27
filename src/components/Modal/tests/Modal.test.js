@@ -661,7 +661,7 @@ describe('Keyboard: Tab', () => {
         <button className="three">three</button>
       </ModalComponent>
     )
-    const o = wrapper.find('.one').getNode()
+    const o = wrapper.find('.c-CloseButton').getNode()
 
     wrapper.instance().handleOnShiftTab({
       target: o,
