@@ -227,7 +227,7 @@ class Modal extends Component {
           this.closeNode = node
         }}
       >
-        <CloseButton onClick={closePortal} tabIndex="-1" />
+        <CloseButton onClick={closePortal} />
       </div>
     ) : null
 
