@@ -117,4 +117,22 @@ describe('Width/Height', () => {
     expect(o.prop('style').width).toBe(100)
     expect(o.prop('style').height).toBe(50)
   })
+
+  test('Use the width/height as aspect fit width/height if less than max', () => {
+    const wrapper = mount(
+      <Image
+        src="mugatu.jpg"
+        width={75}
+        height={50}
+        maxWidth={100}
+        maxHeight={100}
+      />
+    )
+    const o = wrapper.find('img')
+
+    expect(wrapper.prop('width')).toBe(75)
+    expect(wrapper.prop('height')).toBe(50)
+    expect(o.prop('style').width).toBe(75)
+    expect(o.prop('style').height).toBe(50)
+  })
 })
