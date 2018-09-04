@@ -121,7 +121,7 @@ describe('Width/Height', () => {
   test('Use the width/height as aspect fit width/height if less than max', () => {
     const wrapper = mount(
       <Image
-        src="mugatu.jgp"
+        src="mugatu.jpg"
         width={75}
         height={50}
         maxWidth={100}
