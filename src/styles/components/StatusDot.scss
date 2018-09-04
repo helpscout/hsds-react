@@ -1,19 +1,10 @@
 .c-StatusDot {
-  @import "../resets/base";
-  @import "../configs/color";
-
-  $states: (
-    online: _color(green),
-    offline: _color(red),
-    busy: _color(yellow),
-    new: _color(green),
-    active: _color(green),
-    inactive: _color(grey, 600)
-  );
+  @import '../resets/base';
+  @import '../configs/color';
 
   $sizes: (
     md: 8px,
-    sm: 6px,
+    sm: 6px
   );
 
   $borderWidth: 2px;
@@ -33,10 +24,26 @@
   }
 
   // Status
-  @each $state, $color in $states {
-    &.is-#{$state} {
-      color: $color;
-    }
+  &.is-active,
+  &.is-online,
+  &.is-new {
+    border: none;
+    color: _color(green);
+  }
+
+  &.is-offline {
+    border-color: _color(red);
+    color: white;
+  }
+
+  &.is-busy {
+    border-color: _color(yellow);
+    color: white;
+  }
+
+  &.is-inactive {
+    border: none;
+    color: _color(grey, 600);
   }
 
   // Sizes
