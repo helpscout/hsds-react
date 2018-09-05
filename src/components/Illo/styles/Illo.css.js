@@ -1,4 +1,6 @@
 // @flow
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/base.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import { BEM } from '../../../utilities/classNames'
@@ -8,31 +10,15 @@ export const ILLO_SIZES = [ILLO_DEFAULT_SIZE, 60, 72, 80]
 
 const bem = BEM('.c-Illo')
 
-const css = `
-  box-sizing: border-box;
-  color: currentColor;
+export const IlloUI = styled('span')`
+  ${baseStyles} color: currentColor;
   display: block;
   height: ${ILLO_DEFAULT_SIZE}px;
   margin: auto;
   position: relative;
   width: ${ILLO_DEFAULT_SIZE}px;
 
-  ${makeSizeStyles()}
-
-  ${bem.element('icon')} {
-    display: block;
-    height: 100%;
-    pointer-events: none;
-
-    svg {
-      display: block;
-      height: 100%;
-      max-width: 100%;
-      width: 100%;
-    }
-  }
-
-  ${bem.element('pathFillSecondary')} {
+  ${makeSizeStyles()} ${bem.element('pathFillSecondary')} {
     opacity: 0.3;
   }
 
@@ -60,6 +46,20 @@ const css = `
   }
 `
 
+export const IconUI = styled('span')`
+  display: block;
+  height: 100%;
+  pointer-events: none;
+  width: 100%;
+
+  svg {
+    display: block;
+    height: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+`
+
 function makeSizeStyles(): string {
   return forEach(
     ILLO_SIZES,
@@ -71,5 +71,3 @@ function makeSizeStyles(): string {
   `
   )
 }
-
-export default css

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Illo from '..'
+import Illo from '../Illo'
 
 describe('ClassName', () => {
   test('Has default className', () => {
