@@ -1,6 +1,7 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
+import forEach from '../../../styles/utilities/forEach'
 import styled from '../../styled'
 
 export const config = {
@@ -33,17 +34,22 @@ export const config = {
   },
 }
 
-export const SwitchWrapperUI = styled('div')`
+export const WrapperUI = styled('div')`
   ${baseStyles} display: inline-block;
 `
 
 export const SwitchUI = styled('label')`
-  ${baseStyles} display: block;
+  ${baseStyles} cursor: pointer;
+  display: block;
   margin: 0;
   position: relative;
+
+  &.is-loading {
+    pointer-events: none;
+  }
 `
 
-export const SwitchInputUI = styled('input')`
+export const InputUI = styled('input')`
   ${baseStyles} bottom: 0;
   left: 0;
   opacity: 0;
@@ -53,7 +59,7 @@ export const SwitchInputUI = styled('input')`
   z-index: 1;
 `
 
-export const SwitchToggleUI = styled('div')`
+export const BackdropUI = styled('div')`
   background-color: ${config.backgroundColor.default};
   border-radius: ${config.borderRadius}px;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1) inset;
@@ -62,24 +68,13 @@ export const SwitchToggleUI = styled('div')`
   cursor: pointer;
   font-size: ${config.fontSize}px;
   padding: ${config.padding};
+  pointer-events: none;
   position: relative;
   text-align: right;
   transition: ${config.transition.switch};
   z-index: 1;
 
-  &::before {
-    background-color: white;
-    border-radius: ${config.borderRadius}px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    content: '';
-    left: ${config.toggle.offset}px;
-    position: absolute;
-    top: ${config.toggle.offset}px;
-    transition: ${config.transition.toggle};
-  }
-
-  ${makeSizeStyles(config.size.md)} &.is-focused {
+  &.is-focused {
     background-color: ${config.backgroundColor.hover};
   }
 
@@ -88,34 +83,65 @@ export const SwitchToggleUI = styled('div')`
     color: ${config.color.checked};
     text-align: left;
 
-    &::before {
-      left: inherit;
-      right: ${config.toggle.offset}px;
-    }
-
     &.is-focused {
       background-color: ${config.backgroundColorChecked.hover};
     }
   }
 
-  &.is-lg {
-    ${makeSizeStyles(config.size.lg)};
-  }
-  &.is-md {
-    ${makeSizeStyles(config.size.md)};
-  }
-  &.is-sm {
-    ${makeSizeStyles(config.size.sm)};
-  }
-
-  &:active {
-    &::before {
-      width: 60%;
-    }
-  }
+  ${makeSizeStyles(config)};
 `
 
-export const SwitchStateUI = styled('div')`
+export const ToggleUI = styled('div')`
+  background-color: white;
+  border-radius: ${config.borderRadius}px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  content: '';
+  left: ${config.toggle.offset}px;
+  pointer-events: none;
+  position: absolute;
+  top: ${config.toggle.offset}px;
+  transition: ${config.transition.toggle};
+
+  ${makeToggleSizeStyles(config)}
+
+  &.is-active {
+    width: 60%;
+  }
+
+  &.is-checked {
+    left: inherit;
+    right: ${config.toggle.offset}px;
+  }
+
+  &.is-loading {
+    animation: SwitchTogglePulse 1000ms linear infinite;
+    left: 50%;
+    right: inherit;
+
+    ${makeToggleOffsetStyles(config)}
+  }
+
+  @keyframes SwitchTogglePulse {
+    0% {
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      transform: scale(0.8);
+    }
+
+    50% {
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      transform: scale(0.6);
+    }
+
+    100% {
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+   	  transform: scale(0.8);
+    }
+  }
+}
+`
+
+export const StateUI = styled('div')`
   border-radius: 100px;
   bottom: 0;
   box-shadow: 0 0 0 2px ${getColor('state.error')};
@@ -132,17 +158,40 @@ function getWidth(size: number): number {
   return Math.floor(size * 2)
 }
 
-function makeSizeStyles(size: number): string {
-  return `
-    height: ${size}px;
-    line-height: ${size}px;
-    width: ${getWidth(size)}px;
-
-    &::before {
-      height: ${size - config.toggle.offset * 2}px;
-      width: ${size - config.toggle.offset * 2}px;
+function makeSizeStyles(config: Object): string {
+  return forEach(
+    config.size,
+    (size, value) => `
+    &.is-${size} {
+      height: ${value}px;
+      line-height: ${value}px;
+      width: ${getWidth(value)}px;
     }
   `
+  )
+}
+
+function makeToggleSizeStyles(config: Object): string {
+  return forEach(
+    config.size,
+    (size, value) => `
+    &.is-${size} {
+      height: ${value - config.toggle.offset * 2}px;
+      width: ${value - config.toggle.offset * 2}px;
+    }
+  `
+  )
+}
+
+function makeToggleOffsetStyles(config: Object): string {
+  return forEach(
+    config.size,
+    (size, value) => `
+    &.is-${size} {
+      margin-left: -${value / 2 - config.toggle.offset / 1}px;
+    }
+  `
+  )
 }
 
 export default SwitchUI
