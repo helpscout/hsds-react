@@ -113,6 +113,7 @@ class Input extends Component<Props, State> {
   render() {
     const {
       align,
+      autoFocus,
       className,
       checked,
       disabled,
@@ -154,7 +155,7 @@ class Input extends Component<Props, State> {
     return (
       <InputUI className={componentClassName}>
         <InputInputUI
-          autoFocus={checked}
+          autoFocus={autoFocus}
           aria-describedby={helpText || undefined}
           aria-invalid={state !== 'error'}
           checked={checked}
