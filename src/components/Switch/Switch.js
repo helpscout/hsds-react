@@ -9,11 +9,12 @@ import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import {
-  SwitchWrapperUI,
+  WrapperUI,
   SwitchUI,
-  SwitchInputUI,
-  SwitchStateUI,
-  SwitchToggleUI,
+  InputUI,
+  StateUI,
+  BackdropUI,
+  ToggleUI,
 } from './styles/Switch.css.js'
 import { COMPONENT_KEY } from './utils'
 
@@ -21,11 +22,15 @@ type Props = {
   className?: string,
   checked: boolean,
   id: string,
+  isLoading: boolean,
   inputRef: (ref: any) => void,
   name: string,
   onBlur: (event: Event) => void,
-  onChange: (event: Event) => void,
+  onChange: (value: SwitchValue) => void,
+  onClick: (event: Event, value: SwitchValue) => void,
   onFocus: (event: Event) => void,
+  onMouseDown: (event: Event) => void,
+  onMouseUp: (event: Event) => void,
   labelOn: string,
   labelOff: string,
   size: SwitchSize,
@@ -34,8 +39,9 @@ type Props = {
 }
 
 type State = {
-  checked: boolean,
+  checked: ?boolean,
   id: string,
+  isActive: boolean,
   isFocused: boolean,
 }
 
@@ -43,23 +49,31 @@ const uniqueID = createUniqueIDFactory('Switch')
 
 class Switch extends Component<Props, State> {
   static defaultProps = {
-    checked: false,
     inputRef: noop,
+    isLoading: false,
     labelOn: 'On',
     labelOff: 'Off',
     onBlur: noop,
     onChange: noop,
+    onClick: noop,
     onFocus: noop,
+    onMouseDown: noop,
+    onMouseUp: noop,
+    size: 'md',
     value: '',
   }
+
+  shouldAutoUpdateChecked: boolean
 
   constructor(props: Props) {
     super(props)
     this.state = {
-      checked: props.checked,
+      checked: props.checked || false,
+      isActive: false,
       isFocused: false,
       id: props.id || uniqueID(),
     }
+    this.shouldAutoUpdateChecked = props.checked === undefined
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -71,10 +85,23 @@ class Switch extends Component<Props, State> {
     }
   }
 
-  handleOnChange = (event: Event) => {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     const { onChange, value } = this.props
-    this.setState({ checked: !this.state.checked })
-    onChange(value)
+
+    if (prevState.checked !== this.state.checked) {
+      onChange(value)
+    }
+  }
+
+  handleOnChange = (event: Event) => {
+    const { onClick, value } = this.props
+
+    /* istanbul ignore else */
+    if (this.shouldAutoUpdateChecked) {
+      this.setState({ checked: !this.state.checked })
+    }
+
+    onClick(event, value)
   }
 
   handleOnBlur = (event: Event) => {
@@ -87,19 +114,32 @@ class Switch extends Component<Props, State> {
     this.props.onFocus(event)
   }
 
+  handleOnMouseDown = (event: Event) => {
+    this.setState({
+      isActive: true,
+    })
+    this.props.onMouseDown(event)
+  }
+
+  handleOnMouseUp = (event: Event) => {
+    this.setState({
+      isActive: false,
+    })
+    this.props.onMouseUp(event)
+  }
+
   getIdFromContextProps = (props: Object = {}) => {
     return props.id || this.state.id
   }
 
   getInputMarkup = (props: Object = {}) => {
     const { checked: propActive, inputRef, name, value, ...rest } = this.props
-
     const { checked } = this.state
 
     const id = this.getIdFromContextProps(props)
 
     return (
-      <SwitchInputUI
+      <InputUI
         {...getValidProps(rest)}
         aria-checked={checked}
         className="c-Switch__input"
@@ -124,6 +164,7 @@ class Switch extends Component<Props, State> {
       onChange,
       onFocus,
       id,
+      isLoading,
       labelOn,
       labelOff,
       size,
@@ -132,41 +173,58 @@ class Switch extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { checked, isFocused } = this.state
+    const { checked, isActive, isFocused } = this.state
+
+    const shouldShowChecked = !isLoading && checked
+    const shouldShowActive = !isLoading && isActive
 
     const componentClassName = classNames(
       'c-Switch',
-      checked && 'is-checked',
+      shouldShowChecked && 'is-checked',
+      isLoading && 'is-loading',
       size && `is-${size}`,
       state && `is-${state}`,
       className
     )
 
-    const toggleClassName = classNames(
-      'c-Switch__toggle',
-      checked && 'is-checked',
+    const backdropClassName = classNames(
+      'c-Switch__backdrop',
+      shouldShowChecked && 'is-checked',
       isFocused && 'is-focused',
       size && `is-${size}`
     )
 
-    const stateMarkup = state && <SwitchStateUI className="c-Switch__state" />
+    const toggleClassName = classNames(
+      'c-Switch__toggle',
+      shouldShowChecked && 'is-checked',
+      shouldShowActive && 'is-active',
+      isFocused && 'is-focused',
+      isLoading && 'is-loading',
+      size && `is-${size}`
+    )
+
+    const stateMarkup = state && <StateUI className="c-Switch__state" />
     const switchLabel = checked ? labelOn : labelOff
 
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <SwitchWrapperUI className="c-SwitchWrapper">
+          <WrapperUI className="c-SwitchWrapper">
             <SwitchUI
               {...getValidProps(rest)}
               className={componentClassName}
               htmlFor={this.getIdFromContextProps(props)}
+              onMouseDown={this.handleOnMouseDown}
+              onMouseUp={this.handleOnMouseUp}
             >
               {this.getInputMarkup(props)}
-              <SwitchToggleUI className={toggleClassName} />
+              <BackdropUI className={backdropClassName}>
+                <ToggleUI className={toggleClassName} />
+              </BackdropUI>
               {stateMarkup}
               <VisuallyHidden>{switchLabel}</VisuallyHidden>
             </SwitchUI>
-          </SwitchWrapperUI>
+          </WrapperUI>
         )}
       </FormLabelContext.Consumer>
     )

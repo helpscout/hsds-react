@@ -66,6 +66,24 @@ stories.add('state', () => (
   </form>
 ))
 
+stories.add('loading', () => (
+  <form style={{ width: 300 }}>
+    <Hr size="sm" />
+    <Flexy>
+      <Flexy.Item>
+        <Text>Relax (Regular)</Text>
+        <br />
+        <Text faint size="13">
+          When you want to go to it
+        </Text>
+      </Flexy.Item>
+      <Flexy.Item>
+        <LoadingSwitch />
+      </Flexy.Item>
+    </Flexy>
+  </form>
+))
+
 stories.add('sizes', () => (
   <form style={{ width: 300 }}>
     <Hr size="sm" />
@@ -110,6 +128,44 @@ stories.add('sizes', () => (
     <Hr size="sm" />
   </form>
 ))
+
+class LoadingSwitch extends React.Component {
+  state = {
+    on: false,
+    isLoading: false,
+  }
+
+  handleOnClick = () => {
+    const nextValue = !this.state.on
+
+    this.setState({
+      isLoading: true,
+    })
+
+    setTimeout(() => {
+      this.setState({
+        on: nextValue,
+        isLoading: false,
+      })
+    }, 1000)
+  }
+
+  handleOnChange = value => {
+    console.log('toggle', value, this.state.on)
+  }
+
+  render() {
+    return (
+      <Switch
+        value="on"
+        checked={this.state.on}
+        isLoading={this.state.isLoading}
+        onClick={this.handleOnClick}
+        onChange={this.handleOnChange}
+      />
+    )
+  }
+}
 
 class App extends React.Component {
   state = {

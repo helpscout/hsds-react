@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Switch from '../Switch'
 import FormLabel from '../../FormLabel'
+import { SwitchUI, BackdropUI, ToggleUI } from '../styles/Switch.css.js'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -81,7 +82,7 @@ describe('Checked', () => {
     const o = wrapper.instance()
     const input = wrapper.find('input')
 
-    input.simulate('change')
+    wrapper.setProps({ checked: false })
 
     expect(o.state.checked).toBe(false)
     expect(wrapper.find('input').props().checked).toBe(false)
@@ -90,6 +91,60 @@ describe('Checked', () => {
 
     expect(o.state.checked).toBe(true)
     expect(wrapper.find('input').props().checked).toBe(true)
+  })
+})
+
+describe('Loading', () => {
+  test('Is not loading by default', () => {
+    const wrapper = mount(<Switch />)
+
+    expect(wrapper.prop('isLoading')).toBe(false)
+  })
+
+  test('Does not render checked/active styles if onLoading', () => {
+    const wrapper = mount(<Switch checked isLoading />)
+    wrapper.setState({ isActive: true })
+
+    const comp = wrapper.find(SwitchUI)
+    const backdrop = wrapper.find(BackdropUI)
+    const toggle = wrapper.find(ToggleUI)
+
+    expect(comp.hasClass('is-checked')).toBe(false)
+    expect(backdrop.hasClass('is-checked')).toBe(false)
+    expect(toggle.hasClass('is-checked')).toBe(false)
+    expect(toggle.hasClass('is-active')).toBe(false)
+  })
+
+  test('Can render checked/active styles if not onLoading', () => {
+    const wrapper = mount(<Switch checked isLoading={false} />)
+    wrapper.setState({ isActive: true })
+
+    const comp = wrapper.find(SwitchUI)
+    const backdrop = wrapper.find(BackdropUI)
+    const toggle = wrapper.find(ToggleUI)
+
+    expect(comp.hasClass('is-checked')).toBe(true)
+    expect(backdrop.hasClass('is-checked')).toBe(true)
+    expect(toggle.hasClass('is-checked')).toBe(true)
+    expect(toggle.hasClass('is-active')).toBe(true)
+  })
+})
+
+describe('Toggle', () => {
+  test('Toggles active styles on mousedown/mouseup', () => {
+    const wrapper = mount(<Switch />)
+    const comp = wrapper.find(SwitchUI)
+    const toggle = wrapper.find(ToggleUI)
+
+    expect(toggle.hasClass('is-active')).toBe(false)
+
+    comp.simulate('mousedown')
+
+    expect(toggle.hasClass('is-active')).toBe(true)
+
+    comp.simulate('mouseup')
+
+    expect(toggle.hasClass('is-active')).toBe(false)
   })
 })
 
@@ -114,12 +169,40 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalledWith('Mugatu')
   })
 
+  test('onClick callback can be triggered, by onChange', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Switch onClick={spy} value="Mugatu" />)
+    const input = wrapper.find('input')
+
+    input.simulate('change')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('onFocus callback can be triggered', () => {
     const spy = jest.fn()
     const wrapper = mount(<Switch onFocus={spy} />)
     const input = wrapper.find('input')
 
     input.simulate('focus')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onMouseDown callback can be triggered', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Switch onMouseDown={spy} />)
+
+    wrapper.find(SwitchUI).simulate('mousedown')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onMouseUp callback can be triggered', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Switch onMouseUp={spy} />)
+
+    wrapper.find(SwitchUI).simulate('mouseup')
 
     expect(spy).toHaveBeenCalled()
   })
