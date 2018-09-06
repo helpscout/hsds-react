@@ -172,9 +172,9 @@ describe('Events', () => {
   test('onClick callback can be triggered, by onChange', () => {
     const spy = jest.fn()
     const wrapper = mount(<Switch onClick={spy} value="Mugatu" />)
-    const input = wrapper.find('input')
+    const input = wrapper.find(SwitchUI)
 
-    input.simulate('change')
+    input.simulate('click')
 
     expect(spy).toHaveBeenCalled()
   })
