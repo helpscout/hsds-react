@@ -28,11 +28,11 @@ describe('Autofocus', () => {
     expect(input.prop('autoFocus')).toBeFalsy()
   })
 
-  test('Autofocuses if checked', () => {
+  test('Should not autofocuses if checked', () => {
     const wrapper = mount(<Input checked />)
     const input = wrapper.find('input')
 
-    expect(input.prop('autoFocus')).toBeTruthy()
+    expect(input.prop('autoFocus')).toBe(false)
   })
 })
 
