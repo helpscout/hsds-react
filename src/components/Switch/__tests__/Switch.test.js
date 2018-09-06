@@ -128,6 +128,17 @@ describe('Loading', () => {
     expect(toggle.hasClass('is-checked')).toBe(true)
     expect(toggle.hasClass('is-active')).toBe(true)
   })
+
+  test('onClick callback does not fire if isLoading', () => {
+    const spy = jest.fn()
+    const eventSpy = jest.fn()
+    const wrapper = mount(<Switch onClick={spy} isLoading />)
+    const input = wrapper.find('input')
+
+    input.simulate('click', { preventDefault: eventSpy })
+    expect(spy).not.toHaveBeenCalled()
+    expect(eventSpy).toHaveBeenCalledTimes(1)
+  })
 })
 
 describe('Toggle', () => {
