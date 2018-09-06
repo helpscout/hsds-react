@@ -27,6 +27,7 @@ type Props = {
   name: string,
   onBlur: (event: Event) => void,
   onChange: (value: SwitchValue) => void,
+  onClick: (event: Event) => void,
   onFocus: (event: Event) => void,
   onMouseDown: (event: Event) => void,
   onMouseUp: (event: Event) => void,
@@ -54,6 +55,7 @@ class Switch extends Component<Props, State> {
     labelOff: 'Off',
     onBlur: noop,
     onChange: noop,
+    onClick: noop,
     onFocus: noop,
     onMouseDown: noop,
     onMouseUp: noop,
@@ -92,6 +94,15 @@ class Switch extends Component<Props, State> {
     }
 
     onChange(value)
+  }
+
+  handleOnClick = (event: Event) => {
+    event.stopPropagation()
+    if (this.props.isLoading) {
+      event.preventDefault()
+    } else {
+      this.props.onClick(event)
+    }
   }
 
   handleOnBlur = (event: Event) => {
@@ -139,6 +150,7 @@ class Switch extends Component<Props, State> {
         onBlur={this.handleOnBlur}
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
+        onClick={this.handleOnClick}
         ref={inputRef}
         role="switch"
         type="checkbox"

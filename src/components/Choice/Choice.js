@@ -21,6 +21,7 @@ import { COMPONENT_KEY } from './utils'
 
 type Props = {
   align: ChoiceAlign,
+  autoFocus: boolean,
   children?: any,
   checked: boolean,
   className?: string,
@@ -49,6 +50,7 @@ const uniqueID = createUniqueIDFactory('Choice')
 
 class Choice extends Component<Props, State> {
   static defaultProps = {
+    autoFocus: false,
     componentID: 'Choice',
     disabled: false,
     hideLabel: false,
@@ -117,6 +119,7 @@ class Choice extends Component<Props, State> {
   render() {
     const {
       align,
+      autoFocus,
       children,
       className,
       componentID,
@@ -152,6 +155,7 @@ class Choice extends Component<Props, State> {
 
     const inputProps = {
       align,
+      autoFocus,
       checked,
       disabled,
       helpText,

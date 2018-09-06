@@ -128,6 +128,17 @@ describe('Loading', () => {
     expect(toggle.hasClass('is-checked')).toBe(true)
     expect(toggle.hasClass('is-active')).toBe(true)
   })
+
+  test('onClick callback does not fire if isLoading', () => {
+    const spy = jest.fn()
+    const eventSpy = jest.fn()
+    const wrapper = mount(<Switch onClick={spy} isLoading />)
+    const input = wrapper.find('input')
+
+    input.simulate('click', { preventDefault: eventSpy })
+    expect(spy).not.toHaveBeenCalled()
+    expect(eventSpy).toHaveBeenCalledTimes(1)
+  })
 })
 
 describe('Toggle', () => {
@@ -172,11 +183,12 @@ describe('Events', () => {
   test('onClick callback can be triggered, by onChange', () => {
     const spy = jest.fn()
     const wrapper = mount(<Switch onClick={spy} value="Mugatu" />)
-    const input = wrapper.find(SwitchUI)
+    const input = wrapper.find('input')
 
     input.simulate('click')
 
     expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onFocus callback can be triggered', () => {

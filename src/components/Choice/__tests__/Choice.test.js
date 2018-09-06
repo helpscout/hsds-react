@@ -35,15 +35,15 @@ describe('Autofocus', () => {
     const wrapper = mount(<Choice />)
     const input = wrapper.find('input')
 
-    expect(input.prop('autoFocus')).toBeFalsy()
+    expect(input.prop('autoFocus')).toBe(false)
     wrapper.unmount()
   })
 
-  test('Autofocuses if checked', () => {
+  test('Does not autofocuses if checked', () => {
     const wrapper = mount(<Choice checked />)
     const input = wrapper.find('input')
 
-    expect(input.prop('autoFocus')).toBeTruthy()
+    expect(input.prop('autoFocus')).toBe(false)
     wrapper.unmount()
   })
 })
@@ -58,7 +58,6 @@ describe('Children', () => {
     const input = wrapper.find('input')
     const o = wrapper.find('.milk')
 
-    expect(input.prop('autoFocus')).toBeTruthy()
     expect(o.length).toBeTruthy()
     expect(o.text()).toContain('bad choice')
     wrapper.unmount()
@@ -73,7 +72,6 @@ describe('Children', () => {
     const input = wrapper.find('input')
     const o = wrapper.find('.milk')
 
-    expect(input.prop('autoFocus')).toBeTruthy()
     expect(o.length).toBeTruthy()
     expect(o.text()).toContain('bad choice')
     expect(wrapper.html()).not.toContain('news-team')
