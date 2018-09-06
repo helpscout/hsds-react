@@ -160,8 +160,8 @@ class LoadingSwitch extends React.Component {
         value="on"
         checked={this.state.on}
         isLoading={this.state.isLoading}
-        onClick={this.handleOnClick}
         onChange={this.handleOnChange}
+        onClick={this.handleOnClick}
       />
     )
   }

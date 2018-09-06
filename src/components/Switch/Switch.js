@@ -27,7 +27,6 @@ type Props = {
   name: string,
   onBlur: (event: Event) => void,
   onChange: (value: SwitchValue) => void,
-  onClick: (event: Event, value: SwitchValue) => void,
   onFocus: (event: Event) => void,
   onMouseDown: (event: Event) => void,
   onMouseUp: (event: Event) => void,
@@ -55,7 +54,6 @@ class Switch extends Component<Props, State> {
     labelOff: 'Off',
     onBlur: noop,
     onChange: noop,
-    onClick: noop,
     onFocus: noop,
     onMouseDown: noop,
     onMouseUp: noop,
@@ -85,23 +83,15 @@ class Switch extends Component<Props, State> {
     }
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
-    const { onChange, value } = this.props
-
-    if (prevState.checked !== this.state.checked) {
-      onChange(value)
-    }
-  }
-
   handleOnChange = (event: Event) => {
-    const { onClick, value } = this.props
+    const { onChange, value } = this.props
 
     /* istanbul ignore else */
     if (this.shouldAutoUpdateChecked) {
       this.setState({ checked: !this.state.checked })
     }
 
-    onClick(event, value)
+    onChange(value)
   }
 
   handleOnBlur = (event: Event) => {
