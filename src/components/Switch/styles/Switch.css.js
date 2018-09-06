@@ -51,12 +51,15 @@ export const SwitchUI = styled('label')`
 
 export const InputUI = styled('input')`
   ${baseStyles} bottom: 0;
+  height: 100%;
   left: 0;
+  margin: 0;
   opacity: 0;
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
+  width: 100%;
+  z-index: -1;
 `
 
 export const BackdropUI = styled('div')`

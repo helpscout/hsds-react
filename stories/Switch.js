@@ -136,6 +136,7 @@ class LoadingSwitch extends React.Component {
   }
 
   handleOnClick = () => {
+    console.log('click')
     const nextValue = !this.state.on
 
     this.setState({
