@@ -178,6 +178,7 @@ export const ButtonUI = styled('button')`
   outline: none;
   padding: 0 ${config.size.md.padding}px;
   position: relative;
+  text-align: center;
   text-decoration: none;
 
   &:focus {
