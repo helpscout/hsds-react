@@ -13,7 +13,7 @@ describe('StatusDot', () => {
     const text = $('.text')
 
     expect(text.offset().left).toBe(dot.offset().left)
-    expect(text.offset().top).toBeGreaterThan(dot.offset().top + dot.height())
+    expect(text.offset().top).not.toBeLessThan(dot.offset().top + dot.height())
   })
 
   it('should align adjacent to sibling node, if inline', () => {

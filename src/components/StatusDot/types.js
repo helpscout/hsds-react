@@ -6,3 +6,7 @@ export type StatusDotStatus =
 | 'new'
 | 'active'
 | 'inactive'
+
+export type StatusDotSize =
+| 'md'
+| 'sm'
