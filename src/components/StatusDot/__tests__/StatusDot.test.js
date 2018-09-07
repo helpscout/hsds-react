@@ -1,18 +1,19 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import StatusDot from '..'
-import { Icon } from '../../index'
+import { mount } from 'enzyme'
+import StatusDot from '../StatusDot'
+import { Icon, Tooltip } from '../../index'
+import { StatusDotUI } from '../styles/StatusDot.css.js'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
 
     expect(wrapper.hasClass('c-StatusDot')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<StatusDot className={customClass} />)
+    const wrapper = mount(<StatusDot className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -20,33 +21,34 @@ describe('ClassName', () => {
 
 describe('BorderColor', () => {
   test('Does not have custom borderColor by default', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
+    const comp = wrapper.find(StatusDotUI)
 
-    expect(wrapper.instance().props.borderColor).toBeFalsy()
-    expect(wrapper.props().style.borderColor).toBeFalsy()
+    expect(comp.props().style.borderColor).toBeFalsy()
   })
 
   test('Can customize borderColor style', () => {
-    const wrapper = shallow(<StatusDot borderColor="red" />)
+    const wrapper = mount(<StatusDot borderColor="red" />)
+    const comp = wrapper.find(StatusDotUI)
 
-    expect(wrapper.instance().props.borderColor).toBe('red')
-    expect(wrapper.props().style.borderColor).toBe('red')
+    expect(comp.props().style.borderColor).toBe('red')
   })
 
   test('Can customize borderColor style + add custom style', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <StatusDot borderColor="red" style={{ margin: 10 }} />
     )
+    const comp = wrapper.find(StatusDotUI)
+    const styles = comp.props().style
 
-    expect(wrapper.instance().props.borderColor).toBe('red')
-    expect(wrapper.props().style.borderColor).toBe('red')
-    expect(wrapper.props().style.margin).toBe(10)
+    expect(styles.borderColor).toBe('red')
+    expect(styles.margin).toBe(10)
   })
 })
 
 describe('Icon', () => {
   test('Does not render an icon by default', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
     const o = wrapper.find(Icon)
 
     expect(wrapper.hasClass('is-icon')).not.toBe(true)
@@ -54,7 +56,7 @@ describe('Icon', () => {
   })
 
   test('Can render icon, if defined', () => {
-    const wrapper = shallow(<StatusDot icon="tick" />)
+    const wrapper = mount(<StatusDot icon="tick" />)
     const o = wrapper.find(Icon)
 
     expect(wrapper.hasClass('is-icon')).toBeTruthy()
@@ -65,13 +67,13 @@ describe('Icon', () => {
 
 describe('Inline', () => {
   test('Is not inline by default', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
 
     expect(wrapper.hasClass('is-inline')).not.toBe(true)
   })
 
   test('Can render inline styles, if defined', () => {
-    const wrapper = shallow(<StatusDot inline />)
+    const wrapper = mount(<StatusDot inline />)
 
     expect(wrapper.hasClass('is-inline')).toBeTruthy()
   })
@@ -79,39 +81,40 @@ describe('Inline', () => {
 
 describe('OuterBorderColor', () => {
   test('Does not have custom outerBorderColor by default', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
+    const comp = wrapper.find(StatusDotUI)
 
-    expect(wrapper.instance().props.outerBorderColor).toBeFalsy()
-    expect(wrapper.props().style.boxShadow).toBeFalsy()
+    expect(comp.props().style.boxShadow).toBeFalsy()
   })
 
   test('Can customize outerBorderColor style', () => {
-    const wrapper = shallow(<StatusDot outerBorderColor="red" />)
+    const wrapper = mount(<StatusDot outerBorderColor="red" />)
+    const comp = wrapper.find(StatusDotUI)
 
-    expect(wrapper.instance().props.outerBorderColor).toBe('red')
-    expect(wrapper.props().style.boxShadow).toContain('red')
+    expect(comp.props().style.boxShadow).toContain('red')
   })
 
   test('Can customize outerBorderColor style + add custom style', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <StatusDot outerBorderColor="red" style={{ margin: 10 }} />
     )
+    const comp = wrapper.find(StatusDotUI)
+    const styles = comp.props().style
 
-    expect(wrapper.instance().props.outerBorderColor).toBe('red')
-    expect(wrapper.props().style.boxShadow).toContain('red')
-    expect(wrapper.props().style.margin).toBe(10)
+    expect(styles.boxShadow).toContain('red')
+    expect(styles.margin).toBe(10)
   })
 })
 
 describe('Size', () => {
   test('Has a default size', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
 
     expect(wrapper.hasClass('is-sm')).toBe(true)
   })
 
   test('Can render size styles, if defined', () => {
-    const wrapper = shallow(<StatusDot size="md" />)
+    const wrapper = mount(<StatusDot size="md" />)
 
     expect(wrapper.hasClass('is-md')).toBeTruthy()
     expect(wrapper.hasClass('is-sm')).not.toBeTruthy()
@@ -120,13 +123,13 @@ describe('Size', () => {
 
 describe('Status', () => {
   test('Has an online status by default', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
 
     expect(wrapper.hasClass('is-online')).toBe(true)
   })
 
   test('Can render status styles, if defined', () => {
-    const wrapper = shallow(<StatusDot status="offline" />)
+    const wrapper = mount(<StatusDot status="offline" />)
 
     expect(wrapper.hasClass('is-offline')).toBeTruthy()
     expect(wrapper.hasClass('is-online')).not.toBeTruthy()
@@ -135,14 +138,14 @@ describe('Status', () => {
 
 describe('Unread', () => {
   test('Is not unread by default', () => {
-    const wrapper = shallow(<StatusDot />)
+    const wrapper = mount(<StatusDot />)
 
     expect(wrapper.instance().props.isUnread).toBe(false)
     expect(wrapper.hasClass('is-unread')).toBe(false)
   })
 
   test('Can add unread styles, if defined', () => {
-    const wrapper = shallow(<StatusDot isUnread />)
+    const wrapper = mount(<StatusDot isUnread />)
 
     expect(wrapper.instance().props.isUnread).toBe(true)
     expect(wrapper.hasClass('is-unread')).toBe(true)
@@ -151,21 +154,23 @@ describe('Unread', () => {
 
 describe('Title', () => {
   test('Provides a tooltip title by default', () => {
-    const wrapper = shallow(<StatusDot status="online" />)
+    const wrapper = mount(<StatusDot status="online" />)
+    const title = wrapper.find('[title]').props().title
 
-    expect(wrapper.props().title).toBe('Is online')
+    expect(title).toBe('Is online')
   })
 
   test('Title can be customized', () => {
-    const wrapper = shallow(<StatusDot status="online" title="OMG! ONLINE" />)
+    const wrapper = mount(<StatusDot status="online" title="OMG! ONLINE" />)
+    const title = wrapper.find('[title]').props().title
 
-    expect(wrapper.props().title).toBe('OMG! ONLINE')
+    expect(title).toBe('OMG! ONLINE')
   })
 })
 
 describe('Children', () => {
   test('Does not renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <StatusDot>
         <div className="child">Hello</div>
       </StatusDot>
