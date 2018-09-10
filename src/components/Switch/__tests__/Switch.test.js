@@ -94,6 +94,28 @@ describe('Checked', () => {
   })
 })
 
+describe('Disabled', () => {
+  test('Is false by default', () => {
+    const wrapper = mount(<Switch />)
+    const o = wrapper.instance()
+
+    const backdrop = wrapper.find(BackdropUI)
+
+    expect(o.props.disabled).toBeFalsy()
+    expect(backdrop.hasClass('is-disabled')).not.toBeTruthy()
+  })
+
+  test('Can be set to true', () => {
+    const wrapper = mount(<Switch disabled />)
+    const o = wrapper.instance()
+
+    const backdrop = wrapper.find(BackdropUI)
+
+    expect(o.props.disabled).toBeTruthy()
+    expect(backdrop.hasClass('is-disabled')).toBeTruthy()
+  })
+})
+
 describe('Loading', () => {
   test('Is not loading by default', () => {
     const wrapper = mount(<Switch />)

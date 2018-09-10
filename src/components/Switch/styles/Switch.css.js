@@ -7,15 +7,18 @@ import styled from '../../styled'
 export const config = {
   backgroundColor: {
     default: getColor('grey.500'),
+    disabled: getColor('grey.300'),
     hover: getColor('grey.600'),
   },
   backgroundColorChecked: {
     default: getColor('green.500'),
+    disabled: getColor('green.300'),
     hover: getColor('green.600'),
   },
   borderRadius: 100,
   color: {
     default: getColor('charcoal.200'),
+    disabled: getColor('charcoal.400'),
     checked: 'white',
   },
   fontSize: 12,
@@ -81,6 +84,11 @@ export const BackdropUI = styled('div')`
     background-color: ${config.backgroundColor.hover};
   }
 
+  &.is-disabled {
+    background-color: ${config.backgroundColor.disabled};
+    color: ${config.color.disabled};
+  }
+
   &.is-checked {
     background-color: ${config.backgroundColorChecked.default};
     color: ${config.color.checked};
@@ -88,6 +96,11 @@ export const BackdropUI = styled('div')`
 
     &.is-focused {
       background-color: ${config.backgroundColorChecked.hover};
+    }
+
+    &.is-disabled {
+      background-color: ${config.backgroundColorChecked.disabled};
+      color: ${config.color.disabled};
     }
   }
 
