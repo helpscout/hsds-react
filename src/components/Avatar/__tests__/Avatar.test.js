@@ -1,6 +1,6 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import Avatar from '..'
+import { mount } from 'enzyme'
+import Avatar from '../Avatar'
 import { StatusDot } from '../../index'
 
 const classNames = {
@@ -12,42 +12,42 @@ const classNames = {
 
 describe('Name', () => {
   test('Uses the `initials` attribute if specified', () => {
-    const wrapper = shallow(<Avatar name="Ron Burgandy" initials="XY" />)
+    const wrapper = mount(<Avatar name="Ron Burgandy" initials="XY" />)
     const title = wrapper.find(classNames.initials)
 
     expect(title.text()).toBe('XY')
   })
 
   test('Initializes first/last name to two letters', () => {
-    const wrapper = shallow(<Avatar name="Ron Burgandy" />)
+    const wrapper = mount(<Avatar name="Ron Burgandy" />)
     const title = wrapper.find(classNames.initials)
 
     expect(title.text()).toBe('RB')
   })
 
   test('Initializes multi-word names to two letters', () => {
-    const wrapper = shallow(<Avatar name="Buddy the Elf" />)
+    const wrapper = mount(<Avatar name="Buddy the Elf" />)
     const title = wrapper.find(classNames.initials)
 
     expect(title.text()).toBe('BE')
   })
 
   test('Initializes single names to one letters', () => {
-    const wrapper = shallow(<Avatar name="Buddy" />)
+    const wrapper = mount(<Avatar name="Buddy" />)
     const title = wrapper.find(classNames.initials)
 
     expect(title.text()).toBe('B')
   })
 
   test('Can be overridden by count prop', () => {
-    const wrapper = shallow(<Avatar name="Buddy" count="Elf" />)
+    const wrapper = mount(<Avatar name="Buddy" count="Elf" />)
     const title = wrapper.find(classNames.initials)
 
     expect(title.text()).toBe('Elf')
   })
 
   test('Sets `title` attribute to the `name`', () => {
-    const wrapper = shallow(<Avatar name="Bobby McGee" />)
+    const wrapper = mount(<Avatar name="Bobby McGee" />)
     const root = wrapper.find(classNames.root)
     expect(root.prop('title')).toBe('Bobby McGee')
   })
@@ -131,7 +131,7 @@ describe('Image', () => {
   })
 
   test('Sets `title` attribute to the `name`', () => {
-    const wrapper = shallow(<Avatar name="Bobby McGee" />)
+    const wrapper = mount(<Avatar name="Bobby McGee" />)
     const root = wrapper.find(classNames.root)
     expect(root.prop('title')).toBe('Bobby McGee')
   })
@@ -139,13 +139,12 @@ describe('Image', () => {
 
 describe('ClassNames', () => {
   test('Accept classNames', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Avatar name="Buddy" size="sm" className="not now arctic puffin" />
     )
 
     const classNames = wrapper.prop('className')
 
-    expect(classNames).toContain('c-Avatar')
     expect(classNames).toContain('not')
     expect(classNames).toContain('now')
     expect(classNames).toContain('arctic')
@@ -155,7 +154,7 @@ describe('ClassNames', () => {
 
 describe('Border color', () => {
   test('Can apply borderColor', () => {
-    const wrapper = shallow(<Avatar name="Buddy" borderColor="green" />)
+    const wrapper = mount(<Avatar name="Buddy" borderColor="green" />)
     const crop = wrapper.find(classNames.crop)
     const style = crop.props().style
 
@@ -165,7 +164,7 @@ describe('Border color', () => {
   })
 
   test('Does not have a border by default', () => {
-    const wrapper = shallow(<Avatar name="Buddy" />)
+    const wrapper = mount(<Avatar name="Buddy" />)
     const crop = wrapper.find(classNames.crop)
     const style = crop.props().style
 
@@ -173,13 +172,13 @@ describe('Border color', () => {
   })
 
   test('Adds a style class to the component', () => {
-    const wrapper = shallow(<Avatar name="Buddy" borderColor="red" />)
+    const wrapper = mount(<Avatar name="Buddy" borderColor="red" />)
 
     expect(wrapper.hasClass('has-borderColor')).toBeTruthy()
   })
 
   test('Does not pass borderColor as outerBorderColor to StatusDot, by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Avatar name="Buddy" borderColor="red" status="online" />
     )
     const o = wrapper.find(StatusDot)
@@ -188,7 +187,7 @@ describe('Border color', () => {
   })
 
   test('Passes borderColor as outerBorderColor to StatusDot, if specified', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Avatar
         name="Buddy"
         borderColor="red"
@@ -204,7 +203,7 @@ describe('Border color', () => {
 
 describe('Outer border color', () => {
   test('Does not apply outerBorderColor by default', () => {
-    const wrapper = shallow(<Avatar name="Buddy" />)
+    const wrapper = mount(<Avatar name="Buddy" />)
     const crop = wrapper.find(classNames.crop)
     const style = crop.props().style
 
@@ -212,7 +211,7 @@ describe('Outer border color', () => {
   })
 
   test('Can apply outerBorderColor', () => {
-    const wrapper = shallow(<Avatar name="Buddy" outerBorderColor="green" />)
+    const wrapper = mount(<Avatar name="Buddy" outerBorderColor="green" />)
     const crop = wrapper.find(classNames.crop)
     const style = crop.props().style
 
@@ -221,7 +220,7 @@ describe('Outer border color', () => {
   })
 
   test('Adds a style class to the component', () => {
-    const wrapper = shallow(<Avatar name="Buddy" outerBorderColor="red" />)
+    const wrapper = mount(<Avatar name="Buddy" outerBorderColor="red" />)
 
     expect(wrapper.hasClass('has-outerBorderColor')).toBeTruthy()
   })
@@ -229,24 +228,24 @@ describe('Outer border color', () => {
 
 describe('Size', () => {
   test('Apply size classes', () => {
-    const sm = shallow(<Avatar name="Buddy" size="sm" />)
-    const lg = shallow(<Avatar name="Buddy" size="lg" />)
+    const sm = mount(<Avatar name="Buddy" size="sm" />)
+    const lg = mount(<Avatar name="Buddy" size="lg" />)
 
-    expect(sm.prop('className')).toContain('is-sm')
-    expect(lg.prop('className')).toContain('is-lg')
+    expect(sm.hasClass('is-sm')).toBe(true)
+    expect(lg.hasClass('is-lg')).toBe(true)
   })
 })
 
 describe('StatusDot', () => {
   test('Does not render a StatusDot by default', () => {
-    const wrapper = shallow(<Avatar />)
+    const wrapper = mount(<Avatar />)
     const o = wrapper.find(StatusDot)
 
     expect(o.length).toBe(0)
   })
 
   test('Renders a StatusDot if status is defined', () => {
-    const wrapper = shallow(<Avatar status="online" />)
+    const wrapper = mount(<Avatar status="online" />)
     const statusMarkup = wrapper.find('.c-Avatar__status')
     const o = statusMarkup.find(StatusDot)
 
@@ -256,7 +255,7 @@ describe('StatusDot', () => {
   })
 
   test('Does not adjust the size of StatusDot, if the Avatar is md or smaller', () => {
-    const wrapper = shallow(<Avatar status="online" size="md" />)
+    const wrapper = mount(<Avatar status="online" size="md" />)
 
     expect(wrapper.find(StatusDot).prop('size')).toBe('sm')
 
@@ -266,13 +265,13 @@ describe('StatusDot', () => {
   })
 
   test('Adjusts the size of StatusDot if Avatar is lg', () => {
-    const wrapper = shallow(<Avatar status="online" size="lg" />)
+    const wrapper = mount(<Avatar status="online" size="lg" />)
 
     expect(wrapper.find(StatusDot).prop('size')).toBe('md')
   })
 
   test('Renders an icon in StatusDot, if defined', () => {
-    const wrapper = shallow(<Avatar status="online" statusIcon="tick" />)
+    const wrapper = mount(<Avatar status="online" statusIcon="tick" />)
     const o = wrapper.find(StatusDot)
 
     expect(o.props().icon).toBe('tick')
@@ -282,7 +281,7 @@ describe('StatusDot', () => {
 describe('onError', () => {
   test('onError handler gets called when there is an error loading the avatar image', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
+    const wrapper = mount(
       <Avatar name="Buddy" image="buddy.jpg" onError={spy} />
     )
     const img = wrapper.find('img').first()
@@ -294,7 +293,7 @@ describe('onError', () => {
 describe('onLoad', () => {
   test('onLoad handler gets called when the avatar image loads', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
+    const wrapper = mount(
       <Avatar name="Buddy" image="buddy.jpg" onLoad={spy} />
     )
     const img = wrapper.find('img').first()

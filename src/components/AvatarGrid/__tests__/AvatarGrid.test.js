@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import AvatarGrid from '..'
+import AvatarGrid from '../AvatarGrid'
 import { Animate, Avatar, Text } from '../../index'
 
 describe('ClassName', () => {
