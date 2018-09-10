@@ -192,6 +192,7 @@ class Switch extends Component<Props, State> {
 
     const componentClassName = classNames(
       'c-Switch',
+      disabled && 'is-disabled',
       shouldShowChecked && 'is-checked',
       isLoading && 'is-loading',
       size && `is-${size}`,

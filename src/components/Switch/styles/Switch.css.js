@@ -47,6 +47,10 @@ export const SwitchUI = styled('label')`
   margin: 0;
   position: relative;
 
+  &.is-disabled {
+    pointer-events: none;
+  }
+
   &.is-loading {
     pointer-events: none;
   }
