@@ -66,6 +66,47 @@ stories.add('state', () => (
   </form>
 ))
 
+stories.add('disabled', () => (
+  <form style={{ width: 300 }}>
+    <Hr size="sm" />
+    <Flexy>
+      <Flexy.Item>
+        <Text>Disabled (checked)</Text>
+      </Flexy.Item>
+      <Flexy.Item>
+        <Switch checked disabled size="sm" />
+      </Flexy.Item>
+    </Flexy>
+    <Hr size="sm" />
+    <Flexy>
+      <Flexy.Item>
+        <Text>Disabled</Text>
+      </Flexy.Item>
+      <Flexy.Item>
+        <Switch disabled size="sm" />
+      </Flexy.Item>
+    </Flexy>
+    <Hr size="sm" />
+    <Flexy>
+      <Flexy.Item>
+        <Text>Enabled (checked)</Text>
+      </Flexy.Item>
+      <Flexy.Item>
+        <Switch checked disabled={false} size="sm" />
+      </Flexy.Item>
+    </Flexy>
+    <Hr size="sm" />
+    <Flexy>
+      <Flexy.Item>
+        <Text>Enabled</Text>
+      </Flexy.Item>
+      <Flexy.Item>
+        <Switch disabled={false} size="sm" />
+      </Flexy.Item>
+    </Flexy>
+  </form>
+))
+
 stories.add('loading', () => (
   <form style={{ width: 300 }}>
     <Hr size="sm" />

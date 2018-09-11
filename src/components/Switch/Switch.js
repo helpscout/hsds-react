@@ -21,6 +21,7 @@ import { COMPONENT_KEY } from './utils'
 type Props = {
   className?: string,
   checked: boolean,
+  disabled: boolean,
   id: string,
   isLoading: boolean,
   inputRef: (ref: any) => void,
@@ -134,7 +135,14 @@ class Switch extends Component<Props, State> {
   }
 
   getInputMarkup = (props: Object = {}) => {
-    const { checked: propActive, inputRef, name, value, ...rest } = this.props
+    const {
+      checked: propActive,
+      disabled,
+      inputRef,
+      name,
+      value,
+      ...rest
+    } = this.props
     const { checked } = this.state
 
     const id = this.getIdFromContextProps(props)
@@ -145,6 +153,7 @@ class Switch extends Component<Props, State> {
         aria-checked={checked}
         className="c-Switch__input"
         checked={checked}
+        disabled={disabled}
         id={id}
         name={name}
         onBlur={this.handleOnBlur}
@@ -162,6 +171,7 @@ class Switch extends Component<Props, State> {
   render() {
     const {
       className,
+      disabled,
       onBlur,
       onChange,
       onFocus,
@@ -182,6 +192,7 @@ class Switch extends Component<Props, State> {
 
     const componentClassName = classNames(
       'c-Switch',
+      disabled && 'is-disabled',
       shouldShowChecked && 'is-checked',
       isLoading && 'is-loading',
       size && `is-${size}`,
@@ -192,6 +203,7 @@ class Switch extends Component<Props, State> {
     const backdropClassName = classNames(
       'c-Switch__backdrop',
       shouldShowChecked && 'is-checked',
+      disabled && 'is-disabled',
       isFocused && 'is-focused',
       size && `is-${size}`
     )
