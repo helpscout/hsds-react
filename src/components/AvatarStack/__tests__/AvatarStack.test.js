@@ -1,11 +1,11 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import AvatarStack from '..'
+import { mount } from 'enzyme'
+import AvatarStack from '../AvatarStack'
 import { AnimateGroup, Animate, Avatar, Text } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<AvatarStack />)
+    const wrapper = mount(<AvatarStack />)
     const o = wrapper.find('.c-AvatarStack')
 
     expect(o.hasClass('c-AvatarStack')).toBeTruthy()
@@ -13,7 +13,7 @@ describe('ClassName', () => {
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<AvatarStack className={customClass} />)
+    const wrapper = mount(<AvatarStack className={customClass} />)
     const o = wrapper.find('.c-AvatarStack')
 
     expect(o.prop('className')).toContain(customClass)
@@ -22,7 +22,7 @@ describe('ClassName', () => {
 
 describe('Animation', () => {
   test('Wraps children in an Animate, within an AnimateGroup', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarStack>
         <Avatar />
       </AvatarStack>
@@ -37,7 +37,7 @@ describe('Animation', () => {
   })
 
   test('Passes staggering props to AnimateGroup', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarStack>
         <Avatar />
       </AvatarStack>
@@ -49,7 +49,7 @@ describe('Animation', () => {
   })
 
   test('Can set custom AnimateGroup props', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarStack animationStagger={1000}>
         <Avatar />
       </AvatarStack>
@@ -60,7 +60,7 @@ describe('Animation', () => {
   })
 
   test('Can set custom Animate sequences', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarStack animationSequence="fade">
         <Avatar />
       </AvatarStack>
@@ -73,7 +73,7 @@ describe('Animation', () => {
 
 describe('Children', () => {
   test('Discards non-Avatar children', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarStack>
         <Avatar />
         <Text />
@@ -89,7 +89,7 @@ describe('Children', () => {
 
 describe('Limit', () => {
   test('Can limit the amount of avatars', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarStack max={2}>
         <Avatar />
         <Avatar />
@@ -106,7 +106,7 @@ describe('Limit', () => {
   })
 
   test('Cannot set limit to zero (0)', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AvatarStack max={0}>
         <Avatar />
         <Avatar />
