@@ -1,4 +1,4 @@
-import { PureComponent as Component } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 import { addEventListener, removeEventListener } from '../../utilities/events'
 

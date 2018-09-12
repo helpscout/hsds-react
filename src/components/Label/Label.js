@@ -1,6 +1,6 @@
 // @flow
 import type { UIState } from '../../constants/types'
-import React from 'react'
+import React, { PureComponent as Component } from 'react'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -16,41 +16,43 @@ type Props = {
   state?: UIState,
 }
 
-const Label = (props: Props) => {
-  const {
-    className,
-    children,
-    for: htmlFor,
-    isMarginless,
-    state,
-    ...rest
-  } = props
+class Label extends Component<Props> {
+  static defaultProps = {
+    isMarginless: false,
+    state: 'default',
+  }
 
-  const componentClassName = classNames(
-    'c-Label',
-    isMarginless && 'is-marginless',
-    state && `is-${state}`,
-    className
-  )
+  render() {
+    const {
+      className,
+      children,
+      for: htmlFor,
+      isMarginless,
+      state,
+      ...rest
+    } = this.props
 
-  const contentMarkup = isString(children) ? (
-    <Text className="c-Label__text" shade="subtle">
-      {children}
-    </Text>
-  ) : (
-    children
-  )
+    const componentClassName = classNames(
+      'c-Label',
+      isMarginless && 'is-marginless',
+      state && `is-${state}`,
+      className
+    )
 
-  return (
-    <LabelUI className={componentClassName} htmlFor={htmlFor} {...rest}>
-      {contentMarkup}
-    </LabelUI>
-  )
-}
+    const contentMarkup = isString(children) ? (
+      <Text className="c-Label__text" shade="subtle">
+        {children}
+      </Text>
+    ) : (
+      children
+    )
 
-Label.defaultProps = {
-  isMarginless: false,
-  state: 'default',
+    return (
+      <LabelUI {...rest} className={componentClassName} htmlFor={htmlFor}>
+        {contentMarkup}
+      </LabelUI>
+    )
+  }
 }
 
 namespaceComponent(COMPONENT_KEY)(Label)
