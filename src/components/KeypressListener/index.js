@@ -1,7 +1,7 @@
 // Modified version of:
 // https://github.com/Shopify/polaris/blob/master/src/components/KeypressListener/KeypressListener.tsx
 
-import React, { PureComponent as Component } from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { addEventListener, removeEventListener } from '../../utilities/events'
