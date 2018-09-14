@@ -27,7 +27,7 @@ type Props = {
   inputRef: (ref: any) => void,
   name: string,
   onBlur: (event: Event) => void,
-  onChange: (value: SwitchValue) => void,
+  onChange: (state: boolean, { event: Event, value: SwitchValue }) => void,
   onClick: (event: Event) => void,
   onFocus: (event: Event) => void,
   onMouseDown: (event: Event) => void,
