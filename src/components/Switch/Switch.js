@@ -88,13 +88,14 @@ class Switch extends Component<Props, State> {
 
   handleOnChange = (event: Event) => {
     const { onChange, value } = this.props
+    const nextChecked = !this.state.checked
 
     /* istanbul ignore else */
     if (this.shouldAutoUpdateChecked) {
-      this.setState({ checked: !this.state.checked })
+      this.setState({ checked: nextChecked })
     }
 
-    onChange(value)
+    onChange(nextChecked, { event, value })
   }
 
   handleOnClick = (event: Event) => {

@@ -215,11 +215,8 @@ class App extends React.Component {
   }
 
   handleOnChange = value => {
-    const nextValue = !this.state.on
-    console.log(value, 'toggle', nextValue)
-
     this.setState({
-      on: nextValue,
+      on: value,
     })
   }
 
@@ -227,7 +224,7 @@ class App extends React.Component {
     return (
       <Switch
         value="on"
-        active={this.state.on}
+        checked={this.state.on}
         onChange={this.handleOnChange}
         id="Switch"
       />
