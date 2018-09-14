@@ -199,7 +199,22 @@ describe('Events', () => {
 
     input.simulate('change')
 
-    expect(spy).toHaveBeenCalledWith('Mugatu')
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onChange callback also receives value and event', () => {
+    let callbackProps = []
+    const onChange = (...args) => (callbackProps = [...args])
+    const wrapper = mount(
+      <Switch onChange={onChange} value="Mugatu" checked={false} />
+    )
+    const input = wrapper.find('input')
+
+    input.simulate('change')
+
+    expect(callbackProps[0]).toBe(true)
+    expect(callbackProps[1].event).toBeTruthy()
+    expect(callbackProps[1].value).toBe('Mugatu')
   })
 
   test('onClick callback can be triggered, by onChange', () => {
@@ -304,6 +319,24 @@ describe('ID', () => {
 })
 
 describe('State', () => {
+  test('onChange callback receives next switch state ', () => {
+    let callbackProps = []
+    const onChange = (...args) => (callbackProps = [...args])
+    const wrapper = mount(
+      <Switch
+        onChange={onChange}
+        checked={false}
+        value="Mugatu"
+        checked={false}
+      />
+    )
+    const input = wrapper.find('input')
+
+    input.simulate('change')
+
+    expect(callbackProps[0]).toBe(true)
+  })
+
   test('Can render error styles', () => {
     const wrapper = mount(<Switch state="error" />)
     const el = wrapper.find('.c-Switch').getNode()
