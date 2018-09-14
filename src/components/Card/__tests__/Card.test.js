@@ -1,17 +1,18 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import Card from '..'
+import { MemoryRouter } from 'react-router'
+import { mount } from 'enzyme'
+import Card from '../Card'
 import Link from '../../Link'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Card />)
+    const wrapper = mount(<Card />)
 
-    expect(wrapper.prop('className')).toBe('c-Card')
+    expect(wrapper.hasClass('c-Card')).toBe(true)
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<Card className="not-metro-man" />)
+    const wrapper = mount(<Card className="not-metro-man" />)
 
     expect(wrapper.prop('className')).toContain('not-metro-man')
   })
@@ -19,14 +20,14 @@ describe('ClassName', () => {
 
 describe('Block', () => {
   test('Does not render a Card.Block by default', () => {
-    const wrapper = shallow(<Card />)
+    const wrapper = mount(<Card />)
     const o = wrapper.find(Card.Block)
 
     expect(o.length).toBeFalsy()
   })
 
   test('Can render a Card.Block', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Card>
         <Card.Block>MegaMind</Card.Block>
       </Card>
@@ -38,7 +39,7 @@ describe('Block', () => {
   })
 
   test('Can render a multiple Card.Block', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Card>
         <Card.Block>Mega</Card.Block>
         <Card.Block>Mind</Card.Block>
@@ -52,7 +53,7 @@ describe('Block', () => {
 
 describe('Content', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<Card>Megamind</Card>)
+    const wrapper = mount(<Card>Megamind</Card>)
 
     expect(wrapper.text()).toBe('Megamind')
   })
@@ -76,14 +77,14 @@ describe('Link', () => {
   const link = 'https://www.helpscout.net'
 
   test('Adds link styles if href is specified', () => {
-    const wrapper = shallow(<Card href={link} />)
+    const wrapper = mount(<Card href={link} />)
 
-    expect(wrapper.prop('className')).toContain('is-clickable')
-    expect(wrapper.prop('className')).toContain('is-hoverable')
+    expect(wrapper.hasClass('is-clickable')).toBe(true)
+    expect(wrapper.hasClass('is-hoverable')).toBe(true)
   })
 
   test('Renders a Link component if href is defined', () => {
-    const wrapper = shallow(<Card href={link} />)
+    const wrapper = mount(<Card href={link} />)
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
@@ -92,7 +93,11 @@ describe('Link', () => {
   })
 
   test('Renders a Link component if to is defined', () => {
-    const wrapper = shallow(<Card to={link} />)
+    const wrapper = mount(
+      <MemoryRouter>
+        <Card to={link} />
+      </MemoryRouter>
+    )
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
@@ -101,19 +106,22 @@ describe('Link', () => {
   })
 
   test('Renders a Link component with target="_blank"', () => {
-    const wrapper = shallow(<Card href={link} external />)
+    const wrapper = mount(
+      <MemoryRouter>
+        <Card href={link} external />
+      </MemoryRouter>
+    )
     const o = wrapper.find(Link)
     const p = o.getNode().props
 
     expect(o.length).toBe(1)
     expect(p.block).toBeTruthy()
     expect(p.href).toBe(link)
-    expect(p.external).toBeTruthy()
     expect(o.html()).toContain('_blank')
   })
 
   test('Renders a Link, with a Card.Block child', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Card href={link}>
         <Card.Block>MegaMind</Card.Block>
       </Card>
@@ -129,7 +137,7 @@ describe('Link', () => {
 
   test('onBlur fires for a Link', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Card href={link} onBlur={spy} />)
+    const wrapper = mount(<Card href={link} onBlur={spy} />)
     wrapper.simulate('blur')
 
     expect(spy).toHaveBeenCalled()
@@ -137,7 +145,7 @@ describe('Link', () => {
 
   test('onClick fires for a Link', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Card href={link} onClick={spy} />)
+    const wrapper = mount(<Card href={link} onClick={spy} />)
     wrapper.simulate('click')
 
     expect(spy).toHaveBeenCalled()
@@ -145,22 +153,22 @@ describe('Link', () => {
 
   test('onFocus fires for a Link', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Card href={link} onFocus={spy} />)
+    const wrapper = mount(<Card href={link} onFocus={spy} />)
     wrapper.simulate('focus')
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('Does not pass autoWordWrap prop to div', () => {
-    const wrapper = shallow(<Card autoWordWrap />)
+    const wrapper = mount(<Card autoWordWrap />)
     const o = wrapper.find('.c-Card')
 
     expect(o.props().autoWordWrap).toBeFalsy()
   })
 
   test('Can pass autoWordWrap to Link', () => {
-    const wrapper = shallow(<Card href={link} autoWordWrap />)
-    const o = wrapper.find('.c-Card')
+    const wrapper = mount(<Card href={link} autoWordWrap />)
+    const o = wrapper.find(Link)
 
     expect(o.props().autoWordWrap).toBeTruthy()
   })
@@ -172,7 +180,7 @@ describe('Click', () => {
     const onClick = () => {
       value = true
     }
-    const wrapper = shallow(<Card onClick={onClick} />)
+    const wrapper = mount(<Card onClick={onClick} />)
 
     wrapper.simulate('click')
 
@@ -181,53 +189,55 @@ describe('Click', () => {
 
   test('Adds clickable styles if onClick is specified', () => {
     const noop = () => {}
-    const wrapper = shallow(<Card onClick={noop} />)
+    const wrapper = mount(<Card onClick={noop} />)
 
-    expect(wrapper.prop('className')).toContain('is-clickable')
+    expect(wrapper.hasClass('is-clickable')).toBe(true)
   })
 })
 
 describe('Selector', () => {
   test('Renders a div selector by default', () => {
-    const wrapper = shallow(<Card />)
+    const wrapper = mount(<Card />)
+    const o = wrapper.find('.c-Card')
 
-    expect(wrapper.getNode().type).toBe('div')
+    expect(o.getNode().tagName).toBe('DIV')
   })
 
   test('Renders a custom selector, if specified', () => {
-    const wrapper = shallow(<Card selector="span" />)
+    const wrapper = mount(<Card selector="span" />)
+    const o = wrapper.find('.c-Card')
 
-    expect(wrapper.getNode().type).toBe('span')
+    expect(o.getNode().tagName).toBe('SPAN')
   })
 })
 
 describe('Styles', () => {
   test('Renders borderless styles, if specified', () => {
-    const wrapper = shallow(<Card borderless />)
+    const wrapper = mount(<Card borderless />)
 
     expect(wrapper.hasClass('is-borderless')).toBeTruthy()
   })
 
   test('Renders flex styles, if specified', () => {
-    const wrapper = shallow(<Card flex />)
+    const wrapper = mount(<Card flex />)
 
     expect(wrapper.hasClass('is-flex')).toBeTruthy()
   })
 
   test('Renders fullHeight styles, if specified', () => {
-    const wrapper = shallow(<Card fullHeight />)
+    const wrapper = mount(<Card fullHeight />)
 
     expect(wrapper.hasClass('is-fullHeight')).toBeTruthy()
   })
 
   test('Renders floating styles, if specified', () => {
-    const wrapper = shallow(<Card floating />)
+    const wrapper = mount(<Card floating />)
 
     expect(wrapper.hasClass('is-floating')).toBeTruthy()
   })
 
   test('Renders seamless styles, if specified', () => {
-    const wrapper = shallow(<Card seamless />)
+    const wrapper = mount(<Card seamless />)
 
     expect(wrapper.hasClass('is-seamless')).toBeTruthy()
   })
