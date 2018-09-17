@@ -12,7 +12,7 @@ type Props = {
   autoWordWrap?: boolean,
   children?: any,
   className?: string,
-  textAlign: FluffyCardTextAlign,
+  flex: boolean,
   fullHeight: boolean,
   hover: boolean,
   href?: string,
@@ -21,6 +21,8 @@ type Props = {
   onClick: (event: Event) => void,
   onFocus: (event: Event) => void,
   seamless: boolean,
+  selector: 'string',
+  textAlign: FluffyCardTextAlign,
   to?: string,
 }
 

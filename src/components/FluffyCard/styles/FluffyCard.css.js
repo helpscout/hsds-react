@@ -5,11 +5,11 @@ import styled from '../../styled'
 
 export const config = {
   borderRadius: 4,
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  boxShadowHover: '0 6px 12px rgba(0, 0, 0, 0.12)',
+  boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.1)',
+  boxShadowHover: '0px 8px 15px 0 rgba(0, 0, 0, 0.2)',
   horizontalOffset: 10,
   padding: '20px 15px',
-  transformHover: 'translateY(-2px)',
+  transformHover: 'translateY(-3px)',
   transition: 'box-shadow 200ms linear, transform 200ms linear',
 }
 
