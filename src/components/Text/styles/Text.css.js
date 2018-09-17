@@ -60,6 +60,18 @@ const css = `
     ${linkStyles()}
   }
 
+  &.is-noUnderline {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &.is-plainLink {
+    color: ${getColor('blue.500')};
+  }
+
   &.is-samp {
     font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
     font-family: var(--BlueConfigGlobalFontFamilyMono);

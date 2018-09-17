@@ -7,6 +7,7 @@ export const config = {
   borderRadius: 4,
   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   boxShadowHover: '0 6px 12px rgba(0, 0, 0, 0.12)',
+  horizontalOffset: 10,
   padding: '20px 15px',
   transformHover: 'translateY(-2px)',
   transition: 'box-shadow 200ms linear, transform 200ms linear',
@@ -22,7 +23,7 @@ export const FluffyCardUI = styled(Card)`
   padding: ${config.padding};
 
   & + & {
-    margin-left: 20px;
+    margin-left: ${config.horizontalOffset}px;
   }
 
   &.is-hoverable {

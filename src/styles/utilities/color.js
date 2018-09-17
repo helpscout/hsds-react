@@ -1,6 +1,7 @@
 // @flow
 import colors from '../configs/colors'
 import { isNumber, isObject } from '../../utilities/is'
+import get from '../../utilities/get'
 
 type Color = string
 type ColorArgs = any
@@ -40,4 +41,19 @@ export const getColor = (...args: ColorArgs): Color => {
   }
 
   return color || defaultColor
+}
+
+/**
+ * Retrieves a brand property from ThemeProvider.
+ * @param   {Object} props The styled props.
+ * @param   {string} path  The props path to retrieve
+ * @param   {any} fallback The fallback prop.
+ * @returns {any} The fetched property
+ */
+export const getThemeBrandProp = (
+  props: Object = {},
+  path: string = '',
+  fallback: any
+): any => {
+  return get(props, `theme.brandColor.${path}`, fallback)
 }
