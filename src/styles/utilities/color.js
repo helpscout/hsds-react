@@ -53,7 +53,7 @@ export const getColor = (...args: ColorArgs): Color => {
 export const getThemeBrandProp = (
   props: Object = {},
   path: string = '',
-  fallback: any
+  fallback: any = ''
 ): any => {
   return get(props, `theme.brandColor.${path}`, fallback)
 }

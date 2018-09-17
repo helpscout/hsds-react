@@ -107,6 +107,18 @@ describe('Styles', () => {
 
     expect(wrapper.hasClass('is-200')).toBe(true)
   })
+
+  test('Applies noUnderline styles if specified', () => {
+    const wrapper = mount(<Text noUnderline />)
+
+    expect(wrapper.hasClass('is-noUnderline')).toBe(true)
+  })
+
+  test('Applies isPlainLink styles if specified', () => {
+    const wrapper = mount(<Text isPlainLink />)
+
+    expect(wrapper.hasClass('is-plainLink')).toBe(true)
+  })
 })
 
 describe('States', () => {

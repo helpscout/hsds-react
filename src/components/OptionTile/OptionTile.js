@@ -25,6 +25,7 @@ type Props = {
   title?: string,
   style?: Object,
   subtitle?: string,
+  textAlign: string,
 }
 
 class OptionTile extends Component<Props> {
@@ -33,6 +34,7 @@ class OptionTile extends Component<Props> {
     title: 'Title',
     style: {},
     subtitle: 'Description',
+    textAlign: 'center',
   }
 
   static Container = Container
@@ -47,6 +49,7 @@ class OptionTile extends Component<Props> {
       title,
       style,
       subtitle,
+      textAlign,
       ...rest
     } = this.props
     const componentClassName = classNames('c-OptionTile', className)
@@ -62,7 +65,7 @@ class OptionTile extends Component<Props> {
         className={componentClassName}
         style={styles}
         title={title}
-        textAlign="center"
+        textAlign={textAlign}
       >
         <HeaderUI className="c-OptionTile__header">
           <Centralize>
