@@ -20,8 +20,10 @@ type Props = {
   href?: string,
   icon: string,
   iconTitle?: string,
+  minHeight?: number | string,
   to?: string,
   title?: string,
+  style?: Object,
   subtitle?: string,
 }
 
@@ -29,6 +31,7 @@ class OptionTile extends Component<Props> {
   static defaultProps = {
     icon: 'chat',
     title: 'Title',
+    style: {},
     subtitle: 'Description',
   }
 
@@ -40,16 +43,24 @@ class OptionTile extends Component<Props> {
       children,
       icon,
       iconTitle,
+      minHeight,
       title,
+      style,
       subtitle,
       ...rest
     } = this.props
     const componentClassName = classNames('c-OptionTile', className)
 
+    const styles = {
+      ...style,
+      minHeight,
+    }
+
     return (
       <OptionTileUI
         {...rest}
         className={componentClassName}
+        style={styles}
         title={title}
         textAlign="center"
       >

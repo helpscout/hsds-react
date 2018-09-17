@@ -30,7 +30,7 @@ stories.add('Themed', () => {
   const theme = {
     brandColor: {
       brandColor: 'red',
-      textColor: 'blue',
+      textColor: 'black',
     },
   }
 

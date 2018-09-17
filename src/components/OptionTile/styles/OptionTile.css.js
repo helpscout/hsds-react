@@ -1,5 +1,4 @@
 // @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import FluffyCard from '../../FluffyCard'
 import styled from '../../styled'
 
