@@ -1,11 +1,14 @@
 // @flow
-import React from 'react'
-import PropTypes from 'prop-types'
-import Scrollable from '../Scrollable'
-import classNames from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
-import { standardSizeTypes } from '../../constants/propTypes'
 import type { UISize } from '../../constants/types'
+import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Scrollable from '../Scrollable'
+import styled from '../styled'
+import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { noop } from '../../utilities/other'
+import css from './styles/Block.css.js'
+import { COMPONENT_KEY } from './utils'
 
 type Props = {
   bgMuted: boolean,
@@ -19,59 +22,66 @@ type Props = {
   size?: UISize,
 }
 
-const Block = (props: Props) => {
-  const {
-    bgMuted,
-    className,
-    children,
-    onScroll,
-    scrollable,
-    scrollableRef,
-    flex,
-    size,
-    ...rest
-  } = props
+class Block extends Component<Props> {
+  static defaultProps = {
+    onScroll: noop,
+    scrollableRef: noop,
+  }
 
-  const componentClassName = classNames(
-    'c-Card__block',
-    bgMuted && 'is-bg-muted',
-    flex && 'is-flex',
-    scrollable && 'is-scrollable',
-    size && `c-Card__block--${size}`,
-    className
-  )
+  render() {
+    const {
+      bgMuted,
+      className,
+      children,
+      onScroll,
+      scrollable,
+      scrollableRef,
+      flex,
+      size,
+      ...rest
+    } = this.props
 
-  const scrollableClassName = classNames(
-    'c-Card__block',
-    'c-Card__block--scrollable',
-    flex && 'is-flex',
-    scrollable && 'is-scrollable'
-  )
+    const componentClassName = classNames(
+      'c-Card__block',
+      bgMuted && 'is-bg-muted',
+      flex && 'is-flex',
+      scrollable && 'is-scrollable',
+      size && `is-${size}`,
+      className
+    )
 
-  const contentMarkup = (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
+    const scrollableClassName = classNames(
+      'c-Card__block',
+      bgMuted && 'is-bg-muted',
+      flex && 'is-flex',
+      scrollable && 'is-scrollableWrapper',
+      className
+    )
 
-  const componentMarkup = scrollable ? (
-    <Scrollable
-      className={scrollableClassName}
-      onScroll={onScroll}
-      scrollableRef={scrollableRef}
-    >
-      {contentMarkup}
-    </Scrollable>
-  ) : (
-    contentMarkup
-  )
+    const contentMarkup = (
+      <div {...getValidProps(rest)} className={componentClassName}>
+        {children}
+      </div>
+    )
 
-  return componentMarkup
+    const componentMarkup = scrollable ? (
+      <Scrollable
+        className={scrollableClassName}
+        onScroll={onScroll}
+        scrollableRef={scrollableRef}
+      >
+        {contentMarkup}
+      </Scrollable>
+    ) : (
+      contentMarkup
+    )
+
+    return componentMarkup
+  }
 }
 
-Block.defaultProps = {
-  onScroll: noop,
-  scrollableRef: noop,
-}
+const StyledBlock = styled(Block)(css)
 
-export default Block
+namespaceComponent(COMPONENT_KEY.Block)(StyledBlock)
+
+export default StyledBlock

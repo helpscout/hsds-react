@@ -1,7 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { createSpec, faker } from '@helpscout/helix'
-import { Card, Text } from '../../../'
+import { Card, Text } from '../../../index'
 
 test('Renders fixture data into Blue component', () => {
   const fixture = createSpec({
@@ -10,7 +10,7 @@ test('Renders fixture data into Blue component', () => {
     text: faker.lorem.sentence(),
   }).generate()
 
-  const wrapper = shallow(
+  const wrapper = mount(
     <Card id={fixture.id}>
       <Text className="name" muted>
         {fixture.name} said…
