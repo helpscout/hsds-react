@@ -5,7 +5,7 @@ A OptionTile component is to render a link, displayed in a stylized [Card](../..
 ## Example
 
 ```jsx
-<OptionCard icon="search" title="Go searchin" />
+<OptionTile icon="search" title="Go searchin" />
 ```
 
 ## Theming
@@ -15,7 +15,7 @@ This component, specifically the inner [OptionIcon](../../OptionIcon), can be th
 ```jsx
 <ThemeProvider theme={myTheme}>
   ...
-  <OptionCard icon="search" title="Go searchin" />
+  <OptionTile icon="search" title="Go searchin" />
   ...
 </ThemeProvider>
 ```
