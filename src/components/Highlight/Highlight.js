@@ -10,12 +10,12 @@ type Props = {
   className?: string,
 }
 
-class CopyInput extends Component<Props> {
+class Highlight extends Component<Props> {
   static defaultProps = {}
 
   render() {
     const { className, children, ...rest } = this.props
-    const componentClassName = classNames('c-CopyInput', className)
+    const componentClassName = classNames('c-Highlight', className)
 
     return (
       <div {...getValidProps(rest)} className={componentClassName}>
@@ -25,6 +25,6 @@ class CopyInput extends Component<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(CopyInput)
+namespaceComponent(COMPONENT_KEY)(Highlight)
 
-export default CopyInput
+export default Highlight
