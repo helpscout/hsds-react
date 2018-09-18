@@ -68,6 +68,18 @@ export const config = {
     disabledBorderColor: getColor('grey.500'),
     disabledColor: getColor('grey.600'),
   },
+  tertiary: {
+    backgroundColor: getColor('grey.200'),
+    backgroundColorHover: getColor('grey.200'),
+    backgroundColorActive: getColor('grey.200'),
+    borderColor: getColor('grey.700'),
+    borderColorHover: getColor('charcoal.200'),
+    borderColorActive: getColor('charcoal.200'),
+    color: getColor('charcoal.400'),
+    disabledBackgroundColor: 'white',
+    disabledBorderColor: getColor('grey.500'),
+    disabledColor: getColor('grey.600'),
+  },
   default: {
     backgroundColor: 'transparent',
     backgroundColorHover: 'transparent',
@@ -145,6 +157,13 @@ export const config = {
       minWidth: 'initial',
       padding: 15,
     },
+    xs: {
+      fontSize: 13,
+      fontWeight: 600,
+      height: 24,
+      minWidth: 'initial',
+      padding: 15,
+    },
   },
   suffix: {
     backgroundColor: getColor('grey.200'),
@@ -207,6 +226,7 @@ export const ButtonUI = styled('button')`
   ${props => makePrimaryStyles(props)}
   ${makeButtonKindStyles('secondary', config.secondary)}
   ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
+  ${makeButtonKindStyles('tertiary', config.tertiary)}
   ${makeButtonKindStyles('default', config.default)}
   ${makeButtonKindStyles('link', config.link)}
   ${makeButtonKindStyles('suffix', config.suffix)}
