@@ -2,6 +2,7 @@ import { injectGlobal } from '../src/components/styled'
 import '../src/styles/blue.scss'
 // import '../src/styles/blue.hs-app.scss'
 
+import './Accordion'
 import './Alert'
 import './AnimateGroup'
 import './Animate'
