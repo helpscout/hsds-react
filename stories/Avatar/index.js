@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, Flexy } from '../../src/index.js'
+import { ThemeProvider } from '../../src/components/styled'
 import AvatarSpec from './specs/Avatar'
 
 const stories = storiesOf('Avatar', module)
@@ -12,6 +13,20 @@ stories.add('default', () => (
 
 stories.add('fallback', () => (
   <Avatar name={fixture.name} image="https://notfound" />
+))
+
+stories.add('themed', () => (
+  <div>
+    <ThemeProvider theme={{ brandColor: { brandColor: 'red' } }}>
+      <Avatar name={fixture.name} image="https://notfound" />
+    </ThemeProvider>
+    <ThemeProvider theme={{ brandColor: { brandColor: 'green' } }}>
+      <Avatar name={fixture.name} image="https://notfound" />
+    </ThemeProvider>
+    <ThemeProvider theme={{ brandColor: { brandColor: 'blue' } }}>
+      <Avatar name={fixture.name} image="https://notfound" />
+    </ThemeProvider>
+  </div>
 ))
 
 stories.add('status', () => (
