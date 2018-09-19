@@ -1,17 +1,2 @@
-$seed-flexy-namespace: "c-Flexy";
-@import "pack/seed-flexy/_index";
-
-.#{$seed-flexy-namespace} {
-  $alignments: (
-    top: flex-start,
-    middle: center,
-    bottom: flex-end,
-    stretch: stretch
-  );
-
-  @each $name, $value in $alignments {
-    &.is-#{$name} {
-      align-items: $value;
-    }
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.
