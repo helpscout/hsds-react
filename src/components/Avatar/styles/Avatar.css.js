@@ -1,6 +1,6 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import { getColor } from '../../../styles/utilities/color'
+import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import styled from '../../styled'
@@ -8,7 +8,7 @@ import styled from '../../styled'
 export const config = {
   borderRadius: 3,
   borderWidth: 2,
-  color: getColor('purple.500'),
+  color: getColor('blue.500'),
   position: 'relative',
   size: {
     lg: {
@@ -40,10 +40,11 @@ export const config = {
 
 export const AvatarUI = styled('div')`
   ${baseStyles}
-  color: ${config.color};
   height: ${config.size.md.size}px;
   position: relative;
   width: ${config.size.md.size}px;
+
+  ${props => getColorStyles(props)}
 
   &.is-light {
     color: ${getColor('grey.400')};
@@ -116,6 +117,12 @@ export const StatusUI = styled('div')`
     right: -4px;
   }
 `
+
+function getColorStyles(props: Object): string {
+  return `
+    color: ${getThemeBrandProp(props, 'brandColor', config.color)};
+  `
+}
 
 function getSizeStyles(): string {
   return forEach(config.size, (size, props) => {
