@@ -1,6 +1,7 @@
 // @flow
 import type { Align, Gap, Just } from './types.js'
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Block from './Block'
 import Item from './Item'
 import { classNames } from '../../utilities/classNames'
@@ -36,7 +37,7 @@ class Flexy extends Component<Props> {
     )
 
     return (
-      <FlexyUI className={componentClassName} {...rest}>
+      <FlexyUI {...getValidProps(rest)} className={componentClassName}>
         {children}
       </FlexyUI>
     )
