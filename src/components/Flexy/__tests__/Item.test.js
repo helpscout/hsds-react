@@ -1,17 +1,17 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import Flexy from '..'
+import { mount } from 'enzyme'
+import Flexy from '../Flexy'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Flexy.Item />)
+    const wrapper = mount(<Flexy.Item />)
 
     expect(wrapper.hasClass('c-Flexy__item')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Flexy.Item className={customClass} />)
+    const wrapper = mount(<Flexy.Item className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -19,16 +19,16 @@ describe('ClassName', () => {
 
 describe('Inline', () => {
   test('Applies inline className if specified', () => {
-    const wrapper = shallow(<Flexy.Item inline />)
+    const wrapper = mount(<Flexy.Item inline />)
 
-    expect(wrapper.hasClass('c-Flexy__inline-item')).toBeTruthy()
-    expect(wrapper.hasClass('c-Flexy__item')).not.toBeTruthy()
+    expect(wrapper.hasClass('is-inlineItem')).toBeTruthy()
+    expect(wrapper.hasClass('is-inlineDefault')).not.toBeTruthy()
   })
 })
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Flexy.Item>
         <div className="child">Hello</div>
       </Flexy.Item>

@@ -1,17 +1,17 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import Flexy from '..'
+import { mount } from 'enzyme'
+import Flexy from '../Flexy'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Flexy />)
+    const wrapper = mount(<Flexy />)
 
     expect(wrapper.hasClass('c-Flexy')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Flexy className={customClass} />)
+    const wrapper = mount(<Flexy className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -19,7 +19,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Flexy>
         <div className="child">Hello</div>
       </Flexy>
@@ -32,32 +32,32 @@ describe('Children', () => {
 
 describe('Styles', () => {
   test('Applies vertical alignment styles', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Flexy align="top">
         <Flexy.Item>Hello</Flexy.Item>
       </Flexy>
     )
 
-    expect(wrapper.prop('className')).toContain('top')
+    expect(wrapper.hasClass('is-align-top')).toBe(true)
   })
 
   test('Applies horizontal alignment styles', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Flexy just="right">
         <Flexy.Item>Hello</Flexy.Item>
       </Flexy>
     )
 
-    expect(wrapper.prop('className')).toContain('right')
+    expect(wrapper.hasClass('is-just-right')).toBe(true)
   })
 
   test('Applies spacing styles', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Flexy gap="lg">
         <Flexy.Item>Hello</Flexy.Item>
       </Flexy>
     )
 
-    expect(wrapper.prop('className')).toContain('gap-lg')
+    expect(wrapper.hasClass('is-gap-lg')).toBe(true)
   })
 })

@@ -15,6 +15,7 @@ import {
 } from './styles/Input.css.js'
 
 type Props = {
+  autoFocus: boolean,
   align: ChoiceAlign,
   children?: any,
   checked: boolean,
@@ -44,6 +45,7 @@ type State = {
 
 class Input extends Component<Props, State> {
   static defaultProps = {
+    autoFocus: false,
     disabled: false,
     onBlur: noop,
     onChange: noop,

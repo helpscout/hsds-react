@@ -1,6 +1,10 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import classNames from '../../utilities/classNames'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { ItemUI } from './styles/Item.css.js'
 
 type Props = {
   children?: any,
@@ -12,22 +16,24 @@ class Item extends Component<Props> {
   static defaultProps = {
     inline: false,
   }
-  static displayName = 'Flexy.Item'
 
   render() {
     const { children, className, inline, ...rest } = this.props
 
     const componentClassName = classNames(
-      inline ? 'c-Flexy__inline-item' : 'c-Flexy__item',
+      'c-Flexy__item',
+      inline ? 'is-inlineItem' : 'is-defaultItem',
       className
     )
 
     return (
-      <div className={componentClassName} {...rest}>
+      <ItemUI {...getValidProps(rest)} className={componentClassName}>
         {children}
-      </div>
+      </ItemUI>
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY)(Item)
 
 export default Item
