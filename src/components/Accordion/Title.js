@@ -1,10 +1,14 @@
 // @flow
-import { Icon, Flexy } from '../..'
-import Keys from '../../constants/Keys'
-import React, { Component } from 'react'
-import { TitleUI } from './styles/Accordion.css'
 import type { TitleProps } from './types'
-import classNames, { BEM } from '../../utilities/classNames'
+import React, { Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Flexy from '../Flexy'
+import Icon from '../Icon'
+import Keys from '../../constants/Keys'
+import { BEM, classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { TitleUI } from './styles/Accordion.css.js'
+import { COMPONENT_KEY } from './utils'
 
 const bem = BEM('c-Accordion__Section')
 
@@ -52,22 +56,16 @@ class Title extends Component<TitleProps> {
 
   static displayName = 'AccordionSectionTitle'
 
-  constructor(props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
-  }
-
-  handleClick = e => {
-    e && e.preventDefault()
+  handleClick = (event: Event | SyntheticKeyboardEvent<HTMLElement>) => {
+    event && event.preventDefault()
     const { isOpen, setOpen, uuid } = this.props
     setOpen(uuid, !isOpen)
   }
 
-  handleKeyPress = e => {
+  handleKeyPress = (event: SyntheticKeyboardEvent<HTMLElement>) => {
     const { ENTER, SPACE } = Keys
-    if (e && (e.charCode === ENTER || e.charCode === SPACE)) {
-      this.handleClick(e)
+    if (event && (event.charCode === ENTER || event.charCode === SPACE)) {
+      this.handleClick(event)
     }
   }
 
@@ -76,11 +74,14 @@ class Title extends Component<TitleProps> {
       className,
       children,
       isOpen,
+      onOpen,
+      onClose,
       setOpen,
       size,
       uuid,
       ...rest
     } = this.props
+
     const id = `accordion__section__title--${uuid}`
     const ariaControls = `accordion__section__body--${uuid}`
     const componentClassName = getComponentClassName(this.props)
@@ -88,8 +89,10 @@ class Title extends Component<TitleProps> {
       faint: !isOpen,
       name: isOpen ? 'caret-up' : 'caret-down',
     }
+
     return (
       <TitleUI
+        {...getValidProps(rest)}
         aria-controls={ariaControls}
         aria-selected={isOpen}
         className={componentClassName}
@@ -98,7 +101,6 @@ class Title extends Component<TitleProps> {
         onKeyPress={this.handleKeyPress}
         role="tab"
         tabIndex="0"
-        {...rest}
       >
         <Flexy>
           <Flexy.Block>{children}</Flexy.Block>
@@ -110,5 +112,7 @@ class Title extends Component<TitleProps> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Title)(Title)
 
 export default Title

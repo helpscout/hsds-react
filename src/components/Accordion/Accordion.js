@@ -1,15 +1,19 @@
 // @flow
-import Body from './Body'
+import type { AccordionProps, AccordionState } from './types'
 import React, { cloneElement, Children, Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Body from './Body'
 import Section from './Section'
-import { AccordionUI } from './styles/Accordion.css'
 import Title from './Title'
-import type { AccordionProps } from './types'
 import classNames from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { noop } from '../../utilities/other'
+import { AccordionUI } from './styles/Accordion.css.js'
+import { COMPONENT_KEY } from './utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
-  isAllowMulipleMultipleClassName: 'is-allow-multiple',
+  isAllowMultipleClassName: 'is-allow-multiple',
   isSeamlessClassName: 'is-seamless',
 }
 
@@ -31,25 +35,22 @@ export const getComponentClassName = ({
   )
 }
 
-class Accordion extends Component<AccordionProps> {
+class Accordion extends Component<AccordionProps, AccordionState> {
   static Body = Body
   static Section = Section
   static Title = Title
 
   static defaultProps = {
+    onOpen: noop,
+    onClose: noop,
     size: 'md',
   }
 
-  static displayName = 'Accordion'
-
-  constructor(props) {
-    super(props)
-
-    this.state = { sections: {} }
-    this.setOpen = this.setOpen.bind(this)
+  state = {
+    sections: {},
   }
 
-  setOpen(uuid: string, isOpen: boolean) {
+  setOpen = (uuid: string, isOpen: boolean) => {
     const { allowMultiple } = this.props
     if (allowMultiple) {
       return this.setState({
@@ -71,16 +72,29 @@ class Accordion extends Component<AccordionProps> {
       allowMultiple,
       className,
       children,
+      onOpen,
+      onClose,
       isSeamless,
       size,
       ...rest
     } = this.props
     const { sections } = this.state
     const componentClassName = getComponentClassName(this.props)
-    const extraProps = { isSeamless, sections, setOpen: this.setOpen, size }
+    const extraProps = {
+      isSeamless,
+      onOpen,
+      onClose,
+      sections,
+      setOpen: this.setOpen,
+      size,
+    }
 
     return (
-      <AccordionUI className={componentClassName} role="tablist" {...rest}>
+      <AccordionUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        role="tablist"
+      >
         {Children.map(children, child =>
           cloneElement(child, {
             ...child.props,
@@ -91,5 +105,7 @@ class Accordion extends Component<AccordionProps> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Accordion)(Accordion)
 
 export default Accordion

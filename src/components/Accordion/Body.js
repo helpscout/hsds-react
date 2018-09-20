@@ -1,9 +1,13 @@
 // @flow
-import { Collapsible } from '../../'
-import React, { Component } from 'react'
-import { BodyUI } from './styles/Accordion.css'
 import type { BodyProps } from './types'
-import classNames, { BEM } from '../../utilities/classNames'
+import React, { Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Collapsible from '../Collapsible'
+import { BEM, classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { noop } from '../../utilities/other'
+import { BodyUI } from './styles/Accordion.css.js'
+import { COMPONENT_KEY } from './utils'
 
 const bem = BEM('c-Accordion__Section')
 
@@ -45,19 +49,49 @@ export const getComponentClassName = ({
 }
 
 class Body extends Component<BodyProps> {
-  static display = 'AccordionSectionBody'
+  static defaultProps = {
+    onOpen: noop,
+    onClose: noop,
+  }
+
+  handleOnOpen = () => {
+    const { onOpen, uuid } = this.props
+
+    onOpen(uuid)
+  }
+
+  handleOnClose = () => {
+    const { onClose, uuid } = this.props
+
+    onClose(uuid)
+  }
 
   render() {
-    const { className, isOpen, size, uuid, ...rest } = this.props
+    const {
+      className,
+      isOpen,
+      onOpen,
+      onClose,
+      size,
+      uuid,
+      ...rest
+    } = this.props
     const id = `accordion__section__body--${uuid}`
     const componentClassName = getComponentClassName(this.props)
 
     return (
-      <Collapsible id={id} isOpen={isOpen}>
-        <BodyUI className={componentClassName} {...rest} />
+      <Collapsible
+        id={id}
+        isOpen={isOpen}
+        onOpen={this.handleOnOpen}
+        onClose={this.handleOnClose}
+      >
+        <BodyUI {...getValidProps(rest)} className={componentClassName} />
       </Collapsible>
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Body)(Body)
 
 export default Body

@@ -10,7 +10,13 @@ export type AccordionProps = {
   children: ChildrenArray<Element<typeof Section>>,
   className?: string,
   isSeamless?: boolean,
+  onOpen?: (uuid: string) => void,
+  onClose?: (uuid: string) => void,
   size?: Sizes
+}
+
+export type AccordionState = {
+  sections: Object,
 }
 
 export type BodyProps = {
@@ -18,6 +24,8 @@ export type BodyProps = {
   className?: string,
   isOpen: boolean,
   isSeamless?: boolean,
+  onOpen: (uuid: string) => void,
+  onClose: (uuid: string) => void,
   size?: Sizes,
   uuid: string,
 }
@@ -26,6 +34,8 @@ export type SectionProps = {
   children: ChildrenArray<Element<typeof Title|Body>>,
   className?: string,
   isSeamless?: boolean,
+  onOpen?: (uuid: string) => void,
+  onClose?: (uuid: string) => void,
   sections: object,
   setOpen: () => void,
   size?: Sizes,
@@ -39,5 +49,10 @@ export type TitleProps = {
   isSeamless?: boolean,
   setOpen: () => void,
   size?: Sizes,
+  uuid: string
+}
+
+export type WithUuidProps = {}
+export type WithUuidState = {
   uuid: string
 }
