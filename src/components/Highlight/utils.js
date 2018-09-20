@@ -1,1 +1,1 @@
-export default (COMPONENT_KEY = 'Highlight')
+export const COMPONENT_KEY = 'Highlight'
