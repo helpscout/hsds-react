@@ -8,7 +8,6 @@ import objectivec from 'highlight.js/lib/languages/objectivec'
 import java from 'highlight.js/lib/languages/java'
 import javascript from 'highlight.js/lib/languages/javascript'
 import swift from 'highlight.js/lib/languages/swift'
-
 hljs.registerLanguage('objectivec', objectivec)
 hljs.registerLanguage('java', java)
 hljs.registerLanguage('javascript', javascript)
