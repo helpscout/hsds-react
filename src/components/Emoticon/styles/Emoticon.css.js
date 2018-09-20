@@ -1,31 +1,50 @@
-import base from '../../../styles/resets/base.css'
+// @flow
+import base from '../../../styles/resets/base.css.js'
+import styled from '../../styled'
 
-// Variables
-const colors = {
-  on: {
-    head: '#FFE8B5',
-    face: '#d79400',
+export const config = {
+  colors: {
+    on: {
+      head: '#FFE8B5',
+      face: '#d79400',
+    },
+    off: {
+      head: '#e3e8eb',
+      face: '#a5b2bd',
+    },
   },
-  off: {
-    head: '#e3e8eb',
-    face: '#a5b2bd',
+  size: {
+    default: '26px',
+    md: '26px',
+    sm: '16px',
   },
-}
-const sizes = {
-  default: '26px',
-  md: '26px',
-  sm: '16px',
+  transition: 'opacity 100ms linear, transform 100ms linear',
+  transformHover: 'translateY(-2px)',
+  svgTransition: 'fill 200ms linear',
 }
 
-// Styles
-const css = `
-  ${base}
-  color: currentColor;
+export const EmoticonUI = styled('span')`
+  ${base} color: currentColor;
   cursor: pointer;
   display: block;
-  height: ${sizes.default};
+  height: ${config.size.default};
+  opacity: 1;
   position: relative;
-  width: ${sizes.default};
+  transform: translateY(0);
+  transition: ${config.transition};
+  width: ${config.size.default};
+
+  &:hover {
+    transform: ${config.transformHover};
+  }
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 
   &__icon {
     color: currentColor;
@@ -41,11 +60,16 @@ const css = `
     }
   }
 
+  .c-Emoticon__pathHead,
+  .c-Emoticon__pathFace {
+    transition: ${config.svgTransition};
+  }
+
   .c-Emoticon__pathHead {
-    fill: ${colors.off.head};
+    fill: ${config.colors.off.head};
   }
   .c-Emoticon__pathFace {
-    fill: ${colors.off.face};
+    fill: ${config.colors.off.face};
   }
 
   /**
@@ -68,24 +92,25 @@ const css = `
   }
 
   // Color
-  &.is-active {
+  &.is-active,
+  &:hover {
     .c-Emoticon__pathHead {
-      fill: ${colors.on.head};
+      fill: ${config.colors.on.head};
     }
     .c-Emoticon__pathFace {
-      fill: ${colors.on.face};
+      fill: ${config.colors.on.face};
     }
   }
 
   // Size
   &.is-md {
-    height: ${sizes.md};
-    width: ${sizes.md};
+    height: ${config.size.md};
+    width: ${config.size.md};
   }
   &.is-sm {
-    height: ${sizes.sm};
-    width: ${sizes.sm};
+    height: ${config.size.sm};
+    width: ${config.size.sm};
   }
 `
 
-export default css
+export default EmoticonUI

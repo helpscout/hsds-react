@@ -33,5 +33,19 @@ stories.add('default', () => (
       <Emoticon inline name="sad" size="sm" />
       <Emoticon inline name="sad" isActive={false} size="sm" />
     </div>
+
+    <h3>Default (Disabled)</h3>
+    <div>
+      <Emoticon inline isDisabled name="happy" />
+      <Emoticon inline isDisabled name="happy" isActive={false} />
+    </div>
+    <div>
+      <Emoticon inline isDisabled name="meh" />
+      <Emoticon inline isDisabled name="meh" isActive={false} />
+    </div>
+    <div>
+      <Emoticon inline isDisabled name="sad" />
+      <Emoticon inline isDisabled name="sad" isActive={false} />
+    </div>
   </div>
 ))
