@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Accordion, Text } from '../../src/'
+import { Accordion, Page, Text } from '../../src/'
 
 const stories = storiesOf('Accordion', module)
 
@@ -89,4 +89,46 @@ stories.add('allow multiple', () => (
       <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
   </Accordion>
+))
+
+stories.add('is seamless', () => (
+  <Page title="Accordion">
+    <Page.Card>
+      <Page.Header title="Accordion" subtitle="In seamless mode" />
+      <Accordion isSeamless>
+        <Accordion.Section>
+          <Accordion.Title>
+            <Text truncate weight={700}>
+              Section 1
+            </Text>
+          </Accordion.Title>
+          <Accordion.Body>{bodyCopy}</Accordion.Body>
+        </Accordion.Section>
+        <Accordion.Section>
+          <Accordion.Title>
+            <Text truncate weight={700}>
+              Section 2
+            </Text>
+          </Accordion.Title>
+          <Accordion.Body>{bodyCopy}</Accordion.Body>
+        </Accordion.Section>
+        <Accordion.Section>
+          <Accordion.Title>
+            <Text truncate weight={700}>
+              Section 3
+            </Text>
+          </Accordion.Title>
+          <Accordion.Body>{bodyCopy}</Accordion.Body>
+        </Accordion.Section>
+        <Accordion.Section>
+          <Accordion.Title>
+            <Text truncate weight={700}>
+              Section 4
+            </Text>
+          </Accordion.Title>
+          <Accordion.Body>{bodyCopy}</Accordion.Body>
+        </Accordion.Section>
+      </Accordion>
+    </Page.Card>
+  </Page>
 ))

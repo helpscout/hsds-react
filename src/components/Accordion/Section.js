@@ -13,16 +13,23 @@ export const nextUuid = createUniqueIDFactory('AccordionSection')
 export const classNameStrings = {
   baseComponentClassName: bem.element('Section'),
   isOpenClassName: 'is-open',
+  isSeamlessClassName: 'is-seamless',
 }
 
 export const getComponentClassName = ({
   className,
   isOpen,
+  isSeamless,
 }: SectionProps): string => {
-  const { baseComponentClassName, isOpenClassName } = classNameStrings
+  const {
+    baseComponentClassName,
+    isOpenClassName,
+    isSeamlessClassName,
+  } = classNameStrings
   return classNames(
     baseComponentClassName,
     isOpen && isOpenClassName,
+    isSeamless && isSeamlessClassName,
     className
   )
 }
@@ -39,6 +46,7 @@ class Section extends Component<SectionProps> {
     const {
       uuid,
       className,
+      isSeamless,
       children,
       sections = {},
       setOpen,
@@ -47,7 +55,7 @@ class Section extends Component<SectionProps> {
     } = this.props
     const isOpen = sections[uuid]
     const componentClassName = getComponentClassName({ ...this.props, isOpen })
-    const extraChildProps = { isOpen, size, uuid }
+    const extraChildProps = { isOpen, isSeamless, size, uuid }
 
     return (
       <SectionUI className={componentClassName} {...rest}>
