@@ -1,6 +1,7 @@
 // @flow
 import React, { Children, Component } from 'react'
 import classNames from '../../utilities/classNames'
+import { AccordionUI } from './styles/Accordion.css'
 import Body from './Body'
 import Section from './Section'
 import Title from './Title'
@@ -8,6 +9,7 @@ import Title from './Title'
 type Props = {
   allowMultiple?: boolean,
   className?: string,
+  size?: string,
 }
 
 class Accordion extends Component<Props> {
@@ -43,7 +45,7 @@ class Accordion extends Component<Props> {
   }
 
   render() {
-    const { allowMultiple, className, children, ...rest } = this.props
+    const { allowMultiple, className, children, size, ...rest } = this.props
     const { sections } = this.state
 
     const componentClassName = classNames(
@@ -53,15 +55,16 @@ class Accordion extends Component<Props> {
     )
 
     return (
-      <div className={componentClassName} role="tablist" {...rest}>
+      <AccordionUI className={componentClassName} role="tablist" {...rest}>
         {Children.map(children, child => {
           return React.cloneElement(child, {
             ...child.props,
             sections,
             setOpen: this.setOpen,
+            size,
           })
         })}
-      </div>
+      </AccordionUI>
     )
   }
 }

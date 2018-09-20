@@ -30,6 +30,7 @@ type Props = {
   className?: string,
   sections: object,
   setOpen: () => void,
+  size?: string,
 }
 
 class Section extends Component<Props> {
@@ -42,6 +43,7 @@ class Section extends Component<Props> {
       children,
       sections = {},
       setOpen,
+      size,
       ...rest
     } = this.props
     const isOpen = sections[uuid]
@@ -60,6 +62,7 @@ class Section extends Component<Props> {
             ...child.props,
             uuid,
             isOpen,
+            size,
             ...props,
           })
         })}

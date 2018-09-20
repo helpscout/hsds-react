@@ -1,13 +1,16 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from '../../utilities/classNames'
+import { Icon, Flexy } from '../..'
 import Keys from '../../constants/Keys'
+import { TitleUI } from './styles/Section.css'
 
 type Props = {
   uuid: string,
   className?: string,
   isOpen: boolean,
   setOpen: () => void,
+  size?: string,
 }
 
 class Title extends Component<Props> {
@@ -33,7 +36,15 @@ class Title extends Component<Props> {
   }
 
   render() {
-    const { className, isOpen, setOpen, uuid, ...rest } = this.props
+    const {
+      className,
+      children,
+      isOpen,
+      setOpen,
+      size,
+      uuid,
+      ...rest
+    } = this.props
 
     const id = `accordion__section__title--${uuid}`
     const ariaControls = `accordion__section__body--${uuid}`
@@ -41,11 +52,19 @@ class Title extends Component<Props> {
     const componentClassName = classNames(
       'c-Accordion__Section__Title',
       isOpen && 'is-open',
+      size && size === 'xs' && 'is-xs',
+      size && size === 'sm' && 'is-sm',
+      size && size === 'md' && 'is-md',
       className
     )
 
+    const iconProps = {
+      faint: !isOpen,
+      name: isOpen ? 'caret-up' : 'caret-down',
+    }
+
     return (
-      <div
+      <TitleUI
         aria-controls={ariaControls}
         aria-selected={isOpen}
         className={componentClassName}
@@ -55,7 +74,14 @@ class Title extends Component<Props> {
         role={role}
         tabIndex="0"
         {...rest}
-      />
+      >
+        <Flexy>
+          <Flexy.Block>{children}</Flexy.Block>
+          <Flexy.Item>
+            <Icon {...iconProps} />
+          </Flexy.Item>
+        </Flexy>
+      </TitleUI>
     )
   }
 }
