@@ -1,30 +1,52 @@
 // @flow
+import { Collapsible } from '../../'
 import React, { Component } from 'react'
-import { BodyUI } from './styles/Section.css'
-import classNames from '../../utilities/classNames'
-import { Collapsible } from '../..'
+import { BodyUI } from './styles/Accordion.css'
+import type { BodyProps } from './types'
+import classNames, { BEM } from '../../utilities/classNames'
 
-type Props = {
-  uuid: string,
-  className?: string,
-  isOpen: boolean,
-  size?: string,
+const bem = BEM('c-Accordion__Section')
+
+export const classNameStrings = {
+  baseComponentClassName: bem.element('Body'),
+  isOpenClassName: 'is-open',
+  isSizeXsClassName: 'is-xs',
+  isSizeSmClassName: 'is-sm',
+  isSizeMdClassName: 'is-md',
+  isSizeLgClassName: 'is-lg',
 }
 
-class Body extends Component<Props> {
-  static displayName = 'AccordionSectionBody'
+export const getComponentClassName = ({
+  className,
+  isOpen,
+  size,
+}: BodyProps): string => {
+  const {
+    baseComponentClassName,
+    isOpenClassName,
+    isSizeXsClassName,
+    isSizeSmClassName,
+    isSizeMdClassName,
+    isSizeLgClassName,
+  } = classNameStrings
+  return classNames(
+    baseComponentClassName,
+    isOpen && isOpenClassName,
+    size && size === 'xs' && isSizeXsClassName,
+    size && size === 'sm' && isSizeSmClassName,
+    size && size === 'md' && isSizeMdClassName,
+    size && size === 'lg' && isSizeLgClassName,
+    className
+  )
+}
+
+class Body extends Component<BodyProps> {
+  static display = 'AccordionSectionBody'
 
   render() {
     const { className, isOpen, size, uuid, ...rest } = this.props
     const id = `accordion__section__body--${uuid}`
-    const componentClassName = classNames(
-      'c-Accordion__Section__Body',
-      isOpen && 'is-open',
-      size && size === 'xs' && 'is-xs',
-      size && size === 'sm' && 'is-sm',
-      size && size === 'md' && 'is-md',
-      className
-    )
+    const componentClassName = getComponentClassName(this.props)
 
     return (
       <Collapsible id={id} isOpen={isOpen}>

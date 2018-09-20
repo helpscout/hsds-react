@@ -1,13 +1,72 @@
 // @flow
-import React, { Children, Component } from 'react'
-import classNames from '../../utilities/classNames'
-import { createUniqueIDFactory } from '../../utilities/id'
-import { SectionUI } from './styles/Section.css'
+import React, { Children, cloneElement, Component, Element } from 'react'
+import { SectionUI } from './styles/Accordion.css'
 import Title from './Title'
+import type { SectionProps } from './types'
+import classNames, { BEM } from '../../utilities/classNames'
+import { createUniqueIDFactory } from '../../utilities/id'
 
-const nextUuid = createUniqueIDFactory('AccordionSection')
+const bem = BEM('c-Accordion')
 
-export const withUuid = WrappedComponent =>
+export const nextUuid = createUniqueIDFactory('AccordionSection')
+
+export const classNameStrings = {
+  baseComponentClassName: bem.element('Section'),
+  isOpenClassName: 'is-open',
+}
+
+export const getComponentClassName = ({
+  className,
+  isOpen,
+}: SectionProps): string => {
+  const { baseComponentClassName, isOpenClassName } = classNameStrings
+  return classNames(
+    baseComponentClassName,
+    isOpen && isOpenClassName,
+    className
+  )
+}
+
+class Section extends Component<SectionProps> {
+  static defaultProps = {
+    sections: {},
+    setOpen: () => {},
+  }
+
+  static displayName = 'AccordionSection'
+
+  render() {
+    const {
+      uuid,
+      className,
+      children,
+      sections = {},
+      setOpen,
+      size,
+      ...rest
+    } = this.props
+    const isOpen = sections[uuid]
+    const componentClassName = getComponentClassName({ ...this.props, isOpen })
+    const extraChildProps = { isOpen, size, uuid }
+
+    return (
+      <SectionUI className={componentClassName} {...rest}>
+        {Children.map(children, child => {
+          const extraProps = child.type === Title ? { setOpen } : {}
+          return cloneElement(child, {
+            ...child.props,
+            ...extraChildProps,
+            ...extraProps,
+          })
+        })}
+      </SectionUI>
+    )
+  }
+}
+
+const withUuid = (
+  WrappedComponent: Element<typeof Section>
+): Element<typeof Section> =>
   class extends Component {
     constructor(props) {
       super(props)
@@ -24,51 +83,5 @@ export const withUuid = WrappedComponent =>
       })
     }
   }
-
-type Props = {
-  uuid: string,
-  className?: string,
-  sections: object,
-  setOpen: () => void,
-  size?: string,
-}
-
-class Section extends Component<Props> {
-  static displayName = 'AccordionSection'
-
-  render() {
-    const {
-      uuid,
-      className,
-      children,
-      sections = {},
-      setOpen,
-      size,
-      ...rest
-    } = this.props
-    const isOpen = sections[uuid]
-    const componentClassName = classNames(
-      'c-Accordion__Section',
-      isOpen && 'is-open',
-      className
-    )
-
-    return (
-      <SectionUI className={componentClassName} {...rest}>
-        {Children.map(children, child => {
-          const props = child.type === Title ? { setOpen } : {}
-
-          return React.cloneElement(child, {
-            ...child.props,
-            uuid,
-            isOpen,
-            size,
-            ...props,
-          })
-        })}
-      </SectionUI>
-    )
-  }
-}
 
 export default withUuid(Section)

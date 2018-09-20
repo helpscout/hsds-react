@@ -1,19 +1,51 @@
 // @flow
-import React, { Component } from 'react'
-import classNames from '../../utilities/classNames'
 import { Icon, Flexy } from '../..'
 import Keys from '../../constants/Keys'
-import { TitleUI } from './styles/Section.css'
+import React, { Component } from 'react'
+import { TitleUI } from './styles/Accordion.css'
+import type { TitleProps } from './types'
+import classNames, { BEM } from '../../utilities/classNames'
 
-type Props = {
-  uuid: string,
-  className?: string,
-  isOpen: boolean,
-  setOpen: () => void,
-  size?: string,
+const bem = BEM('c-Accordion__Section')
+
+export const classNameStrings = {
+  baseComponentClassName: bem.element('Title'),
+  isOpenClassName: 'is-open',
+  isSizeXsClassName: 'is-xs',
+  isSizeSmClassName: 'is-sm',
+  isSizeMdClassName: 'is-md',
+  isSizeLgClassName: 'is-lg',
 }
 
-class Title extends Component<Props> {
+export const getComponentClassName = ({
+  className,
+  isOpen,
+  size,
+}: TitleProps): string => {
+  const {
+    baseComponentClassName,
+    isOpenClassName,
+    isSizeXsClassName,
+    isSizeSmClassName,
+    isSizeMdClassName,
+    isSizeLgClassName,
+  } = classNameStrings
+  return classNames(
+    baseComponentClassName,
+    isOpen && isOpenClassName,
+    size && size === 'xs' && isSizeXsClassName,
+    size && size === 'sm' && isSizeSmClassName,
+    size && size === 'md' && isSizeMdClassName,
+    size && size === 'lg' && isSizeLgClassName,
+    className
+  )
+}
+
+class Title extends Component<TitleProps> {
+  static defaultProps = {
+    setOpen: () => {},
+  }
+
   static displayName = 'AccordionSectionTitle'
 
   constructor(props) {
@@ -24,13 +56,13 @@ class Title extends Component<Props> {
 
   handleClick = e => {
     e && e.preventDefault()
-
     const { isOpen, setOpen, uuid } = this.props
     setOpen(uuid, !isOpen)
   }
 
   handleKeyPress = e => {
-    if (e && (e.charCode === Keys.ENTER || e.charCode === Keys.SPACE)) {
+    const { ENTER, SPACE } = Keys
+    if (e && (e.charCode === ENTER || e.charCode === SPACE)) {
       this.handleClick(e)
     }
   }
@@ -45,24 +77,13 @@ class Title extends Component<Props> {
       uuid,
       ...rest
     } = this.props
-
     const id = `accordion__section__title--${uuid}`
     const ariaControls = `accordion__section__body--${uuid}`
-    const role = 'tab'
-    const componentClassName = classNames(
-      'c-Accordion__Section__Title',
-      isOpen && 'is-open',
-      size && size === 'xs' && 'is-xs',
-      size && size === 'sm' && 'is-sm',
-      size && size === 'md' && 'is-md',
-      className
-    )
-
+    const componentClassName = getComponentClassName(this.props)
     const iconProps = {
       faint: !isOpen,
       name: isOpen ? 'caret-up' : 'caret-down',
     }
-
     return (
       <TitleUI
         aria-controls={ariaControls}
@@ -71,7 +92,7 @@ class Title extends Component<Props> {
         id={id}
         onClick={this.handleClick}
         onKeyPress={this.handleKeyPress}
-        role={role}
+        role="tab"
         tabIndex="0"
         {...rest}
       >

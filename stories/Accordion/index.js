@@ -4,6 +4,19 @@ import { Accordion, Text } from '../../src/'
 
 const stories = storiesOf('Accordion', module)
 
+const bodyCopy = `
+Laborum ex laboris exercitation exercitation. Laborum nisi excepteur sunt ut 
+sint sunt non consectetur incididunt. In dolor nulla cupidatat adipisicing 
+eiusmod commodo officia. Dolore ut tempor cillum voluptate minim quis cupidatat 
+sit ea incididunt tempor irure ex consectetur. Aliqua enim consectetur ad
+sit. Ullamco aliquip ullamco commodo cupidatat culpa qui commodo. Do sint 
+reprehenderit aute dolor veniam. Anim non deserunt do irure nostrud labore 
+consequat. Enim voluptate nostrud id aliquip est. Nisi esse ea voluptate 
+nostrud. Incididunt adipisicing aute elit in sint. Ipsum laborum labore dolor 
+amet mollit Lorem. Mollit laborum cillum id occaecat et laboris labore pariatur
+do est.
+`
+
 stories.add('default', () => (
   <Accordion>
     <Accordion.Section>
@@ -12,7 +25,7 @@ stories.add('default', () => (
           Section 1
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 1</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
     <Accordion.Section>
       <Accordion.Title>
@@ -20,7 +33,7 @@ stories.add('default', () => (
           Section 2
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 2</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
     <Accordion.Section>
       <Accordion.Title>
@@ -28,16 +41,15 @@ stories.add('default', () => (
           Section 3
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 3</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
     <Accordion.Section>
       <Accordion.Title>
         <Text truncate weight={700}>
-          Wow The Title For Section Four Really Is Ridiculously Long Isn't It? I
-          Mean Come On? How Long Does It Need To Be?
+          Section 4
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 4</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
   </Accordion>
 ))
@@ -50,7 +62,7 @@ stories.add('allow multiple', () => (
           Section 1
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 1</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
     <Accordion.Section>
       <Accordion.Title>
@@ -58,7 +70,7 @@ stories.add('allow multiple', () => (
           Section 2
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 2</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
     <Accordion.Section>
       <Accordion.Title>
@@ -66,16 +78,15 @@ stories.add('allow multiple', () => (
           Section 3
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 3</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
     <Accordion.Section>
       <Accordion.Title>
         <Text truncate weight={700}>
-          Wow The Title For Section Four Really Is Ridiculously Long Isn't It? I
-          Mean Come On? How Long Does It Need To Be?
+          Section 4
         </Text>
       </Accordion.Title>
-      <Accordion.Body>Some body text for section 4</Accordion.Body>
+      <Accordion.Body>{bodyCopy}</Accordion.Body>
     </Accordion.Section>
   </Accordion>
 ))
