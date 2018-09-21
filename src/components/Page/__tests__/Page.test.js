@@ -5,7 +5,6 @@ import Page from '../Page'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Page />)
-
     expect(wrapper.hasClass('c-Page')).toBe(true)
   })
 
@@ -21,7 +20,7 @@ describe('Content', () => {
   test('Can render child content', () => {
     const wrapper = mount(<Page>Channel 4</Page>)
 
-    expect(wrapper.text()).toBe('Channel 4')
+    expect(wrapper.html()).toContain('Channel 4')
   })
 
   test('Can render child component', () => {
@@ -46,8 +45,8 @@ describe('Sub-components', () => {
       </Page>
     )
 
-    expect(wrapper.find('Card').length).toBe(1)
-    expect(wrapper.find('Header').length).toBe(1)
-    expect(wrapper.find('Actions').length).toBe(1)
+    expect(wrapper.find(Page.Card).length).toBe(1)
+    expect(wrapper.find(Page.Header).length).toBe(1)
+    expect(wrapper.find(Page.Actions).length).toBe(1)
   })
 })
