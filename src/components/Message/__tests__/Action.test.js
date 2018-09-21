@@ -85,13 +85,12 @@ describe('Context', () => {
     )
     let o = wrapper.find(ui.text)
 
-    expect(o.props().className).toContain('11')
+    expect(o.props().className).toContain('12')
     expect(o.props().className).toContain('faint')
 
     wrapper.setProps({ theme: 'admin' })
     o = wrapper.find(ui.text)
 
-    expect(o.props().className).toContain('11')
     expect(o.props().className).toContain('muted')
   })
 })
