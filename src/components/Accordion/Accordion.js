@@ -95,18 +95,23 @@ class Accordion extends Component<AccordionProps, AccordionState> {
       size,
     }
 
+    const content =
+      Children.count(children) > 0
+        ? Children.map(children, child =>
+            cloneElement(child, {
+              ...child.props,
+              ...extraProps,
+            })
+          )
+        : null
+
     return (
       <AccordionUI
         {...getValidProps(rest)}
         className={componentClassName}
         role="tablist"
       >
-        {Children.map(children, child =>
-          cloneElement(child, {
-            ...child.props,
-            ...extraProps,
-          })
-        )}
+        {content}
       </AccordionUI>
     )
   }

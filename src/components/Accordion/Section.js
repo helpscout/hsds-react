@@ -69,18 +69,23 @@ class Section extends Component<SectionProps> {
       uuid,
     }
 
+    const content =
+      Children.count(children) > 0
+        ? Children.map(children, child => {
+            const extraProps = isComponentNamed(child, COMPONENT_KEY.Title)
+              ? { setOpen }
+              : {}
+            return cloneElement(child, {
+              ...child.props,
+              ...extraChildProps,
+              ...extraProps,
+            })
+          })
+        : null
+
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>
-        {Children.map(children, child => {
-          const extraProps = isComponentNamed(child, COMPONENT_KEY.Title)
-            ? { setOpen }
-            : {}
-          return cloneElement(child, {
-            ...child.props,
-            ...extraChildProps,
-            ...extraProps,
-          })
-        })}
+        {content}
       </SectionUI>
     )
   }
