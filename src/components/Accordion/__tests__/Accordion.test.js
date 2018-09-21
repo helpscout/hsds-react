@@ -83,3 +83,25 @@ describe('Content', () => {
     ).toHaveLength(1)
   })
 })
+
+describe('State', () => {
+  test('It should only track the value of one section if allow multiple is not enabled', () => {
+    const wrapper = mount(<Accordion />)
+    const instance = wrapper.instance()
+    expect(wrapper.state('sections')).toEqual({})
+    instance.setOpen('123', true)
+    expect(wrapper.state('sections')).toEqual({ '123': true })
+    instance.setOpen('456', true)
+    expect(wrapper.state('sections')).toEqual({ '456': true })
+  })
+
+  test('It should track the value of multiple sections if allow multiple is enabled', () => {
+    const wrapper = mount(<Accordion allowMultiple />)
+    const instance = wrapper.instance()
+    expect(wrapper.state('sections')).toEqual({})
+    instance.setOpen('123', true)
+    expect(wrapper.state('sections')).toEqual({ '123': true })
+    instance.setOpen('456', true)
+    expect(wrapper.state('sections')).toEqual({ '123': true, '456': true })
+  })
+})
