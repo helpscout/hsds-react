@@ -3,13 +3,11 @@ import React, { PureComponent } from 'react'
 import Card from '../Card'
 import Text from '../Text'
 import Truncate from '../Truncate'
-
-import classNames from '../../utilities/classNames'
 import styled from '../styled'
-import css from './styles/ArticleCard.css.js'
-
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
+import css from './styles/ArticleCard.css.js'
 
 type Props = {
   className?: string,

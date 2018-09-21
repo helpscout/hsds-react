@@ -9,8 +9,8 @@ const grey600 = getColor('grey.600')
 
 export const config = {
   hoverStyle: {
-    baseShadow: `box-shadow: #{0 1px 3px 0 rgba(black, 0.1), 
-                            inset 0 0 0 1px rgba(${grey600}, 0.7), 
+    baseShadow: `box-shadow: #{0 1px 3px 0 rgba(black, 0.1),
+                            inset 0 0 0 1px rgba(${grey600}, 0.7),
                             inset 0 -1px 0px 0px ${grey600}}`,
     baseHoverShadow: `box-shadow: 0 3px 12px 0 rgba(black, 0.1)`,
   },
@@ -23,7 +23,7 @@ const css = `
   padding: 20px 18px 27px;
   position: relative;
   will-change: box-shadow;
-  word-wrap: break-word; 
+  word-wrap: break-word;
 
   -moz-osx-font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
@@ -54,7 +54,7 @@ const css = `
   &:hover{
     ${bem.element('title')} {
       color: ${getColor('blue.600')};
-    }   
+    }
   }
 
   &.is-hoverable {
@@ -87,8 +87,6 @@ const css = `
       opacity: 1;
     }
   }
-
-
 `
 
 export default css
