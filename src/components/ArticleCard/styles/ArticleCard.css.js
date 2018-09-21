@@ -20,7 +20,7 @@ const css = `
   ${baseStyles}
 
   margin-bottom: 3px;
-  padding: 16px 18px 18px;
+  padding: 20px 18px 27px;
   position: relative;
   will-change: box-shadow;
   word-wrap: break-word; 
@@ -30,22 +30,25 @@ const css = `
 
   ${bem.element('title')} {
     color: ${getColor('blue.500')};
-    font-weight: 500;
     line-height: 1.5;
     margin-bottom: 5px;
     transition: all 200ms linear;
   }
 
   ${bem.element('footer')} {
-    margin-top:5px;
+    margin-top:8px;
   }
 
   ${bem.element('content')} {
     margin: 0;
   }
 
+  .c-AvatarStack{
+    margin-bottom:-5px;
+  }
+
   ${bem.element('metaHeader')} {
-    margin-bottom:5px;
+    margin-bottom:7px;
   }
 
   &:hover{
@@ -58,6 +61,7 @@ const css = `
     box-shadow: ${config.hoverStyle.baseShadow};
     border: none;
     transform: translateZ(0);
+    text-decoration:none;
 
     &:hover {
       border: none;

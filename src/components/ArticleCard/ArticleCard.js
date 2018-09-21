@@ -8,6 +8,9 @@ import classNames from '../../utilities/classNames'
 import styled from '../styled'
 import css from './styles/ArticleCard.css.js'
 
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+
 type Props = {
   className?: string,
   title?: string,
@@ -32,47 +35,55 @@ class ArticleCard extends PureComponent<Props> {
     contentSize: 13,
   }
 
-  renderTitle() {
+  renderTitle = () => {
     const { title, titleLimit, titleSize } = this.props
 
     return (
-      <div className="c-ArticleCard__title">
-        <Text size={titleSize}>
-          <Truncate limit={titleLimit} type="end">
-            {title}
-          </Truncate>
-        </Text>
-      </div>
+      title && (
+        <div className="c-ArticleCard__title">
+          <Text size={titleSize} weight="500">
+            <Truncate limit={titleLimit} type="end">
+              {title}
+            </Truncate>
+          </Text>
+        </div>
+      )
     )
   }
 
-  renderContent() {
+  renderContent = () => {
     const { content, contentLimit, contentSize } = this.props
 
     return (
-      <p className="c-ArticleCard__content">
-        <Text
-          size={contentSize}
-          className="c-ArticleCard__contentText"
-          block
-          muted
-        >
-          <Truncate limit={contentLimit} type="end">
-            {content}
-          </Truncate>
-        </Text>
-      </p>
+      content && (
+        <div className="c-ArticleCard__content">
+          <Text
+            size={contentSize}
+            className="c-ArticleCard__contentText"
+            block
+            muted
+          >
+            <Truncate limit={contentLimit} type="end">
+              {content}
+            </Truncate>
+          </Text>
+        </div>
+      )
     )
   }
 
-  renderFooter() {
+  renderFooter = () => {
     const { footer } = this.props
-    return <div className="c-ArticleCard__footer">{footer}</div>
+    return footer && <div className="c-ArticleCard__footer">{footer}</div>
   }
 
-  renderMetaHeader() {
+  renderMetaHeader = () => {
     const { metaHeader } = this.props
-    return <div className="c-ArticleCard__metaHeader">{metaHeader}</div>
+    return (
+      metaHeader && (
+        <div className="c-ArticleCard__metaHeader">{metaHeader}</div>
+      )
+    )
   }
 
   render() {
@@ -93,15 +104,17 @@ class ArticleCard extends PureComponent<Props> {
 
     return (
       <Card {...rest} className={componentClassName}>
-        {metaHeader && this.renderMetaHeader()}
-        {title && this.renderTitle()}
-        {content && this.renderContent()}
-        {footer && this.renderFooter()}
+        {this.renderMetaHeader()}
+        {this.renderTitle()}
+        {this.renderContent()}
+        {this.renderFooter()}
       </Card>
     )
   }
 }
 
 const StyledCard = styled(ArticleCard)(css)
+
+namespaceComponent(COMPONENT_KEY)(StyledCard)
 
 export default StyledCard
