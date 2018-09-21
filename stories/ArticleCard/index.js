@@ -7,6 +7,7 @@ import {
   StatusBadge,
   Avatar,
   AvatarStack,
+  styled,
 } from '../../src/index.js'
 import AvatarSpec from '../AvatarGrid/specs/Avatar'
 
@@ -42,7 +43,18 @@ const avatarsMarkup = fixtures.map(avatar => {
   )
 })
 
-const footer = <AvatarStack max={5}>{avatarsMarkup}</AvatarStack>
+const footer = (
+  <AvatarStack max={5} size="sm">
+    {avatarsMarkup}
+  </AvatarStack>
+)
+
+const WrapperUI = styled('div')`
+  box-sizing: border-box;
+  background: #eee;
+  max-width: 350px;
+  padding: 12px;
+`
 
 const content = `Aspernatur amet et explicabo deserunt veritatis.
   Laudantium eveniet ab quia recusandae.
@@ -52,20 +64,61 @@ const content = `Aspernatur amet et explicabo deserunt veritatis.
   Debitis distinctio at assumenda non suscipit quasi nam ipsam non.
   Quis accusantium quos quo eum at excepturi.`
 
-storiesOf('ArticleCard', module)
-  .add('default', () => <ArticleCard content="Hello" />)
-  .add('title', () => <ArticleCard title="Hello title" content="Hello" />)
-  .add('meta header', () => (
-    <ArticleCard metaHeader={metaHeader} title="Hello title" content="Hello" />
-  ))
-  .add('footer', () => (
-    <ArticleCard footer={footer} title="Hello title" content="Hello" />
-  ))
-  .add('with everything', () => (
+const stories = storiesOf('ArticleCard', module)
+
+stories.add('default', () => <ArticleCard content="Hello" />)
+
+stories.add('title', () => <ArticleCard title="Hello title" content="Hello" />)
+
+stories.add('meta header', () => (
+  <ArticleCard metaHeader={metaHeader} title="Hello title" content="Hello" />
+))
+
+stories.add('footer', () => (
+  <ArticleCard footer={footer} title="Hello title" content="Hello" />
+))
+
+stories.add('with everything', () => (
+  <ArticleCard
+    footer={footer}
+    metaHeader={metaHeader}
+    title="Hello title"
+    content={content}
+  />
+))
+
+stories.add('Link', () => (
+  <ArticleCard
+    href="#"
+    footer={footer}
+    metaHeader={metaHeader}
+    title="Hello title"
+    content={content}
+  />
+))
+
+stories.add('Consecutive', () => (
+  <WrapperUI>
+    <ArticleCard href="#" title="Hello title" content={content} />
+    <ArticleCard href="#" title="Hello title" content={content} />
+  </WrapperUI>
+))
+
+stories.add('Consecutive: Everything', () => (
+  <WrapperUI>
     <ArticleCard
+      href="#"
       footer={footer}
       metaHeader={metaHeader}
       title="Hello title"
       content={content}
     />
-  ))
+    <ArticleCard
+      href="#"
+      footer={footer}
+      metaHeader={metaHeader}
+      title="Hello title"
+      content={content}
+    />
+  </WrapperUI>
+))
