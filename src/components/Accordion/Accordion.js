@@ -14,22 +14,26 @@ import { COMPONENT_KEY } from './utils'
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
   isAllowMultipleClassName: 'is-allow-multiple',
+  isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
 }
 
 export const getComponentClassName = ({
   allowMultiple,
   className,
+  isPage,
   isSeamless,
 }: AccordionProps): string => {
   const {
     baseComponentClassName,
     isAllowMultipleClassName,
+    isPageClassName,
     isSeamlessClassName,
   } = classNameStrings
   return classNames(
     baseComponentClassName,
     allowMultiple && isAllowMultipleClassName,
+    isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
     className
   )
@@ -74,6 +78,7 @@ class Accordion extends Component<AccordionProps, AccordionState> {
       children,
       onOpen,
       onClose,
+      isPage,
       isSeamless,
       size,
       ...rest
@@ -81,6 +86,7 @@ class Accordion extends Component<AccordionProps, AccordionState> {
     const { sections } = this.state
     const componentClassName = getComponentClassName(this.props)
     const extraProps = {
+      isPage,
       isSeamless,
       onOpen,
       onClose,

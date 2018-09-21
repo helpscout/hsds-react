@@ -4,7 +4,7 @@ import { Accordion, Page, Text } from '../../src/'
 
 const stories = storiesOf('Accordion', module)
 
-const bodyCopy = `
+const body = `
 Laborum ex laboris exercitation exercitation. Laborum nisi excepteur sunt ut
 sint sunt non consectetur incididunt. In dolor nulla cupidatat adipisicing
 eiusmod commodo officia. Dolore ut tempor cillum voluptate minim quis cupidatat
@@ -17,121 +17,47 @@ amet mollit Lorem. Mollit laborum cillum id occaecat et laboris labore pariatur
 do est.
 `
 
+const data = [
+  { title: 'Section 1', body },
+  { title: 'Section 2', body },
+  { title: 'Section 3', body },
+  { title: 'Section 4', body },
+]
+
+const createSections = () =>
+  data.map((datum, index) => (
+    <Accordion.Section key={index}>
+      <Accordion.Title>
+        <Text truncate weight={700}>
+          {datum.title}
+        </Text>
+      </Accordion.Title>
+      <Accordion.Body>{datum.body}</Accordion.Body>
+    </Accordion.Section>
+  ))
+
 const onOpen = id => console.log('Open', id)
 const onClose = id => console.log('Close', id)
 
 stories.add('default', () => (
   <Accordion onOpen={onOpen} onClose={onClose}>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 1
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 2
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 3
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 4
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
+    {createSections()}
   </Accordion>
 ))
 
 stories.add('allow multiple', () => (
-  <Accordion allowMultiple>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 1
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 2
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 3
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
-    <Accordion.Section>
-      <Accordion.Title>
-        <Text truncate weight={700}>
-          Section 4
-        </Text>
-      </Accordion.Title>
-      <Accordion.Body>{bodyCopy}</Accordion.Body>
-    </Accordion.Section>
-  </Accordion>
+  <Accordion allowMultiple>{createSections()}</Accordion>
 ))
 
 stories.add('is seamless', () => (
+  <Accordion isSeamless>{createSections()}</Accordion>
+))
+
+stories.add('is seamless in page', () => (
   <Page title="Accordion">
     <Page.Card>
       <Page.Header title="Accordion" subtitle="In seamless mode" />
-      <Accordion isSeamless>
-        <Accordion.Section>
-          <Accordion.Title>
-            <Text truncate weight={700}>
-              Section 1
-            </Text>
-          </Accordion.Title>
-          <Accordion.Body>{bodyCopy}</Accordion.Body>
-        </Accordion.Section>
-        <Accordion.Section>
-          <Accordion.Title>
-            <Text truncate weight={700}>
-              Section 2
-            </Text>
-          </Accordion.Title>
-          <Accordion.Body>{bodyCopy}</Accordion.Body>
-        </Accordion.Section>
-        <Accordion.Section>
-          <Accordion.Title>
-            <Text truncate weight={700}>
-              Section 3
-            </Text>
-          </Accordion.Title>
-          <Accordion.Body>{bodyCopy}</Accordion.Body>
-        </Accordion.Section>
-        <Accordion.Section>
-          <Accordion.Title>
-            <Text truncate weight={700}>
-              Section 4
-            </Text>
-          </Accordion.Title>
-          <Accordion.Body>{bodyCopy}</Accordion.Body>
-        </Accordion.Section>
-      </Accordion>
+      <Accordion>{createSections()}</Accordion>
     </Page.Card>
   </Page>
 ))

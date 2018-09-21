@@ -4,6 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Actions from './Actions'
 import Card from './Card'
 import Header from './Header'
+import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { PageUI } from './styles/Page.css.js'
@@ -26,7 +27,9 @@ class Page extends Component<Props> {
 
     return (
       <PageUI {...getValidProps(rest)} className={componentClassName}>
-        {children}
+        <PropProvider value={{ Accordion: { isPage: true, isSeamless: true } }}>
+          {children}
+        </PropProvider>
       </PageUI>
     )
   }

@@ -1,6 +1,9 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
 import styled from '../../styled'
+
+import { config as pageCardConfig } from '../../Page/styles/Card.css.js'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};
@@ -10,6 +13,19 @@ export const AccordionUI = styled('div')`
   &.is-seamless {
     border: none;
     border-radius: none;
+  }
+
+  &.is-page {
+    margin-left: -50px;
+    margin-right: -50px;
+
+    ${breakpoint(
+      pageCardConfig.breakpoint.widescreen,
+      `
+      margin-left: -100px;
+      margin-right: -100px;
+    `
+    )};
   }
 `
 
@@ -33,6 +49,19 @@ export const BodyUI = styled('div')`
   &.is-seamless {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  &.is-page {
+    padding-left: 50px;
+    padding-right: 50px;
+
+    ${breakpoint(
+      pageCardConfig.breakpoint.widescreen,
+      `
+      padding-left: 100px;
+      padding-right: 100px;
+    `
+    )};
   }
 `
 
@@ -81,5 +110,18 @@ export const TitleUI = styled('div')`
   &.is-seamless {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  &.is-page {
+    padding-left: 50px;
+    padding-right: 50px;
+
+    ${breakpoint(
+      pageCardConfig.breakpoint.widescreen,
+      `
+      padding-left: 100px;
+      padding-right: 100px;
+    `
+    )};
   }
 `

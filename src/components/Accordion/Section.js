@@ -46,6 +46,7 @@ class Section extends Component<SectionProps> {
     const {
       uuid,
       className,
+      isPage,
       isSeamless,
       children,
       onOpen,
@@ -58,7 +59,15 @@ class Section extends Component<SectionProps> {
 
     const isOpen = sections[uuid]
     const componentClassName = getComponentClassName({ ...this.props, isOpen })
-    const extraChildProps = { onOpen, onClose, isOpen, isSeamless, size, uuid }
+    const extraChildProps = {
+      onOpen,
+      onClose,
+      isOpen,
+      isPage,
+      isSeamless,
+      size,
+      uuid,
+    }
 
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>

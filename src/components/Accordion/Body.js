@@ -14,6 +14,7 @@ const bem = BEM('c-Accordion__Section')
 export const classNameStrings = {
   baseComponentClassName: bem.element('Body'),
   isOpenClassName: 'is-open',
+  isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
   isSizeXsClassName: 'is-xs',
   isSizeSmClassName: 'is-sm',
@@ -24,12 +25,14 @@ export const classNameStrings = {
 export const getComponentClassName = ({
   className,
   isOpen,
+  isPage,
   isSeamless,
   size,
 }: BodyProps): string => {
   const {
     baseComponentClassName,
     isOpenClassName,
+    isPageClassName,
     isSeamlessClassName,
     isSizeXsClassName,
     isSizeSmClassName,
@@ -39,6 +42,7 @@ export const getComponentClassName = ({
   return classNames(
     baseComponentClassName,
     isOpen && isOpenClassName,
+    isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
     size && size === 'xs' && isSizeXsClassName,
     size && size === 'sm' && isSizeSmClassName,
@@ -70,6 +74,7 @@ class Body extends Component<BodyProps> {
     const {
       className,
       isOpen,
+      isPage,
       onOpen,
       onClose,
       size,
