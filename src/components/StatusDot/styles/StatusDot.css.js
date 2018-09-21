@@ -19,7 +19,7 @@ export const config = {
   iconSize: 18,
   size: {
     md: 8,
-    sm: 6,
+    sm: 4,
   },
 }
 

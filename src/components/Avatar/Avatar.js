@@ -12,7 +12,9 @@ import { nameToInitials } from '../../utilities/strings'
 import {
   AvatarUI,
   CropUI,
+  CropBorderUI,
   ImageUI,
+  OuterBorderUI,
   StatusUI,
   TitleUI,
 } from './styles/Avatar.css.js'
@@ -48,8 +50,10 @@ export const IMAGE_STATES = {
 
 class Avatar extends Component<Props, State> {
   static defaultProps = {
+    borderColor: 'transparent',
     light: false,
     name: '',
+    outerBorderColor: 'transparent',
     showStatusBorderColor: false,
     size: 'md',
     shape: 'circle',
@@ -98,18 +102,7 @@ class Avatar extends Component<Props, State> {
   }
 
   getCropStyles = (): ?Object => {
-    const { borderColor, outerBorderColor } = this.props
-
-    let styles =
-      borderColor || outerBorderColor
-        ? {
-            border: borderColor ? '2px solid' : undefined,
-            borderColor,
-            boxShadow: outerBorderColor
-              ? `0 0 0 2px ${outerBorderColor}`
-              : undefined,
-          }
-        : {}
+    let styles = {}
 
     if (this.hasImage()) {
       styles = {
@@ -150,7 +143,9 @@ class Avatar extends Component<Props, State> {
 
     const componentClassName = classNames(
       'c-Avatar__status',
-      this.getShapeClassNames()
+      this.getShapeClassNames(),
+      statusIcon && 'is-withStatusIcon',
+      showStatusBorderColor && 'is-withBorder'
     )
 
     return (
@@ -212,6 +207,34 @@ class Avatar extends Component<Props, State> {
     return this.hasImage() ? contentMarkup : titleMarkup
   }
 
+  getCropBorderMarkup = () => {
+    const { borderColor, shape } = this.props
+    const componentClassName = classNames(
+      'c-Avatar__cropBorder',
+      shape && `is-${shape}`
+    )
+
+    const styles = {
+      borderColor,
+    }
+
+    return <CropBorderUI className={componentClassName} style={styles} />
+  }
+
+  getOuterBorderMarkup = () => {
+    const { outerBorderColor, shape } = this.props
+    const componentClassName = classNames(
+      'c-Avatar__outerBorder',
+      shape && `is-${shape}`
+    )
+
+    const styles = {
+      borderColor: outerBorderColor,
+    }
+
+    return <OuterBorderUI className={componentClassName} style={styles} />
+  }
+
   render() {
     const {
       borderColor,
@@ -245,17 +268,16 @@ class Avatar extends Component<Props, State> {
       className
     )
 
-    const cropMarkup = this.getCropMarkup()
-    const statusMarkup = this.getStatusMarkup()
-
     return (
       <AvatarUI
         {...getValidProps(rest)}
         className={componentClassName}
         title={name}
       >
-        {cropMarkup}
-        {statusMarkup}
+        {this.getCropMarkup()}
+        {this.getStatusMarkup()}
+        {this.getCropBorderMarkup()}
+        {this.getOuterBorderMarkup()}
       </AvatarUI>
     )
   }

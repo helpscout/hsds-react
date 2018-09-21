@@ -11,6 +11,7 @@ export const config = {
     md: 8,
     sm: 3,
   },
+  lineHeight: 'calc(19 / 13)',
   icon: {
     left: 14,
     offset: {
@@ -22,6 +23,7 @@ export const config = {
   padding: {
     embed: '12px 15px',
     md: '13px 20px 13px',
+    fromMd: '13px 20px 14px',
     sm: '5px',
   },
 }
@@ -29,7 +31,8 @@ export const config = {
 export const BodyCSS = `
   color: ${getColor('charcoal.500')};
   font-size: ${variableFontSize({ fontSize: 13 })};
-  line-height: 1.5;
+  line-height: 19px;
+  line-height: ${config.lineHeight};
   word-break: break-word;
 `
 
@@ -76,6 +79,10 @@ const css = `
     border-top-right-radius: ${config.borderRadius.md}px;
     border-bottom-right-radius: ${config.borderRadius.md}px;
     border-bottom-left-radius: ${config.borderRadius.sm}px;
+
+    &.is-md {
+      padding: ${config.padding.fromMd};
+    }
   }
 
   &.is-rtl {
