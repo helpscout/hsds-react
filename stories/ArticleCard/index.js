@@ -53,17 +53,13 @@ const content = `Aspernatur amet et explicabo deserunt veritatis.
   Quis accusantium quos quo eum at excepturi.`
 
 storiesOf('ArticleCard', module)
-  .add('default', () => <ArticleCard>Hello</ArticleCard>)
-  .add('title', () => <ArticleCard title="Hello title">Hello</ArticleCard>)
+  .add('default', () => <ArticleCard content="Hello" />)
+  .add('title', () => <ArticleCard title="Hello title" content="Hello" />)
   .add('meta header', () => (
-    <ArticleCard metaHeader={metaHeader} title="Hello title">
-      Hello
-    </ArticleCard>
+    <ArticleCard metaHeader={metaHeader} title="Hello title" content="Hello" />
   ))
   .add('footer', () => (
-    <ArticleCard footer={footer} title="Hello title">
-      Hello
-    </ArticleCard>
+    <ArticleCard footer={footer} title="Hello title" content="Hello" />
   ))
   .add('with everything', () => (
     <ArticleCard
