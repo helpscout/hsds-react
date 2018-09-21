@@ -7,6 +7,7 @@ import Icon from '../Icon'
 import Keys from '../../constants/Keys'
 import { BEM, classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
+import { noop } from '../../utilities/other'
 import { TitleUI } from './styles/Accordion.css.js'
 import { COMPONENT_KEY } from './utils'
 
@@ -55,7 +56,7 @@ const getComponentClassName = ({
 
 class Title extends Component<TitleProps> {
   static defaultProps = {
-    setOpen: () => {},
+    setOpen: noop,
   }
 
   static displayName = 'AccordionSectionTitle'

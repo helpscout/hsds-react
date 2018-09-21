@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Accordion from '../Accordion'
+import Collapsible from '../../Collapsible'
 import Section from '../Section'
 import Title, { classNameStrings as titleClassNames } from '../Title'
 import Body, { classNameStrings as classNames } from '../Body'
@@ -98,5 +99,27 @@ describe('open', () => {
     )
     const o = wrapper.find(`.${classNames.baseComponentClassName}`)
     expect(o).toHaveLength(0)
+  })
+})
+
+describe('Events', () => {
+  test('Fires onOpen callback on open', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Body onOpen={spy} uuid="body001" />)
+    const comp = wrapper.find(Collapsible)
+
+    comp.getNode().props.onOpen()
+
+    expect(spy).toHaveBeenCalledWith('body001')
+  })
+
+  test('Fires onClose callback on close', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Body onClose={spy} uuid="body001" />)
+    const comp = wrapper.find(Collapsible)
+
+    comp.getNode().props.onClose()
+
+    expect(spy).toHaveBeenCalledWith('body001')
   })
 })

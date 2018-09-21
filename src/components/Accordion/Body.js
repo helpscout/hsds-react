@@ -61,20 +61,16 @@ class Body extends Component<BodyProps> {
   // This method is difficult to test through this component in enzyme
   // but tests for the Collapsible component should cover this.
   handleOnOpen = () => {
-    /* istanbul ignore next */
     const { onOpen, uuid } = this.props
 
-    /* istanbul ignore next */
     onOpen(uuid)
   }
 
   // This method is difficult to test through this component in enzyme
   // but tests for the Collapsible component should cover this.
   handleOnClose = () => {
-    /* istanbul ignore next */
     const { onClose, uuid } = this.props
 
-    /* istanbul ignore next */
     onClose(uuid)
   }
 
