@@ -46,6 +46,7 @@ class Section extends Component<SectionProps> {
     const {
       uuid,
       className,
+      duration,
       isPage,
       isSeamless,
       children,
@@ -76,7 +77,7 @@ class Section extends Component<SectionProps> {
         ? Children.map(children, child => {
             const extraProps = isComponentNamed(child, COMPONENT_KEY.Title)
               ? { setOpen }
-              : {}
+              : { duration }
             return cloneElement(child, {
               ...child.props,
               ...extraChildProps,

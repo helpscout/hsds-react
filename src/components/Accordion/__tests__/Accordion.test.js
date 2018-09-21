@@ -65,8 +65,8 @@ describe('Content', () => {
 
   test('Can render sub-components', () => {
     const wrapper = mount(
-      <Accordion>
-        <Section>
+      <Accordion duration={0}>
+        <Section isOpen>
           <Title />
           <Body />
         </Section>
@@ -78,6 +78,8 @@ describe('Content', () => {
     expect(
       wrapper.find(`.${titleClassNames.baseComponentClassName}`)
     ).toHaveLength(1)
-    expect(wrapper.find(`.c-Collapsible`)).toHaveLength(1)
+    expect(
+      wrapper.find(`.${bodyClassNames.baseComponentClassName}`)
+    ).toHaveLength(1)
   })
 })

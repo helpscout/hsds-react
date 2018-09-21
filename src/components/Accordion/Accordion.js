@@ -76,6 +76,7 @@ class Accordion extends Component<AccordionProps, AccordionState> {
       allowMultiple,
       className,
       children,
+      duration,
       onOpen,
       onClose,
       isPage,
@@ -86,6 +87,7 @@ class Accordion extends Component<AccordionProps, AccordionState> {
     const { sections } = this.state
     const componentClassName = getComponentClassName(this.props)
     const extraProps = {
+      duration,
       isPage,
       isSeamless,
       onOpen,

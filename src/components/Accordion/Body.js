@@ -73,6 +73,7 @@ class Body extends Component<BodyProps> {
   render() {
     const {
       className,
+      duration,
       isOpen,
       isPage,
       onOpen,
@@ -86,6 +87,7 @@ class Body extends Component<BodyProps> {
 
     return (
       <Collapsible
+        duration={duration}
         id={id}
         isOpen={isOpen}
         onOpen={this.handleOnOpen}

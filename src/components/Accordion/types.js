@@ -9,6 +9,7 @@ export type AccordionProps = {
   allowMultiple?: boolean,
   children: ChildrenArray<Element<typeof Section>>,
   className?: string,
+  duration?: number,
   isPage?: boolean,
   isSeamless?: boolean,
   onOpen?: (uuid: string) => void,
@@ -23,6 +24,7 @@ export type AccordionState = {
 export type BodyProps = {
   children: Node,
   className?: string,
+  duration?: number,
   isOpen: boolean,
   isPage?: boolean,
   isSeamless?: boolean,
@@ -35,6 +37,7 @@ export type BodyProps = {
 export type SectionProps = {
   children: ChildrenArray<Element<typeof Title|Body>>,
   className?: string,
+  duration?: number,
   isPage?: boolean,
   isSeamless?: boolean,
   onOpen?: (uuid: string) => void,
