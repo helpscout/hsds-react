@@ -23,7 +23,7 @@ export const classNameStrings = {
   isSizeLgClassName: 'is-lg',
 }
 
-export const getComponentClassName = ({
+const getComponentClassName = ({
   className,
   isOpen,
   isPage,
@@ -68,7 +68,8 @@ class Title extends Component<TitleProps> {
 
   handleKeyPress = (event: SyntheticKeyboardEvent<HTMLElement>) => {
     const { ENTER, SPACE } = Keys
-    if (event && (event.charCode === ENTER || event.charCode === SPACE)) {
+    /* istanbul ignore else */
+    if (event && (event.keyCode === ENTER || event.keyCode === SPACE)) {
       this.handleClick(event)
     }
   }
@@ -103,7 +104,7 @@ class Title extends Component<TitleProps> {
         className={componentClassName}
         id={id}
         onClick={this.handleClick}
-        onKeyPress={this.handleKeyPress}
+        onKeyDown={this.handleKeyPress}
         role="tab"
         tabIndex="0"
       >

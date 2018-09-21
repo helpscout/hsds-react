@@ -18,7 +18,7 @@ export const classNameStrings = {
   isSeamlessClassName: 'is-seamless',
 }
 
-export const getComponentClassName = ({
+const getComponentClassName = ({
   allowMultiple,
   className,
   isPage,

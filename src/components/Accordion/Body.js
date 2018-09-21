@@ -22,7 +22,7 @@ export const classNameStrings = {
   isSizeLgClassName: 'is-lg',
 }
 
-export const getComponentClassName = ({
+const getComponentClassName = ({
   className,
   isOpen,
   isPage,

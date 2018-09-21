@@ -10,7 +10,7 @@ import { COMPONENT_KEY, withUuid } from './utils'
 import { SectionUI } from './styles/Accordion.css.js'
 
 const bem = BEM('c-Accordion')
-export const nextUuid = createUniqueIDFactory('AccordionSection')
+const nextUuid = createUniqueIDFactory('AccordionSection')
 
 export const classNameStrings = {
   baseComponentClassName: bem.element('Section'),
@@ -18,7 +18,7 @@ export const classNameStrings = {
   isSeamlessClassName: 'is-seamless',
 }
 
-export const getComponentClassName = ({
+const getComponentClassName = ({
   className,
   isOpen,
   isSeamless,
@@ -51,13 +51,15 @@ class Section extends Component<SectionProps> {
       children,
       onOpen,
       onClose,
-      sections = {},
+      sections,
       setOpen,
       size,
       ...rest
     } = this.props
 
-    const isOpen = sections[uuid]
+    const isOpen = Object.keys(sections).length
+      ? sections[uuid]
+      : this.props.isOpen
     const componentClassName = getComponentClassName({ ...this.props, isOpen })
     const extraChildProps = {
       onOpen,

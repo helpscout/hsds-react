@@ -61,3 +61,5 @@ stories.add('is seamless in page', () => (
     </Page.Card>
   </Page>
 ))
+
+stories.add('is solo', () => <Accordion.Section />)
