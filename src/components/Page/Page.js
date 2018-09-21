@@ -25,11 +25,18 @@ class Page extends Component<Props> {
 
     const componentClassName = classNames('c-Page', className)
 
+    const content =
+      React.Children.count(children) > 0 ? (
+        <PropProvider value={{ Accordion: { isPage: true, isSeamless: true } }}>
+          <div className="c-Page__contentWrapper">{children}</div>
+        </PropProvider>
+      ) : (
+        children
+      )
+
     return (
       <PageUI {...getValidProps(rest)} className={componentClassName}>
-        <PropProvider value={{ Accordion: { isPage: true, isSeamless: true } }}>
-          {children}
-        </PropProvider>
+        {content}
       </PageUI>
     )
   }
