@@ -142,7 +142,7 @@
     "lodash": "4.17.10",
     "mkdirp": "0.5.1",
     "node-sass": "4.9.2",
-    "np": "2.16.0",
+    "np": "^3.0.4",
     "nyc": "12.0.2",
     "object-assign": "4.1.1",
     "object-values": "2.0.0",
@@ -175,7 +175,7 @@
     "tough-cookie": "2.3.4",
     "url-loader": "1.0.1",
     "webpack": "2.6.1",
-    "webpack-dev-server": "3.1.4",
+    "webpack-dev-server": "^3.1.8",
     "webpack-manifest-plugin": "1.1.0",
     "webpack-node-externals": "1.6.0"
   },
@@ -210,6 +210,7 @@
       "!src/components/index.js",
       "!src/components/Animate/animations/**/*.js"
     ],
+    "coverageDirectory": "<rootdir>/coverage/",
     "setupFiles": [
       "<rootDir>/config/polyfills.js",
       "<rootDir>/config/jsdomPolyfills.js"
