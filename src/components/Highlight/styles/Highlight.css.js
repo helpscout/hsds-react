@@ -3,6 +3,8 @@ import { getColor } from '../../../styles/utilities/color.js'
 import styled from '../../styled'
 
 export const HighlightUI = styled('pre')`
+  margin: 0;
+
   .hljs-comment,
   .hljs-quote {
     color: ${getColor('grey.800')};

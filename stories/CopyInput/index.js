@@ -1,22 +1,14 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { CopyInput, Highlight } from '../../src/index.js'
-
-// Import languages
-import hljs from 'highlight.js/lib/highlight'
-import javascript from 'highlight.js/lib/languages/javascript'
-hljs.registerLanguage('javascript', javascript)
+import { action } from '@storybook/addon-actions'
+import { CopyInput } from '../../src/index.js'
 
 const stories = storiesOf('CopyInput', module)
 
-stories.add('Default', () => <CopyInput />)
+stories.add('Default', () => (
+  <CopyInput value="testing" onCopy={action('Copy')} />
+))
 
-stories.add('Highlight', () => {
-  const javascriptCode = 'if (age === 32") { return true; }'
-
-  return (
-    <CopyInput>
-      <Highlight language="javascript">{javascriptCode}</Highlight>
-    </CopyInput>
-  )
-})
+stories.add('Read-only', () => (
+  <CopyInput value="secretkey" onCopy={action('Copy')} readOnly />
+))

@@ -12,6 +12,7 @@ import {
   ContentWrapperUI,
 } from './styles/CopyButton.css.js'
 import { COMPONENT_KEY } from './utils'
+import { ButtonSize } from '../Button/types'
 
 type Props = {
   children?: any,
@@ -21,6 +22,7 @@ type Props = {
   onClick: (event: Event) => void,
   onReset: () => void,
   resetTimeout: number,
+  size: ButtonSize,
   title?: string,
 }
 
