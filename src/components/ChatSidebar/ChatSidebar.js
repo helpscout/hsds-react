@@ -1,13 +1,17 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import pluralize from 'pluralize'
-import Scrollable from '../Scrollable'
 import StatusBar from '../StatusBar'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { COMPONENT_KEY } from './utils'
+import {
+  ChatSidebarUI,
+  StatusBarWrapperUI,
+  ContentUI,
+} from './styles/ChatSidebar.css.js'
 
 type Props = {
   isShowStatusBar: boolean,
@@ -120,28 +124,28 @@ class ChatSidebar extends Component<Props> {
     const componentClassName = classNames('c-ChatSidebar', className)
 
     const statusBarMarkup = (
-      <div className="c-ChatSidebar__status-bar">
+      <StatusBarWrapperUI className="c-ChatSidebar__status-bar">
         <StatusBar
           isOpen={shouldShowStatusBar}
           onClick={handleOnStatusBarClick}
         >
           {newMessageCount} new {pluralize('message', newMessageCount)}
         </StatusBar>
-      </div>
+      </StatusBarWrapperUI>
     )
 
     return (
-      <div className={componentClassName} {...rest}>
+      <ChatSidebarUI className={componentClassName} {...rest}>
         {statusBarMarkup}
-        <Scrollable
+        <ContentUI
           className="c-ChatSidebar__content"
           fade
           onScroll={handleOnScroll}
           scrollableRef={ref => (this.contentNode = ref)}
         >
           {children}
-        </Scrollable>
-      </div>
+        </ContentUI>
+      </ChatSidebarUI>
     )
   }
 }
