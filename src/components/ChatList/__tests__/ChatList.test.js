@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import ChatList from '../ChatList'
 import BlankSlate from '../BlankSlate'
 import Item from '../Item'
@@ -13,7 +13,7 @@ baseComponentTest(ChatList, baseComponentOptions)
 
 describe('Items', () => {
   test('Renders BlankSlate if childless', () => {
-    const wrapper = shallow(<ChatList />)
+    const wrapper = mount(<ChatList />)
     const blankSlate = wrapper.find(BlankSlate)
     const item = wrapper.find(Item)
 
@@ -22,7 +22,7 @@ describe('Items', () => {
   })
 
   test('Can render ChatList.Item, and does not render BlankSlate', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatList>
         <Item />
         <Item />
