@@ -209,7 +209,7 @@
       "!src/components/index.js",
       "!src/components/Animate/animations/**/*.js"
     ],
-    "coverageDirectory": "<rootdir>/coverage/",
+    "coverageDirectory": "coverage/",
     "setupFiles": [
       "<rootDir>/config/polyfills.js",
       "<rootDir>/config/jsdomPolyfills.js"
