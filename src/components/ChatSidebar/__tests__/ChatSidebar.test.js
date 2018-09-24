@@ -1,11 +1,11 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import ChatSidebar from '..'
+import { mount } from 'enzyme'
+import ChatSidebar from '../ChatSidebar'
 import { Scrollable, StatusBar } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<ChatSidebar />)
+    const wrapper = mount(<ChatSidebar />)
     const o = wrapper.find('.c-ChatSidebar')
 
     expect(o.length).toBe(1)
@@ -13,7 +13,7 @@ describe('ClassName', () => {
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<ChatSidebar className={customClass} />)
+    const wrapper = mount(<ChatSidebar className={customClass} />)
     const o = wrapper.find('.c-ChatSidebar')
 
     expect(o.hasClass(customClass)).toBeTruthy()
@@ -22,7 +22,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Can render children content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatSidebar>
         <div className="child">Hello</div>
       </ChatSidebar>
@@ -35,7 +35,7 @@ describe('Children', () => {
 
 describe('Content', () => {
   test('Content is added within a Scrollable component', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatSidebar>
         <div className="derek">ONE LOOK?!</div>
       </ChatSidebar>
@@ -57,7 +57,7 @@ describe('Content', () => {
 
   test('Can fire onScroll callback', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<ChatSidebar onScroll={spy} />)
+    const wrapper = mount(<ChatSidebar onScroll={spy} />)
     const o = wrapper.find(Scrollable)
 
     o.simulate('scroll')
@@ -68,7 +68,10 @@ describe('Content', () => {
 
 describe('StatusBar', () => {
   test('Does not show StatusBar by default', () => {
-    const wrapper = shallow(<ChatSidebar />)
+    const wrapper = mount(<ChatSidebar />)
+
+    wrapper.instance().renderStatusBar()
+
     const o = wrapper.find('.c-ChatSidebar__status-bar')
     const statusBar = o.find(StatusBar)
 
