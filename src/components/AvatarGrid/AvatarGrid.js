@@ -1,24 +1,29 @@
 // @flow
 import type { AvatarShape, AvatarSize } from '../Avatar/types'
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import avatarGridWrapperCSS from './styles/AvatarGridWrapper.css.js'
 import avatarGridContainerCSS from './styles/AvatarGridContainer.css.js'
 import avatarGridCSS from './styles/AvatarGrid.css.js'
 import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
 type Props = {
   animationEasing: string,
   animationSequence: string,
+  borderColor?: string,
   center: boolean,
   children?: any,
   className?: string,
   max: number,
+  outerBorderColor?: string,
   shape: AvatarShape,
+  showStatusBorderColor: boolean,
   size: AvatarSize,
 }
 
@@ -30,9 +35,11 @@ class AvatarGrid extends Component<Props> {
   static defaultProps = {
     animationEasing: 'bounce',
     animationSequence: 'fade',
+    borderColor: 'transparent',
     center: true,
     max: 9,
     shape: 'rounded',
+    showStatusBorderColor: true,
     size: 'md',
   }
 
@@ -40,17 +47,20 @@ class AvatarGrid extends Component<Props> {
     const {
       animationEasing,
       animationSequence,
+      borderColor,
       center,
       children,
       className,
       max,
+      outerBorderColor,
       shape,
+      showStatusBorderColor,
       size,
       ...rest
     } = this.props
 
-    const avatars = React.Children.toArray(children).filter(
-      child => child.type && child.type === Avatar
+    const avatars = React.Children.toArray(children).filter(child =>
+      isComponentNamed(child, AVATAR_KEY)
     )
 
     const totalAvatarCount = avatars.length
@@ -72,10 +82,13 @@ class AvatarGrid extends Component<Props> {
       >
         <div className="c-AvatarGrid__item is-additional">
           <Avatar
+            borderColor={borderColor}
             count={`+${additionalAvatarCount}`}
             light
             name={`+${additionalAvatarCount}`}
+            outerBorderColor={outerBorderColor}
             shape={shape}
+            showStatusBorderColor={showStatusBorderColor}
             size={size}
           />
         </div>
@@ -84,7 +97,10 @@ class AvatarGrid extends Component<Props> {
 
     const avatarMarkup = avatarList.map(avatar => {
       const composedAvatar = React.cloneElement(avatar, {
+        borderColor,
+        outerBorderColor,
         shape,
+        showStatusBorderColor,
         size,
       })
 
@@ -102,7 +118,10 @@ class AvatarGrid extends Component<Props> {
     return (
       <AvatarGridWrapper className={componentWrapperClassName}>
         <AvatarGridContainer className="c-AvatarGridContainer">
-          <AvatarGridComponent className={componentClassName} {...rest}>
+          <AvatarGridComponent
+            {...getValidProps(rest)}
+            className={componentClassName}
+          >
             {avatarMarkup}
             {additionalAvatarMarkup}
           </AvatarGridComponent>

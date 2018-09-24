@@ -67,7 +67,13 @@ class TestComponent extends Component {
   }
 }
 
-stories.add('default', () => <AvatarGrid max={14}>{avatarsMarkup}</AvatarGrid>)
+stories.add('default', () => (
+  <div style={{ background: '#eee', padding: 10 }}>
+    <AvatarGrid borderColor="#eee" showStatusBorderColor max={14}>
+      {avatarsMarkup}
+    </AvatarGrid>
+  </div>
+))
 
 stories.add('animations', () => (
   <AvatarGrid animationSequence="scaleLg" animationStagger={100} max={9}>
