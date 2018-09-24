@@ -121,3 +121,22 @@ describe('Limit', () => {
     expect(additionalCounter.text()).not.toBe('+2')
   })
 })
+
+describe('Avatar Props', () => {
+  test('Passes props to Avatar', () => {
+    const wrapper = mount(
+      <AvatarList
+        borderColor="red"
+        outerBorderColor="blue"
+        showStatusBorderColor={true}
+      >
+        <Avatar />
+      </AvatarList>
+    )
+    const avatar = wrapper.find(Avatar)
+
+    expect(avatar.prop('borderColor')).toBe('red')
+    expect(avatar.prop('outerBorderColor')).toBe('blue')
+    expect(avatar.prop('showStatusBorderColor')).toBe(true)
+  })
+})
