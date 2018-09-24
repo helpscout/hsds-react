@@ -191,7 +191,7 @@ describe('handleScroll', () => {
 describe('forceScrollToBottom', () => {
   test('force scrolls to bottom on mount', () => {
     const spy = jest.fn()
-    const wrapper = mount(
+    mount(
       <ChatScroller onScroll={spy}>
         <Scrollable />
       </ChatScroller>
