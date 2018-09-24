@@ -1,9 +1,9 @@
 // @flow
 import React from 'react'
-import styled from '../styled'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Hr.css.js'
+import { HrUI } from './styles/Hr.css.js'
 import { COMPONENT_KEY } from './utils'
 
 type Props = {
@@ -17,7 +17,9 @@ const Hr = (props: Props) => {
   const { className, children, role, size, ...rest } = props
   const componentClassName = classNames('c-Hr', size && `is-${size}`, className)
 
-  return <hr className={componentClassName} {...rest} role={role} />
+  return (
+    <HrUI {...getValidProps(rest)} className={componentClassName} role={role} />
+  )
 }
 
 Hr.defaultProps = {
@@ -27,4 +29,4 @@ Hr.defaultProps = {
 
 namespaceComponent(COMPONENT_KEY)(Hr)
 
-export default styled(Hr)(css)
+export default Hr
