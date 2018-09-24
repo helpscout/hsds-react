@@ -1,16 +1,2 @@
-@import "../../configs/color";
-
-.c-ChatListBlankSlate {
-  @import "../../resets/base";
-  background-color: _color(grey, 200);
-
-  &__illo {
-    margin-bottom: -10px;
-    margin-top: -13px;
-  }
-
-  &__content {
-    padding: 16px 20px 19px;
-    text-align: center;
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

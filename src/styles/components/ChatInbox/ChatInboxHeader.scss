@@ -1,18 +1,2 @@
-@import "../../configs/constants";
-.c-ChatInboxHeader {
-  @import "../../resets/base";
-
-  &__content {
-    min-height: $UI_TOOLBAR_HEIGHT;
-    padding: 12px 20px;
-  }
-
-  &__avatars {
-    margin-left: 16px;
-  }
-
-  // Modifiers
-  &.is-collapsible {
-    cursor: pointer;
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.
