@@ -2,8 +2,9 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageChatBlock')
-const config = {
+export const config = {
   timestampSize: 60,
+  transition: 'opacity 100ms linear',
 }
 
 const css = `
@@ -18,7 +19,7 @@ const css = `
   ${bem.element('timestamp')} {
     min-width: ${config.timestampSize}px;
     opacity: 0;
-    transition: opacity 200ms linear;
+    transition: ${config.transition};
     will-change: opacity;
   }
   &:hover {

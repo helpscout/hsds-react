@@ -18,6 +18,7 @@ type Props = {
   faint?: boolean,
   isPlainLink: boolean,
   lineHeightReset?: boolean,
+  lineHeightInherit?: boolean,
   linkStyle: boolean,
   muted?: boolean,
   noUnderline: boolean,
@@ -42,6 +43,7 @@ const Text = (props: Props) => {
     disableSelect,
     faint,
     isPlainLink,
+    lineHeightInherit,
     lineHeightReset,
     linkStyle,
     muted,
@@ -69,7 +71,8 @@ const Text = (props: Props) => {
     muted && 'is-muted',
     noUnderline && 'is-noUnderline',
     noWrap && 'is-no-wrap',
-    lineHeightReset && 'is-line-height-reset',
+    lineHeightInherit && 'is-lineHeightInherit',
+    lineHeightReset && 'is-lineHeightReset',
     linkStyle && 'is-linkStyle',
     selector && `is-${selector}`,
     shade && `is-${shade}`,
@@ -78,7 +81,7 @@ const Text = (props: Props) => {
     subtle && 'is-subtle',
     truncate && 'is-truncate',
     weight && `is-${weight}`,
-    wordWrap && 'is-word-wrap',
+    wordWrap && 'is-wordWrap',
     className
   )
 

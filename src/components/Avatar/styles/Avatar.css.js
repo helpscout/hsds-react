@@ -63,15 +63,7 @@ export const CropUI = styled('div')`
   overflow: hidden;
   width: 100%;
 
-  &.is-circle {
-    border-radius: 200%;
-  }
-  &.is-rounded {
-    border-radius: ${config.borderRadius}px;
-  }
-  &.is-square {
-    border-radius: 0;
-  }
+  ${getBorderRadiusStyles()};
 `
 
 export const ImageUI = styled('div')`
@@ -97,13 +89,31 @@ export const StatusUI = styled('div')`
   position: absolute;
   z-index: 1;
 
+  &.is-withBorder {
+    transform: translate(-${config.borderWidth}px, -${config.borderWidth}px);
+  }
+
+  &.is-withStatusIcon {
+    margin-right: -2px;
+    margin-bottom: -1px;
+  }
+
   &.is-circle {
     bottom: 0;
     right: 0;
 
+    &.is-lg {
+      bottom: -3px;
+      right: -3px;
+    }
+
     &.is-sm {
       bottom: -3px;
       right: -3px;
+    }
+
+    &.is-withBorder {
+      transform: none;
     }
   }
 
@@ -118,9 +128,42 @@ export const StatusUI = styled('div')`
   }
 `
 
+export const CropBorderUI = styled('div')`
+  position: absolute;
+  top: -${config.borderWidth}px;
+  bottom: -${config.borderWidth}px;
+  left: -${config.borderWidth}px;
+  right: -${config.borderWidth}px;
+  border-style: solid;
+  border-width: ${config.borderWidth}px;
+
+  ${getBorderRadiusStyles()};
+`
+
+export const OuterBorderUI = styled(CropBorderUI)`
+  top: -${config.borderWidth * 2}px;
+  bottom: -${config.borderWidth * 2}px;
+  left: -${config.borderWidth * 2}px;
+  right: -${config.borderWidth * 2}px;
+`
+
 function getColorStyles(props: Object): string {
   return `
     color: ${getThemeBrandProp(props, 'brandColor', config.color)};
+  `
+}
+
+function getBorderRadiusStyles(): string {
+  return `
+    &.is-circle {
+      border-radius: 200%;
+    }
+    &.is-rounded {
+      border-radius: ${config.borderRadius}px;
+    }
+    &.is-square {
+      border-radius: 0;
+    }
   `
 }
 
@@ -128,18 +171,11 @@ function getSizeStyles(): string {
   return forEach(config.size, (size, props) => {
     const { fontSize, size: sz } = props
 
-    const outerSize = sz + config.borderWidth * 2
-
     return `
       &.is-${size} {
         ${variableFontSize({ fontSize })}
         height: ${sz}px;
         width: ${sz}px;
-
-        &.has-outerBorderColor {
-          height: ${outerSize}px;
-          width: ${outerSize}px;
-        }
       }
     `
   })

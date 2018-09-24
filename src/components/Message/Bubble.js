@@ -72,7 +72,9 @@ export const Bubble = (props: Props, context: Context) => {
   const childrenMarkup = React.Children.map(children, child => {
     return isWord(child) || isNativeSpanType(child) ? (
       <MessageBubbleBody className="c-MessageBubble__body">
-        <Text wordWrap>{child}</Text>
+        <Text lineHeightInherit wordWrap>
+          {child}
+        </Text>
       </MessageBubbleBody>
     ) : (
       child
