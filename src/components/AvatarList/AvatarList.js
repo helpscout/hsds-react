@@ -5,19 +5,23 @@ import Avatar from '../Avatar'
 import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { AvatarListWrapperUI } from './styles/AvatarList.css.js'
 import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
 type Props = {
   animationEasing: string,
   animationSequence: string,
   animationStagger: number,
   avatarsClassName: string,
+  borderColor?: string,
   children?: any,
   className?: string,
   max: number,
+  outerBorderColor?: string,
   shape: AvatarShape,
+  showStatusBorderColor: boolean,
   size: AvatarSize,
 }
 
@@ -28,6 +32,7 @@ class AvatarList extends Component<Props> {
     animationStagger: 10,
     max: 4,
     shape: 'rounded',
+    showStatusBorderColor: false,
     size: 'sm',
   }
 
@@ -37,16 +42,19 @@ class AvatarList extends Component<Props> {
       animationSequence,
       animationStagger,
       avatarsClassName,
+      borderColor,
       children,
       className,
       max,
+      outerBorderColor,
       shape,
+      showStatusBorderColor,
       size,
       ...rest
     } = this.props
 
-    const avatars = React.Children.toArray(children).filter(
-      child => child.type && child.type === Avatar
+    const avatars = React.Children.toArray(children).filter(child =>
+      isComponentNamed(child, AVATAR_KEY)
     )
 
     const totalAvatarCount = avatars.length
@@ -72,11 +80,14 @@ class AvatarList extends Component<Props> {
         sequence={animationSequence}
       >
         <Avatar
+          borderColor={borderColor}
           className={avatarsClassName}
           count={`+${additionalAvatarCount}`}
           light
+          outerBorderColor={outerBorderColor}
           name={`+${additionalAvatarCount}`}
           shape={shape}
+          showStatusBorderColor={showStatusBorderColor}
           size={size}
         />
       </Animate>
@@ -84,8 +95,11 @@ class AvatarList extends Component<Props> {
 
     const avatarMarkup = avatarList.map(avatar => {
       const composedAvatar = React.cloneElement(avatar, {
+        borderColor,
         className: classNames(avatar.props.className, avatarsClassName),
+        outerBorderColor,
         shape,
+        showStatusBorderColor,
         size,
       })
       return (
@@ -103,10 +117,10 @@ class AvatarList extends Component<Props> {
     return (
       <AvatarListWrapperUI className="c-AvatarListWrapper">
         <AnimateGroup
+          {...rest}
           className={componentClassName}
           stagger
           staggerDelay={animationStagger}
-          {...rest}
         >
           {avatarMarkup}
           {additionalAvatarMarkup}
