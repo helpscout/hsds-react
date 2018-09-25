@@ -3,6 +3,7 @@ import {
   isBool,
   isFunction,
   isObject,
+  isPlainObject,
   isNumber,
   isString,
   isDefined,
@@ -66,6 +67,21 @@ describe('isObject', () => {
 
   test('Returns true for objects', () => {
     expect(isObject({})).toBe(true)
+  })
+})
+
+describe('isPlainObject', () => {
+  test('Returns false for non-objects', () => {
+    expect(isPlainObject()).toBe(false)
+    expect(isPlainObject(0)).toBe(false)
+    expect(isPlainObject(1)).toBe(false)
+    expect(isPlainObject(() => {})).toBe(false)
+    expect(isPlainObject([])).toBe(false)
+    expect(isPlainObject(class TestFunction {})).toBe(false)
+  })
+
+  test('Returns true for objects', () => {
+    expect(isPlainObject({})).toBe(true)
   })
 })
 

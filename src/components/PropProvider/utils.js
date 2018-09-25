@@ -1,17 +1,60 @@
 // @flow
-import { isArray, isObject, isFunction, isString } from '../../utilities/is'
+import type { PropProviderProps, ConfigGetter } from './types'
+import {
+  isArray,
+  isObject,
+  isFunction,
+  isPlainObject,
+  isString,
+} from '../../utilities/is'
+import { noop } from '../../utilities/other'
 
-export type ConfigGetter = Array<string> | string | ((config: Object) => {})
+export const channel = '__BLUE_PROP_PROVIDER__'
+
+export const contextTypes = {
+  [channel]: noop,
+}
 
 // Default configs
 export const contextConfig = {}
 
 /**
+ * Merges props with outerProps.
+ *
+ * @param   {Function|Object} props The PropProvider configs.
+ * @param   {Object} outerProps The outer PropProvider configs.
+ * @returns {Object} The merged props.
+ */
+export function getProps(
+  props: PropProviderProps = {},
+  outerProps?: Object = {}
+): Object {
+  if (typeof props === 'function') {
+    const mergedProps = props(outerProps)
+    if (!isPlainObject(mergedProps)) {
+      throw new Error(
+        '[PropProvider] Please return an object from your value function, i.e. value={() => ({})}!'
+      )
+    }
+    return mergedProps
+  }
+  if (!isPlainObject(props)) {
+    throw new Error('[PropProvider] Please make your value prop a plain object')
+  }
+
+  if (outerProps === undefined) {
+    return props
+  }
+
+  return { ...outerProps, ...props }
+}
+
+/**
  * Attempts to retrieve the specified config props.
  *
- * @param  {Object} config The PropProvider configs.
- * @param  {Array<string> | Function | Object | string} getter The namespace of the config.
- * @return {Object} The retrieved config props.
+ * @param   {Object} config The PropProvider configs.
+ * @param   {Array<string> | Function | Object | string} getter The namespace of the config.
+ * @returns {Object} The retrieved config props.
  */
 export function getConfigProps(
   config: Object = contextConfig,
@@ -59,4 +102,13 @@ export function getConfigPropsFromArray(
 
     return remappedProps
   }, {})
+}
+
+/**
+ * Internally sets the Provider props within the connected component.
+ *
+ * @param {Object} providerProps The Provider prop (value)
+ */
+export function setProps(providerProps: Object) {
+  this.setState({ providerProps })
 }

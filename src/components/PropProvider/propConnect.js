@@ -1,10 +1,14 @@
 // @flow
-import type { ConfigGetter } from './utils'
+import type { ConfigGetter } from './types'
 import React, { Component } from 'react'
 import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
-import Consumer from './Consumer'
-import { getConfigProps } from './utils'
+import { channel, contextTypes, getConfigProps, setProps } from './utils'
 import { isDefined, isString } from '../../utilities/is'
+
+type Props = Object
+type State = {
+  providerProps: Object,
+}
 
 /**
  * "Connects" a component with the PropProvider (context). Concept is
@@ -23,14 +27,35 @@ function propConnect(name?: ConfigGetter) {
     }
     const displayName = `connected(${namespace})`
 
-    class Connect extends Component<any> {
+    class Connect extends Component<Props, State> {
       static displayName = displayName
+      static contextTypes = contextTypes
+
+      mergedProps: Object
       setWrappedInstance: Function
+      unsubscribe: number
       wrappedInstance: any = null
 
       constructor(props, context) {
         super(props, context)
         this.setWrappedInstance = this.setWrappedInstance.bind(this)
+        this.state = {
+          providerProps: {},
+        }
+      }
+
+      componentWillMount() {
+        if (this.context[channel] !== undefined) {
+          this.unsubscribe = this.context[channel].subscribe(
+            setProps.bind(this)
+          )
+        }
+      }
+
+      componentWillUnmount() {
+        if (this.unsubscribe !== undefined) {
+          this.context[channel].unsubscribe(this.unsubscribe)
+        }
       }
 
       setWrappedInstance(ref) {
@@ -38,16 +63,16 @@ function propConnect(name?: ConfigGetter) {
       }
 
       render() {
+        this.mergedProps = {
+          ...getConfigProps(this.state.providerProps, namespace),
+          ...this.props,
+        }
+
         return (
-          <Consumer>
-            {(config: Object) => (
-              <WrappedComponent
-                {...getConfigProps(config, namespace)}
-                {...this.props}
-                ref={this.setWrappedInstance}
-              />
-            )}
-          </Consumer>
+          <WrappedComponent
+            {...this.mergedProps}
+            ref={this.setWrappedInstance}
+          />
         )
       }
     }
