@@ -1,28 +1,39 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import CopyButton from '../CopyButton'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Highlight from '../Highlight'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
+import { selectText } from '../../utilities/select'
+import copy from 'copy-to-clipboard'
 import { COMPONENT_KEY } from './utils'
 import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css.js'
 
 type Props = {
-  children?: any,
   className?: string,
-  language: string,
-  onCopy: (event: Event) => void,
+  code: string,
+  language?: string,
 }
 
 class CopyCode extends Component<Props> {
   static defaultProps = {}
 
+  componentDidMount() {
+    this.codeNode && selectText(this.codeNode)
+  }
+
+  handleCopyClick() {
+    this.codeNode && selectText(this.codeNode)
+    copy(this.props.code)
+  }
+
   render() {
-    const { className, children, onCopy, ...rest } = this.props
+    const { className, code, language, ...rest } = this.props
     const componentClassName = classNames('c-CopyCode', className)
 
     const noop = e => {
       e.preventDefault()
+
       return false
     }
 
@@ -34,6 +45,14 @@ class CopyCode extends Component<Props> {
       return noop(e)
     }
 
+    const codeComponent = language ? (
+      <Highlight language={language}>{code}</Highlight>
+    ) : (
+      <pre>
+        <code>{code}</code>
+      </pre>
+    )
+
     return (
       <WrapperUI className={componentClassName}>
         <CopyCodeUI
@@ -42,13 +61,17 @@ class CopyCode extends Component<Props> {
           onCut={noop}
           onPaste={noop}
           onKeyDown={keyDown}
+          innerRef={codeNode => (this.codeNode = codeNode)}
           spellCheck={false}
           suppressContentEditableWarning
         >
-          {children}
+          {codeComponent}
         </CopyCodeUI>
 
-        <CopyButtonUI kind="secondary" onCopy={onCopy}>
+        <CopyButtonUI
+          kind="secondary"
+          onClick={this.handleCopyClick.bind(this)}
+        >
           Copy
         </CopyButtonUI>
       </WrapperUI>

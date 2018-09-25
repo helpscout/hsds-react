@@ -27,6 +27,10 @@ export const CopyCodeUI = styled('div')`
     border-color: ${getColor('blue.400')};
     box-shadow: 0px 0px 0px 1px ${getColor('blue.400')};
   }
+
+  pre {
+    margin: 0;
+  }
 `
 
 export const CopyButtonUI = styled(CopyButton)`

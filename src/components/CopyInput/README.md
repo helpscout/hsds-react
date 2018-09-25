@@ -3,11 +3,13 @@
 ## Example
 
 ```jsx
-<CopyInput>Some text to be copied</CopyInput>
+<CopyInput value="Some text to be copied">
 ```
 
 ## Props
 
-| Prop      | Type     | Description                                      |
-| --------- | -------- | ------------------------------------------------ |
-| className | `string` | Custom class names to be added to the component. |
+| Prop      | Type      | Description                                      |
+| --------- | --------- | ------------------------------------------------ |
+| className | `string`  | Custom class names to be added to the component. |
+| readOnly  | `boolean` | Whether the Input is read only.                  |
+| value     | `string`  | The value to be displayed within the Input.      |

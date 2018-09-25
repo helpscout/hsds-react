@@ -12,7 +12,7 @@ hljs.registerLanguage('javascript', javascript)
 const stories = storiesOf('CopyCode', module)
 
 stories.add('Default', () => (
-  <CopyCode onCopy={action('Copy')}>Code to be copied</CopyCode>
+  <CopyCode onCopy={action('Copy')} code="Code to be copied" />
 ))
 
 stories.add('Highlight', () => {
@@ -20,8 +20,10 @@ stories.add('Highlight', () => {
 <script type="text/javascript">window.Beacon('init', '854f8c17-9530-4aec-9309-8b221d932619')</script>`
 
   return (
-    <CopyCode onCopy={action('Copy')}>
-      <Highlight language="javascript">{javascriptCode}</Highlight>
-    </CopyCode>
+    <CopyCode
+      onCopy={action('Copy')}
+      language="javascript"
+      code={javascriptCode}
+    />
   )
 })
