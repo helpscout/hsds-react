@@ -1,5 +1,6 @@
 // @flow
 import type { PropProviderProps, ConfigGetter } from './types'
+import Logger from '../../utilities/Logger'
 import {
   isArray,
   isObject,
@@ -27,19 +28,21 @@ export const contextConfig = {}
  */
 export function getProps(
   props: PropProviderProps = {},
-  outerProps?: Object = {}
+  outerProps?: Object
 ): Object {
-  if (typeof props === 'function') {
+  if (isFunction(props)) {
     const mergedProps = props(outerProps)
     if (!isPlainObject(mergedProps)) {
-      throw new Error(
+      return Logger.error(
         '[PropProvider] Please return an object from your value function, i.e. value={() => ({})}!'
       )
     }
     return mergedProps
   }
   if (!isPlainObject(props)) {
-    throw new Error('[PropProvider] Please make your value prop a plain object')
+    return Logger.error(
+      '[PropProvider] Please make your value prop a plain object'
+    )
   }
 
   if (outerProps === undefined) {

@@ -64,6 +64,7 @@
     "closest": "0.0.1",
     "emoji-mart": "^1.0.1",
     "lodash.get": "^4.4.2",
+    "loggi": "^1.0.1",
     "pluralize": "^7.0.0",
     "popper.js": "1.14.3",
     "prop-types": "15.6.1",

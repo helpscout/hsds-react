@@ -1,4 +1,50 @@
-import { getConfigProps, getConfigPropsFromArray } from '../utils'
+import { getProps, getConfigProps, getConfigPropsFromArray } from '../utils'
+
+let errorSpy
+beforeEach(() => {
+  errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+})
+afterEach(() => {
+  errorSpy.mockReset()
+  errorSpy.mockRestore()
+})
+
+describe('getProps', () => {
+  test('Returns object by default', () => {
+    expect(getProps()).toEqual({})
+  })
+
+  test('Returns props if outerProps is undefined', () => {
+    const props = { a: 1 }
+    const outerProps = { undefined }
+
+    expect(getProps(props, outerProps)).toEqual(props)
+  })
+
+  test('Fires prop function, if defined', () => {
+    const props = props => ({ ...props, b: 2 })
+    const outerProps = { a: 1 }
+
+    expect(getProps(props, outerProps)).toEqual({
+      a: 1,
+      b: 2,
+    })
+  })
+
+  test('Returns falsy, if props is invalid', () => {
+    const props = []
+    const outerProps = { a: 1 }
+
+    expect(getProps(props, outerProps)).toBeFalsy()
+  })
+
+  test('Returns falsy, if props fn is invalid', () => {
+    const props = props => []
+    const outerProps = { a: 1 }
+
+    expect(getProps(props, outerProps)).toBeFalsy()
+  })
+})
 
 describe('getConfigProps', () => {
   test('Returns an empty object, if no arguments', () => {

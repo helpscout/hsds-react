@@ -1,9 +1,16 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import propConnect from '../propConnect'
-import Provider from '../PropProvider'
+import PropProvider from '../PropProvider'
+import { channel } from '../utils'
 
 describe('PropProvider', () => {
+  test('Renders no children, if non are passed', () => {
+    const wrapper = mount(<PropProvider />)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
   test('Is properly scoped', () => {
     const Buddy = props => <div>{props.noms}</div>
     Buddy.defaultProps = {
@@ -23,11 +30,11 @@ describe('PropProvider', () => {
     }
 
     const wrapper = mount(
-      <Provider value={oldConfig}>
-        <Provider value={config}>
+      <PropProvider value={oldConfig}>
+        <PropProvider value={config}>
           <ConnectedBuddy />
-        </Provider>
-      </Provider>
+        </PropProvider>
+      </PropProvider>
     )
     const el = wrapper.find('Buddy')
 
@@ -67,14 +74,14 @@ describe('PropProvider', () => {
     }
 
     const wrapper = mount(
-      <Provider value={oldConfig}>
-        <Provider value={config}>
+      <PropProvider value={oldConfig}>
+        <PropProvider value={config}>
           <ConnectedBuddy />
-          <Provider value={{}}>
+          <PropProvider value={{}}>
             <ConnectedElf />
-          </Provider>
-        </Provider>
-      </Provider>
+          </PropProvider>
+        </PropProvider>
+      </PropProvider>
     )
     const b = wrapper.find('Buddy')
     const e = wrapper.find('Elf')
@@ -83,5 +90,38 @@ describe('PropProvider', () => {
     expect(b.html()).not.toContain(oldConfig.Buddy.noms)
     expect(e.html()).toContain(config.Elf.feeling)
     expect(e.html()).not.toContain(oldConfig.Elf.feeling)
+  })
+
+  test('Subscribes to parent context, if available', () => {
+    const spy = jest.fn()
+    const value = { a: 1 }
+
+    mount(<PropProvider value={value} />, {
+      context: {
+        [channel]: {
+          subscribe: spy,
+        },
+      },
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Unsubscribes to parent context, if available', () => {
+    const spy = jest.fn()
+    const value = { a: 1 }
+
+    const wrapper = mount(<PropProvider value={value} />, {
+      context: {
+        [channel]: {
+          subscribe: () => 123,
+          unsubscribe: spy,
+        },
+      },
+    })
+
+    wrapper.unmount()
+
+    expect(spy).toHaveBeenCalled()
   })
 })

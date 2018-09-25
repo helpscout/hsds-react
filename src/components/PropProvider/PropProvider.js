@@ -34,6 +34,7 @@ class PropProvider extends Component<Props> {
       this.unsubscribeToOuterId = this.context[channel].subscribe(props => {
         this.outerProps = props
 
+        /* istanbul ignore next */
         if (this.broadcast !== undefined) {
           this.publish(this.props.value)
         }
@@ -55,6 +56,7 @@ class PropProvider extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps: Props) {
+    /* istanbul ignore else */
     if (this.props.value !== nextProps.value) {
       this.publish(nextProps.value)
     }
@@ -62,6 +64,7 @@ class PropProvider extends Component<Props> {
 
   componentWillUnmount() {
     const propContext = this.context[channel]
+    /* istanbul ignore else */
     if (propContext !== undefined) {
       propContext.unsubscribe(this.unsubscribeToOuterId)
     }
