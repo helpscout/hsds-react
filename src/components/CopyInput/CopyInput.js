@@ -6,12 +6,12 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { selectText } from '../../utilities/select'
-import copy from 'copy-to-clipboard'
 import { CopyInputUI } from './styles/CopyInput.css.js'
 import { COMPONENT_KEY } from './utils'
 
 type Props = {
   className?: string,
+  onCopy: (string: value) => undefined,
   readOnly?: boolean,
   value: string,
 }
@@ -20,8 +20,12 @@ class CopyInput extends Component<Props> {
   static defaultProps = {}
 
   handleCopyClick() {
+    const { onCopy, value } = this.props
+
+    // Select the text in the input
     this.input && selectText(this.input)
-    copy(this.props.value)
+
+    onCopy(value)
   }
 
   render() {

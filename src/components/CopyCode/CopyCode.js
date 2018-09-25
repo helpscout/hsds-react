@@ -5,7 +5,6 @@ import Highlight from '../Highlight'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { selectText } from '../../utilities/select'
-import copy from 'copy-to-clipboard'
 import { COMPONENT_KEY } from './utils'
 import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css.js'
 
@@ -13,6 +12,7 @@ type Props = {
   className?: string,
   code: string,
   language?: string,
+  onCopy: (string: code) => undefined,
 }
 
 class CopyCode extends Component<Props> {
@@ -23,8 +23,12 @@ class CopyCode extends Component<Props> {
   }
 
   handleCopyClick() {
+    const { code, onCopy } = this.props
+
+    // Select the text in the content editable area
     this.codeNode && selectText(this.codeNode)
-    copy(this.props.code)
+
+    onCopy(code)
   }
 
   render() {
