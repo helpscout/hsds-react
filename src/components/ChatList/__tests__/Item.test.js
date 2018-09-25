@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Item from '../Item'
 import {
   Animate,
@@ -15,7 +15,7 @@ import {
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const o = wrapper.find('.c-ChatListItem')
 
     expect(o.length).toBe(1)
@@ -23,7 +23,7 @@ describe('ClassName', () => {
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Item className={customClass} />)
+    const wrapper = mount(<Item className={customClass} />)
     const o = wrapper.find('.c-ChatListItem')
 
     expect(o.hasClass(customClass)).toBeTruthy()
@@ -32,7 +32,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Does not render children content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Item>
         <div className="child">Hello</div>
       </Item>
@@ -45,7 +45,7 @@ describe('Children', () => {
 
 describe('Animate', () => {
   test('Is wrapped with Animate', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const animate = wrapper.find(Animate)
     const o = animate.find('.c-ChatListItem')
 
@@ -64,7 +64,7 @@ describe('Assigned', () => {
   })
 
   test('Applies assigned styles, if defined', () => {
-    const wrapper = shallow(<Item isAssigned />)
+    const wrapper = mount(<Item isAssigned />)
     const o = wrapper.find(Link)
 
     expect(o.hasClass('is-assigned')).toBe(true)
@@ -104,7 +104,7 @@ describe('Focus', () => {
   })
 
   test('Applies focus styles, if defined', () => {
-    const wrapper = shallow(<Item isFocused />)
+    const wrapper = mount(<Item isFocused />)
     const o = wrapper.find(Link)
 
     expect(o.hasClass('is-focused')).toBe(true)
@@ -113,7 +113,7 @@ describe('Focus', () => {
 
 describe('Link', () => {
   test('Main component is a Link', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const animate = wrapper.find(Animate)
     const o = animate.find(Link)
 
@@ -122,7 +122,7 @@ describe('Link', () => {
   })
 
   test('Link is properly styled', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const o = wrapper.find(Link)
     const props = o.props()
 
@@ -133,14 +133,14 @@ describe('Link', () => {
 
 describe('MessageCount', () => {
   test('Does not render message count by default', () => {
-    const wrapper = shallow(<Item name="Ron" message="Stay classy!" />)
+    const wrapper = mount(<Item name="Ron" message="Stay classy!" />)
     const o = wrapper.find('.c-ChatListItem__messageCount')
 
     expect(o.length).toBe(0)
   })
 
   test('Renders messageCount within an animated badge', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Item name="Ron" message="Stay classy!" newMessageCount={330} />
     )
     const o = wrapper.find('.c-ChatListItem__messageCount')
@@ -156,42 +156,42 @@ describe('MessageCount', () => {
 
 describe('Loading', () => {
   test('Renders Skeletons by default', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const o = wrapper.find(Skeleton.Text)
 
     expect(o.length).toBeTruthy()
   })
 
   test('Renders Skeletons, if name prop is missing', () => {
-    const wrapper = shallow(<Item message="Hello" />)
+    const wrapper = mount(<Item message="Hello" />)
     const o = wrapper.find(Skeleton.Text)
 
     expect(o.length).toBeTruthy()
   })
 
   test('Renders Skeletons, if message prop is missing', () => {
-    const wrapper = shallow(<Item name="Ron" />)
+    const wrapper = mount(<Item name="Ron" />)
     const o = wrapper.find(Skeleton.Text)
 
     expect(o.length).toBeTruthy()
   })
 
   test('Does not render Skeleton if message prop is missing, but isTyping', () => {
-    const wrapper = shallow(<Item name="Ron" isTyping />)
+    const wrapper = mount(<Item name="Ron" isTyping />)
     const o = wrapper.find(Skeleton.Text)
 
     expect(o.length).not.toBeTruthy()
   })
 
   test('Does not render meta content if isLoading', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const o = wrapper.find('.c-ChatListItem__meta')
 
     expect(o.length).toBe(0)
   })
 
   test('Adds isLoading styles', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const o = wrapper.find(Link)
 
     expect(o.hasClass('is-loading')).toBeTruthy()
@@ -200,14 +200,14 @@ describe('Loading', () => {
 
 describe('Timestamp', () => {
   test('Does not render if isLoading', () => {
-    const wrapper = shallow(<Item name="Ron" />)
+    const wrapper = mount(<Item name="Ron" />)
     const o = wrapper.find(Timestamp)
 
     expect(o.length).toBe(0)
   })
 
   test('Renders if defined', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Item name="Ron" message="Stay classy!" timestamp="noon" />
     )
     const o = wrapper.find(Timestamp)
@@ -219,7 +219,7 @@ describe('Timestamp', () => {
 
 describe('Tags', () => {
   test('Does not render tags by default', () => {
-    const wrapper = shallow(<Item name="Ron" message="Stay classy!" />)
+    const wrapper = mount(<Item name="Ron" message="Stay classy!" />)
     const o = wrapper.find('.c-ChatListItem__tags')
 
     expect(o.length).toBe(0)
@@ -233,7 +233,7 @@ describe('Tags', () => {
       },
     ]
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <Item name="Ron" message="Stay classy!" tags={tagData} />
     )
 
@@ -249,14 +249,14 @@ describe('Tags', () => {
 
 describe('Typing', () => {
   test('Does not show LoadingDots by default', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(0)
   })
 
   test('Renders LoadingDots if isTyping', () => {
-    const wrapper = shallow(<Item name="Ron" isTyping />)
+    const wrapper = mount(<Item name="Ron" isTyping />)
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(1)
@@ -265,16 +265,14 @@ describe('Typing', () => {
 
 describe('Viewing', () => {
   test('Does not render isViewing styles by default', () => {
-    const wrapper = shallow(<Item name="Ron" message="Stay classy!" />)
+    const wrapper = mount(<Item name="Ron" message="Stay classy!" />)
     const o = wrapper.find(Link)
 
     expect(o.hasClass('is-viewing')).toBe(false)
   })
 
   test('Renders isViewing flag, if defined', () => {
-    const wrapper = shallow(
-      <Item name="Ron" message="Stay classy!" isViewing />
-    )
+    const wrapper = mount(<Item name="Ron" message="Stay classy!" isViewing />)
     const o = wrapper.find(Link)
     const viewing = wrapper.find('.c-ChatListItem__viewing')
     const animate = viewing.find(Animate)
@@ -289,16 +287,14 @@ describe('Viewing', () => {
 
 describe('Waiting', () => {
   test('Does not render isWaiting styles by default', () => {
-    const wrapper = shallow(<Item name="Ron" message="Stay classy!" />)
+    const wrapper = mount(<Item name="Ron" message="Stay classy!" />)
     const o = wrapper.find(Link)
 
     expect(o.hasClass('is-waiting')).toBe(false)
   })
 
   test('Renders Waiting tag, if defined', () => {
-    const wrapper = shallow(
-      <Item name="Ron" message="Stay classy!" isWaiting />
-    )
+    const wrapper = mount(<Item name="Ron" message="Stay classy!" isWaiting />)
     const o = wrapper.find(Link)
     const waiting = wrapper.find('.c-ChatListItem__waiting')
     const animate = waiting.find(Animate)
@@ -306,7 +302,6 @@ describe('Waiting', () => {
 
     expect(o.hasClass('is-waiting')).toBe(true)
     expect(waiting.length).toBe(1)
-    expect(animate.length).toBe(1)
     expect(tag.length).toBe(1)
     expect(tag.props().pulsing).toBe(true)
   })

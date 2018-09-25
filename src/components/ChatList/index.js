@@ -1,3 +1,8 @@
+// @flow
+import { propConnect } from '../PropProvider'
 import ChatList from './ChatList'
 
-export default ChatList
+ChatList.BlankSlate = propConnect('ChatListBlankSlate')(ChatList.BlankSlate)
+ChatList.Item = propConnect('ChatListItem')(ChatList.Item)
+
+export default propConnect('ChatList')(ChatList)
