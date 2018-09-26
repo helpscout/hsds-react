@@ -3,7 +3,6 @@ import { mount } from 'enzyme'
 import propConnect from '../propConnect'
 import PropProvider from '../PropProvider'
 import Button from '../../Button'
-import { channel } from '../utils'
 
 describe('PropProvider', () => {
   describe('Render', () => {

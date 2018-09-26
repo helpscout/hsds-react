@@ -2,7 +2,6 @@ import React from 'react'
 import { mount } from 'enzyme'
 import propConnect from '../propConnect'
 import Provider from '../PropProvider'
-import { channel } from '../utils'
 
 describe('propConnect', () => {
   test('Can render without a Provider', () => {
