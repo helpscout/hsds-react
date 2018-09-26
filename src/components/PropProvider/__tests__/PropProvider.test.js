@@ -97,41 +97,6 @@ describe('PropProvider', () => {
     })
   })
 
-  describe('Sub/Unsub', () => {
-    test('Subscribes to parent context, if available', () => {
-      const spy = jest.fn()
-      const value = { a: 1 }
-
-      mount(<PropProvider value={value} />, {
-        context: {
-          [channel]: {
-            subscribe: spy,
-          },
-        },
-      })
-
-      expect(spy).toHaveBeenCalled()
-    })
-
-    test('Unsubscribes to parent context, if available', () => {
-      const spy = jest.fn()
-      const value = { a: 1 }
-
-      const wrapper = mount(<PropProvider value={value} />, {
-        context: {
-          [channel]: {
-            subscribe: () => 123,
-            unsubscribe: spy,
-          },
-        },
-      })
-
-      wrapper.unmount()
-
-      expect(spy).toHaveBeenCalled()
-    })
-  })
-
   describe('Connected component', () => {
     test('Component props merge with (nested) Provider props', () => {
       const config = {

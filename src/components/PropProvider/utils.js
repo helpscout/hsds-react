@@ -1,6 +1,5 @@
 // @flow
-import type { PropProviderProps, ConfigGetter } from './types'
-import Logger from '../../utilities/Logger'
+import type { ConfigGetter } from './types'
 import {
   isArray,
   isObject,
@@ -8,48 +7,42 @@ import {
   isPlainObject,
   isString,
 } from '../../utilities/is'
-import { noop } from '../../utilities/other'
-
-export const channel = '__BLUE_PROP_PROVIDER__'
-
-export const contextTypes = {
-  [channel]: noop,
-}
 
 // Default configs
 export const contextConfig = {}
 
 /**
- * Merges props with outerProps.
- *
- * @param   {Function|Object} props The PropProvider configs.
- * @param   {Object} outerProps The outer PropProvider configs.
+ * Merge contextProps with parent contextProps.
+ * @param   {Object} props The initial PropProvider configs.
+ * @param   {Object} nextProps The next PropProvider configs.
  * @returns {Object} The merged props.
  */
-export function getProps(
-  props: PropProviderProps = {},
-  outerProps?: Object
-): Object {
-  if (isFunction(props)) {
-    const mergedProps = props(outerProps)
-    if (!isPlainObject(mergedProps)) {
-      return Logger.error(
-        '[PropProvider] Please return an object from your value function, i.e. value={() => ({})}!'
-      )
+export function shallowMergeProps(props: Object = {}, nextProps: Object = {}) {
+  // Safety check
+  const safeProps = isPlainObject(props) ? props : {}
+  const safeNextProps = isPlainObject(nextProps) ? nextProps : {}
+
+  const mergedProps = { ...safeProps }
+
+  Object.keys(safeNextProps).forEach(key => {
+    const prop = mergedProps[key]
+    const nextProp = safeNextProps[key]
+
+    if (prop) {
+      if (isPlainObject(nextProp)) {
+        mergedProps[key] = {
+          ...prop,
+          ...nextProp,
+        }
+      } else {
+        mergedProps[key] = nextProp
+      }
+    } else {
+      mergedProps[key] = nextProp
     }
-    return mergedProps
-  }
-  if (!isPlainObject(props)) {
-    return Logger.error(
-      '[PropProvider] Please make your value prop a plain object'
-    )
-  }
+  })
 
-  if (outerProps === undefined) {
-    return props
-  }
-
-  return { ...outerProps, ...props }
+  return mergedProps
 }
 
 /**
@@ -105,13 +98,4 @@ export function getConfigPropsFromArray(
 
     return remappedProps
   }, {})
-}
-
-/**
- * Internally sets the Provider props within the connected component.
- *
- * @param {Object} providerProps The Provider prop (value)
- */
-export function setProps(providerProps: Object) {
-  this.setState({ providerProps })
 }

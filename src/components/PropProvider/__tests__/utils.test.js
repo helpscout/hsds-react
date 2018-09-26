@@ -1,50 +1,8 @@
-import { getProps, getConfigProps, getConfigPropsFromArray } from '../utils'
-
-let errorSpy
-beforeEach(() => {
-  errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-})
-afterEach(() => {
-  errorSpy.mockReset()
-  errorSpy.mockRestore()
-})
-
-describe('getProps', () => {
-  test('Returns object by default', () => {
-    expect(getProps()).toEqual({})
-  })
-
-  test('Returns props if outerProps is undefined', () => {
-    const props = { a: 1 }
-    const outerProps = { undefined }
-
-    expect(getProps(props, outerProps)).toEqual(props)
-  })
-
-  test('Fires prop function, if defined', () => {
-    const props = props => ({ ...props, b: 2 })
-    const outerProps = { a: 1 }
-
-    expect(getProps(props, outerProps)).toEqual({
-      a: 1,
-      b: 2,
-    })
-  })
-
-  test('Returns falsy, if props is invalid', () => {
-    const props = []
-    const outerProps = { a: 1 }
-
-    expect(getProps(props, outerProps)).toBeFalsy()
-  })
-
-  test('Returns falsy, if props fn is invalid', () => {
-    const props = props => []
-    const outerProps = { a: 1 }
-
-    expect(getProps(props, outerProps)).toBeFalsy()
-  })
-})
+import {
+  getConfigProps,
+  getConfigPropsFromArray,
+  shallowMergeProps,
+} from '../utils'
 
 describe('getConfigProps', () => {
   test('Returns an empty object, if no arguments', () => {
@@ -221,6 +179,127 @@ describe('getConfigPropsFromArray', () => {
     expect(getConfigPropsFromArray(config, ['one', 'two', 'three'])).toEqual({
       one: 'Derek',
       two: 'Hansel',
+    })
+  })
+})
+
+describe('shallowMergeProps', () => {
+  test('Safely transforms non-Object props', () => {
+    expect(shallowMergeProps()).toEqual({})
+    expect(shallowMergeProps(1, 2)).toEqual({})
+    expect(shallowMergeProps(() => {}, [])).toEqual({})
+  })
+
+  test('Merges props at varying namespaces', () => {
+    const props = {
+      a: 1,
+    }
+    const nextProps = {
+      b: 2,
+    }
+
+    expect(shallowMergeProps(props, nextProps)).toEqual({
+      a: 1,
+      b: 2,
+    })
+  })
+
+  test('Merges props at same namespaces', () => {
+    const props = {
+      a: 1,
+    }
+    const nextProps = {
+      a: 2,
+    }
+
+    expect(shallowMergeProps(props, nextProps)).toEqual({
+      a: 2,
+    })
+  })
+
+  test('Merges Object props at same namespaces', () => {
+    const props = {
+      a: {
+        b: 1,
+      },
+    }
+    const nextProps = {
+      a: {
+        b: 2,
+      },
+    }
+
+    expect(shallowMergeProps(props, nextProps)).toEqual({
+      a: {
+        b: 2,
+      },
+    })
+  })
+
+  test('Merges Object props with multiple key values at same namespaces', () => {
+    const props = {
+      a: {
+        b: 1,
+        c: 3,
+      },
+    }
+    const nextProps = {
+      a: {
+        b: 2,
+        d: 4,
+      },
+    }
+
+    expect(shallowMergeProps(props, nextProps)).toEqual({
+      a: {
+        b: 2,
+        c: 3,
+        d: 4,
+      },
+    })
+  })
+
+  test('Merges Object props with multiple key values at different namespaces', () => {
+    const props = {
+      a: {
+        b: 1,
+        c: 3,
+      },
+      m: {
+        n: 0,
+        o: 1,
+        p: 2,
+      },
+      x: {
+        y: 0,
+      },
+    }
+    const nextProps = {
+      a: {
+        b: 2,
+        d: 4,
+      },
+      x: {
+        y: 1,
+        z: 2,
+      },
+    }
+
+    expect(shallowMergeProps(props, nextProps)).toEqual({
+      a: {
+        b: 2,
+        c: 3,
+        d: 4,
+      },
+      m: {
+        n: 0,
+        o: 1,
+        p: 2,
+      },
+      x: {
+        y: 1,
+        z: 2,
+      },
     })
   })
 })

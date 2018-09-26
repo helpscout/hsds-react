@@ -177,40 +177,4 @@ describe('propConnect', () => {
 
     expect(el.html()).toContain(config.Buddy.noms.only)
   })
-
-  test('Subscribes to PropProvider context', () => {
-    const spy = jest.fn()
-    const Buddy = props => <div />
-    const ConnectedBuddy = propConnect('Buddy')(Buddy)
-
-    mount(<ConnectedBuddy />, {
-      context: {
-        [channel]: {
-          subscribe: spy,
-          unsubscribe: () => {},
-        },
-      },
-    })
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('Unsubscribes to PropProvider context, on unmount', () => {
-    const spy = jest.fn()
-    const Buddy = props => <div />
-    const ConnectedBuddy = propConnect('Buddy')(Buddy)
-
-    const wrapper = mount(<ConnectedBuddy />, {
-      context: {
-        [channel]: {
-          subscribe: () => 1,
-          unsubscribe: spy,
-        },
-      },
-    })
-
-    wrapper.unmount()
-
-    expect(spy).toHaveBeenCalled()
-  })
 })
