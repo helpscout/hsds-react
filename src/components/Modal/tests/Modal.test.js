@@ -1,7 +1,7 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import { MemoryRouter as Router } from 'react-router'
-import { default as Modal, ModalComponent } from '..'
+import { default as Modal, ModalComponent } from '../Modal'
 import { Card, Portal, Overlay, Scrollable } from '../../index'
 import Keys from '../../../constants/Keys'
 
@@ -30,7 +30,7 @@ const simulateKeyPress = (keyCode, eventType = 'keyup', modifier) => {
 
 describe('Trigger', () => {
   test('Can render', () => {
-    const wrapper = shallow(<Modal isOpen trigger={trigger} />)
+    const wrapper = mount(<Modal isOpen trigger={trigger} />)
     const el = wrapper.find('.trigger')
 
     expect(el.exists()).toBeTruthy()
@@ -38,7 +38,7 @@ describe('Trigger', () => {
   })
 
   test('Automatically receives click event', () => {
-    const wrapper = shallow(<Modal isOpen trigger={trigger} />)
+    const wrapper = mount(<Modal isOpen trigger={trigger} />)
     const el = wrapper.find('.trigger')
 
     expect(el.prop('onClick')).toBeInstanceOf(Function)
@@ -333,7 +333,7 @@ describe('overlayClassName', () => {
 
 describe('Header', () => {
   test('Does not render a Modal.Header by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body>
           <div className="ron">Burgandy</div>
@@ -346,7 +346,7 @@ describe('Header', () => {
   })
 
   test('Renders the Modal.Header within a Card', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Header />
         <div className="ron">Burgandy</div>
@@ -362,7 +362,7 @@ describe('Header', () => {
 
 describe('Footer', () => {
   test('Does not render a Modal.Footer by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body>
           <div className="ron">Burgandy</div>
@@ -375,7 +375,7 @@ describe('Footer', () => {
   })
 
   test('Renders the Modal.Footer within a Card', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Footer />
         <div className="ron">Burgandy</div>
@@ -391,7 +391,7 @@ describe('Footer', () => {
 
 describe('Body', () => {
   test('Can parse plain-text', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body>Ron</Modal.Body>
       </ModalComponent>
@@ -403,7 +403,7 @@ describe('Body', () => {
   })
 
   test('Can render Modal.Body without children content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body />
       </ModalComponent>
@@ -414,7 +414,7 @@ describe('Body', () => {
   })
 
   test('Can render Modal.Body without number content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body>1</Modal.Body>
       </ModalComponent>
@@ -425,7 +425,7 @@ describe('Body', () => {
   })
 
   test('Can render a Modal.Body', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body>
           <div className="ron">Burgandy</div>
@@ -441,7 +441,7 @@ describe('Body', () => {
   })
 
   test('Renders Modal.Body within Card, by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <Modal.Body>
           <div className="ron">Burgandy</div>
@@ -509,7 +509,7 @@ describe('Content', () => {
 
 describe('Children', () => {
   test('Can render non-sub component children', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <div className="ron">Test</div>
       </ModalComponent>
@@ -524,7 +524,7 @@ describe('Children', () => {
       return <Modal.Content>{props.children}</Modal.Content>
     }
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <ModalComponent>
         <WrapperComponent>
           <div className="ron">Test</div>
@@ -537,7 +537,7 @@ describe('Children', () => {
   })
 
   test('Can handle null content', () => {
-    const wrapper = shallow(<ModalComponent>{[null]}</ModalComponent>)
+    const wrapper = mount(<ModalComponent>{[null]}</ModalComponent>)
 
     expect(wrapper).toBeTruthy()
   })
@@ -570,24 +570,28 @@ describe('isOpen', () => {
 
 describe('modalAnimation', () => {
   test('modalAnimationDelay can be passed to Animate component', () => {
-    const wrapper = shallow(<ModalComponent modalAnimationDelay={66} />)
-    const o = wrapper.find('.c-Modal__Card-container')
+    const wrapper = mount(<ModalComponent modalAnimationDelay={66} />)
+    const o = wrapper
+      .find('Animate')
+      .filterWhere(node => node.hasClass('c-Modal__Card-container'))
 
     expect(o.prop('delay')).toBe(66)
   })
 
   test('modalAnimationDuration can be passed to Animate component', () => {
-    const wrapper = shallow(<ModalComponent modalAnimationDuration={66} />)
-    const o = wrapper.find('.c-Modal__Card-container')
+    const wrapper = mount(<ModalComponent modalAnimationDuration={66} />)
+    const o = wrapper
+      .find('Animate')
+      .filterWhere(node => node.hasClass('c-Modal__Card-container'))
 
     expect(o.prop('duration')).toBe(66)
   })
 
   test('modalAnimationEasing can be passed to Animate component', () => {
-    const wrapper = shallow(
-      <ModalComponent modalAnimationEasing="fakeBounce" />
-    )
-    const o = wrapper.find('.c-Modal__Card-container')
+    const wrapper = mount(<ModalComponent modalAnimationEasing="fakeBounce" />)
+    const o = wrapper
+      .find('Animate')
+      .filterWhere(node => node.hasClass('c-Modal__Card-container'))
 
     expect(o.prop('easing')).toBe('fakeBounce')
   })

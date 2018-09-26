@@ -80,18 +80,10 @@ const portalOptions = {
 }
 
 class Modal extends Component {
-  constructor() {
-    super()
-
-    this.documentNode = null
-    this.cardNode = null
-    this.closeNode = null
-    this.scrollableNode = null
-    this.handleOnResize = this.handleOnResize.bind(this)
-    this.handleOnTab = this.handleOnTab.bind(this)
-    this.handleOnShiftTab = this.handleOnShiftTab.bind(this)
-    this.positionCloseNode = this.positionCloseNode.bind(this)
-  }
+  documentNode = null
+  cardNode = null
+  closeNode = null
+  scrollableNode = null
 
   componentWillMount() {
     this.documentNode = getClosestDocument(ReactDOM.findDOMNode(this))
@@ -111,12 +103,18 @@ class Modal extends Component {
     this.scrollableNode = null
   }
 
+  getChildContext() {
+    return {
+      positionCloseNode: this.positionCloseNode,
+    }
+  }
+
   /* istanbul ignore next */
-  handleOnResize() {
+  handleOnResize = () => {
     this.positionCloseNode()
   }
 
-  handleOnTab(event) {
+  handleOnTab = event => {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
     const focusedNode = event.target
@@ -131,7 +129,7 @@ class Modal extends Component {
     }
   }
 
-  handleOnShiftTab(event) {
+  handleOnShiftTab = event => {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
     const focusedNode = event.target
@@ -146,7 +144,7 @@ class Modal extends Component {
     }
   }
 
-  focusModalCard() {
+  focusModalCard = () => {
     const { modalFocusTimeout } = this.props
     setTimeout(() => {
       /* istanbul ignore else */
@@ -156,7 +154,7 @@ class Modal extends Component {
     }, modalFocusTimeout)
   }
 
-  positionCloseNode(scrollableNode) {
+  positionCloseNode = scrollableNode => {
     const scrollNode = scrollableNode || this.scrollableNode
     if (!this.closeNode || !isNodeElement(scrollNode)) return
 
@@ -166,12 +164,6 @@ class Modal extends Component {
       defaultOffset}px`
 
     this.closeNode.style.right = offset
-  }
-
-  getChildContext() {
-    return {
-      positionCloseNode: this.positionCloseNode,
-    }
   }
 
   getCloseMarkup = () => {
@@ -209,72 +201,28 @@ class Modal extends Component {
     })
   }
 
-  setScrollableRef = node => {
-    this.scrollableNode = node
-  }
-
-  render() {
+  getContentMarkup = () => {
     const {
       cardClassName,
-      children,
-      className,
-      closeIcon,
-      closeIconRepositionDelay,
-      closePortal,
-      containTabKeyPress,
-      exact,
-      isOpen,
       modalAnimationDelay,
       modalAnimationDuration,
       modalAnimationEasing,
       modalAnimationSequence,
-      modalFocusTimeout,
-      onClose,
-      onScroll,
-      openPortal,
-      overlayAnimationDelay,
-      overlayAnimationDuration,
-      overlayAnimationEasing,
-      overlayAnimationSequence,
-      overlayClassName,
-      path,
-      portalIsMounted,
       portalIsOpen,
       seamless,
-      style,
-      timeout,
-      trigger,
-      wrapperClassName,
-      zIndex,
-      ...rest
     } = this.props
 
-    const handleOnResize = this.handleOnResize
-
-    const componentClassName = classNames(
-      'c-Modal',
-      isOpen && 'is-open',
-      className
-    )
     const cardComponentClassName = classNames('c-Modal__Card', cardClassName)
-    const overlayComponentClassName = classNames(
-      'c-Modal__Overlay',
-      overlayClassName
-    )
-
-    const modalStyle = { ...style, zIndex }
 
     const childrenMarkup = this.getChildrenMarkup()
     const closeMarkup = this.getCloseMarkup()
 
-    const modalContentMarkup = !seamless ? (
+    const contentMarkup = !seamless ? (
       <Card
         className={cardComponentClassName}
         seamless
         role="dialog"
-        nodeRef={node => {
-          this.cardNode = node
-        }}
+        nodeRef={this.setCardRef}
         tabIndex="-1"
       >
         {closeMarkup}
@@ -287,11 +235,75 @@ class Modal extends Component {
     )
 
     return (
+      <Animate
+        className="c-Modal__Card-container"
+        delay={modalAnimationDelay}
+        duration={modalAnimationDuration}
+        easing={modalAnimationEasing}
+        in={portalIsOpen}
+        sequence={modalAnimationSequence}
+      >
+        {contentMarkup}
+      </Animate>
+    )
+  }
+
+  getOverlayMarkup = () => {
+    const {
+      closePortal,
+      overlayAnimationDelay,
+      overlayAnimationDuration,
+      overlayAnimationSequence,
+      overlayClassName,
+      portalIsOpen,
+    } = this.props
+
+    const overlayComponentClassName = classNames(
+      'c-Modal__Overlay',
+      overlayClassName
+    )
+
+    return (
+      <Animate
+        delay={overlayAnimationDelay}
+        duration={overlayAnimationDuration}
+        in={portalIsOpen}
+        sequence={overlayAnimationSequence}
+      >
+        <Overlay
+          className={overlayComponentClassName}
+          onClick={closePortal}
+          role="presentation"
+        />
+      </Animate>
+    )
+  }
+
+  setCardRef = node => {
+    this.cardNode = node
+  }
+
+  setScrollableRef = node => {
+    this.scrollableNode = node
+  }
+
+  render() {
+    const { className, isOpen, style, zIndex, ...rest } = this.props
+
+    const componentClassName = classNames(
+      'c-Modal',
+      isOpen && 'is-open',
+      className
+    )
+
+    const styles = { ...style, zIndex }
+
+    return (
       <div
         {...getValidProps(rest)}
         className={componentClassName}
         role="document"
-        style={modalStyle}
+        style={styles}
       >
         <KeypressListener
           keyCode={Keys.TAB}
@@ -304,31 +316,9 @@ class Modal extends Component {
           handler={this.handleOnShiftTab}
           type="keydown"
         />
-        <EventListener event="resize" handler={handleOnResize} />
-        <div className="c-Modal__innerWrapper">
-          <Animate
-            className="c-Modal__Card-container"
-            delay={modalAnimationDelay}
-            duration={modalAnimationDuration}
-            easing={modalAnimationEasing}
-            in={portalIsOpen}
-            sequence={modalAnimationSequence}
-          >
-            {modalContentMarkup}
-          </Animate>
-        </div>
-        <Animate
-          delay={overlayAnimationDelay}
-          duration={overlayAnimationDuration}
-          in={portalIsOpen}
-          sequence={overlayAnimationSequence}
-        >
-          <Overlay
-            className={overlayComponentClassName}
-            onClick={closePortal}
-            role="presentation"
-          />
-        </Animate>
+        <EventListener event="resize" handler={this.handleOnResize} />
+        <div className="c-Modal__innerWrapper">{this.getContentMarkup()}</div>
+        {this.getOverlayMarkup()}
       </div>
     )
   }
