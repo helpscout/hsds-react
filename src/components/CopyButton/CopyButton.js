@@ -1,8 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import Button from '../Button'
 import Icon from '../Icon'
-import Text from '../Text'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
@@ -57,6 +55,7 @@ class CopyButton extends Component<Props, State> {
   }
 
   safeSetState = (state: Object) => {
+    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state)
     }

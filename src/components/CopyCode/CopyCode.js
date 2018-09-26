@@ -4,78 +4,106 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Highlight from '../Highlight'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { selectText } from '../../utilities/select'
+import { noop } from '../../utilities/other'
+import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { COMPONENT_KEY } from './utils'
 import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css.js'
 
 type Props = {
   className?: string,
   code: string,
+  copyToClipboard: boolean,
   language?: string,
-  onCopy: (string: code) => undefined,
+  onCopy: (code: string) => void,
+  selectOnMount: boolean,
 }
 
 class CopyCode extends Component<Props> {
-  static defaultProps = {}
+  static defaultProps = {
+    code: '',
+    copyToClipboard: true,
+    onCopy: noop,
+    selectOnMount: true,
+  }
+  codeNode: HTMLElement
 
   componentDidMount() {
+    if (this.props.selectOnMount) {
+      this.selectText()
+    }
+  }
+
+  handleOnKeyDown = (event: SyntheticKeyboardEvent<HTMLElement>) => {
+    if (event.ctrlKey || event.metaKey) {
+      return true
+    }
+
+    return this.preventEventDefault(event)
+  }
+
+  handleCopyClick = () => {
+    this.selectText()
+    this.copyToClipboard()
+    this.props.onCopy(this.getCodeValue())
+  }
+
+  copyToClipboard = () => {
+    if (this.props.copyToClipboard) {
+      copyToClipboard()
+    }
+  }
+
+  getCodeValue = () => {
+    return this.props.code
+  }
+
+  selectText = () => {
     this.codeNode && selectText(this.codeNode)
   }
 
-  handleCopyClick() {
-    const { code, onCopy } = this.props
-
-    // Select the text in the content editable area
-    this.codeNode && selectText(this.codeNode)
-
-    onCopy(code)
+  preventEventDefault = (
+    event: SyntheticKeyboardEvent<HTMLElement> | Event
+  ) => {
+    event && event.preventDefault()
+    return false
   }
 
-  render() {
-    const { className, code, language, ...rest } = this.props
-    const componentClassName = classNames('c-CopyCode', className)
+  setNodeRef = (node: HTMLElement) => {
+    this.codeNode = node
+  }
 
-    const noop = e => {
-      e.preventDefault()
+  getCodeMarkup = () => {
+    const { code, language } = this.props
 
-      return false
-    }
-
-    const keyDown = e => {
-      if (e.ctrlKey || e.metaKey) {
-        return true
-      }
-
-      return noop(e)
-    }
-
-    const codeComponent = language ? (
+    return language ? (
       <Highlight language={language}>{code}</Highlight>
     ) : (
       <pre>
         <code>{code}</code>
       </pre>
     )
+  }
+
+  render() {
+    const { className, code, language, ...rest } = this.props
+    const componentClassName = classNames('c-CopyCode', className)
 
     return (
       <WrapperUI className={componentClassName}>
         <CopyCodeUI
           {...getValidProps(rest)}
           contentEditable
-          onCut={noop}
-          onPaste={noop}
-          onKeyDown={keyDown}
-          innerRef={codeNode => (this.codeNode = codeNode)}
+          onCut={this.preventEventDefault}
+          onPaste={this.preventEventDefault}
+          onKeyDown={this.handleOnKeyDown}
+          innerRef={this.setNodeRef}
           spellCheck={false}
           suppressContentEditableWarning
         >
-          {codeComponent}
+          {this.getCodeMarkup()}
         </CopyCodeUI>
 
-        <CopyButtonUI
-          kind="secondary"
-          onClick={this.handleCopyClick.bind(this)}
-        >
+        <CopyButtonUI kind="secondary" onClick={this.handleCopyClick}>
           Copy
         </CopyButtonUI>
       </WrapperUI>

@@ -5,27 +5,51 @@ import CopyButton from '../CopyButton'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { selectText } from '../../utilities/select'
+import { copyToClipboard, selectText } from '../../utilities/clipboard'
+import { noop } from '../../utilities/other'
 import { CopyInputUI } from './styles/CopyInput.css.js'
 import { COMPONENT_KEY } from './utils'
 
+type InputNode = HTMLInputElement | HTMLTextAreaElement
+
 type Props = {
+  copyToClipboard: boolean,
   className?: string,
-  onCopy: (string: value) => undefined,
-  readOnly?: boolean,
+  onCopy: (value: string) => void,
+  readOnly: boolean,
   value: string,
 }
 
 class CopyInput extends Component<Props> {
-  static defaultProps = {}
+  static defaultProps = {
+    copyToClipboard: true,
+    onCopy: noop,
+    readOnly: true,
+    value: '',
+  }
+  inputNode: InputNode
 
-  handleCopyClick() {
-    const { onCopy, value } = this.props
+  copyToClipboard = () => {
+    copyToClipboard()
+  }
 
-    // Select the text in the input
-    this.input && selectText(this.input)
+  getInputValue = () => {
+    /* istanbul ignore next */
+    return this.inputNode ? this.inputNode.value : this.props.value
+  }
 
-    onCopy(value)
+  selectText = () => {
+    this.inputNode && selectText(this.inputNode)
+  }
+
+  handleCopyClick = () => {
+    this.selectText()
+    this.copyToClipboard()
+    this.props.onCopy(this.getInputValue())
+  }
+
+  setNodeRef = (node: InputNode) => {
+    this.inputNode = node
   }
 
   render() {
@@ -37,7 +61,8 @@ class CopyInput extends Component<Props> {
         <ControlGroup.Block>
           <CopyInputUI
             {...getValidProps(rest)}
-            inputRef={input => (this.input = input)}
+            inputRef={this.setNodeRef}
+            isSubtleReadOnly
           />
         </ControlGroup.Block>
         <ControlGroup.Item>

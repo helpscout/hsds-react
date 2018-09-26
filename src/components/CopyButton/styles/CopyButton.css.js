@@ -19,6 +19,10 @@ export const CopyButtonUI = styled(Button)`
   &.is-iconOnly {
     padding-left: 9px !important;
     padding-right: 9px !important;
+
+    &.is-lg {
+      min-width: initial;
+    }
   }
 
   &.is-copyConfirmed {

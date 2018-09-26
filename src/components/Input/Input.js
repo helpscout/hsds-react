@@ -51,6 +51,7 @@ type Props = {
   isFirst: boolean,
   isNotOnly: boolean,
   isLast: boolean,
+  isSubtleReadOnly: boolean,
   label: any,
   modalhelpText: string,
   moveCursorToEnd: boolean,
@@ -105,6 +106,7 @@ export class Input extends Component<Props, State> {
     isFirst: false,
     isNotOnly: false,
     isLast: false,
+    isSubtleReadOnly: false,
     moveCursorToEnd: false,
     multiline: null,
     offsetAmount: 0,
@@ -473,6 +475,7 @@ export class Input extends Component<Props, State> {
       isFirst,
       isNotOnly,
       isLast,
+      isSubtleReadOnly,
       label,
       maxHeight,
       moveCursorToEnd,
@@ -554,6 +557,7 @@ export class Input extends Component<Props, State> {
       isFirst,
       isNotOnly,
       isLast,
+      isSubtleReadOnly,
       maxHeight,
       multiline,
       readOnly,
@@ -564,13 +568,15 @@ export class Input extends Component<Props, State> {
 
     const { isFocused, value, state } = this.state
 
+    const isReadOnly = !isSubtleReadOnly && readOnly
+
     const componentClassName = classNames(
       'c-Input',
       disabled && 'is-disabled',
       isFocused && 'is-focused',
       maxHeight && 'has-maxHeight',
       multiline && 'is-multiline',
-      readOnly && 'is-readonly',
+      isReadOnly && 'is-readonly',
       resizable && 'is-resizable',
       seamless && 'is-seamless',
       state && `is-${state}`,
@@ -604,7 +610,7 @@ export class Input extends Component<Props, State> {
                 isFirst={isFirst}
                 isNotOnly={isNotOnly}
                 isLast={isLast}
-                readOnly={readOnly}
+                readOnly={isReadOnly}
                 seamless={seamless}
                 state={state}
               />
