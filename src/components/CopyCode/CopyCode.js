@@ -28,6 +28,7 @@ class CopyCode extends Component<Props> {
   codeNode: HTMLElement
 
   componentDidMount() {
+    /* istanbul ignore else */
     if (this.props.selectOnMount) {
       this.selectText()
     }
@@ -48,6 +49,7 @@ class CopyCode extends Component<Props> {
   }
 
   copyToClipboard = () => {
+    /* istanbul ignore else */
     if (this.props.copyToClipboard) {
       copyToClipboard()
     }

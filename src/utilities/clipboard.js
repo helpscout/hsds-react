@@ -40,8 +40,8 @@ export const selectText = (element: any) => {
     }
 
     selectedText = element.value
-    /* istanbul ignore else */
   } else {
+    /* istanbul ignore else */
     if (element.hasAttribute('contenteditable')) {
       element.focus()
     }
