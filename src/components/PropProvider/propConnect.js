@@ -1,10 +1,12 @@
 // @flow
-import type { ConfigGetter } from './utils'
+import type { ConfigGetter } from './types'
 import React, { Component } from 'react'
 import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
-import Consumer from './Consumer'
+import Context from './Context'
 import { getConfigProps } from './utils'
 import { isDefined, isString } from '../../utilities/is'
+
+type Props = Object
 
 /**
  * "Connects" a component with the PropProvider (context). Concept is
@@ -23,8 +25,9 @@ function propConnect(name?: ConfigGetter) {
     }
     const displayName = `connected(${namespace})`
 
-    class Connect extends Component<any> {
+    class Connect extends Component<Props> {
       static displayName = displayName
+
       setWrappedInstance: Function
       wrappedInstance: any = null
 
@@ -39,15 +42,15 @@ function propConnect(name?: ConfigGetter) {
 
       render() {
         return (
-          <Consumer>
-            {(config: Object) => (
+          <Context.Consumer>
+            {contextProps => (
               <WrappedComponent
-                {...getConfigProps(config, namespace)}
+                {...getConfigProps(contextProps, namespace)}
                 {...this.props}
                 ref={this.setWrappedInstance}
               />
             )}
-          </Consumer>
+          </Context.Consumer>
         )
       }
     }
