@@ -1,35 +1,39 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+// @flow
+import type { ToolbarSize } from '../Toolbar/types'
+import React, { PureComponent as Component } from 'react'
 import Toolbar from '../Toolbar'
-import { sizeTypes as toolbarSizeTypes } from '../Toolbar/propTypes'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 
-export const propTypes = {
-  seamless: PropTypes.bool,
-  shadow: PropTypes.bool,
-  size: toolbarSizeTypes,
+type Props = {
+  children?: any,
+  className?: string,
+  seamless: boolean,
+  shadow: boolean,
+  size: ToolbarSize,
 }
 
-const defaultProps = {
-  seamless: false,
-  shadow: false,
-  size: 'lg',
+class Header extends Component<Props> {
+  static defaultProps = {
+    seamless: false,
+    shadow: false,
+    size: 'lg',
+  }
+
+  render() {
+    const { className, children, ...rest } = this.props
+
+    const componentClassName = classNames('c-ModalHeader', className)
+
+    return (
+      <Toolbar {...rest} className={componentClassName} placement="top">
+        {children}
+      </Toolbar>
+    )
+  }
 }
 
-const Header = props => {
-  const { className, children, placement, ...rest } = props
-
-  const componentClassName = classNames('c-ModalHeader', className)
-
-  return (
-    <Toolbar className={componentClassName} placement="top" {...rest}>
-      {children}
-    </Toolbar>
-  )
-}
-
-Header.propTypes = propTypes
-Header.defaultProps = defaultProps
-Header.displayName = 'ModalHeader'
+namespaceComponent(COMPONENT_KEY.Header)(Header)
 
 export default Header

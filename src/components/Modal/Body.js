@@ -1,10 +1,11 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import Scrollable from '../Scrollable'
-import styled from '../styled'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Body.css.js'
+import { COMPONENT_KEY } from './utils'
+import { BodyUI } from './styles/Body.css.js'
 
 type Props = {
   children?: any,
@@ -15,8 +16,6 @@ type Props = {
   scrollableRef: Function,
   scrollFade: boolean,
 }
-
-export const propTypes = {}
 
 class Body extends Component<Props> {
   static defaultProps = {
@@ -30,8 +29,6 @@ class Body extends Component<Props> {
   static contextTypes = {
     positionCloseNode: noop,
   }
-
-  static displayName = 'Modal.Body'
 
   scrollableNode: ?HTMLElement
 
@@ -47,6 +44,11 @@ class Body extends Component<Props> {
     if (this.context.positionCloseNode) {
       this.context.positionCloseNode(this.scrollableNode)
     }
+  }
+
+  setScrollableRef = (node: HTMLElement) => {
+    this.scrollableNode = node
+    this.props.scrollableRef(node)
   }
 
   render() {
@@ -75,10 +77,7 @@ class Body extends Component<Props> {
         fade={scrollFade}
         rounded
         onScroll={onScroll}
-        scrollableRef={node => {
-          this.scrollableNode = node
-          scrollableRef(node)
-        }}
+        scrollableRef={this.setScrollableRef}
       >
         {children}
       </Scrollable>
@@ -87,11 +86,13 @@ class Body extends Component<Props> {
     )
 
     return (
-      <div className={componentClassName} {...rest}>
+      <BodyUI className={componentClassName} {...rest}>
         {childrenContent}
-      </div>
+      </BodyUI>
     )
   }
 }
 
-export default styled(Body)(css)
+namespaceComponent(COMPONENT_KEY.Body)(Body)
+
+export default Body

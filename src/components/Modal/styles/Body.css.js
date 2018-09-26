@@ -1,12 +1,12 @@
 // @flow
+import styled from '../../styled'
 import { BEM } from '../../../utilities/classNames'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
 const bem = BEM('.c-ModalBody')
 
-const css = `
-  ${baseStyles}
-  display: flex;
+export const BodyUI = styled('div')`
+  ${baseStyles} display: flex;
   flex: 1;
   height: 100%;
   max-width: 100%;
@@ -27,4 +27,4 @@ const css = `
   }
 `
 
-export default css
+export default BodyUI

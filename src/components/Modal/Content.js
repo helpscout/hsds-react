@@ -1,30 +1,30 @@
+// @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
-import Body from './Body'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
+import { COMPONENT_KEY } from './utils'
 
-export const propTypes = {
-  scrollableRef: PropTypes.func,
+type Props = {
+  children?: any,
+  className?: string,
+  scrollableRef: (node: HTMLElement) => void,
 }
 
-const defaultProps = {
-  scrollableRef: noop,
-}
+class Content extends Component<Props> {
+  static defaultProps = {
+    scrollableRef: noop,
+  }
 
-class Content extends Component {
   render() {
     const { className, children, scrollableRef, ...rest } = this.props
 
     const componentClassName = classNames('c-ModalContent', className)
 
     const childrenMarkup = React.Children.map(children, child => {
-      if (child && (child.type && child.type === Body)) {
+      if (child && isComponentNamed(child, COMPONENT_KEY.Body)) {
         return React.cloneElement(child, {
-          scrollableRef: node => {
-            scrollableRef(node)
-            child.props.scrollableRef(node)
-          },
+          scrollableRef,
         })
       }
 
@@ -39,8 +39,6 @@ class Content extends Component {
   }
 }
 
-Content.propTypes = propTypes
-Content.defaultProps = defaultProps
-Content.displayName = 'ModalContent'
+namespaceComponent(COMPONENT_KEY.Content)(Content)
 
 export default Content
