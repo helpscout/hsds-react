@@ -129,18 +129,6 @@ describe('Content', () => {
   })
 })
 
-describe('Sub-components', () => {
-  test('Exports sub-components', () => {
-    expect(Message.Action).toBe(Action)
-    expect(Message.Attachment).toBe(Attachment)
-    expect(Message.Bubble).toBe(Bubble)
-    expect(Message.Chat).toBe(Chat)
-    expect(Message.Content).toBe(Content)
-    expect(Message.Media).toBe(Media)
-    expect(Message.Question).toBe(Question)
-  })
-})
-
 describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
     const wrapper = mount(<Message from />)

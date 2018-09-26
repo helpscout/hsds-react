@@ -1,9 +1,13 @@
 // @flow
+import type { Align, Gap, Just } from './types.js'
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Block from './Block'
 import Item from './Item'
-import classNames from '../../utilities/classNames'
-import type { Align, Gap, Just } from './types.js'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { FlexyUI } from './styles/Flexy.css.js'
 
 type Props = {
   align: Align,
@@ -26,18 +30,20 @@ class Flexy extends Component<Props> {
 
     const componentClassName = classNames(
       'c-Flexy',
-      align && `is-${align}`,
-      gap && `c-Flexy--gap-${gap}`,
-      just && `c-Flexy--just-${just}`,
+      align && `is-align-${align} is-${align}`,
+      gap && `is-gap-${gap}`,
+      just && `is-just-${just}`,
       className
     )
 
     return (
-      <div className={componentClassName} {...rest}>
+      <FlexyUI {...getValidProps(rest)} className={componentClassName}>
         {children}
-      </div>
+      </FlexyUI>
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Flexy)(Flexy)
 
 export default Flexy

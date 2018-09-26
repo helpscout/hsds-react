@@ -14,14 +14,16 @@ An AvatarStack component displays an array of [Avatars](../Avatar). This compone
 
 ## Props
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| animationEasing | `string` | Easing of [animation](../Animate) applied to the child [Avatars](../Avatar). |
-| animationSequence | `string` | Style of [animation](../Animate) applied to the child [Avatars](../Avatar). |
-| animationStagger | `number` | Amount (in `ms`) to stagger the [animations](../Animate) of the [Avatars](../Avatar). |
-| avatarsClassName | `string` | Custom className to pass to [Avatars](../Avatar). |
-| borderColor | `string` | Color for the Avatar border. |
-| className | `string` | Custom class names to be added to the component. |
-| max | `number` | Number of avatars to display before truncating. |
-| shape | `string` | Shape of the avatars. |
-| size | `string` | Size of the avatars. |
+| Prop                  | Type     | Description                                                                           |
+| --------------------- | -------- | ------------------------------------------------------------------------------------- |
+| animationEasing       | `string` | Easing of [animation](../Animate) applied to the child [Avatars](../Avatar).          |
+| animationSequence     | `string` | Style of [animation](../Animate) applied to the child [Avatars](../Avatar).           |
+| animationStagger      | `number` | Amount (in `ms`) to stagger the [animations](../Animate) of the [Avatars](../Avatar). |
+| avatarsClassName      | `string` | Custom className to pass to [Avatars](../Avatar).                                     |
+| borderColor           | `string` | Color for the Avatar border.                                                          |
+| className             | `string` | Custom class names to be added to the component.                                      |
+| max                   | `number` | Number of avatars to display before truncating.                                       |
+| outerBorderColor      | `string` | Color for the Avatar's outer border.                                                  |
+| shape                 | `string` | Shape of the avatars.                                                                 |
+| showStatusBorderColor | `bool`   | Renders the [StatusDot](../StatusDot) border.                                         |
+| size                  | `string` | Size of the avatars.                                                                  |

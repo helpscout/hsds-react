@@ -15,6 +15,7 @@ import {
 } from './styles/Input.css.js'
 
 type Props = {
+  autoFocus: boolean,
   align: ChoiceAlign,
   autoFocus: boolean,
   children?: any,

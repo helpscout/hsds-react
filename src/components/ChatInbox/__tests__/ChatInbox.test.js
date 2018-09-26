@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import ChatInbox from '../ChatInbox'
 import Content from '../Content'
 import Header from '../Header'
@@ -31,7 +31,7 @@ describe('Header', () => {
 
   test('Clicking header should change isCollapsed prop', () => {
     const wrapper = mount(
-      <ChatInbox isCollapsible>
+      <ChatInbox isCollapsible isCollapsed={false}>
         <ChatInbox.Header />
       </ChatInbox>
     )
@@ -45,7 +45,7 @@ describe('Header', () => {
 
   test('onClick callback should still fire', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatInbox isCollapsible>
         <ChatInbox.Header onClick={spy} />
       </ChatInbox>
@@ -60,7 +60,7 @@ describe('Header', () => {
 
 describe('Content', () => {
   test('Does not wrap Content in Collapsible by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatInbox>
         <ChatInbox.Content>Mugatu</ChatInbox.Content>
       </ChatInbox>
@@ -73,8 +73,8 @@ describe('Content', () => {
   })
 
   test('Wraps Content in Collapsible, if isCollapsible', () => {
-    const wrapper = shallow(
-      <ChatInbox isCollapsible>
+    const wrapper = mount(
+      <ChatInbox isCollapsible isCollapsed={false}>
         <ChatInbox.Content />
       </ChatInbox>
     )
@@ -86,7 +86,7 @@ describe('Content', () => {
   })
 
   test('Can toggle Collapsible with prop change', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ChatInbox isCollapsible>
         <ChatInbox.Content>Mugatu</ChatInbox.Content>
       </ChatInbox>
@@ -95,12 +95,5 @@ describe('Content', () => {
     const o = wrapper.find(Collapsible)
 
     expect(o.length).toBe(0)
-  })
-})
-
-describe('Sub-components', () => {
-  test('Exports the correct sub-components', () => {
-    expect(ChatInbox.Header).toBe(Header)
-    expect(ChatInbox.Content).toBe(Content)
   })
 })

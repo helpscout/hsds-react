@@ -1,28 +1,41 @@
-import React from 'react'
-import classNames from '../../utilities/classNames'
+// @flow
+import React, { Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import BlankSlate from './BlankSlate'
 import Item from './Item'
+import { ChatListUI } from './styles/ChatList.css.js'
+import { COMPONENT_KEY } from './utils'
 
-const ChatList = props => {
-  const { className, children, ...rest } = props
-
-  const componentClassName = classNames('c-ChatList', className)
-
-  const contentMarkup = React.Children.count(children) ? (
-    children
-  ) : (
-    <BlankSlate />
-  )
-
-  return (
-    <div className={componentClassName} {...rest}>
-      {contentMarkup}
-    </div>
-  )
+type Props = {
+  className?: string,
+  children?: any,
 }
 
-ChatList.displayName = 'ChatList'
-ChatList.BlankSlate = BlankSlate
-ChatList.Item = Item
+class ChatList extends Component<Props> {
+  static BlankSlate = BlankSlate
+  static Item = Item
+
+  render() {
+    const { children, className, ...rest } = this.props
+
+    const componentClassName = classNames('c-ChatList', className)
+
+    const contentMarkup = React.Children.count(children) ? (
+      children
+    ) : (
+      <BlankSlate />
+    )
+
+    return (
+      <ChatListUI {...getValidProps(rest)} className={componentClassName}>
+        {contentMarkup}
+      </ChatListUI>
+    )
+  }
+}
+
+namespaceComponent(COMPONENT_KEY.ChatList)(ChatList)
 
 export default ChatList

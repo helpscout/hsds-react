@@ -16,13 +16,16 @@ This component is similar to [AvatarList](../AvatarList) with minor UI and anima
 
 ## Props
 
-| Prop              | Type                            | Description                                                                  |
-| ----------------- | ------------------------------- | ---------------------------------------------------------------------------- |
-| animationEasing   | `string`                        | Easing of [animation](../Animate) applied to the child [Avatars](../Avatar). |
-| animationSequence | `string`                        | Style of [animation](../Animate) applied to the child [Avatars](../Avatar).  |
-| center            | `bool`                          | Center aligns the component.                                                 |
-| children          | `array`/[`<Avatar>`](../Avatar) | An [Avatar](../Avatar) component or an array of Avatars.                     |
-| className         | `string`                        | Custom class names to be added to the component.                             |
-| max               | `number`                        | Number of avatars to display before truncating.                              |
-| shape             | `string`                        | Shape of the avatars.                                                        |
-| size              | `string`                        | Size of the avatars.                                                         |
+| Prop                  | Type                            | Description                                                                  |
+| --------------------- | ------------------------------- | ---------------------------------------------------------------------------- |
+| animationEasing       | `string`                        | Easing of [animation](../Animate) applied to the child [Avatars](../Avatar). |
+| animationSequence     | `string`                        | Style of [animation](../Animate) applied to the child [Avatars](../Avatar).  |
+| borderColor           | `string`                        | Color for the Avatar border.                                                 |
+| center                | `bool`                          | Center aligns the component.                                                 |
+| children              | `array`/[`<Avatar>`](../Avatar) | An [Avatar](../Avatar) component or an array of Avatars.                     |
+| className             | `string`                        | Custom class names to be added to the component.                             |
+| max                   | `number`                        | Number of avatars to display before truncating.                              |
+| outerBorderColor      | `string`                        | Color for the Avatar's outer border.                                         |
+| shape                 | `string`                        | Shape of the avatars.                                                        |
+| showStatusBorderColor | `bool`                          | Renders the [StatusDot](../StatusDot) border.                                |
+| size                  | `string`                        | Size of the avatars.                                                         |

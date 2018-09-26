@@ -2,23 +2,25 @@
 import type { AvatarShape, AvatarSize } from '../Avatar/types'
 import React, { PureComponent as Component } from 'react'
 import Avatar from '../Avatar'
-import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { AvatarStackUI, ItemUI } from './styles/AvatarStack.css.js'
 import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
 type Props = {
   animationEasing: string,
   animationSequence: string,
   animationStagger: number,
   avatarsClassName: string,
-  borderColor: string,
+  borderColor?: string,
   children?: any,
   className?: string,
   max: number,
+  outerBorderColor?: string,
   shape: AvatarShape,
+  showStatusBorderColor: boolean,
   size: AvatarSize,
 }
 
@@ -30,6 +32,7 @@ class AvatarStack extends Component<Props> {
     borderColor: 'white',
     max: 5,
     shape: 'circle',
+    showStatusBorderColor: true,
     size: 'md',
   }
 
@@ -43,13 +46,15 @@ class AvatarStack extends Component<Props> {
       children,
       className,
       max,
+      outerBorderColor,
       shape,
+      showStatusBorderColor,
       size,
       ...rest
     } = this.props
 
-    const avatars = React.Children.toArray(children).filter(
-      child => child.type && child.type === Avatar
+    const avatars = React.Children.toArray(children).filter(child =>
+      isComponentNamed(child, AVATAR_KEY)
     )
 
     const totalAvatarCount = avatars.length
@@ -71,7 +76,9 @@ class AvatarStack extends Component<Props> {
             className={avatarsClassName}
             count={`+${additionalAvatarCount}`}
             name={`+${additionalAvatarCount}`}
+            outerBorderColor={outerBorderColor}
             shape={shape}
+            showStatusBorderColor={showStatusBorderColor}
             size={size}
           />
         </ItemUI>
@@ -83,7 +90,9 @@ class AvatarStack extends Component<Props> {
       const composedAvatar = React.cloneElement(avatar, {
         borderColor,
         className: classNames(avatar.props.className, avatarsClassName),
+        outerBorderColor,
         shape,
+        showStatusBorderColor,
         size,
       })
 
@@ -101,10 +110,10 @@ class AvatarStack extends Component<Props> {
 
     return (
       <AvatarStackUI
+        {...rest}
         className={componentClassName}
         stagger
         staggerDelay={animationStagger}
-        {...rest}
       >
         {avatarMarkup}
         {additionalAvatarMarkup}

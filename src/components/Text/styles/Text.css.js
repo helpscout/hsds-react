@@ -31,7 +31,7 @@ const css = `
     white-space: nowrap;
   }
 
-  &.is-word-wrap {
+  &.is-wordWrap {
     word-break: break-word;
   }
 
@@ -39,7 +39,11 @@ const css = `
     white-space: nowrap;
   }
 
-  &.is-line-height-reset {
+  &.is-lineHeightInherit {
+    line-height: inherit;
+  }
+
+  &.is-lineHeightReset {
     line-height: 1;
   }
 

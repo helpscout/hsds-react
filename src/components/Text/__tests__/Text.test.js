@@ -90,16 +90,22 @@ describe('Styles', () => {
     expect(wrapper.hasClass('is-linkStyle')).toBe(true)
   })
 
+  test('Applies line-height inherit styles if specified', () => {
+    const wrapper = mount(<Text lineHeightInherit />)
+
+    expect(wrapper.hasClass('is-lineHeightInherit')).toBe(true)
+  })
+
   test('Applies line-height reset styles if specified', () => {
     const wrapper = mount(<Text lineHeightReset />)
 
-    expect(wrapper.hasClass('is-line-height-reset')).toBe(true)
+    expect(wrapper.hasClass('is-lineHeightReset')).toBe(true)
   })
 
   test('Applies word-wrap reset styles if specified', () => {
     const wrapper = mount(<Text wordWrap />)
 
-    expect(wrapper.hasClass('is-word-wrap')).toBe(true)
+    expect(wrapper.hasClass('is-wordWrap')).toBe(true)
   })
 
   test('Applies weight styles if specified', () => {

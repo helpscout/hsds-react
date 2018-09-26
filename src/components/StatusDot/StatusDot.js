@@ -1,6 +1,6 @@
 // @flow
 import type { StatusDotStatus, StatusDotSize } from './types'
-import React from 'react'
+import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import Icon from '../Icon'
@@ -17,72 +17,103 @@ type Props = {
   inline: boolean,
   isUnread: boolean,
   outerBorderColor?: string,
+  outerBorderWidth: number,
   size: StatusDotSize,
   status: StatusDotStatus,
   style?: Object,
   title?: string,
 }
 
-const StatusDot = (props: Props) => {
-  const {
-    borderColor,
-    children,
-    className,
-    icon,
-    inline,
-    isUnread,
-    outerBorderColor,
-    status,
-    size,
-    style,
-    title,
-    ...rest
-  } = props
-
-  const componentClassName = classNames(
-    'c-StatusDot',
-    icon && 'is-icon',
-    inline && 'is-inline',
-    isUnread && 'is-unread',
-    size && `is-${size}`,
-    status && `is-${status}`,
-    className
-  )
-
-  const componentStyle = {
-    ...style,
-    borderColor: borderColor || null,
-    boxShadow: outerBorderColor ? `0 0 0 2px ${outerBorderColor}` : null,
+class StatusDot extends Component<Props> {
+  static defaultProps = {
+    inline: false,
+    isUnread: false,
+    outerBorderWidth: 3,
+    size: 'sm',
+    status: 'online',
+    style: {},
   }
 
-  const tooltipTitle = title || `Is ${status}`
+  getStyles = () => {
+    const {
+      borderColor,
+      icon,
+      outerBorderColor,
+      outerBorderWidth,
+      status,
+      style,
+    } = this.props
 
-  const iconMarkup = icon ? (
-    <Centralize>
-      <div className="c-StatusDot__icon">
-        <Icon name={icon} size="20" />
-      </div>
-    </Centralize>
-  ) : null
+    let styles = {
+      ...style,
+      borderColor: borderColor || null,
+      boxShadow: outerBorderColor
+        ? `0 0 0 ${outerBorderWidth}px ${outerBorderColor}`
+        : null,
+    }
 
-  return (
-    <StatusDotUI
-      {...getValidProps(rest)}
-      className={componentClassName}
-      style={componentStyle}
-      title={tooltipTitle}
-    >
-      {iconMarkup}
-    </StatusDotUI>
-  )
-}
+    if ((status === 'offline' && !icon) || status === 'busy') {
+      styles.color = outerBorderColor || 'white'
+    }
 
-StatusDot.defaultProps = {
-  inline: false,
-  isUnread: false,
-  size: 'sm',
-  status: 'online',
-  style: {},
+    return styles
+  }
+
+  getIconMarkup = () => {
+    const { icon } = this.props
+
+    return (
+      icon && (
+        <Centralize>
+          <div className="c-StatusDot__icon">
+            <Icon name={icon} size="20" />
+          </div>
+        </Centralize>
+      )
+    )
+  }
+
+  render() {
+    const {
+      borderColor,
+      children,
+      className,
+      icon,
+      inline,
+      isUnread,
+      outerBorderColor,
+      outerBorderWidth,
+      status,
+      size,
+      style,
+      title,
+      ...rest
+    } = this.props
+
+    const componentClassName = classNames(
+      'c-StatusDot',
+      icon && 'is-icon',
+      inline && 'is-inline',
+      isUnread && 'is-unread',
+      size && `is-${size}`,
+      status && `is-${status}`,
+      className
+    )
+
+    const componentStyle = this.getStyles()
+    const tooltipTitle = title || `Is ${status}`
+
+    return (
+      <StatusDotUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        style={componentStyle}
+        title={tooltipTitle}
+      >
+        {this.getIconMarkup()}
+      </StatusDotUI>
+    )
+  }
 }
 
 namespaceComponent(COMPONENT_KEY)(StatusDot)

@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, Flexy } from '../../src/index.js'
+import { ThemeProvider } from '../../src/components/styled'
 import AvatarSpec from './specs/Avatar'
 
 const stories = storiesOf('Avatar', module)
@@ -14,18 +15,34 @@ stories.add('fallback', () => (
   <Avatar name={fixture.name} image="https://notfound" />
 ))
 
+stories.add('themed', () => (
+  <div>
+    <ThemeProvider theme={{ brandColor: { brandColor: 'red' } }}>
+      <Avatar name={fixture.name} image="https://notfound" />
+    </ThemeProvider>
+    <ThemeProvider theme={{ brandColor: { brandColor: 'green' } }}>
+      <Avatar name={fixture.name} image="https://notfound" />
+    </ThemeProvider>
+    <ThemeProvider theme={{ brandColor: { brandColor: 'blue' } }}>
+      <Avatar name={fixture.name} image="https://notfound" />
+    </ThemeProvider>
+  </div>
+))
+
 stories.add('status', () => (
   <div style={{ background: 'dodgerblue', padding: 20 }}>
     <Flexy just="left">
       <Avatar
+        borderColor="dodgerblue"
         name={fixture.name}
         image={fixture.image}
         status="online"
         shape="square"
+        showStatusBorderColor
         size="lg"
       />
       <Avatar
-        borderColor="transparent"
+        borderColor="dodgerblue"
         image={fixture.image}
         name={fixture.name}
         outerBorderColor="white"
@@ -34,9 +51,11 @@ stories.add('status', () => (
         status="offline"
       />
       <Avatar
+        borderColor="dodgerblue"
         name={fixture.name}
         image={fixture.image}
         shape="rounded"
+        showStatusBorderColor
         status="busy"
         size="lg"
       />
@@ -44,38 +63,54 @@ stories.add('status', () => (
     <br />
     <Flexy just="left">
       <Avatar
+        borderColor="dodgerblue"
         name={fixture.name}
         image={fixture.image}
+        showStatusBorderColor
         status="online"
         shape="square"
       />
-      <Avatar name={fixture.name} image={fixture.image} status="offline" />
       <Avatar
+        borderColor="dodgerblue"
+        name={fixture.name}
+        image={fixture.image}
+        showStatusBorderColor
+        status="offline"
+      />
+      <Avatar
+        borderColor="dodgerblue"
         name={fixture.name}
         image={fixture.image}
         shape="rounded"
+        showStatusBorderColor
         status="busy"
       />
     </Flexy>
     <br />
     <Flexy just="left">
       <Avatar
+        borderColor="dodgerblue"
         name={fixture.name}
         image={fixture.image}
+        showStatusBorderColor
         status="online"
         shape="square"
         size="sm"
       />
       <Avatar
+        borderColor="dodgerblue"
         name={fixture.name}
         image={fixture.image}
+        showStatusBorderColor
         status="offline"
         size="sm"
       />
       <Avatar
+        borderColor="dodgerblue"
         name={fixture.name}
         image={fixture.image}
         shape="rounded"
+        showStatusBorderColor
         status="busy"
         size="sm"
       />

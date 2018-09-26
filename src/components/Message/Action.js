@@ -1,6 +1,7 @@
 // @flow
 import type { MessageChat, MessageThemeContext } from './types'
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import ChatBlock from './ChatBlock'
 import styled from '../styled'
@@ -40,7 +41,7 @@ export const Action = (props: Props, context: Context) => {
   )
 
   const isThemeEmbed = theme === 'embed'
-  const textSize = '11'
+  const textSize = '12'
   const textShade = isThemeEmbed ? 'faint' : 'muted'
 
   return (
@@ -53,7 +54,7 @@ export const Action = (props: Props, context: Context) => {
       to={to}
       type="action"
     >
-      <div className={componentClassName} {...rest}>
+      <div {...getValidProps(rest)} className={componentClassName}>
         <Text
           className="c-MessageAction__text"
           shade={textShade}

@@ -1,16 +1,21 @@
+// @flow
+import styled from '../../styled'
 import forEach from '../../../styles/utilities/forEach'
+import { getColor } from '../../../styles/utilities/color'
 
-export const HR_SIZES = {
-  md: 20,
-  sm: 12,
-  xs: 8,
-  none: 0,
+export const config = {
+  color: getColor('grey.400'),
+  size: {
+    md: 20,
+    sm: 12,
+    xs: 8,
+    none: 0,
+  },
 }
-export const HR_COLOR = '#eee'
 
-const css = `
+export const HrUI = styled('hr')`
   border: 0;
-  border-top-color: ${HR_COLOR};
+  border-top-color: ${config.color};
   border-top-style: solid;
   border-top-width: 1px;
   box-sizing: content-box;
@@ -18,21 +23,21 @@ const css = `
   height: 0;
   margin: 20px 0;
 
-  ${makeSizeStyles()}
+  ${makeSizeStyles()};
 `
 
 function makeSizeStyles(): string {
-  const sizes = Object.keys(HR_SIZES)
+  const sizes = Object.keys(config.size)
 
   return forEach(
     sizes,
     size => `
     &.is-${size} {
-      margin-bottom: ${HR_SIZES[size]}px;
-      margin-top: ${HR_SIZES[size]}px;
+      margin-bottom: ${config.size[size]}px;
+      margin-top: ${config.size[size]}px;
     }
   `
   )
 }
 
-export default css
+export default HrUI
