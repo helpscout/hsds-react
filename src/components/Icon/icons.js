@@ -3,6 +3,10 @@ import arrowDownHuge from '../../icons/arrow-down-huge.svg'
 import arrowLeft from '../../icons/arrow-left.svg'
 import arrowRight from '../../icons/arrow-right.svg'
 import arrowUpHuge from '../../icons/arrow-up-huge.svg'
+import arrowLeftDoubleLarge from '../../icons/arrow-left-double-large.svg'
+import arrowLeftSingleLarge from '../../icons/arrow-left-single-large.svg'
+import arrowRightDoubleLarge from '../../icons/arrow-right-double-large.svg'
+import arrowRightSingleLarge from '../../icons/arrow-right-single-large.svg'
 import attachment from '../../icons/attachment.svg'
 import caretDown from '../../icons/caret-down.svg'
 import caretLeft from '../../icons/caret-left.svg'
@@ -37,6 +41,7 @@ import search from '../../icons/search.svg'
 import spinner from '../../icons/spinner.svg'
 import star from '../../icons/star.svg'
 import tag from '../../icons/tag.svg'
+import trash from '../../icons/trash.svg'
 import tickLarge from '../../icons/tick-large.svg'
 import tickSmall from '../../icons/tick-small.svg'
 import user from '../../icons/user.svg'
@@ -48,7 +53,12 @@ const ICONS = {
   'arrow-left': arrowLeft,
   'arrow-right': arrowRight,
   'arrow-up-huge': arrowUpHuge,
+  'arrow-left-double-large': arrowLeftDoubleLarge,
+  'arrow-left-single-large': arrowLeftSingleLarge,
+  'arrow-right-double-large': arrowRightDoubleLarge,
+  'arrow-right-single-large': arrowRightSingleLarge,
   attachment,
+  bin: trash,
   'caret-down': caretDown,
   'caret-left': caretLeft,
   'caret-right': caretRight,
@@ -88,6 +98,7 @@ const ICONS = {
   tick: tickLarge,
   'tick-large': tickLarge,
   'tick-small': tickSmall,
+  trash,
   user,
   video,
 }
