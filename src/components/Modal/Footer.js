@@ -1,10 +1,10 @@
 // @flow
 import type { ToolbarSize } from '../Toolbar/types'
 import React, { PureComponent as Component } from 'react'
-import Toolbar from '../Toolbar'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
+import { FooterUI } from './styles/Footer.css.js'
 
 type Props = {
   children?: any,
@@ -27,9 +27,9 @@ class Footer extends Component<Props> {
     const componentClassName = classNames('c-ModalFooter', className)
 
     return (
-      <Toolbar {...rest} className={componentClassName} placement="bottom">
+      <FooterUI {...rest} className={componentClassName} placement="bottom">
         {children}
-      </Toolbar>
+      </FooterUI>
     )
   }
 }

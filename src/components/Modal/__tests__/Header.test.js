@@ -1,26 +1,28 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Header from '../Header'
 import { Toolbar } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Header />)
+    const wrapper = mount(<Header />)
+    const o = wrapper.find('.c-ModalHeader')
 
-    expect(wrapper.hasClass('c-ModalHeader')).toBeTruthy()
+    expect(o.length).toBe(1)
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Header className={customClass} />)
+    const wrapper = mount(<Header className={customClass} />)
+    const o = wrapper.find('.c-ModalHeader')
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(o.hasClass(customClass)).toBe(true)
   })
 })
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Header>
         <div className="child">Hello</div>
       </Header>
@@ -33,24 +35,24 @@ describe('Children', () => {
 
 describe('Toolbar', () => {
   test('Is composed of Toolbar', () => {
-    const wrapper = shallow(<Header />)
+    const wrapper = mount(<Header />)
     const o = wrapper.find(Toolbar)
 
-    expect(o.hasClass('c-ModalHeader')).toBe(true)
+    expect(o.length).toBe(1)
   })
 
   test('Has correct Toolbar placement', () => {
-    const wrapper = shallow(<Header />)
+    const wrapper = mount(<Header />)
     const o = wrapper.find(Toolbar)
 
-    expect(o.prop('placement')).toBe('top')
+    expect(o.props().placement).toBe('top')
   })
 
   test('Can pass props to Toolbar', () => {
-    const wrapper = shallow(<Header shadow seamless />)
+    const wrapper = mount(<Header shadow seamless />)
     const o = wrapper.find(Toolbar)
 
-    expect(o.prop('seamless')).toBe(true)
-    expect(o.prop('shadow')).toBe(true)
+    expect(o.props().seamless).toBe(true)
+    expect(o.props().shadow).toBe(true)
   })
 })

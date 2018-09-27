@@ -1,10 +1,10 @@
 // @flow
 import type { ToolbarSize } from '../Toolbar/types'
 import React, { PureComponent as Component } from 'react'
-import Toolbar from '../Toolbar'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
+import { HeaderUI } from './styles/Header.css.js'
 
 type Props = {
   children?: any,
@@ -27,9 +27,9 @@ class Header extends Component<Props> {
     const componentClassName = classNames('c-ModalHeader', className)
 
     return (
-      <Toolbar {...rest} className={componentClassName} placement="top">
+      <HeaderUI {...rest} className={componentClassName} placement="top">
         {children}
-      </Toolbar>
+      </HeaderUI>
     )
   }
 }

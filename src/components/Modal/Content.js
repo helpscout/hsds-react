@@ -4,6 +4,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
+import { ContentUI } from './styles/Content.css.js'
 
 type Props = {
   children?: any,
@@ -32,9 +33,9 @@ class Content extends Component<Props> {
     })
 
     return (
-      <div className={componentClassName} {...rest}>
+      <ContentUI className={componentClassName} {...rest}>
         {childrenMarkup}
-      </div>
+      </ContentUI>
     )
   }
 }
