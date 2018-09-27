@@ -30,7 +30,7 @@ In the example (above), the `Tooltip` will use the `zIndex` config as a prop.
 
 ### App environment
 
-Support components can render differently for different app environments. To specify an app environment, pass the app name as `app` to `PropProvider`
+Supported components can render differently for different app environments. To specify an app environment, pass the app name as `app` to `PropProvider`
 
 ```jsx
 <PropProvider app="hs-app">
