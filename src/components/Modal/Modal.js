@@ -9,12 +9,11 @@ import Content from './Content'
 import Footer from './Footer'
 import Header from './Header'
 import Overlay from './Overlay'
-import Animate from '../Animate'
-import Card from '../Card'
 import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
 import PortalWrapper from '../PortalWrapper'
+import { isHSApp } from '../PropProvider/utils'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed } from '../../utilities/component'
@@ -22,7 +21,13 @@ import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
 import { COMPONENT_KEY } from './utils'
-import { CloseUI } from './styles/Modal.css.js'
+import {
+  ModalUI,
+  InnerWrapperUI,
+  AnimatedCardContainerUI,
+  CardUI,
+  CloseUI,
+} from './styles/Modal.css.js'
 
 type Props = PortalProps & {
   cardClassName?: string,
@@ -181,9 +186,10 @@ class Modal extends Component<Props> {
 
   getCloseMarkup = () => {
     const { closeIcon, closePortal } = this.props
+    const shouldRenderClose = closeIcon && !isHSApp(this.props)
 
     return (
-      closeIcon && (
+      shouldRenderClose && (
         <CloseUI className="c-Modal__close" innerRef={this.setCloseNode}>
           <CloseButton onClick={closePortal} />
         </CloseUI>
@@ -218,6 +224,7 @@ class Modal extends Component<Props> {
       modalAnimationSequence,
       portalIsOpen,
       seamless,
+      ...rest
     } = this.props
 
     const cardComponentClassName = classNames('c-Modal__Card', cardClassName)
@@ -226,7 +233,8 @@ class Modal extends Component<Props> {
     const closeMarkup = this.getCloseMarkup()
 
     const contentMarkup = !seamless ? (
-      <Card
+      <CardUI
+        {...getValidProps(rest)}
         className={cardComponentClassName}
         seamless
         role="dialog"
@@ -235,7 +243,7 @@ class Modal extends Component<Props> {
       >
         {closeMarkup}
         {childrenMarkup}
-      </Card>
+      </CardUI>
     ) : (
       <div className="c-Modal__innerContent" role="dialog">
         {childrenMarkup}
@@ -243,7 +251,7 @@ class Modal extends Component<Props> {
     )
 
     return (
-      <Animate
+      <AnimatedCardContainerUI
         className="c-Modal__Card-container"
         delay={modalAnimationDelay}
         duration={modalAnimationDuration}
@@ -252,7 +260,7 @@ class Modal extends Component<Props> {
         sequence={modalAnimationSequence}
       >
         {contentMarkup}
-      </Animate>
+      </AnimatedCardContainerUI>
     )
   }
 
@@ -302,7 +310,7 @@ class Modal extends Component<Props> {
     const styles = { ...style, zIndex }
 
     return (
-      <div
+      <ModalUI
         {...getValidProps(rest)}
         className={componentClassName}
         role="document"
@@ -320,11 +328,14 @@ class Modal extends Component<Props> {
           type="keydown"
         />
         <EventListener event="resize" handler={this.handleOnResize} />
-        <div className="c-Modal__innerWrapper">
+        <InnerWrapperUI
+          {...getValidProps(rest)}
+          className="c-Modal__innerWrapper"
+        >
           {this.getInnerContentMarkup()}
-        </div>
+        </InnerWrapperUI>
         {this.getOverlayMarkup()}
-      </div>
+      </ModalUI>
     )
   }
 }

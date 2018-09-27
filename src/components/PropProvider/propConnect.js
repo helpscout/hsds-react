@@ -3,7 +3,7 @@ import type { PropProviderProps, ConfigGetter } from './types'
 import React, { Component } from 'react'
 import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
 import Context from './Context'
-import { getConfigProps, getGlobalApp, propProviderAppNamespace } from './utils'
+import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
 import { isDefined, isString } from '../../utilities/is'
 
 type Props = Object
@@ -42,15 +42,11 @@ function propConnect(name?: ConfigGetter) {
 
       getMergedProps = (contextProps: PropProviderProps): Object => {
         const namespacedProps = getConfigProps(contextProps, namespace)
-        // For styled-components/Emotion to use
-        const theme = this.props.theme || {}
-        // Pass PropProvider global app to theme
-        theme[propProviderAppNamespace] = getGlobalApp(contextProps)
 
         return {
           ...namespacedProps,
           ...this.props,
-          theme,
+          [propProviderDataAttr]: getGlobalApp(contextProps),
         }
       }
 

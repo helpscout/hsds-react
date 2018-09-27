@@ -1,7 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Card, Overlay, PropProvider } from '../src/index.js'
-import { setGlobalApp } from '../src/components/PropProvider/utils'
 
 const stories = storiesOf('Overlay', module)
 

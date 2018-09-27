@@ -15,6 +15,16 @@ export const propProviderAppNamespace =
   '__BLUE_SECRET_PROP_PROVIDER_GLOBAL_APP__'
 export const propProviderAppNamespaceValue = 'blue'
 
+export const APPS = {
+  beacon: 'beacon',
+  hsApp: 'hs-app',
+}
+
+// HTML friendly key for PropProviderAppProp
+// 🖋 🍍 🍎 🖋
+// https://www.youtube.com/watch?v=0E00Zuayv9Q
+export const propProviderDataAttr = 'data-blue-ppap'
+
 /**
  * Default Config
  */
@@ -66,13 +76,16 @@ export function getGlobalApp(config: PropProviderProps): AppNamespace {
   return globalConfig[propProviderAppNamespace]
 }
 
-/**
- * Determines if the internal global app namespace is HS-App.
- * @param {Object} config The initial PropProvider config.
- * @returns {string} The namespace for the App.
- */
-export function isGlobalAppHSApp(config: PropProviderProps): boolean {
-  return getGlobalApp(config) === 'hs-app'
+export function getGlobalAppFromProps(props: Object): AppNamespace {
+  return props[propProviderDataAttr]
+}
+
+export function isBeacon(props: Object): boolean {
+  return getGlobalAppFromProps(props) === APPS.beacon
+}
+
+export function isHSApp(props: Object): boolean {
+  return getGlobalAppFromProps(props) === APPS.hsApp
 }
 
 /**
@@ -117,9 +130,11 @@ export function shallowMergeProps(props: Object = {}, nextProps: Object = {}) {
  * @returns {Object} The retrieved config props.
  */
 export function getConfigProps(
-  config: Object = contextConfig,
+  config: Object,
   getter: ConfigGetter = ''
 ): Object {
+  if (!config) return contextConfig
+
   let props = {}
 
   if (isString(getter)) {
@@ -140,10 +155,7 @@ export function getConfigProps(
     props = getConfigPropsFromArray(config, propKeys)
   }
 
-  return {
-    ...getGlobal(config),
-    ...props,
-  }
+  return props
 }
 
 /**
