@@ -1,6 +1,7 @@
 // @flow
 import type { UIStatus } from '../../constants/types'
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import css from './styles/Badge.css.js'
@@ -42,7 +43,7 @@ const Badge = (props: Props) => {
   )
 
   return (
-    <div className={componentClassName} {...rest}>
+    <div {...getValidProps(rest)} className={componentClassName}>
       {children}
     </div>
   )

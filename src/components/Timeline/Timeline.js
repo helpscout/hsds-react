@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Item'
 import classNames from '../../utilities/classNames'
 
@@ -17,7 +18,7 @@ class Timeline extends Component<Props> {
     const componentClassName = classNames('c-Timeline', className)
 
     return (
-      <div className={componentClassName} {...rest} role="list">
+      <div {...getValidProps(rest)} className={componentClassName} role="list">
         {children}
       </div>
     )

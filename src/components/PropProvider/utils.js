@@ -1,5 +1,5 @@
 // @flow
-import type { ConfigGetter } from './types'
+import type { AppNamespace, PropProviderProps, ConfigGetter } from './types'
 import {
   isArray,
   isObject,
@@ -8,8 +8,67 @@ import {
   isString,
 } from '../../utilities/is'
 
-// Default configs
-export const contextConfig = {}
+/**
+ * Namespaces
+ */
+export const propProviderGlobal = '__BLUE_SECRET_PROP_PROVIDER_GLOBAL__'
+export const propProviderAppNamespace =
+  '__BLUE_SECRET_PROP_PROVIDER_GLOBAL_APP__'
+export const propProviderAppNamespaceValue = 'Blue'
+
+/**
+ * Default Config
+ */
+export const initialGlobalContextConfig = {
+  // Default app "environment" is Blue - "Da ba dee, da ba die"
+  [propProviderAppNamespace]: propProviderAppNamespaceValue,
+}
+export const contextConfig: PropProviderProps = {
+  [propProviderGlobal]: initialGlobalContextConfig,
+}
+
+/**
+ * Sets the internal global app namespace for Blue components.
+ * @param {Object} config The initial PropProvider config.
+ * @param {string} namespace The namespace for the App.
+ * @returns {Object} The modified PropProvider config.
+ */
+export function setGlobalApp(
+  config: PropProviderProps,
+  namespace: AppNamespace
+): PropProviderProps {
+  if (!isPlainObject(config)) return contextConfig
+  const appNamespace = isString(namespace)
+    ? namespace
+    : propProviderAppNamespaceValue
+
+  return {
+    ...config,
+    [propProviderGlobal]: appNamespace,
+  }
+}
+
+/**
+ * Retrieves the internal global config for Blue components.
+ * @param {Object} config The initial PropProvider config.
+ * @returns {Object} The PropProvider global config
+ */
+export function getGlobal(config: PropProviderProps): AppNamespace {
+  const baseConfig = isPlainObject(config) ? config : contextConfig
+
+  return baseConfig[propProviderGlobal]
+}
+
+/**
+ * Retrieves the internal global app namespace for Blue components.
+ * @param {Object} config The initial PropProvider config.
+ * @returns {string} The namespace for the App.
+ */
+export function getGlobalApp(config: PropProviderProps): AppNamespace {
+  const globalConfig = getGlobal(config)
+
+  return globalConfig[propProviderAppNamespace]
+}
 
 /**
  * Merge contextProps with parent contextProps.
@@ -76,7 +135,10 @@ export function getConfigProps(
     props = getConfigPropsFromArray(config, propKeys)
   }
 
-  return props
+  return {
+    ...getGlobal(config),
+    ...props,
+  }
 }
 
 /**

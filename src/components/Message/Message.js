@@ -2,6 +2,7 @@
 import type { Node } from 'react'
 import type { Message as MessageType } from './types'
 import React, { Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Text from '../Text'
 import Action from './Action'
@@ -20,7 +21,7 @@ import {
   isComponentTypeChat,
   namespaceComponent,
 } from '../../utilities/component'
-import { isFunction, isString } from '../../utilities/is'
+import { isString } from '../../utilities/is'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Message.css.js'
 import { COMPONENT_KEY } from './utils'
@@ -142,7 +143,7 @@ export class Message extends Component<Props> {
     const fromMarkup = this.getFromMarkup()
 
     return (
-      <div className={componentClassName} {...rest}>
+      <div {...getValidProps(rest)} className={componentClassName}>
         {fromMarkup}
         <Flexy align="top" gap="xs">
           {from && avatarMarkup}

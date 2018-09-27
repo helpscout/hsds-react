@@ -1,6 +1,7 @@
 // @flow
 import type { HeadingSize } from './types'
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -52,7 +53,7 @@ const Heading = (props: Props) => {
   const element = React.createElement(
     selectorTag,
     {
-      ...rest,
+      ...getValidProps(rest),
       className: componentClassName,
     },
     children

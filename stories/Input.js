@@ -8,7 +8,7 @@ stories.add('default', () => <Input />)
 
 stories.add('autocomplete', () => (
   <div style={{ width: 300 }}>
-    <form autocomplete="on" action="/">
+    <form autoComplete="on" action="/">
       <Input
         autoFocus
         label="First name"

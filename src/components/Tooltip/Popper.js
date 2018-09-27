@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import css from './styles/TooltipPopper.css.js'
@@ -10,9 +11,9 @@ class PopperComponent extends Component {
     const componentClassName = classNames('c-TooltipPopper', className)
 
     return (
-      <div className={componentClassName} {...rest}>
+      <span {...getValidProps(rest)} className={componentClassName}>
         {children}
-      </div>
+      </span>
     )
   }
 }

@@ -1,7 +1,7 @@
-@import "pack/seed-this/_index";
+@import 'pack/seed-this/_index';
 
 .c-Modal {
-  @import "../../resets/base";
+  @import '../../resets/base';
   $block: this();
   $offset: 8px;
 
@@ -38,7 +38,8 @@
   }
 
   & {
-    #{$block}__Card { // Increase specificity on this style
+    #{$block}__Card {
+      // Increase specificity on this style
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -47,14 +48,5 @@
 
   &__card-block {
     height: 100%;
-  }
-
-  &__close {
-    $offset: 8px;
-    position: absolute;
-    right: $offset;
-    top: $offset;
-    transform: translateZ(0);
-    z-index: 3;
   }
 }

@@ -1,12 +1,13 @@
 import {
+  initialGlobalContextConfig,
   getConfigProps,
   getConfigPropsFromArray,
   shallowMergeProps,
 } from '../utils'
 
 describe('getConfigProps', () => {
-  test('Returns an empty object, if no arguments', () => {
-    expect(getConfigProps()).toEqual({})
+  test('Returns default config object, if no arguments', () => {
+    expect(getConfigProps()).toEqual(initialGlobalContextConfig)
   })
 
   test('Returns props from a config, if available', () => {

@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import GridComponent from '../Grid'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -17,7 +18,7 @@ class Grid extends Component<Props> {
     const componentClassName = classNames('c-FormGroupGrid', className)
 
     return (
-      <div className={componentClassName} {...rest}>
+      <div {...getValidProps(rest)} className={componentClassName}>
         <GridComponent>{children}</GridComponent>
       </div>
     )

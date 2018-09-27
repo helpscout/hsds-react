@@ -22,6 +22,7 @@ import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
 import { COMPONENT_KEY } from './utils'
+import { CloseUI } from './styles/Modal.css.js'
 
 type Props = PortalProps & {
   cardClassName?: string,
@@ -123,12 +124,9 @@ class Modal extends Component<Props> {
   handleOnTab = (event: KeyboardEvent) => {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
-    const focusedNode = event.target
+
     const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
-    const focusedNodeIndex = Array.prototype.indexOf.call(
-      focusableNodes,
-      focusedNode
-    )
+    const focusedNodeIndex = this.getFocusNodeIndexFromEvent(event)
 
     if (focusedNodeIndex === focusableNodes.length - 1) {
       event.preventDefault()
@@ -138,6 +136,17 @@ class Modal extends Component<Props> {
   handleOnShiftTab = (event: KeyboardEvent) => {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
+
+    const focusedNodeIndex = this.getFocusNodeIndexFromEvent(event)
+
+    if (focusedNodeIndex === 0) {
+      event.preventDefault()
+    }
+  }
+
+  getFocusNodeIndexFromEvent = (event: KeyboardEvent): number => {
+    if (!event || !this.cardNode || !this.documentNode) return 0
+
     const focusedNode = event.target
     const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
     const focusedNodeIndex = Array.prototype.indexOf.call(
@@ -145,9 +154,7 @@ class Modal extends Component<Props> {
       focusedNode
     )
 
-    if (focusedNodeIndex === 0) {
-      event.preventDefault()
-    }
+    return focusedNodeIndex
   }
 
   focusModalCard = () => {
@@ -177,14 +184,9 @@ class Modal extends Component<Props> {
 
     return (
       closeIcon && (
-        <div
-          className="c-Modal__close"
-          ref={node => {
-            this.closeNode = node
-          }}
-        >
+        <CloseUI className="c-Modal__close" innerRef={this.setCloseNode}>
           <CloseButton onClick={closePortal} />
-        </div>
+        </CloseUI>
       )
     )
   }
@@ -199,7 +201,7 @@ class Modal extends Component<Props> {
           isComponentNamed(child, COMPONENT_KEY.Body))
       ) {
         return React.cloneElement(child, {
-          scrollableRef: this.setScrollableRef,
+          scrollableRef: this.setScrollableNode,
         })
       }
 
@@ -207,7 +209,7 @@ class Modal extends Component<Props> {
     })
   }
 
-  getContentMarkup = () => {
+  getInnerContentMarkup = () => {
     const {
       cardClassName,
       modalAnimationDelay,
@@ -228,7 +230,7 @@ class Modal extends Component<Props> {
         className={cardComponentClassName}
         seamless
         role="dialog"
-        nodeRef={this.setCardRef}
+        nodeRef={this.setCardNode}
         tabIndex="-1"
       >
         {closeMarkup}
@@ -276,11 +278,15 @@ class Modal extends Component<Props> {
     return <Overlay {...props} />
   }
 
-  setCardRef = (node: HTMLElement) => {
+  setCardNode = (node: HTMLElement) => {
     this.cardNode = node
   }
 
-  setScrollableRef = (node: HTMLElement) => {
+  setCloseNode = (node: HTMLElement) => {
+    this.closeNode = node
+  }
+
+  setScrollableNode = (node: HTMLElement) => {
     this.scrollableNode = node
   }
 
@@ -314,7 +320,9 @@ class Modal extends Component<Props> {
           type="keydown"
         />
         <EventListener event="resize" handler={this.handleOnResize} />
-        <div className="c-Modal__innerWrapper">{this.getContentMarkup()}</div>
+        <div className="c-Modal__innerWrapper">
+          {this.getInnerContentMarkup()}
+        </div>
         {this.getOverlayMarkup()}
       </div>
     )

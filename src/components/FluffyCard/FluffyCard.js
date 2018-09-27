@@ -1,6 +1,7 @@
 // @flow
 import type { FluffyCardTextAlign } from './types'
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Container from './Container'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -52,7 +53,11 @@ class FluffyCard extends Component<Props> {
     )
 
     return (
-      <FluffyCardUI {...rest} borderless className={componentClassName}>
+      <FluffyCardUI
+        {...getValidProps(rest)}
+        borderless
+        className={componentClassName}
+      >
         {children}
       </FluffyCardUI>
     )
