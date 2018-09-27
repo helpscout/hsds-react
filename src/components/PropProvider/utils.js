@@ -11,20 +11,16 @@ import {
 /**
  * Namespaces
  */
-export const propProviderGlobal = '__BLUE_SECRET_PROP_PROVIDER_GLOBAL__'
 export const propProviderAppNamespace =
   '__BLUE_SECRET_PROP_PROVIDER_GLOBAL_APP__'
-export const propProviderAppNamespaceValue = 'Blue'
+export const propProviderAppNamespaceValue = 'blue'
 
 /**
  * Default Config
  */
-export const initialGlobalContextConfig = {
+export const contextConfig: PropProviderProps = {
   // Default app "environment" is Blue - "Da ba dee, da ba die"
   [propProviderAppNamespace]: propProviderAppNamespaceValue,
-}
-export const contextConfig: PropProviderProps = {
-  [propProviderGlobal]: initialGlobalContextConfig,
 }
 
 /**
@@ -44,7 +40,7 @@ export function setGlobalApp(
 
   return {
     ...config,
-    [propProviderGlobal]: appNamespace,
+    [propProviderAppNamespace]: appNamespace,
   }
 }
 
@@ -56,7 +52,7 @@ export function setGlobalApp(
 export function getGlobal(config: PropProviderProps): AppNamespace {
   const baseConfig = isPlainObject(config) ? config : contextConfig
 
-  return baseConfig[propProviderGlobal]
+  return baseConfig
 }
 
 /**
@@ -68,6 +64,15 @@ export function getGlobalApp(config: PropProviderProps): AppNamespace {
   const globalConfig = getGlobal(config)
 
   return globalConfig[propProviderAppNamespace]
+}
+
+/**
+ * Determines if the internal global app namespace is HS-App.
+ * @param {Object} config The initial PropProvider config.
+ * @returns {string} The namespace for the App.
+ */
+export function isGlobalAppHSApp(config: PropProviderProps): boolean {
+  return getGlobalApp(config) === 'hs-app'
 }
 
 /**

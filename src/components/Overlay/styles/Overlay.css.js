@@ -3,7 +3,9 @@ import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
 export const OverlayUI = styled('div')`
-  ${baseStyles} align-items: center;
+  ${props => {
+    console.log(props)
+  }} ${baseStyles} align-items: center;
   background-color: rgba(57, 73, 86, 0.15);
   bottom: 0;
   cursor: pointer;

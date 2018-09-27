@@ -2,15 +2,17 @@
 import type { PropProviderProps } from './types'
 import React, { Component } from 'react'
 import Context from './Context'
-import { shallowMergeProps } from './utils'
+import { setGlobalApp, shallowMergeProps } from './utils'
 
 type Props = {
+  app: string,
   children: any,
   value: PropProviderProps,
 }
 
 class PropProvider extends Component<Props> {
   static defaultProps = {
+    app: 'blue',
     value: {},
   }
 
@@ -26,12 +28,19 @@ class PropProvider extends Component<Props> {
     return React.Children.only(children)
   }
 
+  enhanceContextProps = (contextProps: PropProviderProps) => {
+    return setGlobalApp(contextProps, this.props.app)
+  }
+
   render() {
     return (
       <Context.Consumer>
         {contextProps => (
           <Context.Provider
-            value={shallowMergeProps(contextProps, this.props.value)}
+            value={shallowMergeProps(
+              this.enhanceContextProps(contextProps),
+              this.props.value
+            )}
           >
             {this.getChildren()}
           </Context.Provider>
