@@ -84,6 +84,19 @@ describe('CloseIcon', () => {
 
     expect(o.html()).toContain('right:')
   })
+
+  test('Repositions on window.resize', () => {
+    const wrapper = mount(
+      <ModalComponent isOpen>
+        <Modal.Body />
+      </ModalComponent>
+    )
+    const spy = jest.spyOn(wrapper.instance(), 'positionCloseNode')
+
+    global.dispatchEvent(new Event('resize'))
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('Portal', () => {

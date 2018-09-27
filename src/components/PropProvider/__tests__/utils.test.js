@@ -1,8 +1,16 @@
 import {
+  APPS,
   contextConfig,
   getConfigProps,
   getConfigPropsFromArray,
+  getGlobal,
+  isHSApp,
+  isBeacon,
+  propProviderAppNamespace,
+  propProviderAppNamespaceValue,
+  propProviderDataAttr,
   shallowMergeProps,
+  setGlobalApp,
 } from '../utils'
 
 describe('getConfigProps', () => {
@@ -184,6 +192,19 @@ describe('getConfigPropsFromArray', () => {
   })
 })
 
+describe('getGlobal', () => {
+  test('Returns default config if invalid argument', () => {
+    expect(getGlobal()).toEqual(contextConfig)
+    expect(getGlobal(true)).toEqual(contextConfig)
+  })
+
+  test('Returns config if valid', () => {
+    const config = { a: 1 }
+    expect(getGlobal(config)).toEqual(config)
+    expect(getGlobal(config)[propProviderAppNamespace]).toBeTruthy()
+  })
+})
+
 describe('shallowMergeProps', () => {
   test('Safely transforms non-Object props', () => {
     expect(shallowMergeProps()).toEqual({})
@@ -302,5 +323,73 @@ describe('shallowMergeProps', () => {
         z: 2,
       },
     })
+  })
+})
+
+describe('setGlobalApp', () => {
+  test('Sets the namespace to defaults if no arguments are provided', () => {
+    expect(setGlobalApp()).toEqual(contextConfig)
+  })
+
+  test('Sets the namespace to defaults argument is invalid', () => {
+    expect(setGlobalApp(true)).toEqual(contextConfig)
+    expect(setGlobalApp('app')).toEqual(contextConfig)
+    expect(setGlobalApp([])).toEqual(contextConfig)
+  })
+
+  test('Sets the namespace to defaults argument is empty object', () => {
+    expect(setGlobalApp({})).toEqual(contextConfig)
+  })
+
+  test('Sets the namespace to for with a config argument', () => {
+    expect(
+      setGlobalApp(contextConfig, 'new')[propProviderAppNamespace]
+    ).toEqual('new')
+  })
+
+  test('Sets the namespace to for with an empty object argument', () => {
+    expect(setGlobalApp({}, 'new')[propProviderAppNamespace]).toEqual('new')
+  })
+
+  test('Sets the namespace default if namespace is not a string', () => {
+    expect(setGlobalApp({}, 123)[propProviderAppNamespace]).toEqual(
+      propProviderAppNamespaceValue
+    )
+  })
+})
+
+describe('isHSApp', () => {
+  test('Returns true if secret prop is hs-app', () => {
+    const props = {
+      [propProviderDataAttr]: APPS.hsApp,
+    }
+
+    expect(isHSApp(props)).toBe(true)
+  })
+
+  test('Returns false if secret prop is not hs-app', () => {
+    const props = {
+      [propProviderDataAttr]: 'nope-app',
+    }
+
+    expect(isHSApp(props)).toBe(false)
+  })
+})
+
+describe('isBeacon', () => {
+  test('Returns true if secret prop is beacon', () => {
+    const props = {
+      [propProviderDataAttr]: APPS.beacon,
+    }
+
+    expect(isBeacon(props)).toBe(true)
+  })
+
+  test('Returns false if secret prop is not beacon', () => {
+    const props = {
+      [propProviderDataAttr]: 'nope',
+    }
+
+    expect(isBeacon(props)).toBe(false)
   })
 })

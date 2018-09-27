@@ -11,14 +11,14 @@ import {
 /**
  * Namespaces
  */
-export const propProviderAppNamespace =
-  '__BLUE_SECRET_PROP_PROVIDER_GLOBAL_APP__'
-export const propProviderAppNamespaceValue = 'blue'
-
 export const APPS = {
   beacon: 'beacon',
   hsApp: 'hs-app',
 }
+
+export const propProviderAppNamespace =
+  '__BLUE_SECRET_PROP_PROVIDER_GLOBAL_APP__'
+export const propProviderAppNamespaceValue = 'blue'
 
 // HTML friendly key for PropProviderAppProp
 // 🖋 🍍 🍎 🖋
@@ -61,6 +61,10 @@ export function setGlobalApp(
  */
 export function getGlobal(config: PropProviderProps): AppNamespace {
   const baseConfig = isPlainObject(config) ? config : contextConfig
+
+  if (!baseConfig.hasOwnProperty(propProviderAppNamespace)) {
+    baseConfig[propProviderAppNamespace] = propProviderAppNamespaceValue
+  }
 
   return baseConfig
 }

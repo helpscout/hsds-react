@@ -121,7 +121,6 @@ class Modal extends Component<Props> {
     }
   }
 
-  /* istanbul ignore next */
   handleOnResize = () => {
     this.positionCloseNode()
   }
@@ -150,6 +149,7 @@ class Modal extends Component<Props> {
   }
 
   getFocusNodeIndexFromEvent = (event: KeyboardEvent): number => {
+    /* istanbul ignore if */
     if (!event || !this.cardNode || !this.documentNode) return 0
 
     const focusedNode = event.target
@@ -227,7 +227,7 @@ class Modal extends Component<Props> {
       ...rest
     } = this.props
 
-    const cardComponentClassName = classNames('c-Modal__Card', cardClassName)
+    const componentClassName = classNames('c-Modal__Card', cardClassName)
 
     const childrenMarkup = this.getChildrenMarkup()
     const closeMarkup = this.getCloseMarkup()
@@ -235,7 +235,7 @@ class Modal extends Component<Props> {
     const contentMarkup = !seamless ? (
       <CardUI
         {...getValidProps(rest)}
-        className={cardComponentClassName}
+        className={componentClassName}
         seamless
         role="dialog"
         nodeRef={this.setCardNode}
