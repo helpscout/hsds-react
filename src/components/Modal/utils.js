@@ -4,4 +4,5 @@ export const COMPONENT_KEY = {
   Body: 'Modal.Body',
   Content: 'Modal.Content',
   Footer: 'Modal.Footer',
+  Overlay: 'Modal.Overlay',
 }

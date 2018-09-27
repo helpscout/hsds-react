@@ -1,3 +1,5 @@
+// @flow
+import type { PortalProps } from '../Portal/types'
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
@@ -6,12 +8,12 @@ import Body from './Body'
 import Content from './Content'
 import Footer from './Footer'
 import Header from './Header'
+import Overlay from './Overlay'
 import Animate from '../Animate'
 import Card from '../Card'
 import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
-import Overlay from '../Overlay'
 import PortalWrapper from '../PortalWrapper'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
@@ -19,59 +21,37 @@ import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
-import { propTypes as portalTypes } from '../Portal'
 import { COMPONENT_KEY } from './utils'
 
-export const propTypes = Object.assign({}, portalTypes, {
-  cardClassName: PropTypes.string,
-  closeIcon: PropTypes.bool,
-  closeIconRepositionDelay: PropTypes.number,
-  containTabKeyPress: PropTypes.bool,
-  modalAnimationDelay: PropTypes.number,
-  modalAnimationDuration: PropTypes.number,
-  modalAnimationEasing: PropTypes.string,
-  modalAnimationSequence: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  modalFocusTimeout: PropTypes.number,
-  overlayAnimationDelay: PropTypes.number,
-  overlayAnimationDuration: PropTypes.number,
-  overlayAnimationEasing: PropTypes.string,
-  overlayAnimationSequence: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  overlayClassName: PropTypes.string,
-  seamless: PropTypes.bool,
-  trigger: PropTypes.element,
-  timeout: PropTypes.number,
-  wrapperClassName: PropTypes.string,
-})
-
-const defaultProps = {
-  closeIcon: true,
-  seamless: false,
-  isOpen: false,
-  closeIconRepositionDelay: 0,
-  containTabKeyPress: true,
-  modalAnimationDelay: 0,
-  modalAnimationDuration: 200,
-  modalAnimationEasing: 'bounce',
-  modalAnimationSequence: 'fade down',
-  modalFocusTimeout: 90,
-  overlayAnimationDelay: 0,
-  overlayAnimationDuration: 200,
-  overlayAnimationEasing: 'ease',
-  overlayAnimationSequence: 'fade',
-  onScroll: noop,
-  timeout: 80,
-  wrapperClassName: 'c-ModalWrapper',
+type Props = PortalProps & {
+  cardClassName?: string,
+  children?: any,
+  className?: string,
+  closeIcon: boolean,
+  closeIconRepositionDelay: number,
+  closePortal: () => void,
+  isOpen: boolean,
+  containTabKeyPress: boolean,
+  modalAnimationDelay: number,
+  modalAnimationDuration: number,
+  modalAnimationEasing: string,
+  modalAnimationSequence: number | string,
+  modalFocusTimeout: number,
+  overlayAnimationDelay: number,
+  overlayAnimationDuration: number,
+  overlayAnimationEasing: string,
+  overlayAnimationSequence: number | string,
+  overlayClassName?: string,
+  portalIsOpen: boolean,
+  seamless: boolean,
+  style: Object,
+  trigger?: any,
+  timeout: number,
+  wrapperClassName?: string,
+  zIndex: number,
 }
 
-const childContextTypes = {
-  positionCloseNode: PropTypes.func,
-}
+type KeyboardEvent = SyntheticEvent<HTMLElement>
 
 const modalBaseZIndex = 1040
 const portalOptions = {
@@ -79,11 +59,44 @@ const portalOptions = {
   zIndex: modalBaseZIndex,
 }
 
-class Modal extends Component {
-  documentNode = null
-  cardNode = null
-  closeNode = null
-  scrollableNode = null
+class Modal extends Component<Props> {
+  static defaultProps = {
+    closeIcon: true,
+    closePortal: noop,
+    seamless: false,
+    isOpen: false,
+    closeIconRepositionDelay: 0,
+    containTabKeyPress: true,
+    modalAnimationDelay: 0,
+    modalAnimationDuration: 200,
+    modalAnimationEasing: 'bounce',
+    modalAnimationSequence: 'fade down',
+    modalFocusTimeout: 90,
+    overlayAnimationDelay: 0,
+    overlayAnimationDuration: 200,
+    overlayAnimationEasing: 'ease',
+    overlayAnimationSequence: 'fade',
+    onScroll: noop,
+    portalIsOpen: true,
+    style: {},
+    timeout: 80,
+    wrapperClassName: 'c-ModalWrapper',
+    zIndex: 1,
+  }
+  static childContextTypes = {
+    positionCloseNode: PropTypes.func,
+  }
+
+  static Body = Body
+  static Content = Content
+  static Footer = Footer
+  static Header = Header
+  static Overlay = Overlay
+
+  documentNode: HTMLElement
+  cardNode: HTMLElement
+  closeNode: ?HTMLElement
+  scrollableNode: HTMLElement
 
   componentWillMount() {
     this.documentNode = getClosestDocument(ReactDOM.findDOMNode(this))
@@ -94,13 +107,6 @@ class Modal extends Component {
     this.focusModalCard()
     /* istanbul ignore next */
     setTimeout(this.positionCloseNode, this.props.modalAnimationDuration)
-  }
-
-  componentWillUnmount() {
-    this.documentNode = null
-    this.cardNode = null
-    this.closeNode = null
-    this.scrollableNode = null
   }
 
   getChildContext() {
@@ -114,7 +120,7 @@ class Modal extends Component {
     this.positionCloseNode()
   }
 
-  handleOnTab = event => {
+  handleOnTab = (event: KeyboardEvent) => {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
     const focusedNode = event.target
@@ -129,7 +135,7 @@ class Modal extends Component {
     }
   }
 
-  handleOnShiftTab = event => {
+  handleOnShiftTab = (event: KeyboardEvent) => {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
     const focusedNode = event.target
@@ -154,7 +160,7 @@ class Modal extends Component {
     }, modalFocusTimeout)
   }
 
-  positionCloseNode = scrollableNode => {
+  positionCloseNode = (scrollableNode?: HTMLElement) => {
     const scrollNode = scrollableNode || this.scrollableNode
     if (!this.closeNode || !isNodeElement(scrollNode)) return
 
@@ -258,32 +264,23 @@ class Modal extends Component {
       portalIsOpen,
     } = this.props
 
-    const overlayComponentClassName = classNames(
-      'c-Modal__Overlay',
-      overlayClassName
-    )
+    const props = {
+      className: overlayClassName,
+      isOpen: portalIsOpen,
+      onClick: closePortal,
+      overlayAnimationDelay,
+      overlayAnimationDuration,
+      overlayAnimationSequence,
+    }
 
-    return (
-      <Animate
-        delay={overlayAnimationDelay}
-        duration={overlayAnimationDuration}
-        in={portalIsOpen}
-        sequence={overlayAnimationSequence}
-      >
-        <Overlay
-          className={overlayComponentClassName}
-          onClick={closePortal}
-          role="presentation"
-        />
-      </Animate>
-    )
+    return <Overlay {...props} />
   }
 
-  setCardRef = node => {
+  setCardRef = (node: HTMLElement) => {
     this.cardNode = node
   }
 
-  setScrollableRef = node => {
+  setScrollableRef = (node: HTMLElement) => {
     this.scrollableNode = node
   }
 
@@ -324,16 +321,5 @@ class Modal extends Component {
   }
 }
 
-Modal.propTypes = propTypes
-Modal.defaultProps = defaultProps
-Modal.childContextTypes = childContextTypes
-Modal.displayName = 'Modal'
-
-const ComposedModal = PortalWrapper(portalOptions)(Modal)
-ComposedModal.Header = Header
-ComposedModal.Body = Body
-ComposedModal.Content = Content
-ComposedModal.Footer = Footer
-
 export const ModalComponent = Modal
-export default ComposedModal
+export default PortalWrapper(portalOptions)(Modal)

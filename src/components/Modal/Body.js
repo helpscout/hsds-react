@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -86,7 +87,7 @@ class Body extends Component<Props> {
     )
 
     return (
-      <BodyUI className={componentClassName} {...rest}>
+      <BodyUI {...getValidProps(rest)} className={componentClassName}>
         {childrenContent}
       </BodyUI>
     )

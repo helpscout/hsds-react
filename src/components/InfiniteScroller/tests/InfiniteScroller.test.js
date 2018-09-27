@@ -2,7 +2,7 @@ import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
 import InfiniteScroller from '..'
 import LoadingDots from '../../LoadingDots'
-import { default as Modal, ModalComponent } from '../../Modal'
+import { default as Modal, ModalComponent } from '../../Modal/Modal'
 import Text from '../../Text'
 
 const scrollEvent = new Event('scroll')
