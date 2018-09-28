@@ -2,6 +2,7 @@ export type ButtonKind =
 | 'primary'
 | 'secondary'
 | 'secondaryAlt'
+| 'tertiary'
 | 'default'
 | 'link'
 | 'icon'

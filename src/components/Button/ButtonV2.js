@@ -81,7 +81,12 @@ class Button extends Component<Props, State> {
   }
 
   shouldShowFocus = () => {
-    const paddedButtonKinds = ['primary', 'secondary', 'secondaryAlt']
+    const paddedButtonKinds = [
+      'primary',
+      'secondary',
+      'secondaryAlt',
+      'tertiary',
+    ]
     return (
       this.state.isFocused &&
       !this.props.disabled &&
@@ -118,13 +123,14 @@ class Button extends Component<Props, State> {
       if (!isComponentNamed(child, ICON_KEY)) return child
 
       // $FlowFixMe
-      const len = children.length
+      const len = React.Children.count(children)
       const isFirst = index === 0
       const isLast = index === len - 1
+      const isOnly = isFirst && isLast
 
       return React.cloneElement(child, {
-        offsetLeft: isFirst,
-        offsetRight: isLast,
+        offsetLeft: isFirst && !isOnly,
+        offsetRight: isLast && !isOnly,
       })
     })
   }
