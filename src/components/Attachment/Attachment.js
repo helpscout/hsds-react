@@ -1,11 +1,12 @@
 // @flow
 import type { AttachmentProp } from './types'
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AttachmentProvider from './Provider'
 import CloseButton from '../CloseButton'
 import Image from '../Image'
 import Text from '../Text'
-import Truncate, { getTruncatedContent } from '../Truncate'
+import Truncate from '../Truncate'
 import styled from '../styled'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -82,26 +83,6 @@ export class Attachment extends Component<Props> {
       onRemoveClick(event, attachmentProps)
     }
 
-    const isTruncated =
-      getTruncatedContent({
-        ellipsis: '...',
-        limit: truncateLimit,
-        type: 'middle',
-        text: name,
-      }) !== name
-
-    const tooltipName = imageUrl ? name : isTruncated ? name : ''
-
-    const tooltipProps = {
-      title: name,
-      modifiers: {
-        preventOverflow: {
-          boundariesElement: window,
-        },
-      },
-      placement: 'top',
-    }
-
     const componentClassName = classNames(
       'c-Attachment',
       imageUrl && 'has-image',
@@ -152,12 +133,12 @@ export class Attachment extends Component<Props> {
 
     return (
       <a
+        {...getValidProps(rest)}
         className={componentClassName}
         href={url}
         onClick={handleOnClick}
         title={name}
         {...downloadProps}
-        {...rest}
       >
         {contentMarkup}
         {closeMarkup}

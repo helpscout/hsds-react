@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Timestamp from '../Timestamp'
 import classNames from '../../utilities/classNames'
@@ -23,7 +24,11 @@ class Item extends Component<Props> {
     ) : null
 
     return (
-      <div className={componentClassName} {...rest} role="listitem">
+      <div
+        {...getValidProps(rest)}
+        className={componentClassName}
+        role="listitem"
+      >
         <Flexy gap="md" just="left">
           <Flexy.Item className="c-TimelineItem__block">{children}</Flexy.Item>
           {timestampMarkup}

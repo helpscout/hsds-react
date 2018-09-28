@@ -1,23 +1,2 @@
-.c-Overlay {
-  @import "../configs/color";
-  @import "../resets/base";
-  align-items: center;
-  background-color: rgba(_color(charcoal, 500), 0.15);
-  bottom: 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-
-  &.is-fixed {
-    position: fixed;
-  }
-
-  &.is-transparent {
-    cursor: default;
-    opacity: 0;
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

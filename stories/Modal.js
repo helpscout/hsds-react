@@ -4,10 +4,13 @@ import { storiesOf } from '@storybook/react'
 import {
   Button,
   EmojiPicker,
+  FormLabel,
   Heading,
   Modal,
   Link,
+  PropProvider,
   Input,
+  Switch,
   Toolbar,
 } from '../src/index.js'
 import { MemoryRouter } from 'react-router'
@@ -423,3 +426,38 @@ stories.add('tabbing', () => (
     </Modal.Content>
   </Modal>
 ))
+
+class HSAppExample extends React.Component {
+  state = {
+    hsApp: false,
+  }
+
+  toggle = () => {
+    this.setState({
+      hsApp: !this.state.hsApp,
+    })
+  }
+
+  render() {
+    const app = this.state.hsApp ? 'hs-app' : 'blue'
+    return (
+      <PropProvider app={app}>
+        <Modal isOpen trigger={<Link>Clicky</Link>}>
+          <Modal.Content>
+            <Modal.Body>
+              <Heading>Title</Heading>
+              <FormLabel label="See HS App styles">
+                <Switch checked={this.state.hsApp} onChange={this.toggle} />
+              </FormLabel>
+              {ContentSpec.generate(12).map(({ id, content }) => (
+                <p key={id}>{content}</p>
+              ))}
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
+      </PropProvider>
+    )
+  }
+}
+
+stories.add('HSApp', () => <HSAppExample />)

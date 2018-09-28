@@ -1,9 +1,9 @@
 // @flow
-import type { ConfigGetter } from './types'
+import type { PropProviderProps, ConfigGetter } from './types'
 import React, { Component } from 'react'
 import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
 import Context from './Context'
-import { getConfigProps } from './utils'
+import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
 import { isDefined, isString } from '../../utilities/is'
 
 type Props = Object
@@ -40,13 +40,22 @@ function propConnect(name?: ConfigGetter) {
         this.wrappedInstance = ref
       }
 
+      getMergedProps = (contextProps: PropProviderProps): Object => {
+        const namespacedProps = getConfigProps(contextProps, namespace)
+
+        return {
+          ...namespacedProps,
+          ...this.props,
+          [propProviderDataAttr]: getGlobalApp(contextProps),
+        }
+      }
+
       render() {
         return (
           <Context.Consumer>
             {contextProps => (
               <WrappedComponent
-                {...getConfigProps(contextProps, namespace)}
-                {...this.props}
+                {...this.getMergedProps(contextProps)}
                 ref={this.setWrappedInstance}
               />
             )}

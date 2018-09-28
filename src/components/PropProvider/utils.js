@@ -1,5 +1,5 @@
 // @flow
-import type { ConfigGetter } from './types'
+import type { AppNamespace, PropProviderProps, ConfigGetter } from './types'
 import {
   isArray,
   isObject,
@@ -8,8 +8,89 @@ import {
   isString,
 } from '../../utilities/is'
 
-// Default configs
-export const contextConfig = {}
+/**
+ * Namespaces
+ */
+export const APPS = {
+  beacon: 'beacon',
+  hsApp: 'hs-app',
+}
+
+export const propProviderAppNamespace =
+  '__BLUE_SECRET_PROP_PROVIDER_GLOBAL_APP__'
+export const propProviderAppNamespaceValue = 'blue'
+
+// HTML friendly key for PropProviderAppProp
+// 🖋 🍍 🍎 🖋
+// https://www.youtube.com/watch?v=0E00Zuayv9Q
+export const propProviderDataAttr = 'data-blue-ppap'
+
+/**
+ * Default Config
+ */
+export const contextConfig: PropProviderProps = {
+  // Default app "environment" is Blue - "Da ba dee, da ba die"
+  [propProviderAppNamespace]: propProviderAppNamespaceValue,
+}
+
+/**
+ * Sets the internal global app namespace for Blue components.
+ * @param {Object} config The initial PropProvider config.
+ * @param {string} namespace The namespace for the App.
+ * @returns {Object} The modified PropProvider config.
+ */
+export function setGlobalApp(
+  config: PropProviderProps,
+  namespace: AppNamespace
+): PropProviderProps {
+  if (!isPlainObject(config)) return contextConfig
+  const appNamespace = isString(namespace)
+    ? namespace
+    : propProviderAppNamespaceValue
+
+  return {
+    ...config,
+    [propProviderAppNamespace]: appNamespace,
+  }
+}
+
+/**
+ * Retrieves the internal global config for Blue components.
+ * @param {Object} config The initial PropProvider config.
+ * @returns {Object} The PropProvider global config
+ */
+export function getGlobal(config: PropProviderProps): AppNamespace {
+  const baseConfig = isPlainObject(config) ? config : contextConfig
+
+  if (!baseConfig.hasOwnProperty(propProviderAppNamespace)) {
+    baseConfig[propProviderAppNamespace] = propProviderAppNamespaceValue
+  }
+
+  return baseConfig
+}
+
+/**
+ * Retrieves the internal global app namespace for Blue components.
+ * @param {Object} config The initial PropProvider config.
+ * @returns {string} The namespace for the App.
+ */
+export function getGlobalApp(config: PropProviderProps): AppNamespace {
+  const globalConfig = getGlobal(config)
+
+  return globalConfig[propProviderAppNamespace]
+}
+
+export function getGlobalAppFromProps(props: Object): AppNamespace {
+  return props[propProviderDataAttr]
+}
+
+export function isBeacon(props: Object): boolean {
+  return getGlobalAppFromProps(props) === APPS.beacon
+}
+
+export function isHSApp(props: Object): boolean {
+  return getGlobalAppFromProps(props) === APPS.hsApp
+}
 
 /**
  * Merge contextProps with parent contextProps.
@@ -53,9 +134,11 @@ export function shallowMergeProps(props: Object = {}, nextProps: Object = {}) {
  * @returns {Object} The retrieved config props.
  */
 export function getConfigProps(
-  config: Object = contextConfig,
+  config: Object,
   getter: ConfigGetter = ''
 ): Object {
+  if (!config) return contextConfig
+
   let props = {}
 
   if (isString(getter)) {

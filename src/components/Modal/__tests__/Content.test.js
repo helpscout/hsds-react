@@ -1,17 +1,17 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Content from '../Content'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Content />)
+    const wrapper = mount(<Content />)
 
     expect(wrapper.hasClass('c-ModalContent')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Content className={customClass} />)
+    const wrapper = mount(<Content className={customClass} />)
 
     expect(wrapper.prop('className')).toContain(customClass)
   })
@@ -19,7 +19,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Content>
         <div className="child">Hello</div>
       </Content>
@@ -30,7 +30,7 @@ describe('Children', () => {
   })
 
   test('Can handle null content', () => {
-    const wrapper = shallow(<Content>{[null]}</Content>)
+    const wrapper = mount(<Content>{[null]}</Content>)
 
     expect(wrapper).toBeTruthy()
   })

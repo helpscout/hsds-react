@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -50,7 +51,7 @@ class Image extends Component<Props> {
     const enhancedStyle = enhanceStyleWithSize(this.props)
 
     const imageElement = React.createElement('img', {
-      ...rest,
+      ...getValidProps(rest),
       className: componentClassName,
       style: enhancedStyle,
     })

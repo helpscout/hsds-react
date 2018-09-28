@@ -1,24 +1,26 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import Overlay from '..'
+import { mount } from 'enzyme'
+import Overlay from '../Overlay'
 
 describe('Accessibility', () => {
   test('Has aria-role', () => {
-    const wrapper = shallow(<Overlay />)
+    const wrapper = mount(<Overlay />)
+    const o = wrapper.find('.c-Overlay')
 
-    expect(wrapper.prop('role')).toBe('dialog')
+    expect(o.prop('role')).toBe('dialog')
   })
 })
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Overlay />)
+    const wrapper = mount(<Overlay />)
+    const o = wrapper.find('.c-Overlay')
 
-    expect(wrapper.prop('className')).toBe('c-Overlay')
+    expect(o.length).toBe(1)
   })
 
   test('Accepts custom className', () => {
-    const wrapper = shallow(<Overlay className="not-metro-man" />)
+    const wrapper = mount(<Overlay className="not-metro-man" />)
 
     expect(wrapper.prop('className')).toContain('not-metro-man')
   })
@@ -26,7 +28,7 @@ describe('ClassName', () => {
 
 describe('Content', () => {
   test('Renders child content', () => {
-    const wrapper = shallow(<Overlay>Megamind</Overlay>)
+    const wrapper = mount(<Overlay>Megamind</Overlay>)
 
     expect(wrapper.text()).toBe('Megamind')
   })
@@ -52,7 +54,7 @@ describe('Click', () => {
     const onClick = () => {
       value = true
     }
-    const wrapper = shallow(<Overlay onClick={onClick} />)
+    const wrapper = mount(<Overlay onClick={onClick} />)
 
     wrapper.simulate('click')
 
@@ -71,13 +73,13 @@ describe('Styles', () => {
   })
 
   test('Renders fixed styles, if specified', () => {
-    const wrapper = shallow(<Overlay fixed />)
+    const wrapper = mount(<Overlay fixed />)
 
     expect(wrapper.hasClass('is-fixed')).toBeTruthy()
   })
 
   test('Renders transparent styles, if specified', () => {
-    const wrapper = shallow(<Overlay transparent />)
+    const wrapper = mount(<Overlay transparent />)
 
     expect(wrapper.hasClass('is-transparent')).toBeTruthy()
   })

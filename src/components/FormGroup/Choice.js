@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { FormGroupChoiceUI } from './styles/Choice.css.js'
@@ -17,7 +18,10 @@ class Choice extends Component<Props> {
     const componentClassName = classNames('c-FormGroupChoice', className)
 
     return (
-      <FormGroupChoiceUI className={componentClassName} {...rest}>
+      <FormGroupChoiceUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+      >
         {children}
       </FormGroupChoiceUI>
     )

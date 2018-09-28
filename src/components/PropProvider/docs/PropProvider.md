@@ -28,6 +28,20 @@ const App = () => {
 
 In the example (above), the `Tooltip` will use the `zIndex` config as a prop.
 
+### App environment
+
+Supported components can render differently for different app environments. To specify an app environment, pass the app name as `app` to `PropProvider`
+
+```jsx
+<PropProvider app="hs-app">
+  ...
+  <Modal />
+  ...
+</PropProvider>
+```
+
+In the above example, the `Modal` component will render with the `hs-app` theme and behaviours.
+
 ### Nesting
 
 It is possible to nest `PropProvider` components. `PropProvider` will automatically **extend** config defined in any parent instance.
@@ -61,6 +75,7 @@ In the above example, at the level of `Button` and `Tooltip`, the `PropProvider`
 
 ## Props
 
-| Prop  | Type     | Description                         |
-| ----- | -------- | ----------------------------------- |
-| value | `Object` | Custom configs for Blue components. |
+| Prop  | Type     | Description                          |
+| ----- | -------- | ------------------------------------ |
+| app   | `string` | App environment for Blue components. |
+| value | `Object` | Custom configs for Blue components.  |

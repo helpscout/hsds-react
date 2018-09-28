@@ -2,6 +2,7 @@
 import type { Sizes } from '../Text/types'
 import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import Text from '../Text'
@@ -38,7 +39,7 @@ const HelpText = (props: Props) => {
   )
 
   return (
-    <HelpTextUI className={componentClassName} {...rest}>
+    <HelpTextUI {...getValidProps(rest)} className={componentClassName}>
       {contentMarkup}
     </HelpTextUI>
   )

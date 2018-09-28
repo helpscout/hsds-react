@@ -4,6 +4,7 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import classNames from '../../utilities/classNames'
@@ -27,10 +28,13 @@ const defaultProps = {
 class AnimateGroup extends Component {
   render() {
     const {
+      appear,
       className,
       children,
       delay,
       duration,
+      enter,
+      exit,
       easing,
       sequence,
       stagger,
@@ -79,8 +83,18 @@ class AnimateGroup extends Component {
         })
       : children
 
+    const transitionGroupProps = {
+      appear,
+      enter,
+      exit,
+    }
+
     return (
-      <TransitionGroup className={componentClassName} {...rest}>
+      <TransitionGroup
+        {...getValidProps(rest)}
+        {...transitionGroupProps}
+        className={componentClassName}
+      >
         {childrenMarkup}
       </TransitionGroup>
     )

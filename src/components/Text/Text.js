@@ -2,6 +2,7 @@
 import type { Sizes } from './types'
 import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -88,7 +89,7 @@ const Text = (props: Props) => {
   return React.createElement(
     selector,
     {
-      ...rest,
+      ...getValidProps(rest),
       className: componentClassName,
     },
     children

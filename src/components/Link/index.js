@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { wordHasSpaces } from '../../utilities/strings'
@@ -18,6 +19,7 @@ type Props = {
   onFocus: () => void,
   rel: string,
   noUnderline: boolean,
+  target?: string,
   to: string,
   wordWrap: boolean,
 }
@@ -42,6 +44,7 @@ class Link extends Component<Props> {
       className,
       external,
       href,
+      target,
       nodeRef,
       noUnderline,
       wordWrap,
@@ -58,17 +61,19 @@ class Link extends Component<Props> {
       className
     )
 
-    const target = external ? '_blank' : undefined
-    const rel = external ? 'noopener noreferrer' : undefined
+    const isTargetExternal = (target && target === '_blank') || external
+
+    const linkTarget = target || external ? '_blank' : undefined
+    const rel = isTargetExternal ? 'noopener noreferrer' : undefined
 
     return (
       <a
+        {...getValidProps(rest)}
         className={componentClassName}
-        target={target}
+        target={linkTarget}
         rel={rel}
         ref={nodeRef}
         href={href}
-        {...rest}
       >
         {children}
       </a>

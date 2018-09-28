@@ -1,6 +1,7 @@
 // @flow
 import type { MessageChat } from './types'
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ChatBlock from './ChatBlock'
 import styled from '../styled'
 import PreviewCardContext from '../PreviewCard/Context'
@@ -58,7 +59,7 @@ const Content = (props: Props) => {
   return (
     <ChatBlock {...chatProps} className={componentClassName}>
       <PreviewCardContext.Provider value={contextProps}>
-        <div className={innerComponentClassName} {...rest}>
+        <div {...getValidProps(rest)} className={innerComponentClassName}>
           {children}
         </div>
       </PreviewCardContext.Provider>

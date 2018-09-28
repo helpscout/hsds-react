@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { FormGroupUI } from './styles/FormGroup.css.js'
@@ -20,7 +21,7 @@ class FormGroup extends Component<Props> {
     const componentClassName = classNames('c-FormGroup', className)
 
     return (
-      <FormGroupUI className={componentClassName} {...rest}>
+      <FormGroupUI {...getValidProps(rest)} className={componentClassName}>
         {children}
       </FormGroupUI>
     )

@@ -1,6 +1,7 @@
 // @flow
 import type { MessageChat } from './types'
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Action from './Action'
 import Bubble from './Bubble'
@@ -84,7 +85,7 @@ export class ChatBlock extends Component<Props> {
     const timestampMarkup = this.getTimestampMarkup()
 
     return (
-      <div className={componentClassName} {...rest}>
+      <div {...getValidProps(rest)} className={componentClassName}>
         <Flexy className="c-MessageChatBlock__flexy" gap="sm">
           {to && timestampMarkup}
           <Flexy.Item className="c-MessageChatBlock__block">
