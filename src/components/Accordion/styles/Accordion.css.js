@@ -3,7 +3,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
 import styled from '../../styled'
 
-import { config as pageCardConfig } from '../../Page/styles/Card.css.js'
+import PageConfig from '../../Page/styles/Page.config.css.js'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};
@@ -20,7 +20,7 @@ export const AccordionUI = styled('div')`
     margin-right: -50px;
 
     ${breakpoint(
-      pageCardConfig.breakpoint.widescreen,
+      PageConfig.breakpoint.widescreen,
       `
       margin-left: -100px;
       margin-right: -100px;
@@ -56,7 +56,7 @@ export const BodyUI = styled('div')`
     padding-right: 50px;
 
     ${breakpoint(
-      pageCardConfig.breakpoint.widescreen,
+      PageConfig.breakpoint.widescreen,
       `
       padding-left: 100px;
       padding-right: 100px;
@@ -117,7 +117,7 @@ export const TitleUI = styled('div')`
     padding-right: 50px;
 
     ${breakpoint(
-      pageCardConfig.breakpoint.widescreen,
+      PageConfig.breakpoint.widescreen,
       `
       padding-left: 100px;
       padding-right: 100px;

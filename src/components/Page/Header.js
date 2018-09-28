@@ -2,7 +2,6 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Heading from '../Heading'
-import Hr from '../Hr'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -12,6 +11,7 @@ import { COMPONENT_KEY } from './utils'
 type Props = {
   children?: any,
   className?: string,
+  isResponsive: boolean,
   title: string,
   subtitle?: string,
   withBorder: boolean,
@@ -19,6 +19,7 @@ type Props = {
 
 class Header extends Component<Props> {
   static defaultProps = {
+    isResponsive: false,
     title: 'Title',
     withBorder: true,
   }
@@ -27,6 +28,7 @@ class Header extends Component<Props> {
     const {
       children,
       className,
+      isResponsive,
       title,
       subtitle,
       withBorder,
@@ -35,7 +37,8 @@ class Header extends Component<Props> {
 
     const componentClassName = classNames(
       'c-PageHeader',
-      withBorder && 'withBorder',
+      isResponsive && 'is-responsive',
+      withBorder && 'is-withBorder',
       className
     )
 
@@ -53,15 +56,11 @@ class Header extends Component<Props> {
         </Text>
       </SubTitleUI>
     )
-    const borderMarkup = withBorder && (
-      <Hr className="c-PageHeader__border" size="sm" />
-    )
 
     return (
       <HeaderUI {...getValidProps(rest)} className={componentClassName}>
         {titleMarkup}
         {subtitleMarkup}
-        {borderMarkup}
       </HeaderUI>
     )
   }

@@ -26,6 +26,45 @@ stories.add('default', () => (
   </Page>
 ))
 
+stories.add('Sections', () => (
+  <Page>
+    <Page.Card>
+      <Page.Header />
+    </Page.Card>
+
+    <Page.Card>
+      <Page.Header />
+    </Page.Card>
+  </Page>
+))
+
+stories.add('Responsive', () => (
+  <Page isResponsive>
+    <Page.Card>
+      <Page.Header />
+      <ExampleContent />
+    </Page.Card>
+
+    <Page.Card>
+      <Page.Header />
+      <ExampleContent />
+    </Page.Card>
+
+    <Page.Actions
+      primary={
+        <Button kind="primary" size="lg" version={2}>
+          Save
+        </Button>
+      }
+      secondary={
+        <Button size="lg" version={2}>
+          Discard Changes
+        </Button>
+      }
+    />
+  </Page>
+))
+
 stories.add('Example', () => (
   <Page>
     <Page.Card>
@@ -33,7 +72,19 @@ stories.add('Example', () => (
         title="Bacon Settings"
         subtitle="The story is about one of Santa's elves (Ferrell) who learns he is actually a human and goes to New York City."
       />
+      <ExampleContent />
+    </Page.Card>
 
+    <Page.Actions
+      primary={<Button primary>Save</Button>}
+      secondary={<Button>Discard Changes</Button>}
+    />
+  </Page>
+))
+
+function ExampleContent() {
+  return (
+    <Page.Content>
       <FormGroup>
         <FormLabel label="Site Name">
           <Input value="Dashing Dash" />
@@ -74,11 +125,6 @@ stories.add('Example', () => (
           </ControlGroup>
         </FormLabel>
       </FormGroup>
-    </Page.Card>
-
-    <Page.Actions
-      primary={<Button primary>Save</Button>}
-      secondary={<Button>Discard Changes</Button>}
-    />
-  </Page>
-))
+    </Page.Content>
+  )
+}
