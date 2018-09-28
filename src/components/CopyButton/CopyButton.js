@@ -1,5 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -120,7 +121,7 @@ class CopyButton extends Component<Props, State> {
 
     return (
       <CopyButtonUI
-        {...rest}
+        {...getValidProps(rest)}
         className={componentClassName}
         kind={kind}
         onClick={this.handleOnClick}
