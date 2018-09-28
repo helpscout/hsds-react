@@ -109,14 +109,14 @@ export const BackdropUI = styled('div')`
 export const FocusUI = styled('div')`
   animation: BackdropFocusFadeIn 200ms;
   border-radius: ${config.borderRadius}px;
-  bottom: -${config.focusOutlineOffset}px;
+  bottom: 0px;
   box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${config.focusOutlineColor};
-  left: -${config.focusOutlineOffset}px;
+  left: 0px;
   pointer-events: none;
   position: absolute;
-  right: -${config.focusOutlineOffset}px;
-  top: -${config.focusOutlineOffset}px;
-  z-index: -1;
+  right: 0px;
+  top: 0px;
+  z-index: 1;
 
   &.is-radio {
     border-radius: 50%;
@@ -129,6 +129,25 @@ export const FocusUI = styled('div')`
     to {
       opacity: 1;
     }
+  }
+
+  &.is-first {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.is-notOnly {
+    border-radius: 0;
+  }
+  &.is-last {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &.is-stateful {
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+    top: -1px;
   }
 `
 

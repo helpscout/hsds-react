@@ -1,12 +1,2 @@
-@import "pack/seed-family/_index";
-@import "../../configs/constants";
-@import "../../mixins/backdrop-styles";
-
-.c-InputBackdrop {
-  @import "../../configs/color";
-  @import "../../resets/base";
-  $InputField: ".c-InputField";
-  $color-border-focus: _color(blue, 400);
-
-  @include backdrop-styles($InputField, $color-border-focus);
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

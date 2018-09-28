@@ -1,8 +1,9 @@
 // @flow
 import type { UIState } from '../../constants/types'
-import React from 'react'
+import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
+import { isStateful } from './utils'
 import { BackdropUI, FocusUI } from './styles/BackdropV2.css.js'
 
 type Props = {
@@ -21,67 +22,88 @@ type Props = {
   state?: ?UIState,
 }
 
-const Backdrop = (props: Props) => {
-  const {
-    choiceKind,
-    className,
-    disabled,
-    isFilled,
-    isFirst,
-    isFocused,
-    isNotOnly,
-    isLast,
-    isSeamless,
-    kind,
-    readOnly,
-    showFocus,
-    state,
-    ...rest
-  } = props
+class Backdrop extends Component<Props> {
+  static defaultProps = {
+    disabled: false,
+    isFilled: false,
+    isFocused: false,
+    readOnly: false,
+    seamless: false,
+    showFocus: true,
+    state: 'default',
+  }
 
-  const canShowFocus = !isSeamless && isFocused && showFocus
+  getComponentClassNames = () => {
+    const {
+      choiceKind,
+      className,
+      disabled,
+      isFilled,
+      isFirst,
+      isNotOnly,
+      isLast,
+      isSeamless,
+      kind,
+      readOnly,
+      state,
+    } = this.props
 
-  const componentClassName = classNames(
-    'c-InputBackdropV2',
-    choiceKind && `is-${choiceKind}`,
-    disabled && 'is-disabled',
-    isFilled && 'is-filled',
-    canShowFocus && 'is-focused',
-    isFirst && 'is-first',
-    isNotOnly && 'is-notOnly',
-    isLast && 'is-last',
-    isSeamless && 'is-seamless',
-    kind && `is-${kind}`,
-    readOnly && 'is-readonly',
-    state && `is-${state}`,
-    className
-  )
+    return classNames(
+      'c-InputBackdropV2',
+      choiceKind && `is-${choiceKind}`,
+      disabled && 'is-disabled',
+      isFilled && 'is-filled',
+      this.shouldShowFocus() && 'is-focused',
+      isFirst && 'is-first',
+      isNotOnly && 'is-notOnly',
+      isLast && 'is-last',
+      isSeamless && 'is-seamless',
+      kind && `is-${kind}`,
+      readOnly && 'is-readonly',
+      state && `is-${state}`,
+      className
+    )
+  }
 
-  const isRadio = choiceKind === 'radio'
+  getFocusClassNames = () => {
+    const { choiceKind, isFirst, isNotOnly, isLast } = this.props
+    const isRadio = choiceKind === 'radio'
 
-  const focusMarkup = canShowFocus && (
-    <FocusUI className={classNames(isRadio && 'is-radio')} />
-  )
+    return classNames(
+      'c-InputBackdropV2__focus',
+      isFirst && 'is-first',
+      isNotOnly && 'is-notOnly',
+      isLast && 'is-last',
+      isRadio && 'is-radio',
+      isStateful(this.props) && 'is-stateful'
+    )
+  }
 
-  return (
-    <BackdropUI
-      {...getValidProps(rest)}
-      className={componentClassName}
-      role="presentation"
-    >
-      {focusMarkup}
-    </BackdropUI>
-  )
-}
+  shouldShowFocus = () => {
+    const { isSeamless, isFocused, showFocus } = this.props
 
-Backdrop.defaultProps = {
-  disabled: false,
-  isFilled: false,
-  isFocused: false,
-  readOnly: false,
-  seamless: false,
-  showFocus: true,
-  state: 'default',
+    return !isSeamless && isFocused && showFocus
+  }
+
+  getFocusMarkup = () => {
+    return (
+      this.shouldShowFocus() && (
+        <FocusUI className={this.getFocusClassNames()} />
+      )
+    )
+  }
+
+  render() {
+    return (
+      <BackdropUI
+        {...getValidProps(this.props)}
+        className={this.getComponentClassNames()}
+        role="presentation"
+      >
+        {this.getFocusMarkup()}
+      </BackdropUI>
+    )
+  }
 }
 
 export default Backdrop
