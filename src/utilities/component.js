@@ -5,7 +5,13 @@ import { isObject } from './is'
 let REGISTERED_COMPONENTS = {}
 export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
 
-export const CONTROL_TYPE = ['Button', 'Input', 'Input.AddOn', 'Select']
+export const CONTROL_TYPE = [
+  'Button',
+  'CopyButton',
+  'Input',
+  'Input.AddOn',
+  'Select',
+]
 
 export const CHAT_TYPE = [
   'Message.Action',

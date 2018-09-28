@@ -21,7 +21,7 @@ describe('ClassName', () => {
     const wrapper = mount(<Input />)
     const input = wrapper.find(ui.input)
     const field = wrapper.find(ui.field)
-    const backdrop = wrapper.find('.c-InputBackdrop')
+    const backdrop = wrapper.find('.c-Input__backdrop')
 
     expect(input.exists()).toBeTruthy()
     expect(field.exists()).toBeTruthy()

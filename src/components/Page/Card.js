@@ -9,13 +9,22 @@ import { COMPONENT_KEY } from './utils'
 type Props = {
   children?: any,
   className?: string,
+  isResponsive: boolean,
 }
 
 class Card extends Component<Props> {
-  render() {
-    const { children, className, ...rest } = this.props
+  static defaultProps = {
+    isResponsive: false,
+  }
 
-    const componentClassName = classNames('c-PageCard', className)
+  render() {
+    const { children, className, isResponsive, ...rest } = this.props
+
+    const componentClassName = classNames(
+      'c-PageCard',
+      isResponsive && 'is-responsive',
+      className
+    )
 
     return (
       <CardUI {...getValidProps(rest)} className={componentClassName}>

@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "1.6.6-0",
+  "version": "1.6.6",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -63,6 +63,7 @@
     "@helpscout/react-utils": "^1.0.1",
     "closest": "0.0.1",
     "emoji-mart": "^1.0.1",
+    "highlight.js": "^9.12.0",
     "lodash.get": "^4.4.2",
     "pluralize": "^7.0.0",
     "popper.js": "1.14.3",
@@ -82,6 +83,7 @@
   },
   "devDependencies": {
     "@helpscout/helix": "^0.0.13",
+    "@storybook/addon-actions": "^3.4.11",
     "@storybook/addon-options": "^3.2.16",
     "@storybook/cli": "^3.2.16",
     "@storybook/react": "^3.2.16",

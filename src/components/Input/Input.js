@@ -5,7 +5,7 @@ import React, { PureComponent as Component } from 'react'
 import { getValidProps } from '@helpscout/react-utils'
 import FormLabelContext from '../FormLabel/Context'
 import AddOn from './AddOn'
-import Backdrop from './Backdrop'
+import Backdrop from './BackdropV2'
 import Resizer from './Resizer'
 import Static from './Static'
 import HelpText from '../HelpText'
@@ -25,6 +25,7 @@ import {
   moveCursorToEnd,
   isTextArea,
 } from './utils'
+import { InputWrapperUI } from './styles/Input.css.js'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -51,6 +52,7 @@ type Props = {
   isFirst: boolean,
   isNotOnly: boolean,
   isLast: boolean,
+  isSubtleReadOnly: boolean,
   label: any,
   modalhelpText: string,
   moveCursorToEnd: boolean,
@@ -105,6 +107,7 @@ export class Input extends Component<Props, State> {
     isFirst: false,
     isNotOnly: false,
     isLast: false,
+    isSubtleReadOnly: false,
     moveCursorToEnd: false,
     multiline: null,
     offsetAmount: 0,
@@ -473,6 +476,7 @@ export class Input extends Component<Props, State> {
       isFirst,
       isNotOnly,
       isLast,
+      isSubtleReadOnly,
       label,
       maxHeight,
       moveCursorToEnd,
@@ -554,6 +558,7 @@ export class Input extends Component<Props, State> {
       isFirst,
       isNotOnly,
       isLast,
+      isSubtleReadOnly,
       maxHeight,
       multiline,
       readOnly,
@@ -564,13 +569,15 @@ export class Input extends Component<Props, State> {
 
     const { isFocused, value, state } = this.state
 
+    const isReadOnly = !isSubtleReadOnly && readOnly
+
     const componentClassName = classNames(
       'c-Input',
       disabled && 'is-disabled',
       isFocused && 'is-focused',
       maxHeight && 'has-maxHeight',
       multiline && 'is-multiline',
-      readOnly && 'is-readonly',
+      isReadOnly && 'is-readonly',
       resizable && 'is-resizable',
       seamless && 'is-seamless',
       state && `is-${state}`,
@@ -590,7 +597,7 @@ export class Input extends Component<Props, State> {
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <div className="c-InputWrapper" style={styleProp}>
+          <InputWrapperUI className="c-InputWrapper" style={styleProp}>
             {labelMarkup}
             {hintTextMarkup}
             <div className={componentClassName}>
@@ -602,16 +609,17 @@ export class Input extends Component<Props, State> {
                 className="c-Input__backdrop"
                 disabled={disabled}
                 isFirst={isFirst}
+                isFocused={isFocused}
                 isNotOnly={isNotOnly}
                 isLast={isLast}
-                readOnly={readOnly}
-                seamless={seamless}
+                readOnly={isReadOnly}
+                isSeamless={seamless}
                 state={state}
               />
               {resizerMarkup}
             </div>
             {helpTextMarkup}
-          </div>
+          </InputWrapperUI>
         )}
       </FormLabelContext.Consumer>
     )

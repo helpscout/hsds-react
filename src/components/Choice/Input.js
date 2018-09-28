@@ -17,6 +17,7 @@ import {
 type Props = {
   autoFocus: boolean,
   align: ChoiceAlign,
+  autoFocus: boolean,
   children?: any,
   checked: boolean,
   className?: string,
