@@ -17,6 +17,9 @@ export const isString = (o: any): boolean => typeOf(o, 'string')
 export const isObject = (o: any): boolean =>
   typeOf(o, 'object') && !isFunction(o) && !isArray(o)
 
+export const isPlainObject = (o: any): boolean =>
+  Object.prototype.toString.call(o) === '[object Object]'
+
 export const isDefined = (o: any): boolean => o !== undefined
 
 export const anyDefined = (...args: any): boolean =>

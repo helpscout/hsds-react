@@ -1,4 +1,4 @@
 // @flow
-import Context from './Context'
+import PropProvider from './PropProvider'
 
-export default Context.Provider
+export default PropProvider

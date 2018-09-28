@@ -1,17 +1,56 @@
 // @flow
-import { isArray, isObject, isFunction, isString } from '../../utilities/is'
-
-export type ConfigGetter = Array<string> | string | ((config: Object) => {})
+import type { ConfigGetter } from './types'
+import {
+  isArray,
+  isObject,
+  isFunction,
+  isPlainObject,
+  isString,
+} from '../../utilities/is'
 
 // Default configs
 export const contextConfig = {}
 
 /**
+ * Merge contextProps with parent contextProps.
+ * @param   {Object} props The initial PropProvider configs.
+ * @param   {Object} nextProps The next PropProvider configs.
+ * @returns {Object} The merged props.
+ */
+export function shallowMergeProps(props: Object = {}, nextProps: Object = {}) {
+  // Safety check
+  const safeProps = isPlainObject(props) ? props : {}
+  const safeNextProps = isPlainObject(nextProps) ? nextProps : {}
+
+  const mergedProps = { ...safeProps }
+
+  Object.keys(safeNextProps).forEach(key => {
+    const prop = mergedProps[key]
+    const nextProp = safeNextProps[key]
+
+    if (prop) {
+      if (isPlainObject(nextProp)) {
+        mergedProps[key] = {
+          ...prop,
+          ...nextProp,
+        }
+      } else {
+        mergedProps[key] = nextProp
+      }
+    } else {
+      mergedProps[key] = nextProp
+    }
+  })
+
+  return mergedProps
+}
+
+/**
  * Attempts to retrieve the specified config props.
  *
- * @param  {Object} config The PropProvider configs.
- * @param  {Array<string> | Function | Object | string} getter The namespace of the config.
- * @return {Object} The retrieved config props.
+ * @param   {Object} config The PropProvider configs.
+ * @param   {Array<string> | Function | Object | string} getter The namespace of the config.
+ * @returns {Object} The retrieved config props.
  */
 export function getConfigProps(
   config: Object = contextConfig,
