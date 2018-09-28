@@ -1,4 +1,6 @@
 // @flow
+import { includes } from '../../utilities/arrays'
+
 type InputNode = HTMLInputElement | HTMLTextAreaElement
 
 export const COMPONENT_KEY = {
@@ -57,4 +59,8 @@ export const moveCursorToEnd = (input: ?InputNode) => {
  */
 export function isTextArea(node: HTMLElement): boolean {
   return !!(node && node.tagName === 'TEXTAREA')
+}
+
+export function isStateful(props: Object): boolean {
+  return props.state && includes(['error', 'success', 'warning'], props.state)
 }

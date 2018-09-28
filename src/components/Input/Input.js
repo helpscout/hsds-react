@@ -5,7 +5,7 @@ import React, { PureComponent as Component } from 'react'
 import { getValidProps } from '@helpscout/react-utils'
 import FormLabelContext from '../FormLabel/Context'
 import AddOn from './AddOn'
-import Backdrop from './Backdrop'
+import Backdrop from './BackdropV2'
 import Resizer from './Resizer'
 import Static from './Static'
 import HelpText from '../HelpText'
@@ -25,6 +25,7 @@ import {
   moveCursorToEnd,
   isTextArea,
 } from './utils'
+import { InputWrapperUI } from './styles/Input.css.js'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -596,7 +597,7 @@ export class Input extends Component<Props, State> {
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <div className="c-InputWrapper" style={styleProp}>
+          <InputWrapperUI className="c-InputWrapper" style={styleProp}>
             {labelMarkup}
             {hintTextMarkup}
             <div className={componentClassName}>
@@ -608,16 +609,17 @@ export class Input extends Component<Props, State> {
                 className="c-Input__backdrop"
                 disabled={disabled}
                 isFirst={isFirst}
+                isFocused={isFocused}
                 isNotOnly={isNotOnly}
                 isLast={isLast}
                 readOnly={isReadOnly}
-                seamless={seamless}
+                isSeamless={seamless}
                 state={state}
               />
               {resizerMarkup}
             </div>
             {helpTextMarkup}
-          </div>
+          </InputWrapperUI>
         )}
       </FormLabelContext.Consumer>
     )

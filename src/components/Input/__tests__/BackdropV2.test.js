@@ -93,4 +93,31 @@ describe('Focus', () => {
     expect(wrapper.hasClass('is-focused')).toBe(false)
     expect(wrapper.find('FocusUI').length).toBe(0)
   })
+
+  test('Can render isFirst styles', () => {
+    const wrapper = mount(<Backdrop isFocused isFirst />)
+    const o = wrapper.find('.c-InputBackdropV2__focus')
+
+    expect(o.hasClass('is-first')).toBe(true)
+    expect(o.hasClass('is-notOnly')).toBe(false)
+    expect(o.hasClass('is-last')).toBe(false)
+  })
+
+  test('Can render isNotOnly styles', () => {
+    const wrapper = mount(<Backdrop isFocused isNotOnly />)
+    const o = wrapper.find('.c-InputBackdropV2__focus')
+
+    expect(o.hasClass('is-first')).toBe(false)
+    expect(o.hasClass('is-notOnly')).toBe(true)
+    expect(o.hasClass('is-last')).toBe(false)
+  })
+
+  test('Can render isLast styles', () => {
+    const wrapper = mount(<Backdrop isFocused isLast />)
+    const o = wrapper.find('.c-InputBackdropV2__focus')
+
+    expect(o.hasClass('is-first')).toBe(false)
+    expect(o.hasClass('is-notOnly')).toBe(false)
+    expect(o.hasClass('is-last')).toBe(true)
+  })
 })

@@ -9,7 +9,7 @@ import type {
 import React, { PureComponent as Component } from 'react'
 import { getValidProps } from '@helpscout/react-utils'
 import FormLabelContext from '../FormLabel/Context'
-import Backdrop from '../Input/Backdrop'
+import Backdrop from '../Input/BackdropV2'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import Icon from '../Icon'
@@ -21,6 +21,7 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
+import { InputWrapperUI } from '../Input/styles/Input.css.js'
 
 type SelectEvent = SyntheticEvent<HTMLSelectElement>
 type SelectOptionProp =
@@ -54,7 +55,7 @@ type Props = {
   placeholder: string,
   prefix: string,
   removeStateStylesOnFocus: boolean,
-  seamless?: boolean,
+  seamless: boolean,
   style?: Object,
   size: UISize,
   state: UIState,
@@ -84,6 +85,7 @@ class Select extends Component<Props, State> {
     onFocus: noop,
     options: [],
     removeStateStylesOnFocus: false,
+    seamless: false,
     value: '',
   }
 
@@ -409,7 +411,7 @@ class Select extends Component<Props, State> {
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <div className="c-InputWrapper" style={styleProp}>
+          <InputWrapperUI className="c-InputWrapper" style={styleProp}>
             {labelMarkup}
             {hintTextMarkup}
             <div className={componentClassName}>
@@ -423,14 +425,15 @@ class Select extends Component<Props, State> {
                 className="c-Select__backdrop"
                 disabled={disabled}
                 isFirst={isFirst}
+                isFocused={isFocused}
                 isNotOnly={isNotOnly}
                 isLast={isLast}
-                seamless={seamless}
+                isSeamless={seamless}
                 state={state}
               />
             </div>
             {helpTextMarkup}
-          </div>
+          </InputWrapperUI>
         )}
       </FormLabelContext.Consumer>
     )

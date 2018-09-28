@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Page from '../Page'
+import ConnectedPage from '../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -31,6 +32,34 @@ describe('Content', () => {
     )
 
     expect(wrapper.find('div.ron').length).toBe(1)
+  })
+})
+
+describe('Responsive', () => {
+  test('Renders responsive styles, if specified', () => {
+    const wrapper = mount(<Page isResponsive={true} />)
+
+    expect(wrapper.hasClass('is-responsive')).toBe(true)
+  })
+
+  test('Does not render responsive styles, if specified', () => {
+    const wrapper = mount(<Page isResponsive={false} />)
+
+    expect(wrapper.hasClass('is-responsive')).toBe(false)
+  })
+
+  test('Passes responsive config to sub-components', () => {
+    const wrapper = mount(
+      <ConnectedPage isResponsive={true}>
+        <ConnectedPage.Card>
+          <ConnectedPage.Header />
+        </ConnectedPage.Card>
+        <ConnectedPage.Actions />
+      </ConnectedPage>
+    )
+
+    expect(wrapper.find(Page.Card).hasClass('is-responsive')).toBe(true)
+    expect(wrapper.find(Page.Header).hasClass('is-responsive')).toBe(true)
   })
 })
 

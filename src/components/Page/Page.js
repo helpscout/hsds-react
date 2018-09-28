@@ -3,6 +3,7 @@ import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Actions from './Actions'
 import Card from './Card'
+import Content from './Content'
 import Header from './Header'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
@@ -13,31 +14,47 @@ import { COMPONENT_KEY } from './utils'
 type Props = {
   children?: any,
   className?: string,
+  isResponsive: boolean,
 }
 
 class Page extends Component<Props> {
+  static defaultProps = {
+    isResponsive: false,
+  }
   static Actions = Actions
   static Card = Card
+  static Content = Content
   static Header = Header
 
+  getPropProviderProps = () => {
+    const { isResponsive } = this.props
+
+    return {
+      Accordion: { isPage: true, isSeamless: true },
+      [COMPONENT_KEY.Card]: {
+        isResponsive,
+      },
+      [COMPONENT_KEY.Header]: {
+        isResponsive,
+      },
+    }
+  }
+
   render() {
-    const { children, className, ...rest } = this.props
+    const { children, className, isResponsive, ...rest } = this.props
 
-    const componentClassName = classNames('c-Page', className)
-
-    const content =
-      React.Children.count(children) > 0 ? (
-        <PropProvider value={{ Accordion: { isPage: true, isSeamless: true } }}>
-          <div className="c-Page__contentWrapper">{children}</div>
-        </PropProvider>
-      ) : (
-        children
-      )
+    const componentClassName = classNames(
+      'c-Page',
+      isResponsive && 'is-responsive',
+      className
+    )
 
     return (
-      <PageUI {...getValidProps(rest)} className={componentClassName}>
-        {content}
-      </PageUI>
+      <PropProvider value={this.getPropProviderProps()}>
+        <PageUI {...getValidProps(rest)} className={componentClassName}>
+          {children}
+        </PageUI>
+      </PropProvider>
     )
   }
 }

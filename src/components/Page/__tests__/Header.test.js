@@ -44,14 +44,26 @@ describe('Border', () => {
   test('Renders a border', () => {
     const wrapper = mount(<Header title="Channel 4" />)
 
-    expect(wrapper.find('hr').length).toBe(1)
-    expect(wrapper.hasClass('withBorder')).toBe(true)
+    expect(wrapper.hasClass('is-withBorder')).toBe(true)
   })
 
   test('Can not render a border, if specified', () => {
     const wrapper = mount(<Header title="Channel 4" withBorder={false} />)
 
-    expect(wrapper.find('hr').length).toBe(0)
-    expect(wrapper.hasClass('withBorder')).toBe(false)
+    expect(wrapper.hasClass('is-withBorder')).toBe(false)
+  })
+})
+
+describe('Responsive', () => {
+  test('Renders responsive styles, if specified', () => {
+    const wrapper = mount(<Header isResponsive={true} />)
+
+    expect(wrapper.hasClass('is-responsive')).toBe(true)
+  })
+
+  test('Does not render responsive styles, if specified', () => {
+    const wrapper = mount(<Header isResponsive={false} />)
+
+    expect(wrapper.hasClass('is-responsive')).toBe(false)
   })
 })

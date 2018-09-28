@@ -1,15 +1,15 @@
-# Page
+# Content
 
-This component is a presentational wrapper used to render a variety of content. This component is typically used to render form-based UI.
+This component is used to container content within a [`Page`](./Page.md). This component is required for responsive style support.
 
 ## Example
 
 ```jsx
 <Page>
   <Page.Card>
-    <Page.Header title="My Form" />
+    <Page.Header />
+    <Page.Content>...</Page.Content>
   </Page.Card>
-  <Page.Actions primary={<button>Save</button>} />
 </Page>
 ```
 

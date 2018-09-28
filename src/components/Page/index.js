@@ -1,9 +1,11 @@
 // @flow
 import { propConnect } from '../PropProvider'
 import Page from './Page'
+import { COMPONENT_KEY } from './utils'
 
-Page.Actions = propConnect('PageActions')(Page.Actions)
-Page.Card = propConnect('PageCard')(Page.Card)
-Page.Header = propConnect('PageHeader')(Page.Header)
+Page.Actions = propConnect(COMPONENT_KEY.Actions)(Page.Actions)
+Page.Card = propConnect(COMPONENT_KEY.Card)(Page.Card)
+Page.Content = propConnect(COMPONENT_KEY.Content)(Page.Content)
+Page.Header = propConnect(COMPONENT_KEY.Header)(Page.Header)
 
-export default propConnect('Page')(Page)
+export default propConnect(COMPONENT_KEY.Page)(Page)

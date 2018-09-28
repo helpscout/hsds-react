@@ -9,4 +9,5 @@ This component is comprised of smaller components:
 * [Page](./docs/Page.md)
 * [Actions](./docs/Actions.md)
 * [Card](./docs/Card.md)
+* [Content](./docs/Content.md)
 * [Header](./docs/Header.md)
