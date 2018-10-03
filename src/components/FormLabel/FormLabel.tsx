@@ -1,31 +1,30 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Context from './Context'
-import HelpText from '../HelpText'
-import Label from '../Label'
-import classNames from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { createUniqueIDFactory } from '../../utilities/id'
+import Context from './Context.js'
+import HelpText from '../HelpText/index.js'
+import Label from '../Label/index.js'
+import { classNames } from '../../utilities/classNames.js'
+import { namespaceComponent } from '../../utilities/component.js'
+import { createUniqueIDFactory } from '../../utilities/id.js'
 import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './utils.js'
 
-type Props = {
-  children?: any,
-  className?: string,
-  for?: string,
-  id?: string,
-  label?: any,
-  helpText: any,
+export interface Props {
+  children?: any
+  className?: string
+  for?: string
+  id?: string
+  label?: any
+  helpText: any
 }
 
-type State = {
-  id: string,
+export interface State {
+  id: string
 }
 
 const uniqueID = createUniqueIDFactory('FormControl')
 
-class FormLabel extends Component<Props, State> {
+class FormLabel extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {

@@ -6,6 +6,7 @@
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
 
+const path = require('path')
 const paths = require('../config/paths')
 const harvester = require('seed-harvester')
 const includePaths = harvester(['./src/scss'])
@@ -48,6 +49,12 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: 'raw-loader',
+      },
+      // Process TS with TypeScript.
+      {
+        test: /\.(ts|tsx)$/,
+        include: [paths.appSrc, paths.storiesSrc],
+        loader: require.resolve('awesome-typescript-loader'),
       },
     ],
   },
