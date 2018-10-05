@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Text } from '../src/index.js'
+import { Text } from '../src/components/index'
 
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)
