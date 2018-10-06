@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { noop } from '../../utilities/other'
 
 const propTypes = {

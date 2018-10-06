@@ -3,8 +3,11 @@ import type { ButtonKind, ButtonSize } from './types'
 import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from '../../utilities/classNames'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import classNames from '../../utilities/classNames.ts'
+import {
+  namespaceComponent,
+  isComponentNamed,
+} from '../../utilities/component.ts'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'

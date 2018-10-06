@@ -1,16 +1,15 @@
-// @flow
-import type { PropProviderProps } from './types'
-import React, { Component } from 'react'
+import { PropProviderProps } from './types'
+import * as React from 'react'
 import Context from './Context'
 import { setGlobalApp, shallowMergeProps } from './utils'
 
 type Props = {
-  app: string,
-  children: any,
-  value: PropProviderProps,
+  app: string
+  children: any
+  value: PropProviderProps
 }
 
-class PropProvider extends Component<Props> {
+class PropProvider extends React.Component<Props> {
   static defaultProps = {
     app: 'blue',
     value: {},

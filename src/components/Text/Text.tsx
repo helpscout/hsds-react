@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Text.css.js'
+import css from './styles/Text.css'
 import { COMPONENT_KEY } from './utils'
 
 interface Props {

@@ -5,8 +5,11 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
 import styled from '../styled'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import {
+  namespaceComponent,
+  isComponentNamed,
+} from '../../utilities/component.ts'
 import avatarGridWrapperCSS from './styles/AvatarGridWrapper.css.js'
 import avatarGridContainerCSS from './styles/AvatarGridContainer.css.js'
 import avatarGridCSS from './styles/AvatarGrid.css.js'

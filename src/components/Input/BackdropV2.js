@@ -2,7 +2,7 @@
 import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { isStateful } from './utils'
 import { BackdropUI, FocusUI } from './styles/BackdropV2.css.js'
 

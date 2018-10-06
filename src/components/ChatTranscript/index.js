@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import Item from './Item'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 
 type Props = {
   className?: string,

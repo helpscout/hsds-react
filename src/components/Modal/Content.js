@@ -1,7 +1,10 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import {
+  namespaceComponent,
+  isComponentNamed,
+} from '../../utilities/component.ts'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
 import { ContentUI } from './styles/Content.css.js'

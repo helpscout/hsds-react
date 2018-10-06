@@ -1,4 +1,3 @@
-// @flow
 import { includes } from './arrays'
 import { isObject } from './is'
 

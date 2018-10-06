@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Icon from '../Icon'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { noop } from '../../utilities/other'
 import { CloseButtonSize } from './types'
 

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import ThemeProvider from '../ThemeProvider'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { providerContextTypes } from './propTypes'
 import { COMPONENT_KEY } from './utils'
 

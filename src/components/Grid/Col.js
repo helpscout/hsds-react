@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames, variantClassNames } from '../../utilities/classNames'
+import { classNames, variantClassNames } from '../../utilities/classNames.ts'
 
 export const propTypes = {
   size: PropTypes.string,

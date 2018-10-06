@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Text from '..'
+import Text from '../Text'
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { CodeUI } from './styles/Code.css.js'
 import { COMPONENT_KEY } from './utils'
 

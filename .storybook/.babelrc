@@ -1,7 +1,17 @@
 {
-  "presets": [
-    "es2015",
-    "react",
-    "stage-1"
-  ]
+  "presets": ["es2015", "flow", "react", "stage-1"],
+  "plugins": ["transform-class-properties"],
+  "env": {
+    "development": {
+      "presets": ["es2015", "flow", "react", "stage-1"],
+      "plugins": ["transform-class-properties"]
+    },
+    "production": {
+      "plugins": [
+        "transform-flow-strip-types",
+        "transform-class-properties",
+        "inline-svg"
+      ]
+    }
+  }
 }

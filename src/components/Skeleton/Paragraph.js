@@ -1,6 +1,6 @@
 import React from 'react'
 import Text from './Text'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 
 const Paragraph = props => {
   const { className, ...rest } = props

@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from '../../styled'
 

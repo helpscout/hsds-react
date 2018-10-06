@@ -11,7 +11,7 @@ import SortableDragHandle from '../Sortable/DragHandle'
 import Icon from '../Icon'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 
 export const propTypes = Object.assign({}, collapsibleTypes, {
   header: PropTypes.element,

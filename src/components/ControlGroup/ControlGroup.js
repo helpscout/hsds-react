@@ -1,8 +1,11 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
-import { isComponentNamed, namespaceComponent } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import {
+  isComponentNamed,
+  namespaceComponent,
+} from '../../utilities/component.ts'
 import Block from './Block'
 import Item from './Item'
 import { ControlGroupUI } from './styles/ControlGroup.css.js'

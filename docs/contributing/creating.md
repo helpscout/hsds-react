@@ -51,8 +51,8 @@ Add the starting React component boilerplate for `Strong.js`:
 // @flow
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { StrongUI } from './styles/Strong.css.js'
 
 export const COMPONENT_KEY = 'Strong'

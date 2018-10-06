@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Chat from './Chat'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { COMPONENT_KEY } from './utils'
 
 type Props = {

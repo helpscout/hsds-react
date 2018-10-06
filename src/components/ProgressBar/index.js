@@ -1,7 +1,7 @@
 // @flow
 import type { UISize } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
-import { classNames } from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames.ts'
 import { noop } from '../../utilities/other'
 
 type Value = number | string | null

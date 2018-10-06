@@ -1,5 +1,3 @@
-// @flow
-
 // Tiny primitive functions to check types
 export const typeOf = (o: any, type: string): boolean =>
   typeof o === type && o !== null
@@ -22,10 +20,10 @@ export const isPlainObject = (o: any): boolean =>
 
 export const isDefined = (o: any): boolean => o !== undefined
 
-export const anyDefined = (...args: any): boolean =>
+export const anyDefined = (...args): boolean =>
   args.filter(isDefined).length > 0
 
-export const allDefined = (...args: any): boolean => {
+export const allDefined = (...args): boolean => {
   const result = args.filter(isDefined)
   return !!(args.length && result.length === args.length)
 }

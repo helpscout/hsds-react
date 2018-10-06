@@ -1,13 +1,13 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Context from './Context.js'
-import HelpText from '../HelpText/index.js'
+import HelpText from '../HelpText/index'
 import Label from '../Label/index.js'
-import { classNames } from '../../utilities/classNames.js'
-import { namespaceComponent } from '../../utilities/component.js'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id.js'
-import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css.js'
-import { COMPONENT_KEY } from './utils.js'
+import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css'
+import { COMPONENT_KEY } from './utils'
 
 export interface Props {
   children?: any
@@ -15,7 +15,7 @@ export interface Props {
   for?: string
   id?: string
   label?: any
-  helpText: any
+  helpText?: any
 }
 
 export interface State {

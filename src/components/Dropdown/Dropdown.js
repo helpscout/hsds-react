@@ -10,7 +10,7 @@ import { default as Menu, MenuComponent } from './Menu'
 import Trigger from './Trigger'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import {
   focusNextFocusableNode,
   focusPreviousFocusableNode,

@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 
 const Block = props => {
   const { className, children, ...rest } = props

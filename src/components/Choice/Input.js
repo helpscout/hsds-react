@@ -4,7 +4,7 @@ import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import Backdrop from '../Input/BackdropV2'
 import Icon from '../Icon'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { noop } from '../../utilities/other'
 import {
   InputUI,

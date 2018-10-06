@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { arrayMove } from 'react-sortable-hoc'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import DragHandle from './DragHandle'
 import Item from './Item'
 import List from './List'

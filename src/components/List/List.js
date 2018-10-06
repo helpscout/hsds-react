@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import Item from './Item'
 
 export const propTypes = {

@@ -1,8 +1,8 @@
 // @flow
 import type { ToolbarSize } from '../Toolbar/types'
 import React, { PureComponent as Component } from 'react'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { COMPONENT_KEY } from './utils'
 import { HeaderUI } from './styles/Header.css.js'
 

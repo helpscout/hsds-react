@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Block from './Block'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 
 export const propTypes = {
   heading: PropTypes.bool,

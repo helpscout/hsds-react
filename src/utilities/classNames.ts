@@ -1,4 +1,3 @@
-// @flow
 import { classNames as classNamesUtil } from '@helpscout/react-utils'
 import { last } from './arrays'
 

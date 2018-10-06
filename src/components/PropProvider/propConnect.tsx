@@ -1,10 +1,9 @@
-// @flow
-import type { PropProviderProps, ConfigGetter } from './types'
-import React, { Component } from 'react'
+import { PropProviderProps, ConfigGetter } from './types'
+import * as React from 'react'
 import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
 import Context from './Context'
 import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
-import { isDefined, isString } from '../../utilities/is'
+import { isDefined } from '../../utilities/is'
 
 type Props = Object
 
@@ -16,8 +15,7 @@ type Props = Object
  * @returns {React.Component} The connected React component.
  */
 function propConnect(name?: ConfigGetter) {
-  // $FlowFixMe
-  let namespace: string = isString(name) ? name : ''
+  let namespace: string = typeof name === 'string' ? name : ''
 
   return function wrapWithComponent(WrappedComponent: any) {
     if (!isDefined(name)) {
@@ -25,10 +23,9 @@ function propConnect(name?: ConfigGetter) {
     }
     const displayName = `connected(${namespace})`
 
-    class Connect extends Component<Props> {
+    class Connect extends React.Component<Props> {
       static displayName = displayName
 
-      setWrappedInstance: Function
       wrappedInstance: any = null
 
       constructor(props, context) {

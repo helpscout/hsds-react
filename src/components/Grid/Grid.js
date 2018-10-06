@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import Container from './Container'
 import Row from './Row'
 import Col from './Col'

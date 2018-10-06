@@ -8,9 +8,9 @@ import Flexy from '../Flexy'
 import HelpText from '../HelpText'
 import Text from '../Text'
 import VisuallyHidden from '../VisuallyHidden'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { noop } from '../../utilities/other'
 import {
   ChoiceUI,

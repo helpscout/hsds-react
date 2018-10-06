@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Heading from '../Heading'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 
 type Props = {
   children?: any,

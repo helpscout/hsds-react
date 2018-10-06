@@ -1,8 +1,8 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'

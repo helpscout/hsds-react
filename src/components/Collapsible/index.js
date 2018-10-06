@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { requestAnimationFrame, noop } from '../../utilities/other'
 
 type Props = {

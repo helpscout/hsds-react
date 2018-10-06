@@ -15,8 +15,8 @@ import Tag from '../Tag'
 import Text from '../Text'
 import Timestamp from '../Timestamp'
 import Truncate from '../Truncate'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames.ts'
+import { namespaceComponent } from '../../utilities/component.ts'
 import { COMPONENT_KEY } from './utils'
 import {
   ItemUI,

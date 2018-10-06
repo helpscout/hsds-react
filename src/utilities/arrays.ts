@@ -1,4 +1,3 @@
-// @flow
 /**
  * Returns the first item of an array
  * @param  {Array} array The array.

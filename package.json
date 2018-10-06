@@ -85,11 +85,6 @@
   },
   "devDependencies": {
     "@helpscout/helix": "^0.0.13",
-    "@storybook/addon-actions": "^3.4.11",
-    "@storybook/addon-options": "^3.2.16",
-    "@storybook/cli": "^3.2.16",
-    "@storybook/react": "^3.4.0",
-    "@storybook/storybook-deployer": "2.0.0",
     "@types/jest": "^23.3.3",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.8",
@@ -188,7 +183,11 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "^3.1.8",
     "webpack-manifest-plugin": "1.1.0",
-    "webpack-node-externals": "1.6.0"
+    "webpack-node-externals": "1.6.0",
+    "@storybook/react": "^3.4.11",
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/addon-links": "^3.4.11",
+    "@storybook/addons": "^3.4.11"
   },
   "nyc": {
     "exclude": [
@@ -228,11 +227,13 @@
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest",
       "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
@@ -248,7 +249,9 @@
       "js",
       "json",
       "web.jsx",
-      "jsx"
+      "jsx",
+      "ts",
+      "tsx"
     ]
   },
   "babel": {

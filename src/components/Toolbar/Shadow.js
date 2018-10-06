@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { placementTypes } from './propTypes'
 
 export const propTypes = {

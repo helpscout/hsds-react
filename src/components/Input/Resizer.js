@@ -2,7 +2,7 @@
 // See: https://github.com/Shopify/polaris/blob/master/src/components/TextField/Resizer.tsx
 import React, { PureComponent as Component } from 'react'
 import EventListener from '../EventListener'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import { noop } from '../../utilities/other'
 import { repeat } from '../../utilities/strings'
 

@@ -2,7 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import EventListener from '../EventListener'
 import Tooltip from '../Tooltip'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import styled from '../styled'
 import { truncateMiddle } from '../../utilities/strings'
 import css from './styles/Truncate.css.js'

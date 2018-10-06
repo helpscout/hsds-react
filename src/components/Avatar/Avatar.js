@@ -6,8 +6,8 @@ import { getValidProps } from '@helpscout/react-utils'
 import StatusDot from '../StatusDot'
 import VisuallyHidden from '../VisuallyHidden'
 import { includes } from '../../utilities/arrays'
-import { namespaceComponent } from '../../utilities/component'
-import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { nameToInitials } from '../../utilities/strings'
 import {
   AvatarUI,

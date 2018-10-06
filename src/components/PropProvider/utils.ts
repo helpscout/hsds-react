@@ -1,12 +1,5 @@
-// @flow
-import type { AppNamespace, PropProviderProps, ConfigGetter } from './types'
-import {
-  isArray,
-  isObject,
-  isFunction,
-  isPlainObject,
-  isString,
-} from '../../utilities/is'
+import { AppNamespace, PropProviderProps, ConfigGetter } from './types'
+import { isArray, isObject, isPlainObject, isString } from '../../utilities/is'
 
 /**
  * Namespaces
@@ -16,14 +9,14 @@ export const APPS = {
   hsApp: 'hs-app',
 }
 
-export const propProviderAppNamespace =
+export const propProviderAppNamespace: string =
   '__BLUE_SECRET_PROP_PROVIDER_GLOBAL_APP__'
-export const propProviderAppNamespaceValue = 'blue'
+export const propProviderAppNamespaceValue: string = 'blue'
 
 // HTML friendly key for PropProviderAppProp
 // 🖋 🍍 🍎 🖋
 // https://www.youtube.com/watch?v=0E00Zuayv9Q
-export const propProviderDataAttr = 'data-blue-ppap'
+export const propProviderDataAttr: string = 'data-blue-ppap'
 
 /**
  * Default Config
@@ -59,7 +52,7 @@ export function setGlobalApp(
  * @param {Object} config The initial PropProvider config.
  * @returns {Object} The PropProvider global config
  */
-export function getGlobal(config: PropProviderProps): AppNamespace {
+export function getGlobal(config: PropProviderProps): Object {
   const baseConfig = isPlainObject(config) ? config : contextConfig
 
   if (!baseConfig.hasOwnProperty(propProviderAppNamespace)) {
@@ -141,20 +134,17 @@ export function getConfigProps(
 
   let props = {}
 
-  if (isString(getter)) {
+  if (typeof getter === 'string') {
     props = config.hasOwnProperty(getter) ? config[getter] : {}
   }
-  if (isFunction(getter)) {
-    // $FlowFixMe
+  if (typeof getter === 'function') {
     props = getter(config)
   }
-  if (isArray(getter)) {
-    // $FlowFixMe
+  if (Array.isArray(getter)) {
     props = getConfigPropsFromArray(config, getter)
   }
 
   if (isObject(getter)) {
-    // $FlowFixMe
     const propKeys = Object.keys(getter).filter(key => getter[key])
     props = getConfigPropsFromArray(config, propKeys)
   }

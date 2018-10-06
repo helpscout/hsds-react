@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Block from './Block'
-import classNames from '../../utilities/classNames'
+import classNames from '../../utilities/classNames.ts'
 import type { AvatarShape, AvatarSize } from '../Avatar/types'
 
 type Props = {

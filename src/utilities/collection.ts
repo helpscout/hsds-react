@@ -1,4 +1,3 @@
-// @flow
 import { random } from './arrays'
 
 type Collection = Object | Array<any>
