@@ -1,7 +1,7 @@
 import { optimalTextColor } from '../../color'
 
 test('Returns null, if invalid arguments', () => {
-  expect(optimalTextColor()).toEqual(null)
+  expect(optimalTextColor(null)).toEqual(null)
   expect(optimalTextColor(true)).toEqual(null)
   expect(optimalTextColor(111)).toEqual(null)
 })
@@ -29,5 +29,5 @@ test('Can provide custom RGB prop values', () => {
     g: 999,
     b: 999,
   }
-  expect(optimalTextColor('#ff6688'), customValues).toEqual('white')
+  expect(optimalTextColor('#ff6688', customValues)).toEqual('black')
 })

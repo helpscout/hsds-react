@@ -1,7 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Collapsible from '..'
+import Collapsible from '../Collapsible.tsx'
 import { baseComponentTest } from '../../../tests/helpers/components'
+
+jest.useFakeTimers()
 
 const baseComponentOptions = {
   className: 'c-Collapsible',
@@ -9,7 +11,6 @@ const baseComponentOptions = {
 }
 
 describe('Collapsible', () => {
-  jest.useFakeTimers()
   baseComponentTest(Collapsible, baseComponentOptions)
 
   describe('onOpen', () => {

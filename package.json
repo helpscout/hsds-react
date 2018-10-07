@@ -11,7 +11,12 @@
     "url": "git+https://github.com/helpscout/blue.git"
   },
   "authors": [
-    "ItsJonQ <hello@jonquach.com>"
+    "ItsJonQ <hello@jonquach.com>",
+    "Nickolas Kenyeres <nickolas@knicklabs.com>",
+    "Maxi Ferreira <charca@gmail.com>",
+    "Tom Graham",
+    "Tom O'Connor",
+    "Buzz Usborne <hello@buzzusborne.com>"
   ],
   "scripts": {
     "check:npm": "node scripts/check-npm.js",
@@ -93,7 +98,7 @@
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.3",
-    "babel-jest": "20.0.3",
+    "babel-jest": "^23.6.0",
     "babel-loader": "7.0.0",
     "babel-plugin-inline-svg": "0.1.0",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -134,8 +139,8 @@
     "istanbul-api": "1.2.2",
     "istanbul-reports": "1.1.4",
     "jasmine": "2.8.0",
-    "jest": "20.0.4",
-    "jest-cli": "20.0.4",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
     "jquery": "3.2.1",
     "karma": "2.0.5",
     "karma-chrome-launcher": "2.2.0",
