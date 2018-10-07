@@ -22,7 +22,7 @@
     "build:es2015modules": "cross-env NODE_ENV=production BABEL_ENV=modules babel ./src/index.js --out-file ./dist/index.es.js",
     "build:es2015modulesSCSS": "cross-env NODE_ENV=production BABEL_ENV=modules babel ./src/styles/includePaths.js --out-file ./dist/styles/includePaths.es.js",
     "build:copy-files": "babel-node ./scripts/copy-files",
-    "build:js": "npm run build:es2015 && npm run build:es2015modules && npm run build:es2015modulesSCSS && npm run build:copy-files",
+    "build:js": "npm run build:es2015 && npm run build:es2015modules && npm run build:es2015modulesSCSS && npm run build:ts && npm run build:copy-files",
     "build:ts": "tsc",
     "build": "npm run clean && npm run copy:css && npm run build:css && npm run build:js",
     "copy:css": "cpx 'src/styles/**/*.scss' 'dist/styles'",
