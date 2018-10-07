@@ -5,7 +5,7 @@ import {
   cardStyles,
   cardSubtleStyles,
 } from '../../../styles/mixins/cardStyles.css.js'
-import styled from '../../styled/index.js'
+import styled from '../../styled/index.ts'
 
 export const config = {
   iconColor: getColor('grey.600'),

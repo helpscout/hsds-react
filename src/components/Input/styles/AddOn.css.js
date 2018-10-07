@@ -1,7 +1,7 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
-import styled from '../../styled/index.js'
+import styled from '../../styled/index.ts'
 
 export const config = {
   backgroundColor: getColor('grey.200'),

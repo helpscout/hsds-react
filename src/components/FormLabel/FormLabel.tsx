@@ -1,6 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Context from './Context.js'
+import Context from './Context'
 import HelpText from '../HelpText/index'
 import Label from '../Label/index.js'
 import { classNames } from '../../utilities/classNames'
