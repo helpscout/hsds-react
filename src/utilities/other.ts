@@ -1,13 +1,14 @@
-// @flow
-export const noop = (): void => {}
+type Noop = () => void
 
-export const requestAnimationFrame = (callback: () => void): mixed => {
+export const noop: Noop = () => undefined
+
+export const requestAnimationFrame = (callback: FrameRequestCallback): any => {
   // This method was mostly created for node testing.
   // JSDOM (used by Enzyme) doesn't support requestAnimationFrame.
   /* istanbul ignore next */
   return window.requestAnimationFrame
     ? window.requestAnimationFrame(callback)
-    : callback()
+    : callback
 }
 
 export const isNodeEnv = (): boolean => {

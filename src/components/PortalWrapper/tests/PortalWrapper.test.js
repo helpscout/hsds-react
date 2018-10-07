@@ -3,7 +3,6 @@ import { mount } from 'enzyme'
 import PortalWrapper from '..'
 import Keys from '../../../constants/Keys'
 import classNames from '../../../utilities/classNames'
-import wait from '../../../tests/helpers/wait'
 
 jest.useFakeTimers()
 
@@ -153,6 +152,7 @@ describe('isOpen', () => {
     const wrapper = mount(<TestComponent isOpen={false} timeout={0} />, context)
 
     wrapper.setProps({ isOpen: true })
+    jest.runAllTimers()
     wrapper.setProps({ isOpen: false })
     jest.runAllTimers()
 

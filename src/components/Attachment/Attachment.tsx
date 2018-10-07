@@ -1,6 +1,5 @@
-// @flow
-import type { AttachmentProp } from './types'
-import React, { PureComponent as Component } from 'react'
+import { AttachmentProp } from './types'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AttachmentProvider from './Provider'
 import CloseButton from '../CloseButton'
@@ -8,31 +7,32 @@ import Image from '../Image'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import styled from '../styled'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { providerContextTypes } from './propTypes'
+import { COMPONENT_KEY } from './utils'
 import css from './styles/Attachment.css.js'
 
 export const Provider = AttachmentProvider
 
 type Props = {
-  children?: any,
-  className?: string,
-  download: boolean | string,
-  id: number | string,
-  imageUrl: string,
-  mime: string,
-  name: string,
-  onClick: (event: Event, attachmentProp: AttachmentProp) => void,
-  onRemoveClick: (event: Event, attachmentProp: AttachmentProp) => void,
-  size: number | string,
-  target: string,
-  truncateLimit: number,
-  type: 'action' | 'link',
-  url: string,
+  children?: any
+  className?: string
+  download: boolean | string
+  id: string
+  imageUrl: string
+  mime: string
+  name: string
+  onClick: (event: Event, attachmentProp: AttachmentProp) => void
+  onRemoveClick: (event: Event, attachmentProp: AttachmentProp) => void
+  size: number | string
+  target: string
+  truncateLimit: number
+  type: 'action' | 'link'
+  url: string
 }
 
-export class Attachment extends Component<Props> {
+export class Attachment extends React.PureComponent<Props> {
   static defaultProps = {
     mime: 'image/png',
     name: 'image.png',
@@ -41,8 +41,31 @@ export class Attachment extends Component<Props> {
     truncateLimit: 20,
     type: 'link',
   }
-  static contextTypes = providerContextTypes
+  static contextTypes = {
+    theme: noop,
+  }
   static Provider = AttachmentProvider
+
+  getAttachmentProps = (): AttachmentProp => {
+    const { id, imageUrl, mime, name, size, url } = this.props
+
+    return {
+      id,
+      imageUrl,
+      mime,
+      name,
+      size,
+      url,
+    }
+  }
+
+  handleOnClick = (event: Event) => {
+    this.props.onClick(event, this.getAttachmentProps())
+  }
+
+  handleOnRemoveClick = (event: Event) => {
+    this.props.onRemoveClick(event, this.getAttachmentProps())
+  }
 
   render() {
     const {
@@ -65,23 +88,6 @@ export class Attachment extends Component<Props> {
     const { theme } = this.context
 
     const isThemePreview = theme === 'preview'
-
-    const attachmentProps = {
-      id,
-      imageUrl,
-      mime,
-      name,
-      size,
-      url,
-    }
-
-    const handleOnClick = (event: Event) => {
-      onClick(event, attachmentProps)
-    }
-
-    const handleOnRemoveClick = (event: Event) => {
-      onRemoveClick(event, attachmentProps)
-    }
 
     const componentClassName = classNames(
       'c-Attachment',
@@ -120,7 +126,7 @@ export class Attachment extends Component<Props> {
     const closeMarkup = isThemePreview ? (
       <CloseButton
         className="c-Attachment__closeButton"
-        onClick={handleOnRemoveClick}
+        onClick={this.handleOnRemoveClick}
         size="tiny"
         title="Remove"
       />
@@ -136,7 +142,7 @@ export class Attachment extends Component<Props> {
         {...getValidProps(rest)}
         className={componentClassName}
         href={url}
-        onClick={handleOnClick}
+        onClick={this.handleOnClick}
         title={name}
         {...downloadProps}
       >
@@ -147,4 +153,8 @@ export class Attachment extends Component<Props> {
   }
 }
 
-export default styled(Attachment)(css)
+const StyledAttachment = styled(Attachment)(css)
+
+namespaceComponent(COMPONENT_KEY)(StyledAttachment)
+
+export default StyledAttachment

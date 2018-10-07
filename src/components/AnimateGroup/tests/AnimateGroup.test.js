@@ -1,14 +1,15 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { TransitionGroup } from 'react-transition-group'
-import AnimateGroup from '..'
-import Animate from '../../Animate'
+import AnimateGroup from '../index'
+import Animate from '../../Animate/index.ts'
 
 describe('TransitionGroup', () => {
   test('Is a wrapper for TransitionGroup', () => {
-    const wrapper = shallow(<AnimateGroup />)
+    const wrapper = mount(<AnimateGroup />)
+    const o = wrapper.find(TransitionGroup)
 
-    expect(wrapper.type()).toBe(TransitionGroup)
+    expect(o.length).toBe(1)
   })
 })
 
@@ -21,7 +22,7 @@ describe('Staggering', () => {
 
   test('Staggers by adjusting delay times for <Animate />', () => {
     const staggerDelay = 200
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate>
           <div className="ron">Ron</div>
@@ -42,7 +43,7 @@ describe('Staggering', () => {
 
   test('Can adjust staggerDelay', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate>
           <div className="ron">Ron</div>
@@ -63,7 +64,7 @@ describe('Staggering', () => {
 
   test('staggerDelay does not trigger staggering', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup staggerDelay={staggerDelay}>
         <Animate>
           <div className="ron">Ron</div>
@@ -78,13 +79,13 @@ describe('Staggering', () => {
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(0)
-    expect(second.props().delay).toBe(0)
+    expect(first.props().delay).toBeFalsy()
+    expect(second.props().delay).toBeFalsy()
   })
 
   test('staggerDelay respects Animate delay prop', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate delay={100}>
           <div className="ron">Ron</div>
@@ -105,7 +106,7 @@ describe('Staggering', () => {
 
   test('stagger does not affect Animate duration', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate duration={30}>
           <div className="ron">Ron</div>
@@ -173,7 +174,7 @@ describe('className', () => {
 
 describe('duration', () => {
   test('Does not override child duration prop', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup>
         <Animate duration={66} />
       </AnimateGroup>
@@ -184,7 +185,7 @@ describe('duration', () => {
   })
 
   test('Can set child delay', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup>
         <Animate delay={66} />
       </AnimateGroup>
@@ -197,7 +198,7 @@ describe('duration', () => {
 
 describe('sequence', () => {
   test('Does not set sequence by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup>
         <Animate sequence="down" />
       </AnimateGroup>

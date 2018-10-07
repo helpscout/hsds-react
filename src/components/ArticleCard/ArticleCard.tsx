@@ -1,31 +1,30 @@
-// @flow
-import React, { PureComponent } from 'react'
+import * as React from 'react'
 import Card from '../Card'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import styled from '../styled'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 import css from './styles/ArticleCard.css.js'
 
 type Props = {
-  className?: string,
-  title?: string,
-  content?: string,
-  metaHeader?: any,
-  footer?: any,
-  titleLimit?: number,
-  contentLimit?: number,
-  titleSize?: number,
-  contentSize?: number,
+  className?: string
+  title?: string
+  content?: string
+  metaHeader?: any
+  footer?: any
+  titleLimit?: number
+  contentLimit?: number
+  titleSize?: number
+  contentSize?: number
 }
 
 /**
  * A enhanced wrapper that for Card, allowing for displaying a header, footer
  * and content inside a card
  */
-class ArticleCard extends PureComponent<Props> {
+class ArticleCard extends React.PureComponent<Props> {
   static defaultProps = {
     titleLimit: 120,
     contentLimit: 120,

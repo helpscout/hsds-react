@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Collapsible from '../Collapsible.tsx'
+import Collapsible from '../Collapsible'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
 jest.useFakeTimers()

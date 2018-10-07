@@ -7,7 +7,9 @@ import {
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
+import { isComponentNamed } from '../../utilities/component.ts'
+import { COMPONENT_KEY as ANIMATE_COMPONENT_KEY } from '../Animate/utils.ts'
 
 export const propTypes = {
   easing: PropTypes.string,
@@ -20,12 +22,15 @@ export const propTypes = {
 }
 
 const defaultProps = {
+  delay: 0,
   easing: 'ease-in-out',
   stagger: false,
   staggerDelay: 200,
 }
 
 class AnimateGroup extends Component {
+  static defaultProps = defaultProps
+
   render() {
     const {
       appear,
@@ -49,6 +54,7 @@ class AnimateGroup extends Component {
       ? React.Children.map(children, (child, index) => {
           if (!React.isValidElement(child)) return null
           if (
+            isComponentNamed(child, ANIMATE_COMPONENT_KEY) ||
             child.type === Animate ||
             child.type === Transition ||
             child.type === CSSTransition
@@ -62,17 +68,17 @@ class AnimateGroup extends Component {
             const durationProp =
               (stagger && staggerDuration ? staggerDuration : duration) ||
               child.props.duration
-            const staggerIndexDelay =
-              child.props.delay + (index + 1) * staggerDelay
+            const delayProp = child.props.delay || 0
+            const staggerIndexDelay = delayProp + (index + 1) * staggerDelay
             /* istanbul ignore next */
-            const delayProp = stagger ? staggerIndexDelay : delay
+            const computedDelayProp = stagger ? staggerIndexDelay : delay
             /* istanbul ignore next */
             const sequenceProp = child.props.sequence || sequence
 
             return React.cloneElement(child, {
               ...child.props,
               duration: durationProp,
-              delay: delayProp,
+              delay: computedDelayProp,
               easing: easingProp,
               sequence: sequenceProp,
               key,
@@ -102,6 +108,5 @@ class AnimateGroup extends Component {
 }
 
 AnimateGroup.propTypes = propTypes
-AnimateGroup.defaultProps = defaultProps
 
 export default AnimateGroup

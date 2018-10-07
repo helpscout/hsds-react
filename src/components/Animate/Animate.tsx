@@ -1,40 +1,39 @@
-// @flow
-import type { AnimationSequences } from './types'
-import React, { PureComponent as Component } from 'react'
+import { AnimationSequence } from './types'
+import * as React from 'react'
 import { Transition } from 'react-transition-group'
 import styled from '../styled'
 import { getSequenceNames } from '../../utilities/animation'
-import classNames from '../../utilities/classNames.ts'
+import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
 import css from './styles/Animate.css.js'
 
-type Props = {
-  animateOnMount: boolean,
-  block: boolean,
-  children?: any,
-  className: string,
-  delay: number,
-  duration: number,
-  easing: string,
-  in: boolean,
-  inline: boolean,
-  inlineBlock: boolean,
-  mountOnEnter: boolean,
-  onEnter: () => void,
-  onEntered: () => void,
-  onEntering: () => void,
-  onExit: () => void,
-  onExited: () => void,
-  onExiting: () => void,
-  sequence: AnimationSequences,
-  style?: Object,
-  timeout: number,
-  transitionProperty: string,
-  unmountOnExit: boolean,
+export interface Props {
+  animateOnMount: boolean
+  block: boolean
+  children?: any
+  className: string
+  delay: number
+  duration: number
+  easing: string
+  in: boolean
+  inline: boolean
+  inlineBlock: boolean
+  mountOnEnter: boolean
+  onEnter: () => void
+  onEntered: () => void
+  onEntering: () => void
+  onExit: () => void
+  onExited: () => void
+  onExiting: () => void
+  sequence: AnimationSequence
+  style: Object
+  timeout: number
+  transitionProperty: string
+  unmountOnExit: boolean
 }
 
-export class Animate extends Component<Props> {
+export class Animate extends React.PureComponent<Props> {
   static defaultProps = {
     animateOnMount: true,
     delay: 0,
@@ -49,15 +48,14 @@ export class Animate extends Component<Props> {
     onExited: noop,
     onExiting: noop,
     sequence: ['fade'],
+    style: {},
     transitionProperty: 'all',
     unmountOnExit: true,
   }
 
-  node: ?HTMLElement = null
+  node: HTMLElement
 
-  componentWillUnmount() {
-    this.node = null
-  }
+  setNodeRef = (node: HTMLDivElement) => (this.node = node)
 
   render() {
     const {
@@ -88,7 +86,7 @@ export class Animate extends Component<Props> {
       className
     )
 
-    const componentStyles = {
+    const componentStyles: Object = {
       ...defaultStyle,
       transitionProperty: transitionProperty,
       transitionDuration: `${duration}ms`,
@@ -119,10 +117,8 @@ export class Animate extends Component<Props> {
               sequenceClassNames,
               `ax-${transitionState}`
             )}
-            ref={node => {
-              this.node = node
-            }}
-            style={{ ...componentStyles }}
+            ref={this.setNodeRef}
+            style={componentStyles}
           >
             {children}
           </div>

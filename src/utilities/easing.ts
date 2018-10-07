@@ -1,9 +1,12 @@
 import { camelCase } from './strings'
 
-export const defaultEasingTiming = 'ease-in-out'
-export const bounceCubicBezier = '0.680, -0.650, 0.265, 1.650'
+type EasingDefaultTiming = string
+type CubicBezierCurve = string
 
-export const customCubicBezier = {
+export const defaultEasingTiming: EasingDefaultTiming = 'ease-in-out'
+export const bounceCubicBezier: CubicBezierCurve = '0.680, -0.650, 0.265, 1.650'
+
+export const customCubicBezier: Object = {
   easeInQuad: '0.550, 0.085, 0.680, 0.530',
   easeInCubic: '0.550, 0.055, 0.675, 0.190',
   easeInQuart: '0.895, 0.030, 0.685, 0.220',
@@ -36,12 +39,16 @@ export const customCubicBezier = {
   elastic: '0.680, -1.500, 0.265, 2.500',
 }
 
-export const cubicBezierCSSProp = curve => {
+export const cubicBezierCSSProp = (
+  curve: CubicBezierCurve
+): CubicBezierCurve => {
   if (!curve) return defaultEasingTiming
   return `cubic-bezier(${curve.toString()})`
 }
 
-export const getEasingTiming = (easing = defaultEasingTiming) => {
+export const getEasingTiming = (
+  easing: EasingDefaultTiming = defaultEasingTiming
+): CubicBezierCurve => {
   if (!easing || typeof easing !== 'string') return defaultEasingTiming
   const customEasing = customCubicBezier[camelCase(easing)]
 

@@ -1,14 +1,14 @@
-// @flow
-import ThemeProvider from '../ThemeProvider'
-import { providerContextTypes } from './propTypes'
+import ThemeProvider from '../ThemeProvider/index'
 
-const propTypes = providerContextTypes
+const propTypes = {
+  theme: () => null,
+}
 
 const defaultProps = {
   theme: 'default',
 }
 
-const childContextTypes = providerContextTypes
+const childContextTypes = propTypes
 
 const Provider = ThemeProvider
 
