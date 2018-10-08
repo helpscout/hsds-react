@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import PortalWrapper from '../PortalWrapper'
 import Keys from '../../../constants/Keys'
-import classNames from '../../../utilities/classNames'
+import { classNames } from '../../../utilities/classNames'
 
 jest.useFakeTimers()
 

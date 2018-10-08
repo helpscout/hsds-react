@@ -2,7 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { namespaceComponent } from '../../utilities/component.ts'
 import { OptionIconUI } from './styles/OptionIcon.css.js'
 import { COMPONENT_KEY } from './utils'

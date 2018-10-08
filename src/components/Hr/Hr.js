@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { namespaceComponent } from '../../utilities/component.ts'
 import { HrUI } from './styles/Hr.css.js'
 import { COMPONENT_KEY } from './utils'

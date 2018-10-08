@@ -5,7 +5,7 @@ import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
 import { default as Menu, MenuComponent } from './Menu'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { noop } from '../../utilities/other'
 
 type Props = {

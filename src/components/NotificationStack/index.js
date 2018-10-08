@@ -1,7 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import Notification from '../Notification'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {

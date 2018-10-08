@@ -1,6 +1,6 @@
 import React from 'react'
 import { default as Text, propTypes as textProps } from './Text'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 
 export const propTypes = textProps
 

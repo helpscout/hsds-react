@@ -13,7 +13,7 @@ import {
   createUniqueIndexFactory,
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { requestAnimationFrame } from '../../utilities/other'
 import Content from './Content'
 

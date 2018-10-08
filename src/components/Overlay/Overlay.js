@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { namespaceComponent } from '../../utilities/component.ts'
 import { COMPONENT_KEY } from './utils'
 import { OverlayUI } from './styles/Overlay.css.js'

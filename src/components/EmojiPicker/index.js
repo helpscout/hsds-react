@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { emojiIndex, Picker } from 'emoji-mart'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 
 export const propTypes = Object.assign(Picker.propTypes, {
   showPreview: PropTypes.bool,

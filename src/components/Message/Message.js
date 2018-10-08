@@ -16,7 +16,7 @@ import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
 import styled from '../styled'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import {
   isComponentTypeChat,
   namespaceComponent,

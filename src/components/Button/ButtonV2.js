@@ -3,7 +3,7 @@ import type { ButtonKind, ButtonSize } from './types'
 import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import {
   namespaceComponent,
   isComponentNamed,

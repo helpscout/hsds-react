@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SortableContainer } from 'react-sortable-hoc'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { listTypes } from './propTypes'
 
 export const propTypes = Object.assign({}, listTypes, {

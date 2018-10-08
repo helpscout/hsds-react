@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 import { namespaceComponent } from '../../utilities/component.ts'
 import { AddOnUI } from './styles/AddOn.css.js'
 import { COMPONENT_KEY } from './utils'

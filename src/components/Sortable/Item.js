@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { SortableElement } from 'react-sortable-hoc'
 import DragHandle from './DragHandle'
-import classNames from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames.ts'
 
 export const propTypes = {
   classNames: PropTypes.string,
