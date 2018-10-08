@@ -45,7 +45,7 @@ describe('Trigger', () => {
   })
 })
 
-describe.only('Key events', () => {
+describe('Key events', () => {
   test('Closes modal when ESCAPE is pressed', () => {
     mount(
       <Modal isOpen trigger={trigger}>

@@ -202,7 +202,7 @@ class Collapsible extends React.Component<Props, any> {
     }
     const componentStyle: Object = {
       ...style,
-      collapseStyle,
+      ...collapseStyle,
     }
 
     return (

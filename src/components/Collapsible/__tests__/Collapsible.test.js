@@ -122,13 +122,12 @@ describe('Collapsible', () => {
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: true })
-      expect(wrapper.state().animationState).toBe('measuring')
 
-      jest.runOnlyPendingTimers()
-      expect(wrapper.state().animationState).toBe('openingStart')
-
-      jest.runOnlyPendingTimers()
       expect(wrapper.state().animationState).toBe('opening')
+
+      jest.runOnlyPendingTimers()
+
+      expect(wrapper.state().animationState).toBe('opened')
     })
 
     test('Runs through open states on various timing sequences', () => {
@@ -137,13 +136,12 @@ describe('Collapsible', () => {
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: false })
-      expect(wrapper.state().animationState).toBe('measuring')
 
-      jest.runOnlyPendingTimers()
-      expect(wrapper.state().animationState).toBe('closingStart')
-
-      jest.runOnlyPendingTimers()
       expect(wrapper.state().animationState).toBe('closing')
+
+      jest.runOnlyPendingTimers()
+
+      expect(wrapper.state().animationState).toBe('closed')
     })
   })
 

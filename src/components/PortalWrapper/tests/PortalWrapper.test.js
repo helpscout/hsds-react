@@ -1,13 +1,13 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import PortalWrapper from '..'
+import PortalWrapper from '../PortalWrapper'
 import Keys from '../../../constants/Keys'
 import classNames from '../../../utilities/classNames'
 
 jest.useFakeTimers()
 
 const TestButton = props => {
-  const { className } = props
+  const { className, children } = props
   const componentClassName = classNames('button', className)
   const handleClick = () => {
     console.log('wee')
@@ -17,6 +17,7 @@ const TestButton = props => {
       <button className={componentClassName} onClick={handleClick}>
         Click
       </button>
+      {children}
     </div>
   )
 }
@@ -152,12 +153,12 @@ describe('isOpen', () => {
     const wrapper = mount(<TestComponent isOpen={false} timeout={0} />, context)
 
     wrapper.setProps({ isOpen: true })
-    jest.runAllTimers()
+    expect(wrapper.find('Animate').props().in).toBe(true)
+
     wrapper.setProps({ isOpen: false })
     jest.runAllTimers()
 
-    const o = document.body.childNodes[0]
-    expect(o).not.toBeTruthy()
+    expect(wrapper.find('Animate').props().in).toBe(false)
   })
 })
 
