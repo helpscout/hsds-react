@@ -1,18 +1,19 @@
-// @flow
-import { Component } from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 
-type Props = {
-  children?: any,
-  theme: string,
+export interface Props {
+  children?: any
+  theme: string
 }
 
-class ThemeProvider extends Component<Props> {
+class ThemeProvider extends React.Component<Props> {
+  static propTypes: Object
+  static displayName: string
+
   static defaultProps = {
     theme: 'default',
   }
   static childContextTypes = {
-    theme: PropTypes.any,
+    theme: () => null,
   }
 
   getChildContext = () => {
