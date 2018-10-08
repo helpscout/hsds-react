@@ -7,7 +7,7 @@ import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Text.css'
 import { COMPONENT_KEY } from './utils'
 
-interface Props {
+export interface Props {
   allCaps?: boolean
   block?: boolean
   children: any

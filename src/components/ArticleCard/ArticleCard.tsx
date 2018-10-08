@@ -8,16 +8,16 @@ import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 import css from './styles/ArticleCard.css.js'
 
-type Props = {
+export interface Props {
   className?: string
-  title?: string
   content?: string
-  metaHeader?: any
-  footer?: any
-  titleLimit?: number
   contentLimit?: number
-  titleSize?: number
   contentSize?: number
+  footer?: any
+  metaHeader?: any
+  title?: string
+  titleLimit?: number
+  titleSize?: number
 }
 
 /**

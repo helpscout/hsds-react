@@ -7,7 +7,7 @@ import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Heading.css'
 import { COMPONENT_KEY } from './utils'
 
-type Props = {
+export interface Props {
   center: boolean
   className?: string
   children?: any

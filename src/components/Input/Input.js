@@ -2,7 +2,7 @@
 /* eslint react/no-deprecated: off */
 import type { UISize, UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
-import { getValidProps } from '@helpscout/react-utils'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import AddOn from './AddOn'
 import Backdrop from './BackdropV2'

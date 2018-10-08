@@ -1,6 +1,7 @@
 import { PropProviderProps, ConfigGetter } from './types'
 import * as React from 'react'
-import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
+import getComponentName from '@helpscout/react-utils/dist/getComponentName'
+import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import Context from './Context'
 import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
 import { isDefined } from '../../utilities/is'

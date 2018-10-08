@@ -1,4 +1,4 @@
-import { classNames as classNamesUtil } from '@helpscout/react-utils'
+import classNamesUtil from '@helpscout/react-utils/dist/classNames'
 import { last } from './arrays'
 
 /**

@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
-import { enhanceComponentMethod } from '@helpscout/react-utils'
+import enhanceComponentMethod from '@helpscout/react-utils/dist/enhanceComponentMethod'
 import Item from './Item'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'

@@ -1,7 +1,7 @@
 // @flow
 import type { PopProps } from '../Pop/types'
 import React, { Component } from 'react'
-import { getValidProps } from '@helpscout/react-utils'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import Pop from '../Pop'
 import Popper from './Popper'

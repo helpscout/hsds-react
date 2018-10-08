@@ -3,7 +3,7 @@ import * as React from 'react'
 import Context from './Context'
 import { setGlobalApp, shallowMergeProps } from './utils'
 
-type Props = {
+export interface Props {
   app: string
   children: any
   value: PropProviderProps

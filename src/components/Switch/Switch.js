@@ -1,7 +1,7 @@
 // @flow
 import { SwitchSize, SwitchState, SwitchValue } from './types'
 import React, { PureComponent as Component } from 'react'
-import { getValidProps } from '@helpscout/react-utils'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames.ts'

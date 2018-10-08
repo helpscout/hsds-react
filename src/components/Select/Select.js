@@ -7,7 +7,7 @@ import type {
   SelectValue,
 } from './types'
 import React, { PureComponent as Component } from 'react'
-import { getValidProps } from '@helpscout/react-utils'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import Backdrop from '../Input/BackdropV2'
 import HelpText from '../HelpText'

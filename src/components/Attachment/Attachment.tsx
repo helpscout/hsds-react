@@ -15,18 +15,20 @@ import css from './styles/Attachment.css.js'
 
 export const Provider = AttachmentProvider
 
-type Props = {
+export type MouseClickEvent = React.MouseEvent<HTMLAnchorElement>
+
+export interface Props {
   children?: any
   className?: string
-  download: boolean | string
+  download?: any
   id: string
   imageUrl: string
   mime: string
   name: string
-  onClick: (event: Event, attachmentProp: AttachmentProp) => void
+  onClick: (event: MouseClickEvent, attachmentProp: AttachmentProp) => void
   onRemoveClick: (event: Event, attachmentProp: AttachmentProp) => void
   size: number | string
-  target: string
+  target?: string
   truncateLimit: number
   type: 'action' | 'link'
   url: string
@@ -59,7 +61,7 @@ export class Attachment extends React.PureComponent<Props> {
     }
   }
 
-  handleOnClick = (event: Event) => {
+  handleOnClick = (event: MouseClickEvent) => {
     this.props.onClick(event, this.getAttachmentProps())
   }
 
@@ -134,7 +136,7 @@ export class Attachment extends React.PureComponent<Props> {
 
     const downloadProps = {
       download: download !== undefined ? download : url ? true : null,
-      target: target !== undefined ? target : url ? '_blank' : null,
+      target: target !== undefined ? target : url ? '_blank' : '',
     }
 
     return (
