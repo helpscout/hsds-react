@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { noop } from '../../utilities/other'
 
 export interface Props {
   children?: any
@@ -13,7 +14,7 @@ class ThemeProvider extends React.Component<Props> {
     theme: 'default',
   }
   static childContextTypes = {
-    theme: () => null,
+    theme: noop,
   }
 
   getChildContext = () => {

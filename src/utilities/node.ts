@@ -1,10 +1,9 @@
-// @flow
-import closest from 'closest'
+import closest from './closest'
 import { isNodeEnv } from './other'
 
 type Node = HTMLElement | any
 type Scope = Node | Document
-const Element = window.Element
+const Element = window['Element']
 
 export const isNodeElement = (node: Scope): boolean => {
   return (
@@ -30,7 +29,6 @@ export const applyStylesToNode = (node: Node, styles: Object = {}): Node => {
 
   Object.keys(styles).forEach((prop: number | string) => {
     const value = styles[prop]
-    // $FlowFixMe
     node.style[prop] =
       typeof value === 'number' && prop !== 'zIndex' ? `${value}px` : value
   })
@@ -38,12 +36,19 @@ export const applyStylesToNode = (node: Node, styles: Object = {}): Node => {
   return node
 }
 
+export const parseFloatValue = (value: string | null): number =>
+  parseFloat(value || '0')
+
 export const getComputedHeightProps = (
   node: Node
-): Object | { height: number, offset: number } => {
-  if (!isNodeElement(node)) return {}
+): { height: number; offset: number } => {
+  if (!isNodeElement(node))
+    return {
+      height: 0,
+      offset: 0,
+    }
+
   const el = node !== document ? node : document.body
-  // $FlowFixMe
   const height = el.offsetHeight
 
   const {
@@ -54,10 +59,11 @@ export const getComputedHeightProps = (
   } = window.getComputedStyle(el)
 
   // Adjust for node environments (for testing purposes)
-  let offset = parseFloat(marginTop) + parseFloat(marginBottom)
+  let offset = parseFloatValue(marginTop) + parseFloatValue(marginBottom)
   /* istanbul ignore next */
   if (!isNodeEnv()) {
-    offset = offset + parseFloat(paddingTop) + parseFloat(paddingBottom)
+    offset =
+      offset + parseFloatValue(paddingTop) + parseFloatValue(paddingBottom)
   }
 
   return {
@@ -68,10 +74,14 @@ export const getComputedHeightProps = (
 
 export const getComputedWidthProps = (
   node: Node
-): Object | { width: number, offset: number } => {
-  if (!isNodeElement(node)) return {}
+): { width: number; offset: number } => {
+  if (!isNodeElement(node))
+    return {
+      width: 0,
+      offset: 0,
+    }
+
   const el = node !== document ? node : document.body
-  // $FlowFixMe
   const width = el.offsetWidth
 
   const {
@@ -82,10 +92,11 @@ export const getComputedWidthProps = (
   } = window.getComputedStyle(el)
 
   // Adjust for node environments (for testing purposes)
-  let offset = parseFloat(marginLeft) + parseFloat(marginRight)
+  let offset = parseFloatValue(marginLeft) + parseFloatValue(marginRight)
   /* istanbul ignore next */
   if (!isNodeEnv()) {
-    offset = offset + parseFloat(paddingLeft) + parseFloat(paddingRight)
+    offset =
+      offset + parseFloatValue(paddingLeft) + parseFloatValue(paddingRight)
   }
 
   return {
@@ -137,10 +148,10 @@ export const getViewportWidth = (scope: Scope): number => {
  * @return    bool                True/False if node is in view
  */
 export const isNodeVisible = (options: {
-  node: Node,
-  scope: Scope,
-  offset: number,
-  complete: boolean,
+  node: Node
+  scope: Scope
+  offset: number
+  complete: boolean
 }) => {
   if (!options || typeof options !== 'object') return false
   const { node, scope, offset, complete } = options

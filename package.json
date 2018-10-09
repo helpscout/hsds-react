@@ -69,7 +69,6 @@
     "@helpscout/fancy": "^2.0.5",
     "@helpscout/react-utils": "^1.0.1",
     "@types/storybook__react": "^3.0.9",
-    "closest": "0.0.1",
     "emoji-mart": "^1.0.1",
     "highlight.js": "^9.12.0",
     "lodash.get": "^4.4.2",
@@ -209,7 +208,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
+      "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/?(*.)types.{js,jsx}",
       "!src/**/?(*.)helpers.{js,jsx}",
       "!src/**/?(*.)testHelpers.{js,jsx}",
@@ -219,8 +218,9 @@
       "!src/components/Input/utils.{js,jsx}",
       "!src/components/Popper/**/*.{js,jsx}",
       "!src/tests/helpers/**/*.{js,jsx}",
-      "!src/utilities/browser.{js,jsx}",
+      "!src/utilities/browser.{js,jsx,ts}",
       "!src/utilities/smoothScroll.{js,jsx}",
+      "!src/utilities/closest.ts",
       "!src/utilities/index.{js,jsx}",
       "!src/utilities/log.{js,jsx}",
       "!src/styles/includePaths.js",
