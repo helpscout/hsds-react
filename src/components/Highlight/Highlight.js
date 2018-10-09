@@ -16,8 +16,8 @@ type Props = {
 class Highlight extends Component<Props> {
   static defaultProps = {}
 
-  highlightBlock(element) {
-    element && hljs.highlightBlock(element)
+  highlightBlock = (node: HTMLElement) => {
+    node && hljs.highlightBlock(node)
   }
 
   render() {
