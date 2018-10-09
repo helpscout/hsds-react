@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Embed from '../Embed'
+import LoadingDots from '../../LoadingDots'
 import Message from '../Message'
 
 const cx = 'c-MessageEmbed'
@@ -18,6 +19,18 @@ describe('ClassNames', () => {
     const wrapper = mount(<Embed className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
     expect(o.hasClass('mugatu')).toBeTruthy()
+  })
+
+  test('Does not have an is-loading className when there is no iframe inside the HTML', () => {
+    const wrapper = mount(<Embed html="<div></div>" />)
+    const o = wrapper.find(`.${cx}`)
+    expect(o.hasClass('is-loading')).toBeFalsy()
+  })
+
+  test('Has an is-loading className when there is an iframe inside the HTML', () => {
+    const wrapper = mount(<Embed html={html} />)
+    const o = wrapper.find(`.${cx}`)
+    expect(o.hasClass('is-loading')).toBeTruthy()
   })
 })
 
@@ -44,6 +57,16 @@ describe('Content', () => {
     const wrapper = mount(<Embed html={html} />)
     const o = wrapper.find(`.${cx}`)
     expect(o.html()).toContain(html)
+  })
+
+  test('Renders the loading dots when it is loading', () => {
+    const wrapper = mount(<Embed html={html} />)
+    expect(wrapper.find(LoadingDots)).toHaveLength(1)
+  })
+
+  test('Does not render the loading dots when not loading', () => {
+    const wrapper = mount(<Embed />)
+    expect(wrapper.find(LoadingDots)).toHaveLength(0)
   })
 })
 
