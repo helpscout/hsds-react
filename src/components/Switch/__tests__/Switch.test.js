@@ -80,7 +80,6 @@ describe('Checked', () => {
   test('Can be manually set using checked prop', () => {
     const wrapper = mount(<Switch checked />)
     const o = wrapper.instance()
-    const input = wrapper.find('input')
 
     wrapper.setProps({ checked: false })
 
