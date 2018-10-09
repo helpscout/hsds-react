@@ -323,12 +323,7 @@ describe('State', () => {
     let callbackProps = []
     const onChange = (...args) => (callbackProps = [...args])
     const wrapper = mount(
-      <Switch
-        onChange={onChange}
-        checked={false}
-        value="Mugatu"
-        checked={false}
-      />
+      <Switch onChange={onChange} checked={false} value="Mugatu" />
     )
     const input = wrapper.find('input')
 

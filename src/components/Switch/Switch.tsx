@@ -1,6 +1,6 @@
-// @flow
 import { SwitchSize, SwitchState, SwitchValue } from './types'
-import React, { PureComponent as Component } from 'react'
+import { FormLabelContextProps } from '../FormLabel/types'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
@@ -18,37 +18,37 @@ import {
 } from './styles/Switch.css.js'
 import { COMPONENT_KEY } from './utils'
 
-type Props = {
-  className?: string,
-  checked: boolean,
-  disabled: boolean,
-  id: string,
-  isLoading: boolean,
-  inputRef: (ref: any) => void,
-  name: string,
-  onBlur: (event: Event) => void,
-  onChange: (state: boolean, { event: Event, value: SwitchValue }) => void,
-  onClick: (event: Event) => void,
-  onFocus: (event: Event) => void,
-  onMouseDown: (event: Event) => void,
-  onMouseUp: (event: Event) => void,
-  labelOn: string,
-  labelOff: string,
-  size: SwitchSize,
-  state: SwitchState,
-  value: SwitchValue,
+export interface Props {
+  className?: string
+  checked: boolean
+  disabled: boolean
+  id: string
+  isLoading: boolean
+  inputRef: (ref: any) => void
+  name: string
+  onBlur: (event: Event) => void
+  onChange: (state: boolean, { event: Event, value: SwitchValue }) => void
+  onClick: (event: Event) => void
+  onFocus: (event: Event) => void
+  onMouseDown: (event: Event) => void
+  onMouseUp: (event: Event) => void
+  labelOn: string
+  labelOff: string
+  size: SwitchSize
+  state: SwitchState
+  value: SwitchValue
 }
 
-type State = {
-  checked: ?boolean,
-  id: string,
-  isActive: boolean,
-  isFocused: boolean,
+export interface State {
+  checked?: boolean
+  id: string
+  isActive: boolean
+  isFocused: boolean
 }
 
 const uniqueID = createUniqueIDFactory('Switch')
 
-class Switch extends Component<Props, State> {
+class Switch extends React.PureComponent<Props, State> {
   static defaultProps = {
     inputRef: noop,
     isLoading: false,
@@ -131,11 +131,11 @@ class Switch extends Component<Props, State> {
     this.props.onMouseUp(event)
   }
 
-  getIdFromContextProps = (props: Object = {}) => {
+  getIdFromContextProps = (props: FormLabelContextProps = { id: '' }) => {
     return props.id || this.state.id
   }
 
-  getInputMarkup = (props: Object = {}) => {
+  getInputMarkup = (props: FormLabelContextProps = { id: '' }) => {
     const {
       checked: propActive,
       disabled,
@@ -223,7 +223,7 @@ class Switch extends Component<Props, State> {
 
     return (
       <FormLabelContext.Consumer>
-        {(props: Object) => (
+        {(props: FormLabelContextProps) => (
           <WrapperUI className="c-SwitchWrapper">
             <SwitchUI
               {...getValidProps(rest)}
