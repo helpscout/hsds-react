@@ -1,35 +1,46 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import {
   Transition,
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { isComponentNamed } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as ANIMATE_COMPONENT_KEY } from '../Animate/utils'
 
-export const propTypes = {
-  easing: PropTypes.string,
-  delay: PropTypes.number,
-  duration: PropTypes.number,
-  sequence: PropTypes.string,
-  stagger: PropTypes.bool,
-  staggerDelay: PropTypes.number,
-  staggerDuration: PropTypes.number,
+export interface Props {
+  appear?: any
+  className?: string
+  easing: string
+  enter?: any
+  exit?: any
+  delay: number
+  duration?: number
+  sequence?: string
+  stagger: boolean
+  staggerDelay: number
+  staggerDuration?: number
 }
 
-const defaultProps = {
-  delay: 0,
-  easing: 'ease-in-out',
-  stagger: false,
-  staggerDelay: 200,
+type AnimateChildProps = {
+  delay?: number
+  duration?: number
+  easing?: string
+  id?: string
+  sequence?: string
 }
 
-class AnimateGroup extends Component {
-  static defaultProps = defaultProps
+class AnimateGroup extends React.Component<Props> {
+  static defaultProps = {
+    delay: 0,
+    easing: 'ease-in-out',
+    stagger: false,
+    staggerDelay: 200,
+  }
 
   render() {
     const {
@@ -59,24 +70,27 @@ class AnimateGroup extends Component {
             child.type === Transition ||
             child.type === CSSTransition
           ) {
-            const key = child.props.id || child.key || index
+            const childProps: AnimateChildProps = child.props
+
+            const key = childProps.id || child.key || index
             // Ignoring all these because, for whatever reason, the props
             // get lost in the JSDOM/Enzyme setup. It works in browser though.
             /* istanbul ignore next */
-            const easingProp = child.props.easing || easing
+            const easingProp = childProps.easing || easing
             /* istanbul ignore next */
             const durationProp =
               (stagger && staggerDuration ? staggerDuration : duration) ||
-              child.props.duration
-            const delayProp = child.props.delay || 0
+              childProps.duration
+            const delayProp = childProps.delay || 0
             const staggerIndexDelay = delayProp + (index + 1) * staggerDelay
             /* istanbul ignore next */
             const computedDelayProp = stagger ? staggerIndexDelay : delay
             /* istanbul ignore next */
-            const sequenceProp = child.props.sequence || sequence
+            const sequenceProp = childProps.sequence || sequence
 
             return React.cloneElement(child, {
-              ...child.props,
+              ...childProps,
+              // @ts-ignore
               duration: durationProp,
               delay: computedDelayProp,
               easing: easingProp,
@@ -107,6 +121,6 @@ class AnimateGroup extends Component {
   }
 }
 
-AnimateGroup.propTypes = propTypes
+namespaceComponent(COMPONENT_KEY)(AnimateGroup)
 
 export default AnimateGroup
