@@ -1,18 +1,17 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
-import { ItemUI } from './styles/Item.css.js'
+import { ItemUI } from './styles/Item.css'
 
-type Props = {
-  children?: any,
-  className?: string,
-  inline: boolean,
+export interface Props {
+  children?: any
+  className?: string
+  inline: boolean
 }
 
-class Item extends Component<Props> {
+class Item extends React.PureComponent<Props> {
   static defaultProps = {
     inline: false,
   }
@@ -34,6 +33,6 @@ class Item extends Component<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Item)
+namespaceComponent(COMPONENT_KEY.Item)(Item)
 
 export default Item

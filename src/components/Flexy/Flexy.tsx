@@ -1,23 +1,22 @@
-// @flow
-import type { Align, Gap, Just } from './types.js'
-import React, { PureComponent as Component } from 'react'
+import { Align, Gap, Just } from './types.js'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Block from './Block'
 import Item from './Item'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
-import { FlexyUI } from './styles/Flexy.css.js'
+import { FlexyUI } from './styles/Flexy.css'
 
-type Props = {
-  align: Align,
-  children?: any,
-  className?: string,
-  gap: Gap,
-  just: Just,
+export interface Props {
+  align: Align
+  children?: any
+  className?: string
+  gap: Gap
+  just: Just
 }
 
-class Flexy extends Component<Props> {
+class Flexy extends React.PureComponent<Props> {
   static defaultProps = {
     gap: 'sm',
   }

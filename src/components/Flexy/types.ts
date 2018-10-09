@@ -1,4 +1,3 @@
-// @flow
 export type Align = 'top' | 'middle' | 'bottom' | ''
 
 export type Gap = 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'none' | ''

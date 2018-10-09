@@ -1,17 +1,16 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
-import { BlockUI } from './styles/Block.css.js'
+import { BlockUI } from './styles/Block.css'
 
-type Props = {
-  children?: any,
-  className?: string,
+export interface Props {
+  children?: any
+  className?: string
 }
 
-class Block extends Component<Props> {
+class Block extends React.PureComponent<Props> {
   render() {
     const { children, className, ...rest } = this.props
 
@@ -25,6 +24,6 @@ class Block extends Component<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Block)
+namespaceComponent(COMPONENT_KEY.Block)(Block)
 
 export default Block
