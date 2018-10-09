@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Text } from '../../'
-import Samp from '..'
+import Text from '../../Text'
+import Samp from '../Samp'
 
 describe('Text', () => {
   test('Renders the "samp" version of the Text component', () => {
