@@ -16,13 +16,17 @@ type Props = {
 class Highlight extends Component<Props> {
   static defaultProps = {}
 
+  highlightBlock = (node: HTMLElement) => {
+    node && hljs.highlightBlock(node)
+  }
+
   render() {
     const { className, children, language, ...rest } = this.props
     const componentClassName = classNames('c-Highlight', className)
 
     return (
       <HighlightUI {...getValidProps(rest)} className={componentClassName}>
-        <code className={language} ref={el => hljs.highlightBlock(el)}>
+        <code className={language} ref={this.highlightBlock}>
           {children}
         </code>
       </HighlightUI>
