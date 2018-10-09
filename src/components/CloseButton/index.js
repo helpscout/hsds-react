@@ -16,13 +16,6 @@ type Props = {
   title?: string,
 }
 
-const defaultProps = {
-  onBlur: noop,
-  onClick: noop,
-  onFocus: noop,
-  title: 'Close',
-}
-
 const CloseButton = (props: Props) => {
   const { children, className, seamless, size, title, ...rest } = props
 
