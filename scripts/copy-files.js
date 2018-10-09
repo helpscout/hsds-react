@@ -1,11 +1,10 @@
 import path from 'path'
-import fse from 'fs-extra'
-import glob from 'glob'
+import fs from 'fs-extra'
 
 function copyFile(file) {
   const buildPath = path.resolve(__dirname, '../dist/', path.basename(file))
   return new Promise(resolve => {
-    fse.copy(file, buildPath, err => {
+    fs.copy(file, buildPath, err => {
       if (err) throw err
       resolve()
     })
@@ -14,13 +13,17 @@ function copyFile(file) {
 
 function createPackageFile() {
   return new Promise(resolve => {
-    fse.readFile(path.resolve(__dirname, '../package.json'), 'utf8', (err, data) => {
-      if (err) {
-        throw err
-      }
+    fs.readFile(
+      path.resolve(__dirname, '../package.json'),
+      'utf8',
+      (err, data) => {
+        if (err) {
+          throw err
+        }
 
-      resolve(data)
-    })
+        resolve(data)
+      }
+    )
   })
     .then(data => JSON.parse(data))
     .then(packageData => {
@@ -36,7 +39,7 @@ function createPackageFile() {
       return new Promise(resolve => {
         const buildPath = path.resolve(__dirname, '../dist/package.json')
         const data = JSON.stringify(minimalPackage, null, 2)
-        fse.writeFile(buildPath, data, err => {
+        fs.writeFile(buildPath, data, err => {
           if (err) throw err
           console.log(`Created package.json in ${buildPath}`)
           resolve()
@@ -47,5 +50,4 @@ function createPackageFile() {
 
 const files = ['README.md', 'LICENSE']
 
-Promise.all(files.map(file => copyFile(file)))
-  .then(() => createPackageFile())
+Promise.all(files.map(file => copyFile(file))).then(() => createPackageFile())
