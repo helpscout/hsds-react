@@ -3,7 +3,7 @@ import React, { PureComponent as Component } from 'react'
 import { propConnect } from '../PropProvider'
 import ButtonV2 from './ButtonV2'
 import Button from './Button'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 
 type Props = {

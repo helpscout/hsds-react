@@ -1,13 +1,10 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import FormGroup from '../FormGroup'
 import { includes } from '../../utilities/arrays'
-import {
-  isComponentNamed,
-  namespaceComponent,
-} from '../../utilities/component.ts'
+import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { ChoiceGroupUI } from './styles/ChoiceGroup.css.js'

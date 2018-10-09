@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import Flexy from '../Flexy'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 
 class Item extends Component {
   render() {

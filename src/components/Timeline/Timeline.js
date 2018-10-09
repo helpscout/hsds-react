@@ -2,7 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Item'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 
 type Props = {
   children?: any,

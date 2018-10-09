@@ -1,5 +1,5 @@
 import React, { PureComponent as Component } from 'react'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 
 class Item extends Component {
   render() {

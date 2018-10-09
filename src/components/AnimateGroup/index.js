@@ -7,9 +7,9 @@ import {
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
-import { classNames } from '../../utilities/classNames.ts'
-import { isComponentNamed } from '../../utilities/component.ts'
-import { COMPONENT_KEY as ANIMATE_COMPONENT_KEY } from '../Animate/utils.ts'
+import { classNames } from '../../utilities/classNames'
+import { isComponentNamed } from '../../utilities/component'
+import { COMPONENT_KEY as ANIMATE_COMPONENT_KEY } from '../Animate/utils'
 
 export const propTypes = {
   easing: PropTypes.string,

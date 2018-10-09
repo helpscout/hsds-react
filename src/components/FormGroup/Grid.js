@@ -2,8 +2,8 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import GridComponent from '../Grid'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 
 type Props = {

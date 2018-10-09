@@ -1,6 +1,6 @@
 import React from 'react'
 import Block from './Block'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 
 const Image = props => {
   const { className, ...rest } = props

@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { TransitionGroup } from 'react-transition-group'
 import AnimateGroup from '../index'
-import Animate from '../../Animate/index.ts'
+import Animate from '../../Animate/index'
 
 describe('TransitionGroup', () => {
   test('Is a wrapper for TransitionGroup', () => {

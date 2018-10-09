@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 import { ContentUI } from './styles/Content.css.js'
 

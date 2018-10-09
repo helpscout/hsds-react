@@ -2,7 +2,7 @@ import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import PortalWrapper from '../PortalWrapper'
 import Positioner from './Positioner'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import { propTypes as portalTypes } from '../Portal'
 
 export const propTypes = Object.assign({}, portalTypes, {

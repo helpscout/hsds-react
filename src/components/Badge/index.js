@@ -3,7 +3,7 @@ import type { UIStatus } from '../../constants/types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import css from './styles/Badge.css.js'
 
 type BadgeDisplay = 'block' | 'inlineBlock'

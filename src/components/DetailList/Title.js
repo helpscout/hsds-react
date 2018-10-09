@@ -1,5 +1,5 @@
 import React from 'react'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 
 const Title = props => {
   const { children, className, ...rest } = props

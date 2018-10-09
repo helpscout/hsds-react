@@ -2,11 +2,8 @@
 import type { SectionProps } from './types'
 import React, { Children, cloneElement, Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { BEM, classNames } from '../../utilities/classNames.ts'
-import {
-  namespaceComponent,
-  isComponentNamed,
-} from '../../utilities/component.ts'
+import { BEM, classNames } from '../../utilities/classNames'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY, withUuid } from './utils'

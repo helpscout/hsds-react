@@ -5,7 +5,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import Pop from '../Pop'
 import Popper from './Popper'
-import classNames, { BEM } from '../../utilities/classNames.ts'
+import classNames, { BEM } from '../../utilities/classNames'
 import { isFunction } from '../../utilities/is'
 import css from './styles/Tooltip.css.js'
 

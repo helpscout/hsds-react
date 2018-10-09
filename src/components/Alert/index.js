@@ -5,7 +5,7 @@ import Animate from '../Animate'
 import Collapsible from '../Collapsible'
 import CloseButton from '../CloseButton'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { statusTypes } from '../../constants/propTypes'
 

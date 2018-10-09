@@ -11,7 +11,7 @@ import SortableDragHandle from '../Sortable/DragHandle'
 import Icon from '../Icon'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 
 export const propTypes = Object.assign({}, collapsibleTypes, {
   header: PropTypes.element,
@@ -141,12 +141,12 @@ class SidebarCollapsibleCard extends Component {
       >
         <EventListener event="mouseup" handler={handleOnSortEnd} />
         <a
-          href="#"
           className="c-SidebarCollapsibleCard__header"
           onClick={handleToggleOpen}
           role="heading"
           aria-expanded={open}
           aria-controls={regionId}
+          tabIndex="1"
         >
           <Flexy gap="sm">
             <Flexy.Block>{headerMarkup}</Flexy.Block>

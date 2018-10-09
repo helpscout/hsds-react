@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from '../Icon'
 import VisuallyHidden from '../VisuallyHidden'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import { sizeTypes } from './propTypes'
 
 export const propTypes = {

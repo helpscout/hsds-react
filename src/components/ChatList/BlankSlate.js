@@ -4,8 +4,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Hr from '../Hr'
 import Illo from '../Illo'
 import Text from '../Text'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 import {
   BlankSlateUI,

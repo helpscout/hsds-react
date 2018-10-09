@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { SortableHandle } from 'react-sortable-hoc'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 export const propTypes = {

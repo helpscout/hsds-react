@@ -2,8 +2,8 @@
 import type { AvatarShape, AvatarSize } from '../Avatar/types'
 import React, { PureComponent as Component } from 'react'
 import Avatar from '../Avatar'
-import { classNames } from '../../utilities/classNames.ts'
-import { namespaceComponent } from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 
 type Props = {

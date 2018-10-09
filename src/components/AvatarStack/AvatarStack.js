@@ -3,11 +3,8 @@ import type { AvatarShape, AvatarSize } from '../Avatar/types'
 import React, { PureComponent as Component } from 'react'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
-import { classNames } from '../../utilities/classNames.ts'
-import {
-  namespaceComponent,
-  isComponentNamed,
-} from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { AvatarStackUI, ItemUI } from './styles/AvatarStack.css.js'
 import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'

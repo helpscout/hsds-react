@@ -16,11 +16,11 @@ import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
 import styled from '../styled'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import {
   isComponentTypeChat,
   namespaceComponent,
-} from '../../utilities/component.ts'
+} from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Message.css.js'

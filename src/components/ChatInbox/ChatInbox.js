@@ -4,12 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Collapsible from '../Collapsible'
 import Header from './Header'
 import Content from './Content'
-import { classNames } from '../../utilities/classNames.ts'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import {
-  namespaceComponent,
-  isComponentNamed,
-} from '../../utilities/component.ts'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 import { ChatInboxUI } from './styles/ChatInbox.css.js'
 

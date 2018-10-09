@@ -3,11 +3,8 @@ import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
-import { classNames } from '../../utilities/classNames.ts'
-import {
-  namespaceComponent,
-  isComponentNamed,
-} from '../../utilities/component.ts'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { TagListUI } from './styles/TagList.css.js'
 import { COMPONENT_KEY } from './utils'
