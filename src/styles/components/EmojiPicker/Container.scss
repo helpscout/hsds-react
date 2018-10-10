@@ -1,9 +1,0 @@
-@import "../../configs/color";
-
-.emoji-mart {
-  @import "../../resets/base";
-  border: 1px solid _color(grey, 700);
-  box-shadow: #{
-    0 1px 3px 0 rgba(black, 0.1),
-    };
-}

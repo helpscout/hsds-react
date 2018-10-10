@@ -30,8 +30,6 @@ Below is a list of documentation for our Components:
 * [DetailList](./DetailList)
 * [Drop](./Drop)
 * [Dropdown](./Dropdown)
-* [Emoji](./Emoji)
-* [EmojiPicker](./EmojiPicker)
 * [Emoticon](./Emoticon)
 * [EventListener](./EventListener)
 * [Flexy](./Flexy)

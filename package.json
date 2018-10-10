@@ -62,7 +62,6 @@
     "@helpscout/fancy": "^2.0.5",
     "@helpscout/react-utils": "^1.0.1",
     "closest": "0.0.1",
-    "emoji-mart": "^1.0.1",
     "highlight.js": "^9.12.0",
     "lodash.get": "^4.4.2",
     "pluralize": "^7.0.0",
