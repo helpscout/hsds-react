@@ -2,19 +2,21 @@
 /* eslint react/no-deprecated: off */
 import type { UISize, UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
-import { getValidProps } from '@helpscout/react-utils'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import AddOn from './AddOn'
 import Backdrop from './BackdropV2'
+import Prefix from './Prefix'
 import Resizer from './Resizer'
 import Static from './Static'
+import Suffix from './Suffix'
 import HelpText from '../HelpText'
 import Icon from '../Icon'
 import Label from '../Label'
 import { scrollLockY } from '../ScrollLock'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop, requestAnimationFrame } from '../../utilities/other'
@@ -25,7 +27,7 @@ import {
   moveCursorToEnd,
   isTextArea,
 } from './utils'
-import { InputWrapperUI } from './styles/Input.css.js'
+import { InputWrapperUI, SuffixUI } from './styles/Input.css.js'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -68,7 +70,7 @@ type Props = {
   onStartTyping: (now?: number) => void,
   onStopTyping: () => void,
   placeholder: string,
-  prefix: string,
+  prefix: any,
   readOnly: boolean,
   refApplyCallStopTyping: (fn: () => void) => void,
   removeStateStylesOnFocus: boolean,
@@ -78,7 +80,7 @@ type Props = {
   size: UISize,
   state?: ?UIState,
   style: Object,
-  suffix: string,
+  suffix: any,
   type: string,
   typingThrottleInterval: number,
   typingTimeoutDelay: number,
@@ -131,10 +133,14 @@ export class Input extends Component<Props, State> {
     value: '',
     withTypingEvent: false,
   }
+
   static AddOn = AddOn
   static Backdrop = Backdrop
+  static Prefix = Prefix
   static Resizer = Resizer
   static Static = Static
+  static Suffix = Suffix
+
   inputNode: InputNode
 
   constructor(props: Props) {
@@ -387,27 +393,37 @@ export class Input extends Component<Props, State> {
   }
 
   getInlinePrefixMarkup = () => {
-    const { inlinePrefix } = this.props
+    const { inlinePrefix, prefix, seamless } = this.props
 
-    return (
+    return [
+      prefix && (
+        <Prefix className="c-Input__item c-Input__prefix" isSeamless={seamless}>
+          {prefix}
+        </Prefix>
+      ),
       inlinePrefix && (
         <div className="c-Input__item c-Input__inlinePrefix">
           {inlinePrefix}
         </div>
-      )
-    )
+      ),
+    ]
   }
 
   getInlineSuffixMarkup = () => {
-    const { inlineSuffix } = this.props
+    const { inlineSuffix, seamless, suffix } = this.props
 
-    return (
+    return [
       inlineSuffix && (
         <div className="c-Input__item c-Input__inlineSuffix">
           {inlineSuffix}
         </div>
-      )
-    )
+      ),
+      suffix && (
+        <Suffix className="c-Input__item c-Input__suffix" isSeamless={seamless}>
+          {suffix}
+        </Suffix>
+      ),
+    ]
   }
 
   getErrorMarkup = () => {
