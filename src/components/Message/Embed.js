@@ -1,5 +1,5 @@
 // @flow
-import type { MessageThemeContext } from './types'
+import type { MessageChat, MessageThemeContext } from './types'
 import React, { Component } from 'react'
 import styled from '../styled'
 import Chat from './Chat'
@@ -9,31 +9,36 @@ import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Embed.css.js'
 import { COMPONENT_KEY } from './utils'
 
-type Props = {
+type Props = MessageChat & {
   className?: string,
-  html: string,
+  html?: string,
+}
+
+type State = {
+  isLoading: boolean,
 }
 
 type Context = MessageThemeContext
 
-class Embed extends Component<Props, Context> {
+class Embed extends Component<Props, State, Context> {
   static displayName = 'Message.Embed'
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isLoading: true,
-    }
-    this.toggleLoading = this.toggleLoading.bind(this)
+  state = {
+    isLoading: true,
   }
+
+  node: HTMLDivElement
 
   componentDidMount() {
     this.loadContent()
   }
 
-  loadContent() {
-    const iframes = this.htmlNode.getElementsByTagName('iframe')
+  loadContent = () => {
+    /* istanbul ignore next */
+    if (!this.node) return
+
+    const iframes = this.node.getElementsByTagName('iframe')
+
     if (!iframes.length) {
       return this.toggleLoading()
     }
@@ -41,11 +46,13 @@ class Embed extends Component<Props, Context> {
     iframe.onload = this.toggleLoading
   }
 
-  toggleLoading() {
+  toggleLoading = () => {
     this.setState({
       isLoading: !this.state.isLoading,
     })
   }
+
+  setNodeRef = (node: HTMLDivElement) => (this.node = node)
 
   render() {
     const { className, html, ...rest } = this.props
@@ -70,7 +77,7 @@ class Embed extends Component<Props, Context> {
         <div
           dangerouslySetInnerHTML={{ __html: html }}
           className="c-MessageEmbed__html"
-          ref={node => (this.htmlNode = node)}
+          ref={this.setNodeRef}
         />
         {isLoading && <LoadingDots className="c-MessageEmbed__loading" />}
       </Chat>
