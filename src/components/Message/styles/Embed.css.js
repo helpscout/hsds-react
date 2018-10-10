@@ -22,6 +22,15 @@ export const css = `
     width: ${config.embedWidth};
   }
 
+  iframe {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+  }
+
+  &.is-loading iframe {
+    opacity: 0;
+  }
+
   ${bem.element('bubble')}.c-MessageBubble {
     background-color: white;
     border: none;
@@ -41,6 +50,13 @@ export const css = `
       background-color: ${getColor('yellow.300')};
       color: ${getColor('yellow.800')};
     }
+  }
+
+  ${bem.element('loading')}.c-LoadingDots {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `
 
