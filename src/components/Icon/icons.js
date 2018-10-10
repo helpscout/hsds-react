@@ -24,6 +24,7 @@ import crossMedium from '../../icons/cross-medium.svg'
 import crossSmall from '../../icons/cross-small.svg'
 import drag from '../../icons/drag.svg'
 import document from '../../icons/document.svg'
+import duplicate from '../../icons/duplicate.svg'
 import emoji from '../../icons/emoji.svg'
 import fabAntenna from '../../icons/fab-antenna.svg'
 import fabBuoy from '../../icons/fab-buoy.svg'
@@ -77,6 +78,7 @@ const ICONS = {
   'cross-small': crossSmall,
   drag,
   document,
+  duplicate,
   emoji,
   'fab-antenna': fabAntenna,
   'fab-buoy': fabBuoy,
