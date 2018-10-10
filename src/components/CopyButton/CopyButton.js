@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -14,6 +13,7 @@ import { COMPONENT_KEY } from './utils'
 import { ButtonSize } from '../Button/types'
 
 type Props = {
+  canRenderFocus: boolean,
   children?: any,
   className?: string,
   icon: string,
@@ -31,6 +31,7 @@ type State = {
 
 class CopyButton extends Component<Props, State> {
   static defaultProps = {
+    canRenderFocus: false,
     icon: 'copy',
     iconShade: 'faint',
     onClick: noop,
@@ -121,7 +122,7 @@ class CopyButton extends Component<Props, State> {
 
     return (
       <CopyButtonUI
-        {...getValidProps(rest)}
+        {...rest}
         className={componentClassName}
         kind={kind}
         onClick={this.handleOnClick}
