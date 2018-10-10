@@ -12,6 +12,10 @@ export const ChoiceGroupUI = styled('div')`
 
     > * {
       margin-right: ${config.itemSpacing}px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 `

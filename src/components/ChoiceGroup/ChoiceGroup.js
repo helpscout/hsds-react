@@ -16,6 +16,7 @@ type Props = {
   align: 'horizontal' | 'vertical',
   className: string,
   children?: any,
+  isResponsive: boolean,
   onBlur: (event: Event) => void,
   onChange: (event: Event) => void,
   onFocus: (event: Event) => void,
@@ -35,6 +36,7 @@ const uniqueID = createUniqueIDFactory('ChoiceGroup')
 class ChoiceGroup extends Component<Props, State> {
   static defaultProps = {
     align: 'vertical',
+    isResponsive: false,
     onBlur: noop,
     onChange: noop,
     onFocus: noop,
@@ -94,7 +96,7 @@ class ChoiceGroup extends Component<Props, State> {
   }
 
   getChildrenMarkup = () => {
-    const { onBlur, onFocus, children, name } = this.props
+    const { isResponsive, onBlur, onFocus, children, name } = this.props
 
     const { id, selectedValue } = this.state
 
@@ -102,7 +104,7 @@ class ChoiceGroup extends Component<Props, State> {
       children &&
       React.Children.map(children, (child, index) => {
         return (
-          <FormGroup.Choice key={`${id}-${index}`}>
+          <FormGroup.Choice key={`${id}-${index}`} isResponsive={isResponsive}>
             {React.cloneElement(child, {
               checked: includes(selectedValue, child.props.value),
               onBlur,
@@ -121,6 +123,7 @@ class ChoiceGroup extends Component<Props, State> {
       align,
       className,
       children,
+      isResponsive,
       onBlur,
       onChange,
       onFocus,
@@ -136,6 +139,7 @@ class ChoiceGroup extends Component<Props, State> {
       'c-ChoiceGroup',
       align && `is-align-${align}`,
       isMultiSelect && 'is-multi-select',
+      isResponsive && 'is-responsive',
       className
     )
 
