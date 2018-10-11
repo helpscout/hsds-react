@@ -3,6 +3,7 @@ import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import FormGroup from '../FormGroup'
+import FormLabelContext from '../FormLabel/Context'
 import { includes } from '../../utilities/arrays'
 import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -130,6 +131,8 @@ class ChoiceGroup extends Component<Props, State> {
     )
   }
 
+  getIdFromContextProps = (props: Object) => props.id || this.state.id
+
   render() {
     const {
       align,
@@ -144,7 +147,7 @@ class ChoiceGroup extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { id, multiSelect } = this.state
+    const { multiSelect } = this.state
     const isMultiSelect = multiSelectSetting || multiSelect
 
     const componentClassName = classNames(
@@ -158,13 +161,17 @@ class ChoiceGroup extends Component<Props, State> {
     const childrenMarkup = this.getChildrenMarkup()
 
     return (
-      <ChoiceGroupUI
-        {...getValidProps(rest)}
-        className={componentClassName}
-        id={id}
-      >
-        {childrenMarkup}
-      </ChoiceGroupUI>
+      <FormLabelContext.Consumer>
+        {(props: Object) => (
+          <ChoiceGroupUI
+            {...getValidProps(rest)}
+            className={componentClassName}
+            id={this.getIdFromContextProps(props)}
+          >
+            {childrenMarkup}
+          </ChoiceGroupUI>
+        )}
+      </FormLabelContext.Consumer>
     )
   }
 }
