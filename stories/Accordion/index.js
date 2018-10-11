@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Accordion, Page, Text } from '../../src/'
+import { Accordion, Button, Input, Page, Text } from '../../src/'
 
 const stories = storiesOf('Accordion', module)
 
@@ -17,9 +17,16 @@ amet mollit Lorem. Mollit laborum cillum id occaecat et laboris labore pariatur
 do est.
 `
 
+const form = (
+  <form>
+    <Input label="Enter some text" style={{ marginBottom: '7px' }} />
+    <Button primary>Save</Button>
+  </form>
+)
+
 const data = [
   { title: 'Section 1', body },
-  { title: 'Section 2', body },
+  { title: 'Section 2', body: form },
   { title: 'Section 3', body },
   { title: 'Section 4', body },
 ]
@@ -41,6 +48,24 @@ const onClose = id => console.log('Close', id)
 
 stories.add('default', () => (
   <Accordion onOpen={onOpen} onClose={onClose}>
+    {createSections()}
+  </Accordion>
+))
+
+stories.add('extra small', () => (
+  <Accordion onOpen={onOpen} onClose={onClose} size="xs">
+    {createSections()}
+  </Accordion>
+))
+
+stories.add('small', () => (
+  <Accordion onOpen={onOpen} onClose={onClose} size="sm">
+    {createSections()}
+  </Accordion>
+))
+
+stories.add('large', () => (
+  <Accordion onOpen={onOpen} onClose={onClose} size="lg">
     {createSections()}
   </Accordion>
 ))
