@@ -10,26 +10,26 @@ import { COMPONENT_KEY } from './utils'
 import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css.js'
 
 type Props = {
+  autoFocus: boolean,
   className?: string,
   code: string,
   copyToClipboard: boolean,
   language?: string,
   onCopy: (code: string) => void,
-  selectOnMount: boolean,
 }
 
 class CopyCode extends Component<Props> {
   static defaultProps = {
+    autoFocus: true,
     code: '',
     copyToClipboard: true,
     onCopy: noop,
-    selectOnMount: true,
   }
   codeNode: HTMLElement
 
   componentDidMount() {
     /* istanbul ignore else */
-    if (this.props.selectOnMount) {
+    if (this.props.autoFocus) {
       this.selectText()
     }
   }
