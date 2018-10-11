@@ -37,10 +37,12 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | helpText                 | `string`/`component` | Displays text underneath input.                                            |
 | hintText                 | `string`/`component` | Displays text above input.                                                 |
 | id                       | `string`             | ID for the input.                                                          |
-| isFocused                | `string`             | Determines if the component is focused.                                    |
+| inlinePrefix             | `string`             | Text to appear before the input.                                           |
+| inlineSuffix             | `string`             | Text to after before the input.                                            |
 | isFirst                  | `boolean`            | Helps render component without right borders.                              |
-| isNotOnly                | `boolean`            | Helps render component without left/right borders.                         |
+| isFocused                | `string`             | Determines if the component is focused.                                    |
 | isLast                   | `boolean`            | Helps render component without left borders.                               |
+| isNotOnly                | `boolean`            | Helps render component without left/right borders.                         |
 | label                    | `string`/`component` | Label for the input.                                                       |
 | maxHeight                | `number`/`string`    | Sets the `max-height` for the input. Used with `multiline`.                |
 | moveCursorToEnd          | `boolean`            | Moves the selection cursor to the end, on focus. Default `false`.          |
@@ -54,7 +56,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | onStartTyping            | `function`           | Callback when user starts typing, rate limited by `typingThrottleInterval` |
 | onStopTyping             | `function`           | Callback when user stops typing after delay of `typingTimeoutDelay`.       |
 | placeholder              | `string`             | Placeholder text for the input.                                            |
-| prefix                   | `string`             | Text to appear before the input.                                           |
+| prefix                   | `any`                | Component to render before the input.                                      |
 | readOnly                 | `bool`               | Disable editing of the input.                                              |
 | refApplyCallStopTyping   | `function`           | Exposes `CallStopTyping`, so that it can be called outside itself.         |
 | removeStateStylesOnFocus | `bool`               | Removes the `state` styles on input focus. Default `false`.                |
@@ -63,10 +65,10 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | seamless                 | `bool`               | Removes the border around the input.                                       |
 | size                     | `string`             | Determines the size of the input.                                          |
 | state                    | `string`             | Change input to state color.                                               |
-| suffix                   | `string`             | Text to appear after the input.                                            |
+| suffix                   | `any`                | Component to render after the input.                                       |
 | type                     | `string`             | Determines the input type.                                                 |
-| typingTimeoutDelay       | `number`             | Determines the delay of when `onStopTyping` fires after typing stops.      |
 | typingThrottleInterval   | `number`             | Determines the rate limiting interval for firing `onStartTyping`.          |
+| typingTimeoutDelay       | `number`             | Determines the delay of when `onStopTyping` fires after typing stops.      |
 | value                    | `string`             | Initial value of the input.                                                |
 | withTypingEvent          | `bool`               | Enables typing `onStartTyping` and `onStopTyping` event callbacks.         |
 

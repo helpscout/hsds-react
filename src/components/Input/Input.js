@@ -27,7 +27,7 @@ import {
   moveCursorToEnd,
   isTextArea,
 } from './utils'
-import { InputWrapperUI, SuffixUI } from './styles/Input.css.js'
+import { InputWrapperUI } from './styles/Input.css.js'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -393,37 +393,51 @@ export class Input extends Component<Props, State> {
   }
 
   getInlinePrefixMarkup = () => {
-    const { inlinePrefix, prefix, seamless } = this.props
+    const { inlinePrefix } = this.props
 
-    return [
-      prefix && (
-        <Prefix className="c-Input__item c-Input__prefix" isSeamless={seamless}>
-          {prefix}
-        </Prefix>
-      ),
+    return (
       inlinePrefix && (
         <div className="c-Input__item c-Input__inlinePrefix">
           {inlinePrefix}
         </div>
-      ),
-    ]
+      )
+    )
+  }
+
+  getPrefixMarkup = () => {
+    const { prefix, seamless } = this.props
+
+    return (
+      prefix && (
+        <Prefix className="c-Input__item c-Input__prefix" isSeamless={seamless}>
+          {prefix}
+        </Prefix>
+      )
+    )
   }
 
   getInlineSuffixMarkup = () => {
-    const { inlineSuffix, seamless, suffix } = this.props
+    const { inlineSuffix } = this.props
 
-    return [
+    return (
       inlineSuffix && (
         <div className="c-Input__item c-Input__inlineSuffix">
           {inlineSuffix}
         </div>
-      ),
+      )
+    )
+  }
+
+  getSuffixMarkup = () => {
+    const { suffix, seamless } = this.props
+
+    return (
       suffix && (
         <Suffix className="c-Input__item c-Input__suffix" isSeamless={seamless}>
           {suffix}
         </Suffix>
-      ),
-    ]
+      )
+    )
   }
 
   getErrorMarkup = () => {
@@ -601,26 +615,19 @@ export class Input extends Component<Props, State> {
       className
     )
 
-    const helpTextMarkup = this.getHelpTextMarkup()
-    const hintTextMarkup = this.getHintTextMarkup()
-    const labelMarkup = this.getLabelMarkup()
-    const inlinePrefixMarkup = this.getInlinePrefixMarkup()
-    const inlineSuffixMarkup = this.getInlineSuffixMarkup()
-    const errorMarkup = this.getErrorMarkup()
-
-    const resizerMarkup = this.getResizerMarkup()
-
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
           <InputWrapperUI className="c-InputWrapper" style={styleProp}>
-            {labelMarkup}
-            {hintTextMarkup}
+            {this.getLabelMarkup()}
+            {this.getHelpTextMarkup()}
             <div className={componentClassName}>
-              {inlinePrefixMarkup}
+              {this.getPrefixMarkup()}
+              {this.getInlinePrefixMarkup()}
               {this.getInputMarkup(props)}
-              {inlineSuffixMarkup}
-              {errorMarkup}
+              {this.getInlineSuffixMarkup()}
+              {this.getSuffixMarkup()}
+              {this.getErrorMarkup()}
               <Backdrop
                 className="c-Input__backdrop"
                 disabled={disabled}
@@ -632,9 +639,9 @@ export class Input extends Component<Props, State> {
                 isSeamless={seamless}
                 state={state}
               />
-              {resizerMarkup}
+              {this.getResizerMarkup()}
             </div>
-            {helpTextMarkup}
+            {this.getHintTextMarkup()}
           </InputWrapperUI>
         )}
       </FormLabelContext.Consumer>

@@ -3,7 +3,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
-
 import { SuffixUI } from './styles/Input.css.js'
 
 export interface Props {

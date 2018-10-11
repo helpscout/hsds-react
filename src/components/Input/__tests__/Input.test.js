@@ -704,7 +704,7 @@ describe('ErrorMessage', () => {
   })
 })
 
-describe('Prefix/Suffix', () => {
+describe('inlinePrefix/inlineSuffix', () => {
   test('Can render an inline prefix', () => {
     const wrapper = mount(<Input inlinePrefix="Words" />)
     const el = wrapper.find('.c-Input__inlinePrefix')
@@ -726,5 +726,57 @@ describe('Prefix/Suffix', () => {
 
     expect(prefix.text()).toBe('A lota')
     expect(suffix.text()).toBe('Words')
+  })
+})
+
+describe('Prefix', () => {
+  test('Does not render a Prefix by default', () => {
+    const wrapper = mount(<Input />)
+    const o = wrapper.find(Input.Prefix)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders a prefix if specified', () => {
+    const Compo = () => <div className="Compo">Hello</div>
+    const wrapper = mount(<Input prefix={<Compo />} />)
+    const pre = wrapper.find(Input.Prefix)
+    const o = pre.find('div.Compo')
+
+    expect(pre.length).toBe(1)
+    expect(o.length).toBe(1)
+  })
+})
+
+describe('Suffix', () => {
+  test('Does not render a Suffix by default', () => {
+    const wrapper = mount(<Input />)
+    const o = wrapper.find(Input.Suffix)
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Renders a Suffix if specified', () => {
+    const Compo = () => <div className="Compo">Hello</div>
+    const wrapper = mount(<Input suffix={<Compo />} />)
+    const suf = wrapper.find(Input.Suffix)
+    const o = suf.find('div.Compo')
+
+    expect(suf.length).toBe(1)
+    expect(o.length).toBe(1)
+  })
+
+  test('Can render a Prefix and a Suffix', () => {
+    const Compo = () => <div className="Compo">Hello</div>
+    const wrapper = mount(<Input prefix={<Compo />} suffix={<Compo />} />)
+    const pre = wrapper.find(Input.Prefix)
+    const o = pre.find('div.Compo')
+    const suf = wrapper.find(Input.Suffix)
+    const p = suf.find('div.Compo')
+
+    expect(pre.length).toBe(1)
+    expect(o.length).toBe(1)
+    expect(suf.length).toBe(1)
+    expect(p.length).toBe(1)
   })
 })
