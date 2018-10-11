@@ -32,18 +32,23 @@ export const AccordionUI = styled('div')`
 export const BodyUI = styled('div')`
   ${baseStyles};
 
-  padding: 20px 20px;
+  display: block;
+  padding: 24px 20px;
+
+  .is-closed & {
+    display: none;
+  }
 
   &.is-md {
-    padding: 16px 20px;
+    padding: 20px 20px;
   }
 
   &.is-sm {
-    padding: 12px 20px;
+    padding: 16px 20px;
   }
 
   &.is-xs {
-    padding: 8px 20px;
+    padding: 14px 20px;
   }
 
   &.is-seamless {
@@ -79,7 +84,7 @@ export const SectionUI = styled('div')`
 export const TitleUI = styled('div')`
   ${baseStyles};
   cursor: pointer;
-  padding: 20px 20px;
+  padding: 18px 20px;
 
   &:hover,
   &:focus,
@@ -91,20 +96,20 @@ export const TitleUI = styled('div')`
     border-bottom: 1px solid rgba(193, 203, 212, 0.7);
 
     &.is-seamless {
-      border-bottom: none;
+      border-bottom-color: transparent;
     }
   }
 
   &.is-md {
-    padding: 16px 20px;
+    padding: 14px 20px;
   }
 
   &.is-sm {
-    padding: 12px 20px;
+    padding: 8px 20px;
   }
 
   &.is-xs {
-    padding: 8px 20px;
+    padding: 6px 20px;
   }
 
   &.is-seamless {

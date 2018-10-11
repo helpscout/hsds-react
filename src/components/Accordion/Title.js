@@ -95,6 +95,7 @@ class Title extends Component<TitleProps> {
     const iconProps = {
       faint: !isOpen,
       name: isOpen ? 'caret-up' : 'caret-down',
+      size: 18,
     }
 
     return (
