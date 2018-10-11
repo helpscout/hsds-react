@@ -12,6 +12,7 @@ export const ChoiceUI = styled('div')`
 
 export const ChoiceLabelUI = styled('label')`
   cursor: pointer;
+  margin-bottom: 0;
 
   &.is-disabled {
     cursor: not-allowed;
