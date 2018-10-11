@@ -10,15 +10,25 @@ type Props = {
   children?: any,
   className?: string,
   isResponsive: boolean,
+  maxWidth?: string | number,
+  style: Object,
 }
 
 class Choice extends Component<Props> {
   static defaultProps = {
     isResponsive: false,
+    style: {},
   }
 
   render() {
-    const { className, children, isResponsive, ...rest } = this.props
+    const {
+      className,
+      children,
+      isResponsive,
+      maxWidth,
+      style,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
       'c-FormGroupChoice',
@@ -26,10 +36,16 @@ class Choice extends Component<Props> {
       className
     )
 
+    const componentStyle = {
+      maxWidth,
+      ...style,
+    }
+
     return (
       <FormGroupChoiceUI
         {...getValidProps(rest)}
         className={componentClassName}
+        style={componentStyle}
       >
         {children}
       </FormGroupChoiceUI>

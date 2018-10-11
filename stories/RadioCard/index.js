@@ -34,3 +34,21 @@ stories.add('responsive', () => (
     </ChoiceGroup>
   </div>
 ))
+
+stories.add('responsive + maxWidth', () => (
+  <div style={{ width: 600 }}>
+    <ChoiceGroup
+      align="horizontal"
+      onChange={onChange}
+      isResponsive
+      choiceMaxWidth="75px"
+      value="chat"
+    >
+      <RadioCard icon="fab-chat" value="chat" />
+      <RadioCard icon="fab-antenna" value="antenna" />
+      <RadioCard icon="fab-buoy" value="buoy" />
+      <RadioCard icon="fab-search" value="search" />
+      <RadioCard icon="fab-question" value="question" />
+    </ChoiceGroup>
+  </div>
+))

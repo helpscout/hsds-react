@@ -15,6 +15,7 @@ import { COMPONENT_KEY } from './utils'
 type Props = {
   align: 'horizontal' | 'vertical',
   className: string,
+  choiceMaxWidth?: string | number,
   children?: any,
   isResponsive: boolean,
   onBlur: (event: Event) => void,
@@ -96,7 +97,14 @@ class ChoiceGroup extends Component<Props, State> {
   }
 
   getChildrenMarkup = () => {
-    const { isResponsive, onBlur, onFocus, children, name } = this.props
+    const {
+      isResponsive,
+      onBlur,
+      onFocus,
+      choiceMaxWidth,
+      children,
+      name,
+    } = this.props
 
     const { id, selectedValue } = this.state
 
@@ -104,7 +112,11 @@ class ChoiceGroup extends Component<Props, State> {
       children &&
       React.Children.map(children, (child, index) => {
         return (
-          <FormGroup.Choice key={`${id}-${index}`} isResponsive={isResponsive}>
+          <FormGroup.Choice
+            key={`${id}-${index}`}
+            maxWidth={choiceMaxWidth}
+            isResponsive={isResponsive}
+          >
             {React.cloneElement(child, {
               checked: includes(selectedValue, child.props.value),
               onBlur,
