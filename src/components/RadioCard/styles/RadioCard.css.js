@@ -1,7 +1,6 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
-import { cardStyles } from '../../../styles/mixins/cardStyles.css.js'
 import styled from '../../styled/index.js'
 
 export const config = {
@@ -15,7 +14,7 @@ export const config = {
     0px 5px 10px 1px ${getColor('grey.300')},
     0px 3px 3px 0px rgba(0, 0, 0, 0.05)
   `,
-  borderRadius: '3px',
+  borderRadius: '4px',
   iconColor: getColor('grey.600'),
   iconColorChecked: getColor('charcoal.500'),
   iconWrapperSize: 52,
@@ -47,7 +46,7 @@ export const RadioCardUI = styled('label')`
   }
 
   &.is-checked {
-    ${cardStyles()};
+    box-shadow: ${config.boxShadowHover};
   }
 `
 
