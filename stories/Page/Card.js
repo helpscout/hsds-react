@@ -104,7 +104,7 @@ function ExampleContent() {
         <FormLabel label="Sub-domain">
           <ControlGroup>
             <ControlGroup.Block>
-              <Input value="dashingdash" suffix=".helpscoutdocs.com" />
+              <Input value="dashingdash" />
             </ControlGroup.Block>
             <ControlGroup.Item>
               <Input.AddOn>.helpscoutdocs.com</Input.AddOn>
@@ -120,7 +120,7 @@ function ExampleContent() {
               <Input.AddOn>https://</Input.AddOn>
             </ControlGroup.Item>
             <ControlGroup.Block>
-              <Input value="kitchen.dashingdash.com" prefix="https://" />
+              <Input value="kitchen.dashingdash.com" />
             </ControlGroup.Block>
           </ControlGroup>
         </FormLabel>
