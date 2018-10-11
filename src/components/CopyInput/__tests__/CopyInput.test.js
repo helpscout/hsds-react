@@ -6,15 +6,17 @@ import CopyInput from '../CopyInput'
 describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<CopyInput />)
+    const input = wrapper.find('.c-Input')
 
-    expect(wrapper.hasClass('c-CopyInput')).toBe(true)
+    expect(input.hasClass('c-CopyInput')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
     const wrapper = mount(<CopyInput className={className} />)
+    const input = wrapper.find('.c-Input')
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(input.hasClass(className)).toBe(true)
   })
 })
 

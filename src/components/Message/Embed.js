@@ -20,12 +20,13 @@ type State = {
 
 type Context = MessageThemeContext
 
-class Embed extends Component<Props, State, Context> {
+class Embed extends Component<Props, State> {
   static displayName = 'Message.Embed'
 
   state = {
     isLoading: true,
   }
+  context: Context
 
   node: HTMLDivElement
 

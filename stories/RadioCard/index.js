@@ -17,3 +17,20 @@ stories.add('default', () => (
     <RadioCard icon="fab-question" value="question" />
   </ChoiceGroup>
 ))
+
+stories.add('responsive', () => (
+  <div style={{ width: 300 }}>
+    <ChoiceGroup
+      align="horizontal"
+      onChange={onChange}
+      isResponsive
+      value="chat"
+    >
+      <RadioCard icon="fab-chat" value="chat" />
+      <RadioCard icon="fab-antenna" value="antenna" />
+      <RadioCard icon="fab-buoy" value="buoy" />
+      <RadioCard icon="fab-search" value="search" />
+      <RadioCard icon="fab-question" value="question" />
+    </ChoiceGroup>
+  </div>
+))

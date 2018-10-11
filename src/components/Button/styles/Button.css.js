@@ -20,7 +20,7 @@ export const config = {
     disabledBackgroundColor: getColor('grey.500'),
     disabledBorderColor: getColor('grey.500'),
     disabledColor: 'white',
-    fontWeight: 600,
+    fontWeight: 500,
     danger: {
       backgroundColor: getColor('red.500'),
       backgroundColorHover: getColor('red.600'),

@@ -13,7 +13,8 @@ export const config = {
   iconWrapperSize: 52,
   iconWrapperMargin: 5,
   padding: '5px 12px 15px',
-  width: 75,
+  maxWidth: '75px',
+  width: '100%',
 }
 
 export const RadioCardUI = styled('label')`
@@ -23,9 +24,10 @@ export const RadioCardUI = styled('label')`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-width: ${config.maxWidth};
   min-width: 0;
   padding: ${config.padding};
-  width: ${config.width}px;
+  width: ${config.width};
 
   &.is-checked {
     ${cardStyles()};

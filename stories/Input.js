@@ -94,6 +94,32 @@ stories.add('prefix + suffix', () => (
   </div>
 ))
 
+stories.add('prefix', () => (
+  <div>
+    <Input
+      prefix={
+        <Button version={2} kind="secondary" size="lg" isFirst>
+          Prefix
+        </Button>
+      }
+      value="Input Prefix"
+    />
+  </div>
+))
+
+stories.add('suffix', () => (
+  <div>
+    <Input
+      suffix={
+        <Button version={2} kind="secondary" size="lg" isLast>
+          Suffix
+        </Button>
+      }
+      value="Input Suffix"
+    />
+  </div>
+))
+
 stories.add('seamless', () => <Input seamless autoFocus />)
 
 stories.add('disabled', () => <Input disabled autoFocus />)

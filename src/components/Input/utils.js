@@ -6,7 +6,9 @@ type InputNode = HTMLInputElement | HTMLTextAreaElement
 export const COMPONENT_KEY = {
   Input: 'Input',
   AddOn: 'Input.AddOn',
+  Prefix: 'Input.Prefix',
   Static: 'Input.Static',
+  Suffix: 'Input.Suffix',
 }
 
 /**

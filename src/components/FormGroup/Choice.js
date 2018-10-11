@@ -9,13 +9,22 @@ import { COMPONENT_KEY } from './utils'
 type Props = {
   children?: any,
   className?: string,
+  isResponsive: boolean,
 }
 
 class Choice extends Component<Props> {
-  render() {
-    const { className, children, ...rest } = this.props
+  static defaultProps = {
+    isResponsive: false,
+  }
 
-    const componentClassName = classNames('c-FormGroupChoice', className)
+  render() {
+    const { className, children, isResponsive, ...rest } = this.props
+
+    const componentClassName = classNames(
+      'c-FormGroupChoice',
+      isResponsive && 'is-responsive',
+      className
+    )
 
     return (
       <FormGroupChoiceUI
