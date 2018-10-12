@@ -75,6 +75,7 @@ class StoryComponent extends Component {
             onLoading={onLoading}
             onLoaded={onLoaded}
             isLoading={isLoading}
+            onScroll={(event, props) => console.log(props)}
             style={{ padding: 16 }}
           >
             <Text>Load More</Text>

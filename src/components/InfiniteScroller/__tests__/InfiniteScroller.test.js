@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
-import InfiniteScroller from '..'
+import InfiniteScroller from '../InfiniteScroller'
 import LoadingDots from '../../LoadingDots'
 import { default as Modal, ModalComponent } from '../../Modal/Modal'
 import Text from '../../Text'
