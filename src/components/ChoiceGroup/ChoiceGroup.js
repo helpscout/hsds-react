@@ -3,6 +3,7 @@ import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
 import FormGroup from '../FormGroup'
+import FormLabelContext from '../FormLabel/Context'
 import { includes } from '../../utilities/arrays'
 import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -15,6 +16,7 @@ import { COMPONENT_KEY } from './utils'
 type Props = {
   align: 'horizontal' | 'vertical',
   className: string,
+  choiceMaxWidth?: string | number,
   children?: any,
   isResponsive: boolean,
   onBlur: (event: Event) => void,
@@ -96,7 +98,14 @@ class ChoiceGroup extends Component<Props, State> {
   }
 
   getChildrenMarkup = () => {
-    const { isResponsive, onBlur, onFocus, children, name } = this.props
+    const {
+      isResponsive,
+      onBlur,
+      onFocus,
+      choiceMaxWidth,
+      children,
+      name,
+    } = this.props
 
     const { id, selectedValue } = this.state
 
@@ -104,7 +113,11 @@ class ChoiceGroup extends Component<Props, State> {
       children &&
       React.Children.map(children, (child, index) => {
         return (
-          <FormGroup.Choice key={`${id}-${index}`} isResponsive={isResponsive}>
+          <FormGroup.Choice
+            key={`${id}-${index}`}
+            maxWidth={choiceMaxWidth}
+            isResponsive={isResponsive}
+          >
             {React.cloneElement(child, {
               checked: includes(selectedValue, child.props.value),
               onBlur,
@@ -117,6 +130,8 @@ class ChoiceGroup extends Component<Props, State> {
       })
     )
   }
+
+  getIdFromContextProps = (props: Object) => props.id || this.state.id
 
   render() {
     const {
@@ -132,7 +147,7 @@ class ChoiceGroup extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { id, multiSelect } = this.state
+    const { multiSelect } = this.state
     const isMultiSelect = multiSelectSetting || multiSelect
 
     const componentClassName = classNames(
@@ -146,13 +161,17 @@ class ChoiceGroup extends Component<Props, State> {
     const childrenMarkup = this.getChildrenMarkup()
 
     return (
-      <ChoiceGroupUI
-        {...getValidProps(rest)}
-        className={componentClassName}
-        id={id}
-      >
-        {childrenMarkup}
-      </ChoiceGroupUI>
+      <FormLabelContext.Consumer>
+        {(props: Object) => (
+          <ChoiceGroupUI
+            {...getValidProps(rest)}
+            className={componentClassName}
+            id={this.getIdFromContextProps(props)}
+          >
+            {childrenMarkup}
+          </ChoiceGroupUI>
+        )}
+      </FormLabelContext.Consumer>
     )
   }
 }

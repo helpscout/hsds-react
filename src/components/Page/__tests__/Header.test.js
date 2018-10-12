@@ -67,3 +67,17 @@ describe('Responsive', () => {
     expect(wrapper.hasClass('is-responsive')).toBe(false)
   })
 })
+
+describe('withBottomMargin', () => {
+  test('Renders withBottomMargin styles, if specified', () => {
+    const wrapper = mount(<Header withBottomMargin={true} />)
+
+    expect(wrapper.hasClass('is-withBottomMargin')).toBe(true)
+  })
+
+  test('Does not render withBottomMargin styles, if specified', () => {
+    const wrapper = mount(<Header withBottomMargin={false} />)
+
+    expect(wrapper.hasClass('is-withBottomMargin')).toBe(false)
+  })
+})

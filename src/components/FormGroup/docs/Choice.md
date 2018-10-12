@@ -18,7 +18,8 @@ Note: The [ChoiceGroup](../ChoiceGroup) component automatically wraps child comp
 
 ## Props
 
-| Prop         | Type     | Description                                      |
-| ------------ | -------- | ------------------------------------------------ |
-| className    | `string` | Custom class names to be added to the component. |
-| isResponsive | `bool`   | Enables responsive styling.                      |
+| Prop         | Type              | Description                                      |
+| ------------ | ----------------- | ------------------------------------------------ |
+| className    | `string`          | Custom class names to be added to the component. |
+| maxWidth     | `number`/`string` | Max-width for the component.                     |
+| isResponsive | `bool`            | Enables responsive styling.                      |

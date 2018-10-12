@@ -15,6 +15,7 @@ type Props = {
   title: string,
   subtitle?: string,
   withBorder: boolean,
+  withBottomMargin: boolean,
 }
 
 class Header extends Component<Props> {
@@ -22,6 +23,7 @@ class Header extends Component<Props> {
     isResponsive: false,
     title: 'Title',
     withBorder: true,
+    withBottomMargin: true,
   }
 
   render() {
@@ -32,6 +34,7 @@ class Header extends Component<Props> {
       title,
       subtitle,
       withBorder,
+      withBottomMargin,
       ...rest
     } = this.props
 
@@ -39,6 +42,7 @@ class Header extends Component<Props> {
       'c-PageHeader',
       isResponsive && 'is-responsive',
       withBorder && 'is-withBorder',
+      withBottomMargin && 'is-withBottomMargin',
       className
     )
 
