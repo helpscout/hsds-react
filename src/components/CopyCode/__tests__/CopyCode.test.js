@@ -4,6 +4,7 @@ import CopyButton from '../../CopyButton'
 import Highlight from '../../Highlight'
 import CopyCode from '../CopyCode'
 import { CopyCodeUI } from '../styles/CopyCode.css.js'
+import Keys from '../../../constants/Keys'
 
 // Stub selection/range functions as they are not available in tests
 window.getSelection = () => ({
@@ -89,6 +90,35 @@ describe('Content editable', () => {
       preventDefault: jest.fn(),
       metaKey: true,
       key: 'c',
+    }
+
+    expect(wrapper.find(CopyCodeUI).prop('onKeyDown')(eventSpy)).toBe(true)
+    expect(eventSpy.preventDefault).not.toHaveBeenCalled()
+  })
+
+  test('Does not prevent tab keyDown', () => {
+    const onCopySpy = jest.fn()
+    const code = 'return true;'
+    const wrapper = mount(<CopyCode onCopy={onCopySpy} code={code} />)
+
+    const eventSpy = {
+      preventDefault: jest.fn(),
+      keyCode: Keys.TAB,
+    }
+
+    expect(wrapper.find(CopyCodeUI).prop('onKeyDown')(eventSpy)).toBe(true)
+    expect(eventSpy.preventDefault).not.toHaveBeenCalled()
+  })
+
+  test('Does not prevent tab + shift keyDown', () => {
+    const onCopySpy = jest.fn()
+    const code = 'return true;'
+    const wrapper = mount(<CopyCode onCopy={onCopySpy} code={code} />)
+
+    const eventSpy = {
+      preventDefault: jest.fn(),
+      shiftKey: true,
+      keyCode: Keys.TAB,
     }
 
     expect(wrapper.find(CopyCodeUI).prop('onKeyDown')(eventSpy)).toBe(true)
