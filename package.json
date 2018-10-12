@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "1.7.3",
+  "version": "1.7.7",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -65,8 +65,6 @@
   "dependencies": {
     "@helpscout/fancy": "^2.0.5",
     "@helpscout/react-utils": "^1.0.1",
-    "@types/storybook__react": "^3.0.9",
-    "emoji-mart": "^1.0.1",
     "highlight.js": "^9.12.0",
     "lodash.get": "^4.4.2",
     "pluralize": "^7.0.0",
@@ -96,6 +94,7 @@
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.8",
     "@types/react-transition-group": "^2.0.14",
+    "@types/storybook__react": "^3.0.9",
     "autoprefixer": "7.1.1",
     "awesome-typescript-loader": "^4.0.1",
     "babel-cli": "6.26.0",

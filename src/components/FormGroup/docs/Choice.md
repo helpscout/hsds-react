@@ -2,7 +2,6 @@
 
 A FormGroup.Choice is used for [Choice](../Choice) based components, such as [Checkbox](../Checkbox) and [Radio](../Radio).
 
-
 ## Example
 
 ```jsx
@@ -17,9 +16,10 @@ A FormGroup.Choice is used for [Choice](../Choice) based components, such as [Ch
 
 Note: The [ChoiceGroup](../ChoiceGroup) component automatically wraps child components with `<FormGroup.Choice>`.
 
-
 ## Props
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| className | `string` | Custom class names to be added to the component. |
+| Prop         | Type              | Description                                      |
+| ------------ | ----------------- | ------------------------------------------------ |
+| className    | `string`          | Custom class names to be added to the component. |
+| maxWidth     | `number`/`string` | Max-width for the component.                     |
+| isResponsive | `bool`            | Enables responsive styling.                      |

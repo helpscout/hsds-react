@@ -8,6 +8,7 @@ import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { COMPONENT_KEY } from './utils'
 import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css.js'
+import Keys from '../../constants/Keys'
 
 type Props = {
   autoFocus: boolean,
@@ -36,6 +37,10 @@ class CopyCode extends Component<Props> {
 
   handleOnKeyDown = (event: SyntheticKeyboardEvent<HTMLElement>) => {
     if (event.ctrlKey || event.metaKey) {
+      return true
+    }
+
+    if (event.keyCode === Keys.TAB) {
       return true
     }
 
@@ -105,7 +110,11 @@ class CopyCode extends Component<Props> {
           {this.getCodeMarkup()}
         </CopyCodeUI>
 
-        <CopyButtonUI kind="secondary" onClick={this.handleCopyClick}>
+        <CopyButtonUI
+          kind="secondary"
+          onClick={this.handleCopyClick}
+          canRenderFocus
+        >
           Copy
         </CopyButtonUI>
       </WrapperUI>

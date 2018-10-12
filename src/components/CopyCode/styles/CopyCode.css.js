@@ -48,7 +48,7 @@ export const CopyCodeUI = styled('div')`
 
 export const CopyButtonUI = styled(CopyButton)`
   box-shadow: 0 0 0 2px white;
-  position: absolute;
+  position: absolute !important;
   top: 10px;
   right: 10px;
 `

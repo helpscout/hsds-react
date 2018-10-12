@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import ControlGroup from '../ControlGroup'
 import CopyButton from '../CopyButton'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
@@ -57,18 +56,19 @@ class CopyInput extends Component<Props> {
     const componentClassName = classNames('c-CopyInput', className)
 
     return (
-      <ControlGroup className={componentClassName}>
-        <ControlGroup.Block>
-          <CopyInputUI
-            {...getValidProps(rest)}
-            inputRef={this.setNodeRef}
-            isSubtleReadOnly
+      <CopyInputUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        inputRef={this.setNodeRef}
+        isSubtleReadOnly
+        suffix={
+          <CopyButton
+            onClick={this.handleCopyClick.bind(this)}
+            size="lg"
+            isLast
           />
-        </ControlGroup.Block>
-        <ControlGroup.Item>
-          <CopyButton onClick={this.handleCopyClick.bind(this)} size="lg" />
-        </ControlGroup.Item>
-      </ControlGroup>
+        }
+      />
     )
   }
 }

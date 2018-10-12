@@ -6,8 +6,10 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import AddOn from './AddOn'
 import Backdrop from './BackdropV2'
+import Prefix from './Prefix'
 import Resizer from './Resizer'
 import Static from './Static'
+import Suffix from './Suffix'
 import HelpText from '../HelpText'
 import Icon from '../Icon'
 import Label from '../Label'
@@ -68,7 +70,7 @@ type Props = {
   onStartTyping: (now?: number) => void,
   onStopTyping: () => void,
   placeholder: string,
-  prefix: string,
+  prefix: any,
   readOnly: boolean,
   refApplyCallStopTyping: (fn: () => void) => void,
   removeStateStylesOnFocus: boolean,
@@ -78,7 +80,7 @@ type Props = {
   size: UISize,
   state?: ?UIState,
   style: Object,
-  suffix: string,
+  suffix: any,
   type: string,
   typingThrottleInterval: number,
   typingTimeoutDelay: number,
@@ -131,10 +133,14 @@ export class Input extends Component<Props, State> {
     value: '',
     withTypingEvent: false,
   }
+
   static AddOn = AddOn
   static Backdrop = Backdrop
+  static Prefix = Prefix
   static Resizer = Resizer
   static Static = Static
+  static Suffix = Suffix
+
   inputNode: InputNode
 
   constructor(props: Props) {
@@ -398,6 +404,18 @@ export class Input extends Component<Props, State> {
     )
   }
 
+  getPrefixMarkup = () => {
+    const { prefix, seamless } = this.props
+
+    return (
+      prefix && (
+        <Prefix className="c-Input__item c-Input__prefix" isSeamless={seamless}>
+          {prefix}
+        </Prefix>
+      )
+    )
+  }
+
   getInlineSuffixMarkup = () => {
     const { inlineSuffix } = this.props
 
@@ -406,6 +424,18 @@ export class Input extends Component<Props, State> {
         <div className="c-Input__item c-Input__inlineSuffix">
           {inlineSuffix}
         </div>
+      )
+    )
+  }
+
+  getSuffixMarkup = () => {
+    const { suffix, seamless } = this.props
+
+    return (
+      suffix && (
+        <Suffix className="c-Input__item c-Input__suffix" isSeamless={seamless}>
+          {suffix}
+        </Suffix>
       )
     )
   }
@@ -585,26 +615,19 @@ export class Input extends Component<Props, State> {
       className
     )
 
-    const helpTextMarkup = this.getHelpTextMarkup()
-    const hintTextMarkup = this.getHintTextMarkup()
-    const labelMarkup = this.getLabelMarkup()
-    const inlinePrefixMarkup = this.getInlinePrefixMarkup()
-    const inlineSuffixMarkup = this.getInlineSuffixMarkup()
-    const errorMarkup = this.getErrorMarkup()
-
-    const resizerMarkup = this.getResizerMarkup()
-
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
           <InputWrapperUI className="c-InputWrapper" style={styleProp}>
-            {labelMarkup}
-            {hintTextMarkup}
+            {this.getLabelMarkup()}
+            {this.getHelpTextMarkup()}
             <div className={componentClassName}>
-              {inlinePrefixMarkup}
+              {this.getPrefixMarkup()}
+              {this.getInlinePrefixMarkup()}
               {this.getInputMarkup(props)}
-              {inlineSuffixMarkup}
-              {errorMarkup}
+              {this.getInlineSuffixMarkup()}
+              {this.getSuffixMarkup()}
+              {this.getErrorMarkup()}
               <Backdrop
                 className="c-Input__backdrop"
                 disabled={disabled}
@@ -616,9 +639,9 @@ export class Input extends Component<Props, State> {
                 isSeamless={seamless}
                 state={state}
               />
-              {resizerMarkup}
+              {this.getResizerMarkup()}
             </div>
-            {helpTextMarkup}
+            {this.getHintTextMarkup()}
           </InputWrapperUI>
         )}
       </FormLabelContext.Consumer>

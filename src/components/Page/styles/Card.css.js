@@ -1,6 +1,7 @@
 // @flow
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import { getColor } from '../../../styles/utilities/color'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
 import PageConfig from './Page.config.css.js'
 
@@ -8,12 +9,12 @@ export const config = {
   borderRadius: '4px',
   boxShadow: `
     0px 0px 0px 1px rgba(0, 0, 0, 0.05),
-    0px 5px 10px 0px #F1F3F5,
+    0px 5px 10px 0px ${getColor('grey.300')},
     0px 3px 3px 0px rgba(0, 0, 0, 0.05)
   `,
   boxShadowHover: `
-    0px 0px 0px 1px #D6DDE3,
-    0px 5px 10px 1px #F1F3F5,
+    0px 0px 0px 1px ${getColor('grey.500')},
+    0px 5px 10px 1px ${getColor('grey.300')},
     0px 3px 3px 0px rgba(0, 0, 0, 0.05)
   `,
   flexDirection: {

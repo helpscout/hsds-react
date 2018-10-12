@@ -26,6 +26,7 @@ class Embed extends Component<Props, State> {
   state = {
     isLoading: true,
   }
+  context: Context
 
   node: HTMLDivElement
 

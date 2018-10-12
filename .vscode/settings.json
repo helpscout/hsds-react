@@ -19,5 +19,11 @@
   },
   "javascript.validate.enable": false,
   "prettier.eslintIntegration": true,
-  "eslint.enable": true
+  "eslint.enable": true,
+  "workbench.colorCustomizations": {
+    "statusBar.foreground": "#ffffff",
+    "statusBar.background": "#3197D6",
+    "statusBar.noFolderBackground": "#3197D6",
+    "statusBar.debuggingBackground": "#3197D6"
+  }
 }

@@ -12,7 +12,7 @@ export const config = {
   backgroundColorFill: getColor('osx.control.backgroundColor'),
   borderColor: getColor('border.ui.dark'),
   borderColorFill: getColor('osx.control.borderColor'),
-  borderRadius: 4,
+  borderRadius: 3,
   boxShadow: `0 0 0 0 rgba(${getColor('border')}, 0)`,
   boxShadowCheckbox: '0 0.5px 1px rgba(0, 0, 0, 0.2) inset',
   focusOutlineWidth: 2,

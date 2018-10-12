@@ -184,11 +184,13 @@ class Collapsible extends React.Component<Props, any> {
     const { animationState, height } = this.state
 
     const animating = animationState !== 'idle'
+    const closed = animationState === 'closed'
 
     const componentClassName = classNames(
       'c-Collapsible',
       isOpen && 'is-open',
       animating && 'is-animating',
+      closed && 'is-closed',
       className
     )
 

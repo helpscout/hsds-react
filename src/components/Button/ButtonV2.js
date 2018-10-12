@@ -14,6 +14,7 @@ import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
 
 type Props = {
   buttonRef: (ref: any) => {},
+  canRenderFocus: boolean,
   children?: any,
   className?: string,
   disabled: boolean,
@@ -41,6 +42,7 @@ type State = {
 class Button extends Component<Props, State> {
   static defaultProps = {
     buttonRef: noop,
+    canRenderFocus: true,
     disable: false,
     kind: 'default',
     innerRef: noop,
@@ -90,6 +92,7 @@ class Button extends Component<Props, State> {
     return (
       this.state.isFocused &&
       !this.props.disabled &&
+      this.props.canRenderFocus &&
       includes(paddedButtonKinds, this.props.kind)
     )
   }
