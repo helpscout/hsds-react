@@ -14,13 +14,16 @@ export const config = {
 }
 
 export const HeaderUI = styled('div')`
-  ${baseStyles}
-  margin-bottom: ${config.marginBottom};
+  ${baseStyles} margin-bottom: 0;
   padding-bottom: ${config.paddingBottom};
   width: ${config.width.default};
 
   &.is-withBorder {
-    border-bottom: 1px solid #E3E8EB;
+    border-bottom: 1px solid #e3e8eb;
+  }
+
+  &.is-withBottomMargin {
+    margin-bottom: ${config.marginBottom};
   }
 
   &.is-responsive {
