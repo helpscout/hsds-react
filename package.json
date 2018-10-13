@@ -10,8 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/helpscout/blue.git"
   },
-  "authors": [
-    "ItsJonQ <hello@jonquach.com>"
+  "author": "Jon Quach <hello@jonquach.com>",
+  "contributors": [
+    "Nickolas Kenyeres <nickolas@knicklabs.com>",
+    "Maxi Ferreira <charca@gmail.com>",
+    "Tom Graham",
+    "Tom O'Connor",
+    "Brett Jones <brettjonesdev@gmail.com>",
+    "Lauren Brown",
+    "Pierre-Luc Babin",
+    "Buzz Usborne <hello@buzzusborne.com>",
+    "Alisdair McDiarmid"
   ],
   "scripts": {
     "check:npm": "node scripts/check-npm.js",
