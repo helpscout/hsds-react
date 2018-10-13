@@ -15,7 +15,7 @@ https://hsblue.surge.sh/
 ## Install
 
 ```
-npm install @helpscout/blue --save-dev
+npm install @helpscout/blue --save
 ```
 
 ## Getting Started
