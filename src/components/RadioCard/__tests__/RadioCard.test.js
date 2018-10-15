@@ -90,3 +90,70 @@ describe('Icon', () => {
     expect(o.prop('name')).toBe(wrapper.instance().defaultIcon)
   })
 })
+
+describe('Events', () => {
+  test('Can fire onBlur callback prop', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<RadioCard onBlur={spy} />)
+    const input = wrapper.find('input')
+
+    input.simulate('blur')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Can fire onFocus callback prop', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<RadioCard onFocus={spy} />)
+    const input = wrapper.find('input')
+
+    input.simulate('focus')
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Ref', () => {
+  test('Can retrieve the input node from inputRef', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<RadioCard inputRef={spy} />)
+    const o = wrapper.find('input').getNode()
+
+    expect(spy).toHaveBeenCalledWith(o)
+  })
+})
+
+describe('Focus', () => {
+  test('Does not render focus, by default', () => {
+    const wrapper = mount(<RadioCard />)
+    const o = wrapper.find('.c-RadioCard__focus').first()
+
+    expect(o.length).toBe(0)
+  })
+
+  test('Can preset focus using props', () => {
+    const wrapper = mount(<RadioCard isFocused />)
+    const o = wrapper.find('.c-RadioCard__focus').first()
+
+    expect(o.length).toBe(1)
+  })
+
+  test('Renders FocusUI on blur/focus of input', () => {
+    const wrapper = mount(<RadioCard />)
+    const input = wrapper.find('input')
+
+    input.simulate('focus')
+
+    expect(wrapper.find('.c-RadioCard__focus').first().length).toBe(1)
+
+    input.simulate('blur')
+
+    expect(wrapper.find('.c-RadioCard__focus').first().length).toBe(0)
+  })
+
+  test('Adds focus className, if focused', () => {
+    const wrapper = mount(<RadioCard isFocused />)
+
+    expect(wrapper.hasClass('is-focused')).toBe(true)
+  })
+})
