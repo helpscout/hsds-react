@@ -68,7 +68,7 @@
     "react-dom": "^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "^2.1.0",
+    "@helpscout/fancy": "^2.1.1",
     "@helpscout/react-utils": "^1.0.1",
     "closest": "0.0.1",
     "highlight.js": "^9.12.0",
