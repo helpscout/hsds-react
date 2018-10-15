@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "1.7.8",
+  "version": "1.7.9",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -38,10 +38,8 @@
     "clean": "rimraf public && rimraf dist && mkdir dist",
     "dev": "npm run check:npm && npm run test:dev",
     "deploy": "npm run storybook:clean && npm run storybook:build && npm run surge:cname && npm run surge:deploy",
-    "karma": "BABEL_ENV=development NODE_ENV=test karma start config/karma.conf.js",
-    "lint": "npm run lint:es",
-    "lint:es": "eslint src/**/*.js --cache",
-    "lint:css": "stylelint 'src/styles/**/*.scss'",
+    "lint": "npm run lint:js",
+    "lint:js": "eslint src/**/*.js --cache",
     "pretty": "npm run prettier",
     "release": "np --no-yarn --no-publish",
     "release:patch": "npm run release -- patch",
@@ -53,8 +51,7 @@
     "surge:cname": "echo 'hsblue.surge.sh' > public/CNAME",
     "surge:deploy": "surge ./public",
     "test": "npm run test:coverage",
-    "test:acceptance": "npm run karma -- --single-run",
-    "test:all": "npm run test && npm run test:acceptance",
+    "test:all": "npm run test",
     "test:coverage": "npm run test:dev -- --coverage",
     "test:dev": "node scripts/test.js --env=jsdom",
     "test:coverage:fast": "npm run test:coverage -- --onlyChanged",
@@ -75,8 +72,7 @@
     "lodash.get": "^4.4.2",
     "pluralize": "^7.0.0",
     "popper.js": "1.14.3",
-    "prop-types": "15.6.1",
-    "react-router-dom": "^4",
+    "prop-types": "^15.6.1",
     "react-sortable-hoc": "^0.6.7",
     "react-transition-group": "2.2.0",
     "seed-alert": "0.2.6",
@@ -95,7 +91,6 @@
     "@storybook/addon-options": "^3.2.16",
     "@storybook/cli": "^3.2.16",
     "@storybook/react": "^3.2.16",
-    "@storybook/storybook-deployer": "2.0.0",
     "autoprefixer": "7.1.1",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
@@ -112,8 +107,6 @@
     "babel-preset-react-app": "3.1.1",
     "babel-preset-stage-1": "6.24.1",
     "babel-runtime": "6.23.0",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chai": "4.1.2",
     "chalk": "1.1.3",
     "check-dependencies": "1.1.0",
     "coveralls": "3.0.1",
@@ -130,28 +123,16 @@
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.9.1",
     "eslint-scope": "3.7.1",
-    "extract-text-webpack-plugin": "2.1.2",
-    "file-loader": "0.11.2",
     "flow-bin": "0.72.0",
     "fs-extra": "3.0.1",
     "hoek": "5.0.3",
-    "html-webpack-plugin": "2.29.0",
     "husky": "1.0.0-rc.13",
     "istanbul-api": "1.2.2",
     "istanbul-reports": "1.1.4",
-    "jasmine": "2.8.0",
     "jest": "20.0.4",
     "jest-cli": "20.0.4",
-    "jquery": "3.2.1",
-    "karma": "2.0.5",
-    "karma-chrome-launcher": "2.2.0",
-    "karma-firefox-launcher": "1.0.1",
-    "karma-jasmine": "1.1.0",
-    "karma-jasmine-matchers": "3.7.0",
-    "karma-webpack": "3.0.0",
-    "lodash": "4.17.10",
     "mkdirp": "0.5.1",
-    "node-sass": "4.9.2",
+    "node-sass": "^4.9.2",
     "np": "^3.0.4",
     "nyc": "12.0.2",
     "object-assign": "4.1.1",
@@ -166,10 +147,10 @@
     "react-addons-test-utils": "15.6.2",
     "react-dev-utils": "^3.0.2",
     "react-dom": "15.6.1",
-    "react-error-overlay": "^1.0.9",
     "react-frame-component": "^1.1.0",
     "react-page-object": "1.1.0",
     "react-router": "4.2.0",
+    "react-router-dom": "^4",
     "react-test-renderer": "15.6.1",
     "rgb-hex": "2.1.0",
     "rimraf": "2.6.2",
@@ -178,15 +159,8 @@
     "seed-harvester": "0.1.5",
     "sinon": "^5.0.10",
     "style-loader": "0.18.2",
-    "stylelint": "7.9.0",
-    "stylelint-scss": "1.5.1",
-    "surge": "0.20.1",
-    "tough-cookie": "2.3.4",
-    "url-loader": "1.0.1",
-    "webpack": "2.6.1",
-    "webpack-dev-server": "^3.1.8",
-    "webpack-manifest-plugin": "1.1.0",
-    "webpack-node-externals": "1.6.0"
+    "tough-cookie": "2.4.3",
+    "webpack": "2.6.1"
   },
   "nyc": {
     "exclude": [
@@ -196,80 +170,5 @@
       "stories/**/*.js"
     ],
     "cache": false
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!src/**/?(*.)types.{js,jsx}",
-      "!src/**/?(*.)helpers.{js,jsx}",
-      "!src/**/?(*.)testHelpers.{js,jsx}",
-      "!src/styles/tests/helpers/**/*.{js,jsx}",
-      "!src/**/?(*.)css.{js,jsx}",
-      "!src/index.{js,jsx}",
-      "!src/components/Input/utils.{js,jsx}",
-      "!src/components/Popper/**/*.{js,jsx}",
-      "!src/tests/helpers/**/*.{js,jsx}",
-      "!src/utilities/browser.{js,jsx}",
-      "!src/utilities/smoothScroll.{js,jsx}",
-      "!src/utilities/index.{js,jsx}",
-      "!src/utilities/log.{js,jsx}",
-      "!src/styles/includePaths.js",
-      "!src/polyfills/**/*.{js,jsx}",
-      "!src/vendors/**/*.{js,jsx}",
-      "!src/components/index.js",
-      "!src/components/Animate/animations/**/*.js"
-    ],
-    "coverageDirectory": "coverage/",
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js",
-      "<rootDir>/config/jsdomPolyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "stylelint": {
-    "plugins": [
-      "stylelint-scss"
-    ],
-    "rules": {
-      "indentation": [
-        2
-      ]
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }
