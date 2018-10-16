@@ -11,6 +11,7 @@ module.exports = {
     '!src/components/Popper/**/*.{js,jsx}',
     '!src/tests/helpers/**/*.{js,jsx}',
     '!src/utilities/browser.{js,jsx,ts}',
+    '!src/utilities/react-router/**/*.{js,jsx}',
     '!src/utilities/smoothScroll.{js,jsx}',
     '!src/utilities/closest.ts',
     '!src/utilities/index.{js,jsx}',

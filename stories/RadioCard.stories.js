@@ -52,3 +52,13 @@ stories.add('responsive + maxWidth', () => (
     </ChoiceGroup>
   </div>
 ))
+
+stories.add('focused', () => (
+  <ChoiceGroup align="horizontal" onChange={onChange} value="chat">
+    <RadioCard icon="fab-chat" value="chat" isFocused />
+    <RadioCard icon="fab-antenna" value="antenna" />
+    <RadioCard icon="fab-buoy" value="buoy" />
+    <RadioCard icon="fab-search" value="search" />
+    <RadioCard icon="fab-question" value="question" />
+  </ChoiceGroup>
+))

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Accordion, Button, Input, Page, Text } from '../../src/'
+import { Accordion, Button, Input, Page, Text } from '../src/index'
 
 const stories = storiesOf('Accordion', module)
 

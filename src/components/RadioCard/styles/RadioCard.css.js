@@ -1,7 +1,7 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
-import styled from '../../styled/index.js'
+import styled from '../../styled'
 
 export const config = {
   boxShadow: `
@@ -15,6 +15,8 @@ export const config = {
     0px 3px 3px 0px rgba(0, 0, 0, 0.05)
   `,
   borderRadius: '4px',
+  focusOutlineWidth: '2px',
+  focusOutlineColor: getColor('blue.400'),
   iconColor: getColor('grey.600'),
   iconColorChecked: getColor('charcoal.500'),
   iconWrapperSize: 52,
@@ -37,6 +39,7 @@ export const RadioCardUI = styled('label')`
   max-width: ${config.maxWidth};
   min-width: 0;
   padding: ${config.padding};
+  position: relative;
   width: ${config.width};
   transition: ${config.transition};
   will-change: ${config.willChange};
@@ -61,6 +64,28 @@ export const IconWrapperUI = styled('div')`
 
   &.is-checked {
     color: ${config.iconColorChecked};
+  }
+`
+
+export const FocusUI = styled('div')`
+  animation: BackdropFocusFadeIn 200ms;
+  border-radius: ${config.borderRadius};
+  bottom: 0px;
+  box-shadow: 0 0 0 ${config.focusOutlineWidth} ${config.focusOutlineColor};
+  left: 0px;
+  pointer-events: none;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 1;
+
+  @keyframes BackdropFocusFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `
 
