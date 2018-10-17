@@ -4,7 +4,7 @@ import Animate from '../../Animate'
 import ArticleCard from '../../ArticleCard'
 import Card from '../../Card'
 import CardList from '../CardList'
-import { AnimateGroup, Avatar } from '../../index'
+import { AnimateGroup } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -34,6 +34,21 @@ describe('Animation', () => {
     expect(animateGroup.length).toBe(1)
     expect(animate.length).toBe(1)
     expect(card.length).toBe(1)
+  })
+
+  test('Rejects non-Card components', () => {
+    const wrapper = mount(
+      <CardList>
+        <Card className="the-card">One</Card>
+        <div className="buddy">Two</div>
+        <ArticleCard className="the-articleCard">Three</ArticleCard>
+      </CardList>
+    )
+    const animateGroup = wrapper.find(AnimateGroup)
+
+    expect(animateGroup.find('div.the-card').length).toBe(1)
+    expect(animateGroup.find('div.buddy').length).toBe(0)
+    expect(animateGroup.find('div.the-articleCard').length).toBe(1)
   })
 
   test('Wraps AnimateCard children in an Animate, within an AnimateGroup', () => {
@@ -82,7 +97,7 @@ describe('Animation', () => {
     )
     const props = wrapper.find(Animate).props()
 
-    expect(props.ease).toBe('ease')
+    expect(props.easing).toBe('ease')
   })
 
   test('Can set custom Animate sequences', () => {

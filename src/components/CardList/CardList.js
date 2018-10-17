@@ -15,6 +15,7 @@ type Props = {
   animationStagger: number,
   children?: any,
   className?: string,
+  stagger: boolean,
 }
 
 class CardList extends PureComponent<Props> {
@@ -22,6 +23,7 @@ class CardList extends PureComponent<Props> {
     animationEasing: 'ease',
     animationSequence: 'fade up',
     animationStagger: 60,
+    stagger: true,
   }
 
   getChildrenMarkup = () => {
@@ -31,13 +33,10 @@ class CardList extends PureComponent<Props> {
       if (!isComponentTypeCard(child)) {
         return null
       }
+      const id = child.props.id || child.key || `cardListChild-${index}`
 
       return (
-        <Animate
-          key={index}
-          ease={animationEasing}
-          sequence={animationSequence}
-        >
+        <Animate key={id} easing={animationEasing} sequence={animationSequence}>
           {child}
         </Animate>
       )
@@ -45,11 +44,12 @@ class CardList extends PureComponent<Props> {
   }
 
   render() {
-    const { animationStagger, className } = this.props
+    const { animationStagger, className, ...rest } = this.props
     const componentClassName = classNames('c-CardList', className)
 
     return (
       <AnimateGroup
+        {...rest}
         className={componentClassName}
         stagger
         staggerDelay={animationStagger}
