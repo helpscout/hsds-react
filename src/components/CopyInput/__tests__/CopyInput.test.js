@@ -43,3 +43,13 @@ describe('Copy button', () => {
     expect(onCopySpy).toHaveBeenCalledWith(value)
   })
 })
+
+describe('innerRef', () => {
+  test('Can retrieve innerRef DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<CopyInput innerRef={spy} />)
+    const o = wrapper.find('input').getNode()
+
+    expect(spy).toHaveBeenCalledWith(o)
+  })
+})

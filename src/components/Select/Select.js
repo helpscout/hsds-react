@@ -79,6 +79,7 @@ class Select extends Component<Props, State> {
     autoFocus: false,
     disabled: false,
     errorIcon: 'alert',
+    innerRef: noop,
     forceAutoFocusTimeout: 120,
     onBlur: noop,
     onChange: noop,
@@ -310,6 +311,11 @@ class Select extends Component<Props, State> {
     }
   }
 
+  setSelectNode = (node: HTMLSelectElement) => {
+    this.selectNode = node
+    this.props.innerRef(node)
+  }
+
   getSelectMarkup = (props: Object = {}) => {
     const {
       children,
@@ -320,6 +326,7 @@ class Select extends Component<Props, State> {
       forceAutoFocusTimeout,
       helpText,
       hintText,
+      innerRef,
       isFocused,
       isFirst,
       isNotOnly,
@@ -368,9 +375,7 @@ class Select extends Component<Props, State> {
         onBlur={this.handleOnBlur}
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
-        ref={node => {
-          this.selectNode = node
-        }}
+        ref={this.setSelectNode}
         value={selectedValue}
       >
         {placeholderMarkup}

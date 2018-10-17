@@ -780,3 +780,13 @@ describe('Suffix', () => {
     expect(p.length).toBe(1)
   })
 })
+
+describe('innerRef', () => {
+  test('Can retrieve innerRef DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input innerRef={spy} />)
+    const o = wrapper.find('input').getNode()
+
+    expect(spy).toHaveBeenCalledWith(o)
+  })
+})

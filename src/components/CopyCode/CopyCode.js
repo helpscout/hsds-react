@@ -15,6 +15,7 @@ type Props = {
   className?: string,
   code: string,
   copyToClipboard: boolean,
+  innerRef: (node: HTMLElement) => void,
   language?: string,
   onCopy: (code: string) => void,
 }
@@ -24,6 +25,7 @@ class CopyCode extends Component<Props> {
     autoFocus: true,
     code: '',
     copyToClipboard: true,
+    innerRef: noop,
     onCopy: noop,
   }
   codeNode: HTMLElement
@@ -77,6 +79,7 @@ class CopyCode extends Component<Props> {
 
   setNodeRef = (node: HTMLElement) => {
     this.codeNode = node
+    this.props.innerRef(node)
   }
 
   getCodeMarkup = () => {

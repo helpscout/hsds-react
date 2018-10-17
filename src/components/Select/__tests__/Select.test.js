@@ -508,3 +508,13 @@ describe('ErrorMessage', () => {
     expect(el.props().name).toBe('chat')
   })
 })
+
+describe('innerRef', () => {
+  test('Can retrieve innerRef DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Select innerRef={spy} />)
+    const o = wrapper.find('select').getNode()
+
+    expect(spy).toHaveBeenCalledWith(o)
+  })
+})
