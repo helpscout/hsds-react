@@ -353,3 +353,13 @@ describe('Styles', () => {
     expect(el.classList.contains('is-sm')).toBe(true)
   })
 })
+
+describe('innerRef', () => {
+  test('Can retrieve innerRef DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Switch innerRef={spy} />)
+    const o = wrapper.find('input').getNode()
+
+    expect(spy).toHaveBeenCalledWith(o)
+  })
+})

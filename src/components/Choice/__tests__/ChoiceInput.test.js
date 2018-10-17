@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Input from '../Input'
-import Flexy from '../../Flexy'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -187,5 +186,15 @@ describe('Icon', () => {
 
     expect(wrapper.find('.c-ChoiceInput__placeholder').length).toBe(0)
     expect(wrapper.find('Icon').length).toBe(1)
+  })
+})
+
+describe('innerRef', () => {
+  test('Can retrieve innerRef DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input innerRef={spy} />)
+    const o = wrapper.find('input').getNode()
+
+    expect(spy).toHaveBeenCalledWith(o)
   })
 })

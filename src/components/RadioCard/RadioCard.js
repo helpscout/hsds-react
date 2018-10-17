@@ -20,6 +20,7 @@ type Props = {
   iconSize: number,
   id?: string,
   inputRef: (node: InputNode) => void,
+  innerRef: (node: InputNode) => void,
   isFocused: boolean,
   onBlur: (event: InputEvent) => void,
   onFocus: (event: InputEvent) => void,
@@ -41,6 +42,7 @@ class RadioCard extends Component<Props, State> {
     icon: 'fab-chat',
     iconSize: 52,
     inputRef: noop,
+    innerRef: noop,
     isFocused: false,
     onBlur: noop,
     onFocus: noop,
@@ -99,6 +101,7 @@ class RadioCard extends Component<Props, State> {
   setInputNodeRef = (node: HTMLInputElement) => {
     this.inputNode = node
     this.props.inputRef(node)
+    this.props.innerRef(node)
   }
 
   render() {

@@ -15,11 +15,12 @@ type ButtonSize = 'lg' | 'md' | 'sm' | 'xs'
 type Props = {
   accessibilityLabel?: string,
   block: boolean,
-  buttonRef: (ref: any) => {},
+  buttonRef: (ref: any) => void,
   children?: any,
   className?: string,
   danger: boolean,
   disabled: boolean,
+  innerRef: (ref: any) => void,
   isActive: boolean,
   isFirst: boolean,
   isNotOnly: boolean,
@@ -40,6 +41,7 @@ class Button extends Component<Props> {
     buttonRef: noop,
     danger: false,
     disable: false,
+    innerRef: noop,
     isActive: false,
     isFirst: false,
     isNotOnly: false,
@@ -53,6 +55,11 @@ class Button extends Component<Props> {
   }
 
   static BlueComponentVersion = 1
+
+  setInnerRef = (node: HTMLElement) => {
+    this.props.buttonRef(node)
+    this.props.innerRef(node)
+  }
 
   render() {
     const {
@@ -98,7 +105,7 @@ class Button extends Component<Props> {
       <button
         {...getValidProps(rest)}
         aria-label={accessibilityLabel}
-        ref={buttonRef}
+        ref={this.setInnerRef}
         className={componentClassName}
         disabled={disabled}
         type={type}
