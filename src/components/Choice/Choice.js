@@ -15,6 +15,7 @@ import { noop } from '../../utilities/other'
 import {
   ChoiceUI,
   ChoiceLabelUI,
+  ChoiceLabelTextUI,
   ChoiceHelpTextUI,
 } from './styles/Choice.css.js'
 import { COMPONENT_KEY } from './utils'
@@ -36,6 +37,7 @@ type Props = {
   onChange: (event: Event, checked: boolean) => void,
   name?: string,
   readOnly: boolean,
+  stacked: boolean,
   state?: UIState,
   type: ChoiceType,
   value: ChoiceValue,
@@ -83,31 +85,42 @@ class Choice extends Component<Props, State> {
   }
 
   getLabelMarkup = () => {
-    const { children, disabled, hideLabel, label } = this.props
+    const { children, disabled, hideLabel, label, stacked } = this.props
 
-    let labelTextMarkup = hideLabel ? (
-      <VisuallyHidden>{label}</VisuallyHidden>
-    ) : (
-      <Text muted={disabled}>{label}</Text>
+    if (!children && !label) {
+      return null
+    }
+
+    const className = classNames(
+      'c-Choice__label-text',
+      stacked && 'is-stacked'
     )
 
-    return (
-      (children || label) && (
-        <Flexy.Block>
-          <span className="c-Choice__label-text">
-            {children || labelTextMarkup}
-          </span>
-        </Flexy.Block>
-      )
+    let labelTextMarkup = (
+      <ChoiceLabelTextUI className={className}>
+        {hideLabel ? (
+          <VisuallyHidden>{label}</VisuallyHidden>
+        ) : (
+          <Text muted={disabled}>{label}</Text>
+        )}
+      </ChoiceLabelTextUI>
     )
+
+    if (stacked) {
+      return labelTextMarkup
+    }
+
+    return <Flexy.Block>{labelTextMarkup}</Flexy.Block>
   }
 
   getHelpTextMarkup = () => {
-    const { helpText, state } = this.props
+    const { helpText, stacked, state } = this.props
+
+    const className = classNames('c-Choice__help-text', stacked && 'is-stacked')
 
     return (
       helpText && (
-        <ChoiceHelpTextUI className="c-Choice__help-text">
+        <ChoiceHelpTextUI className={className}>
           <HelpText state={state} muted>
             {helpText}
           </HelpText>
@@ -132,6 +145,7 @@ class Choice extends Component<Props, State> {
       label,
       name,
       readOnly,
+      stacked,
       state,
       type,
       value,
@@ -146,6 +160,7 @@ class Choice extends Component<Props, State> {
       disabled && 'is-disabled',
       kind && `is-${kind}`,
       readOnly && 'is-readonly',
+      stacked && 'is-stacked',
       state && `is-${state}`,
       className
     )
@@ -172,20 +187,33 @@ class Choice extends Component<Props, State> {
 
     const labelClassName = classNames(
       'c-Choice__label',
-      disabled && 'is-disabled'
+      checked && 'is-selected',
+      disabled && 'is-disabled',
+      stacked && 'is-stacked'
+    )
+
+    const inputMarkup = (
+      <span className="c-Choice__control">
+        <Input {...inputProps} />
+      </span>
+    )
+
+    const inputLabelMarkup = stacked ? (
+      <div>
+        {inputMarkup}
+        {labelMarkup}
+      </div>
+    ) : (
+      <Flexy just="left" gap="sm" align={align}>
+        <Flexy.Item>{inputMarkup}</Flexy.Item>
+        {labelMarkup}
+      </Flexy>
     )
 
     return (
       <ChoiceUI {...getValidProps(rest)} className={componentClassName}>
         <ChoiceLabelUI htmlFor={choiceID} className={labelClassName}>
-          <Flexy just="left" gap="sm" align={align}>
-            <Flexy.Item>
-              <span className="c-Choice__control">
-                <Input {...inputProps} />
-              </span>
-            </Flexy.Item>
-            {labelMarkup}
-          </Flexy>
+          {inputLabelMarkup}
         </ChoiceLabelUI>
         {helpTextMarkup}
       </ChoiceUI>

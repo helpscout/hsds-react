@@ -27,6 +27,20 @@ storiesOf('Radio', module)
       </ChoiceGroup>
     </PropProvider>
   ))
+  .add('stacked', () => (
+    <PropProvider value={{ Radio: { kind: 'custom', stacked: true } }}>
+      <ChoiceGroup>
+        <Radio
+          label="Derek (Disable)"
+          helpText="Help text"
+          value="derek"
+          disabled
+        />
+        <Radio label="Hansel" helpText="Help text" value="hansel" />
+        <Radio label="Mugatu" helpText="Help text" value="mugatu" />
+      </ChoiceGroup>
+    </PropProvider>
+  ))
   .add('states', () => (
     <div>
       <ChoiceGroup value="error">
