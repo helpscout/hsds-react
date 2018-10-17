@@ -1,7 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import { matchPath } from 'react-router'
 import getComponentDefaultProp from '@helpscout/react-utils/dist/getComponentDefaultProp'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import Animate from '../Animate'
@@ -15,6 +14,7 @@ import {
 import { setupManager } from '../../utilities/globalManager'
 import classNames from '../../utilities/classNames'
 import { requestAnimationFrame } from '../../utilities/other'
+import matchPath from '../../utilities/react-router/matchPath'
 import Content from './Content'
 
 const defaultOptions = {
