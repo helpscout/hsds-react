@@ -25,6 +25,7 @@ export interface Props {
   id: string
   isLoading: boolean
   inputRef: (ref: any) => void
+  innerRef: (ref: any) => void
   name: string
   onBlur: (event: Event) => void
   onChange: (state: boolean, { event: Event, value: SwitchValue }) => void
@@ -51,6 +52,7 @@ const uniqueID = createUniqueIDFactory('Switch')
 class Switch extends React.PureComponent<Props, State> {
   static defaultProps = {
     inputRef: noop,
+    innerRef: noop,
     isLoading: false,
     labelOn: 'On',
     labelOff: 'Off',
@@ -131,6 +133,11 @@ class Switch extends React.PureComponent<Props, State> {
     this.props.onMouseUp(event)
   }
 
+  setInnerRef = (node: HTMLElement) => {
+    this.props.inputRef(node)
+    this.props.innerRef(node)
+  }
+
   getIdFromContextProps = (props: FormLabelContextProps = { id: '' }) => {
     return props.id || this.state.id
   }
@@ -140,6 +147,7 @@ class Switch extends React.PureComponent<Props, State> {
       checked: propActive,
       disabled,
       inputRef,
+      innerRef,
       name,
       value,
       ...rest
@@ -161,7 +169,7 @@ class Switch extends React.PureComponent<Props, State> {
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
         onClick={this.handleOnClick}
-        ref={inputRef}
+        innerRef={this.setInnerRef}
         role="switch"
         type="checkbox"
         value={value}

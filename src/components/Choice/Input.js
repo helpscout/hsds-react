@@ -25,6 +25,7 @@ type Props = {
   helpText?: string,
   id?: string,
   inputRef: (node: HTMLElement) => void,
+  innerRef: (node: HTMLElement) => void,
   kind?: string,
   onBlur: (event: Event) => void,
   onChange: (
@@ -52,6 +53,7 @@ class Input extends Component<Props, State> {
     onChange: noop,
     onFocus: noop,
     inputRef: noop,
+    innerRef: noop,
     readOnly: false,
     type: 'checkbox',
     value: '',
@@ -113,6 +115,11 @@ class Input extends Component<Props, State> {
     )
   }
 
+  setInnerRef = (node: HTMLElement) => {
+    this.props.inputRef(node)
+    this.props.innerRef(node)
+  }
+
   render() {
     const {
       align,
@@ -123,6 +130,7 @@ class Input extends Component<Props, State> {
       helpText,
       id,
       inputRef,
+      innerRef,
       kind,
       readOnly,
       name,
@@ -165,7 +173,7 @@ class Input extends Component<Props, State> {
           className={inputClassName}
           disabled={disabled}
           id={id}
-          innerRef={inputRef}
+          innerRef={this.setInnerRef}
           name={name}
           onBlur={this.handleOnBlur}
           onChange={this.handleOnChange}

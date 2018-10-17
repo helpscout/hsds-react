@@ -4,6 +4,8 @@ import { isObject } from './is'
 let REGISTERED_COMPONENTS = {}
 export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
 
+export const CARD_TYPE = ['ArticleCard', 'Card']
+
 export const CONTROL_TYPE = [
   'Button',
   'CopyButton',
@@ -95,6 +97,18 @@ export const namespaceComponent = (key: string) => (Component: any): any => {
  */
 export const isComponentNamed = (Component: any, key: string): boolean => {
   return getComponentName(Component) === key
+}
+
+/**
+ * Determines if the provided Component is a card type.
+ *
+ * @param   {React.Component} Component The component.
+ * @returns {boolean} The result.
+ */
+export const isComponentTypeCard = (Component: any): boolean => {
+  const key = getComponentName(Component)
+
+  return includes(CARD_TYPE, key)
 }
 
 /**

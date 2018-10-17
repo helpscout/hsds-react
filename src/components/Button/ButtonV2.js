@@ -13,13 +13,13 @@ import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
 
 type Props = {
-  buttonRef: (ref: any) => {},
+  buttonRef: (ref: any) => void,
   canRenderFocus: boolean,
   children?: any,
   className?: string,
   disabled: boolean,
   kind: ButtonKind,
-  innerRef: (ref: any) => {},
+  innerRef: (ref: any) => void,
   isActive: boolean,
   isBlock: boolean,
   isFocused: boolean,
@@ -27,8 +27,8 @@ type Props = {
   isNotOnly: boolean,
   isLast: boolean,
   isSuffix: boolean,
-  onBlur: (event: Event) => {},
-  onFocus: (event: Event) => {},
+  onBlur: (event: Event) => void,
+  onFocus: (event: Event) => void,
   size: ButtonSize,
   state?: UIState,
   submit: boolean,
@@ -114,7 +114,7 @@ class Button extends Component<Props, State> {
     )
   }
 
-  getNodeRef = ref => {
+  setInnerRef = ref => {
     this.props.innerRef(ref)
     this.props.buttonRef(ref)
   }
@@ -186,7 +186,7 @@ class Button extends Component<Props, State> {
       <ButtonUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={this.getNodeRef}
+        innerRef={this.setInnerRef}
         onBlur={this.handleOnBlur}
         onFocus={this.handleOnFocus}
         type={type}

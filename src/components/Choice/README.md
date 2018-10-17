@@ -2,13 +2,11 @@
 
 A Choice component is a smart wrapper for [`Checkbox`](../Checkbox) and [`Radio`](../Radio) components. It is an enhanced version of the default HTML `<input>` `checkbox`/`radio`.
 
-
 ## Example
 
 ```jsx
 <Choice label="Stay classy San Diego" value="stay-classy" />
 ```
-
 
 ### Group
 
@@ -25,34 +23,32 @@ Choose an anchor:
 </ChoiceGroup>
 ```
 
-
-
 ## Props
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| autoFocus | `bool` | Automatically focuses the input. |
-| className | `string` | Custom class names to be added to the component. |
-| componentID | `string` | Namespace for the input ID. Default is `Choice`. |
-| disabled | `bool` | Disable the input. |
-| helpText | `string` | Displays text underneath input. |
-| hideLabel | `bool` | Hides the label with [VisuallyHidden](../VisuallyHidden). |
-| id | `string` | ID for the input. |
-| label | `string` | Label for the input. |
-| name | `string` | Name for the input. |
-| onBlur | `function` | Callback when the input is blurred. |
-| onChange | `function` | Callback when the input value is changed. |
-| onFocus | `function` | Callback when the input is focused. |
-| readOnly | `bool` | Disable editing of the input. |
-| state | `string` | Change input to state color. |
-| type | `string` | Determines the input type. `checkbox` or `radio`. |
-| value | `string` | The value of the input. |
-
+| Prop        | Type       | Description                                               |
+| ----------- | ---------- | --------------------------------------------------------- |
+| autoFocus   | `bool`     | Automatically focuses the input.                          |
+| className   | `string`   | Custom class names to be added to the component.          |
+| componentID | `string`   | Namespace for the input ID. Default is `Choice`.          |
+| disabled    | `bool`     | Disable the input.                                        |
+| helpText    | `string`   | Displays text underneath input.                           |
+| hideLabel   | `bool`     | Hides the label with [VisuallyHidden](../VisuallyHidden). |
+| id          | `string`   | ID for the input.                                         |
+| innerRef    | `function` | Retrieves the `input` DOM node.                           |
+| label       | `string`   | Label for the input.                                      |
+| name        | `string`   | Name for the input.                                       |
+| onBlur      | `function` | Callback when the input is blurred.                       |
+| onChange    | `function` | Callback when the input value is changed.                 |
+| onFocus     | `function` | Callback when the input is focused.                       |
+| readOnly    | `bool`     | Disable editing of the input.                             |
+| state       | `string`   | Change input to state color.                              |
+| type        | `string`   | Determines the input type. `checkbox` or `radio`.         |
+| value       | `string`   | The value of the input.                                   |
 
 ### States
 
-| Prop | Description |
-| --- | --- |
-| `error` | Changes color to red. |
-| `success` | Changes color to green. |
+| Prop      | Description              |
+| --------- | ------------------------ |
+| `error`   | Changes color to red.    |
+| `success` | Changes color to green.  |
 | `warning` | Changes color to yellow. |
