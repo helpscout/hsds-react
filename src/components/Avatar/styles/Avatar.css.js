@@ -8,9 +8,14 @@ import styled from '../../styled'
 export const config = {
   borderRadius: 3,
   borderWidth: 2,
+  boxShadow: '0 5px 8px rgb(0, 0, 0, 0.2)',
   color: getColor('blue.500'),
   position: 'relative',
   size: {
+    xl: {
+      size: 60,
+      fontSize: 13,
+    },
     lg: {
       size: 52,
       fontSize: 13,
@@ -64,6 +69,10 @@ export const CropUI = styled('div')`
   width: 100%;
 
   ${getBorderRadiusStyles()};
+
+  &.is-withShadow {
+    box-shadow: ${config.boxShadow};
+  }
 `
 
 export const ImageUI = styled('div')`
@@ -101,6 +110,11 @@ export const StatusUI = styled('div')`
   &.is-circle {
     bottom: 0;
     right: 0;
+
+    &.is-xl {
+      bottom: 3px;
+      right: 3px;
+    }
 
     &.is-lg {
       bottom: -3px;

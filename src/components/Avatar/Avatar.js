@@ -36,6 +36,7 @@ type Props = {
   size: AvatarSize,
   statusIcon?: string,
   status?: StatusDotStatus,
+  withShadow: boolean,
 }
 
 type State = {
@@ -57,6 +58,7 @@ class Avatar extends Component<Props, State> {
     showStatusBorderColor: false,
     size: 'md',
     shape: 'circle',
+    withShadow: false,
   }
 
   state = {
@@ -117,11 +119,13 @@ class Avatar extends Component<Props, State> {
   }
 
   getCropMarkup = () => {
+    const { withShadow } = this.props
     const contentMarkup = this.getContentMarkup()
     const styles = this.getCropStyles()
 
     const componentClassName = classNames(
       'c-Avatar__crop',
+      withShadow && 'is-withShadow',
       this.getShapeClassNames()
     )
 
@@ -251,6 +255,7 @@ class Avatar extends Component<Props, State> {
       shape,
       status,
       statusIcon,
+      withShadow,
       ...rest
     } = this.props
 
