@@ -58,6 +58,7 @@ const uniqueID = createUniqueIDFactory('Choice')
 class Choice extends Component<Props, State> {
   static defaultProps = {
     autoFocus: false,
+    checked: false,
     componentID: 'Choice',
     disabled: false,
     hideLabel: false,

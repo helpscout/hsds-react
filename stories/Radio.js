@@ -29,7 +29,7 @@ storiesOf('Radio', module)
   ))
   .add('stacked', () => (
     <PropProvider value={{ Radio: { kind: 'custom', stacked: true } }}>
-      <ChoiceGroup style={{ maxWidth: 600 }}>
+      <ChoiceGroup style={{ maxWidth: 600 }} multiSelect={false}>
         <Grid.Row>
           <Grid.Col size="3">
             <Radio

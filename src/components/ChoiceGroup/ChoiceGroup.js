@@ -87,21 +87,22 @@ class ChoiceGroup extends Component<Props, State> {
     this.multiSelect = multiSelect
   }
 
-  getMultiSelectValue(value: any) {
+  getMultiSelectValue(value: any, checked: boolean) {
     const { selectedValue } = this.state
     const valueIndex = selectedValue.indexOf(value)
 
-    if (valueIndex < 0) {
+    if (valueIndex < 0 && checked) {
       return selectedValue.concat(value)
     }
 
-    selectedValue.splice(valueIndex, 1)
-    return selectedValue
+    return selectedValue.filter(v => v !== value)
   }
 
   handleOnChange = (value: any, checked: boolean) => {
     const { multiSelect } = this.state
-    const selectedValue = multiSelect ? this.getMultiSelectValue(value) : value
+    const selectedValue = multiSelect
+      ? this.getMultiSelectValue(value, checked)
+      : value
 
     this.setState({ selectedValue })
     this.props.onChange(selectedValue)
