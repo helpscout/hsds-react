@@ -145,7 +145,7 @@ describe('ChoiceGroup', () => {
       )
       const input = wrapper.find('input')
 
-      input.last().simulate('change')
+      input.last().simulate('change', { target: { checked: true } })
       expect(spy).toHaveBeenCalledWith(['3'])
     })
   })
