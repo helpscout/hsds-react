@@ -8,7 +8,9 @@ import Flexy from '../Flexy'
 import HelpText from '../HelpText'
 import Text from '../Text'
 import VisuallyHidden from '../VisuallyHidden'
-import classNames from '../../utilities/classNames'
+import ChoiceGroupContext from '../ChoiceGroup/Context'
+import { includes } from '../../utilities/arrays'
+import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
@@ -35,7 +37,9 @@ type Props = {
   innerRef: (node: HTMLElement) => void,
   kind?: string,
   label?: string,
+  onBlur: (event: Event) => void,
   onChange: (event: Event, checked: boolean) => void,
+  onFocus: (event: Event) => void,
   name?: string,
   readOnly: boolean,
   stacked: boolean,
@@ -57,7 +61,9 @@ class Choice extends Component<Props, State> {
     componentID: 'Choice',
     disabled: false,
     hideLabel: false,
+    onBlur: noop,
     onChange: noop,
+    onFocus: noop,
     inputRef: noop,
     innerRef: noop,
     readOnly: false,
@@ -84,6 +90,43 @@ class Choice extends Component<Props, State> {
   handleOnChange = (value: ChoiceValue, checked: boolean) => {
     this.setState({ checked })
     this.props.onChange(value, checked)
+  }
+
+  handleOnBlur = (event: Event) => {
+    this.props.onBlur(event)
+  }
+
+  handleOnFocus = (event: Event) => {
+    this.props.onFocus(event)
+  }
+
+  handleOnBlurWithContext = (contextProps: Object) => {
+    return (...args) => {
+      this.handleOnBlur.apply(null, args)
+      if (contextProps.onBlur) {
+        contextProps.onBlur.apply(null, args)
+      }
+    }
+  }
+
+  handleOnChangeWithContext = (contextProps: Object) => {
+    return (...args) => {
+      if (contextProps.onChange) {
+        contextProps.onChange.apply(null, args)
+        this.props.onChange.apply(null, args)
+      } else {
+        this.handleOnChange.apply(null, args)
+      }
+    }
+  }
+
+  handleOnFocusWithContext = (contextProps: Object) => {
+    return (...args) => {
+      this.handleOnFocus.apply(null, args)
+      if (contextProps.onFocus) {
+        contextProps.onFocus.apply(null, args)
+      }
+    }
   }
 
   getLabelMarkup = () => {
@@ -136,6 +179,76 @@ class Choice extends Component<Props, State> {
     )
   }
 
+  getInputMarkup = (contextProps: Object) => {
+    const {
+      align,
+      autoFocus,
+      disabled,
+      helpText,
+      inputRef,
+      innerRef,
+      kind,
+      name,
+      readOnly,
+      stacked,
+      state,
+      type,
+      value,
+      ...rest
+    } = this.props
+
+    const { checked, id: choiceID } = this.state
+
+    const isChecked =
+      (contextProps.selectedValue &&
+        includes(contextProps.selectedValue, value)) ||
+      checked ||
+      false
+
+    const inputProps = {
+      ...getValidProps(rest),
+      align,
+      autoFocus,
+      checked: isChecked,
+      disabled,
+      helpText,
+      id: choiceID,
+      inputRef,
+      innerRef,
+      kind,
+      name: contextProps.name || name,
+      onBlur: this.handleOnBlurWithContext(contextProps),
+      onFocus: this.handleOnFocusWithContext(contextProps),
+      onChange: this.handleOnChangeWithContext(contextProps),
+      readOnly,
+      state,
+      type,
+      value,
+    }
+
+    const labelMarkup = this.getLabelMarkup()
+
+    const inputMarkup = (
+      <span className="c-Choice__control">
+        <Input {...inputProps} />
+      </span>
+    )
+
+    const inputLabelMarkup = stacked ? (
+      <div className="c-Choice__stackedWrapper">
+        {inputMarkup}
+        {labelMarkup}
+      </div>
+    ) : (
+      <Flexy just="left" gap="sm" align={align}>
+        <Flexy.Item>{inputMarkup}</Flexy.Item>
+        {labelMarkup}
+      </Flexy>
+    )
+
+    return inputLabelMarkup
+  }
+
   render() {
     const {
       align,
@@ -149,6 +262,9 @@ class Choice extends Component<Props, State> {
       id,
       inputRef,
       innerRef,
+      onBlur,
+      onChange,
+      onFocus,
       kind,
       label,
       name,
@@ -173,27 +289,6 @@ class Choice extends Component<Props, State> {
       className
     )
 
-    const labelMarkup = this.getLabelMarkup()
-    const helpTextMarkup = this.getHelpTextMarkup()
-
-    const inputProps = {
-      align,
-      autoFocus,
-      checked,
-      disabled,
-      helpText,
-      id: choiceID,
-      inputRef,
-      innerRef,
-      kind,
-      name,
-      onChange: this.handleOnChange,
-      readOnly,
-      state,
-      type,
-      value,
-    }
-
     const labelClassName = classNames(
       'c-Choice__label',
       checked && 'is-selected',
@@ -201,31 +296,17 @@ class Choice extends Component<Props, State> {
       stacked && 'is-stacked'
     )
 
-    const inputMarkup = (
-      <span className="c-Choice__control">
-        <Input {...inputProps} />
-      </span>
-    )
-
-    const inputLabelMarkup = stacked ? (
-      <div>
-        {inputMarkup}
-        {labelMarkup}
-      </div>
-    ) : (
-      <Flexy just="left" gap="sm" align={align}>
-        <Flexy.Item>{inputMarkup}</Flexy.Item>
-        {labelMarkup}
-      </Flexy>
-    )
-
     return (
-      <ChoiceUI {...getValidProps(rest)} className={componentClassName}>
-        <ChoiceLabelUI htmlFor={choiceID} className={labelClassName}>
-          {inputLabelMarkup}
-        </ChoiceLabelUI>
-        {helpTextMarkup}
-      </ChoiceUI>
+      <ChoiceGroupContext.Consumer>
+        {(contextProps: Object) => (
+          <ChoiceUI {...getValidProps(rest)} className={componentClassName}>
+            <ChoiceLabelUI htmlFor={choiceID} className={labelClassName}>
+              {this.getInputMarkup(contextProps)}
+            </ChoiceLabelUI>
+            {this.getHelpTextMarkup()}
+          </ChoiceUI>
+        )}
+      </ChoiceGroupContext.Consumer>
     )
   }
 }

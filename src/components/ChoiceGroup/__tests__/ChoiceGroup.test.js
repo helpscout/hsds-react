@@ -229,7 +229,7 @@ describe('ChoiceGroup', () => {
 
       expect(
         wrapper
-          .find(Radio)
+          .find('input')
           .first()
           .props().name
       ).toBe('MUGATU')
@@ -245,11 +245,11 @@ describe('ChoiceGroup', () => {
           <Radio value="mugatu" />
         </ChoiceGroup>
       )
-      const radios = wrapper.find(Radio)
+      const radios = wrapper.find('input')
 
-      expect(radios.get(0).props.checked).toBeFalsy()
-      expect(radios.get(1).props.checked).toBeFalsy()
-      expect(radios.get(2).props.checked).toBeFalsy()
+      expect(radios.get(0).checked).toBeFalsy()
+      expect(radios.get(1).checked).toBeFalsy()
+      expect(radios.get(2).checked).toBeFalsy()
     })
 
     test('Checks a Choice if value matches', () => {
@@ -260,11 +260,11 @@ describe('ChoiceGroup', () => {
           <Radio value="mugatu" />
         </ChoiceGroup>
       )
-      const radios = wrapper.find(Radio)
+      const radios = wrapper.find('input')
 
-      expect(radios.get(0).props.checked).toBeFalsy()
-      expect(radios.get(1).props.checked).toBeTruthy()
-      expect(radios.get(2).props.checked).toBeFalsy()
+      expect(radios.get(0).checked).toBeFalsy()
+      expect(radios.get(1).checked).toBeTruthy()
+      expect(radios.get(2).checked).toBeFalsy()
     })
 
     test('Can check multiple values', () => {
@@ -276,11 +276,11 @@ describe('ChoiceGroup', () => {
           <Radio value="mugatu" />
         </ChoiceGroup>
       )
-      const radios = wrapper.find(Radio)
+      const radios = wrapper.find('input')
 
-      expect(radios.get(0).props.checked).toBeTruthy()
-      expect(radios.get(1).props.checked).toBeTruthy()
-      expect(radios.get(2).props.checked).toBeFalsy()
+      expect(radios.get(0).checked).toBeTruthy()
+      expect(radios.get(1).checked).toBeTruthy()
+      expect(radios.get(2).checked).toBeFalsy()
     })
 
     test('Deselects checked value on click', () => {
