@@ -2,9 +2,10 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from '../../utilities/classNames'
+import Context from './Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
-import { includes } from '../../utilities/arrays'
+import get from '../../utilities/get'
 import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
@@ -56,6 +57,15 @@ class ChoiceGroup extends Component<Props, State> {
     }
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    /* istanbul ignore else */
+    if (nextProps.value !== this.props.value) {
+      this.setState({
+        selectedValue: [].concat(nextProps.value),
+      })
+    }
+  }
+
   componentWillMount() {
     const child = this.props.children ? this.props.children[0] : false
     let multiSelect
@@ -77,54 +87,58 @@ class ChoiceGroup extends Component<Props, State> {
     this.multiSelect = multiSelect
   }
 
-  getMultiSelectValue(value: any) {
+  getMultiSelectValue(value: any, checked: boolean) {
     const { selectedValue } = this.state
     const valueIndex = selectedValue.indexOf(value)
 
-    if (valueIndex < 0) {
+    if (valueIndex < 0 && checked) {
       return selectedValue.concat(value)
     }
 
-    selectedValue.splice(valueIndex, 1)
-    return selectedValue
+    return selectedValue.filter(v => v !== value)
   }
 
   handleOnChange = (value: any, checked: boolean) => {
     const { multiSelect } = this.state
-    const selectedValue = multiSelect ? this.getMultiSelectValue(value) : value
+    const selectedValue = multiSelect
+      ? this.getMultiSelectValue(value, checked)
+      : value
 
     this.setState({ selectedValue })
     this.props.onChange(selectedValue)
   }
 
-  getChildrenMarkup = () => {
-    const {
-      isResponsive,
-      onBlur,
-      onFocus,
-      choiceMaxWidth,
-      children,
-      name,
-    } = this.props
+  getContextProps = () => {
+    const { onBlur, onFocus, name } = this.props
 
-    const { id, selectedValue } = this.state
+    const { selectedValue } = this.state
+
+    return {
+      onBlur,
+      onChange: this.handleOnChange,
+      onFocus,
+      name,
+      selectedValue,
+    }
+  }
+
+  getChildrenMarkup = () => {
+    const { isResponsive, choiceMaxWidth, children } = this.props
+
+    const { id } = this.state
 
     return (
       children &&
       React.Children.map(children, (child, index) => {
+        const key = get(child, 'props.id') || `${id}-${index}`
+
         return (
           <FormGroup.Choice
-            key={`${id}-${index}`}
+            key={key}
             maxWidth={choiceMaxWidth}
             isResponsive={isResponsive}
           >
-            {React.cloneElement(child, {
-              checked: includes(selectedValue, child.props.value),
-              onBlur,
-              onChange: this.handleOnChange,
-              onFocus,
-              name,
-            })}
+            {child}
           </FormGroup.Choice>
         )
       })
@@ -163,13 +177,15 @@ class ChoiceGroup extends Component<Props, State> {
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <ChoiceGroupUI
-            {...getValidProps(rest)}
-            className={componentClassName}
-            id={this.getIdFromContextProps(props)}
-          >
-            {childrenMarkup}
-          </ChoiceGroupUI>
+          <Context.Provider value={this.getContextProps()}>
+            <ChoiceGroupUI
+              {...getValidProps(rest)}
+              className={componentClassName}
+              id={this.getIdFromContextProps(props)}
+            >
+              {childrenMarkup}
+            </ChoiceGroupUI>
+          </Context.Provider>
         )}
       </FormLabelContext.Consumer>
     )

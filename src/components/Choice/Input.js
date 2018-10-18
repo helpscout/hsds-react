@@ -72,10 +72,8 @@ class Input extends Component<Props, State> {
 
   handleOnChange = (event: SyntheticEvent<HTMLInputElement>) => {
     const { id, onChange, value } = this.props
-    const { currentTarget } = event
 
-    onChange(value, currentTarget.checked, id)
-
+    onChange(value, event.target.checked, id)
     // Prevents duplicate firing of onChange event
     event.stopPropagation()
   }
@@ -129,8 +127,6 @@ class Input extends Component<Props, State> {
       disabled,
       helpText,
       id,
-      inputRef,
-      innerRef,
       kind,
       readOnly,
       name,

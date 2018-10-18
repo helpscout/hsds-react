@@ -41,6 +41,7 @@ Choose an anchor:
 | onChange    | `function` | Callback when the input value is changed.                 |
 | onFocus     | `function` | Callback when the input is focused.                       |
 | readOnly    | `bool`     | Disable editing of the input.                             |
+| stacked     | `bool`     | Stacks the input above the label.                         |
 | state       | `string`   | Change input to state color.                              |
 | type        | `string`   | Determines the input type. `checkbox` or `radio`.         |
 | value       | `string`   | The value of the input.                                   |
