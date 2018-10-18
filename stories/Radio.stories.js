@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { PropProvider, Radio, ChoiceGroup } from '../src/index.js'
+import { Grid, PropProvider, Radio, ChoiceGroup } from '../src/index.js'
 
 storiesOf('Radio', module)
   .add('default', () => <Radio label="Label" helpText="Help description" />)
@@ -24,6 +24,28 @@ storiesOf('Radio', module)
         <Radio label="Derek (Disable)" value="derek" disabled />
         <Radio label="Hansel" value="hansel" />
         <Radio label="Mugatu" value="mugatu" />
+      </ChoiceGroup>
+    </PropProvider>
+  ))
+  .add('stacked', () => (
+    <PropProvider value={{ Radio: { kind: 'custom', stacked: true } }}>
+      <ChoiceGroup style={{ maxWidth: 600 }} multiSelect={false}>
+        <Grid.Row>
+          <Grid.Col size="3">
+            <Radio
+              label="Derek (Disable)"
+              helpText="Help text"
+              value="derek"
+              disabled
+            />
+          </Grid.Col>
+          <Grid.Col size="3">
+            <Radio label="Hansel" helpText="Help text" value="hansel" />
+          </Grid.Col>
+          <Grid.Col size="3">
+            <Radio label="Mugatu" helpText="Help text" value="mugatu" />
+          </Grid.Col>
+        </Grid.Row>
       </ChoiceGroup>
     </PropProvider>
   ))

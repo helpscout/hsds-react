@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Choice from '../Choice'
 import ChoiceInput from '../Input'
+import ChoiceGroup from '../../ChoiceGroup'
 import HelpText from '../../HelpText'
 import Text from '../../Text'
 import VisuallyHidden from '../../VisuallyHidden'
@@ -274,6 +275,15 @@ describe('States', () => {
   })
 })
 
+describe('Stacked', () => {
+  test('Renders components within a stacked wrapper', () => {
+    const wrapper = mount(<Choice label="Label" stacked />)
+    const el = wrapper.find('.c-Choice__stackedWrapper')
+
+    expect(el.length).toBe(1)
+  })
+})
+
 describe('innerRef', () => {
   test('Can retrieve innerRef DOM node', () => {
     const spy = jest.fn()
@@ -281,5 +291,86 @@ describe('innerRef', () => {
     const o = wrapper.find('input').getNode()
 
     expect(spy).toHaveBeenCalledWith(o)
+  })
+})
+
+describe('ChoiceGroup.Context', () => {
+  test('Inherits name from context', () => {
+    const wrapper = mount(
+      <ChoiceGroup name="buddy">
+        <Choice name="elf" />
+      </ChoiceGroup>
+    )
+    const el = wrapper.find('input')
+
+    expect(el.prop('name')).toBe('buddy')
+  })
+
+  test('Can fire onBlur from ChoiceGroup and Choice', () => {
+    const groupSpy = jest.fn()
+    const spy = jest.fn()
+
+    const wrapper = mount(
+      <ChoiceGroup name="buddy" onBlur={groupSpy}>
+        <Choice name="elf" onBlur={spy} />
+      </ChoiceGroup>
+    )
+    const el = wrapper.find('input')
+
+    el.simulate('blur')
+
+    expect(groupSpy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Can fire onFocus from ChoiceGroup and Choice', () => {
+    const groupSpy = jest.fn()
+    const spy = jest.fn()
+
+    const wrapper = mount(
+      <ChoiceGroup name="buddy" onFocus={groupSpy}>
+        <Choice name="elf" onFocus={spy} />
+      </ChoiceGroup>
+    )
+    const el = wrapper.find('input')
+
+    el.simulate('focus')
+
+    expect(groupSpy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Can fire onChange from ChoiceGroup and Choice', () => {
+    const groupSpy = jest.fn()
+    const spy = jest.fn()
+
+    const wrapper = mount(
+      <ChoiceGroup name="buddy" onChange={groupSpy}>
+        <Choice name="elf" onChange={spy} />
+      </ChoiceGroup>
+    )
+    const el = wrapper.find('input')
+
+    el.simulate('change')
+
+    expect(groupSpy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Inherits checked from ChoiceGroup', () => {
+    const wrapper = mount(
+      <ChoiceGroup name="buddy" value="elf">
+        <Choice value="elf" />
+      </ChoiceGroup>
+    )
+    const el = wrapper.find('input')
+
+    expect(el.prop('checked')).toBe(true)
+
+    wrapper.setProps({
+      value: 'nope',
+    })
+
+    expect(el.prop('checked')).toBe(false)
   })
 })
