@@ -67,7 +67,6 @@
   "dependencies": {
     "@helpscout/fancy": "^2.1.1",
     "@helpscout/react-utils": "^1.0.1",
-    "@seedcss/seed-alert": "0.0.6",
     "@seedcss/seed-button": "0.0.6",
     "@seedcss/seed-color-scheme": "0.0.6",
     "@seedcss/seed-control": "0.0.6",
