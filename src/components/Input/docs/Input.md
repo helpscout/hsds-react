@@ -39,6 +39,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | id                       | `string`             | ID for the input.                                                          |
 | inlinePrefix             | `string`             | Text to appear before the input.                                           |
 | inlineSuffix             | `string`             | Text to after before the input.                                            |
+| innerRef                 | `function`           | Retrieves the `input` DOM node.                                            |
 | isFirst                  | `boolean`            | Helps render component without right borders.                              |
 | isFocused                | `string`             | Determines if the component is focused.                                    |
 | isLast                   | `boolean`            | Helps render component without left borders.                               |

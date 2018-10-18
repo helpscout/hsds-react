@@ -38,7 +38,6 @@ Once you do, `np` will:
 
 * Run the linter
 * Run all Jest tests
-* Run Karma acceptance tests
 * Build/bundle `.js` files
 * Build/bunlde `.css`/`.js` files
 * Semver bump the `git` Tag

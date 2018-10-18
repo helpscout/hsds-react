@@ -50,6 +50,7 @@ type Props = {
   inlinePrefix?: string,
   inlineSuffix?: string,
   inputRef: (ref: HTMLElement) => void,
+  innerRef: (ref: HTMLElement) => void,
   isFocused: boolean,
   isFirst: boolean,
   isNotOnly: boolean,
@@ -105,6 +106,7 @@ export class Input extends Component<Props, State> {
     errorIcon: 'alert',
     forceAutoFocusTimeout: 0,
     inputRef: noop,
+    innerRef: noop,
     isFocused: false,
     isFirst: false,
     isNotOnly: false,
@@ -357,6 +359,7 @@ export class Input extends Component<Props, State> {
   setInputNodeRef = (node: InputNode) => {
     this.inputNode = node
     this.props.inputRef(node)
+    this.props.innerRef(node)
   }
 
   getHelpTextMarkup = () => {

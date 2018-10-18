@@ -283,3 +283,13 @@ describe('Stacked', () => {
     expect(flexy.length).toBe(0)
   })
 })
+
+describe('innerRef', () => {
+  test('Can retrieve innerRef DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Choice innerRef={spy} />)
+    const o = wrapper.find('input').getNode()
+
+    expect(spy).toHaveBeenCalledWith(o)
+  })
+})
