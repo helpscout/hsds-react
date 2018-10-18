@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Choice from '../Choice'
 import ChoiceInput from '../Input'
+import Flexy from '../../Flexy'
 import HelpText from '../../HelpText'
 import Text from '../../Text'
 import VisuallyHidden from '../../VisuallyHidden'
@@ -271,5 +272,14 @@ describe('States', () => {
     expect(o.prop('className')).toContain(`is-${state}`)
     expect(input.prop('state')).toBe(state)
     wrapper.unmount()
+  })
+})
+
+describe('Stacked', () => {
+  test('Does not wrap the label in a Flexy component', () => {
+    const wrapper = mount(<Choice label="Label" stacked />)
+
+    const flexy = wrapper.find(Flexy)
+    expect(flexy.length).toBe(0)
   })
 })

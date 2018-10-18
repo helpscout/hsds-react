@@ -96,21 +96,26 @@ class Choice extends Component<Props, State> {
       stacked && 'is-stacked'
     )
 
-    let labelTextMarkup = (
+    let labelTextMarkup = children
+    if (!children) {
+      labelTextMarkup = hideLabel ? (
+        <VisuallyHidden>{label}</VisuallyHidden>
+      ) : (
+        <Text muted={disabled}>{label}</Text>
+      )
+    }
+
+    const labelMarkup = (
       <ChoiceLabelTextUI className={className}>
-        {hideLabel ? (
-          <VisuallyHidden>{label}</VisuallyHidden>
-        ) : (
-          <Text muted={disabled}>{label}</Text>
-        )}
+        {labelTextMarkup}
       </ChoiceLabelTextUI>
     )
 
     if (stacked) {
-      return labelTextMarkup
+      return labelMarkup
     }
 
-    return <Flexy.Block>{labelTextMarkup}</Flexy.Block>
+    return <Flexy.Block>{labelMarkup}</Flexy.Block>
   }
 
   getHelpTextMarkup = () => {
