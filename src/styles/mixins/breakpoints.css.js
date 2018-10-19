@@ -1,7 +1,7 @@
 // @flow
 import { isFunction, isString, isNumber } from '../../utilities/is'
 
-const breakpoints = {
+export const breakpoints = {
   xs: 0,
   sm: '544px',
   md: '768px',
@@ -40,4 +40,20 @@ export function breakpoint(
       compiledStyles
     }
   }`
+}
+
+export function breakpointAll(content: string): string {
+  return `
+    ${content}
+
+    @media (min-width: ${breakpoints.sm}) {
+      ${content}
+    }
+    @media (min-width: ${breakpoints.md}) {
+      ${content}
+    }
+    @media (min-width: ${breakpoints.lg}) {
+      ${content}
+    }
+  `
 }
