@@ -1,30 +1,27 @@
-import React from 'react'
-import Block from './Block'
-import classNames from '../../utilities/classNames'
-import { standardSizeTypes } from '../../constants/propTypes'
+import React, { PureComponent as Component } from 'react'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { ControlUI } from './styles/Control.css.js'
 
-export const propTypes = {
-  sizes: standardSizeTypes,
+class Control extends Component {
+  static defaultProps = {
+    size: 'md',
+  }
+
+  render() {
+    const { className, size, ...rest } = this.props
+
+    const componentClassName = classNames(
+      'c-SkeletonControl',
+      size && `is-${size}`,
+      className
+    )
+
+    return <ControlUI {...rest} className={componentClassName} />
+  }
 }
 
-const defaultProps = {
-  size: 'md',
-}
-
-const Control = props => {
-  const { className, size, ...rest } = props
-
-  const componentClassName = classNames(
-    'c-SkeletonControl',
-    size && `is-${size}`,
-    className
-  )
-
-  return <Block className={componentClassName} {...rest} />
-}
-
-Control.propTypes = propTypes
-Control.defaultProps = defaultProps
-Control.displayName = 'SkeletonControl'
+namespaceComponent(COMPONENT_KEY.Control)(Control)
 
 export default Control

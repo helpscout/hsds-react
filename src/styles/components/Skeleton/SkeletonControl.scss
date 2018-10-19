@@ -1,17 +1,2 @@
-.c-SkeletonControl {
-  @import "../../resets/base";
-  $sizes: (
-    lg: 48px,
-    md: 40px,
-    sm: 32px,
-  );
-  border-radius: 4px;
-  height: 40px;
-  width: 100%;
-
-  @each $size, $height in $sizes {
-    &.is-#{$size} {
-      height: $height;
-    }
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.
