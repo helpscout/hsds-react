@@ -17,3 +17,10 @@ storiesOf('CardList', module)
       <ArticleCard title="Hello three" content="Three" />
     </CardList>
   ))
+  .add('Animation Props', () => (
+    <CardList animationDelay={500} animationStagger={300}>
+      <Card>One</Card>
+      <Card>Two</Card>
+      <Card>Three</Card>
+    </CardList>
+  ))

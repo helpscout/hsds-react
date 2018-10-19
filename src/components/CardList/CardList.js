@@ -10,6 +10,7 @@ import { COMPONENT_KEY } from './utils'
 import classNames from '../../utilities/classNames'
 
 type Props = {
+  animationDelay: number,
   animationEasing: string,
   animationSequence: string,
   animationStagger: number,
@@ -20,6 +21,7 @@ type Props = {
 
 class CardList extends PureComponent<Props> {
   static defaultProps = {
+    animationDelay: 0,
     animationEasing: 'ease',
     animationSequence: 'fade up',
     animationStagger: 60,
@@ -27,7 +29,7 @@ class CardList extends PureComponent<Props> {
   }
 
   getChildrenMarkup = () => {
-    const { animationEasing, animationSequence, children } = this.props
+    const { animationDelay, animationEasing, animationSequence, children } = this.props
 
     return React.Children.map(children, (child, index) => {
       if (!isComponentTypeCard(child)) {
@@ -36,7 +38,12 @@ class CardList extends PureComponent<Props> {
       const id = child.props.id || child.key || `cardListChild-${index}`
 
       return (
-        <Animate key={id} easing={animationEasing} sequence={animationSequence}>
+        <Animate
+          key={id}
+          delay={animationDelay}
+          easing={animationEasing}
+          sequence={animationSequence}
+        >
           {child}
         </Animate>
       )
