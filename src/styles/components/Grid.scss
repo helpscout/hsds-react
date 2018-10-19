@@ -1,10 +1,2 @@
-$seed-grid-namespace-col: "c-Col";
-$seed-grid-namespace-container: "c-Container";
-$seed-grid-namespace-row: "c-Row";
-$seed-grid-namespace-row-flex: "c-Row-flex";
-
-@import "pack/seed-grid/_index";
-
-.c-Grid {
-  @import "../resets/base";
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

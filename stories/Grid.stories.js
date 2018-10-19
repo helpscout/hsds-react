@@ -13,6 +13,49 @@ storiesOf('Grid', module)
       </Grid.Col>
     </Grid>
   ))
+  .add('sizes', () => (
+    <div>
+      <Grid style={{ marginBottom: 10 }}>
+        <Grid.Col size="6@md">
+          <Card hover>6</Card>
+        </Grid.Col>
+        <Grid.Col size="6@md">
+          <Card hover>6</Card>
+        </Grid.Col>
+      </Grid>
+      <Grid style={{ marginBottom: 10 }}>
+        <Grid.Col size="4@md">
+          <Card hover>4</Card>
+        </Grid.Col>
+        <Grid.Col size="4@md">
+          <Card hover>4</Card>
+        </Grid.Col>
+        <Grid.Col size="4@md">
+          <Card hover>4</Card>
+        </Grid.Col>
+      </Grid>
+      <Grid style={{ marginBottom: 10 }}>
+        <Grid.Col size="2@md">
+          <Card hover>2</Card>
+        </Grid.Col>
+        <Grid.Col size="2@md">
+          <Card hover>2</Card>
+        </Grid.Col>
+        <Grid.Col size="2@md">
+          <Card hover>2</Card>
+        </Grid.Col>
+        <Grid.Col size="2@md">
+          <Card hover>2</Card>
+        </Grid.Col>
+        <Grid.Col size="2@md">
+          <Card hover>2</Card>
+        </Grid.Col>
+        <Grid.Col size="2@md">
+          <Card hover>2</Card>
+        </Grid.Col>
+      </Grid>
+    </div>
+  ))
   .add('form', () => (
     <form>
       <FormGroup.Grid>

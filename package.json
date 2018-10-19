@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -75,7 +75,6 @@
     "@seedcss/seed-control": "0.0.6",
     "@seedcss/seed-dash": "0.0.6",
     "@seedcss/seed-family": "0.0.6",
-    "@seedcss/seed-grid": "0.0.6",
     "@seedcss/seed-list": "0.0.6",
     "@seedcss/seed-this": "0.0.6",
     "highlight.js": "^9.12.0",
