@@ -73,7 +73,6 @@
     "@seedcss/seed-control": "0.0.6",
     "@seedcss/seed-dash": "0.0.6",
     "@seedcss/seed-family": "0.0.6",
-    "@seedcss/seed-grid": "0.0.6",
     "@seedcss/seed-list": "0.0.6",
     "@seedcss/seed-this": "0.0.6",
     "closest": "0.0.1",
