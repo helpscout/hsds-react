@@ -38,6 +38,8 @@ import image from '../../icons/image.svg'
 import link from '../../icons/link.svg'
 import meatball from '../../icons/meatball.svg'
 import minimize from '../../icons/minimize.svg'
+import plusLarge from '../../icons/plus-large.svg'
+import plusSmall from '../../icons/plus-small.svg'
 import search from '../../icons/search.svg'
 import spinner from '../../icons/spinner.svg'
 import star from '../../icons/star.svg'
@@ -93,6 +95,9 @@ const ICONS = {
   meatball,
   minimize,
   'option-dots': meatball,
+  plus: plusLarge,
+  'plus-large': plusLarge,
+  'plus-small': plusSmall,
   search,
   spinner,
   star,
