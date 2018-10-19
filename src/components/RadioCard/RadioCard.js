@@ -1,7 +1,9 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import Icon from '../Icon'
+import ChoiceGroupContext from '../ChoiceGroup/Context'
 import { classNames } from '../../utilities/classNames'
+import { includes } from '../../utilities/arrays'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
@@ -98,19 +100,18 @@ class RadioCard extends Component<Props, State> {
     return isFocused && <FocusUI className="c-RadioCard__focus" />
   }
 
-  setInputNodeRef = (node: HTMLInputElement) => {
-    this.inputNode = node
-    this.props.inputRef(node)
-    this.props.innerRef(node)
-  }
-
-  render() {
-    const { className, checked, icon, title, ...rest } = this.props
+  getCardMarkup = (contextProps: Object) => {
+    const { className, checked, icon, title, value, ...rest } = this.props
     const { id, isFocused } = this.state
+
+    const isChecked =
+      (contextProps.selectedValue &&
+        includes(contextProps.selectedValue, value)) ||
+      checked
 
     const componentClassName = classNames(
       'c-RadioCard',
-      checked && 'is-checked',
+      isChecked && 'is-checked',
       isFocused && 'is-focused',
       className
     )
@@ -120,22 +121,37 @@ class RadioCard extends Component<Props, State> {
         <IconWrapperUI
           className={classNames(
             'c-RadioCard__iconWrapper',
-            checked && 'is-checked'
+            isChecked && 'is-checked'
           )}
         >
           {this.getIconMarkup()}
         </IconWrapperUI>
         <Radio
           {...rest}
-          checked={checked}
+          checked={isChecked}
           kind="custom"
           id={id}
           inputRef={this.setInputNodeRef}
           onBlur={this.handleOnBlur}
           onFocus={this.handleOnFocus}
+          value={value}
         />
         {this.getFocusMarkup()}
       </RadioCardUI>
+    )
+  }
+
+  setInputNodeRef = (node: HTMLInputElement) => {
+    this.inputNode = node
+    this.props.inputRef(node)
+    this.props.innerRef(node)
+  }
+
+  render() {
+    return (
+      <ChoiceGroupContext.Consumer>
+        {this.getCardMarkup}
+      </ChoiceGroupContext.Consumer>
     )
   }
 }
