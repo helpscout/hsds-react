@@ -1,17 +1,17 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Paragraph from '../Paragraph'
 import Text from '../Text'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Paragraph />)
+    const wrapper = mount(<Paragraph />)
 
     expect(wrapper.hasClass('c-SkeletonParagraph')).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Paragraph className="ron" />)
+    const wrapper = mount(<Paragraph className="ron" />)
 
     expect(wrapper.hasClass('c-SkeletonParagraph')).toBeTruthy()
     expect(wrapper.hasClass('ron')).toBeTruthy()
@@ -20,9 +20,18 @@ describe('className', () => {
 
 describe('content', () => {
   test('Contains Skeleton.Text elements', () => {
-    const wrapper = shallow(<Paragraph />)
+    const wrapper = mount(<Paragraph />)
     const text = wrapper.find(Text)
 
     expect(text.length > 1).toBeTruthy()
+  })
+})
+
+describe('Animations', () => {
+  test('Can disable animations for child Text components', () => {
+    const wrapper = mount(<Paragraph withAnimations={false} />)
+    const text = wrapper.find(Text).first()
+
+    expect(text.hasClass('is-withAnimations')).toBe(false)
   })
 })

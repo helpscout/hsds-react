@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from './Text'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 
-const Paragraph = props => {
-  const { className, ...rest } = props
+class Paragraph extends Component {
+  render() {
+    const { className, withAnimations, ...rest } = this.props
 
-  const componentClassName = classNames('c-SkeletonParagraph', className)
+    const componentClassName = classNames('c-SkeletonParagraph', className)
 
-  return (
-    <div className={componentClassName} {...rest}>
-      <Text width="90%" />
-      <Text width="60%" />
-      <Text width="70%" />
-      <Text width="20%" />
-    </div>
-  )
+    return (
+      <div {...getValidProps(rest)} className={componentClassName}>
+        <Text width="90%" withAnimations={withAnimations} />
+        <Text width="60%" withAnimations={withAnimations} />
+        <Text width="70%" withAnimations={withAnimations} />
+        <Text width="20%" withAnimations={withAnimations} />
+      </div>
+    )
+  }
 }
 
-Paragraph.displayName = 'SkeletonParagraph'
+namespaceComponent(COMPONENT_KEY.Paragraph)(Paragraph)
 
 export default Paragraph

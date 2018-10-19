@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "1.8.4",
+  "version": "1.8.7",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -72,7 +72,6 @@
     "@seedcss/seed-control": "0.0.6",
     "@seedcss/seed-dash": "0.0.6",
     "@seedcss/seed-family": "0.0.6",
-    "@seedcss/seed-grid": "0.0.6",
     "@seedcss/seed-list": "0.0.6",
     "@seedcss/seed-this": "0.0.6",
     "closest": "0.0.1",
@@ -97,6 +96,7 @@
     "babel-eslint": "8.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.0.0",
+    "babel-plugin-emotion": "^9.2.11",
     "babel-plugin-inline-svg": "0.1.0",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-flow-strip-types": "6.22.0",

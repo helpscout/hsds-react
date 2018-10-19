@@ -1,23 +1,29 @@
-import React from 'react'
-import classNames from '../../utilities/classNames'
+import React, { PureComponent as Component } from 'react'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 import Container from './Container'
 import Row from './Row'
 import Col from './Col'
 
-const Grid = props => {
-  const { className, children, ...rest } = props
+class Grid extends Component {
+  static Container = Container
+  static Row = Row
+  static Col = Col
 
-  const componentClassName = classNames('c-Grid', className)
+  render() {
+    const { className, children, ...rest } = this.props
 
-  return (
-    <Container className={componentClassName} {...rest}>
-      <Row>{children}</Row>
-    </Container>
-  )
+    const componentClassName = classNames('c-Grid', className)
+
+    return (
+      <Container className={componentClassName} {...rest}>
+        <Row>{children}</Row>
+      </Container>
+    )
+  }
 }
 
-Grid.Container = Container
-Grid.Row = Row
-Grid.Col = Col
+namespaceComponent(COMPONENT_KEY.Grid)(Grid)
 
 export default Grid

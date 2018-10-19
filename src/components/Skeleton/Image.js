@@ -1,15 +1,19 @@
-import React from 'react'
-import Block from './Block'
-import classNames from '../../utilities/classNames'
+import React, { PureComponent as Component } from 'react'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { ImageUI } from './styles/Image.css.js'
 
-const Image = props => {
-  const { className, ...rest } = props
+class Image extends Component {
+  render() {
+    const { className, ...rest } = this.props
 
-  const componentClassName = classNames('c-SkeletonImage', className)
+    const componentClassName = classNames('c-SkeletonImage', className)
 
-  return <Block className={componentClassName} {...rest} />
+    return <ImageUI {...rest} className={componentClassName} />
+  }
 }
 
-Image.displayName = 'SkeletonImage'
+namespaceComponent(COMPONENT_KEY.Image)(Image)
 
 export default Image

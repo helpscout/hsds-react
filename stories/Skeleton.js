@@ -19,6 +19,21 @@ stories.add('default', () => (
   </div>
 ))
 
+stories.add('without animations', () => (
+  <div style={{ width: 300 }}>
+    <Flexy>
+      <Flexy.Item>
+        <Skeleton.Avatar size="lg" withAnimations={false} />
+      </Flexy.Item>
+      <Flexy.Block>
+        <Skeleton.Heading width="70%" withAnimations={false} />
+        <Skeleton.Text width="40%" withAnimations={false} />
+      </Flexy.Block>
+    </Flexy>
+    <Skeleton.Paragraph withAnimations={false} />
+  </div>
+))
+
 stories.add('avatar', () => (
   <div>
     <Skeleton.Avatar size="lg" />

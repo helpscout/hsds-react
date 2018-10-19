@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import RadioCard from '../RadioCard'
+import ChoiceGroup from '../../ChoiceGroup'
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
@@ -163,5 +164,22 @@ describe('Focus', () => {
     const wrapper = mount(<RadioCard isFocused />)
 
     expect(wrapper.hasClass('is-focused')).toBe(true)
+  })
+})
+
+describe('ChoiceGroup.Context', () => {
+  test('Can propogate checked value', () => {
+    const wrapper = mount(
+      <ChoiceGroup>
+        <RadioCard value="buddy" />
+        <RadioCard value="elf" />
+      </ChoiceGroup>
+    )
+    const el = wrapper.find('input').first()
+
+    expect(el.prop('checked')).toBe(false)
+
+    el.simulate('change', { target: { checked: true } })
+    expect(el.prop('checked')).toBe(true)
   })
 })
