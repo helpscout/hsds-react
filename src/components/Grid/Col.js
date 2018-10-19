@@ -1,25 +1,32 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames, variantClassNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { ColUI } from './styles/Col.css.js'
 
-export const propTypes = {
-  size: PropTypes.string,
+export type ColSize = 'md' | 'sm' | 'xs'
+export interface Props {
+  className?: string;
+  children?: any;
+  size?: ColSize;
 }
 
-const Col = props => {
-  const { className, children, size, ...rest } = props
+class Col extends Component<Props> {
+  render() {
+    const { className, children, size, ...rest } = this.props
 
-  const sizeClassName = size ? variantClassNames('c-Col', size) : null
+    const sizeClassName = size ? variantClassNames('is', size) : null
+    const componentClassName = classNames('c-Col', sizeClassName, className)
 
-  const componentClassName = classNames('c-Col', sizeClassName, className)
-
-  return (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
+    return (
+      <ColUI {...getValidProps(rest)} className={componentClassName}>
+        {children}
+      </ColUI>
+    )
+  }
 }
 
-Col.propTypes = propTypes
+namespaceComponent(COMPONENT_KEY.Col, Col)
 
 export default Col
