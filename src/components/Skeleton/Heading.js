@@ -1,24 +1,24 @@
-import React from 'react'
-import { default as Text, propTypes as textProps } from './Text'
-import classNames from '../../utilities/classNames'
+import React, { PureComponent as Component } from 'react'
+import Text from './Text'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
 
-export const propTypes = textProps
+class Heading extends Component {
+  static defaultProps = {
+    style: {},
+    width: '70%',
+  }
 
-const defaultProps = {
-  style: {},
-  width: '70%',
+  render() {
+    const { className, ...rest } = this.props
+
+    const componentClassName = classNames('c-SkeletonHeading', className)
+
+    return <Text {...rest} className={componentClassName} heading />
+  }
 }
 
-const Heading = props => {
-  const { className, ...rest } = props
-
-  const componentClassName = classNames('c-SkeletonHeading', className)
-
-  return <Text className={componentClassName} heading {...rest} />
-}
-
-Heading.propTypes = propTypes
-Heading.defaultProps = defaultProps
-Heading.displayName = 'SkeletonHeading'
+namespaceComponent(COMPONENT_KEY.Heading)(Heading)
 
 export default Heading
