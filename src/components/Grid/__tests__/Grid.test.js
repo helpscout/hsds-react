@@ -1,18 +1,18 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Grid from '..'
 import Container from '../Container'
 import Row from '../Row'
 
 describe('ClassName', () => {
   test('Has the correct CSS class', () => {
-    const wrapper = shallow(<Grid />)
+    const wrapper = mount(<Grid />)
 
     expect(wrapper.hasClass('c-Grid')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = shallow(<Grid className="mugatu" />)
+    const wrapper = mount(<Grid className="mugatu" />)
 
     expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
@@ -20,7 +20,7 @@ describe('ClassName', () => {
 
 describe('Children', () => {
   test('Can render child components', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Grid>
         <div className="mugatu" />
       </Grid>
@@ -32,7 +32,7 @@ describe('Children', () => {
   })
 
   test('Contains Container + Row by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Grid>
         <div className="mugatu" />
       </Grid>
@@ -49,7 +49,7 @@ describe('Children', () => {
 describe('Style', () => {
   test('Accepts style prop', () => {
     const style = { background: 'red' }
-    const wrapper = shallow(<Grid style={style} />)
+    const wrapper = mount(<Grid style={style} />)
 
     expect(wrapper.html()).toContain('style')
     expect(wrapper.html()).toContain('background')
@@ -59,12 +59,12 @@ describe('Style', () => {
 
 describe('Variants', () => {
   test('Correctly renders fluid variant', () => {
-    const wrapper = mount(<Grid fluid />)
+    const wrapper = mount(<Grid isFluid />)
     const o = wrapper.find(Container)
 
     expect(o.hasClass('c-Container')).toBeTruthy()
-    expect(o.hasClass('c-Container--fluid')).toBeTruthy()
-    expect(o.hasClass('c-Container--responsive')).not.toBeTruthy()
+    expect(o.hasClass('is-fluid')).toBeTruthy()
+    expect(o.hasClass('is-responsive')).not.toBeTruthy()
 
     wrapper.unmount()
   })

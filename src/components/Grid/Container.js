@@ -1,29 +1,57 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from '../../utilities/classNames'
+import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { ContainerUI } from './styles/Container.css.js'
 
-export const propTypes = {
-  fluid: PropTypes.bool,
-  responsive: PropTypes.bool,
+export type ContainerSize = 'md' | 'sm' | 'xs'
+export interface Props {
+  className?: string;
+  children?: any;
+  fluid: boolean; // deprecating
+  responsive: boolean; // deprecating
+  isFluid: boolean;
+  isResponsive: boolean;
+  size: ContainerSize;
 }
 
-const Container = props => {
-  const { className, children, fluid, responsive, ...rest } = props
+class Container extends Component<Props> {
+  static defaultProps = {
+    fluid: false,
+    responsive: false,
+    isFluid: false,
+    isResponsive: false,
+  }
 
-  const componentClassName = classNames(
-    'c-Container',
-    fluid && 'c-Container--fluid',
-    responsive && 'c-Container--responsive',
-    className
-  )
+  render() {
+    const {
+      className,
+      children,
+      isFluid,
+      isResponsive,
+      fluid,
+      responsive,
+      size,
+      ...rest
+    } = this.props
 
-  return (
-    <div className={componentClassName} {...rest}>
-      {children}
-    </div>
-  )
+    const componentClassName = classNames(
+      'c-Container',
+      (fluid || isFluid) && 'is-fluid',
+      (responsive || isResponsive) && 'is-responsive',
+      size && `is-${size}`,
+      className
+    )
+
+    return (
+      <ContainerUI {...getValidProps(rest)} className={componentClassName}>
+        {children}
+      </ContainerUI>
+    )
+  }
 }
 
-Container.propTypes = propTypes
+namespaceComponent(COMPONENT_KEY.Container, Container)
 
 export default Container
