@@ -8,8 +8,27 @@ export const config = {
 }
 
 export const AvatarStackUI = styled(AnimateGroup)`
-  ${baseStyles} display: flex;
+  ${baseStyles};
+  display: flex;
   padding-left: ${config.borderWidth * 3}px;
+  position: relative;
+
+  .c-AvatarStack__content {
+    display: flex;
+    position: relative;
+  }
+`
+
+export const AvatarStackV2UI = styled(AvatarStackUI)`
+  .c-AvatarStack__content {
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    max-width: 230px;
+    min-height: 64px;
+    width: 100%;
+    min-width: 0;
+  }
 `
 
 export const ItemUI = styled('div')`

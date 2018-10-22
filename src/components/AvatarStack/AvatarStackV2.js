@@ -3,9 +3,11 @@ import type { AvatarShape, AvatarSize } from '../Avatar/types'
 import React, { PureComponent as Component } from 'react'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
+import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
-import { AvatarStackUI, ItemUI } from './styles/AvatarStack.css.js'
+import { isOdd, getMiddleIndex } from '../../utilities/number'
+import { AvatarStackV2UI, ItemUI } from './styles/AvatarStack.css.js'
 import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
@@ -42,6 +44,17 @@ class AvatarStack extends Component<Props> {
     )
   }
 
+  getTotalAvatarCount = () => {
+    return this.getAvatars().length
+  }
+
+  getCurrentAvatarCount = () => {
+    const { max } = this.props
+    const count = this.getTotalAvatarCount()
+
+    return count < max ? count : max
+  }
+
   getAvatarList = () => {
     const { max } = this.props
 
@@ -54,42 +67,75 @@ class AvatarStack extends Component<Props> {
     return avatarList
   }
 
-  getAvatarMarkup = () => {
+  getAvatarPropsFromIndex = index => {
     const {
-      animationEasing,
-      animationSequence,
       avatarsClassName,
       borderColor,
       outerBorderColor,
       shape,
       showStatusBorderColor,
-      size,
     } = this.props
+    const currentCount = this.getCurrentAvatarCount()
 
-    const avatarList = this.getAvatarList()
+    let size = 'md'
 
-    const avatarMarkup = avatarList.map((avatar, index) => {
-      const zIndex = avatarList.length - index + 1
-      const key = avatar.id || `avatar-${index}`
+    if (currentCount === 2) {
+      size = 'lg'
+    }
+    if (currentCount === 1) {
+      size = 'xl'
+    }
 
-      const composedAvatar = React.cloneElement(avatar, {
+    return {
+      Avatar: {
         borderColor,
-        className: classNames(avatar.props.className, avatarsClassName),
+        className: classNames(avatarsClassName, 'c-AvatarStack__avatar'),
         outerBorderColor,
         shape,
         showStatusBorderColor,
         size,
-      })
+        version: 2,
+      },
+    }
+  }
+
+  getAvatarStyleFromIndex = index => {
+    const { max } = this.props
+    const currentCount = this.getCurrentAvatarCount()
+
+    let zIndex = max - index
+
+    if (currentCount > 2 && isOdd(currentCount)) {
+      if (isOdd(index)) {
+        zIndex = zIndex + 1
+      }
+      if (index === getMiddleIndex(currentCount)) {
+        zIndex = zIndex + 2
+      }
+    }
+
+    return {
+      zIndex,
+    }
+  }
+
+  getAvatarMarkup = () => {
+    const { animationEasing, animationSequence } = this.props
+
+    const avatarList = this.getAvatarList()
+
+    const avatarMarkup = avatarList.map((avatar, index) => {
+      const key = avatar.key || avatar.props.id || `avatar-${index}`
+
+      const avatarProps = this.getAvatarPropsFromIndex(index)
+      const avatarStyles = this.getAvatarStyleFromIndex(index)
 
       return (
-        <Animate
-          key={key}
-          easing={animationEasing}
-          sequence={animationSequence}
-          style={{ ...avatar.style, zIndex }}
-        >
-          <ItemUI className="c-AvatarStack__item">{composedAvatar}</ItemUI>
-        </Animate>
+        <ItemUI className="c-AvatarStack__item" key={key} style={avatarStyles}>
+          <Animate easing={animationEasing} sequence={animationSequence}>
+            <PropProvider value={avatarProps}>{avatar}</PropProvider>
+          </Animate>
+        </ItemUI>
       )
     })
 
@@ -114,7 +160,7 @@ class AvatarStack extends Component<Props> {
     const additionalAvatarCount = totalAvatarCount - avatarList.length
 
     return (
-      additionalAvatarCount && (
+      !!additionalAvatarCount && (
         <Animate
           key="AvatarGrid__additionalAvatarMarkup"
           easing={animationEasing}
@@ -157,7 +203,7 @@ class AvatarStack extends Component<Props> {
     const componentClassName = classNames('c-AvatarStack', className)
 
     return (
-      <AvatarStackUI
+      <AvatarStackV2UI
         {...rest}
         className={componentClassName}
         stagger
@@ -167,7 +213,7 @@ class AvatarStack extends Component<Props> {
           {this.getAvatarMarkup()}
           {this.getAdditionalAvatarMarkup()}
         </div>
-      </AvatarStackUI>
+      </AvatarStackV2UI>
     )
   }
 }
