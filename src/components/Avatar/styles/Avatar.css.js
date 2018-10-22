@@ -41,6 +41,8 @@ export const config = {
       fontSize: 10,
     },
   },
+  transitionDuration: '160ms',
+  transitionEasing: 'ease',
 }
 
 export const AvatarUI = styled('div')`
@@ -48,6 +50,9 @@ export const AvatarUI = styled('div')`
   height: ${config.size.md.size}px;
   position: relative;
   width: ${config.size.md.size}px;
+  transition:
+    width ${config.transitionDuration} ${config.transitionEasing},
+    height ${config.transitionDuration} ${config.transitionEasing};
 
   ${props => getColorStyles(props)}
 

@@ -24,7 +24,6 @@ class Avatar extends Component<Props> {
   }
 
   render() {
-    console.log(this.getAvatarProps())
     return <BaseAvatar {...this.getAvatarProps()} />
   }
 }
