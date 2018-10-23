@@ -125,5 +125,66 @@ describe('PropProvider', () => {
       expect(o.prop('kind')).toBe('primary')
       expect(o.prop('submit')).toBe(true)
     })
+
+    test('Extends style', () => {
+      const config = {
+        Button: {
+          block: true,
+          style: {
+            background: 'red',
+          },
+          version: 2,
+        },
+      }
+      const wrapper = mount(
+        <PropProvider value={config}>
+          <div>
+            <PropProvider value={{ Button: { isActive: true } }}>
+              <Button
+                className="custom"
+                submit
+                kind="primary"
+                style={{ color: 'blue' }}
+              />
+            </PropProvider>
+          </div>
+        </PropProvider>
+      )
+
+      const el = wrapper.find('button')
+
+      expect(el.prop('style').background).toBe('red')
+      expect(el.prop('style').color).toBe('blue')
+    })
+
+    test('Extends className', () => {
+      const config = {
+        Button: {
+          block: true,
+          className: 'ricky',
+          version: 2,
+        },
+      }
+      const wrapper = mount(
+        <PropProvider value={config}>
+          <div>
+            <PropProvider value={{ Button: { isActive: true } }}>
+              <Button
+                className="custom bobby"
+                submit
+                kind="primary"
+                style={{ color: 'blue' }}
+              />
+            </PropProvider>
+          </div>
+        </PropProvider>
+      )
+
+      const el = wrapper.find('button')
+
+      expect(el.hasClass('ricky')).toBe(true)
+      expect(el.hasClass('custom')).toBe(true)
+      expect(el.hasClass('bobby')).toBe(true)
+    })
   })
 })

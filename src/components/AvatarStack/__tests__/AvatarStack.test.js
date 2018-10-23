@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import AvatarStack from '../AvatarStack'
-import { AnimateGroup, Animate, Avatar, Text } from '../../index'
+import { Animate, Avatar, Text } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -104,5 +104,18 @@ describe('Avatar Props', () => {
     expect(avatar.prop('borderColor')).toBe('red')
     expect(avatar.prop('outerBorderColor')).toBe('blue')
     expect(avatar.prop('showStatusBorderColor')).toBe(true)
+  })
+})
+
+describe('Avatar', () => {
+  test('Renders md size, by default', () => {
+    const wrapper = mount(
+      <AvatarStack avatarVersion={1}>
+        <Avatar />
+      </AvatarStack>
+    )
+    const comp = wrapper.find('Avatar').last()
+
+    expect(comp.prop('size')).toBe('md')
   })
 })
