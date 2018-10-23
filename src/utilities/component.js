@@ -154,10 +154,12 @@ export const getComponentKey = (
 
   if (Component.props && Component.props.id) {
     key = Component.props.id
+  } else if (isDefined(fallback)) {
+    key = fallback
   } else if (isDefined(index)) {
     key = `unsafeComponentKey-${index}`
   } else {
-    key = Component.key || fallback
+    key = Component.key || undefined
   }
 
   return key
