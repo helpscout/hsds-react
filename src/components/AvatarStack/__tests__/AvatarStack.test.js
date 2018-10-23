@@ -21,44 +21,6 @@ describe('ClassName', () => {
 })
 
 describe('Animation', () => {
-  test('Wraps children in an Animate, within an AnimateGroup', () => {
-    const wrapper = mount(
-      <AvatarStack>
-        <Avatar />
-      </AvatarStack>
-    )
-    const o = wrapper.find(AnimateGroup)
-    const anime = o.find(Animate)
-    const avatar = o.find(Avatar)
-
-    expect(o.length).toBe(1)
-    expect(anime.length).toBe(1)
-    expect(avatar.length).toBe(1)
-  })
-
-  test('Passes staggering props to AnimateGroup', () => {
-    const wrapper = mount(
-      <AvatarStack>
-        <Avatar />
-      </AvatarStack>
-    )
-    const props = wrapper.find(AnimateGroup).props()
-
-    expect(props.stagger).toBe(true)
-    expect(props.staggerDelay).not.toBe(null)
-  })
-
-  test('Can set custom AnimateGroup props', () => {
-    const wrapper = mount(
-      <AvatarStack animationStagger={1000}>
-        <Avatar />
-      </AvatarStack>
-    )
-    const props = wrapper.find(AnimateGroup).props()
-
-    expect(props.staggerDelay).toBe(1000)
-  })
-
   test('Can set custom Animate sequences', () => {
     const wrapper = mount(
       <AvatarStack animationSequence="fade">
@@ -133,7 +95,11 @@ describe('Avatar Props', () => {
         <Avatar />
       </AvatarStack>
     )
-    const avatar = wrapper.find(Avatar)
+    // Account for HOC
+    const avatar = wrapper
+      .find(Avatar)
+      .find('Avatar')
+      .last()
 
     expect(avatar.prop('borderColor')).toBe('red')
     expect(avatar.prop('outerBorderColor')).toBe('blue')
