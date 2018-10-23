@@ -15,6 +15,7 @@ export type Props = {
   stagger: boolean,
   staggerDelay: number,
   staggerDuration?: number,
+  staggerMax: number,
 }
 
 class AnimateGroup extends Component<Props> {
@@ -23,6 +24,7 @@ class AnimateGroup extends Component<Props> {
     easing: 'ease-in-out',
     stagger: false,
     staggerDelay: 200,
+    staggerMax: 20,
   }
 
   getAnimatePropsFromIndex = index => {
@@ -34,10 +36,14 @@ class AnimateGroup extends Component<Props> {
       stagger,
       staggerDelay,
       staggerDuration,
+      staggerMax,
     } = this.props
 
     const duration = stagger && staggerDuration ? staggerDuration : durationProp
-    const staggerIndexDelay = delayProp + (index + 1) * staggerDelay
+
+    const count = index + 1
+    const countBaseValue = count > staggerMax ? staggerMax : count
+    const staggerIndexDelay = delayProp + countBaseValue * staggerDelay
 
     const delay = stagger ? staggerIndexDelay : delayProp
 

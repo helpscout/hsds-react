@@ -1,14 +1,17 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { TransitionGroup } from 'react-transition-group'
-import AnimateGroup from '..'
+import AnimateGroup from '../AnimateGroup'
 import Animate from '../../Animate'
+
+jest.useFakeTimers()
 
 describe('TransitionGroup', () => {
   test('Is a wrapper for TransitionGroup', () => {
-    const wrapper = shallow(<AnimateGroup />)
+    const wrapper = mount(<AnimateGroup />)
+    const o = wrapper.find(TransitionGroup)
 
-    expect(wrapper.type()).toBe(TransitionGroup)
+    expect(o.length).toBe(1)
   })
 })
 
@@ -21,7 +24,7 @@ describe('Staggering', () => {
 
   test('Staggers by adjusting delay times for <Animate />', () => {
     const staggerDelay = 200
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate>
           <div className="ron">Ron</div>
@@ -32,17 +35,19 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(staggerDelay)
-    expect(second.props().delay).toBe(staggerDelay * 2)
+    jest.runOnlyPendingTimers()
+
+    expect(first.prop('style').transitionDelay).toBe('200ms')
+    expect(second.prop('style').transitionDelay).toBe('400ms')
   })
 
   test('Can adjust staggerDelay', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate>
           <div className="ron">Ron</div>
@@ -53,17 +58,19 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(staggerDelay)
-    expect(second.props().delay).toBe(staggerDelay * 2)
+    jest.runOnlyPendingTimers()
+
+    expect(first.prop('style').transitionDelay).toBe('700ms')
+    expect(second.prop('style').transitionDelay).toBe('1400ms')
   })
 
   test('staggerDelay does not trigger staggering', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup staggerDelay={staggerDelay}>
         <Animate>
           <div className="ron">Ron</div>
@@ -74,17 +81,17 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(0)
-    expect(second.props().delay).toBe(0)
+    expect(first.prop('style').transitionDelay).toBe('0ms')
+    expect(second.prop('style').transitionDelay).toBe('0ms')
   })
 
   test('staggerDelay respects Animate delay prop', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate delay={100}>
           <div className="ron">Ron</div>
@@ -95,17 +102,17 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(staggerDelay + 100)
-    expect(second.props().delay).toBe(staggerDelay * 2 + 200)
+    expect(first.prop('style').transitionDelay).toBe('100ms')
+    expect(second.prop('style').transitionDelay).toBe('200ms')
   })
 
   test('stagger does not affect Animate duration', () => {
     const staggerDelay = 700
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup stagger staggerDelay={staggerDelay}>
         <Animate duration={30}>
           <div className="ron">Ron</div>
@@ -126,7 +133,7 @@ describe('Staggering', () => {
 })
 
 describe('Children', () => {
-  test("Don't render non-compatible children, with stagger", () => {
+  test('Can render non-Animate children, with stagger', () => {
     const wrapper = mount(
       <AnimateGroup stagger>
         <Animate duration={30}>
@@ -139,10 +146,10 @@ describe('Children', () => {
     const p = wrapper.find('.ron')
 
     expect(o.length).toBeTruthy()
-    expect(p.length).not.toBeTruthy()
+    expect(p.length).toBeTruthy()
   })
 
-  test('Filter out null children', () => {
+  test('Does not filter out null children', () => {
     const children = [
       <Animate duration={30} key={11}>
         <div className="champ">Champ</div>
@@ -151,7 +158,7 @@ describe('Children', () => {
     ]
     const wrapper = mount(<AnimateGroup stagger>{children}</AnimateGroup>)
 
-    expect(wrapper.children().length).toBe(1)
+    expect(wrapper.children().length).toBe(2)
   })
 })
 
@@ -173,7 +180,7 @@ describe('className', () => {
 
 describe('duration', () => {
   test('Does not override child duration prop', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup>
         <Animate duration={66} />
       </AnimateGroup>
@@ -184,7 +191,7 @@ describe('duration', () => {
   })
 
   test('Can set child delay', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup>
         <Animate delay={66} />
       </AnimateGroup>
@@ -197,7 +204,7 @@ describe('duration', () => {
 
 describe('sequence', () => {
   test('Does not set sequence by default', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <AnimateGroup>
         <Animate sequence="down" />
       </AnimateGroup>
