@@ -25,7 +25,7 @@ class Example extends React.Component {
   render() {
     return (
       <div>
-        <AvatarStack max={5} version={2}>
+        <AvatarStack max={5} version={2} {...this.props}>
           {this.state.avatars.map(avatar => (
             <Avatar {...avatar} key={avatar.id} />
           ))}
@@ -38,3 +38,4 @@ class Example extends React.Component {
 }
 
 stories.add('default', () => <Example />)
+stories.add('size', () => <Example size="sm" />)
