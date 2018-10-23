@@ -10,12 +10,14 @@ export default createSpec({
   if (Array.isArray(props)) {
     return props.map(prop => {
       return {
+        id: prop.id,
         name: prop.name,
         image: prop.image,
       }
     })
   }
   return {
+    id: props.id,
     name: props.name,
     image: props.image,
   }

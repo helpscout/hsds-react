@@ -5,7 +5,11 @@ import Avatar from '../Avatar'
 import Animate from '../Animate'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import {
+  namespaceComponent,
+  isComponentNamed,
+  getComponentKey,
+} from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
 import { AvatarStackV2UI, ItemUI } from './styles/AvatarStack.css.js'
 import { COMPONENT_KEY } from './utils'
@@ -16,6 +20,7 @@ type Props = {
   animationSequence: string,
   animationStagger: number,
   avatarsClassName: string,
+  avatarVersion: number,
   borderColor?: string,
   children?: any,
   className?: string,
@@ -31,6 +36,7 @@ class AvatarStack extends Component<Props> {
     animationEasing: 'ease',
     animationSequence: 'fade',
     animationStagger: 0,
+    avatarVersion: 2,
     borderColor: 'white',
     max: 5,
     shape: 'circle',
@@ -69,10 +75,12 @@ class AvatarStack extends Component<Props> {
 
   getAvatarPropsFromIndex = index => {
     const {
+      avatarVersion,
       avatarsClassName,
       borderColor,
       outerBorderColor,
       shape,
+      size: sizeProp,
       showStatusBorderColor,
     } = this.props
     const currentCount = this.getCurrentAvatarCount()
@@ -86,6 +94,11 @@ class AvatarStack extends Component<Props> {
       size = 'xl'
     }
 
+    // Backwards compatibility with Avatar/AvatarStack (V1)
+    if (avatarVersion === 1) {
+      size = sizeProp
+    }
+
     return {
       Avatar: {
         borderColor,
@@ -94,23 +107,26 @@ class AvatarStack extends Component<Props> {
         shape,
         showStatusBorderColor,
         size,
-        version: 2,
+        version: avatarVersion,
       },
     }
   }
 
   getAvatarStyleFromIndex = index => {
-    const { max } = this.props
+    const { avatarVersion, max } = this.props
     const currentCount = this.getCurrentAvatarCount()
 
     let zIndex = max - index
 
-    if (currentCount > 2 && isOdd(currentCount)) {
-      if (isOdd(index)) {
-        zIndex = zIndex + 1
-      }
-      if (index === getMiddleIndex(currentCount)) {
-        zIndex = zIndex + 2
+    // Backwards compatibility with Avatar/AvatarStack (V1)
+    if (avatarVersion > 1) {
+      if (currentCount > 2 && isOdd(currentCount)) {
+        if (isOdd(index)) {
+          zIndex = zIndex + 1
+        }
+        if (index === getMiddleIndex(currentCount)) {
+          zIndex = zIndex + 2
+        }
       }
     }
 
@@ -125,7 +141,7 @@ class AvatarStack extends Component<Props> {
     const avatarList = this.getAvatarList()
 
     const avatarMarkup = avatarList.map((avatar, index) => {
-      const key = avatar.key || avatar.props.id || `avatar-${index}`
+      const key = getComponentKey(avatar, index)
 
       const avatarProps = this.getAvatarPropsFromIndex(index)
       const avatarStyles = this.getAvatarStyleFromIndex(index)
@@ -147,6 +163,7 @@ class AvatarStack extends Component<Props> {
       animationEasing,
       animationSequence,
       avatarsClassName,
+      avatarVersion,
       borderColor,
       outerBorderColor,
       shape,
@@ -176,6 +193,7 @@ class AvatarStack extends Component<Props> {
               shape={shape}
               showStatusBorderColor={showStatusBorderColor}
               size={size}
+              version={avatarVersion}
             />
           </ItemUI>
         </Animate>
@@ -209,10 +227,8 @@ class AvatarStack extends Component<Props> {
         stagger
         staggerDelay={animationStagger}
       >
-        <div className="c-AvatarStack__content">
-          {this.getAvatarMarkup()}
-          {this.getAdditionalAvatarMarkup()}
-        </div>
+        {this.getAvatarMarkup()}
+        {this.getAdditionalAvatarMarkup()}
       </AvatarStackV2UI>
     )
   }
