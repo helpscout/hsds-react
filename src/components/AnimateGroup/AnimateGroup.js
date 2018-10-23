@@ -59,7 +59,6 @@ class AnimateGroup extends Component<Props> {
 
   getChildrenMarkup = () => {
     const { children, stagger } = this.props
-    if (!stagger) return children
 
     return React.Children.map(children, (child, index) => {
       const animateProps = this.getAnimatePropsFromIndex(index)
