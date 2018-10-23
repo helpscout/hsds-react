@@ -11,7 +11,11 @@ import {
   getComponentKey,
 } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
-import { AvatarStackV2UI, ItemUI } from './styles/AvatarStack.css.js'
+import {
+  AvatarStackUI,
+  AvatarStackLayeringUI,
+  ItemUI,
+} from './styles/AvatarStack.css.js'
 import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
@@ -28,7 +32,7 @@ type Props = {
   outerBorderColor?: string,
   shape: AvatarShape,
   showStatusBorderColor: boolean,
-  size: AvatarSize,
+  size?: AvatarSize,
 }
 
 class AvatarStack extends Component<Props> {
@@ -41,7 +45,19 @@ class AvatarStack extends Component<Props> {
     max: 5,
     shape: 'circle',
     showStatusBorderColor: true,
-    size: 'md',
+  }
+
+  /**
+   * Stacks the avatars in a way where the center avatar is at the highest
+   * layer
+   *
+   * @returns {boolean}
+   */
+  shouldLayerStack = () => {
+    const { avatarVersion, size } = this.props
+
+    // Layer stacking is only supported for AvatarStack V2+
+    return !size && avatarVersion > 1
   }
 
   getAvatars = () => {
@@ -66,24 +82,21 @@ class AvatarStack extends Component<Props> {
 
     const avatars = this.getAvatars()
     const totalAvatarCount = avatars.length
+    const sliceAt = this.shouldLayerStack() ? max : max - 1
 
     const avatarList =
-      max && totalAvatarCount > max ? avatars.slice(0, max - 1) : avatars
+      max && totalAvatarCount > max ? avatars.slice(0, sliceAt) : avatars
 
     return avatarList
   }
 
-  getAvatarPropsFromIndex = index => {
-    const {
-      avatarVersion,
-      avatarsClassName,
-      borderColor,
-      outerBorderColor,
-      shape,
-      size: sizeProp,
-      showStatusBorderColor,
-    } = this.props
+  getAvatarSize = () => {
+    const { size: sizeProp } = this.props
+
     const currentCount = this.getCurrentAvatarCount()
+    const shouldLayerStack = this.shouldLayerStack()
+
+    if (!shouldLayerStack) return sizeProp
 
     let size = 'md'
 
@@ -94,10 +107,18 @@ class AvatarStack extends Component<Props> {
       size = 'xl'
     }
 
-    // Backwards compatibility with Avatar/AvatarStack (V1)
-    if (avatarVersion === 1) {
-      size = sizeProp
-    }
+    return size
+  }
+
+  getAvatarPropsFromIndex = index => {
+    const {
+      avatarVersion,
+      avatarsClassName,
+      borderColor,
+      outerBorderColor,
+      shape,
+      showStatusBorderColor,
+    } = this.props
 
     return {
       Avatar: {
@@ -106,27 +127,27 @@ class AvatarStack extends Component<Props> {
         outerBorderColor,
         shape,
         showStatusBorderColor,
-        size,
+        size: this.getAvatarSize(),
         version: avatarVersion,
       },
     }
   }
 
   getAvatarStyleFromIndex = index => {
-    const { avatarVersion, max } = this.props
+    const { max } = this.props
     const currentCount = this.getCurrentAvatarCount()
+    const shouldLayerStack = this.shouldLayerStack()
 
     let zIndex = max - index
 
-    // Backwards compatibility with Avatar/AvatarStack (V1)
-    if (avatarVersion > 1) {
-      if (currentCount > 2 && isOdd(currentCount)) {
-        if (isOdd(index)) {
-          zIndex = zIndex + 1
-        }
-        if (index === getMiddleIndex(currentCount)) {
-          zIndex = zIndex + 2
-        }
+    if (!shouldLayerStack) return { zIndex }
+
+    if (currentCount > 2 && isOdd(currentCount)) {
+      if (isOdd(index)) {
+        zIndex = zIndex + 1
+      }
+      if (index === getMiddleIndex(currentCount)) {
+        zIndex = zIndex + 2
       }
     }
 
@@ -171,6 +192,8 @@ class AvatarStack extends Component<Props> {
       size,
     } = this.props
 
+    if (this.shouldLayerStack()) return
+
     const avatars = this.getAvatars()
     const avatarList = this.getAvatarList()
     const totalAvatarCount = avatars.length
@@ -201,6 +224,10 @@ class AvatarStack extends Component<Props> {
     )
   }
 
+  getAvatarStackComponent = () => {
+    return this.shouldLayerStack() ? AvatarStackLayeringUI : AvatarStackUI
+  }
+
   render() {
     const {
       animationEasing,
@@ -220,8 +247,10 @@ class AvatarStack extends Component<Props> {
 
     const componentClassName = classNames('c-AvatarStack', className)
 
+    const Component = this.getAvatarStackComponent()
+
     return (
-      <AvatarStackV2UI
+      <Component
         {...rest}
         className={componentClassName}
         stagger
@@ -229,7 +258,7 @@ class AvatarStack extends Component<Props> {
       >
         {this.getAvatarMarkup()}
         {this.getAdditionalAvatarMarkup()}
-      </AvatarStackV2UI>
+      </Component>
     )
   }
 }

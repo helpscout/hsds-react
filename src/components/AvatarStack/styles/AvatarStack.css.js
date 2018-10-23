@@ -13,7 +13,7 @@ export const AvatarStackUI = styled('div')`
   position: relative;
 `
 
-export const AvatarStackV2UI = styled(AvatarStackUI)`
+export const AvatarStackLayeringUI = styled(AvatarStackUI)`
   align-items: center;
   justify-content: center;
   margin: auto;

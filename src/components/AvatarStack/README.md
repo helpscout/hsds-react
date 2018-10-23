@@ -27,3 +27,4 @@ An AvatarStack component displays an array of [Avatars](../Avatar). This compone
 | shape                 | `string` | Shape of the avatars.                                                                 |
 | showStatusBorderColor | `bool`   | Renders the [StatusDot](../StatusDot) border.                                         |
 | size                  | `string` | Size of the avatars.                                                                  |
+| version               | `number` | Specifies the component version to render.                                            |
