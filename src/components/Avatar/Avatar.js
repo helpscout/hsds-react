@@ -109,7 +109,7 @@ class Avatar extends Component<Props, State> {
     if (this.hasImage()) {
       styles = {
         ...styles,
-        backgroundColor: 'transparent',
+        backgroundColor: 'currentColor',
       }
     }
 
@@ -187,14 +187,19 @@ class Avatar extends Component<Props, State> {
   getContentMarkup = () => {
     const { image, name } = this.props
 
-    const isImageLoaded = this.isImageLoaded()
+    const isImageLoaded = image && this.isImageLoaded()
 
-    const imageStyle =
-      image && isImageLoaded ? { backgroundImage: `url('${image}')` } : null
+    const componentClassName = classNames(
+      'c-Avatar__image',
+      isImageLoaded && 'is-herbieFullyLoaded'
+    )
+    const imageStyle = isImageLoaded
+      ? { backgroundImage: `url('${image}')` }
+      : null
 
     const titleMarkup = this.getTitleMarkup()
     const contentMarkup = (
-      <ImageUI className="c-Avatar__image" style={imageStyle}>
+      <ImageUI className={componentClassName} style={imageStyle}>
         <div className="c-Avatar__name">
           <VisuallyHidden>{name}</VisuallyHidden>
           <img
