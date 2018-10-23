@@ -1,6 +1,6 @@
 // @flow
 import { includes } from './arrays'
-import { isObject } from './is'
+import { isObject, isDefined } from './is'
 
 let REGISTERED_COMPONENTS = {}
 export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
@@ -134,4 +134,31 @@ export const isComponentTypeChat = (Component: any): boolean => {
   const key = getComponentName(Component)
 
   return includes(CHAT_TYPE, key)
+}
+
+/**
+ * Attempts to retrieve a React key from a child when iterating.
+ * @param   {React.Component} Component The component.
+ * @param   {number} index The iterating index value.
+ * @param   {string} fallback A fallback value.
+ * @returns {string} The React cnild key.
+ */
+export const getComponentKey = (
+  Component: any,
+  index?: number,
+  fallback?: string
+): ?string => {
+  if (!isReactComponent(Component)) return undefined
+
+  let key
+
+  if (Component.props && Component.props.id) {
+    key = Component.props.id
+  } else if (isDefined(index)) {
+    key = `unsafeComponentKey-${index}`
+  } else {
+    key = Component.key || fallback
+  }
+
+  return key
 }

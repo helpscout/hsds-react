@@ -4,7 +4,7 @@ import { TransitionGroup } from 'react-transition-group'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { namespaceComponent, getComponentKey } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 
 export type Props = {
@@ -57,8 +57,13 @@ class AnimateGroup extends Component<Props> {
 
     return React.Children.map(children, (child, index) => {
       const animateProps = this.getAnimatePropsFromIndex(index)
+      const key = getComponentKey(child, index)
 
-      return <PropProvider value={animateProps}>{child}</PropProvider>
+      return (
+        <PropProvider value={animateProps} key={key}>
+          {child}
+        </PropProvider>
+      )
     })
   }
 
