@@ -2,13 +2,12 @@
 import type { AnimationSequences } from './types'
 import React, { PureComponent as Component } from 'react'
 import { Transition } from 'react-transition-group'
-import styled from '../styled'
 import { getSequenceNames } from '../../utilities/animation'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
-import css from './styles/Animate.css.js'
+import { AnimateUI } from './styles/Animate.css.js'
 import { COMPONENT_KEY } from './utils'
 
 type Props = {
@@ -115,7 +114,7 @@ export class Animate extends Component<Props> {
         }}
       >
         {transitionState => (
-          <div
+          <AnimateUI
             className={classNames(
               componentClassName,
               sequenceClassNames,
@@ -127,15 +126,13 @@ export class Animate extends Component<Props> {
             style={{ ...componentStyles }}
           >
             {children}
-          </div>
+          </AnimateUI>
         )}
       </Transition>
     )
   }
 }
 
-const StyledAnimate = styled(Animate)(css)
+namespaceComponent(COMPONENT_KEY)(Animate)
 
-namespaceComponent(COMPONENT_KEY)(StyledAnimate)
-
-export default StyledAnimate
+export default Animate
