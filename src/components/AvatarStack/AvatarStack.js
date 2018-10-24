@@ -160,6 +160,10 @@ class AvatarStack extends Component<Props> {
     const { animationEasing, animationSequence } = this.props
 
     const avatarList = this.getAvatarList()
+    const componentClassName = classNames(
+      this.shouldLayerStack() && 'is-withLayerStack',
+      'c-AvatarStack__item'
+    )
 
     const avatarMarkup = avatarList.map((avatar, index) => {
       const key = getComponentKey(avatar, index)
@@ -168,7 +172,7 @@ class AvatarStack extends Component<Props> {
       const avatarStyles = this.getAvatarStyleFromIndex(index)
 
       return (
-        <ItemUI className="c-AvatarStack__item" key={key} style={avatarStyles}>
+        <ItemUI className={componentClassName} key={key} style={avatarStyles}>
           <Animate easing={animationEasing} sequence={animationSequence}>
             <PropProvider value={avatarProps}>{avatar}</PropProvider>
           </Animate>
@@ -245,7 +249,11 @@ class AvatarStack extends Component<Props> {
       ...rest
     } = this.props
 
-    const componentClassName = classNames('c-AvatarStack', className)
+    const componentClassName = classNames(
+      'c-AvatarStack',
+      this.shouldLayerStack() && 'is-withLayerStack',
+      className
+    )
 
     const Component = this.getAvatarStackComponent()
 

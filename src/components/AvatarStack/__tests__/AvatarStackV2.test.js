@@ -36,9 +36,31 @@ describe('AvatarStackV2', () => {
     expect(comp.prop('version')).toBe(2)
     expect(el.length).toBe(1)
   })
+
+  test('Adds layer stack className', () => {
+    const wrapper = mount(
+      <PropProvider value={{ AvatarStack: { version: 2 } }}>
+        <AvatarStackEntry />
+      </PropProvider>
+    )
+    const el = wrapper.find('div.c-AvatarStack')
+
+    expect(el.hasClass('is-withLayerStack')).toBe(true)
+  })
 })
 
 describe('Avatar', () => {
+  test('Adds layer stack className', () => {
+    const wrapper = mount(
+      <AvatarStack avatarVersion={2}>
+        <Avatar />
+      </AvatarStack>
+    )
+    const el = wrapper.find('div.c-AvatarStack__item')
+
+    expect(el.hasClass('is-withLayerStack')).toBe(true)
+  })
+
   test('Single avatars render xl sizes', () => {
     const wrapper = mount(
       <AvatarStack avatarVersion={2}>

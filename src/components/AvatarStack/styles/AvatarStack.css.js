@@ -25,5 +25,8 @@ export const AvatarStackLayeringUI = styled(AvatarStackUI)`
 
 export const ItemUI = styled('div')`
   position: relative;
-  margin-left: -${config.borderWidth * 3}px;
+
+  &.is-withLayerStack {
+    margin-left: -${config.borderWidth * 3}px;
+  }
 `
