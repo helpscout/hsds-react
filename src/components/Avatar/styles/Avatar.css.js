@@ -8,9 +8,14 @@ import styled from '../../styled'
 export const config = {
   borderRadius: 3,
   borderWidth: 2,
+  boxShadow: '0 5px 8px rgb(0, 0, 0, 0.2)',
   color: getColor('blue.500'),
   position: 'relative',
   size: {
+    xl: {
+      size: 60,
+      fontSize: 13,
+    },
     lg: {
       size: 52,
       fontSize: 13,
@@ -36,6 +41,8 @@ export const config = {
       fontSize: 10,
     },
   },
+  transitionDuration: '160ms',
+  transitionEasing: 'ease',
 }
 
 export const AvatarUI = styled('div')`
@@ -43,6 +50,9 @@ export const AvatarUI = styled('div')`
   height: ${config.size.md.size}px;
   position: relative;
   width: ${config.size.md.size}px;
+  transition:
+    width ${config.transitionDuration} ${config.transitionEasing},
+    height ${config.transitionDuration} ${config.transitionEasing};
 
   ${props => getColorStyles(props)}
 
@@ -64,6 +74,10 @@ export const CropUI = styled('div')`
   width: 100%;
 
   ${getBorderRadiusStyles()};
+
+  &.is-withShadow {
+    box-shadow: ${config.boxShadow};
+  }
 `
 
 export const ImageUI = styled('div')`
@@ -72,6 +86,12 @@ export const ImageUI = styled('div')`
   display: block;
   height: 100%;
   width: 100%;
+  opacity: 0;
+  transition: opacity 160ms ease;
+
+  &.is-herbieFullyLoaded {
+    opacity: 1;
+  }
 `
 
 export const TitleUI = styled('div')`
@@ -101,6 +121,11 @@ export const StatusUI = styled('div')`
   &.is-circle {
     bottom: 0;
     right: 0;
+
+    &.is-xl {
+      bottom: 3px;
+      right: 3px;
+    }
 
     &.is-lg {
       bottom: -3px;

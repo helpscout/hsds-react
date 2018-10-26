@@ -40,3 +40,4 @@ This component can be themed using a [ThemeProvider](../styled).
 | showStatusBorderColor | `bool`            | Renders the [StatusDot](../StatusDot) border.                             |
 | status                | `string`          | Renders a [StatusDot](../StatusDot) with the status type.                 |
 | statusIcon            | `string`          | Name of the [Icon](../Icon) to render into the [StatusDot](../StatusDot). |
+| version               | `number`          | Specifies the component version to render.                                |

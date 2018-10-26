@@ -1,9 +1,10 @@
 // @flow
 import baseStyles from '../../../styles/resets/base.css.js'
 import sequencesStyles from './sequences/index.css.js'
+import styled from '../../styled'
 
-const css = `
-  ${baseStyles}
+export const AnimateUI = styled('div')`
+  ${baseStyles};
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function: ease-in-out;
@@ -18,7 +19,7 @@ const css = `
     display: inline-block;
   }
 
-  ${sequencesStyles}
+  ${sequencesStyles};
 `
 
-export default css
+export default AnimateUI

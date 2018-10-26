@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { getComponentName, hoistNonReactStatics } from '@helpscout/react-utils'
 import Context from './Context'
 import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
+import { classNames } from '../../utilities/classNames'
 import { isDefined, isString } from '../../utilities/is'
 
 type Props = Object
@@ -40,12 +41,40 @@ function propConnect(name?: ConfigGetter) {
         this.wrappedInstance = ref
       }
 
+      getNamespacedProps = (contextProps: PropProviderProps): Object => {
+        return getConfigProps(contextProps, namespace)
+      }
+
+      getMergedClassNameProp = (contextProps: PropProviderProps): Object => {
+        const namespacedProps = this.getNamespacedProps(contextProps)
+
+        return classNames(namespacedProps.className, this.props.className)
+      }
+
+      getMergedStyleProp = (contextProps: PropProviderProps): Object => {
+        const namespacedProps = this.getNamespacedProps(contextProps)
+        let style = this.props.style
+
+        if (namespacedProps.style) {
+          style = {
+            ...namespacedProps.style,
+            ...style,
+          }
+        }
+
+        return style
+      }
+
       getMergedProps = (contextProps: PropProviderProps): Object => {
-        const namespacedProps = getConfigProps(contextProps, namespace)
+        const namespacedProps = this.getNamespacedProps(contextProps)
+        const className = this.getMergedClassNameProp(contextProps)
+        const style = this.getMergedStyleProp(contextProps)
 
         return {
           ...namespacedProps,
           ...this.props,
+          className,
+          style,
           [propProviderDataAttr]: getGlobalApp(contextProps),
         }
       }

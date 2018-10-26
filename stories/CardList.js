@@ -8,6 +8,8 @@ storiesOf('CardList', module)
       <Card>One</Card>
       <Card>Two</Card>
       <Card>Three</Card>
+      <Card>Four</Card>
+      <Card>Five</Card>
     </CardList>
   ))
   .add('ArticleCard', () => (

@@ -587,6 +587,7 @@ describe('modalAnimation', () => {
     const o = wrapper
       .find('Animate')
       .filterWhere(node => node.hasClass('c-Modal__Card-container'))
+      .last()
 
     expect(o.prop('delay')).toBe(66)
   })
@@ -596,6 +597,7 @@ describe('modalAnimation', () => {
     const o = wrapper
       .find('Animate')
       .filterWhere(node => node.hasClass('c-Modal__Card-container'))
+      .last()
 
     expect(o.prop('duration')).toBe(66)
   })
@@ -605,6 +607,7 @@ describe('modalAnimation', () => {
     const o = wrapper
       .find('Animate')
       .filterWhere(node => node.hasClass('c-Modal__Card-container'))
+      .last()
 
     expect(o.prop('easing')).toBe('fakeBounce')
   })
