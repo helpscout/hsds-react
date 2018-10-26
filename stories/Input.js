@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Button, Icon, Input } from '../src/index.js'
+import { Button, Icon, Input, styled } from '../src/index.js'
 
 const stories = storiesOf('Input', module)
 
@@ -76,12 +76,24 @@ stories.add('multiline + resizable', () => (
 stories.add('multiline + maxHeight', () => (
   <Input
     autoFocus
-    multiline={1}
+    multiline={3}
     resizable
-    maxHeight={150}
+    maxHeight={160}
     placeholder="This is a resizable textarea with maxHeight!"
     offsetAmount={8}
   />
+))
+
+stories.add('multiline + padded bottom', () => (
+  <PaddedTextArea>
+    <Input
+      autoFocus
+      multiline={3}
+      resizable
+      maxHeight={160}
+      placeholder="This one has a 30px bottom padding. Pressing enter for the last line preserves this spacing!"
+    />
+  </PaddedTextArea>
 ))
 
 stories.add('label', () => <Input label="Labelled" autoFocus />)
@@ -211,3 +223,9 @@ stories.add('onStartTyping', () => {
     </div>
   )
 })
+
+const PaddedTextArea = styled('div')`
+  textarea {
+    padding-bottom: 30px !important;
+  }
+`
