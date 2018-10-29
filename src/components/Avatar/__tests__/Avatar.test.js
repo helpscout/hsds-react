@@ -63,12 +63,12 @@ describe('Image', () => {
     expect(image.exists()).toBeTruthy()
   })
 
-  test('Background is transparent to prevent flash of color before image loads', () => {
+  test('Background is currentColor to prevent flash of color before image loads', () => {
     const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
     const crop = wrapper.find(ui.crop)
 
     expect(crop.exists()).toBeTruthy()
-    expect(crop.prop('style').backgroundColor).toEqual('transparent')
+    expect(crop.prop('style').backgroundColor).toEqual('currentColor')
   })
 
   test('Do not render image if image prop is specified but image is loading', () => {

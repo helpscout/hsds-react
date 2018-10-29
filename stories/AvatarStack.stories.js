@@ -8,15 +8,7 @@ const fixtures = AvatarSpec.generate(5)
 
 const avatarsMarkup = fixtures.map(avatar => {
   const { name, image, status } = avatar
-  return (
-    <Avatar
-      image={image}
-      key={name}
-      name={name}
-      shape="rounded"
-      status={status}
-    />
-  )
+  return <Avatar image={image} key={name} name={name} status={status} />
 })
 
 class TestComponent extends Component {
@@ -45,17 +37,6 @@ stories.add('default', () => <AvatarStack max={5}>{avatarsMarkup}</AvatarStack>)
 
 stories.add('animation: easing', () => (
   <AvatarStack animationEasing="bounce" animationSequence="fade scale" max={4}>
-    {avatarsMarkup}
-  </AvatarStack>
-))
-
-stories.add('animation: staggering', () => (
-  <AvatarStack
-    animationEasing="bounce"
-    animationSequence="fade scale"
-    animationStagger={100}
-    max={4}
-  >
     {avatarsMarkup}
   </AvatarStack>
 ))

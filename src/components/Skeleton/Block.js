@@ -1,14 +1,34 @@
-import React from 'react'
+import React, { PureComponent as Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { BlockUI } from './styles/Block.css.js'
 
-const Block = props => {
-  const { className, children, ...rest } = props
+class Block extends Component {
+  static defaultProps = {
+    withAnimations: true,
+  }
 
-  const componentClassName = classNames('c-SkeletonBlock', className)
+  render() {
+    const { className, children, withAnimations, ...rest } = this.props
 
-  return <div className={componentClassName} {...rest} role="presentation" />
+    const componentClassName = classNames(
+      'c-SkeletonBlock',
+      withAnimations && 'is-withAnimations',
+      className
+    )
+
+    return (
+      <BlockUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        role="presentation"
+      />
+    )
+  }
 }
 
-Block.displayName = 'SkeletonBlock'
+namespaceComponent(COMPONENT_KEY.Block)(Block)
 
 export default Block

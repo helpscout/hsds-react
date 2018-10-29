@@ -8,6 +8,8 @@ storiesOf('CardList', module)
       <Card>One</Card>
       <Card>Two</Card>
       <Card>Three</Card>
+      <Card>Four</Card>
+      <Card>Five</Card>
     </CardList>
   ))
   .add('ArticleCard', () => (
@@ -15,5 +17,12 @@ storiesOf('CardList', module)
       <ArticleCard title="Hello one" content="One" />
       <ArticleCard title="Hello two" content="Two" />
       <ArticleCard title="Hello three" content="Three" />
+    </CardList>
+  ))
+  .add('Animation Props', () => (
+    <CardList animationDelay={500} animationStagger={300}>
+      <Card>One</Card>
+      <Card>Two</Card>
+      <Card>Three</Card>
     </CardList>
   ))

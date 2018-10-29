@@ -1,12 +1,13 @@
 import { AnimationSequence } from './types'
 import * as React from 'react'
 import { Transition } from 'react-transition-group'
-import styled from '../styled'
 import { getSequenceNames } from '../../utilities/animation'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
-import css from './styles/Animate.css.js'
+import { AnimateUI } from './styles/Animate.css.js'
+import { COMPONENT_KEY } from './utils'
 
 export interface Props {
   animateOnMount: boolean
@@ -27,7 +28,7 @@ export interface Props {
   onExited: () => void
   onExiting: () => void
   sequence: AnimationSequence
-  style: Object
+  style?: Object
   timeout: number
   transitionProperty: string
   unmountOnExit: boolean
@@ -48,14 +49,11 @@ export class Animate extends React.PureComponent<Props> {
     onExited: noop,
     onExiting: noop,
     sequence: ['fade'],
-    style: {},
     transitionProperty: 'all',
     unmountOnExit: true,
   }
 
   node: HTMLElement
-
-  setNodeRef = (node: HTMLDivElement) => (this.node = node)
 
   render() {
     const {
@@ -86,7 +84,7 @@ export class Animate extends React.PureComponent<Props> {
       className
     )
 
-    const componentStyles: Object = {
+    const componentStyles = {
       ...defaultStyle,
       transitionProperty: transitionProperty,
       transitionDuration: `${duration}ms`,
@@ -111,21 +109,25 @@ export class Animate extends React.PureComponent<Props> {
         }}
       >
         {transitionState => (
-          <div
+          <AnimateUI
             className={classNames(
               componentClassName,
               sequenceClassNames,
               `ax-${transitionState}`
             )}
-            ref={this.setNodeRef}
-            style={componentStyles}
+            ref={node => {
+              this.node = node
+            }}
+            style={{ ...componentStyles }}
           >
             {children}
-          </div>
+          </AnimateUI>
         )}
       </Transition>
     )
   }
 }
 
-export default styled(Animate)(css)
+namespaceComponent(COMPONENT_KEY)(Animate)
+
+export default Animate

@@ -5,7 +5,7 @@ import { ChoiceGroup, RadioCard } from '../src/index.js'
 const stories = storiesOf('RadioCard', module)
 
 const onChange = value => {
-  // console.log(value)
+  console.log(value)
 }
 
 stories.add('default', () => (

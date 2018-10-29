@@ -1,34 +1,38 @@
 // @flow
-import React from 'react'
-import Block from './Block'
-import { classNames } from '../../utilities/classNames'
 import type { AvatarShape, AvatarSize } from '../Avatar/types'
+import React, { PureComponent as Component } from 'react'
+import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { AvatarUI } from './styles/Avatar.css.js'
 
-type Props = {
-  className?: string,
-  children?: any,
-  shape: AvatarShape,
-  size: AvatarSize,
+export interface Props {
+  className?: string;
+  children?: any;
+  shape: AvatarShape;
+  size: AvatarSize;
 }
 
-const Avatar = (props: Props) => {
-  const { className, children, shape, size, ...rest } = props
+class Avatar extends Component<Props> {
+  static defaultProps = {
+    size: 'md',
+    shape: 'circle',
+  }
 
-  const componentClassName = classNames(
-    'c-SkeletonAvatar',
-    shape && `is-${shape}`,
-    size && `is-${size}`,
-    className
-  )
+  render() {
+    const { className, children, shape, size, ...rest } = this.props
 
-  return <Block className={componentClassName} {...rest} />
+    const componentClassName = classNames(
+      'c-SkeletonAvatar',
+      shape && `is-${shape}`,
+      size && `is-${size}`,
+      className
+    )
+
+    return <AvatarUI {...rest} className={componentClassName} />
+  }
 }
 
-Avatar.defaultProps = {
-  size: 'md',
-  shape: 'circle',
-}
-
-Avatar.displayName = 'Skeleton.Avatar'
+namespaceComponent(COMPONENT_KEY.Avatar)(Avatar)
 
 export default Avatar

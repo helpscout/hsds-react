@@ -1,16 +1,16 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Text from '../Text'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Text />)
+    const wrapper = mount(<Text />)
 
     expect(wrapper.hasClass('c-SkeletonText')).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = shallow(<Text className="ron" />)
+    const wrapper = mount(<Text className="ron" />)
 
     expect(wrapper.hasClass('c-SkeletonText')).toBeTruthy()
     expect(wrapper.hasClass('ron')).toBeTruthy()

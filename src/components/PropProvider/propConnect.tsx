@@ -4,9 +4,13 @@ import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import Context from './Context'
 import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
+import { classNames } from '../../utilities/classNames'
 import { isDefined } from '../../utilities/is'
 
-type Props = Object
+export interface Props {
+  className?: string
+  style: Object
+}
 
 /**
  * "Connects" a component with the PropProvider (context). Concept is
@@ -25,6 +29,9 @@ function propConnect(name?: ConfigGetter) {
     const displayName = `connected(${namespace})`
 
     class Connect extends React.Component<Props> {
+      static defaultProps = {
+        style: {},
+      }
       static displayName = displayName
 
       wrappedInstance: any = null
@@ -38,12 +45,42 @@ function propConnect(name?: ConfigGetter) {
         this.wrappedInstance = ref
       }
 
+      getNamespacedProps = (contextProps: PropProviderProps): Object => {
+        return getConfigProps(contextProps, namespace)
+      }
+
+      getMergedClassNameProp = (contextProps: PropProviderProps): string => {
+        const namespacedProps = this.getNamespacedProps(contextProps)
+
+        // @ts-ignore
+        return classNames(namespacedProps.className, this.props.className)
+      }
+
+      getMergedStyleProp = (contextProps: PropProviderProps): Object => {
+        const namespacedProps = this.getNamespacedProps(contextProps)
+        let style = this.props.style
+        // @ts-ignore
+        if (namespacedProps.style) {
+          style = {
+            // @ts-ignore
+            ...namespacedProps.style,
+            ...style,
+          }
+        }
+
+        return style
+      }
+
       getMergedProps = (contextProps: PropProviderProps): Object => {
-        const namespacedProps = getConfigProps(contextProps, namespace)
+        const namespacedProps = this.getNamespacedProps(contextProps)
+        const className = this.getMergedClassNameProp(contextProps)
+        const style = this.getMergedStyleProp(contextProps)
 
         return {
           ...namespacedProps,
           ...this.props,
+          className,
+          style,
           [propProviderDataAttr]: getGlobalApp(contextProps),
         }
       }

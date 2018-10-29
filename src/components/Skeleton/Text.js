@@ -1,38 +1,33 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Block from './Block'
+import React, { PureComponent as Component } from 'react'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
+import { COMPONENT_KEY } from './utils'
+import { TextUI } from './styles/Text.css.js'
 
-export const propTypes = {
-  heading: PropTypes.bool,
-  style: PropTypes.object,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+class Text extends Component {
+  static defaultProps = {
+    heading: false,
+    style: {},
+    width: '70%',
+  }
+
+  render() {
+    const { className, children, heading, style, width, ...rest } = this.props
+
+    const componentClassName = classNames(
+      'c-SkeletonText',
+      heading && 'is-heading',
+      className
+    )
+
+    const componentStyle = { ...style, width }
+
+    return (
+      <TextUI {...rest} className={componentClassName} style={componentStyle} />
+    )
+  }
 }
 
-const defaultProps = {
-  heading: false,
-  style: {},
-  width: '70%',
-}
-
-const Text = props => {
-  const { className, children, heading, style, width, ...rest } = props
-
-  const componentClassName = classNames(
-    'c-SkeletonText',
-    heading && 'is-heading',
-    className
-  )
-
-  const componentStyle = Object.assign({}, style, { width })
-
-  return (
-    <Block className={componentClassName} style={componentStyle} {...rest} />
-  )
-}
-
-Text.propTypes = propTypes
-Text.defaultProps = defaultProps
-Text.displayName = 'SkeletonText'
+namespaceComponent(COMPONENT_KEY.Text)(Text)
 
 export default Text

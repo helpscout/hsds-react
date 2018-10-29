@@ -89,13 +89,32 @@ describe('Animation', () => {
     expect(props.staggerDelay).toBe(1000)
   })
 
+  test('Can set custom Animate delay', () => {
+    const delay = 500
+    const stagger = 60
+    const wrapper = mount(
+      <CardList animationStagger={stagger} animationDelay={delay}>
+        <Card>One</Card>
+      </CardList>
+    )
+    const props = wrapper
+      .find('Animate')
+      .last()
+      .props()
+
+    expect(props.delay).toBe(delay + stagger)
+  })
+
   test('Can set custom Animate easing', () => {
     const wrapper = mount(
       <CardList animationEasing="ease">
         <Card>One</Card>
       </CardList>
     )
-    const props = wrapper.find(Animate).props()
+    const props = wrapper
+      .find('Animate')
+      .last()
+      .props()
 
     expect(props.easing).toBe('ease')
   })
@@ -106,7 +125,10 @@ describe('Animation', () => {
         <Card>One</Card>
       </CardList>
     )
-    const props = wrapper.find(Animate).props()
+    const props = wrapper
+      .find('Animate')
+      .last()
+      .props()
 
     expect(props.sequence).toBe('fade down')
   })
