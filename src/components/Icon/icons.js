@@ -8,6 +8,8 @@ import arrowLeftSingleLarge from '../../icons/arrow-left-single-large.svg'
 import arrowRightDoubleLarge from '../../icons/arrow-right-double-large.svg'
 import arrowRightSingleLarge from '../../icons/arrow-right-single-large.svg'
 import attachment from '../../icons/attachment.svg'
+import bubbleDotsDuplicate from '../../icons/bubble-dots-duplicate.svg'
+import bubbleDotsPlus from '../../icons/bubble-dots-plus.svg'
 import caretDown from '../../icons/caret-down.svg'
 import caretLeft from '../../icons/caret-left.svg'
 import caretRight from '../../icons/caret-right.svg'
@@ -62,6 +64,8 @@ const ICONS = {
   'arrow-right-single-large': arrowRightSingleLarge,
   attachment,
   bin: trash,
+  'bubble-dots-duplicate': bubbleDotsDuplicate,
+  'bubble-dots-plus': bubbleDotsPlus,
   'caret-down': caretDown,
   'caret-left': caretLeft,
   'caret-right': caretRight,
