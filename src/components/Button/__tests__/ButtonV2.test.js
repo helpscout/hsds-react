@@ -281,3 +281,19 @@ describe('Icon', () => {
     expect(wrapper.text()).toContain('News')
   })
 })
+
+describe('Content event propagation', () => {
+  test('Allows content event propagation by default', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Button onClick={spy}>
+        <Icon />
+      </Button>
+    )
+    const el = wrapper.find('Icon').last()
+
+    el.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
