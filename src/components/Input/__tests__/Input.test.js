@@ -140,6 +140,11 @@ describe('Events', () => {
   test('onKeydown callback fires when input keyDown occurs', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={true} onKeyDown={spy} />)
+
+    wrapper.instance().computedStyles = {
+      paddingBottom: 10,
+    }
+
     const input = wrapper.find('textarea')
 
     input.simulate('keydown')
