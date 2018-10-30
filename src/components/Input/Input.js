@@ -222,10 +222,9 @@ export class Input extends Component<Props, State> {
   // Mocking it would also be extremely difficult and brittle.
 
   /* istanbul ignore next */
-  scrollToBottom(event) {
+  scrollToBottom() {
     if (!this.props.multiline) return
     if (!this.inputNode || !isTextArea(this.inputNode)) return
-    if (event.keyCode !== Keys.ENTER) return
 
     const { paddingBottom } = this.computedStyles
     const { scrollTop, clientHeight } = this.inputNode
@@ -344,7 +343,7 @@ export class Input extends Component<Props, State> {
 
   handleOnKeyDown = (event: Event) => {
     this.props.onKeyDown(event)
-    this.scrollToBottom(event)
+    this.scrollToBottom()
   }
 
   handleExpandingResize = (height: number) => {
