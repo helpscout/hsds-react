@@ -66,7 +66,7 @@ class Example extends React.Component {
 
   render() {
     return (
-      <Artboard width={360} height={200}>
+      <Artboard width={360} height={180}>
         <div>
           <div style={{ margin: 20, position: 'relative' }}>
             {this.renderGuides()}
