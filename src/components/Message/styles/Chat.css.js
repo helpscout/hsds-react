@@ -22,7 +22,7 @@ const css = `
   }
 
   &.is-from {
-    ${bem.block} ~ ${bem.block} {
+    & ~ ${bem.block} {
       ${MessageBubble} {
         border-top-right-radius: ${BubbleConfig.borderRadius.md}px;
       }
