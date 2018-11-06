@@ -97,11 +97,11 @@ stories.add('icon', () => (
   <PropProvider value={{ Button: { version: 2 } }}>
     <ContainerUI>
       <Flexy>
-        <Button kind="secondary">
+        <Button kind="secondary" onClick={e => console.log(e)}>
           <Icon />
           Words
         </Button>
-        <Button kind="secondary">
+        <Button kind="secondary" onClick={e => console.log(e)}>
           Words
           <Icon />
         </Button>

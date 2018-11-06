@@ -15,6 +15,7 @@ import Icon from '../Icon'
 import Label from '../Label'
 import { scrollLockY } from '../ScrollLock'
 import Tooltip from '../Tooltip'
+import Keys from '../../constants/Keys'
 import { STATES } from '../../constants/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -66,6 +67,7 @@ type Props = {
   onBlur: (event: AnyInputEvent) => void,
   onChange: (value: InputValue) => void,
   onFocus: (event: AnyInputEvent) => void,
+  onKeyDown: (event: AnyInputEvent) => void,
   onResize: (height: number) => void,
   onWheel: (event: AnyInputEvent) => void,
   onStartTyping: (now?: number) => void,
@@ -118,6 +120,7 @@ export class Input extends Component<Props, State> {
     onBlur: noop,
     onChange: noop,
     onFocus: noop,
+    onKeyDown: noop,
     onResize: noop,
     onStartTyping: noop,
     onStopTyping: noop,
@@ -143,6 +146,7 @@ export class Input extends Component<Props, State> {
   static Static = Static
   static Suffix = Suffix
 
+  computedStyles: Object
   inputNode: InputNode
 
   constructor(props: Props) {
@@ -214,26 +218,29 @@ export class Input extends Component<Props, State> {
     }, forceAutoFocusTimeout)
   }
 
-  scrollToBottom() {
-    /* istanbul ignore next */
-    if (!this.props.multiline || !this.inputNode || !isTextArea(this.inputNode))
-      return
-    /* istanbul ignore next */
-    /**
-     * Skipping this test, due to lack of JSDOM DOM property support.
-     */
-    /* istanbul ignore next */
-    const currentLine = getTextAreaLineCurrent(this.inputNode)
-    /* istanbul ignore next */
-    const totalLines = getTextAreaLineTotal(this.inputNode)
+  // JSDOM does not provide the necessary values to test this method.
+  // Mocking it would also be extremely difficult and brittle.
 
-    /* istanbul ignore next */
-    if (
-      currentLine === totalLines &&
-      this.inputNode.hasOwnProperty('scrollTo')
-    ) {
-      // $FlowFixMe
-      this.inputNode.scrollTo(0, this.inputNode.scrollHeight)
+  /* istanbul ignore next */
+  scrollToBottom() {
+    if (!this.props.multiline) return
+    if (!this.inputNode || !isTextArea(this.inputNode)) return
+
+    const { paddingBottom } = this.computedStyles
+    const { scrollTop, clientHeight } = this.inputNode
+
+    const currentLine = getTextAreaLineCurrent(this.inputNode)
+    const totalLines = getTextAreaLineTotal(this.inputNode)
+    const isLastLine = currentLine === totalLines
+
+    const scrollBottom = scrollTop + clientHeight + paddingBottom
+
+    if (isLastLine) {
+      requestAnimationFrame(() => {
+        if (this.inputNode && this.inputNode.scrollTo) {
+          this.inputNode.scrollTo(0, scrollBottom)
+        }
+      })
     }
   }
 
@@ -303,7 +310,6 @@ export class Input extends Component<Props, State> {
     const value = event.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
-    this.scrollToBottom()
   }
 
   handleOnInputBlur = (event: InputEvent) => {
@@ -335,9 +341,15 @@ export class Input extends Component<Props, State> {
     onWheel(event)
   }
 
+  handleOnKeyDown = (event: Event) => {
+    this.props.onKeyDown(event)
+    this.scrollToBottom()
+  }
+
   handleExpandingResize = (height: number) => {
     this.props.onResize(height)
     this.setState({ height })
+    this.setComputedStylesFromHeight(height)
   }
 
   moveCursorToEnd = () => {
@@ -360,6 +372,22 @@ export class Input extends Component<Props, State> {
     this.inputNode = node
     this.props.inputRef(node)
     this.props.innerRef(node)
+  }
+
+  // Assumption: The padding-bottom does not change after the component is
+  // rendered.
+  setComputedStylesFromHeight = (height: number) => {
+    if (!height) return
+    if (this.computedStyles) return
+    if (!this.inputNode) return
+
+    const computedStyles = window.getComputedStyle(this.inputNode)
+
+    const { paddingBottom } = computedStyles
+
+    this.computedStyles = {
+      paddingBottom: parseInt(paddingBottom, 10),
+    }
   }
 
   getHelpTextMarkup = () => {
@@ -474,6 +502,11 @@ export class Input extends Component<Props, State> {
     )
   }
 
+  getMultilineValue = () => {
+    const { multiline } = this.props
+    return typeof multiline === 'number' ? multiline : 1
+  }
+
   getResizerMarkup = () => {
     const { multiline, offsetAmount, seamless } = this.props
 
@@ -484,7 +517,7 @@ export class Input extends Component<Props, State> {
         <Resizer
           contents={value}
           currentHeight={height}
-          minimumLines={typeof multiline === 'number' ? multiline : 1}
+          minimumLines={this.getMultilineValue()}
           offsetAmount={offsetAmount}
           onResize={this.handleExpandingResize}
           seamless={seamless}
@@ -522,6 +555,7 @@ export class Input extends Component<Props, State> {
       onStartTyping,
       onStopTyping,
       onWheel,
+      onScroll,
       placeholder,
       prefix,
       readOnly,
@@ -567,6 +601,7 @@ export class Input extends Component<Props, State> {
       className: fieldClassName,
       id,
       onChange: this.handleOnChange,
+      onKeyDown: this.handleOnKeyDown,
       // $FlowFixMe
       ref: this.setInputNodeRef,
       disabled,

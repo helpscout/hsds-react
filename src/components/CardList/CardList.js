@@ -5,6 +5,7 @@ import AnimateGroup from '../AnimateGroup'
 import {
   isComponentTypeCard,
   namespaceComponent,
+  getComponentKey,
 } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 import classNames from '../../utilities/classNames'
@@ -29,35 +30,36 @@ class CardList extends PureComponent<Props> {
   }
 
   getChildrenMarkup = () => {
-    const { animationDelay, animationEasing, animationSequence, children } = this.props
+    const { children } = this.props
 
     return React.Children.map(children, (child, index) => {
       if (!isComponentTypeCard(child)) {
         return null
       }
-      const id = child.props.id || child.key || `cardListChild-${index}`
+      const key = getComponentKey(child, index)
 
-      return (
-        <Animate
-          key={id}
-          delay={animationDelay}
-          easing={animationEasing}
-          sequence={animationSequence}
-        >
-          {child}
-        </Animate>
-      )
+      return <Animate key={key}>{child}</Animate>
     })
   }
 
   render() {
-    const { animationStagger, className, ...rest } = this.props
+    const {
+      animationDelay,
+      animationSequence,
+      animationStagger,
+      className,
+      animationEasing,
+      ...rest
+    } = this.props
     const componentClassName = classNames('c-CardList', className)
 
     return (
       <AnimateGroup
         {...rest}
+        delay={animationDelay}
+        easing={animationEasing}
         className={componentClassName}
+        sequence={animationSequence}
         stagger
         staggerDelay={animationStagger}
       >

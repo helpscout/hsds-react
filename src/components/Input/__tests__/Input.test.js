@@ -137,6 +137,30 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
+  test('onKeydown callback fires when input keyDown occurs', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input multiline={true} onKeyDown={spy} />)
+
+    wrapper.instance().computedStyles = {
+      paddingBottom: 10,
+    }
+
+    const input = wrapper.find('textarea')
+
+    input.simulate('keydown')
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onKeydown callback fires scrollToBottom', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input multiline={true} onKeyDown={spy} />)
+    const input = wrapper.find('textarea')
+    wrapper.instance().scrollToBottom = spy
+
+    input.simulate('keydown')
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('onResize callback is called when Input resizes', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={true} onResize={spy} />)
@@ -788,5 +812,49 @@ describe('innerRef', () => {
     const o = wrapper.find('input').getNode()
 
     expect(spy).toHaveBeenCalledWith(o)
+  })
+})
+
+describe('computedStyles', () => {
+  test('Does not set computed styles if height is falsey', () => {
+    const wrapper = mount(<Input multiline />)
+    const o = wrapper.instance()
+
+    o.setComputedStylesFromHeight(0)
+
+    expect(o.computedStyles).toBeFalsy()
+  })
+
+  test('Does not set computed styles if inputNode is falsey', () => {
+    const wrapper = mount(<Input multiline />)
+    const o = wrapper.instance()
+
+    o.inputNode = undefined
+    o.setComputedStylesFromHeight(50)
+
+    expect(o.computedStyles).toBeFalsy()
+  })
+
+  test('Sets computed styles from input note', () => {
+    const wrapper = mount(<Input multiline />)
+    const o = wrapper.instance()
+    o.inputNode.style.paddingBottom = '100px'
+
+    o.setComputedStylesFromHeight(50)
+
+    expect(o.computedStyles.paddingBottom).toBe(100)
+  })
+
+  test('Does not set computedStyles again after caching', () => {
+    const wrapper = mount(<Input multiline />)
+    const o = wrapper.instance()
+
+    o.inputNode.style.paddingBottom = '100px'
+    o.setComputedStylesFromHeight(150)
+
+    o.inputNode.style.paddingBottom = '500px'
+    o.setComputedStylesFromHeight(550)
+
+    expect(o.computedStyles.paddingBottom).toBe(100)
   })
 })

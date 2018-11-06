@@ -1,8 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { TransitionGroup } from 'react-transition-group'
-import AnimateGroup from '..'
+import AnimateGroup from '../AnimateGroup'
 import Animate from '../../Animate'
+
+jest.useFakeTimers()
 
 describe('TransitionGroup', () => {
   test('Is a wrapper for TransitionGroup', () => {
@@ -33,12 +35,14 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(staggerDelay)
-    expect(second.props().delay).toBe(staggerDelay * 2)
+    jest.runOnlyPendingTimers()
+
+    expect(first.prop('style').transitionDelay).toBe('200ms')
+    expect(second.prop('style').transitionDelay).toBe('400ms')
   })
 
   test('Can adjust staggerDelay', () => {
@@ -54,12 +58,14 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(staggerDelay)
-    expect(second.props().delay).toBe(staggerDelay * 2)
+    jest.runOnlyPendingTimers()
+
+    expect(first.prop('style').transitionDelay).toBe('700ms')
+    expect(second.prop('style').transitionDelay).toBe('1400ms')
   })
 
   test('staggerDelay does not trigger staggering', () => {
@@ -75,12 +81,12 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(0)
-    expect(second.props().delay).toBe(0)
+    expect(first.prop('style').transitionDelay).toBe('0ms')
+    expect(second.prop('style').transitionDelay).toBe('0ms')
   })
 
   test('staggerDelay respects Animate delay prop', () => {
@@ -96,12 +102,12 @@ describe('Staggering', () => {
       </AnimateGroup>
     )
 
-    const o = wrapper.find(Animate)
+    const o = wrapper.find('div.c-Animate')
     const first = o.first()
     const second = o.last()
 
-    expect(first.props().delay).toBe(staggerDelay + 100)
-    expect(second.props().delay).toBe(staggerDelay * 2 + 200)
+    expect(first.prop('style').transitionDelay).toBe('100ms')
+    expect(second.prop('style').transitionDelay).toBe('200ms')
   })
 
   test('stagger does not affect Animate duration', () => {
@@ -124,10 +130,102 @@ describe('Staggering', () => {
     expect(first.props().duration).toBe(30)
     expect(second.props().duration).toBe(30)
   })
+
+  test('Can staggerDuration', () => {
+    const staggerDelay = 1500
+    const wrapper = mount(
+      <AnimateGroup stagger staggerDuration={staggerDelay}>
+        <Animate>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate>
+          <div className="champ">Champ</div>
+        </Animate>
+        <Animate>
+          <div className="brick">Brick</div>
+        </Animate>
+      </AnimateGroup>
+    )
+    const o = wrapper.find('div.c-Animate')
+    const first = o.first()
+    const last = o.last()
+
+    expect(first.prop('style').transitionDuration).toBe('1500ms')
+    expect(last.prop('style').transitionDuration).toBe('1500ms')
+  })
+
+  test('Does not stagger delay, if stagger is false', () => {
+    const staggerDelay = 100
+    const wrapper = mount(
+      <AnimateGroup stagger={false} delay={staggerDelay}>
+        <Animate>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate>
+          <div className="champ">Champ</div>
+        </Animate>
+        <Animate>
+          <div className="brick">Brick</div>
+        </Animate>
+      </AnimateGroup>
+    )
+    const o = wrapper.find('div.c-Animate')
+    const first = o.first()
+    const last = o.last()
+
+    expect(first.prop('style').transitionDelay).toBe('100ms')
+    expect(last.prop('style').transitionDelay).toBe('100ms')
+  })
+
+  test('Delays stagger within staggerMax', () => {
+    const staggerDelay = 100
+    const wrapper = mount(
+      <AnimateGroup stagger staggerDelay={staggerDelay} staggerMax={5}>
+        <Animate>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate>
+          <div className="champ">Champ</div>
+        </Animate>
+        <Animate>
+          <div className="brick">Brick</div>
+        </Animate>
+      </AnimateGroup>
+    )
+    const o = wrapper.find('div.c-Animate')
+    const first = o.first()
+    const last = o.last()
+
+    expect(first.prop('style').transitionDelay).toBe('100ms')
+    expect(last.prop('style').transitionDelay).toBe('300ms')
+  })
+
+  test('Delays do not adjust beyond staggerMax', () => {
+    const staggerDelay = 100
+    const wrapper = mount(
+      <AnimateGroup stagger staggerDelay={staggerDelay} staggerMax={2}>
+        <Animate>
+          <div className="ron">Ron</div>
+        </Animate>
+        <Animate>
+          <div className="champ">Champ</div>
+        </Animate>
+        <Animate>
+          <div className="brick">Brick</div>
+        </Animate>
+      </AnimateGroup>
+    )
+    const o = wrapper.find('div.c-Animate')
+    const first = o.first()
+    const last = o.last()
+
+    expect(first.prop('style').transitionDelay).toBe('100ms')
+    expect(last.prop('style').transitionDelay).toBe('200ms')
+  })
 })
 
 describe('Children', () => {
-  test("Don't render non-compatible children, with stagger", () => {
+  test('Can render non-Animate children, with stagger', () => {
     const wrapper = mount(
       <AnimateGroup stagger>
         <Animate duration={30}>
@@ -140,10 +238,10 @@ describe('Children', () => {
     const p = wrapper.find('.ron')
 
     expect(o.length).toBeTruthy()
-    expect(p.length).not.toBeTruthy()
+    expect(p.length).toBeTruthy()
   })
 
-  test('Filter out null children', () => {
+  test('Does not filter out null children', () => {
     const children = [
       <Animate duration={30} key={11}>
         <div className="champ">Champ</div>
@@ -152,7 +250,7 @@ describe('Children', () => {
     ]
     const wrapper = mount(<AnimateGroup stagger>{children}</AnimateGroup>)
 
-    expect(wrapper.children().length).toBe(1)
+    expect(wrapper.children().length).toBe(2)
   })
 })
 

@@ -97,7 +97,10 @@ describe('Animation', () => {
         <Card>One</Card>
       </CardList>
     )
-    const props = wrapper.find(Animate).props()
+    const props = wrapper
+      .find('Animate')
+      .last()
+      .props()
 
     expect(props.delay).toBe(delay + stagger)
   })
@@ -108,7 +111,10 @@ describe('Animation', () => {
         <Card>One</Card>
       </CardList>
     )
-    const props = wrapper.find(Animate).props()
+    const props = wrapper
+      .find('Animate')
+      .last()
+      .props()
 
     expect(props.easing).toBe('ease')
   })
@@ -119,7 +125,10 @@ describe('Animation', () => {
         <Card>One</Card>
       </CardList>
     )
-    const props = wrapper.find(Animate).props()
+    const props = wrapper
+      .find('Animate')
+      .last()
+      .props()
 
     expect(props.sequence).toBe('fade down')
   })

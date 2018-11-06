@@ -8,6 +8,8 @@ import arrowLeftSingleLarge from '../../icons/arrow-left-single-large.svg'
 import arrowRightDoubleLarge from '../../icons/arrow-right-double-large.svg'
 import arrowRightSingleLarge from '../../icons/arrow-right-single-large.svg'
 import attachment from '../../icons/attachment.svg'
+import bubbleDotsDuplicate from '../../icons/bubble-dots-duplicate.svg'
+import bubbleDotsPlus from '../../icons/bubble-dots-plus.svg'
 import caretDown from '../../icons/caret-down.svg'
 import caretLeft from '../../icons/caret-left.svg'
 import caretRight from '../../icons/caret-right.svg'
@@ -38,6 +40,8 @@ import image from '../../icons/image.svg'
 import link from '../../icons/link.svg'
 import meatball from '../../icons/meatball.svg'
 import minimize from '../../icons/minimize.svg'
+import plusLarge from '../../icons/plus-large.svg'
+import plusSmall from '../../icons/plus-small.svg'
 import search from '../../icons/search.svg'
 import spinner from '../../icons/spinner.svg'
 import star from '../../icons/star.svg'
@@ -60,6 +64,8 @@ const ICONS = {
   'arrow-right-single-large': arrowRightSingleLarge,
   attachment,
   bin: trash,
+  'bubble-dots-duplicate': bubbleDotsDuplicate,
+  'bubble-dots-plus': bubbleDotsPlus,
   'caret-down': caretDown,
   'caret-left': caretLeft,
   'caret-right': caretRight,
@@ -93,6 +99,9 @@ const ICONS = {
   meatball,
   minimize,
   'option-dots': meatball,
+  plus: plusLarge,
+  'plus-large': plusLarge,
+  'plus-small': plusSmall,
   search,
   spinner,
   star,

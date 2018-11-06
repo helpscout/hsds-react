@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { Avatar, Flexy } from '../../src/index.js'
 import { ThemeProvider } from '../../src/components/styled'
 import AvatarSpec from './specs/Avatar'
+import './AvatarV2'
 
 const stories = storiesOf('Avatar', module)
 const fixture = AvatarSpec.generate()

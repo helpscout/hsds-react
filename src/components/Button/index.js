@@ -20,4 +20,4 @@ class WrappedButton extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(WrappedButton)
 
-export default propConnect('Button')(WrappedButton)
+export default propConnect(COMPONENT_KEY)(WrappedButton)
