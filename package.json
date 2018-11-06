@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/blue",
-  "version": "1.9.1",
+  "version": "1.9.4",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -88,6 +88,7 @@
     "react-transition-group": "2.2.0"
   },
   "devDependencies": {
+    "@helpscout/artboard": "^0.0.8",
     "@helpscout/helix": "^0.0.13",
     "@storybook/addon-actions": "^3.4.11",
     "@storybook/addon-links": "^3.4.11",

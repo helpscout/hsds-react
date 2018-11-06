@@ -13,6 +13,7 @@ import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
 
 type Props = {
+  allowContentEventPropogation: boolean,
   buttonRef: (ref: any) => void,
   canRenderFocus: boolean,
   children?: any,
@@ -41,6 +42,7 @@ type State = {
 
 class Button extends Component<Props, State> {
   static defaultProps = {
+    allowContentEventPropogation: true,
     buttonRef: noop,
     canRenderFocus: true,
     disable: false,
@@ -140,6 +142,7 @@ class Button extends Component<Props, State> {
 
   render() {
     const {
+      allowContentEventPropogation,
       children,
       className,
       kind,
@@ -191,7 +194,10 @@ class Button extends Component<Props, State> {
         onFocus={this.handleOnFocus}
         type={type}
       >
-        <ButtonContentUI className="c-ButtonV2__content">
+        <ButtonContentUI
+          className="c-ButtonV2__content"
+          allowContentEventPropogation={allowContentEventPropogation}
+        >
           {childrenMarkup}
         </ButtonContentUI>
         {focusMarkup}

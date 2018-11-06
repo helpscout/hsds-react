@@ -364,6 +364,16 @@ export const ButtonContentUI = styled('span')`
   justify-content: inherit;
   text-decoration: inherit;
   width: 100%;
+
+  ${({ allowContentEventPropogation }) =>
+    allowContentEventPropogation &&
+    `
+    pointer-events: none;
+
+    * {
+      pointer-events: none;
+    }
+  `};
 `
 
 export const FocusUI = styled('span')`

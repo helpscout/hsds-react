@@ -7,7 +7,10 @@ const stories = storiesOf('Icon', module)
 
 stories.add('icons', () => {
   const icons = Object.keys(iconList).map(i => (
-    <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
+    <div
+      style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}
+      key={i}
+    >
       <Icon name={i} key={i} center />
       <Text muted size="sm">
         {i}
