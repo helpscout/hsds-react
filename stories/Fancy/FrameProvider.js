@@ -19,22 +19,46 @@ const Card = styled('div')`
   `};
 `
 
-stories.add('default', () => (
-  <Frame>
-    <FrameProvider>
-      <ScopeProvider scope="html">
-        <ThemeProvider theme={{ color: '#eee' }}>
-          <div id="App">
-            <Card>
-              <Text>
-                <Tooltip title="Elf!" triggerOn="click">
-                  Buddy!
-                </Tooltip>
-              </Text>
-            </Card>
-          </div>
-        </ThemeProvider>
-      </ScopeProvider>
-    </FrameProvider>
-  </Frame>
-))
+stories.add('default', () => {
+  class Example extends React.Component {
+    state = {
+      showFrame: true,
+    }
+
+    toggle = () => {
+      this.setState({
+        showFrame: !this.state.showFrame,
+      })
+    }
+
+    render() {
+      return (
+        <div>
+          <button onClick={this.toggle}>Toggle Frame</button>
+          <br />
+          {this.state.showFrame && (
+            <Frame>
+              <FrameProvider>
+                <ScopeProvider scope="html">
+                  <ThemeProvider theme={{ color: '#eee' }}>
+                    <div id="App">
+                      <Card>
+                        <Text>
+                          <Tooltip title="Elf!" triggerOn="click">
+                            Buddy!
+                          </Tooltip>
+                        </Text>
+                      </Card>
+                    </div>
+                  </ThemeProvider>
+                </ScopeProvider>
+              </FrameProvider>
+            </Frame>
+          )}
+        </div>
+      )
+    }
+  }
+
+  return <Example />
+})
