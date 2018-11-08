@@ -13,7 +13,7 @@ git clone git@github.com:helpscout/hsds-react.git
 Next, go into that directory:
 
 ```
-cd blue
+cd hsds-react
 ```
 
 And install all the dependencies in the world...

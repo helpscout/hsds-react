@@ -1,8 +1,8 @@
 # Contributing
 
-Hallo 👋! So glad you're interested in contributing to Blue!
+Hallo 👋! So glad you're interested in contributing to HSDS!
 
-In this guide, we'll walk through the process of creating a brand new Blue component.
+In this guide, we'll walk through the process of creating a brand new HSDS component.
 
 * [Getting started](setup.md)
 * [Creating a component](creating.md)
