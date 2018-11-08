@@ -9,7 +9,7 @@ The first thing you'll need to do, is add Blue to your React project. This can b
 Or, even faster, you can run:
 
 ```
-npm install @helpscout/blue --save
+npm install @helpscout/hsds-react --save
 ```
 
 ## React (v15)

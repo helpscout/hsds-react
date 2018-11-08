@@ -15,7 +15,7 @@ https://hsds-react.netlify.com/
 ## Install
 
 ```
-npm install @helpscout/blue --save
+npm install @helpscout/hsds-react --save
 ```
 
 ## Getting Started

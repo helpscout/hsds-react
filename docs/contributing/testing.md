@@ -91,7 +91,7 @@ hsds-react/
 
 You can open the `index.html` in your browser to view the full report.
 
-Since Aug 31, 2017, HSDS has maintained [**100% code coverage**](https://coveralls.io/github/helpscout/blue?branch=master) for tests. Because HSDS is a component library (rather than an App), it's testing coverage is stricter. Everything must be tested. There are no exceptions... Except...
+Since Aug 31, 2017, HSDS has maintained [**100% code coverage**](https://coveralls.io/github/helpscout/hsds-react?branch=master) for tests. Because HSDS is a component library (rather than an App), it's testing coverage is stricter. Everything must be tested. There are no exceptions... Except...
 
 ## Exceptions
 

@@ -7,7 +7,7 @@ In this guide, we'll walk through how to get started with HSDS development.
 First, we need to clone the Github repo to your computer. Open up your terminal, and run this command in the directory of your choice:
 
 ```
-git clone git@github.com:helpscout/blue.git
+git clone git@github.com:helpscout/hsds-react.git
 ```
 
 Next, go into that directory:

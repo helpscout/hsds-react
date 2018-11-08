@@ -5,7 +5,7 @@ A Link component is a light-weight wrapper for the default HTML `<a>` selector. 
 ## Example
 
 ```jsx
-You're my boy, <Link href="https://github.com/helpscout/blue">Blue</Link>!
+You're my boy, <Link href="https://github.com/helpscout/hsds-react">Blue</Link>!
 ```
 
 ### Router Link

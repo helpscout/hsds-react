@@ -33,7 +33,7 @@ import Input from '@helpscout/hsds-react/components/Input'
 Technically, you can do this:
 
 ```jsx
-import { Input } from '@helpscout/blue'
+import { Input } from '@helpscout/hsds-react'
 ```
 
 However, the above example will, by default, import **all** of HSDS. I get that HSDS is cool and all, but we don't want to make your App bigger than it needs to be.

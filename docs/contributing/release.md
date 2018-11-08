@@ -1,10 +1,10 @@
 # Publishing a release
 
-In this guide, we'll walk through publishing for our [newly merged](review.md) [custom `Strong` component](creating.md) to [npm](https://www.npmjs.com/package/@helpscout/blue).
+In this guide, we'll walk through publishing for our [newly merged](review.md) [custom `Strong` component](creating.md) to [npm](https://www.npmjs.com/package/@helpscout/hsds-react).
 
 ## Log in
 
-To publish to npm, you **must** have [maintainer access](https://docs.npmjs.com/cli/owner) to the [@helpscout/blue](https://www.npmjs.com/package/@helpscout/blue) package.
+To publish to npm, you **must** have [maintainer access](https://docs.npmjs.com/cli/owner) to the [@helpscout/hsds-react](https://www.npmjs.com/package/@helpscout/hsds-react) package.
 
 ## Publish!
 
@@ -64,6 +64,6 @@ Hope you have a fantastic day ❤️!
 ## See also
 
 * [npm](https://www.npmjs.com/)
-* [@helpscout/blue](https://www.npmjs.com/package/@helpscout/blue)
+* [@helpscout/hsds-react](https://www.npmjs.com/package/@helpscout/hsds-react)
 * [np](https://github.com/sindresorhus/np)
 * [Release notes](https://github.com/helpscout/hsds-react/releases)

@@ -4,7 +4,7 @@ In this guide, we'll walk through add submitting for our [fully test](testing.md
 
 ## Create a pull request
 
-After checking in all of your wonderful changes to your `strong-component` git branch. Push it up to [Github](https://github.com/helpscout/blue).
+After checking in all of your wonderful changes to your `strong-component` git branch. Push it up to [Github](https://github.com/helpscout/hsds-react).
 
 [Create a new pull request](https://github.com/helpscout/hsds-react/compare) against the `master` branch!
 
@@ -16,7 +16,7 @@ Since we're adding a brand new component, we'll add the `feature` label.
 
 ## Continuous Integration
 
-Every pull request automatically fires off a [Travis build](https://travis-ci.org/helpscout/blue). Once that passes, it'll generate a [code coverage score](https://coveralls.io/).
+Every pull request automatically fires off a [Travis build](https://travis-ci.org/helpscout/hsds-react). Once that passes, it'll generate a [code coverage score](https://coveralls.io/).
 
 The Travis build **must be green** and the coverage score **must be 100%** before merging into `master`.
 

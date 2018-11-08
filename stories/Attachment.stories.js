@@ -9,7 +9,7 @@ stories.add('default', () => {
     <Attachment
       name="parrot.png"
       size="5kb"
-      url="https://github.com/helpscout/blue/raw/master/images/Blue.png"
+      url="https://github.com/helpscout/hsds-react/raw/master/images/Blue.png"
     />
   )
 })
@@ -19,7 +19,7 @@ stories.add('long file name', () => {
     <Attachment
       name="parrot-with-a-super-long-name.png"
       size="5kb"
-      url="https://github.com/helpscout/blue/raw/master/images/Blue.png"
+      url="https://github.com/helpscout/hsds-react/raw/master/images/Blue.png"
     />
   )
 })
