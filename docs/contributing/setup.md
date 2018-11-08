@@ -40,7 +40,7 @@ HSDS's `start` does a neat thing that automatically checks and installs dependen
 
 Once Storybook builds, you'll be able to visit it at [http://localhost:8900/](http://localhost:8900/).
 
-The live version of HSDS's Storybook can be seen at [http://hsblue.surge.sh/](http://hsblue.surge.sh/).
+The live version of HSDS's Storybook can be seen at [https://hsds-react.netlify.com/](https://hsds-react.netlify.com/).
 
 Fantastic ✌️! You've got HSDS up and running on your computer.
 
