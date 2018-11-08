@@ -4,10 +4,10 @@ In this guide, we'll walk through adding documentation for our [fully test](test
 
 ## Directory
 
-All of Blue's component documenations files are scoped in the same directory as the component, example:
+All of HSDS's component documenations files are scoped in the same directory as the component, example:
 
 ```
-blue/
+hsds-react/
   └── components/
       └── Button/
           └── README.md
@@ -18,7 +18,7 @@ blue/
 The first thing we'll need to do is create a `README.md` directory under `Strong/`:
 
 ```
-blue/
+hsds-react/
   └── components/
       └── Strong/
           └── README.md
@@ -32,7 +32,7 @@ Our `README.md` documentation should contain:
 * An example of how it can be used
 * Descriptions of the available component `prop`
 
-Check out any `README.md` file from [any component](https://github.com/helpscout/blue/tree/master/src/components) for some examples.
+Check out any `README.md` file from [any component](https://github.com/helpscout/hsds-react/tree/master/src/components) for some examples.
 
 Yay, you did it 🤗! Documentation is [super important](https://www.quora.com/Why-is-documentation-important-in-programming). Thank you for taking the time to write docs!
 

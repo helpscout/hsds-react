@@ -2,14 +2,14 @@
 
 In this guide, we'll walk through writing test for our [custom `Strong` component](creating.md) in [Storybook](https://storybook.js.org/).
 
-Blue uses [Jest](https://jestjs.io/) and [Enzyme](https://github.com/airbnb/enzyme) for testing.
+HSDS uses [Jest](https://jestjs.io/) and [Enzyme](https://github.com/airbnb/enzyme) for testing.
 
 ## Directory
 
-All of Blue's component test files are scoped in the same directory as the component, example:
+All of HSDS's component test files are scoped in the same directory as the component, example:
 
 ```
-blue/
+hsds-react/
   └── components/
       └── Button/
           └── __tests__/
@@ -21,7 +21,7 @@ blue/
 The first thing we'll need to do is create a dedicated `__tests__` directory under `Strong/`:
 
 ```
-blue/
+hsds-react/
   └── components/
       └── Strong/
           └── __tests__/
@@ -30,7 +30,7 @@ blue/
 Under `__tests__/`, we'll need to create the main `Strong.test.js` file:
 
 ```
-blue/
+hsds-react/
   └── components/
       └── Strong/
           └── __tests__/
@@ -58,7 +58,7 @@ describe('classNames', () => {
 
 #### `mount`
 
-Blue favours [mount rendering vs. shallow rendering](https://blog.kentcdodds.com/why-i-never-use-shallow-rendering-c08851a68bb7) for testing. The benefits are many. The only downside is `mount` is slightly slower compared to `shallow`.
+HSDS favours [mount rendering vs. shallow rendering](https://blog.kentcdodds.com/why-i-never-use-shallow-rendering-c08851a68bb7) for testing. The benefits are many. The only downside is `mount` is slightly slower compared to `shallow`.
 
 ## Test development
 
@@ -83,7 +83,7 @@ npm run test
 This runs through the entire Jest test suite, and generates a [coverage report](https://istanbul.js.org/) under:
 
 ```
-blue/
+hsds-react/
   └── coverage/
       └── lcov-report/
           └── index.html
@@ -91,7 +91,7 @@ blue/
 
 You can open the `index.html` in your browser to view the full report.
 
-Since Aug 31, 2017, Blue has maintained [**100% code coverage**](https://coveralls.io/github/helpscout/blue?branch=master) for tests. Because Blue is a component library (rather than an App), it's testing coverage is stricter. Everything must be tested. There are no exceptions... Except...
+Since Aug 31, 2017, HSDS has maintained [**100% code coverage**](https://coveralls.io/github/helpscout/blue?branch=master) for tests. Because HSDS is a component library (rather than an App), it's testing coverage is stricter. Everything must be tested. There are no exceptions... Except...
 
 ## Exceptions
 

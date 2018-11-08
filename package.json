@@ -1,14 +1,14 @@
 {
-  "name": "@helpscout/blue",
+  "name": "@helpscout/hsds-react",
   "version": "2.0.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "license": "MIT",
-  "description": "Help Scout's React component library",
+  "description": "React component library for Help Scout's Design System",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/helpscout/blue.git"
+    "url": "git+https://github.com/helpscout/hsds-react.git"
   },
   "author": "Jon Quach <hello@jonquach.com>",
   "contributors": [

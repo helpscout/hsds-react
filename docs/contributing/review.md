@@ -6,11 +6,11 @@ In this guide, we'll walk through add submitting for our [fully test](testing.md
 
 After checking in all of your wonderful changes to your `strong-component` git branch. Push it up to [Github](https://github.com/helpscout/blue).
 
-[Create a new pull request](https://github.com/helpscout/blue/compare) against the `master` branch!
+[Create a new pull request](https://github.com/helpscout/hsds-react/compare) against the `master` branch!
 
 ## Description and labels
 
-Be descriptive of your changes! The more the better. If possible, include screenshots or GIF demos. Add the [appropriate label(s)](https://github.com/helpscout/blue/labels) that describe your changes.
+Be descriptive of your changes! The more the better. If possible, include screenshots or GIF demos. Add the [appropriate label(s)](https://github.com/helpscout/hsds-react/labels) that describe your changes.
 
 Since we're adding a brand new component, we'll add the `feature` label.
 
@@ -22,7 +22,7 @@ The Travis build **must be green** and the coverage score **must be 100%** befor
 
 ## Review
 
-Tag one of the [`@helpscout` team members](https://github.com/helpscout/blue/graphs/contributors) for review.
+Tag one of the [`@helpscout` team members](https://github.com/helpscout/hsds-react/graphs/contributors) for review.
 
 ## Next
 

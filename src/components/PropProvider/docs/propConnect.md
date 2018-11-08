@@ -6,7 +6,7 @@ Higher-order function that "connects" a React component with Blue's config, gene
 
 ```jsx
 import React, { Component } from 'react'
-import { propConnect } from '@helpscout/blue/PropProvider'
+import { propConnect } from '@helpscout/hsds-react/PropProvider'
 
 const MyComponent extends Component {
   ...

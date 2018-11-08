@@ -1,15 +1,15 @@
 # Creating a component
 
-In this guide, we'll walk through creating a custom component in Blue!
+In this guide, we'll walk through creating a custom component in HSDS!
 
 We'll be created a `Strong` component, an enhancement to the default HTML `strong` primitive.
 
 ## Directory
 
-All of Blue's components are located under `src/components/`:
+All of HSDS's components are located under `src/components/`:
 
 ```
-blue/
+hsds-react/
   └── src/
       └── components/
 ```
@@ -19,7 +19,7 @@ blue/
 The first thing we'll need to do is create a dedicated `Strong` directory under `Components/`:
 
 ```
-blue/
+hsds-react/
   └── src/
       └── components/
           └── Strong/
@@ -31,7 +31,7 @@ Under our newly created `Strong/` directory, we'll need to create 2 files:
 * `Strong.js`
 
 ```
-blue/
+hsds-react/
   └── src/
       └── components/
           └── Strong/
@@ -94,7 +94,7 @@ Whoa 😳! Lots of stuff going on already!
 
 #### `Flow`
 
-Blue uses [Flow](https://flow.org/en/) for typing. To enable Flow type on our component, we have to start off the file with `// @flow`.
+HSDS uses [Flow](https://flow.org/en/) for typing. To enable Flow type on our component, we have to start off the file with `// @flow`.
 
 #### `Strong.css.js`
 
@@ -127,7 +127,7 @@ The concept of markup and classNames can be understood by everyone who knows HTM
 
 The second point is thoughtful architecture. HTML is the foundation to your React component. It's critical to get this right to make your components/app accessible and easy to reason about/comprehend. There has to be a purpose for every single HTML selector added to a React component. Describe that reasoning with a thoughtful className.
 
-Blue follows the [ITCSS](https://developer.helpscout.com/seed/glossary/itcss/) naming architecture, which is why components have a `className` prefix of `c-`.
+HSDS follows the [ITCSS](https://developer.helpscout.com/seed/glossary/itcss/) naming architecture, which is why components have a `className` prefix of `c-`.
 
 #### `is-superBold`
 
@@ -137,7 +137,7 @@ These modifier classNames should typically be prefixed with words like `is-`, `h
 
 #### `...getValidProps(rest)`
 
-Blue's components are designed to be used as if they were default HTML elements. The `...rest` pattern allows for users to pass in custom (but HTML-supported) props like:
+HSDS's components are designed to be used as if they were default HTML elements. The `...rest` pattern allows for users to pass in custom (but HTML-supported) props like:
 
 * `aria` roles
 * `data-` attributes
@@ -157,7 +157,7 @@ Wonderful 🙏! You've created the base for `Strong`, that's performant, easy to
 
 #### `namespaceComponent`
 
-This is a Higher-Order component that sets up the internal namespacing within Blue. It allows for Blue components to reliably type-check each other.
+This is a Higher-Order component that sets up the internal namespacing within HSDS. It allows for HSDS components to reliably type-check each other.
 
 `COMPONENT_KEY` is the namespace for the component, in our case, `Strong`. Exporting it allows for other components to use the key for type-checking.
 
@@ -177,16 +177,16 @@ Whoa 😳! More stuff!
 
 #### `propConnect`
 
-`propConnect` is a special Higher-Order Component that works very similar to [Redux's](https://redux.js.org/) `connect`. It hooks up our `Strong` component to Blue's `PropProvider`, which allows the user to more [easily override props](https://github.com/helpscout/blue/blob/master/src/components/PropProvider/docs/Provider.md).
+`propConnect` is a special Higher-Order Component that works very similar to [Redux's](https://redux.js.org/) `connect`. It hooks up our `Strong` component to HSDS's `PropProvider`, which allows the user to more [easily override props](https://github.com/helpscout/hsds-react/blob/master/src/components/PropProvider/docs/Provider.md).
 
 We provide it with the (`string`) namespace (`'Strong'`), as well as the actual Component.
 
 ## More Exporting
 
-All of Blue's components are made available in `components/index.js`:
+All of HSDS's components are made available in `components/index.js`:
 
 ```
-blue/
+hsds-react/
   └── src/
       └── components/
           └── index.js

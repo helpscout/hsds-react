@@ -4,19 +4,19 @@ In this guide, we'll walk through render our newly [styled](styling.md) [custom 
 
 ## Directory
 
-All of Blue's stories are located under `src/stories/`:
+All of HSDS's stories are located under `src/stories/`:
 
 ```
-blue/
+hsds-react/
   └── stories/
 ```
 
 They are manually imported and rendered with the main `index.js` file:
 
-All of Blue's stories are located under `src/stories/`:
+All of HSDS's stories are located under `src/stories/`:
 
 ```
-blue/
+hsds-react/
   └── stories/
       └── index.js
 ```
@@ -26,7 +26,7 @@ blue/
 The first thing we'll need to do is create a dedicated `Strong` directory under `stories/`:
 
 ```
-blue/
+hsds-react/
   └── stories/
       └── Strong/
 ```
@@ -34,7 +34,7 @@ blue/
 Under `Strong/`, we'll need to create the main `index.js` file:
 
 ```
-blue/
+hsds-react/
   └── stories/
       └── Strong/
           └── index.js

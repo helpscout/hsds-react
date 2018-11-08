@@ -1,14 +1,14 @@
-# 🔷 Blue
+![](https://ddwva799xzrph.cloudfront.net/items/110k3c0l3v183J3J0g2I/hsds-logo-readme.png)
+
+# 🔷 HSDS: React
 
 [![Build Status](https://travis-ci.org/helpscout/blue.svg?branch=master)](https://travis-ci.org/helpscout/blue) [![Coverage Status](https://coveralls.io/repos/github/helpscout/blue/badge.svg?branch=master)](https://coveralls.io/github/helpscout/blue?branch=master) [![npm version](https://badge.fury.io/js/%40helpscout%2Fblue.svg)](https://badge.fury.io/js/%40helpscout%2Fblue) ![node](https://img.shields.io/badge/node-8.11.3-blue.svg) ![npm](https://img.shields.io/badge/npm-6.4.1-blue.svg)
 
-Help Scout's React component library
-
-<img src="https://github.com/helpscout/blue/raw/master/images/Blue.png" width="250">
+React components for Help Scout's Design System
 
 ## Live Demo
 
-Check out Blue's [Storybook](https://hsblue.surge.sh/):
+Check out HSDS's [Storybook](https://hsblue.surge.sh/):
 
 https://hsblue.surge.sh/
 
@@ -32,7 +32,7 @@ Once everything is installed, run:
 npm start
 ```
 
-Check out Blue's Storybook at http://localhost:8900/ in your browser!
+Check out HSDS's Storybook at http://localhost:8900/ in your browser!
 
 ## Testing
 
@@ -50,7 +50,7 @@ npm run test
 
 ## Publishing
 
-To publish and release a new version of Blue, run the following command:
+To publish and release a new version of HSDS, run the following command:
 
 ```
 npm run release
@@ -66,9 +66,3 @@ To deploy the Storybook, run the following command:
 ```
 npm run deploy
 ```
-
-## Extras
-
-![You're my boy, Blue!](./images/yourmyboyblue.gif)
-
-> You're my boy, Blue!
