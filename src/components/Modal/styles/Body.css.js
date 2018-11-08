@@ -7,7 +7,7 @@ const bem = BEM('.c-ModalBody')
 
 export const BodyUI = styled('div')`
   ${baseStyles} display: flex;
-  flex: 1;
+  flex: 1 1 auto;
   height: 100%;
   max-width: 100%;
   min-height: 0;
