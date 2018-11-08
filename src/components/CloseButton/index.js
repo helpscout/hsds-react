@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Icon from '../Icon'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { CloseButtonSize } from './types'
 
@@ -14,13 +14,6 @@ type Props = {
   seamless?: boolean,
   size?: CloseButtonSize,
   title?: string,
-}
-
-const defaultProps = {
-  onBlur: noop,
-  onClick: noop,
-  onFocus: noop,
-  title: 'Close',
 }
 
 const CloseButton = (props: Props) => {

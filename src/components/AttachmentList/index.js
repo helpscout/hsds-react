@@ -5,10 +5,9 @@ import Icon from '../Icon'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
 import styled from '../styled'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import css from './styles/AttachmentList.css.js'
-import { providerContextTypes } from '../Attachment/propTypes'
 
 type Props = {
   children: Array<any> | string,
@@ -28,7 +27,9 @@ export class AttachmentList extends Component<Props> {
     withOverflow: true,
   }
 
-  static contextTypes = providerContextTypes
+  static contextTypes = {
+    theme: () => null,
+  }
 
   handleApplyFade: () => void = () => {}
   handleScrollToEnd: () => void = () => {}

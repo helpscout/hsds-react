@@ -1,6 +1,6 @@
 // @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled/index.js'
+import styled from '../../styled/index'
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {

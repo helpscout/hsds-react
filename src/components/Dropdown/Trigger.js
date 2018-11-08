@@ -1,9 +1,8 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
 import Button from '../Button'
 import Icon from '../Icon'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import type { DropdownDirection } from './types'
 

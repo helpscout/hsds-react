@@ -7,7 +7,7 @@ import {
   propTypes as statusDotPropTypes,
 } from '../StatusDot'
 import { statusTypes } from './propTypes'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 
 export const propTypes = {
   ...statusDotPropTypes,

@@ -3,7 +3,7 @@ import React, { PureComponent as Component } from 'react'
 import Container from './Container'
 import Centralize from '../Centralize'
 import Text from '../Text'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import {
   OptionTileUI,

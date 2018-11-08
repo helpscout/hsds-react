@@ -47,17 +47,24 @@ describe('Trigger', () => {
 
 describe('Key events', () => {
   test('Closes modal when ESCAPE is pressed', () => {
-    mount(<Modal isOpen trigger={trigger} />)
+    mount(
+      <Modal isOpen trigger={trigger}>
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
 
     const portal = document.body.childNodes[0]
     const modal = portal.getElementsByClassName('c-Modal')[0]
+    const o = document.querySelectorAll('.TestContent')
 
     expect(modal).toBeTruthy()
+    expect(o.length).toBeTruthy()
 
     simulateKeyPress(Keys.ESCAPE)
+
     jest.runAllTimers()
 
-    expect(document.querySelectorAll('.c-Modal').length).toBe(0)
+    expect(document.querySelectorAll('.TestContent').length).toBe(0)
   })
 })
 

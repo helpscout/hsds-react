@@ -1,6 +1,6 @@
 module.exports = {
   collectCoverageFrom: [
-    'src/**/*.{js,jsx}',
+    'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/?(*.)types.{js,jsx}',
     '!src/**/?(*.)helpers.{js,jsx}',
     '!src/**/?(*.)testHelpers.{js,jsx}',
@@ -10,9 +10,10 @@ module.exports = {
     '!src/components/Input/utils.{js,jsx}',
     '!src/components/Popper/**/*.{js,jsx}',
     '!src/tests/helpers/**/*.{js,jsx}',
-    '!src/utilities/browser.{js,jsx}',
+    '!src/utilities/browser.{js,jsx,ts}',
     '!src/utilities/react-router/**/*.{js,jsx}',
     '!src/utilities/smoothScroll.{js,jsx}',
+    '!src/utilities/closest.ts',
     '!src/utilities/index.{js,jsx}',
     '!src/utilities/log.{js,jsx}',
     '!src/styles/includePaths.js',
@@ -26,14 +27,17 @@ module.exports = {
     '<rootDir>/config/polyfills.js',
     '<rootDir>/config/jsdomPolyfills.js',
   ],
+  setupTestFrameworkScriptFile: '<rootDir>/config/jest/setupTests.js',
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.js?(x)',
     '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
+    '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
   ],
   testEnvironment: 'node',
   testURL: 'http://localhost',
   transform: {
     '^.+\\.(js|jsx)$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
     '^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
   },
@@ -41,5 +45,5 @@ module.exports = {
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
   },
-  moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx'],
+  moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'ts', 'tsx'],
 }

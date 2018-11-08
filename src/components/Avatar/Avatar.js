@@ -2,7 +2,7 @@
 import type { StatusDotStatus } from '../StatusDot/types'
 import type { AvatarShape, AvatarSize } from './types'
 import React, { PureComponent as Component } from 'react'
-import { getValidProps } from '@helpscout/react-utils'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import StatusDot from '../StatusDot'
 import VisuallyHidden from '../VisuallyHidden'
 import { includes } from '../../utilities/arrays'

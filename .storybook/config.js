@@ -1,19 +1,10 @@
-/* eslint-disable import/no-extraneous-dependencies, import/no-unresolved, import/extensions */
+import { configure } from '@storybook/react'
+import '../src/styles/blue.scss'
 
-import React from 'react'
-import { addDecorator, configure } from '@storybook/react'
-// import { setOptions } from '@storybook/addon-options'
-
-const Docs = props => {
-  return <div>{props.story()}</div>
+// automatically import all files ending in *.stories.js
+const req = require.context('../stories', true, /.stories.(js|ts|tsx)$/)
+function loadStories() {
+  req.keys().forEach(filename => req(filename))
 }
 
-// setOptions({
-//   name: 'Blue',
-//   url: 'https://github.com/helpscout/blue',
-//   showDownPanel: false,
-// })
-
-addDecorator(story => <Docs story={story} />)
-
-configure(() => require('../stories'), module)
+configure(loadStories, module)

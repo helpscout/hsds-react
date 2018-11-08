@@ -6,7 +6,7 @@ import Message from '../Message'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import Timer from './Timer'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { stripUrlPrefix } from '../../utilities/strings'
 

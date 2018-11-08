@@ -1,7 +1,6 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { BEM } from '../../../utilities/classNames'
-import { getColor } from '../../../styles/utilities/color'
+import { getColor } from '../../../styles/utilities/color.js'
 
 const bem = BEM('.c-ArticleCard')
 

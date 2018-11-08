@@ -1,7 +1,10 @@
 import { getComputedHeightProps } from '../../node'
 
-test('Returns false if node (arg) is invalid', () => {
-  expect(getComputedHeightProps()).toEqual({})
+test('Returns empty if node (arg) is invalid', () => {
+  expect(getComputedHeightProps()).toEqual({
+    height: 0,
+    offset: 0,
+  })
 })
 
 test('Accepts document as a node prop', () => {

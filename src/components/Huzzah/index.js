@@ -2,7 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import styled from '../styled'
 import HUZZAHS from './huzzahs'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { sample } from '../../utilities/collection'
 import css from './styles/Huzzah.css.js'
 

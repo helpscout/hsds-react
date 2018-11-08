@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Text from '../Text'

@@ -125,7 +125,7 @@ describe('Fade', () => {
   test('Passes resize function to refApplyFade', () => {
     let testMethod = null
     const stubMethod = ref => (testMethod = ref)
-    const wrapper = mount(<Overflow refApplyFade={stubMethod} />)
+    mount(<Overflow refApplyFade={stubMethod} />)
 
     expect(typeof testMethod).toBe('function')
   })
@@ -294,7 +294,7 @@ describe('Scroll', () => {
   test('Passes scrollToEnd function to refScrollToEnd', () => {
     let testMethod = null
     const stubMethod = ref => (testMethod = ref)
-    const wrapper = mount(<Overflow refScrollToEnd={stubMethod} />)
+    mount(<Overflow refScrollToEnd={stubMethod} />)
 
     expect(typeof testMethod).toBe('function')
   })

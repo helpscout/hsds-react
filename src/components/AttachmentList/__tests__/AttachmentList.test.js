@@ -167,7 +167,6 @@ describe('New attachments', () => {
   })
 
   test('Checker returns false if this.props.children is undefined', () => {
-    const spy = jest.fn()
     const wrapper = mount(<AttachmentList />)
     wrapper.setProps({ children: undefined })
 
@@ -177,7 +176,6 @@ describe('New attachments', () => {
   })
 
   test('Checker defaults to this.props for arg', () => {
-    const spy = jest.fn()
     const wrapper = mount(<AttachmentList />)
     wrapper.setProps({ children: ['one'] })
 

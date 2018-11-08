@@ -1,7 +1,6 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import Divider from './Divider'
 import Header from './Header'
@@ -10,7 +9,7 @@ import { default as Menu, MenuComponent } from './Menu'
 import Trigger from './Trigger'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import {
   focusNextFocusableNode,
   focusPreviousFocusableNode,

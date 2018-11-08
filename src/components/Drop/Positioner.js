@@ -2,7 +2,7 @@ import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
 import {
   getViewportPosition,

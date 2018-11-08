@@ -1,7 +1,7 @@
 import { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { getDocumentFromComponent } from '@helpscout/react-utils'
+import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import { default as Container, ID as portalContainerId } from './Container'
 import { isNodeElement } from '../../utilities/node'
 

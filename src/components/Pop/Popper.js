@@ -5,7 +5,7 @@ import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from '../Portal'
 import Arrow from './Arrow'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 type Props = PopProps

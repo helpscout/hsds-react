@@ -80,7 +80,6 @@ describe('Checked', () => {
   test('Can be manually set using checked prop', () => {
     const wrapper = mount(<Switch checked />)
     const o = wrapper.instance()
-    const input = wrapper.find('input')
 
     wrapper.setProps({ checked: false })
 
@@ -323,12 +322,7 @@ describe('State', () => {
     let callbackProps = []
     const onChange = (...args) => (callbackProps = [...args])
     const wrapper = mount(
-      <Switch
-        onChange={onChange}
-        checked={false}
-        value="Mugatu"
-        checked={false}
-      />
+      <Switch onChange={onChange} checked={false} value="Mugatu" />
     )
     const input = wrapper.find('input')
 

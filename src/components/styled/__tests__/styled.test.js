@@ -28,7 +28,6 @@ describe('styled integration', () => {
         padding: 20px;
       `
       const wrapper = mount(<Ron />)
-      const el = wrapper.find('div').node
 
       expect(document.head.innerHTML).toContain('color:red')
     })
@@ -39,7 +38,6 @@ describe('styled integration', () => {
         padding: ${props => `${props['data-padding']}px;`};
       `
       const wrapper = mount(<Ron data-padding={108} />)
-      const el = wrapper.find('div').node
 
       expect(document.head.innerHTML).toContain('padding:108')
     })
@@ -58,7 +56,6 @@ describe('styled integration', () => {
           </ThemeProvider>
         </div>
       )
-      const el = wrapper.find('div').node
 
       expect(document.head.innerHTML).toContain('black')
     })

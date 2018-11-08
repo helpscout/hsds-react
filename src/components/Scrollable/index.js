@@ -1,7 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import PropTypes from 'prop-types'
 import ScrollLock from '../ScrollLock'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import {
   getFadeTopStyles,
   getFadeBottomStyles,

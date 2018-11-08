@@ -1,7 +1,7 @@
 import React from 'react'
 import Item from './Item'
 import Title from './Title'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 
 const DetailList = props => {
   const { children, className, ...rest } = props

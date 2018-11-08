@@ -1,7 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Collapsible from '..'
+import Collapsible from '../Collapsible'
 import { baseComponentTest } from '../../../tests/helpers/components'
+
+jest.useFakeTimers()
 
 const baseComponentOptions = {
   className: 'c-Collapsible',
@@ -9,7 +11,6 @@ const baseComponentOptions = {
 }
 
 describe('Collapsible', () => {
-  jest.useFakeTimers()
   baseComponentTest(Collapsible, baseComponentOptions)
 
   describe('onOpen', () => {
@@ -121,13 +122,12 @@ describe('Collapsible', () => {
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: true })
-      expect(wrapper.state().animationState).toBe('measuring')
 
-      jest.runOnlyPendingTimers()
-      expect(wrapper.state().animationState).toBe('openingStart')
-
-      jest.runOnlyPendingTimers()
       expect(wrapper.state().animationState).toBe('opening')
+
+      jest.runOnlyPendingTimers()
+
+      expect(wrapper.state().animationState).toBe('opened')
     })
 
     test('Runs through open states on various timing sequences', () => {
@@ -136,13 +136,12 @@ describe('Collapsible', () => {
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: false })
-      expect(wrapper.state().animationState).toBe('measuring')
 
-      jest.runOnlyPendingTimers()
-      expect(wrapper.state().animationState).toBe('closingStart')
-
-      jest.runOnlyPendingTimers()
       expect(wrapper.state().animationState).toBe('closing')
+
+      jest.runOnlyPendingTimers()
+
+      expect(wrapper.state().animationState).toBe('closed')
     })
   })
 

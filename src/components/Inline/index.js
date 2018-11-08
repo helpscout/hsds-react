@@ -1,5 +1,5 @@
 import React, { PureComponent as Component } from 'react'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import Item from './Item'
 import { sizeTypes } from './propTypes'
 
