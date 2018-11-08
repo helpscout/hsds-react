@@ -8,9 +8,9 @@ React components for Help Scout's Design System
 
 ## Live Demo
 
-Check out HSDS's [Storybook](https://hsblue.surge.sh/):
+Check out HSDS's [Storybook](https://hsds-react.netlify.com/):
 
-https://hsblue.surge.sh/
+https://hsds-react.netlify.com/
 
 ## Install
 
