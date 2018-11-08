@@ -14,7 +14,6 @@ before_install:
 
 install:
   - npm install
-  - npm install surge
 
 script:
   - npm run build:css
@@ -27,10 +26,3 @@ after_success:
 branches:
   only:
     - master
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: npm run deploy
-  on:
-    branch: master
