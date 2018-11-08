@@ -1,6 +1,6 @@
 ![](https://ddwva799xzrph.cloudfront.net/items/110k3c0l3v183J3J0g2I/hsds-logo-readme.png)
 
-# 🔷 HSDS: React
+# HSDS: React
 
 [![Build Status](https://travis-ci.org/helpscout/blue.svg?branch=master)](https://travis-ci.org/helpscout/blue) [![Coverage Status](https://coveralls.io/repos/github/helpscout/blue/badge.svg?branch=master)](https://coveralls.io/github/helpscout/blue?branch=master) [![npm version](https://badge.fury.io/js/%40helpscout%2Fblue.svg)](https://badge.fury.io/js/%40helpscout%2Fblue) ![node](https://img.shields.io/badge/node-8.11.3-blue.svg) ![npm](https://img.shields.io/badge/npm-6.4.1-blue.svg)
 
