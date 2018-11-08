@@ -66,3 +66,21 @@ To deploy the Storybook, run the following command:
 ```
 npm run deploy
 ```
+
+## Blue?
+
+On Nov 8, 2018, we rebranded Blue to HSDS: React :tada:.
+
+The original [Blue](https://www.npmjs.com/package/@helpscout/blue) library will still exist on npm, and is still installable via:
+
+```
+npm install @helpscout/blue --save
+```
+
+However, continued development of this component library will continue under HSDS: React, which is installable via:
+
+```
+npm install @helpscout/hsds-react --save
+```
+
+A big thanks to all the folks involved in Blue! Blue will always be your boy :blue_heart: .
