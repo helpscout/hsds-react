@@ -5,15 +5,17 @@ import ControlGroup from '../ControlGroup'
 describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<ControlGroup />)
+    const el = wrapper.find('div.c-ControlGroup')
 
-    expect(wrapper.hasClass('c-ControlGroup')).toBe(true)
+    expect(el.hasClass('c-ControlGroup')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
     const wrapper = mount(<ControlGroup className={className} />)
+    const el = wrapper.find('div.c-ControlGroup')
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(el.hasClass(className)).toBe(true)
   })
 })
 
@@ -27,7 +29,7 @@ describe('Item', () => {
       </ControlGroup>
     )
 
-    const o = wrapper.find('Item')
+    const o = wrapper.find('div.c-ControlGroupItem')
 
     expect(o.length).toBe(1)
     expect(o.find('button').length).toBe(1)
@@ -44,57 +46,57 @@ describe('Item', () => {
 
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isFirst')
     ).toBe(true)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isNotOnly')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isLast')
     ).toBe(false)
 
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isFirst')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isNotOnly')
     ).toBe(true)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isLast')
     ).toBe(false)
 
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(2)
         .prop('isFirst')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(2)
         .prop('isNotOnly')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(2)
         .prop('isLast')
     ).toBe(true)
@@ -111,38 +113,38 @@ describe('Item', () => {
 
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isFirst')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isNotOnly')
     ).toBe(true)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isLast')
     ).toBe(false)
 
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isFirst')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isNotOnly')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isLast')
     ).toBe(true)
@@ -159,7 +161,7 @@ describe('Block', () => {
       </ControlGroup>
     )
 
-    const o = wrapper.find('Block')
+    const o = wrapper.find(ControlGroup.Block)
 
     expect(o.length).toBe(1)
     expect(o.find('button').length).toBe(1)
@@ -176,44 +178,44 @@ describe('Block', () => {
 
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isFirst')
     ).toBe(true)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isNotOnly')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(0)
         .prop('isLast')
     ).toBe(false)
 
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isFirst')
     ).toBe(false)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isNotOnly')
     ).toBe(true)
     expect(
       wrapper
-        .find('Item')
+        .find(ControlGroup.Item)
         .at(1)
         .prop('isLast')
     ).toBe(false)
 
-    expect(wrapper.find('Block').prop('isFirst')).toBe(false)
-    expect(wrapper.find('Block').prop('isNotOnly')).toBe(false)
-    expect(wrapper.find('Block').prop('isLast')).toBe(true)
+    expect(wrapper.find(ControlGroup.Block).prop('isFirst')).toBe(false)
+    expect(wrapper.find(ControlGroup.Block).prop('isNotOnly')).toBe(false)
+    expect(wrapper.find(ControlGroup.Block).prop('isLast')).toBe(true)
   })
 })

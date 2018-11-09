@@ -9,14 +9,16 @@ import { AnimateGroup } from '../../index'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<CardList />)
+    const el = wrapper.find('div.c-CardList')
 
-    expect(wrapper.hasClass('c-CardList')).toBe(true)
+    expect(el.hasClass('c-CardList')).toBe(true)
   })
 
   test('Accepts custom className', () => {
     const wrapper = mount(<CardList className="list-of-cards" />)
+    const el = wrapper.find('div.c-CardList')
 
-    expect(wrapper.prop('className')).toContain('list-of-cards')
+    expect(el.prop('className')).toContain('list-of-cards')
   })
 })
 

@@ -6,14 +6,16 @@ import Scrollable from '../../Scrollable'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<CardBlock />)
+    const el = wrapper.find('div.c-Card__block')
 
-    expect(wrapper.hasClass('c-Card__block')).toBeTruthy()
+    expect(el.hasClass('c-Card__block')).toBeTruthy()
   })
 
   test('Accepts custom className', () => {
     const wrapper = mount(<CardBlock className="not-metro-man" />)
+    const el = wrapper.find('div.c-Card__block')
 
-    expect(wrapper.hasClass('not-metro-man')).toBeTruthy()
+    expect(el.hasClass('not-metro-man')).toBeTruthy()
   })
 })
 
@@ -65,10 +67,11 @@ describe('Scrollable', () => {
 
   test('Renders Scrollable with flex if specified', () => {
     const wrapper = mount(<CardBlock scrollable flex />)
+    const el = wrapper.find('div.c-Card__block.is-flex')
     const o = wrapper.find(Scrollable)
 
     expect(o.length).toBe(1)
-    expect(o.hasClass('is-flex')).toBeTruthy()
+    expect(el.length).toBeTruthy()
   })
 
   test('Can fire onScroll callback, if specified', () => {
@@ -76,7 +79,7 @@ describe('Scrollable', () => {
     const wrapper = mount(<CardBlock scrollable onScroll={spy} />)
     const o = wrapper.find(Scrollable)
 
-    o.getNode().props.onScroll()
+    o.instance().props.onScroll()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -92,27 +95,31 @@ describe('Scrollable', () => {
 describe('Styles', () => {
   test('Does not have a size modifier style by default', () => {
     const wrapper = mount(<CardBlock />)
+    const el = wrapper.find('div.c-Card__block')
 
-    expect(wrapper.hasClass('is-sm')).toBe(false)
-    expect(wrapper.hasClass('is-md')).toBe(false)
-    expect(wrapper.hasClass('is-lg')).toBe(false)
+    expect(el.hasClass('is-sm')).toBe(false)
+    expect(el.hasClass('is-md')).toBe(false)
+    expect(el.hasClass('is-lg')).toBe(false)
   })
 
   test('Renders size styles, if specified', () => {
     const wrapper = mount(<CardBlock size="sm" />)
+    const el = wrapper.find('div.c-Card__block')
 
-    expect(wrapper.hasClass('is-sm')).toBe(true)
+    expect(el.hasClass('is-sm')).toBe(true)
   })
 
   test('Renders bgMuted styles, if specified', () => {
     const wrapper = mount(<CardBlock bgMuted />)
+    const el = wrapper.find('div.c-Card__block')
 
-    expect(wrapper.hasClass('is-bg-muted')).toBeTruthy()
+    expect(el.hasClass('is-bg-muted')).toBeTruthy()
   })
 
   test('Renders flex styles, if specified', () => {
     const wrapper = mount(<CardBlock flex />)
+    const el = wrapper.find('div.c-Card__block')
 
-    expect(wrapper.hasClass('is-flex')).toBeTruthy()
+    expect(el.hasClass('is-flex')).toBeTruthy()
   })
 })

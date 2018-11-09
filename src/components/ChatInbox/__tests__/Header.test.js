@@ -4,11 +4,35 @@ import Header from '../Header'
 import { Icon, Heading, Hr } from '../../index'
 import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-ChatInboxHeader',
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<Header />)
+    const el = wrapper.find('div.c-ChatInboxHeader')
 
-baseComponentTest(Header, baseComponentOptions)
+    expect(el.length).toBe(1)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<Header className={customClass} />)
+    const el = wrapper.find('div.c-ChatInboxHeader')
+
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child', () => {
+    const wrapper = mount(
+      <Header>
+        <div className="child">Hello</div>
+      </Header>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 describe('Avatar/Collapse', () => {
   const avatars = <div className="avatar-stub" />
@@ -53,14 +77,14 @@ describe('Count', () => {
     expect(o.length).toBe(0)
   })
 
-  test('Renders a count, if defined', () => {
+  test.only('Renders a count, if defined', () => {
     const wrapper = mount(<Header count={55} />)
     const count = wrapper.find('.c-ChatInboxHeader__count')
     const o = count.find(Heading)
 
-    expect(count.length).toBe(1)
-    expect(o.length).toBe(1)
-    expect(o.html()).toContain('55')
+    expect(count.length).toBeTruthy()
+    expect(o.length).toBeTruthy()
+    expect(o.first().html()).toContain('55')
   })
 
   test('Does not render a count, if count is zero (0)', () => {

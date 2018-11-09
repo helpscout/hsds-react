@@ -159,7 +159,7 @@ describe('ChoiceGroup', () => {
           <Checkbox value="mugatu" />
         </ChoiceGroup>
       )
-      const o = wrapper.find(ChoiceGroup)
+      const o = wrapper.find('div.c-ChoiceGroup')
 
       expect(o.hasClass('is-multi-select')).toBeTruthy()
     })
@@ -172,7 +172,7 @@ describe('ChoiceGroup', () => {
           <Radio value="mugatu" />
         </ChoiceGroup>
       )
-      const o = wrapper.find(ChoiceGroup)
+      const o = wrapper.find('div.c-ChoiceGroup')
 
       expect(o.hasClass('is-multi-select')).not.toBeTruthy()
     })
@@ -187,7 +187,7 @@ describe('ChoiceGroup', () => {
       )
       const o = wrapper.find(ChoiceGroup)
 
-      expect(o.getNode().multiSelect).toBeFalsy()
+      expect(o.state().multiSelect).toBeFalsy()
     })
 
     test('Does auto-multiSelect for Checkbox children', () => {
@@ -200,7 +200,7 @@ describe('ChoiceGroup', () => {
       )
       const o = wrapper.find(ChoiceGroup)
 
-      expect(o.getNode().multiSelect).toBeTruthy()
+      expect(o.state().multiSelect).toBeTruthy()
     })
 
     test('Can disable multiSelect for Checbox children, if defined', () => {
@@ -213,7 +213,7 @@ describe('ChoiceGroup', () => {
       )
       const o = wrapper.find(ChoiceGroup)
 
-      expect(o.getNode().multiSelect).not.toBeTruthy()
+      expect(o.state().multiSelect).not.toBeTruthy()
     })
   })
 
@@ -247,9 +247,9 @@ describe('ChoiceGroup', () => {
       )
       const radios = wrapper.find('input')
 
-      expect(radios.get(0).checked).toBeFalsy()
-      expect(radios.get(1).checked).toBeFalsy()
-      expect(radios.get(2).checked).toBeFalsy()
+      expect(radios.get(0).props.checked).toBeFalsy()
+      expect(radios.get(1).props.checked).toBeFalsy()
+      expect(radios.get(2).props.checked).toBeFalsy()
     })
 
     test('Checks a Choice if value matches', () => {
@@ -262,9 +262,9 @@ describe('ChoiceGroup', () => {
       )
       const radios = wrapper.find('input')
 
-      expect(radios.get(0).checked).toBeFalsy()
-      expect(radios.get(1).checked).toBeTruthy()
-      expect(radios.get(2).checked).toBeFalsy()
+      expect(radios.get(0).props.checked).toBeFalsy()
+      expect(radios.get(1).props.checked).toBeTruthy()
+      expect(radios.get(2).props.checked).toBeFalsy()
     })
 
     test('Can check multiple values', () => {
@@ -278,9 +278,9 @@ describe('ChoiceGroup', () => {
       )
       const radios = wrapper.find('input')
 
-      expect(radios.get(0).checked).toBeTruthy()
-      expect(radios.get(1).checked).toBeTruthy()
-      expect(radios.get(2).checked).toBeFalsy()
+      expect(radios.get(0).props.checked).toBeTruthy()
+      expect(radios.get(1).props.checked).toBeTruthy()
+      expect(radios.get(2).props.checked).toBeFalsy()
     })
 
     test('Deselects checked value on click', () => {
@@ -304,8 +304,9 @@ describe('ChoiceGroup', () => {
   describe('Style', () => {
     test('Can render responsive styles', () => {
       const wrapper = mount(<ChoiceGroup isResponsive />)
+      const el = wrapper.find('div.c-ChoiceGroup')
 
-      expect(wrapper.hasClass('is-responsive')).toBe(true)
+      expect(el.hasClass('is-responsive')).toBe(true)
     })
   })
 })

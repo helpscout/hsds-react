@@ -1,11 +1,12 @@
 import { PropProviderProps, ConfigGetter } from './types'
 import * as React from 'react'
+import get from 'lodash.get'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import Context from './Context'
 import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
 import { classNames } from '../../utilities/classNames'
-import { isDefined } from '../../utilities/is'
+import { isDefined, isString, isObject } from '../../utilities/is'
 
 export interface Props {
   className?: string
@@ -20,7 +21,8 @@ export interface Props {
  * @returns {React.Component} The connected React component.
  */
 function propConnect(name?: ConfigGetter) {
-  let namespace: string = typeof name === 'string' ? name : ''
+  // @ts-ignore
+  let namespace: string = isString(name) ? name : ''
 
   return function wrapWithComponent(WrappedComponent: any) {
     if (!isDefined(name)) {
@@ -82,6 +84,9 @@ function propConnect(name?: ConfigGetter) {
           className,
           style,
           [propProviderDataAttr]: getGlobalApp(contextProps),
+          ref: !isStateless(WrappedComponent)
+            ? this.setWrappedInstance
+            : undefined,
         }
       }
 
@@ -89,10 +94,7 @@ function propConnect(name?: ConfigGetter) {
         return (
           <Context.Consumer>
             {contextProps => (
-              <WrappedComponent
-                {...this.getMergedProps(contextProps)}
-                ref={this.setWrappedInstance}
-              />
+              <WrappedComponent {...this.getMergedProps(contextProps)} />
             )}
           </Context.Consumer>
         )
@@ -101,6 +103,12 @@ function propConnect(name?: ConfigGetter) {
 
     return hoistNonReactStatics(Connect, WrappedComponent)
   }
+}
+
+function isStateless(Component: any): boolean {
+  if (!isObject(Component)) return true
+
+  return !!(isObject(Component) && !get(Component, 'prototype.render'))
 }
 
 export default propConnect
