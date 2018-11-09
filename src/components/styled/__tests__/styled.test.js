@@ -15,7 +15,7 @@ describe('styled integration', () => {
         padding: 20px;
       `
       const wrapper = mount(<Ron />)
-      const el = wrapper.find('div').node
+      const el = wrapper.find('div').getDOMNode()
 
       expect(el).toBeTruthy()
     })
@@ -27,7 +27,7 @@ describe('styled integration', () => {
         color: red;
         padding: 20px;
       `
-      const wrapper = mount(<Ron />)
+      mount(<Ron />)
 
       expect(document.head.innerHTML).toContain('color:red')
     })
@@ -37,7 +37,7 @@ describe('styled integration', () => {
         color: red;
         padding: ${props => `${props['data-padding']}px;`};
       `
-      const wrapper = mount(<Ron data-padding={108} />)
+      mount(<Ron data-padding={108} />)
 
       expect(document.head.innerHTML).toContain('padding:108')
     })
@@ -49,7 +49,7 @@ describe('styled integration', () => {
         color: ${props => (props.theme.dark ? 'black' : 'white')};
         padding: 20px;
       `
-      const wrapper = mount(
+      mount(
         <div>
           <ThemeProvider theme={{ dark: true }}>
             <Ron />
