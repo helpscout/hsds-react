@@ -2,12 +2,36 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Item from '../Item'
 import { Timestamp } from '../../..'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-TimelineItem',
-}
-baseComponentTest(Item, baseComponentOptions)
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<Item />)
+    const el = wrapper.find('div.c-TimelineItem')
+
+    expect(el.length).toBe(1)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<Item className={customClass} />)
+    const el = wrapper.find('div.c-TimelineItem')
+
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child content', () => {
+    const wrapper = mount(
+      <Item>
+        <div className="child">Hello</div>
+      </Item>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 test('Does not show Timestamp by default', () => {
   const wrapper = shallow(<Item />)
