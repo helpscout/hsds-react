@@ -6,7 +6,7 @@ import { Toolbar } from '../../index'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Header />)
-    const o = wrapper.find('.c-ModalHeader')
+    const o = wrapper.find('.c-ModalHeader').first()
 
     expect(o.length).toBe(1)
   })
@@ -14,7 +14,7 @@ describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Header className={customClass} />)
-    const o = wrapper.find('.c-ModalHeader')
+    const o = wrapper.find('.c-ModalHeader').first()
 
     expect(o.hasClass(customClass)).toBe(true)
   })

@@ -23,7 +23,7 @@ describe('ClassNames', () => {
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Chat className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -39,14 +39,14 @@ describe('Bubble', () => {
     const wrapper = mount(<Chat />)
     const o = wrapper.find(Bubble)
 
-    expect(o.hasClass(cx)).not.toBeTruthy()
+    expect(o.getDOMNode().classList.contains(cx)).not.toBeTruthy()
   })
 
   test('Renders content inside of Bubble', () => {
     const wrapper = mount(<Chat>Mugatu</Chat>)
     const o = wrapper.find(Bubble)
 
-    expect(o.getNode().props.children).toBe('Mugatu')
+    expect(o.instance().props.children).toBe('Mugatu')
   })
 
   test('Passes correct props to Bubble', () => {
@@ -64,7 +64,7 @@ describe('Bubble', () => {
         typing
       />
     )
-    const props = wrapper.find(Bubble).getNode().props
+    const props = wrapper.find(Bubble).instance().props
 
     expect(props.body).toBeTruthy()
     expect(props.from).toBeTruthy()
@@ -91,12 +91,12 @@ describe('ChatBlock', () => {
     const wrapper = mount(<Chat />)
     const o = wrapper.find(ChatBlock)
 
-    expect(o.hasClass(cx)).toBeTruthy()
+    expect(o.getDOMNode().classList.contains(cx)).toBeTruthy()
   })
 
   test('Passes correct props to ChatBlock', () => {
     const wrapper = mount(<Chat from to read ltr rtl timestamp="time" />)
-    const props = wrapper.find(ChatBlock).getNode().props
+    const props = wrapper.find(ChatBlock).instance().props
 
     expect(props.from).toBeTruthy()
     expect(props.to).toBeTruthy()
@@ -168,20 +168,20 @@ describe('Loading', () => {
 
   test('Renders, if specified', () => {
     const wrapper = mount(<Chat isLoading />)
-    const o = wrapper.find(ui.metaState)
-    const s = wrapper.find(ui.loadingSpinner)
+    const o = wrapper.find(ui.metaState).first()
+    const s = wrapper.find(ui.loadingSpinner).first()
 
     expect(o.length).toBe(1)
     expect(s.length).toBe(1)
-    expect(o.find(ui.loadingSpinner).length).toBe(1)
+    expect(o.find(ui.loadingSpinner).first().length).toBe(1)
   })
 
   test('Does not interfere with rendering of meta content', () => {
     const wrapper = mount(<Chat isLoading caption="derek.jpg" error />)
-    const o = wrapper.find(ui.metaState)
-    const l = wrapper.find(ui.loadingSpinner)
-    const c = wrapper.find(ui.caption)
-    const e = wrapper.find(ui.error)
+    const o = wrapper.find(ui.metaState).first()
+    const l = wrapper.find(ui.loadingSpinner).first()
+    const c = wrapper.find(ui.caption).first()
+    const e = wrapper.find(ui.error).first()
 
     expect(o.length).toBe(1)
     expect(l.length).toBe(1)
