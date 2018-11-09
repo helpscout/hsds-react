@@ -86,21 +86,21 @@ describe('Unmounting', () => {
 describe('Styles', () => {
   test('Can render block style className, if applied', () => {
     const wrapper = mount(<Animate block sequence="fade" />)
-    const o = wrapper.find('.c-Animate')
+    const o = wrapper.find('div.c-Animate')
 
     expect(o.hasClass('is-block')).toBe(true)
   })
 
   test('Can render inline style className, if applied', () => {
     const wrapper = mount(<Animate inline sequence="fade" />)
-    const o = wrapper.find('.c-Animate')
+    const o = wrapper.find('div.c-Animate')
 
     expect(o.hasClass('is-inline')).toBe(true)
   })
 
   test('Can render inline-block style className, if applied', () => {
     const wrapper = mount(<Animate inlineBlock sequence="fade" />)
-    const o = wrapper.find('.c-Animate')
+    const o = wrapper.find('div.c-Animate')
 
     expect(o.hasClass('is-inlineBlock')).toBe(true)
   })

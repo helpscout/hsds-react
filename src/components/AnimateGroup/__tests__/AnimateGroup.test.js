@@ -241,7 +241,7 @@ describe('Children', () => {
     expect(p.length).toBeTruthy()
   })
 
-  test('Does not filter out null children', () => {
+  test('Filters out null children', () => {
     const children = [
       <Animate duration={30} key={11}>
         <div className="champ">Champ</div>
@@ -250,7 +250,7 @@ describe('Children', () => {
     ]
     const wrapper = mount(<AnimateGroup stagger>{children}</AnimateGroup>)
 
-    expect(wrapper.children().length).toBe(2)
+    expect(wrapper.children().length).toBe(1)
   })
 })
 

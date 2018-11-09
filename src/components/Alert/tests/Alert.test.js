@@ -1,7 +1,9 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import { default as Alert, cx } from '..'
-import { Badge, Button, CloseButton, Collapsible, Icon } from '../../'
+import { Badge, Button, CloseButton, Collapsible, Icon } from '../../index'
+
+jest.useFakeTimers()
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -68,22 +70,26 @@ describe('Dismissing', () => {
     expect(o.length).not.toBeTruthy()
   })
 
-  test('Renders Collasible by default', () => {
+  test('Renders Collapsible by default', () => {
     const wrapper = shallow(<Alert dismissible />)
-    const o = wrapper.find(Collapsible)
+    const c = wrapper.find(Collapsible)
+    const o = c.find('div.c-Alert')
 
+    expect(c.length).toBeTruthy()
     expect(o.length).toBeTruthy()
-    expect(o.getNode().props.isOpen).toBeTruthy()
   })
 
   test('Collapses alert on CloseButton click', () => {
     const wrapper = mount(<Alert dismissible />)
     const b = wrapper.find(CloseButton)
-    const o = wrapper.find(Collapsible)
 
     b.simulate('click')
 
-    expect(o.getNode().props.isOpen).not.toBeTruthy()
+    jest.runAllTimers()
+
+    const o = wrapper.find(Collapsible)
+
+    expect(o.props().isOpen).toBe(false)
   })
 })
 
@@ -128,7 +134,7 @@ describe('Content', () => {
 
     expect(o.length).toBeTruthy()
     expect(d.length).toBeTruthy()
-    expect(d.node.props.children).toBe('Buddy')
+    expect(d.text()).toContain('Buddy')
   })
 })
 
@@ -147,7 +153,7 @@ describe('Badge', () => {
 
     expect(d.length).toBeTruthy()
     expect(o.length).toBeTruthy()
-    expect(o.getNode().props.children).toBe('Badge')
+    expect(o.text()).toContain('Badge')
     expect(wrapper.hasClass('has-badge')).toBeTruthy()
   })
 })
@@ -167,7 +173,7 @@ describe('Icon', () => {
 
     expect(d.length).toBeTruthy()
     expect(o.length).toBeTruthy()
-    expect(o.getNode().props.name).toBe('alert')
+    expect(o.props().name).toBe('alert')
     expect(wrapper.hasClass('has-icon')).toBeTruthy()
   })
 })
