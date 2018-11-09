@@ -75,12 +75,15 @@ describe('Collapsible', () => {
 
   test('Should pass isOpen prop to Collapsible', () => {
     const wrapper = mount(<StatusBar />)
-    const o = wrapper.find(Collapsible)
 
     wrapper.setProps({ isOpen: true })
+
+    let o = wrapper.find(Collapsible)
     expect(o.props().isOpen).toBeTruthy()
 
     wrapper.setProps({ isOpen: false })
+
+    o = wrapper.find(Collapsible)
     expect(o.props().isOpen).not.toBeTruthy()
   })
 
