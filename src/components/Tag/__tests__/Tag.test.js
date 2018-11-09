@@ -15,9 +15,9 @@ describe('ClassNames', () => {
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Tag className="mugatu" />)
-    const o = wrapper.find('.c-Tag')
+    const o = wrapper.find('.c-Tag').first()
 
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -98,7 +98,7 @@ describe('Remove', () => {
 describe('Styles', () => {
   test('Has allCaps styles', () => {
     const wrapper = mount(<Tag allCaps />)
-    const o = wrapper.find(Text)
+    const o = wrapper.find(Text).first()
 
     expect(o.props().allCaps).toBeTruthy()
     expect(o.props().size).not.toBe('12')
@@ -106,30 +106,32 @@ describe('Styles', () => {
 
   test('Has color styles', () => {
     const wrapper = mount(<Tag color="red" />)
-    const o = wrapper.find('.c-Tag')
+    const o = wrapper.find('.c-Tag').first()
 
-    expect(o.hasClass('is-red')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-red')).toBeTruthy()
   })
 
   test('Has display styles', () => {
     const wrapper = mount(<Tag display="inlineBlock" />)
-    const o = wrapper.find('.c-TagWrapper')
+    const o = wrapper.find('.c-TagWrapper').first()
 
-    expect(o.hasClass('is-display-inlineBlock')).toBeTruthy()
+    expect(
+      o.getDOMNode().classList.contains('is-display-inlineBlock')
+    ).toBeTruthy()
   })
 
   test('Has filled styles', () => {
     const wrapper = mount(<Tag filled />)
-    const o = wrapper.find('.c-Tag')
+    const o = wrapper.find('.c-Tag').first()
 
-    expect(o.hasClass('is-filled')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-filled')).toBeTruthy()
   })
 
   test('Has pulsing styles', () => {
     const wrapper = mount(<Tag pulsing />)
-    const o = wrapper.find('.c-Tag')
+    const o = wrapper.find('.c-Tag').first()
 
-    expect(o.hasClass('is-pulsing')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-pulsing')).toBeTruthy()
   })
 })
 
