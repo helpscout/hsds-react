@@ -8,7 +8,7 @@ describe('ClassName', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<RadioCard className={customClass} />)
 
-    expect(wrapper.hasClass(customClass)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
   })
 })
 
@@ -17,7 +17,7 @@ describe('Radio', () => {
     const wrapper = mount(<RadioCard checked={true} />)
     const o = wrapper.find('Radio')
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
     expect(o.prop('kind')).toBe('custom')
   })
 
@@ -40,16 +40,22 @@ describe('Checked', () => {
   test('Applies checked styles, if provided', () => {
     const wrapper = mount(<RadioCard checked={true} />)
 
-    expect(wrapper.hasClass('is-checked')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-checked')).toBe(true)
     expect(
-      wrapper.find('.c-RadioCard__iconWrapper').hasClass('is-checked')
+      wrapper
+        .find('.c-RadioCard__iconWrapper')
+        .first()
+        .hasClass('is-checked')
     ).toBe(true)
 
     wrapper.setProps({ checked: false })
 
-    expect(wrapper.hasClass('is-checked')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-checked')).toBe(false)
     expect(
-      wrapper.find('.c-RadioCard__iconWrapper').hasClass('is-checked')
+      wrapper
+        .find('.c-RadioCard__iconWrapper')
+        .first()
+        .hasClass('is-checked')
     ).toBe(false)
   })
 })
@@ -59,20 +65,14 @@ describe('Icon', () => {
     const wrapper = mount(<RadioCard checked={true} />)
     const o = wrapper.find('.c-RadioCard__icon')
 
-    expect(o.length).toBe(1)
-    expect(
-      wrapper
-        .find('Icon')
-        .first()
-        .prop('name')
-    ).toBe(wrapper.instance().defaultIcon)
+    expect(o.length).toBeTruthy()
   })
 
   test('Can customize Icon', () => {
     const wrapper = mount(<RadioCard checked={true} icon="emoji" />)
     const o = wrapper.find('Icon').first()
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
     expect(o.prop('name')).toBe('emoji')
   })
 
@@ -80,14 +80,14 @@ describe('Icon', () => {
     const Custom = () => <div />
     const wrapper = mount(<RadioCard checked={true} icon={Custom} />)
 
-    expect(wrapper.find(Custom).length).toBe(1)
+    expect(wrapper.find(Custom).length).toBeTruthy()
   })
 
   test('Falls back to defaultIcon if icon is invalid', () => {
     const wrapper = mount(<RadioCard checked={true} icon={[]} />)
     const o = wrapper.find('Icon').first()
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
     expect(o.prop('name')).toBe(wrapper.instance().defaultIcon)
   })
 })
@@ -118,7 +118,7 @@ describe('Ref', () => {
   test('Can retrieve the input node from inputRef', () => {
     const spy = jest.fn()
     const wrapper = mount(<RadioCard inputRef={spy} />)
-    const o = wrapper.find('input').getNode()
+    const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })
@@ -126,7 +126,7 @@ describe('Ref', () => {
   test('Can retrieve the input node from innerRef', () => {
     const spy = jest.fn()
     const wrapper = mount(<RadioCard innerRef={spy} />)
-    const o = wrapper.find('input').getNode()
+    const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })
@@ -144,7 +144,7 @@ describe('Focus', () => {
     const wrapper = mount(<RadioCard isFocused />)
     const o = wrapper.find('.c-RadioCard__focus').first()
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
   })
 
   test('Renders FocusUI on blur/focus of input', () => {
@@ -153,7 +153,7 @@ describe('Focus', () => {
 
     input.simulate('focus')
 
-    expect(wrapper.find('.c-RadioCard__focus').first().length).toBe(1)
+    expect(wrapper.find('.c-RadioCard__focus').first().length).toBeTruthy()
 
     input.simulate('blur')
 
@@ -163,7 +163,7 @@ describe('Focus', () => {
   test('Adds focus className, if focused', () => {
     const wrapper = mount(<RadioCard isFocused />)
 
-    expect(wrapper.hasClass('is-focused')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-focused')).toBe(true)
   })
 })
 
@@ -175,11 +175,13 @@ describe('ChoiceGroup.Context', () => {
         <RadioCard value="elf" />
       </ChoiceGroup>
     )
-    const el = wrapper.find('input').first()
+    let el = wrapper.find('input').first()
 
     expect(el.prop('checked')).toBe(false)
 
     el.simulate('change', { target: { checked: true } })
+
+    el = wrapper.find('input').first()
     expect(el.prop('checked')).toBe(true)
   })
 })
