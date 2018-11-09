@@ -6,14 +6,14 @@ import ConnectedPage from '../index'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Page />)
-    expect(wrapper.hasClass('c-Page')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-Page')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
     const wrapper = mount(<Page className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -39,13 +39,13 @@ describe('Responsive', () => {
   test('Renders responsive styles, if specified', () => {
     const wrapper = mount(<Page isResponsive={true} />)
 
-    expect(wrapper.hasClass('is-responsive')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(true)
   })
 
   test('Does not render responsive styles, if specified', () => {
     const wrapper = mount(<Page isResponsive={false} />)
 
-    expect(wrapper.hasClass('is-responsive')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(false)
   })
 
   test('Passes responsive config to sub-components', () => {
@@ -58,8 +58,19 @@ describe('Responsive', () => {
       </ConnectedPage>
     )
 
-    expect(wrapper.find(Page.Card).hasClass('is-responsive')).toBe(true)
-    expect(wrapper.find(Page.Header).hasClass('is-responsive')).toBe(true)
+    expect(
+      wrapper
+        .find(Page.Card)
+        .getDOMNode()
+        .classList.contains('is-responsive')
+    ).toBe(true)
+
+    expect(
+      wrapper
+        .find(Page.Header)
+        .getDOMNode()
+        .classList.contains('is-responsive')
+    ).toBe(true)
   })
 })
 
