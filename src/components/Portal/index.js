@@ -1,7 +1,7 @@
 import { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
+import { getDocumentFromComponent } from '@helpscout/react-utils'
 import { default as Container, ID as portalContainerId } from './Container'
 import { isNodeElement } from '../../utilities/node'
 
@@ -33,22 +33,31 @@ class Portal extends Component {
     super()
     this.node = null
     this.portal = null
-    this.mountSelector = null
     this.isOpening = false
     this.isOpen = false
     this.isClosing = false
     this.mountPortal = this.mountPortal.bind(this)
     this.unmountPortal = this.unmountPortal.bind(this)
+
+    this.state = {
+      mountSelector: null,
+    }
   }
 
   componentDidMount() {
     this.document = getDocumentFromComponent(this) || window.document
-    this.mountSelector = this.getMountSelector()
-    this.openPortal(this.props)
+    this.setState(
+      {
+        mountSelector: this.getMountSelector(),
+      },
+      () => {
+        this.openPortal(this.props)
+      }
+    )
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    this.mountPortal(nextProps)
+  componentDidUpdate(prevProps) {
+    this.mountPortal(prevProps)
   }
 
   /* istanbul ignore next */
@@ -95,8 +104,10 @@ class Portal extends Component {
     )
   }
 
-  mountPortal(props) {
+  mountPortal(props, state) {
     const { className, id, onOpen } = props
+
+    if (!this.state.mountSelector) return
 
     if (this.node) {
       this.renderPortalContent(props)
@@ -111,7 +122,7 @@ class Portal extends Component {
       this.node.id = id
     }
     // Render to specified target, instead of document
-    this.mountSelector.appendChild(this.node)
+    this.state.mountSelector.appendChild(this.node)
     this.renderPortalContent(props)
 
     if (onOpen) onOpen(this)
@@ -128,8 +139,11 @@ class Portal extends Component {
 
     ReactDOM.unmountComponentAtNode(this.node)
     // Unmount from specified target, instead of document
-    if (this.mountSelector && this.node.parentNode === this.mountSelector) {
-      this.mountSelector.removeChild(this.node)
+    if (
+      this.state.mountSelector &&
+      this.node.parentNode === this.state.mountSelector
+    ) {
+      this.state.mountSelector.removeChild(this.node)
     }
 
     if (onClose) onClose(this)
@@ -179,6 +193,12 @@ class Portal extends Component {
   }
 
   render() {
+    if (ReactDOM.createPortal && this.state.mountSelector) {
+      return ReactDOM.createPortal(
+        this.props.children,
+        this.state.mountSelector
+      )
+    }
     return null
   }
 }
