@@ -40,9 +40,9 @@ describe('ClassNames', () => {
       <Image src="mugatu.jpg" className="so hot right now" />
     )
 
-    expect(wrapper.hasClass('c-Image')).toBe(true)
-    expect(wrapper.hasClass('so')).toBe(true)
-    expect(wrapper.hasClass('hot')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-Image')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('so')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('hot')).toBe(true)
   })
 })
 
@@ -51,14 +51,14 @@ describe('Styles', () => {
     const wrapper = mount(
       <Image src="mugatu.jpg" className="so hot right now" block />
     )
-    expect(wrapper.hasClass('is-block')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-block')).toBeTruthy()
   })
 
   test('Applies shape styles, if applied', () => {
     const wrapper = mount(
       <Image src="mugatu.jpg" className="so hot right now" shape="rounded" />
     )
-    expect(wrapper.hasClass('is-rounded')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-rounded')).toBeTruthy()
   })
 })
 

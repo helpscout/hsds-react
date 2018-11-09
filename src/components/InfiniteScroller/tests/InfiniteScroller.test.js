@@ -11,7 +11,9 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<InfiniteScroller />)
 
-    expect(wrapper.hasClass('c-InfiniteScroller')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-InfiniteScroller')
+    ).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
@@ -46,8 +48,8 @@ describe('Node Scope', () => {
         <InfiniteScroller />
       </div>
     )
-    const o = wrapper.find(InfiniteScroller).getNode()
-    const d = wrapper.find('.derlict').getNode()
+    const o = wrapper.find(InfiniteScroller).instance()
+    const d = wrapper.find('.derlict').getDOMNode()
 
     expect(o.state.nodeScope).toBe(d)
   })
@@ -60,8 +62,8 @@ describe('scrollParent', () => {
         <InfiniteScroller />
       </div>
     )
-    const o = wrapper.find(InfiniteScroller).getNode()
-    const d = wrapper.find('.derlict').getNode()
+    const o = wrapper.find(InfiniteScroller).instance()
+    const d = wrapper.find('.derlict').getDOMNode()
 
     expect(o.state.nodeScope).toBe(d)
   })
@@ -75,7 +77,7 @@ describe('scrollParent', () => {
         <InfiniteScroller scrollParent={node} />
       </div>
     )
-    const o = wrapper.find(InfiniteScroller).getNode()
+    const o = wrapper.find(InfiniteScroller).instance()
 
     expect(o.state.nodeScope).toBe(node)
     expect(o.state.nodeScope.id).toBe('hansel')
@@ -112,11 +114,11 @@ describe('scrollParent', () => {
     const wrapper = mount(<CustomModal />)
 
     const o = wrapper.find('.custom-scroller')
-    const n = wrapper.find(InfiniteScroller).getNode()
+    const n = wrapper.find(InfiniteScroller).instance()
 
-    o.getNode().dispatchEvent(scrollEvent)
+    o.getDOMNode().dispatchEvent(scrollEvent)
 
-    expect(n.state.nodeScope).toBe(o.node)
+    expect(n.state.nodeScope).toBe(o.getDOMNode())
     expect(spy).toHaveBeenCalled()
   })
 
@@ -151,11 +153,11 @@ describe('scrollParent', () => {
     const wrapper = mount(<CustomModal />)
 
     const o = wrapper.find('.outer')
-    const n = wrapper.find(InfiniteScroller).getNode()
+    const n = wrapper.find(InfiniteScroller).instance()
 
-    o.getNode().dispatchEvent(scrollEvent)
+    o.instance().dispatchEvent(scrollEvent)
 
-    expect(n.state.nodeScope).toBe(o.node)
+    expect(n.state.nodeScope).toBe(o.getDOMNode())
     expect(spy).toHaveBeenCalled()
   })
 })
@@ -164,7 +166,7 @@ describe('Loading', () => {
   test('Adds isLoading className', () => {
     const wrapper = mount(<InfiniteScroller isLoading />)
 
-    expect(wrapper.hasClass('is-loading')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-loading')).toBeTruthy()
   })
 
   test('Renders LoadingDots by default when isLoading', () => {
@@ -172,7 +174,7 @@ describe('Loading', () => {
     const o = wrapper.find(LoadingDots)
 
     expect(o.length).toBe(1)
-    expect(o.getNode().props.align).toBe('center')
+    expect(o.getElement().props.align).toBe('center')
   })
 
   test('Can render custom loading markup', () => {
@@ -332,7 +334,7 @@ describe('Integration: Modal', () => {
     )
     const o = wrapper.find('.c-Scrollable__content')
 
-    o.getNode().dispatchEvent(scrollEvent)
+    o.getDOMNode().dispatchEvent(scrollEvent)
 
     expect(spy).toHaveBeenCalled()
   })

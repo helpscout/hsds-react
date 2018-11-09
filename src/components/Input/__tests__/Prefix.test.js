@@ -7,13 +7,15 @@ describe('Input/Prefix', () => {
     test('Has the correct CSS class', () => {
       const wrapper = mount(<Prefix />)
 
-      expect(wrapper.hasClass('c-InputPrefix')).toBeTruthy()
+      expect(
+        wrapper.getDOMNode().classList.contains('c-InputPrefix')
+      ).toBeTruthy()
     })
 
     test('Accepts additional classNames', () => {
       const wrapper = mount(<Prefix className="mugatu" />)
 
-      expect(wrapper.hasClass('mugatu')).toBeTruthy()
+      expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
     })
   })
 
@@ -21,7 +23,7 @@ describe('Input/Prefix', () => {
     test('Can render seamless styles', () => {
       const wrapper = mount(<Prefix isSeamless />)
 
-      expect(wrapper.hasClass('is-seamless')).toBe(true)
+      expect(wrapper.getDOMNode().classList.contains('is-seamless')).toBe(true)
     })
   })
 })

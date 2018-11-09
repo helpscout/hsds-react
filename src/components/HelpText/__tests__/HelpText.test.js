@@ -7,7 +7,7 @@ describe('ClassName', () => {
     const className = 'gator'
     const wrapper = mount(<HelpText className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -35,7 +35,7 @@ describe('Styles', () => {
   test('Has default component className', () => {
     const wrapper = mount(<HelpText />)
 
-    expect(wrapper.hasClass('c-HelpText')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-HelpText')).toBe(true)
   })
 })
 
@@ -43,18 +43,18 @@ describe('States', () => {
   test('Applies error styles if specified', () => {
     const wrapper = mount(<HelpText state="error" />)
 
-    expect(wrapper.hasClass('is-error')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-error')).toBe(true)
   })
 
   test('Applies success styles if specified', () => {
     const wrapper = mount(<HelpText state="success" />)
 
-    expect(wrapper.hasClass('is-success')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-success')).toBe(true)
   })
 
   test('Applies warning styles if specified', () => {
     const wrapper = mount(<HelpText state="warning" />)
 
-    expect(wrapper.hasClass('is-warning')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-warning')).toBe(true)
   })
 })
