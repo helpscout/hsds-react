@@ -12,7 +12,7 @@ describe('default', () => {
     const wrapper = mount(<Truncate>{words}</Truncate>)
 
     expect(wrapper.props().type).toBe('auto')
-    expect(wrapper.hasClass('is-auto')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-auto')).toBeTruthy()
   })
 })
 
@@ -21,14 +21,14 @@ describe('className', () => {
     const words = fixture.generate()
     const wrapper = mount(<Truncate>{words}</Truncate>)
 
-    expect(wrapper.hasClass('c-Truncate')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Truncate')).toBeTruthy()
   })
 
   test('Accepts additional className', () => {
     const words = fixture.generate()
     const wrapper = mount(<Truncate className="mugatu">{words}</Truncate>)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -91,14 +91,15 @@ describe('node', () => {
   test('References node on mount', () => {
     const wrapper = mount(<Truncate />)
 
-    expect(wrapper.getNode().node).toBeTruthy()
+    expect(wrapper.instance().node).toBeTruthy()
   })
 
   test('Nullifies node on unmount', () => {
     const wrapper = mount(<Truncate />)
+    const o = wrapper.instance()
     wrapper.unmount()
 
-    expect(wrapper.getNode().node).not.toBeTruthy()
+    expect(o.node).not.toBeTruthy()
   })
 })
 
@@ -106,7 +107,7 @@ describe('Truncate: Check', () => {
   test('isTruncated can calculate truncation', () => {
     const props = { type: 'auto' }
     const wrapper = mount(<Truncate>Words</Truncate>)
-    const o = wrapper.getNode()
+    const o = wrapper.instance()
 
     o.node = {
       offsetWidth: 100,
@@ -136,7 +137,7 @@ describe('Truncate: Check', () => {
 
     expect(wrapper.state().isTruncated).toBe(false)
 
-    wrapper.getNode().isTruncated = () => true
+    wrapper.instance().isTruncated = () => true
     wrapper.setProps({ type: 'middle' })
 
     expect(wrapper.state().isTruncated).toBe(true)
@@ -146,9 +147,9 @@ describe('Truncate: Check', () => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
     wrapper.setState({ isTruncated: false })
     // Stub
-    wrapper.getNode().isTruncated = () => true
+    wrapper.instance().isTruncated = () => true
 
-    wrapper.getNode().handleOnResize()
+    wrapper.instance().handleOnResize()
 
     expect(wrapper.state().isTruncated).toBe(true)
   })
@@ -160,9 +161,9 @@ describe('Truncate: Check', () => {
     )
     wrapper.setState({ isTruncated: true })
     // Stub
-    wrapper.getNode().isTruncated = () => true
-    wrapper.getNode().setState = spy
-    wrapper.getNode().handleOnResize()
+    wrapper.instance().isTruncated = () => true
+    wrapper.instance().setState = spy
+    wrapper.instance().handleOnResize()
 
     expect(spy).not.toHaveBeenCalled()
   })
@@ -172,15 +173,15 @@ describe('Truncate: Check', () => {
     const wrapper = mount(
       <Truncate showTooltipOnTruncate={false}>Words</Truncate>
     )
-    wrapper.getNode().setState = spy
-    wrapper.getNode().handleOnResize()
+    wrapper.instance().setState = spy
+    wrapper.instance().handleOnResize()
 
     expect(spy).not.toHaveBeenCalled()
   })
 
   test('Check returns false, if node is somehow not defined', () => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
-    wrapper.getNode().node = null
+    wrapper.instance().node = null
 
     expect(wrapper.state().isTruncated).toBe(false)
   })
