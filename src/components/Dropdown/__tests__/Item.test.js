@@ -3,14 +3,38 @@ import { mount, shallow } from 'enzyme'
 import Item from '../Item'
 import { default as Menu, MenuComponent } from '../Menu'
 import Icon from '../../Icon'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-DropdownItem',
-}
 const LINK_CLASSNAME = 'c-DropdownItem__link'
 
-baseComponentTest(Item, baseComponentOptions)
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<Item />)
+    const el = wrapper.find('div.c-DropdownItem')
+
+    expect(el.length).toBe(1)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<Item className={customClass} />)
+    const el = wrapper.find('div.c-DropdownItem')
+
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child', () => {
+    const wrapper = mount(
+      <Item>
+        <div className="child">Hello</div>
+      </Item>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 describe('TabIndex', () => {
   test('Is set to -1', () => {
@@ -66,7 +90,7 @@ describe('Sub menu', () => {
         <Menu />
       </Item>
     )
-    const o = wrapper.getNode()
+    const o = wrapper.instance()
 
     expect(o.menu).toBeTruthy()
   })
@@ -101,7 +125,7 @@ describe('Sub menu', () => {
       </Item>
     )
     wrapper.setProps({ isHover: true })
-    const o = wrapper.find('.c-DropdownItem__content')
+    const o = wrapper.find('div.c-DropdownItem__content')
     const n = wrapper.find('.c-DropdownItem__menu')
 
     expect(o.length).toBeTruthy()

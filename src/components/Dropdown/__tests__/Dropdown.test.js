@@ -154,7 +154,7 @@ describe('Selected', () => {
       </Dropdown>
     )
     const o = wrapper.find(Dropdown.Item)
-    o.getNode().handleOnClick({ stopPropagation: () => {} })
+    o.instance().handleOnClick({ stopPropagation: () => {} })
 
     expect(spy).toHaveBeenCalledWith('Ron')
   })
