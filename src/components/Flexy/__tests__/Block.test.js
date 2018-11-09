@@ -6,14 +6,16 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Flexy.Block />)
 
-    expect(wrapper.hasClass('c-Flexy__block')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-Flexy__block')
+    ).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Flexy.Block className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 })
 
