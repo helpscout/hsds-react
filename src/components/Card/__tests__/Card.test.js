@@ -74,7 +74,7 @@ describe('Content', () => {
   })
 })
 
-describe.only('Link', () => {
+describe('Link', () => {
   const link = 'https://www.helpscout.net'
 
   test('Adds link styles if href is specified', () => {
@@ -192,23 +192,23 @@ describe('Click', () => {
     const noop = () => {}
     const wrapper = mount(<Card onClick={noop} />)
 
-    expect(wrapper.hasClass('is-clickable')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-clickable')).toBe(true)
   })
 })
 
 describe('Selector', () => {
   test('Renders a div selector by default', () => {
     const wrapper = mount(<Card />)
-    const o = wrapper.find('.c-Card')
+    const o = wrapper.find('.c-Card').first()
 
-    expect(o.getElement().tagName).toBe('DIV')
+    expect(o.getDOMNode().tagName).toBe('DIV')
   })
 
   test('Renders a custom selector, if specified', () => {
     const wrapper = mount(<Card selector="span" />)
-    const o = wrapper.find('.c-Card')
+    const o = wrapper.find('.c-Card').first()
 
-    expect(o.getElement().tagName).toBe('SPAN')
+    expect(o.getDOMNode().tagName).toBe('SPAN')
   })
 })
 
@@ -216,30 +216,34 @@ describe('Styles', () => {
   test('Renders borderless styles, if specified', () => {
     const wrapper = mount(<Card borderless />)
 
-    expect(wrapper.hasClass('is-borderless')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-borderless')
+    ).toBeTruthy()
   })
 
   test('Renders flex styles, if specified', () => {
     const wrapper = mount(<Card flex />)
 
-    expect(wrapper.hasClass('is-flex')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-flex')).toBeTruthy()
   })
 
   test('Renders fullHeight styles, if specified', () => {
     const wrapper = mount(<Card fullHeight />)
 
-    expect(wrapper.hasClass('is-fullHeight')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-fullHeight')
+    ).toBeTruthy()
   })
 
   test('Renders floating styles, if specified', () => {
     const wrapper = mount(<Card floating />)
 
-    expect(wrapper.hasClass('is-floating')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-floating')).toBeTruthy()
   })
 
   test('Renders seamless styles, if specified', () => {
     const wrapper = mount(<Card seamless />)
 
-    expect(wrapper.hasClass('is-seamless')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-seamless')).toBeTruthy()
   })
 })

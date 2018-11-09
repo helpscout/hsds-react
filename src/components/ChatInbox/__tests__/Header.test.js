@@ -77,7 +77,7 @@ describe('Count', () => {
     expect(o.length).toBe(0)
   })
 
-  test.only('Renders a count, if defined', () => {
+  test('Renders a count, if defined', () => {
     const wrapper = mount(<Header count={55} />)
     const count = wrapper.find('.c-ChatInboxHeader__count')
     const o = count.find(Heading)
@@ -98,7 +98,7 @@ describe('Count', () => {
 describe('Children', () => {
   test('Renders children within Heading', () => {
     const wrapper = mount(<Header>Hello</Header>)
-    const o = wrapper.find('.c-ChatInboxHeader__title')
+    const o = wrapper.find('.c-ChatInboxHeader__title').first()
 
     expect(o.html()).toContain('Hello')
   })
