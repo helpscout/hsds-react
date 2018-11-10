@@ -15,7 +15,6 @@ describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<OptionTile className={customClass} />)
-    const el = wrapper.find('div.c-OptionTile')
 
     expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
   })
