@@ -201,7 +201,11 @@ class Portal extends Component {
   }
 
   render() {
-    if (ReactDOM.createPortal && this.state.mountSelector) {
+    if (
+      ReactDOM.createPortal &&
+      this.state.mountSelector &&
+      this.props._unsafeForceRender
+    ) {
       return ReactDOM.createPortal(
         this.props.children,
         this.state.mountSelector
