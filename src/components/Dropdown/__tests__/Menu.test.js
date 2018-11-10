@@ -864,3 +864,15 @@ describe('Tab navigation', () => {
     expect(spy).toHaveBeenCalled()
   })
 })
+
+describe('Closing', () => {
+  test('Fires onClose callback when ESC is pressed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuComponent isOpen onClose={spy} />)
+
+    // Mock the interaction...
+    wrapper.instance().handleEscape()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})

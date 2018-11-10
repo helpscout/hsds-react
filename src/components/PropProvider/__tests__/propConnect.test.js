@@ -176,4 +176,27 @@ describe('propConnect', () => {
 
     expect(el.html()).toContain(config.Buddy.noms.only)
   })
+
+  test('Sets wrappedInstance ref for non-stateless components', () => {
+    class Buddy extends React.Component {
+      render() {
+        return <div>{this.props.noms}</div>
+      }
+    }
+
+    const ConnectedBuddy = propConnect()(Buddy)
+
+    const wrapper = mount(<ConnectedBuddy />)
+
+    expect(wrapper.instance().wrappedInstance).toBeTruthy()
+  })
+
+  test('Does not set wrappedInstance ref for stateless components', () => {
+    const Buddy = props => <div>{props.noms}</div>
+
+    const ConnectedBuddy = propConnect()(Buddy)
+    const wrapper = mount(<ConnectedBuddy />)
+
+    expect(wrapper.instance().wrappedInstance).toBeFalsy()
+  })
 })

@@ -24,7 +24,6 @@ const types = Object.assign({}, propTypes, {
 
 const defaultProps = {
   _unsafeForceRender: false,
-  useNativePortal: true,
   timeout: 0,
 }
 
@@ -202,13 +201,11 @@ class Portal extends Component {
   }
 
   render() {
-    if (this.props.useNativePortal) {
-      if (ReactDOM.createPortal && this.state.mountSelector) {
-        return ReactDOM.createPortal(
-          this.props.children,
-          this.state.mountSelector
-        )
-      }
+    if (ReactDOM.createPortal && this.state.mountSelector) {
+      return ReactDOM.createPortal(
+        this.props.children,
+        this.state.mountSelector
+      )
     }
 
     return null

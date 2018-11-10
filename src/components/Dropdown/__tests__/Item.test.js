@@ -348,3 +348,15 @@ describe('Disabled', () => {
     expect(o.length).not.toBeTruthy()
   })
 })
+
+describe('Closing', () => {
+  test('Fires onMenuClose callback when menu closing', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Item onMenuClose={spy} />)
+
+    // Mock the interaction...
+    wrapper.instance().handleOnMenuClose()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})

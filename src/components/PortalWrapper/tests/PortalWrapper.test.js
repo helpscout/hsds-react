@@ -135,22 +135,22 @@ describe('isOpen', () => {
     const wrapper = mount(<TestComponent isOpen={false} timeout={0} />, context)
 
     wrapper.setProps({ isOpen: true })
-    // expect(
-    //   wrapper
-    //     .find('Animate')
-    //     .first()
-    //     .props().in
-    // ).toBe(true)
+    expect(
+      wrapper
+        .find('Animate')
+        .first()
+        .props().in
+    ).toBe(true)
 
-    // wrapper.setProps({ isOpen: false })
+    wrapper.setProps({ isOpen: false })
     jest.runAllTimers()
 
-    // expect(
-    //   wrapper
-    //     .find('Animate')
-    //     .first()
-    //     .props().in
-    // ).toBe(false)
+    expect(
+      wrapper
+        .find('Animate')
+        .first()
+        .props().in
+    ).toBe(false)
   })
 })
 
@@ -395,5 +395,28 @@ describe('displayName', () => {
 
     expect(WrappedComponent.displayName).toContain('with')
     expect(WrappedComponent.displayName).toContain('Derek')
+  })
+})
+
+describe('Closing', () => {
+  test('Closes portal and stops even propagation on Esc', () => {
+    const eventSpy = jest.fn()
+    class Derek extends React.Component {
+      render() {
+        return <div />
+      }
+    }
+    const WrappedComponent = PortalWrapper()(Derek)
+
+    const wrapper = mount(<WrappedComponent isOpen />)
+
+    expect(wrapper.state().isOpen).toBe(true)
+
+    wrapper.instance().handleOnEsc({
+      stopPropagation: eventSpy,
+    })
+
+    expect(eventSpy).toHaveBeenCalled()
+    expect(wrapper.state().isOpen).toBe(false)
   })
 })

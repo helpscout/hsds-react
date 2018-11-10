@@ -1,12 +1,11 @@
 import { PropProviderProps, ConfigGetter } from './types'
 import * as React from 'react'
-import get from 'lodash.get'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import Context from './Context'
 import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
 import { classNames } from '../../utilities/classNames'
-import { isDefined, isString, isObject } from '../../utilities/is'
+import { isDefined, isString } from '../../utilities/is'
 
 export interface Props {
   className?: string
@@ -106,9 +105,7 @@ function propConnect(name?: ConfigGetter) {
 }
 
 function isStateless(Component: any): boolean {
-  if (!isObject(Component)) return true
-
-  return !!(isObject(Component) && !get(Component, 'prototype.render'))
+  return typeof Component !== 'string' && !Component.prototype.render
 }
 
 export default propConnect
