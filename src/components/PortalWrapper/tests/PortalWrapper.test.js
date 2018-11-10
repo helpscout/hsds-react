@@ -228,12 +228,12 @@ describe('Mounting', () => {
   })
 })
 
-describe.skip('Trigger', () => {
+describe('Trigger', () => {
   test('Sets triggerNode on mount', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.getNode()
+    const o = wrapper.instance()
 
     expect(o.triggerComponent).toBeTruthy()
     expect(o.triggerNode).toBeTruthy()
@@ -243,7 +243,7 @@ describe.skip('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.getNode()
+    const o = wrapper.instance()
 
     wrapper.unmount()
 
@@ -256,7 +256,7 @@ describe.skip('Trigger', () => {
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
     const o = wrapper.find('button')
-    o.getNode().onfocus = spy
+    o.getDOMNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     expect(spy).not.toHaveBeenCalled()
@@ -270,7 +270,7 @@ describe.skip('Trigger', () => {
       <TestComponent timeout={0} trigger={trigger} isOpen />
     )
     const o = wrapper.find('button')
-    o.getNode().onfocus = spy
+    o.getDOMNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     expect(spy).toHaveBeenCalled()

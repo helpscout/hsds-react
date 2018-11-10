@@ -82,7 +82,7 @@ export function isBeacon(props: Object): boolean {
 }
 
 export function isHSApp(props: Object): boolean {
-  return (
+  return !!(
     getGlobalAppFromProps(props) === APPS.hsApp ||
     // @ts-ignore
     (props.theme && getGlobalAppFromProps(props.theme) === APPS.hsApp)
