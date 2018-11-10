@@ -1,4 +1,4 @@
-import { PureComponent as Component } from 'react'
+import { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { getDocumentFromComponent } from '@helpscout/react-utils'
@@ -23,6 +23,7 @@ const types = Object.assign({}, propTypes, {
 })
 
 const defaultProps = {
+  _unsafeForceRender: false,
   useNativePortal: true,
   timeout: 0,
 }
@@ -74,6 +75,13 @@ class Portal extends Component {
     setTimeout(() => {
       this.closePortal(this.props)
     }, this.props.timeout)
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps._unsafeForceRender !== this.props._unsafeForceRender) {
+      return true
+    }
+    return false
   }
 
   getMountSelector() {

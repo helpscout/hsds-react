@@ -1,7 +1,8 @@
 import { PropProviderProps } from './types'
 import * as React from 'react'
 import Context from './Context'
-import { setGlobalApp, shallowMergeProps } from './utils'
+import { ThemeProvider } from '../styled'
+import { setGlobalApp, shallowMergeProps, propProviderDataAttr } from './utils'
 
 export interface Props {
   app: string
@@ -31,6 +32,11 @@ class PropProvider extends React.Component<Props> {
     return setGlobalApp(contextProps, this.props.app)
   }
 
+  getThemeProviderProps = (contextProps: PropProviderProps) => ({
+    // @ts-ignore
+    [propProviderDataAttr]: this.props.app,
+  })
+
   render() {
     return (
       <Context.Consumer>
@@ -41,7 +47,9 @@ class PropProvider extends React.Component<Props> {
               this.props.value
             )}
           >
-            {this.getChildren()}
+            <ThemeProvider theme={this.getThemeProviderProps(contextProps)}>
+              {this.getChildren()}
+            </ThemeProvider>
           </Context.Provider>
         )}
       </Context.Consumer>

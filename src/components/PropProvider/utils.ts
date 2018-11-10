@@ -36,13 +36,13 @@ export function setGlobalApp(
   config: PropProviderProps,
   namespace: AppNamespace
 ): PropProviderProps {
-  if (!isPlainObject(config)) return contextConfig
+  const baseConfig = !isPlainObject(config) ? contextConfig : config
   const appNamespace = isString(namespace)
     ? namespace
     : propProviderAppNamespaceValue
 
   return {
-    ...config,
+    ...baseConfig,
     [propProviderAppNamespace]: appNamespace,
   }
 }
@@ -82,7 +82,11 @@ export function isBeacon(props: Object): boolean {
 }
 
 export function isHSApp(props: Object): boolean {
-  return getGlobalAppFromProps(props) === APPS.hsApp
+  return (
+    getGlobalAppFromProps(props) === APPS.hsApp ||
+    // @ts-ignore
+    (props.theme && getGlobalAppFromProps(props.theme) === APPS.hsApp)
+  )
 }
 
 /**
