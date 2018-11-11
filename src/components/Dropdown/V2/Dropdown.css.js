@@ -15,24 +15,32 @@ export const MenuUI = styled(Card)`
   min-height: 30px;
   min-width: 160px;
   overflow-y: auto;
-  max-height: 100px;
+  max-height: 360px;
 `
 
 MenuUI.defaultProps = {
+  'data-hsds-menu': true,
   floating: true,
 }
 
 export const WrapperUI = styled('div')`
   display: none;
   position: relative;
-  top: 0;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 30%;
+    right: calc(100% - 20px);
+    top: 34px;
+    height: 50%;
+  }
 `
 
 export const ActionUI = styled('div')`
   padding: 8px 16px;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: ${rgba(getColor('grey.300'), 1)};
     color: ${getColor('blue.500')};
 
@@ -46,6 +54,10 @@ export const ActionUI = styled('div')`
   }
 `
 
+ActionUI.defaultProps = {
+  'data-hsds-menu-action': true,
+}
+
 export const ItemUI = styled('div')`
   background-color: ${rgba(getColor('grey.400'), 0)};
   border-radius: 0 !important;
@@ -56,13 +68,17 @@ export const ItemUI = styled('div')`
   transition: background-color 0.1s ease;
   user-select: none;
 
-  &:hover {
-    background-color: ${rgba(getColor('grey.300'), 1)};
-    color: ${getColor('blue.500')};
-
+  &:hover,
+  &.is-focused {
     > ${WrapperUI} {
       display: block;
     }
+  }
+
+  &:hover,
+  &:focus {
+    background-color: ${rgba(getColor('grey.300'), 1)};
+    color: ${getColor('blue.500')};
 
     ${MenuUI} {
       color: initial;
@@ -76,6 +92,8 @@ export const ItemUI = styled('div')`
   ${WrapperUI} {
     position: absolute;
     left: 100%;
+    padding-left: 20px;
+    margin-left: -20px;
   }
 `
 ItemUI.defaultProps = {
