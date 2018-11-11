@@ -130,6 +130,10 @@ export class Dropdown extends React.Component<any> {
     }
   }
 
+  shouldComponentUpdate() {
+    return false
+  }
+
   goUp = () => {
     const node = this.props.activeItem
     let nextActiveItem
@@ -172,6 +176,7 @@ export class Dropdown extends React.Component<any> {
   }
 
   render() {
+    console.log('redner')
     return (
       <DropdownUI>
         <MenuUI>
