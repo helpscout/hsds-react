@@ -32,6 +32,15 @@ stories.add('Menu/Default', () => {
   return <Dropdown items={items} />
 })
 
+stories.add('Menu/Callbacks', () => {
+  const items = ItemSpec.generate(8)
+  const onOpen = () => console.log('Open')
+  const onClose = () => console.log('Close')
+  const onSelect = (item, props) => console.log('Select', props.item)
+
+  return <Dropdown {...{ items, onOpen, onClose, onSelect }} />
+})
+
 stories.add('Menu/Nested', () => {
   const items = [
     {

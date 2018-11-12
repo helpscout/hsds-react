@@ -1,4 +1,5 @@
 import createStore from 'unistore'
+import { noop } from '../../../utilities/other'
 
 export interface DropdownState {
   activeItem?: HTMLElement | null
@@ -8,6 +9,9 @@ export interface DropdownState {
   items: Array<any>
   direction: 'left' | 'right'
   dropUp: boolean
+  onOpen: () => void
+  onClose: () => void
+  onSelect: (item: Object, props: Object) => void
 }
 
 export const initialState: DropdownState = {
@@ -18,6 +22,9 @@ export const initialState: DropdownState = {
   isOpen: false,
   direction: 'right',
   dropUp: false,
+  onOpen: noop,
+  onClose: noop,
+  onSelect: noop,
 }
 
 const store = createStore(initialState)

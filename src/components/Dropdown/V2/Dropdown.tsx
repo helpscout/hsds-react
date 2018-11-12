@@ -16,6 +16,8 @@ export interface Props {
   className?: string
   onBlur: (event: Event) => void
   onFocus: (event: Event) => void
+  onOpen: () => void
+  onClose: () => void
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
@@ -30,6 +32,8 @@ class Dropdown extends React.PureComponent<Props> {
   static defaultProps = {
     ...initialState,
     onBlur: noop,
+    onOpen: noop,
+    onClose: noop,
     onFocus: noop,
     isOpen: false,
     innerRef: noop,
@@ -86,6 +90,7 @@ class Dropdown extends React.PureComponent<Props> {
     store.setState({
       isOpen: false,
     })
+    this.props.onClose()
   }
 
   focusTriggerNode = () => {

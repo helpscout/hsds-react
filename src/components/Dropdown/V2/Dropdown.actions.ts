@@ -31,6 +31,9 @@ export const toggleOpen = state => {
 }
 
 export const openDropdown = state => {
+  // Trigger callback from Provider
+  state.onOpen()
+
   return {
     ...state,
     isOpen: true,
@@ -39,6 +42,9 @@ export const openDropdown = state => {
 }
 
 export const closeDropdown = state => {
+  // Trigger callback from Provider
+  state.onClose()
+
   return {
     ...state,
     isOpen: false,
@@ -50,8 +56,9 @@ export const onSelect = (state, event) => {
   const { items, activeValue, onSelect } = state
   const item = getItemFromCollection(items, activeValue)
 
+  // Trigger callback from Provider
   if (item) {
-    onSelect(item.value, { event, item })
+    onSelect(item.value, { event, item, dropdownType: 'hsds-dropdown-v2' })
   }
 
   if (state.closeOnSelect) {
