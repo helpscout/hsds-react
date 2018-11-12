@@ -86,6 +86,7 @@ const Icon = (props: Props) => {
 
   return (
     <span
+      aria-hidden
       {...getValidProps(rest)}
       className={componentClassName}
       onClick={onClick}

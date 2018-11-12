@@ -23,8 +23,8 @@ export interface Props {
   activeIndex: string
   className?: string
   closeDropdown: () => void
-  direction: string
   dropUp: boolean
+  dropRight: boolean
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
@@ -37,8 +37,8 @@ export class MenuContainer extends React.Component<Props> {
     animationSequence: 'fade down',
     activeIndex: '0',
     closeDropdown: noop,
-    direction: 'right',
     dropUp: false,
+    dropRight: true,
     innerRef: noop,
     items: [],
     isOpen: true,
@@ -60,7 +60,7 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   handleOnKeyDown = event => {
-    const { direction } = this.props
+    const { dropRight } = this.props
     const amount = 1
 
     switch (event.keyCode) {
@@ -76,7 +76,7 @@ export class MenuContainer extends React.Component<Props> {
 
       case Keys.LEFT_ARROW:
         event.preventDefault()
-        if (direction === 'right') {
+        if (dropRight) {
           this.closeSubMenu()
         } else {
           this.openSubMenu()
@@ -85,7 +85,7 @@ export class MenuContainer extends React.Component<Props> {
 
       case Keys.RIGHT_ARROW:
         event.preventDefault()
-        if (direction === 'right') {
+        if (dropRight) {
           this.openSubMenu()
         } else {
           this.closeSubMenu()
@@ -166,24 +166,29 @@ export class MenuContainer extends React.Component<Props> {
       animationDuration,
       animationSequence,
       className,
+      dropUp,
+      dropRight,
       isOpen,
       items,
     } = this.props
+
     const componentClassName = classNames(
       'c-DropdownV2MenuContainer',
+      dropUp && 'is-dropUp',
+      !dropRight && 'is-dropLeft',
       className
     )
 
     return (
-      <Animate
-        sequence={animationSequence}
-        in={isOpen}
-        duration={animationDuration}
-        timeout={animationDuration / 2}
+      <MenuContainerUI
+        className={componentClassName}
+        innerRef={this.setNodeRef}
       >
-        <MenuContainerUI
-          className={componentClassName}
-          innerRef={this.setNodeRef}
+        <Animate
+          sequence={dropUp ? 'fade up' : animationSequence}
+          in={isOpen}
+          duration={animationDuration}
+          timeout={animationDuration / 2}
         >
           <Menu>
             {items.map((item, index) => (
@@ -192,8 +197,8 @@ export class MenuContainer extends React.Component<Props> {
               </Item>
             ))}
           </Menu>
-        </MenuContainerUI>
-      </Animate>
+        </Animate>
+      </MenuContainerUI>
     )
   }
 }
@@ -201,8 +206,15 @@ export class MenuContainer extends React.Component<Props> {
 const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { activeItem, activeIndex, direction, isOpen, items } = state
-    return { activeItem, activeIndex, direction, isOpen, items }
+    const { activeItem, activeIndex, direction, dropUp, isOpen, items } = state
+    return {
+      activeItem,
+      activeIndex,
+      dropUp,
+      dropRight: direction === 'right',
+      isOpen,
+      items,
+    }
   },
   // mapDispatchToProps
   { closeDropdown, setActiveItem }

@@ -14,18 +14,23 @@ export interface Props {
   activeItem?: HTMLElement | null
   activeIndex?: string
   className?: string
+  onBlur: (event: Event) => void
+  onFocus: (event: Event) => void
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
   direction: 'left' | 'right'
   dropUp: boolean
   onSelect: (item: Object, props: Object) => void
+  renderTrigger?: any
   trigger: any
 }
 
 class Dropdown extends React.PureComponent<Props> {
   static defaultProps = {
     ...initialState,
+    onBlur: noop,
+    onFocus: noop,
     isOpen: false,
     innerRef: noop,
     onSelect: noop,
@@ -34,6 +39,7 @@ class Dropdown extends React.PureComponent<Props> {
   static Menu = Menu
   static Item = Item
   static Trigger = Trigger
+  static store = store
 
   node: HTMLElement
   triggerNode: HTMLElement
@@ -93,6 +99,16 @@ class Dropdown extends React.PureComponent<Props> {
     store.setState(this.props)
   }
 
+  getTriggerProps = () => {
+    const { onBlur, onFocus } = this.props
+
+    return {
+      onBlur,
+      onFocus,
+      innerRef: this.setTriggerNodeRef,
+    }
+  }
+
   setNodeRef = (node: HTMLElement) => {
     this.node = node
     this.props.innerRef(node)
@@ -102,6 +118,14 @@ class Dropdown extends React.PureComponent<Props> {
     this.triggerNode = node
   }
 
+  renderTrigger = () => {
+    const { trigger, renderTrigger } = this.props
+
+    return (
+      <Trigger {...this.getTriggerProps()}>{renderTrigger || trigger}</Trigger>
+    )
+  }
+
   render() {
     const { className } = this.props
     const componentClassName = classNames(className, 'c-DropdownV2')
@@ -109,9 +133,7 @@ class Dropdown extends React.PureComponent<Props> {
     return (
       <Provider store={store}>
         <DropdownUI className={componentClassName} innerRef={this.setNodeRef}>
-          <Trigger innerRef={this.setTriggerNodeRef}>
-            {this.props.trigger}
-          </Trigger>
+          {this.renderTrigger()}
           <MenuContainer />
         </DropdownUI>
       </Provider>

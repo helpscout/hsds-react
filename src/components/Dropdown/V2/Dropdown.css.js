@@ -6,11 +6,20 @@ import { getColor } from '../../../styles/utilities/color'
 
 export const DropdownUI = styled('div')`
   ${baseStyles};
+  position: relative;
 `
 
 export const MenuContainerUI = styled('div')`
   ${baseStyles};
   position: absolute;
+
+  &.is-dropUp {
+    bottom: 100%;
+  }
+
+  &.is-dropLeft {
+    right: 0%;
+  }
 `
 
 export const MenuUI = styled(Card)`

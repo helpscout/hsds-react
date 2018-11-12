@@ -172,11 +172,14 @@ export class Item extends React.PureComponent<Props> {
   }
 
   renderSubMenuIndicator = () => {
+    const { dropRight } = this.props
+    const icon = dropRight ? 'caret-right' : 'caret-left'
+
     return (
       this.hasSubMenu() && (
         <Flexy.Item>
           <SubMenuIncidatorUI>
-            <Icon name="caret-right" size="12" shade="extraMuted" />
+            <Icon name={icon} size="12" shade="extraMuted" />
           </SubMenuIncidatorUI>
         </Flexy.Item>
       )

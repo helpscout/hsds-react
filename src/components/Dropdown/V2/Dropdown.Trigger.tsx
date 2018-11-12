@@ -17,6 +17,8 @@ export interface Props {
   closeDropdown: () => void
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
+  onBlur: (event: Event) => void
+  onFocus: (event: Event) => void
   onKeyDown: (event: KeyboardEvent) => void
   onClick: (event: Event) => void
   openDropdown: () => void
@@ -28,6 +30,8 @@ export class Trigger extends React.PureComponent<Props> {
   static defaultProps = {
     innerRef: noop,
     isOpen: false,
+    onBlur: noop,
+    onFocus: noop,
     onKeyDown: noop,
     onClick: noop,
     openDropdown: noop,
@@ -88,7 +92,7 @@ export class Trigger extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, innerRef, isOpen, ...rest } = this.props
+    const { className, onBlur, onFocus, innerRef, isOpen, ...rest } = this.props
     const componentClassName = classNames(
       className,
       isOpen && 'is-open',
@@ -100,6 +104,8 @@ export class Trigger extends React.PureComponent<Props> {
         {...rest}
         className={componentClassName}
         innerRef={this.setNodeRef}
+        onBlur={onBlur}
+        onFocus={onFocus}
         onClick={this.handleOnClick}
         onKeyDown={this.handleOnKeyDown}
       />

@@ -107,6 +107,8 @@ export const setMenuPositionStyles = (props: {
   const { height } = wrapperNode.getBoundingClientRect()
   const triggerNodeMenu = triggerNode.closest(`[${selectors.menuAttribute}]`)
 
+  const translateYUp = wrapperNode.clientHeight - menuOffset
+
   translateY =
     triggerNode.offsetHeight +
     (triggerNodeMenu ? triggerNodeMenu.scrollTop : 0) +
@@ -128,8 +130,14 @@ export const setMenuPositionStyles = (props: {
     wrapperNode.style.paddingRight = '0px'
   }
 
-  if (dropUp || shouldDropUp) {
-    translateY = wrapperNode.clientHeight - menuOffset
+  if (dropUp) {
+    if (shouldDropUp) {
+      translateY = translateYUp
+    }
+  } else {
+    if (shouldDropUp) {
+      translateY = translateYUp
+    }
   }
 
   wrapperNode.style.transform = `translateY(-${translateY}px)`
