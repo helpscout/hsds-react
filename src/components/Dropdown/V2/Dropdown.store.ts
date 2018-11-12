@@ -3,6 +3,7 @@ import createStore from 'unistore'
 export interface DropdownState {
   activeItem?: HTMLElement | null
   activeIndex?: string
+  closeOnSelect: boolean
   isOpen: boolean
   items: Array<any>
   direction: 'left' | 'right'
@@ -12,6 +13,7 @@ export interface DropdownState {
 export const initialState: DropdownState = {
   activeItem: null,
   activeIndex: '',
+  closeOnSelect: true,
   items: [],
   isOpen: false,
   direction: 'right',

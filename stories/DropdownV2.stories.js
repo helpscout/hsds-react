@@ -8,7 +8,13 @@ import { createSpec, faker } from '@helpscout/helix'
 
 const stories = storiesOf('DropdownV2', module)
 stories.addDecorator(storyFn => (
-  <Artboard name="dropdown-v2" withCenterGuides={false}>
+  <Artboard
+    name="dropdown-v2"
+    withCenterGuides={false}
+    showInterface={false}
+    artboardWidth={800}
+    artboardHeight={600}
+  >
     <Provider store={store}>{storyFn()}</Provider>
   </Artboard>
 ))

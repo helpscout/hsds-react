@@ -49,7 +49,14 @@ export const closeDropdown = state => {
 export const onSelect = (state, event) => {
   const { items, activeValue, onSelect } = state
   const item = getItemFromCollection(items, activeValue)
+
   if (item) {
     onSelect(item.value, { event, item })
+  }
+
+  if (state.closeOnSelect) {
+    return closeDropdown(state)
+  } else {
+    return state
   }
 }

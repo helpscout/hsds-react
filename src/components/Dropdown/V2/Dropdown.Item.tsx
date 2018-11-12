@@ -1,7 +1,14 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
+import Flexy from '../../Flexy'
+import Icon from '../../Icon'
 import Menu from './Dropdown.Menu'
-import { ItemUI, ActionUI, WrapperUI } from './Dropdown.css.js'
+import {
+  ItemUI,
+  ActionUI,
+  WrapperUI,
+  SubMenuIncidatorUI,
+} from './Dropdown.css.js'
 import {
   selectors,
   isPathActive,
@@ -19,7 +26,7 @@ export interface Props {
   dropUp: boolean
   index: string
   innerRef: (node: HTMLElement) => void
-  items?: Array<any>
+  items: Array<any>
   onSelect: (event: Event) => void
   setActiveItem: (node: HTMLElement) => void
   label: string
@@ -76,12 +83,12 @@ export class Item extends React.PureComponent<Props> {
     this.props.setActiveItem(node)
   }
 
-  isHover = () => {
+  isHover = (): boolean => {
     const { activeIndex, index } = this.props
     return isPathActive(activeIndex, index)
   }
 
-  isOpen = () => {
+  isOpen = (): boolean => {
     const { activeIndex, index } = this.props
     return this.isHover() && index.length < activeIndex.length
   }
@@ -136,11 +143,17 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
+  hasSubMenu = (): boolean => {
+    const { items } = this.props
+
+    return !!(items && items.length)
+  }
+
   renderSubMenu = () => {
     const { index: path, items } = this.props
 
     return (
-      !!(items && items.length) && (
+      this.hasSubMenu() && (
         <WrapperUI {...this.getWrapperProps()}>
           <Menu innerRef={this.setMenuNodeRef} isSubMenu>
             {items.map((item, index) => (
@@ -158,14 +171,32 @@ export class Item extends React.PureComponent<Props> {
     )
   }
 
+  renderSubMenuIndicator = () => {
+    return (
+      this.hasSubMenu() && (
+        <Flexy.Item>
+          <SubMenuIncidatorUI>
+            <Icon name="caret-right" size="12" shade="extraMuted" />
+          </SubMenuIncidatorUI>
+        </Flexy.Item>
+      )
+    )
+  }
+
   render() {
     return (
       <ItemUI {...this.getItemProps()}>
         <ActionUI
           innerRef={this.setActionNodeRef}
-          className="c-DropdownV2ItemAction"
+          className={classNames(
+            this.hasSubMenu() && 'has-subMenu',
+            'c-DropdownV2ItemAction'
+          )}
         >
-          {this.props.children}
+          <Flexy gap="sm">
+            <Flexy.Block>{this.props.children}</Flexy.Block>
+            {this.renderSubMenuIndicator()}
+          </Flexy>
         </ActionUI>
         {this.renderSubMenu()}
       </ItemUI>

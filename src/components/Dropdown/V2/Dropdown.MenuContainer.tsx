@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
+import Animate from '../../Animate'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
 import {
@@ -17,6 +18,8 @@ import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
+  animationDuration: number
+  animationSequence: string
   activeIndex: string
   className?: string
   closeDropdown: () => void
@@ -30,6 +33,8 @@ export interface Props {
 
 export class MenuContainer extends React.Component<Props> {
   static defaultProps = {
+    animationDuration: 80,
+    animationSequence: 'fade down',
     activeIndex: '0',
     closeDropdown: noop,
     direction: 'right',
@@ -157,26 +162,38 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   render() {
-    const { className, isOpen, items } = this.props
+    const {
+      animationDuration,
+      animationSequence,
+      className,
+      isOpen,
+      items,
+    } = this.props
     const componentClassName = classNames(
       'c-DropdownV2MenuContainer',
       className
     )
 
     return (
-      <MenuContainerUI
-        className={componentClassName}
-        innerRef={this.setNodeRef}
-        style={{ display: isOpen ? 'block' : 'none' }}
+      <Animate
+        sequence={animationSequence}
+        in={isOpen}
+        duration={animationDuration}
+        timeout={animationDuration / 2}
       >
-        <Menu>
-          {items.map((item, index) => (
-            <Item key={item.id} {...item} index={pathResolve(index)}>
-              {item.label}
-            </Item>
-          ))}
-        </Menu>
-      </MenuContainerUI>
+        <MenuContainerUI
+          className={componentClassName}
+          innerRef={this.setNodeRef}
+        >
+          <Menu>
+            {items.map((item, index) => (
+              <Item key={item.id} {...item} index={pathResolve(index)}>
+                {item.label}
+              </Item>
+            ))}
+          </Menu>
+        </MenuContainerUI>
+      </Animate>
     )
   }
 }

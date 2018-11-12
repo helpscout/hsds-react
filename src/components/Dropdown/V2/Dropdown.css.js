@@ -120,10 +120,21 @@ ItemUI.defaultProps = {
 
 export const TriggerUI = styled('a')`
   ${baseStyles};
+  color: ${getColor('blue.500')};
   cursor: pointer;
   display: block;
+  outline: none;
+
+  &.is-open {
+    color: ${getColor('blue.700')};
+  }
 `
 
 TriggerUI.defaultProps = {
   tabIndex: 0,
 }
+
+export const SubMenuIncidatorUI = styled('div')`
+  pointer-events: none;
+  margin-right: -8px;
+`

@@ -88,8 +88,12 @@ export class Trigger extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, innerRef, ...rest } = this.props
-    const componentClassName = classNames(className, 'c-DropdownV2Trigger')
+    const { className, innerRef, isOpen, ...rest } = this.props
+    const componentClassName = classNames(
+      className,
+      isOpen && 'is-open',
+      'c-DropdownV2Trigger'
+    )
 
     return (
       <TriggerUI
