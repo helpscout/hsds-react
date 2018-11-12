@@ -2,16 +2,23 @@ import * as React from 'react'
 import { connect } from 'unistore/react'
 import Menu from './Dropdown.Menu'
 import { ItemUI, ActionUI, WrapperUI } from './Dropdown.css.js'
-import { selectors, isPathActive, pathResolve } from './Dropdown.utils'
+import {
+  selectors,
+  isPathActive,
+  pathResolve,
+  setMenuPositionStyles,
+} from './Dropdown.utils'
 import { setActiveItem, onSelect } from './Dropdown.actions'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
   activeIndex: string
+  className?: string
   dropRight: boolean
   dropUp: boolean
   index: string
+  innerRef: (node: HTMLElement) => void
   items?: Array<any>
   onSelect: (event: Event) => void
   setActiveItem: (node: HTMLElement) => void
@@ -23,6 +30,7 @@ export class Item extends React.PureComponent<Props> {
   static defaultProps = {
     activeIndex: '0',
     index: '0',
+    innerRef: noop,
     items: undefined,
     dropRight: true,
     dropUp: false,
@@ -80,47 +88,21 @@ export class Item extends React.PureComponent<Props> {
 
   renderMenu = () => {
     const { dropRight, dropUp } = this.props
-    let translateY
 
-    if (!this.menuNode) return
-    this.menuNode.scrollTop = 0
-
-    if (this.wrapperNode) {
-      const menuOffset = 9
-      const { top } = this.node.getBoundingClientRect()
-      const { height } = this.wrapperNode.getBoundingClientRect()
-      const actionNodeMenu = this.actionNode.closest(
-        `[${selectors.menuAttribute}]`
-      )
-
-      translateY =
-        this.actionNode.offsetHeight +
-        (actionNodeMenu ? actionNodeMenu.scrollTop : 0) +
-        menuOffset
-
-      const predictedOffsetBottom = translateY + height + top
-
-      const shouldDropUp = window.innerHeight < predictedOffsetBottom
-
-      if (!dropRight) {
-        this.wrapperNode.style.right = '100%'
-        this.wrapperNode.style.paddingLeft = '0px'
-        this.wrapperNode.style.paddingRight = '20px'
-      } else {
-        this.wrapperNode.style.left = '100%'
-        this.wrapperNode.style.paddingLeft = '20px'
-        this.wrapperNode.style.paddingRight = '0px'
-      }
-
-      if (dropUp || shouldDropUp) {
-        translateY = this.wrapperNode.clientHeight - menuOffset
-      }
-
-      this.wrapperNode.style.transform = `translateY(-${translateY}px)`
-    }
+    setMenuPositionStyles({
+      dropRight,
+      dropUp,
+      menuNode: this.menuNode,
+      wrapperNode: this.wrapperNode,
+      itemNode: this.node,
+      triggerNode: this.actionNode,
+    })
   }
 
-  setNodeRef = node => (this.node = node)
+  setNodeRef = node => {
+    this.node = node
+    this.props.innerRef(node)
+  }
   setActionNodeRef = node => (this.actionNode = node)
   setWrapperNodeRef = node => (this.wrapperNode = node)
   setMenuNodeRef = node => (this.menuNode = node)
@@ -192,6 +174,7 @@ export class Item extends React.PureComponent<Props> {
 }
 
 const ConnectedItem: any = connect(
+  // mapStateToProps
   (state: any) => {
     const { activeIndex, dropUp, direction } = state
     return {
@@ -200,6 +183,7 @@ const ConnectedItem: any = connect(
       dropRight: direction === 'right',
     }
   },
+  // mapDispatchToProps
   { setActiveItem, onSelect }
 )(
   // @ts-ignore

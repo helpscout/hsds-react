@@ -1,5 +1,11 @@
 import { selectors, getItemFromCollection } from './Dropdown.utils'
 
+const initialItemState = {
+  activeItem: null,
+  activeIndex: null,
+  activeValue: null,
+}
+
 export const setActiveItem = (state, activeItem) => {
   return {
     ...state,
@@ -13,6 +19,30 @@ export const changeDirection = state => {
   return {
     ...state,
     direction: state.direction === 'right' ? 'left' : 'right',
+  }
+}
+
+export const toggleOpen = state => {
+  if (state.isOpen) {
+    return closeDropdown(state)
+  } else {
+    return openDropdown(state)
+  }
+}
+
+export const openDropdown = state => {
+  return {
+    ...state,
+    isOpen: true,
+    ...initialItemState,
+  }
+}
+
+export const closeDropdown = state => {
+  return {
+    ...state,
+    isOpen: false,
+    ...initialItemState,
   }
 }
 

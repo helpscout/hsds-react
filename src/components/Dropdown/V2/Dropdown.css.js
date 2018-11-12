@@ -1,24 +1,25 @@
 import { rgba } from 'polished'
 import styled from '../../styled'
 import Card from '../../Card'
+import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 
 export const DropdownUI = styled('div')`
-  box-sizing: border-box;
-  * {
-    box-sizing: border-box;
-  }
+  ${baseStyles};
+`
+
+export const MenuContainerUI = styled('div')`
+  ${baseStyles};
+  position: absolute;
 `
 
 export const MenuUI = styled(Card)`
-  box-sizing: border-box;
-  * {
-    box-sizing: border-box;
-  }
+  ${baseStyles};
   padding: 8px 0;
   min-height: 30px;
   min-width: 160px;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 360px;
 `
 
@@ -28,7 +29,7 @@ MenuUI.defaultProps = {
 }
 
 export const WrapperUI = styled('div')`
-  box-sizing: border-box;
+  ${baseStyles};
   visibility: hidden;
   pointer-events: none;
   position: relative;
@@ -48,7 +49,7 @@ WrapperUI.defaultProps = {
 }
 
 export const ActionUI = styled('div')`
-  box-sizing: border-box;
+  ${baseStyles};
   padding: 8px 16px;
 
   &.is-open {
@@ -70,6 +71,7 @@ ActionUI.defaultProps = {
 }
 
 export const ItemUI = styled('div')`
+  ${baseStyles};
   background-color: ${rgba(getColor('grey.400'), 0)};
   border-radius: 0 !important;
   cursor: pointer;
@@ -113,5 +115,15 @@ export const ItemUI = styled('div')`
 `
 ItemUI.defaultProps = {
   'data-hsds-menu-item': true,
+  tabIndex: 0,
+}
+
+export const TriggerUI = styled('a')`
+  ${baseStyles};
+  cursor: pointer;
+  display: block;
+`
+
+TriggerUI.defaultProps = {
   tabIndex: 0,
 }

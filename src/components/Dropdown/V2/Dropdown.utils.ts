@@ -76,3 +76,61 @@ export const decrementPathIndex = (
   const nextIndex = parseInt(nextIndexBase, 10) - amount
   return [...paths, nextIndex].join('.')
 }
+
+export const setMenuPositionStyles = (props: {
+  dropRight: boolean
+  dropUp: boolean
+  menuNode: HTMLElement | null
+  itemNode: HTMLElement
+  wrapperNode: HTMLElement | null
+  triggerNode: HTMLElement
+}) => {
+  const defaultProps = {
+    dropRight: true,
+    dropUp: false,
+  }
+
+  const { dropRight, dropUp, menuNode, itemNode, wrapperNode, triggerNode } = {
+    ...defaultProps,
+    ...props,
+  }
+
+  if (!menuNode || !itemNode || !wrapperNode || !triggerNode) return
+
+  let translateY
+
+  // Reset menuNode scroll position
+  menuNode.scrollTop = 0
+
+  const menuOffset = 9
+  const { top } = itemNode.getBoundingClientRect()
+  const { height } = wrapperNode.getBoundingClientRect()
+  const triggerNodeMenu = triggerNode.closest(`[${selectors.menuAttribute}]`)
+
+  translateY =
+    triggerNode.offsetHeight +
+    (triggerNodeMenu ? triggerNodeMenu.scrollTop : 0) +
+    menuOffset
+
+  const predictedOffsetBottom = translateY + height + top
+  const predictedFlippedOffsetTop = top - translateY - height
+
+  const shouldDropUp =
+    window.innerHeight < predictedOffsetBottom && predictedFlippedOffsetTop > 0
+
+  if (!dropRight) {
+    wrapperNode.style.right = '100%'
+    wrapperNode.style.paddingLeft = '0px'
+    wrapperNode.style.paddingRight = '20px'
+  } else {
+    wrapperNode.style.left = '100%'
+    wrapperNode.style.paddingLeft = '20px'
+    wrapperNode.style.paddingRight = '0px'
+  }
+
+  if (dropUp || shouldDropUp) {
+    translateY = wrapperNode.clientHeight - menuOffset
+  }
+
+  wrapperNode.style.transform = `translateY(-${translateY}px)`
+}
