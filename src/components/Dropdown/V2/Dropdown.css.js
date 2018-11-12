@@ -28,6 +28,7 @@ MenuUI.defaultProps = {
 }
 
 export const WrapperUI = styled('div')`
+  box-sizing: border-box;
   visibility: hidden;
   pointer-events: none;
   position: relative;
@@ -47,6 +48,7 @@ WrapperUI.defaultProps = {
 }
 
 export const ActionUI = styled('div')`
+  box-sizing: border-box;
   padding: 8px 16px;
 
   &.is-open {
@@ -78,9 +80,6 @@ export const ItemUI = styled('div')`
   user-select: none;
 
   &:focus {
-    /* background-color: ${rgba(getColor('grey.300'), 1)};
-    color: ${getColor('blue.500')}; */
-
     ${MenuUI} {
       color: initial;
     }
@@ -115,9 +114,4 @@ export const ItemUI = styled('div')`
 ItemUI.defaultProps = {
   'data-hsds-menu-item': true,
   tabIndex: 0,
-}
-
-export const LinkUI = styled('div')``
-LinkUI.defaultProps = {
-  'data-hsds-menu-link': true,
 }

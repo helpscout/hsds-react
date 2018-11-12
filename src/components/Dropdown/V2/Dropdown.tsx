@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Provider } from 'unistore/react'
 import store, { initialState } from './Dropdown.store'
-import Menu from './Dropdown.Menu'
+import MenuContainer from './Dropdown.MenuContainer'
 
 class Dropdown extends React.PureComponent<any> {
   static defaultProps = {
@@ -29,7 +29,7 @@ class Dropdown extends React.PureComponent<any> {
   render() {
     return (
       <Provider store={store}>
-        <Menu />
+        <MenuContainer />
       </Provider>
     )
   }

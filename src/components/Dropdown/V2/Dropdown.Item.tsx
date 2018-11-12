@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
-import { MenuUI, ItemUI, ActionUI, WrapperUI } from './Dropdown.css.js'
+import Menu from './Dropdown.Menu'
+import { ItemUI, ActionUI, WrapperUI } from './Dropdown.css.js'
 import { selectors, isPathActive, pathResolve } from './Dropdown.utils'
 import { setActiveItem, onSelect } from './Dropdown.actions'
 import { classNames } from '../../../utilities/classNames'
@@ -130,7 +131,8 @@ export class Item extends React.PureComponent<Props> {
     return {
       className: classNames(
         this.isHover() && 'is-hover',
-        this.isOpen() && 'is-open'
+        this.isOpen() && 'is-open',
+        'c-DropdownV2Item'
       ),
       onClick: this.handleOnClick,
       onMouseEnter: this.handleOnMouseEnter,
@@ -145,6 +147,7 @@ export class Item extends React.PureComponent<Props> {
     const { index, value } = this.props
 
     return {
+      className: 'c-DropdownV2MenuWrapper',
       innerRef: this.setWrapperNodeRef,
       [selectors.indexAttribute]: index,
       [selectors.valueAttribute]: value,
@@ -157,7 +160,7 @@ export class Item extends React.PureComponent<Props> {
     return (
       !!(items && items.length) && (
         <WrapperUI {...this.getWrapperProps()}>
-          <MenuUI innerRef={this.setMenuNodeRef}>
+          <Menu innerRef={this.setMenuNodeRef} isSubMenu>
             {items.map((item, index) => (
               <ConnectedItem
                 key={item.id}
@@ -167,7 +170,7 @@ export class Item extends React.PureComponent<Props> {
                 {item.label}
               </ConnectedItem>
             ))}
-          </MenuUI>
+          </Menu>
         </WrapperUI>
       )
     )
@@ -176,7 +179,10 @@ export class Item extends React.PureComponent<Props> {
   render() {
     return (
       <ItemUI {...this.getItemProps()}>
-        <ActionUI innerRef={this.setActionNodeRef}>
+        <ActionUI
+          innerRef={this.setActionNodeRef}
+          className="c-DropdownV2ItemAction"
+        >
           {this.props.children}
         </ActionUI>
         {this.renderSubMenu()}
