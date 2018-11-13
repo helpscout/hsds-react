@@ -46,6 +46,7 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   node: HTMLElement
+  parentNode: HTMLElement
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleOnKeyDown)
@@ -156,8 +157,22 @@ export class MenuContainer extends React.Component<Props> {
     this.setNextActiveItem(nextActiveIndex)
   }
 
+  shouldDropUp = (): boolean => {
+    if (this.props.dropUp) return true
+    if (!this.node || !this.parentNode) return false
+
+    const { top } = this.parentNode.getBoundingClientRect()
+    const { clientHeight: height } = this.node
+
+    return top + height > window.innerHeight
+  }
+
   setNodeRef = node => {
-    this.node = node
+    if (!this.node) {
+      this.node = node
+      this.parentNode = node.parentElement
+    }
+
     this.props.innerRef(node)
   }
 
@@ -166,15 +181,16 @@ export class MenuContainer extends React.Component<Props> {
       animationDuration,
       animationSequence,
       className,
-      dropUp,
       dropRight,
       isOpen,
       items,
     } = this.props
 
+    const shouldDropUp = this.shouldDropUp()
+
     const componentClassName = classNames(
       'c-DropdownV2MenuContainer',
-      dropUp && 'is-dropUp',
+      shouldDropUp && 'is-dropUp',
       !dropRight && 'is-dropLeft',
       className
     )
@@ -185,8 +201,10 @@ export class MenuContainer extends React.Component<Props> {
         innerRef={this.setNodeRef}
       >
         <Animate
-          sequence={dropUp ? 'fade up' : animationSequence}
+          sequence={shouldDropUp ? 'fade up' : animationSequence}
           in={isOpen}
+          mountOnEnter={false}
+          unmountOnExit={false}
           duration={animationDuration}
           timeout={animationDuration / 2}
         >
