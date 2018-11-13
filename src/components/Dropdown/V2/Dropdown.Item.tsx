@@ -24,6 +24,7 @@ export interface Props {
   className?: string
   dropRight: boolean
   dropUp: boolean
+  id?: string
   index: string
   innerRef: (node: HTMLElement) => void
   items: Array<any>
@@ -75,12 +76,31 @@ export class Item extends React.PureComponent<Props> {
 
   handleOnClick = (event: Event) => {
     event.stopPropagation()
+    if (this.hasSubMenu()) return
     this.props.onSelect(event)
   }
 
   setEventTargetAsActive = (event: Event) => {
     const node = event.currentTarget as HTMLElement
     this.props.setActiveItem(node)
+  }
+
+  getActionId = (): string => {
+    const { id } = this.props
+
+    return pathResolve(id, 'action')
+  }
+
+  getSubMenuId = (): string => {
+    const { id } = this.props
+
+    return pathResolve(id, 'sub-menu')
+  }
+
+  hasSubMenu = (): boolean => {
+    const { items } = this.props
+
+    return !!(items && items.length)
   }
 
   isHover = (): boolean => {
@@ -91,6 +111,11 @@ export class Item extends React.PureComponent<Props> {
   isOpen = (): boolean => {
     const { activeIndex, index } = this.props
     return this.isHover() && index.length < activeIndex.length
+  }
+
+  isSelected = () => {
+    const { activeIndex, index } = this.props
+    return activeIndex === index
   }
 
   renderMenu = () => {
@@ -115,14 +140,19 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   getItemProps = () => {
-    const { index, value } = this.props
+    const { className, id, index, value } = this.props
 
     return {
       className: classNames(
+        'c-DropdownV2Item',
+        className,
         this.isHover() && 'is-hover',
-        this.isOpen() && 'is-open',
-        'c-DropdownV2Item'
+        this.isOpen() && 'is-open'
       ),
+      'aria-selected': this.isSelected(),
+      'aria-haspopup': this.hasSubMenu(),
+      'aria-expanded': this.isHover(),
+      id,
       onClick: this.handleOnClick,
       onMouseEnter: this.handleOnMouseEnter,
       onFocus: this.handleOnFocus,
@@ -143,19 +173,18 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  hasSubMenu = (): boolean => {
-    const { items } = this.props
-
-    return !!(items && items.length)
-  }
-
   renderSubMenu = () => {
     const { index: path, items } = this.props
 
     return (
       this.hasSubMenu() && (
         <WrapperUI {...this.getWrapperProps()}>
-          <Menu innerRef={this.setMenuNodeRef} isSubMenu>
+          <Menu
+            aria-labelledby={this.getActionId()}
+            innerRef={this.setMenuNodeRef}
+            isSubMenu
+            id={this.getSubMenuId()}
+          >
             {items.map((item, index) => (
               <ConnectedItem
                 key={item.id}
@@ -190,6 +219,7 @@ export class Item extends React.PureComponent<Props> {
     return (
       <ItemUI {...this.getItemProps()}>
         <ActionUI
+          id={this.getActionId()}
           innerRef={this.setActionNodeRef}
           className={classNames(
             this.hasSubMenu() && 'has-subMenu',
@@ -209,12 +239,13 @@ export class Item extends React.PureComponent<Props> {
 
 const ConnectedItem: any = connect(
   // mapStateToProps
-  (state: any) => {
-    const { activeIndex, dropUp, direction } = state
+  (state: any, ownProps: any) => {
+    const { activeIndex, dropUp, direction, id } = state
     return {
       activeIndex,
       dropUp,
       dropRight: direction === 'right',
+      id: pathResolve(id, ownProps.index),
     }
   },
   // mapDispatchToProps

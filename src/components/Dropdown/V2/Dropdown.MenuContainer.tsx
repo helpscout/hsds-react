@@ -21,14 +21,17 @@ export interface Props {
   animationDuration: number
   animationSequence: string
   activeIndex: string
+  activeId?: string
   className?: string
   closeDropdown: () => void
   dropUp: boolean
   dropRight: boolean
+  id: string
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
   setActiveItem: (node: HTMLElement) => void
+  triggerId?: string
 }
 
 export class MenuContainer extends React.Component<Props> {
@@ -53,11 +56,6 @@ export class MenuContainer extends React.Component<Props> {
   }
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleOnKeyDown)
-  }
-
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.isOpen !== this.props.isOpen) return true
-    return false
   }
 
   handleOnKeyDown = event => {
@@ -180,10 +178,13 @@ export class MenuContainer extends React.Component<Props> {
     const {
       animationDuration,
       animationSequence,
+      activeId,
       className,
       dropRight,
       isOpen,
       items,
+      id,
+      triggerId,
     } = this.props
 
     const shouldDropUp = this.shouldDropUp()
@@ -208,7 +209,11 @@ export class MenuContainer extends React.Component<Props> {
           duration={animationDuration}
           timeout={animationDuration / 2}
         >
-          <Menu>
+          <Menu
+            aria-activedescendant={activeId}
+            aria-labelledby={triggerId}
+            id={id}
+          >
             {items.map((item, index) => (
               <Item key={item.id} {...item} index={pathResolve(index)}>
                 {item.label}
@@ -224,14 +229,27 @@ export class MenuContainer extends React.Component<Props> {
 const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { activeItem, activeIndex, direction, dropUp, isOpen, items } = state
+    const {
+      activeItem,
+      activeIndex,
+      activeId,
+      direction,
+      dropUp,
+      isOpen,
+      items,
+      menuId,
+      triggerId,
+    } = state
     return {
       activeItem,
       activeIndex,
+      activeId,
       dropUp,
       dropRight: direction === 'right',
       isOpen,
       items,
+      id: menuId,
+      triggerId,
     }
   },
   // mapDispatchToProps

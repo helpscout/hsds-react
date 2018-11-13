@@ -4,16 +4,19 @@ import store, { initialState } from './Dropdown.store'
 import MenuContainer from './Dropdown.MenuContainer'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
+import { pathResolve } from './Dropdown.utils'
 import Trigger from './Dropdown.Trigger'
 import Keys from '../../../constants/Keys'
 import { DropdownUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
+import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
   activeItem?: HTMLElement | null
   activeIndex?: string
   className?: string
+  id?: string
   onBlur: (event: Event) => void
   onFocus: (event: Event) => void
   onOpen: () => void
@@ -24,11 +27,18 @@ export interface Props {
   direction: 'left' | 'right'
   dropUp: boolean
   onSelect: (item: Object, props: Object) => void
+  menuId?: string
   renderTrigger?: any
   trigger: any
 }
 
-class Dropdown extends React.PureComponent<Props> {
+export interface State {
+  id: string
+}
+
+const uniqueID = createUniqueIDFactory('hsds-dropdown-v2-')
+
+class Dropdown extends React.PureComponent<Props, State> {
   static defaultProps = {
     ...initialState,
     onBlur: noop,
@@ -49,6 +59,7 @@ class Dropdown extends React.PureComponent<Props> {
   triggerNode: HTMLElement
 
   componentWillMount() {
+    this.setIdToStore()
     this.rehydrateStore()
   }
 
@@ -66,6 +77,16 @@ class Dropdown extends React.PureComponent<Props> {
   componentWillUnmount() {
     document.removeEventListener('click', this.handleOnBodyClick)
     document.removeEventListener('keydown', this.handleOnKeyDown)
+  }
+
+  setIdToStore = () => {
+    const id = this.props.id || uniqueID()
+
+    store.setState({
+      id,
+      menuId: pathResolve(id, 'menu'),
+      triggerId: pathResolve(id, 'trigger'),
+    })
   }
 
   handleOnKeyDown = (event: KeyboardEvent) => {
@@ -132,12 +153,16 @@ class Dropdown extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className } = this.props
+    const { className, id } = this.props
     const componentClassName = classNames(className, 'c-DropdownV2')
 
     return (
       <Provider store={store}>
-        <DropdownUI className={componentClassName} innerRef={this.setNodeRef}>
+        <DropdownUI
+          className={componentClassName}
+          innerRef={this.setNodeRef}
+          id={id}
+        >
           {this.renderTrigger()}
           <MenuContainer />
         </DropdownUI>

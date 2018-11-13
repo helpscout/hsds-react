@@ -16,6 +16,7 @@ export interface Props {
   className?: string
   closeDropdown: () => void
   innerRef: (node: HTMLElement) => void
+  id?: string
   isOpen: boolean
   onBlur: (event: Event) => void
   onFocus: (event: Event) => void
@@ -102,6 +103,8 @@ export class Trigger extends React.PureComponent<Props> {
     return (
       <TriggerUI
         {...rest}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
         className={componentClassName}
         innerRef={this.setNodeRef}
         onBlur={onBlur}
@@ -116,8 +119,8 @@ export class Trigger extends React.PureComponent<Props> {
 const ConnectedTrigger: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { isOpen } = state
-    return { isOpen }
+    const { isOpen, triggerId } = state
+    return { isOpen, id: triggerId }
   },
   // mapDispatchToProps
   {

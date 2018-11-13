@@ -5,6 +5,7 @@ import { noop } from '../../../utilities/other'
 
 export interface Props {
   className?: string
+  id?: string
   innerRef: (node: HTMLElement) => void
   isSubMenu: boolean
   maxHeight: number

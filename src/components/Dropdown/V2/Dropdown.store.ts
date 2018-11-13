@@ -4,7 +4,11 @@ import { noop } from '../../../utilities/other'
 export interface DropdownState {
   activeItem?: HTMLElement | null
   activeIndex?: string
+  activeId?: string
   closeOnSelect: boolean
+  id?: string
+  menuId?: string
+  triggerId?: string
   isOpen: boolean
   items: Array<any>
   direction: 'left' | 'right'
