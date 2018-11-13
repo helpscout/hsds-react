@@ -89,18 +89,18 @@ export const itemOnFocus = (state, event: Event) => {
   return setEventTargetAsActive(state, event)
 }
 
-export const itemOnClick = (state, event: Event) => {
+export const itemOnClick = (state, event: Event, props: any = {}) => {
+  const { hasSubMenu } = props
   if (event) {
     event.stopPropagation()
   }
 
-  // FIX THIS
-  // if (this.hasSubMenu()) return
+  if (hasSubMenu) return
 
   return onSelect(state, event)
 }
 
-export const setEventTargetAsActive = (state, event) => {
+export const setEventTargetAsActive = (state, event: Event) => {
   const node = event.currentTarget as HTMLElement
   if (node) {
     return setActiveItem(state, node)

@@ -120,6 +120,7 @@ const ConnectedTrigger: any = connect(
   // mapStateToProps
   (state: any) => {
     const { isOpen, triggerId } = state
+
     return { isOpen, id: triggerId }
   },
   // mapDispatchToProps

@@ -1,5 +1,6 @@
 import { ItemIndex } from './Dropdown.types'
 import { classNames } from '../../../utilities/classNames'
+import { isObject, isDefined, isString } from '../../../utilities/is'
 
 export const selectors = {
   actionAttribute: 'data-hsds-menu-action',
@@ -81,6 +82,32 @@ export const decrementPathIndex = (
   return [...paths, nextIndex].join('.')
 }
 
+export const isItemActiveFromSelected = (selectedItem, item) => {
+  if (isObject(item) && isObject(selectedItem)) {
+    const { id, value } = selectedItem
+
+    if (isDefined(value) && isDefined(item.value)) {
+      return value === item.value
+    }
+
+    if (isDefined(id) && isDefined(item.id)) {
+      return id === item.id
+    }
+  }
+
+  if (isString(selectedItem) && isObject(item)) {
+    if (isDefined(item.value)) {
+      return selectedItem === item.value
+    }
+
+    if (isDefined(item.id)) {
+      return selectedItem === item.id
+    }
+  }
+
+  return selectedItem === item
+}
+
 export const setMenuPositionStyles = (props: {
   dropRight: boolean
   dropUp: boolean
@@ -147,14 +174,6 @@ export const setMenuPositionStyles = (props: {
   wrapperNode.style.transform = `translateY(-${translateY}px)`
 }
 
-export const applyActionWithState = state => action => {
-  return (...fnArgs) => {
-    let args = [state, ...fnArgs]
-
-    return action.apply(null, args)
-  }
-}
-
 export const enhanceItemsWithProps = (items: Array<any>, props: Object) => {
   return items.map(item => {
     return {
@@ -197,6 +216,10 @@ export const itemIsSelected = (state: any, index: ItemIndex) => {
   return activeIndex === index
 }
 
+export const itemIsActive = (state: any, item: any) => {
+  return isItemActiveFromSelected(state.selectedItem, item)
+}
+
 export const getItemProps = (state: any, itemProps: any): Object => {
   if (!state) return itemProps
 
@@ -206,6 +229,7 @@ export const getItemProps = (state: any, itemProps: any): Object => {
   const isHover = itemIsHover(state, index)
   const isOpen = itemIsOpen(state, index)
   const isSelected = itemIsSelected(state, index)
+  const isActive = itemIsActive(state, itemProps)
 
   return {
     ...rest,
@@ -214,6 +238,7 @@ export const getItemProps = (state: any, itemProps: any): Object => {
       hasSubMenu && 'has-subMenu',
       isHover && 'is-hover',
       isOpen && 'is-open',
+      isActive && 'is-active',
       className
     ),
     'aria-selected': isSelected,

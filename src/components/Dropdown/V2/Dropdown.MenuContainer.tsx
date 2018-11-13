@@ -7,19 +7,11 @@ import {
   selectors,
   decrementPathIndex,
   incrementPathIndex,
+  isDropRight,
   getParentPath,
   getNextChildPath,
-  // pathResolve,
-  enhanceItemsWithProps,
-  getEnhancedItemsWithProps,
 } from './Dropdown.utils'
-import {
-  closeDropdown,
-  setActiveItem,
-  itemOnMouseEnter,
-  itemOnFocus,
-  itemOnClick,
-} from './Dropdown.actions'
+import { closeDropdown, setActiveItem } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
@@ -67,7 +59,7 @@ export class MenuContainer extends React.Component<Props> {
     document.removeEventListener('keydown', this.handleOnKeyDown)
   }
 
-  handleOnKeyDown = event => {
+  handleOnKeyDown = (event: KeyboardEvent) => {
     const { dropRight, isOpen } = this.props
     const amount = 1
 
@@ -185,17 +177,6 @@ export class MenuContainer extends React.Component<Props> {
     this.props.innerRef(node)
   }
 
-  getEnhancedItems = () => {
-    // @ts-ignore
-    const { test, itemOnMouseEnter, itemOnFocus, itemOnClick } = this.props
-
-    return enhanceItemsWithProps(test, {
-      onClick: itemOnClick,
-      onFocus: itemOnFocus,
-      onMouseEnter: itemOnMouseEnter,
-    })
-  }
-
   render() {
     const {
       animationDuration,
@@ -204,7 +185,7 @@ export class MenuContainer extends React.Component<Props> {
       className,
       dropRight,
       isOpen,
-      // items,
+      items,
       id,
       triggerId,
     } = this.props
@@ -217,9 +198,6 @@ export class MenuContainer extends React.Component<Props> {
       !dropRight && 'is-dropLeft',
       className
     )
-
-    // @ts-ignore
-    const enhancedItems = this.getEnhancedItems()
 
     return (
       <MenuContainerUI
@@ -239,7 +217,7 @@ export class MenuContainer extends React.Component<Props> {
             aria-labelledby={triggerId}
             id={id}
           >
-            {enhancedItems.map((item, index) => (
+            {items.map((item, index) => (
               <Item key={getComponentKey(item, index)} {...item}>
                 {item.label}
               </Item>
@@ -254,27 +232,14 @@ export class MenuContainer extends React.Component<Props> {
 const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
-    const {
-      activeItem,
-      activeIndex,
-      activeId,
-      direction,
-      dropUp,
-      isOpen,
-      items,
-      menuId,
-      triggerId,
-    } = state
+    const { activeIndex, activeId, dropUp, isOpen, menuId, triggerId } = state
 
     return {
-      activeItem,
       activeIndex,
       activeId,
       dropUp,
-      dropRight: direction === 'right',
+      dropRight: isDropRight(state),
       isOpen,
-      items,
-      test: getEnhancedItemsWithProps(state),
       id: menuId,
       triggerId,
     }
@@ -282,9 +247,6 @@ const ConnectedMenuContainer: any = connect(
   // mapDispatchToProps
   {
     closeDropdown,
-    itemOnMouseEnter,
-    itemOnFocus,
-    itemOnClick,
     setActiveItem,
   }
 )(

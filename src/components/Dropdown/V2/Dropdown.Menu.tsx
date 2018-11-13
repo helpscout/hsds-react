@@ -28,7 +28,7 @@ export class Menu extends React.PureComponent<Props> {
     zIndex: 1015,
   }
 
-  getStyles = () => {
+  getStyles = (): Object => {
     const {
       minWidth,
       minHeight,

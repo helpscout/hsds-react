@@ -1,21 +1,25 @@
 import * as React from 'react'
-import { Provider } from 'unistore/react'
-import store, { initialState } from './Dropdown.store'
+import { connect } from 'unistore/react'
+import {
+  itemOnMouseEnter,
+  itemOnFocus,
+  itemOnClick,
+  closeDropdown,
+} from './Dropdown.actions'
+import {
+  enhanceItemsWithProps,
+  getEnhancedItemsWithProps,
+} from './Dropdown.utils'
 import MenuContainer from './Dropdown.MenuContainer'
-import Menu from './Dropdown.Menu'
-import Item from './Dropdown.Item'
-import { pathResolve } from './Dropdown.utils'
 import Trigger from './Dropdown.Trigger'
-import Keys from '../../../constants/Keys'
 import { DropdownUI } from './Dropdown.css.js'
+import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
-import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
-  activeItem?: HTMLElement | null
-  activeIndex?: string
   className?: string
+  closeDropdown: () => void
   id?: string
   onBlur: (event: Event) => void
   onFocus: (event: Event) => void
@@ -24,47 +28,51 @@ export interface Props {
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
+  itemOnMouseEnter: (event: Event) => void
+  itemOnFocus: (event: Event) => void
+  itemOnClick: (event: Event) => void
   direction: 'left' | 'right'
   dropUp: boolean
   onSelect: (item: Object, props: Object) => void
   menuId?: string
   renderItems?: any
   renderTrigger?: any
-  subscribe: (state: Object) => void
   trigger: any
+  triggerRef: (node: HTMLElement) => void
 }
 
 export interface State {
-  id: string
+  items: Array<any>
 }
 
-const uniqueID = createUniqueIDFactory('hsds-dropdown-v2-')
-
-class Dropdown extends React.PureComponent<Props, State> {
+export class Dropdown extends React.PureComponent<Props, State> {
   static defaultProps = {
-    ...initialState,
+    direction: 'right',
+    dropUp: false,
+    innerRef: noop,
+    isOpen: false,
+    itemOnClick: noop,
+    itemOnFocus: noop,
+    itemOnMouseEnter: noop,
+    items: [],
     onBlur: noop,
-    onOpen: noop,
     onClose: noop,
     onFocus: noop,
-    isOpen: false,
-    innerRef: noop,
+    onOpen: noop,
     onSelect: noop,
     subscribe: noop,
     trigger: 'Dropdown',
+    triggerRef: noop,
   }
-  static Menu = Menu
-  static Item = Item
-  static Trigger = Trigger
-  static store = store
 
   node: HTMLElement
   triggerNode: HTMLElement
 
-  componentWillMount() {
-    store.subscribe(this.props.subscribe)
-    this.setIdToStore()
-    this.rehydrateStore()
+  constructor(props) {
+    super(props)
+    this.state = {
+      items: this.getEnhancedItemsFromProps(props),
+    }
   }
 
   componentDidMount() {
@@ -72,26 +80,17 @@ class Dropdown extends React.PureComponent<Props, State> {
     document.addEventListener('keydown', this.handleOnKeyDown)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.items !== this.props.items) {
-      this.rehydrateStore()
-    }
-  }
-
   componentWillUnmount() {
     document.removeEventListener('click', this.handleOnBodyClick)
     document.removeEventListener('keydown', this.handleOnKeyDown)
-    store.unsubscribe(this.props.subscribe)
   }
 
-  setIdToStore = () => {
-    const id = this.props.id || uniqueID()
-
-    store.setState({
-      id,
-      menuId: pathResolve(id, 'menu'),
-      triggerId: pathResolve(id, 'trigger'),
-    })
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.items !== this.props.items) {
+      this.setState({
+        items: this.getEnhancedItemsFromProps(nextProps),
+      })
+    }
   }
 
   handleOnKeyDown = (event: KeyboardEvent) => {
@@ -113,21 +112,25 @@ class Dropdown extends React.PureComponent<Props, State> {
   }
 
   closeMenu = () => {
-    store.setState({
-      isOpen: false,
-    })
+    if (!this.props.isOpen) return
+    this.props.closeDropdown()
     this.props.onClose()
   }
 
   focusTriggerNode = () => {
-    if (this.triggerNode && store.getState().isOpen) {
+    if (this.triggerNode && this.props.isOpen) {
       this.triggerNode.focus()
     }
   }
 
-  rehydrateStore = () => {
-    // @ts-ignore
-    store.setState(this.props)
+  getEnhancedItemsFromProps = (props: Props = this.props) => {
+    const { items, itemOnMouseEnter, itemOnFocus, itemOnClick } = props
+
+    return enhanceItemsWithProps(items, {
+      onClick: itemOnClick,
+      onFocus: itemOnFocus,
+      onMouseEnter: itemOnMouseEnter,
+    })
   }
 
   getTriggerProps = () => {
@@ -140,15 +143,6 @@ class Dropdown extends React.PureComponent<Props, State> {
     }
   }
 
-  setNodeRef = (node: HTMLElement) => {
-    this.node = node
-    this.props.innerRef(node)
-  }
-
-  setTriggerNodeRef = (node: HTMLElement) => {
-    this.triggerNode = node
-  }
-
   renderTrigger = () => {
     const { trigger, renderTrigger } = this.props
 
@@ -157,23 +151,55 @@ class Dropdown extends React.PureComponent<Props, State> {
     )
   }
 
+  setNodeRef = (node: HTMLElement) => {
+    this.node = node
+    this.props.innerRef(node)
+  }
+
+  setTriggerNodeRef = (node: HTMLElement) => {
+    this.triggerNode = node
+    this.props.triggerRef(node)
+  }
+
   render() {
     const { className, id } = this.props
     const componentClassName = classNames(className, 'c-DropdownV2')
 
+    const { items } = this.state
+
     return (
-      <Provider store={store}>
-        <DropdownUI
-          className={componentClassName}
-          innerRef={this.setNodeRef}
-          id={id}
-        >
-          {this.renderTrigger()}
-          <MenuContainer />
-        </DropdownUI>
-      </Provider>
+      <DropdownUI
+        className={componentClassName}
+        innerRef={this.setNodeRef}
+        id={id}
+      >
+        {this.renderTrigger()}
+        <MenuContainer items={items} />
+      </DropdownUI>
     )
   }
 }
 
-export default Dropdown
+const ConnectedDropdown: any = connect(
+  // mapStateToProps
+  (state: any) => {
+    const { id, isOpen } = state
+    return {
+      id,
+      isOpen,
+      items: getEnhancedItemsWithProps(state),
+    }
+  },
+  // mapDispatchToProps
+  {
+    closeDropdown,
+    itemOnMouseEnter,
+    itemOnFocus,
+    itemOnClick,
+  }
+)(
+  // @ts-ignore
+  Dropdown
+)
+
+export default ConnectedDropdown

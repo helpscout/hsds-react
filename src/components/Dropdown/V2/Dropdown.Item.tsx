@@ -25,7 +25,7 @@ export interface Props {
   innerRef: (node: HTMLElement) => void
   items: Array<any>
   onMouseEnter: (event: Event) => void
-  onClick: (event: Event) => void
+  onClick: (event: Event, props: any) => void
   onFocus: (event: Event) => void
   onSelect: (event: Event) => void
   setActiveItem: (node: HTMLElement) => void
@@ -63,6 +63,12 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
+  handleOnClick = (event: Event) => {
+    const { onClick } = this.props
+
+    onClick(event, { hasSubMenu: this.hasSubMenu() })
+  }
+
   hasSubMenu = (): boolean => {
     const { items } = this.props
 
@@ -81,14 +87,6 @@ export class Item extends React.PureComponent<Props> {
       triggerNode: this.actionNode,
     })
   }
-
-  setNodeRef = node => {
-    this.node = node
-    this.props.innerRef(node)
-  }
-  setActionNodeRef = node => (this.actionNode = node)
-  setWrapperNodeRef = node => (this.wrapperNode = node)
-  setMenuNodeRef = node => (this.menuNode = node)
 
   getWrapperProps = () => {
     const { index, value } = this.props
@@ -138,6 +136,14 @@ export class Item extends React.PureComponent<Props> {
       )
     )
   }
+
+  setNodeRef = node => {
+    this.node = node
+    this.props.innerRef(node)
+  }
+  setActionNodeRef = node => (this.actionNode = node)
+  setWrapperNodeRef = node => (this.wrapperNode = node)
+  setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
     const { actionId } = this.props
