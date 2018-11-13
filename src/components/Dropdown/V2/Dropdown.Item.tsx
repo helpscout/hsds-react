@@ -149,7 +149,11 @@ export class Item extends React.PureComponent<Props> {
     const { actionId } = this.props
 
     return (
-      <ItemUI {...this.props} innerRef={this.setNodeRef}>
+      <ItemUI
+        {...this.props}
+        onClick={this.handleOnClick}
+        innerRef={this.setNodeRef}
+      >
         <ActionUI
           id={actionId}
           innerRef={this.setActionNodeRef}
