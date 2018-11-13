@@ -1,3 +1,4 @@
+import store from './Dropdown.store'
 import { selectors, getItemFromCollection, pathResolve } from './Dropdown.utils'
 
 const initialItemState = {
@@ -6,6 +7,8 @@ const initialItemState = {
   activeValue: null,
   activeId: null,
 }
+
+export const getState = () => store.getState()
 
 export const setActiveItem = (state, activeItem) => {
   const activeIndex = activeItem
@@ -71,5 +74,35 @@ export const onSelect = (state, event) => {
     return closeDropdown(state)
   } else {
     return state
+  }
+}
+
+export const itemOnMouseEnter = (state, event: MouseEvent) => {
+  return setEventTargetAsActive(state, event)
+}
+
+export const itemOnFocus = (state, event: Event) => {
+  if (event) {
+    event.stopPropagation()
+  }
+
+  return setEventTargetAsActive(state, event)
+}
+
+export const itemOnClick = (state, event: Event) => {
+  if (event) {
+    event.stopPropagation()
+  }
+
+  // FIX THIS
+  // if (this.hasSubMenu()) return
+
+  return onSelect(state, event)
+}
+
+export const setEventTargetAsActive = (state, event) => {
+  const node = event.currentTarget as HTMLElement
+  if (node) {
+    return setActiveItem(state, node)
   }
 }

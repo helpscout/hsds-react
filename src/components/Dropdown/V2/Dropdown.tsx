@@ -28,7 +28,9 @@ export interface Props {
   dropUp: boolean
   onSelect: (item: Object, props: Object) => void
   menuId?: string
+  renderItems?: any
   renderTrigger?: any
+  subscribe: (state: Object) => void
   trigger: any
 }
 
@@ -48,6 +50,7 @@ class Dropdown extends React.PureComponent<Props, State> {
     isOpen: false,
     innerRef: noop,
     onSelect: noop,
+    subscribe: noop,
     trigger: 'Dropdown',
   }
   static Menu = Menu
@@ -59,6 +62,7 @@ class Dropdown extends React.PureComponent<Props, State> {
   triggerNode: HTMLElement
 
   componentWillMount() {
+    store.subscribe(this.props.subscribe)
     this.setIdToStore()
     this.rehydrateStore()
   }
@@ -77,6 +81,7 @@ class Dropdown extends React.PureComponent<Props, State> {
   componentWillUnmount() {
     document.removeEventListener('click', this.handleOnBodyClick)
     document.removeEventListener('keydown', this.handleOnKeyDown)
+    store.unsubscribe(this.props.subscribe)
   }
 
   setIdToStore = () => {

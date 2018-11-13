@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { connect } from 'unistore/react'
 import Flexy from '../../Flexy'
 import Icon from '../../Icon'
 import Menu from './Dropdown.Menu'
@@ -9,27 +8,28 @@ import {
   WrapperUI,
   SubMenuIncidatorUI,
 } from './Dropdown.css.js'
-import {
-  selectors,
-  isPathActive,
-  pathResolve,
-  setMenuPositionStyles,
-} from './Dropdown.utils'
-import { setActiveItem, onSelect } from './Dropdown.actions'
+import { selectors, setMenuPositionStyles } from './Dropdown.utils'
 import { classNames } from '../../../utilities/classNames'
+import { getComponentKey } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
   activeIndex: string
+  actionId?: string
   className?: string
   dropRight: boolean
   dropUp: boolean
+  getState: () => void
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
   items: Array<any>
+  onMouseEnter: (event: Event) => void
+  onClick: (event: Event) => void
+  onFocus: (event: Event) => void
   onSelect: (event: Event) => void
   setActiveItem: (node: HTMLElement) => void
+  subMenuId?: string
   label: string
   value: string
 }
@@ -37,11 +37,15 @@ export interface Props {
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
     activeIndex: '0',
+    getState: noop,
     index: '0',
     innerRef: noop,
     items: undefined,
     dropRight: true,
     dropUp: false,
+    onMouseEnter: noop,
+    onClick: noop,
+    onFocus: noop,
     onSelect: noop,
     setActiveItem: noop,
     label: '',
@@ -59,63 +63,10 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    if (nextProps.activeIndex !== this.props.activeIndex) {
-      this.renderMenu()
-    }
-  }
-
-  handleOnMouseEnter = (event: MouseEvent) => {
-    this.setEventTargetAsActive(event)
-  }
-
-  handleOnFocus = (event: Event) => {
-    event.stopPropagation()
-    this.setEventTargetAsActive(event)
-  }
-
-  handleOnClick = (event: Event) => {
-    event.stopPropagation()
-    if (this.hasSubMenu()) return
-    this.props.onSelect(event)
-  }
-
-  setEventTargetAsActive = (event: Event) => {
-    const node = event.currentTarget as HTMLElement
-    this.props.setActiveItem(node)
-  }
-
-  getActionId = (): string => {
-    const { id } = this.props
-
-    return pathResolve(id, 'action')
-  }
-
-  getSubMenuId = (): string => {
-    const { id } = this.props
-
-    return pathResolve(id, 'sub-menu')
-  }
-
   hasSubMenu = (): boolean => {
     const { items } = this.props
 
     return !!(items && items.length)
-  }
-
-  isHover = (): boolean => {
-    const { activeIndex, index } = this.props
-    return isPathActive(activeIndex, index)
-  }
-
-  isOpen = (): boolean => {
-    const { activeIndex, index } = this.props
-    return this.isHover() && index.length < activeIndex.length
-  }
-
-  isSelected = () => {
-    const { activeIndex, index } = this.props
-    return activeIndex === index
   }
 
   renderMenu = () => {
@@ -139,29 +90,6 @@ export class Item extends React.PureComponent<Props> {
   setWrapperNodeRef = node => (this.wrapperNode = node)
   setMenuNodeRef = node => (this.menuNode = node)
 
-  getItemProps = () => {
-    const { className, id, index, value } = this.props
-
-    return {
-      className: classNames(
-        'c-DropdownV2Item',
-        className,
-        this.isHover() && 'is-hover',
-        this.isOpen() && 'is-open'
-      ),
-      'aria-selected': this.isSelected(),
-      'aria-haspopup': this.hasSubMenu(),
-      'aria-expanded': this.isHover(),
-      id,
-      onClick: this.handleOnClick,
-      onMouseEnter: this.handleOnMouseEnter,
-      onFocus: this.handleOnFocus,
-      innerRef: this.setNodeRef,
-      [selectors.indexAttribute]: index,
-      [selectors.valueAttribute]: value,
-    }
-  }
-
   getWrapperProps = () => {
     const { index, value } = this.props
 
@@ -174,25 +102,21 @@ export class Item extends React.PureComponent<Props> {
   }
 
   renderSubMenu = () => {
-    const { index: path, items } = this.props
+    const { actionId, items, subMenuId } = this.props
 
     return (
       this.hasSubMenu() && (
         <WrapperUI {...this.getWrapperProps()}>
           <Menu
-            aria-labelledby={this.getActionId()}
+            aria-labelledby={actionId}
             innerRef={this.setMenuNodeRef}
             isSubMenu
-            id={this.getSubMenuId()}
+            id={subMenuId}
           >
             {items.map((item, index) => (
-              <ConnectedItem
-                key={item.id}
-                {...item}
-                index={pathResolve(path, index)}
-              >
+              <Item key={getComponentKey(item, index)} {...item}>
                 {item.label}
-              </ConnectedItem>
+              </Item>
             ))}
           </Menu>
         </WrapperUI>
@@ -216,10 +140,12 @@ export class Item extends React.PureComponent<Props> {
   }
 
   render() {
+    const { actionId } = this.props
+
     return (
-      <ItemUI {...this.getItemProps()}>
+      <ItemUI {...this.props} innerRef={this.setNodeRef}>
         <ActionUI
-          id={this.getActionId()}
+          id={actionId}
           innerRef={this.setActionNodeRef}
           className={classNames(
             this.hasSubMenu() && 'has-subMenu',
@@ -237,22 +163,4 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-const ConnectedItem: any = connect(
-  // mapStateToProps
-  (state: any, ownProps: any) => {
-    const { activeIndex, dropUp, direction, id } = state
-    return {
-      activeIndex,
-      dropUp,
-      dropRight: direction === 'right',
-      id: pathResolve(id, ownProps.index),
-    }
-  },
-  // mapDispatchToProps
-  { setActiveItem, onSelect }
-)(
-  // @ts-ignore
-  Item
-)
-
-export default ConnectedItem
+export default Item

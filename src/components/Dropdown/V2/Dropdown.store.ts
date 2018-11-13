@@ -16,6 +16,8 @@ export interface DropdownState {
   onOpen: () => void
   onClose: () => void
   onSelect: (item: Object, props: Object) => void
+  renderItems?: any
+  renderTrigger?: any
 }
 
 export const initialState: DropdownState = {

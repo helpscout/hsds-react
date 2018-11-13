@@ -41,6 +41,13 @@ stories.add('Menu/Callbacks', () => {
   return <Dropdown {...{ items, onOpen, onClose, onSelect }} />
 })
 
+stories.add('Menu/Subscribe', () => {
+  const items = ItemSpec.generate(8)
+  const subscribe = state => console.log(state)
+
+  return <Dropdown {...{ items, subscribe }} />
+})
+
 stories.add('Menu/Nested', () => {
   const items = [
     {

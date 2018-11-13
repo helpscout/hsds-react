@@ -1,3 +1,6 @@
+import { ItemIndex } from './Dropdown.types'
+import { classNames } from '../../../utilities/classNames'
+
 export const selectors = {
   actionAttribute: 'data-hsds-menu-action',
   itemAttribute: 'data-hsds-menu-item',
@@ -7,7 +10,8 @@ export const selectors = {
   valueAttribute: 'data-hsds-menu-item-value',
 }
 
-export const pathResolve = (path: any = '', subPath?: any): string => {
+export const pathResolve = (path?: any, subPath?: any): string => {
+  if (!path) return `${subPath}`
   if (subPath !== undefined) {
     return `${path}.${subPath}`
   }
@@ -141,4 +145,113 @@ export const setMenuPositionStyles = (props: {
   }
 
   wrapperNode.style.transform = `translateY(-${translateY}px)`
+}
+
+export const applyActionWithState = state => action => {
+  return (...fnArgs) => {
+    let args = [state, ...fnArgs]
+
+    return action.apply(null, args)
+  }
+}
+
+export const enhanceItemsWithProps = (items: Array<any>, props: Object) => {
+  return items.map(item => {
+    return {
+      ...item,
+      ...props,
+      items: item.items ? enhanceItemsWithProps(item.items, props) : undefined,
+    }
+  })
+}
+
+/**
+ * Selectors
+ */
+
+export const isDropRight = (state: any): boolean => state.direction === 'right'
+
+export const itemHasSubMenu = (itemProps: any): boolean => {
+  const { items } = itemProps
+
+  return !!(items && items.length)
+}
+
+export const itemIsHover = (state: any, index: ItemIndex): boolean => {
+  const { activeIndex } = state
+  if (!activeIndex) return false
+
+  return isPathActive(activeIndex, index)
+}
+
+export const itemIsOpen = (state: any, index: ItemIndex): boolean => {
+  const { activeIndex } = state
+  if (!activeIndex) return false
+
+  return itemIsHover(state, index) && index.length < activeIndex.length
+}
+
+export const itemIsSelected = (state: any, index: ItemIndex) => {
+  const { activeIndex } = state
+
+  return activeIndex === index
+}
+
+export const getItemProps = (state: any, itemProps: any): Object => {
+  if (!state) return itemProps
+
+  const { className, index, value, ...rest } = itemProps
+
+  const hasSubMenu = itemHasSubMenu(itemProps)
+  const isHover = itemIsHover(state, index)
+  const isOpen = itemIsOpen(state, index)
+  const isSelected = itemIsSelected(state, index)
+
+  return {
+    ...rest,
+    className: classNames(
+      'c-DropdownV2Item',
+      hasSubMenu && 'has-subMenu',
+      isHover && 'is-hover',
+      isOpen && 'is-open',
+      className
+    ),
+    'aria-selected': isSelected,
+    'aria-haspopup': hasSubMenu,
+    'aria-expanded': isHover,
+    [selectors.indexAttribute]: index,
+    [selectors.valueAttribute]: value,
+  }
+}
+
+export const getEnhancedItemsWithProps = (
+  state: any,
+  path?: string
+): Array<any> => {
+  const { dropUp, id, items, renderItems } = state
+  const dropRight = isDropRight(state)
+
+  const enhancedItems = items.map((item, index) => {
+    const itemId = pathResolve(id, index)
+    const itemIndex = pathResolve(path, index)
+
+    const childItems = item.items
+      ? getEnhancedItemsWithProps({ ...state, items: item.items }, itemIndex)
+      : undefined
+
+    return {
+      ...item,
+      ...getItemProps(state, { ...item, index: itemIndex }),
+      actionId: pathResolve(itemId, 'action'),
+      dropUp,
+      dropRight,
+      index: itemIndex,
+      id: itemId,
+      renderItems,
+      items: childItems,
+      subMenuId: pathResolve(itemId, 'sub-menu'),
+    }
+  })
+
+  return enhancedItems
 }
