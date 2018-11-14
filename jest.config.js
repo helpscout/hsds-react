@@ -29,7 +29,7 @@ module.exports = {
   ],
   setupTestFrameworkScriptFile: '<rootDir>/config/jest/setupTests.js',
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.js?(x)',
+    '<rootDir>/src/**/__tests__/**/*.test.(js|jsx|ts|tsx)',
     '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
   ],

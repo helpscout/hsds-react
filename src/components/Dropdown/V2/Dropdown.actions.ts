@@ -11,16 +11,17 @@ const initialItemState = {
 export const getState = () => store.getState()
 
 export const setActiveItem = (state, activeItem) => {
-  const activeIndex = activeItem
-    .getAttribute(selectors.indexAttribute)
-    .toString()
+  const { id } = state
+  const activeIndex = activeItem.getAttribute(selectors.indexAttribute)
+  const activeValue = activeItem.getAttribute(selectors.valueAttribute)
+  const activeId = id ? pathResolve(id, activeIndex) : null
 
   return {
     ...state,
     activeItem,
     activeIndex,
-    activeValue: activeItem.getAttribute(selectors.valueAttribute).toString(),
-    activeId: pathResolve(state.id, activeIndex),
+    activeValue,
+    activeId,
   }
 }
 
@@ -41,7 +42,7 @@ export const toggleOpen = state => {
 
 export const openDropdown = state => {
   // Trigger callback from Provider
-  state.onOpen()
+  state.onOpen && state.onOpen()
 
   return {
     ...state,
@@ -52,7 +53,7 @@ export const openDropdown = state => {
 
 export const closeDropdown = state => {
   // Trigger callback from Provider
-  state.onClose()
+  state.onClose && state.onClose()
 
   return {
     ...state,
@@ -66,7 +67,8 @@ export const onSelect = (state, event) => {
   const item = getItemFromCollection(items, activeValue)
 
   // Trigger callback from Provider
-  if (item) {
+  /* istanbul ignore else */
+  if (item && onSelect) {
     onSelect(item.value, { event, item, dropdownType: 'hsds-dropdown-v2' })
   }
 
@@ -77,12 +79,21 @@ export const onSelect = (state, event) => {
   }
 }
 
+export const setEventTargetAsActive = (state, event: Event) => {
+  const node = event.currentTarget as HTMLElement
+  if (node) {
+    return setActiveItem(state, node)
+  }
+
+  return state
+}
+
 export const itemOnMouseEnter = (state, event: MouseEvent) => {
   return setEventTargetAsActive(state, event)
 }
 
 export const itemOnFocus = (state, event: Event) => {
-  if (event) {
+  if (event && event.stopPropagation) {
     event.stopPropagation()
   }
 
@@ -91,18 +102,11 @@ export const itemOnFocus = (state, event: Event) => {
 
 export const itemOnClick = (state, event: Event, props: any = {}) => {
   const { hasSubMenu } = props
-  if (event) {
+  if (event && event.stopPropagation) {
     event.stopPropagation()
   }
 
   if (hasSubMenu) return
 
   return onSelect(state, event)
-}
-
-export const setEventTargetAsActive = (state, event: Event) => {
-  const node = event.currentTarget as HTMLElement
-  if (node) {
-    return setActiveItem(state, node)
-  }
 }
