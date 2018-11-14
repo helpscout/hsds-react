@@ -1,4 +1,3 @@
-import store from './Dropdown.store'
 import { selectors, getItemFromCollection, pathResolve } from './Dropdown.utils'
 
 const initialItemState = {
@@ -7,8 +6,6 @@ const initialItemState = {
   activeValue: null,
   activeId: null,
 }
-
-export const getState = () => store.getState()
 
 export const setActiveItem = (state, activeItem) => {
   const { id } = state
@@ -76,6 +73,13 @@ export const onSelect = (state, event) => {
     return closeDropdown(state)
   } else {
     return state
+  }
+}
+
+export const setTriggerNode = (state, triggerNode) => {
+  return {
+    ...state,
+    triggerNode,
   }
 }
 

@@ -3,7 +3,7 @@ module.exports = {
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/?(*.)types.{js,jsx}',
     '!src/**/?(*.)helpers.{js,jsx}',
-    '!src/**/?(*.)testHelpers.{js,jsx}',
+    '!src/**/?(*.)testHelpers.{js,jsx,ts,tsx}',
     '!src/styles/tests/helpers/**/*.{js,jsx}',
     '!src/**/?(*.)css.{js,jsx}',
     '!src/index.{js,jsx}',
@@ -46,4 +46,8 @@ module.exports = {
     '^react-native$': 'react-native-web',
   },
   moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'ts', 'tsx'],
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+  ],
 }

@@ -48,6 +48,26 @@ stories.add('Menu/Subscribe', () => {
   return <Dropdown {...{ items, subscribe }} />
 })
 
+stories.add('Menu/zIndex', () => {
+  const items = ItemSpec.generate(8)
+
+  return (
+    <div>
+      <div
+        style={{
+          background: 'red',
+          padding: 20,
+          position: 'relative',
+          zIndex: '88888',
+        }}
+      >
+        z-index: 88888
+      </div>
+      <Dropdown items={items} zIndex={999999} direction="up" />
+    </div>
+  )
+})
+
 stories.add('Menu/Nested', () => {
   const items = [
     {
@@ -90,8 +110,60 @@ stories.add('Menu/Nested/UpLeft', () => {
   return <Dropdown items={items} dropUp direction="left" />
 })
 
-stories.add('Item/Default', () => {
-  return <Dropdown.Item>Item</Dropdown.Item>
+stories.add('Menu/Custom', () => {
+  const items = ItemSpec.generate(3)
+  const onSelect = value => console.log(value)
+  const CustomItem = props => {
+    return (
+      <div style={{ padding: '0px 20px', background: 'magenta' }}>
+        Custom<br />
+        <h5>{props.value}</h5>
+      </div>
+    )
+  }
+
+  const renderMenu = props => {
+    const { items } = props
+    return (
+      <div style={{ background: 'blue', padding: 20 }}>
+        <input placeholder="Input" />
+        {items.map(item => <Dropdown.Item {...item} key={item.id} />)}
+      </div>
+    )
+  }
+
+  return (
+    <Dropdown
+      items={items}
+      renderItems={CustomItem}
+      minWidth={300}
+      onSelect={onSelect}
+    >
+      {renderMenu}
+    </Dropdown>
+  )
+})
+
+stories.add('Item/Custom', () => {
+  const items = ItemSpec.generate(8)
+  const onSelect = value => console.log(value)
+  const CustomItem = props => {
+    return (
+      <div style={{ padding: '0px 20px', background: 'magenta' }}>
+        Custom<br />
+        <h2>{props.value}</h2>
+      </div>
+    )
+  }
+
+  return (
+    <Dropdown
+      items={items}
+      renderItems={CustomItem}
+      minWidth={300}
+      onSelect={onSelect}
+    />
+  )
 })
 
 stories.add('Trigger/Custom', () => {

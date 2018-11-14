@@ -131,7 +131,7 @@ export const TriggerUI = styled('a')`
   ${baseStyles};
   color: ${getColor('blue.500')};
   cursor: pointer;
-  display: block;
+  display: inline-block;
   outline: none;
 
   &.is-open {

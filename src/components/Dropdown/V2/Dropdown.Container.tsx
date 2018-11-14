@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider } from 'unistore/react'
-import store, { initialState } from './Dropdown.store'
+import createStore, { initialState } from './Dropdown.store'
 import Dropdown, { Props as DropdownProps } from './Dropdown'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
@@ -35,16 +35,25 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
   static Menu = Menu
   static Item = Item
   static Trigger = Trigger
-  static store = store
+
+  store: any
+
+  constructor(props) {
+    super(props)
+
+    const id = props.id || uniqueID()
+    const menuId = pathResolve(id, 'menu')
+    const triggerId = pathResolve(id, 'trigger')
+
+    this.store = createStore({ ...this.props, id, menuId, triggerId })
+  }
 
   componentWillMount() {
-    store.subscribe(this.props.subscribe)
-    this.setIdToStore()
-    this.rehydrateStore()
+    this.store.subscribe(this.props.subscribe)
   }
 
   componentWillUnmount() {
-    store.unsubscribe(this.props.subscribe)
+    this.store.unsubscribe(this.props.subscribe)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,24 +62,14 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     }
   }
 
-  setIdToStore = () => {
-    const id = this.props.id || uniqueID()
-
-    store.setState({
-      id,
-      menuId: pathResolve(id, 'menu'),
-      triggerId: pathResolve(id, 'trigger'),
-    })
-  }
-
   rehydrateStore = () => {
     // @ts-ignore
-    store.setState(this.props)
+    this.store.setState(this.props)
   }
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={this.store}>
         <Dropdown {...this.props} />
       </Provider>
     )

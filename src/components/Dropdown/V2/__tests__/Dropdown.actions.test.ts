@@ -1,7 +1,5 @@
 // @ts-ignore
-import store from '../Dropdown.store'
 import {
-  getState,
   setActiveItem,
   changeDirection,
   toggleOpen,
@@ -14,15 +12,6 @@ import {
   itemOnClick,
 } from '../Dropdown.actions'
 import { selectors } from '../Dropdown.utils'
-jest.mock('../Dropdown.store')
-
-describe('getState', () => {
-  test('Calls getState from the store ', () => {
-    getState()
-
-    expect(store.getState).toHaveBeenCalled()
-  })
-})
 
 describe('setActiveItem', () => {
   test('Updates the state with the activeItem DOM node', () => {

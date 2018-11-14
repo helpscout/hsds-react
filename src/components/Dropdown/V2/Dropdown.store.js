@@ -1,6 +1,6 @@
 // Should be a .ts file
 // Couldn't figure out how to make this play nicely with Jest.
-import createStore from 'unistore'
+import unistoreCreateStore from 'unistore'
 import { noop } from '../../../utilities/other'
 
 export const initialState = {
@@ -14,8 +14,9 @@ export const initialState = {
   onOpen: noop,
   onClose: noop,
   onSelect: noop,
+  zIndex: 1080,
 }
 
-const store = createStore(initialState)
+export const createStore = (props = initialState) => unistoreCreateStore(props)
 
-export default store
+export default createStore

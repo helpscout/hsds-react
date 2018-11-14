@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
 import Animate from '../../Animate'
+import Portal from '../../Portal'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
 import {
@@ -23,6 +24,7 @@ export interface Props {
   animationSequence: string
   activeIndex: string
   activeId?: string
+  children?: (props: any) => void
   className?: string
   closeDropdown: () => void
   dropUp: boolean
@@ -33,6 +35,8 @@ export interface Props {
   items: Array<any>
   setActiveItem: (node: HTMLElement) => void
   triggerId?: string
+  triggerNode?: HTMLElement
+  zIndex: number
 }
 
 export class MenuContainer extends React.Component<Props> {
@@ -47,16 +51,29 @@ export class MenuContainer extends React.Component<Props> {
     items: [],
     isOpen: true,
     setActiveItem: noop,
+    zIndex: 1080,
   }
 
   node: HTMLElement
   parentNode: HTMLElement
+  placementNode: HTMLElement
+  wrapperNode: HTMLElement
 
   componentDidMount() {
+    this.setPositionStylesOnNode()
     document.addEventListener('keydown', this.handleOnKeyDown)
+    window.addEventListener('resize', this.setPositionStylesOnNode)
   }
+
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleOnKeyDown)
+    window.removeEventListener('resize', this.setPositionStylesOnNode)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isOpen !== this.props.isOpen) {
+      this.setPositionStylesOnNode()
+    }
   }
 
   handleOnKeyDown = (event: KeyboardEvent) => {
@@ -160,16 +177,112 @@ export class MenuContainer extends React.Component<Props> {
 
   shouldDropUp = (): boolean => {
     if (this.props.dropUp) return true
-    if (!this.node || !this.parentNode) return false
+    if (!this.node || !this.wrapperNode) return false
 
-    const { top } = this.parentNode.getBoundingClientRect()
+    const { top } = this.wrapperNode.getBoundingClientRect()
     const { clientHeight: height } = this.node
 
-    return top + height > window.innerHeight
+    const hasWindowBottomOverflow = top + height > window.innerHeight
+    const hasWindowTopOverflow = top - height < 0
+
+    return hasWindowBottomOverflow && !hasWindowTopOverflow
+  }
+
+  getMenuProps = () => {
+    const { activeId, dropRight, isOpen, items, id, triggerId } = this.props
+
+    const shouldDropUp = this.shouldDropUp()
+
+    return {
+      activeId,
+      dropRight,
+      isOpen,
+      items,
+      id,
+      triggerId,
+      shouldDropUp,
+    }
+  }
+
+  renderMenu = () => {
+    const { activeId, items, id, triggerId } = this.getMenuProps()
+
+    return (
+      <Menu
+        aria-activedescendant={activeId}
+        aria-labelledby={triggerId}
+        id={id}
+      >
+        {items.map((item, index) => (
+          <Item key={getComponentKey(item, index)} {...item}>
+            {item.label}
+          </Item>
+        ))}
+      </Menu>
+    )
+  }
+
+  renderContent = () => {
+    const { children } = this.props
+
+    if (children) {
+      return children(this.getMenuProps())
+    }
+
+    return this.renderMenu()
+  }
+
+  getStylePosition = (): any => {
+    const { triggerNode } = this.props
+    const defaultProps = { top: '0', left: '0' }
+    if (!this.wrapperNode) return defaultProps
+
+    const targetNode = triggerNode || this.wrapperNode
+
+    const rect = targetNode.getBoundingClientRect()
+    const { height, top, left } = rect
+
+    return {
+      left,
+      top: top + height,
+    }
+  }
+
+  setPositionStylesOnNode = () => {
+    const { triggerNode, zIndex } = this.props
+
+    // There's some... unexplainable weirdness in the timing of
+    // getBoundingClientRect. The top is accurate pre-requestAnimationFrame.
+    // Because of this, we'll grab the top first...
+    const { top } = this.getStylePosition()
+
+    requestAnimationFrame(() => {
+      if (!this.node || !this.placementNode) return
+      // ...then get the left.
+      const { left } = this.getStylePosition()
+
+      this.placementNode.style.position = 'fixed'
+      this.placementNode.style.top = `${top}px`
+      this.placementNode.style.left = `${left}px`
+      this.placementNode.style.zIndex = `${zIndex}`
+
+      if (triggerNode) {
+        this.placementNode.style.width = `${triggerNode.clientWidth}px`
+      }
+
+      if (this.shouldDropUp()) {
+        this.node.classList.add('is-dropUp')
+        if (triggerNode) {
+          this.placementNode.style.marginTop = `-${triggerNode.clientHeight}px`
+        }
+      } else {
+        this.node.classList.remove('is-dropUp')
+      }
+    })
   }
 
   setNodeRef = node => {
-    if (!this.node) {
+    if (node) {
       this.node = node
       this.parentNode = node.parentElement
     }
@@ -177,19 +290,17 @@ export class MenuContainer extends React.Component<Props> {
     this.props.innerRef(node)
   }
 
+  setWrapperNode = node => (this.wrapperNode = node)
+  setPlacementNode = node => (this.placementNode = node)
+
   render() {
     const {
       animationDuration,
       animationSequence,
-      activeId,
       className,
       dropRight,
       isOpen,
-      items,
-      id,
-      triggerId,
     } = this.props
-
     const shouldDropUp = this.shouldDropUp()
 
     const componentClassName = classNames(
@@ -200,31 +311,29 @@ export class MenuContainer extends React.Component<Props> {
     )
 
     return (
-      <MenuContainerUI
-        className={componentClassName}
-        innerRef={this.setNodeRef}
-      >
-        <Animate
-          sequence={shouldDropUp ? 'fade up' : animationSequence}
-          in={isOpen}
-          mountOnEnter={false}
-          unmountOnExit={false}
-          duration={animationDuration}
-          timeout={animationDuration / 2}
-        >
-          <Menu
-            aria-activedescendant={activeId}
-            aria-labelledby={triggerId}
-            id={id}
-          >
-            {items.map((item, index) => (
-              <Item key={getComponentKey(item, index)} {...item}>
-                {item.label}
-              </Item>
-            ))}
-          </Menu>
-        </Animate>
-      </MenuContainerUI>
+      <div ref={this.setWrapperNode}>
+        {isOpen && (
+          <Portal>
+            <div style={{ position: 'relative' }} ref={this.setPlacementNode}>
+              <MenuContainerUI
+                className={componentClassName}
+                innerRef={this.setNodeRef}
+              >
+                <Animate
+                  sequence={shouldDropUp ? 'fade up' : animationSequence}
+                  in={isOpen}
+                  mountOnEnter={false}
+                  unmountOnExit={false}
+                  duration={animationDuration}
+                  timeout={animationDuration / 2}
+                >
+                  {this.renderContent()}
+                </Animate>
+              </MenuContainerUI>
+            </div>
+          </Portal>
+        )}
+      </div>
     )
   }
 }
@@ -232,7 +341,16 @@ export class MenuContainer extends React.Component<Props> {
 const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { activeIndex, activeId, dropUp, isOpen, menuId, triggerId } = state
+    const {
+      activeIndex,
+      activeId,
+      dropUp,
+      isOpen,
+      menuId,
+      triggerId,
+      triggerNode,
+      zIndex,
+    } = state
 
     return {
       activeIndex,
@@ -242,6 +360,8 @@ const ConnectedMenuContainer: any = connect(
       isOpen,
       id: menuId,
       triggerId,
+      triggerNode,
+      zIndex,
     }
   },
   // mapDispatchToProps

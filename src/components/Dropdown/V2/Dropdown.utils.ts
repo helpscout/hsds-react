@@ -2,6 +2,10 @@ import { ItemIndex } from './Dropdown.types'
 import { classNames } from '../../../utilities/classNames'
 import { isObject, isDefined, isString } from '../../../utilities/is'
 
+export const COMPONENT_KEY = {
+  Trigger: 'Dropdown.Trigger',
+}
+
 export const selectors = {
   actionAttribute: 'data-hsds-menu-action',
   itemAttribute: 'data-hsds-menu-item',
@@ -184,6 +188,12 @@ export const enhanceItemsWithProps = (items: Array<any>, props: Object) => {
   })
 }
 
+export const getCustomItemProps = (props: any): Object => {
+  const { renderItems, ...rest } = props
+
+  return rest
+}
+
 /**
  * Selectors
  */
@@ -244,6 +254,11 @@ export const getItemProps = (state: any, itemProps: any): Object => {
     'aria-selected': isSelected,
     'aria-haspopup': hasSubMenu,
     'aria-expanded': isHover,
+    hasSubMenu,
+    isHover,
+    isOpen,
+    isSelected,
+    isActive,
     [selectors.indexAttribute]: index,
     [selectors.valueAttribute]: value,
   }
@@ -272,7 +287,7 @@ export const getEnhancedItemsWithProps = (
       dropRight,
       index: itemIndex,
       id: itemId,
-      renderItems,
+      renderItem: renderItems,
       items: childItems,
       subMenuId: pathResolve(itemId, 'sub-menu'),
     }

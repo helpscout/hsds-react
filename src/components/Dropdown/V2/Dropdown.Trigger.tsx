@@ -1,15 +1,14 @@
 import * as React from 'react'
-import { TriggerUI } from './Dropdown.css.js'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from 'unistore/react'
-import {
-  toggleOpen,
-  openDropdown,
-  closeDropdown,
-  setActiveItem,
-} from './Dropdown.actions'
+import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
+import propConnect from '../../PropProvider/propConnect'
+import { TriggerUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
+import { namespaceComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
+import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   children?: any
@@ -23,7 +22,6 @@ export interface Props {
   onKeyDown: (event: KeyboardEvent) => void
   onClick: (event: Event) => void
   openDropdown: () => void
-  setActiveItem: (node: HTMLElement) => void
   toggleOpen: () => void
 }
 
@@ -37,11 +35,8 @@ export class Trigger extends React.PureComponent<Props> {
     onClick: noop,
     openDropdown: noop,
     closeDropdown: noop,
-    setActiveItem: noop,
     toggleOpen: noop,
   }
-
-  node: HTMLElement
 
   handleOnClick = (event: Event) => {
     this.props.onClick(event)
@@ -88,7 +83,6 @@ export class Trigger extends React.PureComponent<Props> {
   }
 
   setNodeRef = (node: HTMLElement) => {
-    this.node = node
     this.props.innerRef(node)
   }
 
@@ -102,11 +96,11 @@ export class Trigger extends React.PureComponent<Props> {
 
     return (
       <TriggerUI
-        {...rest}
+        {...getValidProps(rest)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         className={componentClassName}
-        innerRef={this.setNodeRef}
+        innerRef={innerRef}
         onBlur={onBlur}
         onFocus={onFocus}
         onClick={this.handleOnClick}
@@ -115,6 +109,9 @@ export class Trigger extends React.PureComponent<Props> {
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Trigger)(Trigger)
+const PropConnectedTrigger = propConnect(COMPONENT_KEY.Trigger)(Trigger)
 
 const ConnectedTrigger: any = connect(
   // mapStateToProps
@@ -128,11 +125,10 @@ const ConnectedTrigger: any = connect(
     toggleOpen,
     openDropdown,
     closeDropdown,
-    setActiveItem,
   }
 )(
   // @ts-ignore
-  Trigger
+  PropConnectedTrigger
 )
 
 export default ConnectedTrigger

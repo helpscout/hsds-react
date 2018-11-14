@@ -1,4 +1,5 @@
 import * as React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../../Flexy'
 import Icon from '../../Icon'
 import Menu from './Dropdown.Menu'
@@ -8,7 +9,11 @@ import {
   WrapperUI,
   SubMenuIncidatorUI,
 } from './Dropdown.css.js'
-import { selectors, setMenuPositionStyles } from './Dropdown.utils'
+import {
+  selectors,
+  setMenuPositionStyles,
+  getCustomItemProps,
+} from './Dropdown.utils'
 import { classNames } from '../../../utilities/classNames'
 import { getComponentKey } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
@@ -19,15 +24,17 @@ export interface Props {
   className?: string
   dropRight: boolean
   dropUp: boolean
-  getState: () => void
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
+  isOpen: boolean
+  isHover: boolean
   items: Array<any>
   onMouseEnter: (event: Event) => void
   onClick: (event: Event, props: any) => void
   onFocus: (event: Event) => void
   onSelect: (event: Event) => void
+  renderItem?: (props: any) => void
   setActiveItem: (node: HTMLElement) => void
   subMenuId?: string
   label: string
@@ -37,9 +44,10 @@ export interface Props {
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
     activeIndex: '0',
-    getState: noop,
     index: '0',
     innerRef: noop,
+    isOpen: false,
+    isHover: false,
     items: undefined,
     dropRight: true,
     dropUp: false,
@@ -63,6 +71,12 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isHover !== this.props.isHover) {
+      this.renderMenu()
+    }
+  }
+
   handleOnClick = (event: Event) => {
     const { onClick } = this.props
 
@@ -78,13 +92,18 @@ export class Item extends React.PureComponent<Props> {
   renderMenu = () => {
     const { dropRight, dropUp } = this.props
 
-    setMenuPositionStyles({
-      dropRight,
-      dropUp,
-      menuNode: this.menuNode,
-      wrapperNode: this.wrapperNode,
-      itemNode: this.node,
-      triggerNode: this.actionNode,
+    // Async call to coordinate with Portal adjustments
+    requestAnimationFrame(() => {
+      if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
+        setMenuPositionStyles({
+          dropRight,
+          dropUp,
+          menuNode: this.menuNode,
+          wrapperNode: this.wrapperNode,
+          itemNode: this.node,
+          triggerNode: this.actionNode,
+        })
+      }
     })
   }
 
@@ -137,6 +156,21 @@ export class Item extends React.PureComponent<Props> {
     )
   }
 
+  renderContent = () => {
+    const { renderItem, children } = this.props
+
+    if (renderItem) {
+      return renderItem(getCustomItemProps(this.props))
+    }
+
+    return (
+      <Flexy gap="sm">
+        <Flexy.Block>{children}</Flexy.Block>
+        {this.renderSubMenuIndicator()}
+      </Flexy>
+    )
+  }
+
   setNodeRef = node => {
     this.node = node
     this.props.innerRef(node)
@@ -150,7 +184,7 @@ export class Item extends React.PureComponent<Props> {
 
     return (
       <ItemUI
-        {...this.props}
+        {...getValidProps(this.props)}
         onClick={this.handleOnClick}
         innerRef={this.setNodeRef}
       >
@@ -162,10 +196,7 @@ export class Item extends React.PureComponent<Props> {
             'c-DropdownV2ItemAction'
           )}
         >
-          <Flexy gap="sm">
-            <Flexy.Block>{this.props.children}</Flexy.Block>
-            {this.renderSubMenuIndicator()}
-          </Flexy>
+          {this.renderContent()}
         </ActionUI>
         {this.renderSubMenu()}
       </ItemUI>

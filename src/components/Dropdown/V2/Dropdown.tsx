@@ -5,6 +5,7 @@ import {
   itemOnFocus,
   itemOnClick,
   closeDropdown,
+  setTriggerNode,
 } from './Dropdown.actions'
 import {
   enhanceItemsWithProps,
@@ -18,6 +19,7 @@ import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
+  children?: (props: any) => void
   className?: string
   closeDropdown: () => void
   id?: string
@@ -39,6 +41,7 @@ export interface Props {
   renderTrigger?: any
   trigger: any
   triggerRef: (node: HTMLElement) => void
+  setTriggerNode: (node: HTMLElement) => void
 }
 
 export interface State {
@@ -159,10 +162,12 @@ export class Dropdown extends React.PureComponent<Props, State> {
   setTriggerNodeRef = (node: HTMLElement) => {
     this.triggerNode = node
     this.props.triggerRef(node)
+    // Internally, for store
+    this.props.setTriggerNode(node)
   }
 
   render() {
-    const { className, id } = this.props
+    const { className, children, id } = this.props
     const componentClassName = classNames(className, 'c-DropdownV2')
 
     const { items } = this.state
@@ -174,7 +179,7 @@ export class Dropdown extends React.PureComponent<Props, State> {
         id={id}
       >
         {this.renderTrigger()}
-        <MenuContainer items={items} />
+        <MenuContainer items={items} children={children} />
       </DropdownUI>
     )
   }
@@ -196,6 +201,7 @@ const ConnectedDropdown: any = connect(
     itemOnMouseEnter,
     itemOnFocus,
     itemOnClick,
+    setTriggerNode,
   }
 )(
   // @ts-ignore
