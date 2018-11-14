@@ -1,6 +1,7 @@
 // @ts-ignore
 import {
   setActiveItem,
+  setTriggerNode,
   changeDirection,
   toggleOpen,
   openDropdown,
@@ -34,6 +35,16 @@ describe('setActiveItem', () => {
     expect(nextState.activeIndex).toBe('123')
     expect(nextState.activeValue).toBe('Hello')
     expect(nextState.activeId).toContain('ron')
+  })
+})
+
+describe('setTriggerNode', () => {
+  test('Sets a triggerNode onto the state', () => {
+    const state = {}
+    const mockElement = {}
+    const nextState = setTriggerNode(state, mockElement)
+
+    expect(nextState.triggerNode).toBe(mockElement)
   })
 })
 
