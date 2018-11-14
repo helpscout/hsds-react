@@ -82,10 +82,6 @@ export class Trigger extends React.PureComponent<Props> {
     }
   }
 
-  setNodeRef = (node: HTMLElement) => {
-    this.props.innerRef(node)
-  }
-
   render() {
     const { className, onBlur, onFocus, innerRef, isOpen, ...rest } = this.props
     const componentClassName = classNames(

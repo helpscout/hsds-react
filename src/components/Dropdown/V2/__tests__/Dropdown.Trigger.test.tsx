@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import store from '../Dropdown.store'
+import createStore from '../Dropdown.store'
 import { Provider } from 'unistore/react'
 import Keys from '../../../../constants/Keys.js'
 import ConnectedTrigger, { Trigger } from '../Dropdown.Trigger'
@@ -182,7 +182,7 @@ describe('Actions', () => {
 describe('ConnectedTrigger', () => {
   test('Can render', () => {
     const wrapper = mount(
-      <Provider store={store}>
+      <Provider store={createStore()}>
         <ConnectedTrigger />
       </Provider>
     )

@@ -19,7 +19,6 @@ import { getComponentKey } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
-  activeIndex: string
   actionId?: string
   className?: string
   dropRight: boolean
@@ -27,15 +26,13 @@ export interface Props {
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
-  isOpen: boolean
   isHover: boolean
   items: Array<any>
   onMouseEnter: (event: Event) => void
+  onBlur: (event: Event) => void
   onClick: (event: Event, props: any) => void
   onFocus: (event: Event) => void
-  onSelect: (event: Event) => void
   renderItem?: (props: any) => void
-  setActiveItem: (node: HTMLElement) => void
   subMenuId?: string
   label: string
   value: string
@@ -43,19 +40,16 @@ export interface Props {
 
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
-    activeIndex: '0',
     index: '0',
     innerRef: noop,
-    isOpen: false,
     isHover: false,
     items: undefined,
     dropRight: true,
     dropUp: false,
     onMouseEnter: noop,
+    onBlur: noop,
     onClick: noop,
     onFocus: noop,
-    onSelect: noop,
-    setActiveItem: noop,
     label: '',
     value: '',
   }
@@ -66,6 +60,7 @@ export class Item extends React.PureComponent<Props> {
   menuNode: HTMLElement | null
 
   componentDidMount() {
+    /* istanbul ignore else */
     if (this.node) {
       this.renderMenu()
     }
@@ -91,6 +86,8 @@ export class Item extends React.PureComponent<Props> {
 
   renderMenu = () => {
     const { dropRight, dropUp } = this.props
+
+    if (!this.hasSubMenu()) return
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
@@ -131,9 +128,7 @@ export class Item extends React.PureComponent<Props> {
             id={subMenuId}
           >
             {items.map((item, index) => (
-              <Item key={getComponentKey(item, index)} {...item}>
-                {item.label}
-              </Item>
+              <Item key={getComponentKey(item, index)} {...item} />
             ))}
           </Menu>
         </WrapperUI>
@@ -148,7 +143,7 @@ export class Item extends React.PureComponent<Props> {
     return (
       this.hasSubMenu() && (
         <Flexy.Item>
-          <SubMenuIncidatorUI>
+          <SubMenuIncidatorUI className="c-DropdownV2Item__subMenuIndicator">
             <Icon name={icon} size="12" shade="extraMuted" />
           </SubMenuIncidatorUI>
         </Flexy.Item>
@@ -157,15 +152,17 @@ export class Item extends React.PureComponent<Props> {
   }
 
   renderContent = () => {
-    const { renderItem, children } = this.props
+    const { renderItem, children, label } = this.props
 
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }
 
+    const content = children || label
+
     return (
       <Flexy gap="sm">
-        <Flexy.Block>{children}</Flexy.Block>
+        <Flexy.Block>{content}</Flexy.Block>
         {this.renderSubMenuIndicator()}
       </Flexy>
     )
@@ -180,11 +177,14 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { actionId } = this.props
+    const { actionId, className } = this.props
+
+    const componentClassName = classNames('c-DropdownV2Item', className)
 
     return (
       <ItemUI
         {...getValidProps(this.props)}
+        className={componentClassName}
         onClick={this.handleOnClick}
         innerRef={this.setNodeRef}
       >

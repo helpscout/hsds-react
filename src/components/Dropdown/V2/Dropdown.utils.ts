@@ -189,7 +189,7 @@ export const enhanceItemsWithProps = (items: Array<any>, props: Object) => {
 }
 
 export const getCustomItemProps = (props: any): Object => {
-  const { renderItems, ...rest } = props
+  const { renderItem, ...rest } = props
 
   return rest
 }
