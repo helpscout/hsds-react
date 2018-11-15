@@ -5,6 +5,7 @@ import {
   itemOnFocus,
   itemOnClick,
   closeDropdown,
+  setMenuNode,
   setTriggerNode,
 } from './Dropdown.actions'
 import {
@@ -37,10 +38,12 @@ export interface Props {
   dropUp: boolean
   onSelect: (item: Object, props: Object) => void
   menuId?: string
+  menuRef: (node: HTMLElement) => void
   renderItems?: any
   renderTrigger?: any
   trigger: any
   triggerRef: (node: HTMLElement) => void
+  setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void
 }
 
@@ -58,11 +61,14 @@ export class Dropdown extends React.PureComponent<Props, State> {
     itemOnFocus: noop,
     itemOnMouseEnter: noop,
     items: [],
+    menuRef: noop,
     onBlur: noop,
     onClose: noop,
     onFocus: noop,
     onOpen: noop,
     onSelect: noop,
+    setMenuNode: noop,
+    setTriggerNode: noop,
     subscribe: noop,
     trigger: 'Dropdown',
     triggerRef: noop,
@@ -70,6 +76,7 @@ export class Dropdown extends React.PureComponent<Props, State> {
 
   node: HTMLElement
   triggerNode: HTMLElement
+  menuNode: HTMLElement
 
   constructor(props) {
     super(props)
@@ -105,10 +112,13 @@ export class Dropdown extends React.PureComponent<Props, State> {
 
   handleOnBodyClick = (event: Event) => {
     if (!event) return
-    if (!this.node) return
+    if (!this.menuNode) return
 
-    if (event.target instanceof Element) {
-      if (this.node.contains(event.target)) return
+    const targetNode = event.target
+
+    if (targetNode instanceof Element) {
+      if (this.menuNode.contains(targetNode) || targetNode === this.triggerNode)
+        return
 
       this.closeMenu()
     }
@@ -159,6 +169,13 @@ export class Dropdown extends React.PureComponent<Props, State> {
     this.props.innerRef(node)
   }
 
+  setMenuNodeRef = (node: HTMLElement) => {
+    this.menuNode = node
+    this.props.menuRef(node)
+    // Internally, for store
+    this.props.setMenuNode(node)
+  }
+
   setTriggerNodeRef = (node: HTMLElement) => {
     this.triggerNode = node
     this.props.triggerRef(node)
@@ -179,7 +196,11 @@ export class Dropdown extends React.PureComponent<Props, State> {
         id={id}
       >
         {this.renderTrigger()}
-        <MenuContainer items={items} children={children} />
+        <MenuContainer
+          items={items}
+          children={children}
+          innerRef={this.setMenuNodeRef}
+        />
       </DropdownUI>
     )
   }
@@ -201,6 +222,7 @@ const ConnectedDropdown: any = connect(
     itemOnMouseEnter,
     itemOnFocus,
     itemOnClick,
+    setMenuNode,
     setTriggerNode,
   }
 )(

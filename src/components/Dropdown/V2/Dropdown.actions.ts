@@ -83,6 +83,13 @@ export const setTriggerNode = (state, triggerNode) => {
   }
 }
 
+export const setMenuNode = (state, menuNode) => {
+  return {
+    ...state,
+    menuNode,
+  }
+}
+
 export const setEventTargetAsActive = (state, event: Event) => {
   const node = event.currentTarget as HTMLElement
   if (node) {

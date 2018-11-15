@@ -61,7 +61,7 @@ export const incrementPathIndex = (
   const paths = path.split('.')
   const nextIndexBase = paths.pop()
 
-  /* instanbul ignore if */
+  /* istanbul ignore if */
   if (!nextIndexBase) return path
 
   const nextIndex = parseInt(nextIndexBase, 10) + amount
@@ -75,7 +75,7 @@ export const decrementPathIndex = (
   const paths = path.split('.')
   const nextIndexBase = paths.pop()
 
-  /* instanbul ignore if */
+  /* istanbul ignore if */
   if (!nextIndexBase) return path
 
   let nextIndex = parseInt(nextIndexBase, 10) - amount
