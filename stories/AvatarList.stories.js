@@ -57,3 +57,39 @@ stories.add('animation: staggering', () => (
 ))
 
 stories.add('test: render', () => <TestComponent />)
+
+stories.add('Add/Remove', () => {
+  class Example extends Component {
+    state = { avatars: [] }
+
+    addAvatar = () => {
+      this.setState({
+        avatars: [...this.state.avatars, AvatarSpec.generate()],
+      })
+    }
+
+    removeAvatar = () => {
+      this.setState({
+        avatars: this.state.avatars.slice(0, -1),
+      })
+    }
+
+    render() {
+      const avatarsMarkup = this.state.avatars.map(avatar => {
+        const { name, image } = avatar
+        return <Avatar image={image} key={name} name={name} shape="rounded" />
+      })
+
+      return (
+        <div>
+          <button onClick={this.addAvatar}>Add</button>
+          <button onClick={this.removeAvatar}>Remove</button>
+          <br />
+          <AvatarList max={4}>{avatarsMarkup}</AvatarList>
+        </div>
+      )
+    }
+  }
+
+  return <Example />
+})
