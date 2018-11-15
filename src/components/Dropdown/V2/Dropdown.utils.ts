@@ -83,22 +83,6 @@ export const decrementPathIndex = (
   return [...paths, nextIndex].join('.')
 }
 
-export const getItemFromCollection = (
-  items: Array<any>,
-  value: string
-): any => {
-  for (const item of items) {
-    if (item.value === value) {
-      return item
-    }
-    if (item.items) {
-      const child = getItemFromCollection(item.items, value)
-      if (child) return child
-    }
-  }
-  return undefined
-}
-
 export const isItemActiveFromSelected = (selectedItem, item) => {
   if (isObject(item) && isObject(selectedItem)) {
     const { id, value } = selectedItem
@@ -123,6 +107,38 @@ export const isItemActiveFromSelected = (selectedItem, item) => {
   }
 
   return selectedItem === item
+}
+
+export const getItemFromCollection = (
+  items: Array<any>,
+  value: string | Object
+): any => {
+  for (const item of items) {
+    if (isItemActiveFromSelected(value, item)) {
+      return item
+    }
+    if (item.items) {
+      const child = getItemFromCollection(item.items, value)
+      if (child) return child
+    }
+  }
+  return undefined
+}
+
+export const enhanceItemsWithProps = (items: Array<any>, props: Object) => {
+  return items.map(item => {
+    return {
+      ...item,
+      ...props,
+      items: item.items ? enhanceItemsWithProps(item.items, props) : undefined,
+    }
+  })
+}
+
+export const getCustomItemProps = (props: any): any => {
+  const { renderItem, ...rest } = props
+
+  return rest
 }
 
 export const setMenuPositionStyles = (props: {
@@ -189,22 +205,6 @@ export const setMenuPositionStyles = (props: {
   }
 
   wrapperNode.style.transform = `translateY(-${translateY}px)`
-}
-
-export const enhanceItemsWithProps = (items: Array<any>, props: Object) => {
-  return items.map(item => {
-    return {
-      ...item,
-      ...props,
-      items: item.items ? enhanceItemsWithProps(item.items, props) : undefined,
-    }
-  })
-}
-
-export const getCustomItemProps = (props: any): Object => {
-  const { renderItem, ...rest } = props
-
-  return rest
 }
 
 /**
