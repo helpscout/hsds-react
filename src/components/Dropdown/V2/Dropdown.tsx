@@ -12,6 +12,8 @@ import {
   enhanceItemsWithProps,
   getEnhancedItemsWithProps,
 } from './Dropdown.utils'
+import EventListener from '../../EventListener'
+import KeypressListener from '../../KeypressListener'
 import MenuContainer from './Dropdown.MenuContainer'
 import Trigger from './Dropdown.Trigger'
 import { DropdownUI } from './Dropdown.css.js'
@@ -87,16 +89,6 @@ export class Dropdown extends React.PureComponent<Props, State> {
     }
   }
 
-  componentDidMount() {
-    document.addEventListener('click', this.handleOnBodyClick)
-    document.addEventListener('keydown', this.handleOnKeyDown)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleOnBodyClick)
-    document.removeEventListener('keydown', this.handleOnKeyDown)
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.items !== this.props.items) {
       this.setState({
@@ -128,8 +120,8 @@ export class Dropdown extends React.PureComponent<Props, State> {
 
   closeMenu = () => {
     if (!this.props.isOpen) return
+    // Store calls onClose() callback
     this.props.closeDropdown()
-    this.props.onClose()
   }
 
   focusTriggerNode = () => {
@@ -197,6 +189,12 @@ export class Dropdown extends React.PureComponent<Props, State> {
         innerRef={this.setNodeRef}
         id={id}
       >
+        <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
+        <EventListener
+          event="click"
+          handler={this.handleOnBodyClick}
+          scope={document}
+        />
         {this.renderTrigger()}
         <MenuContainer
           items={items}

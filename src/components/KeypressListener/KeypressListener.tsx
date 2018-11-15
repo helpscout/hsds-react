@@ -1,58 +1,54 @@
 // Modified version of:
 // https://github.com/Shopify/polaris/blob/master/src/components/KeypressListener/KeypressListener.tsx
 
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import { addEventListener, removeEventListener } from '../../utilities/events'
 import { getClosestDocument } from '../../utilities/node'
 import { noop } from '../../utilities/other'
+import { isDefined } from '../../utilities/is'
 
-export const propTypes = {
-  keyCode: PropTypes.number,
-  handler: PropTypes.func,
-  modifier: PropTypes.string,
-  noModifier: PropTypes.bool,
-  type: PropTypes.oneOf(['keyup', 'keypress', 'keydown']),
+export interface Props {
+  keyCode?: number
+  handler: (event: KeyboardEvent) => void
+  modifier?: string
+  noModifier: boolean
+  scope: HTMLElement | Document | Window
+  type: 'keyup' | 'keypress' | 'keydown'
 }
 
-const defaultProps = {
-  handler: noop,
-  noModifier: true,
-  scope: document,
-  type: 'keyup',
-}
-
-class KeypressListener extends Component {
-  constructor() {
-    super()
-    this.handleKeyEvent = this.handleKeyEvent.bind(this)
-    this.node = null
-    this.scope = null
+class KeypressListener extends React.Component<Props> {
+  static defaultProps = {
+    handler: noop,
+    noModifier: true,
+    scope: document,
+    type: 'keyup',
   }
 
+  node: HTMLElement
+  scope: HTMLElement | Document | Window
+
   componentDidMount() {
-    const { scope } = this.props
-    this.node = ReactDOM.findDOMNode(this)
+    const { scope, type } = this.props
     this.scope = scope === document ? getClosestDocument(this.node) : scope
 
-    addEventListener(this.scope, this.props.type, this.handleKeyEvent)
+    addEventListener(this.scope, type, this.handleKeyEvent)
   }
 
   componentWillUnmount() {
     removeEventListener(this.scope, this.props.type, this.handleKeyEvent)
-
-    this.node = null
-    this.scope = null
   }
 
   shouldComponentUpdate() {
     return false
   }
 
-  handleKeyEvent(event) {
+  handleKeyEvent = (event: KeyboardEvent) => {
     const { keyCode, handler, modifier, noModifier } = this.props
     let modKey = true
+
+    if (!isDefined(keyCode)) {
+      return handler(event)
+    }
 
     /* istanbul ignore else */
     // Tested, but istanbul is being picky
@@ -76,6 +72,8 @@ class KeypressListener extends Component {
         case 'control':
           modKey = event.ctrlKey
           break
+        default:
+          break
       }
     } else if (noModifier) {
       modKey =
@@ -87,12 +85,11 @@ class KeypressListener extends Component {
     }
   }
 
+  setNodeRef = node => (this.node = node)
+
   render() {
-    return <div />
+    return <div className="c-KeypressListenerRoot" ref={this.setNodeRef} />
   }
 }
-
-KeypressListener.propTypes = propTypes
-KeypressListener.defaultProps = defaultProps
 
 export default KeypressListener

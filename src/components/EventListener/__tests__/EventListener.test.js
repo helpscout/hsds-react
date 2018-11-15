@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import EventListener from '..'
+import EventListener from '../EventListener'
 
 const simulateEvent = eventName => {
   window.dispatchEvent(new Event(eventName))

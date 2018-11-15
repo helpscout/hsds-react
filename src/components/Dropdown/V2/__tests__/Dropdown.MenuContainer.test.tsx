@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { MenuContainer } from '../Dropdown.MenuContainer'
+import { Provider } from 'unistore/react'
+import ConnectedMenuContainer, {
+  MenuContainer,
+} from '../Dropdown.MenuContainer'
+import createStore from '../Dropdown.store'
 import { find, hasClass } from './Dropdown.testHelpers'
 // @ts-ignore
 import Portal from '../../../Portal'
@@ -186,5 +190,44 @@ describe('renderProp', () => {
     expect(menu.length).toBe(1)
     expect(els.length).toBe(2)
     expect(el.html()).toContain('Ron')
+  })
+})
+
+describe('ConnectedMenuContainer', () => {
+  test('Can render ConnectedMenuContainer', () => {
+    const mockStore = createStore({
+      activeIndex: '0',
+    })
+    const wrapper = mount(
+      <Provider store={mockStore}>
+        <ConnectedMenuContainer />
+      </Provider>
+    )
+
+    expect(wrapper).toBeTruthy()
+  })
+
+  test('Receives props from store', () => {
+    const initialState = {
+      activeIndex: '1',
+      activeId: 'dropdown-1',
+      direction: 'left',
+      menuId: 'someId',
+      zIndex: '1',
+    }
+    const mockStore = createStore(initialState)
+    const wrapper = mount(
+      <Provider store={mockStore}>
+        <ConnectedMenuContainer />
+      </Provider>
+    )
+
+    const el = wrapper.find('MenuContainer')
+
+    expect(el.prop('activeIndex')).toBe(initialState.activeIndex)
+    expect(el.prop('activeId')).toBe(initialState.activeId)
+    expect(el.prop('id')).toBe(initialState.menuId)
+    expect(el.prop('dropRight')).toBe(false)
+    expect(el.prop('zIndex')).toBe(initialState.zIndex)
   })
 })

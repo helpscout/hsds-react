@@ -10,6 +10,8 @@ import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
 
 export interface Props extends DropdownProps {
+  // Secret prop to pass in a custom store
+  __store?: any
   subscribe: (state: any) => void
 }
 
@@ -44,8 +46,19 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     const id = props.id || uniqueID()
     const menuId = pathResolve(id, 'menu')
     const triggerId = pathResolve(id, 'trigger')
+    const initialState = {
+      ...this.props,
+      id,
+      menuId,
+      triggerId,
+    }
 
-    this.store = createStore({ ...this.props, id, menuId, triggerId })
+    if (props.__store && props.__store.setState) {
+      props.__store.setState({ id, menuId, triggerId })
+      this.store = props.__store
+    } else {
+      this.store = createStore(initialState)
+    }
   }
 
   componentWillMount() {

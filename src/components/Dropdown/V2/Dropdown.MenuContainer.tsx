@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
 import Animate from '../../Animate'
+import EventListener from '../../EventListener'
+import KeypressListener from '../../KeypressListener'
 import Portal from '../../Portal'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
@@ -61,13 +63,6 @@ export class MenuContainer extends React.Component<Props> {
 
   componentDidMount() {
     this.setPositionStylesOnNode()
-    document.addEventListener('keydown', this.handleOnKeyDown)
-    window.addEventListener('resize', this.setPositionStylesOnNode)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleOnKeyDown)
-    window.removeEventListener('resize', this.setPositionStylesOnNode)
   }
 
   componentDidUpdate(prevProps) {
@@ -312,6 +307,8 @@ export class MenuContainer extends React.Component<Props> {
 
     return (
       <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
+        <EventListener event="resize" handler={this.setPositionStylesOnNode} />
+        <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
         {isOpen && (
           <Portal>
             <div
