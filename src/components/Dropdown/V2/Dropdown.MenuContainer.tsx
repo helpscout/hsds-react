@@ -29,7 +29,7 @@ export interface Props {
   closeDropdown: () => void
   dropUp: boolean
   dropRight: boolean
-  id: string
+  id?: string
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
@@ -311,10 +311,14 @@ export class MenuContainer extends React.Component<Props> {
     )
 
     return (
-      <div ref={this.setWrapperNode}>
+      <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
         {isOpen && (
           <Portal>
-            <div style={{ position: 'relative' }} ref={this.setPlacementNode}>
+            <div
+              className="DropdownV2MenuContainerPlacementRoot"
+              style={{ position: 'relative' }}
+              ref={this.setPlacementNode}
+            >
               <MenuContainerUI
                 className={componentClassName}
                 innerRef={this.setNodeRef}
