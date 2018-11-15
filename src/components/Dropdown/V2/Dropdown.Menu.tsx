@@ -5,6 +5,7 @@ import { noop } from '../../../utilities/other'
 
 export interface Props {
   className?: string
+  children?: any
   id?: string
   innerRef: (node: HTMLElement) => void
   isSubMenu: boolean
@@ -42,7 +43,7 @@ export class Menu extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, innerRef, isSubMenu, ...rest } = this.props
+    const { children, className, innerRef, isSubMenu, ...rest } = this.props
     const componentClassName = classNames(
       className,
       isSubMenu && 'is-subMenu',
@@ -55,7 +56,9 @@ export class Menu extends React.PureComponent<Props> {
         className={componentClassName}
         innerRef={innerRef}
         style={this.getStyles()}
-      />
+      >
+        {children}
+      </MenuUI>
     )
   }
 }

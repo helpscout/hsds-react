@@ -85,7 +85,7 @@ export const decrementPathIndex = (
   return [...paths, nextIndex].join('.')
 }
 
-export const isItemActiveFromSelected = (selectedItem, item) => {
+export const itemIsActive = (selectedItem, item) => {
   if (isObject(item) && isObject(selectedItem)) {
     const { id, value } = selectedItem
 
@@ -116,7 +116,7 @@ export const getItemFromCollection = (
   value: string | Object
 ): any => {
   for (const item of items) {
-    if (isItemActiveFromSelected(value, item)) {
+    if (itemIsActive(value, item)) {
       return item
     }
     if (item.items) {
@@ -142,6 +142,12 @@ export const getCustomItemProps = (props: any): any => {
   const { renderItem, ...rest } = props
 
   return rest
+}
+
+export const itemHasSubMenu = (itemProps: any): boolean => {
+  const { items } = itemProps
+
+  return !!(items && items.length)
 }
 
 // Going to be ignoring chunks of this from test coverage, since DOM related
@@ -216,17 +222,7 @@ export const setMenuPositionStyles = (props: {
   wrapperNode.style.transform = `translateY(-${translateY}px)`
 }
 
-/**
- * State Selectors
- */
-
 export const isDropRight = (state: any): boolean => state.direction === 'right'
-
-export const itemHasSubMenu = (itemProps: any): boolean => {
-  const { items } = itemProps
-
-  return !!(items && items.length)
-}
 
 export const itemIsHover = (state: any, index: ItemIndex): boolean => {
   const { activeIndex } = state
@@ -248,10 +244,6 @@ export const itemIsSelected = (state: any, index: ItemIndex) => {
   return activeIndex === index
 }
 
-export const itemIsActive = (state: any, item: any) => {
-  return isItemActiveFromSelected(state.selectedItem, item)
-}
-
 export const getItemProps = (state: any, itemProps: any): Object => {
   if (!state) return itemProps
 
@@ -261,7 +253,7 @@ export const getItemProps = (state: any, itemProps: any): Object => {
   const isHover = itemIsHover(state, index)
   const isOpen = itemIsOpen(state, index)
   const isSelected = itemIsSelected(state, index)
-  const isActive = itemIsActive(state, itemProps)
+  const isActive = itemIsActive(state.selectedItem, itemProps)
 
   return {
     ...rest,

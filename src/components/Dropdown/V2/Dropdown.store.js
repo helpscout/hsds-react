@@ -14,6 +14,7 @@ export const initialState = {
   onOpen: noop,
   onClose: noop,
   onSelect: noop,
+  selectedItem: '',
   zIndex: 1080,
 }
 

@@ -7,9 +7,16 @@ import {
   decrementPathIndex,
   enhanceItemsWithProps,
   getCustomItemProps,
-  isItemActiveFromSelected,
+  itemIsActive,
   getItemFromCollection,
   setMenuPositionStyles,
+  isDropRight,
+  itemHasSubMenu,
+  itemIsHover,
+  itemIsOpen,
+  itemIsSelected,
+  getItemProps,
+  getEnhancedItemsWithProps,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -169,49 +176,49 @@ describe('getCustomItemProps', () => {
   })
 })
 
-describe('isItemActiveFromSelected', () => {
+describe('itemIsActive', () => {
   test('Can match an item based on id', () => {
     const selectedItem = { id: 'ron' }
     const item = { id: 'ron', value: 'Ron' }
 
-    expect(isItemActiveFromSelected(selectedItem, item)).toBe(true)
+    expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
   test('Can match an item based on value', () => {
     const selectedItem = { id: 'ron', value: 'Ron' }
     const item = { value: 'Ron' }
 
-    expect(isItemActiveFromSelected(selectedItem, item)).toBe(true)
+    expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
   test('Can match an item.value based on string selected value', () => {
     const selectedItem = 'Ron'
     const item = { value: 'Ron' }
 
-    expect(isItemActiveFromSelected(selectedItem, item)).toBe(true)
+    expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
   test('Can match an item.id based on string selected value', () => {
     const selectedItem = 'ron'
     const item = { id: 'ron' }
 
-    expect(isItemActiveFromSelected(selectedItem, item)).toBe(true)
+    expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
   test('Can exactly match an item', () => {
     const selectedItem = 'ron'
     const item = 'ron'
 
-    expect(isItemActiveFromSelected(selectedItem, item)).toBe(true)
+    expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
   test('Returns false for non matches', () => {
     const selectedItem = { nope_id: 'ron' }
     const item = { id: 'ron', value: 'Ron' }
 
-    expect(isItemActiveFromSelected(selectedItem, item)).toBe(false)
-    expect(isItemActiveFromSelected(selectedItem, 'ron')).toBe(false)
-    expect(isItemActiveFromSelected('nope', 'ron')).toBe(false)
+    expect(itemIsActive(selectedItem, item)).toBe(false)
+    expect(itemIsActive(selectedItem, 'ron')).toBe(false)
+    expect(itemIsActive('nope', 'ron')).toBe(false)
   })
 })
 
@@ -346,5 +353,223 @@ describe('setMenuPositionStyles', () => {
     setMenuPositionStyles(props)
 
     expect(styles).not.toEqual(wrapperNode.style)
+  })
+})
+
+describe('itemHasSubMenu', () => {
+  test('Returns true item contains items', () => {
+    const item = {
+      items: [1, 2, 3],
+    }
+
+    expect(itemHasSubMenu(item)).toBe(true)
+  })
+
+  test('Returns false item does not contains items', () => {
+    const item = {
+      value: 'ron',
+    }
+
+    expect(itemHasSubMenu(item)).toBe(false)
+  })
+
+  test('Returns false item.items is empty', () => {
+    const item = {
+      items: [],
+    }
+
+    expect(itemHasSubMenu(item)).toBe(false)
+  })
+})
+
+describe('isDropRight', () => {
+  test('Returns true if direction is "right"', () => {
+    const state = {
+      direction: 'right',
+    }
+
+    expect(isDropRight(state)).toBe(true)
+  })
+
+  test('Returns false if direction is "left"', () => {
+    const state = {
+      direction: 'left',
+    }
+
+    expect(isDropRight(state)).toBe(false)
+  })
+})
+
+describe('itemIsHover', () => {
+  test('Returns true if item matches activeIndex', () => {
+    const state = {
+      activeIndex: '1.2.3',
+    }
+
+    expect(itemIsHover(state, '1.2')).toBe(true)
+    expect(itemIsHover(state, '1.2.3')).toBe(true)
+  })
+
+  test('Returns false if item does not match activeIndex', () => {
+    const state = {
+      activeIndex: '1.2.3',
+    }
+
+    const index = '0.1.2.3'
+
+    expect(itemIsHover(state, index)).toBe(false)
+    expect(itemIsHover({}, index)).toBe(false)
+  })
+})
+
+describe('itemIsOpen', () => {
+  test('Returns true if item matches activeIndex', () => {
+    const state = {
+      activeIndex: '1.2.3',
+    }
+
+    const index = '1.2'
+
+    expect(itemIsOpen(state, index)).toBe(true)
+  })
+
+  test('Returns false if item does not match activeIndex', () => {
+    const state = {
+      activeIndex: '1.2.3',
+    }
+
+    const index = '0.1.2.3'
+
+    expect(itemIsOpen(state, index)).toBe(false)
+    expect(itemIsOpen({}, index)).toBe(false)
+  })
+
+  test('Returns false if item index is larger than activeIndex', () => {
+    const state = {
+      activeIndex: '1.2.3',
+    }
+
+    expect(itemIsOpen(state, '1.2.3.4')).toBe(false)
+    expect(itemIsOpen(state, '1.2.3')).toBe(false)
+  })
+})
+
+describe('itemIsSelected', () => {
+  test('Returns true if item matches activeIndex', () => {
+    const state = {
+      activeIndex: '1.2.3',
+    }
+
+    const index = '1.2.3'
+
+    expect(itemIsSelected(state, index)).toBe(true)
+  })
+
+  test('Returns false if item does not match activeIndex', () => {
+    const state = {
+      activeIndex: '1.2.3',
+    }
+
+    expect(itemIsSelected(state, '0.1.2.3')).toBe(false)
+    expect(itemIsSelected(state, '0.1.2')).toBe(false)
+    expect(itemIsSelected(state, '0.1')).toBe(false)
+    expect(itemIsSelected({}, '1.2.3')).toBe(false)
+  })
+})
+
+describe('getItemProps', () => {
+  const item = {
+    className: 'ron',
+    index: '0.1',
+    value: 'ron',
+    'aria-label': 'Is Ron',
+  }
+
+  test('Returns unmodified item if state is undefined', () => {
+    const state = undefined
+
+    expect(getItemProps(state, item)).toBe(item)
+  })
+
+  test('Enhances item based on state, if applicable', () => {
+    const state = {
+      activeIndex: '0.1.3',
+    }
+
+    const enhancedItem: any = getItemProps(state, item)
+
+    expect(enhancedItem).not.toBe(item)
+    expect(enhancedItem.className).toContain(item.className)
+    expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
+    expect(enhancedItem.isHover).toBe(true)
+    expect(enhancedItem.isOpen).toBe(true)
+    expect(enhancedItem.isSelected).toBe(false)
+    expect(enhancedItem.isActive).toBe(false)
+  })
+})
+
+describe('getEnhancedItemsWithProps', () => {
+  test('Enhances item from state', () => {
+    const item = {
+      className: 'ron',
+      value: 'ron',
+      'aria-label': 'Is Ron',
+    }
+
+    const state = {
+      activeIndex: '2',
+      items: [item],
+    }
+
+    const enhancedItems: any = getEnhancedItemsWithProps(state)
+    const enhancedItem = enhancedItems[0]
+
+    expect(enhancedItem).not.toBe(item)
+    expect(enhancedItem.className).toContain(item.className)
+    expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
+    expect(enhancedItem.isHover).toBe(false)
+    expect(enhancedItem.isOpen).toBe(false)
+    expect(enhancedItem.isSelected).toBe(false)
+    expect(enhancedItem.isActive).toBe(false)
+  })
+
+  test('Enhances nested item from state', () => {
+    const item = {
+      className: 'ron',
+      value: 'ron',
+      'aria-label': 'Is Ron',
+      items: [
+        {
+          className: 'brian',
+          value: 'brian',
+          'aria-label': 'Is Brian',
+        },
+      ],
+    }
+
+    const state = {
+      activeIndex: '0.0',
+      selectedItem: 'brian',
+      items: [item],
+    }
+
+    const childItem = item.items[0]
+    const enhancedItems: any = getEnhancedItemsWithProps(state)
+    const enhancedItem = enhancedItems[0]
+    const enhancedChildItem = enhancedItem.items[0]
+
+    expect(enhancedItem.hasSubMenu).toBe(true)
+    expect(enhancedItem.isHover).toBe(true)
+    expect(enhancedItem.isOpen).toBe(true)
+
+    expect(enhancedChildItem).not.toBe(childItem)
+    expect(enhancedChildItem.className).toContain(childItem.className)
+    expect(enhancedChildItem.className.length).toBeGreaterThan(
+      childItem.className.length
+    )
+    expect(enhancedChildItem.isHover).toBe(true)
+    expect(enhancedChildItem.isOpen).toBe(false)
+    expect(enhancedChildItem.isSelected).toBe(true)
+    expect(enhancedChildItem.isActive).toBe(true)
   })
 })

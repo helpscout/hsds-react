@@ -1,6 +1,7 @@
 // @ts-ignore
 import {
   setActiveItem,
+  setMenuNode,
   setTriggerNode,
   changeDirection,
   toggleOpen,
@@ -35,6 +36,16 @@ describe('setActiveItem', () => {
     expect(nextState.activeIndex).toBe('123')
     expect(nextState.activeValue).toBe('Hello')
     expect(nextState.activeId).toContain('ron')
+  })
+})
+
+describe('setMenuNode', () => {
+  test('Sets a menuNode onto the state', () => {
+    const state = {}
+    const mockElement = {}
+    const nextState = setMenuNode(state, mockElement)
+
+    expect(nextState.menuNode).toBe(mockElement)
   })
 })
 

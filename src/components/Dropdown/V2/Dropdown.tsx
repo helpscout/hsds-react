@@ -43,6 +43,7 @@ export interface Props {
   renderTrigger?: any
   trigger: any
   triggerRef: (node: HTMLElement) => void
+  selectedItem?: string | Object
   setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void
 }
@@ -67,6 +68,7 @@ export class Dropdown extends React.PureComponent<Props, State> {
     onFocus: noop,
     onOpen: noop,
     onSelect: noop,
+    selectedItem: '',
     setMenuNode: noop,
     setTriggerNode: noop,
     subscribe: noop,
