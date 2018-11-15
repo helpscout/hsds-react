@@ -18,7 +18,7 @@ export const isObject = (o: any): boolean =>
 export const isPlainObject = (o: any): boolean =>
   Object.prototype.toString.call(o) === '[object Object]'
 
-export const isDefined = (o: any): boolean => o !== undefined
+export const isDefined = (o: any): boolean => o !== undefined && o !== null
 
 export const anyDefined = (...args): boolean =>
   args.filter(isDefined).length > 0

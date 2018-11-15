@@ -12,7 +12,7 @@ import {
   itemOnFocus,
   itemOnClick,
 } from '../Dropdown.actions'
-import { selectors } from '../Dropdown.utils'
+import { SELECTORS } from '../Dropdown.utils'
 
 describe('setActiveItem', () => {
   test('Updates the state with the activeItem DOM node', () => {
@@ -25,8 +25,8 @@ describe('setActiveItem', () => {
     }
 
     const activeItem = document.createElement('div')
-    activeItem.setAttribute(selectors.indexAttribute, '123')
-    activeItem.setAttribute(selectors.valueAttribute, 'Hello')
+    activeItem.setAttribute(SELECTORS.indexAttribute, '123')
+    activeItem.setAttribute(SELECTORS.valueAttribute, 'Hello')
 
     const nextState = setActiveItem(state, activeItem)
 

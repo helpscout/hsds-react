@@ -1,4 +1,5 @@
 import { rgba } from 'polished'
+import { SELECTORS } from './Dropdown.utils'
 import styled from '../../styled'
 import Card from '../../Card'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
@@ -33,7 +34,7 @@ export const MenuUI = styled(Card)`
 `
 
 MenuUI.defaultProps = {
-  'data-hsds-menu': true,
+  [SELECTORS.menuAttribute]: true,
   floating: true,
 }
 
@@ -54,7 +55,7 @@ export const WrapperUI = styled('div')`
 `
 
 WrapperUI.defaultProps = {
-  'data-hsds-menu-wrapper': true,
+  [SELECTORS.wrapperAttribute]: true,
 }
 
 export const ActionUI = styled('div')`
@@ -76,7 +77,7 @@ export const ActionUI = styled('div')`
 `
 
 ActionUI.defaultProps = {
-  'data-hsds-menu-action': true,
+  [SELECTORS.actionAttribute]: true,
 }
 
 export const ItemUI = styled('div')`
@@ -123,7 +124,7 @@ export const ItemUI = styled('div')`
   }
 `
 ItemUI.defaultProps = {
-  'data-hsds-menu-item': true,
+  [SELECTORS.itemAttribute]: true,
   tabIndex: 0,
 }
 

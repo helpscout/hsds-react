@@ -6,7 +6,9 @@ export const COMPONENT_KEY = {
   Trigger: 'Dropdown.Trigger',
 }
 
-export const selectors = {
+export const DELIMETER = '.'
+
+export const SELECTORS = {
   actionAttribute: 'data-hsds-menu-action',
   itemAttribute: 'data-hsds-menu-item',
   menuAttribute: 'data-hsds-menu',
@@ -15,49 +17,41 @@ export const selectors = {
   valueAttribute: 'data-hsds-menu-item-value',
 }
 
-export const pathResolve = (path?: any, subPath?: any): string => {
-  if (!path) return `${subPath}`
-  if (subPath !== undefined) {
-    return `${path}.${subPath}`
+export const pathResolve = (...args): string => {
+  // @ts-ignore
+  const [path, ...rest] = args
+  let nextPath = rest.filter(isDefined).join(DELIMETER)
+
+  if (!isDefined(path)) return `${nextPath}`
+
+  if (rest.length) {
+    return [path, nextPath].join(DELIMETER)
   }
 
   return `${path}`
 }
 
 export const isPathActive = (path: string, index: string): boolean => {
-  if (!path) return false
+  if (!isDefined(path)) return false
 
   const matchPath = path
-    .split('.')
-    .slice(0, index.split('.').length)
-    .join('.')
+    .split(DELIMETER)
+    .slice(0, index.split(DELIMETER).length)
+    .join(DELIMETER)
 
   return matchPath === index
 }
 
 export const getParentPath = (path: string): string => {
-  const paths = path.split('.')
-  return paths.slice(0, paths.length - 1).join('.')
+  const paths = path.split(DELIMETER)
+
+  if (paths.length <= 1) return `${paths[0]}`
+
+  return paths.slice(0, paths.length - 1).join(DELIMETER)
 }
 
 export const getNextChildPath = (path: string): string => {
   return `${path}.0`
-}
-
-export const getItemFromCollection = (
-  items: Array<any>,
-  value: string
-): any => {
-  for (const item of items) {
-    if (item.value === value) {
-      return item
-    }
-    if (item.items) {
-      const child = getItemFromCollection(item.items, value)
-      if (child) return child
-    }
-  }
-  return undefined
 }
 
 export const incrementPathIndex = (
@@ -82,8 +76,27 @@ export const decrementPathIndex = (
 
   if (!nextIndexBase) return path
 
-  const nextIndex = parseInt(nextIndexBase, 10) - amount
+  let nextIndex = parseInt(nextIndexBase, 10) - amount
+  if (nextIndex < 0) {
+    nextIndex = 0
+  }
   return [...paths, nextIndex].join('.')
+}
+
+export const getItemFromCollection = (
+  items: Array<any>,
+  value: string
+): any => {
+  for (const item of items) {
+    if (item.value === value) {
+      return item
+    }
+    if (item.items) {
+      const child = getItemFromCollection(item.items, value)
+      if (child) return child
+    }
+  }
+  return undefined
 }
 
 export const isItemActiveFromSelected = (selectedItem, item) => {
@@ -140,7 +153,7 @@ export const setMenuPositionStyles = (props: {
   const menuOffset = 9
   const { top } = itemNode.getBoundingClientRect()
   const { height } = wrapperNode.getBoundingClientRect()
-  const triggerNodeMenu = triggerNode.closest(`[${selectors.menuAttribute}]`)
+  const triggerNodeMenu = triggerNode.closest(`[${SELECTORS.menuAttribute}]`)
 
   const translateYUp = wrapperNode.clientHeight - menuOffset
 
@@ -195,7 +208,7 @@ export const getCustomItemProps = (props: any): Object => {
 }
 
 /**
- * Selectors
+ * State Selectors
  */
 
 export const isDropRight = (state: any): boolean => state.direction === 'right'
@@ -259,8 +272,8 @@ export const getItemProps = (state: any, itemProps: any): Object => {
     isOpen,
     isSelected,
     isActive,
-    [selectors.indexAttribute]: index,
-    [selectors.valueAttribute]: value,
+    [SELECTORS.indexAttribute]: index,
+    [SELECTORS.valueAttribute]: value,
   }
 }
 

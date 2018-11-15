@@ -10,7 +10,7 @@ import {
   SubMenuIncidatorUI,
 } from './Dropdown.css.js'
 import {
-  selectors,
+  SELECTORS,
   setMenuPositionStyles,
   getCustomItemProps,
 } from './Dropdown.utils'
@@ -110,8 +110,8 @@ export class Item extends React.PureComponent<Props> {
     return {
       className: 'c-DropdownV2MenuWrapper',
       innerRef: this.setWrapperNodeRef,
-      [selectors.indexAttribute]: index,
-      [selectors.valueAttribute]: value,
+      [SELECTORS.indexAttribute]: index,
+      [SELECTORS.valueAttribute]: value,
     }
   }
 

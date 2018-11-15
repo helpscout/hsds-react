@@ -1,4 +1,4 @@
-import { selectors, getItemFromCollection, pathResolve } from './Dropdown.utils'
+import { SELECTORS, getItemFromCollection, pathResolve } from './Dropdown.utils'
 
 const initialItemState = {
   activeItem: null,
@@ -9,8 +9,8 @@ const initialItemState = {
 
 export const setActiveItem = (state, activeItem) => {
   const { id } = state
-  const activeIndex = activeItem.getAttribute(selectors.indexAttribute)
-  const activeValue = activeItem.getAttribute(selectors.valueAttribute)
+  const activeIndex = activeItem.getAttribute(SELECTORS.indexAttribute)
+  const activeValue = activeItem.getAttribute(SELECTORS.valueAttribute)
   const activeId = id ? pathResolve(id, activeIndex) : null
 
   return {

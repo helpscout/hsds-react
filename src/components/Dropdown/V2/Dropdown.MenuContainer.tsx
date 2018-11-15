@@ -5,7 +5,7 @@ import Portal from '../../Portal'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
 import {
-  selectors,
+  SELECTORS,
   decrementPathIndex,
   incrementPathIndex,
   isDropRight,
@@ -124,7 +124,7 @@ export class MenuContainer extends React.Component<Props> {
     if (!nextActiveIndex) return
 
     const nextActiveItem = document.querySelector(
-      `[${selectors.indexAttribute}="${nextActiveIndex}"]`
+      `[${SELECTORS.indexAttribute}="${nextActiveIndex}"]`
     ) as HTMLElement
 
     if (nextActiveItem) {
