@@ -9,10 +9,13 @@ import {
   getCustomItemProps,
   isItemActiveFromSelected,
   getItemFromCollection,
+  setMenuPositionStyles,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
   test('Combines paths together, with a . delimeter', () => {
+    expect(pathResolve(0)).toBe('0')
+    expect(pathResolve('a')).toBe('a')
     expect(pathResolve('a', 'b')).toBe('a.b')
     expect(pathResolve('a', 'b', 'c', 'd')).toBe('a.b.c.d')
   })
@@ -48,6 +51,8 @@ describe('isPathActive', () => {
   })
 
   test('Returns false for non-matching paths', () => {
+    // @ts-ignore
+    expect(isPathActive()).toBe(false)
     expect(isPathActive('1.2', '1.2.3')).toBe(false)
     expect(isPathActive('0', '1')).toBe(false)
     expect(isPathActive('0.1', '1')).toBe(false)
@@ -299,5 +304,47 @@ describe('getItemFromCollection', () => {
       name: 'Ron',
       id: 'ron',
     })
+  })
+})
+
+describe('setMenuPositionStyles', () => {
+  test('Does not modify wrapperNode styles if other required DOM nodes are missing', () => {
+    const wrapperNode: HTMLElement = document.createElement('div')
+    const triggerNode: HTMLElement = document.createElement('div')
+    const itemNode: HTMLElement = document.createElement('div')
+
+    const props = {
+      wrapperNode,
+      menuNode: null,
+      triggerNode,
+      itemNode,
+    }
+    const styles = wrapperNode.style.transform
+
+    setMenuPositionStyles(props)
+
+    expect(styles).toBe(wrapperNode.style.transform)
+  })
+
+  test('Modifies wrapperNode styles from DOM node measurements', () => {
+    const wrapperNode: HTMLElement = document.createElement('div')
+    const menuNode: HTMLElement = document.createElement('div')
+    const triggerNode: HTMLElement = document.createElement('div')
+    const itemNode: HTMLElement = document.createElement('div')
+
+    wrapperNode.style.height = '100px'
+
+    const props = {
+      wrapperNode,
+      menuNode,
+      triggerNode,
+      itemNode,
+    }
+
+    const styles = { ...wrapperNode.style }
+
+    setMenuPositionStyles(props)
+
+    expect(styles).not.toEqual(wrapperNode.style)
   })
 })

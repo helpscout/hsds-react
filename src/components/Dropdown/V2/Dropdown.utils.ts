@@ -61,6 +61,7 @@ export const incrementPathIndex = (
   const paths = path.split('.')
   const nextIndexBase = paths.pop()
 
+  /* instanbul ignore if */
   if (!nextIndexBase) return path
 
   const nextIndex = parseInt(nextIndexBase, 10) + amount
@@ -74,6 +75,7 @@ export const decrementPathIndex = (
   const paths = path.split('.')
   const nextIndexBase = paths.pop()
 
+  /* instanbul ignore if */
   if (!nextIndexBase) return path
 
   let nextIndex = parseInt(nextIndexBase, 10) - amount
@@ -119,6 +121,7 @@ export const getItemFromCollection = (
     }
     if (item.items) {
       const child = getItemFromCollection(item.items, value)
+      /* istanbul ignore else */
       if (child) return child
     }
   }
@@ -141,9 +144,11 @@ export const getCustomItemProps = (props: any): any => {
   return rest
 }
 
+// Going to be ignoring chunks of this from test coverage, since DOM related
+// calculations are difficult to mock/test within JSDOM.
 export const setMenuPositionStyles = (props: {
-  dropRight: boolean
-  dropUp: boolean
+  dropRight?: boolean
+  dropUp?: boolean
   menuNode: HTMLElement | null
   itemNode: HTMLElement
   wrapperNode: HTMLElement | null
@@ -173,6 +178,7 @@ export const setMenuPositionStyles = (props: {
 
   const translateYUp = wrapperNode.clientHeight - menuOffset
 
+  /* istanbul ignore next */
   translateY =
     triggerNode.offsetHeight +
     (triggerNodeMenu ? triggerNodeMenu.scrollTop : 0) +
@@ -181,9 +187,11 @@ export const setMenuPositionStyles = (props: {
   const predictedOffsetBottom = translateY + height + top
   const predictedFlippedOffsetTop = top - translateY - height
 
+  /* istanbul ignore next */
   const shouldDropUp =
     window.innerHeight < predictedOffsetBottom && predictedFlippedOffsetTop > 0
 
+  /* istanbul ignore next */
   if (!dropRight) {
     wrapperNode.style.right = '100%'
     wrapperNode.style.paddingLeft = '0px'
@@ -194,6 +202,7 @@ export const setMenuPositionStyles = (props: {
     wrapperNode.style.paddingRight = '0px'
   }
 
+  /* istanbul ignore next */
   if (dropUp) {
     if (shouldDropUp) {
       translateY = translateYUp
