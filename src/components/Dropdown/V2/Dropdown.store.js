@@ -17,6 +17,10 @@ export const initialState = {
   zIndex: 1080,
 }
 
+// This ensures that every dropdown instance will have their own unique
+// store/state. Creating the store and exporting it (like you normally would)
+// would mean that all dropdowns share the same store. And we don't want that!
+
 export const createStore = (props = initialState) => unistoreCreateStore(props)
 
 export default createStore
