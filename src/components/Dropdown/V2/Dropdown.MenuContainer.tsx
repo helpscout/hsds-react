@@ -19,6 +19,7 @@ import { MenuContainerUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
 import { getComponentKey } from '../../../utilities/component'
+import { isDefined } from '../../../utilities/is'
 import { noop } from '../../../utilities/other'
 
 export interface Props {
@@ -45,7 +46,7 @@ export class MenuContainer extends React.Component<Props> {
   static defaultProps = {
     animationDuration: 80,
     animationSequence: 'fade down',
-    activeIndex: '0',
+    activeIndex: null,
     closeDropdown: noop,
     dropUp: false,
     dropRight: true,
@@ -116,9 +117,10 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   setNextActiveItem = (nextActiveIndex: string) => {
-    if (!nextActiveIndex) return
+    /* istanbul ignore if */
+    if (!isDefined(nextActiveIndex)) return
 
-    const nextActiveItem = document.querySelector(
+    const nextActiveItem = this.node.querySelector(
       `[${SELECTORS.indexAttribute}="${nextActiveIndex}"]`
     ) as HTMLElement
 
@@ -128,7 +130,7 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
-  goUp = (amount: number = 1) => {
+  goUp = (amount: number) => {
     const { activeIndex } = this.props
     if (!activeIndex) return
 
@@ -137,7 +139,7 @@ export class MenuContainer extends React.Component<Props> {
     this.setNextActiveItem(nextActiveIndex)
   }
 
-  goDown = (amount: number = 1) => {
+  goDown = (amount: number) => {
     const { activeIndex: currentActiveIndex } = this.props
     // Allows for initial selection of first item (index 0)
     const activeIndex = currentActiveIndex || '-1'
@@ -148,28 +150,40 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   closeOnLastTab = () => {
-    const { activeIndex, closeDropdown, items } = this.props
+    const { activeIndex, closeDropdown, isOpen, items } = this.props
+    // This has been tested
+    /* istanbul ignore if */
+    if (!isOpen) return
+
     const isLastItem = parseInt(activeIndex, 10) === items.length - 1
 
+    /* istanbul ignore else */
     if (isLastItem) {
       closeDropdown()
     }
   }
 
   closeSubMenu = () => {
-    const { activeIndex } = this.props
+    const { activeIndex, isOpen } = this.props
+    if (!isOpen) return
+
     const nextActiveIndex = getParentPath(activeIndex)
 
     this.setNextActiveItem(nextActiveIndex)
   }
 
   openSubMenu = () => {
-    const { activeIndex } = this.props
+    const { activeIndex, isOpen } = this.props
+    if (!isOpen) return
+
     const nextActiveIndex = getNextChildPath(activeIndex)
 
     this.setNextActiveItem(nextActiveIndex)
   }
 
+  /* istanbul ignore next */
+  // Skipping coverage for this method as it does almost exclusively DOM
+  // calculations, which isn't a JSDOM's forte.
   shouldDropUp = (): boolean => {
     if (this.props.dropUp) return true
     if (!this.node || !this.wrapperNode) return false
@@ -229,9 +243,6 @@ export class MenuContainer extends React.Component<Props> {
 
   getStylePosition = (): any => {
     const { triggerNode } = this.props
-    const defaultProps = { top: '0', left: '0' }
-    if (!this.wrapperNode) return defaultProps
-
     const targetNode = triggerNode || this.wrapperNode
 
     const rect = targetNode.getBoundingClientRect()
@@ -265,6 +276,9 @@ export class MenuContainer extends React.Component<Props> {
         this.placementNode.style.width = `${triggerNode.clientWidth}px`
       }
 
+      /* istanbul ignore next */
+      // Skipping coverage for this method as it does almost exclusively DOM
+      // calculations, which isn't a JSDOM's forte.
       if (this.shouldDropUp()) {
         this.node.classList.add('is-dropUp')
         if (triggerNode) {

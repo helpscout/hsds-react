@@ -72,6 +72,7 @@ class KeypressListener extends React.Component<Props> {
         case 'control':
           modKey = event.ctrlKey
           break
+        /* istanbul ignore next */
         default:
           break
       }

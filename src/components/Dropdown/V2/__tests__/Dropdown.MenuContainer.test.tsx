@@ -4,8 +4,10 @@ import { Provider } from 'unistore/react'
 import ConnectedMenuContainer, {
   MenuContainer,
 } from '../Dropdown.MenuContainer'
+import { getEnhancedItemsWithProps } from '../Dropdown.utils'
 import createStore from '../Dropdown.store'
 import { find, hasClass } from './Dropdown.testHelpers'
+import Keys from '../../../../constants/Keys'
 // @ts-ignore
 import Portal from '../../../Portal'
 
@@ -14,6 +16,10 @@ jest.mock('../../../Portal', () => {
     default: 'Portal',
   }
 })
+
+const documentEvents = {
+  keydown: (event: any) => undefined,
+}
 
 const baseSelector = 'div.c-DropdownV2MenuContainer'
 
@@ -229,5 +235,338 @@ describe('ConnectedMenuContainer', () => {
     expect(el.prop('id')).toBe(initialState.menuId)
     expect(el.prop('dropRight')).toBe(false)
     expect(el.prop('zIndex')).toBe(initialState.zIndex)
+  })
+})
+
+describe('Style/Direction', () => {
+  test('shouldDropUp returns true if set', () => {
+    const wrapper = mount(<MenuContainer dropUp={true} />)
+
+    // @ts-ignore
+    expect(wrapper.instance().shouldDropUp()).toBe(true)
+  })
+
+  test('shouldDropUp returns false if important nodes are missing', () => {
+    const wrapper = mount(<MenuContainer />)
+    // @ts-ignore
+    wrapper.instance().wrapperNode = undefined
+
+    // @ts-ignore
+    expect(wrapper.instance().shouldDropUp()).toBe(false)
+  })
+
+  test('Renders dropUp styles, if defined', () => {
+    const wrapper = mount(<MenuContainer dropUp={true} />)
+    const el = find(wrapper, baseSelector)
+    const animate = wrapper.find('Animate')
+
+    expect(hasClass(el, 'is-dropUp')).toBe(true)
+    expect(animate.prop('sequence')).toContain('up')
+  })
+})
+
+describe('SubMenus', () => {
+  test('Increments base index to activeIndex path when opening sub menu', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer activeIndex="5" isOpen={true} />)
+    // @ts-ignore
+    wrapper.instance().setNextActiveItem = spy
+
+    // @ts-ignore
+    wrapper.instance().openSubMenu()
+
+    expect(spy).toHaveBeenCalledWith('5.0')
+  })
+
+  test('Does not open sub menu if menu is closed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer activeIndex="5" isOpen={false} />)
+    // @ts-ignore
+    wrapper.instance().setNextActiveItem = spy
+
+    // @ts-ignore
+    wrapper.instance().openSubMenu()
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Decrements base index to activeIndex path when closing sub menu', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer activeIndex="5.0" isOpen={true} />)
+    // @ts-ignore
+    wrapper.instance().setNextActiveItem = spy
+
+    // @ts-ignore
+    wrapper.instance().closeSubMenu()
+
+    expect(spy).toHaveBeenCalledWith('5')
+  })
+
+  test('Does not close sub menu if menu is closed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer activeIndex="5" isOpen={false} />)
+    // @ts-ignore
+    wrapper.instance().setNextActiveItem = spy
+
+    // @ts-ignore
+    wrapper.instance().closeSubMenu()
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('Keyboard interactions', () => {
+  const initialState = {
+    activeIndex: null,
+    isOpen: true,
+    items: [
+      {
+        value: 'ron',
+        label: 'Ron',
+      },
+      {
+        value: 'champ',
+        label: 'Champ',
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    document.addEventListener = jest.fn((event, handler) => {
+      documentEvents[event] = handler
+    })
+  })
+
+  afterEach(() => {
+    // @ts-ignore
+    document.addEventListener.mockRestore()
+  })
+
+  describe('Down Arrow', () => {
+    test('Down: Does not select the first item if Menu is closed', () => {
+      const mockStore = createStore({
+        ...initialState,
+        isOpen: false,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.DOWN_ARROW,
+      })
+
+      expect(mockStore.getState().activeIndex).toBeFalsy()
+      expect(mockStore.getState().activeItem).toBeFalsy()
+    })
+
+    test('Down: Does not select item if there are none', () => {
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps({ items: [] }),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.DOWN_ARROW,
+      })
+
+      expect(mockStore.getState().activeIndex).toBeFalsy()
+      expect(mockStore.getState().activeItem).toBeFalsy()
+    })
+
+    test('Down: Selects first item on keydown', () => {
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      expect(mockStore.getState().activeIndex).toBeFalsy()
+      expect(mockStore.getState().activeItem).toBeFalsy()
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.DOWN_ARROW,
+      })
+
+      expect(mockStore.getState().activeIndex).toBe('0')
+      expect(mockStore.getState().activeItem).toBeTruthy()
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.DOWN_ARROW,
+      })
+      expect(mockStore.getState().activeIndex).toBe('1')
+    })
+
+    test('Does not update store if there are no next valid items', () => {
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        activeIndex: '500',
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      mockStore.subscribe(spy)
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.DOWN_ARROW,
+      })
+
+      expect(spy).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('Up Arrow', () => {
+    test('Up: Does not select the item if Menu is closed', () => {
+      const mockStore = createStore({
+        ...initialState,
+        isOpen: false,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.UP_ARROW,
+      })
+
+      expect(mockStore.getState().activeIndex).toBeFalsy()
+      expect(mockStore.getState().activeItem).toBeFalsy()
+    })
+
+    test('Up: Does not update store if activeIndex is undefined', () => {
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      mockStore.subscribe(spy)
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.UP_ARROW,
+      })
+
+      expect(spy).not.toHaveBeenCalled()
+    })
+
+    test('Up: Selects previous item on keydown', () => {
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.DOWN_ARROW,
+      })
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.DOWN_ARROW,
+      })
+
+      expect(mockStore.getState().activeIndex).toBe('1')
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.UP_ARROW,
+      })
+
+      expect(mockStore.getState().activeIndex).toBe('0')
+    })
+  })
+
+  describe('Right Arrow', () => {})
+
+  describe('Tab', () => {
+    test('Closes menu if pressed on last item', () => {
+      const mockStore = createStore({
+        ...initialState,
+        activeIndex: '1',
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      const wrapper = mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.TAB,
+      })
+
+      expect(mockStore.getState().isOpen).toBe(false)
+      expect(wrapper.find('Menu').length).toBe(0)
+    })
+
+    test('Does not trigger store update if menu is closed', () => {
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        activeIndex: '1',
+        isOpen: false,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer items={mockStore.getState().items} />
+        </Provider>
+      )
+
+      mockStore.subscribe(spy)
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.TAB,
+      })
+
+      expect(spy).not.toHaveBeenCalled()
+    })
   })
 })

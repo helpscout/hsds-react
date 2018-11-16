@@ -47,7 +47,7 @@ class EventListener extends React.Component<Props> {
     this.detachListener()
   }
 
-  setInternalScopeFromProps = (props: Props = this.props) => {
+  setInternalScopeFromProps = (props: Props) => {
     const { scope } = props
     this.scope = scope === document ? getClosestDocument(this.node) : scope
   }
