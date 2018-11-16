@@ -198,7 +198,10 @@ export const setMenuPositionStyles = (props: {
   let translateY
 
   // Reset menuNode scroll position
-  menuNode.scrollTop = 0
+  /* istanbul ignore next */
+  if (menuNode.scrollTop) {
+    menuNode.scrollTop = 0
+  }
 
   // Hard-coded dimensions
   const menuOffset = 9
