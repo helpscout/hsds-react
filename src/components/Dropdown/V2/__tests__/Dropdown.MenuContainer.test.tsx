@@ -708,3 +708,104 @@ describe('Keyboard interactions', () => {
     })
   })
 })
+
+describe('isLoading', () => {
+  test('Can render custom Loading UI', () => {
+    const Loading = () => <div>Loading...</div>
+    const wrapper = mount(
+      <MenuContainer
+        isOpen={true}
+        items={[]}
+        isLoading={true}
+        renderLoading={<Loading />}
+      />
+    )
+    const el = wrapper.find('Loading')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Does not render loading UI, if isLoading is false', () => {
+    const Loading = () => <div>Loading...</div>
+    const wrapper = mount(
+      <MenuContainer
+        isOpen={true}
+        items={[]}
+        isLoading={false}
+        renderLoading={<Loading />}
+      />
+    )
+    const el = wrapper.find('Loading')
+
+    expect(el.length).toBeFalsy()
+  })
+
+  test('Does not render loading UI by default', () => {
+    const Loading = () => <div>Loading...</div>
+    const wrapper = mount(
+      <MenuContainer isOpen={true} items={[]} renderLoading={<Loading />} />
+    )
+    const el = wrapper.find('Loading')
+
+    expect(el.length).toBeFalsy()
+  })
+})
+
+describe('Empty', () => {
+  test('Can render Empty UI, if applicable', () => {
+    const Empty = () => <div>Empty</div>
+    const wrapper = mount(
+      <MenuContainer isOpen={true} items={[]} renderEmpty={<Empty />} />
+    )
+    const el = wrapper.find('Empty')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Does not render Empty UI, if there are items', () => {
+    const items = [
+      {
+        value: 'ron',
+        label: 'Ron',
+      },
+      {
+        value: 'champ',
+        label: 'Champ',
+      },
+    ]
+    const Empty = () => <div>Empty</div>
+    const wrapper = mount(
+      <MenuContainer isOpen={true} items={items} renderEmpty={<Empty />} />
+    )
+    const el = wrapper.find('Empty')
+
+    expect(el.length).toBeFalsy()
+  })
+
+  test('Does not render Empty UI, if isLoading', () => {
+    const Loading = () => <div>Loading...</div>
+    const Empty = () => <div>Empty</div>
+    const items = [
+      {
+        value: 'ron',
+        label: 'Ron',
+      },
+      {
+        value: 'champ',
+        label: 'Champ',
+      },
+    ]
+    const wrapper = mount(
+      <MenuContainer
+        isOpen={true}
+        items={items}
+        isLoading={true}
+        renderEmpty={<Empty />}
+        renderLoading={<Loading />}
+      />
+    )
+
+    expect(wrapper.find('Loading').length).toBeTruthy()
+    expect(wrapper.find('Empty').length).toBeFalsy()
+  })
+})

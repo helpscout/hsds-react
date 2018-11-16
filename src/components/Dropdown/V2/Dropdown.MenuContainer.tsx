@@ -14,6 +14,7 @@ import {
   isDropRight,
   getParentPath,
   getNextChildPath,
+  renderRenderPropComponent,
 } from './Dropdown.utils'
 import { closeDropdown, setActiveItem, onSelect } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
@@ -36,10 +37,13 @@ export interface Props {
   dropUp: boolean
   dropRight: boolean
   id?: string
+  isLoading: boolean
   onSelect: () => {}
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
+  renderEmpty?: any
+  renderLoading?: any
   setActiveItem: (node: HTMLElement) => void
   triggerId?: string
   triggerNode?: HTMLElement
@@ -57,6 +61,7 @@ export class MenuContainer extends React.Component<Props> {
     innerRef: noop,
     items: [],
     isOpen: true,
+    isLoading: false,
     onSelect: noop,
     setActiveItem: noop,
     zIndex: 1080,
@@ -228,8 +233,26 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
+  renderItems = () => {
+    const { isLoading, renderEmpty, renderLoading } = this.props
+    const { items } = this.getMenuProps()
+
+    // Loading
+    if (isLoading && renderLoading)
+      return renderRenderPropComponent(renderLoading)
+    // Empty
+    if (!items.length && renderEmpty)
+      return renderRenderPropComponent(renderEmpty)
+    // Normal
+    return items.map((item, index) => (
+      <Item key={getComponentKey(item, index)} {...item}>
+        {item.label}
+      </Item>
+    ))
+  }
+
   renderMenu = () => {
-    const { activeId, items, id, triggerId } = this.getMenuProps()
+    const { activeId, id, triggerId } = this.getMenuProps()
 
     return (
       <Menu
@@ -237,11 +260,7 @@ export class MenuContainer extends React.Component<Props> {
         aria-labelledby={triggerId}
         id={id}
       >
-        {items.map((item, index) => (
-          <Item key={getComponentKey(item, index)} {...item}>
-            {item.label}
-          </Item>
-        ))}
+        {this.renderItems()}
       </Menu>
     )
   }
@@ -381,7 +400,10 @@ const ConnectedMenuContainer: any = connect(
       activeId,
       dropUp,
       isOpen,
+      isLoading,
       menuId,
+      renderEmpty,
+      renderLoading,
       triggerId,
       triggerNode,
       zIndex,
@@ -394,6 +416,9 @@ const ConnectedMenuContainer: any = connect(
       dropRight: isDropRight(state),
       isOpen,
       id: menuId,
+      isLoading,
+      renderEmpty,
+      renderLoading,
       triggerId,
       triggerNode,
       zIndex,

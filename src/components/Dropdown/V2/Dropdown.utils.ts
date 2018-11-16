@@ -1,6 +1,12 @@
+import * as React from 'react'
 import { ItemIndex } from './Dropdown.types'
 import { classNames } from '../../../utilities/classNames'
-import { isObject, isDefined, isString } from '../../../utilities/is'
+import {
+  isFunction,
+  isObject,
+  isDefined,
+  isString,
+} from '../../../utilities/is'
 
 export const COMPONENT_KEY = {
   Dropdown: 'Dropdown',
@@ -154,6 +160,19 @@ export const itemHasSubMenu = (itemProps: any): boolean => {
   return !!(items && items.length)
 }
 
+export const renderRenderPropComponent = (
+  renderProp: any,
+  props: Object = {}
+): any => {
+  if (React.isValidElement(renderProp)) {
+    return React.cloneElement(renderProp, props)
+  }
+  if (isFunction(renderProp)) {
+    return renderProp(props)
+  }
+  return null
+}
+
 // Going to be ignoring chunks of this from test coverage, since DOM related
 // calculations are difficult to mock/test within JSDOM.
 export const setMenuPositionStyles = (props: {
@@ -181,7 +200,10 @@ export const setMenuPositionStyles = (props: {
   // Reset menuNode scroll position
   menuNode.scrollTop = 0
 
+  // Hard-coded dimensions
   const menuOffset = 9
+  const menuBuffer = 20
+
   const { top } = itemNode.getBoundingClientRect()
   const { height } = wrapperNode.getBoundingClientRect()
   const triggerNodeMenu = triggerNode.closest(`[${SELECTORS.menuAttribute}]`)
@@ -205,10 +227,10 @@ export const setMenuPositionStyles = (props: {
   if (!dropRight) {
     wrapperNode.style.right = '100%'
     wrapperNode.style.paddingLeft = '0px'
-    wrapperNode.style.paddingRight = '20px'
+    wrapperNode.style.paddingRight = `${menuBuffer}px`
   } else {
     wrapperNode.style.left = '100%'
-    wrapperNode.style.paddingLeft = '20px'
+    wrapperNode.style.paddingLeft = `${menuBuffer}px`
     wrapperNode.style.paddingRight = '0px'
   }
 

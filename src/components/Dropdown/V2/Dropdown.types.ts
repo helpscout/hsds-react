@@ -34,6 +34,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   onOpen: () => void
   onClose: () => void
   innerRef: (node: HTMLElement) => void
+  isLoading: boolean
   isOpen: boolean
   items: Array<any>
   itemOnMouseEnter: (event: Event) => void
@@ -44,7 +45,9 @@ export interface DropdownProps extends DropdownMenuDimensions {
   onSelect: (item: Object, props: Object) => void
   menuId?: string
   menuRef: (node: HTMLElement) => void
+  renderEmpty?: any
   renderItem?: any
+  renderLoading?: any
   renderTrigger?: any
   trigger: any
   triggerRef: (node: HTMLElement) => void

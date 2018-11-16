@@ -26,10 +26,23 @@ const ItemSpec = createSpec({
   value: faker.name.firstName(),
 })
 
-stories.add('Menu/Default', () => {
+stories.add('Dropdown/Default', () => {
   const items = ItemSpec.generate(8)
 
   return <Dropdown items={items} />
+})
+
+stories.add('Dropdown/Empty', () => {
+  const Empty = () => <div>Nothing here!</div>
+
+  return <Dropdown items={[]} renderEmpty={() => <Empty />} />
+})
+
+stories.add('Dropdown/Loadiing', () => {
+  const items = ItemSpec.generate(8)
+  const Loading = () => <div>Loading...</div>
+
+  return <Dropdown items={items} isLoading renderLoading={() => <Loading />} />
 })
 
 stories.add('Menu/Custom size', () => {

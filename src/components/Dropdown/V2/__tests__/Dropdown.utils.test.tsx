@@ -1,3 +1,4 @@
+import * as React from 'react'
 import {
   pathResolve,
   isPathActive,
@@ -17,6 +18,7 @@ import {
   itemIsSelected,
   getItemProps,
   getEnhancedItemsWithProps,
+  renderRenderPropComponent,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -571,5 +573,60 @@ describe('getEnhancedItemsWithProps', () => {
     expect(enhancedChildItem.isOpen).toBe(false)
     expect(enhancedChildItem.isSelected).toBe(true)
     expect(enhancedChildItem.isActive).toBe(true)
+  })
+})
+
+describe('renderRenderPropComponent', () => {
+  test('Can render an instantiated React component', () => {
+    const CryLaughingComponent = () => <div />
+    const result = renderRenderPropComponent(<CryLaughingComponent />)
+
+    expect(React.isValidElement(result)).toBe(true)
+  })
+
+  test('Can pass props to instantiated component', () => {
+    const CryLaughingComponent = () => <div />
+    const props = {
+      disabled: true,
+    }
+    const result = renderRenderPropComponent(
+      // @ts-ignore
+      <CryLaughingComponent title="custom" />,
+      props
+    )
+
+    expect(result.props.title).toBe('custom')
+    expect(result.props.disabled).toBe(true)
+  })
+
+  test('Can render a function', () => {
+    const CryLaughingComponent = () => <div />
+    const result = renderRenderPropComponent(() => <CryLaughingComponent />)
+
+    expect(React.isValidElement(result)).toBe(true)
+  })
+
+  test('Can pass props to a functional component', () => {
+    const CryLaughingComponent = () => <div />
+    const props = {
+      disabled: true,
+    }
+    const result = renderRenderPropComponent(
+      ({ disabled }) => (
+        // @ts-ignore
+        <CryLaughingComponent title="custom" disabled={disabled} />
+      ),
+      props
+    )
+
+    expect(result.props.title).toBe('custom')
+    expect(result.props.disabled).toBe(true)
+  })
+
+  test('Returns null for invalid arg', () => {
+    expect(renderRenderPropComponent(0)).toBe(null)
+    expect(renderRenderPropComponent(null)).toBe(null)
+    expect(renderRenderPropComponent(undefined)).toBe(null)
+    expect(renderRenderPropComponent('div')).toBe(null)
   })
 })

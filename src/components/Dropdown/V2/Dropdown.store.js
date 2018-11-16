@@ -9,6 +9,7 @@ export const initialState = {
   closeOnSelect: true,
   items: [],
   isOpen: false,
+  isLoading: false,
   direction: 'right',
   dropUp: false,
   minWidth: 180,

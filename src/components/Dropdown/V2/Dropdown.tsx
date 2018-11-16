@@ -13,6 +13,7 @@ import {
 import {
   enhanceItemsWithProps,
   getEnhancedItemsWithProps,
+  renderRenderPropComponent,
 } from './Dropdown.utils'
 import EventListener from '../../EventListener'
 import KeypressListener from '../../KeypressListener'
@@ -36,6 +37,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     dropUp: false,
     innerRef: noop,
     isOpen: false,
+    isLoading: false,
     itemOnClick: noop,
     itemOnFocus: noop,
     itemOnMouseEnter: noop,
@@ -138,10 +140,12 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
 
   renderTrigger = () => {
     const { trigger, renderTrigger } = this.props
+    const triggerComponent = renderTrigger
+      ? /* istanbul ignore next */
+        renderRenderPropComponent(renderTrigger)
+      : trigger
 
-    return (
-      <Trigger {...this.getTriggerProps()}>{renderTrigger || trigger}</Trigger>
-    )
+    return <Trigger {...this.getTriggerProps()}>{triggerComponent}</Trigger>
   }
 
   setNodeRef = (node: HTMLElement) => {

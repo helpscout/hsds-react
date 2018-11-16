@@ -36,7 +36,7 @@ The `children` prop renders with an `Object` containing an **enhanced** listing 
 This component supports async rendering of items. Render the `Dropdown` as you would normally. Provide the component with a `renderLoading` and `isLoading`. Adjust `isLoading` and `items` from your source of state as required.
 
 ```jsx
-<Dropdown items={[...]} isLoading={true} renderLoading={<div>Loading...</div>} />
+<Dropdown items={[...]} isLoading={true} renderLoading={() => <div>Loading...</div>} />
 ```
 
 ## Props
@@ -48,8 +48,8 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | dropUp        | `boolean`         | `false`    | Changes the dropdown to drop upwards.             |
 | id            | `string`          |            | ID of the component.                              |
 | innerRef      | `Function`        |            | Retrieves the Dropdown DOM node.                  |
-| isLoading     | `boolean`         | `false`    | Determines if the dropdown is loading.            |
 | items         | `Array<Object>`   | `[]`       | Items to render.                                  |
+| isLoading     | `boolean`         | `false`    | Renders the loading UI.                           |
 | onBlur        | `Function`        |            | Callback when the Trigger blurs.                  |
 | onFocus       | `Function`        |            | Callback when the Trigger focuses.                |
 | onOpen        | `Function`        |            | Callback when the dropdown opens.                 |
@@ -60,6 +60,8 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | minHeight     | `number`          | `48`       | Minimum width for the menu.                       |
 | minWidth      | `number`          | `180`      | Minimum width for the menu.                       |
 | menuRef       | `Function`        |            | Retrieves the Dropdown Menu DOM node.             |
+| renderEmpty   | `Function`        |            | Callback to render the empty UI.                  |
+| renderLoading | `Function`        |            | Callback to render the loading UI.                |
 | renderItem    | `Function`        |            | Callback to customize how an item renders.        |
 | renderTrigger | `Function`        |            | Callback to customize how an trigger renders.     |
 | selectedItem  | `string`/`Object` |            | Controls the dropdown and sets the "active" item. |
