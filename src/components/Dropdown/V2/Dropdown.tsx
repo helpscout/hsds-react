@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
+import { DropdownProps } from './Dropdown.types'
+import propConnect from '../../PropProvider/propConnect'
 import {
   itemOnMouseEnter,
   itemOnFocus,
@@ -20,42 +22,16 @@ import { DropdownUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
-
-export interface Props {
-  children?: (props: any) => void
-  className?: string
-  closeDropdown: () => void
-  id?: string
-  onBlur: (event: Event) => void
-  onFocus: (event: Event) => void
-  onOpen: () => void
-  onClose: () => void
-  innerRef: (node: HTMLElement) => void
-  isOpen: boolean
-  items: Array<any>
-  itemOnMouseEnter: (event: Event) => void
-  itemOnFocus: (event: Event) => void
-  itemOnClick: (event: Event) => void
-  direction: 'left' | 'right'
-  dropUp: boolean
-  onSelect: (item: Object, props: Object) => void
-  menuId?: string
-  menuRef: (node: HTMLElement) => void
-  renderItems?: any
-  renderTrigger?: any
-  trigger: any
-  triggerRef: (node: HTMLElement) => void
-  selectedItem?: string | Object
-  setMenuNode: (node: HTMLElement) => void
-  setTriggerNode: (node: HTMLElement) => void
-}
+import { namespaceComponent } from '../../../utilities/component'
+import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface State {
   items: Array<any>
 }
 
-export class Dropdown extends React.PureComponent<Props, State> {
+export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
+    closeDropdown: noop,
     direction: 'right',
     dropUp: false,
     innerRef: noop,
@@ -64,6 +40,10 @@ export class Dropdown extends React.PureComponent<Props, State> {
     itemOnFocus: noop,
     itemOnMouseEnter: noop,
     items: [],
+    minWidth: 180,
+    maxWidth: 360,
+    minHeight: 48,
+    maxHeight: 320,
     menuRef: noop,
     onBlur: noop,
     onClose: noop,
@@ -97,19 +77,24 @@ export class Dropdown extends React.PureComponent<Props, State> {
     }
   }
 
-  handleOnKeyDown = (event: KeyboardEvent) => {
+  handleOnDocumentKeyDown = (event: KeyboardEvent) => {
+    if (!this.props.isOpen) return
+
+    /* istanbul ignore else */
     if (event.keyCode === Keys.ESCAPE) {
+      event.preventDefault && event.preventDefault()
       this.focusTriggerNode()
       this.closeMenu()
     }
   }
 
-  handleOnBodyClick = (event: Event) => {
+  handleOnDocumentBodyClick = (event: Event) => {
     if (!event) return
     if (!this.menuNode) return
 
     const targetNode = event.target
 
+    /* istanbul ignore else */
     if (targetNode instanceof Element) {
       if (this.menuNode.contains(targetNode) || targetNode === this.triggerNode)
         return
@@ -130,7 +115,7 @@ export class Dropdown extends React.PureComponent<Props, State> {
     }
   }
 
-  getEnhancedItemsFromProps = (props: Props = this.props) => {
+  getEnhancedItemsFromProps = (props: DropdownProps) => {
     const { items, itemOnMouseEnter, itemOnFocus, itemOnClick } = props
 
     return enhanceItemsWithProps(items, {
@@ -177,11 +162,22 @@ export class Dropdown extends React.PureComponent<Props, State> {
     this.props.setTriggerNode(node)
   }
 
-  render() {
-    const { className, children, id } = this.props
-    const componentClassName = classNames(className, 'c-DropdownV2')
-
+  renderMenu = () => {
+    const { children } = this.props
     const { items } = this.state
+
+    return (
+      <MenuContainer
+        items={items}
+        children={children}
+        innerRef={this.setMenuNodeRef}
+      />
+    )
+  }
+
+  render() {
+    const { className, id } = this.props
+    const componentClassName = classNames(className, 'c-DropdownV2')
 
     return (
       <DropdownUI
@@ -189,22 +185,24 @@ export class Dropdown extends React.PureComponent<Props, State> {
         innerRef={this.setNodeRef}
         id={id}
       >
-        <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
+        <KeypressListener
+          handler={this.handleOnDocumentKeyDown}
+          type="keydown"
+        />
         <EventListener
           event="click"
-          handler={this.handleOnBodyClick}
+          handler={this.handleOnDocumentBodyClick}
           scope={document}
         />
         {this.renderTrigger()}
-        <MenuContainer
-          items={items}
-          children={children}
-          innerRef={this.setMenuNodeRef}
-        />
+        {this.renderMenu()}
       </DropdownUI>
     )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Dropdown)(Dropdown)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
 
 const ConnectedDropdown: any = connect(
   // mapStateToProps
@@ -227,7 +225,7 @@ const ConnectedDropdown: any = connect(
   }
 )(
   // @ts-ignore
-  Dropdown
+  PropConnectedComponent
 )
 
 export default ConnectedDropdown

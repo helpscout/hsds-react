@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
+import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import EventListener from '../../EventListener'
 import KeypressListener from '../../KeypressListener'
@@ -14,13 +15,15 @@ import {
   getParentPath,
   getNextChildPath,
 } from './Dropdown.utils'
-import { closeDropdown, setActiveItem } from './Dropdown.actions'
+import { closeDropdown, setActiveItem, onSelect } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
 import { getComponentKey } from '../../../utilities/component'
 import { isDefined } from '../../../utilities/is'
 import { noop } from '../../../utilities/other'
+import { namespaceComponent } from '../../../utilities/component'
+import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   animationDuration: number
@@ -33,6 +36,7 @@ export interface Props {
   dropUp: boolean
   dropRight: boolean
   id?: string
+  onSelect: () => {}
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
@@ -53,6 +57,7 @@ export class MenuContainer extends React.Component<Props> {
     innerRef: noop,
     items: [],
     isOpen: true,
+    onSelect: noop,
     setActiveItem: noop,
     zIndex: 1080,
   }
@@ -79,6 +84,11 @@ export class MenuContainer extends React.Component<Props> {
     if (!isOpen) return
 
     switch (event.keyCode) {
+      case Keys.ENTER:
+        event.preventDefault()
+        this.selectActiveItem()
+        break
+
       case Keys.UP_ARROW:
         event.preventDefault()
         this.goUp(amount)
@@ -111,9 +121,14 @@ export class MenuContainer extends React.Component<Props> {
         this.closeOnLastTab()
         break
 
+      /* istanbul ignore next */
       default:
         break
     }
+  }
+
+  selectActiveItem = () => {
+    this.props.onSelect()
   }
 
   setNextActiveItem = (nextActiveIndex: string) => {
@@ -353,6 +368,11 @@ export class MenuContainer extends React.Component<Props> {
   }
 }
 
+namespaceComponent(COMPONENT_KEY.MenuContainer)(MenuContainer)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.MenuContainer)(
+  MenuContainer
+)
+
 const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
@@ -383,10 +403,11 @@ const ConnectedMenuContainer: any = connect(
   {
     closeDropdown,
     setActiveItem,
+    onSelect,
   }
 )(
   // @ts-ignore
-  MenuContainer
+  PropConnectedComponent
 )
 
 export default ConnectedMenuContainer

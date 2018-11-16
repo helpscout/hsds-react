@@ -2,6 +2,7 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import Dropdown from '../../DropdownV2'
 import createStore, { initialState } from '../Dropdown.store'
+// Mocking the components below
 // @ts-ignore
 import Portal from '../../../Portal'
 

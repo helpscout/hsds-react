@@ -1,7 +1,11 @@
 import * as React from 'react'
+import { connect } from 'unistore/react'
+import propConnect from '../../PropProvider/propConnect'
 import { MenuUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
+import { namespaceComponent } from '../../../utilities/component'
+import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   className?: string
@@ -63,4 +67,24 @@ export class Menu extends React.PureComponent<Props> {
   }
 }
 
-export default Menu
+namespaceComponent(COMPONENT_KEY.Menu)(Menu)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Menu)(Menu)
+
+const ConnectedMenu: any = connect(
+  // mapStateToProps
+  (state: any) => {
+    const { maxHeight, maxWidth, minHeight, minWidth } = state
+
+    return {
+      maxHeight,
+      maxWidth,
+      minHeight,
+      minWidth,
+    }
+  }
+)(
+  // @ts-ignore
+  PropConnectedComponent
+)
+
+export default ConnectedMenu

@@ -338,6 +338,22 @@ describe('onSelect', () => {
 
     expect(spy).not.toHaveBeenCalled()
   })
+
+  test('Does not fire onSelect if item is disabled', () => {
+    const spy = jest.fn()
+    const state = {
+      items: [{ value: 'champ', disabled: true }, { value: 'brick' }],
+      activeValue: 'champ',
+      onSelect: spy,
+    }
+
+    const mockEvent = {}
+
+    const nextState = onSelect(state, mockEvent)
+
+    expect(spy).not.toHaveBeenCalled()
+    expect(nextState).toBe(state)
+  })
 })
 
 describe('setEventTargetAsActive', () => {

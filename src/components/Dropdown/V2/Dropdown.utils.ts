@@ -3,7 +3,11 @@ import { classNames } from '../../../utilities/classNames'
 import { isObject, isDefined, isString } from '../../../utilities/is'
 
 export const COMPONENT_KEY = {
+  Dropdown: 'Dropdown',
   Trigger: 'Dropdown.Trigger',
+  Menu: 'Dropdown.Menu',
+  MenuContainer: 'Dropdown.MenuContainer',
+  Item: 'Dropdown.Item',
 }
 
 export const DELIMETER = '.'
@@ -267,7 +271,7 @@ export const getItemProps = (state: any, itemProps: any): Object => {
     ),
     'aria-selected': isSelected,
     'aria-haspopup': hasSubMenu,
-    'aria-expanded': isHover,
+    'aria-expanded': isOpen,
     hasSubMenu,
     isHover,
     isOpen,
@@ -282,7 +286,7 @@ export const getEnhancedItemsWithProps = (
   state: any,
   path?: string
 ): Array<any> => {
-  const { dropUp, id, items, renderItems } = state
+  const { dropUp, id, items, renderItem } = state
   const dropRight = isDropRight(state)
 
   const enhancedItems = items.map((item, index) => {
@@ -301,7 +305,7 @@ export const getEnhancedItemsWithProps = (
       dropRight,
       index: itemIndex,
       id: itemId,
-      renderItem: renderItems,
+      renderItem,
       items: childItems,
       subMenuId: pathResolve(itemId, 'sub-menu'),
     }

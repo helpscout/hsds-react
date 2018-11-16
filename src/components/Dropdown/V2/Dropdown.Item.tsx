@@ -1,5 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../../PropProvider/propConnect'
 import Flexy from '../../Flexy'
 import Icon from '../../Icon'
 import Menu from './Dropdown.Menu'
@@ -15,12 +16,17 @@ import {
   getCustomItemProps,
 } from './Dropdown.utils'
 import { classNames } from '../../../utilities/classNames'
-import { getComponentKey } from '../../../utilities/component'
+import {
+  getComponentKey,
+  namespaceComponent,
+} from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
+import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   actionId?: string
   className?: string
+  disabled: boolean
   dropRight: boolean
   dropUp: boolean
   id?: string
@@ -40,6 +46,7 @@ export interface Props {
 
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
+    disabled: false,
     index: '0',
     innerRef: noop,
     isHover: false,
@@ -177,16 +184,22 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { actionId, className } = this.props
+    const { actionId, className, disabled } = this.props
 
-    const componentClassName = classNames('c-DropdownV2Item', className)
+    const componentClassName = classNames(
+      'c-DropdownV2Item',
+      disabled && 'is-disabled',
+      className
+    )
 
     return (
       <ItemUI
         {...getValidProps(this.props)}
         className={componentClassName}
+        aria-disabled={disabled}
         onClick={this.handleOnClick}
         innerRef={this.setNodeRef}
+        role={this.hasSubMenu() ? 'group' : 'option'}
       >
         <ActionUI
           id={actionId}
@@ -204,4 +217,7 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-export default Item
+namespaceComponent(COMPONENT_KEY.Item)(Item)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
+
+export default PropConnectedComponent

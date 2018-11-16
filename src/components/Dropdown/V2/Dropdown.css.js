@@ -91,6 +91,10 @@ export const ItemUI = styled('div')`
   transition: background-color 0.1s ease;
   user-select: none;
 
+  &.is-active {
+    font-weight: bold;
+  }
+
   &:focus {
     ${MenuUI} {
       color: initial;
@@ -121,6 +125,12 @@ export const ItemUI = styled('div')`
       visibility: visible;
       pointer-events: auto;
     }
+  }
+
+  &.is-disabled {
+    cursor: initial;
+    pointer-events: none;
+    opacity: 0.4;
   }
 `
 ItemUI.defaultProps = {

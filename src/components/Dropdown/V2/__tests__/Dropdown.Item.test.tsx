@@ -1,10 +1,21 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
-import { findDOMNode, hasClass } from './Dropdown.testHelpers'
+import { findDOMNode, hasClass, getAttribute } from './Dropdown.testHelpers'
 import { setMenuPositionStyles } from '../Dropdown.utils'
+// @ts-ignore
+import MenuComponent from '../Dropdown.Menu'
+import { MenuUI } from '../Dropdown.css.js'
 
 jest.mock('../Dropdown.utils')
+jest.mock('../Dropdown.Menu', () => {
+  const Menu = props => <MenuUI {...props} />
+  return {
+    default: props => {
+      return <Menu {...props} />
+    },
+  }
+})
 
 beforeEach(() => {
   // @ts-ignore
@@ -61,14 +72,6 @@ describe('innerRef', () => {
 
     // @ts-ignore
     expect(wrapper.instance().wrapperNode).toBeTruthy()
-  })
-
-  test('Internally sets the sub menu node', () => {
-    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
-    const wrapper = mount(<Item items={items} />)
-
-    // @ts-ignore
-    expect(wrapper.instance().menuNode).toBeTruthy()
   })
 })
 
@@ -137,7 +140,7 @@ describe('Action', () => {
 describe('Items', () => {
   test('Does not render sub menu by default', () => {
     const wrapper = mount(<Item />)
-    const el = wrapper.find('.c-DropdownV2Menu')
+    const el = wrapper.find('Menu')
 
     expect(el.length).not.toBeTruthy()
   })
@@ -145,7 +148,7 @@ describe('Items', () => {
   test('Renders sub menu with items', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2Menu')
+    const el = wrapper.find('Menu')
 
     expect(el.length).toBeTruthy()
   })
@@ -241,5 +244,15 @@ describe('renderItem', () => {
     const el = wrapper.find('div.ron')
 
     expect(el.length).toBeTruthy()
+  })
+})
+
+describe('disabled', () => {
+  test('Adds disabled styles, if specified', () => {
+    const wrapper = mount(<Item disabled />)
+    const el = wrapper.find('.c-DropdownV2Item')
+
+    expect(hasClass(wrapper, 'is-disabled')).toBe(true)
+    expect(getAttribute(el, 'aria-disabled')).toBe('true')
   })
 })

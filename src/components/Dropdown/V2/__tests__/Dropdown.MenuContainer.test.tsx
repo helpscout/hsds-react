@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { mount } from 'enzyme'
 import { Provider } from 'unistore/react'
+import { mount } from 'enzyme'
 import ConnectedMenuContainer, {
   MenuContainer,
 } from '../Dropdown.MenuContainer'
@@ -10,10 +10,21 @@ import { find, hasClass } from './Dropdown.testHelpers'
 import Keys from '../../../../constants/Keys'
 // @ts-ignore
 import Portal from '../../../Portal'
+// @ts-ignore
+import MenuComponent from '../Dropdown.Menu'
+import { MenuUI } from '../Dropdown.css.js'
 
 jest.mock('../../../Portal', () => {
   return {
     default: 'Portal',
+  }
+})
+jest.mock('../Dropdown.Menu', () => {
+  const Menu = props => <MenuUI {...props} />
+  return {
+    default: props => {
+      return <Menu {...props} />
+    },
   }
 })
 
@@ -519,7 +530,134 @@ describe('Keyboard interactions', () => {
     })
   })
 
-  describe('Right Arrow', () => {})
+  describe('Enter', () => {
+    test('Selects the activeItem', () => {
+      const eventSpy = jest.fn()
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        activeIndex: '0',
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      mount(
+        <Provider store={mockStore}>
+          <ConnectedMenuContainer
+            items={mockStore.getState().items}
+            onSelect={spy}
+          />
+        </Provider>
+      )
+
+      documentEvents.keydown({
+        preventDefault: eventSpy,
+        keyCode: Keys.ENTER,
+      })
+
+      expect(eventSpy).toHaveBeenCalled()
+      expect(spy).toHaveBeenCalled()
+    })
+  })
+
+  describe('Left Arrow', () => {
+    test('Attemps to close sub menu, if dropRight', () => {
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      const wrapper = mount(
+        <MenuContainer
+          items={mockStore.getState().items}
+          dropRight={true}
+          isOpen={true}
+        />
+      )
+      wrapper.instance()['closeSubMenu'] = spy
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.LEFT_ARROW,
+      })
+
+      expect(spy).toHaveBeenCalled()
+    })
+
+    test('Attemps to open sub menu, if dropRight is false', () => {
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      const wrapper = mount(
+        <MenuContainer
+          items={mockStore.getState().items}
+          dropRight={false}
+          isOpen={true}
+        />
+      )
+      wrapper.instance()['openSubMenu'] = spy
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.LEFT_ARROW,
+      })
+
+      expect(spy).toHaveBeenCalled()
+    })
+  })
+
+  describe('Right Arrow', () => {
+    test('Attemps to open sub menu, if dropRight', () => {
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      const wrapper = mount(
+        <MenuContainer
+          items={mockStore.getState().items}
+          dropRight={true}
+          isOpen={true}
+        />
+      )
+      wrapper.instance()['openSubMenu'] = spy
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.RIGHT_ARROW,
+      })
+
+      expect(spy).toHaveBeenCalled()
+    })
+
+    test('Attemps to close sub menu, if dropRight is false', () => {
+      const spy = jest.fn()
+      const mockStore = createStore({
+        ...initialState,
+        items: getEnhancedItemsWithProps(initialState),
+      })
+
+      const wrapper = mount(
+        <MenuContainer
+          items={mockStore.getState().items}
+          dropRight={false}
+          isOpen={true}
+        />
+      )
+      wrapper.instance()['closeSubMenu'] = spy
+
+      documentEvents.keydown({
+        preventDefault: jest.fn(),
+        keyCode: Keys.RIGHT_ARROW,
+      })
+
+      expect(spy).toHaveBeenCalled()
+    })
+  })
 
   describe('Tab', () => {
     test('Closes menu if pressed on last item', () => {

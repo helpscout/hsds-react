@@ -63,6 +63,9 @@ export const onSelect = (state, event) => {
   const { items, activeValue, onSelect } = state
   const item = getItemFromCollection(items, activeValue)
 
+  if (!item) return state
+  if (item.disabled) return state
+
   // Trigger callback from Provider
   /* istanbul ignore else */
   if (item && onSelect) {

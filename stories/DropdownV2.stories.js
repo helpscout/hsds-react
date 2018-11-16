@@ -32,6 +32,18 @@ stories.add('Menu/Default', () => {
   return <Dropdown items={items} />
 })
 
+stories.add('Menu/Custom size', () => {
+  const items = ItemSpec.generate(8)
+
+  return <Dropdown items={items} minWidth={400} maxWidth={600} />
+})
+
+stories.add('Menu/DownLeft', () => {
+  const items = ItemSpec.generate(8)
+
+  return <Dropdown items={items} direction="left" />
+})
+
 stories.add('Menu/Callbacks', () => {
   const items = ItemSpec.generate(8)
   const onOpen = () => console.log('Open')
@@ -135,13 +147,32 @@ stories.add('Menu/Custom', () => {
   return (
     <Dropdown
       items={items}
-      renderItems={CustomItem}
+      renderItem={CustomItem}
       minWidth={300}
       onSelect={onSelect}
     >
       {renderMenu}
     </Dropdown>
   )
+})
+
+stories.add('Item/Active', () => {
+  const items = ItemSpec.generate(8)
+  const selectedItem = items[0]
+
+  return <Dropdown items={items} selectedItem={selectedItem} />
+})
+
+stories.add('Item/Disabled', () => {
+  const items = ItemSpec.generate(8).map((item, index) => {
+    if (index !== 5) return item
+    return {
+      ...item,
+      disabled: true,
+    }
+  })
+
+  return <Dropdown items={items} />
 })
 
 stories.add('Item/Custom', () => {
@@ -159,7 +190,7 @@ stories.add('Item/Custom', () => {
   return (
     <Dropdown
       items={items}
-      renderItems={CustomItem}
+      renderItem={CustomItem}
       minWidth={300}
       onSelect={onSelect}
     />
