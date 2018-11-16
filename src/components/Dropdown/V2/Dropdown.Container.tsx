@@ -71,13 +71,16 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.items !== this.props.items) {
-      this.rehydrateStore()
+      this.rehydrateStoreWithProps({ items: nextProps.items })
+    }
+    if (nextProps.isOpen !== this.props.isOpen) {
+      this.rehydrateStoreWithProps({ isOpen: nextProps.isOpen })
     }
   }
 
-  rehydrateStore = () => {
+  rehydrateStoreWithProps = (props: Object) => {
     // @ts-ignore
-    this.store.setState(this.props)
+    this.store.setState(props)
   }
 
   render() {
