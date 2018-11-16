@@ -61,28 +61,28 @@ export const getParentPath = (path: string): string => {
 }
 
 export const getNextChildPath = (path: string): string => {
-  return `${path}.0`
+  return `${path}${DELIMETER}0`
 }
 
 export const incrementPathIndex = (
   path: string,
   amount: number = 1
 ): string => {
-  const paths = path.split('.')
+  const paths = path.split(DELIMETER)
   const nextIndexBase = paths.pop()
 
   /* istanbul ignore if */
   if (!nextIndexBase) return path
 
   const nextIndex = parseInt(nextIndexBase, 10) + amount
-  return [...paths, nextIndex].join('.')
+  return [...paths, nextIndex].join(DELIMETER)
 }
 
 export const decrementPathIndex = (
   path: string,
   amount: number = 1
 ): string => {
-  const paths = path.split('.')
+  const paths = path.split(DELIMETER)
   const nextIndexBase = paths.pop()
 
   /* istanbul ignore if */
@@ -92,7 +92,7 @@ export const decrementPathIndex = (
   if (nextIndex < 0) {
     nextIndex = 0
   }
-  return [...paths, nextIndex].join('.')
+  return [...paths, nextIndex].join(DELIMETER)
 }
 
 export const itemIsActive = (selectedItem, item) => {
