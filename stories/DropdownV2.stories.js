@@ -39,7 +39,7 @@ stories.add('Menu/Custom size', () => {
 })
 
 stories.add('Menu/DownLeft', () => {
-  const items = ItemSpec.generate(8)
+  const items = ItemSpec.generate(20)
 
   return <Dropdown items={items} direction="left" />
 })

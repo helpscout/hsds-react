@@ -56,6 +56,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     subscribe: noop,
     trigger: 'Dropdown',
     triggerRef: noop,
+    withScrollLock: true,
   }
 
   node: HTMLElement

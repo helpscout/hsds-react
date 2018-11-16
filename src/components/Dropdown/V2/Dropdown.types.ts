@@ -51,6 +51,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   selectedItem?: string | Object
   setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void
+  withScrollLock: boolean
 }
 
 export type ItemIndex = string

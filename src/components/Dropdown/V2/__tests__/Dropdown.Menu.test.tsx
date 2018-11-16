@@ -78,3 +78,19 @@ describe('styles', () => {
     expect(el.style.zIndex).toBe('44')
   })
 })
+
+describe('ScrollLock', () => {
+  test('Renders with ScrollLock by default', () => {
+    const wrapper = mount(<Menu />)
+    const el = wrapper.find('ScrollLock')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('ScrollLocking can be disabled', () => {
+    const wrapper = mount(<Menu withScrollLock={false} />)
+    const el = wrapper.find('ScrollLock')
+
+    expect(el.length).toBeFalsy()
+  })
+})
