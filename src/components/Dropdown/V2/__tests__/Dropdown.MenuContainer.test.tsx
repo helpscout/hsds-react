@@ -9,11 +9,14 @@ import createStore from '../Dropdown.store'
 import { find, hasClass } from './Dropdown.testHelpers'
 import Keys from '../../../../constants/Keys'
 // @ts-ignore
+import { scrollIntoView } from '../../../../utilities/scrolling'
+// @ts-ignore
 import Portal from '../../../Portal'
 // @ts-ignore
 import MenuComponent from '../Dropdown.Menu'
 import { MenuUI } from '../Dropdown.css.js'
 
+jest.mock('../../../../utilities/scrolling')
 jest.mock('../../../Portal', () => {
   return {
     default: 'Portal',

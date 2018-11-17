@@ -4,6 +4,8 @@ import { Provider } from 'unistore/react'
 import Artboard from '@helpscout/artboard'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
 import Button from '../src/components/Button'
+import Input from '../src/components/Input'
+import styled from '../src/components/styled'
 import store from '../src/components/Dropdown/V2/Dropdown.store'
 import { createSpec, faker } from '@helpscout/helix'
 
@@ -136,37 +138,72 @@ stories.add('Menu/Nested/UpLeft', () => {
 })
 
 stories.add('Menu/Custom', () => {
-  const items = ItemSpec.generate(3)
-  const onSelect = value => console.log(value)
-  const CustomItem = props => {
-    return (
-      <div style={{ padding: '0px 20px', background: 'magenta' }}>
-        Custom<br />
-        <h5>{props.value}</h5>
-      </div>
-    )
+  const HeaderUI = styled('div')`
+    position: sticky;
+    z-index: 10;
+    background: white;
+    padding: 8px 10px 8px;
+    top: 0;
+    transform: translateY(-8px);
+    border: 1px solid #eee;
+  `
+  class FilterableDropdown extends React.Component {
+    state = {
+      items: ItemSpec.generate(30),
+      inputValue: '',
+      selectedItem: undefined,
+    }
+
+    onInputChange = inputValue => {
+      this.setState({
+        inputValue,
+      })
+    }
+
+    onSelect = selectedItem => {
+      this.setState({
+        selectedItem,
+      })
+    }
+
+    filterSearchResult = item => {
+      if (!this.state.inputValue) return true
+
+      return item.label
+        .toLowerCase()
+        .includes(this.state.inputValue.toLowerCase())
+    }
+
+    render() {
+      return (
+        <Dropdown
+          items={this.state.items}
+          selectedItem={this.state.selectedItem}
+          minWidth={300}
+          onSelect={this.onSelect}
+        >
+          {({ items }) => (
+            <Dropdown.Menu>
+              <HeaderUI>
+                <Input
+                  placeholder="Search"
+                  size="sm"
+                  autoFocus
+                  onChange={this.onInputChange}
+                  value={this.state.inputValue}
+                />
+              </HeaderUI>
+              {items
+                .filter(this.filterSearchResult)
+                .map(item => <Dropdown.Item {...item} key={item.id} />)}
+            </Dropdown.Menu>
+          )}
+        </Dropdown>
+      )
+    }
   }
 
-  const renderMenu = props => {
-    const { items } = props
-    return (
-      <div style={{ background: 'blue', padding: 20 }}>
-        <input placeholder="Input" />
-        {items.map(item => <Dropdown.Item {...item} key={item.id} />)}
-      </div>
-    )
-  }
-
-  return (
-    <Dropdown
-      items={items}
-      renderItem={CustomItem}
-      minWidth={300}
-      onSelect={onSelect}
-    >
-      {renderMenu}
-    </Dropdown>
-  )
+  return <FilterableDropdown />
 })
 
 stories.add('Item/Active', () => {

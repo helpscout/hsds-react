@@ -75,6 +75,7 @@
     "@seedcss/seed-family": "0.0.6",
     "@seedcss/seed-list": "0.0.6",
     "@seedcss/seed-this": "0.0.6",
+    "compute-scroll-into-view": "^1.0.11",
     "highlight.js": "^9.12.0",
     "lodash.get": "^4.4.2",
     "path-to-regexp": "^2.4.0",

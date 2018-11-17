@@ -35,6 +35,7 @@ export interface Props {
   isHover: boolean
   items: Array<any>
   onMouseEnter: (event: Event) => void
+  onMouseMove: (event: Event) => void
   onBlur: (event: Event) => void
   onClick: (event: Event, props: any) => void
   onFocus: (event: Event) => void
@@ -54,6 +55,7 @@ export class Item extends React.PureComponent<Props> {
     dropRight: true,
     dropUp: false,
     onMouseEnter: noop,
+    onMouseMove: noop,
     onBlur: noop,
     onClick: noop,
     onFocus: noop,

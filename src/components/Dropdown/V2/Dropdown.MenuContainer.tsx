@@ -24,6 +24,7 @@ import { getComponentKey } from '../../../utilities/component'
 import { isDefined } from '../../../utilities/is'
 import { noop } from '../../../utilities/other'
 import { namespaceComponent } from '../../../utilities/component'
+import { scrollIntoView } from '../../../utilities/scrolling'
 import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
@@ -146,7 +147,7 @@ export class MenuContainer extends React.Component<Props> {
 
     if (nextActiveItem) {
       this.props.setActiveItem(nextActiveItem)
-      nextActiveItem.focus()
+      scrollIntoView(nextActiveItem)
     }
   }
 

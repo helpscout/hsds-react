@@ -37,6 +37,21 @@ describe('setActiveItem', () => {
     expect(nextState.activeValue).toBe('Hello')
     expect(nextState.activeId).toContain('ron')
   })
+
+  test('Guarded from updated state if activeItem is the same', () => {
+    const mockActiveItem = document.createElement('div')
+    const state = {
+      activeItem: mockActiveItem,
+      activeIndex: null,
+      activeValue: null,
+      activeId: null,
+      id: 'ron',
+    }
+
+    const nextState = setActiveItem(state, mockActiveItem)
+
+    expect(nextState).toBeFalsy()
+  })
 })
 
 describe('setMenuNode', () => {
@@ -266,7 +281,7 @@ describe('onSelect', () => {
     })
   })
 
-  test('Returns state as is', () => {
+  test('Returns falsy to prevent unnecessary setState for invalid props', () => {
     const state = {
       items: [{ value: 'ron' }, { value: 'brick' }],
       activeValue: 'ron',
@@ -277,7 +292,7 @@ describe('onSelect', () => {
 
     const nextState = onSelect(state, mockEvent)
 
-    expect(nextState).toBe(state)
+    expect(nextState).toBeFalsy()
   })
 
   test('Performs closeDropdown action, if specified', () => {
@@ -297,7 +312,7 @@ describe('onSelect', () => {
 
     const nextState = onSelect(state, mockEvent)
 
-    expect(nextState).not.toBe(state)
+    expect(nextState).not.toBeFalsy()
     expect(nextState.isOpen).toBe(false)
     expect(spy).toHaveBeenCalled()
   })
@@ -319,8 +334,7 @@ describe('onSelect', () => {
 
     const nextState = onSelect(state, mockEvent)
 
-    expect(nextState).toBe(state)
-    expect(nextState.isOpen).toBe(true)
+    expect(nextState).toBeFalsy()
     expect(spy).not.toHaveBeenCalled()
   })
 
@@ -352,7 +366,7 @@ describe('onSelect', () => {
     const nextState = onSelect(state, mockEvent)
 
     expect(spy).not.toHaveBeenCalled()
-    expect(nextState).toBe(state)
+    expect(nextState).toBeFalsy()
   })
 })
 
@@ -385,8 +399,7 @@ describe('setEventTargetAsActive', () => {
     // @ts-ignore
     const nextState = setEventTargetAsActive(state, mockEvent)
 
-    expect(nextState).toBe(state)
-    expect(nextState.activeItem).toBe(null)
+    expect(nextState).toBeFalsy()
   })
 })
 
@@ -406,6 +419,25 @@ describe('itemOnMouseEnter', () => {
 
     expect(nextState).not.toBe(state)
     expect(nextState.activeItem).toBe(mockElement)
+  })
+
+  test('Fires event.stopPropagation', () => {
+    const spy = jest.fn()
+    const state = {
+      activeItem: null,
+    }
+    const mockElement = document.createElement('div')
+
+    const mockEvent = {
+      currentTarget: mockElement,
+      stopPropagation: spy,
+    }
+
+    // @ts-ignore
+    const nextState = itemOnMouseEnter(state, mockEvent)
+
+    expect(nextState.activeItem).toBe(mockElement)
+    expect(spy).toHaveBeenCalled()
   })
 })
 

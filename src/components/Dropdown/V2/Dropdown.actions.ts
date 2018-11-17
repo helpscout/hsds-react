@@ -9,6 +9,10 @@ const initialItemState = {
 
 export const setActiveItem = (state, activeItem) => {
   const { id } = state
+
+  // Guard state from being updated!
+  if (state.activeItem === activeItem) return
+
   const activeIndex = activeItem.getAttribute(SELECTORS.indexAttribute)
   const activeValue = activeItem.getAttribute(SELECTORS.valueAttribute)
   const activeId = id ? pathResolve(id, activeIndex) : null
@@ -63,8 +67,9 @@ export const onSelect = (state, event) => {
   const { items, activeValue, onSelect } = state
   const item = getItemFromCollection(items, activeValue)
 
-  if (!item) return state
-  if (item.disabled) return state
+  // Guard state from being updated!
+  if (!item) return
+  if (item.disabled) return
 
   // Trigger callback from Provider
   /* istanbul ignore else */
@@ -74,8 +79,6 @@ export const onSelect = (state, event) => {
 
   if (state.closeOnSelect) {
     return closeDropdown(state)
-  } else {
-    return state
   }
 }
 
@@ -98,11 +101,13 @@ export const setEventTargetAsActive = (state, event: Event) => {
   if (node) {
     return setActiveItem(state, node)
   }
-
-  return state
 }
 
 export const itemOnMouseEnter = (state, event: MouseEvent) => {
+  if (event && event.stopPropagation) {
+    event.stopPropagation()
+  }
+
   return setEventTargetAsActive(state, event)
 }
 
