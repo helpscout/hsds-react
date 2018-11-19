@@ -1,12 +1,14 @@
+const { jsWithBabel: tsjPreset } = require('ts-jest/presets')
+
 module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/?(*.)types.{js,jsx}',
     '!src/**/?(*.)helpers.{js,jsx}',
-    '!src/**/?(*.)testHelpers.{js,jsx}',
+    '!src/**/?(*.)testHelpers.{js,jsx,ts,tsx}',
     '!src/styles/tests/helpers/**/*.{js,jsx}',
-    '!src/**/?(*.)css.{js,jsx}',
-    '!src/index.{js,jsx}',
+    '!src/**/?(*.)css.{js,jsx,ts,tsx}',
+    '!src/index.{js,jsx,ts,tsx}',
     '!src/components/Input/utils.{js,jsx}',
     '!src/components/Popper/**/*.{js,jsx}',
     '!src/tests/helpers/**/*.{js,jsx}',
@@ -20,7 +22,7 @@ module.exports = {
     '!src/polyfills/**/*.{js,jsx}',
     '!src/vendors/**/*.{js,jsx}',
     '!src/components/index.js',
-    '!src/components/Animate/animations/**/*.js',
+    '!src/components/Animate/animations/**/*',
   ],
   coverageDirectory: 'coverage/',
   setupFiles: [
@@ -29,21 +31,21 @@ module.exports = {
   ],
   setupTestFrameworkScriptFile: '<rootDir>/config/jest/setupTests.js',
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.js?(x)',
+    '<rootDir>/src/**/__tests__/**/*.test.(js|jsx|ts|tsx)',
     '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
   ],
   testEnvironment: 'node',
   testURL: 'http://localhost',
   transform: {
-    '^.+\\.(js|jsx)$': '<rootDir>/node_modules/babel-jest',
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    ...tsjPreset.transform,
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
-    '^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
+    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
   },
-  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
-  moduleNameMapper: {
-    '^react-native$': 'react-native-web',
-  },
+  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$'],
   moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'ts', 'tsx'],
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+  ],
 }

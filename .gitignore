@@ -19,6 +19,7 @@ public
 .env.development.local
 .env.test.local
 .env.production.local
+.cache
 yarn.lock
 
 npm-debug.log*

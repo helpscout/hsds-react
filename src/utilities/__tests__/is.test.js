@@ -127,10 +127,10 @@ describe('isDefined', () => {
   test('Returns false for undefined', () => {
     expect(isDefined()).toBe(false)
     expect(isDefined(undefined)).toBe(false)
+    expect(isDefined(null)).toBe(false)
   })
 
   test('Returns true for defined', () => {
-    expect(isDefined(null)).toBe(true)
     expect(isDefined(0)).toBe(true)
     expect(isDefined(true)).toBe(true)
   })

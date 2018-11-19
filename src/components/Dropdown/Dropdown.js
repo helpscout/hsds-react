@@ -8,8 +8,10 @@ import Item from './Item'
 import { default as Menu, MenuComponent } from './Menu'
 import Trigger from './Trigger'
 import KeypressListener from '../KeypressListener'
+import { propConnect } from '../PropProvider'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import {
   focusNextFocusableNode,
   focusPreviousFocusableNode,
@@ -35,7 +37,7 @@ type State = {
   selectedIndex: number,
 }
 
-class Dropdown extends Component<Props, State> {
+export class Dropdown extends Component<Props, State> {
   static defaultProps = {
     closeMenuOnClick: true,
     enableTabNavigation: false,
@@ -274,4 +276,6 @@ class Dropdown extends Component<Props, State> {
   }
 }
 
-export default Dropdown
+namespaceComponent('Dropdown')(Dropdown)
+
+export default propConnect('Dropdown')(Dropdown)

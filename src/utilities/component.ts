@@ -147,7 +147,7 @@ export const getComponentKey = (
   index?: number,
   fallback?: string
 ) => {
-  if (!isReactComponent(Component)) return undefined
+  if (!isReactComponent(Component) && !isObject(Component)) return undefined
 
   let key
 
