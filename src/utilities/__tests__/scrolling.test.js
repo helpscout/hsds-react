@@ -1,4 +1,10 @@
-import { remapScrollingPlane } from '../scrolling'
+import { scrollIntoView, remapScrollingPlane } from '../scrolling'
+
+describe('scrollIntoView', () => {
+  test('Returns falsy if node is null', () => {
+    expect(scrollIntoView(null)).toBeFalsy()
+  })
+})
 
 describe('remapScrollingPlane', () => {
   test('Adjusts scrollLeft based on deltaY value', () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import Dropdown from '../index'
+import { Dropdown } from '../Dropdown'
 import { MenuComponent } from '../Menu'
 
 describe('Classname', () => {
