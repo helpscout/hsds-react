@@ -10,10 +10,10 @@ import {
 
 export const COMPONENT_KEY = {
   Dropdown: 'Dropdown',
-  Trigger: 'Dropdown.Trigger',
-  Menu: 'Dropdown.Menu',
-  MenuContainer: 'Dropdown.MenuContainer',
-  Item: 'Dropdown.Item',
+  Trigger: 'DropdownTrigger',
+  Menu: 'DropdownMenu',
+  MenuContainer: 'DropdownMenuContainer',
+  Item: 'DropdownItem',
 }
 
 export const DELIMETER = '.'
