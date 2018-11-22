@@ -40,17 +40,23 @@ import image from '../../icons/image.svg'
 import link from '../../icons/link.svg'
 import meatball from '../../icons/meatball.svg'
 import minimize from '../../icons/minimize.svg'
+import note from '../../icons/note.svg'
+import pencilSmall from '../../icons/pencil-small.svg'
 import plusLarge from '../../icons/plus-large.svg'
 import plusSmall from '../../icons/plus-small.svg'
+import reply from '../../icons/reply.svg'
 import search from '../../icons/search.svg'
 import spinner from '../../icons/spinner.svg'
 import star from '../../icons/star.svg'
+import status from '../../icons/status.svg'
 import tag from '../../icons/tag.svg'
 import trash from '../../icons/trash.svg'
 import tickLarge from '../../icons/tick-large.svg'
 import tickSmall from '../../icons/tick-small.svg'
 import user from '../../icons/user.svg'
 import video from '../../icons/video.svg'
+import workflow from '../../icons/workflow.svg'
+import workflowSmall from '../../icons/workflow-small.svg'
 
 const ICONS = {
   alert,
@@ -98,13 +104,17 @@ const ICONS = {
   link,
   meatball,
   minimize,
+  note,
   'option-dots': meatball,
+  'pencil-small': pencilSmall,
   plus: plusLarge,
   'plus-large': plusLarge,
   'plus-small': plusSmall,
+  reply,
   search,
   spinner,
   star,
+  status,
   tag,
   tick: tickLarge,
   'tick-large': tickLarge,
@@ -112,6 +122,8 @@ const ICONS = {
   trash,
   user,
   video,
+  workflow,
+  'workflow-small': workflowSmall,
 }
 
 export default ICONS
