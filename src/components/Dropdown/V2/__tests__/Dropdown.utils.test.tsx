@@ -16,7 +16,7 @@ import {
   itemIsHover,
   itemIsOpen,
   itemIsSelected,
-  getItemProps,
+  getItemPropsOld,
   getEnhancedItemsWithProps,
   renderRenderPropComponent,
 } from '../Dropdown.utils'
@@ -479,7 +479,7 @@ describe('itemIsSelected', () => {
   })
 })
 
-describe('getItemProps', () => {
+describe('getItemPropsOld', () => {
   const item = {
     className: 'ron',
     index: '0.1',
@@ -490,7 +490,7 @@ describe('getItemProps', () => {
   test('Returns unmodified item if state is undefined', () => {
     const state = undefined
 
-    expect(getItemProps(state, item)).toBe(item)
+    expect(getItemPropsOld(state, item)).toBe(item)
   })
 
   test('Enhances item based on state, if applicable', () => {
@@ -498,7 +498,7 @@ describe('getItemProps', () => {
       activeIndex: '0.1.3',
     }
 
-    const enhancedItem: any = getItemProps(state, item)
+    const enhancedItem: any = getItemPropsOld(state, item)
 
     expect(enhancedItem).not.toBe(item)
     expect(enhancedItem.className).toContain(item.className)

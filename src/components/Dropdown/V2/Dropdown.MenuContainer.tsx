@@ -15,6 +15,7 @@ import {
   getParentPath,
   getNextChildPath,
   renderRenderPropComponent,
+  getItemProps,
 } from './Dropdown.utils'
 import { closeDropdown, setActiveItem, onSelect } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
@@ -66,6 +67,10 @@ export class MenuContainer extends React.Component<Props> {
     onSelect: noop,
     setActiveItem: noop,
     zIndex: 1080,
+  }
+
+  static contextTypes = {
+    getState: noop,
   }
 
   node: HTMLElement
@@ -234,6 +239,11 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
+  getItemProps = (item: any, index: number) => {
+    const state = this.context.getState()
+    return getItemProps(state, item, index)
+  }
+
   renderItems = () => {
     const { isLoading, renderEmpty, renderLoading } = this.props
     const { items } = this.getMenuProps()
@@ -245,11 +255,15 @@ export class MenuContainer extends React.Component<Props> {
     if (!items.length && renderEmpty)
       return renderRenderPropComponent(renderEmpty)
     // Normal
-    return items.map((item, index) => (
-      <Item key={getComponentKey(item, index)} {...item}>
-        {item.label}
-      </Item>
-    ))
+    return items.map((item, index) => {
+      const props = this.getItemProps(item, index)
+      console.log(props)
+      return (
+        <Item key={getComponentKey(item, index)} {...item}>
+          {item.label}
+        </Item>
+      )
+    })
   }
 
   renderMenu = () => {

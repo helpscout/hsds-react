@@ -39,7 +39,15 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
   static Item = Item
   static Trigger = Trigger
 
+  static childContextTypes = {
+    getState: noop,
+  }
+
   store: any
+
+  getChildContext = () => {
+    return { getState: () => this.store.getState() }
+  }
 
   constructor(props) {
     super(props)

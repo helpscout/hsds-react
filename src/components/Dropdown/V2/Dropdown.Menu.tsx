@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
 import propConnect from '../../PropProvider/propConnect'
+import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import { MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
@@ -101,4 +102,4 @@ const ConnectedMenu: any = connect(
   PropConnectedComponent
 )
 
-export default ConnectedMenu
+export default renderSpy({ id: 'Dropdown.Menu' })(ConnectedMenu)

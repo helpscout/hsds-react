@@ -61,6 +61,10 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     withScrollLock: true,
   }
 
+  static childContextTypes = {
+    getState: noop,
+  }
+
   node: HTMLElement
   triggerNode: HTMLElement
   menuNode: HTMLElement

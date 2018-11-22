@@ -32,3 +32,13 @@ declare module '@helpscout/react-utils/dist/hoistNonReactStatics' {
   ): WrappedComponent
   export = hoistNonReactStatics
 }
+
+declare module '@helpscout/react-utils/dist/renderSpy' {
+  function renderSpy(options: any): any
+  export = renderSpy
+}
+
+declare module '@helpscout/react-utils/dist/perf' {
+  function perf(options: any): any
+  export = perf
+}

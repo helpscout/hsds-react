@@ -27,6 +27,34 @@ export const SELECTORS = {
   valueAttribute: 'data-hsds-menu-item-value',
 }
 
+/**
+ * DOM Helpers
+ */
+export const getIndexFromItemDOMNode = itemNode => {
+  return itemNode && itemNode.getAttribute(SELECTORS.indexAttribute)
+}
+export const getIdFromItemDOMNode = itemNode => {
+  return itemNode && itemNode.getAttribute('id')
+}
+export const findItemDOMNode = (index, envNode = document) => {
+  return envNode.querySelector(`[${SELECTORS.indexAttribute}="${index}"]`)
+}
+export const findItemDOMNodeById = (item, envNode = document) => {
+  return item && item.id && envNode.getElementById(item.id)
+}
+export const findItemDOMNodes = (envNode = document) => {
+  return envNode.querySelectorAll(`[${SELECTORS.indexAttribute}]`)
+}
+export const findClosestItemDOMNode = node => {
+  return node && node.closest && node.closest(`[${SELECTORS.indexAttribute}]`)
+}
+export const isDOMNodeValidItem = node => {
+  return !!getIndexFromItemDOMNode(node)
+}
+
+/**
+ * Path Helpers
+ */
 export const pathResolve = (...args): string => {
   // @ts-ignore
   const [path, ...rest] = args
@@ -95,6 +123,9 @@ export const decrementPathIndex = (
   return [...paths, nextIndex].join(DELIMETER)
 }
 
+/**
+ * Item Helpers
+ */
 export const itemIsActive = (selectedItem, item) => {
   if (isObject(item) && isObject(selectedItem)) {
     const { id, value } = selectedItem
@@ -273,7 +304,22 @@ export const itemIsSelected = (state: any, index: ItemIndex) => {
   return activeIndex === index
 }
 
-export const getItemProps = (state: any, itemProps: any): Object => {
+export const getItemProps = (state: any, item: any, index: number): Object => {
+  const { value, ...rest } = item
+  const itemIndex = !isString(index) ? index.toString() : index
+  const isSelected = itemIsSelected(state, itemIndex as string)
+
+  return {
+    ...rest,
+    [SELECTORS.indexAttribute]: index,
+    [SELECTORS.valueAttribute]: value,
+    role: 'option',
+    index,
+    isSelected,
+  }
+}
+
+export const getItemPropsOld = (state: any, itemProps: any): Object => {
   if (!state) return itemProps
 
   const { className, index, value, ...rest } = itemProps
@@ -324,7 +370,7 @@ export const getEnhancedItemsWithProps = (
 
     return {
       ...item,
-      ...getItemProps(state, { ...item, index: itemIndex }),
+      ...getItemPropsOld(state, { ...item, index: itemIndex }),
       actionId: pathResolve(itemId, 'action'),
       dropUp,
       dropRight,
