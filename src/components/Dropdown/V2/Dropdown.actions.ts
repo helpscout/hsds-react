@@ -138,12 +138,17 @@ export const setEventTargetAsActive = (state, event: Event) => {
 }
 
 export const incrementIndex = (state, modifier: number = 1) => {
-  const { index, indexMap } = state
+  const { envNode, index, indexMap } = state
   let prevIndex = index ? index : -1
   prevIndex = `${prevIndex}`
   const nextIndex = incrementPathIndex(prevIndex, modifier)
 
   if (!indexMap[nextIndex]) return
+
+  // This extra check is to support item filtering.
+  // The next DOM node may not exist, depending on filtering results.
+  const nextNode = findItemDOMNode(nextIndex, envNode)
+  if (!nextNode) return
 
   return {
     previousIndex: index,

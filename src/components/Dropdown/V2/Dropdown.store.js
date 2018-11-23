@@ -19,6 +19,7 @@ export const initialState = {
   isOpen: false,
   isMounted: false,
   indexMap: [],
+  inputValue: '',
   items: [],
   lastInteractionType: undefined,
   maxHeight: 320,

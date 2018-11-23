@@ -39,11 +39,9 @@ export interface DropdownProps extends DropdownMenuDimensions {
   id?: string
   index?: string
   innerRef: (node: HTMLElement) => void
+  inputValue: string
   isLoading: boolean
   isOpen: boolean
-  // itemOnClick: (...args: any[]) => void
-  // itemOnFocus: (...args: any[]) => void
-  // itemOnMouseEnter: (...args: any[]) => void
   items: Array<any>
   menuId?: string
   menuRef: (node: HTMLElement) => void

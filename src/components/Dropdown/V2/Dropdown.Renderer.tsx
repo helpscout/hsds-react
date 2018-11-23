@@ -138,7 +138,6 @@ class Renderer extends React.PureComponent<any> {
     } = this.props
 
     if (!index && !selectedItem) return
-    // This can be abstracted to CSS classes to keep JS tidier.
     // Render focus (hover) styles
     const previousNode = findItemDOMNode(previousIndex, envNode)
     const nextNode = findItemDOMNode(index, envNode)

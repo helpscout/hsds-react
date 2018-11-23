@@ -1,7 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from 'unistore/react'
-import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import propConnect from '../../PropProvider/propConnect'
 import Flexy from '../../Flexy'
 import Icon from '../../Icon'
@@ -241,4 +240,4 @@ const ConnectedItem: any = connect(
   PropConnectedComponent
 )
 
-export default renderSpy({ id: 'Dropdown.Item' })(ConnectedItem)
+export default ConnectedItem

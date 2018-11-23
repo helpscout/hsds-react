@@ -184,6 +184,7 @@ stories.add('Menu/Custom', () => {
           items={this.state.items}
           selectedItem={this.state.selectedItem}
           minWidth={300}
+          inputValue={this.state.inputValue}
           onSelect={this.onSelect}
         >
           {({ items, getItemProps }) => (
@@ -200,7 +201,7 @@ stories.add('Menu/Custom', () => {
               {items
                 .filter(this.filterSearchResult)
                 .map((item, index) => (
-                  <Dropdown.Item {...getItemProps(item)} key={item.id} />
+                  <Dropdown.Item {...getItemProps(item, index)} key={item.id} />
                 ))}
             </Dropdown.Menu>
           )}
