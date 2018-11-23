@@ -211,7 +211,11 @@ class Renderer extends React.PureComponent<any> {
 
     return (
       <div className="c-DropdownV2RendererNode">
-        <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
+        <KeypressListener
+          handler={this.handleOnKeyDown}
+          type="keydown"
+          scope={this.props.envNode}
+        />
       </div>
     )
   }
