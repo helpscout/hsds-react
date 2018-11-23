@@ -140,7 +140,7 @@ export class Item extends React.PureComponent<Props> {
           >
             {items.map((item, index) => (
               <Item
-                key={getComponentKey(item, index)}
+                key={item.value || getComponentKey(item, index)}
                 {...this.getItemProps(item)}
               />
             ))}

@@ -157,7 +157,10 @@ export class MenuContainer extends React.Component<Props> {
     // Normal
     return items.map((item, index) => {
       return (
-        <Item key={getComponentKey(item, index)} {...this.getItemProps(item)}>
+        <Item
+          key={item.value || getComponentKey(item, index)}
+          {...this.getItemProps(item)}
+        >
           {item.label}
         </Item>
       )
