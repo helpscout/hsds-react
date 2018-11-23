@@ -5,6 +5,7 @@ import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import EventListener from '../../EventListener'
 import Portal from '../../Portal'
+import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
 import Renderer from './Dropdown.Renderer'
@@ -171,9 +172,11 @@ export class MenuContainer extends React.Component<Props> {
     const { id, triggerId } = this.getMenuProps()
 
     return (
-      <Menu aria-labelledby={triggerId} id={id}>
-        {this.renderItems()}
-      </Menu>
+      <Card>
+        <Menu aria-labelledby={triggerId} id={id}>
+          {this.renderItems()}
+        </Menu>
+      </Card>
     )
   }
 

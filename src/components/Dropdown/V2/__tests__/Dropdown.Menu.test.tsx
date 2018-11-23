@@ -58,15 +58,7 @@ describe('styles', () => {
 
   test('Adds custom dimension styles from props', () => {
     const wrapper = mount(
-      <Menu
-        className="ron"
-        style={{ background: 'blue' }}
-        minWidth={600}
-        maxWidth={650}
-        minHeight={300}
-        maxHeight={500}
-        zIndex={44}
-      />
+      <Menu className="ron" style={{ background: 'blue' }} zIndex={44} />
     )
     const el: any = wrapper.getDOMNode()
 

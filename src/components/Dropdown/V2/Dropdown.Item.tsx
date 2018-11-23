@@ -4,6 +4,7 @@ import { connect } from 'unistore/react'
 import propConnect from '../../PropProvider/propConnect'
 import Flexy from '../../Flexy'
 import Icon from '../../Icon'
+import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
 import {
   ItemUI,
@@ -131,19 +132,21 @@ export class Item extends React.PureComponent<Props> {
     return (
       this.hasSubMenu() && (
         <WrapperUI {...this.getWrapperProps()}>
-          <Menu
-            aria-labelledby={actionId}
-            innerRef={this.setMenuNodeRef}
-            isSubMenu
-            id={subMenuId}
-          >
-            {items.map((item, index) => (
-              <Item
-                key={item.value || getComponentKey(item, index)}
-                {...this.getItemProps(item)}
-              />
-            ))}
-          </Menu>
+          <Card>
+            <Menu
+              aria-labelledby={actionId}
+              innerRef={this.setMenuNodeRef}
+              isSubMenu
+              id={subMenuId}
+            >
+              {items.map((item, index) => (
+                <Item
+                  key={item.value || getComponentKey(item, index)}
+                  {...this.getItemProps(item)}
+                />
+              ))}
+            </Menu>
+          </Card>
         </WrapperUI>
       )
     )

@@ -15,10 +15,6 @@ export interface Props {
   id?: string
   innerRef: (node: HTMLElement) => void
   isSubMenu: boolean
-  maxHeight: number
-  maxWidth: number
-  minHeight: number
-  minWidth: number
   style: Object
   withScrollLock: boolean
   zIndex: number
@@ -27,10 +23,6 @@ export interface Props {
 export class Menu extends React.PureComponent<Props> {
   static defaultProps = {
     innerRef: noop,
-    minWidth: 180,
-    maxWidth: 360,
-    minHeight: 48,
-    maxHeight: 320,
     isSubMenu: false,
     style: {},
     withScrollLock: true,
@@ -38,24 +30,18 @@ export class Menu extends React.PureComponent<Props> {
   }
 
   getStyles = (): Object => {
-    const {
-      minWidth,
-      minHeight,
-      maxHeight,
-      maxWidth,
-      style,
-      zIndex,
-    } = this.props
+    const { style, zIndex } = this.props
 
-    return { ...style, minWidth, minHeight, maxHeight, maxWidth, zIndex }
+    return { ...style, zIndex }
   }
 
   renderMenu = () => {
     const { children, className, innerRef, isSubMenu, ...rest } = this.props
     const componentClassName = classNames(
-      className,
+      'c-DropdownV2Block',
+      'c-DropdownV2Menu',
       isSubMenu && 'is-subMenu',
-      'c-DropdownV2Menu'
+      className
     )
 
     return (
@@ -87,13 +73,9 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Menu)(Menu)
 const ConnectedMenu: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { maxHeight, maxWidth, minHeight, minWidth, withScrollLock } = state
+    const { withScrollLock } = state
 
     return {
-      maxHeight,
-      maxWidth,
-      minHeight,
-      minWidth,
       withScrollLock,
     }
   }

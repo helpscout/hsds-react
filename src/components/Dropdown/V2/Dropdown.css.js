@@ -21,22 +21,54 @@ export const MenuContainerUI = styled('div')`
   &.is-dropLeft {
     right: 0%;
   }
+
+  .c-DropdownV2Block + .c-DropdownV2Block {
+    border-top: 1px solid ${getColor('grey.600')};
+  }
 `
 
-export const MenuUI = styled(Card)`
-  ${baseStyles};
-  padding: 8px 0;
+export const CardUI = styled(Card)`
+  display: flex;
+  flex-direction: column;
   min-height: 30px;
   min-width: 160px;
+  max-height: 360px;
+`
+
+CardUI.defaultProps = {
+  floating: true,
+  seamless: true,
+}
+
+export const MenuUI = styled('div')`
+  ${baseStyles};
+  padding: 8px 0;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 360px;
+  max-height: 100%;
+  height: 100%;
+  width: 100%;
 `
 
 MenuUI.defaultProps = {
   [SELECTORS.menuAttribute]: true,
   floating: true,
 }
+
+export const BlockUI = styled('div')`
+  flex: none;
+  padding: 8px 16px;
+  min-height: 0;
+  max-height: 100%;
+
+  &.is-seamless {
+    padding: 0;
+  }
+
+  &.is-stretchy {
+    flex: 1;
+  }
+`
 
 export const WrapperUI = styled('div')`
   ${baseStyles};
@@ -137,7 +169,6 @@ export const ItemUI = styled('div')`
 `
 ItemUI.defaultProps = {
   [SELECTORS.itemAttribute]: true,
-  tabIndex: 0,
 }
 
 export const TriggerUI = styled('a')`

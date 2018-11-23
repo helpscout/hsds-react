@@ -264,6 +264,7 @@ export const getItemProps = (
     isSelected,
     hasSubMenu,
     items: childItems,
+    tabIndex: state.enableTabNavigation ? 0 : -1,
     value,
   }
 }

@@ -6,6 +6,8 @@ import createStore, { initialState } from './Dropdown.store'
 import Dropdown from './Dropdown'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
+import Block from './Dropdown.Block'
+import Card from './Dropdown.Card'
 import { pathResolve, getIndexMapFromItems } from './Dropdown.utils'
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../../utilities/id'
@@ -36,8 +38,11 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     subscribe: noop,
     trigger: 'Dropdown',
   }
-  static Menu = Menu
+
+  static Block = Block
+  static Card = Card
   static Item = Item
+  static Menu = Menu
   static Trigger = Trigger
 
   static childContextTypes = {
