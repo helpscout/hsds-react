@@ -44,6 +44,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   items: Array<any>
   menuId?: string
   menuRef: (node: HTMLElement) => void
+  openClassName: string
   onBlur: (...args: any[]) => void
   onClose: () => void
   onFocus: (...args: any[]) => void

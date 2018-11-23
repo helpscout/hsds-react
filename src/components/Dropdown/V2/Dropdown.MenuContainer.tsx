@@ -11,8 +11,6 @@ import Item from './Dropdown.Item'
 import Renderer from './Dropdown.Renderer'
 import {
   SELECTORS,
-  decrementPathIndex,
-  incrementPathIndex,
   isDropRight,
   getParentPath,
   getNextChildPath,
@@ -42,7 +40,6 @@ export interface Props {
   animationDuration: number
   animationSequence: string
   activeIndex: string
-  activeId?: string
   children?: (props: any) => void
   className?: string
   closeDropdown: () => void
@@ -108,26 +105,10 @@ export class MenuContainer extends React.Component<Props> {
 
   handleOnKeyDown = (event: KeyboardEvent) => {
     const { dropRight, isOpen } = this.props
-    const amount = 1
 
     if (!isOpen) return
 
     switch (event.keyCode) {
-      case Keys.ENTER:
-        event.preventDefault()
-        this.selectActiveItem()
-        break
-
-      case Keys.UP_ARROW:
-        event.preventDefault()
-        this.goUp(amount)
-        break
-
-      case Keys.DOWN_ARROW:
-        event.preventDefault()
-        this.goDown(amount)
-        break
-
       case Keys.LEFT_ARROW:
         event.preventDefault()
         if (dropRight) {
@@ -172,25 +153,6 @@ export class MenuContainer extends React.Component<Props> {
       this.props.setActiveItem(nextActiveItem)
       scrollIntoView(nextActiveItem)
     }
-  }
-
-  goUp = (amount: number) => {
-    const { activeIndex } = this.props
-    if (!activeIndex) return
-
-    const nextActiveIndex = decrementPathIndex(activeIndex, amount)
-
-    this.setNextActiveItem(nextActiveIndex)
-  }
-
-  goDown = (amount: number) => {
-    const { activeIndex: currentActiveIndex } = this.props
-    // Allows for initial selection of first item (index 0)
-    const activeIndex = currentActiveIndex || '-1'
-
-    const nextActiveIndex = incrementPathIndex(activeIndex, amount)
-
-    this.setNextActiveItem(nextActiveIndex)
   }
 
   closeOnLastTab = () => {
@@ -242,13 +204,13 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   getMenuProps = () => {
-    const { activeId, dropRight, isOpen, items, id, triggerId } = this.props
+    const { dropRight, isOpen, items, id, triggerId } = this.props
 
     const shouldDropUp = this.shouldDropUp()
 
     return {
-      activeId,
       dropRight,
+      getItemProps: this.getItemProps,
       isOpen,
       items,
       id,
@@ -257,7 +219,7 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
-  getItemProps = (item: any, index: number) => {
+  getItemProps = (item: any, index?: number) => {
     const state = this.context.getState()
     return getItemProps(state, item, index)
   }
@@ -274,9 +236,8 @@ export class MenuContainer extends React.Component<Props> {
       return renderRenderPropComponent(renderEmpty)
     // Normal
     return items.map((item, index) => {
-      const props = this.getItemProps(item, index)
       return (
-        <Item key={getComponentKey(item, index)} {...props}>
+        <Item key={getComponentKey(item, index)} {...this.getItemProps(item)}>
           {item.label}
         </Item>
       )
@@ -284,14 +245,10 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   renderMenu = () => {
-    const { activeId, id, triggerId } = this.getMenuProps()
+    const { id, triggerId } = this.getMenuProps()
 
     return (
-      <Menu
-        aria-activedescendant={activeId}
-        aria-labelledby={triggerId}
-        id={id}
-      >
+      <Menu aria-labelledby={triggerId} id={id}>
         {this.renderItems()}
       </Menu>
     )
@@ -394,33 +351,32 @@ export class MenuContainer extends React.Component<Props> {
         <EventListener event="resize" handler={this.setPositionStylesOnNode} />
         <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
         {isOpen && (
-          <Portal>
+          <Portal onOpen={onMenuMounted} onClose={onMenuUnmounted}>
             <div
               className="DropdownV2MenuContainerPlacementRoot"
               style={{ position: 'relative' }}
               ref={this.setPlacementNode}
             >
+              <Renderer />
               <Animate
                 sequence={shouldDropUp ? 'fade up' : animationSequence}
                 in={isOpen}
-                onEntered={onMenuMounted}
-                onExited={onMenuUnmounted}
                 mountOnEnter={false}
                 unmountOnExit={false}
                 duration={animationDuration}
                 timeout={animationDuration / 2}
               >
-                <div>
-                  <Renderer />
-                  <MenuContainerUI
-                    className={componentClassName}
-                    innerRef={this.setNodeRef}
-                    onClick={selectItem}
-                    onMouseMove={focusItem}
-                  >
-                    {this.renderContent()}
-                  </MenuContainerUI>
-                </div>
+                <MenuContainerUI
+                  className={componentClassName}
+                  innerRef={this.setNodeRef}
+                  onClick={selectItem}
+                  onMouseMove={focusItem}
+                  {...{
+                    [SELECTORS.menuRootAttribute]: true,
+                  }}
+                >
+                  {this.renderContent()}
+                </MenuContainerUI>
               </Animate>
             </div>
           </Portal>
@@ -439,11 +395,10 @@ const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
     const {
-      activeIndex,
-      activeId,
       dropUp,
       isOpen,
       isLoading,
+      items,
       menuId,
       renderEmpty,
       renderLoading,
@@ -453,13 +408,12 @@ const ConnectedMenuContainer: any = connect(
     } = state
 
     return {
-      activeIndex,
-      activeId,
       dropUp,
       dropRight: isDropRight(state),
       isOpen,
       id: menuId,
       isLoading,
+      items,
       renderEmpty,
       renderLoading,
       triggerId,

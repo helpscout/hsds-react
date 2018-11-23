@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
-import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import Keys from '../../../constants/Keys'
 import KeypressListener from '../../KeypressListener'
 import {
@@ -13,7 +12,10 @@ import {
   SELECTORS,
   findItemDOMNode,
   findItemDOMNodeById,
+  findOpenItemDOMNodes,
   isDOMNodeValidItem,
+  isPathActive,
+  getIndexFromItemDOMNode,
 } from './Dropdown.utils'
 import { scrollIntoView } from '../../../utilities/scrolling'
 import { noop } from '../../../utilities/other'
@@ -89,6 +91,7 @@ class Renderer extends React.PureComponent<any> {
       focusClassName,
       previousIndex,
       index,
+      openClassName,
       previousSelectedItem,
       selectedItem,
     } = this.props
@@ -99,17 +102,33 @@ class Renderer extends React.PureComponent<any> {
     const previousNode = findItemDOMNode(previousIndex)
     const nextNode = findItemDOMNode(index)
 
-    console.log(nextNode)
-
-    if (!nextNode) return
-
-    // Handle the UI for focus, however it is you wish!
     if (previousNode) {
-      previousNode.classList.remove(focusClassName)
+      const isOpen = isPathActive(index, previousIndex)
+      if (isOpen) {
+        previousNode.classList.add(openClassName)
+      } else {
+        previousNode.classList.remove(focusClassName)
+        previousNode.classList.remove(openClassName)
+      }
     }
 
-    nextNode.classList.add(focusClassName)
-    scrollIntoView(nextNode)
+    if (nextNode) {
+      nextNode.classList.add(focusClassName)
+      scrollIntoView(nextNode)
+    }
+
+    // Clean up recursive opens
+    const openNodes = findOpenItemDOMNodes(document, openClassName)
+    Array.from(openNodes).forEach(node => {
+      const nodeIndex = getIndexFromItemDOMNode(node)
+      const isOpen = isPathActive(index, nodeIndex)
+      if (isOpen) {
+        node.classList.add(openClassName)
+      } else {
+        node.classList.remove(openClassName)
+        node.classList.remove(focusClassName)
+      }
+    })
 
     requestAnimationFrame(() => {
       // Render selected (active) styles
@@ -158,7 +177,7 @@ const ConnectedRenderer: any = connect(
       previousIndex,
       index,
       indexMap,
-      isMounted,
+      openClassName,
       previousSelectedItem,
       selectedItem,
     } = state
@@ -170,7 +189,7 @@ const ConnectedRenderer: any = connect(
       previousIndex,
       index,
       indexMap,
-      isMounted,
+      openClassName,
       previousSelectedItem,
       selectedItem,
     }
@@ -187,4 +206,4 @@ const ConnectedRenderer: any = connect(
   Renderer
 )
 
-export default renderSpy({ id: 'Dropdown.Renderer' })(ConnectedRenderer)
+export default ConnectedRenderer

@@ -148,13 +148,6 @@ describe('Item', () => {
 })
 
 describe('Accessibility', () => {
-  test('Sets activeId on Menu', () => {
-    const wrapper = mount(<MenuContainer items={[]} activeId="ron" isOpen />)
-    const el = find(wrapper, 'Menu')
-
-    expect(el.prop('aria-activedescendant')).toBe('ron')
-  })
-
   test('Sets triggerId on Menu', () => {
     const wrapper = mount(<MenuContainer items={[]} triggerId="ron" isOpen />)
     const el = find(wrapper, 'Menu')

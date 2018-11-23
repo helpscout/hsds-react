@@ -1,5 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { connect } from 'unistore/react'
+import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import propConnect from '../../PropProvider/propConnect'
 import Flexy from '../../Flexy'
 import Icon from '../../Icon'
@@ -14,6 +16,7 @@ import {
   SELECTORS,
   setMenuPositionStyles,
   getCustomItemProps,
+  getItemProps,
 } from './Dropdown.utils'
 import { classNames } from '../../../utilities/classNames'
 import {
@@ -63,6 +66,10 @@ export class Item extends React.PureComponent<Props> {
     value: '',
   }
 
+  static contextTypes = {
+    getState: noop,
+  }
+
   node: HTMLElement
   actionNode: HTMLElement
   wrapperNode: HTMLElement
@@ -71,12 +78,6 @@ export class Item extends React.PureComponent<Props> {
   componentDidMount() {
     /* istanbul ignore else */
     if (this.node) {
-      this.renderMenu()
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isHover !== this.props.isHover) {
       this.renderMenu()
     }
   }
@@ -94,9 +95,9 @@ export class Item extends React.PureComponent<Props> {
   }
 
   renderMenu = () => {
-    const { dropRight, dropUp } = this.props
-
     if (!this.hasSubMenu()) return
+
+    const { dropRight, dropUp } = this.props
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
@@ -111,6 +112,11 @@ export class Item extends React.PureComponent<Props> {
         })
       }
     })
+  }
+
+  getItemProps = (item: any, index?: number) => {
+    const state = this.context.getState()
+    return getItemProps(state, item)
   }
 
   getWrapperProps = () => {
@@ -137,7 +143,10 @@ export class Item extends React.PureComponent<Props> {
             id={subMenuId}
           >
             {items.map((item, index) => (
-              <Item key={getComponentKey(item, index)} {...item} />
+              <Item
+                key={getComponentKey(item, index)}
+                {...this.getItemProps(item)}
+              />
             ))}
           </Menu>
         </WrapperUI>
@@ -222,4 +231,18 @@ export class Item extends React.PureComponent<Props> {
 namespaceComponent(COMPONENT_KEY.Item)(Item)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 
-export default PropConnectedComponent
+const ConnectedItem: any = connect(
+  // mapStateToProps
+  (state: any) => {
+    const { renderItem } = state
+
+    return {
+      renderItem,
+    }
+  }
+)(
+  // @ts-ignore
+  PropConnectedComponent
+)
+
+export default renderSpy({ id: 'Dropdown.Item' })(ConnectedItem)

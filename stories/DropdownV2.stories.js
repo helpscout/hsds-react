@@ -74,7 +74,7 @@ stories.add('Menu/Callbacks', () => {
 
 stories.add('Menu/Subscribe', () => {
   const items = ItemSpec.generate(8)
-  const subscribe = state => console.log(state)
+  const subscribe = state => console.log('State update', state)
 
   return <Dropdown {...{ items, subscribe }} />
 })
@@ -186,7 +186,7 @@ stories.add('Menu/Custom', () => {
           minWidth={300}
           onSelect={this.onSelect}
         >
-          {({ items }) => (
+          {({ items, getItemProps }) => (
             <Dropdown.Menu>
               <HeaderUI>
                 <Input
@@ -199,7 +199,9 @@ stories.add('Menu/Custom', () => {
               </HeaderUI>
               {items
                 .filter(this.filterSearchResult)
-                .map(item => <Dropdown.Item {...item} key={item.id} />)}
+                .map((item, index) => (
+                  <Dropdown.Item {...getItemProps(item)} key={item.id} />
+                ))}
             </Dropdown.Menu>
           )}
         </Dropdown>

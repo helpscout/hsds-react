@@ -1,3 +1,5 @@
+import { isDefined } from '../../../utilities/is'
+
 import {
   SELECTORS,
   getItemFromCollection,
@@ -9,7 +11,6 @@ import {
   incrementPathIndex,
   decrementPathIndex,
 } from './Dropdown.utils'
-import { includes } from '../../../utilities/arrays'
 
 const initialItemState = {
   activeItem: null,
@@ -79,7 +80,6 @@ export const closeDropdown = state => {
 }
 
 export const onMenuMounted = state => {
-  console.log(state)
   return {
     ...state,
     isMounted: true,
@@ -100,6 +100,7 @@ export const onSelect = (state, event) => {
   // Guard state from being updated!
   if (!item) return
   if (item.disabled) return
+  if (item.items) return
 
   // Trigger callback from Provider
   /* istanbul ignore else */
@@ -135,13 +136,16 @@ export const setEventTargetAsActive = (state, event: Event) => {
 
 export const incrementIndex = (state, modifier: number = 1) => {
   const { index, indexMap } = state
-  const nextIndex = incrementPathIndex(index, modifier)
+  let prevIndex = index ? index : -1
+  prevIndex = `${prevIndex}`
+  const nextIndex = incrementPathIndex(prevIndex, modifier)
 
-  if (!includes(indexMap, nextIndex)) return
+  if (!indexMap[nextIndex]) return
 
   return {
     previousIndex: index,
     index: nextIndex,
+    lastInteractionType: 'keyboard',
   }
 }
 
@@ -149,11 +153,12 @@ export const decrementIndex = (state, modifier: number = 1) => {
   const { index, indexMap } = state
   const nextIndex = decrementPathIndex(index, modifier)
 
-  if (!includes(indexMap, nextIndex)) return
+  if (!indexMap[nextIndex]) return
 
   return {
     previousIndex: state.index,
     index: nextIndex,
+    lastInteractionType: 'keyboard',
   }
 }
 
@@ -191,9 +196,14 @@ export const focusItem = (state, event: Event) => {
   // Performance guard to prevent store from uppdating
   if (state.index === index) return
 
+  // @ts-ignore
+  const isMouseEvent = isDefined(event.pageX)
+  const lastInteractionType = isMouseEvent ? 'mouse' : 'keyboard'
+
   return {
     previousIndex: state.index,
     index: index,
+    lastInteractionType,
   }
 }
 
@@ -208,16 +218,23 @@ export const selectItemFromIndex = (state: any) => {
 export const selectItem = (state, event: any) => {
   const node = findClosestItemDOMNode(event.target)
   const index = getIndexFromItemDOMNode(node)
-  // Performance guard to prevent store from updating
   const itemValue = getValueFromItemDOMNode(node)
   const item = getItemFromCollection(state.items, itemValue)
 
+  // Performance guard to prevent store from updating
   if (!index) return
+  if (!item) return
+  if (item.disabled) return
+  if (item.items) return
 
   // Trigger Callback
-  // if (item && onSelect) {
-  //   onSelect(item.value, { event, item, dropdownType: 'hsds-dropdown-v2' })
-  // }
+  if (item && state.onSelect) {
+    state.onSelect(item.value, {
+      event,
+      item,
+      dropdownType: 'hsds-dropdown-v2',
+    })
+  }
 
   return {
     isOpen: state.closeOnSelect ? false : state.isOpen,

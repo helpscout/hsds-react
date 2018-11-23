@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
+import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import { DropdownProps } from './Dropdown.types'
 import propConnect from '../../PropProvider/propConnect'
 import {
@@ -55,6 +56,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     onFocus: noop,
     onOpen: noop,
     onSelect: noop,
+    openClassName: 'is-open',
     selectedItem: '',
     setMenuNode: noop,
     setTriggerNode: noop,
@@ -175,16 +177,9 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   renderMenu = () => {
-    const { children, items } = this.props
-    // const { items } = this.state
+    const { children } = this.props
 
-    return (
-      <MenuContainer
-        items={items}
-        children={children}
-        innerRef={this.setMenuNodeRef}
-      />
-    )
+    return <MenuContainer children={children} innerRef={this.setMenuNodeRef} />
   }
 
   render() {
@@ -219,11 +214,10 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
 const ConnectedDropdown: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { id, items, isOpen } = state
+    const { id, isOpen } = state
     return {
       id,
       isOpen,
-      items,
     }
   },
   // mapDispatchToProps
@@ -240,4 +234,4 @@ const ConnectedDropdown: any = connect(
   PropConnectedComponent
 )
 
-export default ConnectedDropdown
+export default renderSpy({ id: 'Dropdown' })(ConnectedDropdown)

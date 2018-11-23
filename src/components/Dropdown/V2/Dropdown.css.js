@@ -92,7 +92,9 @@ export const ItemUI = styled('div')`
   user-select: none;
 
   &.is-active {
-    font-weight: bold;
+    > ${ActionUI} {
+      font-weight: bold;
+    }
   }
 
   &:focus {

@@ -21,6 +21,7 @@ export const DELIMETER = '.'
 export const SELECTORS = {
   actionAttribute: 'data-hsds-menu-action',
   itemAttribute: 'data-hsds-menu-item',
+  menuRootAttribute: 'data-hsds-menu-root',
   menuAttribute: 'data-hsds-menu',
   wrapperAttribute: 'data-hsds-menu-wrapper',
   indexAttribute: 'data-hsds-menu-item-path',
@@ -47,6 +48,14 @@ export const findItemDOMNodeById = (item, envNode = document) => {
 }
 export const findItemDOMNodes = (envNode = document) => {
   return envNode.querySelectorAll(`[${SELECTORS.indexAttribute}]`)
+}
+export const findOpenItemDOMNodes = (
+  envNode = document,
+  openClassName = 'is-open'
+) => {
+  return envNode.querySelectorAll(
+    `[${SELECTORS.indexAttribute}].${openClassName}`
+  )
 }
 export const findClosestItemDOMNode = node => {
   return node && node.closest && node.closest(`[${SELECTORS.indexAttribute}]`)
@@ -202,10 +211,14 @@ export const getIndexMapFromItems = (
     const itemIndex = pathResolve(path, index)
     const childItems = item.items
       ? getIndexMapFromItems(item.items, itemIndex)
-      : []
+      : {}
 
-    return [...indexMap, itemIndex, ...childItems]
-  }, [])
+    if (!indexMap[itemIndex]) {
+      indexMap
+    }
+
+    return { ...indexMap, [itemIndex]: item.value, ...childItems }
+  }, {})
 }
 
 export const renderRenderPropComponent = (
@@ -319,18 +332,37 @@ export const itemIsSelected = (state: any, index: ItemIndex) => {
   return state.index === index
 }
 
-export const getItemProps = (state: any, item: any, index: number): Object => {
+export const getItemProps = (
+  state: any,
+  item: any,
+  index?: string | number
+): Object => {
   const { value, ...rest } = item
-  const itemIndex = !isString(index) ? index.toString() : index
+  let itemIndex = Object.keys(state.indexMap).find(
+    key => state.indexMap[key] === value
+  )
+
+  if (isDefined(index)) {
+    // @ts-ignore
+    itemIndex = !isString(index) ? index.toString() : index
+  }
+
+  const hasSubMenu = itemHasSubMenu(item)
   const isSelected = itemIsSelected(state, itemIndex as string)
+  const childItems = item.items
+    ? item.items.map(item => getItemProps(state, item))
+    : undefined
 
   return {
     ...rest,
-    [SELECTORS.indexAttribute]: index,
+    [SELECTORS.indexAttribute]: itemIndex,
     [SELECTORS.valueAttribute]: value,
     role: 'option',
-    index,
+    index: itemIndex,
     isSelected,
+    hasSubMenu,
+    items: childItems,
+    value,
   }
 }
 
