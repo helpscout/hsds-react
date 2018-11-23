@@ -4,7 +4,6 @@ import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import EventListener from '../../EventListener'
-import KeypressListener from '../../KeypressListener'
 import Portal from '../../Portal'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
@@ -12,14 +11,11 @@ import Renderer from './Dropdown.Renderer'
 import {
   SELECTORS,
   isDropRight,
-  getParentPath,
-  getNextChildPath,
   renderRenderPropComponent,
   getItemProps,
 } from './Dropdown.utils'
 import {
   closeDropdown,
-  setActiveItem,
   onSelect,
   focusItem,
   selectItem,
@@ -27,19 +23,15 @@ import {
   onMenuUnmounted,
 } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
-import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
 import { getComponentKey } from '../../../utilities/component'
-import { isDefined } from '../../../utilities/is'
 import { noop } from '../../../utilities/other'
 import { namespaceComponent } from '../../../utilities/component'
-import { scrollIntoView } from '../../../utilities/scrolling'
 import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   animationDuration: number
   animationSequence: string
-  activeIndex: string
   children?: (props: any) => void
   className?: string
   closeDropdown: () => void
@@ -57,7 +49,6 @@ export interface Props {
   renderEmpty?: any
   renderLoading?: any
   selectItem: (...args: any[]) => void
-  setActiveItem: (node: HTMLElement) => void
   triggerId?: string
   triggerNode?: HTMLElement
   zIndex: number
@@ -67,7 +58,6 @@ export class MenuContainer extends React.Component<Props> {
   static defaultProps = {
     animationDuration: 80,
     animationSequence: 'fade down',
-    activeIndex: null,
     closeDropdown: noop,
     dropUp: false,
     dropRight: true,
@@ -103,89 +93,19 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
-  handleOnKeyDown = (event: KeyboardEvent) => {
-    const { dropRight, isOpen } = this.props
+  // closeOnLastTab = () => {
+  //   const { activeIndex, closeDropdown, isOpen, items } = this.props
+  //   // This has been tested
+  //   /* istanbul ignore if */
+  //   if (!isOpen) return
 
-    if (!isOpen) return
+  //   const isLastItem = parseInt(activeIndex, 10) === items.length - 1
 
-    switch (event.keyCode) {
-      case Keys.LEFT_ARROW:
-        event.preventDefault()
-        if (dropRight) {
-          this.closeSubMenu()
-        } else {
-          this.openSubMenu()
-        }
-        break
-
-      case Keys.RIGHT_ARROW:
-        event.preventDefault()
-        if (dropRight) {
-          this.openSubMenu()
-        } else {
-          this.closeSubMenu()
-        }
-        break
-
-      case Keys.TAB:
-        this.closeOnLastTab()
-        break
-
-      /* istanbul ignore next */
-      default:
-        break
-    }
-  }
-
-  selectActiveItem = () => {
-    this.props.onSelect()
-  }
-
-  setNextActiveItem = (nextActiveIndex: string) => {
-    /* istanbul ignore if */
-    if (!isDefined(nextActiveIndex)) return
-
-    const nextActiveItem = this.node.querySelector(
-      `[${SELECTORS.indexAttribute}="${nextActiveIndex}"]`
-    ) as HTMLElement
-
-    if (nextActiveItem) {
-      this.props.setActiveItem(nextActiveItem)
-      scrollIntoView(nextActiveItem)
-    }
-  }
-
-  closeOnLastTab = () => {
-    const { activeIndex, closeDropdown, isOpen, items } = this.props
-    // This has been tested
-    /* istanbul ignore if */
-    if (!isOpen) return
-
-    const isLastItem = parseInt(activeIndex, 10) === items.length - 1
-
-    /* istanbul ignore else */
-    if (isLastItem) {
-      closeDropdown()
-    }
-  }
-
-  closeSubMenu = () => {
-    const { activeIndex, isOpen } = this.props
-    if (!isOpen) return
-
-    const nextActiveIndex = getParentPath(activeIndex)
-
-    this.setNextActiveItem(nextActiveIndex)
-  }
-
-  openSubMenu = () => {
-    const { activeIndex, isOpen } = this.props
-    if (!isOpen) return
-
-    const nextActiveIndex = getNextChildPath(activeIndex)
-
-    this.setNextActiveItem(nextActiveIndex)
-  }
+  //   /* istanbul ignore else */
+  //   if (isLastItem) {
+  //     closeDropdown()
+  //   }
+  // }
 
   /* istanbul ignore next */
   // Skipping coverage for this method as it does almost exclusively DOM
@@ -349,7 +269,6 @@ export class MenuContainer extends React.Component<Props> {
     return (
       <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
         <EventListener event="resize" handler={this.setPositionStylesOnNode} />
-        <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
         {isOpen && (
           <Portal onOpen={onMenuMounted} onClose={onMenuUnmounted}>
             <div
@@ -424,7 +343,6 @@ const ConnectedMenuContainer: any = connect(
   // mapDispatchToProps
   {
     closeDropdown,
-    setActiveItem,
     onSelect,
     focusItem,
     selectItem,

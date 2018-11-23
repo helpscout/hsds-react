@@ -28,6 +28,8 @@ export interface DropdownProps extends DropdownMenuDimensions {
   activeClassName: string
   children?: (props: any) => void
   className?: string
+  closeOnSelect: boolean
+  clearOnSelect: boolean
   closeDropdown: () => void
   direction: 'left' | 'right'
   dropUp: boolean
@@ -38,9 +40,9 @@ export interface DropdownProps extends DropdownMenuDimensions {
   innerRef: (node: HTMLElement) => void
   isLoading: boolean
   isOpen: boolean
-  itemOnClick: (...args: any[]) => void
-  itemOnFocus: (...args: any[]) => void
-  itemOnMouseEnter: (...args: any[]) => void
+  // itemOnClick: (...args: any[]) => void
+  // itemOnFocus: (...args: any[]) => void
+  // itemOnMouseEnter: (...args: any[]) => void
   items: Array<any>
   menuId?: string
   menuRef: (node: HTMLElement) => void

@@ -19,6 +19,7 @@ const initialItemState = {
   activeId: null,
   index: null,
   previousIndex: null,
+  selectedItem: null,
   selectedIndex: '',
   previousSelectedIndex: '',
 }
@@ -236,12 +237,13 @@ export const selectItem = (state, event: any) => {
     })
   }
 
+  const selectedItem = !state.clearOnSelect ? item : null
+
   return {
     isOpen: state.closeOnSelect ? false : state.isOpen,
     previousSelectedItem: state.selectedItem,
     previousSelectedIndex: state.selectedIndex,
     selectedIndex: index,
-    selectedItem: item,
-    ...initialItemState,
+    selectedItem: selectedItem,
   }
 }

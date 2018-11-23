@@ -8,6 +8,7 @@ export const initialState = {
   activeIndex: '',
   activeItem: null,
   closeOnSelect: true,
+  clearOnSelect: true,
   direction: 'right',
   dropUp: false,
   enableTabNavigation: true,
@@ -23,7 +24,9 @@ export const initialState = {
   maxWidth: 360,
   minHeight: 48,
   minWidth: 180,
+  onBlur: noop,
   onClose: noop,
+  onFocus: noop,
   onOpen: noop,
   onSelect: noop,
   openClassName: 'is-open',
@@ -31,6 +34,9 @@ export const initialState = {
   previousSelectedIndex: '',
   selectedIndex: '',
   selectedItem: '',
+  subscribe: noop,
+  trigger: 'Dropdown',
+  withScrollLock: true,
   zIndex: 1080,
 }
 

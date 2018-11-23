@@ -1,21 +1,11 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
 import renderSpy from '@helpscout/react-utils/dist/renderSpy'
+import { initialState } from './Dropdown.store'
 import { DropdownProps } from './Dropdown.types'
 import propConnect from '../../PropProvider/propConnect'
-import {
-  itemOnMouseEnter,
-  itemOnFocus,
-  itemOnClick,
-  closeDropdown,
-  setMenuNode,
-  setTriggerNode,
-} from './Dropdown.actions'
-import {
-  enhanceItemsWithProps,
-  // getEnhancedItemsWithProps,
-  renderRenderPropComponent,
-} from './Dropdown.utils'
+import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
+import { renderRenderPropComponent } from './Dropdown.utils'
 import EventListener from '../../EventListener'
 import KeypressListener from '../../KeypressListener'
 import MenuContainer from './Dropdown.MenuContainer'
@@ -33,37 +23,12 @@ export interface State {
 
 export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
-    activeClassName: 'is-selected',
-    closeDropdown: noop,
-    direction: 'right',
-    dropUp: false,
-    enableTabNavigation: true,
-    focusClassName: 'is-focused',
+    ...initialState,
     innerRef: noop,
-    isOpen: false,
-    isLoading: false,
-    itemOnClick: noop,
-    itemOnFocus: noop,
-    itemOnMouseEnter: noop,
-    items: [],
-    minWidth: 180,
-    maxWidth: 360,
-    minHeight: 48,
-    maxHeight: 320,
     menuRef: noop,
-    onBlur: noop,
-    onClose: noop,
-    onFocus: noop,
-    onOpen: noop,
-    onSelect: noop,
-    openClassName: 'is-open',
-    selectedItem: '',
     setMenuNode: noop,
     setTriggerNode: noop,
-    subscribe: noop,
-    trigger: 'Dropdown',
     triggerRef: noop,
-    withScrollLock: true,
   }
 
   static childContextTypes = {
@@ -73,21 +38,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   node: HTMLElement
   triggerNode: HTMLElement
   menuNode: HTMLElement
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      items: this.getEnhancedItemsFromProps(props),
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.items !== this.props.items) {
-      this.setState({
-        items: this.getEnhancedItemsFromProps(nextProps),
-      })
-    }
-  }
 
   handleOnDocumentKeyDown = (event: KeyboardEvent) => {
     if (!this.props.isOpen) return
@@ -125,16 +75,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     if (this.triggerNode && this.props.isOpen) {
       this.triggerNode.focus()
     }
-  }
-
-  getEnhancedItemsFromProps = (props: DropdownProps) => {
-    const { items, itemOnMouseEnter, itemOnFocus, itemOnClick } = props
-
-    return enhanceItemsWithProps(items, {
-      onClick: itemOnClick,
-      onFocus: itemOnFocus,
-      onMouseEnter: itemOnMouseEnter,
-    })
   }
 
   getTriggerProps = () => {
@@ -223,9 +163,6 @@ const ConnectedDropdown: any = connect(
   // mapDispatchToProps
   {
     closeDropdown,
-    itemOnMouseEnter,
-    itemOnFocus,
-    itemOnClick,
     setMenuNode,
     setTriggerNode,
   }

@@ -13,10 +13,14 @@ import {
   findItemDOMNode,
   findItemDOMNodeById,
   findOpenItemDOMNodes,
-  isDOMNodeValidItem,
-  isPathActive,
   getIndexFromItemDOMNode,
+  getNextChildPath,
+  getParentPath,
+  isDOMNodeValidItem,
+  isDropRight,
+  isPathActive,
 } from './Dropdown.utils'
+import { isDefined } from '../../../utilities/is'
 import { scrollIntoView } from '../../../utilities/scrolling'
 import { noop } from '../../../utilities/other'
 
@@ -41,7 +45,9 @@ class Renderer extends React.PureComponent<any> {
   }
 
   handleOnKeyDown = event => {
+    const { dropRight } = this.props
     const modifier = 1
+
     switch (event.keyCode) {
       case Keys.UP_ARROW:
         event.preventDefault()
@@ -51,6 +57,24 @@ class Renderer extends React.PureComponent<any> {
       case Keys.DOWN_ARROW:
         event.preventDefault()
         this.props.incrementIndex(modifier)
+        break
+
+      case Keys.LEFT_ARROW:
+        event.preventDefault()
+        if (dropRight) {
+          this.closeSubMenu()
+        } else {
+          this.openSubMenu()
+        }
+        break
+
+      case Keys.RIGHT_ARROW:
+        event.preventDefault()
+        if (dropRight) {
+          this.openSubMenu()
+        } else {
+          this.closeSubMenu()
+        }
         break
 
       case Keys.TAB:
@@ -64,24 +88,36 @@ class Renderer extends React.PureComponent<any> {
 
       default:
         break
+    }
+  }
 
-      // case Keys.LEFT_ARROW:
-      //   event.preventDefault()
-      //   if (dropRight) {
-      //     this.closeSubMenu()
-      //   } else {
-      //     this.openSubMenu()
-      //   }
-      //   break
+  openSubMenu = () => {
+    const { index, isOpen } = this.props
+    if (!isOpen || !isDefined(index)) return
 
-      // case Keys.RIGHT_ARROW:
-      //   event.preventDefault()
-      //   if (dropRight) {
-      //     this.openSubMenu()
-      //   } else {
-      //     this.closeSubMenu()
-      //   }
-      //   break
+    const nextIndex = getNextChildPath(index)
+
+    this.setNextActiveItem(nextIndex)
+  }
+
+  closeSubMenu = () => {
+    const { index, isOpen } = this.props
+    if (!isOpen || !isDefined(index)) return
+
+    const nextIndex = getParentPath(index)
+
+    this.setNextActiveItem(nextIndex)
+  }
+
+  setNextActiveItem = (nextActiveIndex: string) => {
+    /* istanbul ignore if */
+    if (!isDefined(nextActiveIndex)) return
+
+    const target = findItemDOMNode(nextActiveIndex)
+
+    if (target) {
+      this.props.focusItem({ target })
+      scrollIntoView(target)
     }
   }
 
@@ -177,6 +213,7 @@ const ConnectedRenderer: any = connect(
       previousIndex,
       index,
       indexMap,
+      isOpen,
       openClassName,
       previousSelectedItem,
       selectedItem,
@@ -185,10 +222,12 @@ const ConnectedRenderer: any = connect(
     return {
       activeClassName,
       enableTabNavigation,
+      dropRight: isDropRight(state),
       focusClassName,
       previousIndex,
       index,
       indexMap,
+      isOpen,
       openClassName,
       previousSelectedItem,
       selectedItem,

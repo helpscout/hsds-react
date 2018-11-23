@@ -93,6 +93,8 @@ export const isPathActive = (path: string, index: string): boolean => {
 }
 
 export const getParentPath = (path: string): string => {
+  if (!isDefined(path)) return ''
+
   const paths = path.split(DELIMETER)
 
   if (paths.length <= 1) return `${paths[0]}`
@@ -101,6 +103,8 @@ export const getParentPath = (path: string): string => {
 }
 
 export const getNextChildPath = (path: string): string => {
+  if (!isDefined(path)) return ''
+
   return `${path}${DELIMETER}0`
 }
 
