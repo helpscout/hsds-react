@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'unistore/react'
 import propConnect from '../../PropProvider/propConnect'
 import renderSpy from '@helpscout/react-utils/dist/renderSpy'
-import { MenuUI } from './Dropdown.css.js'
+import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
@@ -38,21 +38,22 @@ export class Menu extends React.PureComponent<Props> {
   renderMenu = () => {
     const { children, className, innerRef, isSubMenu, ...rest } = this.props
     const componentClassName = classNames(
-      'c-DropdownV2Block',
       'c-DropdownV2Menu',
       isSubMenu && 'is-subMenu',
       className
     )
 
     return (
-      <MenuUI
-        {...rest}
-        className={componentClassName}
-        innerRef={innerRef}
-        style={this.getStyles()}
-      >
-        {children}
-      </MenuUI>
+      <MenuWrapperUI className="c-DropdownV2Block">
+        <MenuUI
+          {...rest}
+          className={componentClassName}
+          innerRef={innerRef}
+          style={this.getStyles()}
+        >
+          {children}
+        </MenuUI>
+      </MenuWrapperUI>
     )
   }
 

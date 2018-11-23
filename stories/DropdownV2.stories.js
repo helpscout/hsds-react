@@ -33,7 +33,7 @@ const ItemSpec = createSpec({
 })
 
 stories.add('Dropdown/Default', () => {
-  const items = ItemSpec.generate(8)
+  const items = ItemSpec.generate(20)
 
   return <Dropdown items={items} />
 })
@@ -117,7 +117,7 @@ stories.add('Menu/Nested', () => {
     ...ItemSpec.generate(6),
   ]
 
-  return <Dropdown items={items} />
+  return <Dropdown items={items} isOpened />
 })
 
 stories.add('Menu/Nested/UpLeft', () => {

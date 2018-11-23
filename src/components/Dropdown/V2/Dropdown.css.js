@@ -40,13 +40,18 @@ CardUI.defaultProps = {
   seamless: true,
 }
 
-export const MenuUI = styled('div')`
-  ${baseStyles};
-  padding: 8px 0;
+export const MenuWrapperUI = styled('div')`
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 100%;
+  min-height: 0;
   height: 100%;
+  width: 100%;
+`
+
+export const MenuUI = styled('div')`
+  ${baseStyles};
+  padding: 8px 0;
   width: 100%;
 `
 

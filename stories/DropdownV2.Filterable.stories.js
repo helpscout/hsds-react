@@ -44,15 +44,13 @@ stories.add('Custom Filterable', () => {
     border: 1px solid #eee;
   `
   class FilterableDropdown extends React.Component {
+    static defaultProps = {
+      isLoading: false,
+      disabled: false,
+    }
+
     state = {
-      items: [
-        {
-          value: 'header',
-          disabled: true,
-          label: 'Header',
-        },
-        ...ItemSpec.generate(30),
-      ],
+      items: ItemSpec.generate(30),
       inputValue: '',
       selectedItem: undefined,
     }
@@ -104,32 +102,30 @@ stories.add('Custom Filterable', () => {
           onClose={this.resetInputValue}
         >
           {({ items, getItemProps }) => (
-            <FocusTrap>
-              <Dropdown.Card>
-                <Dropdown.Block>
-                  <Input
-                    placeholder="Search"
-                    size="sm"
-                    autoFocus
-                    onChange={this.onInputChange}
-                    value={this.state.inputValue}
-                    onKeyDown={this.handleOnKeyDown}
-                  />
-                </Dropdown.Block>
-                <Dropdown.Menu>
-                  {items
-                    .filter(this.filterSearchResult)
-                    .map((item, index) => (
-                      <Dropdown.Item {...getItemProps(item, index)} />
-                    ))}
-                </Dropdown.Menu>
-                <Dropdown.Block>
-                  <Button version={2} kind="primary" isBlock>
-                    Button
-                  </Button>
-                </Dropdown.Block>
-              </Dropdown.Card>
-            </FocusTrap>
+            <Dropdown.Card>
+              <Dropdown.Block>
+                <Input
+                  placeholder="Search"
+                  size="sm"
+                  autoFocus
+                  onChange={this.onInputChange}
+                  value={this.state.inputValue}
+                  onKeyDown={this.handleOnKeyDown}
+                />
+              </Dropdown.Block>
+              <Dropdown.Menu>
+                {items
+                  .filter(this.filterSearchResult)
+                  .map((item, index) => (
+                    <Dropdown.Item {...getItemProps(item, index)} />
+                  ))}
+              </Dropdown.Menu>
+              <Dropdown.Block>
+                <Button version={2} kind="primary" isBlock>
+                  Button
+                </Button>
+              </Dropdown.Block>
+            </Dropdown.Card>
           )}
         </Dropdown>
       )
