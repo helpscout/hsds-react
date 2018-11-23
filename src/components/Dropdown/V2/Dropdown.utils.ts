@@ -29,42 +29,6 @@ export const SELECTORS = {
 }
 
 /**
- * DOM Helpers
- */
-export const getIndexFromItemDOMNode = itemNode => {
-  return itemNode && itemNode.getAttribute(SELECTORS.indexAttribute)
-}
-export const getIdFromItemDOMNode = itemNode => {
-  return itemNode && itemNode.getAttribute('id')
-}
-export const getValueFromItemDOMNode = itemNode => {
-  return itemNode && itemNode.getAttribute(SELECTORS.valueAttribute)
-}
-export const findItemDOMNode = (index, envNode = document) => {
-  return envNode.querySelector(`[${SELECTORS.indexAttribute}="${index}"]`)
-}
-export const findItemDOMNodeById = (item, envNode = document) => {
-  return item && item.id && envNode.getElementById(item.id)
-}
-export const findItemDOMNodes = (envNode = document) => {
-  return envNode.querySelectorAll(`[${SELECTORS.indexAttribute}]`)
-}
-export const findOpenItemDOMNodes = (
-  envNode = document,
-  openClassName = 'is-open'
-) => {
-  return envNode.querySelectorAll(
-    `[${SELECTORS.indexAttribute}].${openClassName}`
-  )
-}
-export const findClosestItemDOMNode = node => {
-  return node && node.closest && node.closest(`[${SELECTORS.indexAttribute}]`)
-}
-export const isDOMNodeValidItem = node => {
-  return !!getIndexFromItemDOMNode(node)
-}
-
-/**
  * Path Helpers
  */
 export const pathResolve = (...args): string => {
@@ -81,11 +45,14 @@ export const pathResolve = (...args): string => {
   return `${path}`
 }
 
-export const isPathActive = (path: string, index: string): boolean => {
+export const isPathActive = (path?: string, index?: string): boolean => {
   if (!isDefined(path)) return false
+  if (!isDefined(index)) return false
 
+  // @ts-ignore
   const matchPath = path
     .split(DELIMETER)
+    // @ts-ignore
     .slice(0, index.split(DELIMETER).length)
     .join(DELIMETER)
 
@@ -238,84 +205,6 @@ export const renderRenderPropComponent = (
   return null
 }
 
-// Going to be ignoring chunks of this from test coverage, since DOM related
-// calculations are difficult to mock/test within JSDOM.
-export const setMenuPositionStyles = (props: {
-  dropRight?: boolean
-  dropUp?: boolean
-  menuNode: HTMLElement | null
-  itemNode: HTMLElement
-  wrapperNode: HTMLElement | null
-  triggerNode: HTMLElement
-}) => {
-  const defaultProps = {
-    dropRight: true,
-    dropUp: false,
-  }
-
-  const { dropRight, dropUp, menuNode, itemNode, wrapperNode, triggerNode } = {
-    ...defaultProps,
-    ...props,
-  }
-
-  if (!menuNode || !itemNode || !wrapperNode || !triggerNode) return
-
-  let translateY
-
-  // Reset menuNode scroll position
-  /* istanbul ignore next */
-  if (menuNode.scrollTop) {
-    menuNode.scrollTop = 0
-  }
-
-  // Hard-coded dimensions
-  const menuOffset = 9
-  const menuBuffer = 20
-
-  const { top } = itemNode.getBoundingClientRect()
-  const { height } = wrapperNode.getBoundingClientRect()
-  const triggerNodeMenu = triggerNode.closest(`[${SELECTORS.menuAttribute}]`)
-
-  const translateYUp = wrapperNode.clientHeight - menuOffset
-
-  /* istanbul ignore next */
-  translateY =
-    triggerNode.offsetHeight +
-    (triggerNodeMenu ? triggerNodeMenu.scrollTop : 0) +
-    menuOffset
-
-  const predictedOffsetBottom = translateY + height + top
-  const predictedFlippedOffsetTop = top - translateY - height
-
-  /* istanbul ignore next */
-  const shouldDropUp =
-    window.innerHeight < predictedOffsetBottom && predictedFlippedOffsetTop > 0
-
-  /* istanbul ignore next */
-  if (!dropRight) {
-    wrapperNode.style.right = '100%'
-    wrapperNode.style.paddingLeft = '0px'
-    wrapperNode.style.paddingRight = `${menuBuffer}px`
-  } else {
-    wrapperNode.style.left = '100%'
-    wrapperNode.style.paddingLeft = `${menuBuffer}px`
-    wrapperNode.style.paddingRight = '0px'
-  }
-
-  /* istanbul ignore next */
-  if (dropUp) {
-    if (shouldDropUp) {
-      translateY = translateYUp
-    }
-  } else {
-    if (shouldDropUp) {
-      translateY = translateYUp
-    }
-  }
-
-  wrapperNode.style.transform = `translateY(-${translateY}px)`
-}
-
 export const isDropRight = (state: any): boolean => state.direction === 'right'
 
 export const itemIsHover = (state: any, index: ItemIndex): boolean => {
@@ -341,7 +230,7 @@ export const getItemProps = (
   item: any,
   index?: string | number
 ): Object => {
-  const { value, ...rest } = item
+  const { className, value, ...rest } = item
   let itemIndex = Object.keys(state.indexMap).find(
     key => state.indexMap[key] === value
   )
@@ -351,6 +240,7 @@ export const getItemProps = (
     itemIndex = !isString(index) ? index.toString() : index
   }
 
+  const isActive = itemIsActive(state.selectedItem, item)
   const hasSubMenu = itemHasSubMenu(item)
   const isSelected = itemIsSelected(state, itemIndex as string)
   const childItems = item.items
@@ -359,79 +249,21 @@ export const getItemProps = (
 
   return {
     ...rest,
+    className: classNames(
+      'c-DropdownV2Item',
+      hasSubMenu && 'has-subMenu',
+      isActive && 'is-active',
+      className
+    ),
+    'aria-haspopup': hasSubMenu,
     [SELECTORS.indexAttribute]: itemIndex,
     [SELECTORS.valueAttribute]: value,
     role: 'option',
     index: itemIndex,
+    isActive,
     isSelected,
     hasSubMenu,
     items: childItems,
     value,
   }
-}
-
-export const getItemPropsOld = (state: any, itemProps: any): Object => {
-  if (!state) return itemProps
-
-  const { className, index, value, ...rest } = itemProps
-
-  const hasSubMenu = itemHasSubMenu(itemProps)
-  const isHover = itemIsHover(state, index)
-  const isOpen = itemIsOpen(state, index)
-  const isSelected = itemIsSelected(state, index)
-  const isActive = itemIsActive(state.selectedItem, itemProps)
-
-  return {
-    ...rest,
-    className: classNames(
-      'c-DropdownV2Item',
-      hasSubMenu && 'has-subMenu',
-      isHover && 'is-hover',
-      isOpen && 'is-open',
-      isActive && 'is-active',
-      className
-    ),
-    'aria-selected': isSelected,
-    'aria-haspopup': hasSubMenu,
-    'aria-expanded': isOpen,
-    hasSubMenu,
-    isHover,
-    isOpen,
-    isSelected,
-    isActive,
-    [SELECTORS.indexAttribute]: index,
-    [SELECTORS.valueAttribute]: value,
-  }
-}
-
-export const getEnhancedItemsWithProps = (
-  state: any,
-  path?: string
-): Array<any> => {
-  const { dropUp, id, items, renderItem } = state
-  const dropRight = isDropRight(state)
-
-  const enhancedItems = items.map((item, index) => {
-    const itemId = pathResolve(id, index)
-    const itemIndex = pathResolve(path, index)
-
-    const childItems = item.items
-      ? getEnhancedItemsWithProps({ ...state, items: item.items }, itemIndex)
-      : undefined
-
-    return {
-      ...item,
-      ...getItemPropsOld(state, { ...item, index: itemIndex }),
-      actionId: pathResolve(itemId, 'action'),
-      dropUp,
-      dropRight,
-      index: itemIndex,
-      id: itemId,
-      renderItem,
-      items: childItems,
-      subMenuId: pathResolve(itemId, 'sub-menu'),
-    }
-  })
-
-  return enhancedItems
 }

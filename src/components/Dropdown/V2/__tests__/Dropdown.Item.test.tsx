@@ -2,9 +2,8 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
 import { findDOMNode, hasClass, getAttribute } from './Dropdown.testHelpers'
-import { setMenuPositionStyles } from '../Dropdown.utils'
-// @ts-ignore
-import MenuComponent from '../Dropdown.Menu'
+import { setMenuPositionStyles } from '../Dropdown.renderUtils'
+import '../Dropdown.Menu'
 import { MenuUI } from '../Dropdown.css.js'
 
 jest.mock('../Dropdown.utils')

@@ -123,7 +123,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   render() {
-    const { className, id } = this.props
+    const { className, envNode, id } = this.props
     const componentClassName = classNames(className, 'c-DropdownV2')
 
     return (
@@ -135,11 +135,12 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
         <KeypressListener
           handler={this.handleOnDocumentKeyDown}
           type="keydown"
+          scope={envNode}
         />
         <EventListener
           event="click"
           handler={this.handleOnDocumentBodyClick}
-          scope={document}
+          scope={envNode}
         />
         {this.renderTrigger()}
         {this.renderMenu()}
@@ -154,8 +155,9 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
 const ConnectedDropdown: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { id, isOpen } = state
+    const { envNode, id, isOpen } = state
     return {
+      envNode,
       id,
       isOpen,
     }

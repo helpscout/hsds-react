@@ -8,29 +8,32 @@ import {
   decrementIndex,
   selectItemFromIndex,
 } from './Dropdown.actions'
+import { getNextChildPath, getParentPath, isDropRight } from './Dropdown.utils'
 import {
-  SELECTORS,
+  didCloseSubMenu,
   findItemDOMNode,
   findItemDOMNodeById,
   findOpenItemDOMNodes,
   getIndexFromItemDOMNode,
-  getNextChildPath,
-  getParentPath,
   isDOMNodeValidItem,
-  isDropRight,
-  isPathActive,
-} from './Dropdown.utils'
+  isOpenFromIndex,
+  resetSubMenuScrollPositionFromItemNode,
+  setAriaActiveOnMenuFromItemNode,
+} from './Dropdown.renderUtils'
 import { isDefined } from '../../../utilities/is'
 import { scrollIntoView } from '../../../utilities/scrolling'
 import { noop } from '../../../utilities/other'
 
 class Renderer extends React.PureComponent<any> {
   static defaultProps = {
+    activeClassName: 'is-active',
     decrementIndex: noop,
     enableTabNavigation: true,
+    focusClassName: 'is-focused',
     focusItem: noop,
     incrementIndex: noop,
     items: [],
+    openClassName: 'is-open',
     selectItemFromIndex: noop,
   }
 
@@ -110,10 +113,11 @@ class Renderer extends React.PureComponent<any> {
   }
 
   setNextActiveItem = (nextActiveIndex: string) => {
+    const { envNode } = this.props
     /* istanbul ignore if */
     if (!isDefined(nextActiveIndex)) return
 
-    const target = findItemDOMNode(nextActiveIndex)
+    const target = findItemDOMNode(nextActiveIndex, envNode)
 
     if (target) {
       this.props.focusItem({ target })
@@ -124,6 +128,7 @@ class Renderer extends React.PureComponent<any> {
   optimizedItemRenderFromProps = () => {
     const {
       activeClassName,
+      envNode,
       focusClassName,
       previousIndex,
       index,
@@ -135,29 +140,16 @@ class Renderer extends React.PureComponent<any> {
     if (!index && !selectedItem) return
     // This can be abstracted to CSS classes to keep JS tidier.
     // Render focus (hover) styles
-    const previousNode = findItemDOMNode(previousIndex)
-    const nextNode = findItemDOMNode(index)
+    const previousNode = findItemDOMNode(previousIndex, envNode)
+    const nextNode = findItemDOMNode(index, envNode)
+    const openNodes = findOpenItemDOMNodes(envNode, openClassName)
 
-    if (previousNode) {
-      const isOpen = isPathActive(index, previousIndex)
-      if (isOpen) {
-        previousNode.classList.add(openClassName)
-      } else {
-        previousNode.classList.remove(focusClassName)
-        previousNode.classList.remove(openClassName)
-      }
-    }
+    const closedSubMenu = didCloseSubMenu(previousIndex, index)
 
-    if (nextNode) {
-      nextNode.classList.add(focusClassName)
-      scrollIntoView(nextNode)
-    }
-
-    // Clean up recursive opens
-    const openNodes = findOpenItemDOMNodes(document, openClassName)
+    // Render (recursive) sub-menu interactions
     Array.from(openNodes).forEach(node => {
       const nodeIndex = getIndexFromItemDOMNode(node)
-      const isOpen = isPathActive(index, nodeIndex)
+      const isOpen = isOpenFromIndex(index, nodeIndex)
       if (isOpen) {
         node.classList.add(openClassName)
       } else {
@@ -166,22 +158,43 @@ class Renderer extends React.PureComponent<any> {
       }
     })
 
+    // Render previous interactions
+    if (previousNode) {
+      const isOpen = isOpenFromIndex(index, previousIndex)
+
+      if (isOpen) {
+        previousNode.classList.add(openClassName)
+      } else {
+        previousNode.classList.remove(focusClassName)
+        previousNode.classList.remove(openClassName)
+        resetSubMenuScrollPositionFromItemNode(previousNode)
+      }
+    }
+
+    // Render next interactions
+    if (nextNode) {
+      nextNode.classList.add(focusClassName)
+      scrollIntoView(nextNode)
+      if (closedSubMenu) {
+        nextNode.classList.remove(openClassName)
+      }
+    }
+
     requestAnimationFrame(() => {
       // Render selected (active) styles
-      // Handle the UI for select/active, however it is you wish!
-      const previousSelectedNode = findItemDOMNodeById(previousSelectedItem)
+      const previousSelectedNode = findItemDOMNodeById(
+        previousSelectedItem,
+        envNode
+      )
       if (previousSelectedNode) {
         previousSelectedNode.classList.remove(activeClassName)
       }
 
-      const selectedNode = findItemDOMNodeById(selectedItem)
+      const selectedNode = findItemDOMNodeById(selectedItem, envNode)
+
       if (selectedNode) {
         selectedNode.classList.add(activeClassName)
-        // @ts-ignore
-        const menuNode = selectedNode.closest(`[${SELECTORS.menuAttribute}]`)
-        if (menuNode) {
-          menuNode.setAttribute('aria-activedescendant', selectedNode.id)
-        }
+        setAriaActiveOnMenuFromItemNode(selectedNode)
       }
     })
   }
@@ -195,6 +208,7 @@ class Renderer extends React.PureComponent<any> {
     // rather than spreading the work throughout the menu/item tree.
     // This is especially important if item nesting is going to be a thing.
     this.optimizedItemRenderFromProps()
+
     return (
       <div className="c-DropdownV2RendererNode">
         <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
@@ -209,6 +223,7 @@ const ConnectedRenderer: any = connect(
     const {
       activeClassName,
       enableTabNavigation,
+      envNode,
       focusClassName,
       previousIndex,
       index,
@@ -222,6 +237,7 @@ const ConnectedRenderer: any = connect(
     return {
       activeClassName,
       enableTabNavigation,
+      envNode,
       dropRight: isDropRight(state),
       focusClassName,
       previousIndex,

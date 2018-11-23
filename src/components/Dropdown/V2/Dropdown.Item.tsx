@@ -12,12 +12,8 @@ import {
   WrapperUI,
   SubMenuIncidatorUI,
 } from './Dropdown.css.js'
-import {
-  SELECTORS,
-  setMenuPositionStyles,
-  getCustomItemProps,
-  getItemProps,
-} from './Dropdown.utils'
+import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
+import { setMenuPositionStyles } from './Dropdown.renderUtils'
 import { classNames } from '../../../utilities/classNames'
 import {
   getComponentKey,

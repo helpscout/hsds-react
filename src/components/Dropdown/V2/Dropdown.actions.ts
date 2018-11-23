@@ -4,13 +4,16 @@ import {
   SELECTORS,
   getItemFromCollection,
   pathResolve,
+  incrementPathIndex,
+  decrementPathIndex,
+} from './Dropdown.utils'
+
+import {
   findItemDOMNode,
   findClosestItemDOMNode,
   getIndexFromItemDOMNode,
   getValueFromItemDOMNode,
-  incrementPathIndex,
-  decrementPathIndex,
-} from './Dropdown.utils'
+} from './Dropdown.renderUtils'
 
 const initialItemState = {
   activeItem: null,
@@ -19,7 +22,6 @@ const initialItemState = {
   activeId: null,
   index: null,
   previousIndex: null,
-  selectedItem: null,
   selectedIndex: '',
   previousSelectedIndex: '',
 }
@@ -64,8 +66,8 @@ export const openDropdown = state => {
 
   return {
     ...state,
-    isOpen: true,
     ...initialItemState,
+    isOpen: true,
   }
 }
 
@@ -75,8 +77,8 @@ export const closeDropdown = state => {
 
   return {
     ...state,
-    isOpen: false,
     ...initialItemState,
+    isOpen: false,
   }
 }
 
@@ -191,7 +193,7 @@ export const itemOnClick = (state, event: Event, props: any = {}) => {
 }
 
 export const focusItem = (state, event: Event) => {
-  const node = findClosestItemDOMNode(event.target)
+  const node = findClosestItemDOMNode(event.target as Element)
   if (!node) return
   const index = getIndexFromItemDOMNode(node)
   // Performance guard to prevent store from uppdating
@@ -209,7 +211,7 @@ export const focusItem = (state, event: Event) => {
 }
 
 export const selectItemFromIndex = (state: any) => {
-  const target = findItemDOMNode(state.index)
+  const target = findItemDOMNode(state.index, state.envNode)
   if (!target) return
 
   const mockEvent = { target }

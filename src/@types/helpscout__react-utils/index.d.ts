@@ -20,6 +20,11 @@ declare module '@helpscout/react-utils/dist/getComponentName' {
   export = getComponentName
 }
 
+declare module '@helpscout/react-utils/dist/getDocumentFromComponent' {
+  function getDocumentFromComponent(component: Component): any
+  export = getDocumentFromComponent
+}
+
 declare module '@helpscout/react-utils/dist/getValidProps' {
   function getValidProps(props: Object): Object
   export = getValidProps

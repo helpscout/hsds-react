@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Provider } from 'unistore/react'
+import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import { DropdownProps } from './Dropdown.types'
 import createStore, { initialState } from './Dropdown.store'
 import Dropdown from './Dropdown'
@@ -57,6 +58,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     const triggerId = pathResolve(id, 'trigger')
     const initialState = {
       ...this.props,
+      envNode: getDocumentFromComponent(this),
       id,
       menuId,
       triggerId,

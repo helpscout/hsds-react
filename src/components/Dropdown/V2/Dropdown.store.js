@@ -12,6 +12,7 @@ export const initialState = {
   direction: 'right',
   dropUp: false,
   enableTabNavigation: true,
+  envNode: document,
   focusClassName: 'is-focused',
   index: null,
   isLoading: false,
