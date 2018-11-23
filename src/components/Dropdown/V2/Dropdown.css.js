@@ -113,13 +113,13 @@ export const ItemUI = styled('div')`
     margin-right: -20px;
   }
 
-  &.is-hover {
+  &.is-focused {
     > ${ActionUI} {
       background-color: ${rgba(getColor('grey.300'), 1)};
       color: ${getColor('blue.500')};
     }
   }
-  &.is-hover:hover,
+  &.is-focused:hover,
   &.is-open {
     > ${WrapperUI} {
       visibility: visible;

@@ -1,10 +1,25 @@
-import { SELECTORS, getItemFromCollection, pathResolve } from './Dropdown.utils'
+import {
+  SELECTORS,
+  getItemFromCollection,
+  pathResolve,
+  findItemDOMNode,
+  findClosestItemDOMNode,
+  getIndexFromItemDOMNode,
+  getValueFromItemDOMNode,
+  incrementPathIndex,
+  decrementPathIndex,
+} from './Dropdown.utils'
+import { includes } from '../../../utilities/arrays'
 
 const initialItemState = {
   activeItem: null,
   activeIndex: null,
   activeValue: null,
   activeId: null,
+  index: null,
+  previousIndex: null,
+  selectedIndex: '',
+  previousSelectedIndex: '',
 }
 
 export const setActiveItem = (state, activeItem) => {
@@ -63,6 +78,21 @@ export const closeDropdown = state => {
   }
 }
 
+export const onMenuMounted = state => {
+  console.log(state)
+  return {
+    ...state,
+    isMounted: true,
+  }
+}
+
+export const onMenuUnmounted = state => {
+  return {
+    ...state,
+    isMounted: false,
+  }
+}
+
 export const onSelect = (state, event) => {
   const { items, activeValue, onSelect } = state
   const item = getItemFromCollection(items, activeValue)
@@ -103,6 +133,30 @@ export const setEventTargetAsActive = (state, event: Event) => {
   }
 }
 
+export const incrementIndex = (state, modifier: number = 1) => {
+  const { index, indexMap } = state
+  const nextIndex = incrementPathIndex(index, modifier)
+
+  if (!includes(indexMap, nextIndex)) return
+
+  return {
+    previousIndex: index,
+    index: nextIndex,
+  }
+}
+
+export const decrementIndex = (state, modifier: number = 1) => {
+  const { index, indexMap } = state
+  const nextIndex = decrementPathIndex(index, modifier)
+
+  if (!includes(indexMap, nextIndex)) return
+
+  return {
+    previousIndex: state.index,
+    index: nextIndex,
+  }
+}
+
 export const itemOnMouseEnter = (state, event: MouseEvent) => {
   if (event && event.stopPropagation) {
     event.stopPropagation()
@@ -128,4 +182,49 @@ export const itemOnClick = (state, event: Event, props: any = {}) => {
   if (hasSubMenu) return
 
   return onSelect(state, event)
+}
+
+export const focusItem = (state, event: Event) => {
+  const node = findClosestItemDOMNode(event.target)
+  if (!node) return
+  const index = getIndexFromItemDOMNode(node)
+  // Performance guard to prevent store from uppdating
+  if (state.index === index) return
+
+  return {
+    previousIndex: state.index,
+    index: index,
+  }
+}
+
+export const selectItemFromIndex = (state: any) => {
+  const target = findItemDOMNode(state.index)
+  if (!target) return
+
+  const mockEvent = { target }
+  return selectItem(state, mockEvent)
+}
+
+export const selectItem = (state, event: any) => {
+  const node = findClosestItemDOMNode(event.target)
+  const index = getIndexFromItemDOMNode(node)
+  // Performance guard to prevent store from updating
+  const itemValue = getValueFromItemDOMNode(node)
+  const item = getItemFromCollection(state.items, itemValue)
+
+  if (!index) return
+
+  // Trigger Callback
+  // if (item && onSelect) {
+  //   onSelect(item.value, { event, item, dropdownType: 'hsds-dropdown-v2' })
+  // }
+
+  return {
+    isOpen: state.closeOnSelect ? false : state.isOpen,
+    previousSelectedItem: state.selectedItem,
+    previousSelectedIndex: state.selectedIndex,
+    selectedIndex: index,
+    selectedItem: item,
+    ...initialItemState,
+  }
 }

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
+import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import EventListener from '../../EventListener'
@@ -7,6 +8,7 @@ import KeypressListener from '../../KeypressListener'
 import Portal from '../../Portal'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
+import Renderer from './Dropdown.Renderer'
 import {
   SELECTORS,
   decrementPathIndex,
@@ -17,7 +19,15 @@ import {
   renderRenderPropComponent,
   getItemProps,
 } from './Dropdown.utils'
-import { closeDropdown, setActiveItem, onSelect } from './Dropdown.actions'
+import {
+  closeDropdown,
+  setActiveItem,
+  onSelect,
+  focusItem,
+  selectItem,
+  onMenuMounted,
+  onMenuUnmounted,
+} from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
@@ -38,14 +48,18 @@ export interface Props {
   closeDropdown: () => void
   dropUp: boolean
   dropRight: boolean
+  focusItem: (...args: any[]) => void
   id?: string
   isLoading: boolean
-  onSelect: () => {}
+  onMenuMounted: () => void
+  onMenuUnmounted: () => void
+  onSelect: (...args: any[]) => void
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
   renderEmpty?: any
   renderLoading?: any
+  selectItem: (...args: any[]) => void
   setActiveItem: (node: HTMLElement) => void
   triggerId?: string
   triggerNode?: HTMLElement
@@ -60,11 +74,15 @@ export class MenuContainer extends React.Component<Props> {
     closeDropdown: noop,
     dropUp: false,
     dropRight: true,
+    focusItem: noop,
     innerRef: noop,
     items: [],
     isOpen: true,
     isLoading: false,
+    onMenuMounted: noop,
+    onMenuUnmounted: noop,
     onSelect: noop,
+    selectItem: noop,
     setActiveItem: noop,
     zIndex: 1080,
   }
@@ -257,9 +275,8 @@ export class MenuContainer extends React.Component<Props> {
     // Normal
     return items.map((item, index) => {
       const props = this.getItemProps(item, index)
-      console.log(props)
       return (
-        <Item key={getComponentKey(item, index)} {...item}>
+        <Item key={getComponentKey(item, index)} {...props}>
           {item.label}
         </Item>
       )
@@ -353,11 +370,15 @@ export class MenuContainer extends React.Component<Props> {
 
   render() {
     const {
-      animationDuration,
       animationSequence,
+      animationDuration,
       className,
       dropRight,
+      focusItem,
+      onMenuMounted,
+      onMenuUnmounted,
       isOpen,
+      selectItem,
     } = this.props
     const shouldDropUp = this.shouldDropUp()
 
@@ -379,21 +400,28 @@ export class MenuContainer extends React.Component<Props> {
               style={{ position: 'relative' }}
               ref={this.setPlacementNode}
             >
-              <MenuContainerUI
-                className={componentClassName}
-                innerRef={this.setNodeRef}
+              <Animate
+                sequence={shouldDropUp ? 'fade up' : animationSequence}
+                in={isOpen}
+                onEntered={onMenuMounted}
+                onExited={onMenuUnmounted}
+                mountOnEnter={false}
+                unmountOnExit={false}
+                duration={animationDuration}
+                timeout={animationDuration / 2}
               >
-                <Animate
-                  sequence={shouldDropUp ? 'fade up' : animationSequence}
-                  in={isOpen}
-                  mountOnEnter={false}
-                  unmountOnExit={false}
-                  duration={animationDuration}
-                  timeout={animationDuration / 2}
-                >
-                  {this.renderContent()}
-                </Animate>
-              </MenuContainerUI>
+                <div>
+                  <Renderer />
+                  <MenuContainerUI
+                    className={componentClassName}
+                    innerRef={this.setNodeRef}
+                    onClick={selectItem}
+                    onMouseMove={focusItem}
+                  >
+                    {this.renderContent()}
+                  </MenuContainerUI>
+                </div>
+              </Animate>
             </div>
           </Portal>
         )}
@@ -444,10 +472,16 @@ const ConnectedMenuContainer: any = connect(
     closeDropdown,
     setActiveItem,
     onSelect,
+    focusItem,
+    selectItem,
+    onMenuMounted,
+    onMenuUnmounted,
   }
 )(
   // @ts-ignore
   PropConnectedComponent
 )
 
-export default ConnectedMenuContainer
+export default renderSpy({ id: 'Dropdown.MenuContainer' })(
+  ConnectedMenuContainer
+)

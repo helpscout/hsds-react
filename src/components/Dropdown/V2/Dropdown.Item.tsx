@@ -34,11 +34,11 @@ export interface Props {
   innerRef: (node: HTMLElement) => void
   isHover: boolean
   items: Array<any>
-  onMouseEnter: (event: Event) => void
-  onMouseMove: (event: Event) => void
-  onBlur: (event: Event) => void
-  onClick: (event: Event, props: any) => void
-  onFocus: (event: Event) => void
+  onMouseEnter: (...args: any[]) => void
+  onMouseMove: (...args: any[]) => void
+  onBlur: (...args: any[]) => void
+  onClick: (...args: any[]) => void
+  onFocus: (...args: any[]) => void
   renderItem?: (props: any) => void
   subMenuId?: string
   label: string

@@ -36,6 +36,9 @@ export const getIndexFromItemDOMNode = itemNode => {
 export const getIdFromItemDOMNode = itemNode => {
   return itemNode && itemNode.getAttribute('id')
 }
+export const getValueFromItemDOMNode = itemNode => {
+  return itemNode && itemNode.getAttribute(SELECTORS.valueAttribute)
+}
 export const findItemDOMNode = (index, envNode = document) => {
   return envNode.querySelector(`[${SELECTORS.indexAttribute}="${index}"]`)
 }
@@ -191,6 +194,20 @@ export const itemHasSubMenu = (itemProps: any): boolean => {
   return !!(items && items.length)
 }
 
+export const getIndexMapFromItems = (
+  items: Array<any>,
+  path?: string
+): Array<any> => {
+  return items.reduce((indexMap, item, index) => {
+    const itemIndex = pathResolve(path, index)
+    const childItems = item.items
+      ? getIndexMapFromItems(item.items, itemIndex)
+      : []
+
+    return [...indexMap, itemIndex, ...childItems]
+  }, [])
+}
+
 export const renderRenderPropComponent = (
   renderProp: any,
   props: Object = {}
@@ -299,9 +316,7 @@ export const itemIsOpen = (state: any, index: ItemIndex): boolean => {
 }
 
 export const itemIsSelected = (state: any, index: ItemIndex) => {
-  const { activeIndex } = state
-
-  return activeIndex === index
+  return state.index === index
 }
 
 export const getItemProps = (state: any, item: any, index: number): Object => {

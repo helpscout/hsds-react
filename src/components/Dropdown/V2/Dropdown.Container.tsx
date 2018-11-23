@@ -5,7 +5,7 @@ import createStore, { initialState } from './Dropdown.store'
 import Dropdown from './Dropdown'
 import Menu from './Dropdown.Menu'
 import Item from './Dropdown.Item'
-import { pathResolve } from './Dropdown.utils'
+import { pathResolve, getIndexMapFromItems } from './Dropdown.utils'
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
@@ -60,6 +60,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
       id,
       menuId,
       triggerId,
+      indexMap: getIndexMapFromItems(props.items),
     }
 
     if (props.__store && props.__store.setState) {
@@ -80,7 +81,10 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.items !== this.props.items) {
-      this.rehydrateStoreWithProps({ items: nextProps.items })
+      this.rehydrateStoreWithProps({
+        items: nextProps.items,
+        indexMap: getIndexMapFromItems(nextProps.items),
+      })
     }
     if (nextProps.isOpen !== this.props.isOpen) {
       this.rehydrateStoreWithProps({ isOpen: nextProps.isOpen })

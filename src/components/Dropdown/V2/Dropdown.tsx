@@ -12,7 +12,7 @@ import {
 } from './Dropdown.actions'
 import {
   enhanceItemsWithProps,
-  getEnhancedItemsWithProps,
+  // getEnhancedItemsWithProps,
   renderRenderPropComponent,
 } from './Dropdown.utils'
 import EventListener from '../../EventListener'
@@ -32,9 +32,12 @@ export interface State {
 
 export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
+    activeClassName: 'is-selected',
     closeDropdown: noop,
     direction: 'right',
     dropUp: false,
+    enableTabNavigation: true,
+    focusClassName: 'is-focused',
     innerRef: noop,
     isOpen: false,
     isLoading: false,
@@ -172,8 +175,8 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   renderMenu = () => {
-    const { children } = this.props
-    const { items } = this.state
+    const { children, items } = this.props
+    // const { items } = this.state
 
     return (
       <MenuContainer
@@ -216,11 +219,11 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
 const ConnectedDropdown: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { id, isOpen } = state
+    const { id, items, isOpen } = state
     return {
       id,
       isOpen,
-      items: getEnhancedItemsWithProps(state),
+      items,
     }
   },
   // mapDispatchToProps
