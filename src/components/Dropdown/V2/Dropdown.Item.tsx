@@ -41,6 +41,7 @@ export interface Props {
   renderItem?: (props: any) => void
   subMenuId?: string
   label: string
+  type: string
   value: string
 }
 
@@ -59,6 +60,7 @@ export class Item extends React.PureComponent<Props> {
     onClick: noop,
     onFocus: noop,
     label: '',
+    type: 'item',
     value: '',
   }
 
@@ -76,6 +78,11 @@ export class Item extends React.PureComponent<Props> {
     if (this.node) {
       this.renderMenu()
     }
+  }
+
+  shouldRenderContent = (): boolean => {
+    const { type } = this.props
+    return type !== 'divider'
   }
 
   handleOnClick = (event: Event) => {
@@ -170,6 +177,8 @@ export class Item extends React.PureComponent<Props> {
   renderContent = () => {
     const { renderItem, children, label } = this.props
 
+    if (!this.shouldRenderContent()) return null
+
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }
@@ -193,11 +202,12 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { actionId, className, disabled } = this.props
+    const { actionId, className, disabled, type } = this.props
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
       disabled && 'is-disabled',
+      type && `is-${type}`,
       className
     )
 

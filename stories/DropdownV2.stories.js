@@ -141,78 +141,6 @@ stories.add('Menu/Nested/UpLeft', () => {
   return <Dropdown items={items} dropUp direction="left" />
 })
 
-stories.add('Menu/Custom', () => {
-  const HeaderUI = styled('div')`
-    position: sticky;
-    z-index: 10;
-    background: white;
-    padding: 8px 10px 8px;
-    top: 0;
-    transform: translateY(-8px);
-    border: 1px solid #eee;
-  `
-  class FilterableDropdown extends React.Component {
-    state = {
-      items: ItemSpec.generate(30),
-      inputValue: '',
-      selectedItem: undefined,
-    }
-
-    onInputChange = inputValue => {
-      this.setState({
-        inputValue,
-      })
-    }
-
-    onSelect = selectedItem => {
-      this.setState({
-        selectedItem,
-      })
-    }
-
-    filterSearchResult = item => {
-      if (!this.state.inputValue) return true
-
-      return item.label
-        .toLowerCase()
-        .includes(this.state.inputValue.toLowerCase())
-    }
-
-    render() {
-      return (
-        <Dropdown
-          items={this.state.items}
-          selectedItem={this.state.selectedItem}
-          minWidth={300}
-          inputValue={this.state.inputValue}
-          onSelect={this.onSelect}
-        >
-          {({ items, getItemProps }) => (
-            <Dropdown.Menu>
-              <HeaderUI>
-                <Input
-                  placeholder="Search"
-                  size="sm"
-                  autoFocus
-                  onChange={this.onInputChange}
-                  value={this.state.inputValue}
-                />
-              </HeaderUI>
-              {items
-                .filter(this.filterSearchResult)
-                .map((item, index) => (
-                  <Dropdown.Item {...getItemProps(item, index)} key={item.id} />
-                ))}
-            </Dropdown.Menu>
-          )}
-        </Dropdown>
-      )
-    }
-  }
-
-  return <FilterableDropdown />
-})
-
 stories.add('Item/Active', () => {
   const items = ItemSpec.generate(8)
   const selectedItem = items[0]
@@ -228,6 +156,42 @@ stories.add('Item/Disabled', () => {
       disabled: true,
     }
   })
+
+  return <Dropdown items={items} />
+})
+
+stories.add('Item/Divider', () => {
+  const items = ItemSpec.generate(8).map((item, index) => {
+    if (index !== 5) return item
+    return {
+      type: 'divider',
+    }
+  })
+
+  return <Dropdown items={items} />
+})
+
+stories.add('Item/Groups', () => {
+  const items = [
+    {
+      items: [
+        {
+          ...ItemSpec.generate(),
+          items: ItemSpec.generate(8),
+        },
+        ...ItemSpec.generate(8),
+      ],
+      label: 'Group 1',
+      value: 'thing',
+      type: 'group',
+    },
+    {
+      items: ItemSpec.generate(8),
+      label: 'Group 2',
+      type: 'group',
+      value: 'thing2',
+    },
+  ]
 
   return <Dropdown items={items} />
 })

@@ -171,6 +171,29 @@ export const ItemUI = styled('div')`
     pointer-events: none;
     opacity: 0.4;
   }
+
+  &.is-group {
+    color: ${getColor('charcoal.200')};
+    margin-top: 10px;
+    position: relative;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &.is-divider {
+    position: relative;
+
+    &:before {
+      background-color: ${getColor('grey.400')};
+      content: '';
+      height: 1px;
+      position: absolute;
+      top: 50%;
+      width: 100%;
+    }
+  }
 `
 ItemUI.defaultProps = {
   [SELECTORS.itemAttribute]: true,

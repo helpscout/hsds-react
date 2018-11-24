@@ -14,6 +14,8 @@ import {
   isDropRight,
   renderRenderPropComponent,
   getItemProps,
+  hasGroups,
+  flattenGroupedItems,
 } from './Dropdown.utils'
 import {
   closeDropdown,
@@ -155,8 +157,29 @@ export class MenuContainer extends React.Component<Props> {
     // Empty
     if (!items.length && renderEmpty)
       return renderRenderPropComponent(renderEmpty)
+    // Groups
+    if (this.hasGroups()) return this.renderItemsAsGroups()
     // Normal
     return items.map((item, index) => {
+      return (
+        <Item
+          key={item.value || getComponentKey(item, index)}
+          {...this.getItemProps(item)}
+        >
+          {item.label}
+        </Item>
+      )
+    })
+  }
+
+  hasGroups = () => {
+    return hasGroups(this.props.items)
+  }
+
+  renderItemsAsGroups = () => {
+    const flattenedItems = flattenGroupedItems(this.props.items)
+
+    return flattenedItems.map((item, index) => {
       return (
         <Item
           key={item.value || getComponentKey(item, index)}

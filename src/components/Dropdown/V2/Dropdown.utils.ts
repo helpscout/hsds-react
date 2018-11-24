@@ -174,11 +174,46 @@ export const itemHasSubMenu = (itemProps: any): boolean => {
   return !!(items && items.length)
 }
 
+export const hasGroups = (items: Array<any>): boolean => {
+  return !!items.find(i => i.type === 'group')
+}
+
+export const flattenGroupedItems = (items: Array<any>): Array<any> => {
+  return items.reduce((collection, group) => {
+    const { items, ...groupHeader } = group
+    return [...collection, groupHeader, ...items]
+  }, [])
+}
+
+export const filterGroupHeaderFromItems = (item: any): boolean => {
+  return !(item && item.type && item.type === 'group')
+}
+
+export const filterDisabledFromItems = (item: any): boolean => {
+  return !(item && item.disabled === true)
+}
+
+export const filterDividerFromItems = (item: any): boolean => {
+  return !(item && item.type && item.type === 'divider')
+}
+
+export const filterNonFocusableItemFromItems = (item: any): boolean => {
+  return filterDisabledFromItems(item) && filterDividerFromItems(item)
+}
+
 export const getIndexMapFromItems = (
   items: Array<any>,
   path?: string
 ): Array<any> => {
-  return items.reduce((indexMap, item, index) => {
+  let collection = items
+
+  if (hasGroups(items)) {
+    collection = flattenGroupedItems(items).filter(filterGroupHeaderFromItems)
+  }
+
+  collection = collection.filter(filterNonFocusableItemFromItems)
+
+  return collection.reduce((indexMap, item, index) => {
     const itemIndex = pathResolve(path, index)
     const childItems = item.items
       ? getIndexMapFromItems(item.items, itemIndex)
