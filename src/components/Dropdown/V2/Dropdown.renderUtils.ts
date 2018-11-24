@@ -90,6 +90,7 @@ export const didCloseSubMenu = (
   return previousIndex.length > index.length
 }
 
+// TODO: Recalculate on EVERY show
 // Going to be ignoring chunks of this from test coverage, since DOM related
 // calculations are difficult to mock/test within JSDOM.
 export const setMenuPositionStyles = (props: {

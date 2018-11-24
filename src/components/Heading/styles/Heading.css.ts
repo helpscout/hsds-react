@@ -31,8 +31,8 @@ const css = `
   font-weight: 500;
   line-height: 1.2;
 
-  ${makeShadeStyles()}
   ${makeSizeStyles()}
+  ${makeShadeStyles()}
 
   &.is-big {
     font-weight: 600;
@@ -42,6 +42,8 @@ const css = `
     color: ${getColor('charcoal.500')};
     letter-spacing: 0.5px;
     text-transform: uppercase;
+
+    ${makeShadeStyles()}
   }
 
   &.is-disableSelect {

@@ -5,6 +5,8 @@ import propConnect from '../../PropProvider/propConnect'
 import Flexy from '../../Flexy'
 import Icon from '../../Icon'
 import Card from './Dropdown.Card'
+import Divider from './Dropdown.Divider'
+import Header from './Dropdown.Header'
 import Menu from './Dropdown.Menu'
 import {
   ItemUI,
@@ -78,11 +80,6 @@ export class Item extends React.PureComponent<Props> {
     if (this.node) {
       this.renderMenu()
     }
-  }
-
-  shouldRenderContent = (): boolean => {
-    const { type } = this.props
-    return type !== 'divider'
   }
 
   handleOnClick = (event: Event) => {
@@ -177,8 +174,6 @@ export class Item extends React.PureComponent<Props> {
   renderContent = () => {
     const { renderItem, children, label } = this.props
 
-    if (!this.shouldRenderContent()) return null
-
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }
@@ -207,9 +202,11 @@ export class Item extends React.PureComponent<Props> {
     const componentClassName = classNames(
       'c-DropdownV2Item',
       disabled && 'is-disabled',
-      type && `is-${type}`,
       className
     )
+
+    if (type === 'group') return <Header {...this.props} />
+    if (type === 'divider') return <Divider />
 
     return (
       <ItemUI

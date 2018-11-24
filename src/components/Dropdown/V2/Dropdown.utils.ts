@@ -265,22 +265,25 @@ export const getItemProps = (
   item: any,
   index?: string | number
 ): Object => {
+  const { dropUp, id, enableTabNavigation, indexMap, selectedItem } = state
   const { className, value, ...rest } = item
-  let itemIndex = Object.keys(state.indexMap).find(
-    key => state.indexMap[key] === value
-  )
+  const dropRight = isDropRight(state)
+
+  let itemIndex = Object.keys(indexMap).find(key => indexMap[key] === value)
 
   if (isDefined(index)) {
     // @ts-ignore
     itemIndex = !isString(index) ? index.toString() : index
   }
 
-  const isActive = itemIsActive(state.selectedItem, item)
+  const isActive = itemIsActive(selectedItem, item)
   const hasSubMenu = itemHasSubMenu(item)
   const isSelected = itemIsSelected(state, itemIndex as string)
   const childItems = item.items
     ? item.items.map(item => getItemProps(state, item))
     : undefined
+
+  const itemId = pathResolve(id, itemIndex)
 
   return {
     ...rest,
@@ -293,13 +296,18 @@ export const getItemProps = (
     'aria-haspopup': hasSubMenu,
     [SELECTORS.indexAttribute]: itemIndex,
     [SELECTORS.valueAttribute]: value,
+    actionId: pathResolve(itemId, 'action'),
     role: 'option',
     index: itemIndex,
+    dropRight,
+    dropUp,
+    id: itemId,
     isActive,
     isSelected,
     hasSubMenu,
     items: childItems,
-    tabIndex: state.enableTabNavigation ? 0 : -1,
+    subMenuId: pathResolve(itemId, 'sub-menu'),
+    tabIndex: enableTabNavigation ? 0 : null,
     value,
   }
 }

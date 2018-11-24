@@ -7,6 +7,7 @@ import EventListener from '../../EventListener'
 import Portal from '../../Portal'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
+import Group from './Dropdown.Group'
 import Item from './Dropdown.Item'
 import Renderer from './Dropdown.Renderer'
 import {
@@ -15,7 +16,6 @@ import {
   renderRenderPropComponent,
   getItemProps,
   hasGroups,
-  flattenGroupedItems,
 } from './Dropdown.utils'
 import {
   closeDropdown,
@@ -25,7 +25,7 @@ import {
   onMenuMounted,
   onMenuUnmounted,
 } from './Dropdown.actions'
-import { MenuContainerUI } from './Dropdown.css.js'
+import { MenuContainerUI, GroupUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
 import { getComponentKey } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
@@ -177,16 +177,28 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   renderItemsAsGroups = () => {
-    const flattenedItems = flattenGroupedItems(this.props.items)
+    const { id, items } = this.props
 
-    return flattenedItems.map((item, index) => {
+    return items.map((group, index) => {
+      const { items, ...groupProps } = group
+      const groupId = `${id}-group-${index}`
+      const groupHeaderId = `${id}-group-${index}-header`
+
+      if (!items.length) return
+
       return (
-        <Item
-          key={item.value || getComponentKey(item, index)}
-          {...this.getItemProps(item)}
-        >
-          {item.label}
-        </Item>
+        <Group key={index} id={groupId} aria-labelledby={groupHeaderId}>
+          <Item {...groupProps} id={groupHeaderId} />
+          {items.map((item, index) => (
+            <Item
+              key={item.value || getComponentKey(item, index)}
+              {...this.getItemProps(item)}
+              id={groupHeaderId}
+            >
+              {item.label}
+            </Item>
+          ))}
+        </Group>
       )
     })
   }

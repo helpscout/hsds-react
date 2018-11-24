@@ -4,10 +4,13 @@ import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFro
 import { DropdownProps } from './Dropdown.types'
 import createStore, { initialState } from './Dropdown.store'
 import Dropdown from './Dropdown'
-import Menu from './Dropdown.Menu'
-import Item from './Dropdown.Item'
 import Block from './Dropdown.Block'
 import Card from './Dropdown.Card'
+import Divider from './Dropdown.Divider'
+import Group from './Dropdown.Group'
+import Header from './Dropdown.Header'
+import Item from './Dropdown.Item'
+import Menu from './Dropdown.Menu'
 import { pathResolve, getIndexMapFromItems } from './Dropdown.utils'
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../../utilities/id'
@@ -41,6 +44,9 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
   static Block = Block
   static Card = Card
+  static Divider = Divider
+  static Group = Group
+  static Header = Header
   static Item = Item
   static Menu = Menu
   static Trigger = Trigger
