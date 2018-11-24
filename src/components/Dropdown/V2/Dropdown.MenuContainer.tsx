@@ -144,7 +144,9 @@ export class MenuContainer extends React.Component<Props> {
 
   getItemProps = (item: any, index?: number) => {
     const state = this.context.getState()
-    return getItemProps(state, item, index)
+    const props = getItemProps(state, item, index)
+
+    return props
   }
 
   renderItems = () => {

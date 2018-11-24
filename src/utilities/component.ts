@@ -138,13 +138,13 @@ export const isComponentTypeChat = (Component: any): boolean => {
 /**
  * Attempts to retrieve a React key from a child when iterating.
  * @param   {React.Component} Component The component.
- * @param   {number} index The iterating index value.
+ * @param   {number | string} index The iterating index value.
  * @param   {string} fallback A fallback value.
  * @returns {string} The React cnild key.
  */
 export const getComponentKey = (
   Component: any,
-  index?: number,
+  index?: number | string,
   fallback?: string
 ) => {
   if (!isReactComponent(Component) && !isObject(Component)) return undefined

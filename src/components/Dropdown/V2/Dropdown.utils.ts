@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { ItemIndex } from './Dropdown.types'
+import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
 import {
   isFunction,
@@ -284,6 +285,7 @@ export const getItemProps = (
     : undefined
 
   const itemId = pathResolve(id, itemIndex)
+  const key = item.id || item.value || getComponentKey(item, index)
 
   return {
     ...rest,
@@ -297,6 +299,7 @@ export const getItemProps = (
     [SELECTORS.indexAttribute]: itemIndex,
     [SELECTORS.valueAttribute]: value,
     actionId: pathResolve(itemId, 'action'),
+    key,
     role: 'option',
     index: itemIndex,
     dropRight,

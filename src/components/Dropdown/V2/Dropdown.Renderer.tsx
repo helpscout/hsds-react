@@ -121,8 +121,16 @@ class Renderer extends React.PureComponent<any> {
 
     if (target) {
       this.props.focusItem({ target })
-      scrollIntoView(target)
+      this.scrollIntoView(target)
     }
+  }
+
+  scrollIntoView = node => {
+    requestAnimationFrame(() => {
+      if (node) {
+        scrollIntoView(node)
+      }
+    })
   }
 
   optimizedItemRenderFromProps = () => {
@@ -130,6 +138,7 @@ class Renderer extends React.PureComponent<any> {
       activeClassName,
       envNode,
       focusClassName,
+      lastInteractionWasKeyboard,
       previousIndex,
       index,
       openClassName,
@@ -173,7 +182,9 @@ class Renderer extends React.PureComponent<any> {
     // Render next interactions
     if (nextNode) {
       nextNode.classList.add(focusClassName)
-      scrollIntoView(nextNode)
+      if (lastInteractionWasKeyboard) {
+        this.scrollIntoView(nextNode)
+      }
       if (closedSubMenu) {
         nextNode.classList.remove(openClassName)
       }
@@ -228,6 +239,7 @@ const ConnectedRenderer: any = connect(
       enableTabNavigation,
       envNode,
       focusClassName,
+      lastInteractionType,
       previousIndex,
       index,
       indexMap,
@@ -243,6 +255,7 @@ const ConnectedRenderer: any = connect(
       envNode,
       dropRight: isDropRight(state),
       focusClassName,
+      lastInteractionWasKeyboard: lastInteractionType === 'keyboard',
       previousIndex,
       index,
       indexMap,

@@ -15,7 +15,6 @@ stories.addDecorator(storyFn => (
   <Artboard
     name="dropdown-v2"
     withCenterGuides={false}
-    showInterface={false}
     artboardWidth={480}
     artboardHeight={300}
   >

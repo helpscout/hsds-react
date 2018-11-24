@@ -14,7 +14,6 @@ stories.addDecorator(storyFn => (
   <Artboard
     name="dropdown-v2"
     withCenterGuides={false}
-    showInterface={false}
     artboardWidth={480}
     artboardHeight={300}
   >
@@ -33,7 +32,7 @@ const ItemSpec = createSpec({
 })
 
 stories.add('Dropdown/Default', () => {
-  const items = ItemSpec.generate(20)
+  const items = ItemSpec.generate(100)
 
   return <Dropdown items={items} />
 })

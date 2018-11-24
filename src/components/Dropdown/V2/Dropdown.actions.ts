@@ -204,6 +204,10 @@ export const focusItem = (state, event: Event) => {
   // Performance guard to prevent store from uppdating
   if (state.index === index) return
 
+  if (event && event.stopPropagation) {
+    event.stopPropagation()
+  }
+
   // @ts-ignore
   const isMouseEvent = isDefined(event.pageX)
   const lastInteractionType = isMouseEvent ? 'mouse' : 'keyboard'
