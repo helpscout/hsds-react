@@ -1,23 +1,23 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Actions from './Actions'
 import Card from './Card'
 import Content from './Content'
 import Header from './Header'
+import Heading from './Heading'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { PageUI } from './styles/Page.css.js'
+import { PageUI } from './styles/Page.css'
 import { COMPONENT_KEY } from './utils'
 
-type Props = {
-  children?: any,
-  className?: string,
-  isResponsive: boolean,
+export interface Props {
+  children?: any
+  className?: string
+  isResponsive: boolean
 }
 
-class Page extends Component<Props> {
+class Page extends React.PureComponent<Props> {
   static defaultProps = {
     isResponsive: false,
   }
@@ -25,6 +25,7 @@ class Page extends Component<Props> {
   static Card = Card
   static Content = Content
   static Header = Header
+  static Heading = Heading
 
   getPropProviderProps = () => {
     const { isResponsive } = this.props
