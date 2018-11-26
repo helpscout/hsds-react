@@ -186,5 +186,8 @@
       "stories/**/*.js"
     ],
     "cache": false
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.0.1"
   }
 }
