@@ -1,6 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { COMPONENT_KEY } from './utils'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { HeadingUI, SecondaryHeadingUI } from './styles/Heading.css'
 
@@ -16,20 +17,26 @@ class Heading extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, secondary, ...rest } = this.props
+    const { children, secondary, className, ...rest } = this.props
+
+    const componentClassName = classNames(
+      'c-PageHeader__titleHeading',
+      secondary && 'c-PageHeader__titleHeading--secondary',
+      className
+    )
 
     return !secondary ? (
       <HeadingUI {...getValidProps(rest)}
         selector="h1"
         size="md"
-        className="c-PageHeader__titleHeading">
+        className={componentClassName}>
         {children}
       </HeadingUI>
     ) : (
         <SecondaryHeadingUI {...getValidProps(rest)}
           selector="h2"
           size="h4"
-          className="c-PageHeader__titleHeading">
+          className={componentClassName}>
           {children}
         </SecondaryHeadingUI>
       );

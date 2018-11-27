@@ -38,6 +38,12 @@ describe('Title', () => {
     expect(wrapper.text()).toContain('Channel 4')
     expect(wrapper.text()).toContain('News team')
   })
+
+  test('Title is primary heading (h1)', () => {
+    const wrapper = mount(<Header title="Channel 4" subtitle="News team" />)
+
+    expect(wrapper.find('h1').length).toBe(1);
+  })
 })
 
 describe('Border', () => {
