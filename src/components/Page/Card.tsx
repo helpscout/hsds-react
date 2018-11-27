@@ -1,18 +1,17 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { ContentUI } from './styles/Content.css.js'
+import { CardUI } from './styles/Card.css'
 import { COMPONENT_KEY } from './utils'
 
-type Props = {
-  children?: any,
-  className?: string,
-  isResponsive: boolean,
+export interface Props {
+  children?: any
+  className?: string
+  isResponsive: boolean
 }
 
-class Content extends Component<Props> {
+class Card extends React.PureComponent<Props> {
   static defaultProps = {
     isResponsive: false,
   }
@@ -21,19 +20,19 @@ class Content extends Component<Props> {
     const { children, className, isResponsive, ...rest } = this.props
 
     const componentClassName = classNames(
-      'c-PageContent',
+      'c-PageCard',
       isResponsive && 'is-responsive',
       className
     )
 
     return (
-      <ContentUI {...getValidProps(rest)} className={componentClassName}>
+      <CardUI {...getValidProps(rest)} className={componentClassName}>
         {children}
-      </ContentUI>
+      </CardUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Content)(Content)
+namespaceComponent(COMPONENT_KEY.Card)(Card)
 
-export default Content
+export default Card

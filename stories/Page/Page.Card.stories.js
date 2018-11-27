@@ -1,4 +1,5 @@
 import React from 'react'
+// import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import {
   Button,
@@ -41,7 +42,10 @@ stories.add('Sections', () => (
 stories.add('Responsive', () => (
   <Page isResponsive>
     <Page.Card>
-      <Page.Header />
+      <Page.Header
+        title="Edit your account"
+        subtitle="Welcome to the Dharma Initiative"
+      />
       <ExampleContent />
     </Page.Card>
 
@@ -57,8 +61,13 @@ stories.add('Responsive', () => (
         </Button>
       }
       secondary={
-        <Button size="lg" version={2}>
+        <Button size="md" version={2}>
           Discard Changes
+        </Button>
+      }
+      serious={
+        <Button state="danger" size="md" version={2}>
+          Something serious!
         </Button>
       }
     />
@@ -99,7 +108,7 @@ function ExampleContent() {
           <Switch active />
         </FormLabel>
       </FormGroup>
-
+      <Page.Heading secondary>Default Settings</Page.Heading>
       <FormGroup>
         <FormLabel label="Sub-domain">
           <ControlGroup>
