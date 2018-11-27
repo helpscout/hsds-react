@@ -145,6 +145,10 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
+  hasGroups = () => {
+    return hasGroups(this.props.items)
+  }
+
   getItemProps = (item: any, index?: number) => {
     const state = this.context.getState()
     const props = getItemProps(state, item, index)
@@ -152,27 +156,9 @@ export class MenuContainer extends React.Component<Props> {
     return props
   }
 
-  renderDefaultItems = () => {
-    const { id, isLoading, renderEmpty, renderLoading } = this.props
-    const { items } = this.getMenuProps()
-
-    // Loading
-    if (isLoading && renderLoading)
-      return renderRenderPropComponent(renderLoading)
-    // Empty
-    if (!items.length && renderEmpty)
-      return renderRenderPropComponent(renderEmpty)
-    // Groups
-    if (this.hasGroups()) return this.renderItemsAsGroups({ items, id })
-    // Normal
-    return this.renderItems({ items })
-  }
-
-  hasGroups = () => {
-    return hasGroups(this.props.items)
-  }
-
   renderItemsAsGroups = ({ id = 'group', items }) => {
+    let groupStartIndex = 0
+
     return items.map((group, index) => {
       const { items, ...groupProps } = group
       const groupId = `${id}-group-${index}`
@@ -180,13 +166,13 @@ export class MenuContainer extends React.Component<Props> {
 
       if (!items.length) return
 
-      return (
+      const groupedItemsMarkup = (
         <Group key={index} id={groupId} aria-labelledby={groupHeaderId}>
           <Item {...groupProps} id={groupHeaderId} />
           {items.map((item, index) => (
             <Item
-              key={item.value || getComponentKey(item, index)}
-              {...this.getItemProps(item)}
+              key={item.value || getComponentKey(item)}
+              {...this.getItemProps(item, index + groupStartIndex)}
               id={groupHeaderId}
             >
               {item.label}
@@ -194,6 +180,12 @@ export class MenuContainer extends React.Component<Props> {
           ))}
         </Group>
       )
+
+      // This ensures that the set(s) have the current path index.
+      // This is especially important if the groups are filtered.
+      groupStartIndex += items.length
+
+      return groupedItemsMarkup
     })
   }
 
@@ -210,13 +202,29 @@ export class MenuContainer extends React.Component<Props> {
     })
   }
 
+  renderMenuItems = () => {
+    const { id, isLoading, renderEmpty, renderLoading } = this.props
+    const { items } = this.getMenuProps()
+
+    // Loading
+    if (isLoading && renderLoading)
+      return renderRenderPropComponent(renderLoading)
+    // Empty
+    if (!items.length && renderEmpty)
+      return renderRenderPropComponent(renderEmpty)
+    // Groups
+    if (this.hasGroups()) return this.renderItemsAsGroups({ items, id })
+    // Normal
+    return this.renderItems({ items })
+  }
+
   renderMenu = () => {
     const { id, triggerId } = this.getMenuProps()
 
     return (
       <Card>
         <Menu aria-labelledby={triggerId} id={id}>
-          {this.renderDefaultItems()}
+          {this.renderMenuItems()}
         </Menu>
       </Card>
     )

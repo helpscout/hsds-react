@@ -15,6 +15,7 @@ import {
   findItemDOMNodeById,
   findOpenItemDOMNodes,
   findFocusedItemDOMNodes,
+  findSingleItemDOMNode,
   getIndexFromItemDOMNode,
   isDOMNodeValidItem,
   isOpenFromIndex,
@@ -226,11 +227,19 @@ class Renderer extends React.PureComponent<any> {
     if (previousInputValue === inputValue) return
 
     // @ts-ignore
+    const firstItemNode = findSingleItemDOMNode(envNode)
+    if (!firstItemNode) return
+
     const otherFocusedNodes = Array.from(findFocusedItemDOMNodes(envNode))
-    if (otherFocusedNodes.length) {
+
+    if (!otherFocusedNodes.length) {
+      if (firstItemNode.classList.contains(focusClassName)) return
+      firstItemNode.classList.add(focusClassName)
+    } else if (otherFocusedNodes.length > 1) {
       otherFocusedNodes.forEach(node => {
         node.classList.remove(focusClassName)
       })
+      firstItemNode.classList.add(focusClassName)
     }
   }
 

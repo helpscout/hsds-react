@@ -33,6 +33,10 @@ export const findItemDOMNodes = (envNode = document) => {
   return envNode.querySelectorAll(`[${SELECTORS.indexAttribute}]`)
 }
 
+export const findSingleItemDOMNode = (envNode = document) => {
+  return envNode.querySelector(`[${SELECTORS.indexAttribute}]`)
+}
+
 export const findOpenItemDOMNodes = (
   envNode = document,
   openClassName: string = 'is-open'
