@@ -14,6 +14,7 @@ import {
   findItemDOMNode,
   findItemDOMNodeById,
   findOpenItemDOMNodes,
+  findFocusedItemDOMNodes,
   getIndexFromItemDOMNode,
   isDOMNodeValidItem,
   isOpenFromIndex,
@@ -133,28 +134,19 @@ class Renderer extends React.PureComponent<any> {
     })
   }
 
-  optimizedItemRenderFromProps = () => {
-    const {
-      activeClassName,
-      envNode,
-      focusClassName,
-      lastInteractionWasKeyboard,
-      previousIndex,
-      index,
-      openClassName,
-      previousSelectedItem,
-      selectedItem,
-    } = this.props
+  shouldRenderDOM = () => {
+    const { index, selectedItem } = this.props
 
-    if (!index && !selectedItem) return
-    // Render focus (hover) styles
-    const previousNode = findItemDOMNode(previousIndex, envNode)
-    const nextNode = findItemDOMNode(index, envNode)
+    return index || selectedItem
+  }
+
+  renderSubMenus = () => {
+    const { envNode, focusClassName, index, openClassName } = this.props
+
+    if (!this.shouldRenderDOM()) return
+
     const openNodes = findOpenItemDOMNodes(envNode, openClassName)
 
-    const closedSubMenu = didCloseSubMenu(previousIndex, index)
-
-    // Render (recursive) sub-menu interactions
     Array.from(openNodes).forEach(node => {
       const nodeIndex = getIndexFromItemDOMNode(node)
       const isOpen = isOpenFromIndex(index, nodeIndex)
@@ -165,47 +157,136 @@ class Renderer extends React.PureComponent<any> {
         node.classList.remove(focusClassName)
       }
     })
+  }
+
+  renderPreviousInteraction = () => {
+    const {
+      envNode,
+      focusClassName,
+      previousIndex,
+      index,
+      openClassName,
+    } = this.props
+
+    if (!this.shouldRenderDOM()) return
+
+    const previousNode = findItemDOMNode(previousIndex, envNode)
+
+    if (!previousNode) return
+
+    const isOpen = isOpenFromIndex(index, previousIndex)
+
+    if (isOpen) {
+      previousNode.classList.add(openClassName)
+    } else {
+      previousNode.classList.remove(focusClassName)
+      previousNode.classList.remove(openClassName)
+      resetSubMenuScrollPositionFromItemNode(previousNode)
+    }
+  }
+
+  renderNextInteraction = () => {
+    const {
+      envNode,
+      focusClassName,
+      lastInteractionWasKeyboard,
+      index,
+      openClassName,
+      previousIndex,
+    } = this.props
+
+    if (!this.shouldRenderDOM()) return
+
+    const nextNode = findItemDOMNode(index, envNode)
+
+    if (!nextNode) return
+
+    nextNode.classList.add(focusClassName)
+
+    if (lastInteractionWasKeyboard) {
+      this.scrollIntoView(nextNode)
+    }
+
+    const closedSubMenu = didCloseSubMenu(previousIndex, index)
+
+    if (closedSubMenu) {
+      nextNode.classList.remove(openClassName)
+    }
+  }
+
+  renderInputValueChange = () => {
+    const {
+      envNode,
+      focusClassName,
+      previousInputValue,
+      inputValue,
+    } = this.props
+
+    // Render selected item from inputValue changes
+    if (previousInputValue === inputValue) return
+
+    // @ts-ignore
+    const [firstFocusedNode, ...otherFocusedNodes] = Array.from(
+      findFocusedItemDOMNodes(envNode)
+    )
+    if (otherFocusedNodes.length) {
+      otherFocusedNodes.forEach(node => {
+        node.classList.remove(focusClassName)
+      })
+    }
+  }
+
+  renderSelectedItem = () => {
+    const {
+      activeClassName,
+      envNode,
+      previousSelectedItem,
+      selectedItem,
+    } = this.props
+
+    if (!this.shouldRenderDOM()) return
+
+    // Render selected (active) styles
+    const previousSelectedNode = findItemDOMNodeById(
+      previousSelectedItem,
+      envNode
+    )
+    const selectedNode = findItemDOMNodeById(selectedItem, envNode)
+
+    if (previousSelectedNode) {
+      previousSelectedNode.classList.remove(activeClassName)
+    }
+
+    if (selectedNode) {
+      selectedNode.classList.add(activeClassName)
+      setAriaActiveOnMenuFromItemNode(selectedNode)
+    }
+  }
+
+  optimizedItemRenderFromProps = () => {
+    if (!this.shouldRenderDOM()) return
+
+    // Render (recursive) sub-menu interactions
+    this.renderSubMenus()
 
     // Render previous interactions
-    if (previousNode) {
-      const isOpen = isOpenFromIndex(index, previousIndex)
-
-      if (isOpen) {
-        previousNode.classList.add(openClassName)
-      } else {
-        previousNode.classList.remove(focusClassName)
-        previousNode.classList.remove(openClassName)
-        resetSubMenuScrollPositionFromItemNode(previousNode)
-      }
-    }
+    this.renderPreviousInteraction()
 
     // Render next interactions
-    if (nextNode) {
-      nextNode.classList.add(focusClassName)
-      if (lastInteractionWasKeyboard) {
-        this.scrollIntoView(nextNode)
-      }
-      if (closedSubMenu) {
-        nextNode.classList.remove(openClassName)
-      }
-    }
+    this.renderNextInteraction()
 
+    // Render selected item from inputValue changes
+    this.renderInputValueChange()
+
+    // Render selected item
     requestAnimationFrame(() => {
-      // Render selected (active) styles
-      const previousSelectedNode = findItemDOMNodeById(
-        previousSelectedItem,
-        envNode
-      )
-      if (previousSelectedNode) {
-        previousSelectedNode.classList.remove(activeClassName)
-      }
+      this.renderSelectedItem()
+    })
+  }
 
-      const selectedNode = findItemDOMNodeById(selectedItem, envNode)
-
-      if (selectedNode) {
-        selectedNode.classList.add(activeClassName)
-        setAriaActiveOnMenuFromItemNode(selectedNode)
-      }
+  optimizedRender = () => {
+    requestAnimationFrame(() => {
+      this.optimizedItemRenderFromProps()
     })
   }
 
@@ -217,7 +298,7 @@ class Renderer extends React.PureComponent<any> {
     // That is because we're doing with a single (more or less) calculcation
     // rather than spreading the work throughout the menu/item tree.
     // This is especially important if item nesting is going to be a thing.
-    this.optimizedItemRenderFromProps()
+    this.optimizedRender()
 
     return (
       <div className="c-DropdownV2RendererNode">
@@ -241,8 +322,10 @@ const ConnectedRenderer: any = connect(
       focusClassName,
       lastInteractionType,
       previousIndex,
+      previousInputValue,
       index,
       indexMap,
+      inputValue,
       isOpen,
       openClassName,
       previousSelectedItem,
@@ -256,9 +339,11 @@ const ConnectedRenderer: any = connect(
       dropRight: isDropRight(state),
       focusClassName,
       lastInteractionWasKeyboard: lastInteractionType === 'keyboard',
+      previousInputValue,
       previousIndex,
       index,
       indexMap,
+      inputValue,
       isOpen,
       openClassName,
       previousSelectedItem,

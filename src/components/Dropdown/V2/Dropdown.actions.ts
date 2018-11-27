@@ -26,25 +26,6 @@ const initialItemState = {
   previousSelectedIndex: '',
 }
 
-export const setActiveItem = (state, activeItem) => {
-  const { id } = state
-
-  // Guard state from being updated!
-  if (state.activeItem === activeItem) return
-
-  const activeIndex = activeItem.getAttribute(SELECTORS.indexAttribute)
-  const activeValue = activeItem.getAttribute(SELECTORS.valueAttribute)
-  const activeId = id ? pathResolve(id, activeIndex) : null
-
-  return {
-    ...state,
-    activeItem,
-    activeIndex,
-    activeValue,
-    activeId,
-  }
-}
-
 export const changeDirection = state => {
   return {
     ...state,
@@ -130,13 +111,6 @@ export const setMenuNode = (state, menuNode) => {
   }
 }
 
-export const setEventTargetAsActive = (state, event: Event) => {
-  const node = event.currentTarget as HTMLElement
-  if (node) {
-    return setActiveItem(state, node)
-  }
-}
-
 export const incrementIndex = (state, modifier: number = 1) => {
   const { envNode, index, indexMap } = state
   let prevIndex = index ? index : -1
@@ -168,33 +142,6 @@ export const decrementIndex = (state, modifier: number = 1) => {
     index: nextIndex,
     lastInteractionType: 'keyboard',
   }
-}
-
-export const itemOnMouseEnter = (state, event: MouseEvent) => {
-  if (event && event.stopPropagation) {
-    event.stopPropagation()
-  }
-
-  return setEventTargetAsActive(state, event)
-}
-
-export const itemOnFocus = (state, event: Event) => {
-  if (event && event.stopPropagation) {
-    event.stopPropagation()
-  }
-
-  return setEventTargetAsActive(state, event)
-}
-
-export const itemOnClick = (state, event: Event, props: any = {}) => {
-  const { hasSubMenu } = props
-  if (event && event.stopPropagation) {
-    event.stopPropagation()
-  }
-
-  if (hasSubMenu) return
-
-  return onSelect(state, event)
 }
 
 export const focusItem = (state, event: Event) => {

@@ -93,6 +93,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
   }
 
   componentWillReceiveProps(nextProps) {
+    const state = this.store.getState()
     if (nextProps.items !== this.props.items) {
       this.rehydrateStoreWithProps({
         items: nextProps.items,
@@ -104,7 +105,9 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     }
     if (nextProps.inputValue !== this.props.inputValue) {
       this.rehydrateStoreWithProps({
-        previousIndex: this.store.getState().index,
+        previousIndex: state.index,
+        previousInputValue: state.inputValue,
+        inputValue: nextProps.inputValue,
         index: '0',
       })
     }

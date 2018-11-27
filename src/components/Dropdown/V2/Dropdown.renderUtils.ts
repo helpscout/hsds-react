@@ -42,6 +42,15 @@ export const findOpenItemDOMNodes = (
   )
 }
 
+export const findFocusedItemDOMNodes = (
+  envNode = document,
+  focusClassName: string = 'is-focused'
+) => {
+  return envNode.querySelectorAll(
+    `[${SELECTORS.indexAttribute}].${focusClassName}`
+  )
+}
+
 export const findMenuDOMNodesFromItemNode = (
   itemNode: DOMNode,
   envNode = document

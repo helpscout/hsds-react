@@ -19,6 +19,7 @@ export const initialState = {
   isOpen: false,
   isMounted: false,
   indexMap: [],
+  previousInputValue: '',
   inputValue: '',
   items: [],
   lastInteractionType: undefined,
