@@ -16,7 +16,7 @@ import {
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Item />)
-    const o = wrapper.find('.c-ChatListItem')
+    const o = wrapper.find('a.c-ChatListItem')
 
     expect(o.length).toBe(1)
   })
@@ -24,7 +24,7 @@ describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Item className={customClass} />)
-    const o = wrapper.find('.c-ChatListItem')
+    const o = wrapper.find('a.c-ChatListItem')
 
     expect(o.hasClass(customClass)).toBeTruthy()
   })
@@ -47,7 +47,7 @@ describe('Animate', () => {
   test('Is wrapped with Animate', () => {
     const wrapper = mount(<Item />)
     const animate = wrapper.find(Animate)
-    const o = animate.find('.c-ChatListItem')
+    const o = animate.find('a.c-ChatListItem')
 
     expect(animate.length).toBe(1)
     expect(o.length).toBe(1)
@@ -74,7 +74,7 @@ describe('Assigned', () => {
 describe('Avatar', () => {
   test('Does not render an avatar block by default', () => {
     const wrapper = mount(<Item />)
-    const o = wrapper.find('.c-ChatListItem__avatar')
+    const o = wrapper.find('div.c-ChatListItem__avatar')
 
     expect(o.length).toBe(0)
   })
@@ -84,7 +84,7 @@ describe('Avatar', () => {
     const wrapper = mount(
       <Item avatar={avatarMarkup} name="Ron" message="Stay classy!" />
     )
-    const o = wrapper.find('.c-ChatListItem__avatar')
+    const o = wrapper.find('div.c-ChatListItem__avatar')
     const animate = o.find(Animate)
     const avatar = animate.find(Avatar)
 
@@ -134,7 +134,7 @@ describe('Link', () => {
 describe('MessageCount', () => {
   test('Does not render message count by default', () => {
     const wrapper = mount(<Item name="Ron" message="Stay classy!" />)
-    const o = wrapper.find('.c-ChatListItem__messageCount')
+    const o = wrapper.find('div.c-ChatListItem__messageCount')
 
     expect(o.length).toBe(0)
   })
@@ -143,7 +143,7 @@ describe('MessageCount', () => {
     const wrapper = mount(
       <Item name="Ron" message="Stay classy!" newMessageCount={330} />
     )
-    const o = wrapper.find('.c-ChatListItem__messageCount')
+    const o = wrapper.find('div.c-ChatListItem__messageCount')
     const animate = o.find(Animate)
     const badge = animate.find(Badge)
 
@@ -185,7 +185,7 @@ describe('Loading', () => {
 
   test('Does not render meta content if isLoading', () => {
     const wrapper = mount(<Item />)
-    const o = wrapper.find('.c-ChatListItem__meta')
+    const o = wrapper.find('div.c-ChatListItem__meta')
 
     expect(o.length).toBe(0)
   })
@@ -220,7 +220,7 @@ describe('Timestamp', () => {
 describe('Tags', () => {
   test('Does not render tags by default', () => {
     const wrapper = mount(<Item name="Ron" message="Stay classy!" />)
-    const o = wrapper.find('.c-ChatListItem__tags')
+    const o = wrapper.find('div.c-ChatListItem__tags')
 
     expect(o.length).toBe(0)
   })
@@ -274,9 +274,9 @@ describe('Viewing', () => {
   test('Renders isViewing flag, if defined', () => {
     const wrapper = mount(<Item name="Ron" message="Stay classy!" isViewing />)
     const o = wrapper.find(Link)
-    const viewing = wrapper.find('.c-ChatListItem__viewing')
+    const viewing = wrapper.find('div.c-ChatListItem__viewing')
     const animate = viewing.find(Animate)
-    const flag = viewing.find('.c-ChatListItem__viewingFlag')
+    const flag = viewing.find('div.c-ChatListItem__viewingFlag')
 
     expect(o.hasClass('is-viewing')).toBe(true)
     expect(viewing.length).toBe(1)
@@ -296,7 +296,7 @@ describe('Waiting', () => {
   test('Renders Waiting tag, if defined', () => {
     const wrapper = mount(<Item name="Ron" message="Stay classy!" isWaiting />)
     const o = wrapper.find(Link)
-    const waiting = wrapper.find('.c-ChatListItem__waiting')
+    const waiting = wrapper.find('div.c-ChatListItem__waiting')
     const animate = waiting.find(Animate)
     const tag = animate.find(Tag)
 

@@ -1,16 +1,37 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import ChatInbox from '../ChatInbox'
-import Content from '../Content'
-import Header from '../Header'
 import { Collapsible } from '../../index'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-ChatInbox',
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<ChatInbox />)
+    const el = wrapper.find('div.c-ChatInbox')
 
-baseComponentTest(ChatInbox, baseComponentOptions)
+    expect(el.length).toBe(1)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<ChatInbox className={customClass} />)
+    const el = wrapper.find('div.c-ChatInbox')
+
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child content', () => {
+    const wrapper = mount(
+      <ChatInbox>
+        <div className="child">Hello</div>
+      </ChatInbox>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 describe('Header', () => {
   test('Enhance Header component with props', () => {
@@ -19,12 +40,14 @@ describe('Header', () => {
         <ChatInbox.Header />
       </ChatInbox>
     )
-    const o = wrapper.find(ChatInbox.Header)
+    let o = wrapper.find(ChatInbox.Header)
 
     expect(o.props().isCollapsible).toBe(true)
     expect(o.props().isCollapsed).toBe(true)
 
     wrapper.setProps({ isCollapsible: false })
+
+    o = wrapper.find(ChatInbox.Header)
 
     expect(o.props().isCollapsible).toBe(false)
   })
@@ -35,9 +58,11 @@ describe('Header', () => {
         <ChatInbox.Header />
       </ChatInbox>
     )
-    const o = wrapper.find(ChatInbox.Header)
+    let o = wrapper.find(ChatInbox.Header)
 
     o.simulate('click')
+
+    o = wrapper.find(ChatInbox.Header)
 
     expect(wrapper.state().isCollapsed).toBe(true)
     expect(o.props().isCollapsed).toBe(true)

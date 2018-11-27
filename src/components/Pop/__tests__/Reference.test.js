@@ -48,8 +48,8 @@ describe('Manager', () => {
       </Manager>
     )
     const man = wrapper.find(Manager)
-    const el = wrapper.find('span').getNode()
+    const el = wrapper.find('span').getDOMNode()
 
-    expect(man.node.state.context.referenceNode).toBe(el)
+    expect(man.instance().state.context.referenceNode).toBe(el)
   })
 })

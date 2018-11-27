@@ -6,8 +6,9 @@ import createStore, { initialState } from '../Dropdown.store'
 import '../../../Portal'
 
 jest.mock('../../../Portal', () => {
+  const Portal = props => <div>{props.children}</div>
   return {
-    default: 'Portal',
+    default: props => <Portal {...props} />,
   }
 })
 
@@ -27,8 +28,8 @@ describe('Store/Render', () => {
     expect(store.getState().triggerNode).toBeTruthy()
     expect(store.getState().menuNode).toBeTruthy()
 
-    const menu = wrapper.find('Menu')
-    const items = wrapper.find('Item')
+    const menu = wrapper.find('DropdownMenu')
+    const items = wrapper.find('DropdownItem')
 
     expect(menu.length).toBeTruthy()
     expect(items.length).not.toBeTruthy()
@@ -45,7 +46,10 @@ describe('Store/Render', () => {
 
     expect(dropdowns.length).toBe(2)
     // @ts-ignore
-    expect(dropdowns.at(0).node.store).not.toBe(dropdowns.at(1).node.store)
+    expect(dropdowns.at(0).instance().store).not.toBe(
+      // @ts-ignore
+      dropdowns.at(1).instance().store
+    )
   })
 
   // Moving forward, let's use our mockStore for more control + easier testing
@@ -78,8 +82,8 @@ describe('Store/Render', () => {
     expect(store.getState().triggerNode).toBeTruthy()
     expect(store.getState().menuNode).toBeTruthy()
 
-    const menu = wrapper.find('Menu')
-    const items = wrapper.find('Item')
+    const menu = wrapper.find('DropdownMenu')
+    const items = wrapper.find('DropdownItem')
 
     expect(menu.length).toBeTruthy()
     expect(items.length).toBeTruthy()

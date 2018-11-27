@@ -1,9 +1,18 @@
+import React from 'react'
+import { mount } from 'enzyme'
 import List from '../List'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-SortableList',
-  skipChildrenTest: true,
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<List />)
 
-baseComponentTest(List, baseComponentOptions)
+    expect(wrapper.getDOMNode().classList.contains('c-SortableList')).toBe(true)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<List className={customClass} />)
+
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
+  })
+})

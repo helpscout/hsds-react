@@ -1,8 +1,7 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
 import styled from '../../styled'
-import PageConfig from './Page.config.css.js'
+import PageConfig from './Page.config.css'
 
 export const config = {
   paddingBottom: '11px',
@@ -13,7 +12,7 @@ export const config = {
   },
 }
 
-export const HeaderUI = styled('div')`
+export const HeaderUI = styled('header')`
   ${baseStyles} margin-bottom: 0;
   padding-bottom: ${config.paddingBottom};
   width: ${config.width.default};
@@ -36,7 +35,6 @@ export const HeaderUI = styled('div')`
     )};
   }
 `
-
 export const TitleUI = styled('div')`
   ${baseStyles};
 `

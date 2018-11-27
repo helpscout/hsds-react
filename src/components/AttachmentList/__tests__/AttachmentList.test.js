@@ -137,7 +137,7 @@ describe('Theme', () => {
         <AttachmentList />
       </Attachment.Provider>
     )
-    const o = wrapper.find(AttachmentList)
+    const o = wrapper.find('div.c-AttachmentList')
 
     expect(o.length).toBe(1)
     expect(o.hasClass('is-theme-default')).toBeTruthy()
@@ -149,7 +149,7 @@ describe('Theme', () => {
         <AttachmentList />
       </Attachment.Provider>
     )
-    const o = wrapper.find(AttachmentList)
+    const o = wrapper.find('div.c-AttachmentList')
 
     expect(o.length).toBe(1)
     expect(o.hasClass('is-theme-preview')).toBeTruthy()

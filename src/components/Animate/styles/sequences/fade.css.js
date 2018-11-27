@@ -3,10 +3,6 @@ const css = `
   opacity: 0;
   pointer-events: none;
 
-  &.ax-entering {
-    will-change: opacity;
-  }
-
   &.ax-entered {
     opacity: 1;
     pointer-events: auto;
@@ -14,7 +10,6 @@ const css = `
 
   &.ax-exiting {
     pointer-events: none;
-    will-change: opacity;
   }
 }
 `

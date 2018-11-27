@@ -16,14 +16,16 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Notification />)
 
-    expect(wrapper.hasClass('c-Notification')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-Notification')
+    ).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Notification className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 })
 
@@ -44,13 +46,17 @@ describe('Align', () => {
   test('Has default alignment of right', () => {
     const wrapper = mount(<Notification />)
 
-    expect(wrapper.hasClass('is-align-right')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-align-right')
+    ).toBeTruthy()
   })
 
   test('Can change alignment styles, if specified', () => {
     const wrapper = mount(<Notification align="left" />)
 
-    expect(wrapper.hasClass('is-align-left')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-align-left')
+    ).toBeTruthy()
   })
 })
 
@@ -66,7 +72,7 @@ describe('AnimationSequence', () => {
 describe('Body', () => {
   test('Does not render body content', () => {
     const wrapper = mount(<Notification body="Santa!" />)
-    const o = wrapper.find(ui.message)
+    const o = wrapper.find(ui.message).first()
 
     expect(o.length).toBe(1)
     expect(o.prop('body')).toBeFalsy()
@@ -157,9 +163,10 @@ describe('isActive', () => {
 describe('setState', () => {
   test('Sets internal isMounted state to false on unmount', () => {
     const wrapper = mount(<Notification />)
+    const o = wrapper.instance()
     wrapper.unmount()
 
-    expect(wrapper.getNode()._isMounted).toBe(false)
+    expect(o._isMounted).toBe(false)
   })
 
   test('Only sets state if mounted', () => {
@@ -187,19 +194,19 @@ describe('Type', () => {
     test('Adds text-based className', () => {
       const wrapper = mount(<Notification />)
 
-      expect(wrapper.hasClass('is-text')).toBe(true)
+      expect(wrapper.getDOMNode().classList.contains('is-text')).toBe(true)
     })
 
     test('Does not pass body prop to Messages', () => {
       const wrapper = mount(<Notification body="mugatu" />)
-      const o = wrapper.find(ui.message)
+      const o = wrapper.find(ui.message).first()
 
       expect(o.prop('body')).not.toBe('mugatu')
     })
 
     test('Passes body as children prop to Messages', () => {
       const wrapper = mount(<Notification body="mugatu" children="derek" />)
-      const o = wrapper.find(ui.message)
+      const o = wrapper.find(ui.message).first()
 
       expect(o.prop('body')).toBeFalsy()
       expect(o.html()).toContain('mugatu')
@@ -208,8 +215,8 @@ describe('Type', () => {
 
     test('Passes body as truncated content as children prop to Messages', () => {
       const wrapper = mount(<Notification body="mugatu" children="derek" />)
-      const o = wrapper.find(ui.message)
-      const t = o.find(Truncate)
+      const o = wrapper.find(ui.message).first()
+      const t = o.find(Truncate).first()
 
       expect(t.length).toBe(1)
       expect(t.html()).toContain('mugatu')
@@ -220,26 +227,26 @@ describe('Type', () => {
     test('Adds image-based className', () => {
       const wrapper = mount(<Notification type="image" />)
 
-      expect(wrapper.hasClass('is-image')).toBe(true)
+      expect(wrapper.getDOMNode().classList.contains('is-image')).toBe(true)
     })
 
     test('Renders a text prefix', () => {
       const wrapper = mount(<Notification type="image" />)
-      const o = wrapper.find(ui.textPrefix)
+      const o = wrapper.find(ui.textPrefix).first()
 
       expect(o.length).toBe(1)
     })
 
     test('Does not pass body to Message as prop', () => {
       const wrapper = mount(<Notification body="mugatu.png" type="image" />)
-      const o = wrapper.find(ui.message)
+      const o = wrapper.find(ui.message).first()
 
       expect(o.prop('body')).toBeFalsy()
     })
 
     test('Passes image markup as children to Message', () => {
       const wrapper = mount(<Notification body="mugatu.png" type="image" />)
-      const o = wrapper.find(ui.message)
+      const o = wrapper.find(ui.message).first()
 
       expect(o.prop('children')).toBeTruthy()
       expect(o.html()).toContain('mugatu.png')
@@ -251,19 +258,19 @@ describe('Type', () => {
     test('Adds link-based className', () => {
       const wrapper = mount(<Notification type="link" />)
 
-      expect(wrapper.hasClass('is-link')).toBe(true)
+      expect(wrapper.getDOMNode().classList.contains('is-link')).toBe(true)
     })
 
     test('Does not pass body to Message as prop', () => {
       const wrapper = mount(<Notification body={link} type="link" />)
-      const o = wrapper.find(ui.message)
+      const o = wrapper.find(ui.message).first()
 
       expect(o.prop('body')).toBeFalsy()
     })
 
     test('Passes link markup as children to Message', () => {
       const wrapper = mount(<Notification body={link} type="link" />)
-      const o = wrapper.find(ui.message)
+      const o = wrapper.find(ui.message).first()
 
       expect(o.prop('children')).toBeTruthy()
       expect(o.html()).toContain(link)
@@ -274,7 +281,7 @@ describe('Type', () => {
 describe('Truncation', () => {
   test('Can customize truncation limit', () => {
     const wrapper = mount(<Notification body="DEREK!" truncateLimit={3} />)
-    const o = wrapper.find(Truncate)
+    const o = wrapper.find(Truncate).first()
 
     expect(o.prop('limit')).toBe(3)
   })

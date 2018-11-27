@@ -20,22 +20,22 @@ describe('Popper', () => {
     })
 
     test('Renders in a Portal (DOM)', () => {
-      const wrapper = mount(<Popper />)
+      mount(<Popper />)
 
-      const portal = document.body.childNodes[0]
-      const el = portal.getElementsByClassName('c-PopPopper')[0]
+      const el = document.getElementsByClassName('c-PopPopper')[0]
 
       expect(el).toBeTruthy()
     })
 
     test('Nullifies Portal on unmount', () => {
       const wrapper = mount(<Popper />)
+      const o = wrapper.instance()
 
-      expect(wrapper.getNode().portal).toBeTruthy()
+      expect(wrapper.instance().portal).toBeTruthy()
 
       wrapper.unmount()
 
-      expect(wrapper.getNode().portal).not.toBeTruthy()
+      expect(o.portal).not.toBeTruthy()
     })
   })
 
@@ -44,8 +44,7 @@ describe('Popper', () => {
       const spy = jest.fn()
       const wrapper = mount(<Popper onClick={spy} />)
 
-      const portal = document.body.childNodes[0]
-      const el = portal.getElementsByClassName('c-PopPopper')[0]
+      const el = document.getElementsByClassName('c-PopPopper')[0]
 
       el.click()
 

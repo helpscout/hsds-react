@@ -13,9 +13,10 @@ test('Provides child components with props as context', () => {
       <Message />
     </Provider>
   )
-  const o = wrapper.find(ui.message)
-  expect(o.props().className).toContain('is-theme-embed')
+  let o = wrapper.find(ui.message).first()
+  expect(o.getDOMNode().classList.contains('is-theme-embed')).toBe(true)
 
   wrapper.setProps({ theme: 'admin' })
-  expect(o.props().className).toContain('is-theme-admin')
+  o = wrapper.find(ui.message).first()
+  expect(o.getDOMNode().classList.contains('is-theme-admin')).toBe(true)
 })

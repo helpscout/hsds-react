@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import TagList from '../TagList'
-import { Inline, Overflow, Tag } from '../../index'
+import { Icon, Inline, Overflow, Tag } from '../../index'
 
 jest.useFakeTimers()
 
@@ -9,7 +9,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<TagList />)
 
-    expect(wrapper.hasClass('c-TagList')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-TagList')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
@@ -79,14 +79,15 @@ describe('onRemove', () => {
   test('Fires callback from tag, if specified', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <TagList onRemove={spy}>
+      <TagList onRemove={spy} isRemovable>
         <Tag id={1} />
         <Tag id={2} />
       </TagList>
     )
     const o = wrapper.find(Tag).first()
+    const icon = o.find(Icon)
 
-    o.getNode().wrappedInstance.handleOnRemove()
+    icon.simulate('click')
 
     jest.runOnlyPendingTimers()
 

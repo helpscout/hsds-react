@@ -1,18 +1,27 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import SidebarCollapsibleCard from '..'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
 const simulateEvent = eventName => {
   window.dispatchEvent(new Event(eventName))
 }
 
-const baseComponentOptions = {
-  className: 'c-SidebarCollapsibleCard',
-  skipChildrenTest: true,
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<SidebarCollapsibleCard />)
 
-baseComponentTest(SidebarCollapsibleCard, baseComponentOptions)
+    expect(
+      wrapper.getDOMNode().classList.contains('c-SidebarCollapsibleCard')
+    ).toBe(true)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<SidebarCollapsibleCard className={customClass} />)
+
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
+  })
+})
 
 describe('Accessibility', () => {
   test('Has correct accessibility roles/props', () => {
@@ -38,25 +47,25 @@ describe('Open', () => {
   test('Should apply open styles, if specified', () => {
     const wrapper = mount(<SidebarCollapsibleCard isOpen />)
 
-    expect(wrapper.hasClass('is-open')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-open')).toBeTruthy()
   })
 
   test('Should not be open by default', () => {
     const wrapper = mount(<SidebarCollapsibleCard />)
 
-    expect(wrapper.hasClass('is-open')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-open')).not.toBeTruthy()
   })
 
   test('Can change state by updating isOpen prop', () => {
     const wrapper = mount(<SidebarCollapsibleCard />)
     wrapper.setProps({ isOpen: true })
 
-    expect(wrapper.hasClass('is-open')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-open')).toBeTruthy()
     expect(wrapper.state().isOpen).toBeTruthy()
 
     wrapper.setProps({ isOpen: false })
 
-    expect(wrapper.hasClass('is-open')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-open')).not.toBeTruthy()
     expect(wrapper.state().isOpen).not.toBeTruthy()
   })
 })
@@ -71,9 +80,9 @@ describe('Header/Title', () => {
 
   test('Should render a Heading if title is defined', () => {
     const wrapper = mount(<SidebarCollapsibleCard title="Ron" />)
-    const o = wrapper.find('.c-SidebarCollapsibleCard__title')
+    const o = wrapper.find('.c-SidebarCollapsibleCard__title').first()
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
     expect(o.html()).toContain('Ron')
   })
 
@@ -84,7 +93,7 @@ describe('Header/Title', () => {
     const n = wrapper.find('.milk')
 
     expect(o.length).toBe(0)
-    expect(n.length).toBe(1)
+    expect(n.length).toBeTruthy()
     expect(n.html()).toContain('Bad Choice')
   })
 
@@ -97,7 +106,7 @@ describe('Header/Title', () => {
     const n = wrapper.find('.milk')
 
     expect(o.length).toBe(0)
-    expect(n.length).toBe(1)
+    expect(n.length).toBeTruthy()
     expect(n.html()).toContain('Bad Choice')
   })
 
@@ -134,14 +143,16 @@ describe('Caret', () => {
 
   test('Should transition from down to up on isOpen change', () => {
     const wrapper = mount(<SidebarCollapsibleCard />)
-    const o = wrapper.find('Icon')
+    let o = wrapper.find('Icon')
 
     expect(o.props().name).toContain('down')
 
     wrapper.setState({ isOpen: true })
+    o = wrapper.find('Icon')
     expect(o.props().name).toContain('up')
 
     wrapper.setState({ isOpen: false })
+    o = wrapper.find('Icon')
     expect(o.props().name).toContain('down')
 
     wrapper.unmount()
@@ -164,7 +175,7 @@ describe('Collapsible', () => {
     const o = wrapper.find('Collapsible')
     const p = o.props()
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
     expect(p.duration).toBe(1000)
     expect(p.durationOpen).toBe(300)
     expect(p.durationClose).toBe(500)
@@ -186,13 +197,13 @@ describe('Sortable', () => {
     const wrapper = mount(<SidebarCollapsibleCard sortable />)
     const o = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
   })
 
   test('onSortStart callback can fire when sort begins', () => {
     const spy = jest.fn()
     const wrapper = mount(<SidebarCollapsibleCard sortable onSortStart={spy} />)
-    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle').first()
     h.simulate('mousedown')
 
     expect(spy).toHaveBeenCalled()
@@ -204,7 +215,7 @@ describe('Sortable', () => {
       <SidebarCollapsibleCard sortable onSortStart={spy} isOpen />
     )
     const o = wrapper.instance()
-    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle').first()
     h.simulate('mousedown')
 
     expect(o._prevIsOpen).toBeTruthy()
@@ -215,7 +226,7 @@ describe('Sortable', () => {
   test('onSortEnd callback can fire when sort ends', () => {
     const spy = jest.fn()
     const wrapper = mount(<SidebarCollapsibleCard sortable onSortEnd={spy} />)
-    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle').first()
     h.simulate('mousedown')
     simulateEvent('mouseup')
 
@@ -225,7 +236,7 @@ describe('Sortable', () => {
   test('onSortEnd callback can only fire when isSorting', () => {
     const spy = jest.fn()
     const wrapper = mount(<SidebarCollapsibleCard sortable onSortEnd={spy} />)
-    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle').first()
     simulateEvent('mouseup')
     simulateEvent('mouseup')
     simulateEvent('mouseup')
@@ -243,7 +254,7 @@ describe('Sortable', () => {
       <SidebarCollapsibleCard sortable onSortStart={spy} isOpen />
     )
     const o = wrapper.instance()
-    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle')
+    const h = wrapper.find('.c-SidebarCollapsibleCard__drag-handle').first()
     h.simulate('mousedown')
 
     expect(o.state.isOpen).toBeFalsy()

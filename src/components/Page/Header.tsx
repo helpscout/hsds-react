@@ -1,24 +1,23 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Heading from '../Heading'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { HeaderUI, TitleUI, SubTitleUI } from './styles/Header.css.js'
+import { HeaderUI, TitleUI, SubTitleUI } from './styles/Header.css'
+import Heading from './Heading'
 import { COMPONENT_KEY } from './utils'
 
-type Props = {
-  children?: any,
-  className?: string,
-  isResponsive: boolean,
-  title: string,
-  subtitle?: string,
-  withBorder: boolean,
-  withBottomMargin: boolean,
+export interface Props {
+  children?: any
+  className?: string
+  isResponsive: boolean
+  title: string
+  subtitle?: string
+  withBorder: boolean
+  withBottomMargin: boolean
 }
 
-class Header extends Component<Props> {
+class Header extends React.PureComponent<Props> {
   static defaultProps = {
     isResponsive: false,
     title: 'Title',
@@ -48,9 +47,7 @@ class Header extends Component<Props> {
 
     const titleMarkup = title && (
       <TitleUI className="c-PageHeader__title">
-        <Heading className="c-PageHeader__titleHeading" size="md">
-          {title}
-        </Heading>
+        <Heading className="c-PageHeader__titleHeading">{title}</Heading>
       </TitleUI>
     )
     const subtitleMarkup = subtitle && (

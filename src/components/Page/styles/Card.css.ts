@@ -1,9 +1,8 @@
-// @flow
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
-import PageConfig from './Page.config.css.js'
+import PageConfig from './Page.config.css'
 
 export const config = {
   borderRadius: '4px',
@@ -29,7 +28,7 @@ export const config = {
   transition: 'all 300ms ease',
 }
 
-export const CardUI = styled('div')`
+export const CardUI = styled('section')`
   ${baseStyles} background-color: white;
   border-radius: ${config.borderRadius};
   box-shadow: ${config.boxShadow};

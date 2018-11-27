@@ -7,14 +7,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Body />)
 
-    expect(wrapper.hasClass('c-ModalBody')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-ModalBody')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Body className={customClass} />)
 
-    expect(wrapper.hasClass(customClass)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
   })
 })
 
@@ -52,19 +52,25 @@ describe('Scrollable', () => {
   test('Applies scrollable styles by default', () => {
     const wrapper = mount(<Body />)
 
-    expect(wrapper.hasClass('is-scrollable')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-scrollable')
+    ).toBeTruthy()
   })
 
   test('Removes scrollable styles, if disabled', () => {
     const wrapper = mount(<Body scrollable={false} />)
 
-    expect(wrapper.hasClass('is-scrollable')).not.toBeTruthy()
-    expect(wrapper.hasClass('is-not-scrollable')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-scrollable')
+    ).not.toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-not-scrollable')
+    ).toBeTruthy()
   })
 
   test('Can pass scrollableRef to parent', () => {
     const wrapper = mount(<MyComponent />)
-    const n = wrapper.find('.c-Scrollable__content').getNode()
+    const n = wrapper.find('.c-Scrollable__content').getDOMNode()
     const o = wrapper.instance()
 
     expect(o.scrollable).toBe(n)
@@ -75,7 +81,7 @@ describe('Scrollable', () => {
     const wrapper = mount(<MyComponent onScroll={spy} />)
     const o = wrapper.find(Scrollable)
 
-    o.getNode().props.onScroll()
+    o.instance().props.onScroll()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -112,12 +118,14 @@ describe('Styles', () => {
   test('Does not have seamless styles by default', () => {
     const wrapper = mount(<Body />)
 
-    expect(wrapper.hasClass('is-seamless')).not.toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-seamless')
+    ).not.toBeTruthy()
   })
 
   test('Applies isSeamless styles, if applied', () => {
     const wrapper = mount(<Body isSeamless />)
 
-    expect(wrapper.hasClass('is-seamless')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-seamless')).toBeTruthy()
   })
 })

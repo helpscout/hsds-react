@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Accordion from '../Accordion'
 import Section from '../Section'
 import Title, { classNameStrings as classNames } from '../Title'
@@ -8,20 +8,24 @@ import Keys from '../../../constants/Keys'
 describe('ClassNames', () => {
   test('Has default className', () => {
     const wrapper = mount(<Title />)
-    expect(wrapper.hasClass(classNames.baseComponentClassName)).toBe(true)
-    expect(wrapper.hasClass(classNames.isOpenClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isPageClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isSeamlessClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isSizeLgClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isSizeMdClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isSizeSmClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isSizeXsClassName)).toBe(false)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(classNames.baseComponentClassName)).toBe(true)
+    expect(el.hasClass(classNames.isOpenClassName)).toBe(false)
+    expect(el.hasClass(classNames.isPageClassName)).toBe(false)
+    expect(el.hasClass(classNames.isSeamlessClassName)).toBe(false)
+    expect(el.hasClass(classNames.isSizeLgClassName)).toBe(false)
+    expect(el.hasClass(classNames.isSizeMdClassName)).toBe(false)
+    expect(el.hasClass(classNames.isSizeSmClassName)).toBe(false)
+    expect(el.hasClass(classNames.isSizeXsClassName)).toBe(false)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'kustom'
     const wrapper = mount(<Title className={className} />)
-    expect(wrapper.hasClass(className)).toBe(true)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(className)).toBe(true)
   })
 
   test('Applies a className to indicate that the Title is in an open section', () => {
@@ -30,7 +34,7 @@ describe('ClassNames', () => {
         <Title />
       </Section>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass(classNames.isOpenClassName)).toBe(true)
   })
 
@@ -42,7 +46,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass(classNames.isSeamlessClassName)).toBe(true)
   })
 
@@ -55,7 +59,7 @@ describe('ClassNames', () => {
           </Section>
         </Accordion>
       )
-      const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+      const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       expect(o.hasClass(`is-${size}`)).toBe(true)
     })
 
@@ -66,7 +70,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass('is-xl')).toBe(false)
   })
 
@@ -78,7 +82,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass(classNames.isPageClassName)).toBe(true)
   })
 })
@@ -91,7 +95,7 @@ describe('setOpen', () => {
         <Title />
       </Section>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     const uuid = wrapper.state('uuid')
     o.simulate('click')
     expect(spy).toBeCalledWith(uuid, true)
@@ -104,7 +108,7 @@ describe('setOpen', () => {
         <Title />
       </Section>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     const uuid = wrapper.state('uuid')
     o.simulate('click')
     expect(spy).toBeCalledWith(uuid, false)
@@ -118,7 +122,7 @@ describe('setOpen', () => {
           <Title />
         </Section>
       )
-      const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+      const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       const uuid = wrapper.state('uuid')
       o.simulate('keydown', { keyCode })
       expect(spy).toBeCalledWith(uuid, true)
@@ -133,7 +137,7 @@ describe('setOpen', () => {
           <Title />
         </Section>
       )
-      const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+      const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       const uuid = wrapper.state('uuid')
       o.simulate('keydown', { keyCode })
       expect(spy).toBeCalledWith(uuid, false)

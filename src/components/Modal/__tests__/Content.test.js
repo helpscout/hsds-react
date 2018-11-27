@@ -6,14 +6,16 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Content />)
 
-    expect(wrapper.hasClass('c-ModalContent')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-ModalContent')
+    ).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Content className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
   })
 })
 

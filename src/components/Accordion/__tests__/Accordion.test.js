@@ -8,33 +8,43 @@ import Body, { classNameStrings as bodyClassNames } from '../Body'
 describe('ClassNames', () => {
   test('Has default className', () => {
     const wrapper = mount(<Accordion />)
-    expect(wrapper.hasClass(classNames.baseComponentClassName)).toBe(true)
-    expect(wrapper.hasClass(classNames.isAllowMulipleClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isPageClassName)).toBe(false)
-    expect(wrapper.hasClass(classNames.isSeamlessClassName)).toBe(false)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.length).toBe(1)
+    expect(el.hasClass(classNames.isAllowMulipleClassName)).toBe(false)
+    expect(el.hasClass(classNames.isPageClassName)).toBe(false)
+    expect(el.hasClass(classNames.isSeamlessClassName)).toBe(false)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'kustom'
     const wrapper = mount(<Accordion className={className} />)
-    expect(wrapper.hasClass(className)).toBe(true)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(className)).toBe(true)
   })
 
-  test(`Applies a className to indicate that the Accordion allows multiple 
+  test(`Applies a className to indicate that the Accordion allows multiple
         sections to be open simultaneously`, () => {
     const wrapper = mount(<Accordion allowMultiple />)
-    expect(wrapper.hasClass(classNames.isAllowMultipleClassName)).toBe(true)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(classNames.isAllowMultipleClassName)).toBe(true)
   })
 
   test(`Applies a className to indicate that the Accordion is mounted inside
         of a Page component`, () => {
     const wrapper = mount(<Accordion isPage />)
-    expect(wrapper.hasClass(classNames.isPageClassName)).toBe(true)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(classNames.isPageClassName)).toBe(true)
   })
 
   test('Applies a className to indicate that the Accordion is seamless', () => {
     const wrapper = mount(<Accordion isSeamless />)
-    expect(wrapper.hasClass(classNames.isSeamlessClassName)).toBe(true)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(classNames.isSeamlessClassName)).toBe(true)
   })
 })
 
@@ -46,7 +56,7 @@ describe('Content', () => {
       </Accordion>
     )
     expect(
-      wrapper.find(`.${sectionClassNames.baseComponentClassName}`)
+      wrapper.find(`div.${sectionClassNames.baseComponentClassName}`)
     ).toHaveLength(1)
   })
 
@@ -59,7 +69,7 @@ describe('Content', () => {
       </Accordion>
     )
     expect(
-      wrapper.find(`.${sectionClassNames.baseComponentClassName}`)
+      wrapper.find(`div.${sectionClassNames.baseComponentClassName}`)
     ).toHaveLength(3)
   })
 
@@ -73,13 +83,13 @@ describe('Content', () => {
       </Accordion>
     )
     expect(
-      wrapper.find(`.${sectionClassNames.baseComponentClassName}`)
+      wrapper.find(`div.${sectionClassNames.baseComponentClassName}`)
     ).toHaveLength(1)
     expect(
-      wrapper.find(`.${titleClassNames.baseComponentClassName}`)
+      wrapper.find(`div.${titleClassNames.baseComponentClassName}`)
     ).toHaveLength(1)
     expect(
-      wrapper.find(`.${bodyClassNames.baseComponentClassName}`)
+      wrapper.find(`div.${bodyClassNames.baseComponentClassName}`)
     ).toHaveLength(1)
   })
 })

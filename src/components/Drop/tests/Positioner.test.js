@@ -1,17 +1,40 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Positioner from '../Positioner'
-import { baseComponentTest } from '../../../tests/helpers/components'
-
-const baseComponentOptions = {
-  className: 'c-DropPositioner',
-}
 
 const simulateEvent = eventName => {
   window.dispatchEvent(new Event(eventName))
 }
 
-baseComponentTest(Positioner, baseComponentOptions)
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<Positioner />)
+    const el = wrapper.find('div.c-DropPositioner')
+
+    expect(el.length).toBe(1)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<Positioner className={customClass} />)
+    const el = wrapper.find('div.c-DropPositioner')
+
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child', () => {
+    const wrapper = mount(
+      <Positioner>
+        <div className="child">Hello</div>
+      </Positioner>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 describe('Position', () => {
   test('Sets position, if defined', () => {
@@ -29,7 +52,7 @@ describe('Position', () => {
         <div>Ron B</div>
       </Positioner>
     )
-    const o = wrapper.find('.c-DropPositioner').getNode().style
+    const o = wrapper.find('div.c-DropPositioner').getDOMNode().style
 
     // Can only test display, unfortunately.
     // Cannot test transform style in JSDOM :'(
@@ -51,7 +74,7 @@ describe('Position', () => {
         <div>Ron B</div>
       </Positioner>
     )
-    const o = wrapper.find('.c-DropPositioner').getNode().style
+    const o = wrapper.find('div.c-DropPositioner').getDOMNode().style
 
     expect(o.display).toBe('none')
   })
@@ -117,8 +140,10 @@ describe('Direction', () => {
       </Positioner>
     )
 
-    expect(wrapper.hasClass('is-right')).toBeTruthy()
-    expect(wrapper.hasClass('is-down')).toBeTruthy()
+    const el = wrapper.find('div.c-DropPositioner')
+
+    expect(el.hasClass('is-right')).toBeTruthy()
+    expect(el.hasClass('is-down')).toBeTruthy()
   })
 
   test('Does not update direction classNames if new position is the same', () => {
@@ -138,8 +163,10 @@ describe('Direction', () => {
 
     wrapper.setProps({ position })
 
-    expect(wrapper.hasClass('is-right')).toBeTruthy()
-    expect(wrapper.hasClass('is-down')).toBeTruthy()
+    const el = wrapper.find('div.c-DropPositioner')
+
+    expect(el.hasClass('is-right')).toBeTruthy()
+    expect(el.hasClass('is-down')).toBeTruthy()
   })
 
   test('Updates direction classNames based on position change', () => {
@@ -166,9 +193,11 @@ describe('Direction', () => {
       }),
     })
 
-    expect(wrapper.hasClass('is-right')).not.toBeTruthy()
-    expect(wrapper.hasClass('is-down')).not.toBeTruthy()
-    expect(wrapper.hasClass('is-left')).toBeTruthy()
-    expect(wrapper.hasClass('is-up')).toBeTruthy()
+    const el = wrapper.find('div.c-DropPositioner')
+
+    expect(el.hasClass('is-right')).not.toBeTruthy()
+    expect(el.hasClass('is-down')).not.toBeTruthy()
+    expect(el.hasClass('is-left')).toBeTruthy()
+    expect(el.hasClass('is-up')).toBeTruthy()
   })
 })

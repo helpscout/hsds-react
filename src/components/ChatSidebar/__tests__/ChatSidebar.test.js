@@ -6,7 +6,7 @@ import { Scrollable, StatusBar } from '../../index'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<ChatSidebar />)
-    const o = wrapper.find('.c-ChatSidebar')
+    const o = wrapper.find('div.c-ChatSidebar')
 
     expect(o.length).toBe(1)
   })
@@ -14,7 +14,7 @@ describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<ChatSidebar className={customClass} />)
-    const o = wrapper.find('.c-ChatSidebar')
+    const o = wrapper.find('div.c-ChatSidebar')
 
     expect(o.hasClass(customClass)).toBeTruthy()
   })
@@ -72,7 +72,7 @@ describe('StatusBar', () => {
 
     wrapper.instance().renderStatusBar()
 
-    const o = wrapper.find('.c-ChatSidebar__status-bar')
+    const o = wrapper.find('div.c-ChatSidebar__status-bar')
     const statusBar = o.find(StatusBar)
 
     expect(o.length).toBe(1)

@@ -6,14 +6,14 @@ describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<Heading />)
 
-    expect(wrapper.hasClass('c-Heading')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-Heading')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
     const wrapper = mount(<Heading className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -46,43 +46,47 @@ describe('Styles', () => {
     const wrapper1 = mount(<Heading size="h1" />)
     const wrapperSm = mount(<Heading size="small" />)
 
-    expect(wrapper1.hasClass('is-h1')).toBe(true)
-    expect(wrapperSm.hasClass('is-small')).toBe(true)
+    expect(wrapper1.getDOMNode().classList.contains('is-h1')).toBe(true)
+    expect(wrapperSm.getDOMNode().classList.contains('is-small')).toBe(true)
   })
 
   test('Applies disableSelect styles if specified', () => {
     const wrapper = mount(<Heading disableSelect />)
 
-    expect(wrapper.hasClass('is-disableSelect')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-disableSelect')).toBe(
+      true
+    )
   })
 
   test('Applies center styles if specified', () => {
     const wrapper = mount(<Heading center />)
 
-    expect(wrapper.hasClass('is-center')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-center')).toBe(true)
   })
 
   test('Applies link-style styles if specified', () => {
     const wrapper = mount(<Heading linkStyle />)
 
-    expect(wrapper.hasClass('is-linkStyle')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-linkStyle')).toBe(true)
   })
 
   test('Applies light styles if specified', () => {
     const wrapper = mount(<Heading light />)
 
-    expect(wrapper.hasClass('is-light')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-light')).toBe(true)
   })
 
   test('Applies line-height reset styles if specified', () => {
     const wrapper = mount(<Heading lineHeightReset />)
 
-    expect(wrapper.hasClass('is-line-height-reset')).toBe(true)
+    expect(
+      wrapper.getDOMNode().classList.contains('is-line-height-reset')
+    ).toBe(true)
   })
 
   test('Applies weight styles if specified', () => {
     const wrapper = mount(<Heading weight={200} />)
 
-    expect(wrapper.hasClass('is-200')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-200')).toBe(true)
   })
 })

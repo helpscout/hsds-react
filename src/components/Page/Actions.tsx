@@ -1,26 +1,20 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import { ActionsDirection } from './types'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import {
-  ActionsUI,
-  ActionsBlockUI,
-  ActionsItemUI,
-} from './styles/Actions.css.js'
+import { ActionsUI, ActionsBlockUI, ActionsItemUI } from './styles/Actions.css'
 import { COMPONENT_KEY } from './utils'
 
-type ActionsDirection = 'left' | 'right'
-
-type Props = {
-  className?: string,
-  direction?: ActionsDirection,
-  primary?: any,
-  secondary?: any,
-  serious?: any,
+export interface Props {
+  className?: string
+  direction?: ActionsDirection
+  primary?: any
+  secondary?: any
+  serious?: any
 }
 
-class Actions extends Component<Props> {
+class Actions extends React.PureComponent<Props> {
   static defaultProps = {
     direction: 'right',
   }
@@ -45,7 +39,11 @@ class Actions extends Component<Props> {
     )
 
     return (
-      <ActionsUI {...getValidProps(rest)} className={componentClassName}>
+      <ActionsUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        role="toolbar"
+      >
         <ActionsItemUI className="c-PageActions__primary">
           {primary}
         </ActionsItemUI>

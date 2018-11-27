@@ -7,15 +7,17 @@ jest.useFakeTimers()
 describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<CopyButton />)
+    const el = wrapper.find('button.c-CopyButton')
 
-    expect(wrapper.hasClass('c-CopyButton')).toBe(true)
+    expect(el.hasClass('c-CopyButton')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
     const wrapper = mount(<CopyButton className={className} />)
+    const el = wrapper.find('button.c-CopyButton')
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(el.hasClass(className)).toBe(true)
   })
 })
 

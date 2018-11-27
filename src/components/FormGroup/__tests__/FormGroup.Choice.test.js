@@ -8,7 +8,7 @@ describe('FormGroupChoice', () => {
       const customClass = 'piano-key-neck-tie'
       const wrapper = mount(<FormGroupChoice className={customClass} />)
 
-      expect(wrapper.prop('className')).toContain(customClass)
+      expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
     })
   })
 
@@ -29,7 +29,9 @@ describe('FormGroupChoice', () => {
     test('Renders responsive styles, if specified', () => {
       const wrapper = mount(<FormGroupChoice isResponsive />)
 
-      expect(wrapper.hasClass('is-responsive')).toBe(true)
+      expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(
+        true
+      )
     })
   })
 })

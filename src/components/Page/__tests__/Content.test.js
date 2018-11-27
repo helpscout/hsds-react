@@ -6,14 +6,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Content />)
 
-    expect(wrapper.hasClass('c-PageContent')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-PageContent')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
     const wrapper = mount(<Content className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -39,12 +39,12 @@ describe('Responsive', () => {
   test('Renders responsive styles, if specified', () => {
     const wrapper = mount(<Content isResponsive={true} />)
 
-    expect(wrapper.hasClass('is-responsive')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(true)
   })
 
   test('Does not render responsive styles, if specified', () => {
     const wrapper = mount(<Content isResponsive={false} />)
 
-    expect(wrapper.hasClass('is-responsive')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(false)
   })
 })

@@ -79,12 +79,13 @@ describe('Pop', () => {
           </Pop.Reference>
         </Pop>
       )
+      const o = wrapper.instance()
 
-      expect(wrapper.getNode().node).toBeTruthy()
+      expect(wrapper.instance().node).toBeTruthy()
 
       wrapper.unmount()
 
-      expect(wrapper.getNode().node).toBeFalsy()
+      expect(o.node).toBeFalsy()
     })
   })
 

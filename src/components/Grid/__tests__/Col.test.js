@@ -6,13 +6,13 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = mount(<Col />)
 
-    expect(wrapper.hasClass('c-Col')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Col')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
     const wrapper = mount(<Col className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -45,34 +45,34 @@ describe('Size', () => {
   test('Can render an additional size', () => {
     const wrapper = mount(<Col size="8" />)
 
-    expect(wrapper.hasClass('c-Col')).toBeTruthy()
-    expect(wrapper.hasClass('is-8')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Col')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-8')).toBeTruthy()
   })
 
   test('Can render additional sizes, separated by space', () => {
     const wrapper = mount(<Col size="8 6@md 4@lg" />)
 
-    expect(wrapper.hasClass('c-Col')).toBeTruthy()
-    expect(wrapper.hasClass('is-8')).toBeTruthy()
-    expect(wrapper.hasClass('is-6@md')).toBeTruthy()
-    expect(wrapper.hasClass('is-4@lg')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Col')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-8')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-6@md')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-4@lg')).toBeTruthy()
   })
 
   test('Can render additional sizes, separated by comma', () => {
     const wrapper = mount(<Col size="8,6@md, 4@lg" />)
 
-    expect(wrapper.hasClass('c-Col')).toBeTruthy()
-    expect(wrapper.hasClass('is-8')).toBeTruthy()
-    expect(wrapper.hasClass('is-6@md')).toBeTruthy()
-    expect(wrapper.hasClass('is-4@lg')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Col')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-8')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-6@md')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-4@lg')).toBeTruthy()
   })
 
   test('Can render additional sizes, separated by comma + space', () => {
     const wrapper = mount(<Col size="8,6@md     4@lg" />)
 
-    expect(wrapper.hasClass('c-Col')).toBeTruthy()
-    expect(wrapper.hasClass('is-8')).toBeTruthy()
-    expect(wrapper.hasClass('is-6@md')).toBeTruthy()
-    expect(wrapper.hasClass('is-4@lg')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Col')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-8')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-6@md')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-4@lg')).toBeTruthy()
   })
 })

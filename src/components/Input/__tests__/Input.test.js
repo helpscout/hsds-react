@@ -99,7 +99,7 @@ describe('Events', () => {
     const input = wrapper.find('input')
     const value = 'Champ Kind'
 
-    input.node.value = value
+    input.getDOMNode().value = value
     input.simulate('change')
 
     expect(spy).toHaveBeenCalledWith(value)
@@ -166,7 +166,7 @@ describe('Events', () => {
     const wrapper = mount(<Input multiline={true} onResize={spy} />)
     const resizer = wrapper.find('Resizer')
 
-    resizer.getNode().handleOnResize()
+    resizer.instance().handleOnResize()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -235,7 +235,7 @@ describe('ID', () => {
 describe('Multiline', () => {
   test('Default selector is an input', () => {
     const wrapper = mount(<Input />)
-    const o = wrapper.find(ui.field).getNode()
+    const o = wrapper.find(ui.field).getDOMNode()
 
     expect(o.tagName.toLowerCase()).toBe('input')
     expect(o.type).toBe('text')
@@ -243,14 +243,14 @@ describe('Multiline', () => {
 
   test('Selector becomes a textarea if multiline is defined', () => {
     const wrapper = mount(<Input multiline />)
-    const o = wrapper.find(ui.field).getNode()
+    const o = wrapper.find(ui.field).getDOMNode()
 
     expect(o.type).toBe('textarea')
   })
 
   test('Accepts number argument', () => {
     const wrapper = mount(<Input multiline={5} />)
-    const o = wrapper.find(ui.field).getNode()
+    const o = wrapper.find(ui.field).getDOMNode()
 
     expect(o.type).toBe('textarea')
   })
@@ -305,7 +305,7 @@ describe('Multiline', () => {
     const wrapper = mount(<Input multiline={3} maxHeight={50} />)
     const o = wrapper.find(ui.input)
 
-    expect(o.hasClass('has-maxHeight')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('has-maxHeight')).toBeTruthy()
   })
 
   test('maxHeight Accepts string values', () => {
@@ -319,7 +319,7 @@ describe('Multiline', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={3} maxHeight="50vh" />)
     const o = wrapper.find(ui.field)
-    o.getNode().onfocus = spy
+    o.getDOMNode().onfocus = spy
 
     wrapper.instance().handleExpandingResize()
 
@@ -336,7 +336,7 @@ describe('HelpText', () => {
 
   test('Adds helpText if specified', () => {
     const wrapper = mount(<Input helpText="Help text" />)
-    const o = wrapper.find(ui.helpText)
+    const o = wrapper.find(ui.helpText).first()
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Help text')
   })
@@ -362,21 +362,21 @@ describe('HintText', () => {
 
   test('Adds hintText if specified', () => {
     const wrapper = mount(<Input hintText="Hint text" />)
-    const o = wrapper.find(ui.hintText)
+    const o = wrapper.find(ui.hintText).first()
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Hint text')
   })
 
   test('Does not pass state to hintText', () => {
     const wrapper = mount(<Input hintText="Hint text" state="error" />)
-    const o = wrapper.find(ui.hintText)
+    const o = wrapper.find(ui.hintText).first()
     expect(o.props().state).not.toBeTruthy()
   })
 
   test('Accepts React components', () => {
     const custom = <div className="custom">Custom text</div>
     const wrapper = mount(<Input hintText={custom} />)
-    const o = wrapper.find(ui.hintText)
+    const o = wrapper.find(ui.hintText).first()
     const c = o.find('.custom')
 
     expect(o.exists()).toBeTruthy()
@@ -388,7 +388,7 @@ describe('HintText', () => {
 describe('Label', () => {
   test('Adds label if specified', () => {
     const wrapper = mount(<Input label="Channel" />)
-    const label = wrapper.find(ui.label)
+    const label = wrapper.find(ui.label).first()
 
     expect(label.exists()).toBeTruthy()
     expect(label.text()).toBe('Channel')
@@ -397,7 +397,7 @@ describe('Label', () => {
   test('Accepts React components', () => {
     const custom = <div className="custom">Custom text</div>
     const wrapper = mount(<Input label={custom} />)
-    const o = wrapper.find(ui.label)
+    const o = wrapper.find(ui.label).first()
     const c = o.find('.custom')
 
     expect(o.exists()).toBeTruthy()
@@ -475,19 +475,19 @@ describe('States', () => {
     wrapper.setProps({ state: 'success' })
 
     expect(wrapper.state().state).toBe('success')
-    expect(input.hasClass('is-success')).toBe(true)
+    expect(input.getDOMNode().classList.contains('is-success')).toBe(true)
 
     wrapper.setProps({ state: null })
 
     expect(wrapper.state().state).toBe(null)
-    expect(input.hasClass('is-success')).toBe(false)
+    expect(input.getDOMNode().classList.contains('is-success')).toBe(false)
   })
 })
 
 describe('Stateful helper label', () => {
   test('Renders stateful helper label if error is a string', () => {
     const wrapper = mount(<Input state="error" helpText="Error" />)
-    const helperLabel = wrapper.find('.c-HelpText')
+    const helperLabel = wrapper.find('.c-HelpText').first()
 
     expect(helperLabel.exists()).toBeTruthy()
     expect(helperLabel.text()).toBe('Error')
@@ -503,7 +503,7 @@ describe('removeStateStylesOnFocus', () => {
     o.simulate('focus')
 
     expect(wrapper.state().state).toBe('error')
-    expect(input.hasClass('is-error')).toBe(true)
+    expect(input.getDOMNode().classList.contains('is-error')).toBe(true)
   })
 
   test('Removes state style on focus, by specified', () => {
@@ -514,7 +514,7 @@ describe('removeStateStylesOnFocus', () => {
     o.simulate('focus')
 
     expect(wrapper.state().state).toBeFalsy()
-    expect(input.hasClass('is-error')).toBe(false)
+    expect(input.getDOMNode().classList.contains('is-error')).toBe(false)
   })
 })
 
@@ -522,14 +522,15 @@ describe('inputNode', () => {
   test('Sets inputNode on mount', () => {
     const wrapper = mount(<Input />)
 
-    expect(wrapper.getNode().inputNode).toBeTruthy()
+    expect(wrapper.instance().inputNode).toBeTruthy()
   })
 
   test('Unsets inputNode on unmount', () => {
     const wrapper = mount(<Input />)
+    const o = wrapper.instance()
     wrapper.unmount()
 
-    expect(wrapper.getNode().inputNode).not.toBeTruthy()
+    expect(o.inputNode).not.toBeTruthy()
   })
 })
 
@@ -537,7 +538,7 @@ describe('isFocused', () => {
   test('Can focus input using isFocused prop', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input isFocused />)
-    const o = wrapper.getNode().inputNode
+    const o = wrapper.instance().inputNode
     o.onfocus = spy
 
     jest.runOnlyPendingTimers()
@@ -548,7 +549,7 @@ describe('isFocused', () => {
   test('Can focus input using custom timeout', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input isFocused forceAutoFocusTimeout={20} />)
-    const o = wrapper.getNode().inputNode
+    const o = wrapper.instance().inputNode
     o.onfocus = spy
 
     jest.runOnlyPendingTimers()
@@ -561,7 +562,7 @@ describe('isFocused', () => {
     const wrapper = mount(
       <Input onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
     )
-    const o = wrapper.getNode().inputNode
+    const o = wrapper.instance().inputNode
     o.onfocus = spy
 
     wrapper.setProps({ isFocused: true })
@@ -576,7 +577,7 @@ describe('moveCursorToEnd', () => {
   test('Moves the selection cursor to end of value', () => {
     const wrapper = mount(<Input value="WEE" moveCursorToEnd />)
     wrapper.setState({ value: 'WEE' })
-    wrapper.getNode().moveCursorToEnd()
+    wrapper.instance().moveCursorToEnd()
   })
 })
 
@@ -701,8 +702,8 @@ describe('ErrorMessage', () => {
 
   test('Can render an error Icon and suffix', () => {
     const wrapper = mount(<Input suffix="Derek" state="error" />)
-    const error = wrapper.find(ui.errorIcon)
-    const suffix = wrapper.find(ui.suffix)
+    const error = wrapper.find(ui.errorIcon).first()
+    const suffix = wrapper.find(ui.suffix).first()
 
     expect(error.length).toBe(1)
     expect(suffix.length).toBe(1)
@@ -809,7 +810,7 @@ describe('innerRef', () => {
   test('Can retrieve innerRef DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input innerRef={spy} />)
-    const o = wrapper.find('input').getNode()
+    const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })

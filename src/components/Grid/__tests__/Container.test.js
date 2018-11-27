@@ -6,13 +6,13 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = mount(<Container />)
 
-    expect(wrapper.hasClass('c-Container')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Container')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
     const wrapper = mount(<Container className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -45,39 +45,47 @@ describe('Variants', () => {
   test('Correctly renders (old) fluid variant', () => {
     const wrapper = mount(<Container fluid />)
 
-    expect(wrapper.hasClass('c-Container')).toBeTruthy()
-    expect(wrapper.hasClass('is-fluid')).toBeTruthy()
-    expect(wrapper.hasClass('is-responsive')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Container')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-fluid')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-responsive')
+    ).not.toBeTruthy()
   })
 
   test('Correctly renders fluid variant', () => {
     const wrapper = mount(<Container isFluid />)
 
-    expect(wrapper.hasClass('c-Container')).toBeTruthy()
-    expect(wrapper.hasClass('is-fluid')).toBeTruthy()
-    expect(wrapper.hasClass('is-responsive')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Container')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-fluid')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-responsive')
+    ).not.toBeTruthy()
   })
 
   test('Correctly renders (old) responsive variant', () => {
     const wrapper = mount(<Container responsive />)
 
-    expect(wrapper.hasClass('c-Container')).toBeTruthy()
-    expect(wrapper.hasClass('is-responsive')).toBeTruthy()
-    expect(wrapper.hasClass('is-fluid')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Container')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-responsive')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-fluid')).not.toBeTruthy()
   })
 
   test('Correctly renders responsive variant', () => {
     const wrapper = mount(<Container isResponsive />)
 
-    expect(wrapper.hasClass('c-Container')).toBeTruthy()
-    expect(wrapper.hasClass('is-responsive')).toBeTruthy()
-    expect(wrapper.hasClass('is-fluid')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Container')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-responsive')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-fluid')).not.toBeTruthy()
   })
 
   test('Correctly renders size', () => {
     const wrapper = mount(<Container size="sm" />)
 
-    expect(wrapper.hasClass('c-Container')).toBeTruthy()
-    expect(wrapper.hasClass('is-sm')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Container')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-sm')).toBeTruthy()
   })
 })

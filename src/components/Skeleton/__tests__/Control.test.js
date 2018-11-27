@@ -6,14 +6,18 @@ describe('className', () => {
   test('Has default className', () => {
     const wrapper = mount(<Control />)
 
-    expect(wrapper.hasClass('c-SkeletonControl')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-SkeletonControl')
+    ).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Control className="ron" />)
 
-    expect(wrapper.hasClass('c-SkeletonControl')).toBeTruthy()
-    expect(wrapper.hasClass('ron')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-SkeletonControl')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('ron')).toBeTruthy()
   })
 })
 
@@ -21,6 +25,6 @@ describe('Styles', () => {
   test('Can render size styles, if defined', () => {
     const wrapper = mount(<Control size="sm" />)
 
-    expect(wrapper.hasClass('is-sm')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-sm')).toBeTruthy()
   })
 })

@@ -2,14 +2,21 @@ import React from 'react'
 import { mount } from 'enzyme'
 import OptionIcon from '../OptionIcon'
 import Icon from '../../Icon'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-OptionIcon',
-  skipChildrenTest: true,
-}
+describe('ClassName', () => {
+  test('Has default component className', () => {
+    const wrapper = mount(<OptionIcon />)
 
-baseComponentTest(OptionIcon, baseComponentOptions)
+    expect(wrapper.getDOMNode().classList.contains('c-OptionIcon')).toBe(true)
+  })
+
+  test('Applies custom className if specified', () => {
+    const className = 'gator'
+    const wrapper = mount(<OptionIcon className={className} />)
+
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
+  })
+})
 
 describe('Icon', () => {
   test('Renders an Icon, by default', () => {

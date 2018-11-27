@@ -20,7 +20,7 @@ describe('ClassNames', () => {
     const wrapper = shallow(<Caption className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.hasClass('mugatu')).toBe(true)
   })
 })
 

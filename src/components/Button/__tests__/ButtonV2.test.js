@@ -6,7 +6,7 @@ import Icon from '../../Icon'
 describe('ClassNames', () => {
   test('Accepts custom className', () => {
     const wrapper = mount(<Button className="foo bar baz">Click Me</Button>)
-    const classNames = wrapper.prop('className')
+    const classNames = wrapper.find('button.c-ButtonV2').prop('className')
 
     expect(classNames).toContain('foo')
     expect(classNames).toContain('bar')
@@ -19,8 +19,8 @@ describe('Kind', () => {
     const primary = mount(<Button kind="primary">Primary</Button>)
     const link = mount(<Button kind="link">Plain</Button>)
 
-    expect(primary.hasClass('is-primary')).toBe(true)
-    expect(link.hasClass('is-link')).toBe(true)
+    expect(primary.find('button.c-ButtonV2').hasClass('is-primary')).toBe(true)
+    expect(link.find('button.c-ButtonV2').hasClass('is-link')).toBe(true)
   })
 
   test('Creates a button with type="submit"', () => {
@@ -30,15 +30,15 @@ describe('Kind', () => {
   })
 
   test('Can create block buttons, if specified', () => {
-    const o = mount(<Button isBlock>Button</Button>)
+    const wrapper = mount(<Button isBlock>Button</Button>)
 
-    expect(o.hasClass('is-block')).toBe(true)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-block')).toBe(true)
   })
 
   test('Does not render Block style, if spefied', () => {
-    const o = mount(<Button isBlock={false}>Button</Button>)
+    const wrapper = mount(<Button isBlock={false}>Button</Button>)
 
-    expect(o.hasClass('is-block')).toBe(false)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-block')).toBe(false)
   })
 })
 
@@ -48,9 +48,9 @@ describe('Sizes', () => {
     const md = mount(<Button size="md">Medium</Button>)
     const sm = mount(<Button size="sm">Small</Button>)
 
-    expect(lg.hasClass('is-lg')).toBe(true)
-    expect(md.hasClass('is-md')).toBe(true)
-    expect(sm.hasClass('is-sm')).toBe(true)
+    expect(lg.find('button.c-ButtonV2').hasClass('is-lg')).toBe(true)
+    expect(md.find('button.c-ButtonV2').hasClass('is-md')).toBe(true)
+    expect(sm.find('button.c-ButtonV2').hasClass('is-sm')).toBe(true)
   })
 })
 
@@ -60,15 +60,15 @@ describe('States', () => {
     const danger = mount(<Button state="danger">Danger</Button>)
     const warning = mount(<Button state="warning">Warning</Button>)
 
-    expect(success.hasClass('is-success')).toBe(true)
-    expect(danger.hasClass('is-danger')).toBe(true)
-    expect(warning.hasClass('is-warning')).toBe(true)
+    expect(success.find('button.c-ButtonV2').hasClass('is-success')).toBe(true)
+    expect(danger.find('button.c-ButtonV2').hasClass('is-danger')).toBe(true)
+    expect(warning.find('button.c-ButtonV2').hasClass('is-warning')).toBe(true)
   })
 
   test('Adds the active classNames', () => {
     const wrapper = mount(<Button isActive>Button</Button>)
 
-    expect(wrapper.hasClass('is-active')).toBe(true)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-active')).toBe(true)
   })
 
   test('Disables the button', () => {
@@ -89,21 +89,23 @@ describe('Styles', () => {
   test('Applies suffix styles', () => {
     const wrapper = mount(<Button isSuffix>Click Me</Button>)
 
-    expect(wrapper.hasClass('is-suffix')).toBe(true)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-suffix')).toBe(true)
   })
 })
 
 describe('Themes', () => {
   test('Does not have a theme className by default', () => {
-    const o = mount(<Button />)
+    const wrapper = mount(<Button />)
 
-    expect(o.props().theme).not.toBeTruthy()
+    expect(wrapper.props().theme).not.toBeTruthy()
   })
 
   test('Can add theme className', () => {
-    const o = mount(<Button theme="editing" />)
+    const wrapper = mount(<Button theme="editing" />)
 
-    expect(o.hasClass('is-editing')).toBeTruthy()
+    expect(
+      wrapper.find('button.c-ButtonV2').hasClass('is-editing')
+    ).toBeTruthy()
   })
 })
 
@@ -111,19 +113,19 @@ describe('Styles', () => {
   test('Renders isFirst styles', () => {
     const wrapper = mount(<Button isFirst />)
 
-    expect(wrapper.hasClass('is-first')).toBe(true)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-first')).toBe(true)
   })
 
   test('Renders isNotOnly styles', () => {
     const wrapper = mount(<Button isNotOnly />)
 
-    expect(wrapper.hasClass('is-notOnly')).toBe(true)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-notOnly')).toBe(true)
   })
 
   test('Renders isLast styles', () => {
     const wrapper = mount(<Button isLast />)
 
-    expect(wrapper.hasClass('is-last')).toBe(true)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-last')).toBe(true)
   })
 })
 
@@ -161,17 +163,17 @@ describe('Focus', () => {
     const wrapper = mount(<Button kind="primary" />)
     wrapper.simulate('focus')
 
-    const o = wrapper.find('.c-ButtonV2Focus')
+    const o = wrapper.find('span.c-ButtonV2Focus')
 
     expect(o.length).toBe(1)
-    expect(wrapper.hasClass('is-focused')).toBe(true)
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-focused')).toBe(true)
   })
 
   test('Does not render FocusUI on certain buttons', () => {
     const wrapper = mount(<Button kind="link" />)
     wrapper.simulate('focus')
 
-    const o = wrapper.find('.c-ButtonV2Focus')
+    const o = wrapper.find('span.c-ButtonV2Focus')
 
     expect(o.length).toBe(0)
   })
@@ -181,7 +183,7 @@ describe('Focus', () => {
     wrapper.simulate('focus')
     wrapper.simulate('blur')
 
-    const o = wrapper.find('.c-ButtonV2Focus')
+    const o = wrapper.find('span.c-ButtonV2Focus')
 
     expect(o.length).toBe(0)
   })
@@ -190,7 +192,7 @@ describe('Focus', () => {
     const wrapper = mount(<Button kind="primary" disabled />)
     wrapper.simulate('focus')
 
-    const o = wrapper.find('.c-ButtonV2Focus')
+    const o = wrapper.find('span.c-ButtonV2Focus')
 
     expect(o.length).toBe(0)
   })
@@ -198,7 +200,7 @@ describe('Focus', () => {
   test('Can be rendered with prop', () => {
     const wrapper = mount(<Button kind="primary" isFocused />)
 
-    const o = wrapper.find('.c-ButtonV2Focus')
+    const o = wrapper.find('span.c-ButtonV2Focus')
 
     expect(o.length).toBe(1)
   })
@@ -208,7 +210,7 @@ describe('Focus', () => {
       <Button kind="primary" isFocused isFirst isNotOnly isLast />
     )
 
-    const o = wrapper.find('.c-ButtonV2Focus')
+    const o = wrapper.find('span.c-ButtonV2Focus')
 
     expect(o.length).toBe(1)
     expect(o.hasClass('is-first'))

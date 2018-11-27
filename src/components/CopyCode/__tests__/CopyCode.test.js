@@ -20,15 +20,17 @@ document.createRange = () => ({
 describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<CopyCode />)
+    const el = wrapper.find('div.c-CopyCode')
 
-    expect(wrapper.hasClass('c-CopyCode')).toBe(true)
+    expect(el.hasClass('c-CopyCode')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
     const wrapper = mount(<CopyCode className={className} />)
+    const el = wrapper.find('div.c-CopyCode')
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(el.hasClass(className)).toBe(true)
   })
 })
 

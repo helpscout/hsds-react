@@ -8,7 +8,7 @@ describe('FormGroup', () => {
       const customClass = 'piano-key-neck-tie'
       const wrapper = mount(<FormGroup className={customClass} />)
 
-      expect(wrapper.prop('className')).toContain(customClass)
+      expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
     })
   })
 

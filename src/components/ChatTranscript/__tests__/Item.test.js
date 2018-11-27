@@ -251,7 +251,7 @@ describe('Attachments', () => {
       type: ITEM_TYPES.note,
     }
     const wrapper = shallow(<Item {...props} />)
-    const o = wrapper.find(ui.attachments)
+    const o = wrapper.find(`div${ui.attachments}`)
 
     expect(o.length).toBe(0)
   })
@@ -272,7 +272,7 @@ describe('Attachments', () => {
       type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
-    const o = wrapper.find(ui.attachments)
+    const o = wrapper.find(`div${ui.attachments}`)
     const a = o.find(Attachment)
 
     expect(o.length).toBe(1)
@@ -295,7 +295,7 @@ describe('Attachments', () => {
       type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
-    const o = wrapper.find(ui.attachments)
+    const o = wrapper.find(`div${ui.attachments}`)
     const a = o.find(Attachment)
 
     expect(o.length).toBe(1)
@@ -343,7 +343,7 @@ describe('Attachments', () => {
       type: ITEM_TYPES.note,
     }
     const wrapper = mount(<Item {...props} />)
-    const o = wrapper.find(ui.attachments)
+    const o = wrapper.find(`div${ui.attachments}`)
     const a = o.find(Attachment)
 
     expect(o.length).toBe(1)
