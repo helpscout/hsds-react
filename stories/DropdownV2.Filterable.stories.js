@@ -32,6 +32,21 @@ const ItemSpec = createSpec({
   value: faker.name.firstName(),
 })
 
+const items = [
+  {
+    items: ItemSpec.generate(8),
+    label: 'Group 1',
+    value: 'thing',
+    type: 'group',
+  },
+  {
+    items: ItemSpec.generate(8),
+    label: 'Group 2',
+    type: 'group',
+    value: 'thing2',
+  },
+]
+
 stories.add('Custom Filterable', () => {
   const HeaderUI = styled('div')`
     position: sticky;
@@ -49,7 +64,8 @@ stories.add('Custom Filterable', () => {
     }
 
     state = {
-      items: ItemSpec.generate(30),
+      // items: ItemSpec.generate(30),
+      items,
       inputValue: '',
       selectedItem: undefined,
     }
@@ -67,6 +83,12 @@ stories.add('Custom Filterable', () => {
       this.resetInputValue()
     }
 
+    filterGroupSearchResultFromItems = groups => {
+      return groups.map(group => {
+        return { ...group, items: group.items.filter(this.filterSearchResult) }
+      })
+    }
+
     filterSearchResult = item => {
       if (!this.state.inputValue) return true
 
@@ -78,7 +100,6 @@ stories.add('Custom Filterable', () => {
     handleOnKeyDown = event => {
       if (event.keyCode === 13) {
         event.stopPropagation()
-        console.log('cool')
       }
     }
 
@@ -86,6 +107,23 @@ stories.add('Custom Filterable', () => {
       this.setState({
         inputValue: '',
       })
+    }
+
+    renderItems = dropdownProps => {
+      const {
+        items,
+        renderItems,
+        renderItemsAsGroups,
+        hasGroups,
+      } = dropdownProps
+
+      if (hasGroups) {
+        return renderItemsAsGroups({
+          items: this.filterGroupSearchResultFromItems(items),
+        })
+      }
+
+      return renderItems({ items: items.filter(this.filterSearchResult) })
     }
 
     render() {
@@ -100,7 +138,7 @@ stories.add('Custom Filterable', () => {
           isOpen
           onClose={this.resetInputValue}
         >
-          {({ items, getItemProps }) => (
+          {dropdownProps => (
             <Dropdown.Card>
               <Dropdown.Block>
                 <Input
@@ -112,13 +150,7 @@ stories.add('Custom Filterable', () => {
                   onKeyDown={this.handleOnKeyDown}
                 />
               </Dropdown.Block>
-              <Dropdown.Menu>
-                {items
-                  .filter(this.filterSearchResult)
-                  .map((item, index) => (
-                    <Dropdown.Item {...getItemProps(item, index)} />
-                  ))}
-              </Dropdown.Menu>
+              <Dropdown.Menu>{this.renderItems(dropdownProps)}</Dropdown.Menu>
               <Dropdown.Block>
                 <Button version={2} kind="primary" isBlock>
                   Button

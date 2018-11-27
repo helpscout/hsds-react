@@ -226,9 +226,7 @@ class Renderer extends React.PureComponent<any> {
     if (previousInputValue === inputValue) return
 
     // @ts-ignore
-    const [firstFocusedNode, ...otherFocusedNodes] = Array.from(
-      findFocusedItemDOMNodes(envNode)
-    )
+    const otherFocusedNodes = Array.from(findFocusedItemDOMNodes(envNode))
     if (otherFocusedNodes.length) {
       otherFocusedNodes.forEach(node => {
         node.classList.remove(focusClassName)

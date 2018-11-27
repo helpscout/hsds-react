@@ -134,6 +134,9 @@ export class MenuContainer extends React.Component<Props> {
     return {
       dropRight,
       getItemProps: this.getItemProps,
+      renderItemsAsGroups: this.renderItemsAsGroups,
+      renderItems: this.renderItems,
+      hasGroups: this.hasGroups(),
       isOpen,
       items,
       id,
@@ -149,8 +152,8 @@ export class MenuContainer extends React.Component<Props> {
     return props
   }
 
-  renderItems = () => {
-    const { isLoading, renderEmpty, renderLoading } = this.props
+  renderDefaultItems = () => {
+    const { id, isLoading, renderEmpty, renderLoading } = this.props
     const { items } = this.getMenuProps()
 
     // Loading
@@ -160,27 +163,16 @@ export class MenuContainer extends React.Component<Props> {
     if (!items.length && renderEmpty)
       return renderRenderPropComponent(renderEmpty)
     // Groups
-    if (this.hasGroups()) return this.renderItemsAsGroups()
+    if (this.hasGroups()) return this.renderItemsAsGroups({ items, id })
     // Normal
-    return items.map((item, index) => {
-      return (
-        <Item
-          key={item.value || getComponentKey(item, index)}
-          {...this.getItemProps(item)}
-        >
-          {item.label}
-        </Item>
-      )
-    })
+    return this.renderItems({ items })
   }
 
   hasGroups = () => {
     return hasGroups(this.props.items)
   }
 
-  renderItemsAsGroups = () => {
-    const { id, items } = this.props
-
+  renderItemsAsGroups = ({ id = 'group', items }) => {
     return items.map((group, index) => {
       const { items, ...groupProps } = group
       const groupId = `${id}-group-${index}`
@@ -205,13 +197,26 @@ export class MenuContainer extends React.Component<Props> {
     })
   }
 
+  renderItems = ({ items }) => {
+    return items.map((item, index) => {
+      return (
+        <Item
+          key={item.value || getComponentKey(item, index)}
+          {...this.getItemProps(item)}
+        >
+          {item.label}
+        </Item>
+      )
+    })
+  }
+
   renderMenu = () => {
     const { id, triggerId } = this.getMenuProps()
 
     return (
       <Card>
         <Menu aria-labelledby={triggerId} id={id}>
-          {this.renderItems()}
+          {this.renderDefaultItems()}
         </Menu>
       </Card>
     )
