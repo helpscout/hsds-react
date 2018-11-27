@@ -1,9 +1,7 @@
 import { isDefined } from '../../../utilities/is'
 
 import {
-  SELECTORS,
   getItemFromCollection,
-  pathResolve,
   incrementPathIndex,
   decrementPathIndex,
 } from './Dropdown.utils'
@@ -121,27 +119,26 @@ export const incrementIndex = (state, modifier: number = 1) => {
 
   // This extra check is to support item filtering.
   // The next DOM node may not exist, depending on filtering results.
-  const nextNode = findItemDOMNode(nextIndex, envNode)
-  if (!nextNode) return
+  const target = findItemDOMNode(nextIndex, envNode) as Element
+  if (!target) return
 
-  return {
-    previousIndex: index,
-    index: nextIndex,
-    lastInteractionType: 'keyboard',
-  }
+  // @ts-ignore
+  return focusItem(state, { target })
 }
 
 export const decrementIndex = (state, modifier: number = 1) => {
-  const { index, indexMap } = state
+  const { envNode, index, indexMap } = state
   const nextIndex = decrementPathIndex(index, modifier)
 
   if (!indexMap[nextIndex]) return
 
-  return {
-    previousIndex: state.index,
-    index: nextIndex,
-    lastInteractionType: 'keyboard',
-  }
+  // This extra check is to support item filtering.
+  // The next DOM node may not exist, depending on filtering results.
+  const target = findItemDOMNode(nextIndex, envNode) as Element
+  if (!target) return
+
+  // @ts-ignore
+  return focusItem(state, { target })
 }
 
 export const focusItem = (state, event: Event) => {
@@ -158,6 +155,11 @@ export const focusItem = (state, event: Event) => {
   // @ts-ignore
   const isMouseEvent = isDefined(event.pageX)
   const lastInteractionType = isMouseEvent ? 'mouse' : 'keyboard'
+
+  if (state.enableTabNavigation && !isMouseEvent) {
+    // @ts-ignore
+    node.focus()
+  }
 
   return {
     previousIndex: state.index,

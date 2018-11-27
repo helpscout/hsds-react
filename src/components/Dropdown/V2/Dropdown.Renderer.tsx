@@ -7,6 +7,7 @@ import {
   incrementIndex,
   decrementIndex,
   selectItemFromIndex,
+  closeDropdown,
 } from './Dropdown.actions'
 import { getNextChildPath, getParentPath, isDropRight } from './Dropdown.utils'
 import {
@@ -40,11 +41,21 @@ class Renderer extends React.PureComponent<any> {
   }
 
   handleTab = (event: Event) => {
-    if (!this.props.enableTabNavigation) return
+    const { closeDropdown, enableTabNavigation, items, index } = this.props
+
+    if (!enableTabNavigation) return
     requestAnimationFrame(() => {
       const target = document.activeElement
+      const isLastItem = parseInt(index, 10) === items.length - 1
+
+      if (isLastItem) {
+        closeDropdown()
+        return
+      }
+
       if (!isDOMNodeValidItem(target)) return
       event.preventDefault()
+
       this.props.focusItem({ target })
     })
   }
@@ -334,6 +345,7 @@ const ConnectedRenderer: any = connect(
       indexMap,
       inputValue,
       isOpen,
+      items,
       openClassName,
       previousSelectedItem,
       selectedItem,
@@ -352,6 +364,7 @@ const ConnectedRenderer: any = connect(
       indexMap,
       inputValue,
       isOpen,
+      items,
       openClassName,
       previousSelectedItem,
       selectedItem,
@@ -359,6 +372,7 @@ const ConnectedRenderer: any = connect(
   },
   // mapDispatchToProps
   {
+    closeDropdown,
     focusItem,
     incrementIndex,
     decrementIndex,

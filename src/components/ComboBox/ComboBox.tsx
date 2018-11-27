@@ -1,21 +1,42 @@
+import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
 import * as React from 'react'
 import Dropdown from '../Dropdown/DropdownV2'
 import { isItemsEmpty } from '../Dropdown/V2/Dropdown.utils'
-import Input from '../Input'
+import { initialState } from '../Dropdown/V2/Dropdown.store'
+import Keys from '../../constants/Keys'
 import Text from '../Text'
 import { noop } from '../../utilities/other'
+import { classNames } from '../../utilities/classNames'
 import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
 
-export class ComboBox extends React.Component<any, any> {
+export interface ComboBoxProps extends DropdownProps {
+  autoFocusInput: boolean
+  customFilter?: (filterProps: Object, defaultFilter: any) => void
+  onInputChange: (value: string) => void
+  inputProps: any
+  placeholder: string
+  noResultsLabel: string
+  renderMenuStart?: () => void
+  renderMenuEnd?: () => void
+  renderFooter?: () => void
+}
+
+export interface ComboBoxState {
+  inputValue: string
+}
+
+export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   static defaultProps = {
-    isLoading: false,
-    isOpen: false,
-    disabled: false,
-    items: [],
+    ...initialState,
     onInputChange: noop,
-    onOpen: noop,
-    onClose: noop,
-    onSelect: noop,
+    inputProps: {
+      autoFocus: true,
+      className: 'c-ComboBoxInput',
+      onChange: noop,
+      onKeyDown: noop,
+      placeholder: 'Search',
+      size: 'xssm',
+    },
     maxHeight: 330,
     minWidth: 222,
     noResultsLabel: 'No results',
@@ -23,7 +44,6 @@ export class ComboBox extends React.Component<any, any> {
 
   state = {
     inputValue: '',
-    selectedItem: undefined,
   }
 
   onInputChange = inputValue => {
@@ -32,19 +52,23 @@ export class ComboBox extends React.Component<any, any> {
     })
 
     this.props.onInputChange(inputValue)
+
+    if (this.props.inputProps.onChange) {
+      this.props.inputProps.onChange(inputValue)
+    }
   }
 
   onSelect = (selectedItem, props) => {
-    this.setState({
-      selectedItem,
-    })
     this.resetInputValue()
     this.props.onSelect(selectedItem, props)
   }
 
   handleOnKeyDown = event => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === Keys.ENTER) {
       event.stopPropagation()
+    }
+    if (this.props.inputProps.onKeyDown) {
+      this.props.inputProps.onKeyDown(event)
     }
   }
 
@@ -132,29 +156,12 @@ export class ComboBox extends React.Component<any, any> {
   }
 
   getDropdownProps = () => {
-    const {
-      isOpen,
-      items,
-      minWidth,
-      minHeight,
-      maxWidth,
-      maxHeight,
-      onOpen,
-    } = this.props
+    const { onInputChange, noResultsLabel, ...rest } = this.props
     const { inputValue } = this.state
 
     return {
-      enableTabNavigation: false,
+      ...rest,
       inputValue,
-      onClose: this.onClose,
-      onOpen,
-      isOpen,
-      items,
-      onSelect: this.onSelect,
-      minWidth,
-      minHeight,
-      maxHeight,
-      maxWidth,
     }
   }
 
@@ -188,28 +195,30 @@ export class ComboBox extends React.Component<any, any> {
     const { renderFooter } = this.props
     if (!renderFooter) return
 
-    return <Dropdown.Block>{renderFooter()}</Dropdown.Block>
+    return (
+      <Dropdown.Block className="c-ComboBoxFooter">
+        {renderFooter()}
+      </Dropdown.Block>
+    )
   }
 
   render() {
+    const { className, inputProps } = this.props
+    const componentClassName = classNames('c-ComboBox', className)
+
     return (
-      <Dropdown
-        {...this.getDropdownProps()}
-        selectedItem={this.state.selectedItem}
-      >
+      <Dropdown {...this.getDropdownProps()} className={componentClassName}>
         {dropdownProps => (
           <Dropdown.Card>
-            <HeaderUI>
+            <HeaderUI className="c-ComboBoxHeader">
               <InputUI
-                placeholder="Search"
-                size="xssm"
-                autoFocus
+                {...inputProps}
                 onChange={this.onInputChange}
-                value={this.state.inputValue}
                 onKeyDown={this.handleOnKeyDown}
+                value={this.state.inputValue}
               />
             </HeaderUI>
-            <MenuUI>
+            <MenuUI className="c-ComboBoxMenu">
               {this.renderMenuStart()}
               {this.renderItems(dropdownProps)}
               {this.renderMenuEnd()}

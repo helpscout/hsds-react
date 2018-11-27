@@ -95,20 +95,6 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
-  // closeOnLastTab = () => {
-  //   const { activeIndex, closeDropdown, isOpen, items } = this.props
-  //   // This has been tested
-  //   /* istanbul ignore if */
-  //   if (!isOpen) return
-
-  //   const isLastItem = parseInt(activeIndex, 10) === items.length - 1
-
-  //   /* istanbul ignore else */
-  //   if (isLastItem) {
-  //     closeDropdown()
-  //   }
-  // }
-
   /* istanbul ignore next */
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
