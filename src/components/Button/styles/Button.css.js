@@ -145,7 +145,7 @@ export const config = {
       padding: 20,
     },
     md: {
-      fontSize: 14,
+      fontSize: 13,
       height: 35,
       minWidth: 'initial',
       padding: 15,
