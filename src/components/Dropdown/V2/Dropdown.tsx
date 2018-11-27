@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
-import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import { initialState } from './Dropdown.store'
 import { DropdownProps } from './Dropdown.types'
 import propConnect from '../../PropProvider/propConnect'
@@ -29,10 +28,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     setMenuNode: noop,
     setTriggerNode: noop,
     triggerRef: noop,
-  }
-
-  static childContextTypes = {
-    getState: noop,
   }
 
   node: HTMLElement
@@ -173,4 +168,4 @@ const ConnectedDropdown: any = connect(
   PropConnectedComponent
 )
 
-export default renderSpy({ id: 'Dropdown' })(ConnectedDropdown)
+export default ConnectedDropdown

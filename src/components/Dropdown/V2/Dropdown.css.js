@@ -53,6 +53,13 @@ export const MenuUI = styled('div')`
   ${baseStyles};
   padding: 8px 0;
   width: 100%;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
 `
 
 MenuUI.defaultProps = {
@@ -121,6 +128,7 @@ export const ItemUI = styled('div')`
   ${baseStyles};
   background-color: ${rgba(getColor('grey.400'), 0)};
   border-radius: 0 !important;
+  color: ${getColor('charcoal.400')};
   cursor: pointer;
   display: block;
   outline: none;

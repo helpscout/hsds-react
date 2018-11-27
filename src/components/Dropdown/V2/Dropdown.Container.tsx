@@ -67,6 +67,8 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     const id = props.id || uniqueID()
     const menuId = pathResolve(id, 'menu')
     const triggerId = pathResolve(id, 'trigger')
+
+    // Define the initial state for the store
     const initialState = {
       ...this.props,
       envNode: getDocumentFromComponent(this),
@@ -94,15 +96,23 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
   componentWillReceiveProps(nextProps) {
     const state = this.store.getState()
+
+    // Update items + regenerate the indexMap if items chage
     if (nextProps.items !== this.props.items) {
       this.rehydrateStoreWithProps({
         items: nextProps.items,
         indexMap: getIndexMapFromItems(nextProps.items),
       })
     }
+
+    // Adjust open state, if changed
     if (nextProps.isOpen !== this.props.isOpen) {
       this.rehydrateStoreWithProps({ isOpen: nextProps.isOpen })
     }
+
+    // This is to handle filterable dropdowns. We need to adjust the internally
+    // tracked inputValue and reset the `index` value for a filterable
+    // experience.
     if (nextProps.inputValue !== this.props.inputValue) {
       this.rehydrateStoreWithProps({
         previousIndex: state.index,

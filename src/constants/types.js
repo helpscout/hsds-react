@@ -25,6 +25,8 @@ export type UIStatus =
 | null
 
 export type UISize =
+| 'xs'
+| 'xssm'
 | 'sm'
 | 'md'
 | 'lg'

@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
 import propConnect from '../../PropProvider/propConnect'
-import renderSpy from '@helpscout/react-utils/dist/renderSpy'
-import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
+import { MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
@@ -44,16 +43,14 @@ export class Menu extends React.PureComponent<Props> {
     )
 
     return (
-      <MenuWrapperUI className="c-DropdownV2Block">
-        <MenuUI
-          {...rest}
-          className={componentClassName}
-          innerRef={innerRef}
-          style={this.getStyles()}
-        >
-          {children}
-        </MenuUI>
-      </MenuWrapperUI>
+      <MenuUI
+        {...rest}
+        className={componentClassName}
+        innerRef={innerRef}
+        style={this.getStyles()}
+      >
+        {children}
+      </MenuUI>
     )
   }
 
@@ -85,4 +82,4 @@ const ConnectedMenu: any = connect(
   PropConnectedComponent
 )
 
-export default renderSpy({ id: 'Dropdown.Menu' })(ConnectedMenu)
+export default ConnectedMenu

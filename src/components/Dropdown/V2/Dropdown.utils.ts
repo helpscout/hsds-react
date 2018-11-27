@@ -186,6 +186,18 @@ export const flattenGroupedItems = (items: Array<any>): Array<any> => {
   }, [])
 }
 
+export const isItemsEmpty = (items: Array<any>): boolean => {
+  let collection = items
+
+  if (hasGroups(items)) {
+    collection = flattenGroupedItems(items).filter(
+      item => item.type !== 'group'
+    )
+  }
+
+  return collection.length === 0
+}
+
 export const filterGroupHeaderFromItems = (item: any): boolean => {
   return !(item && item.type && item.type === 'group')
 }

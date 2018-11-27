@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
-import renderSpy from '@helpscout/react-utils/dist/renderSpy'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import EventListener from '../../EventListener'
@@ -410,6 +409,4 @@ const ConnectedMenuContainer: any = connect(
   PropConnectedComponent
 )
 
-export default renderSpy({ id: 'Dropdown.MenuContainer' })(
-  ConnectedMenuContainer
-)
+export default ConnectedMenuContainer
