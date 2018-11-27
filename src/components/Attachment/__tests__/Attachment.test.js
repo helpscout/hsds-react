@@ -22,7 +22,7 @@ describe('ClassName', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = shallow(<Attachment className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.hasClass(customClass)).toBeTruthy()
   })
 })
 
@@ -82,9 +82,8 @@ describe('Size', () => {
   test('Renders if size is provided', () => {
     const size = '5KB'
     const wrapper = mount(<Attachment size={size} />)
-    const o = wrapper.find(ui.size)
+    const o = wrapper.find(`span${ui.size}`)
 
-    expect(o.length).toBe(1)
     expect(o.text()).toBe(size)
   })
 })
@@ -95,7 +94,7 @@ describe('TruncateLimit', () => {
     const wrapper = mount(
       <Attachment truncateLimit={10} name="mr-mr-mr-mugatu.png" />
     )
-    const o = wrapper.find(ui.name)
+    const o = wrapper.find(`span${ui.name}`)
     const t = o.text()
 
     expect(t).not.toBe(name)
@@ -108,7 +107,7 @@ describe('TruncateLimit', () => {
     const wrapper = mount(
       <Attachment truncateLimit={100} name="mr-mr-mr-mugatu.png" />
     )
-    const o = wrapper.find(ui.name)
+    const o = wrapper.find(`span${ui.name}`)
     const t = o.text()
 
     expect(t).toBe(name)
@@ -133,7 +132,7 @@ describe('Theme', () => {
         <Attachment type="action" />
       </Provider>
     )
-    const o = wrapper.find(Attachment)
+    const o = wrapper.find('a.c-Attachment')
 
     expect(o.length).toBe(1)
     expect(o.hasClass('is-theme-default')).toBeTruthy()
@@ -145,7 +144,7 @@ describe('Theme', () => {
         <Attachment type="action" />
       </Provider>
     )
-    const o = wrapper.find(Attachment)
+    const o = wrapper.find('a.c-Attachment')
 
     expect(o.length).toBe(1)
     expect(o.hasClass('is-theme-preview')).toBeTruthy()
@@ -155,8 +154,9 @@ describe('Theme', () => {
 describe('Image', () => {
   test('Adds image className if image is provided', () => {
     const wrapper = mount(<Attachment imageUrl="image.png" />)
+    const o = wrapper.find('a.c-Attachment')
 
-    expect(wrapper.hasClass('has-image')).toBeTruthy()
+    expect(o.hasClass('has-image')).toBeTruthy()
   })
 })
 
@@ -189,7 +189,7 @@ describe('Content', () => {
 describe('CloseButton', () => {
   test('Does not render by default', () => {
     const wrapper = mount(<Attachment imageUrl="image.png" />)
-    const o = wrapper.find(ui.closeButton)
+    const o = wrapper.find(`button${ui.closeButton}`)
 
     expect(o.length).toBe(0)
   })
@@ -200,7 +200,7 @@ describe('CloseButton', () => {
         <Attachment imageUrl="image.png" />
       </Provider>
     )
-    const o = wrapper.find(ui.closeButton)
+    const o = wrapper.find(`button${ui.closeButton}`)
 
     expect(o.length).toBe(1)
   })
@@ -212,7 +212,7 @@ describe('CloseButton', () => {
         <Attachment imageUrl="image.png" onRemoveClick={spy} id="1" />
       </Provider>
     )
-    const o = wrapper.find(ui.closeButton)
+    const o = wrapper.find(`button${ui.closeButton}`)
 
     o.simulate('click')
 

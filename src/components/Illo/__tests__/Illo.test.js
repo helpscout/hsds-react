@@ -6,7 +6,7 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Illo name="chatListBlankSlate" />)
 
-    expect(wrapper.hasClass('c-Illo')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-Illo')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
@@ -15,7 +15,7 @@ describe('ClassName', () => {
       <Illo name="chatListBlankSlate" className={className} />
     )
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -24,7 +24,7 @@ describe('Color', () => {
     const wrapper = mount(<Illo name="tick" size="40" color="red" />)
     const el = wrapper.find('span').first()
 
-    expect(wrapper.hasClass('has-color')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('has-color')).toBe(true)
     expect(el.prop('style').color).toContain('red')
   })
 
@@ -34,7 +34,9 @@ describe('Color', () => {
     )
     const el = wrapper.find('span').first()
 
-    expect(wrapper.hasClass('has-colorSecondary')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('has-colorSecondary')).toBe(
+      true
+    )
     expect(el.prop('style').color).toContain('red')
   })
 })
@@ -43,6 +45,6 @@ describe('Sizes', () => {
   test('Add sizing styles if applied', () => {
     const wrapper = mount(<Illo name="chatListBlankSlate" size="40" />)
 
-    expect(wrapper.hasClass('is-40')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-40')).toBe(true)
   })
 })

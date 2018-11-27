@@ -29,7 +29,7 @@ describe('ClassNames', () => {
     const wrapper = mount(<Message className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -64,7 +64,7 @@ describe('Avatar', () => {
     const a = <Avatar name="Mugatu" />
     const wrapper = mount(<Message className="mugatu" from avatar={a} />)
 
-    expect(wrapper.hasClass('has-avatar')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('has-avatar')).toBeTruthy()
   })
 })
 
@@ -133,13 +133,13 @@ describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
     const wrapper = mount(<Message from />)
 
-    expect(wrapper.hasClass('is-from')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
     const wrapper = mount(<Message to />)
 
-    expect(wrapper.hasClass('is-to')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-to')).toBeTruthy()
   })
 })
 
@@ -164,7 +164,7 @@ describe('Context', () => {
         </Message.Provider>
       )
 
-      const o = wrapper.find(ui.avatar)
+      const o = wrapper.find(ui.avatar).first()
 
       expect(o.length).toBe(1)
     })

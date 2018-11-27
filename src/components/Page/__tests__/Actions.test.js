@@ -6,14 +6,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Actions />)
 
-    expect(wrapper.hasClass('c-PageActions')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-PageActions')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
     const wrapper = mount(<Actions className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -29,14 +29,14 @@ describe('Direction', () => {
   test('Renders right-aligned, by default', () => {
     const wrapper = mount(<Actions />)
 
-    expect(wrapper.hasClass('is-right')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-right')).toBe(true)
   })
 
   test('Can render left-aligned, if specified', () => {
     const wrapper = mount(<Actions direction="left" />)
 
-    expect(wrapper.hasClass('is-right')).toBe(false)
-    expect(wrapper.hasClass('is-left')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-right')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-left')).toBe(true)
   })
 })
 
@@ -45,7 +45,7 @@ describe('Slots', () => {
     const wrapper = mount(<Actions primary={<button />} />)
 
     expect(wrapper.find('button').length).toBe(1)
-    expect(wrapper.hasClass('withPrimary')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('withPrimary')).toBe(true)
   })
 
   test('Can render in secondary slot', () => {
@@ -58,8 +58,8 @@ describe('Slots', () => {
 
     expect(wrapper.find('#primary').length).toBe(1)
     expect(wrapper.find('#secondary').length).toBe(1)
-    expect(wrapper.hasClass('withPrimary')).toBe(true)
-    expect(wrapper.hasClass('withSecondary')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('withPrimary')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('withSecondary')).toBe(true)
   })
 
   test('Can render in serious slot', () => {
@@ -74,8 +74,8 @@ describe('Slots', () => {
     expect(wrapper.find('#primary').length).toBe(1)
     expect(wrapper.find('#secondary').length).toBe(1)
     expect(wrapper.find('#serious').length).toBe(1)
-    expect(wrapper.hasClass('withPrimary')).toBe(true)
-    expect(wrapper.hasClass('withSecondary')).toBe(true)
-    expect(wrapper.hasClass('withSerious')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('withPrimary')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('withSecondary')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('withSerious')).toBe(true)
   })
 })

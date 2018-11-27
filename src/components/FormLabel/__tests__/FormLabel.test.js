@@ -7,14 +7,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<FormLabel />)
 
-    expect(wrapper.hasClass('c-FormLabel')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-FormLabel')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
     const wrapper = mount(<FormLabel className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 

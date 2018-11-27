@@ -20,8 +20,8 @@ test('Renders fixture data into Blue component', () => {
     </Card>
   )
 
-  const name = wrapper.find('.name')
-  const message = wrapper.find('.message')
+  const name = wrapper.find('.name').first()
+  const message = wrapper.find('.message').first()
 
   expect(wrapper.props().id).toBe(fixture.id)
   expect(name.props().children).toContain(fixture.name)

@@ -5,8 +5,9 @@ import ArticleCard from '../ArticleCard'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<ArticleCard />)
+    const o = wrapper.find('div.c-Card')
 
-    expect(wrapper.hasClass('c-Card')).toBe(true)
+    expect(o.hasClass('c-Card')).toBe(true)
   })
 
   test('Accepts custom className', () => {

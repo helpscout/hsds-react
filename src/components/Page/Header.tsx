@@ -47,9 +47,7 @@ class Header extends React.PureComponent<Props> {
 
     const titleMarkup = title && (
       <TitleUI className="c-PageHeader__title">
-        <Heading className="c-PageHeader__titleHeading">
-          {title}
-        </Heading>
+        <Heading className="c-PageHeader__titleHeading">{title}</Heading>
       </TitleUI>
     )
     const subtitleMarkup = subtitle && (

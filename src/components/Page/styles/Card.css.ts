@@ -44,19 +44,19 @@ export const CardUI = styled('section')`
   }
 
   ${breakpoint(
-  PageConfig.breakpoint.widescreen,
-  `
+    PageConfig.breakpoint.widescreen,
+    `
       padding: ${config.padding.widescreen};
     `
-)};
+  )};
 
   &.is-responsive {
     ${breakpoint(
-  PageConfig.breakpoint.superWidescreen,
-  `
+      PageConfig.breakpoint.superWidescreen,
+      `
         flex-direction: ${config.flexDirection.superWidescreen};
       `
-)};
+    )};
   }
 `
 

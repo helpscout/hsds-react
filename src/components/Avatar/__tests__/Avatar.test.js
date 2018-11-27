@@ -15,42 +15,42 @@ const ui = {
 describe('Name', () => {
   test('Uses the `initials` attribute if specified', () => {
     const wrapper = mount(<Avatar name="Ron Burgandy" initials="XY" />)
-    const title = wrapper.find(ui.initials)
+    const title = wrapper.find(`div${ui.initials}`)
 
     expect(title.text()).toBe('XY')
   })
 
   test('Initializes first/last name to two letters', () => {
     const wrapper = mount(<Avatar name="Ron Burgandy" />)
-    const title = wrapper.find(ui.initials)
+    const title = wrapper.find(`div${ui.initials}`)
 
     expect(title.text()).toBe('RB')
   })
 
   test('Initializes multi-word names to two letters', () => {
     const wrapper = mount(<Avatar name="Buddy the Elf" />)
-    const title = wrapper.find(ui.initials)
+    const title = wrapper.find(`div${ui.initials}`)
 
     expect(title.text()).toBe('BE')
   })
 
   test('Initializes single names to one letters', () => {
     const wrapper = mount(<Avatar name="Buddy" />)
-    const title = wrapper.find(ui.initials)
+    const title = wrapper.find(`div${ui.initials}`)
 
     expect(title.text()).toBe('B')
   })
 
   test('Can be overridden by count prop', () => {
     const wrapper = mount(<Avatar name="Buddy" count="Elf" />)
-    const title = wrapper.find(ui.initials)
+    const title = wrapper.find(`div${ui.initials}`)
 
     expect(title.text()).toBe('Elf')
   })
 
   test('Sets `title` attribute to the `name`', () => {
     const wrapper = mount(<Avatar name="Bobby McGee" />)
-    const root = wrapper.find(ui.root)
+    const root = wrapper.find(`div${ui.root}`)
     expect(root.prop('title')).toBe('Bobby McGee')
   })
 })
@@ -58,14 +58,14 @@ describe('Name', () => {
 describe('Image', () => {
   test('Has the correct className', () => {
     const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
-    const image = wrapper.find(ui.image)
+    const image = wrapper.find(`div${ui.image}`)
 
     expect(image.exists()).toBeTruthy()
   })
 
   test('Background is currentColor to prevent flash of color before image loads', () => {
     const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
-    const crop = wrapper.find(ui.crop)
+    const crop = wrapper.find(`div${ui.crop}`)
 
     expect(crop.exists()).toBeTruthy()
     expect(crop.prop('style').backgroundColor).toEqual('currentColor')
@@ -74,7 +74,7 @@ describe('Image', () => {
   test('Do not render image if image prop is specified but image is loading', () => {
     const src = 'buddy.jpg'
     const wrapper = mount(<Avatar name="Buddy the Elf" image={src} />)
-    const image = wrapper.find(ui.image)
+    const image = wrapper.find(`div${ui.image}`)
 
     expect(image.exists()).toBeTruthy()
     expect(image.prop('style')).toBe(null) // Style prop does not get set.
@@ -83,18 +83,21 @@ describe('Image', () => {
   test('Render image if image prop is specified and image has finished loading', () => {
     const src = 'buddy.jpg'
     const wrapper = mount(<Avatar name="Buddy the Elf" image={src} />)
-    const image = wrapper.find(ui.image)
+
     wrapper
       .find('img')
       .first()
       .simulate('load')
+
+    const image = wrapper.find(`div${ui.image}`)
+
     expect(image.prop('style').backgroundImage).toContain(src)
   })
 
   test('Rendered image should have name within', () => {
     const name = 'Buddy the Elf'
     const wrapper = mount(<Avatar name={name} image="buddy.jpg" />)
-    const image = wrapper.find(ui.image)
+    const image = wrapper.find(`div${ui.image}`)
 
     expect(image.text()).toBe(name)
   })
@@ -113,8 +116,8 @@ describe('Image', () => {
       .first()
       .simulate('error')
 
-    const initials = wrapper.find(ui.initials)
-    const image = wrapper.find(ui.image)
+    const initials = wrapper.find(`div${ui.initials}`)
+    const image = wrapper.find(`div${ui.image}`)
 
     expect(initials.exists()).toBeTruthy()
     expect(image.exists()).toBeFalsy()
@@ -127,14 +130,14 @@ describe('Image', () => {
       .first()
       .simulate('error')
 
-    const crop = wrapper.find(ui.crop)
+    const crop = wrapper.find(`div${ui.crop}`)
 
     expect(crop.prop('style')).toBe(null)
   })
 
   test('Sets `title` attribute to the `name`', () => {
     const wrapper = mount(<Avatar name="Bobby McGee" />)
-    const root = wrapper.find(ui.root)
+    const root = wrapper.find(`div${ui.root}`)
     expect(root.prop('title')).toBe('Bobby McGee')
   })
 })
@@ -157,7 +160,7 @@ describe('ClassNames', () => {
 describe('Border color', () => {
   test('Can apply borderColor', () => {
     const wrapper = mount(<Avatar name="Buddy" borderColor="green" />)
-    const crop = wrapper.find(ui.cropBorder)
+    const crop = wrapper.find(`div${ui.cropBorder}`)
     const style = crop.props().style
 
     expect(style).toBeTruthy()
@@ -166,7 +169,7 @@ describe('Border color', () => {
 
   test('Does not have a border by default', () => {
     const wrapper = mount(<Avatar name="Buddy" />)
-    const crop = wrapper.find(ui.cropBorder)
+    const crop = wrapper.find(`div${ui.cropBorder}`)
     const style = crop.props().style
 
     expect(style.borderColor).toBe('transparent')
@@ -174,15 +177,16 @@ describe('Border color', () => {
 
   test('CropBorder UI renders Avatar shape', () => {
     const wrapper = mount(<Avatar name="Buddy" outerBorderColor="green" />)
-    const el = wrapper.find(ui.cropBorder)
+    const el = wrapper.find(`div${ui.cropBorder}`)
 
     expect(el.props().className).toContain(wrapper.prop('shape'))
   })
 
   test('Adds a style class to the component', () => {
     const wrapper = mount(<Avatar name="Buddy" borderColor="red" />)
+    const o = wrapper.find('div.c-Avatar')
 
-    expect(wrapper.hasClass('has-borderColor')).toBeTruthy()
+    expect(o.hasClass('has-borderColor')).toBeTruthy()
   })
 
   test('Does not pass borderColor as outerBorderColor to StatusDot, by default', () => {
@@ -212,7 +216,7 @@ describe('Border color', () => {
 describe('Outer border color', () => {
   test('Does not apply outerBorderColor by default', () => {
     const wrapper = mount(<Avatar name="Buddy" />)
-    const el = wrapper.find(ui.outerBorder)
+    const el = wrapper.find(`div${ui.outerBorder}`)
     const style = el.props().style
 
     expect(style.borderColor).toBe('transparent')
@@ -220,7 +224,7 @@ describe('Outer border color', () => {
 
   test('Can apply outerBorderColor', () => {
     const wrapper = mount(<Avatar name="Buddy" outerBorderColor="green" />)
-    const el = wrapper.find(ui.outerBorder)
+    const el = wrapper.find(`div${ui.outerBorder}`)
     const style = el.props().style
 
     expect(style.borderColor).toContain('green')
@@ -229,15 +233,16 @@ describe('Outer border color', () => {
 
   test('OuterBorder UI renders Avatar shape', () => {
     const wrapper = mount(<Avatar name="Buddy" outerBorderColor="green" />)
-    const el = wrapper.find(ui.outerBorder)
+    const el = wrapper.find(`div${ui.outerBorder}`)
 
     expect(el.props().className).toContain(wrapper.prop('shape'))
   })
 
   test('Adds a style class to the component', () => {
     const wrapper = mount(<Avatar name="Buddy" outerBorderColor="red" />)
+    const o = wrapper.find('div.c-Avatar')
 
-    expect(wrapper.hasClass('has-outerBorderColor')).toBeTruthy()
+    expect(o.hasClass('has-outerBorderColor')).toBeTruthy()
   })
 })
 
@@ -246,8 +251,8 @@ describe('Size', () => {
     const sm = mount(<Avatar name="Buddy" size="sm" />)
     const lg = mount(<Avatar name="Buddy" size="lg" />)
 
-    expect(sm.hasClass('is-sm')).toBe(true)
-    expect(lg.hasClass('is-lg')).toBe(true)
+    expect(sm.find('div.c-Avatar').hasClass('is-sm')).toBe(true)
+    expect(lg.find('div.c-Avatar').hasClass('is-lg')).toBe(true)
   })
 })
 
@@ -261,7 +266,7 @@ describe('StatusDot', () => {
 
   test('Renders a StatusDot if status is defined', () => {
     const wrapper = mount(<Avatar status="online" />)
-    const statusMarkup = wrapper.find('.c-Avatar__status')
+    const statusMarkup = wrapper.find('div.c-Avatar__status')
     const o = statusMarkup.find(StatusDot)
 
     expect(wrapper.hasClass('is-online'))

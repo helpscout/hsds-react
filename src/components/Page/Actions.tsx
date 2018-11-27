@@ -3,11 +3,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import {
-  ActionsUI,
-  ActionsBlockUI,
-  ActionsItemUI,
-} from './styles/Actions.css'
+import { ActionsUI, ActionsBlockUI, ActionsItemUI } from './styles/Actions.css'
 import { COMPONENT_KEY } from './utils'
 
 export interface Props {
@@ -43,7 +39,11 @@ class Actions extends React.PureComponent<Props> {
     )
 
     return (
-      <ActionsUI {...getValidProps(rest)} className={componentClassName} role="toolbar">
+      <ActionsUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        role="toolbar"
+      >
         <ActionsItemUI className="c-PageActions__primary">
           {primary}
         </ActionsItemUI>

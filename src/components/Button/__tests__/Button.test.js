@@ -12,7 +12,8 @@ const wrap = (...args) =>
 describe('ClassNames', () => {
   test('Accepts custom className', () => {
     const wrapper = wrap(<Button className="foo bar baz">Click Me</Button>)
-    const classNames = wrapper.prop('className')
+    const el = wrapper.find('button.c-Button')
+    const classNames = el.prop('className')
 
     expect(classNames).toContain('c-Button')
     expect(classNames).toContain('foo')
@@ -177,7 +178,7 @@ describe('RouteWrapper', () => {
   test('`to` router navigation is skipped on ctrl+click', done => {
     const route = '/some/route/'
     const wrapper = wrap(<Button to={route}>Gator</Button>, options)
-    expect(wrapper.getNode().type).toBe('button')
+    expect(wrapper.getElement().type).toBe('button')
     clickEvent.ctrlKey = true
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).not.toHaveBeenCalled()
@@ -190,7 +191,7 @@ describe('RouteWrapper', () => {
   test('`to` router navigation is skipped on cmd+click', done => {
     const route = '/some/route/'
     const wrapper = wrap(<Button to={route}>Gator</Button>, options)
-    expect(wrapper.getNode().type).toBe('button')
+    expect(wrapper.getElement().type).toBe('button')
     clickEvent.metaKey = true
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).not.toHaveBeenCalled()
@@ -209,7 +210,7 @@ describe('RouteWrapper', () => {
       </Button>,
       options
     )
-    expect(wrapper.getNode().type).toBe('button')
+    expect(wrapper.getElement().type).toBe('button')
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()
     setTimeout(() => {

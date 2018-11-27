@@ -27,12 +27,12 @@ export const HeaderUI = styled('header')`
 
   &.is-responsive {
     ${breakpoint(
-  PageConfig.breakpoint.superWidescreen,
-  `
+      PageConfig.breakpoint.superWidescreen,
+      `
         border-bottom: none;
         width: ${config.width.superWidescreen};
       `
-)};
+    )};
   }
 `
 export const TitleUI = styled('div')`

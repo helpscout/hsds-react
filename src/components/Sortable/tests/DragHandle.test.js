@@ -1,18 +1,20 @@
 import React from 'react'
+import { mount } from 'enzyme'
 import DragHandle from '../DragHandle'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-SortableDragHandle',
-  skipChildrenTest: true,
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<DragHandle />)
 
-baseComponentTest(DragHandle, baseComponentOptions)
+    expect(
+      wrapper.getDOMNode().classList.contains('c-SortableDragHandle')
+    ).toBe(true)
+  })
 
-describe('Sortable', () => {
-  test('Uses SortableHandle HOC', () => {
-    const wrapper = <DragHandle />
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<DragHandle className={customClass} />)
 
-    expect(wrapper.type.displayName.toLowerCase()).toContain('sortablehandle')
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
   })
 })

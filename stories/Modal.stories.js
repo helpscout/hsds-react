@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { storiesOf } from '@storybook/react'
 import {
   Button,
-  EmojiPicker,
   FormLabel,
   Heading,
   Modal,
@@ -13,9 +12,11 @@ import {
   Switch,
   Toolbar,
 } from '../src/index.js'
+import { FrameProvider } from '../src/components/styled'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
+import Frame from 'react-frame-component'
 
 const stories = storiesOf('Modal', module)
 
@@ -241,7 +242,9 @@ stories.add('custom close trigger', () => {
 stories.add('seamless', () => (
   <Modal trigger={<Link>Clicky</Link>} seamless isOpen>
     <Modal.Content>
-      <EmojiPicker />
+      {ContentSpec.generate(8).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
     </Modal.Content>
   </Modal>
 ))
@@ -429,7 +432,8 @@ stories.add('tabbing', () => (
 
 class HSAppExample extends React.Component {
   state = {
-    hsApp: false,
+    hsApp: true,
+    isOpen: false,
   }
 
   toggle = () => {
@@ -438,24 +442,57 @@ class HSAppExample extends React.Component {
     })
   }
 
+  toggleModal = () => {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    })
+  }
+
+  closeModal = () => {
+    this.setState({
+      isOpen: false,
+    })
+  }
+
   render() {
     const app = this.state.hsApp ? 'hs-app' : 'blue'
     return (
-      <PropProvider app={app}>
-        <Modal isOpen trigger={<Link>Clicky</Link>}>
-          <Modal.Content>
-            <Modal.Body>
-              <Heading>Title</Heading>
-              <FormLabel label="See HS App styles">
-                <Switch checked={this.state.hsApp} onChange={this.toggle} />
-              </FormLabel>
-              {ContentSpec.generate(12).map(({ id, content }) => (
-                <p key={id}>{content}</p>
-              ))}
-            </Modal.Body>
-          </Modal.Content>
-        </Modal>
-      </PropProvider>
+      <div>
+        <button onClick={this.toggleModal}>Toggle Modal</button>
+        {this.state.isOpen && (
+          <Frame
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              border: 'none',
+            }}
+          >
+            <FrameProvider>
+              <PropProvider app={app}>
+                <Modal isOpen onClose={this.closeModal}>
+                  <Modal.Content>
+                    <Modal.Body>
+                      <Heading>Title</Heading>
+                      <FormLabel label="See HS App styles">
+                        <Switch
+                          checked={this.state.hsApp}
+                          onChange={this.toggle}
+                        />
+                      </FormLabel>
+                      {ContentSpec.generate(12).map(({ id, content }) => (
+                        <p key={id}>{content}</p>
+                      ))}
+                    </Modal.Body>
+                  </Modal.Content>
+                </Modal>
+              </PropProvider>
+            </FrameProvider>
+          </Frame>
+        )}
+      </div>
     )
   }
 }

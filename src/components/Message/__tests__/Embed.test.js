@@ -17,28 +17,28 @@ describe('ClassNames', () => {
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Embed className="mugatu" />)
-    const o = wrapper.find(`.${cx}`)
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    const o = wrapper.find(`.${cx}`).first()
+    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 
   test('Does not have an is-loading className when there is no iframe inside the HTML', () => {
     const wrapper = mount(<Embed html="<div></div>" />)
-    const o = wrapper.find(`.${cx}`)
-    expect(o.hasClass('is-loading')).toBeFalsy()
+    const o = wrapper.find(`.${cx}`).first()
+    expect(o.getDOMNode().classList.contains('is-loading')).toBeFalsy()
   })
 
   test('Has an is-loading className when there is an iframe inside the HTML', () => {
     const wrapper = mount(<Embed html={html} />)
-    const o = wrapper.find(`.${cx}`)
-    expect(o.hasClass('is-loading')).toBeTruthy()
+    const o = wrapper.find(`.${cx}`).first()
+    expect(o.getDOMNode().classList.contains('is-loading')).toBeTruthy()
   })
 })
 
 describe('Context', () => {
   test('Should not have a theme className by default', () => {
     const wrapper = mount(<Embed />)
-    const o = wrapper.find(`.${cx}`)
-    expect(o.props().className).not.toContain('is-theme')
+    const o = wrapper.find(`.${cx}`).first()
+    expect(o.getDOMNode().classList.contains('is-theme-embed')).toBe(false)
   })
 
   test('Adds className based on context.theme', () => {
@@ -47,15 +47,15 @@ describe('Context', () => {
         <Embed />
       </Message.Provider>
     )
-    const o = wrapper.find(`.${cx}`)
-    expect(o.props().className).toContain('is-theme-embed')
+    const o = wrapper.find(`.${cx}`).first()
+    expect(o.getDOMNode().classList.contains('is-theme-embed')).toBe(true)
   })
 })
 
 describe('Content', () => {
   test('Renders html inside component', () => {
     const wrapper = mount(<Embed html={html} />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(`.${cx}`).first()
     expect(o.html()).toContain(html)
   })
 

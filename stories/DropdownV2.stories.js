@@ -15,10 +15,12 @@ stories.addDecorator(storyFn => (
     name="dropdown-v2"
     withCenterGuides={false}
     showInterface={false}
-    artboardWidth={800}
-    artboardHeight={600}
+    artboardWidth={480}
+    artboardHeight={300}
   >
-    <Provider store={store}>{storyFn()}</Provider>
+    <Provider store={store}>
+      <div style={{ width: 450, height: 270 }}>{storyFn()}</div>
+    </Provider>
   </Artboard>
 ))
 

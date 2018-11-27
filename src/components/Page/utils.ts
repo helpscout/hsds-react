@@ -11,5 +11,5 @@ export const COMPONENT_KEY: {
   Card: 'PageCard',
   Content: 'PageContent',
   Header: 'PageHeader',
-  Heading: 'PageHeading'
+  Heading: 'PageHeading',
 }

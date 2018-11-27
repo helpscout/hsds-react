@@ -27,7 +27,7 @@ Styles (spacing and font sizes) are handled specifically for use within Pages.
 
 ## Props
 
-| Prop             | Type      | Description                                         |
-| ---------------- | --------- | --------------------------------------------------- |
-| className        | `string`  | Custom class names to be added to the component.    |
-| secondary     | `boolean` | Signals a secondary (h2) heading. Default `false`.         |
+| Prop      | Type      | Description                                        |
+| --------- | --------- | -------------------------------------------------- |
+| className | `string`  | Custom class names to be added to the component.   |
+| secondary | `boolean` | Signals a secondary (h2) heading. Default `false`. |

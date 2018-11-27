@@ -200,7 +200,7 @@ describe('Events', () => {
 describe('Label', () => {
   test('Adds label if specified', () => {
     const wrapper = mount(<Select label="Channel" />)
-    const label = wrapper.find(ui.label)
+    const label = wrapper.find(ui.label).first()
 
     expect(label.exists()).toBeTruthy()
     expect(label.text()).toBe('Channel')
@@ -209,7 +209,10 @@ describe('Label', () => {
   test('Sets ID on the select element', () => {
     const id = 'channel'
     const wrapper = mount(<Select label="Channel" id={id} />)
-    const label = wrapper.find(ui.label)
+    const label = wrapper
+      .find(ui.label)
+      .first()
+      .find('label')
     const select = wrapper.find('select')
 
     expect(label.text()).toBe('Channel')
@@ -248,7 +251,7 @@ describe('HelpText', () => {
 
   test('Adds helpText if specified', () => {
     const wrapper = mount(<Select helpText="Help text" />)
-    const o = wrapper.find(ui.helpText)
+    const o = wrapper.find(ui.helpText).first()
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Help text')
   })
@@ -274,14 +277,14 @@ describe('HintText', () => {
 
   test('Adds hintText if specified', () => {
     const wrapper = mount(<Select hintText="Hint text" />)
-    const o = wrapper.find(ui.hintText)
+    const o = wrapper.find(ui.hintText).first()
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Hint text')
   })
 
   test('Does not pass state to hintText', () => {
     const wrapper = mount(<Select hintText="Hint text" state="error" />)
-    const o = wrapper.find(ui.hintText)
+    const o = wrapper.find(ui.hintText).first()
     expect(o.props().state).not.toBeTruthy()
   })
 
@@ -316,7 +319,7 @@ describe('States', () => {
     test('Adds error helper text if error prop is a string', () => {
       const message = 'Cannonballlll'
       const wrapper = mount(<Select state="error" helpText={message} />)
-      const o = wrapper.find('.c-HelpText')
+      const o = wrapper.find('.c-HelpText').first()
 
       expect(o.text()).toContain(message)
     })
@@ -333,7 +336,7 @@ describe('States', () => {
     test('Adds success helper text if success prop is a string', () => {
       const message = 'Cannonballlll'
       const wrapper = mount(<Select state="success" helpText={message} />)
-      const o = wrapper.find('.c-HelpText')
+      const o = wrapper.find('.c-HelpText').first()
 
       expect(o.text()).toContain(message)
     })
@@ -350,7 +353,7 @@ describe('States', () => {
     test('Adds warning helper text if warning prop is a string', () => {
       const message = 'Cannonballlll'
       const wrapper = mount(<Select state="warning" helpText={message} />)
-      const o = wrapper.find('.c-HelpText')
+      const o = wrapper.find('.c-HelpText').first()
 
       expect(o.text()).toContain(message)
     })
@@ -358,17 +361,26 @@ describe('States', () => {
 
   test('Updates state.state on prop change', () => {
     const wrapper = mount(<Select state="warning" />)
-    const select = wrapper.find('.c-Select')
 
     wrapper.setProps({ state: 'success' })
 
     expect(wrapper.state().state).toBe('success')
-    expect(select.hasClass('is-success')).toBe(true)
+    expect(
+      wrapper
+        .find('.c-Select')
+        .first()
+        .hasClass('is-success')
+    ).toBe(true)
 
     wrapper.setProps({ state: null })
 
     expect(wrapper.state().state).toBe(null)
-    expect(select.hasClass('is-success')).toBe(false)
+    expect(
+      wrapper
+        .find('.c-Select')
+        .first()
+        .hasClass('is-success')
+    ).toBe(false)
   })
 })
 
@@ -408,13 +420,17 @@ describe('removeStateStylesOnFocus', () => {
 
   test('Removes state style on focus, by specified', () => {
     const wrapper = mount(<Select state="error" removeStateStylesOnFocus />)
-    const select = wrapper.find('.c-Select')
     const o = wrapper.find('select')
 
     o.simulate('focus')
 
     expect(wrapper.state().state).toBeFalsy()
-    expect(select.hasClass('is-error')).toBe(false)
+    expect(
+      wrapper
+        .find('.c-Select')
+        .first()
+        .hasClass('is-error')
+    ).toBe(false)
   })
 })
 
@@ -422,14 +438,15 @@ describe('selectNode', () => {
   test('Sets selectNode on mount', () => {
     const wrapper = mount(<Select />)
 
-    expect(wrapper.getNode().selectNode).toBeTruthy()
+    expect(wrapper.instance().selectNode).toBeTruthy()
   })
 
   test('Unsets selectNode on unmount', () => {
     const wrapper = mount(<Select />)
+    const o = wrapper.instance()
     wrapper.unmount()
 
-    expect(wrapper.getNode().selectNode).not.toBeTruthy()
+    expect(o.selectNode).not.toBeTruthy()
   })
 })
 
@@ -437,7 +454,7 @@ describe('isFocused', () => {
   test('Can focus select using isFocused prop', () => {
     const spy = jest.fn()
     const wrapper = mount(<Select isFocused />)
-    const o = wrapper.getNode().selectNode
+    const o = wrapper.instance().selectNode
     o.onfocus = spy
 
     jest.runOnlyPendingTimers()
@@ -448,7 +465,7 @@ describe('isFocused', () => {
   test('Can focus select using custom timeout', () => {
     const spy = jest.fn()
     const wrapper = mount(<Select isFocused forceAutoFocusTimeout={20} />)
-    const o = wrapper.getNode().selectNode
+    const o = wrapper.instance().selectNode
     o.onfocus = spy
 
     expect(spy).not.toHaveBeenCalled()
@@ -463,7 +480,7 @@ describe('isFocused', () => {
     const wrapper = mount(
       <Select onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
     )
-    const o = wrapper.getNode().selectNode
+    const o = wrapper.instance().selectNode
     o.onfocus = spy
 
     wrapper.setProps({ isFocused: true })
@@ -475,13 +492,22 @@ describe('isFocused', () => {
 
   test('Removes focus styles on blur', () => {
     const wrapper = mount(<Select isFocused={true} />)
-    const o = wrapper.find('.c-Select')
 
-    expect(o.hasClass('is-focused')).toBe(true)
+    expect(
+      wrapper
+        .find('.c-Select')
+        .first()
+        .hasClass('is-focused')
+    ).toBe(true)
 
     wrapper.find('select').simulate('blur')
 
-    expect(o.hasClass('is-focused')).toBe(false)
+    expect(
+      wrapper
+        .find('.c-Select')
+        .first()
+        .hasClass('is-focused')
+    ).toBe(false)
   })
 })
 
@@ -490,14 +516,14 @@ describe('ErrorMessage', () => {
     const wrapper = mount(<Select state="error" />)
     const error = wrapper.find(ui.errorIcon)
 
-    expect(error.length).toBe(1)
+    expect(error.length).toBeTruthy()
   })
 
   test('Renders a Tooltip, if error', () => {
     const wrapper = mount(<Select state="error" errorMessage="Nope!" />)
     const el = wrapper.find('Tooltip')
 
-    expect(el.length).toBe(1)
+    expect(el.length).toBeTruthy()
     expect(el.props().title).toBe('Nope!')
   })
 
@@ -513,7 +539,7 @@ describe('innerRef', () => {
   test('Can retrieve innerRef DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<Select innerRef={spy} />)
-    const o = wrapper.find('select').getNode()
+    const o = wrapper.find('select').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })

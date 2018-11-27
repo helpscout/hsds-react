@@ -13,27 +13,27 @@ describe('Arrow', () => {
       const wrapper = mount(<Arrow placement="top" />)
       const el = wrapper.find('div')
 
-      expect(el.hasClass('is-top')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-top')).toBe(true)
 
       wrapper.setProps({ placement: 'bottom' })
 
-      expect(el.hasClass('is-top')).toBe(false)
-      expect(el.hasClass('is-bottom')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-top')).toBe(false)
+      expect(el.getDOMNode().classList.contains('is-bottom')).toBe(true)
     })
 
     test('Renders placement/position styles', () => {
       const wrapper = mount(<Arrow placement="top-start" />)
       const el = wrapper.find('div')
 
-      expect(el.hasClass('is-top')).toBe(true)
-      expect(el.hasClass('is-start')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-top')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-start')).toBe(true)
 
       wrapper.setProps({ placement: 'bottom-end' })
 
-      expect(el.hasClass('is-top')).toBe(false)
-      expect(el.hasClass('is-start')).toBe(false)
-      expect(el.hasClass('is-bottom')).toBe(true)
-      expect(el.hasClass('is-end')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-top')).toBe(false)
+      expect(el.getDOMNode().classList.contains('is-start')).toBe(false)
+      expect(el.getDOMNode().classList.contains('is-bottom')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-end')).toBe(true)
     })
   })
 })

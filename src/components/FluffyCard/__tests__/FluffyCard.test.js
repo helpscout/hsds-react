@@ -4,13 +4,34 @@ import { MemoryRouter } from 'react-router'
 import FluffyCard from '../FluffyCard'
 import Card from '../../Card'
 import Link from '../../Link'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-FluffyCard',
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<FluffyCard />)
 
-baseComponentTest(FluffyCard, baseComponentOptions)
+    expect(wrapper.getDOMNode().classList.contains('c-FluffyCard')).toBeTruthy()
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<FluffyCard className={customClass} />)
+
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child content', () => {
+    const wrapper = mount(
+      <FluffyCard>
+        <div className="child">Hello</div>
+      </FluffyCard>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 describe('Card', () => {
   test('Internally renders Card component', () => {
@@ -37,6 +58,8 @@ describe('textAlign', () => {
   test('Renders styles for specified textAlign', () => {
     const wrapper = mount(<FluffyCard textAlign="right" />)
 
-    expect(wrapper.hasClass('is-textAlign-right')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-textAlign-right')).toBe(
+      true
+    )
   })
 })

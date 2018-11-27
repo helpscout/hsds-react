@@ -3,7 +3,7 @@ import Heading from '../../Heading'
 
 export const config = {
   marginTop: '35px',
-  marginBottom: '27px'
+  marginBottom: '27px',
 }
 
 export const HeadingUI = styled(Heading)`

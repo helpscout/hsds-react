@@ -7,14 +7,18 @@ describe('className', () => {
   test('Has default className', () => {
     const wrapper = mount(<Paragraph />)
 
-    expect(wrapper.hasClass('c-SkeletonParagraph')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-SkeletonParagraph')
+    ).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Paragraph className="ron" />)
 
-    expect(wrapper.hasClass('c-SkeletonParagraph')).toBeTruthy()
-    expect(wrapper.hasClass('ron')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-SkeletonParagraph')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('ron')).toBeTruthy()
   })
 })
 
@@ -32,6 +36,8 @@ describe('Animations', () => {
     const wrapper = mount(<Paragraph withAnimations={false} />)
     const text = wrapper.find(Text).first()
 
-    expect(text.hasClass('is-withAnimations')).toBe(false)
+    expect(text.getDOMNode().classList.contains('is-withAnimations')).toBe(
+      false
+    )
   })
 })

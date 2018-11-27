@@ -13,7 +13,7 @@ export interface Props {
 
 class Heading extends React.PureComponent<Props> {
   static defaultProps = {
-    secondary: false
+    secondary: false,
   }
 
   render() {
@@ -26,20 +26,24 @@ class Heading extends React.PureComponent<Props> {
     )
 
     return !secondary ? (
-      <HeadingUI {...getValidProps(rest)}
+      <HeadingUI
+        {...getValidProps(rest)}
         selector="h1"
         size="md"
-        className={componentClassName}>
+        className={componentClassName}
+      >
         {children}
       </HeadingUI>
     ) : (
-        <SecondaryHeadingUI {...getValidProps(rest)}
-          selector="h2"
-          size="h4"
-          className={componentClassName}>
-          {children}
-        </SecondaryHeadingUI>
-      );
+      <SecondaryHeadingUI
+        {...getValidProps(rest)}
+        selector="h2"
+        size="h4"
+        className={componentClassName}
+      >
+        {children}
+      </SecondaryHeadingUI>
+    )
   }
 }
 namespaceComponent(COMPONENT_KEY.Heading)(Heading)

@@ -4,7 +4,7 @@ import Action from '../Action'
 import ChatBlock from '../ChatBlock'
 import Bubble from '../Bubble'
 import Message from '../Message'
-import { Animate, Flexy, Timestamp } from '../../'
+import { Flexy, Timestamp } from '../../'
 
 const cx = 'c-MessageChatBlock'
 
@@ -18,7 +18,7 @@ describe('ClassNames', () => {
   test('Accepts custom classNames', () => {
     const wrapper = mount(<ChatBlock className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -29,28 +29,20 @@ describe('Timestamp', () => {
     expect(wrapper.find(Timestamp).length).toBeTruthy()
   })
 
-  test('Renders as first child, if to props is set', () => {
-    const wrapper = mount(<ChatBlock timestamp="time" to />)
-    const f = wrapper.find(Flexy)
-
-    expect(f.children().nodes[0].props.className).toContain(`${cx}__timestamp`)
-  })
-
-  test('Renders as last child, if to props is set', () => {
+  test('Renders timestamp with from', () => {
     const wrapper = mount(<ChatBlock timestamp="time" from />)
-    const f = wrapper.find(Flexy)
 
-    expect(f.children().nodes[1].props.className).toContain(`${cx}__timestamp`)
+    expect(wrapper.find(Timestamp).length).toBeTruthy()
   })
 })
 
 describe('Content', () => {
   test('Can render children content', () => {
     const wrapper = mount(<ChatBlock>Mugatu</ChatBlock>)
-    const o = wrapper.find(`.${cx}__block`)
+    const o = wrapper.find(`.${cx}__block`).first()
 
     expect(o.length).toBeTruthy()
-    expect(o.getNode().innerHTML).toContain('Mugatu')
+    expect(o.getDOMNode().innerHTML).toContain('Mugatu')
   })
 
   test('Enhances Action child component', () => {
@@ -95,14 +87,14 @@ describe('To/From', () => {
     const wrapper = mount(<ChatBlock from />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.hasClass('is-from')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
     const wrapper = mount(<ChatBlock to />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.hasClass('is-to')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-to')).toBeTruthy()
   })
 })
 

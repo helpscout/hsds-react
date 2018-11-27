@@ -6,13 +6,19 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Heading>Heisenberg shop</Heading>)
 
-    expect(wrapper.hasClass('c-PageHeader__titleHeading')).toBe(true)
+    expect(
+      wrapper.getDOMNode().classList.contains('c-PageHeader__titleHeading')
+    ).toBe(true)
   })
 
   test('Has Secondary className', () => {
     const wrapper = mount(<Heading secondary>Beakers</Heading>)
 
-    expect(wrapper.hasClass('c-PageHeader__titleHeading--secondary')).toBe(true)
+    expect(
+      wrapper
+        .getDOMNode()
+        .classList.contains('c-PageHeader__titleHeading--secondary')
+    ).toBe(true)
   })
 
   test('Applies custom className if specified', () => {

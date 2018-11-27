@@ -25,9 +25,9 @@ describe('ClassNames', () => {
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Media className="mugatu" />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(`.${cx}`).first()
 
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -43,7 +43,7 @@ describe('Chat', () => {
     const wrapper = mount(<Media />)
     const o = wrapper.find(Chat)
 
-    expect(o.hasClass(cx)).toBeTruthy()
+    expect(o.getDOMNode().classList.contains(cx)).toBeTruthy()
   })
 
   test('Passes correct props to Chat', () => {
@@ -60,7 +60,7 @@ describe('Chat', () => {
         to
       />
     )
-    const props = wrapper.find(Chat).getNode().props
+    const props = wrapper.find(Chat).instance().props
 
     expect(props.from).toBeTruthy()
     expect(props.isNote).toBeTruthy()
@@ -284,7 +284,7 @@ describe('Error', () => {
   test('Adds error class, if error', () => {
     const wrapper = mount(<Media caption="mugatu" error />)
 
-    expect(wrapper.hasClass('is-error')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-error')).toBeTruthy()
   })
 
   test('Returns error message, if error', () => {
@@ -319,7 +319,7 @@ describe('Error', () => {
         tryAgainLabel="Try again"
       />
     )
-    const o = wrapper.find(ui.tryAgainAction)
+    const o = wrapper.find(ui.tryAgainAction).first()
 
     expect(o.length).toBe(1)
     expect(o.html()).toContain('Try again')
@@ -337,7 +337,7 @@ describe('Error', () => {
         tryAgainLabel="Try again"
       />
     )
-    const o = wrapper.find(ui.mediaImage)
+    const o = wrapper.find(ui.mediaImage).first()
     o.simulate('click')
 
     expect(spy).toHaveBeenCalled()
@@ -352,7 +352,7 @@ describe('Error', () => {
         tryAgainLabel="Try again"
       />
     )
-    const o = wrapper.find(ui.tryAgainAction)
+    const o = wrapper.find(ui.tryAgainAction).first()
 
     expect(o.length).toBe(0)
   })
@@ -368,7 +368,7 @@ describe('Error', () => {
         onErrorTryAgainClick={spy}
       />
     )
-    const o = wrapper.find(ui.tryAgainAction)
+    const o = wrapper.find(ui.tryAgainAction).first()
     const eventSpy = {
       preventDefault: jest.fn(),
       stopPropagation: jest.fn(),

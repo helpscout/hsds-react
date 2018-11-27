@@ -1,17 +1,33 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Code from '../Code'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-Code',
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<Code />)
+    const el = wrapper.find('code.c-Code')
 
-baseComponentTest(Code, baseComponentOptions)
+    expect(el.length).toBe(1)
+  })
 
-test('Renders a code selector', () => {
-  const wrapper = mount(<Code />)
-  const o = wrapper.find('code')
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<Code className={customClass} />)
+    const el = wrapper.find('code.c-Code')
 
-  expect(o.length).toBeTruthy()
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child', () => {
+    const wrapper = mount(
+      <Code>
+        <div className="child">Hello</div>
+      </Code>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
 })

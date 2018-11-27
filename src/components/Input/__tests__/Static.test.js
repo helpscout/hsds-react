@@ -6,13 +6,15 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = mount(<Static />)
 
-    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-InputStatic')
+    ).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
     const wrapper = mount(<Static className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -45,8 +47,10 @@ describe('Size', () => {
   test('Can render an additional size', () => {
     const wrapper = mount(<Static size="md" />)
 
-    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
-    expect(wrapper.hasClass('is-md')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-InputStatic')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-md')).toBeTruthy()
   })
 })
 
@@ -54,24 +58,30 @@ describe('Alignment', () => {
   test('Can be aligned left', () => {
     const wrapper = mount(<Static align="left" />)
 
-    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
-    expect(wrapper.hasClass('is-block')).toBeTruthy()
-    expect(wrapper.hasClass('is-left')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-InputStatic')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-block')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-left')).toBeTruthy()
   })
 
   test('Can be aligned center', () => {
     const wrapper = mount(<Static align="center" />)
 
-    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
-    expect(wrapper.hasClass('is-block')).toBeTruthy()
-    expect(wrapper.hasClass('is-center')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-InputStatic')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-block')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-center')).toBeTruthy()
   })
 
   test('Can be aligned right', () => {
     const wrapper = mount(<Static align="right" />)
 
-    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
-    expect(wrapper.hasClass('is-block')).toBeTruthy()
-    expect(wrapper.hasClass('is-right')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-InputStatic')
+    ).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-block')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-right')).toBeTruthy()
   })
 })

@@ -19,9 +19,9 @@ describe('ClassNames', () => {
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Content className="mugatu" />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(`.${cx}`).first()
 
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -37,12 +37,12 @@ describe('ChatBlock', () => {
     const wrapper = mount(<Content />)
     const o = wrapper.find(ChatBlock)
 
-    expect(o.hasClass(cx)).toBeTruthy()
+    expect(o.getDOMNode().classList.contains(cx)).toBeTruthy()
   })
 
   test('Passes correct props to ChatBlock', () => {
     const wrapper = mount(<Content from to read ltr rtl timestamp="time" />)
-    const props = wrapper.find(ChatBlock).getNode().props
+    const props = wrapper.find(ChatBlock).instance().props
 
     expect(props.from).toBeTruthy()
     expect(props.to).toBeTruthy()
@@ -56,38 +56,38 @@ describe('ChatBlock', () => {
 describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
     const wrapper = mount(<Content from />)
-    const o = wrapper.find(ui.content)
+    const o = wrapper.find(ui.content).first()
 
-    expect(o.hasClass('is-from')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
     const wrapper = mount(<Content to />)
-    const o = wrapper.find(ui.content)
+    const o = wrapper.find(ui.content).first()
 
-    expect(o.hasClass('is-to')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-to')).toBeTruthy()
   })
 
   test('Applies "ltr" styles, if defined', () => {
     const wrapper = mount(<Content ltr />)
-    const o = wrapper.find(ui.content)
+    const o = wrapper.find(ui.content).first()
 
-    expect(o.hasClass('is-ltr')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-ltr')).toBeTruthy()
   })
 
   test('Applies "rtl" styles, if defined', () => {
     const wrapper = mount(<Content rtl />)
-    const o = wrapper.find(ui.content)
+    const o = wrapper.find(ui.content).first()
 
-    expect(o.hasClass('is-rtl')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-rtl')).toBeTruthy()
   })
 
   test('Applies "isNote" styles, if defined', () => {
     const wrapper = mount(<Content isNote />)
-    const b = wrapper.find(ui.base)
-    const o = wrapper.find(ui.content)
+    const b = wrapper.find(ui.base).first()
+    const o = wrapper.find(ui.content).first()
 
-    expect(b.hasClass('is-note')).toBeTruthy()
-    expect(o.hasClass('is-note')).toBeTruthy()
+    expect(b.getDOMNode().classList.contains('is-note')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-note')).toBeTruthy()
   })
 })

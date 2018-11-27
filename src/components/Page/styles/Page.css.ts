@@ -22,11 +22,11 @@ export const PageUI = styled('div')`
 
   &.is-responsive {
     ${breakpoint(
-  PageConfig.breakpoint.superWidescreen,
-  `
+      PageConfig.breakpoint.superWidescreen,
+      `
       max-width: ${config.maxWidth.superWidescreen};
     `
-)};
+    )};
   }
 `
 

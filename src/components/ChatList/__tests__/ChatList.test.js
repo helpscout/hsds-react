@@ -3,13 +3,36 @@ import { mount } from 'enzyme'
 import ChatList from '../ChatList'
 import BlankSlate from '../BlankSlate'
 import Item from '../Item'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-ChatList',
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<ChatList />)
+    const el = wrapper.find('div.c-ChatList')
 
-baseComponentTest(ChatList, baseComponentOptions)
+    expect(el.length).toBe(1)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<ChatList className={customClass} />)
+    const el = wrapper.find('div.c-ChatList')
+
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child', () => {
+    const wrapper = mount(
+      <ChatList>
+        <div className="child">Hello</div>
+      </ChatList>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 describe('Items', () => {
   test('Renders BlankSlate if childless', () => {

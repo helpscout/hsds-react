@@ -2,18 +2,27 @@ import React from 'react'
 import { mount } from 'enzyme'
 import PreviewCard from '../index'
 import Context from '../Context'
-import { baseComponentTest } from '../../../tests/helpers/components'
 import { Card, Heading, Text } from '../../'
 
 const ui = {
   base: '.c-PreviewCard',
 }
 
-const baseComponentOptions = {
-  className: 'c-PreviewCard',
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<PreviewCard />)
 
-baseComponentTest(PreviewCard, baseComponentOptions)
+    expect(wrapper.getDOMNode().classList.contains('c-PreviewCard')).toBe(true)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<PreviewCard className={customClass} />)
+    const el = wrapper.find('div.c-PreviewCard')
+
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
+  })
+})
 
 describe('Card', () => {
   test('Extends Card component', () => {
@@ -37,22 +46,22 @@ describe('Title', () => {
 
   test('Renders a title, if defined', () => {
     const wrapper = mount(<PreviewCard title="Mugatu" />)
-    const o = wrapper.find(Heading)
+    const o = wrapper.find(Heading).first()
 
     expect(o.length).toBeTruthy()
     expect(o.hasClass('c-PreviewCard__title')).toBeTruthy()
-    expect(o.getNode().props.children).toBe('Mugatu')
+    expect(o.instance().props.children).toBe('Mugatu')
   })
 })
 
 describe('Text', () => {
   test('Renders children in a Text component', () => {
     const wrapper = mount(<PreviewCard title="Mugatu">Relax</PreviewCard>)
-    const o = wrapper.find(Text)
+    const o = wrapper.find(Text).first()
 
     expect(o.length).toBeTruthy()
     expect(o.hasClass('c-PreviewCard__content')).toBeTruthy()
-    expect(o.getNode().props.children).toBe('Relax')
+    expect(o.instance().props.children).toBe('Relax')
   })
 })
 
@@ -63,11 +72,13 @@ describe('Context', () => {
         <PreviewCard />
       </Context.Provider>
     )
-    const o = wrapper.find(ui.base)
+    let o = wrapper.find(ui.base).first()
 
     expect(o.hasClass('is-note')).toBe(true)
 
     wrapper.setProps({ value: { isNote: false } })
+
+    o = wrapper.find(ui.base).first()
 
     expect(o.hasClass('is-note')).toBe(false)
   })

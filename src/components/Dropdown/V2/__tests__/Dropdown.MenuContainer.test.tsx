@@ -18,15 +18,16 @@ import { MenuUI } from '../Dropdown.css.js'
 
 jest.mock('../../../../utilities/scrolling')
 jest.mock('../../../Portal', () => {
+  const Portal = props => <div>{props.children}</div>
   return {
-    default: 'Portal',
+    default: props => <Portal {...props} />,
   }
 })
 jest.mock('../Dropdown.Menu', () => {
-  const Menu = props => <MenuUI {...props} />
+  const DropdownMenu = props => <MenuUI {...props} />
   return {
     default: props => {
-      return <Menu {...props} />
+      return <DropdownMenu {...props} />
     },
   }
 })
@@ -79,7 +80,7 @@ describe('Portal', () => {
 describe('Menu', () => {
   test('Renders a Menu by default', () => {
     const wrapper = mount(<MenuContainer items={[]} isOpen />)
-    const el = wrapper.find('Menu')
+    const el = wrapper.find('DropdownMenu')
 
     expect(el.length).toBeTruthy()
   })
@@ -87,14 +88,14 @@ describe('Menu', () => {
   test('Renders a Menu within Portal', () => {
     const wrapper = mount(<MenuContainer items={[]} isOpen />)
     const portal = wrapper.find('Portal')
-    const el = portal.find('Menu')
+    const el = portal.find('DropdownMenu')
 
     expect(el.length).toBeTruthy()
   })
 
   test('Passes the id to the Menu', () => {
     const wrapper = mount(<MenuContainer items={[]} id="ron" isOpen />)
-    const el = find(wrapper, 'Menu')
+    const el = find(wrapper, 'DropdownMenu')
 
     expect(el.prop('id')).toBe('ron')
   })
@@ -113,8 +114,8 @@ describe('Item', () => {
       },
     ]
     const wrapper = mount(<MenuContainer items={items} isOpen />)
-    const menu = wrapper.find('Menu')
-    const els = menu.find('Item')
+    const menu = wrapper.find('DropdownMenu')
+    const els = menu.find('DropdownItem')
     const el = els.first()
 
     expect(els.length).toBeTruthy()
@@ -136,9 +137,9 @@ describe('Item', () => {
       },
     ]
     const wrapper = mount(<MenuContainer items={items} isOpen />)
-    const menu = wrapper.find('Menu')
+    const menu = wrapper.find('DropdownMenu')
     const subMenu = menu.last()
-    const el = subMenu.find('Item').first()
+    const el = subMenu.find('DropdownItem').first()
 
     expect(menu.length).toBeGreaterThanOrEqual(2)
 
@@ -150,14 +151,14 @@ describe('Item', () => {
 describe('Accessibility', () => {
   test('Sets activeId on Menu', () => {
     const wrapper = mount(<MenuContainer items={[]} activeId="ron" isOpen />)
-    const el = find(wrapper, 'Menu')
+    const el = find(wrapper, 'DropdownMenu')
 
     expect(el.prop('aria-activedescendant')).toBe('ron')
   })
 
   test('Sets triggerId on Menu', () => {
     const wrapper = mount(<MenuContainer items={[]} triggerId="ron" isOpen />)
-    const el = find(wrapper, 'Menu')
+    const el = find(wrapper, 'DropdownMenu')
 
     expect(el.prop('aria-labelledby')).toBe('ron')
   })
@@ -167,7 +168,7 @@ describe('renderProp', () => {
   test('Does not render Menu, if renderProp (children) is specified', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen>{spy}</MenuContainer>)
-    const menu = wrapper.find('Menu')
+    const menu = wrapper.find('DropdownMenu')
 
     expect(menu.length).toBe(0)
     expect(spy).toHaveBeenCalled()
@@ -242,7 +243,7 @@ describe('ConnectedMenuContainer', () => {
       </Provider>
     )
 
-    const el = wrapper.find('MenuContainer')
+    const el = wrapper.find('DropdownMenuContainer')
 
     expect(el.prop('activeIndex')).toBe(initialState.activeIndex)
     expect(el.prop('activeId')).toBe(initialState.activeId)
@@ -682,7 +683,10 @@ describe('Keyboard interactions', () => {
       })
 
       expect(mockStore.getState().isOpen).toBe(false)
-      expect(wrapper.find('Menu').length).toBe(0)
+
+      wrapper.update()
+
+      expect(wrapper.find('DropdownMenu').length).toBe(0)
     })
 
     test('Does not trigger store update if menu is closed', () => {
