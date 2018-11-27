@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+// import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import {
   Button,
@@ -41,7 +42,10 @@ stories.add('Sections', () => (
 stories.add('Responsive', () => (
   <Page isResponsive>
     <Page.Card>
-      <Page.Header title="Edit your account" subtitle="Welcome to the Dharma Initiative" />
+      <Page.Header
+        title="Edit your account"
+        subtitle="Welcome to the Dharma Initiative"
+      />
       <ExampleContent />
     </Page.Card>
 

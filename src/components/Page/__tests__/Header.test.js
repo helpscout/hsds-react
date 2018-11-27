@@ -42,7 +42,7 @@ describe('Title', () => {
   test('Title is primary heading (h1)', () => {
     const wrapper = mount(<Header title="Channel 4" subtitle="News team" />)
 
-    expect(wrapper.find('h1').length).toBe(1);
+    expect(wrapper.find('h1').length).toBe(1)
   })
 })
 

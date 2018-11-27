@@ -7,9 +7,9 @@ export const COMPONENT_KEY: {
   Heading: string
 } = {
   Page: 'Page',
-  Actions: 'Page.Actions',
-  Card: 'Page.Card',
-  Content: 'Page.Content',
-  Header: 'Page.Header',
-  Heading: 'Page.Heading'
+  Actions: 'PageActions',
+  Card: 'PageCard',
+  Content: 'PageContent',
+  Header: 'PageHeader',
+  Heading: 'PageHeading'
 }

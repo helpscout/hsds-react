@@ -20,12 +20,12 @@ export const AccordionUI = styled('div')`
     margin-right: -50px;
 
     ${breakpoint(
-  PageConfig.breakpoint.widescreen,
-  `
+      PageConfig.breakpoint.widescreen,
+      `
       margin-left: -100px;
       margin-right: -100px;
     `
-)};
+    )};
   }
 `
 
@@ -61,12 +61,12 @@ export const BodyUI = styled('div')`
     padding-right: 50px;
 
     ${breakpoint(
-  PageConfig.breakpoint.widescreen,
-  `
+      PageConfig.breakpoint.widescreen,
+      `
       padding-left: 100px;
       padding-right: 100px;
     `
-)};
+    )};
   }
 `
 
@@ -122,11 +122,11 @@ export const TitleUI = styled('div')`
     padding-right: 50px;
 
     ${breakpoint(
-  PageConfig.breakpoint.widescreen,
-  `
+      PageConfig.breakpoint.widescreen,
+      `
       padding-left: 100px;
       padding-right: 100px;
     `
-)};
+    )};
   }
 `
