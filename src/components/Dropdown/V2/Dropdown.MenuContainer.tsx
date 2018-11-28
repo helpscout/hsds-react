@@ -252,8 +252,8 @@ export class MenuContainer extends React.Component<Props> {
       const { left } = this.getStylePosition()
 
       this.placementNode.style.position = 'fixed'
-      this.placementNode.style.top = `${top}px`
-      this.placementNode.style.left = `${left}px`
+      this.placementNode.style.top = `${Math.round(top)}px`
+      this.placementNode.style.left = `${Math.round(left)}px`
       this.placementNode.style.zIndex = `${zIndex}`
 
       if (triggerNode) {

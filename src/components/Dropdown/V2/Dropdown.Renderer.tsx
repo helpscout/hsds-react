@@ -303,9 +303,7 @@ class Renderer extends React.PureComponent<any> {
   }
 
   optimizedRender = () => {
-    requestAnimationFrame(() => {
-      this.optimizedItemRenderFromProps()
-    })
+    this.optimizedItemRenderFromProps()
   }
 
   render() {

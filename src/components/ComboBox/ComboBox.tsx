@@ -207,7 +207,11 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     const componentClassName = classNames('c-ComboBox', className)
 
     return (
-      <Dropdown {...this.getDropdownProps()} className={componentClassName}>
+      <Dropdown
+        {...this.getDropdownProps()}
+        enableTabNavigation={false}
+        className={componentClassName}
+      >
         {dropdownProps => (
           <Dropdown.Card>
             <HeaderUI className="c-ComboBoxHeader">
