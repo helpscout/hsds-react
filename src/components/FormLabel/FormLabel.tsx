@@ -16,6 +16,7 @@ export interface Props {
   id?: string
   label?: any
   helpText?: any
+  inline?: boolean
 }
 
 export interface State {
@@ -68,21 +69,32 @@ class FormLabel extends React.Component<Props, State> {
     const {
       className,
       children,
+      inline,
       for: htmlFor,
       id: idProp,
       ...rest
     } = this.props
 
-    const componentClassName = classNames('c-FormLabel', className)
+    const componentClassName = classNames(
+      'c-FormLabel',
+      inline && 'c-FormLabel--inline',
+      className
+    )
     const labelMarkup = this.getLabelMarkup()
     const helpTextMarkup = this.getHelpTextMarkup()
 
     return (
       <Context.Provider value={this.getContextProps()}>
-        <FormLabelUI {...getValidProps(rest)} className={componentClassName}>
-          {labelMarkup}
-          {helpTextMarkup}
-          <div className="c-FromLabel__content">{children}</div>
+        <FormLabelUI
+          {...getValidProps(rest)}
+          className={componentClassName}
+          inline={inline}
+        >
+          <div className="c-FormLabel__label">
+            {labelMarkup}
+            {helpTextMarkup}
+          </div>
+          <div className="c-FormLabel__content">{children}</div>
         </FormLabelUI>
       </Context.Provider>
     )

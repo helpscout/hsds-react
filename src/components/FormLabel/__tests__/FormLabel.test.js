@@ -111,3 +111,25 @@ describe('Context', () => {
     expect(o.prop('id')).toContain('FormControl')
   })
 })
+
+describe('Inline', () => {
+  test('Renders the content inline with the label', () => {
+    const wrapper = mount(
+      <FormLabel inline>
+        <Input />
+      </FormLabel>
+    )
+
+    expect(wrapper.find('.c-FormLabel--inline').length).toBeTruthy()
+  })
+
+  test('Renders the content normally with inline off', () => {
+    const wrapper = mount(
+      <FormLabel>
+        <Input />
+      </FormLabel>
+    )
+
+    expect(wrapper.find('.c-FormLabel--inline').length).toBe(0)
+  })
+})
