@@ -67,6 +67,8 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   onInputChange = inputValue => {
+    if (inputValue === this.state.inputValue) return
+
     this.safeSetState({
       inputValue,
     })

@@ -50,6 +50,15 @@ export const findOpenItemDOMNodes = (
   )
 }
 
+export const findFocusedItemDOMNode = (
+  envNode = document,
+  focusClassName: string = 'is-focused'
+) => {
+  return envNode.querySelector(
+    `[${SELECTORS.indexAttribute}].${focusClassName}`
+  )
+}
+
 export const findFocusedItemDOMNodes = (
   envNode = document,
   focusClassName: string = 'is-focused'

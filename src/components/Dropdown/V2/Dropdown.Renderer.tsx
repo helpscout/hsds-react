@@ -15,6 +15,7 @@ import {
   findItemDOMNode,
   findItemDOMNodeById,
   findOpenItemDOMNodes,
+  findFocusedItemDOMNode,
   findFocusedItemDOMNodes,
   findSingleItemDOMNode,
   getIndexFromItemDOMNode,
@@ -180,7 +181,7 @@ class Renderer extends React.PureComponent<any> {
 
     if (!this.shouldRenderDOM()) return
 
-    const previousNode = findItemDOMNode(previousIndex, envNode)
+    const previousNode = findFocusedItemDOMNode(envNode, focusClassName)
 
     if (!previousNode) return
 
