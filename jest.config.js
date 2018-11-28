@@ -3,9 +3,10 @@ const { jsWithBabel: tsjPreset } = require('ts-jest/presets')
 module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
-    '!src/**/?(*.)types.{js,jsx}',
+    '!src/**/?(*.)types.{js,jsx,ts,tsx}',
     '!src/**/?(*.)helpers.{js,jsx,ts,tsx}',
     '!src/**/?(*.)testHelpers.{js,jsx,ts,tsx}',
+    '!src/tests/helpers/**/*.{js,jsx,ts,tsx}',
     '!src/styles/tests/helpers/**/*.{js,jsx,ts,tsx}',
     '!src/**/?(*.)css.{js,jsx,ts,tsx}',
     '!src/index.{js,jsx,ts,tsx}',

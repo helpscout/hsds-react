@@ -134,7 +134,12 @@ export class MenuContainer extends React.Component<Props> {
     return props
   }
 
-  renderItemsAsGroups = ({ id = 'group', items, withIndex }) => {
+  renderItemsAsGroups = ({
+    /* istanbul ignore next */
+    id = 'group',
+    items,
+    withIndex,
+  }) => {
     let groupStartIndex = 0
 
     return items.map((group, index) => {

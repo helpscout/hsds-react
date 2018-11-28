@@ -149,7 +149,7 @@ export class Item extends React.PureComponent<Props> {
                   key={
                     item.id ||
                     item.value ||
-                    /* istanbul ignore else */
+                    /* istanbul ignore next */
                     getComponentKey(item, index)
                   }
                   {...this.getItemProps(item)}

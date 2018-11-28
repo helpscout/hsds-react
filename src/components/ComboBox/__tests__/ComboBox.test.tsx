@@ -180,6 +180,32 @@ describe('Filtering', () => {
     expect(wrapper.find('DropdownItem').length).toBe(1)
   })
 
+  test('Filters if custom itemFilterKey cannot be found', () => {
+    const items = [
+      {
+        value: 'ron',
+      },
+      {
+        value: 'champ',
+      },
+      {
+        value: 'brick',
+      },
+    ]
+    const wrapper = mount(
+      <ComboBox isOpen items={items} itemFilterKey="nope" />
+    )
+
+    expect(wrapper.find('DropdownItem').length).toBe(3)
+
+    const el = wrapper.find('input[type="text"]')
+    // @ts-ignore
+    el.getDOMNode().value = 'ron'
+    el.simulate('change')
+
+    expect(wrapper.find('DropdownItem').length).toBe(0)
+  })
+
   test('Filters groups on inputValue change', () => {
     const items = [
       {
@@ -249,6 +275,82 @@ describe('Filtering', () => {
     expect(emptyEl.text()).toContain('No results')
     expect(emptyEl.text()).toContain(searchQuery)
   })
+
+  test('Can render a custom empty UI', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'News Team',
+        items: [
+          {
+            value: 'ron',
+          },
+          {
+            value: 'champ',
+          },
+          {
+            value: 'brick',
+          },
+        ],
+      },
+    ]
+    const renderEmpty = () => <div className="empty-block" />
+    const wrapper = mount(
+      <ComboBox isOpen items={items} renderEmpty={renderEmpty} />
+    )
+
+    const el = wrapper.find('input[type="text"]')
+    const searchQuery = 'loudddddddddnoises'
+    // @ts-ignore
+    el.getDOMNode().value = searchQuery
+    el.simulate('change')
+
+    const emptyEl = wrapper.find('div.empty-block')
+
+    expect(emptyEl.length).toBeTruthy()
+  })
+})
+
+describe('Custom Filtering', () => {
+  test('Can customize filter results with customFilter', () => {
+    const items = [
+      {
+        value: 'ron',
+      },
+      {
+        value: 'champ',
+      },
+      {
+        value: 'brick',
+      },
+    ]
+
+    const customFilter = ({ inputValue, items }) => {
+      if (!inputValue) return items
+
+      // Force return a bear!
+      return [
+        {
+          value: 'bear',
+          label: 'bear',
+        },
+      ]
+    }
+
+    const wrapper = mount(
+      <ComboBox isOpen items={items} customFilter={customFilter} />
+    )
+
+    expect(wrapper.find('DropdownItem').length).toBe(3)
+
+    const el = wrapper.find('input[type="text"]')
+    // @ts-ignore
+    el.getDOMNode().value = 'ron'
+    el.simulate('change')
+
+    expect(wrapper.find('DropdownItem').length).toBe(1)
+    expect(wrapper.find('DropdownItem').text()).toContain('bear')
+  })
 })
 
 describe('Render slots', () => {
@@ -301,5 +403,44 @@ describe('onSelect', () => {
     el.props().onSelect('ron', {})
 
     expect(spy).toHaveBeenCalledWith('ron', {})
+  })
+})
+
+describe('onMenuMount/Unmount', () => {
+  test('Clears search query on menu mount', () => {
+    const wrapper = mount(<ComboBox />)
+    wrapper.setState({ inputValue: 'ron' })
+
+    const el = wrapper.find('Dropdown').first()
+    // @ts-ignore
+    el.props().onMenuMount()
+
+    // @ts-ignore
+    expect(wrapper.state().inputValue).toBeFalsy()
+  })
+
+  test('Clears search query on menu unmount', () => {
+    const wrapper = mount(<ComboBox />)
+    wrapper.setState({ inputValue: 'ron' })
+
+    const el = wrapper.find('Dropdown').first()
+    // @ts-ignore
+    el.props().onMenuUnmount()
+
+    // @ts-ignore
+    expect(wrapper.state().inputValue).toBeFalsy()
+  })
+
+  test('Attempts to scroll to top on reset', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<ComboBox />)
+    // @ts-ignore
+    wrapper.instance().menuWrapperNode = { scrollTop: 50 }
+
+    // @ts-ignore
+    wrapper.instance().resetInputValue()
+
+    // @ts-ignore
+    expect(wrapper.instance().menuWrapperNode.scrollTop).toBe(0)
   })
 })

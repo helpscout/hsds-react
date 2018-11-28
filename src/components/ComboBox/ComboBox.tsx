@@ -16,35 +16,34 @@ import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
 import { COMPONENT_KEY } from './ComboBox.utils'
 
 export interface ComboBoxProps extends DropdownProps {
-  autoFocusInput: boolean
   customFilter?: (filterProps: Object, defaultFilter: any) => void
   onInputChange: (value: string) => void
   inputProps: any
   itemFilterKey: string
-  placeholder: string
   noResultsLabel: string
   renderMenuStart?: () => void
   renderMenuEnd?: () => void
   renderFooter?: () => void
-  resetInputValueDelay: number
 }
 
 export interface ComboBoxState {
   inputValue: string
 }
 
+const defaultInputProps = {
+  autoFocus: true,
+  className: 'c-ComboBoxInput',
+  onChange: noop,
+  onKeyDown: noop,
+  placeholder: 'Search',
+  size: 'xssm',
+}
+
 export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   static defaultProps = {
     ...initialState,
     onInputChange: noop,
-    inputProps: {
-      autoFocus: true,
-      className: 'c-ComboBoxInput',
-      onChange: noop,
-      onKeyDown: noop,
-      placeholder: 'Search',
-      size: 'xssm',
-    },
+    inputProps: {},
     itemFilterKey: 'value',
     innerWrapperRef: noop,
     maxHeight: 330,
@@ -95,9 +94,11 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   handleOnKeyDown = event => {
+    /* istanbul ignore else */
     if (event.keyCode === Keys.ENTER) {
       event.stopPropagation()
     }
+    /* istanbul ignore else */
     if (this.props.inputProps.onKeyDown) {
       this.props.inputProps.onKeyDown(event)
     }
@@ -130,6 +131,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   scrollMenuToTop = () => {
+    /* istanbul ignore else */
     if (!this.menuWrapperNode) return
     this.menuWrapperNode.scrollTop = 0
   }
@@ -218,12 +220,17 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   renderEmpty = () => {
-    const { noResultsLabel } = this.props
+    const { renderEmpty, noResultsLabel } = this.props
     const { inputValue } = this.state
+
+    if (renderEmpty) {
+      return renderRenderPropComponent(renderEmpty)
+    }
 
     const message = inputValue
       ? `${noResultsLabel} for "${inputValue}"`
       : noResultsLabel
+
     return (
       <EmptyItemUI className="c-ComboBoxEmpty">
         <Text shade="muted">{message}</Text>
@@ -265,7 +272,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
           <Dropdown.Card>
             <HeaderUI className="c-ComboBoxHeader">
               <InputUI
-                {...inputProps}
+                {...{ ...defaultInputProps, ...inputProps }}
                 onChange={this.onInputChange}
                 onKeyDown={this.handleOnKeyDown}
                 value={this.state.inputValue}
