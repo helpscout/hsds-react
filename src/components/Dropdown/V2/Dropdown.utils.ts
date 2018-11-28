@@ -20,13 +20,14 @@ export const COMPONENT_KEY = {
 export const DELIMETER = '.'
 
 export const SELECTORS = {
-  actionAttribute: 'data-hsds-menu-action',
-  itemAttribute: 'data-hsds-menu-item',
-  menuRootAttribute: 'data-hsds-menu-root',
-  menuAttribute: 'data-hsds-menu',
-  wrapperAttribute: 'data-hsds-menu-wrapper',
-  indexAttribute: 'data-hsds-menu-item-path',
-  valueAttribute: 'data-hsds-menu-item-value',
+  actionAttribute: 'data-hsds-dd-menu-action',
+  itemAttribute: 'data-hsds-dd-menu-item',
+  menuRootAttribute: 'data-hsds-dd-menu-root',
+  menuAttribute: 'data-hsds-dd-menu',
+  wrapperAttribute: 'data-hsds-dd-menu-wrapper',
+  indexAttribute: 'data-hsds-dd-menu-item-path',
+  triggerAttribute: 'data-hsds-dd-menu-trigger',
+  valueAttribute: 'data-hsds-dd-menu-item-value',
 }
 
 /**

@@ -11,6 +11,7 @@ import {
   findClosestItemDOMNode,
   getIndexFromItemDOMNode,
   getValueFromItemDOMNode,
+  findTriggerNode,
 } from './Dropdown.renderUtils'
 
 const initialItemState = {
@@ -62,6 +63,9 @@ export const closeDropdown = state => {
 }
 
 export const onMenuMounted = state => {
+  // Trigger callback from Provider
+  state.onMenuMount && state.onMenuMount()
+
   return {
     ...state,
     isMounted: true,
@@ -69,31 +73,40 @@ export const onMenuMounted = state => {
 }
 
 export const onMenuUnmounted = state => {
+  // Trigger callback from Provider
+  state.onMenuUnmount && state.onMenuUnmount()
+
   return {
     ...state,
     isMounted: false,
   }
 }
 
-export const onSelect = (state, event) => {
-  const { items, activeValue, onSelect } = state
-  const item = getItemFromCollection(items, activeValue)
+// export const onSelect = (state, event) => {
+//   const { envNode, items, activeValue, onSelect } = state
+//   const item = getItemFromCollection(items, activeValue)
 
-  // Guard state from being updated!
-  if (!item) return
-  if (item.disabled) return
-  if (item.items) return
+//   // Guard state from being updated!
+//   if (!item) return
+//   if (item.disabled) return
+//   if (item.items) return
 
-  // Trigger callback from Provider
-  /* istanbul ignore else */
-  if (item && onSelect) {
-    onSelect(item.value, { event, item, dropdownType: 'hsds-dropdown-v2' })
-  }
+//   const triggerNode = findTriggerNode(envNode)
 
-  if (state.closeOnSelect) {
-    return closeDropdown(state)
-  }
-}
+//   // Trigger callback from Provider
+//   /* istanbul ignore else */
+//   if (item && onSelect) {
+//     onSelect(item.value, { event, item, dropdownType: 'hsds-dropdown-v2' })
+//   }
+
+//   if (state.closeOnSelect) {
+//     // Refocus triggerNode
+//     // @ts-ignore
+//     triggerNode && triggerNode.focus()
+
+//     return closeDropdown(state)
+//   }
+// }
 
 export const setTriggerNode = (state, triggerNode) => {
   return {
@@ -110,7 +123,9 @@ export const setMenuNode = (state, menuNode) => {
 }
 
 export const incrementIndex = (state, modifier: number = 1) => {
-  const { envNode, index, indexMap } = state
+  const { envNode, index, indexMap, items } = state
+  if (!items.length) return
+
   let prevIndex = index ? index : -1
   prevIndex = `${prevIndex}`
   const nextIndex = incrementPathIndex(prevIndex, modifier)
@@ -127,7 +142,9 @@ export const incrementIndex = (state, modifier: number = 1) => {
 }
 
 export const decrementIndex = (state, modifier: number = 1) => {
-  const { envNode, index, indexMap } = state
+  const { envNode, index, indexMap, items } = state
+  if (!items.length || !isDefined(index)) return
+
   const nextIndex = decrementPathIndex(index, modifier)
 
   if (!indexMap[nextIndex]) return
@@ -177,10 +194,11 @@ export const selectItemFromIndex = (state: any) => {
 }
 
 export const selectItem = (state, event: any) => {
+  const { closeOnSelect, items, envNode } = state
   const node = findClosestItemDOMNode(event.target)
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
-  const item = getItemFromCollection(state.items, itemValue)
+  const item = getItemFromCollection(items, itemValue)
 
   // Performance guard to prevent store from updating
   if (!index) return
@@ -188,7 +206,10 @@ export const selectItem = (state, event: any) => {
   if (item.disabled) return
   if (item.items) return
 
-  // Trigger Callback
+  const triggerNode = findTriggerNode(envNode)
+  const selectedItem = !state.clearOnSelect ? item : null
+
+  // Trigger select callback
   if (item && state.onSelect) {
     state.onSelect(item.value, {
       event,
@@ -197,10 +218,16 @@ export const selectItem = (state, event: any) => {
     })
   }
 
-  const selectedItem = !state.clearOnSelect ? item : null
+  // Trigger close callback from Provider
+  if (closeOnSelect) {
+    state.onClose && state.onClose()
+    // Refocus triggerNode
+    // @ts-ignore
+    triggerNode && triggerNode.focus()
+  }
 
   return {
-    isOpen: state.closeOnSelect ? false : state.isOpen,
+    isOpen: closeOnSelect ? false : state.isOpen,
     previousSelectedItem: state.selectedItem,
     previousSelectedIndex: state.selectedIndex,
     selectedIndex: index,

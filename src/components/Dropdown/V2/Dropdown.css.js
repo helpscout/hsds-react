@@ -53,13 +53,6 @@ export const MenuUI = styled('div')`
   ${baseStyles};
   padding: 8px 0;
   width: 100%;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 100%;
-  min-height: 0;
-  height: 100%;
-  width: 100%;
 `
 
 MenuUI.defaultProps = {
@@ -215,6 +208,7 @@ export const TriggerUI = styled('a')`
 `
 
 TriggerUI.defaultProps = {
+  [SELECTORS.triggerAttribute]: true,
   tabIndex: 0,
 }
 

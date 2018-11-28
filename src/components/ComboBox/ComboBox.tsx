@@ -19,6 +19,7 @@ export interface ComboBoxProps extends DropdownProps {
   renderMenuStart?: () => void
   renderMenuEnd?: () => void
   renderFooter?: () => void
+  resetInputValueDelay: number
 }
 
 export interface ComboBoxState {
@@ -37,17 +38,36 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
       placeholder: 'Search',
       size: 'xssm',
     },
+    innerWrapperRef: noop,
     maxHeight: 330,
     minWidth: 222,
     noResultsLabel: 'No results',
+    resetInputValueDelay: 60,
   }
 
   state = {
     inputValue: '',
   }
 
+  _isMounted: boolean
+  menuWrapperNode: HTMLElement
+
+  componentDidMount() {
+    this._isMounted = true
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
+  }
+
+  safeSetState = (nextState, callback?) => {
+    if (this._isMounted) {
+      this.setState(nextState, callback)
+    }
+  }
+
   onInputChange = inputValue => {
-    this.setState({
+    this.safeSetState({
       inputValue,
     })
 
@@ -90,9 +110,15 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   resetInputValue = () => {
-    this.setState({
+    this.safeSetState({
       inputValue: '',
     })
+    this.scrollMenuToTop()
+  }
+
+  scrollMenuToTop = () => {
+    if (!this.menuWrapperNode) return
+    this.menuWrapperNode.scrollTop = 0
   }
 
   defaultFilter = filterProps => {
@@ -146,21 +172,27 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     if (hasGroups) {
       return renderItemsAsGroups({ items: nextItems })
     } else {
-      return renderItems({ items: nextItems })
+      return renderItems({ items: nextItems, withIndex: true })
     }
   }
 
-  onClose = () => {
+  onMenuUnmount = () => {
+    this.props.onMenuUnmount()
     this.resetInputValue()
-    this.props.onClose()
   }
 
   getDropdownProps = () => {
+    const { className } = this.props
     const { onInputChange, noResultsLabel, ...rest } = this.props
     const { inputValue } = this.state
 
+    const componentClassName = classNames('c-ComboBox', className)
+
     return {
       ...rest,
+      onMenuUnmount: this.onMenuUnmount,
+      enableTabNavigation: false,
+      className: componentClassName,
       inputValue,
     }
   }
@@ -202,16 +234,13 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     )
   }
 
+  setMenuWrapperNode = node => (this.menuWrapperNode = node)
+
   render() {
-    const { className, inputProps } = this.props
-    const componentClassName = classNames('c-ComboBox', className)
+    const { inputProps } = this.props
 
     return (
-      <Dropdown
-        {...this.getDropdownProps()}
-        enableTabNavigation={false}
-        className={componentClassName}
-      >
+      <Dropdown {...this.getDropdownProps()}>
         {dropdownProps => (
           <Dropdown.Card>
             <HeaderUI className="c-ComboBoxHeader">
@@ -222,7 +251,10 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
                 value={this.state.inputValue}
               />
             </HeaderUI>
-            <MenuUI className="c-ComboBoxMenu">
+            <MenuUI
+              className="c-ComboBoxMenu"
+              innerWrapperRef={this.setMenuWrapperNode}
+            >
               {this.renderMenuStart()}
               {this.renderItems(dropdownProps)}
               {this.renderMenuEnd()}

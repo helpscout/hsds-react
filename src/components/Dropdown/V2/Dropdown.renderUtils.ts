@@ -21,6 +21,10 @@ export const getValueFromItemDOMNode = (itemNode?: DOMNode): string => {
   return value || ''
 }
 
+export const findTriggerNode = (envNode = document) => {
+  return envNode.querySelector(`[${SELECTORS.triggerAttribute}]`)
+}
+
 export const findItemDOMNode = (index, envNode = document) => {
   return envNode.querySelector(`[${SELECTORS.indexAttribute}="${index}"]`)
 }

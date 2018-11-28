@@ -149,7 +149,7 @@ class InfiniteScroller extends Component {
 
   setParentNode() {
     const { getScrollParent, scrollParent } = this.props
-    let nodeScope = getScrollParent()
+    let nodeScope = getScrollParent({ node: this.node })
     nodeScope =
       isNodeElement(nodeScope) || nodeScope === window ? nodeScope : null
 

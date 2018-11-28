@@ -30,6 +30,8 @@ export const initialState = {
   onBlur: noop,
   onClose: noop,
   onFocus: noop,
+  onMenuMount: noop,
+  onMenuUnmount: noop,
   onOpen: noop,
   onSelect: noop,
   openClassName: 'is-open',

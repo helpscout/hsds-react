@@ -139,11 +139,9 @@ class Renderer extends React.PureComponent<any> {
   }
 
   scrollIntoView = node => {
-    requestAnimationFrame(() => {
-      if (node) {
-        scrollIntoView(node)
-      }
-    })
+    if (node) {
+      scrollIntoView(node)
+    }
   }
 
   shouldRenderDOM = () => {
@@ -294,7 +292,9 @@ class Renderer extends React.PureComponent<any> {
     this.renderNextInteraction()
 
     // Render selected item from inputValue changes
-    this.renderInputValueChange()
+    requestAnimationFrame(() => {
+      this.renderInputValueChange()
+    })
 
     // Render selected item
     requestAnimationFrame(() => {

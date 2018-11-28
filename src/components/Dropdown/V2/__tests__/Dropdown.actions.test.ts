@@ -6,7 +6,6 @@ import {
   toggleOpen,
   openDropdown,
   closeDropdown,
-  onSelect,
 } from '../Dropdown.actions'
 import { SELECTORS } from '../Dropdown.utils'
 
@@ -257,110 +256,110 @@ describe('closeDropdown', () => {
   })
 })
 
-describe('onSelect', () => {
-  test('Fires onSelect callback, if provided', () => {
-    const state = {
-      items: [{ value: 'ron' }, { value: 'brick' }],
-      activeValue: 'ron',
-      onSelect: jest.fn(),
-    }
+// describe('onSelect', () => {
+//   test('Fires onSelect callback, if provided', () => {
+//     const state = {
+//       items: [{ value: 'ron' }, { value: 'brick' }],
+//       activeValue: 'ron',
+//       onSelect: jest.fn(),
+//     }
 
-    const mockEvent = {}
+//     const mockEvent = {}
 
-    onSelect(state, mockEvent)
+//     onSelect(state, mockEvent)
 
-    expect(state.onSelect).toHaveBeenCalledWith('ron', {
-      dropdownType: 'hsds-dropdown-v2',
-      event: mockEvent,
-      item: { value: 'ron' },
-    })
-  })
+//     expect(state.onSelect).toHaveBeenCalledWith('ron', {
+//       dropdownType: 'hsds-dropdown-v2',
+//       event: mockEvent,
+//       item: { value: 'ron' },
+//     })
+//   })
 
-  test('Returns falsy to prevent unnecessary setState for invalid props', () => {
-    const state = {
-      items: [{ value: 'ron' }, { value: 'brick' }],
-      activeValue: 'ron',
-      onSelect: jest.fn(),
-    }
+//   test('Returns falsy to prevent unnecessary setState for invalid props', () => {
+//     const state = {
+//       items: [{ value: 'ron' }, { value: 'brick' }],
+//       activeValue: 'ron',
+//       onSelect: jest.fn(),
+//     }
 
-    const mockEvent = {}
+//     const mockEvent = {}
 
-    const nextState = onSelect(state, mockEvent)
+//     const nextState = onSelect(state, mockEvent)
 
-    expect(nextState).toBeFalsy()
-  })
+//     expect(nextState).toBeFalsy()
+//   })
 
-  test('Performs closeDropdown action, if specified', () => {
-    const spy = jest.fn()
-    const state = {
-      // This one
-      closeOnSelect: true,
-      /////
-      items: [{ value: 'ron' }, { value: 'brick' }],
-      activeValue: 'ron',
-      onSelect: jest.fn(),
-      isOpen: true,
-      onClose: spy,
-    }
+//   test('Performs closeDropdown action, if specified', () => {
+//     const spy = jest.fn()
+//     const state = {
+//       // This one
+//       closeOnSelect: true,
+//       /////
+//       items: [{ value: 'ron' }, { value: 'brick' }],
+//       activeValue: 'ron',
+//       onSelect: jest.fn(),
+//       isOpen: true,
+//       onClose: spy,
+//     }
 
-    const mockEvent = {}
+//     const mockEvent = {}
 
-    const nextState = onSelect(state, mockEvent)
+//     const nextState = onSelect(state, mockEvent)
 
-    expect(nextState).not.toBeFalsy()
-    expect(nextState.isOpen).toBe(false)
-    expect(spy).toHaveBeenCalled()
-  })
+//     expect(nextState).not.toBeFalsy()
+//     expect(nextState.isOpen).toBe(false)
+//     expect(spy).toHaveBeenCalled()
+//   })
 
-  test('Does not performs closeDropdown action, if specified', () => {
-    const spy = jest.fn()
-    const state = {
-      // This one
-      closeOnSelect: false,
-      /////
-      items: [{ value: 'ron' }, { value: 'brick' }],
-      activeValue: 'ron',
-      onSelect: jest.fn(),
-      isOpen: true,
-      onClose: spy,
-    }
+//   test('Does not performs closeDropdown action, if specified', () => {
+//     const spy = jest.fn()
+//     const state = {
+//       // This one
+//       closeOnSelect: false,
+//       /////
+//       items: [{ value: 'ron' }, { value: 'brick' }],
+//       activeValue: 'ron',
+//       onSelect: jest.fn(),
+//       isOpen: true,
+//       onClose: spy,
+//     }
 
-    const mockEvent = {}
+//     const mockEvent = {}
 
-    const nextState = onSelect(state, mockEvent)
+//     const nextState = onSelect(state, mockEvent)
 
-    expect(nextState).toBeFalsy()
-    expect(spy).not.toHaveBeenCalled()
-  })
+//     expect(nextState).toBeFalsy()
+//     expect(spy).not.toHaveBeenCalled()
+//   })
 
-  test('Does not fire onSelect if item cannot be found', () => {
-    const spy = jest.fn()
-    const state = {
-      items: [{ value: 'champ' }, { value: 'brick' }],
-      activeValue: 'ron',
-      onSelect: spy,
-    }
+//   test('Does not fire onSelect if item cannot be found', () => {
+//     const spy = jest.fn()
+//     const state = {
+//       items: [{ value: 'champ' }, { value: 'brick' }],
+//       activeValue: 'ron',
+//       onSelect: spy,
+//     }
 
-    const mockEvent = {}
+//     const mockEvent = {}
 
-    onSelect(state, mockEvent)
+//     onSelect(state, mockEvent)
 
-    expect(spy).not.toHaveBeenCalled()
-  })
+//     expect(spy).not.toHaveBeenCalled()
+//   })
 
-  test('Does not fire onSelect if item is disabled', () => {
-    const spy = jest.fn()
-    const state = {
-      items: [{ value: 'champ', disabled: true }, { value: 'brick' }],
-      activeValue: 'champ',
-      onSelect: spy,
-    }
+//   test('Does not fire onSelect if item is disabled', () => {
+//     const spy = jest.fn()
+//     const state = {
+//       items: [{ value: 'champ', disabled: true }, { value: 'brick' }],
+//       activeValue: 'champ',
+//       onSelect: spy,
+//     }
 
-    const mockEvent = {}
+//     const mockEvent = {}
 
-    const nextState = onSelect(state, mockEvent)
+//     const nextState = onSelect(state, mockEvent)
 
-    expect(spy).not.toHaveBeenCalled()
-    expect(nextState).toBeFalsy()
-  })
-})
+//     expect(spy).not.toHaveBeenCalled()
+//     expect(nextState).toBeFalsy()
+//   })
+// })

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'unistore/react'
 import propConnect from '../../PropProvider/propConnect'
-import { MenuUI } from './Dropdown.css.js'
+import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
@@ -13,6 +13,7 @@ export interface Props {
   children?: any
   id?: string
   innerRef: (node: HTMLElement) => void
+  innerWrapperRef: (node: HTMLElement) => void
   isSubMenu: boolean
   style: Object
   withScrollLock: boolean
@@ -22,6 +23,7 @@ export interface Props {
 export class Menu extends React.PureComponent<Props> {
   static defaultProps = {
     innerRef: noop,
+    innerWrapperRef: noop,
     isSubMenu: false,
     style: {},
     withScrollLock: true,
@@ -35,7 +37,14 @@ export class Menu extends React.PureComponent<Props> {
   }
 
   renderMenu = () => {
-    const { children, className, innerRef, isSubMenu, ...rest } = this.props
+    const {
+      children,
+      className,
+      innerRef,
+      innerWrapperRef,
+      isSubMenu,
+      ...rest
+    } = this.props
     const componentClassName = classNames(
       'c-DropdownV2Menu',
       isSubMenu && 'is-subMenu',
@@ -43,14 +52,19 @@ export class Menu extends React.PureComponent<Props> {
     )
 
     return (
-      <MenuUI
-        {...rest}
-        className={componentClassName}
-        innerRef={innerRef}
-        style={this.getStyles()}
+      <MenuWrapperUI
+        className="c-DropdownV2MenuWrapper"
+        innerRef={innerWrapperRef}
       >
-        {children}
-      </MenuUI>
+        <MenuUI
+          {...rest}
+          className={componentClassName}
+          innerRef={innerRef}
+          style={this.getStyles()}
+        >
+          {children}
+        </MenuUI>
+      </MenuWrapperUI>
     )
   }
 

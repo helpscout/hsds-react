@@ -18,7 +18,6 @@ import {
 } from './Dropdown.utils'
 import {
   closeDropdown,
-  onSelect,
   focusItem,
   selectItem,
   onMenuMounted,
@@ -44,7 +43,6 @@ export interface Props {
   isLoading: boolean
   onMenuMounted: () => void
   onMenuUnmounted: () => void
-  onSelect: (...args: any[]) => void
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
@@ -70,7 +68,6 @@ export class MenuContainer extends React.Component<Props> {
     isLoading: false,
     onMenuMounted: noop,
     onMenuUnmounted: noop,
-    onSelect: noop,
     selectItem: noop,
     setActiveItem: noop,
     zIndex: 1080,
@@ -174,12 +171,19 @@ export class MenuContainer extends React.Component<Props> {
     })
   }
 
-  renderItems = ({ items }) => {
+  renderItems = ({
+    items,
+    withIndex,
+  }: {
+    items: Array<any>
+    withIndex?: boolean
+  }) => {
     return items.map((item, index) => {
+      const indexProp = withIndex ? index : undefined
       return (
         <Item
           key={item.value || getComponentKey(item, index)}
-          {...this.getItemProps(item)}
+          {...this.getItemProps(item, indexProp)}
         >
           {item.label}
         </Item>
@@ -384,7 +388,6 @@ const ConnectedMenuContainer: any = connect(
   // mapDispatchToProps
   {
     closeDropdown,
-    onSelect,
     focusItem,
     selectItem,
     onMenuMounted,
