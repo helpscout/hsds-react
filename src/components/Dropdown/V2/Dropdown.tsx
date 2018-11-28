@@ -34,6 +34,10 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   triggerNode: HTMLElement
   menuNode: HTMLElement
 
+  static contextTypes = {
+    getState: noop,
+  }
+
   handleOnDocumentKeyDown = (event: KeyboardEvent) => {
     if (!this.props.isOpen) return
 
@@ -100,14 +104,18 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   setMenuNodeRef = (node: HTMLElement) => {
     this.menuNode = node
     this.props.menuRef(node)
+
     // Internally, for store
+    if (this.context.getState().menuNode) return
     this.props.setMenuNode(node)
   }
 
   setTriggerNodeRef = (node: HTMLElement) => {
     this.triggerNode = node
     this.props.triggerRef(node)
+
     // Internally, for store
+    if (this.context.getState().triggerNode) return
     this.props.setTriggerNode(node)
   }
 

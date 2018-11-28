@@ -10,11 +10,16 @@ import {
 } from '../../../utilities/is'
 
 export const COMPONENT_KEY = {
+  Block: 'DropdownBlock',
+  Card: 'DropdownCard',
+  Divider: 'DropdownDivider',
   Dropdown: 'Dropdown',
-  Trigger: 'DropdownTrigger',
+  Group: 'DropdownGroup',
+  Header: 'DropdownHeader',
+  Item: 'DropdownItem',
   Menu: 'DropdownMenu',
   MenuContainer: 'DropdownMenuContainer',
-  Item: 'DropdownItem',
+  Trigger: 'DropdownTrigger',
 }
 
 export const DELIMETER = '.'

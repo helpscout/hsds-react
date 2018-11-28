@@ -1,9 +1,10 @@
 import { isDefined } from '../../../utilities/is'
-
+import actionTypes from './Dropdown.actionTypes'
 import {
   getItemFromCollection,
   incrementPathIndex,
   decrementPathIndex,
+  getIndexMapFromItems,
 } from './Dropdown.utils'
 
 import {
@@ -13,17 +14,7 @@ import {
   getValueFromItemDOMNode,
   findTriggerNode,
 } from './Dropdown.renderUtils'
-
-const initialItemState = {
-  activeItem: null,
-  activeIndex: null,
-  activeValue: null,
-  activeId: null,
-  index: null,
-  previousIndex: null,
-  selectedIndex: '',
-  previousSelectedIndex: '',
-}
+import { dispatch } from './Dropdown.store'
 
 export const changeDirection = state => {
   return {
@@ -44,82 +35,54 @@ export const openDropdown = state => {
   // Trigger callback from Provider
   state.onOpen && state.onOpen()
 
-  return {
-    ...state,
-    ...initialItemState,
-    isOpen: true,
-  }
+  return dispatch(state, {
+    type: actionTypes.OPEN_DROPDOWN,
+  })
 }
 
 export const closeDropdown = state => {
   // Trigger callback from Provider
   state.onClose && state.onClose()
 
-  return {
-    ...state,
-    ...initialItemState,
-    isOpen: false,
-  }
+  return dispatch(state, {
+    type: actionTypes.CLOSE_DROPDOWN,
+  })
 }
 
 export const onMenuMounted = state => {
   // Trigger callback from Provider
   state.onMenuMount && state.onMenuMount()
 
-  return {
-    ...state,
-    isMounted: true,
-  }
+  return dispatch(state, {
+    type: actionTypes.MENU_MOUNT,
+  })
 }
 
 export const onMenuUnmounted = state => {
   // Trigger callback from Provider
   state.onMenuUnmount && state.onMenuUnmount()
 
-  return {
-    ...state,
-    isMounted: false,
-  }
+  return dispatch(state, {
+    type: actionTypes.MENU_UNMOUNT,
+  })
 }
 
-// export const onSelect = (state, event) => {
-//   const { envNode, items, activeValue, onSelect } = state
-//   const item = getItemFromCollection(items, activeValue)
-
-//   // Guard state from being updated!
-//   if (!item) return
-//   if (item.disabled) return
-//   if (item.items) return
-
-//   const triggerNode = findTriggerNode(envNode)
-
-//   // Trigger callback from Provider
-//   /* istanbul ignore else */
-//   if (item && onSelect) {
-//     onSelect(item.value, { event, item, dropdownType: 'hsds-dropdown-v2' })
-//   }
-
-//   if (state.closeOnSelect) {
-//     // Refocus triggerNode
-//     // @ts-ignore
-//     triggerNode && triggerNode.focus()
-
-//     return closeDropdown(state)
-//   }
-// }
-
 export const setTriggerNode = (state, triggerNode) => {
-  return {
-    ...state,
-    triggerNode,
-  }
+  return dispatch(state, {
+    type: actionTypes.SET_TRIGGER_NODE,
+    payload: {
+      triggerNode,
+    },
+  })
 }
 
 export const setMenuNode = (state, menuNode) => {
-  return {
-    ...state,
-    menuNode,
-  }
+  return dispatch(state, {
+    type: actionTypes.SET_MENU_NODE,
+    payload: {
+      menuNode,
+    },
+  })
 }
 
 export const incrementIndex = (state, modifier: number = 1) => {
@@ -178,11 +141,14 @@ export const focusItem = (state, event: Event) => {
     node.focus()
   }
 
-  return {
-    previousIndex: state.index,
-    index: index,
-    lastInteractionType,
-  }
+  return dispatch(state, {
+    type: actionTypes.FOCUS_ITEM,
+    payload: {
+      previousIndex: state.index,
+      index: index,
+      lastInteractionType,
+    },
+  })
 }
 
 export const selectItemFromIndex = (state: any) => {
@@ -226,11 +192,54 @@ export const selectItem = (state, event: any) => {
     triggerNode && triggerNode.focus()
   }
 
-  return {
-    isOpen: closeOnSelect ? false : state.isOpen,
-    previousSelectedItem: state.selectedItem,
-    previousSelectedIndex: state.selectedIndex,
-    selectedIndex: index,
-    selectedItem: selectedItem,
-  }
+  return dispatch(state, {
+    type: actionTypes.SELECT_ITEM,
+    payload: {
+      isOpen: closeOnSelect ? false : state.isOpen,
+      previousSelectedItem: state.selectedItem,
+      previousSelectedIndex: state.selectedIndex,
+      selectedIndex: index,
+      selectedItem: selectedItem,
+    },
+  })
+}
+
+export const updateIndex = (state, index) => {
+  return dispatch(state, {
+    type: actionTypes.UPDATE_INDEX,
+    payload: {
+      index,
+    },
+  })
+}
+
+export const updateItems = (state, items) => {
+  return dispatch(state, {
+    type: actionTypes.UPDATE_ITEMS,
+    payload: {
+      items,
+      indexMap: getIndexMapFromItems(items),
+    },
+  })
+}
+
+export const updateOpen = (state, isOpen) => {
+  return dispatch(state, {
+    type: actionTypes.UPDATE_OPEN,
+    payload: {
+      isOpen,
+    },
+  })
+}
+
+export const updateInputValue = (state, inputValue) => {
+  return dispatch(state, {
+    type: actionTypes.UPDATE_INPUT_VALUE,
+    payload: {
+      previousIndex: state.index,
+      previousInputValue: state.inputValue,
+      inputValue: inputValue,
+      index: '0',
+    },
+  })
 }

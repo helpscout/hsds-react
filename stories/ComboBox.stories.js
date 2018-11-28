@@ -50,6 +50,26 @@ stories.add('Default', () => {
   return <ComboBox itemFilterKey="label" items={items} isOpen={true} />
 })
 
+stories.add('StateReducer', () => {
+  const stateReducer = (state, action) => {
+    console.group('State update')
+    console.log('state', state)
+    console.log('action', action)
+    console.groupEnd()
+
+    return state
+  }
+
+  return (
+    <ComboBox
+      itemFilterKey="label"
+      items={items}
+      isOpen={true}
+      stateReducer={stateReducer}
+    />
+  )
+})
+
 stories.add('Infinite Scroll', () => {
   class Test extends React.Component {
     state = {

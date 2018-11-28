@@ -339,3 +339,14 @@ describe('Integration: Modal', () => {
     expect(spy).toHaveBeenCalled()
   })
 })
+
+describe('getScrollNodeTop', () => {
+  test('Returns window.scrollY, if nodeScope is window', () => {
+    window.scrollY = 123
+    const wrapper = mount(<InfiniteScroller getScrollParent={() => window} />)
+
+    expect(wrapper.instance().getScrollNodeTop()).toBe(123)
+    // Reset
+    window.scrollY = 0
+  })
+})

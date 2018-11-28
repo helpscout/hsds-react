@@ -1,6 +1,7 @@
 // Should be a .ts file
 // Couldn't figure out how to make this play nicely with Jest.
 import unistoreCreateStore from 'unistore'
+import reducer from './Dropdown.reducer'
 import { noop } from '../../../utilities/other'
 
 export const initialState = {
@@ -39,6 +40,7 @@ export const initialState = {
   previousSelectedIndex: '',
   selectedIndex: '',
   selectedItem: '',
+  stateReducer: state => state,
   subscribe: noop,
   trigger: 'Dropdown',
   withScrollLock: true,
@@ -50,5 +52,9 @@ export const initialState = {
 // would mean that all dropdowns share the same store. And we don't want that!
 
 export const createStore = (props = initialState) => unistoreCreateStore(props)
+
+export const dispatch = (state = {}, action = {}) => {
+  return reducer(state, action)
+}
 
 export default createStore

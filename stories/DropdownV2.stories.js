@@ -43,7 +43,7 @@ stories.add('Dropdown/Empty', () => {
   return <Dropdown items={[]} renderEmpty={() => <Empty />} />
 })
 
-stories.add('Dropdown/Loadiing', () => {
+stories.add('Dropdown/Loading', () => {
   const items = ItemSpec.generate(8)
   const Loading = () => <div>Loading...</div>
 
@@ -69,6 +69,20 @@ stories.add('Menu/Callbacks', () => {
   const onSelect = (item, props) => console.log('Select', props.item)
 
   return <Dropdown {...{ items, onOpen, onClose, onSelect }} />
+})
+
+stories.add('Menu/StateReducer', () => {
+  const items = ItemSpec.generate(8)
+  const stateReducer = (state, action) => {
+    console.group('State update')
+    console.log('state', state)
+    console.log('action', action)
+    console.groupEnd()
+
+    return state
+  }
+
+  return <Dropdown {...{ items, stateReducer }} />
 })
 
 stories.add('Menu/Subscribe', () => {

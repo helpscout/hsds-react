@@ -1,8 +1,29 @@
 import * as React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from 'unistore/react'
 import { CardUI } from './Dropdown.css'
+import { classNames } from '../../../utilities/classNames'
+import { namespaceComponent } from '../../../utilities/component'
+import { noop } from '../../../utilities/other'
+import { COMPONENT_KEY } from './Dropdown.utils'
 
-class Card extends React.PureComponent {
+export interface Props {
+  className?: string;
+  children?: any;
+  innerRef: (node: HTMLElement) => void;
+  minWidth?: number;
+  minHeight?: number;
+  maxHeight?: number;
+  maxWidth?: number;
+  style: Object;
+}
+
+export class Card extends React.PureComponent<Props> {
+  static defaultProps = {
+    innerRef: noop,
+    style: {},
+  }
+
   getStyles = (): Object => {
     const { minWidth, minHeight, maxHeight, maxWidth, style } = this.props
 
@@ -10,10 +31,25 @@ class Card extends React.PureComponent {
   }
 
   render() {
-    const { children } = this.props
-    return <CardUI style={this.getStyles()}>{children}</CardUI>
+    const { className, children, innerRef, rest } = this.props
+
+    const componentClassName = classNames('c-DropdownV2Card', className)
+
+    return (
+      <CardUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        innerRef={innerRef}
+        style={this.getStyles()}
+      >
+        {children}
+      </CardUI>
+    )
   }
 }
+
+namespaceComponent(COMPONENT_KEY.Card)(Card)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Card)(Card)
 
 const ConnectedCard: any = connect(
   // mapStateToProps
@@ -29,7 +65,7 @@ const ConnectedCard: any = connect(
   }
 )(
   // @ts-ignore
-  Card
+  PropConnectedComponent
 )
 
 export default ConnectedCard
