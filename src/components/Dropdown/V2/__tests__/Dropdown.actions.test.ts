@@ -1,8 +1,10 @@
 // @ts-ignore
 import {
+  changeDirection,
+  onMenuMounted,
+  onMenuUnmounted,
   setMenuNode,
   setTriggerNode,
-  changeDirection,
   toggleOpen,
   openDropdown,
   closeDropdown,
@@ -47,6 +49,42 @@ import { SELECTORS } from '../Dropdown.utils'
 //     expect(nextState).toBeFalsy()
 //   })
 // })
+
+describe('onMenuMounted', () => {
+  test('Change isMounted state to true', () => {
+    const state = { isMounted: false }
+    const nextState = onMenuMounted(state)
+
+    expect(nextState.isMounted).toBe(true)
+  })
+
+  test('Fires onMenuMount callback', () => {
+    const spy = jest.fn()
+    const state = { isMounted: false, onMenuMount: spy }
+    const nextState = onMenuMounted(state)
+
+    expect(nextState.isMounted).toBe(true)
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('onMenuUnmounted', () => {
+  test('Change isMounted state to false', () => {
+    const state = { isMounted: true }
+    const nextState = onMenuUnmounted(state)
+
+    expect(nextState.isMounted).toBe(false)
+  })
+
+  test('Fires onMenuMount callback', () => {
+    const spy = jest.fn()
+    const state = { isMounted: true, onMenuUnmount: spy }
+    const nextState = onMenuUnmounted(state)
+
+    expect(nextState.isMounted).toBe(false)
+    expect(spy).toHaveBeenCalled()
+  })
+})
 
 describe('setMenuNode', () => {
   test('Sets a menuNode onto the state', () => {
@@ -192,17 +230,15 @@ describe('openDropdown', () => {
     expect(spy).not.toHaveBeenCalled()
   })
 
-  test('Resets activeItem and related props', () => {
+  test('Resets index and related props', () => {
     const state = {
-      activeItem: '123',
-      activeId: '456',
+      index: '123',
       isOpen: false,
     }
 
     const nextState = openDropdown(state)
 
-    expect(nextState.activeItem).toBeFalsy()
-    expect(nextState.activeId).toBeFalsy()
+    expect(nextState.index).toBeFalsy()
   })
 })
 
@@ -242,17 +278,15 @@ describe('closeDropdown', () => {
     expect(spy).not.toHaveBeenCalled()
   })
 
-  test('Resets activeItem and related props', () => {
+  test('Resets index and related props', () => {
     const state = {
-      activeItem: '123',
-      activeId: '456',
+      index: '123',
       isOpen: true,
     }
 
     const nextState = closeDropdown(state)
 
-    expect(nextState.activeItem).toBeFalsy()
-    expect(nextState.activeId).toBeFalsy()
+    expect(nextState.index).toBeFalsy()
   })
 })
 

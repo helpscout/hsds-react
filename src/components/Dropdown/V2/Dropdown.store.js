@@ -6,8 +6,6 @@ import { noop } from '../../../utilities/other'
 
 export const initialState = {
   activeClassName: 'is-active',
-  activeIndex: '',
-  activeItem: null,
   clearOnSelect: true,
   closeOnSelect: true,
   direction: 'right',
@@ -37,9 +35,6 @@ export const initialState = {
   onSelect: noop,
   openClassName: 'is-open',
   previousIndex: null,
-  previousInputValue: '',
-  previousSelectedIndex: '',
-  selectedIndex: '',
   selectedItem: '',
   stateReducer: state => state,
   subscribe: noop,
@@ -54,7 +49,7 @@ export const initialState = {
 
 export const createStore = (props = initialState) => unistoreCreateStore(props)
 
-export const dispatch = (state = {}, action = {}) => {
+export const dispatch = (state = initialState, action = {}) => {
   return reducer(state, action)
 }
 

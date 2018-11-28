@@ -1,13 +1,7 @@
-import * as React from 'react'
 import { ItemIndex } from './Dropdown.types'
 import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
-import {
-  isFunction,
-  isObject,
-  isDefined,
-  isString,
-} from '../../../utilities/is'
+import { isObject, isDefined, isString } from '../../../utilities/is'
 
 export const COMPONENT_KEY = {
   Block: 'DropdownBlock',
@@ -150,6 +144,7 @@ export const getItemFromCollection = (
     if (itemIsActive(value, item)) {
       return item
     }
+    /* istanbul ignore else */
     if (item.items) {
       const child = getItemFromCollection(item.items, value)
       /* istanbul ignore else */
@@ -157,16 +152,6 @@ export const getItemFromCollection = (
     }
   }
   return undefined
-}
-
-export const enhanceItemsWithProps = (items: Array<any>, props: Object) => {
-  return items.map(item => {
-    return {
-      ...item,
-      ...props,
-      items: item.items ? enhanceItemsWithProps(item.items, props) : undefined,
-    }
-  })
 }
 
 export const getCustomItemProps = (props: any): any => {
@@ -220,6 +205,10 @@ export const filterNonFocusableItemFromItems = (item: any): boolean => {
   return filterDisabledFromItems(item) && filterDividerFromItems(item)
 }
 
+export const getUniqueKeyFromItem = item => {
+  return item && (item.id || item.value || item.label)
+}
+
 export const getIndexMapFromItems = (
   items: Array<any>,
   path?: string
@@ -238,11 +227,14 @@ export const getIndexMapFromItems = (
       ? getIndexMapFromItems(item.items, itemIndex)
       : {}
 
+    /* istanbul ignore else */
     if (!indexMap[itemIndex]) {
       indexMap
     }
 
-    return { ...indexMap, [itemIndex]: item.value, ...childItems }
+    const key = getUniqueKeyFromItem(item)
+
+    return { ...indexMap, [itemIndex]: key, ...childItems }
   }, {})
 }
 
@@ -271,12 +263,21 @@ export const getItemProps = (
   item: any,
   index?: string | number
 ): Object => {
+  if (!state) return item
+
   const { dropUp, id, enableTabNavigation, indexMap, selectedItem } = state
   const { className, value, ...rest } = item
   const dropRight = isDropRight(state)
+  const indexKey = getUniqueKeyFromItem(item)
 
-  let itemIndex = Object.keys(indexMap).find(key => indexMap[key] === value)
+  let itemIndex
 
+  /* istanbul ignore else */
+  if (indexMap) {
+    itemIndex = Object.keys(indexMap).find(key => indexMap[key] === indexKey)
+  }
+
+  /* istanbul ignore if */
   if (isDefined(index)) {
     // @ts-ignore
     itemIndex = !isString(index) ? index.toString() : index
@@ -285,22 +286,20 @@ export const getItemProps = (
   const isActive = itemIsActive(selectedItem, item)
   const hasSubMenu = itemHasSubMenu(item)
   const isSelected = itemIsSelected(state, itemIndex as string)
-  const childItems = item.items
-    ? item.items.map(item => getItemProps(state, item))
-    : undefined
 
   const itemId = pathResolve(id, itemIndex)
 
   const key =
-    item.id ||
-    item.value ||
     getComponentKey(item, index) ||
+    indexKey ||
+    /* istanbul ignore next */
     `unsafeComponentKey-${item.toString()}`
 
   return {
     ...rest,
     className: classNames(
       'c-DropdownV2Item',
+      /* istanbul ignore next */
       hasSubMenu && 'has-subMenu',
       isActive && 'is-active',
       className
@@ -318,7 +317,6 @@ export const getItemProps = (
     isActive,
     isSelected,
     hasSubMenu,
-    items: childItems,
     subMenuId: pathResolve(itemId, 'sub-menu'),
     tabIndex: enableTabNavigation ? 0 : null,
     value,

@@ -1,5 +1,6 @@
-import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
 import * as React from 'react'
+import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
+import propConnect from '../PropProvider/propConnect'
 import Dropdown from '../Dropdown/DropdownV2'
 import { isItemsEmpty } from '../Dropdown/V2/Dropdown.utils'
 import { initialState } from '../Dropdown/V2/Dropdown.store'
@@ -7,8 +8,12 @@ import Keys from '../../constants/Keys'
 import Text from '../Text'
 import { noop } from '../../utilities/other'
 import { classNames } from '../../utilities/classNames'
-import { renderRenderPropComponent } from '../../utilities/component'
+import {
+  namespaceComponent,
+  renderRenderPropComponent,
+} from '../../utilities/component'
 import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
+import { COMPONENT_KEY } from './ComboBox.utils'
 
 export interface ComboBoxProps extends DropdownProps {
   autoFocusInput: boolean
@@ -78,6 +83,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
 
     this.props.onInputChange(inputValue)
 
+    /* istanbul ignore else */
     if (this.props.inputProps.onChange) {
       this.props.inputProps.onChange(inputValue)
     }
@@ -194,8 +200,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   getDropdownProps = () => {
-    const { className } = this.props
-    const { onInputChange, noResultsLabel, ...rest } = this.props
+    const { className, onInputChange, noResultsLabel, ...rest } = this.props
     const { inputValue } = this.state
 
     const componentClassName = classNames('c-ComboBox', className)
@@ -204,6 +209,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
       ...rest,
       onMenuMount: this.onMenuMount,
       onMenuUnmount: this.onMenuUnmount,
+      onSelect: this.onSelect,
       enableTabNavigation: false,
       className: componentClassName,
       inputValue,
@@ -219,7 +225,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
       ? `${noResultsLabel} for "${inputValue}"`
       : noResultsLabel
     return (
-      <EmptyItemUI>
+      <EmptyItemUI className="c-ComboBoxEmpty">
         <Text shade="muted">{message}</Text>
       </EmptyItemUI>
     )
@@ -281,4 +287,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 }
 
-export default ComboBox
+namespaceComponent(COMPONENT_KEY)(ComboBox)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(ComboBox)
+
+export default PropConnectedComponent

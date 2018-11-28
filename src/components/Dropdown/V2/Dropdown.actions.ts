@@ -17,10 +17,9 @@ import {
 import { dispatch } from './Dropdown.store'
 
 export const changeDirection = state => {
-  return {
-    ...state,
-    direction: state.direction === 'right' ? 'left' : 'right',
-  }
+  return dispatch(state, {
+    type: actionTypes.CHANGE_DIRECTION,
+  })
 }
 
 export const toggleOpen = state => {
@@ -85,6 +84,7 @@ export const setMenuNode = (state, menuNode) => {
   })
 }
 
+/* istanbul ignore next */
 export const incrementIndex = (state, modifier: number = 1) => {
   const { envNode, index, indexMap, items } = state
   if (!items.length) return
@@ -104,6 +104,7 @@ export const incrementIndex = (state, modifier: number = 1) => {
   return focusItem(state, { target })
 }
 
+/* istanbul ignore next */
 export const decrementIndex = (state, modifier: number = 1) => {
   const { envNode, index, indexMap, items } = state
   if (!items.length || !isDefined(index)) return
@@ -121,6 +122,7 @@ export const decrementIndex = (state, modifier: number = 1) => {
   return focusItem(state, { target })
 }
 
+/* istanbul ignore next */
 export const focusItem = (state, event: Event) => {
   const node = findClosestItemDOMNode(event.target as Element)
   if (!node) return
@@ -144,13 +146,13 @@ export const focusItem = (state, event: Event) => {
   return dispatch(state, {
     type: actionTypes.FOCUS_ITEM,
     payload: {
-      previousIndex: state.index,
       index: index,
       lastInteractionType,
     },
   })
 }
 
+/* istanbul ignore next */
 export const selectItemFromIndex = (state: any) => {
   const target = findItemDOMNode(state.index, state.envNode)
   if (!target) return
@@ -159,6 +161,7 @@ export const selectItemFromIndex = (state: any) => {
   return selectItem(state, mockEvent)
 }
 
+/* istanbul ignore next */
 export const selectItem = (state, event: any) => {
   const { closeOnSelect, items, envNode } = state
   const node = findClosestItemDOMNode(event.target)
@@ -195,11 +198,7 @@ export const selectItem = (state, event: any) => {
   return dispatch(state, {
     type: actionTypes.SELECT_ITEM,
     payload: {
-      isOpen: closeOnSelect ? false : state.isOpen,
-      previousSelectedItem: state.selectedItem,
-      previousSelectedIndex: state.selectedIndex,
-      selectedIndex: index,
-      selectedItem: selectedItem,
+      selectedItem,
     },
   })
 }
@@ -237,7 +236,6 @@ export const updateInputValue = (state, inputValue) => {
     type: actionTypes.UPDATE_INPUT_VALUE,
     payload: {
       previousIndex: state.index,
-      previousInputValue: state.inputValue,
       inputValue: inputValue,
       index: '0',
     },

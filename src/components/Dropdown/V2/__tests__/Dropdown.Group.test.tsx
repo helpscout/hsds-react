@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Group } from '../Dropdown.Group'
-import { hasClass } from './Dropdown.testHelpers'
+import { hasClass } from '../../../../tests/helpers/enzyme'
 
 describe('className', () => {
   test('Has a default className', () => {

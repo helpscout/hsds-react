@@ -193,6 +193,7 @@ describe('setMenuNode', () => {
     const wrapper = mount(
       <Dropdown getState={mockGetState} setMenuNode={spy} />
     )
+    wrapper.setProps({ isOpen: true })
     wrapper.update()
 
     expect(spy).not.toHaveBeenCalled()
@@ -209,6 +210,7 @@ describe('setTriggerNode', () => {
     const wrapper = mount(
       <Dropdown getState={mockGetState} setTriggerNode={spy} />
     )
+    wrapper.setProps({ isOpen: true })
     wrapper.update()
 
     expect(spy).not.toHaveBeenCalled()

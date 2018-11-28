@@ -1,20 +1,23 @@
-import * as React from 'react'
 import {
-  pathResolve,
-  isPathActive,
-  getParentPath,
-  getNextChildPath,
-  incrementPathIndex,
   decrementPathIndex,
-  enhanceItemsWithProps,
+  flattenGroupedItems,
   getCustomItemProps,
-  itemIsActive,
+  getIndexMapFromItems,
   getItemFromCollection,
+  getItemProps,
+  getNextChildPath,
+  getParentPath,
+  getUniqueKeyFromItem,
+  incrementPathIndex,
   isDropRight,
+  isItemsEmpty,
+  isPathActive,
   itemHasSubMenu,
+  itemIsActive,
   itemIsHover,
   itemIsOpen,
   itemIsSelected,
+  pathResolve,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -58,6 +61,7 @@ describe('isPathActive', () => {
   test('Returns false for non-matching paths', () => {
     // @ts-ignore
     expect(isPathActive()).toBe(false)
+    expect(isPathActive('0.1')).toBe(false)
     expect(isPathActive('1.2', '1.2.3')).toBe(false)
     expect(isPathActive('0', '1')).toBe(false)
     expect(isPathActive('0.1', '1')).toBe(false)
@@ -75,6 +79,11 @@ describe('getParentPath', () => {
     expect(getParentPath('1.2')).toBe('1')
     expect(getParentPath('1')).toBe('1')
   })
+
+  test('Returns empty string if no path', () => {
+    // @ts-ignore
+    expect(getParentPath()).toBe('')
+  })
 })
 
 describe('getNextChildPath', () => {
@@ -83,6 +92,11 @@ describe('getNextChildPath', () => {
     expect(getNextChildPath('1.1')).toBe('1.1.0')
     expect(getNextChildPath('1.0')).toBe('1.0.0')
     expect(getNextChildPath('0')).toBe('0.0')
+  })
+
+  test('Returns empty string if no path', () => {
+    // @ts-ignore
+    expect(getNextChildPath()).toBe('')
   })
 })
 
@@ -120,43 +134,6 @@ describe('decrementPathIndex', () => {
     expect(decrementPathIndex('0')).toBe('0')
     expect(decrementPathIndex('5.4.3.0')).toBe('5.4.3.0')
     expect(decrementPathIndex('5.4.3.0', 10)).toBe('5.4.3.0')
-  })
-})
-
-describe('enhanceItemsWithProps', () => {
-  test('Can add props to an array of items', () => {
-    const items = [{ name: 'ron' }, { name: 'champ' }]
-    const enhancedItems = enhanceItemsWithProps(items, { network: 'channel 4' })
-
-    expect(enhancedItems[0]).toEqual({
-      name: 'ron',
-      network: 'channel 4',
-    })
-    expect(enhancedItems[1]).toEqual({
-      name: 'champ',
-      network: 'channel 4',
-    })
-  })
-
-  test('Can add props to a nested array of items', () => {
-    const items = [
-      {
-        name: 'ron',
-        items: [{ name: 'brick' }],
-      },
-      { name: 'champ' },
-    ]
-    const enhancedItems = enhanceItemsWithProps(items, { network: 'channel 4' })
-
-    expect(enhancedItems[0]).toEqual({
-      name: 'ron',
-      network: 'channel 4',
-      items: [{ name: 'brick', network: 'channel 4' }],
-    })
-    expect(enhancedItems[1]).toEqual({
-      name: 'champ',
-      network: 'channel 4',
-    })
   })
 })
 
@@ -233,6 +210,17 @@ describe('getItemFromCollection', () => {
       name: 'Ron',
       value: 'ron',
     })
+  })
+
+  test('Returns undefined for no match', () => {
+    const items = [
+      { name: 'Ron', value: 'ron' },
+      { name: 'Brick', value: 'brick' },
+      { name: 'Champ', value: 'champ' },
+      { name: 'Brian', value: 'brian' },
+    ]
+
+    expect(getItemFromCollection(items, 'nope')).toBe(undefined)
   })
 
   test('Can return a nested item from a collection based on value match', () => {
@@ -476,99 +464,146 @@ describe('itemIsSelected', () => {
   })
 })
 
-// describe('getItemPropsOld', () => {
-//   const item = {
-//     className: 'ron',
-//     index: '0.1',
-//     value: 'ron',
-//     'aria-label': 'Is Ron',
-//   }
+describe('flattenGroupedItems', () => {
+  test('Returns a flattened array of group + items', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Channel 4',
+        items: [
+          { name: 'Ron', id: 'ron' },
+          { name: 'Brick', id: 'brick' },
+          { name: 'Champ', id: 'champ' },
+          { name: 'Brian', id: 'brian' },
+        ],
+      },
+    ]
 
-//   test('Returns unmodified item if state is undefined', () => {
-//     const state = undefined
+    const collection = flattenGroupedItems(items)
 
-//     expect(getItemPropsOld(state, item)).toBe(item)
-//   })
+    expect(collection.length).toBe(5)
+    expect(collection[0].type).toBe('group')
+    expect(collection[0].label).toBe('Channel 4')
+  })
+})
 
-//   test('Enhances item based on state, if applicable', () => {
-//     const state = {
-//       index: '0.1.3',
-//     }
+describe('isItemsEmpty', () => {
+  test('Returns true for empty items', () => {
+    expect(isItemsEmpty([])).toBe(true)
+    expect(isItemsEmpty([{ type: 'group', items: [] }])).toBe(true)
+  })
 
-//     const enhancedItem: any = getItemPropsOld(state, item)
+  test('Returns false for non empty items', () => {
+    expect(isItemsEmpty([{ value: 'ron' }])).toBe(false)
+    expect(isItemsEmpty([{ type: 'group', items: [{ value: 'ron' }] }])).toBe(
+      false
+    )
+  })
+})
 
-//     expect(enhancedItem).not.toBe(item)
-//     expect(enhancedItem.className).toContain(item.className)
-//     expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
-//     expect(enhancedItem.isHover).toBe(true)
-//     expect(enhancedItem.isOpen).toBe(true)
-//     expect(enhancedItem.isSelected).toBe(false)
-//     expect(enhancedItem.isActive).toBe(false)
-//   })
-// })
+describe('getUniqueKeyFromItem', () => {
+  test('Attempts to return the best, unique, key', () => {
+    expect(getUniqueKeyFromItem({ id: 'ron' })).toBe('ron')
+    expect(getUniqueKeyFromItem({ value: 'ron' })).toBe('ron')
+    expect(getUniqueKeyFromItem({ label: 'ron' })).toBe('ron')
+    expect(getUniqueKeyFromItem({ id: 'ron', value: 'brick' })).toBe('ron')
+    // Invalid items
+    expect(getUniqueKeyFromItem({})).toBe(undefined)
+    // @ts-ignore
+    expect(getUniqueKeyFromItem()).toBe(undefined)
+  })
+})
 
-// describe('getEnhancedItemsWithProps', () => {
-//   test('Enhances item from state', () => {
-//     const item = {
-//       className: 'ron',
-//       value: 'ron',
-//       'aria-label': 'Is Ron',
-//     }
+describe('getIndexMapFromItems', () => {
+  test('Can create an indexMap with flat items', () => {
+    const items = [
+      { name: 'Ron', id: 'ron' },
+      { name: 'Brick', id: 'brick' },
+      { name: 'Champ', id: 'champ' },
+      { type: 'divider' },
+      { name: 'Brian', id: 'brian' },
+    ]
+    const indexMap = getIndexMapFromItems(items)
 
-//     const state = {
-//       index: '2',
-//       items: [item],
-//     }
+    expect(Object.keys(indexMap).length).toBe(4)
+    expect(indexMap['0']).toEqual('ron')
+    expect(indexMap['1']).toEqual('brick')
+  })
 
-//     const enhancedItems: any = getEnhancedItemsWithProps(state)
-//     const enhancedItem = enhancedItems[0]
+  test('Can create an indexMap with grouped items', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Channel 4',
+        items: [
+          { name: 'Ron', id: 'ron' },
+          { name: 'Brick', id: 'brick' },
+          { name: 'Champ', id: 'champ' },
+          { name: 'Brian', id: 'brian' },
+        ],
+      },
+    ]
+    const indexMap = getIndexMapFromItems(items)
 
-//     expect(enhancedItem).not.toBe(item)
-//     expect(enhancedItem.className).toContain(item.className)
-//     expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
-//     expect(enhancedItem.isHover).toBe(false)
-//     expect(enhancedItem.isOpen).toBe(false)
-//     expect(enhancedItem.isSelected).toBe(false)
-//     expect(enhancedItem.isActive).toBe(false)
-//   })
+    expect(Object.keys(indexMap).length).toBe(4)
+    expect(indexMap['0']).toEqual('ron')
+    expect(indexMap['1']).toEqual('brick')
+  })
 
-//   test('Enhances nested item from state', () => {
-//     const item = {
-//       className: 'ron',
-//       value: 'ron',
-//       'aria-label': 'Is Ron',
-//       items: [
-//         {
-//           className: 'brian',
-//           value: 'brian',
-//           'aria-label': 'Is Brian',
-//         },
-//       ],
-//     }
+  test('Can create an indexMap with grouped items + nested items', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Channel 4',
+        items: [
+          {
+            name: 'Ron',
+            id: 'ron',
+            items: [
+              { name: 'Brick', id: 'brick' },
+              { name: 'Champ', id: 'champ' },
+              { name: 'Brian', id: 'brian' },
+            ],
+          },
+        ],
+      },
+    ]
+    const indexMap = getIndexMapFromItems(items)
 
-//     const state = {
-//       index: '0.0',
-//       selectedItem: 'brian',
-//       items: [item],
-//     }
+    expect(Object.keys(indexMap).length).toBe(4)
+    expect(indexMap['0']).toEqual('ron')
+    expect(indexMap['0.0']).toEqual('brick')
+  })
+})
 
-//     const childItem = item.items[0]
-//     const enhancedItems: any = getEnhancedItemsWithProps(state)
-//     const enhancedItem = enhancedItems[0]
-//     const enhancedChildItem = enhancedItem.items[0]
+describe('getItemProps', () => {
+  const item = {
+    className: 'ron',
+    index: '0',
+    value: 'ron',
+    'aria-label': 'Is Ron',
+  }
 
-//     expect(enhancedItem.hasSubMenu).toBe(true)
-//     expect(enhancedItem.isHover).toBe(true)
-//     expect(enhancedItem.isOpen).toBe(true)
+  test('Returns unmodified item if state is undefined', () => {
+    const state = undefined
 
-//     expect(enhancedChildItem).not.toBe(childItem)
-//     expect(enhancedChildItem.className).toContain(childItem.className)
-//     expect(enhancedChildItem.className.length).toBeGreaterThan(
-//       childItem.className.length
-//     )
-//     expect(enhancedChildItem.isHover).toBe(true)
-//     expect(enhancedChildItem.isOpen).toBe(false)
-//     expect(enhancedChildItem.isSelected).toBe(true)
-//     expect(enhancedChildItem.isActive).toBe(true)
-//   })
-// })
+    expect(getItemProps(state, item)).toBe(item)
+  })
+
+  test('Enhances item based on state, if applicable', () => {
+    const state = {
+      indexMap: getIndexMapFromItems([item]),
+      items: [{ ...item, items: [{ value: 'brick' }] }],
+      index: '0',
+      selectedItem: item,
+    }
+
+    const enhancedItem: any = getItemProps(state, item)
+
+    expect(enhancedItem).not.toBe(item)
+    expect(enhancedItem.className).toContain(item.className)
+    expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
+    expect(enhancedItem.isSelected).toBe(true)
+    expect(enhancedItem.isActive).toBe(true)
+  })
+})

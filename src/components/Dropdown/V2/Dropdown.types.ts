@@ -52,12 +52,10 @@ export interface DropdownProps extends DropdownMenuDimensions {
   onSelect: (item: Object, props: Object) => void
   openClassName: string
   previousIndex?: null
-  previousSelectedIndex?: string
   renderEmpty?: any
   renderItem?: any
   renderLoading?: any
   renderTrigger?: any
-  selectedIndex?: string
   selectedItem?: string | Object
   setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void

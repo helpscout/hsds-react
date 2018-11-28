@@ -1,19 +1,24 @@
 import actionTypes from './Dropdown.actionTypes'
 import { initialState } from './Dropdown.store'
+import { isFunction } from '../../../utilities/is'
 
 export const initialItemState = {
   index: null,
   previousIndex: null,
-  selectedIndex: '',
-  previousSelectedIndex: '',
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: any = {}) => {
   let nextState
   const { payload } = action
 
   switch (action.type) {
     // Interactions
+    case actionTypes.CHANGE_DIRECTION:
+      nextState = {
+        direction: state.direction === 'right' ? 'left' : 'right',
+      }
+      break
+
     case actionTypes.OPEN_DROPDOWN:
       nextState = {
         ...initialItemState,
@@ -41,11 +46,15 @@ const reducer = (state = initialState, action) => {
       break
 
     case actionTypes.FOCUS_ITEM:
-      nextState = { ...payload }
+      nextState = { ...payload, previousIndex: state.index }
       break
 
     case actionTypes.SELECT_ITEM:
-      nextState = { ...payload }
+      nextState = {
+        ...payload,
+        isOpen: state.closeOnSelect ? false : state.isOpen,
+        previousSelectedItem: state.selectedItem,
+      }
       break
 
     // Node references
@@ -75,13 +84,16 @@ const reducer = (state = initialState, action) => {
       break
   }
 
-  return state.stateReducer(
-    {
-      ...state,
-      ...nextState,
-    },
-    action
-  )
+  const nextReducedState = {
+    ...state,
+    ...nextState,
+  }
+
+  if (isFunction(state.stateReducer)) {
+    return state.stateReducer(nextReducedState, action)
+  } else {
+    return nextReducedState
+  }
 }
 
 export default reducer

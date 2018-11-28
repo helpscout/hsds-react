@@ -1,7 +1,11 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
-import { findDOMNode, hasClass, getAttribute } from './Dropdown.testHelpers'
+import {
+  findDOMNode,
+  hasClass,
+  getAttribute,
+} from '../../../../tests/helpers/enzyme'
 import { setMenuPositionStyles } from '../Dropdown.renderUtils'
 import { MenuUI } from '../Dropdown.css.js'
 

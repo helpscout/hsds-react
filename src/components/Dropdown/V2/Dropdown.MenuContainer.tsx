@@ -148,6 +148,7 @@ export class MenuContainer extends React.Component<Props> {
         <Group key={groupId} id={groupId} aria-labelledby={groupHeaderId}>
           <Item {...groupProps} id={groupHeaderId} />
           {items.map((item, index) => {
+            /* istanbul ignore next */
             const indexProp = withIndex ? index + groupStartIndex : undefined
 
             return (
@@ -175,6 +176,7 @@ export class MenuContainer extends React.Component<Props> {
     withIndex?: boolean
   }) => {
     return items.map((item, index) => {
+      /* istanbul ignore next */
       const indexProp = withIndex ? index : undefined
       return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
     })
@@ -269,6 +271,7 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   setNodeRef = node => {
+    /* istanbul ignore else */
     if (node) {
       this.node = node
       this.parentNode = node.parentElement

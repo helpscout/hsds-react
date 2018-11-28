@@ -4,7 +4,7 @@ import createStore from '../Dropdown.store'
 import { Provider } from 'unistore/react'
 import Keys from '../../../../constants/Keys'
 import ConnectedTrigger, { Trigger } from '../Dropdown.Trigger'
-import { hasClass, getAttribute } from './Dropdown.testHelpers'
+import { hasClass, getAttribute } from '../../../../tests/helpers/enzyme'
 
 describe('className', () => {
   test('Has a default className', () => {

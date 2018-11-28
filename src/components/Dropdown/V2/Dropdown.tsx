@@ -103,6 +103,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     this.menuNode = node
     this.props.menuRef(node)
 
+    /* istanbul ignore next */
     // Internally, for store
     // @ts-ignore
     if (this.props.getState().menuNode) return
@@ -113,6 +114,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     this.triggerNode = node
     this.props.triggerRef(node)
 
+    /* istanbul ignore next */
     // Internally, for store
     // @ts-ignore
     if (this.props.getState().triggerNode) return

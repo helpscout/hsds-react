@@ -1,6 +1,7 @@
 import { createActionTypes } from '../../../utilities/actions'
 
 const actionTypes = [
+  'CHANGE_DIRECTION',
   'CLOSE_DROPDOWN',
   'FOCUS_ITEM',
   'MENU_MOUNT',

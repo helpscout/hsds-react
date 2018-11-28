@@ -130,7 +130,7 @@ export class Item extends React.PureComponent<Props> {
   }
 
   renderSubMenu = () => {
-    const { actionId, items, subMenuId } = this.props
+    const { actionId, getState, renderItem, items, subMenuId } = this.props
 
     return (
       this.hasSubMenu() && (
@@ -143,8 +143,11 @@ export class Item extends React.PureComponent<Props> {
               id={subMenuId}
             >
               {items.map((item, index) => (
-                <ConnectedItem
+                <Item
+                  getState={getState}
+                  renderItem={renderItem}
                   key={
+                    item.id ||
                     item.value ||
                     /* istanbul ignore else */
                     getComponentKey(item, index)
