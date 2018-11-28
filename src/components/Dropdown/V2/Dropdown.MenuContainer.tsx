@@ -138,7 +138,7 @@ export class MenuContainer extends React.Component<Props> {
     return props
   }
 
-  renderItemsAsGroups = ({ id = 'group', items }) => {
+  renderItemsAsGroups = ({ id = 'group', items, withIndex }) => {
     let groupStartIndex = 0
 
     return items.map((group, index) => {
@@ -149,17 +149,17 @@ export class MenuContainer extends React.Component<Props> {
       if (!items.length) return
 
       const groupedItemsMarkup = (
-        <Group key={index} id={groupId} aria-labelledby={groupHeaderId}>
+        <Group key={groupId} id={groupId} aria-labelledby={groupHeaderId}>
           <Item {...groupProps} id={groupHeaderId} />
-          {items.map((item, index) => (
-            <Item
-              key={item.value || getComponentKey(item)}
-              {...this.getItemProps(item, index + groupStartIndex)}
-              id={groupHeaderId}
-            >
-              {item.label}
-            </Item>
-          ))}
+          {items.map((item, index) => {
+            const indexProp = withIndex ? index + groupStartIndex : undefined
+
+            return (
+              <Item {...this.getItemProps(item, indexProp)} id={groupHeaderId}>
+                {item.label}
+              </Item>
+            )
+          })}
         </Group>
       )
 
@@ -180,14 +180,7 @@ export class MenuContainer extends React.Component<Props> {
   }) => {
     return items.map((item, index) => {
       const indexProp = withIndex ? index : undefined
-      return (
-        <Item
-          key={item.value || getComponentKey(item, index)}
-          {...this.getItemProps(item, indexProp)}
-        >
-          {item.label}
-        </Item>
-      )
+      return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
     })
   }
 
@@ -202,7 +195,8 @@ export class MenuContainer extends React.Component<Props> {
     if (!items.length && renderEmpty)
       return renderRenderPropComponent(renderEmpty)
     // Groups
-    if (this.hasGroups()) return this.renderItemsAsGroups({ items, id })
+    if (this.hasGroups())
+      return this.renderItemsAsGroups({ items, id, withIndex: false })
     // Normal
     return this.renderItems({ items })
   }

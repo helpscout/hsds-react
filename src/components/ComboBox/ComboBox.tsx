@@ -14,6 +14,7 @@ export interface ComboBoxProps extends DropdownProps {
   customFilter?: (filterProps: Object, defaultFilter: any) => void
   onInputChange: (value: string) => void
   inputProps: any
+  itemFilterKey: string
   placeholder: string
   noResultsLabel: string
   renderMenuStart?: () => void
@@ -38,6 +39,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
       placeholder: 'Search',
       size: 'xssm',
     },
+    itemFilterKey: 'value',
     innerWrapperRef: noop,
     maxHeight: 330,
     minWidth: 222,
@@ -106,9 +108,11 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   filterSearchResult = (item, inputValue) => {
+    const { itemFilterKey } = this.props
     if (!inputValue) return true
+    if (!item[itemFilterKey]) return false
 
-    return item.label.toLowerCase().includes(inputValue.toLowerCase())
+    return item[itemFilterKey].toLowerCase().includes(inputValue.toLowerCase())
   }
 
   resetInputValue = () => {
@@ -172,10 +176,15 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     // We need to render the items slightly differently for groups.
     // To do this, we'll rely on the function provided to use from Dropdown.
     if (hasGroups) {
-      return renderItemsAsGroups({ items: nextItems })
+      return renderItemsAsGroups({ items: nextItems, withIndex: !!inputValue })
     } else {
       return renderItems({ items: nextItems, withIndex: true })
     }
+  }
+
+  onMenuMount = () => {
+    this.props.onMenuMount()
+    this.resetInputValue()
   }
 
   onMenuUnmount = () => {
@@ -192,10 +201,12 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
 
     return {
       ...rest,
+      onMenuMount: this.onMenuMount,
       onMenuUnmount: this.onMenuUnmount,
       enableTabNavigation: false,
       className: componentClassName,
       inputValue,
+      index: '0',
     }
   }
 

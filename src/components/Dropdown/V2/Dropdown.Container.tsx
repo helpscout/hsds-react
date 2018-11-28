@@ -98,7 +98,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     const state = this.store.getState()
 
     // Update items + regenerate the indexMap if items chage
-    if (nextProps.items !== this.props.items) {
+    if (nextProps.items !== state.items) {
       this.rehydrateStoreWithProps({
         items: nextProps.items,
         indexMap: getIndexMapFromItems(nextProps.items),
@@ -110,10 +110,15 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
       this.rehydrateStoreWithProps({ isOpen: nextProps.isOpen })
     }
 
+    // Adjust index, if changed
+    if (nextProps.index !== state.index) {
+      this.rehydrateStoreWithProps({ index: nextProps.index })
+    }
+
     // This is to handle filterable dropdowns. We need to adjust the internally
     // tracked inputValue and reset the `index` value for a filterable
     // experience.
-    if (nextProps.inputValue !== this.props.inputValue) {
+    if (nextProps.inputValue !== state.inputValue) {
       this.rehydrateStoreWithProps({
         previousIndex: state.index,
         previousInputValue: state.inputValue,

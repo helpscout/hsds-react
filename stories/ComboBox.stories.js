@@ -35,7 +35,11 @@ const items = [
     type: 'group',
   },
   {
-    items: ItemSpec.generate(8),
+    items: [
+      ...ItemSpec.generate(8),
+      { type: 'divider' },
+      ...ItemSpec.generate(3),
+    ],
     label: 'Group 2',
     type: 'group',
     value: 'thing2',
@@ -43,7 +47,7 @@ const items = [
 ]
 
 stories.add('Default', () => {
-  return <ComboBox items={items} isOpen={true} />
+  return <ComboBox itemFilterKey="label" items={items} isOpen={true} />
 })
 
 stories.add('Infinite Scroll', () => {
@@ -83,6 +87,7 @@ stories.add('Infinite Scroll', () => {
     render() {
       return (
         <ComboBox
+          itemFilterKey="label"
           items={this.state.items}
           isOpen={true}
           onInputChange={this.onInputChange}

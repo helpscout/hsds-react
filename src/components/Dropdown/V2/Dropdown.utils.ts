@@ -298,7 +298,12 @@ export const getItemProps = (
     : undefined
 
   const itemId = pathResolve(id, itemIndex)
-  const key = item.id || item.value || getComponentKey(item, index)
+
+  const key =
+    item.id ||
+    item.value ||
+    getComponentKey(item, index) ||
+    `unsafeComponentKey-${item.toString()}`
 
   return {
     ...rest,

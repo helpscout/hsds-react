@@ -15,9 +15,7 @@ import {
   findItemDOMNode,
   findItemDOMNodeById,
   findOpenItemDOMNodes,
-  findFocusedItemDOMNode,
   findFocusedItemDOMNodes,
-  findSingleItemDOMNode,
   getIndexFromItemDOMNode,
   isDOMNodeValidItem,
   isOpenFromIndex,
@@ -181,7 +179,7 @@ class Renderer extends React.PureComponent<any> {
 
     if (!this.shouldRenderDOM()) return
 
-    const previousNode = findFocusedItemDOMNode(envNode, focusClassName)
+    const previousNode = findItemDOMNode(previousIndex, envNode)
 
     if (!previousNode) return
 
@@ -190,8 +188,13 @@ class Renderer extends React.PureComponent<any> {
     if (isOpen) {
       previousNode.classList.add(openClassName)
     } else {
-      previousNode.classList.remove(focusClassName)
-      previousNode.classList.remove(openClassName)
+      Array.from(findFocusedItemDOMNodes(envNode, focusClassName)).forEach(
+        node => {
+          if (!node.classList.contains(openClassName)) {
+            node.classList.remove(focusClassName)
+          }
+        }
+      )
       resetSubMenuScrollPositionFromItemNode(previousNode)
     }
   }
@@ -222,34 +225,6 @@ class Renderer extends React.PureComponent<any> {
 
     if (closedSubMenu) {
       nextNode.classList.remove(openClassName)
-    }
-  }
-
-  renderInputValueChange = () => {
-    const {
-      envNode,
-      focusClassName,
-      previousInputValue,
-      inputValue,
-    } = this.props
-
-    // Render selected item from inputValue changes
-    if (previousInputValue === inputValue) return
-
-    // @ts-ignore
-    const firstItemNode = findSingleItemDOMNode(envNode)
-    if (!firstItemNode) return
-
-    const otherFocusedNodes = Array.from(findFocusedItemDOMNodes(envNode))
-
-    if (!otherFocusedNodes.length) {
-      if (firstItemNode.classList.contains(focusClassName)) return
-      firstItemNode.classList.add(focusClassName)
-    } else if (otherFocusedNodes.length > 1) {
-      otherFocusedNodes.forEach(node => {
-        node.classList.remove(focusClassName)
-      })
-      firstItemNode.classList.add(focusClassName)
     }
   }
 
@@ -292,19 +267,14 @@ class Renderer extends React.PureComponent<any> {
     // Render next interactions
     this.renderNextInteraction()
 
-    // Render selected item from inputValue changes
-    requestAnimationFrame(() => {
-      this.renderInputValueChange()
-    })
-
     // Render selected item
-    requestAnimationFrame(() => {
-      this.renderSelectedItem()
-    })
+    this.renderSelectedItem()
   }
 
   optimizedRender = () => {
-    this.optimizedItemRenderFromProps()
+    requestAnimationFrame(() => {
+      this.optimizedItemRenderFromProps()
+    })
   }
 
   render() {
@@ -339,7 +309,6 @@ const ConnectedRenderer: any = connect(
       focusClassName,
       lastInteractionType,
       previousIndex,
-      previousInputValue,
       index,
       indexMap,
       inputValue,
@@ -357,7 +326,6 @@ const ConnectedRenderer: any = connect(
       dropRight: isDropRight(state),
       focusClassName,
       lastInteractionWasKeyboard: lastInteractionType === 'keyboard',
-      previousInputValue,
       previousIndex,
       index,
       indexMap,
