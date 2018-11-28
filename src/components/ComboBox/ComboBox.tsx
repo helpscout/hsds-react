@@ -49,7 +49,6 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     maxHeight: 330,
     minWidth: 222,
     noResultsLabel: 'No results',
-    resetInputValueDelay: 60,
   }
 
   state = {
@@ -82,7 +81,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
 
     this.props.onInputChange(inputValue)
 
-    /* istanbul ignore else */
+    /* istanbul ignore next */
     if (this.props.inputProps.onChange) {
       this.props.inputProps.onChange(inputValue)
     }
