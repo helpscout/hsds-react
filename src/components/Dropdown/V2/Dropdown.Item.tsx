@@ -99,6 +99,7 @@ export class Item extends React.PureComponent<Props> {
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
+      /* istanbul ignore else */
       if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
         setMenuPositionStyles({
           dropRight,
@@ -142,8 +143,12 @@ export class Item extends React.PureComponent<Props> {
               id={subMenuId}
             >
               {items.map((item, index) => (
-                <Item
-                  key={item.value || getComponentKey(item, index)}
+                <ConnectedItem
+                  key={
+                    item.value ||
+                    /* istanbul ignore else */
+                    getComponentKey(item, index)
+                  }
                   {...this.getItemProps(item)}
                 />
               ))}
@@ -196,7 +201,6 @@ export class Item extends React.PureComponent<Props> {
 
   render() {
     const { actionId, className, disabled, type } = this.props
-    console.log('re-render')
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
@@ -238,10 +242,10 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 const ConnectedItem: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { renderItem } = state
+    const { getState, renderItem } = state
 
     return {
-      getState: () => state,
+      getState,
       renderItem,
     }
   }

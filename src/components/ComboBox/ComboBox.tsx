@@ -7,6 +7,7 @@ import Keys from '../../constants/Keys'
 import Text from '../Text'
 import { noop } from '../../utilities/other'
 import { classNames } from '../../utilities/classNames'
+import { renderRenderPropComponent } from '../../utilities/component'
 import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
 
 export interface ComboBoxProps extends DropdownProps {
@@ -227,13 +228,13 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   renderMenuStart = () => {
     const { renderMenuStart } = this.props
 
-    return renderMenuStart ? renderMenuStart() : null
+    return renderMenuStart ? renderRenderPropComponent(renderMenuStart) : null
   }
 
   renderMenuEnd = () => {
     const { renderMenuEnd } = this.props
 
-    return renderMenuEnd ? renderMenuEnd() : null
+    return renderMenuEnd ? renderRenderPropComponent(renderMenuEnd) : null
   }
 
   renderFooter = () => {
@@ -242,7 +243,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
 
     return (
       <Dropdown.Block className="c-ComboBoxFooter">
-        {renderFooter()}
+        {renderRenderPropComponent(renderFooter)}
       </Dropdown.Block>
     )
   }

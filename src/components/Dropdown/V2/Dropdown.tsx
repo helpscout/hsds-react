@@ -4,7 +4,6 @@ import { initialState } from './Dropdown.store'
 import { DropdownProps } from './Dropdown.types'
 import propConnect from '../../PropProvider/propConnect'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
-import { renderRenderPropComponent } from './Dropdown.utils'
 import EventListener from '../../EventListener'
 import KeypressListener from '../../KeypressListener'
 import MenuContainer from './Dropdown.MenuContainer'
@@ -13,7 +12,10 @@ import { DropdownUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
-import { namespaceComponent } from '../../../utilities/component'
+import {
+  namespaceComponent,
+  renderRenderPropComponent,
+} from '../../../utilities/component'
 import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface State {
@@ -33,10 +35,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   node: HTMLElement
   triggerNode: HTMLElement
   menuNode: HTMLElement
-
-  static contextTypes = {
-    getState: noop,
-  }
 
   handleOnDocumentKeyDown = (event: KeyboardEvent) => {
     if (!this.props.isOpen) return
@@ -106,7 +104,8 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     this.props.menuRef(node)
 
     // Internally, for store
-    if (this.context.getState().menuNode) return
+    // @ts-ignore
+    if (this.props.getState().menuNode) return
     this.props.setMenuNode(node)
   }
 
@@ -115,7 +114,8 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     this.props.triggerRef(node)
 
     // Internally, for store
-    if (this.context.getState().triggerNode) return
+    // @ts-ignore
+    if (this.props.getState().triggerNode) return
     this.props.setTriggerNode(node)
   }
 
@@ -158,11 +158,12 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
 const ConnectedDropdown: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { envNode, id, isOpen } = state
+    const { envNode, id, isOpen, getState } = state
     return {
       envNode,
       id,
       isOpen,
+      getState,
     }
   },
   // mapDispatchToProps

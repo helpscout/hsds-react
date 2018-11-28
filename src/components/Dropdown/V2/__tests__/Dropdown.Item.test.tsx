@@ -232,3 +232,19 @@ describe('disabled', () => {
     expect(getAttribute(el, 'aria-disabled')).toBe('true')
   })
 })
+
+describe('Types', () => {
+  test('Renders a Group Header, if type is group', () => {
+    const wrapper = mount(<Item type="group" />)
+    const el = wrapper.find('DropdownHeader')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Renders a Divider, if type is divider', () => {
+    const wrapper = mount(<Item type="divider" />)
+    const el = wrapper.find('DropdownDivider')
+
+    expect(el.length).toBeTruthy()
+  })
+})

@@ -6,9 +6,6 @@ export interface DropdownMenuDimensions {
 }
 
 export interface DropdownState extends DropdownMenuDimensions {
-  activeItem?: HTMLElement | null
-  activeIndex?: string
-  activeId?: string
   closeOnSelect: boolean
   id?: string
   menuId?: string
@@ -36,6 +33,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   enableTabNavigation: boolean
   envNode: any
   focusClassName: string
+  getState: (...args: any[]) => void
   id?: string
   index?: string
   innerRef: (node: HTMLElement) => void

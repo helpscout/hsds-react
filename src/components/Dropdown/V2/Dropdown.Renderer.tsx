@@ -112,7 +112,7 @@ class Renderer extends React.PureComponent<any> {
 
     const nextIndex = getNextChildPath(index)
 
-    this.setNextActiveItem(nextIndex)
+    this.setNextIndex(nextIndex)
   }
 
   closeSubMenu = () => {
@@ -121,15 +121,15 @@ class Renderer extends React.PureComponent<any> {
 
     const nextIndex = getParentPath(index)
 
-    this.setNextActiveItem(nextIndex)
+    this.setNextIndex(nextIndex)
   }
 
-  setNextActiveItem = (nextActiveIndex: string) => {
+  setNextIndex = (nextIndex: string) => {
     const { envNode } = this.props
     /* istanbul ignore if */
-    if (!isDefined(nextActiveIndex)) return
+    if (!isDefined(nextIndex)) return
 
-    const target = findItemDOMNode(nextActiveIndex, envNode)
+    const target = findItemDOMNode(nextIndex, envNode)
 
     if (target) {
       this.props.focusItem({ target })

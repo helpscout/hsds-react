@@ -12,7 +12,6 @@ import Renderer from './Dropdown.Renderer'
 import {
   SELECTORS,
   isDropRight,
-  renderRenderPropComponent,
   getItemProps,
   hasGroups,
 } from './Dropdown.utils'
@@ -23,9 +22,9 @@ import {
   onMenuMounted,
   onMenuUnmounted,
 } from './Dropdown.actions'
-import { MenuContainerUI, GroupUI } from './Dropdown.css.js'
+import { MenuContainerUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
-import { getComponentKey } from '../../../utilities/component'
+import { renderRenderPropComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { namespaceComponent } from '../../../utilities/component'
 import { COMPONENT_KEY } from './Dropdown.utils'
@@ -39,6 +38,7 @@ export interface Props {
   dropUp: boolean
   dropRight: boolean
   focusItem: (...args: any[]) => void
+  getState: (...args: any[]) => void
   id?: string
   isLoading: boolean
   onMenuMounted: () => void
@@ -61,6 +61,7 @@ export class MenuContainer extends React.Component<Props> {
     closeDropdown: noop,
     dropUp: false,
     dropRight: true,
+    getState: noop,
     focusItem: noop,
     innerRef: noop,
     items: [],
@@ -69,12 +70,7 @@ export class MenuContainer extends React.Component<Props> {
     onMenuMounted: noop,
     onMenuUnmounted: noop,
     selectItem: noop,
-    setActiveItem: noop,
     zIndex: 1080,
-  }
-
-  static contextTypes = {
-    getState: noop,
   }
 
   node: HTMLElement
@@ -132,7 +128,7 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   getItemProps = (item: any, index?: number) => {
-    const state = this.context.getState()
+    const state = this.props.getState()
     const props = getItemProps(state, item, index)
 
     return props
@@ -354,6 +350,7 @@ const ConnectedMenuContainer: any = connect(
   (state: any) => {
     const {
       dropUp,
+      getState,
       isOpen,
       isLoading,
       items,
@@ -368,6 +365,7 @@ const ConnectedMenuContainer: any = connect(
     return {
       dropUp,
       dropRight: isDropRight(state),
+      getState,
       isOpen,
       id: menuId,
       isLoading,

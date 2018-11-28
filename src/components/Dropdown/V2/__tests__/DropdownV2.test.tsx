@@ -109,13 +109,13 @@ describe('Store/Render', () => {
     // Dropdown uses setState during initialization
     expect(spy).toHaveBeenCalledTimes(1)
 
-    store.setState({ activeId: '123' })
+    store.setState({ index: '123' })
 
     expect(spy).toHaveBeenCalledTimes(2)
 
     wrapper.unmount()
 
-    store.setState({ activeId: '456' })
+    store.setState({ index: '456' })
     store.setState({ isOpen: true })
     store.setState({ isOpen: false })
     store.setState({ isOpen: true })

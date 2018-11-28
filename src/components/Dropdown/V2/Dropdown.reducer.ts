@@ -2,10 +2,6 @@ import actionTypes from './Dropdown.actionTypes'
 import { initialState } from './Dropdown.store'
 
 export const initialItemState = {
-  activeItem: null,
-  activeIndex: null,
-  activeValue: null,
-  activeId: null,
   index: null,
   previousIndex: null,
   selectedIndex: '',

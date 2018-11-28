@@ -2,11 +2,6 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import { Dropdown } from '../Dropdown'
 import Keys from '../../../../constants/Keys'
-// Mocking the components below
-// @ts-ignore
-import Trigger from '../Dropdown.Trigger'
-// @ts-ignore
-import MenuContainer from '../Dropdown.MenuContainer'
 
 const documentEvents = {
   click: (event: any) => undefined,
@@ -183,6 +178,38 @@ describe('Click events', () => {
     wrapper.instance()['menuNode'] = mockMenuNode
 
     documentEvents.click({ target: targetNode })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('setMenuNode', () => {
+  test('Does not setMenuNode, if already defined', () => {
+    const spy = jest.fn()
+    const mockGetState = () => ({
+      menuNode: true,
+    })
+
+    const wrapper = mount(
+      <Dropdown getState={mockGetState} setMenuNode={spy} />
+    )
+    wrapper.update()
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('setTriggerNode', () => {
+  test('Does not setTriggerNode, if already defined', () => {
+    const spy = jest.fn()
+    const mockGetState = () => ({
+      triggerNode: true,
+    })
+
+    const wrapper = mount(
+      <Dropdown getState={mockGetState} setTriggerNode={spy} />
+    )
+    wrapper.update()
 
     expect(spy).not.toHaveBeenCalled()
   })

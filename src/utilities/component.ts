@@ -1,5 +1,6 @@
+import * as React from 'react'
 import { includes } from './arrays'
-import { isObject, isDefined } from './is'
+import { isFunction, isObject, isDefined } from './is'
 
 let REGISTERED_COMPONENTS = {}
 export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
@@ -162,4 +163,17 @@ export const getComponentKey = (
   }
 
   return key
+}
+
+export const renderRenderPropComponent = (
+  renderProp: any,
+  props: Object = {}
+): any => {
+  if (React.isValidElement(renderProp)) {
+    return React.cloneElement(renderProp, props)
+  }
+  if (isFunction(renderProp)) {
+    return renderProp(props)
+  }
+  return null
 }

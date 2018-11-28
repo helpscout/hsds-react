@@ -15,7 +15,6 @@ import {
   itemIsHover,
   itemIsOpen,
   itemIsSelected,
-  renderRenderPropComponent,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -401,18 +400,18 @@ describe('isDropRight', () => {
 })
 
 describe('itemIsHover', () => {
-  test('Returns true if item matches activeIndex', () => {
+  test('Returns true if item matches index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     expect(itemIsHover(state, '1.2')).toBe(true)
     expect(itemIsHover(state, '1.2.3')).toBe(true)
   })
 
-  test('Returns false if item does not match activeIndex', () => {
+  test('Returns false if item does not match index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '0.1.2.3'
@@ -423,9 +422,9 @@ describe('itemIsHover', () => {
 })
 
 describe('itemIsOpen', () => {
-  test('Returns true if item matches activeIndex', () => {
+  test('Returns true if item matches index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '1.2'
@@ -433,9 +432,9 @@ describe('itemIsOpen', () => {
     expect(itemIsOpen(state, index)).toBe(true)
   })
 
-  test('Returns false if item does not match activeIndex', () => {
+  test('Returns false if item does not match index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '0.1.2.3'
@@ -444,9 +443,9 @@ describe('itemIsOpen', () => {
     expect(itemIsOpen({}, index)).toBe(false)
   })
 
-  test('Returns false if item index is larger than activeIndex', () => {
+  test('Returns false if item index is larger than index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     expect(itemIsOpen(state, '1.2.3.4')).toBe(false)
@@ -455,9 +454,9 @@ describe('itemIsOpen', () => {
 })
 
 describe('itemIsSelected', () => {
-  test('Returns true if item matches activeIndex', () => {
+  test('Returns true if item matches index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '1.2.3'
@@ -465,9 +464,9 @@ describe('itemIsSelected', () => {
     expect(itemIsSelected(state, index)).toBe(true)
   })
 
-  test('Returns false if item does not match activeIndex', () => {
+  test('Returns false if item does not match index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     expect(itemIsSelected(state, '0.1.2.3')).toBe(false)
@@ -493,7 +492,7 @@ describe('itemIsSelected', () => {
 
 //   test('Enhances item based on state, if applicable', () => {
 //     const state = {
-//       activeIndex: '0.1.3',
+//       index: '0.1.3',
 //     }
 
 //     const enhancedItem: any = getItemPropsOld(state, item)
@@ -517,7 +516,7 @@ describe('itemIsSelected', () => {
 //     }
 
 //     const state = {
-//       activeIndex: '2',
+//       index: '2',
 //       items: [item],
 //     }
 
@@ -548,7 +547,7 @@ describe('itemIsSelected', () => {
 //     }
 
 //     const state = {
-//       activeIndex: '0.0',
+//       index: '0.0',
 //       selectedItem: 'brian',
 //       items: [item],
 //     }
@@ -571,60 +570,5 @@ describe('itemIsSelected', () => {
 //     expect(enhancedChildItem.isOpen).toBe(false)
 //     expect(enhancedChildItem.isSelected).toBe(true)
 //     expect(enhancedChildItem.isActive).toBe(true)
-//   })
-// })
-
-// describe('renderRenderPropComponent', () => {
-//   test('Can render an instantiated React component', () => {
-//     const CryLaughingComponent = () => <div />
-//     const result = renderRenderPropComponent(<CryLaughingComponent />)
-
-//     expect(React.isValidElement(result)).toBe(true)
-//   })
-
-//   test('Can pass props to instantiated component', () => {
-//     const CryLaughingComponent = () => <div />
-//     const props = {
-//       disabled: true,
-//     }
-//     const result = renderRenderPropComponent(
-//       // @ts-ignore
-//       <CryLaughingComponent title="custom" />,
-//       props
-//     )
-
-//     expect(result.props.title).toBe('custom')
-//     expect(result.props.disabled).toBe(true)
-//   })
-
-//   test('Can render a function', () => {
-//     const CryLaughingComponent = () => <div />
-//     const result = renderRenderPropComponent(() => <CryLaughingComponent />)
-
-//     expect(React.isValidElement(result)).toBe(true)
-//   })
-
-//   test('Can pass props to a functional component', () => {
-//     const CryLaughingComponent = () => <div />
-//     const props = {
-//       disabled: true,
-//     }
-//     const result = renderRenderPropComponent(
-//       ({ disabled }) => (
-//         // @ts-ignore
-//         <CryLaughingComponent title="custom" disabled={disabled} />
-//       ),
-//       props
-//     )
-
-//     expect(result.props.title).toBe('custom')
-//     expect(result.props.disabled).toBe(true)
-//   })
-
-//   test('Returns null for invalid arg', () => {
-//     expect(renderRenderPropComponent(0)).toBe(null)
-//     expect(renderRenderPropComponent(null)).toBe(null)
-//     expect(renderRenderPropComponent(undefined)).toBe(null)
-//     expect(renderRenderPropComponent('div')).toBe(null)
 //   })
 // })

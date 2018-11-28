@@ -246,37 +246,24 @@ export const getIndexMapFromItems = (
   }, {})
 }
 
-export const renderRenderPropComponent = (
-  renderProp: any,
-  props: Object = {}
-): any => {
-  if (React.isValidElement(renderProp)) {
-    return React.cloneElement(renderProp, props)
-  }
-  if (isFunction(renderProp)) {
-    return renderProp(props)
-  }
-  return null
-}
-
 export const isDropRight = (state: any): boolean => state.direction === 'right'
 
-export const itemIsHover = (state: any, index: ItemIndex): boolean => {
-  const { activeIndex } = state
-  if (!activeIndex) return false
+export const itemIsHover = (state: any, itemIndex: ItemIndex): boolean => {
+  const { index } = state
+  if (!index) return false
 
-  return isPathActive(activeIndex, index)
+  return isPathActive(index, itemIndex)
 }
 
-export const itemIsOpen = (state: any, index: ItemIndex): boolean => {
-  const { activeIndex } = state
-  if (!activeIndex) return false
+export const itemIsOpen = (state: any, itemIndex: ItemIndex): boolean => {
+  const { index } = state
+  if (!index) return false
 
-  return itemIsHover(state, index) && index.length < activeIndex.length
+  return itemIsHover(state, itemIndex) && itemIndex.length < index.length
 }
 
-export const itemIsSelected = (state: any, index: ItemIndex) => {
-  return state.index === index
+export const itemIsSelected = (state: any, itemIndex: ItemIndex) => {
+  return state.index === itemIndex
 }
 
 export const getItemProps = (

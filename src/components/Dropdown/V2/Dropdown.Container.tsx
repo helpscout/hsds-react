@@ -59,15 +59,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
   static Menu = Menu
   static Trigger = Trigger
 
-  static childContextTypes = {
-    getState: noop,
-  }
-
   store: any
-
-  getChildContext = () => {
-    return { getState: () => this.store.getState() }
-  }
 
   constructor(props) {
     super(props)
@@ -86,12 +78,20 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
       indexMap: getIndexMapFromItems(props.items),
     }
 
+    // Use the user provided Store, if defined...
     if (props.__store && props.__store.setState) {
       props.__store.setState({ id, menuId, triggerId })
       this.store = props.__store
-    } else {
+    }
+    // ...Otherwise, create our own default store
+    else {
       this.store = createStore(initialState)
     }
+
+    // Expose store.getState to internal components
+    // This method is cleaner (and simpler) than relying on context or even
+    // React.createContext
+    this.store.setState({ getState: this.store.getState })
   }
 
   componentWillMount() {
