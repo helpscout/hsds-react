@@ -13,8 +13,12 @@ export interface Props {
 }
 
 export class Divider extends React.PureComponent<Props> {
+  static defaultProps = {
+    innerRef: noop,
+  }
+
   render() {
-    const { className, innerRef, ...rest } = this.props
+    const { className, children, innerRef, ...rest } = this.props
     const componentClassName = classNames('c-DropdownV2Divider', className)
 
     return (

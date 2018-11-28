@@ -30,6 +30,7 @@ export interface Props {
   disabled: boolean
   dropRight: boolean
   dropUp: boolean
+  getState: (...args: any[]) => void
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
@@ -49,6 +50,7 @@ export interface Props {
 
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
+    getState: noop,
     disabled: false,
     index: '0',
     innerRef: noop,
@@ -64,10 +66,6 @@ export class Item extends React.PureComponent<Props> {
     label: '',
     type: 'item',
     value: '',
-  }
-
-  static contextTypes = {
-    getState: noop,
   }
 
   node: HTMLElement
@@ -115,7 +113,7 @@ export class Item extends React.PureComponent<Props> {
   }
 
   getItemProps = (item: any, index?: number) => {
-    const state = this.context.getState()
+    const state = this.props.getState()
     return getItemProps(state, item)
   }
 
@@ -198,6 +196,7 @@ export class Item extends React.PureComponent<Props> {
 
   render() {
     const { actionId, className, disabled, type } = this.props
+    console.log('re-render')
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
@@ -242,6 +241,7 @@ const ConnectedItem: any = connect(
     const { renderItem } = state
 
     return {
+      getState: () => state,
       renderItem,
     }
   }

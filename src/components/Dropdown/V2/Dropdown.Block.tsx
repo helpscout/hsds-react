@@ -8,11 +8,11 @@ import { noop } from '../../../utilities/other'
 import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
-  className?: string;
-  children?: any;
-  innerRef: (node: HTMLElement) => void;
-  isSeamless: boolean;
-  isStretchy: boolean;
+  className?: string
+  children?: any
+  innerRef: (node: HTMLElement) => void
+  isSeamless: boolean
+  isStretchy: boolean
 }
 
 export class Block extends React.PureComponent<Props> {
@@ -23,11 +23,19 @@ export class Block extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, innerRef, isSeamless, isStretchy, ...rest } = this.props
+    const {
+      children,
+      className,
+      innerRef,
+      isSeamless,
+      isStretchy,
+      ...rest
+    } = this.props
     const componentClassName = classNames(
       'c-DropdownV2Block',
       isSeamless && 'is-seamless',
-      isStretchy && 'is-stretchy'
+      isStretchy && 'is-stretchy',
+      className
     )
 
     return (

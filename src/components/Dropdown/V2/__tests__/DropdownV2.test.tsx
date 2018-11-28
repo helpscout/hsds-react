@@ -2,8 +2,6 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import Dropdown from '../../DropdownV2'
 import createStore, { initialState } from '../Dropdown.store'
-// Mocking the components below
-import '../../../Portal'
 
 jest.mock('../../../Portal', () => {
   const Portal = props => <div>{props.children}</div>
@@ -91,81 +89,6 @@ describe('Store/Render', () => {
     expect(items.at(0).text()).toContain('Ron')
     expect(items.at(1).text()).toContain('Champ')
     expect(items.at(2).text()).toContain('Brick')
-  })
-
-  test('Rehydrate store when items change', () => {
-    const props = {
-      items: [
-        {
-          value: 'ron',
-          label: 'Ron',
-        },
-        {
-          value: 'champ',
-          label: 'Champ',
-        },
-        {
-          value: 'brick',
-          label: 'Brick',
-        },
-      ],
-    }
-    const store = createMockStore(props)
-    const spy = jest.fn()
-    const wrapper = mount(<Dropdown __store={store} subscribe={spy} />)
-
-    // Dropdown uses setState during initialization
-    expect(spy).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({ activeId: '123' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({ items: [] })
-
-    expect(spy).toHaveBeenCalledTimes(2)
-    expect(store.getState().items).toEqual([])
-  })
-
-  test('Rehydrate store when isOpen change', () => {
-    const props = {
-      items: [
-        {
-          value: 'ron',
-          label: 'Ron',
-        },
-        {
-          value: 'champ',
-          label: 'Champ',
-        },
-        {
-          value: 'brick',
-          label: 'Brick',
-        },
-      ],
-    }
-    const store = createMockStore(props)
-    const spy = jest.fn()
-    const wrapper = mount(<Dropdown __store={store} subscribe={spy} />)
-
-    // Dropdown uses setState during initialization
-    expect(spy).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({ activeId: '123' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({ isOpen: true })
-
-    // Flipping isOpen triggers 2 updates
-    expect(spy).toHaveBeenCalledTimes(3)
-    expect(store.getState().isOpen).toBe(true)
-
-    wrapper.setProps({ isOpen: false })
-
-    // Flipping isOpen triggers 2 updates
-    expect(spy).toHaveBeenCalledTimes(5)
-    expect(store.getState().isOpen).toBe(false)
   })
 
   test('Can subscribe to store changes', () => {

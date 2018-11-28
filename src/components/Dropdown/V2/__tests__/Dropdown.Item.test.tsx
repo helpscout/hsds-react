@@ -3,10 +3,18 @@ import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
 import { findDOMNode, hasClass, getAttribute } from './Dropdown.testHelpers'
 import { setMenuPositionStyles } from '../Dropdown.renderUtils'
-import '../Dropdown.Menu'
 import { MenuUI } from '../Dropdown.css.js'
 
 jest.mock('../Dropdown.utils')
+jest.mock('../Dropdown.renderUtils')
+jest.mock('../Dropdown.Card', () => {
+  const Card = props => <div {...props} />
+  return {
+    default: props => {
+      return <Card {...props} />
+    },
+  }
+})
 jest.mock('../Dropdown.Menu', () => {
   const Menu = props => <MenuUI {...props} />
   return {
@@ -83,25 +91,6 @@ describe('renderMenu', () => {
     expect(setMenuPositionStyles).toHaveBeenCalled()
   })
 
-  test('Re-renders the menu if hover change', () => {
-    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
-    const wrapper = mount(<Item items={items} />)
-
-    expect(setMenuPositionStyles).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({
-      isHover: true,
-    })
-
-    expect(setMenuPositionStyles).toHaveBeenCalledTimes(2)
-
-    wrapper.setProps({
-      isHover: false,
-    })
-
-    expect(setMenuPositionStyles).toHaveBeenCalledTimes(3)
-  })
-
   test('Does not render the menu if important DOM nodes are missing', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
@@ -148,18 +137,6 @@ describe('Items', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
     const el = wrapper.find('Menu')
-
-    expect(el.length).toBeTruthy()
-  })
-
-  test('Renders sub menu items', () => {
-    const items = [
-      { value: 'ron', id: 'ron' },
-      { value: 'champ' },
-      { value: 'brick' },
-    ]
-    const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('#ron')
 
     expect(el.length).toBeTruthy()
   })

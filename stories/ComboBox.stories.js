@@ -95,7 +95,7 @@ stories.add('Infinite Scroll', () => {
         this.state.showInfiniteScroller && (
           <InfiniteScroller
             onLoading={this.loadMore}
-            offset={100}
+            offset={200}
             getScrollParent={({ node }) =>
               node.closest('.c-DropdownV2MenuWrapper')
             }

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../../PropProvider/propConnect'
 import { connect } from 'unistore/react'
 import { CardUI } from './Dropdown.css'
 import { classNames } from '../../../utilities/classNames'
@@ -8,14 +9,14 @@ import { noop } from '../../../utilities/other'
 import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
-  className?: string;
-  children?: any;
-  innerRef: (node: HTMLElement) => void;
-  minWidth?: number;
-  minHeight?: number;
-  maxHeight?: number;
-  maxWidth?: number;
-  style: Object;
+  className?: string
+  children?: any
+  innerRef: (node: HTMLElement) => void
+  minWidth?: number
+  minHeight?: number
+  maxHeight?: number
+  maxWidth?: number
+  style: Object
 }
 
 export class Card extends React.PureComponent<Props> {
@@ -31,7 +32,7 @@ export class Card extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, children, innerRef, rest } = this.props
+    const { className, children, innerRef, ...rest } = this.props
 
     const componentClassName = classNames('c-DropdownV2Card', className)
 

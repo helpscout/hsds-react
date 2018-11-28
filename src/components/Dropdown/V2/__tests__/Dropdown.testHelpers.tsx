@@ -1,3 +1,5 @@
+import { initialState } from '../Dropdown.store'
+
 export const getDOMNode = (wrapper: any): any => {
   if (!wrapper.getDOMNode || !wrapper.first) return wrapper
 

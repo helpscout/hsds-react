@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Block } from '../Dropdown.Block'
-import { findDOMNode, hasClass, getAttribute } from './Dropdown.testHelpers'
+import { hasClass } from './Dropdown.testHelpers'
 
 describe('className', () => {
   test('Has a default className', () => {
@@ -36,5 +36,19 @@ describe('innerRef', () => {
     const el = wrapper.getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(el)
+  })
+})
+
+describe('Styles', () => {
+  test('Can render seamless styles', () => {
+    const wrapper = mount(<Block isSeamless />)
+
+    expect(hasClass(wrapper, 'is-seamless')).toBe(true)
+  })
+
+  test('Can render stretchy styles', () => {
+    const wrapper = mount(<Block isStretchy />)
+
+    expect(hasClass(wrapper, 'is-stretchy')).toBe(true)
   })
 })

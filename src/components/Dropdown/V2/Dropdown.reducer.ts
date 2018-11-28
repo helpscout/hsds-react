@@ -73,6 +73,10 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_INDEX:
       nextState = { ...payload }
       break
+
+    case actionTypes.UPDATE_OPEN:
+      nextState = { ...payload }
+      break
   }
 
   return state.stateReducer(

@@ -11,8 +11,6 @@
 // // @ts-ignore
 // import { scrollIntoView } from '../../../../utilities/scrolling'
 // // @ts-ignore
-// import Portal from '../../../Portal'
-// // @ts-ignore
 // import MenuComponent from '../Dropdown.Menu'
 // import { MenuUI } from '../Dropdown.css.js'
 
