@@ -88,6 +88,7 @@ class FormLabel extends React.Component<Props, State> {
         <FormLabelUI
           {...getValidProps(rest)}
           className={componentClassName}
+          isHelpTextPresent={!!helpTextMarkup}
           inline={inline}
         >
           <div className="c-FormLabel__label">

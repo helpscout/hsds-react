@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import FormLabel from '../FormLabel'
 import Input from '../../Input'
+import { calculateContentRules } from '../styles/FormLabel.css'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -131,5 +132,30 @@ describe('Inline', () => {
     )
 
     expect(wrapper.find('.c-FormLabel--inline').length).toBe(0)
+  })
+
+  test('calculateContentRules generates the correct rules to align content in inline mode', () => {
+    const inlineWithoutHelpText = calculateContentRules({
+      inline: true,
+      isHelpTextPresent: false,
+    })
+    expect(inlineWithoutHelpText).toBe('align-self: center;')
+
+    const inlineWithHelpText = calculateContentRules({
+      inline: true,
+      isHelpTextPresent: true,
+    })
+    expect(inlineWithHelpText).toBe(
+      `
+        align-self: flex-start;
+        margin-top: 1.4em;
+      `
+    )
+
+    const inlineOff = calculateContentRules({
+      inline: false,
+      isHelpTextPresent: false,
+    })
+    expect(inlineOff).toBe('align-self: initial;')
   })
 })

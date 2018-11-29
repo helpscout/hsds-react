@@ -18,13 +18,35 @@ storiesOf('FormLabel', module)
     </Page>
   ))
   .add('inline', () => (
-    <FormGroup>
-      <FormLabel
-        label="Label for the Switch"
-        helpText="Enable this feature or you might regret it later."
-        inline
-      >
-        <Switch />
-      </FormLabel>
-    </FormGroup>
+    <Page>
+      <Page.Card>
+        <FormGroup>
+          <FormLabel label="Label for the Switch" inline>
+            <Switch />
+          </FormLabel>
+        </FormGroup>
+      </Page.Card>
+      <Page.Card>
+        <FormGroup>
+          <FormLabel
+            label="Label for the Switch"
+            helpText="Enable this feature or you might regret it later."
+            inline
+          >
+            <Switch />
+          </FormLabel>
+        </FormGroup>
+      </Page.Card>
+      <Page.Card>
+        <FormGroup>
+          <FormLabel
+            label="Label for the Switch"
+            helpText="Enable this feature or you might regret it later.Enable this feature or you might regret it later.Enable this feature or you might regret it later."
+            inline
+          >
+            <Switch />
+          </FormLabel>
+        </FormGroup>
+      </Page.Card>
+    </Page>
   ))
