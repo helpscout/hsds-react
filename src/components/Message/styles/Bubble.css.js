@@ -21,6 +21,7 @@ export const config = {
   },
   maxWidth: 500,
   padding: {
+    notification: '18px 20px',
     embed: '12px 15px',
     md: '13px 20px 13px',
     fromMd: '13px 20px 14px',
@@ -154,6 +155,9 @@ const css = `
     }
   }
 
+  &.is-theme-notifications {
+    padding: ${config.padding.notification};
+  }
 `
 
 export default css
