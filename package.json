@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -159,6 +159,7 @@
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",
     "jest-watch-typeahead": "^0.2.0",
+    "lodash": "4.17.11",
     "mkdirp": "0.5.1",
     "node-sass": "^4.10.0",
     "np": "^3.0.4",
