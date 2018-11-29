@@ -66,23 +66,30 @@ class Example extends React.Component {
 
   render() {
     return (
-      <Artboard width={360} height={180}>
-        <div>
-          <div style={{ margin: 20, position: 'relative' }}>
-            {this.renderGuides()}
-            <AvatarStack max={5} version={2} {...this.props}>
-              {this.state.avatars.map(avatar => (
-                <Avatar {...avatar} key={avatar.id} />
-              ))}
-            </AvatarStack>
-          </div>
-          <button onClick={this.addAvatar}>Add Avatar</button>
-          <button onClick={this.removeAvatar}>Remove Avatar</button>
+      <div>
+        <div style={{ margin: 20, position: 'relative' }}>
+          {this.renderGuides()}
+          <AvatarStack max={5} version={2} {...this.props}>
+            {this.state.avatars.map(avatar => (
+              <Avatar {...avatar} key={avatar.id} />
+            ))}
+          </AvatarStack>
         </div>
-      </Artboard>
+        <button onClick={this.addAvatar}>Add Avatar</button>
+        <button onClick={this.removeAvatar}>Remove Avatar</button>
+      </div>
     )
   }
 }
 
-stories.add('default', () => <Example />)
-stories.add('size', () => <Example size="sm" />)
+stories.add('default', () => (
+  <Artboard width={360} height={180}>
+    <Example />
+  </Artboard>
+))
+
+stories.add('size', () => (
+  <Artboard width={360} height={180}>
+    <Example size="sm" />
+  </Artboard>
+))

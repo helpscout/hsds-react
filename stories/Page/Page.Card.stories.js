@@ -104,6 +104,7 @@ function ExampleContent() {
         <FormLabel
           label="Site Visibility"
           helpText="Turns your site on or off to visitors. Visit site."
+          isInline
         >
           <Switch active />
         </FormLabel>
