@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Notification from '../index'
-import { Animate, Truncate } from '../../'
+import { Notification } from '../Notification'
+import { Animate, Truncate } from '../../index'
 
 jest.useFakeTimers()
 

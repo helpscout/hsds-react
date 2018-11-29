@@ -2,6 +2,7 @@ import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import Artboard, { GuideContainer, Guide } from '@helpscout/artboard'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, text, select } from '@storybook/addon-knobs'
 import { Notification } from '../src/index.js'
 
 const NotificationSpec = createSpec({
@@ -11,15 +12,18 @@ const NotificationSpec = createSpec({
 })
 
 const stories = storiesOf('Notification', module)
-stories.addDecorator(storyFn => (
-  <Artboard
-    name="hsds-notification"
-    artboardHeight={200}
-    withCenterGuides={false}
-  >
-    <div style={{ padding: 30 }}>{storyFn()}</div>
-  </Artboard>
-))
+stories.addDecorator(withKnobs)
+stories.addDecorator(storyFn => {
+  return (
+    <Artboard
+      name="hsds-notification"
+      artboardHeight={200}
+      withCenterGuides={false}
+    >
+      <div style={{ padding: 20, width: 320 }}>{storyFn()}</div>
+    </Artboard>
+  )
+})
 
 const baseGuide = {
   position: 'absolute',
@@ -69,60 +73,40 @@ export function makeGuides(guides) {
   return guides.map((guide, key) => <Guide key={key} {...guide} />)
 }
 
-stories.add('default', () => {
-  const props = NotificationSpec.generate()
-  const { body, from, name } = props
+const defaultProps = NotificationSpec.generate()
+
+stories.add('Default', () => {
+  const { body, from } = defaultProps
+  const align = select(
+    'align',
+    {
+      Left: 'left',
+      Right: 'right',
+    },
+    'right'
+  )
+
+  const type = select(
+    'type',
+    {
+      Text: 'text',
+      Image: 'image',
+      Link: 'link',
+    },
+    'text'
+  )
 
   return (
-    <GuideContainer>
+    <GuideContainer maxWidth={300}>
       {makeGuides(notificationGuides)}
       <div>
-        <Notification body={body} from={from} name={name} />
+        <Notification
+          body={text('body', body)}
+          from={text('from', from)}
+          align={align}
+          type={type}
+        />
       </div>
     </GuideContainer>
-  )
-})
-
-stories.add('types', () => {
-  const props = NotificationSpec.generate()
-  return (
-    <div style={{ maxWidth: 300 }}>
-      <div style={{ textAlign: 'right' }}>Text (Default)</div>
-      <Notification {...props} type="text" />
-
-      <div style={{ textAlign: 'right' }}>Link</div>
-      <Notification
-        {...props}
-        body="https://www.helpscout.net/blog/beacon-preview/"
-        type="link"
-      />
-
-      <div style={{ textAlign: 'right' }}>Image</div>
-      <Notification
-        {...props}
-        body="https://www.helpscout.net/images/blog/2016/feb/release-notes-2016.png"
-        type="image"
-      />
-    </div>
-  )
-})
-
-stories.add('align', () => {
-  const props = () => NotificationSpec.generate()
-
-  return (
-    <div style={{ maxWidth: 300 }}>
-      <div style={{ textAlign: 'right' }}>Right (Default)</div>
-      <div>
-        <Notification {...props()} type="text" />
-        <Notification {...props()} type="text" />
-      </div>
-
-      <div style={{ textAlign: 'left' }}>Left</div>
-      <div>
-        <Notification {...props()} align="left" type="text" />
-        <Notification {...props()} align="left" type="text" />
-      </div>
-    </div>
   )
 })

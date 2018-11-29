@@ -5,6 +5,7 @@
   $bubbleClassName: '.c-Notification__messageBubble';
   $br: 8px;
   $br-sm: 2px;
+  max-width: 300px;
 
   #{$bubbleClassName} {
     background-color: white;
@@ -76,6 +77,12 @@
     }
     .c-MessageBubble__from {
       text-align: left;
+    }
+
+    &:only-child {
+      #{$bubbleClassName} {
+        border-top-left-radius: $br !important;
+      }
     }
 
     &:not(:only-child) {
