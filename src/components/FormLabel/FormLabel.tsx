@@ -16,7 +16,7 @@ export interface Props {
   id?: string
   label?: any
   helpText?: any
-  inline?: boolean
+  isInline: boolean
 }
 
 export interface State {
@@ -31,6 +31,10 @@ class FormLabel extends React.Component<Props, State> {
     this.state = {
       id: props.for || props.id || uniqueID(),
     }
+  }
+
+  static defaultProps = {
+    isInline: false,
   }
 
   getContextProps = () => {
@@ -69,7 +73,7 @@ class FormLabel extends React.Component<Props, State> {
     const {
       className,
       children,
-      inline,
+      isInline,
       for: htmlFor,
       id: idProp,
       ...rest
@@ -77,7 +81,7 @@ class FormLabel extends React.Component<Props, State> {
 
     const componentClassName = classNames(
       'c-FormLabel',
-      inline && 'c-FormLabel--inline',
+      isInline && 'is-inline',
       className
     )
     const labelMarkup = this.getLabelMarkup()
@@ -89,7 +93,7 @@ class FormLabel extends React.Component<Props, State> {
           {...getValidProps(rest)}
           className={componentClassName}
           isHelpTextPresent={!!helpTextMarkup}
-          inline={inline}
+          isInline={isInline}
         >
           <div className="c-FormLabel__label">
             {labelMarkup}

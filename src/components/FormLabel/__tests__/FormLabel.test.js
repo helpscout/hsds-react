@@ -116,12 +116,12 @@ describe('Context', () => {
 describe('Inline', () => {
   test('Renders the content inline with the label', () => {
     const wrapper = mount(
-      <FormLabel inline>
+      <FormLabel isInline>
         <Input />
       </FormLabel>
     )
 
-    expect(wrapper.find('.c-FormLabel--inline').length).toBeTruthy()
+    expect(wrapper.find('.is-inline').length).toBeTruthy()
   })
 
   test('Renders the content normally with inline off', () => {
@@ -131,18 +131,18 @@ describe('Inline', () => {
       </FormLabel>
     )
 
-    expect(wrapper.find('.c-FormLabel--inline').length).toBe(0)
+    expect(wrapper.find('.is-inline').length).toBe(0)
   })
 
   test('calculateContentRules generates the correct rules to align content in inline mode', () => {
     const inlineWithoutHelpText = calculateContentRules({
-      inline: true,
+      isInline: true,
       isHelpTextPresent: false,
     })
     expect(inlineWithoutHelpText).toBe('align-self: center;')
 
     const inlineWithHelpText = calculateContentRules({
-      inline: true,
+      isInline: true,
       isHelpTextPresent: true,
     })
     expect(inlineWithHelpText).toBe(
@@ -153,7 +153,7 @@ describe('Inline', () => {
     )
 
     const inlineOff = calculateContentRules({
-      inline: false,
+      isInline: false,
       isHelpTextPresent: false,
     })
     expect(inlineOff).toBe('align-self: initial;')

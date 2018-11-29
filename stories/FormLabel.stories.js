@@ -21,7 +21,7 @@ storiesOf('FormLabel', module)
     <Page>
       <Page.Card>
         <FormGroup>
-          <FormLabel label="Label for the Switch" inline>
+          <FormLabel label="Label for the Switch" isInline>
             <Switch />
           </FormLabel>
         </FormGroup>
@@ -31,7 +31,7 @@ storiesOf('FormLabel', module)
           <FormLabel
             label="Label for the Switch"
             helpText="Enable this feature or you might regret it later."
-            inline
+            isInline
           >
             <Switch />
           </FormLabel>
@@ -42,7 +42,7 @@ storiesOf('FormLabel', module)
           <FormLabel
             label="Label for the Switch"
             helpText="Enable this feature or you might regret it later.Enable this feature or you might regret it later.Enable this feature or you might regret it later."
-            inline
+            isInline
           >
             <Switch />
           </FormLabel>

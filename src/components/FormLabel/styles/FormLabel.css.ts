@@ -4,32 +4,45 @@ import styled from '../../styled'
 export const FormLabelUI = styled('div')`
   ${baseStyles};
   display: flex;
-  flex-flow: ${props => (props.inline ? 'row' : 'column')};
-  justify-content: space-between;
-  align-items: ${props => (props.inline ? 'flex-end' : 'stretch')};
+  flex-flow: column;
+  align-items: stretch;
 
-  & .c-FormLabel__label {
-    margin-right: ${props => (props.inline ? '40px' : '0')};
+  &.is-inline {
+    flex-flow: row;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    .c-FormLabel__label {
+      margin-right: 40px;
+    }
+    .c-FormLabel__helpText {
+      padding-bottom: 0;
+    }
   }
-  & .c-FormLabel__helpText {
-    padding-bottom: ${props => (props.inline ? '0' : '4px')};
-  }
+
   & .c-FormLabel__content {
     ${props => calculateContentRules(props)};
   }
 `
+
+export const FormLabelHelpTextUI = styled('div')`
+  padding-bottom: 4px;
+`
+
+export default FormLabelUI
+
 /**
  * Method to generate the correct rules to align the content
  * vertically in inline mode depending on whether Help Text
  * is present or not
- * @param props {inline:boolean, isHelpTextPresent:boolean }
+ * @param props {isInline:boolean, isHelpTextPresent:boolean }
  */
-type funcArg = { inline: boolean; isHelpTextPresent: boolean }
+type funcArg = { isInline: boolean; isHelpTextPresent: boolean }
 export function calculateContentRules({
-  inline,
+  isInline,
   isHelpTextPresent,
 }: funcArg): string {
-  if (inline) {
+  if (isInline) {
     if (isHelpTextPresent) {
       return `
         align-self: flex-start;
@@ -40,9 +53,3 @@ export function calculateContentRules({
   }
   return 'align-self: initial;'
 }
-
-export const FormLabelHelpTextUI = styled('div')`
-  padding-bottom: 4px;
-`
-
-export default FormLabelUI
