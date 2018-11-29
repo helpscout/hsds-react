@@ -10,13 +10,20 @@ This component is a wrapper for Control components, such as [`Input`](../../Inpu
 </FormLabel>
 ```
 
+```jsx
+<FormLabel label="First name" inline>
+  <Switch />
+</FormLabel>
+```
+
 ## Props
 
-| Prop      | Type     | Description                                                          |
-| --------- | -------- | -------------------------------------------------------------------- |
-| children  | `any`    | Content to render.                                                   |
-| className | `string` | Custom class names to be added to the component.                     |
-| for       | `string` | Determines what the `label` is associated with. Preferred over `id`. |
-| helpText  | `string` | Content to render a [`HelpText`](../../HelpText).                    |
-| id        | `string` | Custom ID to bind the `label` with the Control component.            |
-| label     | `string` | Content to render a [`Label`](../../Label).                          |
+| Prop      | Type      | Description                                                                                              |
+| --------- | --------- | -------------------------------------------------------------------------------------------------------- |
+| children  | `any`     | Content to render.                                                                                       |
+| className | `string`  | Custom class names to be added to the component.                                                         |
+| for       | `string`  | Determines what the `label` is associated with. Preferred over `id`.                                     |
+| helpText  | `string`  | Content to render a [`HelpText`](../../HelpText).                                                        |
+| id        | `string`  | Custom ID to bind the `label` with the Control component.                                                |
+| label     | `string`  | Content to render a [`Label`](../../Label).                                                              |
+| inline    | `boolean` | Determines whether to render the label and form input inline (made specially for checkboxes or `Switch`) |
