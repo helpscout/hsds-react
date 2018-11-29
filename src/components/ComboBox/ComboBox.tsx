@@ -85,6 +85,8 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     if (this.props.inputProps.onChange) {
       this.props.inputProps.onChange(inputValue)
     }
+
+    this.scrollMenuToTop()
   }
 
   onSelect = (selectedItem, props) => {
@@ -130,9 +132,11 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   scrollMenuToTop = () => {
-    /* istanbul ignore else */
-    if (!this.menuWrapperNode) return
-    this.menuWrapperNode.scrollTop = 0
+    requestAnimationFrame(() => {
+      /* istanbul ignore else */
+      if (!this.menuWrapperNode) return
+      this.menuWrapperNode.scrollTop = 0
+    })
   }
 
   defaultFilter = filterProps => {
