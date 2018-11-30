@@ -1,5 +1,8 @@
 import React from 'react'
+import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
+import Artboard, { GuideContainer, Guide } from '@helpscout/artboard'
+import { withKnobs, boolean, text, select } from '@storybook/addon-knobs'
 import {
   ArticleCard,
   Flexy,
@@ -11,114 +14,124 @@ import {
 } from '../src/index.js'
 import AvatarSpec from './AvatarGrid/specs/Avatar'
 
-const badge = (
-  <Flexy.Item>
-    <StatusBadge count={20} status={'new'} />
-  </Flexy.Item>
-)
-
-const metaHeader = (
-  <Flexy align="top">
-    <Flexy.Block>
-      <Text faint size="12">
-        Last updated 1 day ago
-      </Text>
-    </Flexy.Block>
-    {badge}
-  </Flexy>
-)
-
-const fixtures = AvatarSpec.generate(5)
-
-const avatarsMarkup = fixtures.map(avatar => {
-  const { name, image } = avatar
+const stories = storiesOf('ArticleCard', module)
+stories.addDecorator(withKnobs)
+stories.addDecorator(storyFn => {
   return (
-    <Avatar
-      image={image}
-      key={name}
-      name={name}
-      shape="rounded"
-      status={null}
-    />
+    <Artboard
+      name="hsds-article-card"
+      artboardHeight={200}
+      withCenterGuides={false}
+      showGuides={false}
+    >
+      <div style={{ background: '#f2f2f2', padding: 20, minWidth: 320 }}>
+        {storyFn()}
+      </div>
+    </Artboard>
   )
 })
 
-const footer = (
-  <AvatarStack max={5} size="sm">
-    {avatarsMarkup}
-  </AvatarStack>
-)
+const fixtures = AvatarSpec.generate(5)
+const avatarsMarkup = fixtures.map(avatar => {
+  const { name, image } = avatar
+  return <Avatar image={image} key={name} name={name} status={null} />
+})
 
-const WrapperUI = styled('div')`
-  box-sizing: border-box;
-  background: #eee;
-  max-width: 350px;
-  padding: 12px;
-`
+const baseGuide = {
+  position: 'absolute',
+  width: '100%',
+  zIndex: 1000,
+}
 
-const content = `Aspernatur amet et explicabo deserunt veritatis.
-  Laudantium eveniet ab quia recusandae.
-  Sequi libero fugit aspernatur.
-  Qui sit eaque magnam non.
-  Velit eius maiores aperiam eaque quia dolorem.
-  Debitis distinctio at assumenda non suscipit quasi nam ipsam non.
-  Quis accusantium quos quo eum at excepturi.`
+export const guides = [
+  {
+    ...baseGuide,
+    height: 20,
+  },
+  {
+    ...baseGuide,
+    height: 22,
+    top: 'none',
+    bottom: 0,
+  },
+  {
+    ...baseGuide,
+    height: '100%',
+    width: 20,
+  },
+  {
+    ...baseGuide,
+    height: '100%',
+    left: 'none',
+    right: 0,
+    width: 20,
+  },
+  {
+    ...baseGuide,
+    height: 5,
+    top: 'none',
+    color: 'blue',
+    bottom: -4,
+  },
+]
 
-const stories = storiesOf('ArticleCard', module)
+export function makeGuides(guides) {
+  return guides.map((guide, key) => <Guide key={key} {...guide} />)
+}
 
-stories.add('default', () => <ArticleCard content="Hello" />)
+const ArticleSpec = createSpec({
+  title: faker.lorem.sentence(),
+  content: faker.lorem.paragraph(),
+})
 
-stories.add('title', () => <ArticleCard title="Hello title" content="Hello" />)
+const article = ArticleSpec.generate()
 
-stories.add('meta header', () => (
-  <ArticleCard metaHeader={metaHeader} title="Hello title" content="Hello" />
-))
+stories.add('default', () => {
+  const { content, title } = article
 
-stories.add('footer', () => (
-  <ArticleCard footer={footer} title="Hello title" content="Hello" />
-))
+  const metaHeaderConfig = boolean('metaHeader', false)
+  const footerConfig = boolean('footer', false)
+  const consecutive = boolean('Multiple Cards', false)
 
-stories.add('with everything', () => (
-  <ArticleCard
-    footer={footer}
-    metaHeader={metaHeader}
-    title="Hello title"
-    content={content}
-  />
-))
+  const props = {
+    content: text('content', content),
+    href: text('href', '#'),
+    title: text('title', title),
+    isHovered: boolean('isHovered', false),
+    metaHeader: metaHeaderConfig && metaHeader(),
+    footer: footerConfig && footer(),
+  }
 
-stories.add('Link', () => (
-  <ArticleCard
-    href="#"
-    footer={footer}
-    metaHeader={metaHeader}
-    title="Hello title"
-    content={content}
-  />
-))
+  return (
+    <div style={{ position: 'relative' }}>
+      <GuideContainer position="absolute" width="100%" height="100%">
+        {makeGuides(guides)}
+      </GuideContainer>
+      <ArticleCard {...props} />
+      {consecutive && <ArticleCard {...props} />}
+    </div>
+  )
+})
 
-stories.add('Consecutive', () => (
-  <WrapperUI>
-    <ArticleCard href="#" title="Hello title" content={content} />
-    <ArticleCard href="#" title="Hello title" content={content} />
-  </WrapperUI>
-))
+function metaHeader() {
+  return (
+    <Flexy align="top">
+      <Flexy.Block>
+        <Text faint size="12">
+          Last updated 1 day ago
+        </Text>
+      </Flexy.Block>
+      <Flexy.Item>
+        <StatusBadge count={20} status={'new'} />
+      </Flexy.Item>
+    </Flexy>
+  )
+}
 
-stories.add('Consecutive: Everything', () => (
-  <WrapperUI>
-    <ArticleCard
-      href="#"
-      footer={footer}
-      metaHeader={metaHeader}
-      title="Hello title"
-      content={content}
-    />
-    <ArticleCard
-      href="#"
-      footer={footer}
-      metaHeader={metaHeader}
-      title="Hello title"
-      content={content}
-    />
-  </WrapperUI>
-))
+function footer() {
+  return (
+    <AvatarStack max={5} size="sm" version={2}>
+      {avatarsMarkup}
+    </AvatarStack>
+  )
+}
