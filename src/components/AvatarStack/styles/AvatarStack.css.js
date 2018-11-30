@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from '../../styled'
 
@@ -9,8 +8,11 @@ export const config = {
 export const AvatarStackUI = styled('div')`
   ${baseStyles};
   display: flex;
-  padding-left: ${config.borderWidth * 3}px;
   position: relative;
+
+  &.is-withLayerStack {
+    padding-left: ${config.borderWidth * 3}px;
+  }
 `
 
 export const AvatarStackLayeringUI = styled(AvatarStackUI)`
@@ -24,6 +26,7 @@ export const AvatarStackLayeringUI = styled(AvatarStackUI)`
 `
 
 export const ItemUI = styled('div')`
+  ${baseStyles};
   position: relative;
 
   &.is-withLayerStack {
