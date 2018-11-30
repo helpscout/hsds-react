@@ -2,7 +2,6 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from 'unistore/react'
 import propConnect from '../../PropProvider/propConnect'
-import Flexy from '../../Flexy'
 import Icon from '../../Icon'
 import Card from './Dropdown.Card'
 import Divider from './Dropdown.Divider'
@@ -11,6 +10,7 @@ import Menu from './Dropdown.Menu'
 import {
   ItemUI,
   ActionUI,
+  ActionContentUI,
   WrapperUI,
   SubMenuIncidatorUI,
 } from './Dropdown.css.js'
@@ -167,30 +167,41 @@ export class Item extends React.PureComponent<Props> {
     const icon = dropRight ? 'caret-right' : 'caret-left'
 
     return (
-      this.hasSubMenu() && (
-        <Flexy.Item>
-          <SubMenuIncidatorUI className="c-DropdownV2Item__subMenuIndicator">
-            <Icon name={icon} size="12" shade="extraMuted" />
-          </SubMenuIncidatorUI>
-        </Flexy.Item>
-      )
+      <SubMenuIncidatorUI className="c-DropdownV2ItemSubMenuIndicator">
+        <Icon name={icon} size="12" shade="extraMuted" />
+      </SubMenuIncidatorUI>
     )
   }
 
   renderContent = () => {
-    const { renderItem, children, label } = this.props
+    const { actionId, renderItem, children, label } = this.props
 
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }
 
     const content = children || label
+    const hasSubMenu = this.hasSubMenu()
+    const componentClassName = classNames(
+      hasSubMenu && 'has-subMenu',
+      'c-DropdownV2ItemAction'
+    )
 
-    return (
-      <Flexy gap="sm">
-        <Flexy.Block>{content}</Flexy.Block>
+    const actionProps = {
+      id: actionId,
+      innerRef: this.setActionNodeRef,
+      className: componentClassName,
+    }
+
+    return hasSubMenu ? (
+      <ActionUI {...actionProps}>
+        <ActionContentUI className="c-DropdownV2ItemActionContent">
+          {content}
+        </ActionContentUI>
         {this.renderSubMenuIndicator()}
-      </Flexy>
+      </ActionUI>
+    ) : (
+      <ActionUI {...actionProps}>{content}</ActionUI>
     )
   }
 
@@ -203,7 +214,7 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { actionId, className, disabled, type } = this.props
+    const { className, disabled, type } = this.props
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
@@ -223,16 +234,7 @@ export class Item extends React.PureComponent<Props> {
         innerRef={this.setNodeRef}
         role={this.hasSubMenu() ? 'group' : 'option'}
       >
-        <ActionUI
-          id={actionId}
-          innerRef={this.setActionNodeRef}
-          className={classNames(
-            this.hasSubMenu() && 'has-subMenu',
-            'c-DropdownV2ItemAction'
-          )}
-        >
-          {this.renderContent()}
-        </ActionUI>
+        {this.renderContent()}
         {this.renderSubMenu()}
       </ItemUI>
     )

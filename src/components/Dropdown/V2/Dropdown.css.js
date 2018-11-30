@@ -97,6 +97,9 @@ WrapperUI.defaultProps = {
 
 export const ActionUI = styled('div')`
   ${baseStyles};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 16px;
 
   &.is-open {
@@ -116,6 +119,12 @@ export const ActionUI = styled('div')`
 ActionUI.defaultProps = {
   [SELECTORS.actionAttribute]: true,
 }
+
+export const ActionContentUI = styled('div')`
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+`
 
 export const ItemUI = styled('div')`
   ${baseStyles};
@@ -215,4 +224,5 @@ TriggerUI.defaultProps = {
 export const SubMenuIncidatorUI = styled('div')`
   pointer-events: none;
   margin-right: -8px;
+  min-width: 0;
 `

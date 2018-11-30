@@ -188,7 +188,7 @@ describe('Indicator', () => {
   test('Renders the sub menu indicator, if has items', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2Item__subMenuIndicator')
+    const el = wrapper.find('.c-DropdownV2ItemSubMenuIndicator')
 
     expect(el.length).toBeTruthy()
   })
@@ -196,7 +196,7 @@ describe('Indicator', () => {
   test('Does not render the sub menu indicator, if has no items', () => {
     const items = undefined
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2Item__subMenuIndicator')
+    const el = wrapper.find('.c-DropdownV2ItemSubMenuIndicator')
 
     expect(el.length).not.toBeTruthy()
   })

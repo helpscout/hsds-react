@@ -81,6 +81,38 @@ describe('Portal', () => {
 
     expect(el.length).not.toBeTruthy()
   })
+
+  test('Fires onMenuMounted callback on mount', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer isOpen={true} onMenuMounted={spy} />)
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.props().onOpen()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onMenuUnmounted callback on mount', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer isOpen={true} onMenuUnmounted={spy} />)
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.props().onClose()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Adjusts position on Portal mount', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer isOpen={true} />)
+    // @ts-ignore
+    wrapper.instance().setPositionStylesOnNode = spy
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.props().onOpen()
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('Menu', () => {

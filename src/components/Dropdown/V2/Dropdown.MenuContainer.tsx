@@ -54,7 +54,7 @@ export interface Props {
   zIndex: number
 }
 
-export class MenuContainer extends React.Component<Props> {
+export class MenuContainer extends React.PureComponent<Props> {
   static defaultProps = {
     animationDuration: 80,
     animationSequence: 'fade down',
@@ -239,18 +239,18 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
+  onPortalOpen = () => {
+    this.setPositionStylesOnNode()
+    this.props.onMenuMounted()
+  }
+
   setPositionStylesOnNode = () => {
     const { triggerNode, zIndex } = this.props
-
-    // There's some... unexplainable weirdness in the timing of
-    // getBoundingClientRect. The top is accurate pre-requestAnimationFrame.
-    // Because of this, we'll grab the top first...
-    const { top } = this.getStylePosition()
 
     requestAnimationFrame(() => {
       if (!this.node || !this.placementNode) return
       // ...then get the left.
-      const { left } = this.getStylePosition()
+      const { top, left } = this.getStylePosition()
 
       this.placementNode.style.position = 'fixed'
       this.placementNode.style.top = `${Math.round(top)}px`
@@ -295,7 +295,6 @@ export class MenuContainer extends React.Component<Props> {
       className,
       dropRight,
       focusItem,
-      onMenuMounted,
       onMenuUnmounted,
       isOpen,
       selectItem,
@@ -313,7 +312,7 @@ export class MenuContainer extends React.Component<Props> {
       <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
         <EventListener event="resize" handler={this.setPositionStylesOnNode} />
         {isOpen && (
-          <Portal onOpen={onMenuMounted} onClose={onMenuUnmounted}>
+          <Portal onOpen={this.onPortalOpen} onClose={onMenuUnmounted}>
             <div
               className="DropdownV2MenuContainerPlacementRoot"
               style={{ position: 'relative' }}
