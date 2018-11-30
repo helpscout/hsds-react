@@ -1,21 +1,24 @@
-import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { TimerUI } from './Notification.css'
 
-const propTypes = {
-  isRunning: PropTypes.bool,
-  onTimerEnd: PropTypes.func,
-  timeout: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+export interface Props {
+  className?: string
+  isRunning: boolean
+  onTimerEnd: () => void
+  style: Object
+  timeout: number | string
 }
 
-const defaultProps = {
-  isRunning: true,
-  onTimerEnd: noop,
-  timeout: 5000,
-}
+export class Timer extends React.PureComponent<Props> {
+  static defaultProps = {
+    isRunning: true,
+    onTimerEnd: noop,
+    style: {},
+    timeout: 5000,
+  }
 
-class Timer extends Component {
   render() {
     const { className, isRunning, onTimerEnd, style, timeout } = this.props
 
@@ -29,7 +32,7 @@ class Timer extends Component {
     })
 
     return (
-      <div
+      <TimerUI
         className={componentClassName}
         onAnimationEnd={onTimerEnd}
         style={styles}
@@ -37,8 +40,5 @@ class Timer extends Component {
     )
   }
 }
-
-Timer.propTypes = propTypes
-Timer.defaultProps = defaultProps
 
 export default Timer

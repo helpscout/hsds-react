@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import { Notification, NotificationStack } from '../src/index.js'
 
 const NotificationSpec = createSpec({
@@ -22,8 +23,10 @@ class TestComponent extends Component {
   }
 
   handleAddNotification() {
+    const notification = NotificationSpec.generate()
+    action('Added Notification')(notification)
     this.setState({
-      notifications: [...this.state.notifications, NotificationSpec.generate()],
+      notifications: [...this.state.notifications, notification],
     })
   }
 
@@ -34,6 +37,7 @@ class TestComponent extends Component {
       }
     })
     console.log('Dismissed all')
+    action('Dismissed!')()
   }
 
   render() {
