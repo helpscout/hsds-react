@@ -1,4 +1,5 @@
 // @flow
+import { rgba } from 'polished'
 import { getColor } from '../utilities/color'
 
 export const cardBaseStyles = (subtle: boolean = false) => {
@@ -14,7 +15,7 @@ export const cardBaseStyles = (subtle: boolean = false) => {
     border-radius: 3px;
     box-shadow:
       0 1px 3px 0 rgba(0, 0, 0, 0.1),
-      inset 0 0 0 1px ${color},
+      inset 0 0 0 1px ${rgba(color, 0.7)},
       inset 0 -1px 0 0 ${bottomColor};
     transition: box-shadow 200ms linear;
     will-change: box-shadow;
