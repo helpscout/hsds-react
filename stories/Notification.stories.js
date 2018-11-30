@@ -20,7 +20,7 @@ stories.addDecorator(storyFn => {
       artboardHeight={200}
       withCenterGuides={false}
     >
-      <div style={{ padding: 20, width: 320 }}>{storyFn()}</div>
+      <div style={{ padding: 20 }}>{storyFn()}</div>
     </Artboard>
   )
 })
