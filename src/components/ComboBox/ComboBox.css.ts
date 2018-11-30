@@ -25,6 +25,7 @@ export const MenuUI = styled(Dropdown.Menu)`
 export const EmptyItemUI = styled('div')`
   ${baseStyles};
   padding: 8px 16px;
+  word-break: break-word;
 
   > .c-Text {
     line-height: 1.25;
