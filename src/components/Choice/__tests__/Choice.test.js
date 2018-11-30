@@ -116,6 +116,25 @@ describe('HelpText', () => {
     expect(text.text()).toBe(helpText)
     wrapper.unmount()
   })
+
+  test('Renders helpText outside label when not stacked', () => {
+    const helpText = 'Help Text'
+    const wrapper = mount(<Choice label="Label" helpText={helpText} />)
+    const text = wrapper.find('label').find(HelpText)
+
+    expect(text.length).toBeFalsy()
+    wrapper.unmount()
+  })
+
+  test('Renders helpText inside label when stacked', () => {
+    const helpText = 'Help Text'
+    const wrapper = mount(<Choice label="Label" helpText={helpText} stacked />)
+    const text = wrapper.find('label').find(HelpText)
+
+    expect(text.length).toBeTruthy()
+    expect(text.text()).toBe(helpText)
+    wrapper.unmount()
+  })
 })
 
 describe('Label', () => {
