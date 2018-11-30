@@ -138,8 +138,12 @@ export const ItemUI = styled('div')`
   transition: background-color 0.1s ease;
   user-select: none;
 
+  &.is-option {
+    padding: 8px 16px;
+  }
+
   &.is-active {
-    > ${ActionUI} {
+    > ${ActionUI}, &.is-option {
       font-weight: bold;
     }
   }
@@ -163,7 +167,7 @@ export const ItemUI = styled('div')`
   }
 
   &.is-focused {
-    > ${ActionUI} {
+    > ${ActionUI}, &.is-option {
       background-color: ${rgba(getColor('grey.300'), 1)};
       color: ${getColor('blue.500')};
     }

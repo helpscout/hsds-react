@@ -153,18 +153,17 @@ export const focusItem = (state, event: Event) => {
 }
 
 /* istanbul ignore next */
-export const selectItemFromIndex = (state: any) => {
+export const selectItemFromIndex = (state: any, event: any) => {
   const target = findItemDOMNode(state.index, state.envNode)
   if (!target) return
 
-  const mockEvent = { target }
-  return selectItem(state, mockEvent)
+  return selectItem(state, event, target)
 }
 
 /* istanbul ignore next */
-export const selectItem = (state, event: any) => {
+export const selectItem = (state, event: any, eventTarget?: any) => {
   const { closeOnSelect, items, envNode } = state
-  const node = findClosestItemDOMNode(event.target)
+  const node = eventTarget || findClosestItemDOMNode(event.target)
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
   const item = getItemFromCollection(items, itemValue)
@@ -177,14 +176,22 @@ export const selectItem = (state, event: any) => {
 
   const triggerNode = findTriggerNode(envNode)
   const selectedItem = !state.clearOnSelect ? item : null
+  const isMouseEvent = isDefined(event.pageX)
+
+  const callbackProps = {
+    event,
+    item,
+    dropdownType: 'hsds-dropdown-v2',
+  }
 
   // Trigger select callback
   if (item && state.onSelect) {
-    state.onSelect(item.value, {
-      event,
-      item,
-      dropdownType: 'hsds-dropdown-v2',
-    })
+    state.onSelect(item.value, callbackProps)
+  }
+
+  // Trigger item.onClick callback
+  if (item && item.onClick && !isMouseEvent) {
+    item.onClick(event)
   }
 
   // Trigger close callback from Provider

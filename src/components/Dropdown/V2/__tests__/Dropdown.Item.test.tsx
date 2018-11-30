@@ -113,8 +113,9 @@ describe('renderMenu', () => {
 })
 
 describe('Action', () => {
+  const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
   test('Renders an Action', () => {
-    const wrapper = mount(<Item />)
+    const wrapper = mount(<Item items={items} />)
     const el = wrapper.find('.c-DropdownV2ItemAction')
 
     expect(el.length).toBeTruthy()

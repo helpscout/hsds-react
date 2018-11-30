@@ -180,8 +180,11 @@ export class Item extends React.PureComponent<Props> {
       return renderItem(getCustomItemProps(this.props))
     }
 
-    const content = children || label
     const hasSubMenu = this.hasSubMenu()
+    const content = children || label
+
+    if (!hasSubMenu) return content
+
     const componentClassName = classNames(
       hasSubMenu && 'has-subMenu',
       'c-DropdownV2ItemAction'
@@ -193,15 +196,13 @@ export class Item extends React.PureComponent<Props> {
       className: componentClassName,
     }
 
-    return hasSubMenu ? (
+    return (
       <ActionUI {...actionProps}>
         <ActionContentUI className="c-DropdownV2ItemActionContent">
           {content}
         </ActionContentUI>
         {this.renderSubMenuIndicator()}
       </ActionUI>
-    ) : (
-      <ActionUI {...actionProps}>{content}</ActionUI>
     )
   }
 
@@ -215,10 +216,12 @@ export class Item extends React.PureComponent<Props> {
 
   render() {
     const { className, disabled, type } = this.props
+    const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
       disabled && 'is-disabled',
+      !hasSubMenu && 'is-option',
       className
     )
 
@@ -232,7 +235,7 @@ export class Item extends React.PureComponent<Props> {
         aria-disabled={disabled}
         onClick={this.handleOnClick}
         innerRef={this.setNodeRef}
-        role={this.hasSubMenu() ? 'group' : 'option'}
+        role={hasSubMenu ? 'group' : 'option'}
       >
         {this.renderContent()}
         {this.renderSubMenu()}

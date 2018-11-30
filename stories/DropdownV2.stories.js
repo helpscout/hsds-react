@@ -29,6 +29,7 @@ const ItemSpec = createSpec({
   id: faker.random.uuid(),
   label: faker.name.firstName(),
   value: faker.name.firstName(),
+  onClick: () => (value, props) => console.log('Clicked!', value),
 })
 
 stories.add('Dropdown/Default', () => {
@@ -158,7 +159,9 @@ stories.add('Item/Active', () => {
   const items = ItemSpec.generate(8)
   const selectedItem = items[0]
 
-  return <Dropdown items={items} selectedItem={selectedItem} />
+  return (
+    <Dropdown items={items} selectedItem={selectedItem} clearOnSelect={false} />
+  )
 })
 
 stories.add('Item/Disabled', () => {
@@ -215,7 +218,8 @@ stories.add('Item/Custom', () => {
   const CustomItem = props => {
     return (
       <div style={{ padding: '0px 20px', background: 'magenta' }}>
-        Custom<br />
+        Custom
+        <br />
         <h2>{props.value}</h2>
       </div>
     )

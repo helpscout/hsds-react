@@ -8,47 +8,32 @@ import {
   toggleOpen,
   openDropdown,
   closeDropdown,
+  selectItem,
 } from '../Dropdown.actions'
-import { SELECTORS } from '../Dropdown.utils'
 
-// describe('setActiveItem', () => {
-//   test('Updates the state with the activeItem DOM node', () => {
-//     const state = {
-//       activeItem: null,
-//       activeIndex: null,
-//       activeValue: null,
-//       activeId: null,
-//       id: 'ron',
-//     }
+const mockTriggerNode = {
+  focus: jest.fn(),
+}
+const mockItem = {
+  label: 'Ron',
+  onClick: jest.fn(),
+  value: 'ron',
+}
 
-//     const activeItem = document.createElement('div')
-//     activeItem.setAttribute(SELECTORS.indexAttribute, '123')
-//     activeItem.setAttribute(SELECTORS.valueAttribute, 'Hello')
+jest.mock('../Dropdown.renderUtils', () => {
+  return {
+    findClosestItemDOMNode: () => true,
+    getIndexFromItemDOMNode: () => '1',
+    getValueFromItemDOMNode: () => 'ron',
+    findTriggerNode: () => mockTriggerNode,
+  }
+})
 
-//     const nextState = setActiveItem(state, activeItem)
-
-//     expect(nextState).not.toEqual(state)
-//     expect(nextState.activeItem).toBe(activeItem)
-//     expect(nextState.activeIndex).toBe('123')
-//     expect(nextState.activeValue).toBe('Hello')
-//     expect(nextState.activeId).toContain('ron')
-//   })
-
-//   test('Guarded from updated state if activeItem is the same', () => {
-//     const mockActiveItem = document.createElement('div')
-//     const state = {
-//       activeItem: mockActiveItem,
-//       activeIndex: null,
-//       activeValue: null,
-//       activeId: null,
-//       id: 'ron',
-//     }
-
-//     const nextState = setActiveItem(state, mockActiveItem)
-
-//     expect(nextState).toBeFalsy()
-//   })
-// })
+jest.mock('../Dropdown.utils', () => {
+  return {
+    getItemFromCollection: () => mockItem,
+  }
+})
 
 describe('onMenuMounted', () => {
   test('Change isMounted state to true', () => {
@@ -290,110 +275,70 @@ describe('closeDropdown', () => {
   })
 })
 
-// describe('onSelect', () => {
-//   test('Fires onSelect callback, if provided', () => {
-//     const state = {
-//       items: [{ value: 'ron' }, { value: 'brick' }],
-//       activeValue: 'ron',
-//       onSelect: jest.fn(),
-//     }
+describe('selectItem', () => {
+  test('Stores the selectedItem from getItemFromCollection', () => {
+    const state = { selectedItem: undefined }
+    const event = {}
+    const nextState = selectItem(state, event)
 
-//     const mockEvent = {}
+    expect(nextState.selectedItem).toBe(mockItem)
+  })
 
-//     onSelect(state, mockEvent)
+  test('Does not store the selectedItem, if clearOnSelect is set', () => {
+    const state = { clearOnSelect: true, selectedItem: undefined }
+    const event = {}
+    const nextState = selectItem(state, event)
 
-//     expect(state.onSelect).toHaveBeenCalledWith('ron', {
-//       dropdownType: 'hsds-dropdown-v2',
-//       event: mockEvent,
-//       item: { value: 'ron' },
-//     })
-//   })
+    expect(nextState.selectedItem).toBeFalsy()
+  })
 
-//   test('Returns falsy to prevent unnecessary setState for invalid props', () => {
-//     const state = {
-//       items: [{ value: 'ron' }, { value: 'brick' }],
-//       activeValue: 'ron',
-//       onSelect: jest.fn(),
-//     }
+  test('Fires the onSelect callback, on select', () => {
+    const spy = jest.fn()
+    const state = { onSelect: spy, selectedItem: undefined }
+    const event = {}
 
-//     const mockEvent = {}
+    selectItem(state, event)
 
-//     const nextState = onSelect(state, mockEvent)
+    expect(spy).toHaveBeenCalledWith(mockItem.value, {
+      dropdownType: 'hsds-dropdown-v2',
+      event,
+      item: mockItem,
+    })
+  })
 
-//     expect(nextState).toBeFalsy()
-//   })
+  test('Fires the item.onClick callback, on select', () => {
+    const state = { selectedItem: undefined }
+    const event = {}
 
-//   test('Performs closeDropdown action, if specified', () => {
-//     const spy = jest.fn()
-//     const state = {
-//       // This one
-//       closeOnSelect: true,
-//       /////
-//       items: [{ value: 'ron' }, { value: 'brick' }],
-//       activeValue: 'ron',
-//       onSelect: jest.fn(),
-//       isOpen: true,
-//       onClose: spy,
-//     }
+    selectItem(state, event)
 
-//     const mockEvent = {}
+    expect(mockItem.onClick).toHaveBeenCalledWith(event)
+  })
 
-//     const nextState = onSelect(state, mockEvent)
+  test('Closes Dropdown on select, if closeOnSelect', () => {
+    const state = { isOpen: true, closeOnSelect: true }
+    const event = {}
 
-//     expect(nextState).not.toBeFalsy()
-//     expect(nextState.isOpen).toBe(false)
-//     expect(spy).toHaveBeenCalled()
-//   })
+    const nextState = selectItem(state, event)
 
-//   test('Does not performs closeDropdown action, if specified', () => {
-//     const spy = jest.fn()
-//     const state = {
-//       // This one
-//       closeOnSelect: false,
-//       /////
-//       items: [{ value: 'ron' }, { value: 'brick' }],
-//       activeValue: 'ron',
-//       onSelect: jest.fn(),
-//       isOpen: true,
-//       onClose: spy,
-//     }
+    expect(nextState.isOpen).toBe(false)
+  })
 
-//     const mockEvent = {}
+  test('Does not close Dropdown on select, if closeOnSelect is false', () => {
+    const state = { isOpen: true, closeOnSelect: false }
+    const event = {}
 
-//     const nextState = onSelect(state, mockEvent)
+    const nextState = selectItem(state, event)
 
-//     expect(nextState).toBeFalsy()
-//     expect(spy).not.toHaveBeenCalled()
-//   })
+    expect(nextState.isOpen).toBe(true)
+  })
 
-//   test('Does not fire onSelect if item cannot be found', () => {
-//     const spy = jest.fn()
-//     const state = {
-//       items: [{ value: 'champ' }, { value: 'brick' }],
-//       activeValue: 'ron',
-//       onSelect: spy,
-//     }
+  test('Refocuses triggerNode on select + close', () => {
+    const state = { isOpen: true, closeOnSelect: true }
+    const event = {}
 
-//     const mockEvent = {}
+    const nextState = selectItem(state, event)
 
-//     onSelect(state, mockEvent)
-
-//     expect(spy).not.toHaveBeenCalled()
-//   })
-
-//   test('Does not fire onSelect if item is disabled', () => {
-//     const spy = jest.fn()
-//     const state = {
-//       items: [{ value: 'champ', disabled: true }, { value: 'brick' }],
-//       activeValue: 'champ',
-//       onSelect: spy,
-//     }
-
-//     const mockEvent = {}
-
-//     const nextState = onSelect(state, mockEvent)
-
-//     expect(spy).not.toHaveBeenCalled()
-//     expect(nextState).toBeFalsy()
-//   })
-// })
+    expect(mockTriggerNode.focus).toHaveBeenCalled()
+  })
+})

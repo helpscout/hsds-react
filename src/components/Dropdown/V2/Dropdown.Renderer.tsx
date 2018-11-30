@@ -98,7 +98,7 @@ class Renderer extends React.PureComponent<any> {
 
       case Keys.ENTER:
         event.preventDefault()
-        this.props.selectItemFromIndex()
+        this.props.selectItemFromIndex(event)
         break
 
       default:
