@@ -1,5 +1,5 @@
 {
-  "extends": "react",
+  "extends": "react-app",
   "parser": "babel-eslint",
   "plugins": ["flowtype"],
   "settings": {
