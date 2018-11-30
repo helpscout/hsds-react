@@ -1,13 +1,18 @@
 import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import Flexy from '../Flexy'
 import Message from '../Message'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import Timer from './Timer'
+import { NotificationUI, TextUI } from './Notification.css'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { stripUrlPrefix } from '../../utilities/strings'
+import { COMPONENT_KEY } from './utils'
 
 export const NOTIFICATION_TYPE = {
   image: 'image',
@@ -36,7 +41,7 @@ export interface State {
   isActive: boolean
 }
 
-class Notification extends React.PureComponent<Props, State> {
+export class Notification extends React.PureComponent<Props, State> {
   static defaultProps = {
     animationSequence: 'fade upUp',
     align: 'right',
@@ -49,7 +54,6 @@ class Notification extends React.PureComponent<Props, State> {
     truncateLimit: 60,
   }
 
-  static displayName = 'Notification'
   static Timer = Timer
 
   _isMounted: boolean = false
@@ -107,9 +111,9 @@ class Notification extends React.PureComponent<Props, State> {
   renderLinkContent() {
     const { body } = this.props
     return (
-      <Text className="c-Notification__text" linkStyle truncate title={body}>
+      <TextUI className="c-Notification__text" linkStyle truncate title={body}>
         {body}
-      </Text>
+      </TextUI>
     )
   }
 
@@ -122,11 +126,11 @@ class Notification extends React.PureComponent<Props, State> {
           <Text className="c-Notification__textPrefix">New Image:</Text>
         </Flexy.Item>
         <Flexy.Block>
-          <Text className="c-Notification__text" linkStyle title={body}>
+          <TextUI className="c-Notification__text" linkStyle title={body}>
             <Truncate type="middle" limit={24}>
               {stripUrlPrefix(body)}
             </Truncate>
-          </Text>
+          </TextUI>
         </Flexy.Block>
       </Flexy>
     )
@@ -136,11 +140,11 @@ class Notification extends React.PureComponent<Props, State> {
     const { body, truncateLimit } = this.props
 
     return (
-      <Text className="c-Notification__text" title={body}>
+      <TextUI className="c-Notification__text" title={body}>
         <Truncate limit={truncateLimit} type="end">
           {body}
         </Truncate>
-      </Text>
+      </TextUI>
     )
   }
 
@@ -191,27 +195,31 @@ class Notification extends React.PureComponent<Props, State> {
 
     return (
       <Animate
-        className={componentClassName}
         in={isActive}
         onExited={this.handleOnExited}
         sequence={animationSequence}
       >
-        <Message.Provider theme="notifications">
-          <Message.Chat
-            bubbleClassName="c-Notification__messageBubble"
-            className="c-Notification__message"
-            {...rest}
-            {...messageProps}
+        <NotificationUI {...getValidProps(rest)} className={componentClassName}>
+          <Message.Provider theme="notifications">
+            <Message.Chat
+              bubbleClassName="c-Notification__messageBubble"
+              className="c-Notification__message"
+              {...rest}
+              {...messageProps}
+            />
+          </Message.Provider>
+          <Timer
+            isRunning={isDismissable}
+            onTimerEnd={this.handleOnTimeout}
+            timeout={timeout}
           />
-        </Message.Provider>
-        <Timer
-          isRunning={isDismissable}
-          onTimerEnd={this.handleOnTimeout}
-          timeout={timeout}
-        />
+        </NotificationUI>
       </Animate>
     )
   }
 }
 
-export default Notification
+namespaceComponent(COMPONENT_KEY)(Notification)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(Notification)
+
+export default PropConnectedComponent

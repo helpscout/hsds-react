@@ -15,17 +15,17 @@ const ui = {
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Notification />)
+    const el = wrapper.find('div.c-Notification')
 
-    expect(
-      wrapper.getDOMNode().classList.contains('c-Notification')
-    ).toBeTruthy()
+    expect(el.length).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Notification className={customClass} />)
+    const el = wrapper.find('div.c-Notification')
 
-    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
+    expect(el.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 })
 
@@ -45,18 +45,16 @@ describe('Children', () => {
 describe('Align', () => {
   test('Has default alignment of right', () => {
     const wrapper = mount(<Notification />)
+    const el = wrapper.find('div.c-Notification')
 
-    expect(
-      wrapper.getDOMNode().classList.contains('is-align-right')
-    ).toBeTruthy()
+    expect(el.getDOMNode().classList.contains('is-align-right')).toBeTruthy()
   })
 
   test('Can change alignment styles, if specified', () => {
     const wrapper = mount(<Notification align="left" />)
+    const el = wrapper.find('div.c-Notification')
 
-    expect(
-      wrapper.getDOMNode().classList.contains('is-align-left')
-    ).toBeTruthy()
+    expect(el.getDOMNode().classList.contains('is-align-left')).toBeTruthy()
   })
 })
 
@@ -193,8 +191,9 @@ describe('Type', () => {
 
     test('Adds text-based className', () => {
       const wrapper = mount(<Notification />)
+      const el = wrapper.find('div.c-Notification')
 
-      expect(wrapper.getDOMNode().classList.contains('is-text')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-text')).toBe(true)
     })
 
     test('Does not pass body prop to Messages', () => {
@@ -226,8 +225,9 @@ describe('Type', () => {
   describe('Image', () => {
     test('Adds image-based className', () => {
       const wrapper = mount(<Notification type="image" />)
+      const el = wrapper.find('div.c-Notification')
 
-      expect(wrapper.getDOMNode().classList.contains('is-image')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-image')).toBe(true)
     })
 
     test('Renders a text prefix', () => {
@@ -257,8 +257,9 @@ describe('Type', () => {
     const link = 'http://mugatu.com'
     test('Adds link-based className', () => {
       const wrapper = mount(<Notification type="link" />)
+      const el = wrapper.find('div.c-Notification')
 
-      expect(wrapper.getDOMNode().classList.contains('is-link')).toBe(true)
+      expect(el.getDOMNode().classList.contains('is-link')).toBe(true)
     })
 
     test('Does not pass body to Message as prop', () => {
