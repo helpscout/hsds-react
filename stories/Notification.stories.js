@@ -3,6 +3,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import Artboard, { GuideContainer, Guide } from '@helpscout/artboard'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, text, select } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
 import { Notification } from '../src/index.js'
 
 const NotificationSpec = createSpec({
@@ -105,6 +106,7 @@ stories.add('Default', () => {
           from={text('from', from)}
           align={align}
           type={type}
+          onClick={action('Clicked!')}
         />
       </div>
     </GuideContainer>

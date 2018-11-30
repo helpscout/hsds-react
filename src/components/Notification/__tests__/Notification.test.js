@@ -78,6 +78,19 @@ describe('Body', () => {
   })
 })
 
+describe('Click', () => {
+  test('Stops event propagation on click', () => {
+    const spy = jest.fn()
+    const mockEvent = {
+      stopPropagation: spy,
+    }
+    const wrapper = mount(<Notification />)
+    wrapper.instance().handleOnClick(mockEvent)
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
 describe('isDismissable', () => {
   test('Is not dismissable by default', () => {
     const wrapper = mount(<Notification />)

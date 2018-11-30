@@ -1,7 +1,6 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Animate from '../Animate'
 import Flexy from '../Flexy'
 import Message from '../Message'
 import Text from '../Text'
@@ -102,6 +101,9 @@ export class Notification extends React.PureComponent<Props, State> {
 
   handleOnClick = event => {
     const { onClick, isDismissable } = this.props
+    if (event && event.stopPropagation) {
+      event.stopPropagation()
+    }
     if (isDismissable) {
       this.forceDismiss()
     }
@@ -194,27 +196,27 @@ export class Notification extends React.PureComponent<Props, State> {
     }
 
     return (
-      <Animate
+      <NotificationUI
+        {...getValidProps(rest)}
+        className={componentClassName}
         in={isActive}
         onExited={this.handleOnExited}
         sequence={animationSequence}
       >
-        <NotificationUI {...getValidProps(rest)} className={componentClassName}>
-          <Message.Provider theme="notifications">
-            <Message.Chat
-              bubbleClassName="c-Notification__messageBubble"
-              className="c-Notification__message"
-              {...rest}
-              {...messageProps}
-            />
-          </Message.Provider>
-          <Timer
-            isRunning={isDismissable}
-            onTimerEnd={this.handleOnTimeout}
-            timeout={timeout}
+        <Message.Provider theme="notifications">
+          <Message.Chat
+            bubbleClassName="c-Notification__messageBubble"
+            className="c-Notification__message"
+            {...rest}
+            {...messageProps}
           />
-        </NotificationUI>
-      </Animate>
+        </Message.Provider>
+        <Timer
+          isRunning={isDismissable}
+          onTimerEnd={this.handleOnTimeout}
+          timeout={timeout}
+        />
+      </NotificationUI>
     )
   }
 }

@@ -1,5 +1,6 @@
 import { rgba } from 'polished'
 import styled from '../styled'
+import Animate from '../Animate'
 import Text from '../Text'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
@@ -12,7 +13,7 @@ export const config = {
   bubbleClassName: '.c-Notification__messageBubble',
 }
 
-export const NotificationUI = styled('div')`
+export const NotificationUI = styled(Animate)`
   ${baseStyles};
   max-width: 300px;
 
