@@ -28,7 +28,7 @@ export interface Props {
 
 export class ArticleCard extends React.PureComponent<Props> {
   static defaultProps = {
-    contentLimit: 190,
+    contentLimit: 160,
     contentSize: 13,
     isHovered: false,
     titleLimit: 120,
