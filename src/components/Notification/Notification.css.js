@@ -42,6 +42,8 @@ export const NotificationUI = styled(Animate)`
   }
 
   &.is-align-right {
+    margin-left: auto;
+
     ${config.bubbleClassName} {
       border-top-left-radius: ${config.borderRadius.md} !important;
       border-top-right-radius: ${config.borderRadius.sm} !important;
@@ -69,6 +71,8 @@ export const NotificationUI = styled(Animate)`
   }
 
   &.is-align-left {
+    margin-right: auto;
+
     ${config.bubbleClassName} {
       border-top-left-radius: ${config.borderRadius.sm} !important;
       border-top-right-radius: ${config.borderRadius.md} !important;
