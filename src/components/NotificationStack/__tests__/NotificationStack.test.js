@@ -1,32 +1,36 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import NotificationStack from '../index'
+import { mount } from 'enzyme'
+import { NotificationStack } from '../NotificationStack'
 import Notification from '../../Notification'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<NotificationStack />)
+    const wrapper = mount(<NotificationStack />)
 
-    expect(wrapper.hasClass('c-NotificationStack')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-NotificationStack')
+    ).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<NotificationStack className={customClass} />)
+    const wrapper = mount(<NotificationStack className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 
   test('Applies theme-based className', () => {
-    const wrapper = shallow(<NotificationStack theme="chat" />)
+    const wrapper = mount(<NotificationStack theme="chat" />)
 
-    expect(wrapper.hasClass('is-theme-chat')).toBe(true)
+    expect(
+      wrapper.getDOMNode().classList.contains('is-theme-chat')
+    ).toBeTruthy()
   })
 })
 
 describe('Children', () => {
   test('Only renders Notification children components', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <NotificationStack>
         <Notification />
         <Notification />
@@ -44,7 +48,7 @@ describe('Children', () => {
 
 describe('Notification', () => {
   test('Sets Notification isActive based on limit, in first->last order', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <NotificationStack limit={2}>
         <Notification />
         <Notification />
@@ -64,17 +68,35 @@ describe('Notification', () => {
     expect(n.first().prop('isActive')).toBe(true)
     expect(n.last().prop('isActive')).toBe(true)
   })
+
+  test('Passes Notification click event props to onClick callback', () => {
+    const mockEvent = {}
+    const mockExtraProps = {}
+
+    const spy = jest.fn()
+
+    const wrapper = mount(
+      <NotificationStack onClick={spy}>
+        <Notification />
+      </NotificationStack>
+    )
+
+    const el = wrapper.find('Notification').first()
+    el.props().onClick(mockEvent, mockExtraProps)
+
+    expect(spy).toHaveBeenCalledWith(mockEvent, mockExtraProps)
+  })
 })
 
 describe('Dismissable', () => {
   test('Is initially set by props', () => {
-    const wrapper = shallow(<NotificationStack autoDismiss />)
+    const wrapper = mount(<NotificationStack autoDismiss />)
 
     expect(wrapper.state('isDismissable')).toBe(true)
   })
 
   test('Pauses dismissability on mouseenter/mouseleave', () => {
-    const wrapper = shallow(<NotificationStack autoDismiss />)
+    const wrapper = mount(<NotificationStack autoDismiss />)
     wrapper.simulate('mouseenter')
 
     expect(wrapper.state('isDismissable')).toBe(false)
@@ -89,7 +111,7 @@ describe('Dismissable', () => {
   })
 
   test('Does not change dismissability on mouse interactions, if not enabled', () => {
-    const wrapper = shallow(<NotificationStack autoDismiss={false} />)
+    const wrapper = mount(<NotificationStack autoDismiss={false} />)
     wrapper.simulate('mouseenter')
 
     expect(wrapper.state('isDismissable')).toBe(false)
@@ -107,7 +129,7 @@ describe('Dismissable', () => {
 describe('Mouse events', () => {
   test('Mouseenter callback still works', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<NotificationStack onMouseEnter={spy} />)
+    const wrapper = mount(<NotificationStack onMouseEnter={spy} />)
 
     wrapper.simulate('mouseenter')
 
@@ -116,7 +138,7 @@ describe('Mouse events', () => {
 
   test('Mouseleave callback still works', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<NotificationStack onMouseLeave={spy} />)
+    const wrapper = mount(<NotificationStack onMouseLeave={spy} />)
 
     wrapper.simulate('mouseleave')
 
@@ -166,7 +188,7 @@ describe('NotificationID', () => {
     n
       .last()
       .props()
-      .onBubbleClick()
+      .onClick()
 
     expect(wrapper.instance().firstNotificationId).toBeFalsy()
   })
@@ -174,7 +196,7 @@ describe('NotificationID', () => {
 
 describe('From', () => {
   test('Only sets from prop on the first notification', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <NotificationStack limit={2}>
         <Notification from="a" id={1} />
         <Notification from="b" id={2} />

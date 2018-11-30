@@ -56,10 +56,10 @@ const css = `
   }
 
   &.is-theme-notifications {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 
     &:last-child {
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
 
     ${bem.element('flexy')} {

@@ -1,10 +1,2 @@
-.c-NotificationTimer {
-  @import "../../resets/base";
-  animation-fill-mode: forward;
-  animation-name: BlueNotificationTimer;
-  animation-iteration-count: 1;
-  animation-duration: 5000ms;
-  animation-play-state: running;
-
-  @keyframes BlueNotificationTimer {}
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.
