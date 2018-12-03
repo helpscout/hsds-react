@@ -6,7 +6,7 @@ import { namespaceComponent } from '../../utilities/component'
 import { CloseButtonSize } from './CloseButton.types'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './CloseButton.utils'
-import { CloseButtonUI, IconUI } from './CloseButton.css'
+import { CloseButtonUI, IconUI } from './CloseButton.css.js'
 
 export interface Props {
   className?: string

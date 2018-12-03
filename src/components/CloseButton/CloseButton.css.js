@@ -2,6 +2,7 @@ import styled from '../styled'
 import Icon from '../Icon'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
+import forEach from '../../styles/utilities/forEach.js'
 
 export const config = {
   color: getColor('grey.700'),
@@ -60,7 +61,7 @@ export const CloseButtonUI = styled('button')`
     color: ${config.colorHover};
     outline: none;
 
-    ${Icon} {
+    ${IconUI} {
       opacity: 0.8;
     }
   }
@@ -68,7 +69,7 @@ export const CloseButtonUI = styled('button')`
     color: ${config.colorActive};
     outline: none;
 
-    ${Icon} {
+    ${IconUI} {
       opacity: 0.8;
     }
   }
@@ -84,4 +85,19 @@ export const CloseButtonUI = styled('button')`
       color: currentColor;
     }
   }
+
+  ${makeSizeStyles};
 `
+
+function makeSizeStyles(): string {
+  return forEach(
+    config.sizes,
+    (size, values) => `
+    &.is-${size} {
+      height: ${values.size};
+      padding: ${values.padding};
+      width: ${values.size};
+    }
+  `
+  )
+}
