@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Provider } from 'unistore/react'
+import { Provider } from '@helpscout/wedux'
 import Artboard from '@helpscout/artboard'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
 import Button from '../src/components/Button'
@@ -14,13 +14,14 @@ stories.addDecorator(storyFn => (
   <Artboard
     name="dropdown-v2"
     withCenterGuides={false}
-    showInterface={false}
     artboardWidth={480}
     artboardHeight={300}
   >
-    <Provider store={store}>
-      <div style={{ width: 450, height: 270 }}>{storyFn()}</div>
-    </Provider>
+    <div
+      style={{ boxSizing: 'border-box', width: 480, height: 300, padding: 30 }}
+    >
+      <Provider store={store}>{storyFn()}</Provider>
+    </div>
   </Artboard>
 ))
 
@@ -28,10 +29,11 @@ const ItemSpec = createSpec({
   id: faker.random.uuid(),
   label: faker.name.firstName(),
   value: faker.name.firstName(),
+  onClick: () => (value, props) => console.log('Clicked!', value),
 })
 
 stories.add('Dropdown/Default', () => {
-  const items = ItemSpec.generate(8)
+  const items = ItemSpec.generate(100)
 
   return <Dropdown items={items} />
 })
@@ -42,7 +44,7 @@ stories.add('Dropdown/Empty', () => {
   return <Dropdown items={[]} renderEmpty={() => <Empty />} />
 })
 
-stories.add('Dropdown/Loadiing', () => {
+stories.add('Dropdown/Loading', () => {
   const items = ItemSpec.generate(8)
   const Loading = () => <div>Loading...</div>
 
@@ -70,9 +72,23 @@ stories.add('Menu/Callbacks', () => {
   return <Dropdown {...{ items, onOpen, onClose, onSelect }} />
 })
 
+stories.add('Menu/StateReducer', () => {
+  const items = ItemSpec.generate(8)
+  const stateReducer = (state, action) => {
+    console.group('State update')
+    console.log('state', state)
+    console.log('action', action)
+    console.groupEnd()
+
+    return state
+  }
+
+  return <Dropdown {...{ items, stateReducer }} />
+})
+
 stories.add('Menu/Subscribe', () => {
   const items = ItemSpec.generate(8)
-  const subscribe = state => console.log(state)
+  const subscribe = state => console.log('State update', state)
 
   return <Dropdown {...{ items, subscribe }} />
 })
@@ -115,7 +131,7 @@ stories.add('Menu/Nested', () => {
     ...ItemSpec.generate(6),
   ]
 
-  return <Dropdown items={items} />
+  return <Dropdown items={items} isOpened />
 })
 
 stories.add('Menu/Nested/UpLeft', () => {
@@ -139,80 +155,13 @@ stories.add('Menu/Nested/UpLeft', () => {
   return <Dropdown items={items} dropUp direction="left" />
 })
 
-stories.add('Menu/Custom', () => {
-  const HeaderUI = styled('div')`
-    position: sticky;
-    z-index: 10;
-    background: white;
-    padding: 8px 10px 8px;
-    top: 0;
-    transform: translateY(-8px);
-    border: 1px solid #eee;
-  `
-  class FilterableDropdown extends React.Component {
-    state = {
-      items: ItemSpec.generate(30),
-      inputValue: '',
-      selectedItem: undefined,
-    }
-
-    onInputChange = inputValue => {
-      this.setState({
-        inputValue,
-      })
-    }
-
-    onSelect = selectedItem => {
-      this.setState({
-        selectedItem,
-      })
-    }
-
-    filterSearchResult = item => {
-      if (!this.state.inputValue) return true
-
-      return item.label
-        .toLowerCase()
-        .includes(this.state.inputValue.toLowerCase())
-    }
-
-    render() {
-      return (
-        <Dropdown
-          items={this.state.items}
-          selectedItem={this.state.selectedItem}
-          minWidth={300}
-          onSelect={this.onSelect}
-        >
-          {({ items }) => (
-            <Dropdown.Menu>
-              <HeaderUI>
-                <Input
-                  placeholder="Search"
-                  size="sm"
-                  autoFocus
-                  onChange={this.onInputChange}
-                  value={this.state.inputValue}
-                />
-              </HeaderUI>
-              {items
-                .filter(this.filterSearchResult)
-                .map(item => <Dropdown.Item {...item} key={item.id} />)}
-            </Dropdown.Menu>
-          )}
-        </Dropdown>
-      )
-    }
-  }
-
-  return <FilterableDropdown />
-})
-
 stories.add('Item/Active', () => {
   const items = ItemSpec.generate(8)
   const selectedItem = items[0]
 
-  return <Dropdown items={items} selectedItem={selectedItem} />
+  return (
+    <Dropdown items={items} selectedItem={selectedItem} clearOnSelect={false} />
+  )
 })
 
 stories.add('Item/Disabled', () => {
@@ -227,13 +176,50 @@ stories.add('Item/Disabled', () => {
   return <Dropdown items={items} />
 })
 
+stories.add('Item/Divider', () => {
+  const items = ItemSpec.generate(8).map((item, index) => {
+    if (index !== 5) return item
+    return {
+      type: 'divider',
+    }
+  })
+
+  return <Dropdown items={items} />
+})
+
+stories.add('Item/Groups', () => {
+  const items = [
+    {
+      items: [
+        {
+          ...ItemSpec.generate(),
+          items: ItemSpec.generate(8),
+        },
+        ...ItemSpec.generate(8),
+      ],
+      label: 'Group 1',
+      value: 'thing',
+      type: 'group',
+    },
+    {
+      items: ItemSpec.generate(8),
+      label: 'Group 2',
+      type: 'group',
+      value: 'thing2',
+    },
+  ]
+
+  return <Dropdown items={items} />
+})
+
 stories.add('Item/Custom', () => {
   const items = ItemSpec.generate(8)
   const onSelect = value => console.log(value)
   const CustomItem = props => {
     return (
       <div style={{ padding: '0px 20px', background: 'magenta' }}>
-        Custom<br />
+        Custom
+        <br />
         <h2>{props.value}</h2>
       </div>
     )

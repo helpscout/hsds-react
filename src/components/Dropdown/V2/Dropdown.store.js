@@ -1,25 +1,45 @@
 // Should be a .ts file
 // Couldn't figure out how to make this play nicely with Jest.
-import unistoreCreateStore from 'unistore'
+import unistoreCreateStore from '@helpscout/wedux'
+import reducer from './Dropdown.reducer'
 import { noop } from '../../../utilities/other'
 
 export const initialState = {
-  activeItem: null,
-  activeIndex: '',
+  activeClassName: 'is-active',
+  clearOnSelect: true,
   closeOnSelect: true,
-  items: [],
-  isOpen: false,
-  isLoading: false,
   direction: 'right',
   dropUp: false,
-  minWidth: 180,
+  enableTabNavigation: true,
+  envNode: document,
+  focusClassName: 'is-focused',
+  getState: noop,
+  index: null,
+  indexMap: [],
+  inputValue: '',
+  isLoading: false,
+  isMounted: false,
+  isOpen: false,
+  items: [],
+  lastInteractionType: undefined,
+  maxHeight: 320,
   maxWidth: 360,
   minHeight: 48,
-  maxHeight: 320,
-  onOpen: noop,
+  minWidth: 180,
+  onBlur: noop,
   onClose: noop,
+  onFocus: noop,
+  onMenuMount: noop,
+  onMenuUnmount: noop,
+  onOpen: noop,
   onSelect: noop,
+  openClassName: 'is-open',
+  previousIndex: null,
   selectedItem: '',
+  stateReducer: state => state,
+  subscribe: noop,
+  trigger: 'Dropdown',
+  withScrollLock: true,
   zIndex: 1080,
 }
 
@@ -28,5 +48,9 @@ export const initialState = {
 // would mean that all dropdowns share the same store. And we don't want that!
 
 export const createStore = (props = initialState) => unistoreCreateStore(props)
+
+export const dispatch = (state = initialState, action = {}) => {
+  return reducer(state, action)
+}
 
 export default createStore

@@ -1,53 +1,59 @@
 import * as React from 'react'
-import { Provider } from 'unistore/react'
 import { mount } from 'enzyme'
-import ConnectedMenuContainer, {
-  MenuContainer,
-} from '../Dropdown.MenuContainer'
-import { getEnhancedItemsWithProps } from '../Dropdown.utils'
-import createStore from '../Dropdown.store'
-import { find, hasClass } from './Dropdown.testHelpers'
-import Keys from '../../../../constants/Keys'
-// @ts-ignore
-import { scrollIntoView } from '../../../../utilities/scrolling'
-// @ts-ignore
-import Portal from '../../../Portal'
-// @ts-ignore
-import MenuComponent from '../Dropdown.Menu'
+import { MenuContainer } from '../Dropdown.MenuContainer'
+import { initialState } from '../Dropdown.store'
+import { find, hasClass } from '../../../../tests/helpers/enzyme'
 import { MenuUI } from '../Dropdown.css.js'
 
-jest.mock('../../../../utilities/scrolling')
 jest.mock('../../../Portal', () => {
-  const Portal = props => <div>{props.children}</div>
+  const Portal = ({ children }) => <div>{children}</div>
   return {
-    default: props => <Portal {...props} />,
+    default: Portal,
+  }
+})
+jest.mock('../../../Animate', () => {
+  const Animate = ({ children }) => <div>{children}</div>
+  return {
+    default: Animate,
+  }
+})
+jest.mock('../Dropdown.Renderer', () => {
+  const Renderer = () => <div />
+  return {
+    default: Renderer,
   }
 })
 jest.mock('../Dropdown.Menu', () => {
-  const DropdownMenu = props => <MenuUI {...props} />
+  const Menu = props => <MenuUI {...props} />
   return {
-    default: props => {
-      return <DropdownMenu {...props} />
-    },
+    default: Menu,
   }
 })
-
-const documentEvents = {
-  keydown: (event: any) => undefined,
-}
+jest.mock('../Dropdown.Card', () => {
+  const Card = ({ children }) => <div>{children}</div>
+  return {
+    default: Card,
+  }
+})
+jest.mock('../Dropdown.Item', () => {
+  const Item = ({ children }) => <div>{children}</div>
+  return {
+    default: Item,
+  }
+})
 
 const baseSelector = 'div.c-DropdownV2MenuContainer'
 
 describe('className', () => {
   test('Has a default className', () => {
-    const wrapper = mount(<MenuContainer />)
+    const wrapper = mount(<MenuContainer isOpen />)
     const el = wrapper.find(baseSelector)
 
     expect(el.length).toBeTruthy()
   })
 
   test('Accepts custom className', () => {
-    const wrapper = mount(<MenuContainer className="ron" />)
+    const wrapper = mount(<MenuContainer className="ron" isOpen />)
     const el = find(wrapper, baseSelector)
 
     expect(hasClass(el, 'ron')).toBe(true)
@@ -75,12 +81,44 @@ describe('Portal', () => {
 
     expect(el.length).not.toBeTruthy()
   })
+
+  test('Fires onMenuMounted callback on mount', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer isOpen={true} onMenuMounted={spy} />)
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.props().onOpen()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onMenuUnmounted callback on mount', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer isOpen={true} onMenuUnmounted={spy} />)
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.props().onClose()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Adjusts position on Portal mount', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<MenuContainer isOpen={true} />)
+    // @ts-ignore
+    wrapper.instance().setPositionStylesOnNode = spy
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.props().onOpen()
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('Menu', () => {
   test('Renders a Menu by default', () => {
     const wrapper = mount(<MenuContainer items={[]} isOpen />)
-    const el = wrapper.find('DropdownMenu')
+    const el = wrapper.find('Menu')
 
     expect(el.length).toBeTruthy()
   })
@@ -88,14 +126,14 @@ describe('Menu', () => {
   test('Renders a Menu within Portal', () => {
     const wrapper = mount(<MenuContainer items={[]} isOpen />)
     const portal = wrapper.find('Portal')
-    const el = portal.find('DropdownMenu')
+    const el = portal.find('Menu')
 
     expect(el.length).toBeTruthy()
   })
 
   test('Passes the id to the Menu', () => {
     const wrapper = mount(<MenuContainer items={[]} id="ron" isOpen />)
-    const el = find(wrapper, 'DropdownMenu')
+    const el = find(wrapper, 'Menu')
 
     expect(el.prop('id')).toBe('ron')
   })
@@ -113,22 +151,33 @@ describe('Item', () => {
         label: 'Brian',
       },
     ]
-    const wrapper = mount(<MenuContainer items={items} isOpen />)
-    const menu = wrapper.find('DropdownMenu')
-    const els = menu.find('DropdownItem')
+    const getState = () => ({ ...initialState, items })
+
+    const wrapper = mount(
+      <MenuContainer items={items} isOpen getState={getState} />
+    )
+
+    const menu = wrapper.find('Menu')
+    const els = menu.find('Item')
     const el = els.first()
 
     expect(els.length).toBeTruthy()
     expect(el.props().label).toBe('Ron')
     expect(el.props().value).toBe('ron')
   })
+})
 
-  test('Renders nested tems', () => {
+describe('Groups', () => {
+  test('Can render grouped items', () => {
     const items = [
       {
-        value: 'ron',
-        label: 'Ron',
+        type: 'group',
+        label: 'Group',
         items: [
+          {
+            value: 'ron',
+            label: 'Ron',
+          },
           {
             value: 'brian',
             label: 'Brian',
@@ -136,31 +185,68 @@ describe('Item', () => {
         ],
       },
     ]
-    const wrapper = mount(<MenuContainer items={items} isOpen />)
-    const menu = wrapper.find('DropdownMenu')
-    const subMenu = menu.last()
-    const el = subMenu.find('DropdownItem').first()
+    const getState = () => ({ ...initialState, items })
 
-    expect(menu.length).toBeGreaterThanOrEqual(2)
+    const wrapper = mount(
+      <MenuContainer items={items} isOpen getState={getState} />
+    )
 
-    expect(el.props().label).toBe('Brian')
-    expect(el.props().value).toBe('brian')
-  })
-})
+    const group = wrapper.find('DropdownGroup')
+    const menu = wrapper.find('Menu')
+    const els = menu.find('Item.c-DropdownV2Item')
+    const el = els.first()
 
-describe('Accessibility', () => {
-  test('Sets activeId on Menu', () => {
-    const wrapper = mount(<MenuContainer items={[]} activeId="ron" isOpen />)
-    const el = find(wrapper, 'DropdownMenu')
-
-    expect(el.prop('aria-activedescendant')).toBe('ron')
+    expect(group.length).toBeTruthy()
+    expect(els.length).toBeTruthy()
+    expect(el.props().label).toBe('Ron')
+    expect(el.props().value).toBe('ron')
   })
 
-  test('Sets triggerId on Menu', () => {
-    const wrapper = mount(<MenuContainer items={[]} triggerId="ron" isOpen />)
-    const el = find(wrapper, 'DropdownMenu')
+  test('Renders group with default id, if id is undefined', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Group',
+        items: [
+          {
+            value: 'ron',
+            label: 'Ron',
+          },
+          {
+            value: 'brian',
+            label: 'Brian',
+          },
+        ],
+      },
+    ]
+    const getState = () => ({ ...initialState, items })
 
-    expect(el.prop('aria-labelledby')).toBe('ron')
+    const wrapper = mount(
+      <MenuContainer items={items} isOpen getState={getState} id={undefined} />
+    )
+
+    const group = wrapper.find('DropdownGroup')
+
+    expect(group.prop('id')).toContain('group-')
+  })
+
+  test('Does not render group is group.items is empty', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Group',
+        items: [],
+      },
+    ]
+    const getState = () => ({ ...initialState, items })
+
+    const wrapper = mount(
+      <MenuContainer items={items} isOpen getState={getState} />
+    )
+
+    const group = wrapper.find('DropdownGroup')
+
+    expect(group.length).toBeFalsy()
   })
 })
 
@@ -168,7 +254,7 @@ describe('renderProp', () => {
   test('Does not render Menu, if renderProp (children) is specified', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen>{spy}</MenuContainer>)
-    const menu = wrapper.find('DropdownMenu')
+    const menu = wrapper.find('Menu')
 
     expect(menu.length).toBe(0)
     expect(spy).toHaveBeenCalled()
@@ -185,6 +271,7 @@ describe('renderProp', () => {
         label: 'Brian',
       },
     ]
+    const getState = () => ({ ...initialState, items })
 
     const CustomMenu = props => {
       const { items } = props
@@ -200,7 +287,7 @@ describe('renderProp', () => {
     }
 
     const wrapper = mount(
-      <MenuContainer isOpen items={items}>
+      <MenuContainer isOpen items={items} getState={getState}>
         {CustomMenu}
       </MenuContainer>
     )
@@ -211,45 +298,6 @@ describe('renderProp', () => {
     expect(menu.length).toBe(1)
     expect(els.length).toBe(2)
     expect(el.html()).toContain('Ron')
-  })
-})
-
-describe('ConnectedMenuContainer', () => {
-  test('Can render ConnectedMenuContainer', () => {
-    const mockStore = createStore({
-      activeIndex: '0',
-    })
-    const wrapper = mount(
-      <Provider store={mockStore}>
-        <ConnectedMenuContainer />
-      </Provider>
-    )
-
-    expect(wrapper).toBeTruthy()
-  })
-
-  test('Receives props from store', () => {
-    const initialState = {
-      activeIndex: '1',
-      activeId: 'dropdown-1',
-      direction: 'left',
-      menuId: 'someId',
-      zIndex: '1',
-    }
-    const mockStore = createStore(initialState)
-    const wrapper = mount(
-      <Provider store={mockStore}>
-        <ConnectedMenuContainer />
-      </Provider>
-    )
-
-    const el = wrapper.find('DropdownMenuContainer')
-
-    expect(el.prop('activeIndex')).toBe(initialState.activeIndex)
-    expect(el.prop('activeId')).toBe(initialState.activeId)
-    expect(el.prop('id')).toBe(initialState.menuId)
-    expect(el.prop('dropRight')).toBe(false)
-    expect(el.prop('zIndex')).toBe(initialState.zIndex)
   })
 })
 
@@ -278,441 +326,12 @@ describe('Style/Direction', () => {
     expect(hasClass(el, 'is-dropUp')).toBe(true)
     expect(animate.prop('sequence')).toContain('up')
   })
-})
 
-describe('SubMenus', () => {
-  test('Increments base index to activeIndex path when opening sub menu', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<MenuContainer activeIndex="5" isOpen={true} />)
-    // @ts-ignore
-    wrapper.instance().setNextActiveItem = spy
+  test('Renders dropLeft styles, if defined', () => {
+    const wrapper = mount(<MenuContainer dropRight={false} />)
+    const el = find(wrapper, baseSelector)
 
-    // @ts-ignore
-    wrapper.instance().openSubMenu()
-
-    expect(spy).toHaveBeenCalledWith('5.0')
-  })
-
-  test('Does not open sub menu if menu is closed', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<MenuContainer activeIndex="5" isOpen={false} />)
-    // @ts-ignore
-    wrapper.instance().setNextActiveItem = spy
-
-    // @ts-ignore
-    wrapper.instance().openSubMenu()
-
-    expect(spy).not.toHaveBeenCalled()
-  })
-
-  test('Decrements base index to activeIndex path when closing sub menu', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<MenuContainer activeIndex="5.0" isOpen={true} />)
-    // @ts-ignore
-    wrapper.instance().setNextActiveItem = spy
-
-    // @ts-ignore
-    wrapper.instance().closeSubMenu()
-
-    expect(spy).toHaveBeenCalledWith('5')
-  })
-
-  test('Does not close sub menu if menu is closed', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<MenuContainer activeIndex="5" isOpen={false} />)
-    // @ts-ignore
-    wrapper.instance().setNextActiveItem = spy
-
-    // @ts-ignore
-    wrapper.instance().closeSubMenu()
-
-    expect(spy).not.toHaveBeenCalled()
-  })
-})
-
-describe('Keyboard interactions', () => {
-  const initialState = {
-    activeIndex: null,
-    isOpen: true,
-    items: [
-      {
-        value: 'ron',
-        label: 'Ron',
-      },
-      {
-        value: 'champ',
-        label: 'Champ',
-      },
-    ],
-  }
-
-  beforeEach(() => {
-    document.addEventListener = jest.fn((event, handler) => {
-      documentEvents[event] = handler
-    })
-  })
-
-  afterEach(() => {
-    // @ts-ignore
-    document.addEventListener.mockRestore()
-  })
-
-  describe('Down Arrow', () => {
-    test('Down: Does not select the first item if Menu is closed', () => {
-      const mockStore = createStore({
-        ...initialState,
-        isOpen: false,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.DOWN_ARROW,
-      })
-
-      expect(mockStore.getState().activeIndex).toBeFalsy()
-      expect(mockStore.getState().activeItem).toBeFalsy()
-    })
-
-    test('Down: Does not select item if there are none', () => {
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps({ items: [] }),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.DOWN_ARROW,
-      })
-
-      expect(mockStore.getState().activeIndex).toBeFalsy()
-      expect(mockStore.getState().activeItem).toBeFalsy()
-    })
-
-    test('Down: Selects first item on keydown', () => {
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      expect(mockStore.getState().activeIndex).toBeFalsy()
-      expect(mockStore.getState().activeItem).toBeFalsy()
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.DOWN_ARROW,
-      })
-
-      expect(mockStore.getState().activeIndex).toBe('0')
-      expect(mockStore.getState().activeItem).toBeTruthy()
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.DOWN_ARROW,
-      })
-      expect(mockStore.getState().activeIndex).toBe('1')
-    })
-
-    test('Does not update store if there are no next valid items', () => {
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        activeIndex: '500',
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      mockStore.subscribe(spy)
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.DOWN_ARROW,
-      })
-
-      expect(spy).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('Up Arrow', () => {
-    test('Up: Does not select the item if Menu is closed', () => {
-      const mockStore = createStore({
-        ...initialState,
-        isOpen: false,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.UP_ARROW,
-      })
-
-      expect(mockStore.getState().activeIndex).toBeFalsy()
-      expect(mockStore.getState().activeItem).toBeFalsy()
-    })
-
-    test('Up: Does not update store if activeIndex is undefined', () => {
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      mockStore.subscribe(spy)
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.UP_ARROW,
-      })
-
-      expect(spy).not.toHaveBeenCalled()
-    })
-
-    test('Up: Selects previous item on keydown', () => {
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.DOWN_ARROW,
-      })
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.DOWN_ARROW,
-      })
-
-      expect(mockStore.getState().activeIndex).toBe('1')
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.UP_ARROW,
-      })
-
-      expect(mockStore.getState().activeIndex).toBe('0')
-    })
-  })
-
-  describe('Enter', () => {
-    test('Selects the activeItem', () => {
-      const eventSpy = jest.fn()
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        activeIndex: '0',
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer
-            items={mockStore.getState().items}
-            onSelect={spy}
-          />
-        </Provider>
-      )
-
-      documentEvents.keydown({
-        preventDefault: eventSpy,
-        keyCode: Keys.ENTER,
-      })
-
-      expect(eventSpy).toHaveBeenCalled()
-      expect(spy).toHaveBeenCalled()
-    })
-  })
-
-  describe('Left Arrow', () => {
-    test('Attemps to close sub menu, if dropRight', () => {
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      const wrapper = mount(
-        <MenuContainer
-          items={mockStore.getState().items}
-          dropRight={true}
-          isOpen={true}
-        />
-      )
-      wrapper.instance()['closeSubMenu'] = spy
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.LEFT_ARROW,
-      })
-
-      expect(spy).toHaveBeenCalled()
-    })
-
-    test('Attemps to open sub menu, if dropRight is false', () => {
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      const wrapper = mount(
-        <MenuContainer
-          items={mockStore.getState().items}
-          dropRight={false}
-          isOpen={true}
-        />
-      )
-      wrapper.instance()['openSubMenu'] = spy
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.LEFT_ARROW,
-      })
-
-      expect(spy).toHaveBeenCalled()
-    })
-  })
-
-  describe('Right Arrow', () => {
-    test('Attemps to open sub menu, if dropRight', () => {
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      const wrapper = mount(
-        <MenuContainer
-          items={mockStore.getState().items}
-          dropRight={true}
-          isOpen={true}
-        />
-      )
-      wrapper.instance()['openSubMenu'] = spy
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.RIGHT_ARROW,
-      })
-
-      expect(spy).toHaveBeenCalled()
-    })
-
-    test('Attemps to close sub menu, if dropRight is false', () => {
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      const wrapper = mount(
-        <MenuContainer
-          items={mockStore.getState().items}
-          dropRight={false}
-          isOpen={true}
-        />
-      )
-      wrapper.instance()['closeSubMenu'] = spy
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.RIGHT_ARROW,
-      })
-
-      expect(spy).toHaveBeenCalled()
-    })
-  })
-
-  describe('Tab', () => {
-    test('Closes menu if pressed on last item', () => {
-      const mockStore = createStore({
-        ...initialState,
-        activeIndex: '1',
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      const wrapper = mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.TAB,
-      })
-
-      expect(mockStore.getState().isOpen).toBe(false)
-
-      wrapper.update()
-
-      expect(wrapper.find('DropdownMenu').length).toBe(0)
-    })
-
-    test('Does not trigger store update if menu is closed', () => {
-      const spy = jest.fn()
-      const mockStore = createStore({
-        ...initialState,
-        activeIndex: '1',
-        isOpen: false,
-        items: getEnhancedItemsWithProps(initialState),
-      })
-
-      mount(
-        <Provider store={mockStore}>
-          <ConnectedMenuContainer items={mockStore.getState().items} />
-        </Provider>
-      )
-
-      mockStore.subscribe(spy)
-
-      documentEvents.keydown({
-        preventDefault: jest.fn(),
-        keyCode: Keys.TAB,
-      })
-
-      expect(spy).not.toHaveBeenCalled()
-    })
+    expect(hasClass(el, 'is-dropLeft')).toBe(true)
   })
 })
 
@@ -780,9 +399,15 @@ describe('Empty', () => {
         label: 'Champ',
       },
     ]
+    const getState = () => ({ ...initialState, items })
     const Empty = () => <div>Empty</div>
     const wrapper = mount(
-      <MenuContainer isOpen={true} items={items} renderEmpty={<Empty />} />
+      <MenuContainer
+        getState={getState}
+        isOpen={true}
+        items={items}
+        renderEmpty={<Empty />}
+      />
     )
     const el = wrapper.find('Empty')
 
@@ -802,8 +427,11 @@ describe('Empty', () => {
         label: 'Champ',
       },
     ]
+    const getState = () => ({ ...initialState, items })
+
     const wrapper = mount(
       <MenuContainer
+        getState={getState}
         isOpen={true}
         items={items}
         isLoading={true}

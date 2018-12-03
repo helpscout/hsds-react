@@ -1,19 +1,23 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Menu } from '../Dropdown.Menu'
-import { hasClass } from './Dropdown.testHelpers'
+import { hasClass } from '../../../../tests/helpers/enzyme'
+
+const baseSelector = 'div.c-DropdownV2Menu'
 
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Menu />)
+    const el = wrapper.find(baseSelector)
 
-    expect(hasClass(wrapper, 'c-DropdownV2Menu')).toBe(true)
+    expect(hasClass(el, 'c-DropdownV2Menu')).toBe(true)
   })
 
   test('Accepts custom className', () => {
     const wrapper = mount(<Menu className="ron" />)
+    const el = wrapper.find(baseSelector)
 
-    expect(hasClass(wrapper, 'ron')).toBe(true)
+    expect(hasClass(el, 'ron')).toBe(true)
   })
 })
 
@@ -41,41 +45,9 @@ describe('innerRef', () => {
 describe('subMenu', () => {
   test('Renders sub-menu class, if isSubMenu', () => {
     const wrapper = mount(<Menu className="ron" isSubMenu />)
+    const el = wrapper.find(baseSelector)
 
-    expect(hasClass(wrapper, 'is-subMenu')).toBe(true)
-  })
-})
-
-describe('styles', () => {
-  test('Can render custom styles', () => {
-    const wrapper = mount(
-      <Menu className="ron" style={{ background: 'blue' }} />
-    )
-    const el: any = wrapper.getDOMNode()
-
-    expect(el.style.background).toBe('blue')
-  })
-
-  test('Adds custom dimension styles from props', () => {
-    const wrapper = mount(
-      <Menu
-        className="ron"
-        style={{ background: 'blue' }}
-        minWidth={600}
-        maxWidth={650}
-        minHeight={300}
-        maxHeight={500}
-        zIndex={44}
-      />
-    )
-    const el: any = wrapper.getDOMNode()
-
-    expect(el.style.background).toBe('blue')
-    expect(el.style.minWidth).toBe('600px')
-    expect(el.style.maxWidth).toBe('650px')
-    expect(el.style.minHeight).toBe('300px')
-    expect(el.style.maxHeight).toBe('500px')
-    expect(el.style.zIndex).toBe('44')
+    expect(hasClass(el, 'is-subMenu')).toBe(true)
   })
 })
 

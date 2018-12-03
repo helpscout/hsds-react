@@ -1,13 +1,24 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
-import { findDOMNode, hasClass, getAttribute } from './Dropdown.testHelpers'
-import { setMenuPositionStyles } from '../Dropdown.utils'
-// @ts-ignore
-import MenuComponent from '../Dropdown.Menu'
+import {
+  findDOMNode,
+  hasClass,
+  getAttribute,
+} from '../../../../tests/helpers/enzyme'
+import { setMenuPositionStyles } from '../Dropdown.renderUtils'
 import { MenuUI } from '../Dropdown.css.js'
 
 jest.mock('../Dropdown.utils')
+jest.mock('../Dropdown.renderUtils')
+jest.mock('../Dropdown.Card', () => {
+  const Card = props => <div {...props} />
+  return {
+    default: props => {
+      return <Card {...props} />
+    },
+  }
+})
 jest.mock('../Dropdown.Menu', () => {
   const Menu = props => <MenuUI {...props} />
   return {
@@ -84,25 +95,6 @@ describe('renderMenu', () => {
     expect(setMenuPositionStyles).toHaveBeenCalled()
   })
 
-  test('Re-renders the menu if hover change', () => {
-    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
-    const wrapper = mount(<Item items={items} />)
-
-    expect(setMenuPositionStyles).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({
-      isHover: true,
-    })
-
-    expect(setMenuPositionStyles).toHaveBeenCalledTimes(2)
-
-    wrapper.setProps({
-      isHover: false,
-    })
-
-    expect(setMenuPositionStyles).toHaveBeenCalledTimes(3)
-  })
-
   test('Does not render the menu if important DOM nodes are missing', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
@@ -121,8 +113,9 @@ describe('renderMenu', () => {
 })
 
 describe('Action', () => {
+  const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
   test('Renders an Action', () => {
-    const wrapper = mount(<Item />)
+    const wrapper = mount(<Item items={items} />)
     const el = wrapper.find('.c-DropdownV2ItemAction')
 
     expect(el.length).toBeTruthy()
@@ -149,18 +142,6 @@ describe('Items', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
     const el = wrapper.find('Menu')
-
-    expect(el.length).toBeTruthy()
-  })
-
-  test('Renders sub menu items', () => {
-    const items = [
-      { value: 'ron', id: 'ron' },
-      { value: 'champ' },
-      { value: 'brick' },
-    ]
-    const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('#ron')
 
     expect(el.length).toBeTruthy()
   })
@@ -208,7 +189,7 @@ describe('Indicator', () => {
   test('Renders the sub menu indicator, if has items', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2Item__subMenuIndicator')
+    const el = wrapper.find('.c-DropdownV2ItemSubMenuIndicator')
 
     expect(el.length).toBeTruthy()
   })
@@ -216,7 +197,7 @@ describe('Indicator', () => {
   test('Does not render the sub menu indicator, if has no items', () => {
     const items = undefined
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2Item__subMenuIndicator')
+    const el = wrapper.find('.c-DropdownV2ItemSubMenuIndicator')
 
     expect(el.length).not.toBeTruthy()
   })
@@ -254,5 +235,21 @@ describe('disabled', () => {
 
     expect(hasClass(wrapper, 'is-disabled')).toBe(true)
     expect(getAttribute(el, 'aria-disabled')).toBe('true')
+  })
+})
+
+describe('Types', () => {
+  test('Renders a Group Header, if type is group', () => {
+    const wrapper = mount(<Item type="group" />)
+    const el = wrapper.find('DropdownHeader')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Renders a Divider, if type is divider', () => {
+    const wrapper = mount(<Item type="divider" />)
+    const el = wrapper.find('DropdownDivider')
+
+    expect(el.length).toBeTruthy()
   })
 })

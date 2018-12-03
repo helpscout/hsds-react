@@ -3,13 +3,16 @@ const { jsWithBabel: tsjPreset } = require('ts-jest/presets')
 module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
-    '!src/**/?(*.)types.{js,jsx}',
-    '!src/**/?(*.)helpers.{js,jsx}',
+    '!src/**/?(*.)types.{js,jsx,ts,tsx}',
+    '!src/**/?(*.)helpers.{js,jsx,ts,tsx}',
     '!src/**/?(*.)testHelpers.{js,jsx,ts,tsx}',
-    '!src/styles/tests/helpers/**/*.{js,jsx}',
+    '!src/tests/helpers/**/*.{js,jsx,ts,tsx}',
+    '!src/styles/tests/helpers/**/*.{js,jsx,ts,tsx}',
     '!src/**/?(*.)css.{js,jsx,ts,tsx}',
     '!src/index.{js,jsx,ts,tsx}',
     '!src/components/Input/utils.{js,jsx}',
+    '!src/components/Dropdown/V2/Dropdown.Renderer.tsx',
+    '!src/components/Dropdown/V2/Dropdown.renderUtils.ts',
     '!src/components/Popper/**/*.{js,jsx}',
     '!src/tests/helpers/**/*.{js,jsx}',
     '!src/utilities/browser.{js,jsx,ts}',
@@ -40,7 +43,8 @@ module.exports = {
   transform: {
     ...tsjPreset.transform,
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
-    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
+    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)':
+      '<rootDir>/config/jest/fileTransform.js',
   },
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$'],
   moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'ts', 'tsx'],

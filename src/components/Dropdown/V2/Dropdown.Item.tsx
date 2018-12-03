@@ -1,20 +1,21 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
-import Flexy from '../../Flexy'
 import Icon from '../../Icon'
+import Card from './Dropdown.Card'
+import Divider from './Dropdown.Divider'
+import Header from './Dropdown.Header'
 import Menu from './Dropdown.Menu'
 import {
   ItemUI,
   ActionUI,
+  ActionContentUI,
   WrapperUI,
   SubMenuIncidatorUI,
 } from './Dropdown.css.js'
-import {
-  SELECTORS,
-  setMenuPositionStyles,
-  getCustomItemProps,
-} from './Dropdown.utils'
+import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
+import { setMenuPositionStyles } from './Dropdown.renderUtils'
 import { classNames } from '../../../utilities/classNames'
 import {
   getComponentKey,
@@ -29,24 +30,27 @@ export interface Props {
   disabled: boolean
   dropRight: boolean
   dropUp: boolean
+  getState: (...args: any[]) => void
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
   isHover: boolean
   items: Array<any>
-  onMouseEnter: (event: Event) => void
-  onMouseMove: (event: Event) => void
-  onBlur: (event: Event) => void
-  onClick: (event: Event, props: any) => void
-  onFocus: (event: Event) => void
+  onMouseEnter: (...args: any[]) => void
+  onMouseMove: (...args: any[]) => void
+  onBlur: (...args: any[]) => void
+  onClick: (...args: any[]) => void
+  onFocus: (...args: any[]) => void
   renderItem?: (props: any) => void
   subMenuId?: string
   label: string
+  type: string
   value: string
 }
 
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
+    getState: noop,
     disabled: false,
     index: '0',
     innerRef: noop,
@@ -60,6 +64,7 @@ export class Item extends React.PureComponent<Props> {
     onClick: noop,
     onFocus: noop,
     label: '',
+    type: 'item',
     value: '',
   }
 
@@ -75,31 +80,26 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isHover !== this.props.isHover) {
-      this.renderMenu()
-    }
-  }
-
   handleOnClick = (event: Event) => {
     const { onClick } = this.props
 
     onClick(event, { hasSubMenu: this.hasSubMenu() })
   }
 
-  hasSubMenu = (): boolean => {
+  hasSubMenu(): boolean {
     const { items } = this.props
 
     return !!(items && items.length)
   }
 
-  renderMenu = () => {
-    const { dropRight, dropUp } = this.props
-
+  renderMenu() {
     if (!this.hasSubMenu()) return
+
+    const { dropRight, dropUp } = this.props
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
+      /* istanbul ignore else */
       if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
         setMenuPositionStyles({
           dropRight,
@@ -113,6 +113,11 @@ export class Item extends React.PureComponent<Props> {
     })
   }
 
+  getItemProps = (item: any, index?: number) => {
+    const state = this.props.getState()
+    return getItemProps(state, item)
+  }
+
   getWrapperProps = () => {
     const { index, value } = this.props
 
@@ -124,56 +129,80 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  renderSubMenu = () => {
-    const { actionId, items, subMenuId } = this.props
+  renderSubMenu() {
+    const { actionId, getState, renderItem, items, subMenuId } = this.props
 
     return (
       this.hasSubMenu() && (
         <WrapperUI {...this.getWrapperProps()}>
-          <Menu
-            aria-labelledby={actionId}
-            innerRef={this.setMenuNodeRef}
-            isSubMenu
-            id={subMenuId}
-          >
-            {items.map((item, index) => (
-              <Item key={getComponentKey(item, index)} {...item} />
-            ))}
-          </Menu>
+          <Card>
+            <Menu
+              aria-labelledby={actionId}
+              innerRef={this.setMenuNodeRef}
+              isSubMenu
+              id={subMenuId}
+            >
+              {items.map((item, index) => (
+                <Item
+                  getState={getState}
+                  renderItem={renderItem}
+                  key={
+                    item.id ||
+                    item.value ||
+                    /* istanbul ignore next */
+                    getComponentKey(item, index)
+                  }
+                  {...this.getItemProps(item)}
+                />
+              ))}
+            </Menu>
+          </Card>
         </WrapperUI>
       )
     )
   }
 
-  renderSubMenuIndicator = () => {
+  renderSubMenuIndicator() {
     const { dropRight } = this.props
     const icon = dropRight ? 'caret-right' : 'caret-left'
 
     return (
-      this.hasSubMenu() && (
-        <Flexy.Item>
-          <SubMenuIncidatorUI className="c-DropdownV2Item__subMenuIndicator">
-            <Icon name={icon} size="12" shade="extraMuted" />
-          </SubMenuIncidatorUI>
-        </Flexy.Item>
-      )
+      <SubMenuIncidatorUI className="c-DropdownV2ItemSubMenuIndicator">
+        <Icon name={icon} size="12" shade="extraMuted" />
+      </SubMenuIncidatorUI>
     )
   }
 
-  renderContent = () => {
-    const { renderItem, children, label } = this.props
+  renderContent() {
+    const { actionId, renderItem, children, label } = this.props
 
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }
 
+    const hasSubMenu = this.hasSubMenu()
     const content = children || label
 
+    if (!hasSubMenu) return content
+
+    const componentClassName = classNames(
+      hasSubMenu && 'has-subMenu',
+      'c-DropdownV2ItemAction'
+    )
+
+    const actionProps = {
+      id: actionId,
+      innerRef: this.setActionNodeRef,
+      className: componentClassName,
+    }
+
     return (
-      <Flexy gap="sm">
-        <Flexy.Block>{content}</Flexy.Block>
+      <ActionUI {...actionProps}>
+        <ActionContentUI className="c-DropdownV2ItemActionContent">
+          {content}
+        </ActionContentUI>
         {this.renderSubMenuIndicator()}
-      </Flexy>
+      </ActionUI>
     )
   }
 
@@ -186,13 +215,18 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { actionId, className, disabled } = this.props
+    const { className, disabled, type } = this.props
+    const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
       disabled && 'is-disabled',
+      !hasSubMenu && 'is-option',
       className
     )
+
+    if (type === 'group') return <Header {...this.props} />
+    if (type === 'divider') return <Divider />
 
     return (
       <ItemUI
@@ -201,18 +235,9 @@ export class Item extends React.PureComponent<Props> {
         aria-disabled={disabled}
         onClick={this.handleOnClick}
         innerRef={this.setNodeRef}
-        role={this.hasSubMenu() ? 'group' : 'option'}
+        role={hasSubMenu ? 'group' : 'option'}
       >
-        <ActionUI
-          id={actionId}
-          innerRef={this.setActionNodeRef}
-          className={classNames(
-            this.hasSubMenu() && 'has-subMenu',
-            'c-DropdownV2ItemAction'
-          )}
-        >
-          {this.renderContent()}
-        </ActionUI>
+        {this.renderContent()}
         {this.renderSubMenu()}
       </ItemUI>
     )
@@ -222,4 +247,19 @@ export class Item extends React.PureComponent<Props> {
 namespaceComponent(COMPONENT_KEY.Item)(Item)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 
-export default PropConnectedComponent
+const ConnectedItem: any = connect(
+  // mapStateToProps
+  (state: any) => {
+    const { getState, renderItem } = state
+
+    return {
+      getState,
+      renderItem,
+    }
+  }
+)(
+  // @ts-ignore
+  PropConnectedComponent
+)
+
+export default ConnectedItem
