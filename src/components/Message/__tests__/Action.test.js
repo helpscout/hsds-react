@@ -87,10 +87,5 @@ describe('Context', () => {
 
     expect(o.getDOMNode().classList.contains('is-12')).toBe(true)
     expect(o.getDOMNode().classList.contains('is-faint')).toBe(true)
-
-    wrapper.setProps({ theme: 'admin' })
-    o = wrapper.find(ui.text).first()
-
-    expect(o.getDOMNode().classList.contains('is-muted')).toBe(true)
   })
 })

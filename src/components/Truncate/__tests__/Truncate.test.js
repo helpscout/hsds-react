@@ -32,6 +32,27 @@ describe('className', () => {
   })
 })
 
+describe('Type', () => {
+  test('Does not setState if type (prop) does not change', () => {
+    const spy = jest.fn()
+    const words = fixture.generate()
+    const wrapper = mount(
+      <Truncate className="mugatu" type="auto">
+        {words}
+      </Truncate>
+    )
+    wrapper.instance().setState = spy
+
+    wrapper.setProps({ type: 'auto' })
+
+    expect(spy).not.toHaveBeenCalled()
+
+    wrapper.setProps({ type: 'start' })
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
 describe('ellipsis', () => {
   test('Can render custom ellipsis', () => {
     const words = fixture.generate()
