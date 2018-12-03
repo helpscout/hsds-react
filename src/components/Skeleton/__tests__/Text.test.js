@@ -63,3 +63,16 @@ describe('Width', () => {
     expect(o.props().style.width).toBe('85rem')
   })
 })
+
+describe('Size', () => {
+  test('Has no size by default', () => {
+    const wrapper = mount(<Text />)
+    expect(wrapper.props().size).toBeUndefined()
+  })
+
+  test('Can set a size', () => {
+    const wrapper = mount(<Text size="sm" />)
+    expect(wrapper.props().size).toEqual('sm')
+    expect(wrapper.getDOMNode().classList.contains('is-sm')).toBeTruthy()
+  })
+})

@@ -7,7 +7,6 @@ import { TextUI } from './styles/Text.css.js'
 class Text extends Component {
   static defaultProps = {
     heading: false,
-    size: 'md',
     style: {},
     width: '70%',
   }

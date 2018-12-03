@@ -11,6 +11,11 @@ describe('className', () => {
     ).toBeTruthy()
   })
 
+  test('Has size className', () => {
+    const wrapper = mount(<Heading size="sm" />)
+    expect(wrapper.getDOMNode().classList.contains('is-sm')).toBeTruthy()
+  })
+
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Heading className="ron" />)
 
