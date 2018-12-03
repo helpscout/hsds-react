@@ -5,7 +5,7 @@ import Animate from '../../Animate'
 import Card from '../../Card'
 
 export const config = {
-  closeOffset: '8px',
+  closeOffset: '10px',
   offset: '8px',
   wrapperMaxHeight: '98%',
   theme: {

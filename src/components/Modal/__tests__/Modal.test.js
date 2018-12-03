@@ -86,7 +86,7 @@ describe('CloseIcon', () => {
         <Modal.Body />
       </ModalComponent>
     )
-    const o = wrapper.find('.c-Modal__close').first()
+    const o = wrapper.find('div.c-Modal__close').first()
 
     expect(o.html()).toContain('right:')
   })
@@ -672,7 +672,7 @@ describe('Keyboard: Tab', () => {
         <button className="three">three</button>
       </ModalComponent>
     )
-    const o = wrapper.find('.c-CloseButton').getDOMNode()
+    const o = wrapper.find('button.c-CloseButton').getDOMNode()
 
     wrapper.instance().handleOnShiftTab({
       target: o,

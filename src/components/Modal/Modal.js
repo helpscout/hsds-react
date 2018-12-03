@@ -35,6 +35,7 @@ type Props = PortalProps & {
   className?: string,
   closeIcon: boolean,
   closeIconRepositionDelay: number,
+  closeIconOffset: number,
   closePortal: () => void,
   isOpen: boolean,
   containTabKeyPress: boolean,
@@ -69,6 +70,7 @@ class Modal extends Component<Props> {
   static defaultProps = {
     closeIcon: true,
     closePortal: noop,
+    closeIconOffset: 10,
     seamless: false,
     isOpen: false,
     closeIconRepositionDelay: 0,
@@ -111,8 +113,6 @@ class Modal extends Component<Props> {
   componentDidMount() {
     this.positionCloseNode()
     this.focusModalCard()
-    /* istanbul ignore next */
-    setTimeout(this.positionCloseNode, this.props.modalAnimationDuration)
   }
 
   getChildContext() {
@@ -176,7 +176,7 @@ class Modal extends Component<Props> {
     const scrollNode = scrollableNode || this.scrollableNode
     if (!this.closeNode || !isNodeElement(scrollNode)) return
 
-    const defaultOffset = 9
+    const defaultOffset = this.props.closeIconOffset + 1
     const offset = `${scrollNode.offsetWidth -
       scrollNode.clientWidth +
       defaultOffset}px`
@@ -255,6 +255,7 @@ class Modal extends Component<Props> {
         className="c-Modal__Card-container"
         delay={modalAnimationDelay}
         duration={modalAnimationDuration}
+        onEntered={this.positionCloseNode}
         easing={modalAnimationEasing}
         in={portalIsOpen}
         sequence={modalAnimationSequence}
