@@ -91,7 +91,7 @@ export class MenuContainer extends React.PureComponent<Props> {
   /* istanbul ignore next */
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
-  shouldDropUp = (): boolean => {
+  shouldDropUp(): boolean {
     if (this.props.dropUp) return true
     if (!this.node || !this.wrapperNode) return false
 
@@ -104,7 +104,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     return hasWindowBottomOverflow && !hasWindowTopOverflow
   }
 
-  getMenuProps = () => {
+  getMenuProps() {
     const { dropRight, isOpen, items, id, triggerId } = this.props
 
     const shouldDropUp = this.shouldDropUp()
@@ -123,7 +123,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     }
   }
 
-  hasGroups = () => {
+  hasGroups() {
     return hasGroups(this.props.items)
   }
 
@@ -187,7 +187,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     })
   }
 
-  renderMenuItems = () => {
+  renderMenuItems() {
     const { id, isLoading, renderEmpty, renderLoading } = this.props
     const { items } = this.getMenuProps()
 
@@ -204,7 +204,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     return this.renderItems({ items })
   }
 
-  renderMenu = () => {
+  renderMenu() {
     const { id, triggerId } = this.getMenuProps()
 
     return (
@@ -216,7 +216,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     )
   }
 
-  renderContent = () => {
+  renderContent() {
     const { children } = this.props
 
     if (children) {
@@ -226,7 +226,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     return this.renderMenu()
   }
 
-  getStylePosition = (): any => {
+  getStylePosition(): any {
     const { triggerNode } = this.props
     const targetNode = triggerNode || this.wrapperNode
 
@@ -244,7 +244,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     this.props.onMenuMounted()
   }
 
-  setPositionStylesOnNode = () => {
+  setPositionStylesOnNode() {
     const { triggerNode, zIndex } = this.props
 
     requestAnimationFrame(() => {

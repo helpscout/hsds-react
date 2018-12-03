@@ -106,7 +106,7 @@ class Renderer extends React.PureComponent<any> {
     }
   }
 
-  openSubMenu = () => {
+  openSubMenu() {
     const { index, isOpen } = this.props
     if (!isOpen || !isDefined(index)) return
 
@@ -115,7 +115,7 @@ class Renderer extends React.PureComponent<any> {
     this.setNextIndex(nextIndex)
   }
 
-  closeSubMenu = () => {
+  closeSubMenu() {
     const { index, isOpen } = this.props
     if (!isOpen || !isDefined(index)) return
 
@@ -143,13 +143,13 @@ class Renderer extends React.PureComponent<any> {
     }
   }
 
-  shouldRenderDOM = () => {
+  shouldRenderDOM() {
     const { index, selectedItem } = this.props
 
     return index || selectedItem
   }
 
-  renderSubMenus = () => {
+  renderSubMenus() {
     const { envNode, focusClassName, index, openClassName } = this.props
 
     if (!this.shouldRenderDOM()) return
@@ -168,7 +168,7 @@ class Renderer extends React.PureComponent<any> {
     })
   }
 
-  renderPreviousInteraction = () => {
+  renderPreviousInteraction() {
     const {
       envNode,
       focusClassName,
@@ -199,7 +199,7 @@ class Renderer extends React.PureComponent<any> {
     }
   }
 
-  renderNextInteraction = () => {
+  renderNextInteraction() {
     const {
       envNode,
       focusClassName,
@@ -228,7 +228,7 @@ class Renderer extends React.PureComponent<any> {
     }
   }
 
-  renderSelectedItem = () => {
+  renderSelectedItem() {
     const {
       activeClassName,
       envNode,
@@ -255,7 +255,7 @@ class Renderer extends React.PureComponent<any> {
     }
   }
 
-  optimizedItemRenderFromProps = () => {
+  optimizedItemRenderFromProps() {
     if (!this.shouldRenderDOM()) return
 
     // Render (recursive) sub-menu interactions
@@ -271,7 +271,7 @@ class Renderer extends React.PureComponent<any> {
     this.renderSelectedItem()
   }
 
-  optimizedRender = () => {
+  optimizedRender() {
     requestAnimationFrame(() => {
       this.optimizedItemRenderFromProps()
     })

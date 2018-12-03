@@ -25,7 +25,7 @@ export class Card extends React.PureComponent<Props> {
     style: {},
   }
 
-  getStyles = (): Object => {
+  getStyles(): Object {
     const { minWidth, minHeight, maxHeight, maxWidth, style } = this.props
 
     return { ...style, minWidth, minHeight, maxHeight, maxWidth }

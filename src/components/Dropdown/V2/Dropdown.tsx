@@ -62,19 +62,19 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     }
   }
 
-  closeMenu = () => {
+  closeMenu() {
     if (!this.props.isOpen) return
     // Store calls onClose() callback
     this.props.closeDropdown()
   }
 
-  focusTriggerNode = () => {
+  focusTriggerNode() {
     if (this.triggerNode && this.props.isOpen) {
       this.triggerNode.focus()
     }
   }
 
-  getTriggerProps = () => {
+  getTriggerProps() {
     const { onBlur, onFocus } = this.props
 
     return {
@@ -84,7 +84,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     }
   }
 
-  renderTrigger = () => {
+  renderTrigger() {
     const { trigger, renderTrigger } = this.props
     const triggerComponent = renderTrigger
       ? /* istanbul ignore next */
@@ -121,7 +121,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     this.props.setTriggerNode(node)
   }
 
-  renderMenu = () => {
+  renderMenu() {
     const { children } = this.props
 
     return <MenuContainer children={children} innerRef={this.setMenuNodeRef} />

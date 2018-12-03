@@ -66,7 +66,7 @@ export class Trigger extends React.PureComponent<Props> {
     this.props.onKeyDown(event)
   }
 
-  openDropdown = () => {
+  openDropdown() {
     const { isOpen, openDropdown } = this.props
 
     if (!isOpen) {
@@ -74,7 +74,7 @@ export class Trigger extends React.PureComponent<Props> {
     }
   }
 
-  closeDropdown = () => {
+  closeDropdown() {
     const { isOpen, closeDropdown } = this.props
 
     if (isOpen) {

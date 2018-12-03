@@ -86,13 +86,13 @@ export class Item extends React.PureComponent<Props> {
     onClick(event, { hasSubMenu: this.hasSubMenu() })
   }
 
-  hasSubMenu = (): boolean => {
+  hasSubMenu(): boolean {
     const { items } = this.props
 
     return !!(items && items.length)
   }
 
-  renderMenu = () => {
+  renderMenu() {
     if (!this.hasSubMenu()) return
 
     const { dropRight, dropUp } = this.props
@@ -129,7 +129,7 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  renderSubMenu = () => {
+  renderSubMenu() {
     const { actionId, getState, renderItem, items, subMenuId } = this.props
 
     return (
@@ -162,7 +162,7 @@ export class Item extends React.PureComponent<Props> {
     )
   }
 
-  renderSubMenuIndicator = () => {
+  renderSubMenuIndicator() {
     const { dropRight } = this.props
     const icon = dropRight ? 'caret-right' : 'caret-left'
 
@@ -173,7 +173,7 @@ export class Item extends React.PureComponent<Props> {
     )
   }
 
-  renderContent = () => {
+  renderContent() {
     const { actionId, renderItem, children, label } = this.props
 
     if (renderItem) {

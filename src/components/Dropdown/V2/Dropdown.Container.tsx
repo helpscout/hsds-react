@@ -130,7 +130,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     }
   }
 
-  rehydrateStoreWithProps = (props: Object) => {
+  rehydrateStoreWithProps(props: Object) {
     // @ts-ignore
     this.store.setState(props)
   }

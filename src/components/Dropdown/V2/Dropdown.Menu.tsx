@@ -30,13 +30,13 @@ export class Menu extends React.PureComponent<Props> {
     zIndex: 1015,
   }
 
-  getStyles = (): Object => {
+  getStyles(): Object {
     const { style, zIndex } = this.props
 
     return { ...style, zIndex }
   }
 
-  renderMenu = () => {
+  renderMenu() {
     const {
       children,
       className,
