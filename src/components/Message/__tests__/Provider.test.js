@@ -15,8 +15,25 @@ test('Provides child components with props as context', () => {
   )
   let o = wrapper.find(ui.message).first()
   expect(o.getDOMNode().classList.contains('is-theme-embed')).toBe(true)
+})
 
+test('Changes context for children components on theme prop change', () => {
+  class Sample extends React.Component {
+    static contextTypes = {
+      theme: () => {},
+    }
+    render() {
+      return null
+    }
+  }
+  const wrapper = mount(
+    <Provider theme="embed">
+      <Sample />
+    </Provider>
+  )
   wrapper.setProps({ theme: 'admin' })
-  o = wrapper.find(ui.message).first()
-  expect(o.getDOMNode().classList.contains('is-theme-admin')).toBe(true)
+  wrapper.update()
+
+  const el = wrapper.find('Sample')
+  expect(el.instance().context.theme).toBe('admin')
 })

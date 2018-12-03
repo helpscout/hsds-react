@@ -6,7 +6,11 @@ export interface Props {
   theme: string
 }
 
-class ThemeProvider extends React.Component<Props> {
+export interface State {
+  theme: string
+}
+
+class ThemeProvider extends React.PureComponent<Props, State> {
   static propTypes: Object
   static displayName: string
 
@@ -17,10 +21,24 @@ class ThemeProvider extends React.Component<Props> {
     theme: noop,
   }
 
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      theme: props.theme,
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.theme !== this.state.theme) {
+      this.setState({
+        theme: nextProps.theme,
+      })
+    }
+  }
+
   getChildContext = () => {
-    const { theme } = this.props
     return {
-      theme,
+      theme: this.state.theme,
     }
   }
 

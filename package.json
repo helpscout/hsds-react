@@ -65,7 +65,7 @@
     "react-dom": "^16 || ^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "^2.1.2",
+    "@helpscout/fancy": "^2.2.0",
     "@helpscout/react-utils": "^1.0.1",
     "@seedcss/seed-alert": "0.0.6",
     "@seedcss/seed-button": "0.0.6",
