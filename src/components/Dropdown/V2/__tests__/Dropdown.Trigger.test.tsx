@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import createStore from '../Dropdown.store'
-import { Provider } from 'unistore/react'
+import { Provider } from '@helpscout/wedux'
 import Keys from '../../../../constants/Keys'
 import ConnectedTrigger, { Trigger } from '../Dropdown.Trigger'
 import { hasClass, getAttribute } from '../../../../tests/helpers/enzyme'

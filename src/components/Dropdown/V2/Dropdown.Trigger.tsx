@@ -1,6 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { connect } from 'unistore/react'
+import { connect } from '@helpscout/wedux'
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import propConnect from '../../PropProvider/propConnect'
 import { TriggerUI } from './Dropdown.css.js'

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { connect } from 'unistore/react'
+import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import EventListener from '../../EventListener'

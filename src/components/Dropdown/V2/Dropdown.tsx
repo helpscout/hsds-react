@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { connect } from 'unistore/react'
+import { connect } from '@helpscout/wedux'
 import { initialState } from './Dropdown.store'
 import { DropdownProps } from './Dropdown.types'
 import propConnect from '../../PropProvider/propConnect'

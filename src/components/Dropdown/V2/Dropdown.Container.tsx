@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Provider } from 'unistore/react'
+import { Provider } from '@helpscout/wedux'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import { DropdownProps } from './Dropdown.types'
 import createStore, { initialState } from './Dropdown.store'

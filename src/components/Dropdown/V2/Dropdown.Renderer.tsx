@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { connect } from 'unistore/react'
+import { connect } from '@helpscout/wedux'
 import Keys from '../../../constants/Keys'
 import KeypressListener from '../../KeypressListener'
 import {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Provider } from 'unistore/react'
+import { Provider } from '@helpscout/wedux'
 import Artboard from '@helpscout/artboard'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
 import Button from '../src/components/Button'
