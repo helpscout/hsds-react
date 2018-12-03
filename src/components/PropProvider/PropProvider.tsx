@@ -10,7 +10,7 @@ export interface Props {
   value: PropProviderProps
 }
 
-class PropProvider extends React.Component<Props> {
+class PropProvider extends React.PureComponent<Props> {
   static defaultProps = {
     app: 'blue',
     value: {},
