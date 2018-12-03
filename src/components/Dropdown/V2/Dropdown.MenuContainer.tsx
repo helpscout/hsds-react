@@ -226,7 +226,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     return this.renderMenu()
   }
 
-  getStylePosition(): any {
+  getStylePosition = (): any => {
     const { triggerNode } = this.props
     const targetNode = triggerNode || this.wrapperNode
 
@@ -244,7 +244,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     this.props.onMenuMounted()
   }
 
-  setPositionStylesOnNode() {
+  setPositionStylesOnNode = () => {
     const { triggerNode, zIndex } = this.props
 
     requestAnimationFrame(() => {
