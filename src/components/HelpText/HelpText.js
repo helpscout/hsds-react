@@ -26,6 +26,7 @@ const HelpText = (props: Props) => {
     'c-HelpText',
     isCompact && `is-compact`,
     shade && `is-${shade}`,
+    state && `is-${state}`,
     className
   )
 
