@@ -26,12 +26,11 @@ const HelpText = (props: Props) => {
     'c-HelpText',
     isCompact && `is-compact`,
     shade && `is-${shade}`,
-    state && `is-${state}`,
     className
   )
 
   const contentMarkup = isString(children) ? (
-    <Text className="c-HelpText__text" shade={shade} size={size}>
+    <Text className="c-HelpText__text" shade={shade} size={size} state={state}>
       {children}
     </Text>
   ) : (
