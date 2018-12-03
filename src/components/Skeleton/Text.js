@@ -12,11 +12,20 @@ class Text extends Component {
   }
 
   render() {
-    const { className, children, heading, style, width, ...rest } = this.props
+    const {
+      className,
+      children,
+      heading,
+      size,
+      style,
+      width,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
       'c-SkeletonText',
       heading && 'is-heading',
+      size && `is-${size}`,
       className
     )
 
