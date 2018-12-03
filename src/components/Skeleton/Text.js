@@ -7,16 +7,26 @@ import { TextUI } from './styles/Text.css.js'
 class Text extends Component {
   static defaultProps = {
     heading: false,
+    size: 'md',
     style: {},
     width: '70%',
   }
 
   render() {
-    const { className, children, heading, style, width, ...rest } = this.props
+    const {
+      className,
+      children,
+      heading,
+      size,
+      style,
+      width,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
       'c-SkeletonText',
       heading && 'is-heading',
+      size && `is-${size}`,
       className
     )
 

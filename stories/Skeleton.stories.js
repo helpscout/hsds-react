@@ -72,6 +72,20 @@ stories.add('paragraph', () => (
   </div>
 ))
 
+stories.add('Paragraph with heading', () => (
+  <div>
+    <Skeleton.Heading />
+    <Skeleton.Paragraph />
+  </div>
+))
+
+stories.add('paragraph with small heading', () => (
+  <div>
+    <Skeleton.Heading size="sm" />
+    <Skeleton.Paragraph />
+  </div>
+))
+
 stories.add('text', () => (
   <div>
     <Skeleton.Text width="70%" />
