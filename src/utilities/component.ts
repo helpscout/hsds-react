@@ -1,5 +1,6 @@
+import * as React from 'react'
 import { includes } from './arrays'
-import { isObject, isDefined } from './is'
+import { isFunction, isObject, isDefined } from './is'
 
 let REGISTERED_COMPONENTS = {}
 export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
@@ -138,13 +139,13 @@ export const isComponentTypeChat = (Component: any): boolean => {
 /**
  * Attempts to retrieve a React key from a child when iterating.
  * @param   {React.Component} Component The component.
- * @param   {number} index The iterating index value.
+ * @param   {number | string} index The iterating index value.
  * @param   {string} fallback A fallback value.
  * @returns {string} The React cnild key.
  */
 export const getComponentKey = (
   Component: any,
-  index?: number,
+  index?: number | string,
   fallback?: string
 ) => {
   if (!isReactComponent(Component) && !isObject(Component)) return undefined
@@ -162,4 +163,17 @@ export const getComponentKey = (
   }
 
   return key
+}
+
+export const renderRenderPropComponent = (
+  renderProp: any,
+  props: Object = {}
+): any => {
+  if (React.isValidElement(renderProp)) {
+    return React.cloneElement(renderProp, props)
+  }
+  if (isFunction(renderProp)) {
+    return renderProp(props)
+  }
+  return null
 }

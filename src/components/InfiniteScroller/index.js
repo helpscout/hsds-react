@@ -1,6 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import LoadingDots from '../LoadingDots'
@@ -21,6 +22,7 @@ const defaultProps = {
   isLoading: false,
   onLoading: noop,
   onLoaded: noop,
+  onScroll: noop,
 }
 
 class InfiniteScroller extends Component {
@@ -55,6 +57,15 @@ class InfiniteScroller extends Component {
     }
   }
 
+  getScrollNodeTop = () => {
+    const { nodeScope } = this.state
+    if (nodeScope === window) {
+      return window.scrollY
+    } else {
+      return nodeScope.scrollTop
+    }
+  }
+
   /* istanbul ignore next */
   // This method is tested, but tested in separate parts.
   // Unable to validate isNodeVisible in this method. The isNodeVisible
@@ -62,13 +73,22 @@ class InfiniteScroller extends Component {
   // The handleOnLoading method has been abstracted to be tested in
   // isolation.
   handleOnScroll(event) {
-    const { offset } = this.props
+    const { offset, onScroll } = this.props
     const { isLoading, nodeScope } = this.state
     const isVisible = isNodeVisible({
       node: this.node,
       scope: nodeScope,
       offset,
       complete: true,
+    })
+
+    onScroll(event, {
+      node: this.node,
+      offset,
+      scrollNode: nodeScope,
+      scrollTop: this.getScrollNodeTop(),
+      isVisible,
+      isLoading,
     })
 
     if (isLoading || !isVisible) return
@@ -129,8 +149,9 @@ class InfiniteScroller extends Component {
 
   setParentNode() {
     const { getScrollParent, scrollParent } = this.props
-    let nodeScope = getScrollParent()
-    nodeScope = isNodeElement(nodeScope) ? nodeScope : null
+    let nodeScope = getScrollParent({ node: this.node })
+    nodeScope =
+      isNodeElement(nodeScope) || nodeScope === window ? nodeScope : null
 
     if (!nodeScope && scrollParent) {
       /* istanbul ignore next */
@@ -150,6 +171,8 @@ class InfiniteScroller extends Component {
 
     this.setState({ nodeScope })
   }
+
+  setNodeRef = (node: HTMLDivElement) => (this.node = node)
 
   render() {
     const {
@@ -178,11 +201,9 @@ class InfiniteScroller extends Component {
 
     return (
       <div
+        {...getValidProps(rest)}
         className={componentClassName}
-        ref={node => {
-          this.node = node
-        }}
-        {...rest}
+        ref={this.setNodeRef}
       >
         <EventListener
           event="scroll"

@@ -13,7 +13,7 @@
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "outDir": "dist",
     "rootDirs": ["src", "stories"],
     "sourceMap": true,

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { connect } from 'unistore/react'
+import { connect } from '@helpscout/wedux'
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import propConnect from '../../PropProvider/propConnect'
 import { TriggerUI } from './Dropdown.css.js'
@@ -66,7 +66,7 @@ export class Trigger extends React.PureComponent<Props> {
     this.props.onKeyDown(event)
   }
 
-  openDropdown = () => {
+  openDropdown() {
     const { isOpen, openDropdown } = this.props
 
     if (!isOpen) {
@@ -74,7 +74,7 @@ export class Trigger extends React.PureComponent<Props> {
     }
   }
 
-  closeDropdown = () => {
+  closeDropdown() {
     const { isOpen, closeDropdown } = this.props
 
     if (isOpen) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import HelpText from '../HelpText'
+import Text from '../../Text'
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
@@ -56,5 +57,16 @@ describe('States', () => {
     const wrapper = mount(<HelpText state="warning" />)
 
     expect(wrapper.getDOMNode().classList.contains('is-warning')).toBe(true)
+  })
+
+  test('Passes state to child HelpText', () => {
+    const wrapper = mount(<HelpText state="error">This is a string</HelpText>)
+
+    expect(
+      wrapper
+        .find(Text)
+        .first()
+        .props().state
+    ).toBe('error')
   })
 })

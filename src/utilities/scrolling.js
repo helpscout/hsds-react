@@ -8,7 +8,10 @@ type ScrollEvent = SyntheticWheelEvent<HTMLDivElement> | WheelEvent
 // Source
 // https://github.com/paypal/downshift/blob/master/src/utils.js#L25
 /* istanbul ignore next */
-export const scrollIntoView = (node: HTMLElement, rootNode?: HTMLElement) => {
+export const scrollIntoView = (
+  node: HTMLElement | Element,
+  rootNode?: HTMLElement | Element
+) => {
   /* istanbul ignore next */
   if (node === null) return
   /* istanbul ignore next */

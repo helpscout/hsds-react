@@ -1,70 +1,75 @@
 import * as React from 'react'
-import { connect } from 'unistore/react'
+import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import EventListener from '../../EventListener'
-import KeypressListener from '../../KeypressListener'
 import Portal from '../../Portal'
+import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
+import Group from './Dropdown.Group'
 import Item from './Dropdown.Item'
+import Renderer from './Dropdown.Renderer'
 import {
   SELECTORS,
-  decrementPathIndex,
-  incrementPathIndex,
   isDropRight,
-  getParentPath,
-  getNextChildPath,
-  renderRenderPropComponent,
+  getItemProps,
+  hasGroups,
 } from './Dropdown.utils'
-import { closeDropdown, setActiveItem, onSelect } from './Dropdown.actions'
+import {
+  closeDropdown,
+  focusItem,
+  selectItem,
+  onMenuMounted,
+  onMenuUnmounted,
+} from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
-import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
-import { getComponentKey } from '../../../utilities/component'
-import { isDefined } from '../../../utilities/is'
+import { renderRenderPropComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { namespaceComponent } from '../../../utilities/component'
-import { scrollIntoView } from '../../../utilities/scrolling'
 import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   animationDuration: number
   animationSequence: string
-  activeIndex: string
-  activeId?: string
   children?: (props: any) => void
   className?: string
   closeDropdown: () => void
   dropUp: boolean
   dropRight: boolean
+  focusItem: (...args: any[]) => void
+  getState: (...args: any[]) => void
   id?: string
   isLoading: boolean
-  onSelect: () => {}
+  onMenuMounted: () => void
+  onMenuUnmounted: () => void
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
   renderEmpty?: any
   renderLoading?: any
-  setActiveItem: (node: HTMLElement) => void
+  selectItem: (...args: any[]) => void
   triggerId?: string
   triggerNode?: HTMLElement
   zIndex: number
 }
 
-export class MenuContainer extends React.Component<Props> {
+export class MenuContainer extends React.PureComponent<Props> {
   static defaultProps = {
     animationDuration: 80,
     animationSequence: 'fade down',
-    activeIndex: null,
     closeDropdown: noop,
     dropUp: false,
     dropRight: true,
+    getState: noop,
+    focusItem: noop,
     innerRef: noop,
     items: [],
     isOpen: true,
     isLoading: false,
-    onSelect: noop,
-    setActiveItem: noop,
+    onMenuMounted: noop,
+    onMenuUnmounted: noop,
+    selectItem: noop,
     zIndex: 1080,
   }
 
@@ -83,129 +88,10 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
-  handleOnKeyDown = (event: KeyboardEvent) => {
-    const { dropRight, isOpen } = this.props
-    const amount = 1
-
-    if (!isOpen) return
-
-    switch (event.keyCode) {
-      case Keys.ENTER:
-        event.preventDefault()
-        this.selectActiveItem()
-        break
-
-      case Keys.UP_ARROW:
-        event.preventDefault()
-        this.goUp(amount)
-        break
-
-      case Keys.DOWN_ARROW:
-        event.preventDefault()
-        this.goDown(amount)
-        break
-
-      case Keys.LEFT_ARROW:
-        event.preventDefault()
-        if (dropRight) {
-          this.closeSubMenu()
-        } else {
-          this.openSubMenu()
-        }
-        break
-
-      case Keys.RIGHT_ARROW:
-        event.preventDefault()
-        if (dropRight) {
-          this.openSubMenu()
-        } else {
-          this.closeSubMenu()
-        }
-        break
-
-      case Keys.TAB:
-        this.closeOnLastTab()
-        break
-
-      /* istanbul ignore next */
-      default:
-        break
-    }
-  }
-
-  selectActiveItem = () => {
-    this.props.onSelect()
-  }
-
-  setNextActiveItem = (nextActiveIndex: string) => {
-    /* istanbul ignore if */
-    if (!isDefined(nextActiveIndex)) return
-
-    const nextActiveItem = this.node.querySelector(
-      `[${SELECTORS.indexAttribute}="${nextActiveIndex}"]`
-    ) as HTMLElement
-
-    if (nextActiveItem) {
-      this.props.setActiveItem(nextActiveItem)
-      scrollIntoView(nextActiveItem)
-    }
-  }
-
-  goUp = (amount: number) => {
-    const { activeIndex } = this.props
-    if (!activeIndex) return
-
-    const nextActiveIndex = decrementPathIndex(activeIndex, amount)
-
-    this.setNextActiveItem(nextActiveIndex)
-  }
-
-  goDown = (amount: number) => {
-    const { activeIndex: currentActiveIndex } = this.props
-    // Allows for initial selection of first item (index 0)
-    const activeIndex = currentActiveIndex || '-1'
-
-    const nextActiveIndex = incrementPathIndex(activeIndex, amount)
-
-    this.setNextActiveItem(nextActiveIndex)
-  }
-
-  closeOnLastTab = () => {
-    const { activeIndex, closeDropdown, isOpen, items } = this.props
-    // This has been tested
-    /* istanbul ignore if */
-    if (!isOpen) return
-
-    const isLastItem = parseInt(activeIndex, 10) === items.length - 1
-
-    /* istanbul ignore else */
-    if (isLastItem) {
-      closeDropdown()
-    }
-  }
-
-  closeSubMenu = () => {
-    const { activeIndex, isOpen } = this.props
-    if (!isOpen) return
-
-    const nextActiveIndex = getParentPath(activeIndex)
-
-    this.setNextActiveItem(nextActiveIndex)
-  }
-
-  openSubMenu = () => {
-    const { activeIndex, isOpen } = this.props
-    if (!isOpen) return
-
-    const nextActiveIndex = getNextChildPath(activeIndex)
-
-    this.setNextActiveItem(nextActiveIndex)
-  }
-
   /* istanbul ignore next */
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
-  shouldDropUp = (): boolean => {
+  shouldDropUp(): boolean {
     if (this.props.dropUp) return true
     if (!this.node || !this.wrapperNode) return false
 
@@ -218,14 +104,17 @@ export class MenuContainer extends React.Component<Props> {
     return hasWindowBottomOverflow && !hasWindowTopOverflow
   }
 
-  getMenuProps = () => {
-    const { activeId, dropRight, isOpen, items, id, triggerId } = this.props
+  getMenuProps() {
+    const { dropRight, isOpen, items, id, triggerId } = this.props
 
     const shouldDropUp = this.shouldDropUp()
 
     return {
-      activeId,
       dropRight,
+      getItemProps: this.getItemProps,
+      renderItemsAsGroups: this.renderItemsAsGroups,
+      renderItems: this.renderItems,
+      hasGroups: this.hasGroups(),
       isOpen,
       items,
       id,
@@ -234,8 +123,72 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
-  renderItems = () => {
-    const { isLoading, renderEmpty, renderLoading } = this.props
+  hasGroups() {
+    return hasGroups(this.props.items)
+  }
+
+  getItemProps = (item: any, index?: number) => {
+    const state = this.props.getState()
+    const props = getItemProps(state, item, index)
+
+    return props
+  }
+
+  renderItemsAsGroups = ({
+    /* istanbul ignore next */
+    id = 'group',
+    items,
+    withIndex,
+  }) => {
+    let groupStartIndex = 0
+
+    return items.map((group, index) => {
+      const { items, ...groupProps } = group
+      const groupId = `${id}-group-${index}`
+      const groupHeaderId = `${id}-group-${index}-header`
+
+      if (!items.length) return
+
+      const groupedItemsMarkup = (
+        <Group key={groupId} id={groupId} aria-labelledby={groupHeaderId}>
+          <Item {...groupProps} id={groupHeaderId} />
+          {items.map((item, index) => {
+            /* istanbul ignore next */
+            const indexProp = withIndex ? index + groupStartIndex : undefined
+
+            return (
+              <Item {...this.getItemProps(item, indexProp)} id={groupHeaderId}>
+                {item.label}
+              </Item>
+            )
+          })}
+        </Group>
+      )
+
+      // This ensures that the set(s) have the current path index.
+      // This is especially important if the groups are filtered.
+      groupStartIndex += items.length
+
+      return groupedItemsMarkup
+    })
+  }
+
+  renderItems = ({
+    items,
+    withIndex,
+  }: {
+    items: Array<any>
+    withIndex?: boolean
+  }) => {
+    return items.map((item, index) => {
+      /* istanbul ignore next */
+      const indexProp = withIndex ? index : undefined
+      return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
+    })
+  }
+
+  renderMenuItems() {
+    const { id, isLoading, renderEmpty, renderLoading } = this.props
     const { items } = this.getMenuProps()
 
     // Loading
@@ -244,29 +197,26 @@ export class MenuContainer extends React.Component<Props> {
     // Empty
     if (!items.length && renderEmpty)
       return renderRenderPropComponent(renderEmpty)
+    // Groups
+    if (this.hasGroups())
+      return this.renderItemsAsGroups({ items, id, withIndex: false })
     // Normal
-    return items.map((item, index) => (
-      <Item key={getComponentKey(item, index)} {...item}>
-        {item.label}
-      </Item>
-    ))
+    return this.renderItems({ items })
   }
 
-  renderMenu = () => {
-    const { activeId, id, triggerId } = this.getMenuProps()
+  renderMenu() {
+    const { id, triggerId } = this.getMenuProps()
 
     return (
-      <Menu
-        aria-activedescendant={activeId}
-        aria-labelledby={triggerId}
-        id={id}
-      >
-        {this.renderItems()}
-      </Menu>
+      <Card>
+        <Menu aria-labelledby={triggerId} id={id}>
+          {this.renderMenuItems()}
+        </Menu>
+      </Card>
     )
   }
 
-  renderContent = () => {
+  renderContent() {
     const { children } = this.props
 
     if (children) {
@@ -289,22 +239,22 @@ export class MenuContainer extends React.Component<Props> {
     }
   }
 
+  onPortalOpen = () => {
+    this.setPositionStylesOnNode()
+    this.props.onMenuMounted()
+  }
+
   setPositionStylesOnNode = () => {
     const { triggerNode, zIndex } = this.props
-
-    // There's some... unexplainable weirdness in the timing of
-    // getBoundingClientRect. The top is accurate pre-requestAnimationFrame.
-    // Because of this, we'll grab the top first...
-    const { top } = this.getStylePosition()
 
     requestAnimationFrame(() => {
       if (!this.node || !this.placementNode) return
       // ...then get the left.
-      const { left } = this.getStylePosition()
+      const { top, left } = this.getStylePosition()
 
       this.placementNode.style.position = 'fixed'
-      this.placementNode.style.top = `${top}px`
-      this.placementNode.style.left = `${left}px`
+      this.placementNode.style.top = `${Math.round(top)}px`
+      this.placementNode.style.left = `${Math.round(left)}px`
       this.placementNode.style.zIndex = `${zIndex}`
 
       if (triggerNode) {
@@ -326,6 +276,7 @@ export class MenuContainer extends React.Component<Props> {
   }
 
   setNodeRef = node => {
+    /* istanbul ignore else */
     if (node) {
       this.node = node
       this.parentNode = node.parentElement
@@ -339,11 +290,14 @@ export class MenuContainer extends React.Component<Props> {
 
   render() {
     const {
-      animationDuration,
       animationSequence,
+      animationDuration,
       className,
       dropRight,
+      focusItem,
+      onMenuUnmounted,
       isOpen,
+      selectItem,
     } = this.props
     const shouldDropUp = this.shouldDropUp()
 
@@ -357,29 +311,34 @@ export class MenuContainer extends React.Component<Props> {
     return (
       <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
         <EventListener event="resize" handler={this.setPositionStylesOnNode} />
-        <KeypressListener handler={this.handleOnKeyDown} type="keydown" />
         {isOpen && (
-          <Portal>
+          <Portal onOpen={this.onPortalOpen} onClose={onMenuUnmounted}>
             <div
               className="DropdownV2MenuContainerPlacementRoot"
               style={{ position: 'relative' }}
               ref={this.setPlacementNode}
             >
-              <MenuContainerUI
-                className={componentClassName}
-                innerRef={this.setNodeRef}
+              <Renderer />
+              <Animate
+                sequence={shouldDropUp ? 'fade up' : animationSequence}
+                in={isOpen}
+                mountOnEnter={false}
+                unmountOnExit={false}
+                duration={animationDuration}
+                timeout={animationDuration / 2}
               >
-                <Animate
-                  sequence={shouldDropUp ? 'fade up' : animationSequence}
-                  in={isOpen}
-                  mountOnEnter={false}
-                  unmountOnExit={false}
-                  duration={animationDuration}
-                  timeout={animationDuration / 2}
+                <MenuContainerUI
+                  className={componentClassName}
+                  innerRef={this.setNodeRef}
+                  onClick={selectItem}
+                  onMouseMove={focusItem}
+                  {...{
+                    [SELECTORS.menuRootAttribute]: true,
+                  }}
                 >
                   {this.renderContent()}
-                </Animate>
-              </MenuContainerUI>
+                </MenuContainerUI>
+              </Animate>
             </div>
           </Portal>
         )}
@@ -397,11 +356,11 @@ const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
     const {
-      activeIndex,
-      activeId,
       dropUp,
+      getState,
       isOpen,
       isLoading,
+      items,
       menuId,
       renderEmpty,
       renderLoading,
@@ -411,13 +370,13 @@ const ConnectedMenuContainer: any = connect(
     } = state
 
     return {
-      activeIndex,
-      activeId,
       dropUp,
       dropRight: isDropRight(state),
+      getState,
       isOpen,
       id: menuId,
       isLoading,
+      items,
       renderEmpty,
       renderLoading,
       triggerId,
@@ -428,8 +387,10 @@ const ConnectedMenuContainer: any = connect(
   // mapDispatchToProps
   {
     closeDropdown,
-    setActiveItem,
-    onSelect,
+    focusItem,
+    selectItem,
+    onMenuMounted,
+    onMenuUnmounted,
   }
 )(
   // @ts-ignore

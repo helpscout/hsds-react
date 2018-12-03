@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { connect } from 'unistore/react'
+import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
-import { MenuUI } from './Dropdown.css.js'
+import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
@@ -13,11 +13,8 @@ export interface Props {
   children?: any
   id?: string
   innerRef: (node: HTMLElement) => void
+  innerWrapperRef: (node: HTMLElement) => void
   isSubMenu: boolean
-  maxHeight: number
-  maxWidth: number
-  minHeight: number
-  minWidth: number
   style: Object
   withScrollLock: boolean
   zIndex: number
@@ -26,46 +23,48 @@ export interface Props {
 export class Menu extends React.PureComponent<Props> {
   static defaultProps = {
     innerRef: noop,
-    minWidth: 180,
-    maxWidth: 360,
-    minHeight: 48,
-    maxHeight: 320,
+    innerWrapperRef: noop,
     isSubMenu: false,
     style: {},
     withScrollLock: true,
     zIndex: 1015,
   }
 
-  getStyles = (): Object => {
-    const {
-      minWidth,
-      minHeight,
-      maxHeight,
-      maxWidth,
-      style,
-      zIndex,
-    } = this.props
+  getStyles(): Object {
+    const { style, zIndex } = this.props
 
-    return { ...style, minWidth, minHeight, maxHeight, maxWidth, zIndex }
+    return { ...style, zIndex }
   }
 
-  renderMenu = () => {
-    const { children, className, innerRef, isSubMenu, ...rest } = this.props
-    const componentClassName = classNames(
+  renderMenu() {
+    const {
+      children,
       className,
+      innerRef,
+      innerWrapperRef,
+      isSubMenu,
+      ...rest
+    } = this.props
+    const componentClassName = classNames(
+      'c-DropdownV2Menu',
       isSubMenu && 'is-subMenu',
-      'c-DropdownV2Menu'
+      className
     )
 
     return (
-      <MenuUI
-        {...rest}
-        className={componentClassName}
-        innerRef={innerRef}
-        style={this.getStyles()}
+      <MenuWrapperUI
+        className="c-DropdownV2MenuWrapper"
+        innerRef={innerWrapperRef}
       >
-        {children}
-      </MenuUI>
+        <MenuUI
+          {...rest}
+          className={componentClassName}
+          innerRef={innerRef}
+          style={this.getStyles()}
+        >
+          {children}
+        </MenuUI>
+      </MenuWrapperUI>
     )
   }
 
@@ -86,13 +85,9 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Menu)(Menu)
 const ConnectedMenu: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { maxHeight, maxWidth, minHeight, minWidth, withScrollLock } = state
+    const { withScrollLock } = state
 
     return {
-      maxHeight,
-      maxWidth,
-      minHeight,
-      minWidth,
       withScrollLock,
     }
   }

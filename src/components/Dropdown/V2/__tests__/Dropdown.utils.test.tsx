@@ -1,24 +1,23 @@
-import * as React from 'react'
 import {
-  pathResolve,
-  isPathActive,
-  getParentPath,
-  getNextChildPath,
-  incrementPathIndex,
   decrementPathIndex,
-  enhanceItemsWithProps,
+  flattenGroupedItems,
   getCustomItemProps,
-  itemIsActive,
+  getIndexMapFromItems,
   getItemFromCollection,
-  setMenuPositionStyles,
+  getItemProps,
+  getNextChildPath,
+  getParentPath,
+  getUniqueKeyFromItem,
+  incrementPathIndex,
   isDropRight,
+  isItemsEmpty,
+  isPathActive,
   itemHasSubMenu,
+  itemIsActive,
   itemIsHover,
   itemIsOpen,
   itemIsSelected,
-  getItemProps,
-  getEnhancedItemsWithProps,
-  renderRenderPropComponent,
+  pathResolve,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -62,6 +61,7 @@ describe('isPathActive', () => {
   test('Returns false for non-matching paths', () => {
     // @ts-ignore
     expect(isPathActive()).toBe(false)
+    expect(isPathActive('0.1')).toBe(false)
     expect(isPathActive('1.2', '1.2.3')).toBe(false)
     expect(isPathActive('0', '1')).toBe(false)
     expect(isPathActive('0.1', '1')).toBe(false)
@@ -79,6 +79,11 @@ describe('getParentPath', () => {
     expect(getParentPath('1.2')).toBe('1')
     expect(getParentPath('1')).toBe('1')
   })
+
+  test('Returns empty string if no path', () => {
+    // @ts-ignore
+    expect(getParentPath()).toBe('')
+  })
 })
 
 describe('getNextChildPath', () => {
@@ -87,6 +92,11 @@ describe('getNextChildPath', () => {
     expect(getNextChildPath('1.1')).toBe('1.1.0')
     expect(getNextChildPath('1.0')).toBe('1.0.0')
     expect(getNextChildPath('0')).toBe('0.0')
+  })
+
+  test('Returns empty string if no path', () => {
+    // @ts-ignore
+    expect(getNextChildPath()).toBe('')
   })
 })
 
@@ -124,43 +134,6 @@ describe('decrementPathIndex', () => {
     expect(decrementPathIndex('0')).toBe('0')
     expect(decrementPathIndex('5.4.3.0')).toBe('5.4.3.0')
     expect(decrementPathIndex('5.4.3.0', 10)).toBe('5.4.3.0')
-  })
-})
-
-describe('enhanceItemsWithProps', () => {
-  test('Can add props to an array of items', () => {
-    const items = [{ name: 'ron' }, { name: 'champ' }]
-    const enhancedItems = enhanceItemsWithProps(items, { network: 'channel 4' })
-
-    expect(enhancedItems[0]).toEqual({
-      name: 'ron',
-      network: 'channel 4',
-    })
-    expect(enhancedItems[1]).toEqual({
-      name: 'champ',
-      network: 'channel 4',
-    })
-  })
-
-  test('Can add props to a nested array of items', () => {
-    const items = [
-      {
-        name: 'ron',
-        items: [{ name: 'brick' }],
-      },
-      { name: 'champ' },
-    ]
-    const enhancedItems = enhanceItemsWithProps(items, { network: 'channel 4' })
-
-    expect(enhancedItems[0]).toEqual({
-      name: 'ron',
-      network: 'channel 4',
-      items: [{ name: 'brick', network: 'channel 4' }],
-    })
-    expect(enhancedItems[1]).toEqual({
-      name: 'champ',
-      network: 'channel 4',
-    })
   })
 })
 
@@ -237,6 +210,17 @@ describe('getItemFromCollection', () => {
       name: 'Ron',
       value: 'ron',
     })
+  })
+
+  test('Returns undefined for no match', () => {
+    const items = [
+      { name: 'Ron', value: 'ron' },
+      { name: 'Brick', value: 'brick' },
+      { name: 'Champ', value: 'champ' },
+      { name: 'Brian', value: 'brian' },
+    ]
+
+    expect(getItemFromCollection(items, 'nope')).toBe(undefined)
   })
 
   test('Can return a nested item from a collection based on value match', () => {
@@ -316,47 +300,48 @@ describe('getItemFromCollection', () => {
   })
 })
 
-describe('setMenuPositionStyles', () => {
-  test('Does not modify wrapperNode styles if other required DOM nodes are missing', () => {
-    const wrapperNode: HTMLElement = document.createElement('div')
-    const triggerNode: HTMLElement = document.createElement('div')
-    const itemNode: HTMLElement = document.createElement('div')
+// TODO: MOVE TESTS
+// describe('setMenuPositionStyles', () => {
+//   test('Does not modify wrapperNode styles if other required DOM nodes are missing', () => {
+//     const wrapperNode: HTMLElement = document.createElement('div')
+//     const triggerNode: HTMLElement = document.createElement('div')
+//     const itemNode: HTMLElement = document.createElement('div')
 
-    const props = {
-      wrapperNode,
-      menuNode: null,
-      triggerNode,
-      itemNode,
-    }
-    const styles = wrapperNode.style.transform
+//     const props = {
+//       wrapperNode,
+//       menuNode: null,
+//       triggerNode,
+//       itemNode,
+//     }
+//     const styles = wrapperNode.style.transform
 
-    setMenuPositionStyles(props)
+//     setMenuPositionStyles(props)
 
-    expect(styles).toBe(wrapperNode.style.transform)
-  })
+//     expect(styles).toBe(wrapperNode.style.transform)
+//   })
 
-  test('Modifies wrapperNode styles from DOM node measurements', () => {
-    const wrapperNode: HTMLElement = document.createElement('div')
-    const menuNode: HTMLElement = document.createElement('div')
-    const triggerNode: HTMLElement = document.createElement('div')
-    const itemNode: HTMLElement = document.createElement('div')
+//   test('Modifies wrapperNode styles from DOM node measurements', () => {
+//     const wrapperNode: HTMLElement = document.createElement('div')
+//     const menuNode: HTMLElement = document.createElement('div')
+//     const triggerNode: HTMLElement = document.createElement('div')
+//     const itemNode: HTMLElement = document.createElement('div')
 
-    wrapperNode.style.height = '100px'
+//     wrapperNode.style.height = '100px'
 
-    const props = {
-      wrapperNode,
-      menuNode,
-      triggerNode,
-      itemNode,
-    }
+//     const props = {
+//       wrapperNode,
+//       menuNode,
+//       triggerNode,
+//       itemNode,
+//     }
 
-    const styles = { ...wrapperNode.style }
+//     const styles = { ...wrapperNode.style }
 
-    setMenuPositionStyles(props)
+//     setMenuPositionStyles(props)
 
-    expect(styles).not.toEqual(wrapperNode.style)
-  })
-})
+//     expect(styles).not.toEqual(wrapperNode.style)
+//   })
+// })
 
 describe('itemHasSubMenu', () => {
   test('Returns true item contains items', () => {
@@ -403,18 +388,18 @@ describe('isDropRight', () => {
 })
 
 describe('itemIsHover', () => {
-  test('Returns true if item matches activeIndex', () => {
+  test('Returns true if item matches index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     expect(itemIsHover(state, '1.2')).toBe(true)
     expect(itemIsHover(state, '1.2.3')).toBe(true)
   })
 
-  test('Returns false if item does not match activeIndex', () => {
+  test('Returns false if item does not match index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '0.1.2.3'
@@ -425,9 +410,9 @@ describe('itemIsHover', () => {
 })
 
 describe('itemIsOpen', () => {
-  test('Returns true if item matches activeIndex', () => {
+  test('Returns true if item matches index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '1.2'
@@ -435,9 +420,9 @@ describe('itemIsOpen', () => {
     expect(itemIsOpen(state, index)).toBe(true)
   })
 
-  test('Returns false if item does not match activeIndex', () => {
+  test('Returns false if item does not match index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '0.1.2.3'
@@ -446,9 +431,9 @@ describe('itemIsOpen', () => {
     expect(itemIsOpen({}, index)).toBe(false)
   })
 
-  test('Returns false if item index is larger than activeIndex', () => {
+  test('Returns false if item index is larger than index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     expect(itemIsOpen(state, '1.2.3.4')).toBe(false)
@@ -457,9 +442,9 @@ describe('itemIsOpen', () => {
 })
 
 describe('itemIsSelected', () => {
-  test('Returns true if item matches activeIndex', () => {
+  test('Returns true if item matches index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     const index = '1.2.3'
@@ -467,9 +452,9 @@ describe('itemIsSelected', () => {
     expect(itemIsSelected(state, index)).toBe(true)
   })
 
-  test('Returns false if item does not match activeIndex', () => {
+  test('Returns false if item does not match index', () => {
     const state = {
-      activeIndex: '1.2.3',
+      index: '1.2.3',
     }
 
     expect(itemIsSelected(state, '0.1.2.3')).toBe(false)
@@ -479,10 +464,122 @@ describe('itemIsSelected', () => {
   })
 })
 
+describe('flattenGroupedItems', () => {
+  test('Returns a flattened array of group + items', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Channel 4',
+        items: [
+          { name: 'Ron', id: 'ron' },
+          { name: 'Brick', id: 'brick' },
+          { name: 'Champ', id: 'champ' },
+          { name: 'Brian', id: 'brian' },
+        ],
+      },
+    ]
+
+    const collection = flattenGroupedItems(items)
+
+    expect(collection.length).toBe(5)
+    expect(collection[0].type).toBe('group')
+    expect(collection[0].label).toBe('Channel 4')
+  })
+})
+
+describe('isItemsEmpty', () => {
+  test('Returns true for empty items', () => {
+    expect(isItemsEmpty([])).toBe(true)
+    expect(isItemsEmpty([{ type: 'group', items: [] }])).toBe(true)
+  })
+
+  test('Returns false for non empty items', () => {
+    expect(isItemsEmpty([{ value: 'ron' }])).toBe(false)
+    expect(isItemsEmpty([{ type: 'group', items: [{ value: 'ron' }] }])).toBe(
+      false
+    )
+  })
+})
+
+describe('getUniqueKeyFromItem', () => {
+  test('Attempts to return the best, unique, key', () => {
+    expect(getUniqueKeyFromItem({ id: 'ron' })).toBe('ron')
+    expect(getUniqueKeyFromItem({ value: 'ron' })).toBe('ron')
+    expect(getUniqueKeyFromItem({ label: 'ron' })).toBe('ron')
+    expect(getUniqueKeyFromItem({ id: 'ron', value: 'brick' })).toBe('ron')
+    // Invalid items
+    expect(getUniqueKeyFromItem({})).toBe(undefined)
+    // @ts-ignore
+    expect(getUniqueKeyFromItem()).toBe(undefined)
+  })
+})
+
+describe('getIndexMapFromItems', () => {
+  test('Can create an indexMap with flat items', () => {
+    const items = [
+      { name: 'Ron', id: 'ron' },
+      { name: 'Brick', id: 'brick' },
+      { name: 'Champ', id: 'champ' },
+      { type: 'divider' },
+      { name: 'Brian', id: 'brian' },
+    ]
+    const indexMap = getIndexMapFromItems(items)
+
+    expect(Object.keys(indexMap).length).toBe(4)
+    expect(indexMap['0']).toEqual('ron')
+    expect(indexMap['1']).toEqual('brick')
+  })
+
+  test('Can create an indexMap with grouped items', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Channel 4',
+        items: [
+          { name: 'Ron', id: 'ron' },
+          { name: 'Brick', id: 'brick' },
+          { name: 'Champ', id: 'champ' },
+          { name: 'Brian', id: 'brian' },
+        ],
+      },
+    ]
+    const indexMap = getIndexMapFromItems(items)
+
+    expect(Object.keys(indexMap).length).toBe(4)
+    expect(indexMap['0']).toEqual('ron')
+    expect(indexMap['1']).toEqual('brick')
+  })
+
+  test('Can create an indexMap with grouped items + nested items', () => {
+    const items = [
+      {
+        type: 'group',
+        label: 'Channel 4',
+        items: [
+          {
+            name: 'Ron',
+            id: 'ron',
+            items: [
+              { name: 'Brick', id: 'brick' },
+              { name: 'Champ', id: 'champ' },
+              { name: 'Brian', id: 'brian' },
+            ],
+          },
+        ],
+      },
+    ]
+    const indexMap = getIndexMapFromItems(items)
+
+    expect(Object.keys(indexMap).length).toBe(4)
+    expect(indexMap['0']).toEqual('ron')
+    expect(indexMap['0.0']).toEqual('brick')
+  })
+})
+
 describe('getItemProps', () => {
   const item = {
     className: 'ron',
-    index: '0.1',
+    index: '0',
     value: 'ron',
     'aria-label': 'Is Ron',
   }
@@ -495,7 +592,10 @@ describe('getItemProps', () => {
 
   test('Enhances item based on state, if applicable', () => {
     const state = {
-      activeIndex: '0.1.3',
+      indexMap: getIndexMapFromItems([item]),
+      items: [{ ...item, items: [{ value: 'brick' }] }],
+      index: '0',
+      selectedItem: item,
     }
 
     const enhancedItem: any = getItemProps(state, item)
@@ -503,130 +603,7 @@ describe('getItemProps', () => {
     expect(enhancedItem).not.toBe(item)
     expect(enhancedItem.className).toContain(item.className)
     expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
-    expect(enhancedItem.isHover).toBe(true)
-    expect(enhancedItem.isOpen).toBe(true)
-    expect(enhancedItem.isSelected).toBe(false)
-    expect(enhancedItem.isActive).toBe(false)
-  })
-})
-
-describe('getEnhancedItemsWithProps', () => {
-  test('Enhances item from state', () => {
-    const item = {
-      className: 'ron',
-      value: 'ron',
-      'aria-label': 'Is Ron',
-    }
-
-    const state = {
-      activeIndex: '2',
-      items: [item],
-    }
-
-    const enhancedItems: any = getEnhancedItemsWithProps(state)
-    const enhancedItem = enhancedItems[0]
-
-    expect(enhancedItem).not.toBe(item)
-    expect(enhancedItem.className).toContain(item.className)
-    expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
-    expect(enhancedItem.isHover).toBe(false)
-    expect(enhancedItem.isOpen).toBe(false)
-    expect(enhancedItem.isSelected).toBe(false)
-    expect(enhancedItem.isActive).toBe(false)
-  })
-
-  test('Enhances nested item from state', () => {
-    const item = {
-      className: 'ron',
-      value: 'ron',
-      'aria-label': 'Is Ron',
-      items: [
-        {
-          className: 'brian',
-          value: 'brian',
-          'aria-label': 'Is Brian',
-        },
-      ],
-    }
-
-    const state = {
-      activeIndex: '0.0',
-      selectedItem: 'brian',
-      items: [item],
-    }
-
-    const childItem = item.items[0]
-    const enhancedItems: any = getEnhancedItemsWithProps(state)
-    const enhancedItem = enhancedItems[0]
-    const enhancedChildItem = enhancedItem.items[0]
-
-    expect(enhancedItem.hasSubMenu).toBe(true)
-    expect(enhancedItem.isHover).toBe(true)
-    expect(enhancedItem.isOpen).toBe(true)
-
-    expect(enhancedChildItem).not.toBe(childItem)
-    expect(enhancedChildItem.className).toContain(childItem.className)
-    expect(enhancedChildItem.className.length).toBeGreaterThan(
-      childItem.className.length
-    )
-    expect(enhancedChildItem.isHover).toBe(true)
-    expect(enhancedChildItem.isOpen).toBe(false)
-    expect(enhancedChildItem.isSelected).toBe(true)
-    expect(enhancedChildItem.isActive).toBe(true)
-  })
-})
-
-describe('renderRenderPropComponent', () => {
-  test('Can render an instantiated React component', () => {
-    const CryLaughingComponent = () => <div />
-    const result = renderRenderPropComponent(<CryLaughingComponent />)
-
-    expect(React.isValidElement(result)).toBe(true)
-  })
-
-  test('Can pass props to instantiated component', () => {
-    const CryLaughingComponent = () => <div />
-    const props = {
-      disabled: true,
-    }
-    const result = renderRenderPropComponent(
-      // @ts-ignore
-      <CryLaughingComponent title="custom" />,
-      props
-    )
-
-    expect(result.props.title).toBe('custom')
-    expect(result.props.disabled).toBe(true)
-  })
-
-  test('Can render a function', () => {
-    const CryLaughingComponent = () => <div />
-    const result = renderRenderPropComponent(() => <CryLaughingComponent />)
-
-    expect(React.isValidElement(result)).toBe(true)
-  })
-
-  test('Can pass props to a functional component', () => {
-    const CryLaughingComponent = () => <div />
-    const props = {
-      disabled: true,
-    }
-    const result = renderRenderPropComponent(
-      ({ disabled }) => (
-        // @ts-ignore
-        <CryLaughingComponent title="custom" disabled={disabled} />
-      ),
-      props
-    )
-
-    expect(result.props.title).toBe('custom')
-    expect(result.props.disabled).toBe(true)
-  })
-
-  test('Returns null for invalid arg', () => {
-    expect(renderRenderPropComponent(0)).toBe(null)
-    expect(renderRenderPropComponent(null)).toBe(null)
-    expect(renderRenderPropComponent(undefined)).toBe(null)
-    expect(renderRenderPropComponent('div')).toBe(null)
+    expect(enhancedItem.isSelected).toBe(true)
+    expect(enhancedItem.isActive).toBe(true)
   })
 })

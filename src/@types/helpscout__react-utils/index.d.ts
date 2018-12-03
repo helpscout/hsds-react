@@ -20,6 +20,11 @@ declare module '@helpscout/react-utils/dist/getComponentName' {
   export = getComponentName
 }
 
+declare module '@helpscout/react-utils/dist/getDocumentFromComponent' {
+  function getDocumentFromComponent(component: Component): any
+  export = getDocumentFromComponent
+}
+
 declare module '@helpscout/react-utils/dist/getValidProps' {
   function getValidProps(props: Object): Object
   export = getValidProps
@@ -31,4 +36,14 @@ declare module '@helpscout/react-utils/dist/hoistNonReactStatics' {
     component: Component
   ): WrappedComponent
   export = hoistNonReactStatics
+}
+
+declare module '@helpscout/react-utils/dist/renderSpy' {
+  function renderSpy(options: any): any
+  export = renderSpy
+}
+
+declare module '@helpscout/react-utils/dist/perf' {
+  function perf(options: any): any
+  export = perf
 }

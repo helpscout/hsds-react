@@ -6,9 +6,6 @@ export interface DropdownMenuDimensions {
 }
 
 export interface DropdownState extends DropdownMenuDimensions {
-  activeItem?: HTMLElement | null
-  activeIndex?: string
-  activeId?: string
   closeOnSelect: boolean
   id?: string
   menuId?: string
@@ -25,35 +22,46 @@ export interface DropdownState extends DropdownMenuDimensions {
 }
 
 export interface DropdownProps extends DropdownMenuDimensions {
+  activeClassName: string
   children?: (props: any) => void
   className?: string
+  closeOnSelect: boolean
+  clearOnSelect: boolean
   closeDropdown: () => void
+  direction: 'left' | 'right'
+  dropUp: boolean
+  enableTabNavigation: boolean
+  envNode: any
+  focusClassName: string
+  getState: (...args: any[]) => void
   id?: string
-  onBlur: (event: Event) => void
-  onFocus: (event: Event) => void
-  onOpen: () => void
-  onClose: () => void
+  index?: string
   innerRef: (node: HTMLElement) => void
+  inputValue: string
   isLoading: boolean
   isOpen: boolean
   items: Array<any>
-  itemOnMouseEnter: (event: Event) => void
-  itemOnFocus: (event: Event) => void
-  itemOnClick: (event: Event) => void
-  direction: 'left' | 'right'
-  dropUp: boolean
-  onSelect: (item: Object, props: Object) => void
   menuId?: string
   menuRef: (node: HTMLElement) => void
+  onBlur: (...args: any[]) => void
+  onClose: () => void
+  onFocus: (...args: any[]) => void
+  onMenuMount: () => void
+  onMenuUnmount: () => void
+  onOpen: () => void
+  onSelect: (item: Object, props: Object) => void
+  openClassName: string
+  previousIndex?: null
   renderEmpty?: any
   renderItem?: any
   renderLoading?: any
   renderTrigger?: any
-  trigger: any
-  triggerRef: (node: HTMLElement) => void
   selectedItem?: string | Object
   setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void
+  stateReducer: (...args: any[]) => void
+  trigger: any
+  triggerRef: (node: HTMLElement) => void
   withScrollLock: boolean
 }
 

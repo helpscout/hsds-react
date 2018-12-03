@@ -31,7 +31,7 @@ const HelpText = (props: Props) => {
   )
 
   const contentMarkup = isString(children) ? (
-    <Text className="c-HelpText__text" shade={shade} size={size}>
+    <Text className="c-HelpText__text" shade={shade} size={size} state={state}>
       {children}
     </Text>
   ) : (
