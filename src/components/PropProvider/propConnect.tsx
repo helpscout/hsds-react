@@ -12,6 +12,10 @@ export interface Props {
   style: Object
 }
 
+const defaultOptions = {
+  pure: true,
+}
+
 /**
  * "Connects" a component with the PropProvider (context). Concept is
  * similar to Redux's connect higher-order function.
@@ -19,7 +23,8 @@ export interface Props {
  * @param   {string} name The component's config namespace.
  * @returns {React.Component} The connected React component.
  */
-function propConnect(name?: ConfigGetter) {
+function propConnect(name?: ConfigGetter, options: Object = {}) {
+  const { pure } = { ...defaultOptions, ...options }
   // @ts-ignore
   let namespace: string = isString(name) ? name : ''
 
@@ -28,8 +33,9 @@ function propConnect(name?: ConfigGetter) {
       namespace = getComponentName(WrappedComponent)
     }
     const displayName = `connected(${namespace})`
+    const OuterBaseComponent = pure ? React.PureComponent : React.Component
 
-    class Connect extends React.Component<Props> {
+    class Connect extends OuterBaseComponent<Props> {
       static defaultProps = {
         style: {},
       }
