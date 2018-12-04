@@ -112,7 +112,7 @@
     "@babel/runtime": "^7.0.0",
     "@helpscout/artboard": "0.1.11",
     "@helpscout/helix": "^0.1.0",
-    "@helpscout/prestart": "0.0.4",
+    "@helpscout/prestart": "^0.0.5",
     "@storybook/addon-actions": "^4.0.9",
     "@storybook/addon-knobs": "4.0.9",
     "@storybook/addon-links": "^4.0.9",
