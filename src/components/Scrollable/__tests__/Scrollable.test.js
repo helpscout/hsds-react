@@ -1,7 +1,8 @@
 import React, { PureComponent as Component } from 'react'
-import { mount, shallow } from 'enzyme'
-import Scrollable from '..'
-import wait from '../../../tests/helpers/wait'
+import { mount, render } from 'enzyme'
+import { Scrollable } from '../Scrollable'
+
+jest.useFakeTimers()
 
 const ui = {
   content: '.c-Scrollable__content',
@@ -9,16 +10,16 @@ const ui = {
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<Scrollable />)
+    const wrapper = render(<Scrollable />)
 
-    expect(wrapper.prop('className')).toContain('c-Scrollable')
+    expect(wrapper.hasClass('c-Scrollable')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
-    const wrapper = shallow(<Scrollable className={className} />)
+    const wrapper = render(<Scrollable className={className} />)
 
-    expect(wrapper.prop('className')).toContain(className)
+    expect(wrapper.hasClass(className)).toBeTruthy()
   })
 })
 
@@ -38,13 +39,13 @@ describe('Content', () => {
 
 describe('Fade', () => {
   test('Renders fade elements', () => {
-    const wrapper = shallow(<Scrollable fade />)
+    const wrapper = render(<Scrollable fade />)
     const fade = wrapper.find('.c-Scrollable__fader')
 
-    expect(fade.length).toBe(2)
+    expect(fade.length).toBe(1)
   })
 
-  test('Applies bottom fade styles on mount, if applicable', done => {
+  test('Applies bottom fade styles on mount, if applicable', () => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
     const fade = o.faderNodeBottom
@@ -59,13 +60,12 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    wait(60).then(() => {
-      expect(o.faderNodeBottom.style.transform).toBe('scaleY(1)')
-      done()
-    })
+    jest.runOnlyPendingTimers()
+
+    expect(o.faderNodeBottom.style.transform).toBe('scaleY(1)')
   })
 
-  test('Applies top fade styles when scrolled', done => {
+  test('Applies top fade styles when scrolled', () => {
     const wrapper = mount(<Scrollable fade />)
     const o = wrapper.instance()
 
@@ -77,13 +77,12 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    wait(60).then(() => {
-      expect(o.faderNodeTop.style.transform).toContain('scaleY')
-      done()
-    })
+    jest.runOnlyPendingTimers()
+
+    expect(o.faderNodeTop.style.transform).toContain('scaleY')
   })
 
-  test('Applies bottom fade styles when scrolled', done => {
+  test('Applies bottom fade styles when scrolled', () => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
 
@@ -95,16 +94,15 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    wait(60).then(() => {
-      expect(o.faderNodeBottom.style.transform).toContain('scaleY')
-      done()
-    })
+    jest.runOnlyPendingTimers()
+
+    expect(o.faderNodeBottom.style.transform).toContain('scaleY')
   })
 })
 
 describe('Content', () => {
   test('Renders content within the content node', () => {
-    const wrapper = shallow(
+    const wrapper = render(
       <Scrollable>
         <div className="mugatu">Mugatu</div>
       </Scrollable>
@@ -117,7 +115,7 @@ describe('Content', () => {
   })
 
   test('Can provide content with custom className', () => {
-    const wrapper = shallow(<Scrollable contentClassName="mugatu" />)
+    const wrapper = render(<Scrollable contentClassName="mugatu" />)
     const o = wrapper.find(ui.content)
 
     expect(o.hasClass('mugatu')).toBeTruthy()
@@ -126,9 +124,12 @@ describe('Content', () => {
 
 describe('Styles', () => {
   test('Applies rounded styles when specified', () => {
-    const wrapper = shallow(<Scrollable fade rounded />)
+    const wrapper = render(<Scrollable fade fadeBottom rounded />)
 
-    expect(wrapper.prop('className')).toContain('is-rounded')
+    expect(wrapper.hasClass('is-rounded')).toBe(true)
+    expect(wrapper.find('.c-Scrollable__fader').hasClass('is-rounded')).toBe(
+      true
+    )
   })
 })
 
@@ -163,7 +164,7 @@ describe('scrollableRef', () => {
 
   test('Can pass scrollableRef to parent', () => {
     const wrapper = mount(<MyComponent />)
-    const n = wrapper.find('.c-Scrollable__content').getDOMNode()
+    const n = wrapper.find('div.c-Scrollable__content').getDOMNode()
     const o = wrapper.instance()
 
     expect(o.scrollable).toBe(n)

@@ -15,7 +15,7 @@ export interface Props {
   onBlur: (event: Event) => void
   onClick: (event: Event) => void
   onFocus: (event: Event) => void
-  seamless?: boolean
+  seamless: boolean
   size?: CloseButtonSize
   title?: string
 }
@@ -26,6 +26,7 @@ export class CloseButton extends React.PureComponent<Props> {
     onBlur: noop,
     onClick: noop,
     onFocus: noop,
+    seamless: false,
     title: 'Close',
   }
 

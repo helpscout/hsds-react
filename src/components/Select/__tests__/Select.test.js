@@ -521,7 +521,7 @@ describe('ErrorMessage', () => {
 
   test('Renders a Tooltip, if error', () => {
     const wrapper = mount(<Select state="error" errorMessage="Nope!" />)
-    const el = wrapper.find('Tooltip')
+    const el = wrapper.find('Tooltip').first()
 
     expect(el.length).toBeTruthy()
     expect(el.props().title).toBe('Nope!')

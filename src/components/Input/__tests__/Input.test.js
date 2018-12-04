@@ -713,7 +713,7 @@ describe('ErrorMessage', () => {
     const wrapper = mount(
       <Input suffix="Derek" state="error" errorMessage="Nope!" />
     )
-    const el = wrapper.find('Tooltip')
+    const el = wrapper.find('Tooltip').first()
 
     expect(el.length).toBe(1)
     expect(el.props().title).toBe('Nope!')

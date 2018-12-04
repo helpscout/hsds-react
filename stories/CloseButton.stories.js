@@ -1,19 +1,27 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, boolean, select } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+import { withArtboard } from '@helpscout/artboard'
 import { CloseButton } from '../src/index.js'
 
 const stories = storiesOf('CloseButton', module)
+stories.addDecorator(withKnobs)
+stories.addDecorator(withArtboard({ withCenterGuides: false }))
 
-stories.add('default', () => <CloseButton />)
-
-stories.add('seamless', () => <CloseButton seamless />)
-
-stories.add('sizes', () => (
-  <div>
-    <CloseButton size="md" />
-    <br />
-    <CloseButton size="sm" />
-    <br />
-    <CloseButton size="xs" />
-  </div>
-))
+stories.add('Default', () => {
+  const options = {
+    onClick: action('click'),
+    seamless: boolean('seamless', true),
+    size: select(
+      'size',
+      {
+        lg: 'md',
+        md: 'sm',
+        sm: 'xs',
+      },
+      'md'
+    ),
+  }
+  return <CloseButton {...options} />
+})
