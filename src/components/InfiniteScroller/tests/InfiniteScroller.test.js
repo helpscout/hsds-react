@@ -332,7 +332,7 @@ describe('Integration: Modal', () => {
         </Modal.Body>
       </ModalComponent>
     )
-    const o = wrapper.find('.c-Scrollable__content')
+    const o = wrapper.find('div.c-Scrollable__content')
 
     o.getDOMNode().dispatchEvent(scrollEvent)
 

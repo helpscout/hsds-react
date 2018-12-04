@@ -70,7 +70,7 @@ describe('Scrollable', () => {
 
   test('Can pass scrollableRef to parent', () => {
     const wrapper = mount(<MyComponent />)
-    const n = wrapper.find('.c-Scrollable__content').getDOMNode()
+    const n = wrapper.find('div.c-Scrollable__content').getDOMNode()
     const o = wrapper.instance()
 
     expect(o.scrollable).toBe(n)
@@ -108,7 +108,7 @@ describe('ScrollableNode', () => {
 
   test('scrollableRef callback prop still works', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Body scrollableRef={spy} />)
+    mount(<Body scrollableRef={spy} />)
 
     expect(spy).toHaveBeenCalled()
   })
