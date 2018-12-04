@@ -89,6 +89,10 @@ export const namespaceComponent = (key: string) => (Component: any): any => {
   return Component
 }
 
+export const isComponentNamespaced = (Component: any): boolean => {
+  return !!getComponentName(Component)
+}
+
 /**
  * Determines if the internal Blue namespace matches a key.
  *

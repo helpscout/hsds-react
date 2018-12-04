@@ -5,6 +5,10 @@ import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStati
 import Context from './Context'
 import { getConfigProps, getGlobalApp, propProviderDataAttr } from './utils'
 import { classNames } from '../../utilities/classNames'
+import {
+  namespaceComponent,
+  isComponentNamespaced,
+} from '../../utilities/component'
 import { isDefined, isString } from '../../utilities/is'
 
 export interface Props {
@@ -34,6 +38,11 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
     }
     const displayName = `connected(${namespace})`
     const OuterBaseComponent = pure ? React.PureComponent : React.Component
+
+    // Register component internally
+    if (!isComponentNamespaced(WrappedComponent)) {
+      namespaceComponent(namespace)(WrappedComponent)
+    }
 
     class Connect extends OuterBaseComponent<Props> {
       static defaultProps = {

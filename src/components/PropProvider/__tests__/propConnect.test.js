@@ -19,7 +19,7 @@ describe('propConnect', () => {
     const ConnectedBuddy = propConnect('BUDDYYYY')(Buddy)
 
     const wrapper = mount(<ConnectedBuddy />)
-    const el = wrapper.find('Buddy')
+    const el = wrapper.find('BUDDYYYY')
 
     expect(el.length).toBe(1)
   })
