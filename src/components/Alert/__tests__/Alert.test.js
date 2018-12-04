@@ -1,17 +1,19 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import { default as Alert, cx } from '../Alert'
+import { render, mount } from 'enzyme'
+import { Alert, cx } from '../Alert'
 import { Badge, Button, CloseButton, Collapsible, Icon } from '../../index'
+
+jest.useFakeTimers()
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = mount(<Alert />)
+    const wrapper = render(<Alert />)
 
     expect(wrapper.hasClass(cx.main)).toBeTruthy()
   })
 
   test('Can accept custom className', () => {
-    const wrapper = mount(<Alert className="buddy" />)
+    const wrapper = render(<Alert className="buddy" />)
 
     expect(wrapper.hasClass('buddy')).toBeTruthy()
   })
@@ -19,10 +21,9 @@ describe('ClassName', () => {
 
 describe('Accessibility', () => {
   test('Has correct aria-role', () => {
-    const wrapper = mount(<Alert />)
-    const o = wrapper.find('[role="alert"]')
+    const wrapper = render(<Alert />)
 
-    expect(o.length).toBe(1)
+    expect(wrapper.attr('role')).toBe('alert')
   })
 })
 
@@ -70,7 +71,7 @@ describe('Dismissing', () => {
   })
 
   test('Renders Collapsible by default', () => {
-    const wrapper = shallow(<Alert dismissible />)
+    const wrapper = mount(<Alert dismissible />)
     const c = wrapper.find(Collapsible)
     const o = c.find('div.c-Alert')
 
@@ -84,7 +85,7 @@ describe('Dismissing', () => {
 
     b.simulate('click')
 
-    jest.runAllTimers()
+    jest.runOnlyPendingTimers()
 
     const o = wrapper.find(Collapsible)
 
@@ -102,12 +103,14 @@ describe('Action right', () => {
 
   test('Renders a right action if specified', () => {
     const wrapper = mount(<Alert actionRight={<Button />} />)
-    const d = wrapper.find(`.${cx.actionRight}`)
+    const d = wrapper.find(`.${cx.actionRight}`).first()
     const o = d.find(Button)
 
     expect(d.length).toBeTruthy()
     expect(o.length).toBeTruthy()
-    expect(wrapper.hasClass('has-actionRight')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('has-actionRight')
+    ).toBeTruthy()
   })
 
   test('onClick from actionRight Button can still fire', () => {
@@ -151,7 +154,7 @@ describe('Badge', () => {
     expect(d.length).toBeTruthy()
     expect(o.length).toBeTruthy()
     expect(o.text()).toContain('Badge')
-    expect(wrapper.hasClass('has-badge')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('has-badge')).toBeTruthy()
   })
 })
 
@@ -171,7 +174,7 @@ describe('Icon', () => {
     expect(d.length).toBeTruthy()
     expect(o.length).toBeTruthy()
     expect(o.props().name).toBe('alert')
-    expect(wrapper.hasClass('has-icon')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('has-icon')).toBeTruthy()
   })
 })
 
@@ -180,7 +183,7 @@ describe('Status', () => {
 
   status.forEach(status => {
     test(`Renders ${status} styles`, () => {
-      const wrapper = mount(<Alert status={status} />)
+      const wrapper = render(<Alert status={status} />)
 
       expect(wrapper.hasClass(`is-${status}`)).toBeTruthy()
     })
@@ -189,7 +192,7 @@ describe('Status', () => {
 
 describe('Styles', () => {
   test('Applies "noMargin" styles, if specified', () => {
-    const wrapper = mount(<Alert noMargin />)
+    const wrapper = render(<Alert noMargin />)
 
     expect(wrapper.hasClass('is-noMargin')).toBeTruthy()
   })
