@@ -6,13 +6,13 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = mount(<Row />)
 
-    expect(wrapper.hasClass('c-Row')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Row')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
     const wrapper = mount(<Row className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -34,13 +34,13 @@ describe('Flex', () => {
   test('Can render flex (old) version of Row', () => {
     const wrapper = mount(<Row flex />)
 
-    expect(wrapper.hasClass('is-flex')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-flex')).toBeTruthy()
   })
 
   test('Can render flex version of Row', () => {
     const wrapper = mount(<Row isFlex />)
 
-    expect(wrapper.hasClass('is-flex')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-flex')).toBeTruthy()
   })
 })
 
@@ -59,7 +59,7 @@ describe('Size', () => {
   test('Can render an additional size', () => {
     const wrapper = mount(<Row size="md" />)
 
-    expect(wrapper.hasClass('c-Row')).toBeTruthy()
-    expect(wrapper.hasClass('is-md')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Row')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-md')).toBeTruthy()
   })
 })

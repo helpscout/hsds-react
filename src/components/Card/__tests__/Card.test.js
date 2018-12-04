@@ -7,14 +7,16 @@ import Link from '../../Link'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Card />)
+    const el = wrapper.find('div.c-Card')
 
-    expect(wrapper.hasClass('c-Card')).toBe(true)
+    expect(el.hasClass('c-Card')).toBe(true)
   })
 
   test('Accepts custom className', () => {
     const wrapper = mount(<Card className="not-metro-man" />)
+    const el = wrapper.find('div.c-Card')
 
-    expect(wrapper.prop('className')).toContain('not-metro-man')
+    expect(el.prop('className')).toContain('not-metro-man')
   })
 })
 
@@ -35,7 +37,7 @@ describe('Block', () => {
     const o = wrapper.find(Card.Block)
 
     expect(o.length).toBe(1)
-    expect(o.getNode().props.children).toBe('MegaMind')
+    expect(o.text()).toContain('MegaMind')
   })
 
   test('Can render a multiple Card.Block', () => {
@@ -65,11 +67,10 @@ describe('Content', () => {
       </Card>
     )
 
-    const innerCard = wrapper.childAt(0)
+    const innerCard = wrapper.find('div.mind')
 
     expect(innerCard.exists()).toBeTruthy()
-    expect(innerCard.prop('className')).toContain('mind')
-    expect(innerCard.text()).toBe('Megamind')
+    expect(innerCard.text()).toContain('Megamind')
   })
 })
 
@@ -78,9 +79,10 @@ describe('Link', () => {
 
   test('Adds link styles if href is specified', () => {
     const wrapper = mount(<Card href={link} />)
+    const el = wrapper.find('a.c-Card')
 
-    expect(wrapper.hasClass('is-clickable')).toBe(true)
-    expect(wrapper.hasClass('is-hoverable')).toBe(true)
+    expect(el.hasClass('is-clickable')).toBe(true)
+    expect(el.hasClass('is-hoverable')).toBe(true)
   })
 
   test('Renders a Link component if href is defined', () => {
@@ -88,8 +90,7 @@ describe('Link', () => {
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
-    expect(o.getNode().props.block).toBeTruthy()
-    expect(o.getNode().props.href).toBe(link)
+    expect(o.getElement().props.href).toBe(link)
   })
 
   test('Renders a Link component if to is defined', () => {
@@ -101,8 +102,8 @@ describe('Link', () => {
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
-    expect(o.getNode().props.block).toBeTruthy()
-    expect(o.getNode().props.to).toBe(link)
+    expect(o.getElement().props.block).toBeTruthy()
+    expect(o.getElement().props.to).toBe(link)
   })
 
   test('Renders a Link component with target="_blank"', () => {
@@ -112,7 +113,7 @@ describe('Link', () => {
       </MemoryRouter>
     )
     const o = wrapper.find(Link)
-    const p = o.getNode().props
+    const p = o.getElement().props
 
     expect(o.length).toBe(1)
     expect(p.block).toBeTruthy()
@@ -130,9 +131,9 @@ describe('Link', () => {
     const o = wrapper.find(Link)
 
     expect(o.length).toBe(1)
-    expect(o.getNode().props.children.type).toBe(Card.Block)
+    expect(o.getElement().props.children.type).toBe(Card.Block)
     expect(b.length).toBe(1)
-    expect(b.node.props.children).toBe('MegaMind')
+    expect(b.getElement().props.children).toBe('MegaMind')
   })
 
   test('onBlur fires for a Link', () => {
@@ -191,23 +192,23 @@ describe('Click', () => {
     const noop = () => {}
     const wrapper = mount(<Card onClick={noop} />)
 
-    expect(wrapper.hasClass('is-clickable')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-clickable')).toBe(true)
   })
 })
 
 describe('Selector', () => {
   test('Renders a div selector by default', () => {
     const wrapper = mount(<Card />)
-    const o = wrapper.find('.c-Card')
+    const o = wrapper.find('.c-Card').first()
 
-    expect(o.getNode().tagName).toBe('DIV')
+    expect(o.getDOMNode().tagName).toBe('DIV')
   })
 
   test('Renders a custom selector, if specified', () => {
     const wrapper = mount(<Card selector="span" />)
-    const o = wrapper.find('.c-Card')
+    const o = wrapper.find('.c-Card').first()
 
-    expect(o.getNode().tagName).toBe('SPAN')
+    expect(o.getDOMNode().tagName).toBe('SPAN')
   })
 })
 
@@ -215,30 +216,34 @@ describe('Styles', () => {
   test('Renders borderless styles, if specified', () => {
     const wrapper = mount(<Card borderless />)
 
-    expect(wrapper.hasClass('is-borderless')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-borderless')
+    ).toBeTruthy()
   })
 
   test('Renders flex styles, if specified', () => {
     const wrapper = mount(<Card flex />)
 
-    expect(wrapper.hasClass('is-flex')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-flex')).toBeTruthy()
   })
 
   test('Renders fullHeight styles, if specified', () => {
     const wrapper = mount(<Card fullHeight />)
 
-    expect(wrapper.hasClass('is-fullHeight')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-fullHeight')
+    ).toBeTruthy()
   })
 
   test('Renders floating styles, if specified', () => {
     const wrapper = mount(<Card floating />)
 
-    expect(wrapper.hasClass('is-floating')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-floating')).toBeTruthy()
   })
 
   test('Renders seamless styles, if specified', () => {
     const wrapper = mount(<Card seamless />)
 
-    expect(wrapper.hasClass('is-seamless')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-seamless')).toBeTruthy()
   })
 })

@@ -2,15 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Animate from '../Animate'
 import Badge from '../Badge'
-import {
-  default as StatusDot,
-  propTypes as statusDotPropTypes,
-} from '../StatusDot'
+import StatusDot from '../StatusDot'
 import { statusTypes } from './propTypes'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 
 export const propTypes = {
-  ...statusDotPropTypes,
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   status: statusTypes,
 }

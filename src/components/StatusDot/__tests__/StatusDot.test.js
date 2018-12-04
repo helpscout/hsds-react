@@ -1,21 +1,21 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import StatusDot from '../StatusDot'
-import { Icon, Tooltip } from '../../index'
+import { Icon } from '../../index'
 import { StatusDotUI } from '../styles/StatusDot.css.js'
 
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<StatusDot />)
 
-    expect(wrapper.hasClass('c-StatusDot')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-StatusDot')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<StatusDot className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 })
 
@@ -51,7 +51,7 @@ describe('Icon', () => {
     const wrapper = mount(<StatusDot />)
     const o = wrapper.find(Icon)
 
-    expect(wrapper.hasClass('is-icon')).not.toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-icon')).not.toBe(true)
     expect(o.length).toBe(0)
   })
 
@@ -59,7 +59,7 @@ describe('Icon', () => {
     const wrapper = mount(<StatusDot icon="tick" />)
     const o = wrapper.find(Icon)
 
-    expect(wrapper.hasClass('is-icon')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-icon')).toBeTruthy()
     expect(o.length).toBe(1)
     expect(o.props().name).toBe('tick')
   })
@@ -69,13 +69,13 @@ describe('Inline', () => {
   test('Is not inline by default', () => {
     const wrapper = mount(<StatusDot />)
 
-    expect(wrapper.hasClass('is-inline')).not.toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-inline')).not.toBe(true)
   })
 
   test('Can render inline styles, if defined', () => {
     const wrapper = mount(<StatusDot inline />)
 
-    expect(wrapper.hasClass('is-inline')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-inline')).toBeTruthy()
   })
 })
 
@@ -110,14 +110,14 @@ describe('Size', () => {
   test('Has a default size', () => {
     const wrapper = mount(<StatusDot />)
 
-    expect(wrapper.hasClass('is-sm')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-sm')).toBe(true)
   })
 
   test('Can render size styles, if defined', () => {
     const wrapper = mount(<StatusDot size="md" />)
 
-    expect(wrapper.hasClass('is-md')).toBeTruthy()
-    expect(wrapper.hasClass('is-sm')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-md')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-sm')).not.toBeTruthy()
   })
 })
 
@@ -125,14 +125,16 @@ describe('Status', () => {
   test('Has an online status by default', () => {
     const wrapper = mount(<StatusDot />)
 
-    expect(wrapper.hasClass('is-online')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-online')).toBe(true)
   })
 
   test('Can render status styles, if defined', () => {
     const wrapper = mount(<StatusDot status="offline" />)
 
-    expect(wrapper.hasClass('is-offline')).toBeTruthy()
-    expect(wrapper.hasClass('is-online')).not.toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-offline')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-online')
+    ).not.toBeTruthy()
   })
 })
 
@@ -141,28 +143,34 @@ describe('Unread', () => {
     const wrapper = mount(<StatusDot />)
 
     expect(wrapper.instance().props.isUnread).toBe(false)
-    expect(wrapper.hasClass('is-unread')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-unread')).toBe(false)
   })
 
   test('Can add unread styles, if defined', () => {
     const wrapper = mount(<StatusDot isUnread />)
 
     expect(wrapper.instance().props.isUnread).toBe(true)
-    expect(wrapper.hasClass('is-unread')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-unread')).toBe(true)
   })
 })
 
 describe('Title', () => {
   test('Provides a tooltip title by default', () => {
     const wrapper = mount(<StatusDot status="online" />)
-    const title = wrapper.find('[title]').props().title
+    const title = wrapper
+      .find('[title]')
+      .first()
+      .props().title
 
     expect(title).toBe('Is online')
   })
 
   test('Title can be customized', () => {
     const wrapper = mount(<StatusDot status="online" title="OMG! ONLINE" />)
-    const title = wrapper.find('[title]').props().title
+    const title = wrapper
+      .find('[title]')
+      .first()
+      .props().title
 
     expect(title).toBe('OMG! ONLINE')
   })

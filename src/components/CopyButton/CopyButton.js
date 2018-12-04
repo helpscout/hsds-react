@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent as Component } from 'react'
 import Icon from '../Icon'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import {

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import styled from '../styled'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import css from './styles/VisuallyHidden.css.js'
 
 type Props = {

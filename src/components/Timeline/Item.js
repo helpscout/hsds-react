@@ -3,7 +3,7 @@ import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Timestamp from '../Timestamp'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 
 type Props = {
   children?: any,

@@ -148,7 +148,6 @@ describe('Normal usage', () => {
     expect(hi.exists()).toBeTruthy()
     expect(hi.length).toBe(1)
     expect(hi.text()).toBe('Hi')
-    expect(hi.node.props.className).toBe('hi')
   })
 
   test('Requires a single child element', () => {

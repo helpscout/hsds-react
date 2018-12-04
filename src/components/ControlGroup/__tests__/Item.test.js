@@ -7,15 +7,17 @@ import Select from '../../Select'
 describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<Item />)
+    const el = wrapper.find('div.c-ControlGroupItem')
 
-    expect(wrapper.hasClass('c-ControlGroupItem')).toBe(true)
+    expect(el.hasClass('c-ControlGroupItem')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
     const wrapper = mount(<Item className={className} />)
+    const el = wrapper.find('div.c-ControlGroupItem')
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(el.hasClass(className)).toBe(true)
   })
 })
 
@@ -60,9 +62,9 @@ describe('Control', () => {
       </div>
     )
 
-    expect(wrapper.find('Select').prop('isFirst')).toBe(true)
-    expect(wrapper.find('Input').prop('isNotOnly')).toBe(true)
-    expect(wrapper.find('AddOn').prop('isLast')).toBe(true)
+    expect(wrapper.find(Select).prop('isFirst')).toBe(true)
+    expect(wrapper.find(Input).prop('isNotOnly')).toBe(true)
+    expect(wrapper.find(Input.AddOn).prop('isLast')).toBe(true)
     expect(wrapper.find('button').prop('isNotOnly')).toBe(undefined)
   })
 })

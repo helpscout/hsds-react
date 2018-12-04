@@ -6,6 +6,7 @@ node_modules
 # testing
 .nyc_output
 .eslintcache
+.cache
 coverage
 
 # build
@@ -18,6 +19,7 @@ public
 .env.development.local
 .env.test.local
 .env.production.local
+.cache
 yarn.lock
 
 npm-debug.log*

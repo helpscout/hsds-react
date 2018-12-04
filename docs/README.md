@@ -1,6 +1,6 @@
 # Table of Contents
 
-* [Blue](../README.md)
+* [HSDS: React](../README.md)
 * [Quick start](./quick-start/README.md)
   * [Components](./quick-start/components.md)
 * [Contributing](./contributing/README.md)

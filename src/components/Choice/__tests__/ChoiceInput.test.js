@@ -77,7 +77,7 @@ describe('Events', () => {
 describe('States', () => {
   test('Applies disabled styles if specified', () => {
     const wrapper = mount(<Input disabled />)
-    const o = wrapper.find('.c-ChoiceInput')
+    const o = wrapper.find('div.c-ChoiceInput')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-disabled')
@@ -86,7 +86,7 @@ describe('States', () => {
 
   test('Applies readOnly styles if specified', () => {
     const wrapper = mount(<Input readOnly />)
-    const o = wrapper.find('.c-ChoiceInput')
+    const o = wrapper.find('div.c-ChoiceInput')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-readonly')
@@ -95,27 +95,30 @@ describe('States', () => {
 
   test('Applies error styles if specified', () => {
     const wrapper = mount(<Input state="error" />)
+    const o = wrapper.find('div.c-ChoiceInput')
 
-    expect(wrapper.hasClass('is-error')).toBe(true)
+    expect(o.hasClass('is-error')).toBe(true)
   })
 
   test('Applies success styles if specified', () => {
     const wrapper = mount(<Input state="success" />)
+    const o = wrapper.find('div.c-ChoiceInput')
 
-    expect(wrapper.hasClass('is-success')).toBe(true)
+    expect(o.hasClass('is-success')).toBe(true)
   })
 
   test('Applies warning styles if specified', () => {
     const wrapper = mount(<Input state="warning" />)
+    const o = wrapper.find('div.c-ChoiceInput')
 
-    expect(wrapper.hasClass('is-warning')).toBe(true)
+    expect(o.hasClass('is-warning')).toBe(true)
   })
 })
 
 describe('Type', () => {
   test('Applies checkbox styles by default', () => {
     const wrapper = mount(<Input />)
-    const o = wrapper.find('.c-ChoiceInput')
+    const o = wrapper.find('div.c-ChoiceInput')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-checkbox')
@@ -124,7 +127,7 @@ describe('Type', () => {
 
   test('Applies checkbox styles if specified', () => {
     const wrapper = mount(<Input type="checkbox" />)
-    const o = wrapper.find('.c-ChoiceInput')
+    const o = wrapper.find('div.c-ChoiceInput')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-checkbox')
@@ -133,7 +136,7 @@ describe('Type', () => {
 
   test('Applies checkbox styles if specified', () => {
     const wrapper = mount(<Input type="radio" />)
-    const o = wrapper.find('.c-ChoiceInput')
+    const o = wrapper.find('div.c-ChoiceInput')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-radio')
@@ -144,8 +147,9 @@ describe('Type', () => {
 describe('Styles', () => {
   test('Can apply align styles', () => {
     const wrapper = mount(<Input align="top" />)
+    const o = wrapper.find('div.c-ChoiceInput')
 
-    expect(wrapper.hasClass('is-top')).toBe(true)
+    expect(o.hasClass('is-top')).toBe(true)
   })
 })
 
@@ -153,13 +157,13 @@ describe('Icon', () => {
   test('Renders InputRadioUI, if radio + checked', () => {
     const wrapper = mount(<Input type="radio" checked />)
 
-    expect(wrapper.find('.c-ChoiceInput__radio').length).toBe(1)
+    expect(wrapper.find('div.c-ChoiceInput__radio').length).toBe(1)
   })
 
   test('Does not render InputRadioUI, if radio + unchecked', () => {
     const wrapper = mount(<Input type="radio" checked={false} />)
 
-    expect(wrapper.find('.c-ChoiceInput__radio').length).toBe(0)
+    expect(wrapper.find('div.c-ChoiceInput__radio').length).toBe(0)
   })
 
   test('Renders Icon, if checkbox + checked', () => {
@@ -177,14 +181,14 @@ describe('Icon', () => {
   test('Renders placeholder if custom radio + unchecked', () => {
     const wrapper = mount(<Input type="radio" kind="custom" checked={false} />)
 
-    expect(wrapper.find('.c-ChoiceInput__placeholder').length).toBe(1)
+    expect(wrapper.find('div.c-ChoiceInput__placeholder').length).toBe(1)
     expect(wrapper.find('Icon').length).toBe(0)
   })
 
   test('Replaces placeholder with Icon, if custom radio + checked', () => {
     const wrapper = mount(<Input type="radio" kind="custom" checked={true} />)
 
-    expect(wrapper.find('.c-ChoiceInput__placeholder').length).toBe(0)
+    expect(wrapper.find('div.c-ChoiceInput__placeholder').length).toBe(0)
     expect(wrapper.find('Icon').length).toBe(1)
   })
 })
@@ -193,7 +197,7 @@ describe('innerRef', () => {
   test('Can retrieve innerRef DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input innerRef={spy} />)
-    const o = wrapper.find('input').getNode()
+    const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })

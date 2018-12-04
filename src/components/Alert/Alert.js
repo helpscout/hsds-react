@@ -2,6 +2,7 @@
 import type { UIStatus } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
 import Badge from '../Badge'
 import Animate from '../Animate'
 import Collapsible from '../Collapsible'
@@ -45,7 +46,7 @@ export const cx = {
   icon: `${classNameSpace}__icon`,
 }
 
-class Alert extends Component<Props, State> {
+export class Alert extends Component<Props, State> {
   static defaultProps = {
     dismissible: false,
     icon: false,
@@ -156,4 +157,6 @@ class Alert extends Component<Props, State> {
 
 namespaceComponent(COMPONENT_KEY)(Alert)
 
-export default Alert
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(Alert)
+
+export default PropConnectedComponent

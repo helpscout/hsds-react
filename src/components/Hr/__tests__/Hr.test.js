@@ -1,14 +1,21 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Hr from '../Hr'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
-const baseComponentOptions = {
-  className: 'c-Hr',
-  skipChildrenTest: true,
-}
+describe('ClassName', () => {
+  test('Has default component className', () => {
+    const wrapper = mount(<Hr />)
 
-baseComponentTest(Hr, baseComponentOptions)
+    expect(wrapper.getDOMNode().classList.contains('c-Hr')).toBe(true)
+  })
+
+  test('Applies custom className if specified', () => {
+    const className = 'gator'
+    const wrapper = mount(<Hr className={className} />)
+
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
+  })
+})
 
 describe('Accessibility', () => {
   test('Has proper aria roles', () => {
@@ -30,6 +37,6 @@ describe('Styles', () => {
   test('Can render size styles, if applicable', () => {
     const wrapper = mount(<Hr size="sm" />)
 
-    expect(wrapper.hasClass('is-sm')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-sm')).toBeTruthy()
   })
 })

@@ -7,14 +7,16 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<StatusBadge />)
 
-    expect(wrapper.hasClass('c-StatusBadge')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-StatusBadge')
+    ).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<StatusBadge className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 })
 
@@ -85,14 +87,14 @@ describe('StatusDot', () => {
   describe('BorderColor', () => {
     test('Does not have custom borderColor by default', () => {
       const wrapper = mount(<StatusBadge status="new" />)
-      const o = wrapper.find('.c-StatusDot')
+      const o = wrapper.find('.c-StatusDot').first()
 
       expect(o.props().style.borderColor).toBeFalsy()
     })
 
     test('Can customize borderColor style', () => {
       const wrapper = mount(<StatusBadge borderColor="red" status="new" />)
-      const o = wrapper.find('.c-StatusDot')
+      const o = wrapper.find('.c-StatusDot').first()
 
       expect(o.props().style.borderColor).toBe('red')
     })
@@ -101,21 +103,21 @@ describe('StatusDot', () => {
   describe('OuterBorderColor', () => {
     test('Does not have custom outerBorderColor by default', () => {
       const wrapper = mount(<StatusBadge status="new" />)
-      const o = wrapper.find('.c-StatusDot')
+      const o = wrapper.find('.c-StatusDot').first()
 
       expect(o.props().style.boxShadow).toBeFalsy()
     })
 
     test('Can customize outerBorderColor style', () => {
       const wrapper = mount(<StatusBadge outerBorderColor="red" status="new" />)
-      const o = wrapper.find('.c-StatusDot')
+      const o = wrapper.find('.c-StatusDot').first()
 
       expect(o.props().style.boxShadow).toContain('red')
     })
 
     test('Can customize outerBorderColor style + add custom style', () => {
       const wrapper = mount(<StatusBadge outerBorderColor="red" status="new" />)
-      const o = wrapper.find('.c-StatusDot')
+      const o = wrapper.find('.c-StatusDot').first()
 
       expect(o.props().style.boxShadow).toContain('red')
     })
@@ -124,10 +126,10 @@ describe('StatusDot', () => {
   describe('Status', () => {
     test('Can render status styles, if defined', () => {
       const wrapper = mount(<StatusBadge status="offline" />)
-      const o = wrapper.find(StatusDot)
+      const o = wrapper.find(StatusDot).first()
 
-      expect(o.hasClass('is-offline')).toBeTruthy()
-      expect(o.hasClass('is-online')).not.toBeTruthy()
+      expect(o.getDOMNode().classList.contains('is-offline')).toBeTruthy()
+      expect(o.getDOMNode().classList.contains('is-online')).not.toBeTruthy()
     })
   })
 })

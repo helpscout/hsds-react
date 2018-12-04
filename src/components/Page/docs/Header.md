@@ -1,4 +1,4 @@
-# Actions
+# Header
 
 This component is a presentational wrapper used to a title/subtitle within a [`Page`](./Page.md).
 

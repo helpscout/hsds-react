@@ -1,8 +1,9 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Drop from '..'
-import classNames from '../../../utilities/classNames'
-import wait from '../../../tests/helpers/wait'
+import { classNames } from '../../../utilities/classNames'
+
+jest.useFakeTimers()
 
 const ContentComponent = props => {
   const { className, style } = props
@@ -27,90 +28,84 @@ afterEach(() => {
 })
 
 describe('Composed', () => {
-  test('Can create a component as a HOC', done => {
+  test('Can create a component as a HOC', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen />)
 
-    wait().then(() => {
-      const o = document.querySelector('.content')
+    jest.runOnlyPendingTimers()
 
-      expect(o).toBeTruthy()
-      expect(o.innerHTML).toContain('Content')
-      wrapper.unmount()
-      done()
-    })
+    const o = document.querySelector('.content')
+
+    expect(o).toBeTruthy()
+    expect(o.innerHTML).toContain('Content')
+    wrapper.unmount()
   })
 
-  test('Can pass className to composed component', done => {
+  test('Can pass className to composed component', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent className="ron" isOpen />)
 
-    wait().then(() => {
-      const o = document.querySelector('.content')
+    jest.runOnlyPendingTimers()
 
-      expect(o.classList.contains('ron')).toBeTruthy()
-      wrapper.unmount()
-      done()
-    })
+    const o = document.querySelector('.content')
+
+    expect(o.classList.contains('ron')).toBeTruthy()
+    wrapper.unmount()
   })
 
-  test('Should not steal composed component custom className', done => {
+  test('Should not steal composed component custom className', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent className="ron" isOpen />)
 
-    wait().then(() => {
-      const o = document.querySelector('.c-Drop')
-      const content = document.querySelector('.content')
+    jest.runOnlyPendingTimers()
 
-      expect(o.classList.contains('ron')).not.toBeTruthy()
-      expect(content.classList.contains('ron')).toBeTruthy()
-      wrapper.unmount()
-      done()
-    })
+    const o = document.querySelector('.c-Drop')
+    const content = document.querySelector('.content')
+
+    expect(o.classList.contains('ron')).not.toBeTruthy()
+    expect(content.classList.contains('ron')).toBeTruthy()
+    wrapper.unmount()
   })
 
-  test('Can styles to composed component', done => {
+  test('Can styles to composed component', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(
       <TestComponent style={{ background: 'red' }} isOpen />
     )
 
-    wait().then(() => {
-      const o = document.querySelector('.content')
+    jest.runOnlyPendingTimers()
 
-      expect(o.style.background).toBe('red')
-      wrapper.unmount()
-      done()
-    })
+    const o = document.querySelector('.content')
+
+    expect(o.style.background).toBe('red')
+    wrapper.unmount()
   })
 
-  test('Adds default ID', done => {
+  test('Adds default ID', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen />)
 
-    wait().then(() => {
-      const o = document.body.childNodes[0]
+    jest.runOnlyPendingTimers()
 
-      expect(o.id).toContain('Drop')
-      wrapper.unmount()
-      done()
-    })
+    const o = wrapper.find('Portal').first()
+
+    expect(o.props().id).toContain('Drop')
+    wrapper.unmount()
   })
 
-  test('Override default ID with options', done => {
+  test('Override default ID with options', () => {
     const options = {
       id: 'Brick',
     }
     const TestComponent = Drop(options)(ContentComponent)
     const wrapper = mount(<TestComponent isOpen />)
 
-    wait().then(() => {
-      const o = document.body.childNodes[0]
+    jest.runOnlyPendingTimers()
 
-      expect(o.id).toContain('Brick')
-      wrapper.unmount()
-      done()
-    })
+    const o = wrapper.find('Portal').first()
+
+    expect(o.props().id).toContain('Brick')
+    wrapper.unmount()
   })
 })
 
@@ -134,64 +129,59 @@ describe('Trigger', () => {
 })
 
 describe('wrapperClassName', () => {
-  test('Adds default wrapperClassName', done => {
+  test('Adds default wrapperClassName', () => {
     const TestComponent = Drop()(ContentComponent)
-    mount(<TestComponent isOpen />)
+    const wrapper = mount(<TestComponent isOpen />)
 
-    wait(40).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o.className).toContain('c-DropWrapper')
-      done()
-    })
+    jest.runOnlyPendingTimers()
+
+    const o = wrapper.find('Portal').first()
+
+    expect(o.hasClass('c-DropWrapper')).toBe(true)
   })
 
-  test('Can customize wrapperClassName', done => {
+  test('Can customize wrapperClassName', () => {
     const TestComponent = Drop()(ContentComponent)
-    mount(<TestComponent isOpen wrapperClassName="ron" />)
+    const wrapper = mount(<TestComponent isOpen wrapperClassName="ron" />)
 
-    wait(40).then(() => {
-      const o = document.body.childNodes[0]
-      expect(o.className).toContain('ron')
-      expect(o.className).toContain('c-DropWrapper')
-      done()
-    })
+    jest.runOnlyPendingTimers()
+
+    const o = wrapper.find('Portal').first()
+
+    expect(o.hasClass('ron')).toBe(true)
   })
 })
 
 describe('isOpen', () => {
-  test('Can open wrapped component with isOpen prop change to true', done => {
+  test('Can open wrapped component with isOpen prop change to true', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent />)
+    let o
 
-    wait()
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
+    jest.runOnlyPendingTimers()
 
-        wrapper.setProps({ isOpen: true })
-      })
-      .then(() => wait(10))
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).toBeTruthy()
-        done()
-      })
+    o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
+
+    wrapper.setProps({ isOpen: true })
+
+    jest.runOnlyPendingTimers()
+
+    o = document.body.childNodes[0]
+    expect(o).toBeTruthy()
   })
 
-  test('Can close wrapped component with isOpen prop change to false', done => {
+  test('Can close wrapped component with isOpen prop change to false', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen timeout={0} />)
 
-    wait()
-      .then(() => {
-        wrapper.setProps({ isOpen: false })
-      })
-      .then(() => wait(500))
-      .then(() => {
-        const o = document.body.childNodes[0]
-        expect(o).not.toBeTruthy()
-        done()
-      })
+    jest.runOnlyPendingTimers()
+    wrapper.setProps({ isOpen: false })
+
+    jest.runAllTimers()
+
+    const o = document.body.childNodes[0]
+    expect(o).not.toBeTruthy()
   })
 })
 

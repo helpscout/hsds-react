@@ -6,14 +6,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<AddOn />)
 
-    expect(wrapper.hasClass('c-InputAddOn')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-InputAddOn')).toBe(true)
   })
 
   test('Accepts custom className', () => {
     const className = 'milk-was-a-bad-choice'
     const wrapper = mount(<AddOn className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -33,24 +33,24 @@ describe('Styles', () => {
   test('Can render isFirst styles', () => {
     const wrapper = mount(<AddOn isFirst />)
 
-    expect(wrapper.hasClass('is-first')).toBe(true)
-    expect(wrapper.hasClass('is-notOnly')).toBe(false)
-    expect(wrapper.hasClass('is-last')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-first')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-notOnly')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-last')).toBe(false)
   })
 
   test('Can render isNotOnly styles', () => {
     const wrapper = mount(<AddOn isNotOnly />)
 
-    expect(wrapper.hasClass('is-first')).toBe(false)
-    expect(wrapper.hasClass('is-notOnly')).toBe(true)
-    expect(wrapper.hasClass('is-last')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-first')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-notOnly')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-last')).toBe(false)
   })
 
   test('Can render isLast styles', () => {
     const wrapper = mount(<AddOn isLast />)
 
-    expect(wrapper.hasClass('is-first')).toBe(false)
-    expect(wrapper.hasClass('is-notOnly')).toBe(false)
-    expect(wrapper.hasClass('is-last')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-first')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-notOnly')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-last')).toBe(true)
   })
 })

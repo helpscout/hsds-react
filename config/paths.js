@@ -1,5 +1,3 @@
-'use strict'
-
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
@@ -11,7 +9,7 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
 
 const envPublicUrl = process.env.PUBLIC_URL
 
-function ensureSlash (path, needsSlash) {
+function ensureSlash(path, needsSlash) {
   const hasSlash = path.endsWith('/')
   if (hasSlash && !needsSlash) {
     return path.substr(path, path.length - 1)
@@ -31,7 +29,7 @@ const getPublicUrl = appPackageJson =>
 // single-page apps that may serve index.html for nested URLs like /todos/42.
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
-function getServedPath (appPackageJson) {
+function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson)
   const servedUrl =
     envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/')
@@ -47,10 +45,11 @@ module.exports = {
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  storiesSrc: resolveApp('stories'),
   testAcceptanceSrc: resolveApp('test/acceptance'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json'))
+  servedPath: getServedPath(resolveApp('package.json')),
 }

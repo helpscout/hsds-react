@@ -9,13 +9,16 @@ describe('ClassName', () => {
     const wrapper = mount(<Switch />)
     const el = wrapper.find('.c-Switch')
 
-    expect(el.length).toBe(1)
+    expect(el.length).toBeTruthy()
   })
 
   test('Accepts custom className', () => {
     const className = 'milk-was-a-bad-choice'
     const wrapper = mount(<Switch className={className} />)
-    const el = wrapper.find('.c-Switch').getNode()
+    const el = wrapper
+      .find('.c-Switch')
+      .first()
+      .getDOMNode()
 
     expect(el.classList.contains(className)).toBe(true)
   })
@@ -80,7 +83,6 @@ describe('Checked', () => {
   test('Can be manually set using checked prop', () => {
     const wrapper = mount(<Switch checked />)
     const o = wrapper.instance()
-    const input = wrapper.find('input')
 
     wrapper.setProps({ checked: false })
 
@@ -167,16 +169,18 @@ describe('Toggle', () => {
   test('Toggles active styles on mousedown/mouseup', () => {
     const wrapper = mount(<Switch />)
     const comp = wrapper.find(SwitchUI)
-    const toggle = wrapper.find(ToggleUI)
+    let toggle = wrapper.find(ToggleUI)
 
     expect(toggle.hasClass('is-active')).toBe(false)
 
     comp.simulate('mousedown')
 
+    toggle = wrapper.find(ToggleUI)
     expect(toggle.hasClass('is-active')).toBe(true)
 
     comp.simulate('mouseup')
 
+    toggle = wrapper.find(ToggleUI)
     expect(toggle.hasClass('is-active')).toBe(false)
   })
 })
@@ -323,12 +327,7 @@ describe('State', () => {
     let callbackProps = []
     const onChange = (...args) => (callbackProps = [...args])
     const wrapper = mount(
-      <Switch
-        onChange={onChange}
-        checked={false}
-        value="Mugatu"
-        checked={false}
-      />
+      <Switch onChange={onChange} checked={false} value="Mugatu" />
     )
     const input = wrapper.find('input')
 
@@ -339,7 +338,10 @@ describe('State', () => {
 
   test('Can render error styles', () => {
     const wrapper = mount(<Switch state="error" />)
-    const el = wrapper.find('.c-Switch').getNode()
+    const el = wrapper
+      .find('.c-Switch')
+      .first()
+      .getDOMNode()
 
     expect(el.classList.contains('is-error')).toBe(true)
   })
@@ -348,7 +350,10 @@ describe('State', () => {
 describe('Styles', () => {
   test('Can render size styles, if applicable', () => {
     const wrapper = mount(<Switch size="sm" />)
-    const el = wrapper.find('.c-Switch').getNode()
+    const el = wrapper
+      .find('.c-Switch')
+      .first()
+      .getDOMNode()
 
     expect(el.classList.contains('is-sm')).toBe(true)
   })
@@ -358,7 +363,7 @@ describe('innerRef', () => {
   test('Can retrieve innerRef DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<Switch innerRef={spy} />)
-    const o = wrapper.find('input').getNode()
+    const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })

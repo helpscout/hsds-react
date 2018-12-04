@@ -1,14 +1,37 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { default as BlankSlate } from '../BlankSlate'
-import { baseComponentTest } from '../../../tests/helpers/components'
 import { Illo, Text } from '../../index'
 
-const baseComponentOptions = {
-  className: 'c-ChatListBlankSlate',
-}
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<BlankSlate />)
+    const el = wrapper.find('div.c-ChatListBlankSlate')
 
-baseComponentTest(BlankSlate, baseComponentOptions)
+    expect(el.length).toBe(1)
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<BlankSlate className={customClass} />)
+    const el = wrapper.find('div.c-ChatListBlankSlate')
+
+    expect(el.hasClass(customClass)).toBeTruthy()
+  })
+})
+
+describe('Children', () => {
+  test('Renders child', () => {
+    const wrapper = mount(
+      <BlankSlate>
+        <div className="child">Hello</div>
+      </BlankSlate>
+    )
+    const el = wrapper.find('div.child')
+
+    expect(el.text()).toContain('Hello')
+  })
+})
 
 describe('Illo', () => {
   test('Renders an Illo by default', () => {

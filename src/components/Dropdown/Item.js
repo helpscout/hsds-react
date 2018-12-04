@@ -5,7 +5,7 @@ import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
 import { default as Menu, MenuComponent } from './Menu'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 type Props = {
@@ -280,7 +280,6 @@ class Item extends Component<Props, State> {
           ref={node => {
             this.node = node
           }}
-          role="menuitem"
           aria-haspopup={!!this.menu}
           aria-expanded={!!(this.menu && isOpen)}
           aria-disabled={disabled}

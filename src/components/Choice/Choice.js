@@ -303,8 +303,9 @@ class Choice extends Component<Props, State> {
           <ChoiceUI {...getValidProps(rest)} className={componentClassName}>
             <ChoiceLabelUI htmlFor={choiceID} className={labelClassName}>
               {this.getInputMarkup(contextProps)}
+              {stacked ? this.getHelpTextMarkup() : null}
             </ChoiceLabelUI>
-            {this.getHelpTextMarkup()}
+            {!stacked ? this.getHelpTextMarkup() : null}
           </ChoiceUI>
         )}
       </ChoiceGroupContext.Consumer>

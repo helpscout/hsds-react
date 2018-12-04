@@ -1,4 +1,3 @@
-// @flow
-import get from 'lodash.get'
+import get from 'dash-get'
 
 export default get

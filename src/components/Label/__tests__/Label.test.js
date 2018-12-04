@@ -6,14 +6,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Label />)
 
-    expect(wrapper.hasClass('c-Label')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-Label')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
     const wrapper = mount(<Label className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -51,19 +51,19 @@ describe('States', () => {
   test('Applies error styles if specified', () => {
     const wrapper = mount(<Label state="error" />)
 
-    expect(wrapper.hasClass('is-error')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-error')).toBe(true)
   })
 
   test('Applies success styles if specified', () => {
     const wrapper = mount(<Label state="success" />)
 
-    expect(wrapper.hasClass('is-success')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-success')).toBe(true)
   })
 
   test('Applies warning styles if specified', () => {
     const wrapper = mount(<Label state="warning" />)
 
-    expect(wrapper.hasClass('is-warning')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-warning')).toBe(true)
   })
 })
 
@@ -71,6 +71,6 @@ describe('Styles', () => {
   test('Applies marginless styles if specified', () => {
     const wrapper = mount(<Label isMarginless />)
 
-    expect(wrapper.hasClass('is-marginless')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-marginless')).toBe(true)
   })
 })

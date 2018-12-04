@@ -2,7 +2,7 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Highlight from '../Highlight'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'

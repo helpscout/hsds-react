@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import Dropdown from '../index'
+import { Dropdown } from '../Dropdown'
 import { MenuComponent } from '../Menu'
 
 describe('Classname', () => {
@@ -154,7 +154,7 @@ describe('Selected', () => {
       </Dropdown>
     )
     const o = wrapper.find(Dropdown.Item)
-    o.getNode().handleOnClick({ stopPropagation: () => {} })
+    o.instance().handleOnClick({ stopPropagation: () => {} })
 
     expect(spy).toHaveBeenCalledWith('Ron')
   })

@@ -7,14 +7,16 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<StatusAvatar />)
 
-    expect(wrapper.hasClass('c-StatusAvatar')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-StatusAvatar')
+    ).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<StatusAvatar className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 })
 

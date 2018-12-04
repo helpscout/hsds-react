@@ -7,13 +7,15 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = mount(<Grid />)
 
-    expect(wrapper.hasClass('c-FormGroupGrid')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('c-FormGroupGrid')
+    ).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
     const wrapper = mount(<Grid className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 

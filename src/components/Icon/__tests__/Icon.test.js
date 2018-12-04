@@ -6,22 +6,24 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Icon name="emoji" />)
 
-    expect(wrapper.hasClass('c-Icon')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-Icon')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
     const wrapper = mount(<Icon name="emoji" className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 
   test('Applies icon name className', () => {
     const className = 'channel-4'
     const wrapper = mount(<Icon name="emoji" className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
-    expect(wrapper.hasClass('is-iconName-emoji')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-iconName-emoji')).toBe(
+      true
+    )
   })
 })
 
@@ -29,15 +31,19 @@ describe('Interactions', () => {
   test('Add clickable styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" clickable />)
 
-    expect(wrapper.hasClass('is-clickable')).toBe(true)
-    expect(wrapper.hasClass('is-noInteract')).not.toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-clickable')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-noInteract')).not.toBe(
+      true
+    )
   })
 
   test('Add ignoreClick styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" ignoreClick />)
 
-    expect(wrapper.hasClass('is-clickable')).not.toBe(true)
-    expect(wrapper.hasClass('is-noInteract')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-clickable')).not.toBe(
+      true
+    )
+    expect(wrapper.getDOMNode().classList.contains('is-noInteract')).toBe(true)
   })
 })
 
@@ -45,13 +51,13 @@ describe('Sizes', () => {
   test('Add sizing styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" size="24" />)
 
-    expect(wrapper.hasClass('is-24')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-24')).toBe(true)
   })
 
   test('Has size 13', () => {
     const wrapper = mount(<Icon name="emoji" size="13" />)
 
-    expect(wrapper.hasClass('is-13')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-13')).toBe(true)
   })
 })
 
@@ -59,7 +65,7 @@ describe('Shade', () => {
   test('Add shade styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" shade="muted" />)
 
-    expect(wrapper.hasClass('is-muted')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-muted')).toBe(true)
   })
 })
 
@@ -67,25 +73,25 @@ describe('Styles', () => {
   test('Add center styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" center />)
 
-    expect(wrapper.hasClass('is-center')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-center')).toBe(true)
   })
 
   test('Add faint styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" faint />)
 
-    expect(wrapper.hasClass('is-faint')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-faint')).toBe(true)
   })
 
   test('Add muted styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" muted />)
 
-    expect(wrapper.hasClass('is-muted')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-muted')).toBe(true)
   })
 
   test('Add subtle styles if applied', () => {
     const wrapper = mount(<Icon name="emoji" subtle />)
 
-    expect(wrapper.hasClass('is-subtle')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-subtle')).toBe(true)
   })
 })
 
@@ -103,7 +109,7 @@ describe('withCaret', () => {
     const wrapper = mount(<Icon name="emoji" withCaret />)
     const o = wrapper.find(caretClassName)
 
-    expect(wrapper.hasClass('withCaret')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('withCaret')).toBe(true)
     expect(o.length).toBe(1)
   })
 })

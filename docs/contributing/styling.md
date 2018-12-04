@@ -4,12 +4,12 @@ In this guide, we'll walk through styling our newly created [custom `Strong` com
 
 ## CSS-in-JS
 
-Blue uses CSS-in-JS techniques for styling, powered by [Fancy](https://helpscout.gitbook.io/fancy).
+HSDS uses CSS-in-JS techniques for styling, powered by [Fancy](https://helpscout.gitbook.io/fancy).
 
 Start by creating a dedicated `styles/` directory under `Strong/`:
 
 ```
-blue/
+hsds-react/
   └── src/
       └── components/
           ├── styles/
@@ -20,7 +20,7 @@ blue/
 Within `styles/`, create a file named after our component. In our case, `Strong.css.js`:
 
 ```
-blue/
+hsds-react/
   └── src/
       └── components/
           ├── styles/
@@ -29,7 +29,7 @@ blue/
           └── Strong.js
 ```
 
-The `.css.js` file extension is a convention Blue uses to distinguish dedicated CSS-in-JS file types. They're still plain ol' `.js` files though 🤓.
+The `.css.js` file extension is a convention HSDS uses to distinguish dedicated CSS-in-JS file types. They're still plain ol' `.js` files though 🤓.
 
 ## Styled Components
 
@@ -55,7 +55,7 @@ Whoa 😳! Lots of stuff! What is this stuff!
 
 #### `baseStyles`
 
-These are initial styles used for **every single** Blue component. Blue is designed to work out-of-the-box, with no reliance on normalizers or resets. As such, basic reset styles like `box-sizing: border-box;` and `font-family` are manually added to every component.
+These are initial styles used for **every single** HSDS component. HSDS is designed to work out-of-the-box, with no reliance on normalizers or resets. As such, basic reset styles like `box-sizing: border-box;` and `font-family` are manually added to every component.
 
 Add your desired custom styling after adding `${baseStyles}`.
 
@@ -71,7 +71,7 @@ The design pattern we use to distinguish styled-components (SC) vs. regular Reac
 
 This contains the modifier styles specified in our `Strong` component. Similar to Sass, ampersand for className inheritance is supported.
 
-Blue's CSS-in-JS practices favour the use of conventional CSS modifier classes, rather than [dynamically computed styles](https://www.styled-components.com/docs/basics#adapting-based-on-props). From experience, this keeps the code much cleaner and easier to read. It also avoids clashing, which sometimes happens with dynamic styling.
+HSDS's CSS-in-JS practices favour the use of conventional CSS modifier classes, rather than [dynamically computed styles](https://www.styled-components.com/docs/basics#adapting-based-on-props). From experience, this keeps the code much cleaner and easier to read. It also avoids clashing, which sometimes happens with dynamic styling.
 
 #### export
 

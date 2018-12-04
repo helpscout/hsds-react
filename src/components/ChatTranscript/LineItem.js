@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Text from '../Text'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { newlineToHTML } from '../../utilities/strings'
 
 type Props = {

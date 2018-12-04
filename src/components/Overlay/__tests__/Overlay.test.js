@@ -5,7 +5,7 @@ import Overlay from '../Overlay'
 describe('Accessibility', () => {
   test('Has aria-role', () => {
     const wrapper = mount(<Overlay />)
-    const o = wrapper.find('.c-Overlay')
+    const o = wrapper.find('.c-Overlay').first()
 
     expect(o.prop('role')).toBe('dialog')
   })
@@ -14,7 +14,7 @@ describe('Accessibility', () => {
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Overlay />)
-    const o = wrapper.find('.c-Overlay')
+    const o = wrapper.find('.c-Overlay').first()
 
     expect(o.length).toBe(1)
   })
@@ -40,11 +40,7 @@ describe('Content', () => {
       </Overlay>
     )
 
-    const innerOverlay = wrapper.childAt(0)
-
-    expect(innerOverlay.exists()).toBeTruthy()
-    expect(innerOverlay.prop('className')).toContain('mind')
-    expect(innerOverlay.text()).toBe('Megamind')
+    expect(wrapper.find('.mind').length).toBeTruthy()
   })
 })
 
@@ -75,12 +71,14 @@ describe('Styles', () => {
   test('Renders fixed styles, if specified', () => {
     const wrapper = mount(<Overlay fixed />)
 
-    expect(wrapper.hasClass('is-fixed')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-fixed')).toBeTruthy()
   })
 
   test('Renders transparent styles, if specified', () => {
     const wrapper = mount(<Overlay transparent />)
 
-    expect(wrapper.hasClass('is-transparent')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains('is-transparent')
+    ).toBeTruthy()
   })
 })

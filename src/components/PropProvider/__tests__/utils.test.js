@@ -374,6 +374,17 @@ describe('isHSApp', () => {
 
     expect(isHSApp(props)).toBe(false)
   })
+
+  test('Returns true if ThemeProvider secret prop is not hs-app', () => {
+    const props = {
+      [propProviderDataAttr]: 'nope',
+      theme: {
+        [propProviderDataAttr]: 'hs-app',
+      },
+    }
+
+    expect(isHSApp(props)).toBe(true)
+  })
 })
 
 describe('isBeacon', () => {

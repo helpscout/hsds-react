@@ -1,8 +1,31 @@
 // @flow
+import computeScrollIntoView from 'compute-scroll-into-view'
 import { isFirefox } from './browser'
 import { isMouseWheelYEvent } from './events'
 
 type ScrollEvent = SyntheticWheelEvent<HTMLDivElement> | WheelEvent
+
+// Source
+// https://github.com/paypal/downshift/blob/master/src/utils.js#L25
+/* istanbul ignore next */
+export const scrollIntoView = (
+  node: HTMLElement | Element,
+  rootNode?: HTMLElement | Element
+) => {
+  /* istanbul ignore next */
+  if (node === null) return
+  /* istanbul ignore next */
+  const actions = computeScrollIntoView(node, {
+    boundary: rootNode,
+    block: 'nearest',
+    scrollMode: 'if-needed',
+  })
+  /* istanbul ignore next */
+  actions.forEach(({ el, top, left }) => {
+    el.scrollTop = top
+    el.scrollLeft = left
+  })
+}
 
 export const remapScrollingPlane = (event: ScrollEvent) => {
   // Scrolling behaviour is strange in Firefox…

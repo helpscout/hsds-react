@@ -5,7 +5,7 @@ import Block from './Block'
 import Item from './Item'
 import Shadow from './Shadow'
 import { placementTypes, sizeTypes, themeTypes } from './propTypes'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 
 export const propTypes = {
   placement: placementTypes,

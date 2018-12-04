@@ -6,7 +6,7 @@ import AttachmentList from '../AttachmentList'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
 import Text from '../Text'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { newlineToHTML } from '../../utilities/strings'
 

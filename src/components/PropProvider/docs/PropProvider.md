@@ -6,8 +6,8 @@ A PropProvider component provides child Blue components with config values.
 
 ```jsx
 import React from 'react'
-import PropProvider from '@helpscout/blue/components/PropProvider'
-import Tooltip from '@helpscout/blue/components/Tooltip'
+import PropProvider from '@helpscout/hsds-react/components/PropProvider'
+import Tooltip from '@helpscout/hsds-react/components/Tooltip'
 
 const customConfigs = {
   Tooltip: {

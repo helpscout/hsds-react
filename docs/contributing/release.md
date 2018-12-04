@@ -1,10 +1,10 @@
 # Publishing a release
 
-In this guide, we'll walk through publishing for our [newly merged](review.md) [custom `Strong` component](creating.md) to [npm](https://www.npmjs.com/package/@helpscout/blue).
+In this guide, we'll walk through publishing for our [newly merged](review.md) [custom `Strong` component](creating.md) to [npm](https://www.npmjs.com/package/@helpscout/hsds-react).
 
 ## Log in
 
-To publish to npm, you **must** have [maintainer access](https://docs.npmjs.com/cli/owner) to the [@helpscout/blue](https://www.npmjs.com/package/@helpscout/blue) package.
+To publish to npm, you **must** have [maintainer access](https://docs.npmjs.com/cli/owner) to the [@helpscout/hsds-react](https://www.npmjs.com/package/@helpscout/hsds-react) package.
 
 ## Publish!
 
@@ -22,7 +22,7 @@ Once you're ready, run the following command:
 npm run release
 ```
 
-This will kick of Blue's automated release scripts, powered by [np](https://github.com/sindresorhus/np).
+This will kick of HSDS's automated release scripts, powered by [np](https://github.com/sindresorhus/np).
 
 ![Release prompt by np](https://github.com/sindresorhus/np/raw/master/screenshot-ui.png)
 
@@ -49,7 +49,7 @@ Once you do, `np` will:
 
 ## Release notes
 
-Blue is very transparent with it's [release notes](https://github.com/helpscout/blue/releases). `np` should have automatically created a new version on Github. Edit that version with the appropriate descriptions/screenshots.
+HSDS is very transparent with it's [release notes](https://github.com/helpscout/hsds-react/releases). `np` should have automatically created a new version on Github. Edit that version with the appropriate descriptions/screenshots.
 
 Pro Tip: If your pull request description is thorough. You can just copy/paste it as the release notes 😎.
 
@@ -64,6 +64,6 @@ Hope you have a fantastic day ❤️!
 ## See also
 
 * [npm](https://www.npmjs.com/)
-* [@helpscout/blue](https://www.npmjs.com/package/@helpscout/blue)
+* [@helpscout/hsds-react](https://www.npmjs.com/package/@helpscout/hsds-react)
 * [np](https://github.com/sindresorhus/np)
-* [Release notes](https://github.com/helpscout/blue/releases)
+* [Release notes](https://github.com/helpscout/hsds-react/releases)

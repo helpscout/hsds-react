@@ -6,14 +6,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Flexy />)
 
-    expect(wrapper.hasClass('c-Flexy')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Flexy')).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<Flexy className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
+    expect(wrapper.getDOMNode().classList.contains(customClass))
   })
 })
 
@@ -38,7 +38,7 @@ describe('Styles', () => {
       </Flexy>
     )
 
-    expect(wrapper.hasClass('is-align-top')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-align-top')).toBe(true)
   })
 
   test('Applies horizontal alignment styles', () => {
@@ -48,7 +48,7 @@ describe('Styles', () => {
       </Flexy>
     )
 
-    expect(wrapper.hasClass('is-just-right')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-just-right')).toBe(true)
   })
 
   test('Applies spacing styles', () => {
@@ -58,6 +58,6 @@ describe('Styles', () => {
       </Flexy>
     )
 
-    expect(wrapper.hasClass('is-gap-lg')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-gap-lg')).toBe(true)
   })
 })

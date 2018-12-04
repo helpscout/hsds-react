@@ -29,7 +29,7 @@ describe('ClassNames', () => {
     const wrapper = mount(<Message className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -64,7 +64,7 @@ describe('Avatar', () => {
     const a = <Avatar name="Mugatu" />
     const wrapper = mount(<Message className="mugatu" from avatar={a} />)
 
-    expect(wrapper.hasClass('has-avatar')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('has-avatar')).toBeTruthy()
   })
 })
 
@@ -133,13 +133,13 @@ describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
     const wrapper = mount(<Message from />)
 
-    expect(wrapper.hasClass('is-from')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-from')).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
     const wrapper = mount(<Message to />)
 
-    expect(wrapper.hasClass('is-to')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-to')).toBeTruthy()
   })
 })
 
@@ -155,6 +155,32 @@ describe('Context', () => {
     expect(el.props().className).toContain('is-theme-embed')
   })
 
+  test('Can render from, if theme is embed', () => {
+    const a = <Avatar name="Mugatu" />
+    const wrapper = mount(
+      <Message.Provider theme="embed">
+        <Message avatar={a} showAvatar from="mugatu" />
+      </Message.Provider>
+    )
+
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBeTruthy()
+  })
+
+  test('Does not render from, if theme is not embed', () => {
+    const a = <Avatar name="Mugatu" />
+    const wrapper = mount(
+      <Message.Provider theme="admin">
+        <Message avatar={a} showAvatar from="mugatu" />
+      </Message.Provider>
+    )
+
+    const o = wrapper.find(ui.from)
+
+    expect(o.length).toBe(0)
+  })
+
   describe('Theme: Embed', () => {
     test('Can show Avatar for "from" message', () => {
       const a = <Avatar name="Mugatu" />
@@ -164,7 +190,7 @@ describe('Context', () => {
         </Message.Provider>
       )
 
-      const o = wrapper.find(ui.avatar)
+      const o = wrapper.find(ui.avatar).first()
 
       expect(o.length).toBe(1)
     })
@@ -207,19 +233,12 @@ describe('From', () => {
 
   test('Does not render, unless using context.theme.embed', () => {
     const wrapper = mount(
-      <Message.Provider theme="embed">
+      <Message.Provider theme="admin">
         <Message from="Blue" />
       </Message.Provider>
     )
 
     let o = wrapper.find(ui.from)
-
-    expect(o.length).toBe(1)
-    expect(o.html()).toContain('Blue')
-
-    wrapper.setProps({ theme: 'admin' })
-
-    o = wrapper.find(ui.from)
 
     expect(o.length).toBe(0)
   })

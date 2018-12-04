@@ -176,4 +176,54 @@ describe('propConnect', () => {
 
     expect(el.html()).toContain(config.Buddy.noms.only)
   })
+
+  test('Sets wrappedInstance ref for non-stateless components', () => {
+    class Buddy extends React.Component {
+      render() {
+        return <div>{this.props.noms}</div>
+      }
+    }
+
+    const ConnectedBuddy = propConnect()(Buddy)
+
+    const wrapper = mount(<ConnectedBuddy />)
+
+    expect(wrapper.instance().wrappedInstance).toBeTruthy()
+  })
+
+  test('Does not set wrappedInstance ref for stateless components', () => {
+    const Buddy = props => <div>{props.noms}</div>
+
+    const ConnectedBuddy = propConnect()(Buddy)
+    const wrapper = mount(<ConnectedBuddy />)
+
+    expect(wrapper.instance().wrappedInstance).toBeFalsy()
+  })
+
+  test('Creates a React.PureComponent instance, by default', () => {
+    const Buddy = props => <div>{props.noms}</div>
+
+    const ConnectedBuddy = propConnect()(Buddy)
+    const wrapper = mount(<ConnectedBuddy />)
+
+    expect(wrapper.instance() instanceof React.PureComponent).toBe(true)
+  })
+
+  test('Can create a React.Component instance, if specified', () => {
+    const Buddy = props => <div>{props.noms}</div>
+
+    const ConnectedBuddy = propConnect(null, { pure: false })(Buddy)
+    const wrapper = mount(<ConnectedBuddy />)
+
+    expect(wrapper.instance() instanceof React.Component).toBe(true)
+  })
+
+  test('Can create a React.PureComponent instance, if specified', () => {
+    const Buddy = props => <div>{props.noms}</div>
+
+    const ConnectedBuddy = propConnect(null, { pure: true })(Buddy)
+    const wrapper = mount(<ConnectedBuddy />)
+
+    expect(wrapper.instance() instanceof React.PureComponent).toBe(true)
+  })
 })

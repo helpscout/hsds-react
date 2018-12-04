@@ -5,7 +5,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Link from '../Link'
 import Block from './Block'
 import styled from '../styled'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Card.css.js'
@@ -21,6 +21,7 @@ export type Props = {
   fullHeight: boolean,
   hover: boolean,
   href?: string,
+  innerRef: (node: HTMLElement) => void,
   nodeRef: () => void,
   onBlur: (event: Event) => void,
   onClick: (event: Event) => void,
@@ -37,6 +38,7 @@ class Card extends Component<Props> {
     floating: false,
     fullHeight: false,
     hover: false,
+    innerRef: noop,
     nodeRef: noop,
     onBlur: noop,
     onClick: noop,
@@ -62,6 +64,7 @@ class Card extends Component<Props> {
       fullHeight,
       hover,
       href,
+      innerRef,
       nodeRef,
       onClick,
       seamless,
@@ -94,6 +97,7 @@ class Card extends Component<Props> {
           onClick={onClick}
           href={href}
           to={to}
+          innerRef={innerRef}
           nodeRef={nodeRef}
           {...rest}
         >

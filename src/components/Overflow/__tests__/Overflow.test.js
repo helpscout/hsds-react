@@ -14,14 +14,14 @@ describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Overflow />)
 
-    expect(wrapper.hasClass('c-Overflow')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('c-Overflow')).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
     const wrapper = mount(<Overflow className={className} />)
 
-    expect(wrapper.hasClass(className)).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 })
 
@@ -125,7 +125,7 @@ describe('Fade', () => {
   test('Passes resize function to refApplyFade', () => {
     let testMethod = null
     const stubMethod = ref => (testMethod = ref)
-    const wrapper = mount(<Overflow refApplyFade={stubMethod} />)
+    mount(<Overflow refApplyFade={stubMethod} />)
 
     expect(typeof testMethod).toBe('function')
   })
@@ -163,7 +163,7 @@ describe('Height adjustments', () => {
   test('Method fires on mount', () => {
     const wrapper = mount(<Overflow />)
     const spy = jest.fn()
-    wrapper.getNode().handleOnResize = spy
+    wrapper.instance().handleOnResize = spy
 
     wrapper.instance().componentDidMount()
 
@@ -192,7 +192,7 @@ describe('scrollableRef', () => {
 
   test('Can pass scrollableRef to parent', () => {
     const wrapper = mount(<MyComponent />)
-    const n = wrapper.find('.c-Overflow__container').getNode()
+    const n = wrapper.find('.c-Overflow__container').getDOMNode()
     const o = wrapper.instance()
 
     expect(o.scrollable).toBe(n)
@@ -294,7 +294,7 @@ describe('Scroll', () => {
   test('Passes scrollToEnd function to refScrollToEnd', () => {
     let testMethod = null
     const stubMethod = ref => (testMethod = ref)
-    const wrapper = mount(<Overflow refScrollToEnd={stubMethod} />)
+    mount(<Overflow refScrollToEnd={stubMethod} />)
 
     expect(typeof testMethod).toBe('function')
   })

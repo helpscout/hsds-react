@@ -1,16 +1,26 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Collapsible from '..'
-import { baseComponentTest } from '../../../tests/helpers/components'
+import Collapsible from '../Collapsible'
 
-const baseComponentOptions = {
-  className: 'c-Collapsible',
-  skipChildrenTest: true,
-}
+jest.useFakeTimers()
 
 describe('Collapsible', () => {
-  jest.useFakeTimers()
-  baseComponentTest(Collapsible, baseComponentOptions)
+  describe('ClassName', () => {
+    test('Has default className', () => {
+      const wrapper = mount(<Collapsible />)
+      const el = wrapper.find('div.c-Collapsible')
+
+      expect(el.length).toBe(1)
+    })
+
+    test('Applies custom className if specified', () => {
+      const customClass = 'piano-key-neck-tie'
+      const wrapper = mount(<Collapsible className={customClass} />)
+      const el = wrapper.find('div.c-Collapsible')
+
+      expect(el.hasClass(customClass)).toBeTruthy()
+    })
+  })
 
   describe('onOpen', () => {
     test('onOpen callback should fire when opened', () => {
@@ -43,7 +53,7 @@ describe('Collapsible', () => {
   describe('Height', () => {
     test('Height is 0px by default', () => {
       const wrapper = mount(<Collapsible />)
-      const o = wrapper.get(0).node
+      const o = wrapper.find('div.c-Collapsible').getDOMNode()
 
       expect(o.style['height']).toBe('0px')
       wrapper.unmount()
@@ -55,19 +65,20 @@ describe('Collapsible', () => {
           <div style={{ height: 200 }} />
         </Collapsible>
       )
-      const o = wrapper.get(0).node
+      let o = wrapper.find('div.c-Collapsible').getDOMNode()
       expect(o.style['height']).toBe('0px')
 
       wrapper.setProps({ isOpen: true })
 
       jest.runAllTimers()
 
+      o = wrapper.find('div.c-Collapsible').getDOMNode()
       expect(o.style['height']).not.toBe('0px')
     })
 
     test('Height is auto with no child and when open', () => {
       const wrapper = mount(<Collapsible />)
-      const o = wrapper.get(0).node
+      const o = wrapper.find('div.c-Collapsible').getDOMNode()
       wrapper.setProps({ isOpen: true })
 
       jest.runAllTimers()
@@ -81,7 +92,7 @@ describe('Collapsible', () => {
           <div style={{ height: 200 }} />
         </Collapsible>
       )
-      const o = wrapper.get(0).node
+      let o = wrapper.find('div.c-Collapsible').getDOMNode()
 
       expect(o.style['height']).toBe('auto')
 
@@ -89,18 +100,20 @@ describe('Collapsible', () => {
 
       jest.runAllTimers()
 
+      o = wrapper.find('div.c-Collapsible').getDOMNode()
       expect(o.style['height']).toBe('0px')
     })
 
     test('Height is set to auto when animationState is open', () => {
       const wrapper = mount(<Collapsible />)
-      const o = wrapper.get(0).node
+      let o = wrapper.find('div.c-Collapsible').getDOMNode()
 
       expect(o.style['height']).toBe('0px')
       wrapper.setProps({ isOpen: true })
 
       jest.runAllTimers()
 
+      o = wrapper.find('div.c-Collapsible').getDOMNode()
       expect(o.style['height']).toBe('auto')
     })
   })
@@ -121,13 +134,12 @@ describe('Collapsible', () => {
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: true })
-      expect(wrapper.state().animationState).toBe('measuring')
 
-      jest.runOnlyPendingTimers()
-      expect(wrapper.state().animationState).toBe('openingStart')
-
-      jest.runOnlyPendingTimers()
       expect(wrapper.state().animationState).toBe('opening')
+
+      jest.runOnlyPendingTimers()
+
+      expect(wrapper.state().animationState).toBe('opened')
     })
 
     test('Runs through open states on various timing sequences', () => {
@@ -136,13 +148,12 @@ describe('Collapsible', () => {
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: false })
-      expect(wrapper.state().animationState).toBe('measuring')
 
-      jest.runOnlyPendingTimers()
-      expect(wrapper.state().animationState).toBe('closingStart')
-
-      jest.runOnlyPendingTimers()
       expect(wrapper.state().animationState).toBe('closing')
+
+      jest.runOnlyPendingTimers()
+
+      expect(wrapper.state().animationState).toBe('closed')
     })
   })
 

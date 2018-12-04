@@ -1,12 +1,12 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import AvatarList from '../AvatarList'
-import { AnimateGroup, Animate, Avatar, Text } from '../../index'
+import { AvatarList } from '../AvatarList'
+import { Animate, Avatar, Text } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<AvatarList />)
-    const o = wrapper.find('.c-AvatarList')
+    const o = wrapper.find('div.c-AvatarList')
 
     expect(o.hasClass('c-AvatarList')).toBeTruthy()
   })
@@ -14,60 +14,24 @@ describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<AvatarList className={customClass} />)
-    const o = wrapper.find('.c-AvatarList')
+    const o = wrapper.find('div.c-AvatarList')
 
-    expect(o.prop('className')).toContain(customClass)
+    expect(o.hasClass(customClass)).toBe(true)
   })
 })
 
 describe('Animation', () => {
-  test('Wraps children in an Animate, within an AnimateGroup', () => {
+  test('Wraps children in an Animate', () => {
     const wrapper = mount(
       <AvatarList>
         <Avatar />
       </AvatarList>
     )
-    const o = wrapper.find(AnimateGroup)
-    const anime = o.find(Animate)
-    const avatar = o.find(Avatar)
+    const anime = wrapper.find(Animate)
+    const avatar = wrapper.find(Avatar)
 
-    expect(o.length).toBe(1)
-    expect(anime.length).toBe(1)
-    expect(avatar.length).toBe(1)
-  })
-
-  test('Passes staggering props to AnimateGroup', () => {
-    const wrapper = mount(
-      <AvatarList>
-        <Avatar />
-      </AvatarList>
-    )
-    const props = wrapper.find(AnimateGroup).props()
-
-    expect(props.stagger).toBe(true)
-    expect(props.staggerDelay).toBeTruthy()
-  })
-
-  test('Can set custom AnimateGroup props', () => {
-    const wrapper = mount(
-      <AvatarList animationStagger={1000}>
-        <Avatar />
-      </AvatarList>
-    )
-    const props = wrapper.find(AnimateGroup).props()
-
-    expect(props.staggerDelay).toBe(1000)
-  })
-
-  test('Can set custom Animate sequences', () => {
-    const wrapper = mount(
-      <AvatarList animationSequence="fade">
-        <Avatar />
-      </AvatarList>
-    )
-    const props = wrapper.find(Animate).props()
-
-    expect(props.sequence).toBe('fade')
+    expect(anime.length).toBeTruthy()
+    expect(avatar.length).toBeTruthy()
   })
 })
 
@@ -82,7 +46,7 @@ describe('Children', () => {
     const avatar = wrapper.find(Avatar)
     const text = wrapper.find(Text)
 
-    expect(avatar.length).toBe(1)
+    expect(avatar.length).toBeTruthy()
     expect(text.length).toBe(0)
   })
 })
@@ -133,7 +97,7 @@ describe('Avatar Props', () => {
         <Avatar />
       </AvatarList>
     )
-    const avatar = wrapper.find(Avatar)
+    const avatar = wrapper.find('Avatar').first()
 
     expect(avatar.prop('borderColor')).toBe('red')
     expect(avatar.prop('outerBorderColor')).toBe('blue')

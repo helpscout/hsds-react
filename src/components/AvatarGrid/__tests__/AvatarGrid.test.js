@@ -6,7 +6,7 @@ import { Animate, Avatar, Text } from '../../index'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<AvatarGrid />)
-    const o = wrapper.find('.c-AvatarGrid')
+    const o = wrapper.find('div.c-AvatarGrid')
 
     expect(o.hasClass('c-AvatarGrid')).toBeTruthy()
   })
@@ -14,7 +14,7 @@ describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<AvatarGrid className={customClass} />)
-    const o = wrapper.find('.c-AvatarGrid')
+    const o = wrapper.find('div.c-AvatarGrid')
 
     expect(o.prop('className')).toContain(customClass)
   })

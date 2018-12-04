@@ -15,7 +15,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o).toHaveLength(1)
     const el = o.first()
     expect(el.hasClass(classNames.isOpenClassName)).toBe(true)
@@ -35,7 +35,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const el = wrapper.find(`.${classNames.baseComponentClassName}`).first()
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`).first()
     expect(el.hasClass(className)).toBe(true)
   })
 
@@ -47,7 +47,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const el = wrapper.find(`.${classNames.baseComponentClassName}`).first()
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`).first()
     expect(el.hasClass(classNames.isSeamlessClassName)).toBe(true)
   })
 
@@ -60,7 +60,7 @@ describe('ClassNames', () => {
           </Section>
         </Accordion>
       )
-      const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+      const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       expect(o.hasClass(`is-${size}`)).toBe(true)
     })
 
@@ -71,7 +71,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass('is-xl')).toBe(false)
   })
 
@@ -83,7 +83,7 @@ describe('ClassNames', () => {
         </Section>
       </Accordion>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass(classNames.isPageClassName)).toBe(true)
   })
 })
@@ -97,7 +97,7 @@ describe('open', () => {
         </Section>
       </Accordion>
     )
-    const o = wrapper.find(`.${classNames.baseComponentClassName}`)
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o).toHaveLength(0)
   })
 })
@@ -108,7 +108,7 @@ describe('Events', () => {
     const wrapper = mount(<Body onOpen={spy} uuid="body001" />)
     const comp = wrapper.find(Collapsible)
 
-    comp.getNode().props.onOpen()
+    comp.instance().props.onOpen()
 
     expect(spy).toHaveBeenCalledWith('body001')
   })
@@ -118,7 +118,7 @@ describe('Events', () => {
     const wrapper = mount(<Body onClose={spy} uuid="body001" />)
     const comp = wrapper.find(Collapsible)
 
-    comp.getNode().props.onClose()
+    comp.instance().props.onClose()
 
     expect(spy).toHaveBeenCalledWith('body001')
   })

@@ -3,7 +3,7 @@ import type { Sizes } from '../Text/types'
 import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import Text from '../Text'
 import { isString } from '../../utilities/is'
@@ -31,7 +31,7 @@ const HelpText = (props: Props) => {
   )
 
   const contentMarkup = isString(children) ? (
-    <Text className="c-HelpText__text" shade={shade} size={size}>
+    <Text className="c-HelpText__text" shade={shade} size={size} state={state}>
       {children}
     </Text>
   ) : (

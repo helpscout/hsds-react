@@ -12,7 +12,7 @@ import {
   createUniqueIndexFactory,
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 import Content from './Content'

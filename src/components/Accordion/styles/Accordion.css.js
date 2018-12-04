@@ -3,7 +3,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
 import styled from '../../styled'
 
-import PageConfig from '../../Page/styles/Page.config.css.js'
+import PageConfig from '../../Page/styles/Page.config.css'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};

@@ -3,7 +3,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
-import styled from '../../styled/index.js'
+import styled from '../../styled/index'
 
 export const config = {
   backgroundColor: 'white',

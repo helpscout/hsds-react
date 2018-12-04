@@ -2,7 +2,7 @@
 import type { MessageThemeContext } from './types'
 import React from 'react'
 import Text from '../Text'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { providerContextTypes } from './propTypes'
 import { COMPONENT_KEY } from './utils'

@@ -1,14 +1,13 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import PortalWrapper from '..'
+import PortalWrapper from '../PortalWrapper'
 import Keys from '../../../constants/Keys'
-import classNames from '../../../utilities/classNames'
-import wait from '../../../tests/helpers/wait'
+import { classNames } from '../../../utilities/classNames'
 
 jest.useFakeTimers()
 
 const TestButton = props => {
-  const { className } = props
+  const { className, children } = props
   const componentClassName = classNames('button', className)
   const handleClick = () => {
     console.log('wee')
@@ -18,6 +17,7 @@ const TestButton = props => {
       <button className={componentClassName} onClick={handleClick}>
         Click
       </button>
+      {children}
     </div>
   )
 }
@@ -64,10 +64,10 @@ describe('ClassName', () => {
 describe('ID', () => {
   test('Adds default ID', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />, context)
+    const wrapper = mount(<TestComponent isOpen />, context)
 
-    const c = document.body.childNodes[0]
-    expect(c.id).toContain('PortalWrapper')
+    const comp = wrapper.find('Portal').first()
+    expect(comp.props().id).toContain('PortalWrapper')
   })
 
   test('Override default ID with options', () => {
@@ -76,10 +76,10 @@ describe('ID', () => {
       timeout: 0,
     }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />, context)
+    const wrapper = mount(<TestComponent isOpen />, context)
 
-    const c = document.body.childNodes[0]
-    expect(c.id).toContain('Brick')
+    const comp = wrapper.find('Portal').first()
+    expect(comp.props().id).toContain('Brick')
   })
 })
 
@@ -96,8 +96,8 @@ describe('Manager', () => {
 
     const o = wrapper.find(TestComponent).last()
 
-    o.getNode().closePortal()
-    expect(o.getNode().state.isOpen).toBe(false)
+    o.instance().closePortal()
+    expect(o.instance().state.isOpen).toBe(false)
   })
 
   test('Cannot close Component that is not last in Manage list', () => {
@@ -111,26 +111,8 @@ describe('Manager', () => {
     )
     const o = wrapper.find(TestComponent).first()
 
-    o.getNode().closePortal()
-    expect(o.getNode().state.isOpen).toBe(true)
-  })
-})
-
-describe('wrapperClassName', () => {
-  test('Does not add a wrapperClassName to portal', () => {
-    const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />, context)
-
-    const c = document.body.childNodes[0]
-    expect(c.className).toBeFalsy()
-  })
-
-  test('Can customize wrapperClassName', () => {
-    const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen wrapperClassName="blue" />, context)
-
-    const c = document.body.childNodes[0]
-    expect(c.className).toContain('blue')
+    o.instance().closePortal()
+    expect(o.instance().state.isOpen).toBe(true)
   })
 })
 
@@ -153,11 +135,22 @@ describe('isOpen', () => {
     const wrapper = mount(<TestComponent isOpen={false} timeout={0} />, context)
 
     wrapper.setProps({ isOpen: true })
+    expect(
+      wrapper
+        .find('Animate')
+        .first()
+        .props().in
+    ).toBe(true)
+
     wrapper.setProps({ isOpen: false })
     jest.runAllTimers()
 
-    const o = document.body.childNodes[0]
-    expect(o).not.toBeTruthy()
+    expect(
+      wrapper
+        .find('Animate')
+        .first()
+        .props().in
+    ).toBe(false)
   })
 })
 
@@ -240,7 +233,7 @@ describe('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.getNode()
+    const o = wrapper.instance()
 
     expect(o.triggerComponent).toBeTruthy()
     expect(o.triggerNode).toBeTruthy()
@@ -250,7 +243,7 @@ describe('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.getNode()
+    const o = wrapper.instance()
 
     wrapper.unmount()
 
@@ -263,7 +256,7 @@ describe('Trigger', () => {
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
     const o = wrapper.find('button')
-    o.getNode().onfocus = spy
+    o.getDOMNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     expect(spy).not.toHaveBeenCalled()
@@ -277,7 +270,7 @@ describe('Trigger', () => {
       <TestComponent timeout={0} trigger={trigger} isOpen />
     )
     const o = wrapper.find('button')
-    o.getNode().onfocus = spy
+    o.getDOMNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 
     expect(spy).toHaveBeenCalled()
@@ -402,5 +395,28 @@ describe('displayName', () => {
 
     expect(WrappedComponent.displayName).toContain('with')
     expect(WrappedComponent.displayName).toContain('Derek')
+  })
+})
+
+describe('Closing', () => {
+  test('Closes portal and stops even propagation on Esc', () => {
+    const eventSpy = jest.fn()
+    class Derek extends React.Component {
+      render() {
+        return <div />
+      }
+    }
+    const WrappedComponent = PortalWrapper()(Derek)
+
+    const wrapper = mount(<WrappedComponent isOpen />)
+
+    expect(wrapper.state().isOpen).toBe(true)
+
+    wrapper.instance().handleOnEsc({
+      stopPropagation: eventSpy,
+    })
+
+    expect(eventSpy).toHaveBeenCalled()
+    expect(wrapper.state().isOpen).toBe(false)
   })
 })

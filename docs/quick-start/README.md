@@ -4,12 +4,12 @@ This guide will show you how to get started with Blue!
 
 ## Installation
 
-The first thing you'll need to do, is add Blue to your React project. This can be done by adding the [latest version](https://github.com/helpscout/blue/releases) to your `package.json` file.
+The first thing you'll need to do, is add Blue to your React project. This can be done by adding the [latest version](https://github.com/helpscout/hsds-react/releases) to your `package.json` file.
 
 Or, even faster, you can run:
 
 ```
-npm install @helpscout/blue --save
+npm install @helpscout/hsds-react --save
 ```
 
 ## React (v15)
@@ -34,15 +34,15 @@ All of the uncompiled `.scss` files are available from Blue.
 You can import the single main `blue.scss` from:
 
 ```scss
-@import '@helpscout/blue/scss/blue.scss';
+@import '@helpscout/hsds-react/scss/blue.scss';
 ```
 
 Or, individual `.scss` files as required:
 
 ```scss
-@import '@helpscout/blue/styles/components/Alert.scss';
-@import '@helpscout/blue/styles/components/Button.scss';
-@import '@helpscout/blue/styles/components/Heading.scss';
+@import '@helpscout/hsds-react/styles/components/Alert.scss';
+@import '@helpscout/hsds-react/styles/components/Button.scss';
+@import '@helpscout/hsds-react/styles/components/Heading.scss';
 ```
 
 #### Seed
@@ -56,7 +56,7 @@ Check out [Seed's guide](https://developer.helpscout.com/seed/guides/quick-start
 Blue provides a compiled `.css` file, which can be imported from:
 
 ```js
-import '@helpscout/blue/css/blue.css'
+import '@helpscout/hsds-react/css/blue.css'
 ```
 
 ### Future of CSS-in-Blue

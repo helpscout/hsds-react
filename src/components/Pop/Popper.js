@@ -5,7 +5,7 @@ import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from '../Portal'
 import Arrow from './Arrow'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 type Props = PopProps
@@ -26,7 +26,17 @@ class Popper extends Component<Props> {
     zIndex: 1000,
   }
 
+  state = {
+    isReady: false,
+  }
+
   portal = null
+
+  componentDidMount() {
+    this.setState({
+      isReady: true,
+    })
+  }
 
   componentWillUnmount = () => {
     this.portal = null
@@ -70,7 +80,10 @@ class Popper extends Component<Props> {
     }
 
     return (
-      <Portal ref={ref => (this.portal = ref)}>
+      <Portal
+        ref={ref => (this.portal = ref)}
+        _unsafeForceRender={this.state.isReady}
+      >
         <ReactPopper
           modifiers={modifiers}
           placement={placement}

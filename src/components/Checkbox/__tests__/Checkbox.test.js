@@ -23,14 +23,18 @@ describe('ChoiceGroup.Context', () => {
         <Checkbox value="elf" />
       </ChoiceGroup>
     )
-    const el = wrapper.find('input').first()
+    let el = wrapper.find('input').first()
 
     expect(el.prop('checked')).toBe(false)
 
     el.simulate('change', { target: { checked: true } })
+    el = wrapper.find('input').first()
+
     expect(el.prop('checked')).toBe(true)
 
     el.simulate('change', { target: { checked: false } })
+    el = wrapper.find('input').first()
+
     expect(el.prop('checked')).toBe(false)
   })
 })

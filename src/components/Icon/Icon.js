@@ -6,7 +6,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ICONS from './icons'
 import styled from '../styled'
 import VisuallyHidden from '../VisuallyHidden'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Icon.css.js'
@@ -86,6 +86,7 @@ const Icon = (props: Props) => {
 
   return (
     <span
+      aria-hidden
       {...getValidProps(rest)}
       className={componentClassName}
       onClick={onClick}

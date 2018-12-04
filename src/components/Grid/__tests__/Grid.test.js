@@ -8,13 +8,13 @@ describe('ClassName', () => {
   test('Has the correct CSS class', () => {
     const wrapper = mount(<Grid />)
 
-    expect(wrapper.hasClass('c-Grid')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('c-Grid')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
     const wrapper = mount(<Grid className="mugatu" />)
 
-    expect(wrapper.hasClass('mugatu')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -62,9 +62,9 @@ describe('Variants', () => {
     const wrapper = mount(<Grid isFluid />)
     const o = wrapper.find(Container)
 
-    expect(o.hasClass('c-Container')).toBeTruthy()
-    expect(o.hasClass('is-fluid')).toBeTruthy()
-    expect(o.hasClass('is-responsive')).not.toBeTruthy()
+    expect(o.getDOMNode().classList.contains('c-Container')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-fluid')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('is-responsive')).not.toBeTruthy()
 
     wrapper.unmount()
   })

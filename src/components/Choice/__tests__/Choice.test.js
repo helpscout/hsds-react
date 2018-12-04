@@ -116,6 +116,25 @@ describe('HelpText', () => {
     expect(text.text()).toBe(helpText)
     wrapper.unmount()
   })
+
+  test('Renders helpText outside label when not stacked', () => {
+    const helpText = 'Help Text'
+    const wrapper = mount(<Choice label="Label" helpText={helpText} />)
+    const text = wrapper.find('label').find(HelpText)
+
+    expect(text.length).toBeFalsy()
+    wrapper.unmount()
+  })
+
+  test('Renders helpText inside label when stacked', () => {
+    const helpText = 'Help Text'
+    const wrapper = mount(<Choice label="Label" helpText={helpText} stacked />)
+    const text = wrapper.find('label').find(HelpText)
+
+    expect(text.length).toBeTruthy()
+    expect(text.text()).toBe(helpText)
+    wrapper.unmount()
+  })
 })
 
 describe('Label', () => {
@@ -191,7 +210,7 @@ describe('Events', () => {
 describe('States', () => {
   test('Applies checkbox styles by default', () => {
     const wrapper = mount(<Choice />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
 
     expect(o.prop('className')).toContain('is-checkbox')
     wrapper.unmount()
@@ -199,7 +218,7 @@ describe('States', () => {
 
   test('Applies checkbox styles if specified', () => {
     const wrapper = mount(<Choice type="checkbox" />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-checkbox')
@@ -209,7 +228,7 @@ describe('States', () => {
 
   test('Applies radio styles if specified', () => {
     const wrapper = mount(<Choice type="radio" />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-radio')
@@ -221,7 +240,7 @@ describe('States', () => {
 describe('States', () => {
   test('Applies disabled styles if specified', () => {
     const wrapper = mount(<Choice label="Label" disabled />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
     const input = wrapper.find('input')
     const labelText = wrapper.find(Text)
 
@@ -233,7 +252,7 @@ describe('States', () => {
 
   test('Applies readOnly styles if specified', () => {
     const wrapper = mount(<Choice label="Label" readOnly />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
     const input = wrapper.find('input')
 
     expect(o.prop('className')).toContain('is-readonly')
@@ -244,7 +263,7 @@ describe('States', () => {
   test('Applies error styles if specified', () => {
     const state = 'error'
     const wrapper = mount(<Choice state={state} />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
     const input = wrapper.find(ChoiceInput)
 
     expect(o.prop('className')).toContain(`is-${state}`)
@@ -255,7 +274,7 @@ describe('States', () => {
   test('Applies success styles if specified', () => {
     const state = 'success'
     const wrapper = mount(<Choice state={state} />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
     const input = wrapper.find(ChoiceInput)
 
     expect(o.prop('className')).toContain(`is-${state}`)
@@ -266,7 +285,7 @@ describe('States', () => {
   test('Applies warning styles if specified', () => {
     const state = 'warning'
     const wrapper = mount(<Choice state={state} />)
-    const o = wrapper.find('.c-Choice')
+    const o = wrapper.find('div.c-Choice')
     const input = wrapper.find(ChoiceInput)
 
     expect(o.prop('className')).toContain(`is-${state}`)
@@ -288,7 +307,7 @@ describe('innerRef', () => {
   test('Can retrieve innerRef DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<Choice innerRef={spy} />)
-    const o = wrapper.find('input').getNode()
+    const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })
@@ -363,13 +382,15 @@ describe('ChoiceGroup.Context', () => {
         <Choice value="elf" />
       </ChoiceGroup>
     )
-    const el = wrapper.find('input')
+    let el = wrapper.find('input')
 
     expect(el.prop('checked')).toBe(true)
 
     wrapper.setProps({
       value: 'nope',
     })
+
+    el = wrapper.find('input')
 
     expect(el.prop('checked')).toBe(false)
   })

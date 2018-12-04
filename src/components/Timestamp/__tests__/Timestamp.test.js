@@ -17,7 +17,7 @@ describe('ClassNames', () => {
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Timestamp className="mugatu" />)
-    const o = wrapper.find(`.${cx}`)
+    const o = wrapper.find(`.${cx}`).first()
 
     expect(o.hasClass('mugatu')).toBeTruthy()
   })
@@ -162,6 +162,6 @@ describe('Styles', () => {
   test('Has muted styles', () => {
     const wrapper = mount(<Timestamp muted />)
 
-    expect(wrapper.hasClass('is-muted')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-muted')).toBeTruthy()
   })
 })

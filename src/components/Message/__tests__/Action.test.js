@@ -23,7 +23,7 @@ describe('ClassNames', () => {
     const wrapper = mount(<Action className="mugatu" />)
     const o = wrapper.find(ui.action)
 
-    expect(o.hasClass('mugatu')).toBeTruthy()
+    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
@@ -39,12 +39,12 @@ describe('ChatBlock', () => {
     const wrapper = mount(<Action />)
     const o = wrapper.find(ChatBlock)
 
-    expect(o.hasClass(cx)).not.toBeTruthy()
+    expect(o.getDOMNode().classList.contains(cx)).not.toBeTruthy()
   })
 
   test('Passes correct props to ChatBlock', () => {
     const wrapper = mount(<Action from to read ltr rtl timestamp="time" />)
-    const props = wrapper.find(ChatBlock).getNode().props
+    const props = wrapper.find(ChatBlock).instance().props
 
     expect(props.from).toBeTruthy()
     expect(props.to).toBeTruthy()
@@ -61,7 +61,7 @@ describe('Content', () => {
     const o = wrapper.find(Text)
 
     expect(o.length).toBeTruthy()
-    expect(o.getNode().props.children).toBe('Relax')
+    expect(o.instance().props.children).toBe('Relax')
   })
 })
 
@@ -74,7 +74,7 @@ describe('Context', () => {
     )
     const o = wrapper.find(ui.action)
 
-    expect(o.hasClass('is-theme-embed')).toBe(true)
+    expect(o.getDOMNode().classList.contains('is-theme-embed')).toBe(true)
   })
 
   test('Does not Change text props based on context.theme', () => {
@@ -83,14 +83,9 @@ describe('Context', () => {
         <Action />
       </Message.Provider>
     )
-    let o = wrapper.find(ui.text)
+    let o = wrapper.find(ui.text).first()
 
-    expect(o.props().className).toContain('12')
-    expect(o.props().className).toContain('faint')
-
-    wrapper.setProps({ theme: 'admin' })
-    o = wrapper.find(ui.text)
-
-    expect(o.props().className).toContain('muted')
+    expect(o.getDOMNode().classList.contains('is-12')).toBe(true)
+    expect(o.getDOMNode().classList.contains('is-faint')).toBe(true)
   })
 })

@@ -1,7 +1,7 @@
 // @flow
 import type { Node } from 'react'
 import type { Message as MessageType } from './types'
-import React, { Component } from 'react'
+import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Text from '../Text'
@@ -16,7 +16,7 @@ import Media from './Media'
 import Provider from './Provider'
 import Question from './Question'
 import styled from '../styled'
-import classNames from '../../utilities/classNames'
+import { classNames } from '../../utilities/classNames'
 import {
   isComponentTypeChat,
   namespaceComponent,
