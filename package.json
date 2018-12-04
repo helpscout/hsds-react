@@ -110,7 +110,7 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.0.0",
-    "@helpscout/artboard": "0.1.11",
+    "@helpscout/artboard": "0.1.12",
     "@helpscout/helix": "^0.1.0",
     "@helpscout/prestart": "^0.0.5",
     "@storybook/addon-actions": "^4.0.9",
