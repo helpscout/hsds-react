@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import ScrollLock from '..'
+import { ScrollLock } from '../ScrollLock'
 
 describe('Direction: Y', () => {
   test('Permits scrolling within extent', () => {
