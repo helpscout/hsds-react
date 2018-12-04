@@ -51,7 +51,7 @@ export const CloseButtonUI = styled('button')`
   cursor: pointer;
   display: block;
   height: ${config.size};
-  padding: $padding;
+  padding: ${config.padding};
   position: relative;
   transition: background-color 300ms ease;
   width: ${config.size};
