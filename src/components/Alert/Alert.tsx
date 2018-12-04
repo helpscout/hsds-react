@@ -1,6 +1,5 @@
-// @flow
-import type { UIStatus } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { UIStatus } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Badge from '../Badge'
@@ -9,9 +8,8 @@ import Collapsible from '../Collapsible'
 import CloseButton from '../CloseButton'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Alert.utils'
 import {
   AlertUI,
   BadgeWrapperUI,
@@ -19,20 +17,22 @@ import {
   CloseWrapperUI,
   ContentUI,
   IconWrapperUI,
-} from './styles/Alert.css.js'
+} from './Alert.css'
 
 export interface Props {
-  actionRight?: any;
-  badge?: string;
-  dismissible: boolean;
-  icon: boolean;
-  noMargin: boolean;
-  onDismiss: () => void;
-  status: UIStatus;
+  actionRight?: any
+  badge?: string
+  className?: string
+  closeLabel?: string
+  dismissible: boolean
+  icon: boolean
+  noMargin: boolean
+  onDismiss: () => void
+  status: UIStatus
 }
 
 export interface State {
-  dismissed: boolean;
+  dismissed: boolean
 }
 
 export const classNameSpace = 'c-Alert'
@@ -46,7 +46,7 @@ export const cx = {
   icon: `${classNameSpace}__icon`,
 }
 
-export class Alert extends Component<Props, State> {
+export class Alert extends React.PureComponent<Props, State> {
   static defaultProps = {
     dismissible: false,
     icon: false,
@@ -135,9 +135,9 @@ export class Alert extends Component<Props, State> {
 
     const componentMarkup = (
       <AlertUI
+        role="alert"
         {...getValidProps(rest)}
         className={componentClassName}
-        role="alert"
       >
         {this.getContentMarkup()}
       </AlertUI>
@@ -154,8 +154,6 @@ export class Alert extends Component<Props, State> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(Alert)
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY)(Alert)
 
