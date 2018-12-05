@@ -26,22 +26,6 @@ class Popper extends Component<Props> {
     zIndex: 1000,
   }
 
-  state = {
-    isReady: false,
-  }
-
-  portal = null
-
-  componentDidMount() {
-    this.setState({
-      isReady: true,
-    })
-  }
-
-  componentWillUnmount = () => {
-    this.portal = null
-  }
-
   handleOnClick = (event: Event) => {
     /* istanbul ignore next */
     event && event.stopPropagation()
@@ -80,16 +64,13 @@ class Popper extends Component<Props> {
     }
 
     return (
-      <Portal
-        ref={ref => (this.portal = ref)}
-        _unsafeForceRender={this.state.isReady}
+      <ReactPopper
+        modifiers={modifiers}
+        placement={placement}
+        positionFixed={positionFixed}
       >
-        <ReactPopper
-          modifiers={modifiers}
-          placement={placement}
-          positionFixed={positionFixed}
-        >
-          {({ ref, style, placement, arrowProps }) => (
+        {({ ref, style, placement, arrowProps }) => (
+          <Portal>
             <div
               className={componentClassName}
               data-placement={placement}
@@ -121,9 +102,9 @@ class Popper extends Component<Props> {
                 )}
               </Animate>
             </div>
-          )}
-        </ReactPopper>
-      </Portal>
+          </Portal>
+        )}
+      </ReactPopper>
     )
   }
 }

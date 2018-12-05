@@ -5,7 +5,7 @@ import { color } from './variables.css.js'
 const css = `
   ${baseStyles}
 
-  &__arrow {
+  .c-PopArrow {
     border-color: ${color.background};
   }
 `

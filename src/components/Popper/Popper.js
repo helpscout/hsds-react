@@ -72,17 +72,36 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     data: undefined,
   }
 
+  _isMounted = false
+
+  componentDidMount() {
+    this._isMounted = true
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
+    if (this.state.popperInstance) {
+      this.state.popperInstance.destroy()
+    }
+  }
+
+  safeSetState(nextState) {
+    if (this._isMounted) {
+      return this.setState(nextState)
+    }
+  }
+
   setPopperNode = (popperNode: ?HTMLElement) => {
     safeInvoke(this.props.innerRef, popperNode)
-    this.setState({ popperNode })
+    this.safeSetState({ popperNode })
   }
-  setArrowNode = (arrowNode: ?HTMLElement) => this.setState({ arrowNode })
+  setArrowNode = (arrowNode: ?HTMLElement) => this.safeSetState({ arrowNode })
 
   updateStateModifier = {
     enabled: true,
     order: 900,
     fn: (data: Object) => {
-      this.setState({ data })
+      this.safeSetState({ data })
       return data
     },
   }
@@ -130,7 +149,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
         popperNode,
         this.getOptions()
       )
-      this.setState({ popperInstance })
+      this.safeSetState({ popperInstance })
       return true
     }
     return false
@@ -140,7 +159,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     if (this.state.popperInstance) {
       this.state.popperInstance.destroy()
     }
-    this.setState({ popperInstance: undefined }, callback)
+    this.safeSetState({ popperInstance: undefined }, callback)
   }
 
   updatePopperInstance = () => {
@@ -172,12 +191,6 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
       ) {
         this.updatePopperInstance()
       }
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.state.popperInstance) {
-      this.state.popperInstance.destroy()
     }
   }
 

@@ -90,7 +90,7 @@ describe('Pop', () => {
   })
 
   describe('Mouse: Hover events', () => {
-    test('Does not changes open/close states on mouseenter/mouseleave, if triggerOn is click', () => {
+    test('Does not changes open/close states on mousemove/mouseleave, if triggerOn is click', () => {
       const wrapper = shallow(
         <Pop triggerOn="click">
           <Pop.Reference />
@@ -98,14 +98,14 @@ describe('Pop', () => {
       )
       const el = wrapper.find(cx.node)
 
-      el.simulate('mouseenter')
+      el.simulate('mousemove')
       expect(wrapper.state().isOpen).not.toBe(true)
 
       el.simulate('mouseleave')
       expect(wrapper.state().isOpen).toBe(false)
     })
 
-    test('Changes open/close states on mouseenter/mouseleave', () => {
+    test('Changes open/close states on mousemove/mouseleave', () => {
       const wrapper = shallow(
         <Pop triggerOn="hover">
           <Pop.Reference />
@@ -113,14 +113,14 @@ describe('Pop', () => {
       )
       const el = wrapper.find(cx.node)
 
-      el.simulate('mouseenter')
+      el.simulate('mousemove')
       expect(wrapper.state().isOpen).toBe(true)
 
       el.simulate('mouseleave')
       expect(wrapper.state().isOpen).toBe(false)
     })
 
-    test('Fires onOpen/onClose on mouseenter/mouseleave', () => {
+    test('Fires onOpen/onClose on mousemove/mouseleave', () => {
       const spyOpen = jest.fn()
       const spyClose = jest.fn()
       const wrapper = shallow(
@@ -130,11 +130,26 @@ describe('Pop', () => {
       )
       const el = wrapper.find(cx.node)
 
-      el.simulate('mouseenter')
+      el.simulate('mousemove')
       expect(spyOpen).toHaveBeenCalled()
 
       el.simulate('mouseleave')
       expect(spyClose).toHaveBeenCalled()
+    })
+
+    test('Does not re-trigger open on mousemove, if already open', () => {
+      const spy = jest.fn()
+      const wrapper = shallow(
+        <Pop triggerOn="hover" onOpen={spy}>
+          <Pop.Reference />
+        </Pop>
+      )
+      const el = wrapper.find(cx.node)
+      wrapper.setState({ isOpen: true })
+
+      el.simulate('mousemove')
+
+      expect(spy).not.toHaveBeenCalled()
     })
   })
 
