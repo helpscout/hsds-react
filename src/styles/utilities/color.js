@@ -2,6 +2,7 @@
 import colors from '../configs/colors'
 import { isNumber, isObject } from '../../utilities/is'
 import get from '../../utilities/get'
+export { rgba } from '../../utilities/color'
 
 type Color = string
 type ColorArgs = any

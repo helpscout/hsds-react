@@ -1,6 +1,5 @@
 // @flow
-import { rgba } from 'polished'
-import { getColor } from '../utilities/color'
+import { getColor, rgba } from '../utilities/color'
 
 export const cardBaseStyles = (subtle: boolean = false) => {
   const bottomColor = getColor('grey.600')

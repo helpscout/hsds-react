@@ -1,9 +1,8 @@
-import { rgba } from 'polished'
 import styled from '../styled'
 import Animate from '../Animate'
 import Text from '../Text'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
-import { getColor } from '../../styles/utilities/color'
+import { getColor, rgba } from '../../styles/utilities/color'
 
 export const config = {
   borderRadius: {
@@ -20,8 +19,7 @@ export const NotificationUI = styled(Animate)`
   ${config.bubbleClassName} {
     background-color: white;
     border-color: transparent !important;
-    box-shadow: 0 0 0 1px ${rgba('black', 0.1)},
-      0 4px 6px ${rgba('black', 0.15)};
+    box-shadow: 0 0 0 1px ${rgba('#000', 0.1)}, 0 4px 6px ${rgba('#000', 0.15)};
     cursor: pointer;
     max-width: 100%;
     text-align: right;
