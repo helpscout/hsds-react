@@ -37,6 +37,7 @@ import fullscreen from '../../icons/fullscreen.svg'
 import helpscoutLogo from '../../icons/helpscout-logo.svg'
 import imageAdd from '../../icons/image-add.svg'
 import image from '../../icons/image.svg'
+import info from '../../icons/info.svg'
 import link from '../../icons/link.svg'
 import meatball from '../../icons/meatball.svg'
 import minimize from '../../icons/minimize.svg'
@@ -101,6 +102,7 @@ const ICONS = {
   'helpscout-logo': helpscoutLogo,
   'image-add': imageAdd,
   image,
+  info,
   link,
   meatball,
   minimize,
