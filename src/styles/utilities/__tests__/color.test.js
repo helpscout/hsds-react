@@ -1,5 +1,5 @@
 import colors from '../../configs/colors'
-import { getColor, getThemeBrandProp, rgba } from '../color'
+import { getColor, getThemeBrandProp } from '../color'
 
 describe('getColor', () => {
   test('Returns currentColor as a default', () => {
