@@ -255,7 +255,6 @@ class Modal extends Component<Props> {
         className="c-Modal__Card-container"
         delay={modalAnimationDelay}
         duration={modalAnimationDuration}
-        onEntered={this.positionCloseNode}
         easing={modalAnimationEasing}
         in={portalIsOpen}
         sequence={modalAnimationSequence}
