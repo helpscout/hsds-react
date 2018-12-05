@@ -9,4 +9,4 @@ Modal.Footer = propConnect(COMPONENT_KEY.Footer)(Modal.Footer)
 Modal.Header = propConnect(COMPONENT_KEY.Header)(Modal.Header)
 Modal.Overlay = propConnect(COMPONENT_KEY.Overlay)(Modal.Overlay)
 
-export default propConnect(COMPONENT_KEY.Modal)(Modal)
+export default propConnect(COMPONENT_KEY.Modal, { pure: false })(Modal)

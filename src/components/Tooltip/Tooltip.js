@@ -94,7 +94,10 @@ class Tooltip extends Component<Props> {
         <Pop.Reference className="c-Tooltip__reference">
           {children}
         </Pop.Reference>
-        <Pop.Popper arrowClassName={arrowClassName}>
+        <Pop.Popper
+          arrowClassName={arrowClassName}
+          className={componentClassName}
+        >
           <Popper style={{ maxWidth }}>{contentMarkup}</Popper>
         </Pop.Popper>
       </Pop>

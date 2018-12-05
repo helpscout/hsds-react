@@ -3,6 +3,12 @@ import { mount } from 'enzyme'
 import Popper, { enhancePopperStyles } from '../Popper'
 import ReactPopper from '../../Popper/Popper'
 
+jest.mock('../../Portal', () => {
+  const Portal = ({ children }) => <div>{children}</div>
+
+  return Portal
+})
+
 const cleanUp = () => {
   global.document.body.innerHTML = ''
 }
@@ -15,27 +21,16 @@ describe('Popper', () => {
   describe('Portal', () => {
     test('Renders a Portal', () => {
       const wrapper = mount(<Popper />)
+      const el = wrapper.find('Portal')
 
-      expect(wrapper.instance().portal).toBeTruthy()
+      expect(el.length).toBeTruthy()
     })
 
     test('Renders in a Portal (DOM)', () => {
-      mount(<Popper />)
-
-      const el = document.getElementsByClassName('c-PopPopper')[0]
-
-      expect(el).toBeTruthy()
-    })
-
-    test('Nullifies Portal on unmount', () => {
       const wrapper = mount(<Popper />)
-      const o = wrapper.instance()
+      const el = wrapper.find('Portal div.c-PopPopper')
 
-      expect(wrapper.instance().portal).toBeTruthy()
-
-      wrapper.unmount()
-
-      expect(o.portal).not.toBeTruthy()
+      expect(el.length).toBeTruthy()
     })
   })
 
@@ -43,22 +38,11 @@ describe('Popper', () => {
     test('Fires onClick callback on click', () => {
       const spy = jest.fn()
       const wrapper = mount(<Popper onClick={spy} />)
+      const el = wrapper.find('Portal div.c-PopPopper')
 
-      const el = document.getElementsByClassName('c-PopPopper')[0]
-
-      el.click()
+      el.simulate('click')
 
       expect(spy).toHaveBeenCalled()
-      cleanUp(wrapper)
-    })
-  })
-
-  describe('Content', () => {
-    test('Renders ReactPopper', () => {
-      const wrapper = mount(<Popper />)
-      const portal = wrapper.instance().portal
-
-      expect(portal.props.children.type === ReactPopper).toBeTruthy()
     })
   })
 })
