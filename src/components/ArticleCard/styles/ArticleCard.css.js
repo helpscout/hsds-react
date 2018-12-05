@@ -1,7 +1,6 @@
-import { rgba } from 'polished'
 import Card from '../../Card'
 import styled from '../../styled'
-import { getColor } from '../../../styles/utilities/color.js'
+import { getColor, rgba } from '../../../styles/utilities/color.js'
 
 export const config = {
   hover: {
@@ -10,7 +9,7 @@ export const config = {
       inset 0 0 0 1px ${rgba(getColor('grey.600'), 0.7)},
       inset 0 -1px 0 0 ${getColor('grey.600')};
     `,
-    baseHoverShadow: `0 4px 40px 0 ${rgba('black', 0.1)}`,
+    baseHoverShadow: `0 4px 40px 0 ${rgba('#000', 0.1)}`,
   },
 }
 

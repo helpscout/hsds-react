@@ -167,3 +167,10 @@ export const getColorShade = (hex, propValues = optimalTextColorValues) => {
     return 'darkest'
   }
 }
+
+export function rgba(hex: string, opacity: number = 1) {
+  const { r, g, b } = hexToRgb(hex) || { r: 0, g: 0, b: 0 }
+  const alpha = Math.min(Math.max(opacity, 0), 1)
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
