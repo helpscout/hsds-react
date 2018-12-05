@@ -280,4 +280,28 @@ describe('Portal', () => {
       expect(document.body.innerHTML).not.toContain('Derek')
     })
   })
+
+  describe('Updates', () => {
+    test('Attempts to (re)mountPortal if props change', () => {
+      const spy = jest.fn()
+      const wrapper = mount(<Portal />)
+      wrapper.instance().mountPortal = spy
+
+      wrapper.setProps({ in: true })
+
+      expect(spy).toHaveBeenCalled()
+    })
+
+    test('Does not (re)render content if mountSelector is falsy', () => {
+      const spy = jest.fn()
+      const wrapper = mount(<Portal />)
+      wrapper.setState({ mountSelector: undefined })
+
+      wrapper.instance().renderPortalContent = spy
+
+      wrapper.setProps({ in: true })
+
+      expect(spy).not.toHaveBeenCalled()
+    })
+  })
 })

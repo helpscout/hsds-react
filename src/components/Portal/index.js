@@ -18,12 +18,7 @@ export const propTypes = {
   timeout: PropTypes.number,
 }
 
-const types = Object.assign({}, propTypes, {
-  children: PropTypes.element.isRequired,
-})
-
 const defaultProps = {
-  _unsafeForceRender: false,
   timeout: 0,
 }
 
@@ -57,10 +52,6 @@ class Portal extends Component {
     )
   }
 
-  componentDidUpdate(prevProps) {
-    this.mountPortal(prevProps)
-  }
-
   /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
@@ -77,9 +68,6 @@ class Portal extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps._unsafeForceRender !== this.props._unsafeForceRender) {
-      return true
-    }
     return false
   }
 
@@ -205,7 +193,7 @@ class Portal extends Component {
   }
 }
 
-Portal.propTypes = types
+Portal.propTypes = propTypes
 Portal.defaultProps = defaultProps
 Portal.Container = Container
 Portal.displayName = 'Portal'
