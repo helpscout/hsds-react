@@ -63,8 +63,9 @@ class Pop extends Component<Props, State> {
     this.node = null
   }
 
-  handleMouseEnter = () => {
+  handleMouseMove = () => {
     if (!this.shouldHandleHover()) return
+    if (this.state.isOpen) return
     this.open()
   }
 
@@ -175,7 +176,7 @@ class Pop extends Component<Props, State> {
         <PopUI
           className={componentClassName}
           innerRef={node => (this.node = node)}
-          onMouseEnter={this.handleMouseEnter}
+          onMouseMove={this.handleMouseMove}
           onMouseLeave={this.handleMouseLeave}
           onClick={this.handleClick}
         >
