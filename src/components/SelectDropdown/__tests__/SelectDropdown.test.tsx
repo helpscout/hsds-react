@@ -93,6 +93,18 @@ describe('selectedItem', () => {
 
     expect(wrapper.find('Dropdown').prop('selectedItem')).toBe(nextItem)
   })
+
+  test('Does not update the selectItem on an unrelated prop change', () => {
+    const prevItem = jest.fn()
+
+    const wrapper = mount(<SelectDropdown selectedItem={prevItem} />)
+
+    expect(wrapper.find('Dropdown').prop('selectedItem')).toBe(prevItem)
+
+    wrapper.setProps({ dropUp: true })
+
+    expect(wrapper.find('Dropdown').prop('selectedItem')).toBe(prevItem)
+  })
 })
 
 describe('renderTrigger', () => {
