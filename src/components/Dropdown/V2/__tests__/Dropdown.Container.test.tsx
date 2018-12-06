@@ -51,4 +51,14 @@ describe('Prop changes', () => {
 
     expect(store.getState().inputValue).toEqual('Ron')
   })
+
+  test('Update store on dropUp change', () => {
+    const wrapper = mount(<DropdownContainer dropUp={false} />)
+
+    wrapper.setProps({ dropUp: true })
+    // @ts-ignore
+    const store = wrapper.instance().store
+
+    expect(store.getState().dropUp).toEqual(true)
+  })
 })

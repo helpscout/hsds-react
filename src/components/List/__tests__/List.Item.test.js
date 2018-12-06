@@ -1,7 +1,6 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
-import Item from '../Item'
-import { baseComponentTest } from '../../../tests/helpers/components'
+import { mount, render } from 'enzyme'
+import { Item } from '../List.Item'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -34,22 +33,42 @@ describe('Children', () => {
 })
 describe('Selector', () => {
   test('Renders an li', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
 
     expect(wrapper.find('li').length).toBeTruthy()
+  })
+
+  test('Renders listItem style, if defined', () => {
+    const wrapper = render(<Item isListItem />)
+
+    expect(wrapper.hasClass('is-listItem')).toBeTruthy()
   })
 })
 
 describe('Accessibility', () => {
   test('Has an aria-role by default', () => {
-    const wrapper = shallow(<Item />)
+    const wrapper = mount(<Item />)
 
     expect(wrapper.find('li').props().role).toBe('listitem')
   })
 
   test('Role can be overridden', () => {
-    const wrapper = shallow(<Item role="presentation" />)
+    const wrapper = mount(<Item role="presentation" />)
 
     expect(wrapper.find('li').props().role).toBe('presentation')
+  })
+})
+
+describe('borderStyle', () => {
+  test('Adds border class if borderStyle, is defined', () => {
+    const wrapper = render(<Item borderStyle="dot" />)
+
+    expect(wrapper.hasClass('is-bordered')).toBeTruthy()
+  })
+
+  test('Adds borderStyle class, is defined', () => {
+    const wrapper = render(<Item borderStyle="line" />)
+
+    expect(wrapper.hasClass('is-border-line')).toBeTruthy()
   })
 })
