@@ -1,6 +1,6 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
-import Dropdown from '../Dropdown/DropdownV2'
+import AutoDropdown from '../AutoDropdown'
 import Icon from '../Icon'
 import Text from '../Text'
 import SelectArrows from '../Select/Select.Arrows'
@@ -147,7 +147,7 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
   render() {
     return (
       <SelectDropdownUI className="c-SelectDropdownWrapper">
-        <Dropdown
+        <AutoDropdown
           {...this.props}
           clearOnSelect={false}
           renderTrigger={this.renderTrigger()}
