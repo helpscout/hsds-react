@@ -26,7 +26,6 @@ export interface Props extends DropdownProps {
   isFocused: boolean
   placeholder: string
   state: string
-  triggerLabel: string
 }
 export interface State {
   isFocused: boolean
@@ -36,6 +35,7 @@ export interface State {
 export class SelectDropdown extends React.PureComponent<Props, State> {
   static defaultProps = {
     ...initialState,
+    clearOnSelect: false,
     errorIcon: 'alert',
     items: [],
     isFocused: false,
@@ -46,7 +46,7 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
     maxWidth: '100%',
     menuOffsetTop: 3,
     state: 'default',
-    triggerLabel: 'Select',
+    trigger: undefined,
     width: '100%',
   }
 
@@ -93,7 +93,7 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
   }
 
   getLabel() {
-    const { triggerLabel, placeholder } = this.props
+    const { trigger, placeholder } = this.props
     const { selectedItem } = this.state
     const activeItem = this.getActiveItem()
     const targetItem = selectedItem || activeItem
@@ -102,9 +102,7 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
       return targetItem.label || targetItem.value
     }
 
-    if (triggerLabel) return triggerLabel
-
-    return placeholder
+    return trigger || placeholder
   }
 
   renderError() {
@@ -114,7 +112,7 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
     if (!shouldRenderError) return null
 
     return (
-      <ErrorUI>
+      <ErrorUI className="c-SelectDropdownError">
         <Tooltip display="block" placement="top-end" title={errorMessage}>
           <Icon
             aria-hidden
@@ -133,8 +131,10 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
     const isError = state === 'error'
 
     return (
-      <InputUI className={classNames(isError && 'is-error')}>
-        <LabelUI>
+      <InputUI
+        className={classNames('c-SelectDropdownTrigger', isError && 'is-error')}
+      >
+        <LabelUI className="c-SelectDropdownTriggerLabel">
           <Text truncate>{this.getLabel()}</Text>
         </LabelUI>
         <SelectArrows state={state} />
@@ -145,11 +145,14 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
   }
 
   render() {
+    const { className, ...rest } = this.props
+
+    const componentClassName = classNames('c-SelectDropdown', className)
     return (
       <SelectDropdownUI className="c-SelectDropdownWrapper">
         <AutoDropdown
-          {...this.props}
-          clearOnSelect={false}
+          {...rest}
+          className={componentClassName}
           renderTrigger={this.renderTrigger()}
           selectedItem={this.state.selectedItem}
           onBlur={this.handleOnBlur}

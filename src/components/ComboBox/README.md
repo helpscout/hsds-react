@@ -37,15 +37,16 @@ const customFilter = ({ hasGroups, items, inputValue }, defaultFilter) => {
 
 ## Props
 
-| Prop            | Type                                                | Default      | Description                                |
-| --------------- | --------------------------------------------------- | ------------ | ------------------------------------------ |
-| customFilter    | `Function`                                          |              | Customize the item search filter results.  |
+| Prop            | Type                                                | Default      | Description                                     |
+| --------------- | --------------------------------------------------- | ------------ | ----------------------------------------------- |
+| customFilter    | `Function`                                          |              | Customize the item search filter results.       |
 | onInputChange   | `Functoin | | Callback when the inputValue changes. |
-| inputProps      | `Object`                                            |              |                                            | Custom props for the inner `Input` component. |
-| itemFilterKey   | `string`                                            | `value`      | Key to filter the results against.         |
-| noResultsLabel  | `string`                                            | `No results` | Text to display when there are no results. |
-| renderMenuStart | `Function`                                          |              |                                            | Custom UI to render before the `Menu`. |
-| renderMenuEnd   | `Function`                                          |              |                                            | Custom UI to render after the `Menu`. |
-| renderFooter    | `Function`                                          |              |                                            | Custom UI to render in the `Dropdown` footer. |
+| inputProps      | `Object`                                            |              |                                                 | Custom props for the inner `Input` component. |
+| itemFilterKey   | `string`                                            | `value`      | Key to filter the results against.              |
+| noResultsLabel  | `string`                                            | `No results` | Text to display when there are no results.      |
+| renderMenuStart | `Function`                                          |              |                                                 | Custom UI to render before the `Menu`. |
+| renderMenuEnd   | `Function`                                          |              |                                                 | Custom UI to render after the `Menu`. |
+| renderFooter    | `Function`                                          |              |                                                 | Custom UI to render in the `Dropdown` footer. |
+| showInput       | `boolean`                                           | `true`       | Renders the search [Input](../Input) component. |
 
-For additional props, check out [Dropdown V2](../Dropdown/V2/docs/Dropdown.md).
+For additional customization and props, check out [Dropdown](../Dropdown/V2/docs/Dropdown.md).

@@ -24,4 +24,4 @@ export class AutoDropdown extends React.PureComponent<Props> {
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY)(AutoDropdown)
 
-export default AutoDropdown
+export default PropConnectedComponent
