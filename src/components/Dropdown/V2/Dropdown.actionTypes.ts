@@ -10,6 +10,7 @@ const actionTypes = [
   'SELECT_ITEM',
   'SET_MENU_NODE',
   'SET_TRIGGER_NODE',
+  'UPDATE_DROPUP',
   'UPDATE_INDEX',
   'UPDATE_INPUT_VALUE',
   'UPDATE_ITEMS',

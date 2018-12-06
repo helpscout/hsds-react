@@ -219,6 +219,15 @@ export const updateIndex = (state, index) => {
   })
 }
 
+export const updateDropUp = (state, dropUp) => {
+  return dispatch(state, {
+    type: actionTypes.UPDATE_DROPUP,
+    payload: {
+      dropUp,
+    },
+  })
+}
+
 export const updateItems = (state, items) => {
   return dispatch(state, {
     type: actionTypes.UPDATE_ITEMS,

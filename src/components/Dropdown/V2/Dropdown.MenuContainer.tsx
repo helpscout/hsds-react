@@ -41,6 +41,7 @@ export interface Props {
   getState: (...args: any[]) => void
   id?: string
   isLoading: boolean
+  menuOffsetTop: number
   onMenuMounted: () => void
   onMenuUnmounted: () => void
   innerRef: (node: HTMLElement) => void
@@ -67,6 +68,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     items: [],
     isOpen: true,
     isLoading: false,
+    menuOffsetTop: 0,
     onMenuMounted: noop,
     onMenuUnmounted: noop,
     selectItem: noop,
@@ -101,7 +103,10 @@ export class MenuContainer extends React.PureComponent<Props> {
     const hasWindowBottomOverflow = top + height > window.innerHeight
     const hasWindowTopOverflow = top - height < 0
 
-    return hasWindowBottomOverflow && !hasWindowTopOverflow
+    if (hasWindowBottomOverflow) {
+      return !hasWindowTopOverflow
+    }
+    return false
   }
 
   getMenuProps() {
@@ -245,7 +250,7 @@ export class MenuContainer extends React.PureComponent<Props> {
   }
 
   setPositionStylesOnNode = () => {
-    const { triggerNode, zIndex } = this.props
+    const { menuOffsetTop, triggerNode, zIndex } = this.props
 
     requestAnimationFrame(() => {
       if (!this.node || !this.placementNode) return
@@ -267,10 +272,14 @@ export class MenuContainer extends React.PureComponent<Props> {
       if (this.shouldDropUp()) {
         this.node.classList.add('is-dropUp')
         if (triggerNode) {
-          this.placementNode.style.marginTop = `-${triggerNode.clientHeight}px`
+          this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
+            menuOffsetTop}px`
         }
       } else {
         this.node.classList.remove('is-dropUp')
+        if (triggerNode) {
+          this.placementNode.style.marginTop = `${menuOffsetTop}px`
+        }
       }
     })
   }
@@ -362,6 +371,7 @@ const ConnectedMenuContainer: any = connect(
       isLoading,
       items,
       menuId,
+      menuOffsetTop,
       renderEmpty,
       renderLoading,
       triggerId,
@@ -377,6 +387,7 @@ const ConnectedMenuContainer: any = connect(
       id: menuId,
       isLoading,
       items,
+      menuOffsetTop,
       renderEmpty,
       renderLoading,
       triggerId,

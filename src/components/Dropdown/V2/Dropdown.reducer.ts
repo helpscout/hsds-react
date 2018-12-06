@@ -82,6 +82,10 @@ const reducer = (state = initialState, action: any = {}) => {
     case actionTypes.UPDATE_OPEN:
       nextState = { ...payload }
       break
+
+    case actionTypes.UPDATE_DROPUP:
+      nextState = { ...payload }
+      break
   }
 
   const nextReducedState = {

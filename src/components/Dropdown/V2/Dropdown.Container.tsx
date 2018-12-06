@@ -18,6 +18,7 @@ import {
   updateOpen,
   updateIndex,
   updateInputValue,
+  updateDropUp,
 } from './Dropdown.actions'
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../../utilities/id'
@@ -118,6 +119,11 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     // Adjust index, if changed
     if (nextProps.index !== state.index) {
       this.rehydrateStoreWithProps(updateIndex(state, nextProps.index))
+    }
+
+    // Adjust index, if changed
+    if (nextProps.dropUp !== state.dropUp) {
+      this.rehydrateStoreWithProps(updateDropUp(state, nextProps.dropUp))
     }
 
     // This is to handle filterable dropdowns. We need to adjust the internally

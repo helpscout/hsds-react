@@ -14,6 +14,7 @@ import HelpText from '../HelpText'
 import Label from '../Label'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
+import Arrows from './Select.Arrows'
 import { STATES } from '../../constants/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -89,6 +90,8 @@ class Select extends Component<Props, State> {
     seamless: false,
     value: '',
   }
+
+  static Arrows = Arrows
 
   optionClassName = 'c-Select__option'
   selectNode: ?HTMLSelectElement = null
@@ -422,9 +425,7 @@ class Select extends Component<Props, State> {
             <div className={componentClassName}>
               {prefixMarkup}
               {this.getSelectMarkup(props)}
-              <div
-                className={classNames('c-SelectIcon', state && `is-${state}`)}
-              />
+              <Arrows className="c-SelectIcon" state={state} />
               {errorMarkup}
               <Backdrop
                 className="c-Select__backdrop"

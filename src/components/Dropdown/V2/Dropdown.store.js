@@ -24,6 +24,7 @@ export const initialState = {
   lastInteractionType: undefined,
   maxHeight: 320,
   maxWidth: 360,
+  menuOffsetTop: 0,
   minHeight: 48,
   minWidth: 180,
   onBlur: noop,

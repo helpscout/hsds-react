@@ -24,6 +24,7 @@ export interface ComboBoxProps extends DropdownProps {
   renderMenuStart?: () => void
   renderMenuEnd?: () => void
   renderFooter?: () => void
+  showInput: boolean
 }
 
 export interface ComboBoxState {
@@ -50,6 +51,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     minWidth: 222,
     maxWidth: 222,
     noResultsLabel: 'No results',
+    showInput: true,
   }
 
   state = {
@@ -268,20 +270,23 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   setMenuWrapperNode = node => (this.menuWrapperNode = node)
 
   render() {
-    const { inputProps } = this.props
+    const { inputProps, showInput } = this.props
 
     return (
       <Dropdown {...this.getDropdownProps()}>
         {dropdownProps => (
           <Dropdown.Card>
-            <HeaderUI className="c-ComboBoxHeader">
-              <InputUI
-                {...{ ...defaultInputProps, ...inputProps }}
-                onChange={this.onInputChange}
-                onKeyDown={this.handleOnKeyDown}
-                value={this.state.inputValue}
-              />
-            </HeaderUI>
+            {showInput && (
+              <HeaderUI className="c-ComboBoxHeader">
+                <InputUI
+                  {...{ ...defaultInputProps, ...inputProps }}
+                  onChange={this.onInputChange}
+                  onKeyDown={this.handleOnKeyDown}
+                  value={this.state.inputValue}
+                />
+              </HeaderUI>
+            )}
+
             <MenuUI
               className="c-ComboBoxMenu"
               innerWrapperRef={this.setMenuWrapperNode}
