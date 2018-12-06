@@ -174,14 +174,14 @@ export class Item extends React.PureComponent<Props> {
   }
 
   renderContent() {
-    const { actionId, renderItem, children, label } = this.props
+    const { actionId, renderItem, children, label, value } = this.props
 
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }
 
     const hasSubMenu = this.hasSubMenu()
-    const content = children || label
+    const content = children || label || value
 
     if (!hasSubMenu) return content
 

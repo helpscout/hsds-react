@@ -1,8 +1,9 @@
 export interface DropdownMenuDimensions {
-  maxHeight: number
-  maxWidth: number
-  minHeight: number
-  minWidth: number
+  maxHeight: number | string
+  maxWidth: number | string
+  minHeight: number | string
+  minWidth: number | string
+  width?: number | string
 }
 
 export interface DropdownState extends DropdownMenuDimensions {
@@ -43,6 +44,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   items: Array<any>
   menuId?: string
   menuRef: (node: HTMLElement) => void
+  menuOffsetTop: number
   onBlur: (...args: any[]) => void
   onClose: () => void
   onFocus: (...args: any[]) => void
