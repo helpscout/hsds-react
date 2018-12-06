@@ -1,17 +1,16 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { ListBorder, ListGenericProps } from './List.types'
+import PropProvider from '../PropProvider/PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import Item from './Item'
+import Item from './List.Item'
 import { COMPONENT_KEY } from './List.utils'
+import { BulletListUI, NumberedListUI } from './List.css'
 
-export interface Props {
-  border: 'line' | 'dot' | null
-  className?: string
+export interface Props extends ListGenericProps {
+  border: ListBorder
   display: 'block' | 'flex'
-  inlineSize: 'md' | 'sm' | 'xs'
-  size: 'lg' | 'md' | 'sm' | 'xs' | null
-  type: 'bullet' | 'inline' | 'number' | null
 }
 
 export class List extends React.PureComponent<Props> {
@@ -23,6 +22,21 @@ export class List extends React.PureComponent<Props> {
   }
 
   static Item = Item
+
+  getItemProps() {
+    const { border, inlineSize, size, type } = this.props
+    const isListItem = type === 'bullet' || type === 'number'
+
+    const borderStyle = border
+
+    return {
+      borderStyle,
+      isListItem,
+      inlineSize,
+      size,
+      type,
+    }
+  }
 
   render() {
     const {
@@ -38,23 +52,27 @@ export class List extends React.PureComponent<Props> {
 
     const componentClassName = classNames(
       'c-List',
-      border === 'dot' && 'c-List--dotted',
-      border === 'line' && 'c-List--bordered',
+      border === 'dot' && 'is-dotted',
+      border === 'line' && 'is-bordered',
       display && `is-display-${display}`,
       inlineSize && `is-inline-${inlineSize}`,
-      size && `c-List--${size}`,
-      type && `c-List--${type}`,
+      size && `is-${size}`,
+      type && `is-${type}`,
       className
     )
 
-    const selectorTag =
-      type === 'bullet' ? 'ul' : type === 'number' ? 'ol' : 'ul'
+    let OuterComponent = BulletListUI
+    if (type === 'number') {
+      OuterComponent = NumberedListUI
+    }
 
-    return React.createElement(selectorTag, {
-      className: componentClassName,
-      children,
-      ...getValidProps(rest),
-    })
+    return (
+      <PropProvider value={{ [COMPONENT_KEY.Item]: this.getItemProps() }}>
+        <OuterComponent {...getValidProps(rest)} className={componentClassName}>
+          {children}
+        </OuterComponent>
+      </PropProvider>
+    )
   }
 }
 

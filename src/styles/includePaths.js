@@ -7,7 +7,6 @@ import dash from '@seedcss/seed-dash'
 import family from '@seedcss/seed-family'
 import flexy from '@seedcss/seed-flexy'
 import grid from '@seedcss/seed-grid'
-import list from '@seedcss/seed-list'
 import seedThis from '@seedcss/seed-this'
 
 const includePaths = pathfinder([

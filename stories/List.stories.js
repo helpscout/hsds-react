@@ -1,8 +1,14 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, select } from '@storybook/addon-knobs'
+import { withArtboard } from '@helpscout/artboard'
 import { List, Heading, Text } from '../src/index.js'
 
 const stories = storiesOf('List', module)
+stories.addDecorator(
+  withArtboard({ withCenterGuides: false, showInterface: false })
+)
+stories.addDecorator(withKnobs)
 
 const listItems = [
   {
@@ -40,43 +46,38 @@ const listItemsMarkup = listItems.map(item => {
   )
 })
 
-stories.add('default', () => <List>{listItemsMarkup}</List>)
+stories.add('Default', () => {
+  const props = {
+    border: select(
+      'border',
+      {
+        dot: 'dot',
+        line: 'line',
+        none: null,
+      },
+      null
+    ),
+    type: select(
+      'type',
+      {
+        bullet: 'bullet',
+        inline: 'inline',
+        number: 'number',
+        none: null,
+      },
+      null
+    ),
+    size: select(
+      'size',
+      {
+        lg: 'lg',
+        md: 'md',
+        sm: 'sm',
+        xs: 'xs',
+      },
+      null
+    ),
+  }
 
-stories.add('borders', () => (
-  <div>
-    <Heading size="h4">Dot</Heading>
-    <List border="dot">{listItemsMarkup}</List>
-    <br />
-    <Heading size="h4">Line</Heading>
-    <List border="line">{listItemsMarkup}</List>
-  </div>
-))
-
-stories.add('bullet', () => <List type="bullet">{listItemsMarkup}</List>)
-
-stories.add('inline', () => <List type="inline">{listItemsMarkup}</List>)
-
-stories.add('sizes', () => (
-  <div>
-    <Heading size="h4">Extra small</Heading>
-    <List type="number" size="xs">
-      {listItemsMarkup}
-    </List>
-    <br />
-    <Heading size="h4">Small</Heading>
-    <List type="number" size="sm">
-      {listItemsMarkup}
-    </List>
-    <br />
-    <Heading size="h4">Medium</Heading>
-    <List type="number" size="md">
-      {listItemsMarkup}
-    </List>
-    <br />
-    <Heading size="h4">Large</Heading>
-    <List type="number" size="lg">
-      {listItemsMarkup}
-    </List>
-    <br />
-  </div>
-))
+  return <List {...props}>{listItemsMarkup}</List>
+})
