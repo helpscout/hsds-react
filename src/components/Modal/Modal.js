@@ -224,6 +224,7 @@ class Modal extends Component<Props> {
       modalAnimationSequence,
       portalIsOpen,
       seamless,
+      style,
       ...rest
     } = this.props
 
