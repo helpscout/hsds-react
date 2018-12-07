@@ -218,6 +218,7 @@ class Modal extends Component<Props> {
   getInnerContentMarkup = () => {
     const {
       cardClassName,
+      className,
       modalAnimationDelay,
       modalAnimationDuration,
       modalAnimationEasing,
