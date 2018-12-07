@@ -11,6 +11,7 @@ import {
   Input,
   Switch,
   Toolbar,
+  styled,
 } from '../src/index.js'
 import { FrameProvider } from '../src/components/styled'
 import { MemoryRouter } from 'react-router'
@@ -498,3 +499,23 @@ class HSAppExample extends React.Component {
 }
 
 stories.add('HSApp', () => <HSAppExample />)
+
+stories.add('styled', () => {
+  const StyledModal = styled(Modal)`
+    .c-ModalOverlay {
+      background: purple;
+    }
+  `
+
+  return (
+    <StyledModal isOpen>
+      <Modal.Content>
+        <Modal.Body>
+          {ContentSpec.generate(12).map(({ id, content }) => (
+            <p key={id}>{content}</p>
+          ))}
+        </Modal.Body>
+      </Modal.Content>
+    </StyledModal>
+  )
+})
