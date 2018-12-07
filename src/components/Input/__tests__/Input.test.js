@@ -139,7 +139,7 @@ describe('Events', () => {
 
   test('onWheel callback stops event from bubbling, even without scrollLock', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input scrollLock={false} />)
+    const wrapper = mount(<Input multiline={3} scrollLock={false} />)
     const input = wrapper.find('textarea')
 
     input.simulate('wheel', {
