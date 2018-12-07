@@ -15,17 +15,17 @@ import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
 export interface Props {
-  animationEasing: string,
-  animationSequence: string,
-  avatarsClassName: string,
-  borderColor?: string,
-  children?: any,
-  className?: string,
-  max: number,
-  outerBorderColor?: string,
-  shape: AvatarShape,
-  showStatusBorderColor: boolean,
-  size: AvatarSize,
+  animationEasing: string
+  animationSequence: string
+  avatarsClassName: string
+  borderColor?: string
+  children?: any
+  className?: string
+  max: number
+  outerBorderColor?: string
+  shape: AvatarShape
+  showStatusBorderColor: boolean
+  size: AvatarSize
 }
 
 export class AvatarList extends React.PureComponent<Props> {
