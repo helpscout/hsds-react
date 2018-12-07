@@ -67,7 +67,6 @@
     "@helpscout/fancy": "^2.2.0",
     "@helpscout/react-utils": "^1.0.4",
     "@helpscout/wedux": "^0.0.10",
-    "@seedcss/seed-alert": "0.0.6",
     "@seedcss/seed-button": "0.0.6",
     "@seedcss/seed-color-scheme": "0.0.6",
     "@seedcss/seed-control": "0.0.6",
