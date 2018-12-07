@@ -1,9 +1,10 @@
-import { Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { getDocumentFromComponent } from '@helpscout/react-utils'
-import { default as Container, ID as portalContainerId } from './Container'
+import Container, { ID as portalContainerId } from './Container'
 import { isNodeElement } from '../../utilities/node'
+import { isObject, isString } from '../../utilities/is'
 
 export const propTypes = {
   className: PropTypes.string,
@@ -18,26 +19,23 @@ export const propTypes = {
   timeout: PropTypes.number,
 }
 
-const defaultProps = {
-  timeout: 0,
-}
+class Portal extends React.Component {
+  static propTypes = propTypes
+  static defaultProps = {
+    timeout: 0,
+  }
+  static Container = Container
+  static displayName = 'Portal'
 
-class Portal extends Component {
-  document: ?Document = null
+  document = null
+  node = null
+  portal = null
+  isOpening = false
+  isOpen = false
+  isClosing = false
 
-  constructor(props) {
-    super()
-    this.node = null
-    this.portal = null
-    this.isOpening = false
-    this.isOpen = false
-    this.isClosing = false
-    this.mountPortal = this.mountPortal.bind(this)
-    this.unmountPortal = this.unmountPortal.bind(this)
-
-    this.state = {
-      mountSelector: null,
-    }
+  state = {
+    mountSelector: null,
   }
 
   componentDidMount() {
@@ -76,12 +74,11 @@ class Portal extends Component {
     let mountSelector
     // 1. Prioritize renderTo selector
     if (renderTo) {
+      mountSelector = isString(renderTo)
+        ? document.querySelector(renderTo)
+        : false
       mountSelector =
-        typeof renderTo === 'string' ? document.querySelector(renderTo) : false
-      mountSelector =
-        typeof renderTo === 'object' && isNodeElement(renderTo)
-          ? renderTo
-          : mountSelector
+        isObject(renderTo) && isNodeElement(renderTo) ? renderTo : mountSelector
     }
     // 2. Fallback to <Portal.Container />
     mountSelector =
@@ -100,7 +97,7 @@ class Portal extends Component {
     )
   }
 
-  mountPortal(props, state) {
+  mountPortal = (props, state) => {
     const { className, id, onOpen } = props
 
     if (!this.state.mountSelector) return
@@ -111,12 +108,8 @@ class Portal extends Component {
     }
 
     this.node = document.createElement('div')
-    if (className) {
-      this.node.className = className
-    }
-    if (id) {
-      this.node.id = id
-    }
+    this.node.className = className
+    this.node.id = id
     // Render to specified target, instead of document
     this.state.mountSelector.appendChild(this.node)
     this.renderPortalContent(props)
@@ -127,7 +120,7 @@ class Portal extends Component {
     this.isOpen = true
   }
 
-  unmountPortal(props) {
+  unmountPortal = props => {
     /* istanbul ignore next */
     if (!this.node) return
 
@@ -192,10 +185,5 @@ class Portal extends Component {
     return null
   }
 }
-
-Portal.propTypes = propTypes
-Portal.defaultProps = defaultProps
-Portal.Container = Container
-Portal.displayName = 'Portal'
 
 export default Portal
