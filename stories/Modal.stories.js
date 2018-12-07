@@ -116,6 +116,7 @@ class StatefulComponent extends React.Component {
                     maxHeight={140}
                     onChange={this.handleOnInputChange}
                     value={value}
+                    scrollLock={false}
                   />
                   <Button onClick={this.handleOnSubmit} primary>
                     Submit

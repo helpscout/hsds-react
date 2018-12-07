@@ -333,6 +333,8 @@ export class Input extends Component<Props, State> {
 
   handleOnWheel = (event: WheelEvent) => {
     const { multiline, onWheel, scrollLock } = this.props
+    event.stopPropagation()
+
     if (!multiline || !scrollLock) return
 
     const stopPropagation = true

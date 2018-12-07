@@ -137,6 +137,18 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
+  test('onWheel callback stops event from bubbling, even without scrollLock', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input multiline={3} scrollLock={false} />)
+    const input = wrapper.find('textarea')
+
+    input.simulate('wheel', {
+      stopPropagation: spy,
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('onKeydown callback fires when input keyDown occurs', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={true} onKeyDown={spy} />)
