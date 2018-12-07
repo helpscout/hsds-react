@@ -1,11 +1,11 @@
-import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import getComponentDefaultProp from '@helpscout/react-utils/dist/getComponentDefaultProp'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
+import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
-import { default as Portal, propTypes as portalTypes } from '../Portal'
+import Portal, { propTypes } from '../Portal'
 import Keys from '../../constants/Keys'
 import {
   createUniqueIDFactory,
@@ -13,37 +13,53 @@ import {
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
 import { classNames } from '../../utilities/classNames'
-import { requestAnimationFrame } from '../../utilities/other'
+import { isFunction } from '../../utilities/is'
+import { noop, requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 import Content from './Content'
 
 const defaultOptions = {
   id: 'PortalWrapper',
+  timeout: 100,
 }
 
 const managerNamespace = 'BluePortalWrapperGlobalManager'
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
-  const propTypes = portalTypes
-
-  const defaultProps = {
-    isOpen: false,
+  const extendedOptions = {
+    ...defaultOptions,
+    ...options,
   }
-
-  const contextTypes = {
-    router: PropTypes.object,
-  }
-
-  const extendedOptions = Object.assign({}, defaultOptions, options, {
-    timeout: 100,
-  })
 
   const uniqueID = createUniqueIDFactory(extendedOptions.id)
   const uniqueIndex = createUniqueIndexFactory(1000)
 
-  class PortalWrapper extends Component {
-    constructor(props) {
-      super()
+  class PortalWrapper extends React.PureComponent {
+    static propTypes = propTypes
+    static defaultProps = {
+      isOpen: false,
+    }
+    static contextTypes = {
+      router: noop,
+    }
+    static childContextTypes = {
+      closePortal: noop,
+    }
+
+    static displayName = `withPortal(${getComponentName(ComposedComponent)})`
+
+    triggerComponent = null
+    triggerNode = null
+    _isMounted = false
+    _portalWrapperId = uniqueIndex()
+
+    // Welcome aboard, Mr. Manager!
+    _MrManager = setupManager(managerNamespace)
+    // Wow, I'm Mr. Manager!
+    // Well, manager… we we just say manager.
+
+    constructor(props, context) {
+      super(props, context)
       const composedWrapperClassName = getComponentDefaultProp(
         ComposedComponent,
         'wrapperClassName'
@@ -59,28 +75,21 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             ? composedWrapperTimeout
             : extendedOptions.timeout
 
-      this.state = Object.assign({}, extendedOptions, props, {
+      this.state = {
+        isOpen: props.isOpen,
         id: uniqueID(),
-        timeout: timeout,
+        timeout,
         wrapperClassName: classNames(
           props.wrapperClassName,
           composedWrapperClassName
         ),
-      })
+      }
+    }
 
-      this.closePortal = this.closePortal.bind(this)
-      this.openPortal = this.openPortal.bind(this)
-      this.handleOnClose = this.handleOnClose.bind(this)
-      this.handleOnEsc = this.handleOnEsc.bind(this)
-      this.triggerComponent = null
-      this.triggerNode = null
-      this._isMounted = false
-      this._portalWrapperId = uniqueIndex()
-
-      // Welcome aboard, Mr. Manager!
-      this._MrManager = setupManager(managerNamespace)
-      // Wow, I'm Mr. Manager!
-      // Well, manager… we we just say manager.
+    getChildContext() {
+      return {
+        closePortal: this.closePortal,
+      }
     }
 
     componentDidMount() {
@@ -142,6 +151,8 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
+    // Note: This will need to be refactored when using a (future) version
+    // of React Router that no longer relies/works on component.context.router
     routeMatches(path) {
       /* istanbul ignore next */
       // Context will always exist, except for Enzyme shallow/mount rendered
@@ -162,13 +173,13 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    openPortal() {
+    openPortal = () => {
       this.safeSetState({
         isOpen: true,
       })
     }
 
-    closePortal() {
+    closePortal = () => {
       if (this._MrManager.max() === this._portalWrapperId) {
         this.forceClosePortal()
       }
@@ -184,18 +195,18 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       requestAnimationFrame(() => onClose())
     }
 
-    handleOnEsc(event) {
+    handleOnEsc = event => {
       /* istanbul ignore else */
       if (this.state.isOpen) {
-        event.stopPropagation()
+        event && event.stopPropagation()
         this.handleOnClose()
       }
     }
 
-    handleOnClose(onClose) {
+    handleOnClose = onClose => {
       const { onBeforeClose } = this.props
 
-      if (onClose && typeof onClose === 'function') {
+      if (isFunction(onClose)) {
         if (onBeforeClose) {
           onBeforeClose(() => this.sequenceClosePortal(onClose))
         } else {
@@ -206,13 +217,36 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    getChildContext() {
-      return {
-        closePortal: this.closePortal,
+    renderTrigger() {
+      const { trigger } = this.props
+      const isValidTrigger = trigger && React.isValidElement(trigger)
+
+      if (!isValidTrigger) return null
+
+      const triggerOnClick = (...args) => {
+        const { onClick } = trigger.props
+        /* istanbul ignore else */
+        if (isFunction(onClick)) {
+          onClick(...args)
+        }
+        this.openPortal()
       }
+
+      const triggerRef = node => {
+        const ref = trigger.ref
+        if (isFunction(ref)) {
+          ref(node)
+        }
+        this.triggerComponent = node
+      }
+
+      return React.cloneElement(trigger, {
+        onClick: triggerOnClick,
+        ref: triggerRef,
+      })
     }
 
-    render() {
+    renderPortal() {
       const {
         className,
         exact,
@@ -234,12 +268,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       const openPortal = this.openPortal
       const handleOnClose = this.handleOnClose
-      const handleOnEsc = this.handleOnEsc
 
       const uniqueIndex = getUniqueIndex(id, options.id)
       const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
 
-      const portalMarkup = (
+      return (
         <Animate
           animateOnMount={false}
           timeout={timeout}
@@ -274,58 +307,23 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
           </Portal>
         </Animate>
       )
+    }
 
-      const portalContainerMarkup = portalMarkup
-
-      const triggerMarkup =
-        trigger && React.isValidElement(trigger)
-          ? React.cloneElement(trigger, {
-              onClick: () => {
-                const { onClick } = trigger.props
-                /* istanbul ignore else */
-                if (onClick && typeof onClick === 'function') {
-                  onClick()
-                }
-                openPortal()
-              },
-              ref: node => {
-                const ref = trigger.ref
-                if (ref && typeof ref === 'function') {
-                  ref(node)
-                }
-                this.triggerComponent = node
-              },
-            })
-          : null
-
+    render() {
       return (
         <div className="c-PortalWrapper">
-          <KeypressListener keyCode={Keys.ESCAPE} handler={handleOnEsc} />
-          {triggerMarkup}
-          {portalContainerMarkup}
+          <KeypressListener keyCode={Keys.ESCAPE} handler={this.handleOnEsc} />
+          {this.renderTrigger()}
+          {this.renderPortal()}
         </div>
       )
     }
   }
 
-  PortalWrapper.childContextTypes = {
-    closePortal: PropTypes.func,
-  }
-  PortalWrapper.propTypes = propTypes
-  PortalWrapper.defaultProps = defaultProps
-  PortalWrapper.contextTypes = contextTypes
-
-  const componentName =
-    ComposedComponent.displayName ||
-    ComposedComponent.name ||
-    /* istanbul ignore next */
-    'Component'
-  PortalWrapper.displayName = `withPortal(${componentName})`
-
   return hoistNonReactStatics(PortalWrapper, ComposedComponent)
 }
 
-const getUniqueIndex = (id, namespace) => {
+function getUniqueIndex(id, namespace) {
   return parseInt(id.replace(namespace, ''), 10)
 }
 
