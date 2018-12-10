@@ -18,34 +18,34 @@ export function typeOf<T>(value: unknown, type: string): value is T {
   return isDefined(value) && typeof value === type
 }
 
-export function isArray<T>(value: unknown): value is T {
+export function isArray<T>(value: unknown): value is Array<T> {
   return Array.isArray(value)
 }
 
-export function isBool<T>(value: unknown): value is T {
+export function isBool<T>(value: unknown): value is Boolean {
   return typeOf(value, 'boolean')
 }
 
-export function isBoolean<T>(value: unknown): value is T {
+export function isBoolean<T>(value: unknown): value is Boolean {
   return isBool(value)
 }
 
-export function isFunction<T>(value: unknown): value is T {
+export function isFunction<T>(value: unknown): value is Function {
   return typeOf(value, 'function')
 }
 
-export function isNumber<T>(value: unknown): value is T {
+export function isNumber<T>(value: unknown): value is Number {
   return typeOf(value, 'number')
 }
 
-export function isString<T>(value: unknown): value is T {
+export function isString<T>(value: unknown): value is String {
   return typeOf(value, 'string')
 }
 
-export function isObject<T>(value: unknown): value is T {
+export function isObject<T>(value: unknown): value is any {
   return typeOf(value, 'object') && !isFunction(value) && !isArray(value)
 }
 
-export function isPlainObject<T>(value: unknown): value is T {
+export function isPlainObject<T>(value: unknown): value is any {
   return Object.prototype.toString.call(value) === '[object Object]'
 }

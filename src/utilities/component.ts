@@ -171,7 +171,7 @@ export const getComponentKey = (
 
 export const renderRenderPropComponent = (
   renderProp: any,
-  props: Object = {}
+  props: any = {}
 ): any => {
   if (React.isValidElement(renderProp)) {
     return React.cloneElement(renderProp, props)
