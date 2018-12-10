@@ -4,6 +4,7 @@ import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
+import { isString } from '../../utilities/is'
 import { COMPONENT_KEY } from './utils'
 import {
   ArticleCardUI,
@@ -15,7 +16,7 @@ import {
 
 export interface Props {
   className?: string
-  content?: string
+  content?: React.ReactNode
   contentLimit?: number
   contentSize?: number
   footer?: any
@@ -51,22 +52,34 @@ export class ArticleCard extends React.PureComponent<Props> {
     )
   }
 
+  renderContentMarkup() {
+    const { content, contentLimit, contentSize } = this.props
+
+    if (isString(content)) {
+      return (
+        <Text
+          block
+          className="c-ArticleCard__contentText"
+          size={contentSize}
+          shade="muted"
+        >
+          <Truncate limit={contentLimit} type="end">
+            {content}
+          </Truncate>
+        </Text>
+      )
+    }
+
+    return <div className="c-ArticleCard__contentMarkup">{content}</div>
+  }
+
   renderContent = () => {
     const { content, contentLimit, contentSize } = this.props
 
     return (
       !!content && (
         <ContentUI className="c-ArticleCard__content">
-          <Text
-            block
-            className="c-ArticleCard__contentText"
-            size={contentSize}
-            shade="muted"
-          >
-            <Truncate limit={contentLimit} type="end">
-              {content}
-            </Truncate>
-          </Text>
+          {this.renderContentMarkup()}
         </ContentUI>
       )
     )
