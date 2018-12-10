@@ -52,11 +52,13 @@ export const ArticleCardUI = styled(Card)`
     box-shadow: ${config.hover.baseShadow};
     border: none;
     transform: translateZ(0);
+    transition: all 550ms cubic-bezier(0.23, 1, 0.32, 1);
     text-decoration: none;
 
     &:hover {
       border: none;
       box-shadow: ${config.hover.baseShadow};
+      transform: translate(0, -2px);
     }
 
     &:after {
