@@ -18,12 +18,27 @@ describe('ClassName', () => {
 })
 
 describe('Content', () => {
+  test('Render markup from prop', () => {
+    const html = <div className="customMarkup">Custom Markup</div>
+    const wrapper = mount(<ArticleCard content={html} />)
+    const innerContent = wrapper
+      .find('.c-ArticleCard__contentMarkup')
+      .last()
+      .html()
+    expect(innerContent).toContain(
+      '<div class="customMarkup">Custom Markup</div>'
+    )
+  })
+
   test('Render text from prop', () => {
     const content =
       'Some people choose to see the ugliness in this world. The disarray. I choose to see the beauty.'
     const wrapper = mount(<ArticleCard content={content} />)
 
-    const innerContent = wrapper.find('div.c-ArticleCard__content').text()
+    const innerContent = wrapper
+      .find('.c-ArticleCard__contentText')
+      .last()
+      .text()
     expect(innerContent).toBe(content)
   })
 
