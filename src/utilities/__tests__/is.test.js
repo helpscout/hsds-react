@@ -1,6 +1,7 @@
 import {
   isArray,
   isBool,
+  isBoolean,
   isFunction,
   isObject,
   isPlainObject,
@@ -37,6 +38,20 @@ describe('isBool', () => {
   test('Returns true for booleans', () => {
     expect(isBool(true)).toBe(true)
     expect(isBool(false)).toBe(true)
+  })
+})
+
+describe('isBoolean', () => {
+  test('Returns false for non-booleans', () => {
+    expect(isBoolean()).toBe(false)
+    expect(isBoolean(0)).toBe(false)
+    expect(isBoolean(1)).toBe(false)
+    expect(isBoolean({})).toBe(false)
+  })
+
+  test('Returns true for booleans', () => {
+    expect(isBoolean(true)).toBe(true)
+    expect(isBoolean(false)).toBe(true)
   })
 })
 
