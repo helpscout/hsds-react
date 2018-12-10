@@ -4,6 +4,7 @@ import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
+import { isString } from '../../utilities/is'
 import { COMPONENT_KEY } from './utils'
 import {
   ArticleCardUI,
@@ -54,7 +55,7 @@ export class ArticleCard extends React.PureComponent<Props> {
   renderContentMarkup() {
     const { content, contentLimit, contentSize } = this.props
 
-    if (typeof content === 'string') {
+    if (isString(content)) {
       return (
         <Text
           block
