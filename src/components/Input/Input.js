@@ -19,6 +19,7 @@ import { STATES } from '../../constants/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { isDefined } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import {
   COMPONENT_KEY,
@@ -224,15 +225,16 @@ export class Input extends Component<Props, State> {
   scrollToBottom() {
     if (!this.props.multiline) return
     if (!this.inputNode || !isTextArea(this.inputNode)) return
+    if (!isDefined(this.computedStyles.paddingBottom)) return
 
-    const { paddingBottom } = this.computedStyles
     const { scrollTop, clientHeight } = this.inputNode
 
     const currentLine = getTextAreaLineCurrent(this.inputNode)
     const totalLines = getTextAreaLineTotal(this.inputNode)
     const isLastLine = currentLine === totalLines
 
-    const scrollBottom = scrollTop + clientHeight + paddingBottom
+    const scrollBottom =
+      scrollTop + clientHeight + this.computedStyles.paddingBottom
 
     if (isLastLine) {
       requestAnimationFrame(() => {
