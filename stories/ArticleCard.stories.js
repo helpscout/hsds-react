@@ -10,6 +10,7 @@ import {
   StatusBadge,
   Avatar,
   AvatarStack,
+  Icon,
   styled,
 } from '../src/index.js'
 import AvatarSpec from './AvatarGrid/specs/Avatar'
@@ -111,6 +112,23 @@ stories.add('default', () => {
       {consecutive && <ArticleCard {...props} />}
     </div>
   )
+})
+
+stories.add('content markup', () => {
+  const content = (
+    <Flexy>
+      <Flexy.Block>
+        <Text size={13} weight="500">
+          Open me
+        </Text>
+      </Flexy.Block>
+      <Flexy.Item>
+        <Icon name="minimize" shade="extraMuted" />
+      </Flexy.Item>
+    </Flexy>
+  )
+
+  return <ArticleCard content={content} />
 })
 
 function metaHeader() {
