@@ -13,13 +13,14 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
 | Prop         | Type      | Description                                                                                   |
 | ------------ | --------- | --------------------------------------------------------------------------------------------- |
 | className    | `string`  | Custom class names to be added to the component.                                              |
-| title        | `string`  | Title of the card. Will be truncated based on the titleLimit prop                             |
 | content      | `node`    | Content of the card. Will be truncated based on the contentLimit prop if content is a string. |
-| metaHeader   | `element` | Element that will be displayed above the title                                                |
+| contentLimit | `number`  | The amount of characters to keep before truncation on the content string.                     |
+| contentSize  | `number`  | The [Text](../Text) font-size for the content.                                                |
 | footer       | `element` | Element that will be displayed below the content                                              |
+| isHovered    | `boolean` | Renders hovered styles.                                                                       |
+| metaHeader   | `element` | Element that will be displayed above the title                                                |
+| title        | `string`  | Title of the card. Will be truncated based on the titleLimit prop                             |
 | titleLimit   | `number`  | The amount of characters to keep before truncation on the title string.                       |
-| contentLimit | `number`  | The amount of characters to keep before truncation on the content string.                     |
-| titleLimit   | `number`  | The amount of characters to keep before truncation on the title string.                       |
-| contentLimit | `number`  | The amount of characters to keep before truncation on the content string.                     |
-| titleSize    | `string`  | Adjust title text size.                                                                       |
-| contentSize  | `string`  | Adjust content text size.                                                                     |
+| titleSize    | `number`  | The [Text](../Text) font-size for the title.                                                  |
+
+This component is an extension of [Card](../Card). Check out [Card](../Card) for additional props.
