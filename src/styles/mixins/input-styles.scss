@@ -2,6 +2,16 @@
 @import '../configs/constants';
 
 @mixin input-styles($padding: 8px) {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  padding-bottom: 1px;
+  padding-top: 1px;
+  padding-left: $padding;
+  padding-right: $padding;
+  position: relative;
+
   // Elements
   &__item {
     position: relative;

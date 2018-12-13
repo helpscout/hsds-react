@@ -1,36 +1,5 @@
 import styled from '../styled'
-import { makeFieldStyles } from '../Input/styles/Input.css.js'
 import { getColor } from '../../styles/utilities/color'
-
-export const SelectUI = styled('div')`
-  align-items: center;
-  background-color: transparent;
-  border: none;
-  display: flex;
-  padding-bottom: 1px;
-  padding-top: 1px;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-
-  & > *:first-child {
-    padding-left: 0;
-  }
-
-  &.is-focused {
-    z-index: 2;
-  }
-`
-
-export const FieldUI = styled('select')`
-  ${makeFieldStyles};
-  padding-left: 8px;
-  padding-right: 20px;
-
-  &.has-placeholder {
-    opacity: 0.3;
-  }
-`
 
 export const SelectArrowsUI = styled('div')`
   align-self: center;
