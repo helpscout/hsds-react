@@ -3,6 +3,7 @@ import { AvatarShape, AvatarSize } from '../Avatar/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
+import List from '../List'
 import PropProvider, { propConnect } from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import {
@@ -84,14 +85,16 @@ export class AvatarList extends React.PureComponent<Props> {
 
     return avatarList.map((avatar, index) => {
       return (
-        <Animate
-          className="c-AvatarList__item c-List__item"
-          easing={animationEasing}
-          key={getComponentKey(avatar, index)}
-          sequence={animationSequence}
-        >
-          {avatar}
-        </Animate>
+        <List.Item>
+          <Animate
+            className="c-AvatarList__item"
+            easing={animationEasing}
+            key={getComponentKey(avatar, index)}
+            sequence={animationSequence}
+          >
+            {avatar}
+          </Animate>
+        </List.Item>
       )
     })
   }
@@ -103,20 +106,22 @@ export class AvatarList extends React.PureComponent<Props> {
     const additionalAvatarCount = this.getTotalAvatarCount() - avatarList.length
 
     return additionalAvatarCount ? (
-      <Animate
-        key="AvatarList__additionalAvatarMarkup"
-        className="c-AvatarList__item c-List__item"
-        easing={animationEasing}
-        sequence={animationSequence}
-      >
-        <Avatar
-          {...this.getAvatarProps()}
-          count={`+${additionalAvatarCount}`}
-          light
-          outerBorderColor={outerBorderColor}
-          name={`+${additionalAvatarCount}`}
-        />
-      </Animate>
+      <List.Item>
+        <Animate
+          key="AvatarList__additionalAvatarMarkup"
+          className="c-AvatarList__item"
+          easing={animationEasing}
+          sequence={animationSequence}
+        >
+          <Avatar
+            {...this.getAvatarProps()}
+            count={`+${additionalAvatarCount}`}
+            light
+            outerBorderColor={outerBorderColor}
+            name={`+${additionalAvatarCount}`}
+          />
+        </Animate>
+      </List.Item>
     ) : null
   }
 
@@ -138,21 +143,24 @@ export class AvatarList extends React.PureComponent<Props> {
 
     const componentClassName = classNames(
       'c-AvatarList',
-      'c-List',
-      'c-List--inline',
-      'c-List--xs',
-      'is-display-flex',
-      'is-inline-sm',
+
       className
     )
 
     return (
       <AvatarListWrapperUI className="c-AvatarListWrapper">
         <PropProvider value={{ [AVATAR_KEY]: { ...this.getAvatarProps() } }}>
-          <div {...getValidProps(rest)} className={componentClassName}>
+          <List
+            {...getValidProps(rest)}
+            className={componentClassName}
+            display="flex"
+            inlineSize="sm"
+            type="inline"
+            size="xs"
+          >
             {this.getAvatarsMarkup()}
             {this.getAdditionalAvatarMarkup()}
-          </div>
+          </List>
         </PropProvider>
       </AvatarListWrapperUI>
     )
