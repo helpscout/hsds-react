@@ -14,6 +14,13 @@ import Header from './Dropdown.Header'
 import Item from './Dropdown.Item'
 import Menu from './Dropdown.Menu'
 import { pathResolve, getIndexMapFromItems } from './Dropdown.utils'
+import {
+  updateItems,
+  updateOpen,
+  updateIndex,
+  updateInputValue,
+  updateDropUp,
+} from './Dropdown.actions'
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
@@ -98,10 +105,48 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
   }
 
   componentWillReceiveProps(nextProps) {
+    const state = this.store.getState()
+    // Update items + regenerate the indexMap if items chage
+    if (nextProps.items !== state.items) {
+      // this.rehydrateStoreWithProps(updateItems(state, nextProps.items))
+    }
+
+    // Adjust open state, if changed
+    if (nextProps.isOpen !== this.props.isOpen) {
+      // this.rehydrateStoreWithProps(updateOpen(state, nextProps.isOpen))
+    }
+
+    // Adjust index, if changed
+    if (nextProps.index !== state.index) {
+      this.rehydrateStoreWithProps(updateIndex(state, nextProps.index))
+    }
+
+    // Adjust index, if changed
+    if (nextProps.dropUp !== state.dropUp) {
+      this.rehydrateStoreWithProps(updateDropUp(state, nextProps.dropUp))
+    }
+
+    // This is to handle filterable dropdowns. We need to adjust the internally
+    // tracked inputValue and reset the `index` value for a filterable
+    // experience.
+    if (nextProps.inputValue !== state.inputValue) {
+      this.rehydrateStoreWithProps(
+        updateInputValue(state, nextProps.inputValue)
+      )
+    }
+
     const diffs = getShallowDiffs(this.props, nextProps)
     if (!diffs.diffs.length) return
 
-    const { children, ...changedProps } = diffs.next
+    const {
+      children,
+      items,
+      isOpen,
+      index,
+      dropUp,
+      inputValue,
+      ...changedProps
+    } = diffs.next
 
     if (Object.keys(changedProps).length) {
       this.rehydrateStoreWithProps(changedProps)
