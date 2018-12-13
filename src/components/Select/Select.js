@@ -23,6 +23,7 @@ import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
 import { InputWrapperUI } from '../Input/styles/Input.css.js'
+import { SelectUI, FieldUI } from './Select.css'
 
 type SelectEvent = SyntheticEvent<HTMLSelectElement>
 type SelectOptionProp =
@@ -353,6 +354,7 @@ class Select extends Component<Props, State> {
     const fieldClassName = classNames(
       'c-Select__inputField',
       'c-InputField',
+      this.hasPlaceholder() && 'has-placeholder',
       size && `is-${size}`
     )
 
@@ -370,7 +372,7 @@ class Select extends Component<Props, State> {
     const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
     return (
-      <select
+      <FieldUI
         {...getValidProps(rest)}
         className={fieldClassName}
         disabled={disabled}
@@ -383,7 +385,7 @@ class Select extends Component<Props, State> {
       >
         {placeholderMarkup}
         {optionsMarkup}
-      </select>
+      </FieldUI>
     )
   }
 
@@ -422,7 +424,7 @@ class Select extends Component<Props, State> {
           <InputWrapperUI className="c-InputWrapper" style={styleProp}>
             {labelMarkup}
             {hintTextMarkup}
-            <div className={componentClassName}>
+            <SelectUI className={componentClassName}>
               {prefixMarkup}
               {this.getSelectMarkup(props)}
               <Arrows className="c-SelectIcon" state={state} />
@@ -437,7 +439,7 @@ class Select extends Component<Props, State> {
                 isSeamless={seamless}
                 state={state}
               />
-            </div>
+            </SelectUI>
             {helpTextMarkup}
           </InputWrapperUI>
         )}

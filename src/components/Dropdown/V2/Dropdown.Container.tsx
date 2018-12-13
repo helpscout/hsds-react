@@ -108,12 +108,12 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     const state = this.store.getState()
     // Update items + regenerate the indexMap if items chage
     if (nextProps.items !== state.items) {
-      // this.rehydrateStoreWithProps(updateItems(state, nextProps.items))
+      this.rehydrateStoreWithProps(updateItems(state, nextProps.items))
     }
 
     // Adjust open state, if changed
     if (nextProps.isOpen !== this.props.isOpen) {
-      // this.rehydrateStoreWithProps(updateOpen(state, nextProps.isOpen))
+      this.rehydrateStoreWithProps(updateOpen(state, nextProps.isOpen))
     }
 
     // Adjust index, if changed

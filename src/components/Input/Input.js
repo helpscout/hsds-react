@@ -28,7 +28,12 @@ import {
   moveCursorToEnd,
   isTextArea,
 } from './utils'
-import { InputWrapperUI } from './styles/Input.css.js'
+import {
+  InputWrapperUI,
+  FieldUI,
+  FieldTextAreaUI,
+  InputUI,
+} from './styles/Input.css.js'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -578,11 +583,18 @@ export class Input extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { height, value } = this.state
+    const { height, value, state } = this.state
+    const isReadOnly = !isSubtleReadOnly && readOnly
 
     const fieldClassName = classNames(
       'c-Input__inputField',
       'c-InputField',
+      maxHeight && 'has-maxHeight',
+      multiline && 'is-multiline',
+      isReadOnly && 'is-readonly',
+      resizable && 'is-resizable',
+      seamless && 'is-seamless',
+      state && `is-${state}`,
       size && `is-${size}`
     )
 
@@ -598,15 +610,16 @@ export class Input extends Component<Props, State> {
 
     const id = props.id || this.state.id
 
-    const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
+    const BaseFieldComponent = multiline ? FieldTextAreaUI : FieldUI
+
+    const componentProps = {
       ...getValidProps(rest),
       autoFocus,
       className: fieldClassName,
       id,
       onChange: this.handleOnChange,
       onKeyDown: this.handleOnKeyDown,
-      // $FlowFixMe
-      ref: this.setInputNodeRef,
+      innerRef: this.setInputNodeRef,
       disabled,
       name,
       onBlur: this.handleOnInputBlur,
@@ -617,9 +630,9 @@ export class Input extends Component<Props, State> {
       style,
       type,
       value,
-    })
+    }
 
-    return inputElement
+    return <BaseFieldComponent {...componentProps} />
   }
 
   render() {
@@ -662,7 +675,7 @@ export class Input extends Component<Props, State> {
           <InputWrapperUI className="c-InputWrapper" style={styleProp}>
             {this.getLabelMarkup()}
             {this.getHelpTextMarkup()}
-            <div className={componentClassName}>
+            <InputUI className={componentClassName}>
               {this.getPrefixMarkup()}
               {this.getInlinePrefixMarkup()}
               {this.getInputMarkup(props)}
@@ -681,7 +694,7 @@ export class Input extends Component<Props, State> {
                 state={state}
               />
               {this.getResizerMarkup()}
-            </div>
+            </InputUI>
             {this.getHintTextMarkup()}
           </InputWrapperUI>
         )}
