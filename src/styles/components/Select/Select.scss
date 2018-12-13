@@ -1,47 +1,5 @@
-@import '../../configs/constants';
 @import '../../mixins/input-styles';
 
 .c-Select {
-  $InputField: '.c-InputField';
-  $arrowSize: 20px;
-  $padding: 16px;
-  $states: $STATES;
-
-  @import '../../configs/color';
-  @import '../../resets/base';
-  @include input-styles($padding);
-
-  // Not necessary with System font.
-  // &__prefix,
-  // &__suffix {
-  //   @-moz-document url-prefix() {
-  //     line-height: 1;
-  //     top: 2px;
-  //   }
-  // }
-
-  #{$InputField} {
-    padding-left: ceil($padding / 2);
-    padding-right: $arrowSize;
-    // Removes outline in Firefox
-    // https://stackoverflow.com/questions/3773430/remove-outline-from-select-box-in-ff/11603104#11603104
-    @-moz-document url-prefix() {
-      color: transparent;
-      text-shadow: 0 0 0 black;
-    }
-  }
-
-  & > *:first-child {
-    padding-left: 0;
-  }
-
-  &.has-placeholder {
-    #{$InputField} {
-      opacity: 0.3;
-    }
-  }
-
-  &.is-focused {
-    z-index: 2;
-  }
+  @include input-styles(16px);
 }

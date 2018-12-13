@@ -31,3 +31,38 @@ stories.add('Default', () => {
   }
   return <AutoDropdown {...props} />
 })
+
+stories.add('Stateful', () => {
+  class StatefulDropdown extends React.PureComponent {
+    static defaultProps = {
+      onSelect: () => undefined,
+    }
+
+    state = {
+      selectedItem: undefined,
+    }
+
+    handleOnSelect = value => {
+      this.setState({
+        selectedItem: value,
+      })
+      this.props.onSelect(value)
+    }
+
+    render() {
+      const { onSelect, ...rest } = this.props
+      const { selectedItem } = this.state
+      const props = {
+        onSelect: this.handleOnSelect,
+        selectedItem,
+        ...rest,
+      }
+
+      console.log(selectedItem)
+
+      return <AutoDropdown {...props} />
+    }
+  }
+
+  return <StatefulDropdown items={ItemSpec.generate(4)} />
+})
