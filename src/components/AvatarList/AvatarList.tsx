@@ -85,11 +85,10 @@ export class AvatarList extends React.PureComponent<Props> {
 
     return avatarList.map((avatar, index) => {
       return (
-        <List.Item>
+        <List.Item key={getComponentKey(avatar, index)}>
           <Animate
             className="c-AvatarList__item"
             easing={animationEasing}
-            key={getComponentKey(avatar, index)}
             sequence={animationSequence}
           >
             {avatar}
@@ -106,9 +105,8 @@ export class AvatarList extends React.PureComponent<Props> {
     const additionalAvatarCount = this.getTotalAvatarCount() - avatarList.length
 
     return additionalAvatarCount ? (
-      <List.Item>
+      <List.Item key="AvatarList__additionalAvatarMarkup">
         <Animate
-          key="AvatarList__additionalAvatarMarkup"
           className="c-AvatarList__item"
           easing={animationEasing}
           sequence={animationSequence}

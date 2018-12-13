@@ -138,8 +138,8 @@ export function makeFieldStyles(): string {
     color: currentColor;
     display: block;
     height: ${getHeight(config.size.md.height)};
-    margin-bottom: $offset;
-    margin-top: $offset;
+    margin-bottom: ${config.offset};
+    margin-top: ${config.offset};
     padding: 0;
     position: relative;
     top: 0;
