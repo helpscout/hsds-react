@@ -29,9 +29,11 @@ export const ItemUI = styled('div')`
 `
 
 export const FieldUI = styled('select')`
-  ${makeFieldStyles};
-  padding-left: 8px;
-  padding-right: 20px;
+  &.c-Select {
+    ${makeFieldStyles};
+    padding-left: 8px;
+    padding-right: 20px;
+  }
 
   &.has-placeholder {
     opacity: 0.3;

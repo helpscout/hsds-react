@@ -21,7 +21,6 @@ import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isDefined } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
-import { ScopeProvider } from '../styled'
 import {
   COMPONENT_KEY,
   getTextAreaLineCurrent,
@@ -689,37 +688,35 @@ export class Input extends Component<Props, State> {
     )
 
     return (
-      <ScopeProvider scope="html">
-        <FormLabelContext.Consumer>
-          {(props: Object) => (
-            <InputWrapperUI className="c-InputWrapper" style={styleProp}>
-              {this.getLabelMarkup()}
-              {this.getHelpTextMarkup()}
-              <InputUI className={componentClassName}>
-                {this.getPrefixMarkup()}
-                {this.getInlinePrefixMarkup()}
-                {this.getInputMarkup(props)}
-                {this.getInlineSuffixMarkup()}
-                {this.getSuffixMarkup()}
-                {this.getErrorMarkup()}
-                <Backdrop
-                  className="c-Input__backdrop"
-                  disabled={disabled}
-                  isFirst={isFirst}
-                  isFocused={isFocused}
-                  isNotOnly={isNotOnly}
-                  isLast={isLast}
-                  readOnly={isReadOnly}
-                  isSeamless={seamless}
-                  state={state}
-                />
-                {this.getResizerMarkup()}
-              </InputUI>
-              {this.getHintTextMarkup()}
-            </InputWrapperUI>
-          )}
-        </FormLabelContext.Consumer>
-      </ScopeProvider>
+      <FormLabelContext.Consumer>
+        {(props: Object) => (
+          <InputWrapperUI className="c-InputWrapper" style={styleProp}>
+            {this.getLabelMarkup()}
+            {this.getHelpTextMarkup()}
+            <InputUI className={componentClassName}>
+              {this.getPrefixMarkup()}
+              {this.getInlinePrefixMarkup()}
+              {this.getInputMarkup(props)}
+              {this.getInlineSuffixMarkup()}
+              {this.getSuffixMarkup()}
+              {this.getErrorMarkup()}
+              <Backdrop
+                className="c-Input__backdrop"
+                disabled={disabled}
+                isFirst={isFirst}
+                isFocused={isFocused}
+                isNotOnly={isNotOnly}
+                isLast={isLast}
+                readOnly={isReadOnly}
+                isSeamless={seamless}
+                state={state}
+              />
+              {this.getResizerMarkup()}
+            </InputUI>
+            {this.getHintTextMarkup()}
+          </InputWrapperUI>
+        )}
+      </FormLabelContext.Consumer>
     )
   }
 }
