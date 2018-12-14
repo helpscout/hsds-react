@@ -33,6 +33,10 @@ export const FieldUI = styled('select')`
     ${makeFieldStyles};
     padding-left: 8px;
     padding-right: 20px;
+
+    &:first-child {
+      padding-left: 0;
+    }
   }
 
   &.has-placeholder {
