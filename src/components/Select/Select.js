@@ -23,7 +23,7 @@ import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
 import { InputWrapperUI } from '../Input/styles/Input.css.js'
-import { SelectUI, FieldUI } from './Select.css'
+import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
 
 type SelectEvent = SyntheticEvent<HTMLSelectElement>
 type SelectOptionProp =
@@ -221,12 +221,29 @@ export class Select extends Component<Props, State> {
     )
   }
 
+  /* istanbul ignore next */
+  getInlinePrefixSuffixClassName({ type, icon }) {
+    const { seamless, state } = this.props
+
+    return classNames(
+      'c-Select__item',
+      type && `is-${type}`,
+      icon && 'is-icon',
+      seamless && 'is-seamless',
+      state && `is-${state}`
+    )
+  }
+
   getPrefixMarkup = () => {
     const { prefix } = this.props
 
     return (
       prefix && (
-        <div className="c-Select__item c-Select__inlinePrefix">{prefix}</div>
+        <InlinePrefixSuffixUI
+          className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
+        >
+          {prefix}
+        </InlinePrefixSuffixUI>
       )
     )
   }
@@ -238,7 +255,7 @@ export class Select extends Component<Props, State> {
     if (!shouldRenderError) return null
 
     return (
-      <div
+      <ItemUI
         className={classNames('c-Select__item', 'c-Select__suffix', 'is-icon')}
       >
         <Tooltip display="block" placement="top-end" title={errorMessage}>
@@ -248,7 +265,7 @@ export class Select extends Component<Props, State> {
             className="c-Select__errorIcon"
           />
         </Tooltip>
-      </div>
+      </ItemUI>
     )
   }
 

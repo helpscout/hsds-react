@@ -58,6 +58,11 @@ export const InputUI = styled('div')`
   }
 `
 
+export const ItemUI = styled('div')`
+  position: relative;
+  z-index: 1;
+`
+
 export const FieldUI = styled('input')`
   ${makeFieldStyles};
 `
@@ -67,7 +72,7 @@ export const FieldTextAreaUI = styled('textarea')`
   ${makeFieldStyles};
 `
 
-export const PrefixUI = styled('div')`
+export const PrefixUI = styled(ItemUI)`
   margin-bottom: -1px;
   margin-left: calc(${config.paddingSide} * -1);
   margin-top: -1px;
@@ -78,7 +83,7 @@ export const PrefixUI = styled('div')`
   }
 `
 
-export const SuffixUI = styled('div')`
+export const SuffixUI = styled(ItemUI)`
   margin-bottom: -1px;
   margin-left: ${config.paddingSide};
   margin-right: calc(${config.paddingSide} * -1);
@@ -86,6 +91,47 @@ export const SuffixUI = styled('div')`
 
   &.is-seamless {
     margin-right: 0;
+  }
+`
+
+export const InlinePrefixSuffixUI = styled('div')`
+  opacity: 0.3;
+  padding-left: 4px;
+  padding-right: 4px;
+  position: relative;
+  top: 0;
+  white-space: nowrap;
+  z-index: 1;
+
+  &.is-icon {
+    opacity: 1;
+
+    &.is-multiline {
+      align-self: flex-start;
+      padding-top: 9px;
+    }
+  }
+
+  ${makeStateStyles};
+
+  &.is-prefix {
+    &.is-icon {
+      margin-left: -8px;
+    }
+
+    &.is-error.is-seamless {
+      margin-left: 0;
+    }
+  }
+
+  &.is-prefix {
+    &.is-icon {
+      margin-right: -8px;
+    }
+
+    &.is-error.is-seamless {
+      margin-right: 0;
+    }
   }
 `
 

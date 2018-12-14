@@ -238,7 +238,7 @@ describe('Prefix', () => {
     const prefix = 'Pick one'
     const wrapper = mount(<Select options={options} prefix={prefix} />)
 
-    expect(wrapper.find('.c-Select__inlinePrefix').text()).toBe(prefix)
+    expect(wrapper.find('div.c-Select__item.is-prefix').text()).toBe(prefix)
   })
 })
 

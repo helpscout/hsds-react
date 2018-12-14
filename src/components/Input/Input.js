@@ -31,6 +31,7 @@ import {
 } from './utils'
 import {
   InputWrapperUI,
+  InlinePrefixSuffixUI,
   FieldUI,
   FieldTextAreaUI,
   InputUI,
@@ -399,7 +400,7 @@ export class Input extends Component<Props, State> {
     }
   }
 
-  getHelpTextMarkup = () => {
+  getHelpTextMarkup() {
     const { helpText } = this.props
 
     return (
@@ -407,7 +408,7 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getHintTextMarkup = () => {
+  getHintTextMarkup() {
     const { hintText } = this.props
 
     return (
@@ -419,7 +420,7 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getLabelMarkup = () => {
+  getLabelMarkup() {
     const { label } = this.props
     const { id: inputID } = this.state
 
@@ -432,19 +433,35 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getInlinePrefixMarkup = () => {
+  /* istanbul ignore next */
+  getInlinePrefixSuffixClassName({ type, icon }) {
+    const { multiline, seamless, state } = this.props
+
+    return classNames(
+      'c-Input__item',
+      type && `is-${type}`,
+      icon && 'is-icon',
+      multiline && 'is-multiline',
+      seamless && 'is-seamless',
+      state && `is-${state}`
+    )
+  }
+
+  getInlinePrefixMarkup() {
     const { inlinePrefix } = this.props
 
     return (
       inlinePrefix && (
-        <div className="c-Input__item c-Input__inlinePrefix">
+        <InlinePrefixSuffixUI
+          className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
+        >
           {inlinePrefix}
-        </div>
+        </InlinePrefixSuffixUI>
       )
     )
   }
 
-  getPrefixMarkup = () => {
+  getPrefixMarkup() {
     const { prefix, seamless } = this.props
 
     return (
@@ -456,19 +473,21 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getInlineSuffixMarkup = () => {
+  getInlineSuffixMarkup() {
     const { inlineSuffix } = this.props
 
     return (
       inlineSuffix && (
-        <div className="c-Input__item c-Input__inlineSuffix">
+        <InlinePrefixSuffixUI
+          className={this.getInlinePrefixSuffixClassName({ type: 'suffix' })}
+        >
           {inlineSuffix}
-        </div>
+        </InlinePrefixSuffixUI>
       )
     )
   }
 
-  getSuffixMarkup = () => {
+  getSuffixMarkup() {
     const { suffix, seamless } = this.props
 
     return (
@@ -480,19 +499,18 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getErrorMarkup = () => {
+  getErrorMarkup() {
     const { errorIcon, errorMessage, state } = this.props
     const shouldRenderError = state === STATES.error
 
     if (!shouldRenderError) return null
 
     return (
-      <div
-        className={classNames(
-          'c-Input__item',
-          'c-Input__inlineSuffix',
-          'is-icon'
-        )}
+      <InlinePrefixSuffixUI
+        className={this.getInlinePrefixSuffixClassName({
+          type: 'suffix',
+          icon: true,
+        })}
       >
         <Tooltip
           animationDelay={0}
@@ -507,16 +525,16 @@ export class Input extends Component<Props, State> {
             className="c-Input__errorIcon"
           />
         </Tooltip>
-      </div>
+      </InlinePrefixSuffixUI>
     )
   }
 
-  getMultilineValue = () => {
+  getMultilineValue() {
     const { multiline } = this.props
     return typeof multiline === 'number' ? multiline : 1
   }
 
-  getResizerMarkup = () => {
+  getResizerMarkup() {
     const { multiline, offsetAmount, seamless } = this.props
 
     const { height, value } = this.state

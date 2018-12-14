@@ -12,7 +12,7 @@ const ui = {
   hintText: '.c-Input__hintText',
   input: 'div.c-Input',
   label: '.c-Input__label',
-  suffix: '.c-Input__inlineSuffix',
+  suffix: 'div.c-Input__item.is-suffix',
   tooltip: '.c-Tooltip',
 }
 
@@ -743,22 +743,22 @@ describe('ErrorMessage', () => {
 describe('inlinePrefix/inlineSuffix', () => {
   test('Can render an inline prefix', () => {
     const wrapper = mount(<Input inlinePrefix="Words" />)
-    const el = wrapper.find('.c-Input__inlinePrefix')
+    const el = wrapper.find('div.c-Input__item.is-prefix')
 
     expect(el.text()).toBe('Words')
   })
 
   test('Can render an inline suffix', () => {
     const wrapper = mount(<Input inlineSuffix="Words" />)
-    const el = wrapper.find('.c-Input__inlineSuffix')
+    const el = wrapper.find('div.c-Input__item.is-suffix')
 
     expect(el.text()).toBe('Words')
   })
 
   test('Can render both inline prefix and suffix', () => {
     const wrapper = mount(<Input inlinePrefix="A lota" inlineSuffix="Words" />)
-    const prefix = wrapper.find('.c-Input__inlinePrefix')
-    const suffix = wrapper.find('.c-Input__inlineSuffix')
+    const prefix = wrapper.find('div.c-Input__item.is-prefix')
+    const suffix = wrapper.find('div.c-Input__item.is-suffix')
 
     expect(prefix.text()).toBe('A lota')
     expect(suffix.text()).toBe('Words')

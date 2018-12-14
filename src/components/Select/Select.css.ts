@@ -1,6 +1,7 @@
 import styled from '../styled'
-import { makeFieldStyles } from '../Input/styles/Input.css.js'
+import { makeFieldStyles } from '../Input/styles/Input.css'
 import { getColor } from '../../styles/utilities/color'
+export { InlinePrefixSuffixUI } from '../Input/styles/Input.css'
 
 export const SelectUI = styled('div')`
   align-items: center;
@@ -20,6 +21,11 @@ export const SelectUI = styled('div')`
   &.is-focused {
     z-index: 2;
   }
+`
+
+export const ItemUI = styled('div')`
+  position: relative;
+  z-index: 1;
 `
 
 export const FieldUI = styled('select')`
