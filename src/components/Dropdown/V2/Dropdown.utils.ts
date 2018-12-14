@@ -1,7 +1,8 @@
 import { ItemIndex } from './Dropdown.types'
+import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
-import { isObject, isDefined, isString } from '../../../utilities/is'
+import { isObject, isDefined, isNumber, isString } from '../../../utilities/is'
 
 export const COMPONENT_KEY = {
   Block: 'DropdownBlock',
@@ -115,7 +116,8 @@ export const itemIsActive = (selectedItem, item) => {
     const { id, value } = selectedItem
 
     if (isDefined(value) && isDefined(item.value)) {
-      return value === item.value
+      // Loose comparison, as number/string values may match
+      return value == item.value
     }
 
     if (isDefined(id) && isDefined(item.id)) {
@@ -125,7 +127,8 @@ export const itemIsActive = (selectedItem, item) => {
 
   if (isString(selectedItem) && isObject(item)) {
     if (isDefined(item.value)) {
-      return selectedItem === item.value
+      // Loose comparison, as number/string values may match
+      return selectedItem == item.value
     }
 
     if (isDefined(item.id)) {
@@ -321,4 +324,15 @@ export const getItemProps = (
     tabIndex: enableTabNavigation ? 0 : null,
     value,
   }
+}
+
+export const filterNonStoreProps = props => {
+  const storeKeys = Object.keys(initialState)
+
+  return storeKeys.reduce((nextProps, key) => {
+    if (props.hasOwnProperty(key)) {
+      return { ...nextProps, [key]: props[key] }
+    }
+    return nextProps
+  }, {})
 }

@@ -249,3 +249,37 @@ stories.add('Trigger/Custom', () => {
     />
   )
 })
+
+stories.add('Stateful', () => {
+  class Example extends React.Component {
+    state = {
+      isOpen: true,
+      items: ItemSpec.generate(8),
+    }
+
+    add = () => {
+      this.setState({
+        items: [...this.state.items, ItemSpec.generate()],
+      })
+    }
+
+    remove = () => {
+      this.setState({
+        items: this.state.items.slice(0, -1),
+      })
+    }
+
+    render() {
+      return (
+        <div>
+          <button onClick={this.add}>Add Item</button>
+          <button onClick={this.remove}>Remove Item</button>
+          <hr />
+          <Dropdown {...this.state} />
+        </div>
+      )
+    }
+  }
+
+  return <Example />
+})

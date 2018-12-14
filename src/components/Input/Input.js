@@ -28,7 +28,13 @@ import {
   moveCursorToEnd,
   isTextArea,
 } from './utils'
-import { InputWrapperUI } from './styles/Input.css.js'
+import {
+  InputWrapperUI,
+  InlinePrefixSuffixUI,
+  FieldUI,
+  FieldTextAreaUI,
+  InputUI,
+} from './styles/Input.css.js'
 
 const uniqueID = createUniqueIDFactory('Input')
 
@@ -393,7 +399,7 @@ export class Input extends Component<Props, State> {
     }
   }
 
-  getHelpTextMarkup = () => {
+  getHelpTextMarkup() {
     const { helpText } = this.props
 
     return (
@@ -401,7 +407,7 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getHintTextMarkup = () => {
+  getHintTextMarkup() {
     const { hintText } = this.props
 
     return (
@@ -413,7 +419,7 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getLabelMarkup = () => {
+  getLabelMarkup() {
     const { label } = this.props
     const { id: inputID } = this.state
 
@@ -426,19 +432,35 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getInlinePrefixMarkup = () => {
+  /* istanbul ignore next */
+  getInlinePrefixSuffixClassName({ type, icon }) {
+    const { multiline, seamless, state } = this.props
+
+    return classNames(
+      'c-Input__item',
+      type && `is-${type}`,
+      icon && 'is-icon',
+      multiline && 'is-multiline',
+      seamless && 'is-seamless',
+      state && `is-${state}`
+    )
+  }
+
+  getInlinePrefixMarkup() {
     const { inlinePrefix } = this.props
 
     return (
       inlinePrefix && (
-        <div className="c-Input__item c-Input__inlinePrefix">
+        <InlinePrefixSuffixUI
+          className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
+        >
           {inlinePrefix}
-        </div>
+        </InlinePrefixSuffixUI>
       )
     )
   }
 
-  getPrefixMarkup = () => {
+  getPrefixMarkup() {
     const { prefix, seamless } = this.props
 
     return (
@@ -450,19 +472,21 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getInlineSuffixMarkup = () => {
+  getInlineSuffixMarkup() {
     const { inlineSuffix } = this.props
 
     return (
       inlineSuffix && (
-        <div className="c-Input__item c-Input__inlineSuffix">
+        <InlinePrefixSuffixUI
+          className={this.getInlinePrefixSuffixClassName({ type: 'suffix' })}
+        >
           {inlineSuffix}
-        </div>
+        </InlinePrefixSuffixUI>
       )
     )
   }
 
-  getSuffixMarkup = () => {
+  getSuffixMarkup() {
     const { suffix, seamless } = this.props
 
     return (
@@ -474,19 +498,18 @@ export class Input extends Component<Props, State> {
     )
   }
 
-  getErrorMarkup = () => {
+  getErrorMarkup() {
     const { errorIcon, errorMessage, state } = this.props
     const shouldRenderError = state === STATES.error
 
     if (!shouldRenderError) return null
 
     return (
-      <div
-        className={classNames(
-          'c-Input__item',
-          'c-Input__inlineSuffix',
-          'is-icon'
-        )}
+      <InlinePrefixSuffixUI
+        className={this.getInlinePrefixSuffixClassName({
+          type: 'suffix',
+          icon: true,
+        })}
       >
         <Tooltip
           animationDelay={0}
@@ -501,16 +524,16 @@ export class Input extends Component<Props, State> {
             className="c-Input__errorIcon"
           />
         </Tooltip>
-      </div>
+      </InlinePrefixSuffixUI>
     )
   }
 
-  getMultilineValue = () => {
+  getMultilineValue() {
     const { multiline } = this.props
     return typeof multiline === 'number' ? multiline : 1
   }
 
-  getResizerMarkup = () => {
+  getResizerMarkup() {
     const { multiline, offsetAmount, seamless } = this.props
 
     const { height, value } = this.state
@@ -530,7 +553,7 @@ export class Input extends Component<Props, State> {
     return resizer
   }
 
-  getInputMarkup = (props: Object = {}) => {
+  getInputMarkup = (props: any) => {
     const {
       autoFocus,
       className,
@@ -578,11 +601,18 @@ export class Input extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { height, value } = this.state
+    const { height, value, state } = this.state
+    const isReadOnly = !isSubtleReadOnly && readOnly
 
     const fieldClassName = classNames(
       'c-Input__inputField',
       'c-InputField',
+      maxHeight && 'has-maxHeight',
+      multiline && 'is-multiline',
+      isReadOnly && 'is-readonly',
+      resizable && 'is-resizable',
+      seamless && 'is-seamless',
+      state && `is-${state}`,
       size && `is-${size}`
     )
 
@@ -598,15 +628,16 @@ export class Input extends Component<Props, State> {
 
     const id = props.id || this.state.id
 
-    const inputElement = React.createElement(multiline ? 'textarea' : 'input', {
+    const BaseFieldComponent = multiline ? FieldTextAreaUI : FieldUI
+
+    const componentProps = {
       ...getValidProps(rest),
       autoFocus,
       className: fieldClassName,
       id,
       onChange: this.handleOnChange,
       onKeyDown: this.handleOnKeyDown,
-      // $FlowFixMe
-      ref: this.setInputNodeRef,
+      innerRef: this.setInputNodeRef,
       disabled,
       name,
       onBlur: this.handleOnInputBlur,
@@ -617,9 +648,9 @@ export class Input extends Component<Props, State> {
       style,
       type,
       value,
-    })
+    }
 
-    return inputElement
+    return <BaseFieldComponent {...componentProps} />
   }
 
   render() {
@@ -662,7 +693,7 @@ export class Input extends Component<Props, State> {
           <InputWrapperUI className="c-InputWrapper" style={styleProp}>
             {this.getLabelMarkup()}
             {this.getHelpTextMarkup()}
-            <div className={componentClassName}>
+            <InputUI className={componentClassName}>
               {this.getPrefixMarkup()}
               {this.getInlinePrefixMarkup()}
               {this.getInputMarkup(props)}
@@ -681,7 +712,7 @@ export class Input extends Component<Props, State> {
                 state={state}
               />
               {this.getResizerMarkup()}
-            </div>
+            </InputUI>
             {this.getHintTextMarkup()}
           </InputWrapperUI>
         )}

@@ -1,6 +1,6 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import Select from '../Select'
+import { mount, render } from 'enzyme'
+import { Select } from '../Select'
 
 const ui = {
   errorIcon: '.c-Select__errorIcon',
@@ -45,10 +45,10 @@ describe('Placeholder', () => {
 
 describe('Select', () => {
   test('Can generate an select component', () => {
-    const wrapper = mount(<Select />)
-    const o = wrapper.instance().getSelectMarkup()
+    const wrapper = render(<Select />)
+    const el = wrapper.find('select')
 
-    expect(o.type).toBe('select')
+    expect(el.length).toBeTruthy()
   })
 })
 
@@ -238,7 +238,7 @@ describe('Prefix', () => {
     const prefix = 'Pick one'
     const wrapper = mount(<Select options={options} prefix={prefix} />)
 
-    expect(wrapper.find('.c-Select__inlinePrefix').text()).toBe(prefix)
+    expect(wrapper.find('div.c-Select__item.is-prefix').text()).toBe(prefix)
   })
 })
 
@@ -311,7 +311,7 @@ describe('States', () => {
   describe('Error', () => {
     test('Applies error styles if error prop is true', () => {
       const wrapper = mount(<Select state="error" />)
-      const o = wrapper.find('.c-Select')
+      const o = wrapper.find('div.c-Select')
 
       expect(o.prop('className')).toContain('is-error')
     })
@@ -328,7 +328,7 @@ describe('States', () => {
   describe('Success', () => {
     test('Applies success styles if success prop is true', () => {
       const wrapper = mount(<Select state="success" />)
-      const o = wrapper.find('.c-Select')
+      const o = wrapper.find('div.c-Select')
 
       expect(o.prop('className')).toContain('is-success')
     })
@@ -345,7 +345,7 @@ describe('States', () => {
   describe('Warning', () => {
     test('Applies warning styles if warning prop is true', () => {
       const wrapper = mount(<Select state="warning" />)
-      const o = wrapper.find('.c-Select')
+      const o = wrapper.find('div.c-Select')
 
       expect(o.prop('className')).toContain('is-warning')
     })
@@ -387,16 +387,16 @@ describe('States', () => {
 describe('Styles', () => {
   test('Adds seamless styles if defined', () => {
     const wrapper = mount(<Select seamless />)
-    const o = wrapper.find('.c-Select')
+    const o = wrapper.find('div.c-Select')
 
     expect(o.prop('className')).toContain('is-seamless')
   })
 
   test('Adds sizing styles if defined', () => {
     const wrapper = mount(<Select size="sm" />)
-    const o = wrapper.find('.c-InputField')
+    const o = wrapper.find('select')
 
-    expect(o.prop('className')).toContain('is-sm')
+    expect(o.hasClass('is-sm')).toBeTruthy()
   })
 
   test('Passes style prop to wrapper', () => {
@@ -409,7 +409,7 @@ describe('Styles', () => {
 describe('removeStateStylesOnFocus', () => {
   test('Does not remove state style on focus, by default', () => {
     const wrapper = mount(<Select state="error" />)
-    const select = wrapper.find('.c-Select')
+    const select = wrapper.find('div.c-Select')
     const o = wrapper.find('select')
 
     o.simulate('focus')

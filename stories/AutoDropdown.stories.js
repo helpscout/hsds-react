@@ -31,3 +31,57 @@ stories.add('Default', () => {
   }
   return <AutoDropdown {...props} />
 })
+
+stories.add('Stateful', () => {
+  class Example extends React.Component {
+    static defaultProps = {
+      onSelect: () => undefined,
+    }
+
+    state = {
+      selectedItem: undefined,
+
+      isOpen: true,
+      items: ItemSpec.generate(8),
+    }
+
+    add = () => {
+      this.setState({
+        items: [...this.state.items, ItemSpec.generate()],
+      })
+    }
+
+    remove = () => {
+      this.setState({
+        items: this.state.items.slice(0, -1),
+      })
+    }
+
+    handleOnSelect = value => {
+      this.setState({
+        selectedItem: value,
+      })
+      this.props.onSelect(value)
+      console.log(value)
+    }
+
+    render() {
+      const props = {
+        ...this.state,
+        onSelect: this.handleOnSelect,
+        clearOnSelect: false,
+      }
+
+      return (
+        <div>
+          <button onClick={this.add}>Add Item</button>
+          <button onClick={this.remove}>Remove Item</button>
+          <hr />
+          <AutoDropdown {...props} />
+        </div>
+      )
+    }
+  }
+
+  return <Example />
+})

@@ -127,6 +127,34 @@ describe('Input', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('Closes ComboBox on input tab press, by default', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<ComboBox isOpen />)
+
+    const el = wrapper.find('Input')
+
+    // @ts-ignore
+    el.props().onKeyDown({ keyCode: 9, stopPropagation: spy })
+
+    expect(spy).toHaveBeenCalled()
+    // @ts-ignore
+    expect(wrapper.state().isOpen).toBe(false)
+  })
+
+  test('Tab press on input does NOT close ComboBox, if specified', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<ComboBox isOpen closeOnInputTab={false} />)
+
+    const el = wrapper.find('Input')
+
+    // @ts-ignore
+    el.props().onKeyDown({ keyCode: 9, stopPropagation: spy })
+
+    expect(spy).not.toHaveBeenCalled()
+    // @ts-ignore
+    expect(wrapper.state().isOpen).toBe(true)
+  })
 })
 
 describe('Filtering', () => {
@@ -442,5 +470,29 @@ describe('onMenuMount/Unmount', () => {
 
     // @ts-ignore
     expect(wrapper.instance().menuWrapperNode.scrollTop).toBe(0)
+  })
+})
+
+describe('onOpen/onClose', () => {
+  test('Fires onOpen callback', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<ComboBox onOpen={spy} />)
+    const el = wrapper.find('Dropdown')
+
+    // @ts-ignore
+    el.props().onOpen()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onClose callback', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<ComboBox onClose={spy} />)
+    const el = wrapper.find('Dropdown')
+
+    // @ts-ignore
+    el.props().onClose()
+
+    expect(spy).toHaveBeenCalled()
   })
 })

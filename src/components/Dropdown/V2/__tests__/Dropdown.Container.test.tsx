@@ -61,4 +61,15 @@ describe('Prop changes', () => {
 
     expect(store.getState().dropUp).toEqual(true)
   })
+
+  test('Update store relevant storeProp change', () => {
+    const initialItems = [{ value: 'Ron' }, { value: 'Champ' }]
+    const wrapper = mount(<DropdownContainer items={initialItems} />)
+
+    wrapper.setProps({ maxHeight: 10000 })
+    // @ts-ignore
+    const store = wrapper.instance().store
+
+    expect(store.getState().maxHeight).toBe(10000)
+  })
 })

@@ -19,7 +19,10 @@ export const HeaderUI = styled('div')`
 
 export const MenuUI = styled(Dropdown.Menu)`
   ${baseStyles};
-  padding-top: 0;
+
+  &.is-withInput {
+    padding-top: 0;
+  }
 `
 
 export const EmptyItemUI = styled('div')`

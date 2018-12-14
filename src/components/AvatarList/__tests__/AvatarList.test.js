@@ -1,22 +1,22 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { mount, render } from 'enzyme'
 import { AvatarList } from '../AvatarList'
 import { Animate, Avatar, Text } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = mount(<AvatarList />)
-    const o = wrapper.find('div.c-AvatarList')
+    const wrapper = render(<AvatarList />)
+    const el = wrapper.find('.c-AvatarList')
 
-    expect(o.hasClass('c-AvatarList')).toBeTruthy()
+    expect(el.length).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<AvatarList className={customClass} />)
-    const o = wrapper.find('div.c-AvatarList')
+    const wrapper = render(<AvatarList className={customClass} />)
+    const el = wrapper.find('.c-AvatarList')
 
-    expect(o.hasClass(customClass)).toBe(true)
+    expect(el.hasClass(customClass)).toBe(true)
   })
 })
 

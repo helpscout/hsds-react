@@ -23,6 +23,7 @@ import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
 import { InputWrapperUI } from '../Input/styles/Input.css.js'
+import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
 
 type SelectEvent = SyntheticEvent<HTMLSelectElement>
 type SelectOptionProp =
@@ -75,7 +76,7 @@ const PLACEHOLDER_VALUE = '__placeholder__'
 
 const uniqueID = createUniqueIDFactory('Select')
 
-class Select extends Component<Props, State> {
+export class Select extends Component<Props, State> {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
@@ -220,12 +221,29 @@ class Select extends Component<Props, State> {
     )
   }
 
+  /* istanbul ignore next */
+  getInlinePrefixSuffixClassName({ type, icon }) {
+    const { seamless, state } = this.props
+
+    return classNames(
+      'c-Select__item',
+      type && `is-${type}`,
+      icon && 'is-icon',
+      seamless && 'is-seamless',
+      state && `is-${state}`
+    )
+  }
+
   getPrefixMarkup = () => {
     const { prefix } = this.props
 
     return (
       prefix && (
-        <div className="c-Select__item c-Select__inlinePrefix">{prefix}</div>
+        <InlinePrefixSuffixUI
+          className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
+        >
+          {prefix}
+        </InlinePrefixSuffixUI>
       )
     )
   }
@@ -237,7 +255,7 @@ class Select extends Component<Props, State> {
     if (!shouldRenderError) return null
 
     return (
-      <div
+      <ItemUI
         className={classNames('c-Select__item', 'c-Select__suffix', 'is-icon')}
       >
         <Tooltip display="block" placement="top-end" title={errorMessage}>
@@ -247,7 +265,7 @@ class Select extends Component<Props, State> {
             className="c-Select__errorIcon"
           />
         </Tooltip>
-      </div>
+      </ItemUI>
     )
   }
 
@@ -319,7 +337,7 @@ class Select extends Component<Props, State> {
     this.props.innerRef(node)
   }
 
-  getSelectMarkup = (props: Object = {}) => {
+  getSelectMarkup = (props: any) => {
     const {
       children,
       className,
@@ -353,6 +371,7 @@ class Select extends Component<Props, State> {
     const fieldClassName = classNames(
       'c-Select__inputField',
       'c-InputField',
+      this.hasPlaceholder() && 'has-placeholder',
       size && `is-${size}`
     )
 
@@ -370,7 +389,7 @@ class Select extends Component<Props, State> {
     const selectedValue = hasPlaceholder ? PLACEHOLDER_VALUE : this.state.value
 
     return (
-      <select
+      <FieldUI
         {...getValidProps(rest)}
         className={fieldClassName}
         disabled={disabled}
@@ -378,12 +397,12 @@ class Select extends Component<Props, State> {
         onBlur={this.handleOnBlur}
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
-        ref={this.setSelectNode}
+        innerRef={this.setSelectNode}
         value={selectedValue}
       >
         {placeholderMarkup}
         {optionsMarkup}
-      </select>
+      </FieldUI>
     )
   }
 
@@ -422,7 +441,7 @@ class Select extends Component<Props, State> {
           <InputWrapperUI className="c-InputWrapper" style={styleProp}>
             {labelMarkup}
             {hintTextMarkup}
-            <div className={componentClassName}>
+            <SelectUI className={componentClassName}>
               {prefixMarkup}
               {this.getSelectMarkup(props)}
               <Arrows className="c-SelectIcon" state={state} />
@@ -437,7 +456,7 @@ class Select extends Component<Props, State> {
                 isSeamless={seamless}
                 state={state}
               />
-            </div>
+            </SelectUI>
             {helpTextMarkup}
           </InputWrapperUI>
         )}

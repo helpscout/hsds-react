@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Provider } from '@helpscout/wedux'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
+import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import { DropdownProps } from './Dropdown.types'
 import createStore, { initialState } from './Dropdown.store'
 import Dropdown from './Dropdown'
@@ -12,7 +13,11 @@ import Group from './Dropdown.Group'
 import Header from './Dropdown.Header'
 import Item from './Dropdown.Item'
 import Menu from './Dropdown.Menu'
-import { pathResolve, getIndexMapFromItems } from './Dropdown.utils'
+import {
+  pathResolve,
+  getIndexMapFromItems,
+  filterNonStoreProps,
+} from './Dropdown.utils'
 import {
   updateItems,
   updateOpen,
@@ -62,8 +67,8 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
   store: any
 
-  constructor(props) {
-    super(props)
+  constructor(props, context) {
+    super(props, context)
 
     const id = props.id || uniqueID()
     const menuId = pathResolve(id, 'menu')
@@ -105,40 +110,63 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
   componentWillReceiveProps(nextProps) {
     const state = this.store.getState()
+    // Batch updates to a single update
+    let nextState = {}
 
     // Update items + regenerate the indexMap if items chage
     if (nextProps.items !== state.items) {
-      this.rehydrateStoreWithProps(updateItems(state, nextProps.items))
+      nextState = { ...updateItems(state, nextProps.items) }
     }
 
     // Adjust open state, if changed
     if (nextProps.isOpen !== this.props.isOpen) {
-      this.rehydrateStoreWithProps(updateOpen(state, nextProps.isOpen))
+      // Queuing this one with RAF
+      requestAnimationFrame(() => {
+        this.rehydrateStoreWithProps(updateOpen(state, nextProps.isOpen))
+      })
     }
 
     // Adjust index, if changed
     if (nextProps.index !== state.index) {
-      this.rehydrateStoreWithProps(updateIndex(state, nextProps.index))
+      nextState = { ...updateIndex(state, nextProps.index) }
     }
 
-    // Adjust index, if changed
+    // Adjust dropUp, if changed
     if (nextProps.dropUp !== state.dropUp) {
-      this.rehydrateStoreWithProps(updateDropUp(state, nextProps.dropUp))
+      nextState = { ...updateDropUp(state, nextProps.dropUp) }
     }
 
     // This is to handle filterable dropdowns. We need to adjust the internally
     // tracked inputValue and reset the `index` value for a filterable
     // experience.
     if (nextProps.inputValue !== state.inputValue) {
-      this.rehydrateStoreWithProps(
-        updateInputValue(state, nextProps.inputValue)
-      )
+      nextState = { ...updateInputValue(state, nextProps.inputValue) }
     }
+
+    const diffs = getShallowDiffs(this.props, nextProps)
+    /* istanbul ignore else */
+    if (diffs.diffs.length) {
+      const {
+        children,
+        items,
+        isOpen,
+        index,
+        dropUp,
+        inputValue,
+        ...changedProps
+      } = diffs.next
+
+      if (Object.keys(changedProps).length) {
+        nextState = { ...changedProps }
+      }
+    }
+
+    this.rehydrateStoreWithProps(nextState)
   }
 
   rehydrateStoreWithProps(props: Object) {
     // @ts-ignore
-    this.store.setState(props)
+    this.store.setState(filterNonStoreProps(props))
   }
 
   render() {

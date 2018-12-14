@@ -1,5 +1,48 @@
 import styled from '../styled'
+import { makeFieldStyles } from '../Input/styles/Input.css'
 import { getColor } from '../../styles/utilities/color'
+export { InlinePrefixSuffixUI } from '../Input/styles/Input.css'
+
+export const SelectUI = styled('div')`
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  padding-bottom: 1px;
+  padding-top: 1px;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+
+  & > *:first-child {
+    padding-left: 0;
+  }
+
+  &.is-focused {
+    z-index: 2;
+  }
+`
+
+export const ItemUI = styled('div')`
+  position: relative;
+  z-index: 1;
+`
+
+export const FieldUI = styled('select')`
+  &.c-InputField {
+    ${makeFieldStyles};
+    padding-left: 8px;
+    padding-right: 20px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  &.has-placeholder {
+    opacity: 0.3;
+  }
+`
 
 export const SelectArrowsUI = styled('div')`
   align-self: center;
