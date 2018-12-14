@@ -16,6 +16,7 @@ import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
 import { COMPONENT_KEY } from './ComboBox.utils'
 
 export interface ComboBoxProps extends DropdownProps {
+  closeOnInputTab: boolean
   customFilter?: (filterProps: Object, defaultFilter: any) => void
   onInputChange: (value: string) => void
   inputProps: any
@@ -29,11 +30,14 @@ export interface ComboBoxProps extends DropdownProps {
 
 export interface ComboBoxState {
   inputValue: string
+  isOpen: boolean
 }
 
 const defaultInputProps = {
   autoFocus: true,
   className: 'c-ComboBoxInput',
+  onOpen: noop,
+  onClose: noop,
   onChange: noop,
   onKeyDown: noop,
   placeholder: 'Search',
@@ -43,6 +47,7 @@ const defaultInputProps = {
 export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   static defaultProps = {
     ...initialState,
+    closeOnInputTab: true,
     onInputChange: noop,
     inputProps: {},
     itemFilterKey: 'value',
@@ -55,6 +60,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   state = {
+    isOpen: this.props.isOpen,
     inputValue: '',
   }
 
@@ -103,8 +109,20 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
       event.stopPropagation()
     }
     /* istanbul ignore else */
+    if (event.keyCode === Keys.TAB) {
+      this.handleTabPress(event)
+    }
+    /* istanbul ignore else */
     if (this.props.inputProps.onKeyDown) {
       this.props.inputProps.onKeyDown(event)
+    }
+  }
+
+  handleTabPress(event) {
+    if (this.props.closeOnInputTab) {
+      event.stopPropagation()
+
+      this.handleOnClose()
     }
   }
 
@@ -208,17 +226,26 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   getDropdownProps = () => {
-    const { className, onInputChange, noResultsLabel, ...rest } = this.props
-    const { inputValue } = this.state
+    const {
+      className,
+      onInputChange,
+      noResultsLabel,
+      showInput,
+      ...rest
+    } = this.props
+    const { inputValue, isOpen } = this.state
 
     const componentClassName = classNames('c-ComboBox', className)
 
     return {
       ...rest,
+      isOpen,
       onMenuMount: this.onMenuMount,
       onMenuUnmount: this.onMenuUnmount,
+      onOpen: this.handleOnOpen,
+      onClick: this.handleOnClose,
       onSelect: this.onSelect,
-      enableTabNavigation: false,
+      enableTabNavigation: !showInput,
       className: componentClassName,
       inputValue,
       index: '0',
@@ -229,6 +256,20 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     const { showInput } = this.props
 
     return classNames('c-ComboBoxMenu', showInput && 'is-withInput')
+  }
+
+  handleOnOpen = () => {
+    this.setState({
+      isOpen: true,
+    })
+    this.props.onOpen()
+  }
+
+  handleOnClose = () => {
+    this.setState({
+      isOpen: false,
+    })
+    this.props.onClose()
   }
 
   renderEmpty = () => {
