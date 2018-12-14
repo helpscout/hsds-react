@@ -1,4 +1,5 @@
 import { ItemIndex } from './Dropdown.types'
+import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
 import { isObject, isDefined, isNumber, isString } from '../../../utilities/is'
@@ -323,4 +324,15 @@ export const getItemProps = (
     tabIndex: enableTabNavigation ? 0 : null,
     value,
   }
+}
+
+export const filterNonStoreProps = props => {
+  const storeKeys = Object.keys(initialState)
+
+  return storeKeys.reduce((nextProps, key) => {
+    if (props.hasOwnProperty(key)) {
+      return { ...nextProps, [key]: props[key] }
+    }
+    return nextProps
+  }, {})
 }

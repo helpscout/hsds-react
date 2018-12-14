@@ -76,7 +76,7 @@ const PLACEHOLDER_VALUE = '__placeholder__'
 
 const uniqueID = createUniqueIDFactory('Select')
 
-class Select extends Component<Props, State> {
+export class Select extends Component<Props, State> {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
@@ -320,7 +320,7 @@ class Select extends Component<Props, State> {
     this.props.innerRef(node)
   }
 
-  getSelectMarkup = (props: Object = {}) => {
+  getSelectMarkup = (props: any) => {
     const {
       children,
       className,
@@ -380,7 +380,7 @@ class Select extends Component<Props, State> {
         onBlur={this.handleOnBlur}
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
-        ref={this.setSelectNode}
+        innerRef={this.setSelectNode}
         value={selectedValue}
       >
         {placeholderMarkup}

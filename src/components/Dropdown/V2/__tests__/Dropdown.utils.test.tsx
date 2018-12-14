@@ -18,6 +18,7 @@ import {
   itemIsOpen,
   itemIsSelected,
   pathResolve,
+  filterNonStoreProps,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -300,49 +301,6 @@ describe('getItemFromCollection', () => {
   })
 })
 
-// TODO: MOVE TESTS
-// describe('setMenuPositionStyles', () => {
-//   test('Does not modify wrapperNode styles if other required DOM nodes are missing', () => {
-//     const wrapperNode: HTMLElement = document.createElement('div')
-//     const triggerNode: HTMLElement = document.createElement('div')
-//     const itemNode: HTMLElement = document.createElement('div')
-
-//     const props = {
-//       wrapperNode,
-//       menuNode: null,
-//       triggerNode,
-//       itemNode,
-//     }
-//     const styles = wrapperNode.style.transform
-
-//     setMenuPositionStyles(props)
-
-//     expect(styles).toBe(wrapperNode.style.transform)
-//   })
-
-//   test('Modifies wrapperNode styles from DOM node measurements', () => {
-//     const wrapperNode: HTMLElement = document.createElement('div')
-//     const menuNode: HTMLElement = document.createElement('div')
-//     const triggerNode: HTMLElement = document.createElement('div')
-//     const itemNode: HTMLElement = document.createElement('div')
-
-//     wrapperNode.style.height = '100px'
-
-//     const props = {
-//       wrapperNode,
-//       menuNode,
-//       triggerNode,
-//       itemNode,
-//     }
-
-//     const styles = { ...wrapperNode.style }
-
-//     setMenuPositionStyles(props)
-
-//     expect(styles).not.toEqual(wrapperNode.style)
-//   })
-// })
-
 describe('itemHasSubMenu', () => {
   test('Returns true item contains items', () => {
     const item = {
@@ -605,5 +563,21 @@ describe('getItemProps', () => {
     expect(enhancedItem.className.length).toBeGreaterThan(item.className.length)
     expect(enhancedItem.isSelected).toBe(true)
     expect(enhancedItem.isActive).toBe(true)
+  })
+})
+
+describe('filterNonStoreProps', () => {
+  test('Removes non-store safe props', () => {
+    const props = {
+      a: 'nope',
+      items: [],
+      index: '0',
+    }
+    const nextProps = filterNonStoreProps(props)
+
+    expect(Object.keys(nextProps).length).toBe(2)
+    expect(nextProps['a']).toBe(undefined)
+    expect(nextProps['items']).toBe(props.items)
+    expect(nextProps['index']).toBe(props.index)
   })
 })

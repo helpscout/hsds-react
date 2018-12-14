@@ -536,7 +536,7 @@ export class Input extends Component<Props, State> {
     return resizer
   }
 
-  getInputMarkup = (props: Object = {}) => {
+  getInputMarkup = (props: any) => {
     const {
       autoFocus,
       className,

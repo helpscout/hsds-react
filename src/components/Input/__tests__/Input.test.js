@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { mount, render } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Resizer'
 
@@ -10,7 +10,7 @@ const ui = {
   errorIcon: '.c-Input__errorIcon',
   helpText: '.c-Input__helpText',
   hintText: '.c-Input__hintText',
-  input: '.c-Input',
+  input: 'div.c-Input',
   label: '.c-Input__label',
   suffix: '.c-Input__inlineSuffix',
   tooltip: '.c-Tooltip',
@@ -39,10 +39,10 @@ describe('ClassName', () => {
 
 describe('Input', () => {
   test('Can generate an input component', () => {
-    const wrapper = mount(<Input />)
-    const o = wrapper.instance().getInputMarkup()
+    const wrapper = render(<Input />)
+    const el = wrapper.find('input')
 
-    expect(o.type).toBe('input')
+    expect(el.length).toBeTruthy()
   })
 })
 
@@ -246,25 +246,24 @@ describe('ID', () => {
 
 describe('Multiline', () => {
   test('Default selector is an input', () => {
-    const wrapper = mount(<Input />)
-    const o = wrapper.find(ui.field).getDOMNode()
+    const wrapper = render(<Input />)
+    const el = wrapper.find('input')
 
-    expect(o.tagName.toLowerCase()).toBe('input')
-    expect(o.type).toBe('text')
+    expect(el.length).toBeTruthy()
   })
 
   test('Selector becomes a textarea if multiline is defined', () => {
-    const wrapper = mount(<Input multiline />)
-    const o = wrapper.find(ui.field).getDOMNode()
+    const wrapper = render(<Input multiline />)
+    const el = wrapper.find('textarea')
 
-    expect(o.type).toBe('textarea')
+    expect(el.length).toBeTruthy()
   })
 
   test('Accepts number argument', () => {
-    const wrapper = mount(<Input multiline={5} />)
-    const o = wrapper.find(ui.field).getDOMNode()
+    const wrapper = render(<Input multiline={5} />)
+    const el = wrapper.find('textarea')
 
-    expect(o.type).toBe('textarea')
+    expect(el.length).toBeTruthy()
   })
 
   test('Adds Resizer component if multiline is defined', () => {
@@ -274,17 +273,17 @@ describe('Multiline', () => {
   })
 
   test('Applies resizable styles if specified', () => {
-    const wrapper = mount(<Input multiline resizable />)
-    const o = wrapper.find(ui.input)
+    const wrapper = render(<Input multiline resizable />)
+    const el = wrapper.find('textarea')
 
-    expect(o.prop('className')).toContain('is-resizable')
+    expect(el.hasClass('is-resizable')).toBeTruthy()
   })
 
   test('Has regular height without multiline', () => {
     const wrapper = mount(<Input />)
-    const o = wrapper.find(ui.field)
+    const el = wrapper.find('input')
 
-    expect(o.prop('style')).toBe(null)
+    expect(el.prop('style')).toBeFalsy()
   })
 
   test('Sets height on textarea with multiline', () => {
@@ -301,37 +300,37 @@ describe('Multiline', () => {
 
   test('Does not set maxHeight on multiline by default', () => {
     const wrapper = mount(<Input multiline={3} />)
-    const o = wrapper.find(ui.field)
+    const el = wrapper.find('textarea')
 
-    expect(o.prop('style').maxHeight).toBeFalsy()
+    expect(el.prop('style').maxHeight).toBeFalsy()
   })
 
   test('Sets maxHeight on multiline, if specified', () => {
     const wrapper = mount(<Input multiline={3} maxHeight={50} />)
-    const o = wrapper.find(ui.field)
+    const el = wrapper.find('textarea')
 
-    expect(o.prop('style').maxHeight).toBe(50)
+    expect(el.prop('style').maxHeight).toBe(50)
   })
 
   test('Adds maxHeight styles, if specified', () => {
     const wrapper = mount(<Input multiline={3} maxHeight={50} />)
-    const o = wrapper.find(ui.input)
+    const el = wrapper.find('textarea')
 
-    expect(o.getDOMNode().classList.contains('has-maxHeight')).toBeTruthy()
+    expect(el.getDOMNode().classList.contains('has-maxHeight')).toBeTruthy()
   })
 
   test('maxHeight Accepts string values', () => {
     const wrapper = mount(<Input multiline={3} maxHeight="50vh" />)
-    const o = wrapper.find(ui.field)
+    const el = wrapper.find('textarea')
 
-    expect(o.prop('style').maxHeight).toBe('50vh')
+    expect(el.prop('style').maxHeight).toBe('50vh')
   })
 
   test('Does not focus input on resize', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={3} maxHeight="50vh" />)
-    const o = wrapper.find(ui.field)
-    o.getDOMNode().onfocus = spy
+    const el = wrapper.find('textarea')
+    el.getDOMNode().onfocus = spy
 
     wrapper.instance().handleExpandingResize()
 
@@ -428,9 +427,9 @@ describe('Styles', () => {
 
   test('Applies sizing styles if specified', () => {
     const wrapper = mount(<Input size="sm" />)
-    const o = wrapper.find(ui.field)
+    const o = wrapper.find('input')
 
-    expect(o.prop('className')).toContain('is-sm')
+    expect(o.hasClass('is-sm')).toBeTruthy()
   })
 
   test('Passes style prop to wrapper', () => {

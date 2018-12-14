@@ -1,22 +1,22 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { mount, render } from 'enzyme'
 import CopyButton from '../../CopyButton'
 import CopyInput from '../CopyInput'
 
 describe('ClassName', () => {
   test('Has default component className', () => {
-    const wrapper = mount(<CopyInput />)
-    const input = wrapper.find('.c-Input')
+    const wrapper = render(<CopyInput />)
+    const el = wrapper.find('.c-CopyInput')
 
-    expect(input.hasClass('c-CopyInput')).toBe(true)
+    expect(el.length).toBeTruthy()
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
-    const wrapper = mount(<CopyInput className={className} />)
-    const input = wrapper.find('.c-Input')
+    const wrapper = render(<CopyInput className={className} />)
+    const el = wrapper.find('.c-CopyInput')
 
-    expect(input.hasClass(className)).toBe(true)
+    expect(el.hasClass(className)).toBe(true)
   })
 })
 

@@ -13,7 +13,11 @@ import Group from './Dropdown.Group'
 import Header from './Dropdown.Header'
 import Item from './Dropdown.Item'
 import Menu from './Dropdown.Menu'
-import { pathResolve, getIndexMapFromItems } from './Dropdown.utils'
+import {
+  pathResolve,
+  getIndexMapFromItems,
+  filterNonStoreProps,
+} from './Dropdown.utils'
 import {
   updateItems,
   updateOpen,
@@ -140,20 +144,21 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     }
 
     const diffs = getShallowDiffs(this.props, nextProps)
-    if (!diffs.diffs.length) return
+    /* istanbul ignore else */
+    if (diffs.diffs.length) {
+      const {
+        children,
+        items,
+        isOpen,
+        index,
+        dropUp,
+        inputValue,
+        ...changedProps
+      } = diffs.next
 
-    const {
-      children,
-      items,
-      isOpen,
-      index,
-      dropUp,
-      inputValue,
-      ...changedProps
-    } = diffs.next
-
-    if (Object.keys(changedProps).length) {
-      nextState = { ...changedProps }
+      if (Object.keys(changedProps).length) {
+        nextState = { ...changedProps }
+      }
     }
 
     this.rehydrateStoreWithProps(nextState)
@@ -161,7 +166,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
   rehydrateStoreWithProps(props: Object) {
     // @ts-ignore
-    this.store.setState(props)
+    this.store.setState(filterNonStoreProps(props))
   }
 
   render() {
