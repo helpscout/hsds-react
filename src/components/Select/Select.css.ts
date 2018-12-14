@@ -29,7 +29,7 @@ export const ItemUI = styled('div')`
 `
 
 export const FieldUI = styled('select')`
-  &.c-Select {
+  &.c-InputField {
     ${makeFieldStyles};
     padding-left: 8px;
     padding-right: 20px;

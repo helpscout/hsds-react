@@ -64,13 +64,13 @@ export const ItemUI = styled('div')`
 `
 
 export const FieldUI = styled('input')`
-  &.c-Input {
+  &.c-InputField {
     ${makeFieldStyles};
   }
 `
 
 export const FieldTextAreaUI = styled('textarea')`
-  &.c-Input {
+  &.c-InputField {
     ${makeFieldStyles};
   }
 `
