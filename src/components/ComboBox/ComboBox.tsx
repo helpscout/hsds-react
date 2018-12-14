@@ -225,6 +225,12 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     }
   }
 
+  getMenuClassName() {
+    const { showInput } = this.props
+
+    return classNames('c-ComboBoxMenu', showInput && 'is-withInput')
+  }
+
   renderEmpty = () => {
     const { renderEmpty, noResultsLabel } = this.props
     const { inputValue } = this.state
@@ -288,7 +294,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
             )}
 
             <MenuUI
-              className="c-ComboBoxMenu"
+              className={this.getMenuClassName()}
               innerWrapperRef={this.setMenuWrapperNode}
             >
               {this.renderMenuStart()}
