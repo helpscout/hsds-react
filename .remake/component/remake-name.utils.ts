@@ -1,1 +1,1 @@
-export COMPONENT_KEY = '<%= name %>'
+export const COMPONENT_KEY = '<%= name %>'
