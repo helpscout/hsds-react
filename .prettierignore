@@ -4,3 +4,4 @@ dist/
 coverage/
 src/**/*/types.js
 src/**/*/*.types.js
+.remake

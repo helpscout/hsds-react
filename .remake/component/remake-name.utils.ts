@@ -1,0 +1,1 @@
+export COMPONENT_KEY = '<%= name %>'
