@@ -32,7 +32,6 @@ export class <%= name %> extends React.PureComponent<Props> {
   }
 }
 
-
 const PropConnectedComponent = propConnect(COMPONENT_KEY)(<%= name %>)
 
 export default PropConnectedComponent
