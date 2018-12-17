@@ -175,7 +175,7 @@
     "react-frame-component": "^1.1.0",
     "react-router": "4.2.0",
     "react-router-dom": "^4",
-    "remake-cli": "0.0.5",
+    "remake-cli": "0.0.7",
     "rgb-hex": "2.1.0",
     "rimraf": "2.6.2",
     "sass-loader": "6.0.6",
