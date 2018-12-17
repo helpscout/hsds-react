@@ -12,14 +12,15 @@ A ChatScroller component is light-weight wrapper automatically scrolls a Chat bo
 
 ## Props
 
-| Prop                  | Type       | Description                                        |
-| --------------------- | ---------- | -------------------------------------------------- |
-| className             | `string`   | Custom class names to be added to the component.   |
-| distanceForAutoScroll | `number`   | A range to enable auto-scrolling.                  |
-| isTyping              | `bool`     | A chat-based event used to trigger auto-scrolling. |
-| lastMessageId         | `string`   | Chat data used to trigger auto-scrolling.          |
-| messages              | `array`    | Chat data used to trigger auto-scrolling.          |
-| messageSelectors      | `string`   | DOM selector(s) for chat message elements.         |
-| onScroll              | `function` | Callback function when component is scrolled.      |
-| scrollableSelector    | `string`   | DOM selector for the scrollable message container. |
-| smoothScrollDuration  | `number`   | Duration (ms) for smooth scrolling.                |
+| Prop                  | Type       | Description                                            |
+| --------------------- | ---------- | ------------------------------------------------------ |
+| className             | `string`   | Custom class names to be added to the component.       |
+| distanceForAutoScroll | `number`   | A range to enable auto-scrolling.                      |
+| isTyping              | `bool`     | A chat-based event used to trigger auto-scrolling.     |
+| lastMessageId         | `string`   | Chat data used to trigger auto-scrolling.              |
+| messages              | `array`    | Chat data used to trigger auto-scrolling.              |
+| messageSelectors      | `string`   | DOM selector(s) for chat message elements.             |
+| onScroll              | `function` | Callback function when component is scrolled.          |
+| propsToCheck          | `Array`    | A collection of props to check to initiate the scroll. |
+| scrollableSelector    | `string`   | DOM selector for the scrollable message container.     |
+| smoothScrollDuration  | `number`   | Duration (ms) for smooth scrolling.                    |

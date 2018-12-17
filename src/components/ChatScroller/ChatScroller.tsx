@@ -1,18 +1,43 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import * as React from 'react'
+import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
+import propConnect from '../PropProvider/propConnect'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { last } from '../../utilities/arrays'
 import { allDefined } from '../../utilities/check'
 import { noop } from '../../utilities/other'
+import { COMPONENT_KEY } from './ChatScroller.utils'
 
-class ChatScroller extends Component {
-  constructor() {
-    super()
-    this.childNodeRef = 'childNode'
-    this.childNode = null
-    this.scrollableNode = null
+export interface Props {
+  className?: string
+  children?: any
+  distanceForAutoScroll: number
+  isTyping: boolean
+  lastMessageId: string
+  messages?: Array<any>
+  messageSelectors: string
+  offsetThreshold: number
+  propsToCheck: Array<string>
+  onScroll: (...args: any) => void
+  scrollCondition: (...args: any) => void
+  scrollableSelector: string
+  smoothScrollDuration: number
+}
+
+export class ChatScroller extends React.PureComponent<Props> {
+  static defaultProps = {
+    distanceForAutoScroll: 150,
+    isTyping: false,
+    messageSelectors: '.c-MessageChat, .c-MessageAction',
+    offsetThreshold: 0.3,
+    onScroll: noop,
+    propsToCheck: ['messages', 'lastMessageId', 'isTyping'],
+    scrollableSelector: '.c-ScrollableNode',
+    smoothScrollDuration: 100,
   }
+
+  document: Document
+  childRef: any = null
+  scrollableNode: any = null
 
   componentDidMount() {
     this.setNodes()
@@ -20,31 +45,23 @@ class ChatScroller extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.messages !== this.props.messages ||
-      prevProps.lastMessageId !== this.props.lastMessageId ||
-      prevProps.isTyping !== this.props.isTyping
-    ) {
+    if (this.shouldScrollOnUpdate(prevProps)) {
       this.autoScrollToLatestMessage()
     }
   }
 
-  setNodes() {
-    const childNode = this.refs[this.childNodeRef]
-    if (!childNode) return
+  shouldScrollOnUpdate(prevProps) {
+    const hasChanged = this.props.propsToCheck.reduce((result, prop) => {
+      if (result) return result
+      return prevProps[prop] !== this.props[prop]
+    }, false)
 
-    // Guard/check to ensure that the childNode is a NodeElement.
-    this.childNode = childNode['querySelector']
-      ? childNode
-      : ReactDOM.findDOMNode(childNode)
-
-    this.scrollableNode = this.childNode.querySelector(
-      this.props.scrollableSelector
-    )
+    return hasChanged
   }
 
   getLatestMessageNode() {
     if (!this.scrollableNode) return
+
     const messageChatNodes = this.scrollableNode.querySelectorAll(
       this.props.messageSelectors
     )
@@ -52,6 +69,7 @@ class ChatScroller extends Component {
     return last(messageChatNodes)
   }
 
+  /* istanbul ignore next */
   autoScrollToLatestMessage() {
     const {
       distanceForAutoScroll,
@@ -59,18 +77,15 @@ class ChatScroller extends Component {
       smoothScrollDuration,
     } = this.props
 
-    /* istanbul ignore next */
     if (!this.scrollableNode) return
 
     const messageNode = this.getLatestMessageNode()
-    /* istanbul ignore next */
     if (!messageNode) return
 
     /**
      * Ignoring the following things as enzyme/JSDOM does not provide a
      * (sane) way to test out scrolling calculation/behaviour.
      */
-    /* istanbul ignore next */
     const scrollProps = getScrollProps({
       distanceForAutoScroll,
       messageNode,
@@ -78,9 +93,7 @@ class ChatScroller extends Component {
       scrollableNode: this.scrollableNode,
     })
 
-    /* istanbul ignore next */
     if (shouldAutoScroll(scrollProps)) {
-      /* istanbul ignore next */
       this.handleScroll({
         duration: smoothScrollDuration,
         node: this.scrollableNode,
@@ -90,11 +103,10 @@ class ChatScroller extends Component {
   }
 
   forceScrollToBottom() {
-    const { smoothScrollDuration } = this.props
     if (!this.scrollableNode) return
 
     this.handleScroll({
-      duration: smoothScrollDuration,
+      duration: this.props.smoothScrollDuration,
       node: this.scrollableNode,
       position: this.scrollableNode.scrollHeight,
     })
@@ -107,6 +119,16 @@ class ChatScroller extends Component {
     this.props.onScroll()
   }
 
+  setNodes() {
+    this.document = getDocumentFromComponent(this.childRef) || document
+
+    this.scrollableNode = this.document.querySelector(
+      this.props.scrollableSelector
+    )
+  }
+
+  setChildNodeRef = ref => (this.childRef = ref)
+
   render() {
     const { children } = this.props
     if (!children) return null
@@ -114,7 +136,7 @@ class ChatScroller extends Component {
     const child = React.Children.only(children)
 
     return React.cloneElement(child, {
-      ref: this.childNodeRef,
+      ref: this.setChildNodeRef,
     })
   }
 }
@@ -122,10 +144,10 @@ class ChatScroller extends Component {
 /**
  * Transforms, calculates, and defines props for scrolling.
  *
- * @param   {object} props
- * @returns {objects}
+ * @param   {Object} props
+ * @returns {Object}
  */
-export const getScrollProps = props => {
+export function getScrollProps(props) {
   if (!allDefined(props)) return {}
 
   const {
@@ -154,10 +176,10 @@ export const getScrollProps = props => {
 /**
  * Determines if the ChatScroller is within range of scrolling.
  *
- * @param   {object} props
+ * @param   {Object} props
  * @returns {boolean}
  */
-export const shouldAutoScroll = props => {
+export function shouldAutoScroll(props): boolean {
   if (!allDefined(props)) return false
 
   const { distanceForAutoScroll, scrollHeight, scrollTop } = props
@@ -165,25 +187,6 @@ export const shouldAutoScroll = props => {
   return scrollTop + distanceForAutoScroll >= scrollHeight
 }
 
-ChatScroller.propTypes = {
-  distanceForAutoScroll: PropTypes.number,
-  isTyping: PropTypes.bool,
-  lastMessageId: PropTypes.string,
-  messageSelectors: PropTypes.string,
-  offsetThreshold: PropTypes.number,
-  onScroll: PropTypes.func,
-  scrollCondition: PropTypes.func,
-  smoothScrollDuration: PropTypes.number,
-}
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(ChatScroller)
 
-ChatScroller.defaultProps = {
-  distanceForAutoScroll: 150,
-  isTyping: false,
-  messageSelectors: '.c-MessageChat, .c-MessageAction',
-  offsetThreshold: 0.3,
-  onScroll: noop,
-  scrollableSelector: '.c-ScrollableNode',
-  smoothScrollDuration: 100,
-}
-
-export default ChatScroller
+export default PropConnectedComponent
