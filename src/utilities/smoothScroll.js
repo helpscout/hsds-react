@@ -1,5 +1,6 @@
 import { isNodeElement } from './node'
 import { requestAnimationFrame } from './other'
+import { isFunction } from './is'
 
 // Source:
 // https://gist.github.com/gre/1650294
@@ -21,7 +22,13 @@ const easeInOutCubic = t => {
 //
 // For now, this method has been extensively tested manually
 // within Storybook.
-export const smoothScrollTo = ({ node, position, duration, direction }) => {
+export const smoothScrollTo = ({
+  node,
+  position,
+  duration,
+  direction,
+  callback,
+}) => {
   const scrollNode = isNodeElement(node) ? node : window
   const isWindow = scrollNode === window
   const scrollDuration = duration || 500
@@ -57,6 +64,10 @@ export const smoothScrollTo = ({ node, position, duration, direction }) => {
     // Proceed with animation as long as we wanted it to.
     if (time < scrollDuration) {
       requestAnimationFrame(step)
+    } else {
+      if (isFunction(callback)) {
+        callback()
+      }
     }
   }
 

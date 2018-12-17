@@ -1,29 +1,35 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import ChatScroller, { getScrollProps, shouldAutoScroll } from '../index'
+import { ChatScroller, getScrollProps, shouldAutoScroll } from '../ChatScroller'
 import Message from '../../Message'
 import Scrollable from '../../Scrollable'
 
+function mockSetNode(wrapper) {
+  const node = wrapper.find('div.c-ScrollableNode').getDOMNode()
+  wrapper.instance().scrollableNode = node
+
+  return wrapper
+}
+
 describe('Nodes', () => {
-  test('Does not set childNode if empty', () => {
+  test('Does not set childRef if empty', () => {
     const wrapper = mount(<ChatScroller />)
 
-    const node = wrapper.instance().childNode
+    const node = wrapper.instance().childRef
 
     expect(node).toBeFalsy()
   })
 
-  test('Sets childNode on mount', () => {
+  test('Sets childRef on mount', () => {
     const wrapper = mount(
       <ChatScroller>
         <div />
       </ChatScroller>
     )
 
-    const node = wrapper.instance().childNode
+    const node = wrapper.instance().childRef
 
     expect(node).toBeTruthy()
-    expect(node.tagName).toBe('DIV')
   })
 
   test('Does not set scrollableNode on mount, if not applicable', () => {
@@ -36,34 +42,6 @@ describe('Nodes', () => {
     const node = wrapper.instance().scrollableNode
 
     expect(node).toBeFalsy()
-  })
-
-  test('Sets scrollableNode on mount, if applicable', () => {
-    const wrapper = mount(
-      <ChatScroller>
-        <div>
-          <Scrollable />
-        </div>
-      </ChatScroller>
-    )
-
-    const node = wrapper.instance().scrollableNode
-
-    expect(node).toBeTruthy()
-    expect(node.tagName).toBe('DIV')
-  })
-
-  test('Can sets scrollableNode on mount, for Scrollable child', () => {
-    const wrapper = mount(
-      <ChatScroller>
-        <Scrollable />
-      </ChatScroller>
-    )
-
-    const node = wrapper.instance().scrollableNode
-
-    expect(node).toBeTruthy()
-    expect(node.tagName).toBe('DIV')
   })
 })
 
@@ -87,6 +65,8 @@ describe('getLatestMessageNode', () => {
         </Scrollable>
       </ChatScroller>
     )
+    // Mock the scrollableNode set
+    mockSetNode(wrapper)
     const node = wrapper.instance().getLatestMessageNode()
 
     expect(node).toBeTruthy()
@@ -106,6 +86,8 @@ describe('getLatestMessageNode', () => {
         </Scrollable>
       </ChatScroller>
     )
+    // Mock the scrollableNode set
+    mockSetNode(wrapper)
     const node = wrapper.instance().getLatestMessageNode()
 
     expect(node.innerHTML).toContain('BURGANDY!')
@@ -182,20 +164,8 @@ describe('handleScroll', () => {
       onScroll: spy,
     })
 
+    mockSetNode(wrapper)
     wrapper.instance().forceScrollToBottom()
-
-    expect(spy).toHaveBeenCalled()
-  })
-})
-
-describe('forceScrollToBottom', () => {
-  test('force scrolls to bottom on mount', () => {
-    const spy = jest.fn()
-    mount(
-      <ChatScroller onScroll={spy}>
-        <Scrollable />
-      </ChatScroller>
-    )
 
     expect(spy).toHaveBeenCalled()
   })
