@@ -1,0 +1,22 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "remake",
+      "type": "shell",
+      "command": "npm",
+      "problemMatcher": ["$eslint-stylish"],
+      "args": ["run", "remake", "--", "--name", "${input:componentName}"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "componentName",
+      "description": "Name your component.",
+      "default": "NewComponent",
+      "type": "promptString"
+    }
+  ]
+}
