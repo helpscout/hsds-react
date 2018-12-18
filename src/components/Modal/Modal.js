@@ -173,15 +173,17 @@ class Modal extends Component<Props> {
   }
 
   positionCloseNode = (scrollableNode?: HTMLElement) => {
-    const scrollNode = scrollableNode || this.scrollableNode
-    if (!this.closeNode || !isNodeElement(scrollNode)) return
+    setTimeout(() => {
+      const scrollNode = scrollableNode || this.scrollableNode
+      if (!this.closeNode || !isNodeElement(scrollNode)) return
 
-    const defaultOffset = this.props.closeIconOffset + 1
-    const offset = `${scrollNode.offsetWidth -
-      scrollNode.clientWidth +
-      defaultOffset}px`
+      const defaultOffset = this.props.closeIconOffset + 1
+      const offset = `${scrollNode.offsetWidth -
+        scrollNode.clientWidth +
+        defaultOffset}px`
 
-    this.closeNode.style.right = offset
+      this.closeNode.style.right = offset
+    }, this.props.closeIconRepositionDelay)
   }
 
   getCloseMarkup = () => {
