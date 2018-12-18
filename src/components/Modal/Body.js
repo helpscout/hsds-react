@@ -1,4 +1,5 @@
 // @flow
+import 'resizey'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
@@ -11,6 +12,7 @@ import { BodyUI } from './styles/Body.css.js'
 type Props = {
   children?: any,
   className?: string,
+  innerRef: (node: HTMLElement) => void,
   isSeamless: boolean,
   onScroll: (event: Event) => void,
   scrollable: boolean,
@@ -20,6 +22,7 @@ type Props = {
 
 class Body extends Component<Props> {
   static defaultProps = {
+    innerRef: noop,
     isSeamless: false,
     onScroll: noop,
     scrollable: true,
@@ -31,14 +34,17 @@ class Body extends Component<Props> {
     positionCloseNode: noop,
   }
 
+  node: HTMLElement
   scrollableNode: ?HTMLElement
 
   componentDidMount() {
     this.positionCloseNode()
+    this.node.addEventListener('resize', this.positionCloseNode)
   }
 
   componentWillUnmount() {
     this.scrollableNode = null
+    this.node.removeEventListener('resize', this.positionCloseNode)
   }
 
   positionCloseNode = () => {
@@ -50,6 +56,11 @@ class Body extends Component<Props> {
   setScrollableRef = (node: HTMLElement) => {
     this.scrollableNode = node
     this.props.scrollableRef(node)
+  }
+
+  setNodeRef = node => {
+    this.node = node
+    this.props.innerRef(node)
   }
 
   render() {
@@ -87,7 +98,11 @@ class Body extends Component<Props> {
     )
 
     return (
-      <BodyUI {...getValidProps(rest)} className={componentClassName}>
+      <BodyUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        innerRef={this.setNodeRef}
+      >
         {childrenContent}
       </BodyUI>
     )
