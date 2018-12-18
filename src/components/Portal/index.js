@@ -87,8 +87,9 @@ class Portal extends React.Component {
     return mountSelector || this.document.body // fallback
   }
 
-  renderPortalContent(props) {
+  renderPortalContent = props => {
     const { children } = props
+    if (!children || !React.isValidElement(children)) return
 
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
@@ -146,38 +147,34 @@ class Portal extends React.Component {
   openPortal(props) {
     const { onBeforeOpen } = props
 
-    const mountPortal = this.mountPortal
-
     if (onBeforeOpen) {
       /* istanbul ignore next */
       if (!this.isOpening && !this.isOpen) {
         this.isOpening = true
         onBeforeOpen(() => {
-          mountPortal(props)
+          this.mountPortal(props)
         })
       }
     } else {
       this.isOpening = true
-      mountPortal(props)
+      this.mountPortal(props)
     }
   }
 
   closePortal(props) {
     const { onBeforeClose } = props
 
-    const unmountPortal = this.unmountPortal
-
     if (onBeforeClose) {
       /* istanbul ignore next */
       if (!this.isClosing) {
         this.isClosing = true
         onBeforeClose(() => {
-          unmountPortal(props)
+          this.unmountPortal(props)
         })
       }
     } else {
       this.isClosing = true
-      unmountPortal(props)
+      this.unmountPortal(props)
     }
   }
 

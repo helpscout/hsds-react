@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.5.1",
+  "version": "2.5.2-4",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -79,7 +79,7 @@
     "highlight.js": "9.12.0",
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
-    "prop-types": "15",
+    "prop-types": "^15",
     "react-sortable-hoc": "0.6.7",
     "react-transition-group": "2.2.0"
   },
@@ -159,7 +159,7 @@
     "jest-watch-typeahead": "^0.2.0",
     "mkdirp": "0.5.1",
     "node-sass": "^4.9.2",
-    "np": "^3.0.4",
+    "np": "^3.1.0",
     "nyc": "12.0.2",
     "object-assign": "4.1.1",
     "object-values": "2.0.0",

@@ -86,6 +86,9 @@ describe('CloseIcon', () => {
         <Modal.Body />
       </ModalComponent>
     )
+
+    jest.runOnlyPendingTimers()
+
     const o = wrapper.find('div.c-Modal__close').first()
 
     expect(o.html()).toContain('right:')
@@ -100,6 +103,8 @@ describe('CloseIcon', () => {
     const spy = jest.spyOn(wrapper.instance(), 'positionCloseNode')
 
     global.dispatchEvent(new Event('resize'))
+
+    jest.runOnlyPendingTimers()
 
     expect(spy).toHaveBeenCalled()
   })

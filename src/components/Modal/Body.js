@@ -11,6 +11,7 @@ import { BodyUI } from './styles/Body.css.js'
 type Props = {
   children?: any,
   className?: string,
+  innerRef: (node: HTMLElement) => void,
   isSeamless: boolean,
   onScroll: (event: Event) => void,
   scrollable: boolean,
@@ -20,6 +21,7 @@ type Props = {
 
 class Body extends Component<Props> {
   static defaultProps = {
+    innerRef: noop,
     isSeamless: false,
     onScroll: noop,
     scrollable: true,
@@ -31,6 +33,7 @@ class Body extends Component<Props> {
     positionCloseNode: noop,
   }
 
+  node: HTMLElement
   scrollableNode: ?HTMLElement
 
   componentDidMount() {
@@ -50,6 +53,11 @@ class Body extends Component<Props> {
   setScrollableRef = (node: HTMLElement) => {
     this.scrollableNode = node
     this.props.scrollableRef(node)
+  }
+
+  setNodeRef = node => {
+    this.node = node
+    this.props.innerRef(node)
   }
 
   render() {
@@ -87,7 +95,11 @@ class Body extends Component<Props> {
     )
 
     return (
-      <BodyUI {...getValidProps(rest)} className={componentClassName}>
+      <BodyUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        innerRef={this.setNodeRef}
+      >
         {childrenContent}
       </BodyUI>
     )
