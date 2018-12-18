@@ -89,6 +89,7 @@ class Portal extends React.Component {
 
   renderPortalContent = props => {
     const { children } = props
+    if (!children) return
 
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
