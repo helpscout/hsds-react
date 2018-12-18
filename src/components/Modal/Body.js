@@ -1,5 +1,4 @@
 // @flow
-import 'resizey'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
@@ -39,12 +38,10 @@ class Body extends Component<Props> {
 
   componentDidMount() {
     this.positionCloseNode()
-    this.node.addEventListener('resize', this.positionCloseNode)
   }
 
   componentWillUnmount() {
     this.scrollableNode = null
-    this.node.removeEventListener('resize', this.positionCloseNode)
   }
 
   positionCloseNode = () => {
