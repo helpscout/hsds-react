@@ -113,9 +113,10 @@ button.#{$seed-button-namespace} {
   }
   // Theme: Pill
   &--pill.c-Button {
-    background-color: white;
+    background-color: _color(blue, 200);
+    border: 0;
     border-radius: 9999px;
-    color: _color(charcoal, 200);
+    color: _color(blue, 500);
     font-size: 12px;
     font-weight: 500;
     height: 18px;
@@ -123,16 +124,14 @@ button.#{$seed-button-namespace} {
     padding: 0 8px;
 
     &:hover {
-      color: _color(charcoal, 300);
-      border-color: _color(grey, 800);
+      color: _color(blue, 600);
     }
     &:active {
-      background-color: _color(grey, 300);
+      background-color: _color(blue, 300);
     }
     &:active,
     &:focus {
-      border-color: _color(grey, 800);
-      box-shadow: 0 0 0 1px _color(grey, 800);
+      box-shadow: 0 0 0 1px _color(blue, 300);
     }
   }
 }
