@@ -226,4 +226,19 @@ describe('propConnect', () => {
 
     expect(wrapper.instance() instanceof React.PureComponent).toBe(true)
   })
+
+  test('Can retrieve inner component reference via wrappedRef', () => {
+    class Buddy extends React.Component {
+      render() {
+        return <div>{this.props.noms}</div>
+      }
+    }
+
+    const spy = jest.fn()
+
+    const ConnectedBuddy = propConnect(null, { pure: true })(Buddy)
+    const wrapper = mount(<ConnectedBuddy wrappedRef={spy} />)
+
+    expect(spy).toHaveBeenCalledWith(wrapper.instance().wrappedInstance)
+  })
 })
