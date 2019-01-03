@@ -43,6 +43,19 @@ describe('Nodes', () => {
 
     expect(node).toBeFalsy()
   })
+
+  test('Can set scrollableNode if defined', () => {
+    const el = document.createElement('div')
+    const wrapper = mount(
+      <ChatScroller scrollableNode={el}>
+        <div />
+      </ChatScroller>
+    )
+
+    const node = wrapper.instance().scrollableNode
+
+    expect(node).toBe(el)
+  })
 })
 
 describe('getLatestMessageNode', () => {

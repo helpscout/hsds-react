@@ -1,5 +1,5 @@
 import * as React from 'react'
-import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
+import * as ReactDOM from 'react-dom'
 import propConnect from '../PropProvider/propConnect'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { last } from '../../utilities/arrays'
@@ -20,6 +20,7 @@ export interface Props {
   onScroll: (...args: any) => void
   scrollCondition: (...args: any) => void
   scrollableSelector: string
+  scrollableNode: null
   smoothScrollDuration: number
 }
 
@@ -35,8 +36,8 @@ export class ChatScroller extends React.PureComponent<Props> {
     smoothScrollDuration: 100,
   }
 
-  document: Document
   childRef: any = null
+  node: any = null
   scrollableNode: any = null
 
   componentDidMount() {
@@ -116,15 +117,15 @@ export class ChatScroller extends React.PureComponent<Props> {
     if (!this.scrollableNode) return
 
     smoothScrollTo(scrollProps)
-    this.props.onScroll()
+    this.props.onScroll({ target: this.scrollableNode })
   }
 
   setNodes() {
-    this.document = getDocumentFromComponent(this.childRef) || document
+    this.node = ReactDOM.findDOMNode(this.childRef)
 
-    this.scrollableNode = this.document.querySelector(
-      this.props.scrollableSelector
-    )
+    this.scrollableNode =
+      this.props.scrollableNode ||
+      (this.node && this.node.querySelector(this.props.scrollableSelector))
   }
 
   setChildNodeRef = ref => (this.childRef = ref)
