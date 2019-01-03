@@ -86,3 +86,9 @@ const remapConfigToProps = {
 
 const ConnectedDerekComponent = propConnect(remapConfigToProps)(DerekComponent)
 ```
+
+## Props
+
+| Prop       | Type       | Description                                                                       |
+| ---------- | ---------- | --------------------------------------------------------------------------------- |
+| wrappedRef | `Function` | Retrieve the inner Component instance. Only available for Class-based components. |

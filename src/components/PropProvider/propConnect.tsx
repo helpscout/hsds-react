@@ -10,9 +10,11 @@ import {
   isComponentNamespaced,
 } from '../../utilities/component'
 import { isDefined, isString } from '../../utilities/is'
+import { noop } from '../../utilities/other'
 
 export interface Props {
   className?: string
+  wrappedRef: (inst: any) => void
   style: Object
 }
 
@@ -47,6 +49,7 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
     class Connect extends OuterBaseComponent<Props> {
       static defaultProps = {
         style: {},
+        wrappedRef: noop,
       }
       static displayName = displayName
 
@@ -59,6 +62,7 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
 
       setWrappedInstance(ref) {
         this.wrappedInstance = ref
+        this.props.wrappedRef(ref)
       }
 
       getNamespacedProps = (contextProps: PropProviderProps): Object => {
@@ -88,13 +92,14 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
       }
 
       getMergedProps = (contextProps: PropProviderProps): Object => {
+        const { wrappedRef, ...rest } = this.props
         const namespacedProps = this.getNamespacedProps(contextProps)
         const className = this.getMergedClassNameProp(contextProps)
         const style = this.getMergedStyleProp(contextProps)
 
         return {
           ...namespacedProps,
-          ...this.props,
+          ...rest,
           className,
           style,
           [propProviderDataAttr]: getGlobalApp(contextProps),
