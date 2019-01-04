@@ -104,6 +104,7 @@ stories.add('Custom selector', () => {
             <ChatScroller
               messages={this.state.messages}
               isTyping={this.state.isTyping}
+              scrollableSelector=".custom .c-Scrollable__content"
             >
               <div style={{ display: 'flex', height: '100%', width: '100%' }}>
                 <div style={{ padding: '0 15px' }}>

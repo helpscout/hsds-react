@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import propConnect from '../PropProvider/propConnect'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { last } from '../../utilities/arrays'
@@ -36,9 +37,10 @@ export class ChatScroller extends React.PureComponent<Props> {
     smoothScrollDuration: 100,
   }
 
-  childRef: any = null
-  node: any = null
-  scrollableNode: any = null
+  childRef: any
+  document: Document
+  node: any
+  scrollableNode: any
 
   componentDidMount() {
     this.setNodes()
@@ -122,10 +124,12 @@ export class ChatScroller extends React.PureComponent<Props> {
 
   setNodes() {
     this.node = ReactDOM.findDOMNode(this.childRef)
+    this.document = getDocumentFromComponent(this.node)
+    const innerNode =
+      this.node && this.node.querySelector(this.props.scrollableSelector)
+    const outerNode = this.document.querySelector(this.props.scrollableSelector)
 
-    this.scrollableNode =
-      this.props.scrollableNode ||
-      (this.node && this.node.querySelector(this.props.scrollableSelector))
+    this.scrollableNode = this.props.scrollableNode || innerNode || outerNode
   }
 
   setChildNodeRef = ref => (this.childRef = ref)
