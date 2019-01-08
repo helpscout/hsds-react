@@ -4,7 +4,7 @@ import Actions from './Actions'
 import Card from './Card'
 import Content from './Content'
 import Header from './Header'
-import Heading from './Heading'
+import Section from './Section'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -25,17 +25,20 @@ class Page extends React.PureComponent<Props> {
   static Card = Card
   static Content = Content
   static Header = Header
-  static Heading = Heading
+  static Section = Section
 
   getPropProviderProps = () => {
     const { isResponsive } = this.props
 
     return {
       Accordion: { isPage: true, isSeamless: true },
-      [COMPONENT_KEY.Card]: {
+      [COMPONENT_KEY.Section]: {
         isResponsive,
       },
       [COMPONENT_KEY.Header]: {
+        isResponsive,
+      },
+      [COMPONENT_KEY.Content]: {
         isResponsive,
       },
     }

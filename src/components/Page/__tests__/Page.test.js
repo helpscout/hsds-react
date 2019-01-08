@@ -19,9 +19,9 @@ describe('ClassName', () => {
 
 describe('Content', () => {
   test('Can render child content', () => {
-    const wrapper = mount(<Page>Channel 4</Page>)
+    const wrapper = mount(<Page>Channel 5</Page>)
 
-    expect(wrapper.html()).toContain('Channel 4')
+    expect(wrapper.html()).toContain('Channel 5')
   })
 
   test('Can render child component', () => {
@@ -52,7 +52,9 @@ describe('Responsive', () => {
     const wrapper = mount(
       <ConnectedPage isResponsive={true}>
         <ConnectedPage.Card>
-          <ConnectedPage.Header />
+          <ConnectedPage.Section>
+            <ConnectedPage.Header />
+          </ConnectedPage.Section>
         </ConnectedPage.Card>
         <ConnectedPage.Actions />
       </ConnectedPage>
@@ -60,7 +62,7 @@ describe('Responsive', () => {
 
     expect(
       wrapper
-        .find(Page.Card)
+        .find(Page.Section)
         .getDOMNode()
         .classList.contains('is-responsive')
     ).toBe(true)

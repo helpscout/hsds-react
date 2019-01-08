@@ -5,6 +5,7 @@ export const COMPONENT_KEY: {
   Content: string
   Header: string
   Heading: string
+  Section: string
 } = {
   Page: 'Page',
   Actions: 'PageActions',
@@ -12,4 +13,5 @@ export const COMPONENT_KEY: {
   Content: 'PageContent',
   Header: 'PageHeader',
   Heading: 'PageHeading',
+  Section: 'PageSection',
 }

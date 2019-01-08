@@ -8,22 +8,13 @@ import { COMPONENT_KEY } from './utils'
 export interface Props {
   children?: any
   className?: string
-  isResponsive: boolean
 }
 
 class Card extends React.PureComponent<Props> {
-  static defaultProps = {
-    isResponsive: false,
-  }
-
   render() {
-    const { children, className, isResponsive, ...rest } = this.props
+    const { children, className, ...rest } = this.props
 
-    const componentClassName = classNames(
-      'c-PageCard',
-      isResponsive && 'is-responsive',
-      className
-    )
+    const componentClassName = classNames('c-PageCard', className)
 
     return (
       <CardUI {...getValidProps(rest)} className={componentClassName}>

@@ -12,8 +12,7 @@ This component is a presentational wrapper used to render content within a [`Pag
 
 ## Props
 
-| Prop         | Type      | Description                                      |
-| ------------ | --------- | ------------------------------------------------ |
-| children     | `any`     | Content to render.                               |
-| className    | `string`  | Custom class names to be added to the component. |
-| isResponsive | `boolean` | Enables responsive styles. Default `false`.      |
+| Prop      | Type     | Description                                      |
+| --------- | -------- | ------------------------------------------------ |
+| children  | `any`    | Content to render.                               |
+| className | `string` | Custom class names to be added to the component. |
