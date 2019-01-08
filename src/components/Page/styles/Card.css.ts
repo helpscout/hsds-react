@@ -28,7 +28,7 @@ export const config = {
   transition: 'all 300ms ease',
 }
 
-export const CardUI = styled('section')`
+export const CardUI = styled('div')`
   ${baseStyles} background-color: white;
   border-radius: ${config.borderRadius};
   box-shadow: ${config.boxShadow};

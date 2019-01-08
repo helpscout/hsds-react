@@ -3,19 +3,43 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { HeaderUI, TitleUI, SubTitleUI } from './styles/Header.css'
-import Heading from './Heading'
+import { HeaderUI, TitleUI, SubTitleUI, HeadingUI } from './styles/Header.css'
 import { COMPONENT_KEY } from './utils'
 
 export interface Props {
   children?: any
   className?: string
   isResponsive: boolean
-  title: string
+  render?: any
+  title?: string
   subtitle?: string
   withBorder: boolean
   withBottomMargin: boolean
 }
+
+const Title = props => {
+  const { headingLevel, isSecondary, className, children, ...rest } = props
+  const componentClassName = classNames('c-PageHeading', className)
+
+  return (
+    <TitleUI className="c-PageHeader__title">
+      <HeadingUI
+        {...getValidProps(rest)}
+        selector={headingLevel || 'h1'}
+        size={isSecondary ? 'h4' : 'md'}
+        className={componentClassName}
+      >
+        {children}
+      </HeadingUI>
+    </TitleUI>
+  )
+}
+
+const Subtitle = ({ children }) => (
+  <SubTitleUI className="c-PageHeader__subtitle">
+    <Text shade="muted">{children}</Text>
+  </SubTitleUI>
+)
 
 class Header extends React.PureComponent<Props> {
   static defaultProps = {
@@ -27,9 +51,9 @@ class Header extends React.PureComponent<Props> {
 
   render() {
     const {
-      children,
       className,
       isResponsive,
+      render,
       title,
       subtitle,
       withBorder,
@@ -45,23 +69,16 @@ class Header extends React.PureComponent<Props> {
       className
     )
 
-    const titleMarkup = title && (
-      <TitleUI className="c-PageHeader__title">
-        <Heading className="c-PageHeader__titleHeading">{title}</Heading>
-      </TitleUI>
-    )
-    const subtitleMarkup = subtitle && (
-      <SubTitleUI className="c-PageHeader__subtitle">
-        <Text className="c-PageHeader__subtitleText" shade="muted">
-          {subtitle}
-        </Text>
-      </SubTitleUI>
-    )
-
     return (
       <HeaderUI {...getValidProps(rest)} className={componentClassName}>
-        {titleMarkup}
-        {subtitleMarkup}
+        {render ? (
+          render({ Title, Subtitle })
+        ) : (
+          <div>
+            <Title>{title}</Title>
+            {subtitle && <Subtitle>{subtitle}</Subtitle>}
+          </div>
+        )}
       </HeaderUI>
     )
   }
