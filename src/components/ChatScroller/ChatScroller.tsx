@@ -12,6 +12,7 @@ export interface Props {
   className?: string
   children?: any
   distanceForAutoScroll: number
+  forceScrollToBottomProp: any
   isTyping: boolean
   lastMessageId: string
   messages?: Array<any>
@@ -50,6 +51,11 @@ export class ChatScroller extends React.PureComponent<Props> {
   componentDidUpdate(prevProps) {
     if (this.shouldScrollOnUpdate(prevProps)) {
       this.autoScrollToLatestMessage()
+    }
+    if (
+      prevProps.forceScrollToBottomProp !== this.props.forceScrollToBottomProp
+    ) {
+      this.forceScrollToBottom()
     }
   }
 
@@ -124,7 +130,7 @@ export class ChatScroller extends React.PureComponent<Props> {
 
   setNodes() {
     this.node = ReactDOM.findDOMNode(this.childRef)
-    this.document = getDocumentFromComponent(this.node)
+    this.document = getDocumentFromComponent(this.childRef) || document
     const innerNode =
       this.node && this.node.querySelector(this.props.scrollableSelector)
     const outerNode = this.document.querySelector(this.props.scrollableSelector)

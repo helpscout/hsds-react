@@ -257,3 +257,26 @@ describe('shouldAutoScroll', () => {
     ).toBe(true)
   })
 })
+
+describe('forceScrollToBottomProp', () => {
+  test('Should attempt to scroll if forceScrollToBottomProp changes', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<ChatScroller forceScrollToBottomProp="one" />)
+    const inst = wrapper.instance()
+    inst.forceScrollToBottom = spy
+
+    expect(spy).not.toHaveBeenCalled()
+
+    wrapper.setProps({ forceScrollToBottomProp: 'two' })
+    expect(spy).toHaveBeenCalledTimes(1)
+
+    wrapper.setProps({ forceScrollToBottomProp: 'three' })
+    expect(spy).toHaveBeenCalledTimes(2)
+
+    wrapper.setProps({ forceScrollToBottomProp: 'one' })
+    expect(spy).toHaveBeenCalledTimes(3)
+
+    wrapper.setProps({ forceScrollToBottomProp: 'one' })
+    expect(spy).toHaveBeenCalledTimes(3)
+  })
+})
