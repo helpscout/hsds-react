@@ -34,17 +34,3 @@ describe('Content', () => {
     expect(wrapper.find('div.ron').length).toBe(1)
   })
 })
-
-describe('Responsive', () => {
-  test('Renders responsive styles, if specified', () => {
-    const wrapper = mount(<Card isResponsive={true} />)
-
-    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(true)
-  })
-
-  test('Does not render responsive styles, if specified', () => {
-    const wrapper = mount(<Card isResponsive={false} />)
-
-    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(false)
-  })
-})

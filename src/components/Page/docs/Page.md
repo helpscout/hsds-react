@@ -7,9 +7,21 @@ This component is a presentational wrapper used to render a variety of content. 
 ```jsx
 <Page>
   <Page.Card>
-    <Page.Header title="My Form" />
+    <Page.Section>
+      <Page.Header
+        render={({ Title, Subtitle }) => (
+          <div>
+            <Title level="h1">My page</Title>
+            <Subtitle>Very important stuff</Subtitle>
+          </div>
+        )}
+      />
+      <Page.content>
+        <p>Here, I will explain the importance of this</p>
+      </Page.content>
+    </Page.Section>
   </Page.Card>
-  <Page.Actions primary={<button>Save</button>} />
+  <Page.Actions primary={<button>Got it</button>} />
 </Page>
 ```
 
