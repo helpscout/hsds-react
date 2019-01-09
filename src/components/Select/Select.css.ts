@@ -28,7 +28,7 @@ export const ItemUI = styled('div')`
   z-index: 1;
 
   &.is-icon {
-    margin-right: -5px;
+    margin-right: -4px;
   }
 `
 
