@@ -127,7 +127,7 @@ export const InlinePrefixSuffixUI = styled('div')`
     }
   }
 
-  &.is-prefix {
+  &.is-suffix {
     &.is-icon {
       margin-right: -8px;
     }
