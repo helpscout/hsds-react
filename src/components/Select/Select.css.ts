@@ -26,6 +26,10 @@ export const SelectUI = styled('div')`
 export const ItemUI = styled('div')`
   position: relative;
   z-index: 1;
+
+  &.is-icon {
+    margin-right: -4px;
+  }
 `
 
 export const FieldUI = styled('select')`
