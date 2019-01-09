@@ -130,6 +130,7 @@ export class ChatScroller extends React.PureComponent<Props> {
 
   setNodes() {
     this.node = ReactDOM.findDOMNode(this.childRef)
+    /* istanbul ignore next */
     this.document = getDocumentFromComponent(this.childRef) || document
     const innerNode =
       this.node && this.node.querySelector(this.props.scrollableSelector)

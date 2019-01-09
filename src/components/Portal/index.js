@@ -39,6 +39,7 @@ class Portal extends React.Component {
   }
 
   componentDidMount() {
+    /* istanbul ignore next */
     this.document = getDocumentFromComponent(this) || window.document
     this.setState(
       {
