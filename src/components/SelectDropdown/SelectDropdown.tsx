@@ -63,7 +63,7 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedItem !== this.state.selectedItem) {
+    if (nextProps.selectedItem !== this.props.selectedItem) {
       this.setState({
         selectedItem: this.getSelectedItem(
           nextProps.items,
