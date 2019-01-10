@@ -9,6 +9,7 @@ import { initialState } from '../Dropdown/V2/Dropdown.store'
 import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
 import { itemIsActive } from '../Dropdown/V2/Dropdown.utils'
 import { COMPONENT_KEY } from './SelectDropdown.utils'
+import { find } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import {
@@ -18,6 +19,7 @@ import {
   BackdropUI,
   ErrorUI,
 } from './SelectDropdown.css'
+import { isObject } from '../../utilities/is'
 
 export interface Props extends DropdownProps {
   onChange: (...args: any) => void
@@ -26,6 +28,7 @@ export interface Props extends DropdownProps {
   isFocused: boolean
   placeholder: string
   state: string
+  value?: any
 }
 export interface State {
   isFocused: boolean
@@ -48,17 +51,29 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
     state: 'default',
     trigger: undefined,
     width: '100%',
+    value: undefined,
   }
 
   state = {
     isFocused: this.props.isFocused,
-    selectedItem: this.props.selectedItem || this.props.items[0],
+    selectedItem:
+      this.props.selectedItem ||
+      this.getSelectedItem(this.props.items, this.props.value) ||
+      this.props.items[0],
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedItem !== this.state.selectedItem) {
+    if (nextProps.selectedItem !== this.props.selectedItem) {
       this.setState({
-        selectedItem: nextProps.selectedItem,
+        selectedItem: this.getSelectedItem(
+          nextProps.items,
+          nextProps.selectedItem
+        ),
+      })
+    }
+    if (nextProps.value !== this.props.value) {
+      this.setState({
+        selectedItem: this.getSelectedItem(nextProps.items, nextProps.value),
       })
     }
   }
@@ -86,6 +101,12 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
     })
   }
 
+  getClassName() {
+    const { className } = this.props
+
+    return classNames('c-SelectDropdown', className)
+  }
+
   getActiveItem() {
     return this.props.items.filter(item =>
       itemIsActive(this.state.selectedItem, item)
@@ -103,6 +124,23 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
     }
 
     return trigger || placeholder
+  }
+
+  getSelectedItem(items: Array<any>, value: any): any {
+    if (isObject(value)) return value
+
+    return find(items, item => {
+      if (isObject(item)) {
+        return item.value === value
+      }
+      return item === value
+    })
+  }
+
+  getTriggerStyle() {
+    return {
+      textDecoration: 'none',
+    }
   }
 
   renderError() {
@@ -145,19 +183,17 @@ export class SelectDropdown extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { className, ...rest } = this.props
-
-    const componentClassName = classNames('c-SelectDropdown', className)
     return (
       <SelectDropdownUI className="c-SelectDropdownWrapper">
         <AutoDropdown
-          {...rest}
-          className={componentClassName}
+          {...this.props}
+          className={this.getClassName()}
           renderTrigger={this.renderTrigger()}
           selectedItem={this.state.selectedItem}
           onBlur={this.handleOnBlur}
           onFocus={this.handleOnFocus}
           onSelect={this.handleOnChange}
+          triggerStyle={this.getTriggerStyle()}
         />
       </SelectDropdownUI>
     )

@@ -78,6 +78,7 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | subscribe           | `Function`               |              | Subscribes to internal Dropdown state changes.                                  |
 | trigger             | `string`                 | `Dropdown`   | The text to render into the trigger.                                            |
 | triggerRef          | `Function`               |              | Retrieves the Dropdown Trigger DOM node.                                        |
+| triggerStyle        | `Object`                 |              | Inline styles for the Trigger wrapper.                                          |
 | withScrollLock      | `boolean`                | `true`       | Scroll locks the Dropdown menu.                                                 |
 | zIndex              | `number`                 | `1080`       | CSS `z-index` for the menu.                                                     |
 

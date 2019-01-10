@@ -64,6 +64,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   stateReducer: (...args: any[]) => void
   trigger: any
   triggerRef: (node: HTMLElement) => void
+  triggerStyle: any
   withScrollLock: boolean
 }
 

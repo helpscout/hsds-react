@@ -22,6 +22,7 @@ export interface Props {
   onKeyDown: (event: KeyboardEvent) => void
   onClick: (event: Event) => void
   openDropdown: () => void
+  style: any
   toggleOpen: () => void
 }
 
@@ -35,6 +36,7 @@ export class Trigger extends React.PureComponent<Props> {
     onClick: noop,
     openDropdown: noop,
     closeDropdown: noop,
+    style: {},
     toggleOpen: noop,
   }
 
@@ -112,9 +114,9 @@ const PropConnectedTrigger = propConnect(COMPONENT_KEY.Trigger)(Trigger)
 const ConnectedTrigger: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { isOpen, triggerId } = state
+    const { isOpen, triggerId, triggerStyle } = state
 
-    return { isOpen, id: triggerId }
+    return { isOpen, id: triggerId, style: triggerStyle }
   },
   // mapDispatchToProps
   {

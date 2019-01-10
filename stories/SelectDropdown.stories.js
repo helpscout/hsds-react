@@ -42,3 +42,22 @@ stories.add('Default', () => {
   }
   return <SelectDropdown {...props} />
 })
+
+stories.add('Statefully controlled', () => {
+  class Example extends React.Component {
+    state = {
+      items: [{ label: 'Will', value: '123' }, { label: 'Ron', value: '456' }],
+      value: null,
+    }
+
+    onChange = value => {
+      this.setState({ value })
+    }
+
+    render() {
+      return <SelectDropdown {...this.state} onChange={this.onChange} />
+    }
+  }
+
+  return <Example />
+})

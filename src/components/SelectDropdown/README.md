@@ -10,13 +10,14 @@ A SelectDropdown component is an enhanced version of the default HTML `<select>`
 
 ## Props
 
-| Prop         | Type       | Default   | Description                                                           |
-| ------------ | ---------- | --------- | --------------------------------------------------------------------- |
-| onChange     | `Function` |           | Callback when an item is selected.                                    |
-| errorIcon    | `string`   | `alert`   | [Icon](../Icon) to render for an `error` state.                       |
-| errorMessage | `string`   |           | Message to display (in a [Tooltip](../Tooltip)) for an `error` state. |
-| isFocused    | `boolean`  |           | Renders the focus UI.                                                 |
-| placeholder  | `string`   |           | Placeholder text if there are no selected items.                      |
-| state        | `string`   | `default` | State to render for the component.                                    |
+| Prop         | Type              | Default   | Description                                                           |
+| ------------ | ----------------- | --------- | --------------------------------------------------------------------- |
+| onChange     | `Function`        |           | Callback when an item is selected.                                    |
+| errorIcon    | `string`          | `alert`   | [Icon](../Icon) to render for an `error` state.                       |
+| errorMessage | `string`          |           | Message to display (in a [Tooltip](../Tooltip)) for an `error` state. |
+| isFocused    | `boolean`         |           | Renders the focus UI.                                                 |
+| placeholder  | `string`          |           | Placeholder text if there are no selected items.                      |
+| state        | `string`          | `default` | State to render for the component.                                    |
+| value        | `string`/`number` |           | The selected value.                                                   |
 
 For additional customization and props, check out [Dropdown](../Dropdown/V2/docs/Dropdown.md).
