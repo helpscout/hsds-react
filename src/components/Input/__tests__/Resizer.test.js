@@ -122,3 +122,15 @@ describe('offsetAmount', () => {
     expect(chars).not.toContain('R')
   })
 })
+
+describe('isMounted/didMount', () => {
+  test('Unsets _isMounted on unmount', () => {
+    const wrapper = mount(<Resizer offsetAmount={5} />)
+    const inst = wrapper.instance()
+
+    expect(inst._isMounted).toBe(true)
+
+    wrapper.unmount()
+    expect(inst._isMounted).toBe(false)
+  })
+})
