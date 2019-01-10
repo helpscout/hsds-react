@@ -56,6 +56,54 @@ describe('Nodes', () => {
 
     expect(node).toBe(el)
   })
+
+  test('Can reset scrollableNode on scrollableNode prop change', () => {
+    const el = document.createElement('div')
+    const nextEl = document.createElement('span')
+    const wrapper = mount(
+      <ChatScroller scrollableNode={el}>
+        <div />
+      </ChatScroller>
+    )
+
+    wrapper.setProps({ scrollableNode: nextEl })
+
+    const node = wrapper.instance().scrollableNode
+
+    expect(node).not.toBe(el)
+    expect(node).toBe(nextEl)
+  })
+
+  test('Can reset scrollableNode on scrollableSelector prop change', () => {
+    const wrapper = mount(
+      <ChatScroller scrollableSelector=".derek">
+        <div>
+          <div className="derek" />
+          <div className="hansel" />
+        </div>
+      </ChatScroller>
+    )
+
+    wrapper.setProps({ scrollableSelector: '.hansel' })
+    const node = wrapper.instance().scrollableNode
+
+    expect(node.classList.contains('hansel')).toBe(true)
+  })
+
+  test('scrollableNode does not reset on unrelated prop changes', () => {
+    const el = document.createElement('div')
+    const wrapper = mount(
+      <ChatScroller scrollableNode={el}>
+        <div />
+      </ChatScroller>
+    )
+
+    wrapper.setProps({ title: 'Hello!' })
+
+    const node = wrapper.instance().scrollableNode
+
+    expect(node).toBe(el)
+  })
 })
 
 describe('getLatestMessageNode', () => {

@@ -1,9 +1,10 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
+import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import propConnect from '../PropProvider/propConnect'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
-import { last } from '../../utilities/arrays'
+import { last, includes } from '../../utilities/arrays'
 import { allDefined } from '../../utilities/check'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './ChatScroller.utils'
@@ -49,6 +50,8 @@ export class ChatScroller extends React.PureComponent<Props> {
   }
 
   componentDidUpdate(prevProps) {
+    this.resetNodes(prevProps)
+
     if (this.shouldScrollOnUpdate(prevProps)) {
       this.autoScrollToLatestMessage()
     }
@@ -56,6 +59,18 @@ export class ChatScroller extends React.PureComponent<Props> {
       prevProps.forceScrollToBottomProp !== this.props.forceScrollToBottomProp
     ) {
       this.forceScrollToBottom()
+    }
+  }
+
+  resetNodes(nextProps) {
+    const { diffs } = getShallowDiffs(nextProps, this.props)
+
+    if (!diffs.length) return
+
+    const matches = ['scrollableSelector', 'scrollableNode']
+
+    if (diffs.some(item => includes(matches, item))) {
+      this.setNodes()
     }
   }
 
