@@ -108,6 +108,18 @@ describe('selectedItem', () => {
 
     expect(wrapper.find('Dropdown').prop('selectedItem')).toBe(prevItem)
   })
+
+  test('Does not reset the selectItem on an unrelated change', () => {
+    const item = jest.fn()
+
+    const wrapper = mount(<SelectDropdown selectedItem={undefined} />)
+
+    wrapper.setState({ selectedItem: item })
+    wrapper.setProps({ selectedItem: undefined })
+
+    // @ts-ignore
+    expect(wrapper.state().selectedItem).toBe(item)
+  })
 })
 
 describe('renderTrigger', () => {
