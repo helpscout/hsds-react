@@ -1,6 +1,4 @@
-// @flow
-// See: https://github.com/Shopify/polaris/blob/master/src/components/TextField/Resizer.tsx
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -17,19 +15,19 @@ const ENTITIES_TO_REPLACE = {
 }
 const REPLACE_REGEX = /[\n&<>]/g
 
-type Props = {
-  className?: string,
-  contents: string,
-  currentHeight: ?number,
-  minimumLines: number,
-  offsetAmount: number,
-  onResize: (size: number) => void,
-  seamless: boolean,
+export interface Props {
+  className?: string
+  contents: string
+  currentHeight?: number
+  minimumLines: number
+  offsetAmount: number
+  onResize: (size: number) => void
+  seamless: boolean
 }
 
 type RefNode = HTMLDivElement | null
 
-class Resizer extends Component<Props> {
+export class Resizer extends React.PureComponent<Props> {
   static defaultProps = {
     contents: '',
     currentHeight: null,
@@ -40,13 +38,43 @@ class Resizer extends Component<Props> {
   }
   contentNode: RefNode
   minimumLinesNode: RefNode
+  _isMounted = false
 
   componentDidMount() {
+    this._isMounted = true
     this.handleOnResize()
+
+    // Re-trigger to help recalculate when used within heavier components/views.
+    /* istanbul ignore next */
+    requestAnimationFrame(() => {
+      if (this._isMounted) {
+        this.handleOnResize()
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   componentDidUpdate() {
     this.handleOnResize()
+  }
+
+  getClassName() {
+    const { className } = this.props
+
+    return classNames('c-InputResizer', className)
+  }
+
+  getContentClassName() {
+    const { seamless } = this.props
+
+    return classNames(
+      'c-InputGhost',
+      'c-InputGhost--characters',
+      seamless && 'is-seamless'
+    )
   }
 
   // Ignoring as height calculation isn't possible with JSDOM
@@ -89,39 +117,36 @@ class Resizer extends Component<Props> {
       : '<br>'
   }
 
-  render() {
-    const { className, contents, minimumLines, seamless } = this.props
-    const handleOnResize = this.handleOnResize
+  setMinimumLinesNode = node => (this.minimumLinesNode = node)
+  setContentNodeRef = node => (this.contentNode = node)
 
-    const componentClassName = classNames('c-InputResizer', className)
+  renderMinimumLines() {
+    const { minimumLines } = this.props
+    if (!minimumLines) return
 
-    const minimumLinesMarkup = minimumLines ? (
+    return (
       <div
-        ref={(node: RefNode) => (this.minimumLinesNode = node)}
-        className={classNames(
-          'c-InputGhost',
-          'c-InputGhost--lineBreak',
-          seamless && 'is-seamless'
-        )}
+        ref={this.setMinimumLinesNode}
+        className={this.getContentClassName()}
         dangerouslySetInnerHTML={{
           __html: this.getContentsForMinimumLines(minimumLines),
         }}
       />
-    ) : null
+    )
+  }
+
+  render() {
+    const { contents } = this.props
 
     return (
-      <div aria-hidden className={componentClassName}>
-        <EventListener event="resize" handler={handleOnResize} />
+      <div aria-hidden className={this.getClassName()}>
+        <EventListener event="resize" handler={this.handleOnResize} />
         <div
-          ref={(node: RefNode) => (this.contentNode = node)}
-          className={classNames(
-            'c-InputGhost',
-            'c-InputGhost--characters',
-            seamless && 'is-seamless'
-          )}
+          ref={this.setContentNodeRef}
+          className={this.getContentClassName()}
           dangerouslySetInnerHTML={{ __html: this.getFinalContents(contents) }}
         />
-        {minimumLinesMarkup}
+        {this.renderMinimumLines()}
       </div>
     )
   }
