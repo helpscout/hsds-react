@@ -1,4 +1,4 @@
-import { first, last, random } from '../arrays'
+import { first, last, random, find } from '../arrays'
 
 describe('first', () => {
   test('Returns undefined if empty', () => {
@@ -28,5 +28,34 @@ describe('Random', () => {
   test('Returns a random item', () => {
     const array = [1, 2, 3]
     expect(array).toContain(random(array))
+  })
+})
+
+describe('find', () => {
+  test('Returns undefined if empty', () => {
+    expect(find()).toBeFalsy()
+  })
+
+  test('Can find an item from an array', () => {
+    const array = [1, 2, 3]
+    const result = find(array, item => item === 2)
+
+    expect(result).toBe(2)
+  })
+
+  test('Polyfills if Array.prototype is undefined', () => {
+    const fn = Array.prototype.find
+    // Temporarily remove the prototype
+    // eslint-disable-next-line
+    Array.prototype.find = undefined
+
+    const array = [1, 2, 3]
+    const result = find(array, item => item === 2)
+
+    expect(result).toBe(2)
+
+    // Restore the prototype
+    // eslint-disable-next-line
+    Array.prototype.find = fn
   })
 })

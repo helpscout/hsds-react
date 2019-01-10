@@ -1,3 +1,5 @@
+import { noop } from './other'
+
 /**
  * Returns the first item of an array
  * @param  {Array} array The array.
@@ -31,4 +33,18 @@ export const random = (array: Array<any> = []): any => {
  */
 export const includes = (array: Array<any> = [], item: any): boolean => {
   return array.indexOf(item) >= 0
+}
+
+/**
+ * Simple polyfill for Array.prototype.find
+ * @param   {Array} array The array.
+ * @param   {Function} callback Callback to match.
+ * @returns {boolean} The result.
+ */
+export const find = (
+  array: Array<any> = [],
+  callback: (item) => any = noop
+): any => {
+  if (Array.prototype.find) return array.find(callback)
+  return array.filter(callback)[0]
 }

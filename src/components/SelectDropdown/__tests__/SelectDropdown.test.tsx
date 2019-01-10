@@ -82,10 +82,13 @@ describe('Events', () => {
 
 describe('selectedItem', () => {
   test('Updates the selectedItem on if prop changes', () => {
-    const prevItem = jest.fn()
-    const nextItem = jest.fn()
+    const prevItem = {}
+    const nextItem = {}
+    const items = [prevItem, nextItem]
 
-    const wrapper = mount(<SelectDropdown selectedItem={prevItem} />)
+    const wrapper = mount(
+      <SelectDropdown items={items} selectedItem={prevItem} />
+    )
 
     expect(wrapper.find('Dropdown').prop('selectedItem')).toBe(prevItem)
 
@@ -187,5 +190,38 @@ describe('Error', () => {
     const el = wrapper.find('Tooltip').first()
 
     expect(el.prop('title')).toBe('Uh oh!')
+  })
+})
+
+describe('value', () => {
+  test('Sets initial selectedItem state with value onMount', () => {
+    const items = [
+      {
+        value: 'will',
+      },
+      {
+        value: 'ron',
+      },
+    ]
+    const wrapper = mount(<SelectDropdown items={items} value="ron" />)
+
+    // @ts-ignore
+    expect(wrapper.state().selectedItem.value).toBe('ron')
+  })
+
+  test('Updates selectedItem state on value change', () => {
+    const items = [
+      {
+        value: 'will',
+      },
+      {
+        value: 'ron',
+      },
+    ]
+    const wrapper = mount(<SelectDropdown items={items} />)
+    wrapper.setProps({ value: 'ron' })
+
+    // @ts-ignore
+    expect(wrapper.state().selectedItem.value).toBe('ron')
   })
 })

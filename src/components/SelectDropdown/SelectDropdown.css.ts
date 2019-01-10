@@ -19,6 +19,11 @@ export const InputUI = styled('div')`
   padding-left: 16px;
   padding-right: 16px;
   position: relative;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
 
   * {
     box-sizing: border-box;
