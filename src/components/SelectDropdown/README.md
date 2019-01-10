@@ -1,6 +1,6 @@
 # SelectDropdown
 
-A SelectDropdown component is an enhanced version of the default HTML <select> with a stylized menu UI. It differs from the [Select](../Select) component as it uses [Dropdown](../Dropdown/V2/docs/Dropdown.md) for it's UI interactions.
+A SelectDropdown component is an enhanced version of the default HTML `<select>` with a stylized menu UI. It differs from the [Select](../Select) component as it uses [Dropdown](../Dropdown/V2/docs/Dropdown.md) for it's UI interactions.
 
 ## Example
 
