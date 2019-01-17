@@ -2,7 +2,7 @@
 
 # HSDS: React
 
-[![Build Status](https://travis-ci.org/helpscout/hsds-react.svg?branch=master)](https://travis-ci.org/helpscout/hsds-react) [![Coverage Status](https://coveralls.io/repos/github/helpscout/hsds-react/badge.svg?branch=master)](https://coveralls.io/github/helpscout/hsds-react?branch=master) [![npm version](https://badge.fury.io/js/%40helpscout%2Fblue.svg)](https://badge.fury.io/js/%40helpscout%2Fblue) ![node](https://img.shields.io/badge/node-8.11.3-blue.svg) ![npm](https://img.shields.io/badge/npm-6.4.1-blue.svg)
+[![Build Status](https://travis-ci.org/helpscout/hsds-react.svg?branch=master)](https://travis-ci.org/helpscout/hsds-react) [![Coverage Status](https://coveralls.io/repos/github/helpscout/hsds-react/badge.svg?branch=master)](https://coveralls.io/github/helpscout/hsds-react?branch=master) [![npm version](https://badge.fury.io/js/%40helpscout%2Fhsds-react.svg)](https://badge.fury.io/js/%40helpscout%2Fhsds-react) ![node](https://img.shields.io/badge/node-8.11.3-blue.svg) ![npm](https://img.shields.io/badge/npm-6.4.1-blue.svg)
 
 React components for Help Scout's Design System
 
