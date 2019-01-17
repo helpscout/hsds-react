@@ -1,12 +1,10 @@
-// @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import { getColor } from '../../../styles/utilities/color'
-import forEach from '../../../styles/utilities/forEach'
-import { BEM } from '../../../utilities/classNames'
-import styled from '../../styled'
-
-const wrapperBEM = BEM('.c-TagWrapper')
-const bem = BEM('.c-Tag')
+import baseStyles from '../../styles/resets/baseStyles.css.js'
+import { getColor } from '../../styles/utilities/color'
+import forEach from '../../styles/utilities/forEach'
+import Animate from '../Animate'
+import Flexy from '../Flexy'
+import Spinner from '../Spinner'
+import styled from '../styled'
 
 export const config = {
   borderRadius: 3,
@@ -23,8 +21,17 @@ export const config = {
   padding: '1px 4px',
 }
 
+export const BodyUI = styled(Flexy)`
+  max-width: 100%;
+`
+
+export const AnimateUI = styled(Animate)`
+  max-width: 100%;
+`
+
 export const TagWrapperUI = styled('div')`
-  ${baseStyles} display: inline-block;
+  ${baseStyles};
+  display: inline-block;
   max-width: 100%;
 
   &.is-display-block {
@@ -33,14 +40,11 @@ export const TagWrapperUI = styled('div')`
   &.is-display-inlineBlock {
     display: inline-block;
   }
-
-  ${wrapperBEM.element('animate')} {
-    max-width: 100%;
-  }
 `
 
 export const TagUI = styled('div')`
-  ${baseStyles} background-color: white;
+  ${baseStyles};
+  background-color: white;
   border-radius: ${config.borderRadius}px;
   border: 1px solid currentColor;
   color: ${config.colors.default};
@@ -49,11 +53,9 @@ export const TagUI = styled('div')`
   height: ${config.height}px;
   max-width: 100%;
 
-  ${bem.element('body')} {
-    max-width: 100%;
-  }
+  ${makeColorStyles()};
 
-  ${makeColorStyles()} &.is-pulsing {
+  &.is-pulsing {
     animation: _Blue_Tag_Blink 4s infinite both;
     backface-visibility: hidden;
     filter: blur(0);
@@ -80,6 +82,15 @@ export const TagUI = styled('div')`
     100% {
       opacity: 0.2;
     }
+  }
+`
+
+export const SpinnerUI = styled(Spinner)`
+  color: currentColor;
+  padding: 0 1px;
+
+  &.is-filled {
+    color: white;
   }
 `
 

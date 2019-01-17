@@ -1,6 +1,7 @@
 type Noop = () => void
 
 export const noop: Noop = () => undefined
+export const promiseNoop: any = () => Promise.resolve()
 
 export const requestAnimationFrame = (
   callback: FrameRequestCallback | Noop
