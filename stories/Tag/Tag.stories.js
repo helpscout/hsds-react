@@ -1,21 +1,41 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import {
+  withKnobs,
+  boolean,
+  number,
+  select,
+  text,
+} from '@storybook/addon-knobs'
+import { withArtboard } from '@helpscout/artboard'
 import { Tag } from '../../src/index.js'
 
 const stories = storiesOf('Tag', module)
+stories.addDecorator(withArtboard({ id: 'Tag' }))
+stories.addDecorator(withKnobs)
 
-stories.add('default', () => <Tag>Ron</Tag>)
-
-stories.add('colors', () => (
-  <div>
-    <Tag color="red">Ron</Tag>
-    <Tag color="grey">Ron</Tag>
-    <Tag color="green">Ron</Tag>
-    <Tag color="blue">Ron</Tag>
-    <Tag color="orange">Ron</Tag>
-    <Tag color="purple">Ron</Tag>
-  </div>
-))
+stories.add('Default', () => {
+  const props = {
+    color: select(
+      'color',
+      {
+        red: 'red',
+        grey: 'grey',
+        green: 'green',
+        blue: 'blue',
+        orange: 'orange',
+        purple: 'purple',
+      },
+      'grey'
+    ),
+    children: text('children', 'Ron'),
+    filled: boolean('filled', false),
+    pulsing: boolean('pulsing', false),
+    isRemovable: boolean('isRemovable', false),
+    isRemoving: boolean('isRemoving', false),
+  }
+  return <Tag {...props} />
+})
 
 stories.add('filled', () => (
   <div>
@@ -37,52 +57,6 @@ stories.add('filled', () => (
     <Tag color="purple" filled>
       Ron
     </Tag>
-  </div>
-))
-
-stories.add('isRemovable', () => (
-  <div>
-    <div>
-      <Tag color="red" isRemovable>
-        Ron
-      </Tag>
-      <Tag color="grey" isRemovable>
-        Ron
-      </Tag>
-      <Tag color="green" isRemovable>
-        Ron
-      </Tag>
-      <Tag color="blue" isRemovable>
-        Ron
-      </Tag>
-      <Tag color="orange" isRemovable>
-        Ron
-      </Tag>
-      <Tag color="purple" isRemovable>
-        Ron
-      </Tag>
-    </div>
-    <br />
-    <div>
-      <Tag color="red" filled isRemovable>
-        Ron
-      </Tag>
-      <Tag color="grey" filled isRemovable>
-        Ron
-      </Tag>
-      <Tag color="green" filled isRemovable>
-        Ron
-      </Tag>
-      <Tag color="blue" filled isRemovable>
-        Ron
-      </Tag>
-      <Tag color="orange" filled isRemovable>
-        Ron
-      </Tag>
-      <Tag color="purple" filled isRemovable>
-        Ron
-      </Tag>
-    </div>
   </div>
 ))
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Centralize from '../Centralize'
+import { Centralize } from '../Centralize'
 
 describe('ClassName', () => {
   test('Has default className', () => {

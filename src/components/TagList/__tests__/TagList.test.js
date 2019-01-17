@@ -58,7 +58,7 @@ describe('isRemovable', () => {
         <Tag />
       </TagList>
     )
-    const o = wrapper.find(Tag)
+    const o = wrapper.find('Tag')
 
     expect(o.props().isRemovable).toBe(false)
   })
@@ -69,7 +69,7 @@ describe('isRemovable', () => {
         <Tag />
       </TagList>
     )
-    const o = wrapper.find(Tag)
+    const o = wrapper.find('Tag')
 
     expect(o.props().isRemovable).toBe(true)
   })
@@ -78,8 +78,14 @@ describe('isRemovable', () => {
 describe('onRemove', () => {
   test('Fires callback from tag, if specified', () => {
     const spy = jest.fn()
+    const mockOnBeforeRemovePromise = () => ({ then: cb => cb() })
+
     const wrapper = mount(
-      <TagList onRemove={spy} isRemovable>
+      <TagList
+        onBeforeRemove={mockOnBeforeRemovePromise}
+        onRemove={spy}
+        isRemovable
+      >
         <Tag id={1} />
         <Tag id={2} />
       </TagList>

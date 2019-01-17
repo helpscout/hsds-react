@@ -14,6 +14,15 @@ export class SampleComponent extends Component {
     this.handleOnRemove = this.handleOnRemove.bind(this)
   }
 
+  onBeforeRemove({ id }) {
+    return new Promise(resolve => {
+      console.log('REMOVING', id)
+      setTimeout(() => {
+        resolve()
+      }, 500)
+    })
+  }
+
   handleOnRemove({ id }) {
     this.setState({
       tags: this.state.tags.filter(tag => tag.id !== id),
@@ -35,7 +44,11 @@ export class SampleComponent extends Component {
     })
 
     return (
-      <TagList isRemovable onRemove={handleOnRemove}>
+      <TagList
+        onBeforeRemove={this.onBeforeRemove}
+        isRemovable
+        onRemove={handleOnRemove}
+      >
         {tagMarkup}
       </TagList>
     )

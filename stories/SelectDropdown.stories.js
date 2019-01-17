@@ -13,7 +13,9 @@ import { storiesOf } from '@storybook/react'
 import { withArtboard } from '@helpscout/artboard'
 
 const stories = storiesOf('SelectDropdown', module)
-stories.addDecorator(withArtboard({ withResponsiveWidth: true }))
+stories.addDecorator(
+  withArtboard({ id: 'SelectDropdown', withResponsiveWidth: true })
+)
 stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({
