@@ -213,11 +213,6 @@ export function makeFieldStyles(): string {
     ${makeSizeStyles()};
     ${makeStateStyles()};
 
-    @-moz-document url-prefix() {
-      color: transparent;
-      text-shadow: 0 0 0 black;
-    }
-
     &.is-resizable {
       resize: vertical !important;
     }

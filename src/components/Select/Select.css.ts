@@ -33,6 +33,8 @@ export const ItemUI = styled('div')`
 `
 
 export const FieldUI = styled('select')`
+  ${getFirefoxStyles()};
+
   &.c-InputField {
     ${makeFieldStyles};
     padding-left: 8px;
@@ -85,3 +87,14 @@ export const SelectArrowsUI = styled('div')`
     right: 40px;
   }
 `
+
+function getFirefoxStyles() {
+  // Removes outline in Firefox
+  // https://stackoverflow.com/questions/3773430/remove-outline-from-select-box-in-ff/11603104#11603104
+  return `
+    @-moz-document url-prefix() {
+      color: transparent !important;
+      text-shadow: 0 0 0 black !important;
+    }
+  `
+}
