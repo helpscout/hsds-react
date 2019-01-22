@@ -1,9 +1,8 @@
-// @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
-import forEach from '../../../styles/utilities/forEach'
-import variableFontSize from '../../../styles/utilities/variableFontSize'
-import styled from '../../styled'
+import baseStyles from '../../styles/resets/baseStyles.css.js'
+import { getColor, getThemeBrandProp } from '../../styles/utilities/color'
+import forEach from '../../styles/utilities/forEach'
+import variableFontSize from '../../styles/utilities/variableFontSize'
+import styled from '../styled'
 
 export const config = {
   borderRadius: 3,
@@ -13,7 +12,7 @@ export const config = {
   position: 'relative',
   size: {
     xl: {
-      size: 60,
+      size: 64,
       fontSize: 13,
     },
     lg: {
@@ -41,26 +40,19 @@ export const config = {
       fontSize: 10,
     },
   },
-  transitionDuration: '160ms',
-  transitionEasing: 'ease',
 }
 
 export const AvatarUI = styled('div')`
-  ${baseStyles}
+  ${baseStyles};
   height: ${config.size.md.size}px;
   position: relative;
   width: ${config.size.md.size}px;
-  transition:
-    width ${config.transitionDuration} ${config.transitionEasing},
-    height ${config.transitionDuration} ${config.transitionEasing};
 
-  ${props => getColorStyles(props)}
-
-  &.is-light {
+  ${props => getColorStyles(props)} &.is-light {
     color: ${getColor('grey.400')};
   }
 
-  ${getSizeStyles()}
+  ${getSizeStyles()};
 `
 
 export const CropUI = styled('div')`
@@ -87,7 +79,6 @@ export const ImageUI = styled('div')`
   height: 100%;
   width: 100%;
   opacity: 0;
-  transition: opacity 160ms ease;
 
   &.is-herbieFullyLoaded {
     opacity: 1;

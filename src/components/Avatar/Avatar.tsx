@@ -1,12 +1,12 @@
-// @flow
-import type { StatusDotStatus } from '../StatusDot/types'
-import type { AvatarShape, AvatarSize } from './types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
+import { StatusDotStatus } from '../StatusDot/types'
+import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
 import VisuallyHidden from '../VisuallyHidden'
 import { includes } from '../../utilities/arrays'
-import { namespaceComponent } from '../../utilities/component'
+import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
 import {
@@ -17,40 +17,39 @@ import {
   OuterBorderUI,
   StatusUI,
   TitleUI,
-} from './styles/Avatar.css.js'
-import { COMPONENT_KEY } from './utils'
+} from './Avatar.css'
+import { COMPONENT_KEY, IMAGE_STATES } from './Avatar.utils'
 
-type Props = {
-  borderColor?: string,
-  className?: string,
-  count?: number | string,
-  image?: string,
-  initials?: string,
-  light: boolean,
-  name: string,
-  onLoad?: () => void,
-  onError?: () => void,
-  outerBorderColor?: string,
-  showStatusBorderColor: boolean,
-  shape: AvatarShape,
-  size: AvatarSize,
-  statusIcon?: string,
-  status?: StatusDotStatus,
-  withShadow: boolean,
+export interface Props {
+  animationDuration: number
+  animationEasing: string
+  borderColor?: string
+  className?: string
+  count?: number | string
+  image?: string
+  initials?: string
+  light: boolean
+  name: string
+  onLoad?: () => void
+  onError?: () => void
+  outerBorderColor?: string
+  showStatusBorderColor: boolean
+  shape: AvatarShape
+  size: AvatarSize
+  statusIcon?: string
+  status?: StatusDotStatus
+  style: any
+  withShadow: boolean
 }
 
-type State = {
-  imageLoaded: string,
+export interface State {
+  imageLoaded: string
 }
 
-export const IMAGE_STATES = {
-  loading: 'loading',
-  loaded: 'loaded',
-  failed: 'failed',
-}
-
-class Avatar extends Component<Props, State> {
+export class Avatar extends React.PureComponent<Props, State> {
   static defaultProps = {
+    animationDuration: 160,
+    animationEasing: 'ease',
     borderColor: 'transparent',
     light: false,
     name: '',
@@ -58,6 +57,7 @@ class Avatar extends Component<Props, State> {
     showStatusBorderColor: false,
     size: 'md',
     shape: 'circle',
+    style: {},
     withShadow: false,
   }
 
@@ -103,7 +103,7 @@ class Avatar extends Component<Props, State> {
     return classNames(shape && `is-${shape}`, size && `is-${size}`)
   }
 
-  getCropStyles = (): ?Object => {
+  getCropStyles = () => {
     let styles = {}
 
     if (this.hasImage()) {
@@ -113,12 +113,12 @@ class Avatar extends Component<Props, State> {
       }
     }
 
-    styles = Object.keys(styles).length ? styles : null
+    styles = Object.keys(styles).length ? styles : {}
 
     return styles
   }
 
-  getCropMarkup = () => {
+  renderCrop = () => {
     const { withShadow } = this.props
     const contentMarkup = this.getContentMarkup()
     const styles = this.getCropStyles()
@@ -136,7 +136,7 @@ class Avatar extends Component<Props, State> {
     )
   }
 
-  getStatusMarkup = () => {
+  renderStatus = () => {
     const {
       borderColor,
       showStatusBorderColor,
@@ -185,7 +185,7 @@ class Avatar extends Component<Props, State> {
   }
 
   getContentMarkup = () => {
-    const { image, name } = this.props
+    const { animationDuration, animationEasing, image, name } = this.props
 
     const isImageLoaded = image && this.isImageLoaded()
 
@@ -193,9 +193,13 @@ class Avatar extends Component<Props, State> {
       'c-Avatar__image',
       isImageLoaded && 'is-herbieFullyLoaded'
     )
-    const imageStyle = isImageLoaded
-      ? { backgroundImage: `url('${image}')` }
-      : null
+
+    const imageStyle = {
+      backgroundImage: isImageLoaded ? `url('${image}')` : null,
+      transition: `opacity ${animationDuration}ms ${getEasingTiming(
+        animationEasing
+      )}`,
+    }
 
     const titleMarkup = this.getTitleMarkup()
     const contentMarkup = (
@@ -216,7 +220,7 @@ class Avatar extends Component<Props, State> {
     return this.hasImage() ? contentMarkup : titleMarkup
   }
 
-  getCropBorderMarkup = () => {
+  renderCropBorder = () => {
     const { borderColor, shape } = this.props
     const componentClassName = classNames(
       'c-Avatar__cropBorder',
@@ -230,7 +234,7 @@ class Avatar extends Component<Props, State> {
     return <CropBorderUI className={componentClassName} style={styles} />
   }
 
-  getOuterBorderMarkup = () => {
+  renderOuterBorder = () => {
     const { outerBorderColor, shape } = this.props
     const componentClassName = classNames(
       'c-Avatar__outerBorder',
@@ -242,6 +246,18 @@ class Avatar extends Component<Props, State> {
     }
 
     return <OuterBorderUI className={componentClassName} style={styles} />
+  }
+
+  getStyles() {
+    const { animationDuration, animationEasing, style } = this.props
+
+    return {
+      ...style,
+      transition: `width ${animationDuration}ms ${getEasingTiming(
+        animationEasing
+      )},
+      height ${animationDuration}ms ${getEasingTiming(animationEasing)}`,
+    }
   }
 
   render() {
@@ -282,17 +298,18 @@ class Avatar extends Component<Props, State> {
       <AvatarUI
         {...getValidProps(rest)}
         className={componentClassName}
+        style={this.getStyles()}
         title={name}
       >
-        {this.getCropMarkup()}
-        {this.getStatusMarkup()}
-        {this.getCropBorderMarkup()}
-        {this.getOuterBorderMarkup()}
+        {this.renderCrop()}
+        {this.renderStatus()}
+        {this.renderCropBorder()}
+        {this.renderOuterBorder()}
       </AvatarUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Avatar)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(Avatar)
 
-export default Avatar
+export default PropConnectedComponent

@@ -11,7 +11,7 @@ import avatarGridWrapperCSS from './styles/AvatarGridWrapper.css.js'
 import avatarGridContainerCSS from './styles/AvatarGridContainer.css.js'
 import avatarGridCSS from './styles/AvatarGrid.css.js'
 import { COMPONENT_KEY } from './utils'
-import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
+import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 type Props = {
   animationEasing: string,

@@ -1,16 +1,19 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import { propConnect } from '../PropProvider'
 import AvatarV2 from './AvatarV2'
 import Avatar from './Avatar'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Avatar.utils'
 
-type Props = {
-  version?: number,
+export interface Props {
+  version: number
 }
 
-class WrappedAvatar extends Component<Props> {
+class WrappedAvatar extends React.PureComponent<Props> {
+  static defaultProps = {
+    version: 1,
+  }
+
   render() {
     const { version, ...rest } = this.props
 
