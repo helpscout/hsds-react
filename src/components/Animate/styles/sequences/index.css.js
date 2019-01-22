@@ -1,4 +1,3 @@
-// @flow
 import up from './up.css.js'
 import down from './down.css.js'
 import left from './left.css.js'

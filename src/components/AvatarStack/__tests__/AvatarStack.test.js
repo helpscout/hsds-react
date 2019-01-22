@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import AvatarStack from '../AvatarStack'
+import { AvatarStack } from '../AvatarStack'
 import { Animate, Avatar, Text } from '../../index'
 
 describe('ClassName', () => {

@@ -1,8 +1,8 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
+import baseStyles from '../../styles/resets/baseStyles.css.js'
+import styled from '../styled'
 
 export const config = {
-  borderWidth: 2,
+  borderWidth: '2px',
 }
 
 export const AvatarStackUI = styled('div')`
@@ -11,7 +11,7 @@ export const AvatarStackUI = styled('div')`
   position: relative;
 
   &.is-withLayerStack {
-    padding-left: ${config.borderWidth * 3}px;
+    padding-left: calc(${config.borderWidth} * 3);
   }
 `
 
@@ -30,6 +30,6 @@ export const ItemUI = styled('div')`
   position: relative;
 
   &.is-withLayerStack {
-    margin-left: -${config.borderWidth * 3}px;
+    margin-left: 0;
   }
 `

@@ -1,50 +1,43 @@
-// @flow
-import type { AvatarShape, AvatarSize } from '../Avatar/types'
-import React, { PureComponent as Component } from 'react'
-import Avatar from '../Avatar'
-import Animate from '../Animate'
-import PropProvider from '../PropProvider'
+import * as React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { AvatarShape, AvatarSize } from '../Avatar/types'
+import Avatar from '../Avatar/index'
+import Animate from '../Animate/index'
+import propConnect from '../PropProvider/propConnect'
+import PropProvider from '../PropProvider/index'
 import { classNames } from '../../utilities/classNames'
-import {
-  namespaceComponent,
-  isComponentNamed,
-  getComponentKey,
-} from '../../utilities/component'
+import { isComponentNamed, getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
-import {
-  AvatarStackUI,
-  AvatarStackLayeringUI,
-  ItemUI,
-} from './styles/AvatarStack.css.js'
-import { COMPONENT_KEY } from './utils'
+import { AvatarStackUI, AvatarStackLayeringUI, ItemUI } from './AvatarStack.css'
+import { COMPONENT_KEY } from './AvatarStack.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
-type Props = {
-  animationEasing: string,
-  animationSequence: string,
-  animationStagger: number,
-  avatarsClassName: string,
-  avatarVersion: number,
-  borderColor?: string,
-  children?: any,
-  className?: string,
-  max: number,
-  outerBorderColor?: string,
-  shape: AvatarShape,
-  showStatusBorderColor: boolean,
-  size?: AvatarSize,
+export interface Props {
+  animationDuration: number
+  animationEasing: string
+  animationSequence: string
+  avatarsClassName?: string
+  borderColor?: string
+  children?: any
+  className?: string
+  max: number
+  outerBorderColor?: string
+  shape: AvatarShape
+  showStatusBorderColor: boolean
+  size?: AvatarSize
+  version: number
 }
 
-class AvatarStack extends Component<Props> {
+export class AvatarStack extends React.PureComponent<Props> {
   static defaultProps = {
+    animationDuration: 300,
     animationEasing: 'ease',
     animationSequence: 'fade',
-    animationStagger: 0,
-    avatarVersion: 1,
     borderColor: 'white',
     max: 5,
     shape: 'circle',
     showStatusBorderColor: true,
+    version: 1,
   }
 
   /**
@@ -54,10 +47,10 @@ class AvatarStack extends Component<Props> {
    * @returns {boolean}
    */
   shouldLayerStack = () => {
-    const { avatarVersion, size } = this.props
+    const { size, version } = this.props
 
     // Layer stacking is only supported for AvatarStack V2+
-    return !size && avatarVersion > 1
+    return !size && version > 1
   }
 
   getAvatars = () => {
@@ -66,7 +59,7 @@ class AvatarStack extends Component<Props> {
     )
   }
 
-  getTotalAvatarCount = () => {
+  getTotalAvatarCount() {
     return this.getAvatars().length
   }
 
@@ -77,7 +70,7 @@ class AvatarStack extends Component<Props> {
     return count < max ? count : max
   }
 
-  getAvatarList = () => {
+  getAvatarList() {
     const { max } = this.props
 
     const avatars = this.getAvatars()
@@ -112,12 +105,12 @@ class AvatarStack extends Component<Props> {
 
   getAvatarPropsFromIndex = index => {
     const {
-      avatarVersion,
       avatarsClassName,
       borderColor,
       outerBorderColor,
       shape,
       showStatusBorderColor,
+      version,
     } = this.props
 
     return {
@@ -128,7 +121,7 @@ class AvatarStack extends Component<Props> {
         shape,
         showStatusBorderColor,
         size: this.getAvatarSize(),
-        version: avatarVersion,
+        version,
       },
     }
   }
@@ -156,8 +149,8 @@ class AvatarStack extends Component<Props> {
     }
   }
 
-  getAvatarMarkup = () => {
-    const { animationEasing, animationSequence } = this.props
+  renderAvatars() {
+    const { animationDuration, animationEasing, animationSequence } = this.props
 
     const avatarList = this.getAvatarList()
     const componentClassName = classNames(
@@ -173,7 +166,11 @@ class AvatarStack extends Component<Props> {
 
       return (
         <ItemUI className={componentClassName} key={key} style={avatarStyles}>
-          <Animate easing={animationEasing} sequence={animationSequence}>
+          <Animate
+            duration={animationDuration}
+            easing={animationEasing}
+            sequence={animationSequence}
+          >
             <PropProvider value={avatarProps}>{avatar}</PropProvider>
           </Animate>
         </ItemUI>
@@ -183,17 +180,18 @@ class AvatarStack extends Component<Props> {
     return avatarMarkup
   }
 
-  getAdditionalAvatarMarkup = () => {
+  renderAdditionalAvatars() {
     const {
+      animationDuration,
       animationEasing,
       animationSequence,
       avatarsClassName,
-      avatarVersion,
       borderColor,
       outerBorderColor,
       shape,
       showStatusBorderColor,
       size,
+      version,
     } = this.props
 
     if (this.shouldLayerStack()) return
@@ -207,6 +205,7 @@ class AvatarStack extends Component<Props> {
       !!additionalAvatarCount && (
         <Animate
           key="AvatarGrid__additionalAvatarMarkup"
+          duration={animationDuration}
           easing={animationEasing}
           sequence={animationSequence}
         >
@@ -220,7 +219,7 @@ class AvatarStack extends Component<Props> {
               shape={shape}
               showStatusBorderColor={showStatusBorderColor}
               size={size}
-              version={avatarVersion}
+              version={version}
             />
           </ItemUI>
         </Animate>
@@ -236,7 +235,6 @@ class AvatarStack extends Component<Props> {
     const {
       animationEasing,
       animationSequence,
-      animationStagger,
       avatarsClassName,
       borderColor,
       children,
@@ -246,6 +244,7 @@ class AvatarStack extends Component<Props> {
       shape,
       showStatusBorderColor,
       size,
+      version,
       ...rest
     } = this.props
 
@@ -258,19 +257,14 @@ class AvatarStack extends Component<Props> {
     const Component = this.getAvatarStackComponent()
 
     return (
-      <Component
-        {...rest}
-        className={componentClassName}
-        stagger
-        staggerDelay={animationStagger}
-      >
-        {this.getAvatarMarkup()}
-        {this.getAdditionalAvatarMarkup()}
+      <Component {...getValidProps(rest)} className={componentClassName}>
+        {this.renderAvatars()}
+        {this.renderAdditionalAvatars()}
       </Component>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(AvatarStack)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(AvatarStack)
 
-export default AvatarStack
+export default PropConnectedComponent

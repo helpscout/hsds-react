@@ -1,6 +1,6 @@
 const css = `
-&.ax-right {
-  transform: translateX(-12px);
+&.ax-left {
+  transform: translateX(12px);
 
   &.ax-entered {
     transform: translateX(0);
