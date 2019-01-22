@@ -1,10 +1,31 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Artboard, { Guide, GuideContainer } from '@helpscout/artboard'
+import {
+  withKnobs,
+  boolean,
+  number,
+  text,
+  select,
+} from '@storybook/addon-knobs'
+import { withArtboard, Guide, GuideContainer } from '@helpscout/artboard'
 import { Avatar, AvatarStack } from '../src/index.js'
 import AvatarSpec from './Avatar/specs/Avatar'
 
+const guides = [
+  {
+    width: '100%',
+    height: '60px',
+    top: '50%',
+    marginTop: '-30px',
+    opacity: 0.1,
+  },
+]
+
 const stories = storiesOf('AvatarStack/V2', module)
+stories.addDecorator(
+  withArtboard({ id: 'hsds-avatarstack', guides, width: 400, height: 100 })
+)
+stories.addDecorator(withKnobs)
 
 class Example extends React.Component {
   state = {
@@ -84,5 +105,53 @@ class Example extends React.Component {
   }
 }
 
-stories.add('default', () => <Example />)
-stories.add('size', () => <Example size="sm" />)
+stories.add('default', () => {
+  const avatars = number('avatars', 1)
+
+  const animationDuration = number('animationDuration', 300)
+  const animationEasing = text('animationEasing', 'ease')
+  const animationSequence = text('animationSequence', 'fade')
+  const max = number('max', 5)
+
+  const animation = number('animationDuration', 300)
+  const size = select(
+    'size',
+    {
+      default: null,
+      lg: 'lg',
+      md: 'md',
+      smmd: 'smmd',
+      sm: 'sm',
+      xs: 'xs',
+      xxs: 'xxs',
+    },
+    null
+  )
+
+  const shape = select(
+    'shape',
+    {
+      square: 'square',
+      rounded: 'rounded',
+      circle: 'circle',
+    },
+    'circle'
+  )
+
+  const avatarsMarkup = [...Array(avatars)].map(() => {
+    const avatar = AvatarSpec.generate()
+    return <Avatar {...avatar} key={avatar.id} />
+  })
+
+  const props = {
+    animationDuration,
+    animationEasing,
+    animationSequence,
+    max,
+    shape,
+    size,
+    version: 2,
+  }
+
+  return <AvatarStack {...props}>{avatarsMarkup}</AvatarStack>
+})
