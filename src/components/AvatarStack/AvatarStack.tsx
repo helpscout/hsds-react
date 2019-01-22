@@ -1,17 +1,15 @@
 import * as React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { AvatarShape, AvatarSize } from '../Avatar/types'
 import Avatar from '../Avatar/index'
 import Animate from '../Animate/index'
+import propConnect from '../PropProvider/propConnect'
 import PropProvider from '../PropProvider/index'
 import { classNames } from '../../utilities/classNames'
-import {
-  namespaceComponent,
-  isComponentNamed,
-  getComponentKey,
-} from '../../utilities/component'
+import { isComponentNamed, getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
 import { AvatarStackUI, AvatarStackLayeringUI, ItemUI } from './AvatarStack.css'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './AvatarStack.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
 
 export interface Props {
@@ -28,6 +26,7 @@ export interface Props {
   shape: AvatarShape
   showStatusBorderColor: boolean
   size?: AvatarSize
+  version: number
 }
 
 export class AvatarStack extends React.PureComponent<Props> {
@@ -40,6 +39,7 @@ export class AvatarStack extends React.PureComponent<Props> {
     max: 5,
     shape: 'circle',
     showStatusBorderColor: true,
+    version: 1,
   }
 
   /**
@@ -49,10 +49,10 @@ export class AvatarStack extends React.PureComponent<Props> {
    * @returns {boolean}
    */
   shouldLayerStack = () => {
-    const { avatarVersion, size } = this.props
+    const { avatarVersion, size, version } = this.props
 
     // Layer stacking is only supported for AvatarStack V2+
-    return !size && avatarVersion > 1
+    return !size && (avatarVersion > 1 || version > 1)
   }
 
   getAvatars = () => {
@@ -246,6 +246,7 @@ export class AvatarStack extends React.PureComponent<Props> {
       shape,
       showStatusBorderColor,
       size,
+      version,
       ...rest
     } = this.props
 
@@ -258,7 +259,7 @@ export class AvatarStack extends React.PureComponent<Props> {
     const Component = this.getAvatarStackComponent()
 
     return (
-      <Component {...rest} className={componentClassName}>
+      <Component {...getValidProps(rest)} className={componentClassName}>
         {this.renderAvatars()}
         {this.renderAdditionalAvatars()}
       </Component>
@@ -266,6 +267,6 @@ export class AvatarStack extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(AvatarStack)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(AvatarStack)
 
-export default AvatarStack
+export default PropConnectedComponent

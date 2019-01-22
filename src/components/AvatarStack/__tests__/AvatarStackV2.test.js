@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import AvatarStack from '../AvatarStack'
+import { AvatarStack } from '../AvatarStack'
 import AvatarStackEntry from '../index'
 import Avatar from '../../Avatar'
 import PropProvider from '../../PropProvider'
