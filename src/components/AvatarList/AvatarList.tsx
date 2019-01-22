@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AvatarShape, AvatarSize } from '../Avatar/types'
+import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
@@ -13,7 +13,7 @@ import {
 } from '../../utilities/component'
 import { AvatarListWrapperUI } from './styles/AvatarList.css.js'
 import { COMPONENT_KEY } from './utils'
-import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
+import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 export interface Props {
   animationEasing: string

@@ -1,11 +1,11 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import BaseAvatar from './Avatar'
 
 export interface Props {
-  withBorder: boolean;
+  withBorder: boolean
 }
 
-class Avatar extends Component<Props> {
+export class Avatar extends React.PureComponent<Props> {
   static defaultProps = {
     withBorder: true,
   }

@@ -1,16 +1,16 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { AvatarShape, AvatarSize } from '../Avatar/types'
-import Avatar from '../Avatar/index'
-import Animate from '../Animate/index'
+import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
+import Avatar from '../Avatar'
+import Animate from '../Animate'
 import propConnect from '../PropProvider/propConnect'
-import PropProvider from '../PropProvider/index'
+import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed, getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
 import { AvatarStackUI, AvatarStackLayeringUI, ItemUI } from './AvatarStack.css'
 import { COMPONENT_KEY } from './AvatarStack.utils'
-import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/utils'
+import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 export interface Props {
   animationDuration: number

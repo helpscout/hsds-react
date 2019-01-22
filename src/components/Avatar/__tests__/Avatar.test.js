@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Avatar from '../Avatar'
+import { Avatar } from '../Avatar'
 import { StatusDot } from '../../index'
 
 const ui = {
@@ -77,7 +77,7 @@ describe('Image', () => {
     const image = wrapper.find(`div${ui.image}`)
 
     expect(image.exists()).toBeTruthy()
-    expect(image.prop('style')).toBe(null) // Style prop does not get set.
+    expect(image.prop('style').backgroundImage).toBeFalsy()
   })
 
   test('Render image if image prop is specified and image has finished loading', () => {
@@ -132,7 +132,7 @@ describe('Image', () => {
 
     const crop = wrapper.find(`div${ui.crop}`)
 
-    expect(crop.prop('style')).toBe(null)
+    expect(crop.prop('style')).toEqual({})
   })
 
   test('Sets `title` attribute to the `name`', () => {
