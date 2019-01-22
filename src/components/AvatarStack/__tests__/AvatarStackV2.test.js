@@ -12,7 +12,7 @@ describe('AvatarStackV2', () => {
     const comp = wrapper.find('AvatarStack').last()
 
     expect(o.length).toBe(1)
-    expect(comp.prop('avatarVersion')).toBe(2)
+    expect(comp.prop('version')).toBe(2)
   })
 
   test('Can render AvatarStack (V1)', () => {
@@ -21,7 +21,7 @@ describe('AvatarStackV2', () => {
     const comp = wrapper.find('AvatarStack').last()
 
     expect(o.length).toBe(1)
-    expect(comp.prop('avatarVersion')).toBe(1)
+    expect(comp.prop('version')).toBe(1)
   })
 
   test('Can render AvatarStackV2 via PropProvider', () => {
