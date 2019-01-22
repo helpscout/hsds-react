@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { AvatarStack } from '../AvatarStack'
+import AvatarStackV2 from '../AvatarStackV2'
 import AvatarStackEntry from '../index'
 import Avatar from '../../Avatar'
 import PropProvider from '../../PropProvider'
@@ -8,6 +9,15 @@ import PropProvider from '../../PropProvider'
 describe('AvatarStackV2', () => {
   test('Can render AvatarStack V2', () => {
     const wrapper = mount(<AvatarStackEntry version={2} />)
+    const o = wrapper.find('div.c-AvatarStack')
+    const comp = wrapper.find('AvatarStack').last()
+
+    expect(o.length).toBe(1)
+    expect(comp.prop('version')).toBe(2)
+  })
+
+  test('Can render AvatarStack V2 component', () => {
+    const wrapper = mount(<AvatarStackV2 />)
     const o = wrapper.find('div.c-AvatarStack')
     const comp = wrapper.find('AvatarStack').last()
 
@@ -52,7 +62,7 @@ describe('AvatarStackV2', () => {
 describe('Avatar', () => {
   test('Adds layer stack className', () => {
     const wrapper = mount(
-      <AvatarStack avatarVersion={2}>
+      <AvatarStack version={2}>
         <Avatar />
       </AvatarStack>
     )
@@ -63,7 +73,7 @@ describe('Avatar', () => {
 
   test('Single avatars render xl sizes', () => {
     const wrapper = mount(
-      <AvatarStack avatarVersion={2}>
+      <AvatarStack version={2}>
         <Avatar />
       </AvatarStack>
     )
@@ -74,7 +84,7 @@ describe('Avatar', () => {
 
   test('2 avatars render lg sizes', () => {
     const wrapper = mount(
-      <AvatarStack avatarVersion={2}>
+      <AvatarStack version={2}>
         <Avatar />
         <Avatar />
       </AvatarStack>
@@ -86,7 +96,7 @@ describe('Avatar', () => {
 
   test('3 avatars render md sizes', () => {
     const wrapper = mount(
-      <AvatarStack avatarVersion={2}>
+      <AvatarStack version={2}>
         <Avatar />
         <Avatar />
         <Avatar />
@@ -99,7 +109,7 @@ describe('Avatar', () => {
 
   test('3+ avatars render md sizes', () => {
     const wrapper = mount(
-      <AvatarStack avatarVersion={2}>
+      <AvatarStack version={2}>
         <Avatar />
         <Avatar />
         <Avatar />
@@ -115,7 +125,7 @@ describe('Avatar', () => {
 
   test('Adjusts z-index with layering for odd avatar counts', () => {
     const wrapper = mount(
-      <AvatarStack avatarVersion={2}>
+      <AvatarStack version={2}>
         <Avatar />
         <Avatar />
         <Avatar />
@@ -133,7 +143,7 @@ describe('Avatar', () => {
 
   test('Adjusts z-index linearly for even avatar counts', () => {
     const wrapper = mount(
-      <AvatarStack avatarVersion={2}>
+      <AvatarStack version={2}>
         <Avatar />
         <Avatar />
         <Avatar />

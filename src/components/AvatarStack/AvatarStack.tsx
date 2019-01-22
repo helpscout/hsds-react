@@ -17,7 +17,6 @@ export interface Props {
   animationEasing: string
   animationSequence: string
   avatarsClassName?: string
-  avatarVersion: number
   borderColor?: string
   children?: any
   className?: string
@@ -34,7 +33,6 @@ export class AvatarStack extends React.PureComponent<Props> {
     animationDuration: 300,
     animationEasing: 'ease',
     animationSequence: 'fade',
-    avatarVersion: 1,
     borderColor: 'white',
     max: 5,
     shape: 'circle',
@@ -49,10 +47,10 @@ export class AvatarStack extends React.PureComponent<Props> {
    * @returns {boolean}
    */
   shouldLayerStack = () => {
-    const { avatarVersion, size, version } = this.props
+    const { size, version } = this.props
 
     // Layer stacking is only supported for AvatarStack V2+
-    return !size && (avatarVersion > 1 || version > 1)
+    return !size && version > 1
   }
 
   getAvatars = () => {
@@ -107,12 +105,12 @@ export class AvatarStack extends React.PureComponent<Props> {
 
   getAvatarPropsFromIndex = index => {
     const {
-      avatarVersion,
       avatarsClassName,
       borderColor,
       outerBorderColor,
       shape,
       showStatusBorderColor,
+      version,
     } = this.props
 
     return {
@@ -123,7 +121,7 @@ export class AvatarStack extends React.PureComponent<Props> {
         shape,
         showStatusBorderColor,
         size: this.getAvatarSize(),
-        version: avatarVersion,
+        version,
       },
     }
   }
@@ -188,12 +186,12 @@ export class AvatarStack extends React.PureComponent<Props> {
       animationEasing,
       animationSequence,
       avatarsClassName,
-      avatarVersion,
       borderColor,
       outerBorderColor,
       shape,
       showStatusBorderColor,
       size,
+      version,
     } = this.props
 
     if (this.shouldLayerStack()) return
@@ -221,7 +219,7 @@ export class AvatarStack extends React.PureComponent<Props> {
               shape={shape}
               showStatusBorderColor={showStatusBorderColor}
               size={size}
-              version={avatarVersion}
+              version={version}
             />
           </ItemUI>
         </Animate>
