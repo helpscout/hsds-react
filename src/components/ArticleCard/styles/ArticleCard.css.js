@@ -1,6 +1,6 @@
 import Card from '../../Card'
 import styled from '../../styled'
-import { getColor, rgba } from '../../../styles/utilities/color.js'
+import { getColor, rgba } from '../../../styles/utilities/color'
 
 export const config = {
   hover: {
