@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import Animate from '../../Animate'
 import ArticleCard from '../../ArticleCard'
 import Card from '../../Card'
-import CardList from '../CardList'
+import { CardList } from '../CardList'
 import { AnimateGroup } from '../../index'
 
 describe('ClassName', () => {

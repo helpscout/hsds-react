@@ -158,6 +158,8 @@ export const getComponentKey = (
 
   if (Component.props && Component.props.id) {
     key = Component.props.id
+  } else if (isDefined(Component.key)) {
+    key = Component.key
   } else if (isDefined(fallback)) {
     key = fallback
   } else if (isDefined(index)) {

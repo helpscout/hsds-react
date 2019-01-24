@@ -1,26 +1,22 @@
-// @flow
-import React, { PureComponent } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
-import {
-  isComponentTypeCard,
-  namespaceComponent,
-  getComponentKey,
-} from '../../utilities/component'
+import { isComponentTypeCard, getComponentKey } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
 import classNames from '../../utilities/classNames'
 
-type Props = {
-  animationDelay: number,
-  animationEasing: string,
-  animationSequence: string,
-  animationStagger: number,
-  children?: any,
-  className?: string,
-  stagger: boolean,
+export interface Props {
+  animationDelay: number
+  animationEasing: string
+  animationSequence: string
+  animationStagger: number
+  children?: any
+  className?: string
+  stagger: boolean
 }
 
-class CardList extends PureComponent<Props> {
+export class CardList extends React.PureComponent<Props> {
   static defaultProps = {
     animationDelay: 0,
     animationEasing: 'ease',
@@ -47,8 +43,9 @@ class CardList extends PureComponent<Props> {
       animationDelay,
       animationSequence,
       animationStagger,
-      className,
       animationEasing,
+      className,
+      stagger,
       ...rest
     } = this.props
     const componentClassName = classNames('c-CardList', className)
@@ -60,7 +57,7 @@ class CardList extends PureComponent<Props> {
         easing={animationEasing}
         className={componentClassName}
         sequence={animationSequence}
-        stagger
+        stagger={stagger}
         staggerDelay={animationStagger}
       >
         {this.getChildrenMarkup()}
@@ -69,6 +66,6 @@ class CardList extends PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(CardList)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(CardList)
 
-export default CardList
+export default PropConnectedComponent
