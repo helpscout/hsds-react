@@ -2,6 +2,7 @@ import * as React from 'react'
 import { TransitionGroup } from 'react-transition-group'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
+import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, getComponentKey } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
@@ -10,6 +11,7 @@ export interface Props {
   appear?: any
   children?: any
   className?: string
+  childFactory: (...args: any) => any
   easing: string
   enter?: any
   exit?: any
@@ -22,8 +24,9 @@ export interface Props {
   staggerMax: number
 }
 
-class AnimateGroup extends React.PureComponent<Props> {
+export class AnimateGroup extends React.PureComponent<Props> {
   static defaultProps = {
+    childFactory: child => child,
     delay: 0,
     easing: 'ease-in-out',
     stagger: false,
@@ -61,19 +64,17 @@ class AnimateGroup extends React.PureComponent<Props> {
     }
   }
 
-  getChildrenMarkup = () => {
-    const { children } = this.props
+  childFactory = (child, index) => {
+    const { childFactory } = this.props
+    const animateProps = this.getAnimatePropsFromIndex(index)
+    const key = getComponentKey(child, index)
 
-    return React.Children.map(children, (child, index) => {
-      const animateProps = this.getAnimatePropsFromIndex(index)
-      const key = getComponentKey(child, index)
-
-      return (
-        <PropProvider value={animateProps} key={key}>
-          {child}
-        </PropProvider>
-      )
-    })
+    return childFactory(
+      <PropProvider value={animateProps} key={key}>
+        {child}
+      </PropProvider>,
+      index
+    )
   }
 
   render() {
@@ -99,6 +100,7 @@ class AnimateGroup extends React.PureComponent<Props> {
       appear,
       enter,
       exit,
+      childFactory: this.childFactory,
     }
 
     return (
@@ -107,12 +109,12 @@ class AnimateGroup extends React.PureComponent<Props> {
         {...transitionGroupProps}
         className={componentClassName}
       >
-        {this.getChildrenMarkup()}
+        {children}
       </TransitionGroup>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(AnimateGroup)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(AnimateGroup)
 
-export default AnimateGroup
+export default PropConnectedComponent

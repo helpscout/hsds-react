@@ -1,28 +1,47 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { ArticleCard, Card, CardList } from '../src/index.js'
+import { createSpec, faker } from '@helpscout/helix'
+import { withKnobs, boolean, text, number } from '@storybook/addon-knobs'
 
-storiesOf('CardList', module)
-  .add('default', () => (
-    <CardList>
-      <Card>One</Card>
-      <Card>Two</Card>
-      <Card>Three</Card>
-      <Card>Four</Card>
-      <Card>Five</Card>
-    </CardList>
-  ))
-  .add('ArticleCard', () => (
-    <CardList>
-      <ArticleCard title="Hello one" content="One" />
-      <ArticleCard title="Hello two" content="Two" />
-      <ArticleCard title="Hello three" content="Three" />
-    </CardList>
-  ))
-  .add('Animation Props', () => (
-    <CardList animationDelay={500} animationStagger={300}>
-      <Card>One</Card>
-      <Card>Two</Card>
-      <Card>Three</Card>
-    </CardList>
-  ))
+const stories = storiesOf('CardList', module)
+stories.addDecorator(withKnobs)
+
+const CardSpec = createSpec({
+  title: faker.lorem.sentence(),
+  content: faker.lorem.paragraph(),
+  id: faker.random.uuid(),
+  key: faker.random.uuid(),
+})
+
+stories.add('Default', () => {
+  class Example extends React.Component {
+    state = {
+      cards: [],
+    }
+
+    render() {
+      return (
+        <div style={{ margin: 'auto', maxWidth: 420 }}>
+          <CardList {...this.props}>
+            {this.props.cards.map(card => {
+              return <ArticleCard {...card} />
+            })}
+          </CardList>
+        </div>
+      )
+    }
+  }
+
+  const cards = number('cards', 3) || 0
+  const props = {
+    cards: CardSpec.generate(cards),
+    animationDelay: number('animationDelay', 0),
+    animationEasing: text('animationEasing', 'ease'),
+    animationSequence: text('animationSequence', 'fade up'),
+    animationStagger: number('animationStagger', 60),
+    stagger: boolean('stagger', true),
+  }
+
+  return <Example {...props} />
+})
