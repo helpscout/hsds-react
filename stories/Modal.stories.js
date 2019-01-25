@@ -435,7 +435,7 @@ stories.add('tabbing', () => (
 class HSAppExample extends React.Component {
   state = {
     hsApp: true,
-    isOpen: false,
+    isOpen: true,
   }
 
   toggle = () => {
@@ -458,6 +458,11 @@ class HSAppExample extends React.Component {
 
   render() {
     const app = this.state.hsApp ? 'hs-app' : 'blue'
+    const value = {
+      Button: {
+        version: 2,
+      },
+    }
     return (
       <div>
         <button onClick={this.toggleModal}>Toggle Modal</button>
@@ -473,7 +478,7 @@ class HSAppExample extends React.Component {
             }}
           >
             <FrameProvider>
-              <PropProvider app={app}>
+              <PropProvider app={app} value={value}>
                 <Modal isOpen onClose={this.closeModal}>
                   <Modal.Content>
                     <Modal.Body>
@@ -484,6 +489,8 @@ class HSAppExample extends React.Component {
                           onChange={this.toggle}
                         />
                       </FormLabel>
+                      <Button kind="primary">Primary Button</Button>
+                      <Button>Button</Button>
                       {ContentSpec.generate(12).map(({ id, content }) => (
                         <p key={id}>{content}</p>
                       ))}
