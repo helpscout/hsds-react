@@ -1,7 +1,7 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import Portal from '..'
 import Frame from 'react-frame-component'
+import { mount } from 'enzyme'
+import { Portal } from '../Portal'
 
 const cleanUp = () => {
   global.document.body.innerHTML = ''

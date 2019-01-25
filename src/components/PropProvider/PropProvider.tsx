@@ -1,5 +1,5 @@
-import { PropProviderProps } from './types'
 import * as React from 'react'
+import { PropProviderProps } from './types'
 import Context from './Context'
 import { ThemeProvider } from '../styled'
 import { setGlobalApp, shallowMergeProps, propProviderDataAttr } from './utils'
@@ -10,7 +10,7 @@ export interface Props {
   value: PropProviderProps
 }
 
-class PropProvider extends React.PureComponent<Props> {
+class PropProvider extends React.Component<Props> {
   static defaultProps = {
     app: 'blue',
     value: {},
