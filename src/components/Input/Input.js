@@ -16,6 +16,7 @@ import Label from '../Label'
 import { scrollLockY } from '../ScrollLock/ScrollLock.utils'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
+import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -357,21 +358,22 @@ export class Input extends Component<Props, State> {
     event.stopPropagation()
     const cursorIndex = event.currentTarget.selectionStart
     const currentValue = event.currentTarget.value
-    event.currentTarget.value = `${currentValue.substr(
-      0,
-      cursorIndex
-    )}\n${currentValue.substr(cursorIndex)}`
-    // next tick hack for caret insertion
-    setTimeout(() => {
-      this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)
-      console.log(this.inputNode)
-    }, 1)
+    this.setState(
+      {
+        value: `${currentValue.substr(0, cursorIndex)}\n${currentValue.substr(
+          cursorIndex
+        )}`,
+      },
+      () => {
+        this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)
+      }
+    )
   }
 
   handleOnKeyDown = (event: Event) => {
     const { hasInsertCarriageReturns } = this.props
 
-    if (hasInsertCarriageReturns && event.keyCode === 13) {
+    if (hasInsertCarriageReturns && event.keyCode === Keys.ENTER) {
       this.insertCarriageReturnAtCursorIndex(event)
     }
 
