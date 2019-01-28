@@ -224,6 +224,12 @@ stories.add('onStartTyping', () => {
   )
 })
 
+stories.add('speical key + return', () => (
+  <div>
+    <Input hasInsertCarriageReturns={true} multiline={29} resizable />
+  </div>
+))
+
 const PaddedTextArea = styled('div')`
   textarea {
     padding-bottom: 30px !important;

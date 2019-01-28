@@ -184,6 +184,20 @@ describe('Events', () => {
   })
 })
 
+describe('insertCarriageReturnsAtCursorIndex', () => {
+  test('call insertCarriageReturnAtCursorIndex if hasInsertCarriageReturns is true', () => {
+    const insertCarriageReturnAtCursorIndexSpy = jest.spyOn(
+      Input.prototype,
+      'insertCarriageReturnAtCursorIndex'
+    )
+    const wrapper = mount(<Input hasInsertCarriageReturns={true} />)
+    const el = wrapper.find('input')
+    el.simulate('keydown', { keyCode: 13 })
+
+    expect(insertCarriageReturnAtCursorIndexSpy).toHaveBeenCalled()
+  })
+})
+
 describe('value', () => {
   test('Does not update the state if new value is the same as previous value', () => {
     const lifecycleSpy = jest.spyOn(
