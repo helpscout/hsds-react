@@ -364,7 +364,7 @@ export class Input extends Component<Props, State> {
       cursorIndex
     )}\n${currentValue.substr(cursorIndex)}`
     this.setState({ value: newValue }, () => {
-      this.props.onChange(newValue)
+      this.props.onChange(this.state.value)
       this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)
     })
   }
