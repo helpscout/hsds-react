@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, render } from 'enzyme'
+import { mount, shallow, render } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Resizer'
 
@@ -185,6 +185,37 @@ describe('Events', () => {
 })
 
 describe('insertCarriageReturnsAtCursorIndex', () => {
+  test('expect state to get set', () => {
+    const onChangeSpy = jest.fn()
+    const setSelectionRangeSpy = jest.fn()
+    const preventDefaultSpy = jest.fn()
+    const stopPropagationSpy = jest.fn()
+    const wrapper = shallow(
+      <Input hasInsertCarriageReturns={true} onChange={onChangeSpy} />
+    )
+    wrapper
+      .instance()
+      .setInputNodeRef({ setSelectionRange: setSelectionRangeSpy })
+    wrapper.instance().setState = jest.fn((newState, callback) => callback())
+    wrapper.instance().insertCarriageReturnAtCursorIndex({
+      ctrlKey: true,
+      preventDefault: preventDefaultSpy,
+      stopPropagation: stopPropagationSpy,
+      currentTarget: {
+        selectionStart: 4,
+        value: 'testtest',
+      },
+    })
+    expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
+    expect(stopPropagationSpy).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance().setState).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance().setState.mock.calls[0][0]).toEqual({
+      value: 'test\ntest',
+    })
+    expect(onChangeSpy).toHaveBeenCalledTimes(1)
+    expect(setSelectionRangeSpy).toHaveBeenCalledTimes(1)
+  })
+
   test('call insertCarriageReturnAtCursorIndex if hasInsertCarriageReturns is true', () => {
     const insertCarriageReturnAtCursorIndexSpy = jest.spyOn(
       Input.prototype,

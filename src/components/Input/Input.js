@@ -353,22 +353,19 @@ export class Input extends Component<Props, State> {
   }
 
   insertCarriageReturnAtCursorIndex(event) {
-    /* istanbul ignore next */
     if (!(event.ctrlKey || event.metaKey || event.altKey)) return
     event.preventDefault()
     event.stopPropagation()
     const cursorIndex = event.currentTarget.selectionStart
     const currentValue = event.currentTarget.value
-    this.setState(
-      {
-        value: `${currentValue.substr(0, cursorIndex)}\n${currentValue.substr(
-          cursorIndex
-        )}`,
-      },
-      () => {
-        this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)
-      }
-    )
+    const newValue = `${currentValue.substr(
+      0,
+      cursorIndex
+    )}\n${currentValue.substr(cursorIndex)}`
+    this.setState({ value: newValue }, () => {
+      this.props.onChange(this.state.value)
+      this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)
+    })
   }
 
   handleOnKeyDown = (event: Event) => {
