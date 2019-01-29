@@ -60,12 +60,8 @@ class Accordion extends PureComponent<AccordionProps, AccordionState> {
     size: 'md',
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      sections: buildOpenSections(props.openSectionIds),
-    }
+  state = {
+    sections: buildOpenSections(this.props.openSectionIds),
   }
 
   componentWillReceiveProps(nextProps) {
