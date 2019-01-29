@@ -353,7 +353,6 @@ export class Input extends Component<Props, State> {
   }
 
   insertCarriageReturnAtCursorIndex(event) {
-    /* istanbul ignore next */
     if (!(event.ctrlKey || event.metaKey || event.altKey)) return
     event.preventDefault()
     event.stopPropagation()
