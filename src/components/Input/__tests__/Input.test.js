@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, render } from 'enzyme'
+import { mount, shallow, render } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Resizer'
 
@@ -185,6 +185,28 @@ describe('Events', () => {
 })
 
 describe('insertCarriageReturnsAtCursorIndex', () => {
+  test('expect state to get set', () => {
+    const preventDefaultSpy = jest.fn()
+    const stopPropagationSpy = jest.fn()
+    const wrapper = shallow(<Input hasInsertCarriageReturns={true} />)
+    wrapper.instance().setState = jest.fn()
+    wrapper.instance().insertCarriageReturnAtCursorIndex({
+      ctrlKey: true,
+      preventDefault: preventDefaultSpy,
+      stopPropagation: stopPropagationSpy,
+      currentTarget: {
+        selectionStart: 4,
+        value: 'testtest',
+      },
+    })
+    expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
+    expect(stopPropagationSpy).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance().setState).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance().setState.mock.calls[0][0]).toEqual({
+      value: 'test\ntest',
+    })
+  })
+
   test('call insertCarriageReturnAtCursorIndex if hasInsertCarriageReturns is true', () => {
     const insertCarriageReturnAtCursorIndexSpy = jest.spyOn(
       Input.prototype,
