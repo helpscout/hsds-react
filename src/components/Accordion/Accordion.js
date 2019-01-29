@@ -39,7 +39,7 @@ const getComponentClassName = ({
   )
 }
 
-const buildOpenSections = (sectionIds = []) =>
+const buildOpenSections = sectionIds =>
   sectionIds.reduce(
     (accumulator, id) => ({
       ...accumulator,

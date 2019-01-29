@@ -131,7 +131,7 @@ describe('State', () => {
       const instance = wrapper.instance()
       instance.onOpen(1)
       expect(spy).toHaveBeenCalledWith(1, ['1', '2'])
-      wrapper.setProps({ openSectionIds: [6] })
+      wrapper.setState({ sections: { 6: true, 7: false } })
       instance.onOpen(1)
       expect(spy).toHaveBeenCalledWith(1, ['6'])
     })
