@@ -19,7 +19,7 @@ describe('isModifierKeyPressed', () => {
     expect(isModifierKeyPressed(event)).toBe(true)
   })
 
-  test('return true if altKey is pressed', () => {
+  test('return true if metaKey is pressed', () => {
     const event = {
       altKey: false,
       ctrlKey: false,
@@ -28,7 +28,7 @@ describe('isModifierKeyPressed', () => {
     expect(isModifierKeyPressed(event)).toBe(true)
   })
 
-  test('return false if all modifier keys are false', () => {
+  test('return false if all modifier keys are not pressed', () => {
     const event = {
       altKey: false,
       ctrlKey: false,
