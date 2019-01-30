@@ -42,7 +42,7 @@
     "lint:js": "eslint src/**/*.js --cache",
     "pretty": "npm run prettier",
     "remake": "remake component --output=src/components",
-    "release": "np --no-yarn --no-publish",
+    "release": "np --no-yarn --contents=dist",
     "release:patch": "npm run release -- patch",
     "release:beta": "npm run release -- prerelease --yolo --any-branch --tag=beta",
     "start": "npm run storybook",
@@ -55,7 +55,6 @@
     "test:dev": "node scripts/test.js --env=jsdom",
     "test:coverage:fast": "npm run test:coverage -- --onlyChanged",
     "version": "npm run build",
-    "postversion": "npm publish dist",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
     "prettier": "npm run prettier:base -- --write",
     "update:icons": "node ./scripts/update-icons.js"
