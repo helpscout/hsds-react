@@ -54,7 +54,7 @@ describe('Uuid', () => {
 })
 
 describe('isOpen', () => {
-  test('Determines if it is open if sections includes itself', () => {
+  test('Determines if it is open if sections includes its uuid', () => {
     const wrapper = mount(<Section />)
     const uuid = wrapper.state('uuid')
     let el = wrapper.find(`div.${classNames.baseComponentClassName}`)
@@ -62,6 +62,19 @@ describe('isOpen', () => {
     expect(el.hasClass(classNames.isOpenClassName)).toBe(false)
 
     wrapper.setProps({ sections: { [uuid]: true } })
+
+    el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(classNames.isOpenClassName)).toBe(true)
+  })
+
+  test('Determines if it is open if sections includes its id', () => {
+    const wrapper = mount(<Section id="7" />)
+    let el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass(classNames.isOpenClassName)).toBe(false)
+
+    wrapper.setProps({ sections: { '7': true } })
 
     el = wrapper.find(`div.${classNames.baseComponentClassName}`)
 
