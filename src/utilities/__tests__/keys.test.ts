@@ -1,6 +1,6 @@
 import { isModifierKeyPressed } from '../keys'
 
-describe('isArray', () => {
+describe('isModifierKeyPressed', () => {
   test('return true if ctrl is pressed', () => {
     const event = {
       altKey: false,
