@@ -4,6 +4,6 @@ export const COMPONENT_KEY: {
   Item: string
 } = {
   Flexy: 'Flexy',
-  Block: 'Flexy.Block',
-  Item: 'Flexy.Item',
+  Block: 'FlexyBlock',
+  Item: 'FlexyItem',
 }

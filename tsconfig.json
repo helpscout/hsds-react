@@ -19,7 +19,8 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es5"
+    "target": "es5",
+    "types": ["enzyme", "jest", "react", "react-dom", "react-transition-group"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", ".remake/**/*"]

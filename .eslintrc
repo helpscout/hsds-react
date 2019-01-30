@@ -8,5 +8,8 @@
       "pragma": "React",
       "version": "15.0"
     }
+  },
+  "globals": {
+    "cy": true
   }
 }
