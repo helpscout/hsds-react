@@ -48,6 +48,11 @@ const buildOpenSections = sectionIds =>
     {}
   )
 
+const stringifyArray = arr => arr.sort().toString()
+
+const didOpenSectionIdsChange = (prevSectionIds, nextSectionIds) =>
+  stringifyArray(prevSectionIds) !== stringifyArray(nextSectionIds)
+
 class Accordion extends PureComponent<AccordionProps, AccordionState> {
   static Body = Body
   static Section = Section
@@ -65,7 +70,12 @@ class Accordion extends PureComponent<AccordionProps, AccordionState> {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.forceSetOpen(nextProps)
+    const { openSectionIds: nextOpenSectionIds } = nextProps
+    const { openSectionIds: prevOpenSectionIds } = this.props
+
+    if (didOpenSectionIdsChange(prevOpenSectionIds, nextOpenSectionIds)) {
+      this.forceSetOpen(nextProps)
+    }
   }
 
   forceSetOpen({ openSectionIds }) {
