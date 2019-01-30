@@ -1,6 +1,6 @@
 // @flow
 import type { AccordionProps, AccordionState } from './types'
-import React, { cloneElement, Children, Component } from 'react'
+import React, { cloneElement, Children, PureComponent } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Body from './Body'
 import Section from './Section'
@@ -39,7 +39,21 @@ const getComponentClassName = ({
   )
 }
 
-class Accordion extends Component<AccordionProps, AccordionState> {
+const buildOpenSections = sectionIds =>
+  sectionIds.reduce(
+    (accumulator, id) => ({
+      ...accumulator,
+      [id]: true,
+    }),
+    {}
+  )
+
+const stringifyArray = arr => arr.sort().toString()
+
+const didOpenSectionIdsChange = (prevSectionIds, nextSectionIds) =>
+  stringifyArray(prevSectionIds) !== stringifyArray(nextSectionIds)
+
+class Accordion extends PureComponent<AccordionProps, AccordionState> {
   static Body = Body
   static Section = Section
   static Title = Title
@@ -47,11 +61,44 @@ class Accordion extends Component<AccordionProps, AccordionState> {
   static defaultProps = {
     onOpen: noop,
     onClose: noop,
+    openSectionIds: [],
     size: 'md',
   }
 
   state = {
-    sections: {},
+    sections: buildOpenSections(this.props.openSectionIds),
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { openSectionIds: nextOpenSectionIds } = nextProps
+    const { openSectionIds: prevOpenSectionIds } = this.props
+
+    if (didOpenSectionIdsChange(prevOpenSectionIds, nextOpenSectionIds)) {
+      this.forceSetOpen(nextProps)
+    }
+  }
+
+  forceSetOpen({ openSectionIds }) {
+    const sections = buildOpenSections(openSectionIds)
+    this.setState({ sections })
+  }
+
+  getOpenSectionIds() {
+    const { sections } = this.state
+    return Object.keys(sections).reduce((accumulator, key) => {
+      if (sections[key] && sections[key] === true) {
+        return [...accumulator, key]
+      }
+      return accumulator
+    }, [])
+  }
+
+  onClose = uuid => {
+    this.props.onClose(uuid, this.getOpenSectionIds())
+  }
+
+  onOpen = uuid => {
+    this.props.onOpen(uuid, this.getOpenSectionIds())
   }
 
   setOpen = (uuid: string, isOpen: boolean) => {
@@ -77,8 +124,6 @@ class Accordion extends Component<AccordionProps, AccordionState> {
       className,
       children,
       duration,
-      onOpen,
-      onClose,
       isPage,
       isSeamless,
       size,
@@ -90,8 +135,8 @@ class Accordion extends Component<AccordionProps, AccordionState> {
       duration,
       isPage,
       isSeamless,
-      onOpen,
-      onClose,
+      onOpen: this.onOpen,
+      onClose: this.onClose,
       sections,
       setOpen: this.setOpen,
       size,

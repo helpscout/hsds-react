@@ -114,4 +114,57 @@ describe('State', () => {
     instance.setOpen('456', true)
     expect(wrapper.state('sections')).toEqual({ '123': true, '456': true })
   })
+
+  test('It should track the value of all programatically opened sections', () => {
+    const wrapper = mount(<Accordion openSectionIds={[1, 2]} />)
+    expect(wrapper.state('sections')).toEqual({ 1: true, 2: true })
+    wrapper.setProps({ openSectionIds: [4, 5, 6] })
+    expect(wrapper.state('sections')).toEqual({ 4: true, 5: true, 6: true })
+    wrapper.setProps({ openSectionIds: [] })
+    expect(wrapper.state('sections')).toEqual({})
+  })
+})
+
+describe('forceSetOpen', () => {
+  test('It should invoke forceSetOpen if the openSectionIds change', () => {
+    const wrapper = mount(<Accordion openSectionIds={[1, 2]} />)
+    const instance = wrapper.instance()
+    const spy = jest.spyOn(instance, 'forceSetOpen')
+    wrapper.setProps({ openSectionIds: [3, 4] })
+    expect(spy).toHaveBeenCalledTimes(1)
+  })
+
+  test('It should not invoke forceSetOpen if the openSectionIds did not change', () => {
+    const wrapper = mount(<Accordion openSectionIds={[1, 2]} />)
+    const instance = wrapper.instance()
+    const spy = jest.spyOn(instance, 'forceSetOpen')
+    wrapper.setProps({ size: 'lg' })
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('onOpen', () => {
+  test('It should pass an array of open section ids as the second argument to the callback', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Accordion onOpen={spy} openSectionIds={[1, 2]} />)
+    const instance = wrapper.instance()
+    instance.onOpen(1)
+    expect(spy).toHaveBeenCalledWith(1, ['1', '2'])
+    wrapper.setState({ sections: { 6: true, 7: false } })
+    instance.onOpen(1)
+    expect(spy).toHaveBeenCalledWith(1, ['6'])
+  })
+})
+
+describe('onClose', () => {
+  test('It should pass an array of open section ids as the second argument to the callback', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Accordion onClose={spy} openSectionIds={[1, 2]} />)
+    const instance = wrapper.instance()
+    instance.onClose(1)
+    expect(spy).toHaveBeenCalledWith(1, ['1', '2'])
+    wrapper.setProps({ openSectionIds: [6] })
+    instance.onClose(1)
+    expect(spy).toHaveBeenCalledWith(1, ['6'])
+  })
 })
