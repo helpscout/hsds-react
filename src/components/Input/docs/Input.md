@@ -34,6 +34,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 | errorIcon                | `string`             | Icon that renders when the state is `error`.                               |
 | errorMessage             | `string`             | Error message that renders into a Tooltip.                                 |
 | forceAutoFocusTimeout    | `bool`               | Determines the amount of time (`ms`) for the component to focus on mount.  |
+| hasCarriageReturns       | `bool`               | If `true` and `enter + special` key is pressed, a return will be inserted  |
 | helpText                 | `string`/`component` | Displays text underneath input.                                            |
 | hintText                 | `string`/`component` | Displays text above input.                                                 |
 | id                       | `string`             | ID for the input.                                                          |

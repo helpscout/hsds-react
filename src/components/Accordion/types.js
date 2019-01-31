@@ -14,6 +14,7 @@ export type AccordionProps = {
   isSeamless?: boolean,
   onOpen?: (uuid: string) => void,
   onClose?: (uuid: string) => void,
+  openSectionIds?: array,
   size?: Sizes
 }
 
@@ -38,6 +39,7 @@ export type SectionProps = {
   children: ChildrenArray<Element<typeof Title|Body>>,
   className?: string,
   duration?: number,
+  id?: string,
   isPage?: boolean,
   isSeamless?: boolean,
   onOpen?: (uuid: string) => void,

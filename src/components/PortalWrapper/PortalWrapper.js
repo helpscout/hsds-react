@@ -5,7 +5,7 @@ import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStati
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
-import Portal, { propTypes } from '../Portal'
+import Portal, { propTypes } from '../Portal/Portal'
 import Keys from '../../constants/Keys'
 import {
   createUniqueIDFactory,

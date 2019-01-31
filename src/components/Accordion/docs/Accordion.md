@@ -30,12 +30,13 @@ inner `Body` expanded simultaneously.
 
 ## Props
 
-| Prop          | Type                  | Description                                                         |
-| ------------- | --------------------- | ------------------------------------------------------------------- |
-| allowMultiple | `boolean`             | Allows multipe sections to have their body revealed simultaneously. |
-| children      | `Accordion.Section[]` | Sections to be stacked and controled.                               |
-| className     | `string`              | Custom class names to be added to the component.                    |
-| isSeamless    | `boolean`             | Exlude borders and horizontal padding.                              |
-| onOpen        | `function`            | Callback to be invoked when the body of a section is revealed.      |
-| onClose       | `function`            | Callback to be invoked when the body of a section is concealed.     |
-| size          | `string`              | The amount of padding. Valid sizes are `xs`, `sm`, `md`, and `lg`.  |
+| Prop           | Type                  | Description                                                         |
+| -------------- | --------------------- | ------------------------------------------------------------------- |
+| allowMultiple  | `boolean`             | Allows multipe sections to have their body revealed simultaneously. |
+| children       | `Accordion.Section[]` | Sections to be stacked and controled.                               |
+| className      | `string`              | Custom class names to be added to the component.                    |
+| isSeamless     | `boolean`             | Exlude borders and horizontal padding.                              |
+| onOpen         | `function`            | Callback to be invoked when the body of a section is revealed.      |
+| onClose        | `function`            | Callback to be invoked when the body of a section is concealed.     |
+| openSectionIds | `array`               | An array of ids corresponding to sections that should be open.      |
+| size           | `string`              | The amount of padding. Valid sizes are `xs`, `sm`, `md`, and `lg`.  |

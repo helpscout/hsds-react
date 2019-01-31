@@ -16,6 +16,7 @@ import Label from '../Label'
 import { scrollLockY } from '../ScrollLock/ScrollLock.utils'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants/index'
+import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -115,6 +116,7 @@ export class Input extends Component<Props, State> {
     forceAutoFocusTimeout: 0,
     inputRef: noop,
     innerRef: noop,
+    hasInsertCarriageReturns: false,
     isFocused: false,
     isFirst: false,
     isNotOnly: false,
@@ -350,7 +352,29 @@ export class Input extends Component<Props, State> {
     onWheel(event)
   }
 
+  insertCarriageReturnAtCursorIndex(event) {
+    if (!(event.ctrlKey || event.metaKey || event.altKey)) return
+    event.preventDefault()
+    event.stopPropagation()
+    const cursorIndex = event.currentTarget.selectionStart
+    const currentValue = event.currentTarget.value
+    const newValue = `${currentValue.substr(
+      0,
+      cursorIndex
+    )}\n${currentValue.substr(cursorIndex)}`
+    this.setState({ value: newValue }, () => {
+      this.props.onChange(this.state.value)
+      this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)
+    })
+  }
+
   handleOnKeyDown = (event: Event) => {
+    const { hasInsertCarriageReturns } = this.props
+
+    if (hasInsertCarriageReturns && event.keyCode === Keys.ENTER) {
+      this.insertCarriageReturnAtCursorIndex(event)
+    }
+
     this.props.onKeyDown(event)
     this.scrollToBottom()
   }

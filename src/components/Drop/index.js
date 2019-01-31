@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import PortalWrapper from '../PortalWrapper'
 import Positioner from './Positioner'
 import { classNames } from '../../utilities/classNames'
-import { propTypes as portalTypes } from '../Portal'
 
-export const propTypes = Object.assign({}, portalTypes, {
+export const propTypes = {
   trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
   direction: PropTypes.string,
   wrapperClassName: PropTypes.string,
-})
+}
 
 const defaultProps = {
   direction: 'down',

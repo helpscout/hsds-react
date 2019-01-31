@@ -42,11 +42,16 @@ class Section extends Component<SectionProps> {
     setOpen: noop,
   }
 
+  getId() {
+    const { id, uuid } = this.props
+    return id || uuid
+  }
+
   render() {
     const {
-      uuid,
       className,
       duration,
+      id,
       isPage,
       isSeamless,
       children,
@@ -55,11 +60,13 @@ class Section extends Component<SectionProps> {
       sections,
       setOpen,
       size,
+      uuid,
       ...rest
     } = this.props
 
+    const sectionId = this.getId()
     const isOpen = Object.keys(sections).length
-      ? sections[uuid]
+      ? sections[sectionId]
       : this.props.isOpen
     const componentClassName = getComponentClassName({ ...this.props, isOpen })
     const extraChildProps = {
@@ -69,7 +76,7 @@ class Section extends Component<SectionProps> {
       isPage,
       isSeamless,
       size,
-      uuid,
+      uuid: sectionId,
     }
 
     const content =
