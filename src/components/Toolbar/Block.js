@@ -6,6 +6,10 @@ class Block extends Component {
   render() {
     const { className, children, ...rest } = this.props
 
+    if (!children) {
+      return null
+    }
+
     const componentClassName = classNames('c-ToolbarBlock', className)
 
     return (
