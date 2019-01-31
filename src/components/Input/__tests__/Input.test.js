@@ -185,18 +185,44 @@ describe('Events', () => {
 })
 
 describe('insertCarriageReturnsAtCursorIndex', () => {
-  test('expect state to get set', () => {
-    const onChangeSpy = jest.fn()
-    const setSelectionRangeSpy = jest.fn()
-    const preventDefaultSpy = jest.fn()
-    const stopPropagationSpy = jest.fn()
-    const wrapper = shallow(
+  let onChangeSpy,
+    preventDefaultSpy,
+    setSelectionRangeSpy,
+    stopPropagationSpy,
+    wrapper
+
+  beforeEach(() => {
+    onChangeSpy = jest.fn()
+    setSelectionRangeSpy = jest.fn()
+    preventDefaultSpy = jest.fn()
+    stopPropagationSpy = jest.fn()
+    wrapper = shallow(
       <Input hasInsertCarriageReturns={true} onChange={onChangeSpy} />
     )
     wrapper
       .instance()
       .setInputNodeRef({ setSelectionRange: setSelectionRangeSpy })
     wrapper.instance().setState = jest.fn((newState, callback) => callback())
+  })
+
+  test('if empty value with cursorIndex at 0, should only call preventDefault', () => {
+    wrapper.instance().insertCarriageReturnAtCursorIndex({
+      shiftKey: true,
+      preventDefault: preventDefaultSpy,
+      stopPropagation: stopPropagationSpy,
+      currentTarget: {
+        selectionStart: 0,
+        value: '',
+      },
+    })
+    expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
+    expect(stopPropagationSpy).toHaveBeenCalledTimes(0)
+    expect(wrapper.instance().setState).toHaveBeenCalledTimes(0)
+    expect(onChangeSpy).toHaveBeenCalledTimes(0)
+    expect(setSelectionRangeSpy).toHaveBeenCalledTimes(0)
+  })
+
+  test('expect state to get set and update the value', () => {
     wrapper.instance().insertCarriageReturnAtCursorIndex({
       ctrlKey: true,
       preventDefault: preventDefaultSpy,
