@@ -16,9 +16,9 @@ This component is a presentational wrapper used to render a variety of content. 
           </div>
         )}
       />
-      <Page.content>
+      <Page.Content>
         <p>Here, I will explain the importance of this</p>
-      </Page.content>
+      </Page.Content>
     </Page.Section>
   </Page.Card>
   <Page.Actions primary={<button>Got it</button>} />
