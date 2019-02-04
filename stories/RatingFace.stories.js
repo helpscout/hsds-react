@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import <%= name %> from '../src/components/<%= name %>'
+import RatingFace from '../src/components/RatingFace'
 import {
   withKnobs,
   boolean,
@@ -10,13 +10,11 @@ import {
 } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 
-const stories = storiesOf('<%= name %>', module)
+const stories = storiesOf('RatingFace', module)
 
 stories.addDecorator(
-  withArtboard({ id: 'hsds-<%= name %>', width: 500, height: 300 })
+  withArtboard({ id: 'hsds-RatingFace', width: 500, height: 300 })
 )
 stories.addDecorator(withKnobs)
 
-stories.add('Default', () => (
-  <<%= name %> />
-))
+stories.add('Default', () => <RatingFace />)
