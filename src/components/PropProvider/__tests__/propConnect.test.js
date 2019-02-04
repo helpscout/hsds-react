@@ -242,3 +242,33 @@ describe('propConnect', () => {
     expect(spy).toHaveBeenCalledWith(wrapper.instance().wrappedInstance)
   })
 })
+
+describe('Cypress', () => {
+  test('Sets a data-cy attribute by default', () => {
+    class Buddy extends React.Component {
+      render() {
+        return <div {...this.props} />
+      }
+    }
+
+    const ConnectedBuddy = propConnect()(Buddy)
+    const wrapper = mount(<ConnectedBuddy />)
+    const el = wrapper.find('div[data-cy="Buddy"]')
+
+    expect(el).toHaveLength(1)
+  })
+
+  test('Can define a custom data-cy', () => {
+    class Buddy extends React.Component {
+      render() {
+        return <div {...this.props} />
+      }
+    }
+
+    const ConnectedBuddy = propConnect()(Buddy)
+    const wrapper = mount(<ConnectedBuddy data-cy="Hello" />)
+
+    expect(wrapper.find('div[data-cy="Buddy"]')).toHaveLength(0)
+    expect(wrapper.find('div[data-cy="Hello"]')).toHaveLength(1)
+  })
+})
