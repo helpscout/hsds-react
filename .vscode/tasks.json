@@ -8,7 +8,20 @@
       "type": "shell",
       "command": "npm",
       "problemMatcher": ["$eslint-stylish"],
-      "args": ["run", "remake", "--", "--name", "${input:componentName}"]
+      "args": [
+        "run",
+        "remake:component",
+        "--",
+        "--name",
+        "${input:componentName}",
+        "&&",
+        "npm",
+        "run",
+        "remake:story",
+        "--",
+        "--name",
+        "${input:componentName}"
+      ]
     }
   ],
   "inputs": [
