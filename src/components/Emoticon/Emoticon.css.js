@@ -61,6 +61,7 @@ export const EmoticonUI = styled('span')`
   transform: translateY(0);
   transition: ${config.transition};
   width: ${config.size.default};
+  user-select: none;
 
   &.is-disabled {
     opacity: 0.5;

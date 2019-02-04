@@ -27,12 +27,19 @@ export const RateActionUI = styled('button')`
   user-drag: none;
   user-select: none;
   width: ${config.size.default};
+  will-change: box-shadow, transform;
+  z-index: 0;
+
+  &[disabled] {
+    pointer-events: none;
+  }
 
   &:hover,
   &:focus {
     outline: none;
     box-shadow: 0 4px 7px 0 rgba(${config.boxShadowColor}, 0.6);
     transform: scale(1.3);
+    z-index: 1;
   }
 
   &.is-md {
