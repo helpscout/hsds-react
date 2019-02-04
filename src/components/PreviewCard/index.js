@@ -28,7 +28,7 @@ const PreviewCard = (props: Props) => {
     )
 
     const titleMarkup = title ? (
-      <Heading className="c-PreviewCard__title" size="h5">
+      <Heading className="c-PreviewCard__title" size="h6">
         {title}
       </Heading>
     ) : null
