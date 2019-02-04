@@ -87,7 +87,7 @@ const ArticleSpec = createSpec({
 
 const article = ArticleSpec.generate()
 
-stories.add('Default', () => {
+stories.add('default', () => {
   const { content, title } = article
 
   const metaHeaderConfig = boolean('metaHeader', false)
@@ -114,7 +114,7 @@ stories.add('Default', () => {
   )
 })
 
-stories.add('Content', () => {
+stories.add('content markup', () => {
   const content = (
     <Flexy>
       <Flexy.Block>
