@@ -1,1 +1,2 @@
-export type EmotionSize = 'md' | 'sm'
+export type EmoticonName = 'happy' | 'meh' | 'sad'
+export type EmoticonSize = 'md' | 'sm'

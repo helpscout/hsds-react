@@ -13,7 +13,7 @@ import { withArtboard } from '@helpscout/artboard'
 const stories = storiesOf('<%= name %>', module)
 
 stories.addDecorator(
-  withArtboard({ id: 'hsds-<%= name %>', width: 500, height: 300 })
+  withArtboard({ id: 'hsds-<%= name %>', width: 500, height: 300, withCenterGuides: false })
 )
 stories.addDecorator(withKnobs)
 

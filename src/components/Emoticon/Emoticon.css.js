@@ -13,8 +13,8 @@ export const config = {
     },
   },
   size: {
-    default: '26px',
-    md: '26px',
+    default: '24px',
+    md: '24px',
     sm: '16px',
   },
   transition: 'opacity 100ms linear',

@@ -2,8 +2,9 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import EMOTICONS from './Emoticon.icons'
-import { EmotionSize } from './Emoticon.types'
+import { EmoticonName, EmoticonSize } from './Emoticon.types'
 import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 import { EmoticonUI, FaceUI, IconUI } from './Emoticon.css.js'
 import { COMPONENT_KEY } from './Emoticon.utils'
 
@@ -13,10 +14,11 @@ export interface Props {
   clickable: boolean
   isActive: boolean
   isDisabled: boolean
+  innerRef: (node: HTMLElement) => void
   inline: boolean
-  name: string
+  name: EmoticonName
   title?: string
-  size?: EmotionSize
+  size?: EmoticonSize
   withAnimation: boolean
 }
 
@@ -27,7 +29,9 @@ export class Emoticon extends React.PureComponent<Props> {
     inline: false,
     isActive: true,
     isDisabled: false,
+    innerRef: noop,
     name: 'happy',
+    role: 'presentation',
     size: 'md',
     title: '',
     withAnimation: true,
@@ -67,6 +71,7 @@ export class Emoticon extends React.PureComponent<Props> {
       className,
       center,
       clickable,
+      innerRef,
       isActive,
       isDisabled,
       inline,
@@ -79,7 +84,11 @@ export class Emoticon extends React.PureComponent<Props> {
     const src = { __html: EMOTICONS[name] }
 
     return (
-      <EmoticonUI {...getValidProps(rest)} className={this.getClassNames()}>
+      <EmoticonUI
+        {...getValidProps(rest)}
+        className={this.getClassNames()}
+        innerRef={innerRef}
+      >
         <Face isActive={isActive} isDisabled={isDisabled}>
           <IconUI
             className="c-Emoticon__icon"

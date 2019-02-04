@@ -1,11 +1,11 @@
-# RatingFace
+# RateAction
 
 This component does something special.
 
 ## Example
 
 ```jsx
-<RatingFace />
+<RateAction />
 ```
 
 ## Props
