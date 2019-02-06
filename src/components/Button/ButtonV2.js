@@ -90,6 +90,7 @@ class Button extends Component<Props, State> {
   shouldShowFocus = () => {
     const paddedButtonKinds = [
       'primary',
+      'primaryAlt',
       'secondary',
       'secondaryAlt',
       'tertiary',
