@@ -66,6 +66,7 @@ stories.add('everything', () => (
   <PropProvider value={{ Button: { version: 2 } }}>
     <ContainerUI>
       {makeButtonVariations({ kind: 'primary' })}
+      {makeButtonVariations({ kind: 'primaryAlt' })}
       {makeButtonVariations({ kind: 'secondary' })}
       {makeButtonVariations({ kind: 'secondaryAlt' })}
       {makeButtonVariations({ kind: 'default' })}

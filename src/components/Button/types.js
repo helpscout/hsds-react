@@ -1,5 +1,6 @@
 export type ButtonKind =
 | 'primary'
+| 'primaryAlt'
 | 'secondary'
 | 'secondaryAlt'
 | 'tertiary'

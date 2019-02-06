@@ -44,6 +44,41 @@ export const config = {
       colorActive: 'white',
     },
   },
+  primaryAlt: {
+    backgroundColor: getColor('purple.500'),
+    backgroundColorHover: getColor('purple.600'),
+    backgroundColorActive: getColor('purple.700'),
+    borderColor: getColor('purple.500'),
+    borderColorHover: getColor('purple.600'),
+    borderColorActive: getColor('purple.700'),
+    color: 'white',
+    disabledBackgroundColor: getColor('grey.500'),
+    disabledBorderColor: getColor('grey.500'),
+    disabledColor: 'white',
+    fontWeight: 500,
+    danger: {
+      backgroundColor: getColor('red.500'),
+      backgroundColorHover: getColor('red.600'),
+      backgroundColorActive: getColor('red.700'),
+      borderColor: getColor('red.500'),
+      borderColorHover: getColor('red.600'),
+      borderColorActive: getColor('red.700'),
+      color: 'white',
+      colorHover: 'white',
+      colorActive: 'white',
+    },
+    success: {
+      backgroundColor: getColor('green.500'),
+      backgroundColorHover: getColor('green.600'),
+      backgroundColorActive: getColor('green.700'),
+      borderColor: getColor('green.500'),
+      borderColorHover: getColor('green.600'),
+      borderColorActive: getColor('green.700'),
+      color: 'white',
+      colorHover: 'white',
+      colorActive: 'white',
+    },
+  },
   secondary: {
     backgroundColor: 'white',
     backgroundColorHover: 'white',
@@ -224,7 +259,8 @@ export const makeButtonUI = (selector: 'button') => {
 
     ${makeButtonSizeStyles()}
 
-    ${props => makePrimaryStyles(props)}
+    ${props => makePrimaryStyles('primary', props)}
+    ${props => makePrimaryStyles('primaryAlt', props)}
     ${makeButtonKindStyles('secondary', config.secondary)}
     ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
     ${makeButtonKindStyles('tertiary', config.tertiary)}
@@ -234,14 +270,14 @@ export const makeButtonUI = (selector: 'button') => {
   `
 }
 
-function makePrimaryStyles(props: Object = {}): string {
+function makePrimaryStyles(name = 'primary', props: Object = {}): string {
   const { theme } = props
   const backgroundColor =
-    (theme && theme.brandColor) || config.primary.backgroundColor
-  const color = (theme && theme.brandTextColor) || config.primary.color
+    (theme && theme.brandColor) || config[name].backgroundColor
+  const color = (theme && theme.brandTextColor) || config[name].color
 
-  return makeButtonKindStyles('primary', {
-    ...config.primary,
+  return makeButtonKindStyles(name, {
+    ...config[name],
     backgroundColor,
     color,
   })
