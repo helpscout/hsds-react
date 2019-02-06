@@ -81,6 +81,7 @@
     "compute-scroll-into-view": "1.0.11",
     "dash-get": "1.0.0",
     "highlight.js": "9.12.0",
+    "memoize-one": "^5.0.0",
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
     "prop-types": "^15",

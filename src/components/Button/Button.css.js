@@ -1,9 +1,9 @@
 // @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
-import { getColor } from '../../../styles/utilities/color'
-import forEach from '../../../styles/utilities/forEach'
-import variableFontSize from '../../../styles/utilities/variableFontSize'
+import baseStyles from '../../styles/resets/baseStyles.css.js'
+import styled from '../styled'
+import { getColor } from '../../styles/utilities/color'
+import forEach from '../../styles/utilities/forEach'
+import variableFontSize from '../../styles/utilities/variableFontSize'
 
 export const config = {
   borderRadius: 3,
@@ -181,56 +181,58 @@ export const config = {
   },
 }
 
-export const ButtonUI = styled('button')`
-  ${baseStyles}
-  appearance: none;
-  align-items: center;
-  border: 1px solid transparent;
-  border-radius: ${config.borderRadius}px;
-  cursor: pointer;
-  display: inline-flex;
-  font-weight: normal;
-  height: ${config.size.md.height}px;
-  justify-content: center;
-  line-height: 1;
-  min-width: ${config.size.md.minWidth};
-  outline: none;
-  padding: 0 ${config.size.md.padding}px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
+export const makeButtonUI = (selector: 'button') => {
+  return styled(selector)`
+    ${baseStyles};
+    appearance: none;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: ${config.borderRadius}px;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: normal;
+    height: ${config.size.md.height}px;
+    justify-content: center;
+    line-height: 1;
+    min-width: ${config.size.md.minWidth};
+    outline: none;
+    padding: 0 ${config.size.md.padding}px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
 
-  &:focus {
-    z-index: 2;
-  }
+    &:focus {
+      z-index: 2;
+    }
 
-  &.is-first {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  &.is-notOnly {
-    border-radius: 0;
-  }
-  &.is-last {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
+    &.is-first {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &.is-notOnly {
+      border-radius: 0;
+    }
+    &.is-last {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
 
-  &.is-block {
-    display: flex;
-    width: 100%;
-  }
+    &.is-block {
+      display: flex;
+      width: 100%;
+    }
 
-  ${makeButtonSizeStyles()}
+    ${makeButtonSizeStyles()}
 
-  ${props => makePrimaryStyles(props)}
-  ${makeButtonKindStyles('secondary', config.secondary)}
-  ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
-  ${makeButtonKindStyles('tertiary', config.tertiary)}
-  ${makeButtonKindStyles('default', config.default)}
-  ${makeButtonKindStyles('link', config.link)}
-  ${makeButtonKindStyles('suffix', config.suffix)}
-`
+    ${props => makePrimaryStyles(props)}
+    ${makeButtonKindStyles('secondary', config.secondary)}
+    ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
+    ${makeButtonKindStyles('tertiary', config.tertiary)}
+    ${makeButtonKindStyles('default', config.default)}
+    ${makeButtonKindStyles('link', config.link)}
+    ${makeButtonKindStyles('suffix', config.suffix)}
+  `
+}
 
 function makePrimaryStyles(props: Object = {}): string {
   const { theme } = props
