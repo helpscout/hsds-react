@@ -30,12 +30,32 @@ export class Pagination extends React.PureComponent<Props> {
     separator: 'of',
   }
 
+  getStartRange() {
+    return 1
+  }
+
+  getEndRange() {
+    return 15
+  }
+
   renderRange() {
-    return <Text>1 - 15</Text>
+    return (
+      <Text>
+        {this.getStartRange()}
+        {` `}-{` `}
+        {this.getEndRange()}
+      </Text>
+    )
   }
 
   renderTotal() {
-    return <Text>X things</Text>
+    const { totalItems, subject } = this.props
+    return (
+      <Text>
+        {totalItems}
+        {subject && ` ${subject}`}
+      </Text>
+    )
   }
 
   renderNavigation() {}
@@ -61,7 +81,11 @@ export class Pagination extends React.PureComponent<Props> {
         innerRef={innerRef}
       >
         {this.renderRange()}
-        <Text> {separator} </Text>
+        <Text>
+          {` `}
+          {separator}
+          {` `}
+        </Text>
         {this.renderTotal()}
         {showNavigation && this.renderNavigation()}
       </PaginationUI>
