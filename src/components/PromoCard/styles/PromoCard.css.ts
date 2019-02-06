@@ -1,6 +1,7 @@
 import styled from '../../styled'
 import Card from '../../Card'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import { getColor } from '../../../styles/utilities/color'
 
 export const PromoCardUI = styled(Card)`
   ${baseStyles};
@@ -12,7 +13,7 @@ export const PromoCardUI = styled(Card)`
 
 export const BorderUI = styled('div')`
   border-top: 2px solid;
-  border-top-color: ${props => `${props.borderColor}`};
+  border-top-color: ${props => getColor(`${props.borderColor}.500`)};
   left: 0;
   position: absolute;
   top: 0;
