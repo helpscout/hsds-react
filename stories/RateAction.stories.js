@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Emoticon } from '../src/index.js'
+import RateAction from '../src/components/RateAction'
 import {
   withKnobs,
   boolean,
@@ -10,10 +10,10 @@ import {
 } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 
-const stories = storiesOf('Emoticon', module)
+const stories = storiesOf('RateAction', module)
+
 stories.addDecorator(
   withArtboard({
-    id: 'hsds-emoticon',
     width: 100,
     height: 100,
     withCenterGuides: false,
@@ -31,16 +31,14 @@ stories.add('Default', () => {
       },
       'md'
     ),
-    inline: true,
-    isActive: boolean('isActive', true),
-    isDisabled: boolean('isDisabled', false),
+    isActive: boolean('isActive', false),
+    disabled: boolean('disabled', false),
     withAnimation: boolean('withAnimation', true),
   }
   return (
     <div>
-      <Emoticon {...props} name="happy" />
-      <Emoticon {...props} name="meh" />
-      <Emoticon {...props} name="sad" />
+      <RateAction {...props} name="happy" />
+      <RateAction {...props} name="sad" />
     </div>
   )
 })
