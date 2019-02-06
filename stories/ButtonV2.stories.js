@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, select } from '@storybook/addon-knobs'
 import {
   Button,
   ControlGroup,
@@ -11,6 +12,7 @@ import {
 import styled from '../src/components/styled'
 
 const stories = storiesOf('Button/V2', module)
+stories.addDecorator(withKnobs)
 
 const ContainerUI = styled('div')`
   background: #f1f3f5;
@@ -109,3 +111,22 @@ stories.add('icon', () => (
     </ContainerUI>
   </PropProvider>
 ))
+
+stories.add('selector', () => {
+  const props = {
+    href: select(
+      'selector',
+      {
+        button: '',
+        link: '#',
+      },
+      ''
+    ),
+  }
+
+  return (
+    <Button version={2} {...props} size="lg" kind="primary">
+      {props.href ? 'Link' : 'Button'}
+    </Button>
+  )
+})
