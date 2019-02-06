@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { mount, render } from 'enzyme'
+import { mount } from 'enzyme'
 import { PromoCard } from '../PromoCard'
-import Card from '../../Card'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -37,22 +36,17 @@ describe('Children', () => {
 
     expect(el.text()).toContain('Hello')
   })
-
-  test('Returns null if children are undefined', () => {
-    const wrapper = mount(<PromoCard />)
-    expect(wrapper.html()).toBeNull()
-  })
 })
 
 describe('Card', () => {
-  test('Internally renders Card component', () => {
+  test('Internally renders FluffyCard component', () => {
     const wrapper = mount(
       <PromoCard>
         <div className="child">Hello</div>
       </PromoCard>
     )
-    const o = wrapper.find(Card)
+    const o = wrapper.find('FluffyCard')
 
-    expect(o.length).toBe(1)
+    expect(o.length).toBeTruthy()
   })
 })

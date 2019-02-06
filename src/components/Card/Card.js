@@ -91,6 +91,7 @@ class Card extends Component<Props> {
     const element =
       href || to ? (
         <Link
+          {...rest}
           autoWordWrap={autoWordWrap}
           block
           className={componentClassName}
@@ -99,7 +100,6 @@ class Card extends Component<Props> {
           to={to}
           innerRef={innerRef}
           nodeRef={nodeRef}
-          {...rest}
         >
           {children}
         </Link>

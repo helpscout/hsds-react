@@ -1,16 +1,19 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
-import { PromoCardUI, BorderUI, ContentUI } from './styles/PromoCard.css'
+import { PromoCardUI, BorderUI, ContentUI } from './PromoCard.css'
+
+// Refactor this when FluffyCard is converted to TypeScript
+export type FluffyCardTextAlign = 'left' | 'center' | 'right'
 
 export interface Props {
   className?: string
   children?: any
   innerRef: (node: HTMLElement) => void
   promoColor?: string
+  textAlign: FluffyCardTextAlign
 }
 
 export class PromoCard extends React.PureComponent<Props> {
@@ -18,6 +21,7 @@ export class PromoCard extends React.PureComponent<Props> {
   static defaultProps = {
     innerRef: noop,
     promoColor: 'blue',
+    textAlign: 'left',
   }
 
   getClassName() {
@@ -28,13 +32,9 @@ export class PromoCard extends React.PureComponent<Props> {
   render() {
     const { children, innerRef, promoColor, ...rest } = this.props
 
-    if (!children) {
-      return null
-    }
-
     return (
       <PromoCardUI
-        {...getValidProps(rest)}
+        {...rest}
         className={this.getClassName()}
         innerRef={innerRef}
       >
