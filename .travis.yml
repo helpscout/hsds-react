@@ -1,10 +1,12 @@
 language: node_js
 node_js:
-  - '8'
+  - '8.14.0'
 
 cache:
+  npm: true
   directories:
-    - node_modules
+    - ~/.npm
+    - ~/.cache
 
 before_install:
   - npm set progress=false
@@ -13,7 +15,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 install:
-  - npm install
+  - npm ci
 
 script:
   - npm run build:css
