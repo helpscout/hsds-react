@@ -368,6 +368,7 @@ export class Input extends Component<Props, State> {
       return
     }
 
+    /* istanbul ignore if */
     if (!isModifierKeyPressed(event)) return
     // this inserts a return into the value if a modifier key is also pressed
     event.preventDefault()
