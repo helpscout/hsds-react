@@ -9,10 +9,12 @@ export const config = {
     sm: '20px',
   },
   boxShadowColor: '193, 203, 212', // grey.600
+  outlineColor: getColor('green.500'),
   transition: 'all 200ms ease-in-out',
 }
 
 export const RateActionUI = styled('button')`
+  -webkit-user-drag: none;
   ${baseStyles};
   appearance: none;
   border-radius: 50%;
@@ -24,11 +26,41 @@ export const RateActionUI = styled('button')`
   padding: 0;
   position: relative;
   transition: ${config.transition};
-  user-drag: none;
   user-select: none;
   width: ${config.size.default};
   will-change: box-shadow, transform;
   z-index: 0;
+
+  &:after {
+    content: '';
+    border-radius: 50%;
+    border: 2px solid ${config.outlineColor};
+    display: none;
+    height: 28px;
+    left: -4px;
+    pointer-events: none;
+    position: absolute;
+    top: -4px;
+    width: 28px;
+    will-change: transform;
+
+    @keyframes HSDSRateActionSelected {
+      0% {
+        transform: scale(0.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
+
+  &.is-active {
+    &:after {
+      animation: HSDSRateActionSelected 200ms
+        cubic-bezier(0.39, 0.575, 0.565, 1) both;
+      display: block;
+    }
+  }
 
   &[disabled] {
     pointer-events: none;

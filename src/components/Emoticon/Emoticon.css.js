@@ -112,16 +112,16 @@ export const EmoticonUI = styled('span')`
   &.is-withAnimation {
     &:hover {
       &.is-happy ${IconUI} {
-        animation: HSDSEmotionYep 1.5s steps(5, start) 0.15s forwards;
+        animation: HSDSEmoticonYep 1.5s steps(5, start) 0.15s forwards;
       }
 
       &.is-sad ${IconUI} {
-        animation: HSDSNotReally 1.5s steps(5, start) 0.15s forwards;
+        animation: HSDSEmoticonNotReally 1.5s steps(5, start) 0.15s forwards;
       }
     }
   }
 
-  @keyframes HSDSEmotionYep {
+  @keyframes HSDSEmoticonYep {
     0%,
     100% {
       transform: translateY(0);
@@ -145,7 +145,7 @@ export const EmoticonUI = styled('span')`
     }
   }
 
-  @keyframes HSDSNotReally {
+  @keyframes HSDSEmoticonNotReally {
     0%,
     100% {
       transform: translateX(0);

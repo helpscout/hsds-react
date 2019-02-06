@@ -66,9 +66,11 @@ export class RateAction extends React.PureComponent<Props, State> {
 
   getClassName() {
     const { className, name, size } = this.props
+    const { isActive } = this.state
 
     return classNames(
       RateAction.className,
+      isActive && `is-active`,
       name && `is-${name}`,
       size && `is-${size}`,
       className

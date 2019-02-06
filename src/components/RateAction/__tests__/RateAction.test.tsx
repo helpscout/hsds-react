@@ -46,6 +46,12 @@ describe('Events', () => {
 })
 
 describe('isActive', () => {
+  test('Adds active styles', () => {
+    const wrapper = render(<RateAction isActive />)
+
+    expect(wrapper.hasClass('is-active')).toBeTruthy()
+  })
+
   test('onBlur sets isActive to false', () => {
     const wrapper = mount(<RateAction isActive={true} />)
 
