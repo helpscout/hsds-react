@@ -1,5 +1,6 @@
 import { AttachmentProp } from './types'
 import * as React from 'react'
+import { UIState } from '../../constants/types.js'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AttachmentProvider from './Provider'
 import CloseButton from '../CloseButton'
@@ -11,7 +12,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
-import css from './styles/Attachment.css.js'
+import css, { ErrorBorderUI } from './Attachment.css.js'
 
 export const Provider = AttachmentProvider
 
@@ -27,6 +28,7 @@ export interface Props {
   name: string
   onClick: (event: MouseClickEvent, attachmentProp: AttachmentProp) => void
   onRemoveClick: (event: Event, attachmentProp: AttachmentProp) => void
+  state: UIState
   size: number | string
   target?: string
   truncateLimit: number
@@ -41,6 +43,7 @@ export class Attachment extends React.PureComponent<Props> {
     onClick: noop,
     onRemoveClick: noop,
     truncateLimit: 20,
+    state: 'default',
     type: 'link',
   }
   static contextTypes = {
@@ -61,12 +64,31 @@ export class Attachment extends React.PureComponent<Props> {
     }
   }
 
+  isError() {
+    return this.props.state === 'error'
+  }
+
+  isThemePreview() {
+    return this.context.theme === 'preview'
+  }
+
   handleOnClick = (event: MouseClickEvent) => {
     this.props.onClick(event, this.getAttachmentProps())
   }
 
   handleOnRemoveClick = (event: Event) => {
     this.props.onRemoveClick(event, this.getAttachmentProps())
+  }
+
+  renderErrorBorder() {
+    return (
+      this.isError() && (
+        <ErrorBorderUI
+          className="c-Attachment__errorBorder"
+          isCard={this.isThemePreview()}
+        />
+      )
+    )
   }
 
   render() {
@@ -81,6 +103,7 @@ export class Attachment extends React.PureComponent<Props> {
       onClick,
       onRemoveClick,
       size,
+      state,
       target,
       truncateLimit,
       type,
@@ -89,11 +112,12 @@ export class Attachment extends React.PureComponent<Props> {
     } = this.props
     const { theme } = this.context
 
-    const isThemePreview = theme === 'preview'
+    const isThemePreview = this.isThemePreview()
 
     const componentClassName = classNames(
       'c-Attachment',
       imageUrl && 'has-image',
+      state && `is-${state}`,
       type && `is-${type}`,
       theme && `is-theme-${theme}`,
       className
@@ -150,6 +174,7 @@ export class Attachment extends React.PureComponent<Props> {
       >
         {contentMarkup}
         {closeMarkup}
+        {this.renderErrorBorder()}
       </a>
     )
   }

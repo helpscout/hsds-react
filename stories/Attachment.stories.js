@@ -1,25 +1,47 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Attachment } from '../src/index.js'
+import { withKnobs, select, text } from '@storybook/addon-knobs'
+import { withArtboard } from '@helpscout/artboard'
 
 const stories = storiesOf('Attachment', module)
+stories.addDecorator(withKnobs)
+stories.addDecorator(
+  withArtboard({ width: 400, height: 200, withCenterGuides: false })
+)
 
-stories.add('default', () => {
-  return (
-    <Attachment
-      name="parrot.png"
-      size="5kb"
-      url="https://github.com/helpscout/hsds-react/raw/master/images/Blue.png"
-    />
+stories.add('Default', () => {
+  const theme = select(
+    'theme',
+    {
+      default: 'default',
+      preview: 'preview',
+    },
+    'default'
   )
-})
 
-stories.add('long file name', () => {
+  const props = {
+    name: text('name', 'derek.png'),
+    size: text('size', '5kb'),
+    state: select(
+      'state',
+      {
+        default: 'default',
+        error: 'error',
+      },
+      'default'
+    ),
+    url: text(
+      'url',
+      'https://github.com/helpscout/hsds-react/raw/master/images/Blue.png'
+    ),
+  }
+
+  const isPreview = theme === 'preview'
+
   return (
-    <Attachment
-      name="parrot-with-a-super-long-name.png"
-      size="5kb"
-      url="https://github.com/helpscout/hsds-react/raw/master/images/Blue.png"
-    />
+    <Attachment.Provider theme={theme}>
+      <Attachment {...props} size={!isPreview && props.size} />
+    </Attachment.Provider>
   )
 })

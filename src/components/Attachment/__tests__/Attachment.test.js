@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount, shallow, render } from 'enzyme'
 import { Attachment } from '../Attachment'
 import { Provider } from '../index'
 
@@ -251,5 +251,20 @@ describe('Download', () => {
     const link = wrapper.find('a')
 
     expect(link.prop('target')).toBe('_self')
+  })
+})
+
+describe('State', () => {
+  test('Renders state className', () => {
+    const wrapper = render(<Attachment url="file.pdf" state="error" />)
+
+    expect(wrapper.hasClass('is-error')).toBeTruthy()
+  })
+
+  test('Renders state UI', () => {
+    const wrapper = render(<Attachment url="file.pdf" state="error" />)
+    const el = wrapper.find('.c-Attachment__errorBorder')
+
+    expect(el.length).toBeTruthy()
   })
 })
