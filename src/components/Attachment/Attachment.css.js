@@ -1,10 +1,11 @@
-import { BEM } from '../../../utilities/classNames'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+import styled from '../styled'
+import { BEM } from '../../utilities/classNames'
+import baseStyles from '../../styles/resets/baseStyles.css'
 import cardStyles, {
   cardSubtleStyles,
-} from '../../../styles/mixins/cardStyles.css'
-import linkStyles from '../../../styles/mixins/linkStyles.css'
-import { getColor } from '../../../styles/utilities/color'
+} from '../../styles/mixins/cardStyles.css'
+import linkStyles from '../../styles/mixins/linkStyles.css'
+import { getColor } from '../../styles/utilities/color'
 
 const bem = BEM('.c-Attachment')
 
@@ -12,6 +13,27 @@ const config = {
   imageSize: '37px',
   imageMaxWidth: '80px',
 }
+
+export const ErrorBorderUI = styled('div')`
+  border-radius: 99999px;
+  border: 1px solid ${getColor('red.500')};
+  bottom: -1px;
+  left: -1px;
+  pointer-events: none;
+  position: absolute;
+  right: -1px;
+  top: -1px;
+
+  ${({ isCard }) =>
+    isCard &&
+    `
+    border-radius: 3px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+  `};
+`
 
 const css = `
   ${linkStyles()}
@@ -24,6 +46,10 @@ const css = `
   padding: 4px 10px;
   position: relative;
   text-decoration: none;
+
+  &.is-error {
+    color: ${getColor('red.500')};
+  }
 
   // Modifiers
   &.is-action {
