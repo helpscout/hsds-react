@@ -47,6 +47,10 @@ const css = `
   position: relative;
   text-decoration: none;
 
+  &.is-error {
+    color: ${getColor('red.500')};
+  }
+
   // Modifiers
   &.is-action {
     ${bem.element('name')} {
