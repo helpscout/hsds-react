@@ -20,6 +20,7 @@ import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { isModifierKeyPressed } from '../../utilities/keys'
 import { isDefined } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import {
@@ -353,15 +354,28 @@ export class Input extends Component<Props, State> {
   }
 
   insertCarriageReturnAtCursorIndex(event) {
-    if (!(event.ctrlKey || event.metaKey || event.altKey)) return
+    const cursorIndex = event.currentTarget.selectionStart
+    const nextValue = event.currentTarget.value
+    const prevValue = this.state.value
+
+    // this prevents a return being inserted if the field is completely empty
+    // this works on every modifier key, and with standalone returns
+    const isEmptyField =
+      cursorIndex == 0 && nextValue.length === 0 && prevValue.length === 0
+
+    if (isEmptyField) {
+      event.preventDefault() // prevents shift and return from inserting a line break
+      return
+    }
+
+    /* istanbul ignore if */
+    if (!isModifierKeyPressed(event)) return
+    // this inserts a return into the value if a modifier key is also pressed
     event.preventDefault()
     event.stopPropagation()
-    const cursorIndex = event.currentTarget.selectionStart
-    const currentValue = event.currentTarget.value
-    const newValue = `${currentValue.substr(
-      0,
+    const newValue = `${nextValue.substr(0, cursorIndex)}\n${nextValue.substr(
       cursorIndex
-    )}\n${currentValue.substr(cursorIndex)}`
+    )}`
     this.setState({ value: newValue }, () => {
       this.props.onChange(this.state.value)
       this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)

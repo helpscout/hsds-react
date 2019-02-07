@@ -15,6 +15,8 @@ export const requestAnimationFrame = (
 }
 
 export const isNodeEnv = (): boolean => {
+  // @ts-ignore
+  const process = window.process
   return !!(
     typeof process !== 'undefined' &&
     typeof process.title === 'string' &&

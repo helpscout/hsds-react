@@ -8,6 +8,7 @@ node_modules
 .eslintcache
 .cache
 coverage
+cypress/video
 
 # build
 dist

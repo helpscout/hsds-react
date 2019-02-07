@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 
 export const COMPONENT_KEY = {
   Accordion: 'Accordion',
-  Body: 'Accordion.Body',
-  Section: 'Accordion.Section',
-  Title: 'Accordion.Title',
+  Body: 'AccordionBody',
+  Section: 'AccordionSection',
+  Title: 'AccordionTitle',
 }
 
 export const withUuid = (nextUuid: Function) => (

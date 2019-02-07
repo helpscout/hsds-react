@@ -1,8 +1,8 @@
 export const COMPONENT_KEY = {
   Modal: 'Modal',
-  Header: 'Modal.Header',
-  Body: 'Modal.Body',
-  Content: 'Modal.Content',
-  Footer: 'Modal.Footer',
-  Overlay: 'Modal.Overlay',
+  Header: 'ModalHeader',
+  Body: 'ModalBody',
+  Content: 'ModalContent',
+  Footer: 'ModalFooter',
+  Overlay: 'ModalOverlay',
 }
