@@ -51,7 +51,8 @@ export const AnimatedCardContainerUI = styled(Animate)`
 
 export const CardUI = styled(Card)`
   border: none;
-  box-shadow: 0 2px 3px rgba(42, 59, 71, 0.2), 0 10px 40px rgba(42, 59, 71, 0.3);
+  box-shadow: rgba(42, 59, 71, 0.1) 0px 1px 1px,
+    rgba(42, 59, 71, 0.25) 0px 10px 30px;
   display: flex;
   flex-direction: column;
   min-height: 0;
