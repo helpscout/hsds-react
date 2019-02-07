@@ -16,6 +16,7 @@ export const config = {
     orange: getColor('orange.500'),
     purple: getColor('purple.500'),
     red: getColor('red.500'),
+    yellow: getColor('yellow.500'),
   },
   height: 18,
   padding: '1px 4px',

@@ -36,3 +36,4 @@ A Tag component is a UI element that provide contextual labels for categories/ta
 | `orange` | Colors the tag orange. |
 | `purple` | Colors the tag purple. |
 | `red`    | Colors the tag red.    |
+| `yellow` | Colors the tag yellow. |
