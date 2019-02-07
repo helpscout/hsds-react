@@ -31,14 +31,25 @@ export class Pagination extends React.PureComponent<Props> {
     totalItems: 0,
   }
 
+  getCurrentPage() {
+    const { activePage, rangePerPage, totalItems } = this.props
+    if (activePage < 1) {
+      return 1
+    }
+    const maxPage = Math.ceil(totalItems / rangePerPage)
+    return Math.min(maxPage, Math.round(activePage))
+  }
+
   getStartRange() {
-    const { rangePerPage, activePage } = this.props
-    return activePage * rangePerPage - activePage + 1
+    const { rangePerPage } = this.props
+    const page = this.getCurrentPage()
+    return page * rangePerPage - rangePerPage + 1
   }
 
   getEndRange() {
-    const { rangePerPage, activePage, totalItems } = this.props
-    return Math.min(activePage * rangePerPage, totalItems)
+    const { rangePerPage, totalItems } = this.props
+    const page = this.getCurrentPage()
+    return Math.min(page * rangePerPage, totalItems)
   }
 
   renderRange() {
