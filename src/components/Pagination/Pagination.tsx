@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Pagination.utils'
-import { PaginationUI } from './Pagination.css.js'
+import { PaginationUI, InformationUI, NavigationUI } from './Pagination.css.js'
 import Text from '../Text'
 
 export interface Props {
@@ -89,18 +89,20 @@ export class Pagination extends React.PureComponent<Props> {
 
     return (
       <PaginationUI
-        aria-label="Close"
+        aria-label="Pagination"
         {...getValidProps(rest)}
         className={componentClassName}
         innerRef={innerRef}
       >
-        {this.renderRange()}
-        <Text>
-          {` `}
-          {separator}
-          {` `}
-        </Text>
-        {this.renderTotal()}
+        <InformationUI>
+          {this.renderRange()}
+          <Text>
+            {` `}
+            {separator}
+            {` `}
+          </Text>
+          {this.renderTotal()}
+        </InformationUI>
         {showNavigation && this.renderNavigation()}
       </PaginationUI>
     )
