@@ -6,7 +6,7 @@ import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Pagination.utils'
 import { PaginationUI } from './Pagination.css.js'
-import Text from 'components/Text/Text'
+import Text from '../Text'
 
 export interface Props {
   className?: string
