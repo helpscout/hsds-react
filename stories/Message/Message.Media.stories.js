@@ -1,8 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
 import { Avatar, Message } from '../../src/index.js'
 
-const stories = storiesOf('Message/Media', module)
+const stories = storiesOf('Message', module)
+stories.addDecorator(withKnobs)
 
 const dimensions = { width: 800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${
@@ -14,133 +16,60 @@ const imageUrl =
 
 const onMediaLoad = event => console.log(event.target)
 
-stories.add('default', () => (
-  <Message.Provider theme="embed">
-    <Message from avatar={<Avatar name="Arctic Puffin" />}>
-      <Message.Chat>Hey Buddy!</Message.Chat>
-      <Message.Media
-        imageUrl={imageUrl}
-        caption="image.jpg"
-        onMediaLoad={onMediaLoad}
-      />
-    </Message>
+const defaultProps = {
+  className: '',
+  errorMessage: `Couldn't send.`,
+  openMediaInModal: true,
+  maxHeight: 250,
+  maxWidth: 350,
+  modalAnimationDuration: 250,
+  modalAnimationEasing: 'ease',
+  overlayAnimationDuration: 250,
+  modalAnimationSequence: 'fade up',
+  showErrorTryAgainLink: true,
+  tryAgainLabel: 'Try again',
+  isUploading: false,
+}
 
-    <Message to avatar={<Avatar name="Arctic Puffin" />}>
-      <Message.Media imageUrl={imageUrl} caption="image.jpg" />
-    </Message>
-  </Message.Provider>
-))
+stories.add('Media', () => {
+  const {
+    error,
+    modalAnimationDuration,
+    modalAnimationEasing,
+    modalAnimationSequence,
+    overlayAnimationDuration,
+    isUploading,
+    tryAgainLabel,
+  } = defaultProps
 
-const onErrorTryAgainClick = () => console.log('Try again!')
-
-stories.add('image:large', () => {
-  const imageProps = {
+  const props = {
     ...dimensions,
+    caption: text('caption', 'image.jpg'),
+    error: text('error', error),
     imageUrl: imageUrlSlow,
+    modalAnimationDuration: number(
+      'modalAnimationDuration',
+      modalAnimationDuration
+    ),
+    modalAnimationEasing: text('modalAnimationEasing', modalAnimationEasing),
+    modalAnimationSequence: text(
+      'modalAnimationSequence',
+      modalAnimationSequence
+    ),
+    overlayAnimationDuration: number(
+      'overlayAnimationDuration',
+      overlayAnimationDuration
+    ),
+    isUploading: boolean('isUploading', isUploading),
+    tryAgainLabel: text('tryAgainLabel', tryAgainLabel),
   }
+
   return (
     <div>
       <Message to avatar={<Avatar name="Arctic Puffin" />}>
         <Message.Chat>Agent Chat</Message.Chat>
-        <Message.Media {...imageProps} />
-        <Message.Media {...imageProps} caption="image.jpg" />
-        <Message.Media
-          {...imageProps}
-          caption="image.jpg"
-          error
-          onErrorTryAgainClick={onErrorTryAgainClick}
-        />
-      </Message>
-
-      <Message to avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Media {...imageProps} caption="image.jpg" isNote />
-        <Message.Media
-          {...imageProps}
-          caption="image.jpg"
-          error
-          onErrorTryAgainClick={onErrorTryAgainClick}
-          isNote
-        />
-        <Message.Media
-          {...imageProps}
-          caption="image.jpg"
-          error
-          onErrorTryAgainClick={onErrorTryAgainClick}
-          isNote
-          isUploading
-        />
-      </Message>
-
-      <Message from avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Media imageUrl={imageUrl} caption="image.jpg" />
+        <Message.Media {...props} />
       </Message>
     </div>
   )
 })
-
-stories.add('image:left-right', () => {
-  const imageProps = {
-    ...dimensions,
-    imageUrl: imageUrlSlow,
-  }
-  return (
-    <div>
-      <Message to avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Chat>Agent Chat</Message.Chat>
-        <Message.Media {...imageProps} caption="image.jpg" />
-      </Message>
-
-      <Message from avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Media {...imageProps} caption="image.jpg" />
-      </Message>
-
-      <Message to avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Chat>Another message</Message.Chat>
-      </Message>
-
-      <Message from avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Media {...imageProps} caption="image.jpg" />
-        <Message.Chat>Follow-up message</Message.Chat>
-      </Message>
-
-      <Message to avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Chat isNote>First message</Message.Chat>
-        <Message.Media {...imageProps} caption="image.jpg" isNote />
-        <Message.Chat isNote>Second message</Message.Chat>
-      </Message>
-
-      <Message to avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Media {...imageProps} caption="image.jpg" />
-      </Message>
-    </div>
-  )
-})
-
-stories.add('consecutive', () => {
-  const imageProps = {
-    ...dimensions,
-    imageUrl: imageUrlSlow,
-  }
-  return (
-    <div>
-      <Message to avatar={<Avatar name="Arctic Puffin" />}>
-        <Message.Chat>Agent Chat</Message.Chat>
-        <Message.Media {...imageProps} caption="image.jpg" />
-        <Message.Media {...imageProps} caption="image.jpg" />
-        <Message.Media {...imageProps} caption="image.jpg" />
-        <Message.Media {...imageProps} caption="image.jpg" />
-      </Message>
-    </div>
-  )
-})
-
-stories.add('states', () => (
-  <Message.Provider theme="embed">
-    <Message from avatar={<Avatar name="Arctic Puffin" />}>
-      <Message.Chat>Error</Message.Chat>
-      <Message.Media caption="image.jpg" error imageUrl={imageUrl} />
-      <Message.Chat>Uploading</Message.Chat>
-      <Message.Media caption="image.jpg" isUploading imageUrl={imageUrl} />
-    </Message>
-  </Message.Provider>
-))
