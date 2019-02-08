@@ -3,6 +3,8 @@
 * [HSDS: React](../README.md)
 * [Quick start](./quick-start/README.md)
   * [Components](./quick-start/components.md)
+* [Development](./development/README.md)
+  * [Async/Await](./development/async-await.md)
 * [Testing](./testing/README.md)
   * [Local Integration Testing](./testing/local-integration-testing.md)
 * [Reporting Issues](./issues.md)
