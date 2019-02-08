@@ -5,12 +5,19 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Pagination.utils'
-import { PaginationUI, InformationUI, NavigationUI } from './Pagination.css.js'
+import {
+  PaginationUI,
+  InformationUI,
+  NavigationUI,
+  RangeUI,
+} from './Pagination.css.js'
 import Text from '../Text'
+import Icon from '../Icon'
+import Button from '../Button'
 
 export interface Props {
   className?: string
-  onChange: (event: Event) => void
+  onChange: (nextPageNumber: number) => void
   innerRef: (node: HTMLElement) => void
   showNavigation?: boolean
   activePage: number
@@ -31,13 +38,17 @@ export class Pagination extends React.PureComponent<Props> {
     totalItems: 0,
   }
 
+  getNumberOfPages() {
+    const { rangePerPage, totalItems } = this.props
+    return Math.ceil(totalItems / rangePerPage)
+  }
+
   getCurrentPage() {
-    const { activePage, rangePerPage, totalItems } = this.props
+    const { activePage } = this.props
     if (activePage < 1) {
       return 1
     }
-    const maxPage = Math.ceil(totalItems / rangePerPage)
-    return Math.min(maxPage, Math.round(activePage))
+    return Math.min(this.getNumberOfPages(), Math.round(activePage))
   }
 
   getStartRange() {
@@ -52,12 +63,41 @@ export class Pagination extends React.PureComponent<Props> {
     return Math.min(page * rangePerPage, totalItems)
   }
 
+  isNavigationVisible() {
+    const { showNavigation } = this.props
+    return showNavigation && this.getNumberOfPages() > 1
+  }
+
+  handleStartClick = e => {
+    e.preventDefault()
+    const { onChange } = this.props
+    onChange && onChange(1)
+  }
+
+  handlePrevClick = e => {
+    e.preventDefault()
+    const { onChange } = this.props
+    onChange && onChange(this.getCurrentPage() - 1)
+  }
+
+  handleNextClick = e => {
+    e.preventDefault()
+    const { onChange } = this.props
+    onChange && onChange(this.getCurrentPage() + 1)
+  }
+
+  handleEndClick = e => {
+    e.preventDefault()
+    const { onChange } = this.props
+    onChange && onChange(this.getNumberOfPages())
+  }
+
   renderRange() {
     return (
       <Text>
-        {this.getStartRange()}
+        <RangeUI>{this.getStartRange()}</RangeUI>
         {` `}-{` `}
-        {this.getEndRange()}
+        <RangeUI>{this.getEndRange()}</RangeUI>
       </Text>
     )
   }
@@ -72,7 +112,37 @@ export class Pagination extends React.PureComponent<Props> {
     )
   }
 
-  renderNavigation() {}
+  renderNavigation() {
+    const currentPage = this.getCurrentPage()
+    const isNotFirstPage = currentPage > 1
+    const isLastPage = currentPage >= this.getNumberOfPages()
+
+    return (
+      <NavigationUI>
+        {isNotFirstPage && (
+          <Button version={2} onClick={this.handleStartClick}>
+            <Icon name="arrow-left-double-large" size="24" center />
+          </Button>
+        )}
+        {isNotFirstPage && (
+          <Button version={2} onClick={this.handlePrevClick}>
+            <Icon name="arrow-left-single-large" size="24" center />
+          </Button>
+        )}
+
+        <Button
+          version={2}
+          disabled={isLastPage}
+          onClick={this.handleNextClick}
+        >
+          <Icon name="arrow-right-single-large" size="24" center />
+        </Button>
+        <Button version={2} disabled={isLastPage} onClick={this.handleEndClick}>
+          <Icon name="arrow-right-double-large" size="24" center />
+        </Button>
+      </NavigationUI>
+    )
+  }
 
   render() {
     const {
@@ -95,15 +165,15 @@ export class Pagination extends React.PureComponent<Props> {
         innerRef={innerRef}
       >
         <InformationUI>
-          {this.renderRange()}
-          <Text>
+          <Text size={13}>
+            {this.renderRange()}
             {` `}
             {separator}
             {` `}
+            {this.renderTotal()}
           </Text>
-          {this.renderTotal()}
         </InformationUI>
-        {showNavigation && this.renderNavigation()}
+        {this.isNavigationVisible() && this.renderNavigation()}
       </PaginationUI>
     )
   }

@@ -9,7 +9,8 @@ export const config = {
 export const PaginationUI = styled('div')`
   ${baseStyles};
 
-  padding: 12px 10px;
+  padding: 0 10px;
+  min-height: 36px;
   display: flex;
   align-items: center;
   width: 100%;
@@ -23,4 +24,11 @@ export const NavigationUI = styled('div')`
 export const InformationUI = styled('div')`
   flex: 1 1 100%;
   white-space: nowrap;
+  color: ${getColor('charcoal.200')};
+  padding: 10px 0;
+`
+
+export const RangeUI = styled('span')`
+  color: ${getColor('charcoal.600')};
+  font-weight: 600;
 `
