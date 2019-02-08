@@ -49,6 +49,12 @@ const css = `
 
   &.is-error {
     color: ${getColor('red.500')};
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${getColor('red.500')};
+    }
   }
 
   // Modifiers
@@ -82,7 +88,6 @@ const css = `
     text-decoration: none;
 
     ${bem.element('name')} {
-      color: ${getColor('blue.500')};
       text-decoration: underline;
     }
   }
