@@ -225,23 +225,7 @@ describe('Staggering', () => {
 })
 
 describe('Children', () => {
-  test('Can render non-Animate children, with stagger', () => {
-    const wrapper = mount(
-      <AnimateGroup stagger>
-        <Animate duration={30}>
-          <div className="champ">Champ</div>
-        </Animate>
-        <div className="ron">Ron</div>
-      </AnimateGroup>
-    )
-    const o = wrapper.find('.champ')
-    const p = wrapper.find('.ron')
-
-    expect(o.length).toBeTruthy()
-    expect(p.length).toBeTruthy()
-  })
-
-  test('Filters out null children', () => {
+  test('Can render Animate children', () => {
     const children = [
       <Animate duration={30} key={11}>
         <div className="champ">Champ</div>
