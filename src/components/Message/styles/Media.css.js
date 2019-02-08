@@ -1,3 +1,5 @@
+import styled from '../../styled'
+import Image from '../../Image'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
 import { getColor } from '../../../styles/utilities/color.js'
@@ -12,8 +14,12 @@ const mediaImageStyles = `
   object-fit: cover;
 `
 
+export const ImageUI = styled(Image)`
+  ${mediaImageStyles};
+`
+
 const css = `
-  ${baseStyles}
+  ${baseStyles};
 
   ${bem.element('caption')} {
     padding: 8px;
