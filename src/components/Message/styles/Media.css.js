@@ -2,7 +2,7 @@ import styled from '../../styled'
 import Image from '../../Image'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
-import { getColor } from '../../../styles/utilities/color.js'
+import { getColor } from '../../../styles/utilities/color'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 

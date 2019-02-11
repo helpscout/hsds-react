@@ -1,5 +1,5 @@
 // @flow
-import { getColor } from '../../../styles/utilities/color.js'
+import { getColor } from '../../../styles/utilities/color'
 import styled from '../../styled'
 
 export const HighlightUI = styled('pre')`

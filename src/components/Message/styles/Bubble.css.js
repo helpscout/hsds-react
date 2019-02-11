@@ -1,5 +1,5 @@
 // @flow
-import { getColor } from '../../../styles/utilities/color.js'
+import { getColor } from '../../../styles/utilities/color'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import { BEM } from '../../../utilities/classNames'
