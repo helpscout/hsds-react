@@ -236,6 +236,12 @@ export const makeButtonUI = (selector: 'button') => {
     text-align: center;
     text-decoration: none;
 
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+    }
+
     &:focus {
       z-index: 2;
     }
