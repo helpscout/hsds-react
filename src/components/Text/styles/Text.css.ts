@@ -72,7 +72,7 @@ const css: string = `
   }
 
   &.is-plainLink {
-    color: ${getColor('blue.500')};
+    color: ${getColor('link.base')};
   }
 
   &.is-samp {
