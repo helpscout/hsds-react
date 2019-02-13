@@ -103,7 +103,7 @@ export const ActionUI = styled('div')`
 
   &.is-open {
     background-color: ${rgba(getColor('grey.300'), 1)};
-    color: ${getColor('blue.500')};
+    color: ${getColor('link.base')};
 
     ${MenuUI} {
       color: initial;
@@ -168,7 +168,7 @@ export const ItemUI = styled('div')`
   &.is-focused {
     > ${ActionUI}, &.is-option {
       background-color: ${rgba(getColor('grey.300'), 1)};
-      color: ${getColor('blue.500')};
+      color: ${getColor('link.base')};
     }
   }
   &.is-focused:hover,
@@ -209,7 +209,7 @@ export const DividerUI = styled('div')`
 
 export const TriggerUI = styled('a')`
   ${baseStyles};
-  color: ${getColor('blue.500')};
+  color: ${getColor('link.base')};
   cursor: pointer;
   display: inline-block;
   outline: none;

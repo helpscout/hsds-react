@@ -2,18 +2,18 @@
 import { getColor } from '../utilities/color'
 
 const linkStyles = () => `
-  color: ${getColor('blue.500')};
+  color: ${getColor('link.base')};
   cursor: pointer;
   text-decoration: none;
 
   &:hover {
-    color: ${getColor('blue.400')};
+    color: ${getColor('link.hover')};
     outline-width: 0;
     text-decoration: underline;
   }
 
   &:active {
-    color: ${getColor('blue.400')};
+    color: ${getColor('link.active')};
     outline-width: 0;
   }
 `

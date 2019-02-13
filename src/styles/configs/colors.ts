@@ -158,10 +158,19 @@ const osx = {
   },
 }
 
+const link = {
+  default: palette.blue['600'],
+  base: palette.blue['600'],
+  hover: palette.blue['500'],
+  active: palette.blue['500'],
+  focus: palette.blue['500'],
+}
+
 export default {
   ...palette,
   border,
   text,
   state,
   osx,
+  link,
 }

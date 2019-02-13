@@ -19,7 +19,7 @@ const css = `
   // Modifiers
   &.is-link {
     ${bem.element('title')} {
-      color: ${getColor('blue.500')};
+      color: ${getColor('link.base')};
     }
   }
 
