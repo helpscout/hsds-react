@@ -1,17 +1,31 @@
-@import "pack/seed-color-scheme/_index";
+@import 'pack/seed-color-scheme/_index';
 
 // Text
-@include _color((
-  note: (
-    background: #FFF7DD,
-  ),
-  text: (
-    default: _color(charcoal, 700),
-    body: _color(charcoal, 400),
-    heading: _color(charcoal, 700),
-    subtle: _color(charcoal, 500),
-    muted: _color(charcoal, 300),
-    faint: _color(charcoal, 200),
-    extraMuted: _color(grey, 600),
+@include _color(
+  (
+    blue:
+      (
+        default: #1292ee,
+        100: #f3fbff,
+        200: #d6edff,
+        300: #a0d4ff,
+        400: #57b0fb,
+        500: #1292ee,
+        600: #0077cc,
+        700: #005ca4,
+        800: #034077,
+        900: #002651
+      ),
+    note: (background: #fff7dd),
+    text:
+      (
+        default: _color(charcoal, 700),
+        body: _color(charcoal, 400),
+        heading: _color(charcoal, 700),
+        subtle: _color(charcoal, 500),
+        muted: _color(charcoal, 300),
+        faint: _color(charcoal, 200),
+        extraMuted: _color(grey, 600)
+      )
   )
-));
+);
