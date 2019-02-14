@@ -5,6 +5,8 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Pagination.utils'
+import pluralize from '../../utilities/pluralize'
+
 import {
   PaginationUI,
   InformationUI,
@@ -23,6 +25,7 @@ export interface Props {
   rangePerPage: number
   separator?: string
   showNavigation?: boolean
+  pluralizeSubject?: string
   subject?: string
   totalItems: number
 }
@@ -61,6 +64,15 @@ export class Pagination extends React.PureComponent<Props> {
     const { rangePerPage, totalItems } = this.props
     const page = this.getCurrentPage()
     return Math.min(page * rangePerPage, totalItems)
+  }
+
+  getSubject() {
+    const { totalItems, subject = '', pluralizeSubject } = this.props
+
+    if (pluralizeSubject && totalItems > 1) {
+      return pluralizeSubject
+    }
+    return pluralize(subject, totalItems)
   }
 
   isNavigationVisible() {
@@ -107,7 +119,7 @@ export class Pagination extends React.PureComponent<Props> {
     return (
       <Text>
         {totalItems}
-        {subject && ` ${subject}`}
+        {subject && ` ${this.getSubject()}`}
       </Text>
     )
   }

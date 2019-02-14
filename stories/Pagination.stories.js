@@ -25,7 +25,7 @@ stories.addDecorator(storyFn => (
 
 // TODO: add other stories to render different state of the navigation
 
-const subject = () => text('subject', 'Customers')
+const subject = () => text('subject', 'Customer')
 const activePage = (cPage = 1) => number('activePage', cPage)
 
 const getKnobsProps = otherKnobs => {
@@ -47,6 +47,23 @@ stories.add('with subject', () => {
       {...getKnobsProps({ subject: subject() })}
     />
   )
+})
+
+stories.add('with singular subject', () => {
+  const props = {
+    subject: subject(),
+    totalItems: number('totalItems', 1),
+  }
+  return <Pagination showNavigation={false} {...props} />
+})
+
+stories.add('with custom pluralize subject', () => {
+  const props = {
+    subject: 'Complex',
+    pluralizeSubject: 'Complexes',
+    totalItems: number('totalItems', 10),
+  }
+  return <Pagination showNavigation={false} {...props} />
 })
 
 stories.add('start of navigation', () => {
