@@ -41,6 +41,38 @@ describe('Subject', () => {
 
     expect(s.text().indexOf(' ')).toBe(0)
   })
+
+  test('Renders a default subject if no totalItems is provided', () => {
+    const subject = 'Customer'
+    const wrapper = mount(<Pagination subject={subject} />)
+    const s = wrapper.find('.c-Pagination__subject')
+
+    expect(s.text().trim()).toBe(subject)
+  })
+
+  test('Renders a pluralize subject', () => {
+    const subject = 'Customer'
+    const wrapper = mount(<Pagination subject={subject} totalItems={100} />)
+    const s = wrapper.find('.c-Pagination__subject')
+
+    expect(s.text().trim()).toBe('Customers')
+  })
+
+  test('Renders a custom pluralize subject', () => {
+    const subject = 'Customer'
+    const pluralizeSubject = 'Customerzzz'
+
+    const wrapper = mount(
+      <Pagination
+        subject={subject}
+        totalItems={100}
+        pluralizeSubject={pluralizeSubject}
+      />
+    )
+    const s = wrapper.find('.c-Pagination__subject')
+
+    expect(s.text().trim()).toBe(pluralizeSubject)
+  })
 })
 
 describe('Navigation', () => {
@@ -314,5 +346,41 @@ describe('Clicks', () => {
       .first()
       .simulate('click')
     expect(changeWatcher).toHaveBeenCalledWith(3)
+  })
+
+  test('Prev callback should not call onChange if already at first page', () => {
+    const totalItems = 17
+    const rangePerPage = 5
+    const changeWatcher = jest.fn()
+
+    const wrapper = mount(
+      <Pagination
+        showNavigation={true}
+        totalItems={totalItems}
+        rangePerPage={rangePerPage}
+        activePage={1}
+        onChange={changeWatcher}
+      />
+    )
+    wrapper.instance().handlePrevClick({ preventDefault: jest.fn() })
+    expect(changeWatcher).not.toHaveBeenCalled()
+  })
+
+  test('Next callback should not call onChange if already at last page', () => {
+    const totalItems = 15
+    const rangePerPage = 5
+    const changeWatcher = jest.fn()
+
+    const wrapper = mount(
+      <Pagination
+        showNavigation={true}
+        totalItems={totalItems}
+        rangePerPage={rangePerPage}
+        activePage={3}
+        onChange={changeWatcher}
+      />
+    )
+    wrapper.instance().handleNextClick({ preventDefault: jest.fn() })
+    expect(changeWatcher).not.toHaveBeenCalled()
   })
 })

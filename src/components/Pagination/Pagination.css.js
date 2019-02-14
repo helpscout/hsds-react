@@ -1,10 +1,9 @@
 import styled from '../styled'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
+import Button from '../Button'
 
-export const config = {
-  color: getColor('grey.700'),
-}
+import { config } from '../Button/Button.css'
 
 export const PaginationUI = styled('div')`
   ${baseStyles};
@@ -31,4 +30,10 @@ export const InformationUI = styled('div')`
 export const RangeUI = styled('span')`
   color: ${getColor('charcoal.600')};
   font-weight: 600;
+`
+
+export const ButtonIconUI = styled(Button)`
+  &.is-default.is-focused {
+    color: ${config.default.colorActive};
+  }
 `

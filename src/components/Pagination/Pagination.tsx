@@ -12,6 +12,7 @@ import {
   InformationUI,
   NavigationUI,
   RangeUI,
+  ButtonIconUI,
 } from './Pagination.css.js'
 import Text from '../Text'
 import Icon from '../Icon'
@@ -26,7 +27,7 @@ export interface Props {
   separator?: string
   showNavigation?: boolean
   pluralizeSubject?: string
-  subject?: string
+  subject: string
   totalItems: number
 }
 
@@ -37,6 +38,7 @@ export class Pagination extends React.PureComponent<Props> {
     onChange: noop,
     rangePerPage: 50,
     separator: 'of',
+    subject: '',
     showNavigation: true,
     totalItems: 0,
   }
@@ -67,7 +69,7 @@ export class Pagination extends React.PureComponent<Props> {
   }
 
   getSubject() {
-    const { totalItems, subject = '', pluralizeSubject } = this.props
+    const { totalItems, subject, pluralizeSubject } = this.props
 
     if (totalItems === 0) return subject
     if (pluralizeSubject && totalItems > 1) return pluralizeSubject
@@ -140,40 +142,40 @@ export class Pagination extends React.PureComponent<Props> {
     return (
       <NavigationUI>
         {isNotFirstPage && [
-          <Button
+          <ButtonIconUI
             key="firstButton"
             version={2}
             onClick={this.handleFirstClick}
             className="c-Pagination__firstButton"
           >
             <Icon name="arrow-left-double-large" size="24" center />
-          </Button>,
-          <Button
+          </ButtonIconUI>,
+          <ButtonIconUI
             key="prevButton"
             version={2}
             onClick={this.handlePrevClick}
             className="c-Pagination__prevButton"
           >
             <Icon name="arrow-left-single-large" size="24" center />
-          </Button>,
+          </ButtonIconUI>,
         ]}
 
-        <Button
+        <ButtonIconUI
           version={2}
           disabled={isLastPage}
           onClick={this.handleNextClick}
           className="c-Pagination__nextButton"
         >
           <Icon name="arrow-right-single-large" size="24" center />
-        </Button>
-        <Button
+        </ButtonIconUI>
+        <ButtonIconUI
           version={2}
           disabled={isLastPage}
           onClick={this.handleEndClick}
           className="c-Pagination__lastButton"
         >
           <Icon name="arrow-right-double-large" size="24" center />
-        </Button>
+        </ButtonIconUI>
       </NavigationUI>
     )
   }
