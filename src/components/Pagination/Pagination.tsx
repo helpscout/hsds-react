@@ -69,9 +69,9 @@ export class Pagination extends React.PureComponent<Props> {
   getSubject() {
     const { totalItems, subject = '', pluralizeSubject } = this.props
 
-    if (pluralizeSubject && totalItems > 1) {
-      return pluralizeSubject
-    }
+    if (totalItems === 0) return subject
+    if (pluralizeSubject && totalItems > 1) return pluralizeSubject
+
     return pluralize(subject, totalItems)
   }
 
@@ -80,7 +80,7 @@ export class Pagination extends React.PureComponent<Props> {
     return showNavigation && this.getNumberOfPages() > 1
   }
 
-  handleStartClick = e => {
+  handleFirstClick = e => {
     e.preventDefault()
     const { onChange } = this.props
     onChange && onChange(1)
@@ -89,13 +89,19 @@ export class Pagination extends React.PureComponent<Props> {
   handlePrevClick = e => {
     e.preventDefault()
     const { onChange } = this.props
-    onChange && onChange(this.getCurrentPage() - 1)
+    const currentPage = this.getCurrentPage()
+    if (currentPage > 1) {
+      onChange && onChange(currentPage - 1)
+    }
   }
 
   handleNextClick = e => {
     e.preventDefault()
     const { onChange } = this.props
-    onChange && onChange(this.getCurrentPage() + 1)
+    const currentPage = this.getCurrentPage()
+    if (currentPage < this.getNumberOfPages()) {
+      onChange && onChange(this.getCurrentPage() + 1)
+    }
   }
 
   handleEndClick = e => {
@@ -106,7 +112,7 @@ export class Pagination extends React.PureComponent<Props> {
 
   renderRange() {
     return (
-      <Text>
+      <Text className="c-Pagination__range">
         <RangeUI>{this.getStartRange()}</RangeUI>
         {` `}-{` `}
         <RangeUI>{this.getEndRange()}</RangeUI>
@@ -118,8 +124,10 @@ export class Pagination extends React.PureComponent<Props> {
     const { totalItems, subject } = this.props
     return (
       <Text>
-        {totalItems}
-        {subject && ` ${this.getSubject()}`}
+        <span className="c-Pagination__total">{totalItems}</span>
+        {subject && (
+          <span className="c-Pagination__subject">{` ${this.getSubject()}`}</span>
+        )}
       </Text>
     )
   }
@@ -132,10 +140,20 @@ export class Pagination extends React.PureComponent<Props> {
     return (
       <NavigationUI>
         {isNotFirstPage && [
-          <Button version={2} onClick={this.handleStartClick}>
+          <Button
+            key="firstButton"
+            version={2}
+            onClick={this.handleFirstClick}
+            className="c-Pagination__firstButton"
+          >
             <Icon name="arrow-left-double-large" size="24" center />
           </Button>,
-          <Button version={2} onClick={this.handlePrevClick}>
+          <Button
+            key="prevButton"
+            version={2}
+            onClick={this.handlePrevClick}
+            className="c-Pagination__prevButton"
+          >
             <Icon name="arrow-left-single-large" size="24" center />
           </Button>,
         ]}
@@ -144,10 +162,16 @@ export class Pagination extends React.PureComponent<Props> {
           version={2}
           disabled={isLastPage}
           onClick={this.handleNextClick}
+          className="c-Pagination__nextButton"
         >
           <Icon name="arrow-right-single-large" size="24" center />
         </Button>
-        <Button version={2} disabled={isLastPage} onClick={this.handleEndClick}>
+        <Button
+          version={2}
+          disabled={isLastPage}
+          onClick={this.handleEndClick}
+          className="c-Pagination__lastButton"
+        >
           <Icon name="arrow-right-double-large" size="24" center />
         </Button>
       </NavigationUI>

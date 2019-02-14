@@ -23,8 +23,6 @@ stories.addDecorator(storyFn => (
   </PaginationWrapperUI>
 ))
 
-// TODO: add other stories to render different state of the navigation
-
 const subject = () => text('subject', 'Customer')
 const activePage = (cPage = 1) => number('activePage', cPage)
 
