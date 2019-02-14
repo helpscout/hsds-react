@@ -32,16 +32,17 @@ export const RateActionUI = styled('button')`
   z-index: 0;
 
   &:after {
+    ${baseStyles};
     content: '';
     border-radius: 50%;
     border: 2px solid ${config.outlineColor};
     display: none;
-    height: 28px;
+    height: calc(${config.size.default} + 4px);
     left: -4px;
     pointer-events: none;
     position: absolute;
     top: -4px;
-    width: 28px;
+    width: calc(${config.size.default} + 4px);
     will-change: transform;
 
     @keyframes HSDSRateActionSelected {
@@ -81,5 +82,10 @@ export const RateActionUI = styled('button')`
   &.is-sm {
     width: ${config.size.sm};
     height: ${config.size.sm};
+
+    &:after {
+      height: calc(${config.size.sm} + 4px);
+      width: calc(${config.size.sm} + 4px);
+    }
   }
 `
