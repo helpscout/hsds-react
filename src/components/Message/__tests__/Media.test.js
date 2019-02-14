@@ -262,6 +262,25 @@ describe('Modal', () => {
 
     expect(c.props().wrapperClassName).toContain('custom')
   })
+
+  test('Accepts animation Props', () => {
+    const url = './mugatu.png'
+    const wrapper = mount(
+      <Media
+        imageUrl={url}
+        modalAnimationDuration={123}
+        modalAnimationEasing="linear"
+        modalAnimationSequence="down"
+        overlayAnimationDuration={456}
+      />
+    )
+    const c = wrapper.find(Modal)
+
+    expect(c.props().modalAnimationDuration).toBe(123)
+    expect(c.props().modalAnimationEasing).toBe('linear')
+    expect(c.props().modalAnimationSequence).toBe('down')
+    expect(c.props().overlayAnimationDuration).toBe(456)
+  })
 })
 
 describe('Uploading', () => {

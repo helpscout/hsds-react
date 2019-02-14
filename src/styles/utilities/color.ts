@@ -1,5 +1,4 @@
-// @flow
-import colors from '../configs/colors'
+import colorScheme from '../configs/colors'
 import { isNumber, isObject } from '../../utilities/is'
 import get from '../../utilities/get'
 export { rgba } from '../../utilities/color'
@@ -31,7 +30,7 @@ export const getColor = (...args: ColorArgs): Color => {
   }
 
   let index = 0
-  let color = colors
+  let color = colorScheme
 
   while (color != null && index < path.length) {
     color = color[path[index++]]
@@ -41,6 +40,7 @@ export const getColor = (...args: ColorArgs): Color => {
     color = color['default']
   }
 
+  // @ts-ignore
   return color || defaultColor
 }
 
@@ -52,7 +52,7 @@ export const getColor = (...args: ColorArgs): Color => {
  * @returns {any} The fetched property
  */
 export const getThemeBrandProp = (
-  props: Object = {},
+  props: any = {},
   path: string = '',
   fallback: any = ''
 ): any => {

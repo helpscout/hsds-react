@@ -1,7 +1,6 @@
 // @flow
 import type { FluffyCardTextAlign } from './types'
 import React, { PureComponent as Component } from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Container from './Container'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -17,6 +16,7 @@ type Props = {
   fullHeight: boolean,
   hover: boolean,
   href?: string,
+  innerRef: (node: HTMLElement) => void,
   nodeRef: () => void,
   onBlur: (event: Event) => void,
   onClick: (event: Event) => void,
@@ -33,6 +33,7 @@ class FluffyCard extends Component<Props> {
     floating: false,
     fullHeight: false,
     hover: false,
+    innerRef: noop,
     nodeRef: noop,
     onBlur: noop,
     onClick: noop,
@@ -44,7 +45,7 @@ class FluffyCard extends Component<Props> {
   static Container = Container
 
   render() {
-    const { children, className, textAlign, ...rest } = this.props
+    const { children, className, innerRef, textAlign, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-FluffyCard',
@@ -54,9 +55,10 @@ class FluffyCard extends Component<Props> {
 
     return (
       <FluffyCardUI
-        {...getValidProps(rest)}
+        {...rest}
         borderless
         className={componentClassName}
+        innerRef={innerRef}
       >
         {children}
       </FluffyCardUI>

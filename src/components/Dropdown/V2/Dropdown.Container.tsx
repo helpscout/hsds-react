@@ -28,6 +28,7 @@ import {
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
+import { isDefined } from '../../../utilities/is'
 
 export interface Props extends DropdownProps {
   // Secret prop to pass in a custom store
@@ -115,7 +116,10 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
 
     // Update items + regenerate the indexMap if items chage
     if (nextProps.items !== state.items) {
-      nextState = { ...updateItems(state, nextProps.items) }
+      nextState = {
+        ...nextState,
+        ...updateItems(state, nextProps.items),
+      }
     }
 
     // Adjust open state, if changed
@@ -127,20 +131,29 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     }
 
     // Adjust index, if changed
-    if (nextProps.index !== state.index) {
-      nextState = { ...updateIndex(state, nextProps.index) }
+    if (isDefined(nextProps.index) && nextProps.index !== state.index) {
+      nextState = {
+        ...nextState,
+        ...updateIndex(state, nextProps.index),
+      }
     }
 
     // Adjust dropUp, if changed
     if (nextProps.dropUp !== state.dropUp) {
-      nextState = { ...updateDropUp(state, nextProps.dropUp) }
+      nextState = {
+        ...nextState,
+        ...updateDropUp(state, nextProps.dropUp),
+      }
     }
 
     // This is to handle filterable dropdowns. We need to adjust the internally
     // tracked inputValue and reset the `index` value for a filterable
     // experience.
     if (nextProps.inputValue !== state.inputValue) {
-      nextState = { ...updateInputValue(state, nextProps.inputValue) }
+      nextState = {
+        ...nextState,
+        ...updateInputValue(state, nextProps.inputValue),
+      }
     }
 
     const diffs = getShallowDiffs(this.props, nextProps)
@@ -157,7 +170,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
       } = diffs.next
 
       if (Object.keys(changedProps).length) {
-        nextState = { ...changedProps }
+        nextState = { ...nextState, ...changedProps }
       }
     }
 

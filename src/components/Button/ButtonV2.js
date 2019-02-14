@@ -1,5 +1,6 @@
 // @flow
 import type { ButtonKind, ButtonSize } from './types'
+import memoize from 'memoize-one'
 import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -8,7 +9,7 @@ import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
-import { ButtonUI, ButtonContentUI, FocusUI } from './styles/Button.css.js'
+import { makeButtonUI, ButtonContentUI, FocusUI } from './Button.css.js'
 import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
 
@@ -62,6 +63,8 @@ class Button extends Component<Props, State> {
 
   static BlueComponentVersion = 2
 
+  makeButtonUI = memoize(makeButtonUI)
+
   constructor(props, context) {
     super(props, context)
 
@@ -87,6 +90,7 @@ class Button extends Component<Props, State> {
   shouldShowFocus = () => {
     const paddedButtonKinds = [
       'primary',
+      'primaryAlt',
       'secondary',
       'secondaryAlt',
       'tertiary',
@@ -140,6 +144,13 @@ class Button extends Component<Props, State> {
     })
   }
 
+  getButtonUI() {
+    const { href } = this.props
+    const selector = href ? 'a' : 'button'
+
+    return this.makeButtonUI(selector)
+  }
+
   render() {
     const {
       allowContentEventPropogation,
@@ -184,6 +195,7 @@ class Button extends Component<Props, State> {
     const focusMarkup = this.getFocusMarkup()
 
     const childrenMarkup = this.getChildrenMarkup()
+    const ButtonUI = this.getButtonUI()
 
     return (
       <ButtonUI

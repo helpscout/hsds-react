@@ -1,18 +1,18 @@
-@import "../configs/color";
+@import '../configs/color';
 
-@mixin linkStyles () {
-  color: _color(blue, 500);
+@mixin linkStyles() {
+  color: _color(blue, 600);
   cursor: pointer;
   text-decoration: none;
 
   &:hover {
-    color: _color(blue, 400);
+    color: _color(blue, 500);
     outline-width: 0;
     text-decoration: underline;
   }
 
   &:active {
-    color: _color(blue, 400);
+    color: _color(blue, 500);
     outline-width: 0;
   }
 }

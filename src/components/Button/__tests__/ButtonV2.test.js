@@ -299,3 +299,31 @@ describe('Content event propagation', () => {
     expect(spy).toHaveBeenCalled()
   })
 })
+
+describe('Link', () => {
+  test('Can render a link, if href is defined', () => {
+    const wrapper = mount(<Button href="/" />)
+
+    expect(wrapper.find('a').length).toBeTruthy()
+    expect(wrapper.find('button').length).toBeFalsy()
+  })
+
+  test('Can render a link based props', () => {
+    const wrapper = mount(<Button href="/" target="_blank" />)
+    const el = wrapper.find('a').first()
+
+    expect(el.length).toBeTruthy()
+    expect(el.prop('target')).toBe('_blank')
+  })
+
+  test('Changes back to <button>, if href is removed', () => {
+    const wrapper = mount(<Button href="/" />)
+
+    expect(wrapper.find('a').length).toBeTruthy()
+
+    wrapper.setProps({ href: null })
+
+    expect(wrapper.find('a').length).toBeFalsy()
+    expect(wrapper.find('button').length).toBeTruthy()
+  })
+})

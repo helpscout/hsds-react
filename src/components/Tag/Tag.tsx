@@ -11,7 +11,15 @@ import { noop, promiseNoop } from '../../utilities/other'
 import { AnimateUI, TagWrapperUI, TagUI, BodyUI, SpinnerUI } from './Tag.css'
 import { COMPONENT_KEY } from './Tag.utils'
 
-type TagColor = 'blue' | 'green' | 'grey' | 'gray' | 'orange' | 'purple' | 'red'
+type TagColor =
+  | 'blue'
+  | 'green'
+  | 'grey'
+  | 'gray'
+  | 'orange'
+  | 'purple'
+  | 'red'
+  | 'yellow'
 
 export interface Props {
   animationDuration?: number

@@ -30,6 +30,7 @@ Alternatively, [PropProvider](../../PropProvider) can be used to set this prop a
 | className                    | `string`   | Custom class names to be added to the component.                                |
 | disabled                     | `bool`     | Disable the button so it can't be clicked.                                      |
 | fetch                        | `function` | function which returns a promise, will be invoked before routing the `to` route |
+| href                         | `string`   | Hyperlink for the button. This transforms the button to a `<a>` selector.       |
 | innerRef                     | `function` | Retrieves the `button` DOM node.                                                |
 | isFocused                    | `bool`     | Renders the focused style.                                                      |
 | isSuffix                     | `bool`     | Renders suffix styles.                                                          |
@@ -49,6 +50,7 @@ Alternatively, [PropProvider](../../PropProvider) can be used to set this prop a
 | Value          | Description                                                                              |
 | -------------- | ---------------------------------------------------------------------------------------- |
 | `primary`      | Renders a blue button. Used for primary actions.                                         |
+| `primaryAlt`   | Renders a purple button. Used for primary actions.                                       |
 | `secondary`    | Renders a white button with a border. Used for secondary actions.                        |
 | `secondaryAlt` | Renders a white button with a green border. Used for secondary actions.                  |
 | `default`      | Renders a borderless button. Used for subtle/tertiary actions.                           |

@@ -52,7 +52,10 @@ class ThemePreviewDemo extends React.Component {
         <button onClick={this.add}>Add</button>
         <Attachment.Provider theme="preview">
           <AttachmentList>
-            <Attachment imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto" />
+            <Attachment
+              imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
+              state="error"
+            />
             <Attachment imageUrl="http://matthewjamestaylor.com/img/illustrations/large/how-to-convert-a-liquid-layout-to-fixed-width.jpg" />
             <Attachment name="attachment-coming-soon.md" />
             <Attachment name="attachment-coming-soon.md" />

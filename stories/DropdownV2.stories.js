@@ -270,12 +270,20 @@ stories.add('Stateful', () => {
     }
 
     render() {
+      const getItems = () => this.state.items
+      // Forces' Dropdown diff'ing
+      const nonCachedStateReducer = state => state
+
       return (
         <div>
           <button onClick={this.add}>Add Item</button>
           <button onClick={this.remove}>Remove Item</button>
           <hr />
-          <Dropdown {...this.state} />
+          <Dropdown
+            {...this.state}
+            items={getItems()}
+            stateReducer={nonCachedStateReducer}
+          />
         </div>
       )
     }

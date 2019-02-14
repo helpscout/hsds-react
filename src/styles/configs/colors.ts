@@ -1,15 +1,15 @@
 const palette = {
   blue: {
-    default: '#3197d6',
-    '100': '#f7fcfe',
-    '200': '#daf1ff',
-    '300': '#aedfff',
-    '400': '#71bff1',
-    '500': '#3197d6',
-    '600': '#237ab3',
-    '700': '#1f5e89',
-    '800': '#194c6e',
-    '900': '#143d57',
+    default: '#1292EE',
+    '100': '#F3FBFF',
+    '200': '#D6EDFF',
+    '300': '#A0D4FF',
+    '400': '#57B0FB',
+    '500': '#1292EE',
+    '600': '#0077CC',
+    '700': '#005CA4',
+    '800': '#034077',
+    '900': '#002651',
   },
 
   charcoal: {
@@ -158,10 +158,19 @@ const osx = {
   },
 }
 
+const link = {
+  default: palette.blue['600'],
+  base: palette.blue['600'],
+  hover: palette.blue['500'],
+  active: palette.blue['500'],
+  focus: palette.blue['500'],
+}
+
 export default {
   ...palette,
   border,
   text,
   state,
   osx,
+  link,
 }

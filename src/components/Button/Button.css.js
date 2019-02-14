@@ -1,9 +1,9 @@
 // @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
-import { getColor } from '../../../styles/utilities/color'
-import forEach from '../../../styles/utilities/forEach'
-import variableFontSize from '../../../styles/utilities/variableFontSize'
+import baseStyles from '../../styles/resets/baseStyles.css.js'
+import styled from '../styled'
+import { getColor } from '../../styles/utilities/color'
+import forEach from '../../styles/utilities/forEach'
+import variableFontSize from '../../styles/utilities/variableFontSize'
 
 export const config = {
   borderRadius: 3,
@@ -16,6 +16,41 @@ export const config = {
     borderColor: getColor('blue.500'),
     borderColorHover: getColor('blue.600'),
     borderColorActive: getColor('blue.700'),
+    color: 'white',
+    disabledBackgroundColor: getColor('grey.500'),
+    disabledBorderColor: getColor('grey.500'),
+    disabledColor: 'white',
+    fontWeight: 500,
+    danger: {
+      backgroundColor: getColor('red.500'),
+      backgroundColorHover: getColor('red.600'),
+      backgroundColorActive: getColor('red.700'),
+      borderColor: getColor('red.500'),
+      borderColorHover: getColor('red.600'),
+      borderColorActive: getColor('red.700'),
+      color: 'white',
+      colorHover: 'white',
+      colorActive: 'white',
+    },
+    success: {
+      backgroundColor: getColor('green.500'),
+      backgroundColorHover: getColor('green.600'),
+      backgroundColorActive: getColor('green.700'),
+      borderColor: getColor('green.500'),
+      borderColorHover: getColor('green.600'),
+      borderColorActive: getColor('green.700'),
+      color: 'white',
+      colorHover: 'white',
+      colorActive: 'white',
+    },
+  },
+  primaryAlt: {
+    backgroundColor: getColor('purple.500'),
+    backgroundColorHover: getColor('purple.600'),
+    backgroundColorActive: getColor('purple.700'),
+    borderColor: getColor('purple.500'),
+    borderColorHover: getColor('purple.600'),
+    borderColorActive: getColor('purple.700'),
     color: 'white',
     disabledBackgroundColor: getColor('grey.500'),
     disabledBorderColor: getColor('grey.500'),
@@ -118,9 +153,9 @@ export const config = {
     borderColor: 'transparent',
     borderColorHover: 'transparent',
     borderColorActive: 'transparent',
-    color: getColor('blue.500'),
-    colorHover: getColor('blue.600'),
-    colorActive: getColor('blue.700'),
+    color: getColor('link.base'),
+    colorHover: getColor('link.hover'),
+    colorActive: getColor('link.active'),
     disabledBackgroundColor: 'transparent',
     disabledBorderColor: 'transparent',
     disabledColor: getColor('grey.700'),
@@ -181,65 +216,74 @@ export const config = {
   },
 }
 
-export const ButtonUI = styled('button')`
-  ${baseStyles}
-  appearance: none;
-  align-items: center;
-  border: 1px solid transparent;
-  border-radius: ${config.borderRadius}px;
-  cursor: pointer;
-  display: inline-flex;
-  font-weight: normal;
-  height: ${config.size.md.height}px;
-  justify-content: center;
-  line-height: 1;
-  min-width: ${config.size.md.minWidth};
-  outline: none;
-  padding: 0 ${config.size.md.padding}px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
+export const makeButtonUI = (selector: 'button') => {
+  return styled(selector)`
+    ${baseStyles};
+    appearance: none;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: ${config.borderRadius}px;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: normal;
+    height: ${config.size.md.height}px;
+    justify-content: center;
+    line-height: 1;
+    min-width: ${config.size.md.minWidth};
+    outline: none;
+    padding: 0 ${config.size.md.padding}px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
 
-  &:focus {
-    z-index: 2;
-  }
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+    }
 
-  &.is-first {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  &.is-notOnly {
-    border-radius: 0;
-  }
-  &.is-last {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
+    &:focus {
+      z-index: 2;
+    }
 
-  &.is-block {
-    display: flex;
-    width: 100%;
-  }
+    &.is-first {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &.is-notOnly {
+      border-radius: 0;
+    }
+    &.is-last {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
 
-  ${makeButtonSizeStyles()}
+    &.is-block {
+      display: flex;
+      width: 100%;
+    }
 
-  ${props => makePrimaryStyles(props)}
-  ${makeButtonKindStyles('secondary', config.secondary)}
-  ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
-  ${makeButtonKindStyles('tertiary', config.tertiary)}
-  ${makeButtonKindStyles('default', config.default)}
-  ${makeButtonKindStyles('link', config.link)}
-  ${makeButtonKindStyles('suffix', config.suffix)}
-`
+    ${makeButtonSizeStyles()}
 
-function makePrimaryStyles(props: Object = {}): string {
+    ${props => makePrimaryStyles('primary', props)}
+    ${props => makePrimaryStyles('primaryAlt', props)}
+    ${makeButtonKindStyles('secondary', config.secondary)}
+    ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
+    ${makeButtonKindStyles('tertiary', config.tertiary)}
+    ${makeButtonKindStyles('default', config.default)}
+    ${makeButtonKindStyles('link', config.link)}
+    ${makeButtonKindStyles('suffix', config.suffix)}
+  `
+}
+
+function makePrimaryStyles(name = 'primary', props: Object = {}): string {
   const { theme } = props
   const backgroundColor =
-    (theme && theme.brandColor) || config.primary.backgroundColor
-  const color = (theme && theme.brandTextColor) || config.primary.color
+    (theme && theme.brandColor) || config[name].backgroundColor
+  const color = (theme && theme.brandTextColor) || config[name].color
 
-  return makeButtonKindStyles('primary', {
-    ...config.primary,
+  return makeButtonKindStyles(name, {
+    ...config[name],
     backgroundColor,
     color,
   })

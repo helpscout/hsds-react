@@ -10,10 +10,6 @@ export const config = {
   wrapperMaxHeight: '98%',
   theme: {
     app: {
-      cardBoxShadow: `
-        0 2px 3px rgba(42, 59, 71, 0.2),
-        0 10px 40px rgba(42, 59, 71, 0.3)
-      `,
       marginTop: '50px',
       marginBottom: '30px',
       maxWidth: '560px',
@@ -54,12 +50,14 @@ export const AnimatedCardContainerUI = styled(Animate)`
 `
 
 export const CardUI = styled(Card)`
+  border: none;
+  box-shadow: rgba(42, 59, 71, 0.1) 0px 1px 1px,
+    rgba(42, 59, 71, 0.25) 0px 10px 30px;
   display: flex;
   flex-direction: column;
   min-height: 0;
   outline: none;
-
-  ${props => makeHSAppCardStyles(props)};
+  overflow: hidden;
 `
 
 export const CloseUI = styled('div')`
@@ -82,16 +80,6 @@ function makeHSAppInnerWrapperStyles(props: Object): string {
       ${config.theme.app.marginBottom}
     );
     max-width: ${config.theme.app.maxWidth};
-  `
-}
-
-function makeHSAppCardStyles(props: Object): string {
-  if (!isHSApp(props)) return ''
-
-  return `
-    border: none;
-    box-shadow: ${config.theme.app.cardBoxShadow};
-    overflow: hidden;
   `
 }
 

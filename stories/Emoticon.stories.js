@@ -1,51 +1,46 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Emoticon } from '../src/index.js'
+import {
+  withKnobs,
+  boolean,
+  number,
+  text,
+  select,
+} from '@storybook/addon-knobs'
+import { withArtboard } from '@helpscout/artboard'
 
 const stories = storiesOf('Emoticon', module)
+stories.addDecorator(
+  withArtboard({
+    id: 'hsds-emoticon',
+    width: 100,
+    height: 100,
+    withCenterGuides: false,
+  })
+)
+stories.addDecorator(withKnobs)
 
-stories.add('default', () => (
-  <div>
-    <h3>Default</h3>
+stories.add('Default', () => {
+  const props = {
+    size: select(
+      'size',
+      {
+        md: 'md',
+        sm: 'sm',
+      },
+      'md'
+    ),
+    inline: true,
+    isActive: boolean('isActive', true),
+    isDisabled: boolean('isDisabled', false),
+    withAnimation: boolean('withAnimation', true),
+  }
+  return (
     <div>
-      <Emoticon inline name="happy" />
-      <Emoticon inline name="happy" isActive={false} />
+      <Emoticon {...props} name="happy" />
+      <Emoticon {...props} name="meh" />
+      <Emoticon {...props} name="sad" />
     </div>
-    <div>
-      <Emoticon inline name="meh" />
-      <Emoticon inline name="meh" isActive={false} />
-    </div>
-    <div>
-      <Emoticon inline name="sad" />
-      <Emoticon inline name="sad" isActive={false} />
-    </div>
-
-    <h3>Small</h3>
-    <div>
-      <Emoticon inline name="happy" size="sm" />
-      <Emoticon inline name="happy" isActive={false} size="sm" />
-    </div>
-    <div>
-      <Emoticon inline name="meh" size="sm" />
-      <Emoticon inline name="meh" isActive={false} size="sm" />
-    </div>
-    <div>
-      <Emoticon inline name="sad" size="sm" />
-      <Emoticon inline name="sad" isActive={false} size="sm" />
-    </div>
-
-    <h3>Default (Disabled)</h3>
-    <div>
-      <Emoticon inline isDisabled name="happy" />
-      <Emoticon inline isDisabled name="happy" isActive={false} />
-    </div>
-    <div>
-      <Emoticon inline isDisabled name="meh" />
-      <Emoticon inline isDisabled name="meh" isActive={false} />
-    </div>
-    <div>
-      <Emoticon inline isDisabled name="sad" />
-      <Emoticon inline isDisabled name="sad" isActive={false} />
-    </div>
-  </div>
-))
+  )
+})

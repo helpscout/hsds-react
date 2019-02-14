@@ -3,7 +3,6 @@ import type { Node } from 'react'
 import type { MessageBubble } from './types'
 import React, { Component } from 'react'
 import styled from '../styled'
-import Image from '../Image'
 import Link from '../Link'
 import Spinner from '../Spinner'
 import Modal from '../Modal'
@@ -14,7 +13,7 @@ import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
-import css from './styles/Media.css.js'
+import css, { ImageUI } from './styles/Media.css.js'
 import { COMPONENT_KEY } from './utils'
 
 type Props = MessageBubble & {
@@ -28,9 +27,13 @@ type Props = MessageBubble & {
   isUploading?: boolean,
   maxHeight: number,
   maxWidth: number,
+  modalAnimationDuration: number,
+  modalAnimationEasing: string,
+  modalAnimationSequence: string,
   modalClassName?: string,
   modalCardClassName?: string,
   modalWrapperClassName?: string,
+  overlayAnimationDuration: number,
   onErrorTryAgainClick: (event: Event) => void,
   onMediaClick: (event: Event) => void,
   onMediaLoad: () => void,
@@ -51,6 +54,10 @@ export class Media extends Component<Props> {
     openMediaInModal: true,
     maxHeight: 250,
     maxWidth: 350,
+    modalAnimationDuration: 250,
+    modalAnimationEasing: 'ease',
+    overlayAnimationDuration: 250,
+    modalAnimationSequence: 'fade up',
     showErrorTryAgainLink: true,
     tryAgainLabel: 'Try again',
     isUploading: false,
@@ -123,7 +130,7 @@ export class Media extends Component<Props> {
 
     return (
       <div className="c-MessageMedia__media">
-        <Image
+        <ImageUI
           alt={imageAlt}
           block
           className="c-MessageMedia__mediaImage"
@@ -187,9 +194,13 @@ export class Media extends Component<Props> {
       isUploading,
       maxHeight,
       maxWidth,
-      modalClassName,
+      modalAnimationDuration,
+      modalAnimationEasing,
+      modalAnimationSequence,
       modalCardClassName,
+      modalClassName,
       modalWrapperClassName,
+      overlayAnimationDuration,
       onErrorTryAgainClick,
       onMediaClick,
       onMediaLoad,
@@ -236,6 +247,10 @@ export class Media extends Component<Props> {
       maybeOpenMediaInModal ? (
         <div className="c-MessageMedia__mediaContainer">
           <Modal
+            modalAnimationDuration={modalAnimationDuration}
+            modalAnimationEasing={modalAnimationEasing}
+            modalAnimationSequence={modalAnimationSequence}
+            overlayAnimationDuration={overlayAnimationDuration}
             trigger={mediaMarkup}
             className={classNames(
               'c-MessageMedia__modal',
