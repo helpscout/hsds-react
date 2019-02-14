@@ -16,25 +16,25 @@ import Icon from '../Icon'
 import Button from '../Button'
 
 export interface Props {
-  className?: string
-  onChange: (nextPageNumber: number) => void
-  innerRef: (node: HTMLElement) => void
-  showNavigation?: boolean
   activePage: number
-  totalItems: number
+  className?: string
+  innerRef: (node: HTMLElement) => void
+  onChange: (nextPageNumber: number) => void
   rangePerPage: number
-  subject?: string
   separator?: string
+  showNavigation?: boolean
+  subject?: string
+  totalItems: number
 }
 
 export class Pagination extends React.PureComponent<Props> {
   static defaultProps = {
+    activePage: 1,
     innerRef: noop,
     onChange: noop,
-    showNavigation: true,
-    activePage: 1,
     rangePerPage: 50,
     separator: 'of',
+    showNavigation: true,
     totalItems: 0,
   }
 
@@ -119,16 +119,14 @@ export class Pagination extends React.PureComponent<Props> {
 
     return (
       <NavigationUI>
-        {isNotFirstPage && (
+        {isNotFirstPage && [
           <Button version={2} onClick={this.handleStartClick}>
             <Icon name="arrow-left-double-large" size="24" center />
-          </Button>
-        )}
-        {isNotFirstPage && (
+          </Button>,
           <Button version={2} onClick={this.handlePrevClick}>
             <Icon name="arrow-left-single-large" size="24" center />
-          </Button>
-        )}
+          </Button>,
+        ]}
 
         <Button
           version={2}
@@ -149,9 +147,9 @@ export class Pagination extends React.PureComponent<Props> {
       children,
       className,
       innerRef,
+      onChange,
       separator,
       showNavigation,
-      onChange,
       ...rest
     } = this.props
 

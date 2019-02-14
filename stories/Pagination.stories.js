@@ -78,3 +78,31 @@ stories.add('end of navigation', () => {
     />
   )
 })
+
+class PaginationWrapper extends React.Component {
+  state = {
+    activePage: 1,
+  }
+
+  handleOnChange = nextPage => {
+    this.setState({ activePage: nextPage })
+  }
+
+  render() {
+    const { activePage: propPage, ...rest } = this.props
+    const { activePage } = this.state
+
+    return (
+      <Pagination
+        {...rest}
+        activePage={activePage}
+        showNavigation={true}
+        onChange={this.handleOnChange}
+      />
+    )
+  }
+}
+
+stories.add('in action', () => {
+  return <PaginationWrapper {...getKnobsProps({ subject: subject() })} />
+})
