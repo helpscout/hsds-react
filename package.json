@@ -23,7 +23,7 @@
     "Alisdair McDiarmid"
   ],
   "scripts": {
-    "prestart": "prestart",
+    "prestart": "prestart && npm run colorway",
     "build-storybook": "build-storybook",
     "build:css": "node scripts/sass.js",
     "build:es2015": "cross-env NODE_ENV=production babel ./src --ignore *.test.js,tests --out-dir ./dist",
@@ -32,9 +32,10 @@
     "build:copy-files": "babel-node ./scripts/copy-files",
     "build:js": "npm run build:es2015 && npm run build:es2015modules && npm run build:es2015modulesSCSS && npm run build:ts && npm run build:copy-files",
     "build:ts": "tsc",
-    "build": "npm run clean && npm run copy:css && npm run build:css && npm run build:js",
+    "build": "npm run clean && npm run copy:css && npm run colorway && npm run build:css && npm run build:js",
     "copy:css": "cpx 'src/styles/**/*.scss' 'dist/styles'",
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
+    "colorway": "colorway --module=hsds-react && colorway --module=hsds-react-scss",
     "cypress": "$(npm bin)/cypress",
     "cy": "npm run cypress",
     "cy:run": "npm run cy -- run",
@@ -115,6 +116,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@helpscout/artboard": "0.1.12",
+    "@helpscout/colorway": "0.0.2",
     "@helpscout/helix": "^0.1.0",
     "@helpscout/prestart": "^0.0.8",
     "@helpscout/stats": "0.0.5",
