@@ -1,11 +1,11 @@
 # Pagination
 
-description
+A Pagination component listing the current items visible for a given range. It can also add a navigation that will let a user update the active page based on the total of items
 
 ## Example
 
 ```jsx
-<Pagination />
+<Pagination activePage={1} totalItems={250} />
 ```
 
 ## Props
