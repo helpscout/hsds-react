@@ -117,7 +117,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@helpscout/artboard": "0.1.12",
-    "@helpscout/colorway": "0.0.5",
+    "@helpscout/colorway": "0.0.7",
     "@helpscout/helix": "^0.1.0",
     "@helpscout/prestart": "^0.0.8",
     "@helpscout/stats": "0.0.5",
