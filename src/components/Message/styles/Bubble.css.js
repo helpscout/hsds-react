@@ -104,8 +104,8 @@ const css = `
   }
 
   &.is-note {
-    background-color: ${getColor('yellow.300')};
-    border-color: ${getColor('yellow.300')};
+    background-color: ${getColor('yellow.200')};
+    border-color: ${getColor('yellow.400')};
     color: ${getColor('yellow.900')};
 
     * {
