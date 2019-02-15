@@ -20,3 +20,7 @@ test('Returns an empty string if value arg is falsy', () => {
   // @ts-ignore
   expect(pluralize()).toBe('')
 })
+
+test('Skip pluralize if string is ending with an s', () => {
+  expect(pluralize('messages')).toBe('messages')
+})
