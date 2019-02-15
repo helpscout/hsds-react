@@ -269,10 +269,7 @@ export class Media extends Component<Props> {
             )}
           >
             <Modal.Body scrollFade={false} isSeamless>
-              <Modal.Content>
-                {modalMediaMarkup}
-                {captionMarkup}
-              </Modal.Content>
+              <Modal.Content>{modalMediaMarkup}</Modal.Content>
             </Modal.Body>
           </Modal>
         </div>
