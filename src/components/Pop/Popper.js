@@ -1,6 +1,7 @@
 // @flow
 import type { PopProps, PopperStyles } from './types'
 import React, { Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from '../Portal'
@@ -20,6 +21,7 @@ class Popper extends Component<Props> {
     modifiers: {},
     offset: 0,
     onClick: noop,
+    onContentClick: noop,
     placement: 'auto',
     positionFixed: false,
     showArrow: true,
@@ -30,6 +32,7 @@ class Popper extends Component<Props> {
     /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
+    this.props.onContentClick(event)
   }
 
   render() {
@@ -72,6 +75,7 @@ class Popper extends Component<Props> {
         {({ ref, style, placement, arrowProps }) => (
           <Portal>
             <div
+              {...getValidProps(rest)}
               className={componentClassName}
               data-placement={placement}
               onClick={this.handleOnClick}
@@ -86,10 +90,9 @@ class Popper extends Component<Props> {
                 }),
                 zIndex,
               }}
-              {...rest}
             >
               <Animate {...animateProps}>
-                {children}
+                <div style={{ position: 'relative', zIndex }}>{children}</div>
                 {showArrow && (
                   <div className="c-PopPopper__arrowWrapper">
                     <Arrow
@@ -97,6 +100,7 @@ class Popper extends Component<Props> {
                       className={arrowClassName}
                       placement={placement}
                       size={arrowSize}
+                      zIndex={zIndex - 1}
                     />
                   </div>
                 )}

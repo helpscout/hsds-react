@@ -8,12 +8,12 @@ const css = (props: Object) => {
 
   const borderColor = color
     ? `
-    border-color: ${color};
+    background: ${color};
   `
     : ''
 
   const verticalStartEnd = `
-    left: calc(50% - ${sizePx});
+    left: calc(50% - (${sizePx} / 2));
     &.is-start {
       left: calc(0% + ${dblSizePx});
     }
@@ -23,7 +23,7 @@ const css = (props: Object) => {
   `
 
   const horizontalStartEnd = `
-    top: calc(50% - ${sizePx});
+    top: calc(50% - (${sizePx} / 2));
     &.is-start {
       top: calc(0% + ${dblSizePx});
     }
@@ -33,47 +33,47 @@ const css = (props: Object) => {
   `
 
   return `
-    ${baseStyles}
-    ${borderColor}
-    border-style: solid;
-    height: 0;
+    ${baseStyles};
+    ${borderColor};
+    height: ${sizePx};
     position: absolute;
-    width: 0;
+    transform: rotate(45deg);
+    width: ${sizePx};
 
     &.is-top {
-      border-width: ${sizePx} ${sizePx} 0 ${sizePx};
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-bottom-color: transparent;
-      bottom: -${sizePx};
-      ${verticalStartEnd}
+      bottom: calc((${sizePx} / 2) * -1);
+      ${verticalStartEnd};
+
+      &.is-ghost {
+        margin-bottom: 1px;
+      }
     }
 
     &.is-bottom {
-      border-width: 0 ${sizePx} ${sizePx} ${sizePx};
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-top-color: transparent;
-      top: -${sizePx};
-      ${verticalStartEnd}
+      top: calc((${sizePx} / 2) * -1);
+      ${verticalStartEnd};
+
+      &.is-ghost {
+        margin-top: 1px;
+      }
     }
 
     &.is-left {
-      border-width: ${sizePx} 0 ${sizePx} ${sizePx};
-      border-top-color: transparent;
-      border-right-color: transparent;
-      border-bottom-color: transparent;
-      right: -${sizePx};
-      ${horizontalStartEnd}
+      right: calc((${sizePx} / 2) * -1);
+      ${horizontalStartEnd};
+
+      &.is-ghost {
+        margin-right: 1px;
+      }
     }
 
     &.is-right {
-      border-width: ${sizePx} ${sizePx} ${sizePx} 0;
-      border-top-color: transparent;
-      border-left-color: transparent;
-      border-bottom-color: transparent;
-      left: -${sizePx};
-      ${horizontalStartEnd}
+      left: calc((${sizePx} / 2) * -1);
+      ${horizontalStartEnd};
+
+      &.is-ghost {
+        margin-left: 1px;
+      }
     }
   `
 }

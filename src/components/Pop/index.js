@@ -27,8 +27,10 @@ const PopUI = styled('span')(css)
 
 class Pop extends Component<Props, State> {
   static defaultProps = {
+    arrowSize: 5,
     closeOnBodyClick: false,
     closeOnEscPress: true,
+    closeOnContentClick: false,
     display: 'inline-block',
     placement: 'auto',
     isOpen: false,
@@ -86,6 +88,11 @@ class Pop extends Component<Props, State> {
     this.close()
   }
 
+  handleOnContentClick = event => {
+    if (!this.props.closeOnContentClick) return
+    this.close()
+  }
+
   handleOnEsc = () => {
     if (!this.props.closeOnEscPress) return
     this.close()
@@ -118,6 +125,7 @@ class Pop extends Component<Props, State> {
       animationDuration,
       animationEasing,
       animationSequence,
+      arrowSize,
       children,
       className,
       id: idProp,
@@ -162,7 +170,10 @@ class Pop extends Component<Props, State> {
               animationDuration,
               animationEasing,
               animationSequence,
+              arrowSize,
+              className,
               id,
+              onContentClick: this.handleOnContentClick,
               modifiers,
               placement,
               showArrow,

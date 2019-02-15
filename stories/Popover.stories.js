@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PropProvider, Hr, Text, Tooltip } from '../src/components'
+import { PropProvider, Hr, Text, Popover } from '../src/components'
 import {
   withKnobs,
   boolean,
@@ -10,7 +10,7 @@ import {
 import { storiesOf } from '@storybook/react'
 import { withArtboard } from '@helpscout/artboard'
 
-const stories = storiesOf('Tooltip', module)
+const stories = storiesOf('Popover', module)
 stories.addDecorator(withArtboard())
 stories.addDecorator(withKnobs)
 
@@ -51,9 +51,9 @@ stories.add('Default', () => {
   )
 
   return (
-    <PropProvider value={{ Tooltip: { zIndex: 10 } }}>
+    <PropProvider value={{ Popover: { zIndex: 10 } }}>
       <div style={{ padding: '20%' }}>
-        <Tooltip
+        <Popover
           animationDelay={number('animationDelay', 100)}
           animationDuration={number('animationDuration', 100)}
           animationSequence={text('animationSequence', 'fade up')}
@@ -67,7 +67,7 @@ stories.add('Default', () => {
           title="Hallo"
         >
           <div>Tooltip Trigger</div>
-        </Tooltip>
+        </Popover>
       </div>
     </PropProvider>
   )
