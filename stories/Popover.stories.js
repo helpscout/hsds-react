@@ -66,7 +66,7 @@ stories.add('Default', () => {
           showArrow={boolean('showArrow', true)}
           title="Hallo"
         >
-          <div>Tooltip Trigger</div>
+          <div>Popover Trigger</div>
         </Popover>
       </div>
     </PropProvider>
