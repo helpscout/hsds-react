@@ -9,6 +9,7 @@ import {
 } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import { withArtboard } from '@helpscout/artboard'
+import { action } from '@storybook/addon-actions'
 
 const stories = storiesOf('Tooltip', module)
 stories.addDecorator(withArtboard())
@@ -50,22 +51,34 @@ stories.add('Default', () => {
     'top'
   )
 
+  const props = {
+    animationDelay: number('animationDelay', 100),
+    animationDuration: number('animationDuration', 100),
+    animationSequence: text('animationSequence', 'fade up'),
+    closeOnBodyClick: boolean('closeOnBodyClick', true),
+    closeOnEscPress: boolean('closeOnEscPress', true),
+    onBeforeOpen: tooltipInstance => {
+      action('onBeforeOpen')(tooltipInstance)
+      return Promise.resolve()
+    },
+    onBeforeClose: tooltipInstance => {
+      action('onBeforeOpen')(tooltipInstance)
+      return Promise.resolve()
+    },
+    onContentClick: action('onContentClick'),
+    onOpen: action('onOpen'),
+    onClose: action('onClose'),
+    isOpen: boolean('isOpen', true),
+    triggerOn: triggerOn,
+    placement: placement,
+    showArrow: boolean('showArrow', true),
+    title: text('title', 'Hello'),
+  }
+
   return (
     <PropProvider value={{ Tooltip: { zIndex: 10 } }}>
-      <div style={{ padding: '20%' }}>
-        <Tooltip
-          animationDelay={number('animationDelay', 100)}
-          animationDuration={number('animationDuration', 100)}
-          animationSequence={text('animationSequence', 'fade up')}
-          closeOnBodyClick={boolean('closeOnBodyClick', true)}
-          closeOnEscPress={boolean('closeOnEscPress', true)}
-          isOpen={boolean('isOpen', true)}
-          triggerOn={triggerOn}
-          renderContent={() => <List />}
-          placement={placement}
-          showArrow={boolean('showArrow', true)}
-          title="Hallo"
-        >
+      <div style={{ padding: '20%', textAlign: 'center' }}>
+        <Tooltip {...props}>
           <div>Tooltip Trigger</div>
         </Tooltip>
       </div>

@@ -9,25 +9,11 @@ import {
 } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import { withArtboard } from '@helpscout/artboard'
+import { action } from '@storybook/addon-actions'
 
 const stories = storiesOf('Popover', module)
 stories.addDecorator(withArtboard())
 stories.addDecorator(withKnobs)
-
-const List = () => (
-  <div style={{ width: 100 }}>
-    <h3>Heading</h3>
-    <ul>
-      <li>One</li>
-      <li>Two</li>
-      <li>
-        <span role="img" aria-label="Bee">
-          🐝
-        </span>
-      </li>
-    </ul>
-  </div>
-)
 
 stories.add('Default', () => {
   const triggerOn = select(
@@ -50,23 +36,36 @@ stories.add('Default', () => {
     'top'
   )
 
+  const props = {
+    animationDelay: number('animationDelay', 100),
+    animationDuration: number('animationDuration', 100),
+    animationSequence: text('animationSequence', 'fade up'),
+    closeOnBodyClick: boolean('closeOnBodyClick', true),
+    closeOnEscPress: boolean('closeOnEscPress', true),
+    onBeforeOpen: tooltipInstance => {
+      action('onBeforeOpen')(tooltipInstance)
+      return Promise.resolve()
+    },
+    onBeforeClose: tooltipInstance => {
+      action('onBeforeOpen')(tooltipInstance)
+      return Promise.resolve()
+    },
+    onContentClick: action('onContentClick'),
+    onOpen: action('onOpen'),
+    onClose: action('onClose'),
+    isOpen: boolean('isOpen', true),
+    triggerOn: triggerOn,
+    placement: placement,
+    showArrow: boolean('showArrow', true),
+    header: text('header', ''),
+    title: text('title', 'Hello'),
+  }
+
   return (
     <PropProvider value={{ Popover: { zIndex: 10 } }}>
-      <div style={{ padding: '20%' }}>
-        <Popover
-          animationDelay={number('animationDelay', 100)}
-          animationDuration={number('animationDuration', 100)}
-          animationSequence={text('animationSequence', 'fade up')}
-          closeOnBodyClick={boolean('closeOnBodyClick', true)}
-          closeOnEscPress={boolean('closeOnEscPress', true)}
-          isOpen={boolean('isOpen', true)}
-          triggerOn={triggerOn}
-          renderContent={() => <List />}
-          placement={placement}
-          showArrow={boolean('showArrow', true)}
-          title="Hallo"
-        >
-          <div>Tooltip Trigger</div>
+      <div style={{ padding: '20%', textAlign: 'center' }}>
+        <Popover {...props}>
+          <div>Popover Trigger</div>
         </Popover>
       </div>
     </PropProvider>

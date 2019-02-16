@@ -8,6 +8,9 @@ import Portal from '../Portal'
 import Arrow from './Arrow'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { createUniqueIDFactory } from '../../utilities/id'
+
+const uniqueID = createUniqueIDFactory('PopPopper')
 
 type Props = PopProps
 
@@ -26,6 +29,12 @@ class Popper extends Component<Props> {
     positionFixed: false,
     showArrow: true,
     zIndex: 1000,
+  }
+
+  id = uniqueID()
+
+  getId() {
+    return this.props.id || this.id
   }
 
   handleOnClick = (event: Event) => {
@@ -73,7 +82,7 @@ class Popper extends Component<Props> {
         positionFixed={positionFixed}
       >
         {({ ref, style, placement, arrowProps }) => (
-          <Portal>
+          <Portal className="PopPortal" id={this.getId()}>
             <div
               {...getValidProps(rest)}
               className={componentClassName}
