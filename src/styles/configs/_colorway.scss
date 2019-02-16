@@ -5,20 +5,18 @@
 
 @import 'pack/seed-color-scheme/_index';
 
-@include _color(
-  (
-    blue:
-      (
-        default: #1292ee,
-        100: #f3fbff,
-        200: #d6edff,
-        300: #a0d4ff,
-        400: #57b0fb,
-        500: #1292ee,
-        600: #0077cc,
-        700: #005ca4,
-        800: #034077,
-        900: #002651
-      )
-  )
-);
+@include _color((
+  blue:
+    (
+      default: #1292EE,
+      100: #F3FBFF,
+      200: #D6EDFF,
+      300: #A0D4FF,
+      400: #57B0FB,
+      500: #1292EE,
+      600: #0077CC,
+      700: #005CA4,
+      800: #034077,
+      900: #002651,
+    ),
+));
