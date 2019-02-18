@@ -58,7 +58,7 @@ export class Pagination extends React.PureComponent<Props> {
   getStartRange() {
     const { rangePerPage } = this.props
     const page = this.getCurrentPage()
-    return page * rangePerPage - rangePerPage + 1
+    return Math.max(page * rangePerPage - rangePerPage + 1, 0)
   }
 
   getEndRange() {
@@ -68,12 +68,18 @@ export class Pagination extends React.PureComponent<Props> {
   }
 
   getSubject() {
-    const { totalItems, subject, pluralizedSubject } = this.props
+    const { subject, pluralizedSubject } = this.props
+    const totalItems = this.getTotalItems()
 
     if (totalItems === 0) return subject
     if (pluralizedSubject && totalItems > 1) return pluralizedSubject
 
     return pluralize(subject, totalItems)
+  }
+
+  getTotalItems() {
+    const { totalItems } = this.props
+    return Math.max(totalItems, 0)
   }
 
   isNavigationVisible() {
@@ -112,23 +118,23 @@ export class Pagination extends React.PureComponent<Props> {
   }
 
   renderRange() {
+    const { separator, subject } = this.props
+    const totalItems = this.getTotalItems()
+    const totalNode = <span className="c-Pagination__total">{totalItems}</span>
+
+    if (!totalItems) {
+      return subject ? totalNode : null
+    }
+
     return (
       <Text className="c-Pagination__range">
         <RangeUI>{this.getStartRange()}</RangeUI>
         {` `}-{` `}
         <RangeUI>{this.getEndRange()}</RangeUI>
-      </Text>
-    )
-  }
-
-  renderTotal() {
-    const { totalItems, subject } = this.props
-    return (
-      <Text>
-        <span className="c-Pagination__total">{totalItems}</span>
-        {subject && (
-          <span className="c-Pagination__subject">{` ${this.getSubject()}`}</span>
-        )}
+        {` `}
+        {separator}
+        {` `}
+        {totalNode}
       </Text>
     )
   }
@@ -187,6 +193,7 @@ export class Pagination extends React.PureComponent<Props> {
       onChange,
       separator,
       showNavigation,
+      subject,
       ...rest
     } = this.props
 
@@ -202,10 +209,9 @@ export class Pagination extends React.PureComponent<Props> {
         <InformationUI>
           <Text size={13}>
             {this.renderRange()}
-            {` `}
-            {separator}
-            {` `}
-            {this.renderTotal()}
+            {subject && (
+              <span className="c-Pagination__subject">{` ${this.getSubject()}`}</span>
+            )}
           </Text>
         </InformationUI>
         {this.isNavigationVisible() && this.renderNavigation()}
