@@ -58,20 +58,20 @@ describe('Subject', () => {
     expect(s.text().trim()).toBe('Customers')
   })
 
-  test('Renders a custom pluralize subject', () => {
+  test('Renders a custom pluralized subject', () => {
     const subject = 'Customer'
-    const pluralizeSubject = 'Customerzzz'
+    const pluralizedSubject = 'Customerzzz'
 
     const wrapper = mount(
       <Pagination
         subject={subject}
         totalItems={100}
-        pluralizeSubject={pluralizeSubject}
+        pluralizedSubject={pluralizedSubject}
       />
     )
     const s = wrapper.find('.c-Pagination__subject')
 
-    expect(s.text().trim()).toBe(pluralizeSubject)
+    expect(s.text().trim()).toBe(pluralizedSubject)
   })
 })
 

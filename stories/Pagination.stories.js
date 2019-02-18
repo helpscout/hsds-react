@@ -55,10 +55,10 @@ stories.add('with singular subject', () => {
   return <Pagination showNavigation={false} {...props} />
 })
 
-stories.add('with custom pluralize subject', () => {
+stories.add('with custom pluralized subject', () => {
   const props = {
     subject: 'Complex',
-    pluralizeSubject: 'Complexes',
+    pluralizedSubject: 'Complexes',
     totalItems: number('totalItems', 10),
   }
   return <Pagination showNavigation={false} {...props} />

@@ -16,7 +16,6 @@ import {
 } from './Pagination.css.js'
 import Text from '../Text'
 import Icon from '../Icon'
-import Button from '../Button'
 
 export interface Props {
   activePage: number
@@ -26,7 +25,7 @@ export interface Props {
   rangePerPage: number
   separator?: string
   showNavigation?: boolean
-  pluralizeSubject?: string
+  pluralizedSubject?: string
   subject: string
   totalItems: number
 }
@@ -69,10 +68,10 @@ export class Pagination extends React.PureComponent<Props> {
   }
 
   getSubject() {
-    const { totalItems, subject, pluralizeSubject } = this.props
+    const { totalItems, subject, pluralizedSubject } = this.props
 
     if (totalItems === 0) return subject
-    if (pluralizeSubject && totalItems > 1) return pluralizeSubject
+    if (pluralizedSubject && totalItems > 1) return pluralizedSubject
 
     return pluralize(subject, totalItems)
   }
