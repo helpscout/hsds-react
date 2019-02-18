@@ -1,3 +1,11 @@
+import { propConnect } from '../PropProvider/index'
 import SideNavigation from './SideNavigation'
+import { COMPONENT_KEY } from './SideNavigation.utils'
 
-export default SideNavigation
+SideNavigation.Header = propConnect(COMPONENT_KEY.Header)(SideNavigation.Header)
+SideNavigation.Item = propConnect(COMPONENT_KEY.Item)(SideNavigation.Item)
+SideNavigation.Section = propConnect(COMPONENT_KEY.Section)(
+  SideNavigation.Section
+)
+
+export default propConnect(COMPONENT_KEY.SideNavigation)(SideNavigation)

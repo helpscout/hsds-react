@@ -1,5 +1,6 @@
 export const COMPONENT_KEY = {
-  CORE: 'SideNavigation',
-  SECTION: 'SideNavigation.Section',
-  ITEM: 'SideNavigation.Item',
+  Header: 'SideNavigation.Header',
+  Item: 'SideNavigation.Item',
+  Section: 'SideNavigation.Section',
+  SideNavigation: 'SideNavigation',
 }

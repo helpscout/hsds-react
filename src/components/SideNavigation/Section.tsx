@@ -4,42 +4,36 @@ import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-
-import Header from './Header'
-import Item from './Item'
-import Section from './Section'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
-import { SideNavigationUI } from './SideNavigation.css'
+import { SideNavigationSectionUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
 }
 
-export class SideNavigation extends React.PureComponent<Props> {
+export class Section extends React.PureComponent<Props> {
   static defaultProps = {}
-
-  static Header = Header
-  static Item = Item
-  static Section = Section
 
   render() {
     const { children, className, ...rest } = this.props
 
-    const componentClassName = classNames('c-SideNavigation', className)
+    const componentClassName = classNames(
+      'c-SideNavigation__Section',
+      className
+    )
 
     return (
-      <SideNavigationUI
-        aria-label="SideNavigation"
+      <SideNavigationSectionUI
         {...getValidProps(rest)}
         className={componentClassName}
       >
         {children}
-      </SideNavigationUI>
+      </SideNavigationSectionUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.SideNavigation)(SideNavigation)
+namespaceComponent(COMPONENT_KEY.Section)(Section)
 
-export default SideNavigation
+export default Section
