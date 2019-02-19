@@ -14,13 +14,13 @@ The contents of Popover can be customized by using `renderHeader` and/or `render
 
 ```jsx
 <Popover
-  renderHeader={({ Header, Title, Close }) => (
+  renderHeader={({ Header, Title, close }) => (
     <Header>
       <Title>My Title</Title>
       <button onClick={close}>Close Popover</button>
     </Header>
   )}
-  renderContent={({ Close }) => (
+  renderContent={({ close }) => (
     <div>
       <p>My Content</p>
       <button onClick={close}>Close Popover</button>
