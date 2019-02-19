@@ -15,6 +15,17 @@ const stories = storiesOf('Popover', module)
 stories.addDecorator(withArtboard())
 stories.addDecorator(withKnobs)
 
+const actionLoggerProps = {
+  onBeforeOpen: tooltipInstance => {
+    action('onBeforeOpen')(tooltipInstance)
+    return Promise.resolve()
+  },
+  onBeforeClose: tooltipInstance => {
+    action('onBeforeClose')(tooltipInstance)
+    return Promise.resolve()
+  },
+}
+
 stories.add('Default', () => {
   const triggerOn = select(
     'triggerOn',
@@ -37,19 +48,13 @@ stories.add('Default', () => {
   )
 
   const props = {
+    ...actionLoggerProps,
     animationDelay: number('animationDelay', 100),
     animationDuration: number('animationDuration', 100),
     animationSequence: text('animationSequence', 'fade up'),
     closeOnBodyClick: boolean('closeOnBodyClick', true),
     closeOnEscPress: boolean('closeOnEscPress', true),
-    onBeforeOpen: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
-    onBeforeClose: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
+    closeOnContentClick: boolean('closeOnContentClick', false),
     onContentClick: action('onContentClick'),
     onOpen: action('onOpen'),
     onClose: action('onClose'),
@@ -58,7 +63,9 @@ stories.add('Default', () => {
     placement: placement,
     showArrow: boolean('showArrow', true),
     header: text('header', ''),
-    title: text('title', 'Hello'),
+    content: text('content', 'Hello'),
+    minWidth: number('minWidth', ''),
+    maxWidth: number('maxWidth', ''),
   }
 
   return (
@@ -69,5 +76,29 @@ stories.add('Default', () => {
         </Popover>
       </div>
     </PropProvider>
+  )
+})
+
+stories.add('Render props', () => {
+  const props = {
+    ...actionLoggerProps,
+    renderHeader: ({ Header, Title }) => (
+      <Header>
+        <Title>My Title</Title>
+      </Header>
+    ),
+    renderContent: ({ close }) => (
+      <div>
+        <p>
+          <Text>My Content</Text>
+        </p>
+        <button onClick={close}>Close</button>
+      </div>
+    ),
+  }
+  return (
+    <Popover {...props}>
+      <div>Popover Trigger</div>
+    </Popover>
   )
 })

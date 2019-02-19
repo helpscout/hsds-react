@@ -31,6 +31,7 @@ class Pop extends Component<Props, State> {
     closeOnBodyClick: false,
     closeOnEscPress: true,
     closeOnContentClick: false,
+    closeOnMouseLeave: true,
     display: 'inline-block',
     placement: 'auto',
     isOpen: false,
@@ -80,6 +81,8 @@ class Pop extends Component<Props, State> {
 
   handleMouseLeave = () => {
     if (!this.shouldHandleHover()) return
+    if (!this.props.closeOnMouseLeave) return
+
     this.close()
   }
 
@@ -90,7 +93,7 @@ class Pop extends Component<Props, State> {
   }
 
   handleOnBodyClick = event => {
-    if (!this.props.closeOnBodyClick) return
+    if (!this.shouldHandleHover() && !this.props.closeOnBodyClick) return
     if (!event || event.target === this.node) return
     this.close()
   }
@@ -103,6 +106,11 @@ class Pop extends Component<Props, State> {
 
   handleOnEsc = () => {
     if (!this.props.closeOnEscPress) return
+    this.close()
+  }
+
+  handleOnPopperMouseLeave = () => {
+    if (!this.shouldHandleHover()) return
     this.close()
   }
 
@@ -185,8 +193,10 @@ class Pop extends Component<Props, State> {
               animationSequence,
               arrowSize,
               className,
+              close: this.close,
               id,
               onContentClick: this.handleOnContentClick,
+              onMouseLeave: this.handleOnPopperMouseLeave,
               modifiers,
               placement,
               showArrow,

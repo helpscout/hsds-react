@@ -8,6 +8,7 @@ import Portal from '../Portal'
 import Arrow from './Arrow'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { renderRenderPropComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
@@ -23,8 +24,10 @@ class Popper extends Component<Props> {
     arrowSize: 5,
     modifiers: {},
     offset: 0,
+    close: noop,
     onClick: noop,
     onContentClick: noop,
+    onMouseLeave: noop,
     placement: 'auto',
     positionFixed: false,
     showArrow: true,
@@ -44,6 +47,11 @@ class Popper extends Component<Props> {
     this.props.onContentClick(event)
   }
 
+  renderChildren = () => {
+    const { children, close } = this.props
+    return renderRenderPropComponent(children, { close })
+  }
+
   render() {
     const {
       animationDelay,
@@ -57,6 +65,7 @@ class Popper extends Component<Props> {
       children,
       offset,
       onClick,
+      onMouseLeave,
       modifiers,
       positionFixed,
       placement,
@@ -101,7 +110,12 @@ class Popper extends Component<Props> {
               }}
             >
               <Animate {...animateProps}>
-                <div style={{ position: 'relative', zIndex }}>{children}</div>
+                <div
+                  onMouseLeave={onMouseLeave}
+                  style={{ position: 'relative', zIndex }}
+                >
+                  {this.renderChildren()}
+                </div>
                 {showArrow && (
                   <div className="c-PopPopper__arrowWrapper">
                     <Arrow

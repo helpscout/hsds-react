@@ -17,6 +17,7 @@ export interface Props extends PopProps {
   className?: string
   color: string
   innerRef: (node: HTMLElement) => void
+  minWidth?: number | string
   maxWidth?: number | string
   renderContent?: (props: any) => void
   theme?: string
@@ -33,6 +34,7 @@ export class Tooltip extends React.PureComponent<Props> {
     animationSequence: 'fade up',
     color: getColor('charcoal.700'),
     closeOnContentClick: false,
+    closeOnMouseLeave: true,
     innerRef: noop,
     isOpen: false,
     modifiers: {},
@@ -81,17 +83,30 @@ export class Tooltip extends React.PureComponent<Props> {
    * Storybook.
    */
   /* istanbul ignore next */
-  renderContent = () => {
+  renderContent = (renderProps?: any) => {
     const { renderContent, placement, title } = this.props
 
     if (!this.hasRenderContentProp()) return title
 
     // @ts-ignore
-    return renderContent({ placement, title })
+    return renderContent({ ...renderProps, placement, title })
+  }
+
+  renderPopper = (renderProps?: any) => {
+    const { maxWidth, minWidth } = this.props
+
+    return (
+      <Popper
+        className={this.getContentClassName()}
+        style={{ maxWidth, minWidth }}
+      >
+        {this.renderContent(renderProps || {})}
+      </Popper>
+    )
   }
 
   render() {
-    const { className, children, color, maxWidth, ...rest } = this.props
+    const { className, children, color, ...rest } = this.props
 
     if (!this.shouldRenderPopper()) {
       return children ? (
@@ -111,9 +126,7 @@ export class Tooltip extends React.PureComponent<Props> {
           arrowColor={color}
           className={this.getClassName()}
         >
-          <Popper className={this.getContentClassName()} style={{ maxWidth }}>
-            {this.renderContent()}
-          </Popper>
+          {this.renderPopper}
         </Pop.Popper>
       </TooltipUI>
     )

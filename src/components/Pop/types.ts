@@ -26,6 +26,7 @@ export interface PopProps {
   closeOnBodyClick: boolean
   closeOnEscPress: boolean
   closeOnContentClick: boolean
+  closeOnMouseLeave: boolean
   display: string
   id?: string
   isOpen: boolean

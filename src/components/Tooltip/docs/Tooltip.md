@@ -1,6 +1,6 @@
-# Toolbar
+# Tooltip
 
-A Toolbar component is UI component that provides the user with additional context when engaged.
+A Tooltip component is UI component that provides the user with additional context when engaged.
 
 ## Example
 
@@ -10,11 +10,13 @@ A Toolbar component is UI component that provides the user with additional conte
 
 ## Props
 
-| Prop          | Type       | Description                                                         |
-| ------------- | ---------- | ------------------------------------------------------------------- |
-| className     | `string`   | Custom class names to be added to the component.                    |
-| maxWidth      | `number`   | Max width for the component.                                        |
-| renderContent | `function` | Renders a component within the Tooltip. Is prioritized over `title` |
-| title         | `string`   | Text to display within the Tooltip.                                 |
+| Prop          | Type              | Description                                                         |
+| ------------- | ----------------- | ------------------------------------------------------------------- |
+| className     | `string`          | Custom class names to be added to the component.                    |
+| maxWidth      | `number`/`string` | Max width for the component.                                        |
+| minWidth      | `number`/`string` | Min width for the component.                                        |
+| renderContent | `Function`        | Renders a component within the Tooltip. Is prioritized over `title` |
+| title         | `string`          | Text to display within the Tooltip.                                 |
+| triggerOn     | `string`          | Determines how to engage the component.                             |
 
 This component is powered by [Pop](../Pop). After additional props, check out [Pop's documentation](../Pop).

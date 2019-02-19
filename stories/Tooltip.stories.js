@@ -73,6 +73,8 @@ stories.add('Default', () => {
     placement: placement,
     showArrow: boolean('showArrow', true),
     title: text('title', 'Hello'),
+    minWidth: number('minWidth', ''),
+    maxWidth: number('maxWidth', ''),
   }
 
   return (
