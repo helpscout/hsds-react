@@ -15,7 +15,7 @@ const uniqueID = createUniqueIDFactory('PopPopper')
 
 type Props = PopProps
 
-class Popper extends Component<Props> {
+export class Popper extends Component<Props> {
   static defaultProps = {
     animationDelay: 0,
     animationDuration: 0,

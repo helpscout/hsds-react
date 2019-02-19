@@ -16,11 +16,3 @@ describe('className', () => {
     expect(wrapper.hasClass(customClassName)).toBeTruthy()
   })
 })
-
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    const wrapper = render(<Popover data-cy="blue" />)
-
-    expect(wrapper.attr('data-cy')).toBe('blue')
-  })
-})

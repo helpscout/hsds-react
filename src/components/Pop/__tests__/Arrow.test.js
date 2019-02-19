@@ -11,7 +11,7 @@ describe('Arrow', () => {
   describe('Styles', () => {
     test('Renders placement styles', () => {
       const wrapper = mount(<Arrow placement="top" />)
-      const el = wrapper.find('div')
+      const el = wrapper.find('div.c-PopArrow').first()
 
       expect(el.getDOMNode().classList.contains('is-top')).toBe(true)
 
@@ -23,7 +23,7 @@ describe('Arrow', () => {
 
     test('Renders placement/position styles', () => {
       const wrapper = mount(<Arrow placement="top-start" />)
-      const el = wrapper.find('div')
+      const el = wrapper.find('div.c-PopArrow').first()
 
       expect(el.getDOMNode().classList.contains('is-top')).toBe(true)
       expect(el.getDOMNode().classList.contains('is-start')).toBe(true)
