@@ -38,7 +38,13 @@ Actions (typically [Buttons](../Button)) can be embedded within the `Input` usin
 />
 ```
 
-The `Button` should be one step smaller compared to the `Input`. For example, if the `Input` has a size of `md` (default), then the `Button` should be `sm`. If the `Input` is `xs`, then the `Button` should be `xs`.
+The `Button` should be one step smaller compared to the `Input`.
+
+Example:
+
+If the `Input` is `md` (default), then the `Button` should be `sm`.
+
+If the `Input` is `sm`, then the `Button` should be `xs`.
 
 Note: Be sure the version for `Button` is at least version 2.
 
