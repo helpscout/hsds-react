@@ -9,31 +9,29 @@ For more information on the Inline design pattern, check out [`seed-inline`](htt
 ```jsx
 <Inline>
   <Inline.Item>
-    <Icon name='chat' />
+    <Icon name="chat" />
   </Inline.Item>
   <Inline.Item>
-    <Icon name='tick' />
+    <Icon name="tick" />
   </Inline.Item>
   <Inline.Item>
-    <Icon name='meatball' />
+    <Icon name="meatball" />
   </Inline.Item>
 </Inline>
 ```
 
-
 ## Props
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| className | `string` | Custom class names to be added to the component. |
-| size | `string` | Determines the horizontal padding of the component. |
-
+| Prop      | Type     | Description                                         |
+| --------- | -------- | --------------------------------------------------- |
+| className | `string` | Custom class names to be added to the component.    |
+| size      | `string` | Determines the horizontal padding of the component. |
 
 ## Size
 
-| Value | Description |
-| --- | --- |
-| `lg` | Horizontal padding of `10px`. |
-| `md` | Horizontal padding of `8px`. |
-| `sm` | Horizontal padding of `4px`. Default. |
-| `xs` | Horizontal padding of `2px`. |
+| Value | Description                           |
+| ----- | ------------------------------------- |
+| `lg`  | Horizontal padding of `10px`.         |
+| `md`  | Horizontal padding of `8px`.          |
+| `sm`  | Horizontal padding of `4px`. Default. |
+| `xs`  | Horizontal padding of `2px`.          |
