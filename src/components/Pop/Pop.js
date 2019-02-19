@@ -7,12 +7,11 @@ import Manager from './Manager'
 import Arrow from './Arrow'
 import Popper from './Popper'
 import Reference from './Reference'
-import styled from '../styled'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import css from './styles/Pop.css.js'
+import { PopUI } from './styles/Pop.css.js'
 
 type Props = PopProps
 
@@ -22,8 +21,6 @@ type State = {
 }
 
 const uniqueID = createUniqueIDFactory('Pop')
-
-const PopUI = styled('span')(css)
 
 class Pop extends Component<Props, State> {
   static defaultProps = {

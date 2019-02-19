@@ -1,8 +1,9 @@
 // @flow
 import baseStyles from '../../../styles/resets/base.css.js'
+import styled from '../../styled'
 
-const css = `
-  ${baseStyles}
+export const PopUI = styled('span')`
+  ${baseStyles};
 
   &.is-display-block {
     display: block;
@@ -12,5 +13,3 @@ const css = `
     display: inline-block;
   }
 `
-
-export default css

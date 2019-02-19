@@ -19,4 +19,4 @@ A Tooltip component is UI component that provides the user with additional conte
 | title         | `string`          | Text to display within the Tooltip.                                 |
 | triggerOn     | `string`          | Determines how to engage the component.                             |
 
-This component is powered by [Pop](../Pop). After additional props, check out [Pop's documentation](../Pop).
+This component is powered by [Pop](../../Pop/docs/Pop.md). After additional props, check out [Pop's documentation](../../Pop/docs/Pop.md).

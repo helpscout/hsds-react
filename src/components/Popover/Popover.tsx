@@ -67,8 +67,6 @@ export class Popover extends React.PureComponent<Props> {
     const { header, renderHeader } = this.props
     if (!header && !renderHeader) return null
 
-    let headerContent
-
     if (renderHeader) {
       return renderRenderPropComponent(
         renderHeader,
@@ -76,7 +74,10 @@ export class Popover extends React.PureComponent<Props> {
       )
     }
 
+    /* istanbul ignore else */
     if (header) {
+      let headerContent
+
       if (isPlainContent(header)) {
         headerContent = <HeadingUI>{header}</HeadingUI>
       } else {
@@ -85,8 +86,6 @@ export class Popover extends React.PureComponent<Props> {
 
       return <HeaderUI>{headerContent}</HeaderUI>
     }
-
-    return null
   }
 
   renderContent = renderProps => {

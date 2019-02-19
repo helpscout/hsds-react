@@ -100,7 +100,7 @@ export class Tooltip extends React.PureComponent<Props> {
         className={this.getContentClassName()}
         style={{ maxWidth, minWidth }}
       >
-        {this.renderContent(renderProps || {})}
+        {this.renderContent(renderProps || /* istanbul ignore next */ {})}
       </Popper>
     )
   }

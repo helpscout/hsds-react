@@ -111,6 +111,7 @@ export class Popper extends Component<Props> {
             >
               <Animate {...animateProps}>
                 <div
+                  className="c-PopPopperContentWrapper"
                   onMouseLeave={onMouseLeave}
                   style={{ position: 'relative', zIndex }}
                 >
