@@ -92,6 +92,27 @@ describe('Pop', () => {
       expect(spyClose).toHaveBeenCalled()
     })
 
+    test('Fires onBeforeOpen promise + open on initial open', async () => {
+      const spyOpen = jest.fn()
+      const spyOnBeforeOpen = jest.fn()
+
+      const onBeforeOpen = () => {
+        spyOnBeforeOpen()
+        return Promise.resolve()
+      }
+
+      const wrapper = shallow(
+        <Pop onOpen={spyOpen} onBeforeOpen={onBeforeOpen} isOpen={true}>
+          <Pop.Reference />
+        </Pop>
+      )
+
+      wrapper.setProps({ isOpen: true })
+      expect(spyOnBeforeOpen).toHaveBeenCalled()
+      await timeout()
+      expect(spyOpen).toHaveBeenCalled()
+    })
+
     test('Fires onBeforeOpen promise before opening', async () => {
       const spyOpen = jest.fn()
       const spyOnBeforeOpen = jest.fn()

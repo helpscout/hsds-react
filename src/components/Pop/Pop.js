@@ -54,6 +54,12 @@ class Pop extends Component<Props, State> {
     isOpen: this.props.isOpen || false,
   }
 
+  componentDidMount() {
+    if (this.state.isOpen) {
+      this.open()
+    }
+  }
+
   componentWillReceiveProps = (nextProps: Props) => {
     const { isOpen } = nextProps
 
