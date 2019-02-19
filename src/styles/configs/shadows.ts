@@ -14,9 +14,9 @@ export const shadows = {
 
   '200': makeShadows(`0 3px 6px ${rgba(getColor('grey.600'), 0.5)}`),
 
-  '250': makeShadows(`0 4px 7px ${rgba('#000000', 0.5)}`),
+  '250': makeShadows(`0 4px 7px ${rgba('#000000', 0.1)}`),
 
-  '300': makeShadows(`0 4px 6px ${rgba('#000000', 0.5)}`),
+  '300': makeShadows(`0 4px 6px ${rgba(getColor('charcoal.200'), 0.5)}`),
 
   '400': makeShadows(`0 3px 8px ${rgba('#000000', 0.2)}`),
 
