@@ -5,28 +5,56 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import Icon from '../Icon'
 
-import { SideNavigationItemUI } from './SideNavigation.css'
+import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
+  href?: string
+  icon?: Icon
+  count?: number
+  active?: boolean
+  muted?: boolean
+  disabled?: boolean
 }
 
 export class Item extends React.PureComponent<Props> {
-  static defaultProps = {}
+  static defaultProps = {
+    active: false,
+    muted: false,
+    disabled: false,
+  }
 
   render() {
-    const { children, className, ...rest } = this.props
+    const {
+      children,
+      className,
+      icon,
+      count,
+      href,
+      active,
+      muted,
+      disabled,
+      ...rest
+    } = this.props
 
-    const componentClassName = classNames('c-SideNavigation__Item', className)
+    const componentClassName = classNames(
+      'c-SideNavigation__Item',
+      active ? 'is-active' : '',
+      muted ? 'is-muted' : '',
+      disabled ? 'is-disabled' : '',
+      className
+    )
 
     return (
-      <SideNavigationItemUI
-        {...getValidProps(rest)}
-        className={componentClassName}
-      >
-        {children}
-      </SideNavigationItemUI>
+      <ItemUI {...getValidProps(rest)} className={componentClassName}>
+        <ButtonUI version={2} href={href} disabled={disabled}>
+          {icon && <IconUI>{icon}</IconUI>}
+          {children}
+          {count && <CountUI>{count}</CountUI>}
+        </ButtonUI>
+      </ItemUI>
     )
   }
 }

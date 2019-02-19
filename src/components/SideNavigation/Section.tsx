@@ -6,7 +6,7 @@ import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
-import { SideNavigationSectionUI } from './SideNavigation.css'
+import { SectionUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
@@ -24,12 +24,9 @@ export class Section extends React.PureComponent<Props> {
     )
 
     return (
-      <SideNavigationSectionUI
-        {...getValidProps(rest)}
-        className={componentClassName}
-      >
+      <SectionUI {...getValidProps(rest)} className={componentClassName}>
         {children}
-      </SideNavigationSectionUI>
+      </SectionUI>
     )
   }
 }

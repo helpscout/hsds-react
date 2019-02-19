@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { SideNavigation, Flexy, Heading } from '../src/index.js'
+import { SideNavigation, Flexy, Heading, Icon } from '../src/index.js'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
 import { SideNavigationHeaderUI } from '../src/components/SideNavigation/SideNavigation.css'
 import { ItemSpec } from './DropdownV2.stories'
@@ -27,20 +27,57 @@ class SidebarWrapper extends React.PureComponent {
   }
 }
 
+class SidebarDefaultItems extends React.PureComponent {
+  state = {
+    active: 'chat',
+  }
+
+  updateActiveItem(itemName) {
+    this.setState({ active: itemName })
+  }
+
+  render() {
+    return (
+      <SideNavigation.Section>
+        <SideNavigation.Item
+          icon={<Icon name="chat" />}
+          count={10}
+          active={true}
+        >
+          Chat
+        </SideNavigation.Item>
+        <SideNavigation.Item icon={<Icon name="tag" />}>
+          Unassigned
+        </SideNavigation.Item>
+        <SideNavigation.Item icon={<Icon name="user" />}>
+          Mine
+        </SideNavigation.Item>
+        <SideNavigation.Item icon={<Icon name="document" />}>
+          Draft
+        </SideNavigation.Item>
+        <SideNavigation.Item muted={true}>Muted</SideNavigation.Item>
+        <SideNavigation.Item disabled={true}>Disabled</SideNavigation.Item>
+      </SideNavigation.Section>
+    )
+  }
+}
+
 const stories = storiesOf('SideNavigation', module)
 stories.addDecorator(storyFn => <SidebarWrapper>{storyFn()}</SidebarWrapper>)
 
-stories.add('default', () => <SideNavigation />)
+stories.add('empty', () => <SideNavigation />)
 
 stories.add('with header', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
+    <SidebarDefaultItems />
   </SideNavigation>
 ))
 
 stories.add('with linkable header', () => (
   <SideNavigation>
     <SideNavigation.Header href="https://duckduckgo.com/" label="Link" />
+    <SidebarDefaultItems />
   </SideNavigation>
 ))
 
@@ -51,10 +88,20 @@ stories.add('with dropdown header', () => {
       <SideNavigation.Header>
         <Dropdown
           items={items}
-          renderTrigger={<Heading size="h3">Dropdown</Heading>}
+          renderTrigger={<Heading size="h3">Dropdown </Heading>}
         />
       </SideNavigation.Header>
-      test
+      <SidebarDefaultItems />
     </SideNavigation>
   )
 })
+
+stories.add('with multiple section', () => (
+  <SideNavigation>
+    <SideNavigation.Header label="Help Scout" />
+    <SidebarDefaultItems />
+    <SideNavigation.Section>
+      <SideNavigation.Item label="Folder" />
+    </SideNavigation.Section>
+  </SideNavigation>
+))

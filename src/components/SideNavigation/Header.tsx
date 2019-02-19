@@ -7,7 +7,7 @@ import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import Heading from '../Heading'
-import { SideNavigationHeaderUI } from './SideNavigation.css'
+import { HeaderUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
@@ -36,13 +36,10 @@ export class Header extends React.PureComponent<Props> {
     const componentClassName = classNames('c-SideNavigation__Header', className)
 
     return (
-      <SideNavigationHeaderUI
-        {...getValidProps(rest)}
-        className={componentClassName}
-      >
+      <HeaderUI {...getValidProps(rest)} className={componentClassName}>
         {this.renderLabel()}
         {children}
-      </SideNavigationHeaderUI>
+      </HeaderUI>
     )
   }
 }
