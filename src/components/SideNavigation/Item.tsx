@@ -1,6 +1,5 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
@@ -17,6 +16,7 @@ export interface Props {
   active?: boolean
   muted?: boolean
   disabled?: boolean
+  onClick: (event: Event) => void
 }
 
 export class Item extends React.PureComponent<Props> {
@@ -24,6 +24,7 @@ export class Item extends React.PureComponent<Props> {
     active: false,
     muted: false,
     disabled: false,
+    onClick: noop,
   }
 
   render() {
@@ -36,6 +37,7 @@ export class Item extends React.PureComponent<Props> {
       active,
       muted,
       disabled,
+      onClick,
       ...rest
     } = this.props
 
@@ -49,7 +51,7 @@ export class Item extends React.PureComponent<Props> {
 
     return (
       <ItemUI {...getValidProps(rest)} className={componentClassName}>
-        <ButtonUI version={2} href={href} disabled={disabled}>
+        <ButtonUI version={2} href={href} disabled={disabled} onClick={onClick}>
           {icon && <IconUI>{icon}</IconUI>}
           {children}
           {count && <CountUI>{count}</CountUI>}

@@ -33,29 +33,50 @@ class SidebarDefaultItems extends React.PureComponent {
   }
 
   updateActiveItem(itemName) {
+    console.log(itemName)
     this.setState({ active: itemName })
   }
 
   render() {
+    const { active } = this.state
     return (
       <SideNavigation.Section>
         <SideNavigation.Item
           icon={<Icon name="chat" />}
           count={10}
-          active={true}
+          active={active === 'chat'}
+          onClick={e => this.updateActiveItem('chat')}
         >
           Chat
         </SideNavigation.Item>
-        <SideNavigation.Item icon={<Icon name="tag" />}>
+        <SideNavigation.Item
+          icon={<Icon name="tag" />}
+          active={active === 'unassigned'}
+          onClick={e => this.updateActiveItem('unassigned')}
+        >
           Unassigned
         </SideNavigation.Item>
-        <SideNavigation.Item icon={<Icon name="user" />}>
+        <SideNavigation.Item
+          icon={<Icon name="user" />}
+          active={active === 'mine'}
+          onClick={e => this.updateActiveItem('mine')}
+        >
           Mine
         </SideNavigation.Item>
-        <SideNavigation.Item icon={<Icon name="document" />}>
+        <SideNavigation.Item
+          icon={<Icon name="document" />}
+          active={active === 'document'}
+          onClick={e => this.updateActiveItem('document')}
+        >
           Draft
         </SideNavigation.Item>
-        <SideNavigation.Item muted={true}>Muted</SideNavigation.Item>
+        <SideNavigation.Item
+          muted={true}
+          active={active === 'muted'}
+          onClick={e => this.updateActiveItem('muted')}
+        >
+          Muted
+        </SideNavigation.Item>
         <SideNavigation.Item disabled={true}>Disabled</SideNavigation.Item>
       </SideNavigation.Section>
     )
