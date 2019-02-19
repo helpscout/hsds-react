@@ -20,6 +20,8 @@ class Prefix extends Component<Props> {
 
     const componentClassName = classNames(
       'c-InputPrefix',
+      'c-Input__item',
+      'c-Input__prefix',
       isSeamless && 'is-seamless',
       className
     )

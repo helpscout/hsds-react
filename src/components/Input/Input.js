@@ -47,6 +47,7 @@ type AnyInputEvent = InputEvent | WheelEvent | Event
 type InputValue = string
 
 type Props = {
+  action?: any,
   autoFocus: boolean,
   className: string,
   disabled: boolean,
@@ -501,13 +502,7 @@ export class Input extends Component<Props, State> {
   getPrefixMarkup() {
     const { prefix, seamless } = this.props
 
-    return (
-      prefix && (
-        <Prefix className="c-Input__item c-Input__prefix" isSeamless={seamless}>
-          {prefix}
-        </Prefix>
-      )
-    )
+    return prefix && <Prefix isSeamless={seamless}>{prefix}</Prefix>
   }
 
   getInlineSuffixMarkup() {
@@ -527,13 +522,13 @@ export class Input extends Component<Props, State> {
   getSuffixMarkup() {
     const { suffix, seamless } = this.props
 
-    return (
-      suffix && (
-        <Suffix className="c-Input__item c-Input__suffix" isSeamless={seamless}>
-          {suffix}
-        </Suffix>
-      )
-    )
+    return suffix && <Suffix isSeamless={seamless}>{suffix}</Suffix>
+  }
+
+  getActionMarkup() {
+    const { action } = this.props
+
+    return action && <Suffix isAction>{action}</Suffix>
   }
 
   getErrorMarkup() {
@@ -737,6 +732,7 @@ export class Input extends Component<Props, State> {
               {this.getInputMarkup(props)}
               {this.getInlineSuffixMarkup()}
               {this.getSuffixMarkup()}
+              {this.getActionMarkup()}
               {this.getErrorMarkup()}
               <Backdrop
                 className="c-Input__backdrop"
