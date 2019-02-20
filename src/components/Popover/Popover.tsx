@@ -105,7 +105,7 @@ export class Popover extends React.PureComponent<Props> {
       <PopoverUI
         {...rest}
         arrowClassName="c-PopoverArrow"
-        arrowSize={12}
+        arrowSize={16}
         contentClassName="c-PopoverContent"
         className={this.getClassName()}
         closeOnMouseLeave={false}

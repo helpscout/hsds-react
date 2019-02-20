@@ -11,7 +11,7 @@ import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { PopUI } from './styles/Pop.css.js'
+import { PopUI } from './Pop.css.js'
 
 type Props = PopProps
 

@@ -28,7 +28,7 @@ export interface Props extends PopProps {
 export class Tooltip extends React.PureComponent<Props> {
   static defaultProps = {
     arrowClassName: 'c-TooltipArrow',
-    arrowSize: 8,
+    arrowSize: 12,
     animationDelay: 100,
     animationDuration: 100,
     animationSequence: 'fade up',

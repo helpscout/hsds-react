@@ -35,6 +35,17 @@ describe('Arrow', () => {
       expect(el.getDOMNode().classList.contains('is-bottom')).toBe(true)
       expect(el.getDOMNode().classList.contains('is-end')).toBe(true)
     })
+
+    test('Renders visible styles', () => {
+      const wrapper = mount(<Arrow showArrow={false} />)
+      const el = wrapper.find('.c-PopPopperArrowWrapper').first()
+
+      expect(el.getDOMNode().classList.contains('is-hidden')).toBe(true)
+
+      wrapper.setProps({ showArrow: true })
+
+      expect(el.getDOMNode().classList.contains('is-hidden')).toBe(false)
+    })
   })
 })
 

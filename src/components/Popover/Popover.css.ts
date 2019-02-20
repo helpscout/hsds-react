@@ -22,7 +22,6 @@ export const PopoverUI = styled(Tooltip)`
 
   .c-PopoverArrow {
     border: 1px solid ${config.borderColor};
-    box-shadow: ${config.boxShadow};
 
     &.is-ghost {
       border-color: transparent;

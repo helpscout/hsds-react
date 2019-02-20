@@ -116,18 +116,17 @@ export class Popper extends Component<Props> {
                   style={{ position: 'relative', zIndex }}
                 >
                   {this.renderChildren()}
+                  <Arrow
+                    color={arrowColor}
+                    className={arrowClassName}
+                    innerRef={arrowProps.ref}
+                    placement={placement}
+                    showArrow={showArrow}
+                    style={arrowProps.style}
+                    size={arrowSize}
+                    zIndex={zIndex - 1}
+                  />
                 </div>
-                {showArrow && (
-                  <div className="c-PopPopper__arrowWrapper">
-                    <Arrow
-                      color={arrowColor}
-                      className={arrowClassName}
-                      placement={placement}
-                      size={arrowSize}
-                      zIndex={zIndex - 1}
-                    />
-                  </div>
-                )}
               </Animate>
             </div>
           </Portal>

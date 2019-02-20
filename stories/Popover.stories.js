@@ -40,6 +40,8 @@ stories.add('Default', () => {
     {
       auto: 'auto',
       top: 'top',
+      'top-start': 'top-start',
+      'top-end': 'top-end',
       right: 'right',
       bottom: 'bottom',
       left: 'left',
