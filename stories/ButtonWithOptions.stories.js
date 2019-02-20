@@ -42,3 +42,17 @@ stories.add('Default', () => {
     </ButtonWithOptions>
   )
 })
+
+stories.add('Disabled', () => {
+  const options = ItemSpec.generate(4)
+
+  return (
+    <ButtonWithOptions
+      disabled
+      options={options}
+      onClick={() => alert('Button Clicked!')}
+    >
+      Submit
+    </ButtonWithOptions>
+  )
+})
