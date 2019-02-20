@@ -941,3 +941,30 @@ describe('computedStyles', () => {
     expect(o.computedStyles.paddingBottom).toBe(100)
   })
 })
+
+describe('Action', () => {
+  test('Can render action UI', () => {
+    const wrapper = mount(
+      <Input action={<button className="action">Go</button>} />
+    )
+    const el = wrapper.find('button.action')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Can render multiple action UI', () => {
+    const wrapper = mount(
+      <Input
+        action={
+          <div>
+            <button className="go">Go</button>
+            <button className="cancel">Go</button>
+          </div>
+        }
+      />
+    )
+
+    expect(wrapper.find('button.go').length).toBeTruthy()
+    expect(wrapper.find('button.cancel').length).toBeTruthy()
+  })
+})

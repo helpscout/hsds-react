@@ -95,6 +95,10 @@ export const SuffixUI = styled(ItemUI)`
   &.is-seamless {
     margin-right: 0;
   }
+
+  &.is-action {
+    margin-right: -11px;
+  }
 `
 
 export const InlinePrefixSuffixUI = styled('div')`
