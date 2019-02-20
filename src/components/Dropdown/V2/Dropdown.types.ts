@@ -30,6 +30,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   clearOnSelect: boolean
   closeDropdown: () => void
   direction: 'left' | 'right'
+  disabled: boolean
   dropUp: boolean
   enableTabNavigation: boolean
   envNode: any
