@@ -48,6 +48,7 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | closeOnSelect       | `boolean`                | `true`       | Closes Dropdown on select.                                                      |
 | children            | `Function`               |              | Render prop to customize the Dropdown contents.                                 |
 | direction           | `string`                 | `down`       | Preferred for the menu to drop.                                                 |
+| disabled            | `bool`                   | false        | Disable the dropdown trigger so it can't be clicked.                            |
 | dropUp              | `boolean`                | `false`      | Changes the dropdown to drop upwards.                                           |
 | enableTabNavigation | `boolean`                | `true`       | Enables Tab keypresses to navigate through items.                               |
 | envNode             | `Document`/`HTMLElement` | `document`   | Node to bind global events.                                                     |
