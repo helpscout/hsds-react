@@ -17,7 +17,7 @@ import { COMPONENT_KEY } from './ButtonWithOptions.utils'
 export interface Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  buttonRef: (node: HTMLElement) => void
   onClick: (event: Event) => void
   options: Array<any>
 }
@@ -26,7 +26,7 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
   static className = 'c-ButtonWithOptions'
 
   static defaultProps = {
-    innerRef: noop,
+    buttonRef: noop,
     onClick: noop,
     options: [],
   }
@@ -60,17 +60,14 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, innerRef, onClick, ...rest } = this.props
+    const { children, buttonRef, onClick, ...rest } = this.props
 
     return (
-      <ButtonWrapperUI
-        {...getValidProps(rest)}
-        className={this.getClassName()}
-        innerRef={innerRef}
-      >
+      <ButtonWrapperUI {...getValidProps(rest)} className={this.getClassName()}>
         <ButtonUI
           canRenderFocus={false}
           kind="primary"
+          buttonRef={buttonRef}
           onClick={onClick}
           size="lg"
           version={2}
