@@ -23,7 +23,9 @@ export const config = {
   marginBottom: '20px',
   padding: {
     default: '50px 50px',
-    widescreen: '50px 100px 65px',
+    widescreen: '50px 100px',
+    superWidescreen: '65px 50px',
+    fullscreen: '65px 100px',
   },
   transition: 'all 300ms ease',
 }
@@ -50,11 +52,18 @@ export const CardUI = styled('div')`
     `
   )};
 
-  &.is-responsive {
+  .is-responsive & {
     ${breakpoint(
       PageConfig.breakpoint.superWidescreen,
       `
-        flex-direction: ${config.flexDirection.superWidescreen};
+        padding: ${config.padding.superWidescreen};
+      `
+    )};
+
+    ${breakpoint(
+      PageConfig.breakpoint.fullscreen,
+      `
+        padding: ${config.padding.fullscreen};
       `
     )};
   }
