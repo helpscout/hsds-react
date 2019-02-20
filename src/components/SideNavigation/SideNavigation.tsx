@@ -14,6 +14,7 @@ import { SideNavigationUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
+  width?: number
 }
 
 export class SideNavigation extends React.PureComponent<Props> {
@@ -26,15 +27,23 @@ export class SideNavigation extends React.PureComponent<Props> {
   static Button = Button
 
   render() {
-    const { children, className, ...rest } = this.props
+    const { children, className, width, ...rest } = this.props
 
     const componentClassName = classNames('c-SideNavigation', className)
+
+    let styles: object = {}
+    if (width) {
+      styles = {
+        width: `${width}px`,
+      }
+    }
 
     return (
       <SideNavigationUI
         aria-label="SideNavigation"
         {...getValidProps(rest)}
         className={componentClassName}
+        style={styles}
       >
         {children}
       </SideNavigationUI>

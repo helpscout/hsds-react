@@ -117,6 +117,13 @@ stories.add('with dropdown header', () => {
   )
 })
 
+stories.add('with custom width', () => (
+  <SideNavigation width={200}>
+    <SideNavigation.Header label="Help Scout" />
+    <SidebarDefaultItems />
+  </SideNavigation>
+))
+
 stories.add('with multiple section', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
