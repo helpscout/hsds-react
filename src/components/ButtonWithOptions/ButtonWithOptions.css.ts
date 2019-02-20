@@ -33,8 +33,11 @@ export const OptionsDropdownUI = styled(Dropdown)`
 `
 
 export const VerticalDividerUI = styled('div')`
-  border-left: 1px solid ${rgba('#fff', 0.3)};
-  display: inline-block;
+  ${props =>
+    !props.disabled &&
+    `
+    border-left: 1px solid ${rgba('#fff', 0.3)};
+  `} display: inline-block;
   height: 40px;
   vertical-align: top;
 `

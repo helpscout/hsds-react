@@ -17,6 +17,7 @@ import { COMPONENT_KEY } from './ButtonWithOptions.utils'
 export interface Props {
   className?: string
   children?: any
+  disabled?: boolean
   buttonRef: (node: HTMLElement) => void
   onClick: (event: Event) => void
   options: Array<any>
@@ -27,14 +28,17 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
 
   static defaultProps = {
     buttonRef: noop,
+    disabled: false,
     onClick: noop,
     options: [],
   }
 
   renderEndChatOptions() {
+    const { disabled } = this.props
     const trigger = (
       <OptionsTriggerButtonUI
         canRenderFocus={false}
+        disabled={disabled}
         kind="primary"
         size="lg"
         version={2}
@@ -48,6 +52,7 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
     return (
       <OptionsDropdownUI
         direction="left"
+        disabled={disabled}
         items={options}
         renderTrigger={trigger}
       />
@@ -60,21 +65,22 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, buttonRef, onClick, ...rest } = this.props
+    const { children, buttonRef, disabled, onClick, ...rest } = this.props
 
     return (
       <ButtonWrapperUI {...getValidProps(rest)} className={this.getClassName()}>
         <ButtonUI
-          canRenderFocus={false}
-          kind="primary"
           buttonRef={buttonRef}
+          canRenderFocus={false}
+          disabled={disabled}
+          kind="primary"
           onClick={onClick}
           size="lg"
           version={2}
         >
           {children}
         </ButtonUI>
-        <VerticalDividerUI />
+        <VerticalDividerUI disabled />
         {this.renderEndChatOptions()}
       </ButtonWrapperUI>
     )
