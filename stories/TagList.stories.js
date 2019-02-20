@@ -55,4 +55,4 @@ export class SampleComponent extends Component {
   }
 }
 
-stories.add('default', () => <SampleComponent />)
+stories.add('Default', () => <SampleComponent />)

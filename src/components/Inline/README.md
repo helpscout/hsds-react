@@ -4,7 +4,6 @@ A Inline component is a layout-based component that contains [Inline.Item](./Ite
 
 For more information on the Inline design pattern, check out [`seed-inline`](https://developer.helpscout.com/seed/packs/seed-inline/).
 
-
 ## Components
 
 The Inline component is comprised of smaller components:
