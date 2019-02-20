@@ -68,7 +68,11 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
     const { children, buttonRef, disabled, onClick, ...rest } = this.props
 
     return (
-      <ButtonWrapperUI {...getValidProps(rest)} className={this.getClassName()}>
+      <ButtonWrapperUI
+        {...getValidProps(rest)}
+        className={this.getClassName()}
+        disabled
+      >
         <ButtonUI
           buttonRef={buttonRef}
           canRenderFocus={false}

@@ -15,6 +15,12 @@ export const ButtonWrapperUI = styled('div')`
   background-color: ${getColor('blue.500')};
   border-radius: 3px;
   overflow: hidden;
+
+  ${props =>
+    props.disabled &&
+    `
+    cursor: not-allowed;
+  `};
 `
 
 export const OptionsTriggerButtonUI = styled(Button)`
