@@ -154,3 +154,32 @@ stories.add('with linkable items', () => (
     </SideNavigation.Section>
   </SideNavigation>
 ))
+
+stories.add('with footer', () => {
+  const items = ItemSpec.generate(3)
+  return (
+    <SideNavigation>
+      <SideNavigation.Header label="Help Scout" />
+      <SidebarDefaultItems />
+      <SideNavigation.Section title="Folders">
+        <SideNavigation.Item>Folder 1</SideNavigation.Item>
+        <SideNavigation.Item>Folder 2</SideNavigation.Item>
+        <SideNavigation.Item>Folder 3</SideNavigation.Item>
+        <SideNavigation.Item>Folder 4</SideNavigation.Item>
+      </SideNavigation.Section>
+      <SideNavigation.Footer>
+        <Dropdown
+          items={items}
+          renderTrigger={
+            <SideNavigation.Button>
+              <Icon name="workflow" offsetLeft={false} withCaret={true} />
+            </SideNavigation.Button>
+          }
+        />
+        <SideNavigation.Button>
+          <Icon name="image-add" />
+        </SideNavigation.Button>
+      </SideNavigation.Footer>
+    </SideNavigation>
+  )
+})

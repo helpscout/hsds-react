@@ -1,9 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { SectionUI, SectionHeadingUI } from './SideNavigation.css'

@@ -4,15 +4,18 @@ import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import Text from '../Text'
 import Heading from '../Heading'
+import { DropdownUI, TriggerUI } from '../Dropdown/V2/Dropdown.css'
+import { darken, lighten } from '../../utilities/color'
 
 const config = {
   sidePadding: '18px',
+  border: `1px solid ${getColor('grey.500')}`,
 }
 
 export const SideNavigationUI = styled('div')`
   ${baseStyles};
   background-color: ${getColor('grey.300')};
-  border-right: 1px solid ${getColor('grey.500')};
+  border-right: ${config.border};
   height: 100%;
   width: 250px;
   padding-top: 16px;
@@ -21,12 +24,6 @@ export const SideNavigationUI = styled('div')`
 
   &.is-collapsed {
     width: 59px;
-  }
-`
-
-export const SectionUI = styled('div')`
-  & + & {
-    margin-top: 16px;
   }
 `
 
@@ -68,6 +65,43 @@ export const ButtonUI = styled(Button)`
     &.is-disabled {
       color: ${getColor('charcoal.200')};
     }
+  }
+`
+
+export const ButtonFooterUI = styled(Button)`
+  &.is-default {
+    border-top: ${config.border};
+    border-bottom: ${config.border};
+    color: ${getColor('charcoal.200')};
+    background-color: ${lighten(getColor('grey.400'), 2)};
+    display: inline-flex;
+    width: 100%;
+    border-radius: 0;
+
+    &:hover {
+      background-color: ${darken(getColor('grey.400'), 2)};
+    }
+
+    :not(:first-child) {
+      border-left: ${config.border};
+    }
+  }
+`
+
+export const FooterUI = styled('div')`
+  display: flex;
+
+  ${DropdownUI}, ${ButtonFooterUI} {
+    flex: 1 1 0;
+  }
+  ${TriggerUI} {
+    width: 100%;
+  }
+`
+
+export const SectionUI = styled('div')`
+  & + ${FooterUI}, & + & {
+    margin-top: 16px;
   }
 `
 
