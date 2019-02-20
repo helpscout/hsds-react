@@ -6,6 +6,7 @@ import Heading from '../Heading'
 
 export const config = {
   borderColor: getColor('grey.600'),
+  boxShadow: getShadow(100),
   padding: '15px',
 }
 
@@ -13,7 +14,7 @@ export const PopoverUI = styled(Tooltip)`
   .c-PopoverContent {
     background: white;
     border: 1px solid ${config.borderColor};
-    box-shadow: ${getShadow(100)};
+    box-shadow: ${config.boxShadow};
     color: inherit;
     font-size: inherit;
     padding: ${config.padding};
@@ -21,7 +22,7 @@ export const PopoverUI = styled(Tooltip)`
 
   .c-PopoverArrow {
     border: 1px solid ${config.borderColor};
-    box-shadow: ${getShadow(100)};
+    box-shadow: ${config.boxShadow};
 
     &.is-ghost {
       border-color: transparent;
