@@ -139,3 +139,18 @@ stories.add('with titled section', () => (
     </SideNavigation.Section>
   </SideNavigation>
 ))
+
+stories.add('with linkable items', () => (
+  <SideNavigation>
+    <SideNavigation.Header label="Help Scout" />
+    <SidebarDefaultItems />
+    <SideNavigation.Section title="Linkable">
+      <SideNavigation.Item href="https://duckduckgo.com/">
+        Link 1
+      </SideNavigation.Item>
+      <SideNavigation.Item href="https://google.com/">
+        Link 2
+      </SideNavigation.Item>
+    </SideNavigation.Section>
+  </SideNavigation>
+))
