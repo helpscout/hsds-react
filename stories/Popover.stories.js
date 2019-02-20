@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PropProvider, Hr, Text, Tooltip } from '../src/components'
+import { PropProvider, Hr, Text, Popover } from '../src/components'
 import {
   withKnobs,
   boolean,
@@ -11,24 +11,20 @@ import { storiesOf } from '@storybook/react'
 import { withArtboard } from '@helpscout/artboard'
 import { action } from '@storybook/addon-actions'
 
-const stories = storiesOf('Tooltip', module)
+const stories = storiesOf('Popover', module)
 stories.addDecorator(withArtboard())
 stories.addDecorator(withKnobs)
 
-const List = () => (
-  <div style={{ width: 100 }}>
-    <h3>Heading</h3>
-    <ul>
-      <li>One</li>
-      <li>Two</li>
-      <li>
-        <span role="img" aria-label="Bee">
-          🐝
-        </span>
-      </li>
-    </ul>
-  </div>
-)
+const actionLoggerProps = {
+  onBeforeOpen: tooltipInstance => {
+    action('onBeforeOpen')(tooltipInstance)
+    return Promise.resolve()
+  },
+  onBeforeClose: tooltipInstance => {
+    action('onBeforeClose')(tooltipInstance)
+    return Promise.resolve()
+  },
+}
 
 stories.add('Default', () => {
   const triggerOn = select(
@@ -44,6 +40,8 @@ stories.add('Default', () => {
     {
       auto: 'auto',
       top: 'top',
+      'top-start': 'top-start',
+      'top-end': 'top-end',
       right: 'right',
       bottom: 'bottom',
       left: 'left',
@@ -52,19 +50,13 @@ stories.add('Default', () => {
   )
 
   const props = {
+    ...actionLoggerProps,
     animationDelay: number('animationDelay', 100),
     animationDuration: number('animationDuration', 100),
     animationSequence: text('animationSequence', 'fade up'),
     closeOnBodyClick: boolean('closeOnBodyClick', true),
     closeOnEscPress: boolean('closeOnEscPress', true),
-    onBeforeOpen: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
-    onBeforeClose: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
+    closeOnContentClick: boolean('closeOnContentClick', false),
     onContentClick: action('onContentClick'),
     onOpen: action('onOpen'),
     onClose: action('onClose'),
@@ -72,18 +64,43 @@ stories.add('Default', () => {
     triggerOn: triggerOn,
     placement: placement,
     showArrow: boolean('showArrow', true),
-    title: text('title', 'Hello'),
+    header: text('header', ''),
+    content: text('content', 'Hello'),
     minWidth: number('minWidth', ''),
     maxWidth: number('maxWidth', ''),
   }
 
   return (
-    <PropProvider value={{ Tooltip: { zIndex: 10 } }}>
+    <PropProvider value={{ Popover: { zIndex: 10 } }}>
       <div style={{ padding: '20%', textAlign: 'center' }}>
-        <Tooltip {...props}>
-          <div>Tooltip Trigger</div>
-        </Tooltip>
+        <Popover {...props}>
+          <div>Popover Trigger</div>
+        </Popover>
       </div>
     </PropProvider>
+  )
+})
+
+stories.add('Render props', () => {
+  const props = {
+    ...actionLoggerProps,
+    renderHeader: ({ Header, Title }) => (
+      <Header>
+        <Title>My Title</Title>
+      </Header>
+    ),
+    renderContent: ({ close }) => (
+      <div>
+        <p>
+          <Text>My Content</Text>
+        </p>
+        <button onClick={close}>Close</button>
+      </div>
+    ),
+  }
+  return (
+    <Popover {...props}>
+      <div>Popover Trigger</div>
+    </Popover>
   )
 })

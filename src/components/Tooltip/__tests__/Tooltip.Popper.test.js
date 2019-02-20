@@ -1,5 +1,5 @@
 import React from 'react'
-import Popper from '../Popper'
+import Popper from '../Tooltip.Popper'
 import { mount } from 'enzyme'
 
 describe('classNames', () => {
