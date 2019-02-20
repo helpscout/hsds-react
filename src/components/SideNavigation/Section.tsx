@@ -6,17 +6,18 @@ import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
-import { SectionUI } from './SideNavigation.css'
+import { SectionUI, SectionHeadingUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
+  title?: string
 }
 
 export class Section extends React.PureComponent<Props> {
   static defaultProps = {}
 
   render() {
-    const { children, className, ...rest } = this.props
+    const { children, className, title, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-SideNavigation__Section',
@@ -25,6 +26,7 @@ export class Section extends React.PureComponent<Props> {
 
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>
+        {title && <SectionHeadingUI size="small">{title}</SectionHeadingUI>}
         {children}
       </SectionUI>
     )

@@ -3,7 +3,7 @@ import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import Text from '../Text'
-import Icon from '../Icon'
+import Heading from '../Heading'
 
 const config = {
   sidePadding: '18px',
@@ -112,5 +112,12 @@ export const HeaderUI = styled('div')`
       color: ${getColor('charcoal.800')};
       cursor: pointer;
     }
+  }
+`
+
+export const SectionHeadingUI = styled(Heading)`
+  &.is-small {
+    padding: 8px ${config.sidePadding} 4px;
+    color: ${getColor('grey.800')};
   }
 `

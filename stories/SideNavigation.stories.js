@@ -126,3 +126,16 @@ stories.add('with multiple section', () => (
     </SideNavigation.Section>
   </SideNavigation>
 ))
+
+stories.add('with titled section', () => (
+  <SideNavigation>
+    <SideNavigation.Header label="Help Scout" />
+    <SidebarDefaultItems />
+    <SideNavigation.Section title="Folders">
+      <SideNavigation.Item>Folder 1</SideNavigation.Item>
+      <SideNavigation.Item>Folder 2</SideNavigation.Item>
+      <SideNavigation.Item>Folder 3</SideNavigation.Item>
+      <SideNavigation.Item>Folder 4</SideNavigation.Item>
+    </SideNavigation.Section>
+  </SideNavigation>
+))
