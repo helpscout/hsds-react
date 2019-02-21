@@ -8,19 +8,38 @@ import { SectionUI, SectionHeadingUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
+  collapsed?: boolean
+  main?: boolean
   title?: string
+  withPadding?: boolean
 }
 
 export class Section extends React.PureComponent<Props> {
-  static defaultProps = {}
+  static defaultProps = {
+    main: false,
+    withPadding: false,
+  }
 
   render() {
-    const { children, className, title, ...rest } = this.props
+    const {
+      children,
+      className,
+      title,
+      main,
+      collapsed,
+      withPadding,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
       'c-SideNavigation__Section',
+      withPadding ? 'is-with-padding' : '',
       className
     )
+
+    if (collapsed && !main) {
+      return null
+    }
 
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>

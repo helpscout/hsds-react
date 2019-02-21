@@ -10,6 +10,7 @@ import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
+  collapsed?: boolean
   href?: string
   icon?: Icon
   count?: number
@@ -38,6 +39,7 @@ export class Item extends React.PureComponent<Props> {
       muted,
       disabled,
       onClick,
+      collapsed,
       ...rest
     } = this.props
 
@@ -49,12 +51,18 @@ export class Item extends React.PureComponent<Props> {
       className
     )
 
+    const isCountDisplayed = count && !collapsed
+
+    if (collapsed && !icon) {
+      return null
+    }
+
     return (
       <ItemUI {...getValidProps(rest)} className={componentClassName}>
         <ButtonUI version={2} href={href} disabled={disabled} onClick={onClick}>
           {icon && <IconUI>{icon}</IconUI>}
-          {children}
-          {count && <CountUI>{count}</CountUI>}
+          {!collapsed && children}
+          {isCountDisplayed && <CountUI>{count}</CountUI>}
         </ButtonUI>
       </ItemUI>
     )

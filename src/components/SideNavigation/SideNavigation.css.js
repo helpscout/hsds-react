@@ -23,7 +23,7 @@ export const SideNavigationUI = styled('div')`
   overflow: hidden;
 
   &.is-collapsed {
-    width: 59px;
+    width: 60px;
   }
 `
 
@@ -97,11 +97,34 @@ export const FooterUI = styled('div')`
   ${TriggerUI} {
     width: 100%;
   }
+
+  &.is-collapsed {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    color: ${getColor('charcoal.200')};
+  }
+
+  &.is-floating-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 16px;
+    border-top: ${config.border};
+    padding-top: 16px;
+  }
 `
 
 export const SectionUI = styled('div')`
-  & + ${FooterUI}, & + & {
-    margin-top: 16px;
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.is-with-padding {
+    padding: 0 ${config.sidePadding};
   }
 `
 
@@ -138,14 +161,20 @@ export const HeaderUI = styled('div')`
   color: ${getColor('charcoal.500')};
   margin-bottom: 16px;
 
-  a {
-    color: ${getColor('charcoal.500')};
-    text-decoration: none;
+  &.is-collapsed {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+`
 
-    &:hover {
-      color: ${getColor('charcoal.800')};
-      cursor: pointer;
-    }
+export const HeaderLinkUI = styled('a')`
+  color: ${getColor('charcoal.500')};
+  text-decoration: none;
+
+  &:hover {
+    color: ${getColor('charcoal.800')};
+    cursor: pointer;
   }
 `
 
@@ -154,4 +183,18 @@ export const SectionHeadingUI = styled(Heading)`
     padding: 8px ${config.sidePadding} 4px;
     color: ${getColor('grey.800')};
   }
+`
+
+export const BadgeUI = styled('span')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${getColor('blue.400')};
+  border-radius: 31px;
+  color: white;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  height: 31px;
+  width: 31px;
 `
