@@ -65,7 +65,6 @@ export class SideNavigation extends React.PureComponent<Props> {
     const componentClassName = classNames(
       'c-SideNavigation',
       collapsed ? 'is-collapsed' : '',
-      floatingMenu ? 'is-floating' : '',
       className
     )
 
