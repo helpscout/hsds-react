@@ -1,6 +1,16 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import Pop from '../index'
+import Pop from '../Pop'
+
+jest.mock('../../Portal', () => {
+  const Portal = ({ children }) => <div>{children}</div>
+  return Portal
+})
+
+jest.mock('../../Animate', () => {
+  const Animate = ({ children }) => <div>{children}</div>
+  return Animate
+})
 
 const cx = {
   node: '.c-PopWrapper',
@@ -8,6 +18,12 @@ const cx = {
 
 const cleanUp = () => {
   global.document.body.innerHTML = ''
+}
+
+// Helper method to allow for the onBeforeOpen/onBeforeClose async Promises
+// to resolve before checking wrapper.state()
+function timeout(ms = 0) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 describe('Pop', () => {
@@ -28,11 +44,22 @@ describe('Pop', () => {
       expect(wrapper.state().isOpen).toBe(true)
     })
 
-    test('Changes isOpen state on prop change', () => {
-      const wrapper = shallow(<Pop />)
+    test('Changes isOpen (true) state on prop change', async () => {
+      const wrapper = shallow(<Pop isOpen={false} />)
       wrapper.setProps({ isOpen: true })
 
+      await timeout()
+
       expect(wrapper.state().isOpen).toBe(true)
+    })
+
+    test('Changes isOpen (false) state on prop change', async () => {
+      const wrapper = shallow(<Pop isOpen={true} />)
+      wrapper.setProps({ isOpen: false })
+
+      await timeout()
+
+      expect(wrapper.state().isOpen).toBe(false)
     })
 
     test('Does not changes isOpen state on unrelated prop change', () => {
@@ -40,6 +67,102 @@ describe('Pop', () => {
       wrapper.setProps({ nope: true })
 
       expect(wrapper.state().isOpen).toBe(false)
+    })
+
+    test('Fires onOpen/onClose on prop change', async () => {
+      const spyOpen = jest.fn()
+      const spyClose = jest.fn()
+      const wrapper = shallow(
+        <Pop
+          triggerOn="click"
+          onOpen={spyOpen}
+          onClose={spyClose}
+          isOpen={false}
+        >
+          <Pop.Reference />
+        </Pop>
+      )
+
+      wrapper.setProps({ isOpen: true })
+      await timeout()
+      expect(spyOpen).toHaveBeenCalled()
+
+      wrapper.setProps({ isOpen: false })
+      await timeout()
+      expect(spyClose).toHaveBeenCalled()
+    })
+
+    test('Fires onBeforeOpen promise + open on initial open', async () => {
+      const spyOpen = jest.fn()
+      const spyOnBeforeOpen = jest.fn()
+
+      const onBeforeOpen = () => {
+        spyOnBeforeOpen()
+        return Promise.resolve()
+      }
+
+      const wrapper = shallow(
+        <Pop onOpen={spyOpen} onBeforeOpen={onBeforeOpen} isOpen={true}>
+          <Pop.Reference />
+        </Pop>
+      )
+
+      wrapper.setProps({ isOpen: true })
+      expect(spyOnBeforeOpen).toHaveBeenCalled()
+      await timeout()
+      expect(spyOpen).toHaveBeenCalled()
+    })
+
+    test('Fires onBeforeOpen promise before opening', async () => {
+      const spyOpen = jest.fn()
+      const spyOnBeforeOpen = jest.fn()
+
+      const onBeforeOpen = () => {
+        spyOnBeforeOpen()
+        return Promise.resolve()
+      }
+
+      const wrapper = shallow(
+        <Pop
+          triggerOn="click"
+          onOpen={spyOpen}
+          onBeforeOpen={onBeforeOpen}
+          isOpen={false}
+        >
+          <Pop.Reference />
+        </Pop>
+      )
+
+      wrapper.setProps({ isOpen: true })
+      expect(spyOnBeforeOpen).toHaveBeenCalled()
+      await timeout()
+      expect(spyOpen).toHaveBeenCalled()
+    })
+
+    test('Fires onBeforeClose promise before opening', async () => {
+      const spyClose = jest.fn()
+      const spyOnBeforeClose = jest.fn()
+
+      const onBeforeClose = () => {
+        spyOnBeforeClose()
+        return Promise.resolve()
+      }
+
+      const wrapper = shallow(
+        <Pop
+          triggerOn="click"
+          onClose={spyClose}
+          onBeforeClose={onBeforeClose}
+          isOpen={true}
+        >
+          <Pop.Reference />
+        </Pop>
+      )
+
+      wrapper.setProps({ isOpen: false })
+      expect(spyOnBeforeClose).toHaveBeenCalled()
+      await timeout()
+      expect(spyClose).toHaveBeenCalled()
     })
   })
 
@@ -105,7 +228,7 @@ describe('Pop', () => {
       expect(wrapper.state().isOpen).toBe(false)
     })
 
-    test('Changes open/close states on mousemove/mouseleave', () => {
+    test('Changes open/close states on mousemove/mouseleave', async () => {
       const wrapper = shallow(
         <Pop triggerOn="hover">
           <Pop.Reference />
@@ -114,13 +237,32 @@ describe('Pop', () => {
       const el = wrapper.find(cx.node)
 
       el.simulate('mousemove')
+      await timeout()
       expect(wrapper.state().isOpen).toBe(true)
 
       el.simulate('mouseleave')
+      await timeout()
       expect(wrapper.state().isOpen).toBe(false)
     })
 
-    test('Fires onOpen/onClose on mousemove/mouseleave', () => {
+    test('Does not close if closeOnMouseLeave is disabled', async () => {
+      const wrapper = shallow(
+        <Pop triggerOn="hover" closeOnMouseLeave={false}>
+          <Pop.Reference />
+        </Pop>
+      )
+      const el = wrapper.find(cx.node)
+
+      el.simulate('mousemove')
+      await timeout()
+      expect(wrapper.state().isOpen).toBe(true)
+
+      el.simulate('mouseleave')
+      await timeout()
+      expect(wrapper.state().isOpen).toBe(true)
+    })
+
+    test('Fires onOpen/onClose on mousemove/mouseleave', async () => {
       const spyOpen = jest.fn()
       const spyClose = jest.fn()
       const wrapper = shallow(
@@ -131,9 +273,11 @@ describe('Pop', () => {
       const el = wrapper.find(cx.node)
 
       el.simulate('mousemove')
+      await timeout()
       expect(spyOpen).toHaveBeenCalled()
 
       el.simulate('mouseleave')
+      await timeout()
       expect(spyClose).toHaveBeenCalled()
     })
 
@@ -151,9 +295,91 @@ describe('Pop', () => {
 
       expect(spy).not.toHaveBeenCalled()
     })
+
+    test('Closes on content (Popper) mouseleave', async () => {
+      const closeSpy = jest.fn()
+      const wrapper = mount(
+        <Pop triggerOn="hover" isOpen={true} onClose={closeSpy}>
+          <Pop.Reference />
+          <Pop.Popper>
+            {() => <div className="content">Content</div>}
+          </Pop.Popper>
+        </Pop>
+      )
+      const el = wrapper.find('.c-PopPopperContentWrapper')
+      el.simulate('mouseleave')
+
+      await timeout()
+
+      expect(closeSpy).toHaveBeenCalled()
+    })
+
+    test('Does not close on content (Popper) mouseleave, if triggerOn is click', async () => {
+      const closeSpy = jest.fn()
+      const wrapper = mount(
+        <Pop triggerOn="click" isOpen={true} onClose={closeSpy}>
+          <Pop.Reference />
+          <Pop.Popper>
+            {() => <div className="content">Content</div>}
+          </Pop.Popper>
+        </Pop>
+      )
+      const el = wrapper.find('.c-PopPopperContentWrapper')
+      el.simulate('mouseleave')
+
+      await timeout()
+
+      expect(closeSpy).not.toHaveBeenCalled()
+    })
+
+    test('Closes on content click, if specified', async () => {
+      const closeSpy = jest.fn()
+      const wrapper = mount(
+        <Pop
+          triggerOn="hover"
+          isOpen={true}
+          onClose={closeSpy}
+          closeOnContentClick={true}
+        >
+          <Pop.Reference />
+          <Pop.Popper>
+            {() => <div className="content">Content</div>}
+          </Pop.Popper>
+        </Pop>
+      )
+      const el = wrapper.find('.c-PopPopper')
+      el.simulate('click')
+
+      await timeout()
+
+      expect(closeSpy).toHaveBeenCalled()
+    })
+
+    test('Does not close on content click, if specified', async () => {
+      const closeSpy = jest.fn()
+      const wrapper = mount(
+        <Pop
+          triggerOn="hover"
+          isOpen={true}
+          onClose={closeSpy}
+          closeOnContentClick={false}
+        >
+          <Pop.Reference />
+          <Pop.Popper>
+            {() => <div className="content">Content</div>}
+          </Pop.Popper>
+        </Pop>
+      )
+      const el = wrapper.find('.c-PopPopper')
+      el.simulate('click')
+
+      await timeout()
+
+      expect(closeSpy).not.toHaveBeenCalled()
+    })
   })
 
-  describe('Mouse: Cick events', () => {
+  describe('Mouse: Click events', () => {
     test('Stops propogation on click', () => {
       const spy = jest.fn()
       const wrapper = shallow(
@@ -183,7 +409,7 @@ describe('Pop', () => {
       expect(wrapper.state().isOpen).toBe(false)
     })
 
-    test('Changes open/close states on click', () => {
+    test('Changes open/close states on click', async () => {
       const wrapper = shallow(
         <Pop triggerOn="click">
           <Pop.Reference />
@@ -192,13 +418,15 @@ describe('Pop', () => {
       const el = wrapper.find(cx.node)
 
       el.simulate('click')
+      await timeout()
       expect(wrapper.state().isOpen).toBe(true)
 
       el.simulate('click')
+      await timeout()
       expect(wrapper.state().isOpen).toBe(false)
     })
 
-    test('Fires onOpen/onClose on click', () => {
+    test('Fires onOpen/onClose on click', async () => {
       const spyOpen = jest.fn()
       const spyClose = jest.fn()
       const wrapper = shallow(
@@ -209,15 +437,17 @@ describe('Pop', () => {
       const el = wrapper.find(cx.node)
 
       el.simulate('click')
+      await timeout()
       expect(spyOpen).toHaveBeenCalled()
 
       el.simulate('click')
+      await timeout()
       expect(spyClose).toHaveBeenCalled()
     })
   })
 
   describe('Closing mechanisms', () => {
-    test('Closes on block click, if defined', () => {
+    test('Closes on block click, if defined', async () => {
       const spy = jest.fn()
       const wrapper = mount(
         <Pop closeOnBodyClick onClose={spy}>
@@ -228,6 +458,8 @@ describe('Pop', () => {
       wrapper.instance().handleOnBodyClick({
         target: document.body,
       })
+
+      await timeout()
 
       expect(spy).toHaveBeenCalled()
     })
@@ -262,11 +494,13 @@ describe('Pop', () => {
       expect(spy).not.toHaveBeenCalled()
     })
 
-    test('Closes on ESC press, if defined', () => {
+    test('Closes on ESC press, if defined', async () => {
       const spy = jest.fn()
       const wrapper = mount(<Pop closeOnEscPress onClose={spy} />)
 
       wrapper.instance().handleOnEsc()
+
+      await timeout()
 
       expect(spy).toHaveBeenCalled()
     })

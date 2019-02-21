@@ -1,3 +1,10 @@
+// Generated with @helpscout/colorway (v0.0.11)
+//
+// This file was automatically generated with @helpscout/colorway
+// Please don't modify this file. Your changes will be overwritten.
+// Instead, update the template at:
+// https://github.com/helpscout/colorway
+
 const palette = {
   blue: {
     '100': '#F3FBFF',

@@ -25,5 +25,11 @@ describe('Input/Suffix', () => {
 
       expect(wrapper.getDOMNode().classList.contains('is-seamless')).toBe(true)
     })
+
+    test('Can render action styles', () => {
+      const wrapper = mount(<Suffix isAction />)
+
+      expect(wrapper.getDOMNode().classList.contains('is-action')).toBe(true)
+    })
   })
 })

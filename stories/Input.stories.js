@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Button, Icon, Input, styled } from '../src/index.js'
+import { Button, Flexy, Icon, Input, styled } from '../src/index.js'
 
 const stories = storiesOf('Input', module)
 
@@ -235,3 +235,94 @@ const PaddedTextArea = styled('div')`
     padding-bottom: 30px !important;
   }
 `
+
+stories.add('Action', () => {
+  class Example extends React.Component {
+    state = {
+      isDisabled: true,
+      value: '',
+    }
+
+    onChange = value => {
+      this.setState({
+        value,
+        isDisabled: !value,
+      })
+    }
+
+    render() {
+      return (
+        <div style={{ width: 300 }}>
+          <Input
+            autoFocus
+            label="Zip Code (Default Size, md)"
+            name="zip"
+            placeholder="Zip Code"
+            type="text"
+            onChange={this.onChange}
+            value={this.state.value}
+            action={
+              <Button
+                version={2}
+                kind="primary"
+                size="sm"
+                disabled={this.state.isDisabled}
+              >
+                Apply
+              </Button>
+            }
+          />
+          <br />
+          <Input
+            autoFocus
+            label="Zip Code (Small Size, sm)"
+            name="zip"
+            placeholder="Zip Code"
+            type="text"
+            onChange={this.onChange}
+            value={this.state.value}
+            size="sm"
+            action={
+              <Button
+                version={2}
+                kind="primary"
+                size="xs"
+                disabled={this.state.isDisabled}
+              >
+                Apply
+              </Button>
+            }
+          />
+        </div>
+      )
+    }
+  }
+
+  return <Example />
+})
+
+stories.add('Multi-Action', () => {
+  return (
+    <Input
+      autoFocus
+      label="Zip Code"
+      name="zip"
+      placeholder="Zip Code"
+      type="text"
+      action={
+        <Flexy gap="xs">
+          <Flexy.Item>
+            <Button version={2} kind="primary" size="sm">
+              Apply
+            </Button>
+          </Flexy.Item>
+          <Flexy.Item>
+            <Button version={2} kind="secondary" size="sm">
+              Cancel
+            </Button>
+          </Flexy.Item>
+        </Flexy>
+      }
+    />
+  )
+})

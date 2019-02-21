@@ -1,8 +1,9 @@
 // @flow
 import React from 'react'
-import styled from '../styled'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import css from './styles/PopArrow.css.js'
+import { ArrowUI } from './Arrow.css.js'
+import { noop } from '../../utilities/other'
 
 type Props = {
   className?: string,
@@ -10,28 +11,92 @@ type Props = {
   placement: string,
   offset: number,
   size: number,
+  showArrow: boolean,
   theme: Object | string,
+  zIndex: number,
 }
 
-const ArrowComponent = (props: Props) => {
-  const { className, children, placement, offset, size, theme, ...rest } = props
+export class Arrow extends React.PureComponent<Props> {
+  static defaultProps = {
+    innerRef: noop,
+    offset: 0,
+    placement: 'top',
+    showArrow: true,
+    size: 5,
+    style: {},
+    zIndex: 999,
+  }
 
-  const position = getPosition(placement)
+  setArrowNodeRef = node => this.props.innerRef(node)
 
-  const componentClassName = classNames(
-    'c-PopArrow',
-    placement && `is-${getPlacement(placement)}`,
-    position && `is-${position}`,
-    className
-  )
+  render() {
+    const {
+      className,
+      children,
+      color,
+      innerRef,
+      placement,
+      offset,
+      showArrow,
+      size,
+      style,
+      theme,
+      zIndex,
+      ...rest
+    } = this.props
 
-  return (
-    <div
-      className={componentClassName}
-      data-x-placement={placement}
-      {...rest}
-    />
-  )
+    const position = getPosition(placement)
+
+    const positionClassName = classNames(
+      placement && `is-${getPlacement(placement)}`,
+      position && `is-${position}`
+    )
+
+    const wrapperClassName = classNames(
+      'c-PopPopperArrowWrapper',
+      !showArrow && 'is-hidden',
+      positionClassName
+    )
+
+    const componentClassName = classNames(
+      'c-PopArrow',
+      positionClassName,
+      className
+    )
+
+    const ghostClassName = classNames(
+      'c-PopArrow',
+      'c-PopArrowGhost',
+      'is-ghost',
+      positionClassName,
+      className
+    )
+
+    const componentStyle = { zIndex }
+    const ghostComponentStyle = { zIndex: zIndex + 3 }
+
+    return (
+      <ArrowUI
+        className={wrapperClassName}
+        innerRef={this.setArrowNodeRef}
+        data-x-placement={placement}
+        color={color}
+        size={size}
+        style={style}
+      >
+        <div
+          {...getValidProps(rest)}
+          className={componentClassName}
+          style={componentStyle}
+        />
+        <div
+          {...getValidProps(rest)}
+          className={ghostClassName}
+          style={ghostComponentStyle}
+        />
+      </ArrowUI>
+    )
+  }
 }
 
 /**
@@ -56,14 +121,6 @@ export const getPosition = (placement: string) => {
   if (!placement || placement.indexOf('-') < 0) return ''
 
   return placement.split('-')[1]
-}
-
-const Arrow = styled(ArrowComponent)(css)
-
-Arrow.defaultProps = {
-  offset: 0,
-  placement: 'top',
-  size: 5,
 }
 
 export default Arrow

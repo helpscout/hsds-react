@@ -48,7 +48,7 @@ export class TagList extends React.PureComponent<Props> {
     const childrenMarkup = React.Children.map(children, child => {
       if (!isComponentNamed(child, TAG)) return null
 
-      return <Inline.Item extendChild>{React.cloneElement(child)}</Inline.Item>
+      return <Inline.Item>{React.cloneElement(child)}</Inline.Item>
     })
 
     return (

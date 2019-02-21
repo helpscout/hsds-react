@@ -1,16 +1,21 @@
 // @flow
 import type { PopProps, PopperStyles } from './types'
 import React, { Component } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from '../Portal'
 import Arrow from './Arrow'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { renderRenderPropComponent } from '../../utilities/component'
+import { createUniqueIDFactory } from '../../utilities/id'
+
+const uniqueID = createUniqueIDFactory('PopPopper')
 
 type Props = PopProps
 
-class Popper extends Component<Props> {
+export class Popper extends Component<Props> {
   static defaultProps = {
     animationDelay: 0,
     animationDuration: 0,
@@ -19,17 +24,32 @@ class Popper extends Component<Props> {
     arrowSize: 5,
     modifiers: {},
     offset: 0,
+    close: noop,
     onClick: noop,
+    onContentClick: noop,
+    onMouseLeave: noop,
     placement: 'auto',
     positionFixed: false,
     showArrow: true,
     zIndex: 1000,
   }
 
+  id = uniqueID()
+
+  getId() {
+    return this.props.id || this.id
+  }
+
   handleOnClick = (event: Event) => {
     /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
+    this.props.onContentClick(event)
+  }
+
+  renderChildren = () => {
+    const { children, close } = this.props
+    return renderRenderPropComponent(children, { close })
   }
 
   render() {
@@ -45,6 +65,7 @@ class Popper extends Component<Props> {
       children,
       offset,
       onClick,
+      onMouseLeave,
       modifiers,
       positionFixed,
       placement,
@@ -70,8 +91,9 @@ class Popper extends Component<Props> {
         positionFixed={positionFixed}
       >
         {({ ref, style, placement, arrowProps }) => (
-          <Portal>
+          <Portal className="PopPortal" id={this.getId()}>
             <div
+              {...getValidProps(rest)}
               className={componentClassName}
               data-placement={placement}
               onClick={this.handleOnClick}
@@ -86,20 +108,25 @@ class Popper extends Component<Props> {
                 }),
                 zIndex,
               }}
-              {...rest}
             >
               <Animate {...animateProps}>
-                {children}
-                {showArrow && (
-                  <div className="c-PopPopper__arrowWrapper">
-                    <Arrow
-                      color={arrowColor}
-                      className={arrowClassName}
-                      placement={placement}
-                      size={arrowSize}
-                    />
-                  </div>
-                )}
+                <div
+                  className="c-PopPopperContentWrapper"
+                  onMouseLeave={onMouseLeave}
+                  style={{ position: 'relative', zIndex }}
+                >
+                  {this.renderChildren()}
+                  <Arrow
+                    color={arrowColor}
+                    className={arrowClassName}
+                    innerRef={arrowProps.ref}
+                    placement={placement}
+                    showArrow={showArrow}
+                    style={arrowProps.style}
+                    size={arrowSize}
+                    zIndex={zIndex - 1}
+                  />
+                </div>
               </Animate>
             </div>
           </Portal>

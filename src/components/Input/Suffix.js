@@ -7,19 +7,24 @@ import { SuffixUI } from './styles/Input.css.js'
 
 export interface Props {
   className?: string;
+  isAction: boolean;
   isSeamless: boolean;
 }
 
 class Suffix extends Component<Props> {
   static defaultProps = {
+    isAction: false,
     isSeamless: false,
   }
 
   render() {
-    const { className, isSeamless, ...rest } = this.props
+    const { className, isAction, isSeamless, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-InputSuffix',
+      'c-Input__item',
+      'c-Input__suffix',
+      isAction && 'is-action',
       isSeamless && 'is-seamless',
       className
     )

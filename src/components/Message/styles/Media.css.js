@@ -50,7 +50,7 @@ const css = `
 
     &.is-note {
       ${noteBoxShadow()}
-      background-color: ${getColor('yellow.300')};
+      background-color: ${getColor('yellow.200')};
       color: ${getColor('yellow.800')};
     }
 

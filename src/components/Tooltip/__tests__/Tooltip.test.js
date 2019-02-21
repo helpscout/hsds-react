@@ -3,6 +3,13 @@ import Tooltip from '../index'
 import Pop from '../../Pop'
 import { mount } from 'enzyme'
 
+jest.mock('../Tooltip.Popper', () => {
+  const Popper = ({ className, children }) => (
+    <div className={className}>{children}</div>
+  )
+  return Popper
+})
+
 describe('classNames', () => {
   test('Can accept custom className', () => {
     const wrapper = mount(

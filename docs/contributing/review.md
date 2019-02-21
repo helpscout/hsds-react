@@ -14,6 +14,14 @@ Be descriptive of your changes! The more the better. If possible, include screen
 
 Since we're adding a brand new component, we'll add the `feature` label.
 
+## Assigning Reviewers
+
+Assign or `@` at least one code reviewer and one design reviewer. This is required if you're creating a brand new component. If you're unsure who to tag, default to [@itsjonq](https://github.com/itsjonq) and [@digitaldesigner](https://github.com/digitaldesigner).
+
+## Deploy Preview
+
+A [Netlify](https://www.netlify.com/) deploy preview for your Pull Request will automatically be generated. To make it easier for reviewers to QA your updates, provide them with a direct link to your Story either in the Pull Request description or as an additional Github comment.
+
 ## Continuous Integration
 
 Every pull request automatically fires off a [Travis build](https://travis-ci.org/helpscout/hsds-react). Once that passes, it'll generate a [code coverage score](https://coveralls.io/).

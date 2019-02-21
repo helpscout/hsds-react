@@ -6,5 +6,6 @@
  */
 export default function pluralize(word: string, count: number = 1): string {
   if (!word) return ''
+  if (word.lastIndexOf('s') === word.length - 1) return word
   return count === 1 ? word : `${word}s`
 }

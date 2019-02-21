@@ -21,5 +21,6 @@
     "@babel/plugin-transform-flow-strip-types",
     "inline-svg",
     "emotion"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }
