@@ -1,6 +1,7 @@
 import React from 'react'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import PropTypes from 'prop-types'
+import { isDefined } from '../../utilities/is'
 
 /**
  * Adds `fetch` and `to` attributes to a Component, allowing clicks to route,
@@ -13,7 +14,13 @@ import PropTypes from 'prop-types'
 const RouteWrapper = WrappedComponent => {
   class Component extends React.PureComponent {
     render() {
-      const { fetch = () => Promise.resolve(), to, ...rest } = this.props
+      const {
+        fetch = () => Promise.resolve(),
+        to,
+        'data-bypass': dataByPass,
+        ...rest
+      } = this.props
+
       if (to) {
         if (this.context && this.context.router) {
           const history = this.context.router.history
@@ -33,7 +40,10 @@ const RouteWrapper = WrappedComponent => {
           )
         }
       }
-      return <WrappedComponent {...rest} />
+
+      const dataByPassValue = isDefined(dataByPass) ? dataByPass : !!to
+
+      return <WrappedComponent {...rest} data-bypass={dataByPassValue} />
     }
   }
 

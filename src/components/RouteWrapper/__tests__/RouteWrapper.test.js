@@ -9,6 +9,12 @@ const wrap = (...args) =>
     .first()
     .shallow()
 
+const wrapperContext = {
+  context: {
+    router: {},
+  },
+}
+
 describe('Route fetching', () => {
   let options
   let push
@@ -114,5 +120,44 @@ describe('displayName', () => {
 
     expect(WrappedComponent.displayName).toContain('with')
     expect(WrappedComponent.displayName).toContain('Derek')
+  })
+
+  test('Adds data-bypass="false" if to is not defined', () => {
+    class Composed extends React.Component {
+      render() {
+        return <div />
+      }
+    }
+    const WrappedComponent = RouteWrapper(Composed)
+    const wrapper = shallow(<WrappedComponent />)
+
+    expect(wrapper.prop('data-bypass')).toBe(false)
+  })
+
+  test('Adds data-bypass="true" if to is not defined', () => {
+    class Composed extends React.Component {
+      render() {
+        return <div />
+      }
+    }
+    const WrappedComponent = RouteWrapper(Composed)
+    const wrapper = shallow(<WrappedComponent to="/" />, wrapperContext)
+
+    expect(wrapper.prop('data-bypass')).toBe(true)
+  })
+
+  test('Can override data-bypass', () => {
+    class Composed extends React.Component {
+      render() {
+        return <div />
+      }
+    }
+    const WrappedComponent = RouteWrapper(Composed)
+    const wrapper = shallow(
+      <WrappedComponent to="/" data-bypass={false} />,
+      wrapperContext
+    )
+
+    expect(wrapper.prop('data-bypass')).toBe(false)
   })
 })
