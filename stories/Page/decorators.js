@@ -10,7 +10,10 @@ const AppUI = styled('div')`
   display: flex;
   justify-content: center;
   padding: 20px;
-  margin: -40px;
   min-height: calc(100vh);
-  min-width: calc(100vw);
+  width: 100%;
+
+  @media (min-width: 1500px) {
+    padding: 40px 20px;
+  }
 `

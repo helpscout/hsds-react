@@ -14,78 +14,76 @@ import { App } from './decorators'
 const stories = storiesOf('Page/Example', module).addDecorator(App)
 
 stories.add('Responsive', () => (
-  <div style={{ paddingTop: '60px' }}>
-    <Page isResponsive>
-      <Page.Card>
-        <Page.Section>
-          <Page.Header
-            render={({ Title, Subtitle }) => (
-              <div>
-                <Title headingLevel="h1">Edit your account</Title>
-                <Subtitle>Welcome to the Dharma Initiative.</Subtitle>
-              </div>
-            )}
-          />
-          <Page.Content>
-            <FormGroup>
-              <FormLabel label="Site Name">
-                <Input value="Dashing Dash" />
-              </FormLabel>
-            </FormGroup>
-          </Page.Content>
-        </Page.Section>
+  <Page isResponsive>
+    <Page.Card>
+      <Page.Section>
+        <Page.Header
+          render={({ Title, Subtitle }) => (
+            <div>
+              <Title headingLevel="h1">Edit your account</Title>
+              <Subtitle>Welcome to the Dharma Initiative.</Subtitle>
+            </div>
+          )}
+        />
+        <Page.Content>
+          <FormGroup>
+            <FormLabel label="Site Name">
+              <Input value="Dashing Dash" />
+            </FormLabel>
+          </FormGroup>
+        </Page.Content>
+      </Page.Section>
 
-        <Page.Section>
-          <Page.Header
-            withBorder={false}
-            render={({ Title, Subtitle }) => (
-              <div>
-                <Title headingLevel="h2" isSecondary>
-                  Default Settings
-                </Title>
-              </div>
-            )}
-          />
-          <ExampleContent />
-        </Page.Section>
-      </Page.Card>
+      <Page.Section>
+        <Page.Header
+          withBorder={false}
+          render={({ Title, Subtitle }) => (
+            <div>
+              <Title headingLevel="h2" isSecondary>
+                Default Settings
+              </Title>
+            </div>
+          )}
+        />
+        <ExampleContent />
+      </Page.Section>
+    </Page.Card>
 
-      <Page.Card>
-        <Page.Section>
-          <Page.Header
-            render={({ Title, Subtitle }) => (
-              <div>
-                <Title headingLevel="h2">More settings this way</Title>
-                <Subtitle>
-                  Heading looks the same, but it's an H2! There should only be
-                  one h1 per page ;)
-                </Subtitle>
-              </div>
-            )}
-          />
-          <ExampleContent />
-        </Page.Section>
-      </Page.Card>
+    <Page.Card>
+      <Page.Section>
+        <Page.Header
+          render={({ Title, Subtitle }) => (
+            <div>
+              <Title headingLevel="h2">More settings this way</Title>
+              <Subtitle>
+                Heading looks the same, but it's an H2! There should only be one
+                h1 per page ;)
+              </Subtitle>
+            </div>
+          )}
+        />
+        <ExampleContent />
+      </Page.Section>
+    </Page.Card>
 
-      <Page.Actions
-        primary={
-          <Button kind="primary" size="lg" version={2}>
-            Save
-          </Button>
-        }
-        secondary={
-          <Button size="md" version={2}>
-            Discard Changes
-          </Button>
-        }
-        serious={
-          <Button state="danger" size="md" version={2}>
-            Something serious!
-          </Button>
-        }
-      />
-    </Page>
-  </div>
+    <Page.Actions
+      primary={
+        <Button kind="primary" size="lg" version={2}>
+          Save
+        </Button>
+      }
+      secondary={
+        <Button size="md" version={2}>
+          Discard Changes
+        </Button>
+      }
+      serious={
+        <Button state="danger" size="md" version={2}>
+          Something serious!
+        </Button>
+      }
+    />
+  </Page>
 ))
 
 function ExampleContent() {
