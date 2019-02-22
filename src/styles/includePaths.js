@@ -18,7 +18,6 @@ const includePaths = pathfinder([
   family,
   flexy,
   grid,
-  list,
   seedThis,
 ])
 

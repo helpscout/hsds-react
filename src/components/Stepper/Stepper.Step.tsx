@@ -4,40 +4,65 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { StepUI } from './Stepper.css'
+import Progress from './Stepper.Progress'
+import { StepUI, LineUI, CircleUI, GhostTitleUI } from './Stepper.css'
 import { STEP_COMPONENT_KEY } from './Stepper.utils'
 import { StepperStep } from './Stepper.types'
 
 export interface Props extends StepperStep {
   className?: string
-  currentIndex: number
   children?: any
   innerRef: (node: HTMLElement) => void
-  isCurrent: boolean
+  index: number
+  isActive: boolean
+  isClickable: boolean
+  onClick: (event: any, index: number) => void
 }
 
 export class Step extends React.PureComponent<Props> {
   static className = 'c-StepperStep'
   static defaultProps = {
-    isCurrent: false,
+    isActive: false,
+    isClickable: false,
+    index: 0,
     innerRef: noop,
+    onClick: noop,
   }
 
   getClassName() {
-    const { className, isCurrent } = this.props
-    return classNames(Step.className, isCurrent && 'is-current', className)
+    const { className, isActive, isClickable } = this.props
+    return classNames(
+      Step.className,
+      isClickable && 'is-clickable',
+      isActive && 'is-active',
+      className
+    )
+  }
+
+  handleOnClick = event => {
+    if (!this.props.isClickable) return
+
+    this.props.onClick(event, this.props.index)
   }
 
   render() {
-    const { children, description, innerRef, title, ...rest } = this.props
+    const { children, innerRef, isActive, title, ...rest } = this.props
 
     return (
       <StepUI
         {...getValidProps(rest)}
         className={this.getClassName()}
+        onClick={this.handleOnClick}
         innerRef={innerRef}
+        title={title}
       >
         <Text size="14">{title}</Text>
+        <GhostTitleUI size="14" aria-hidden>
+          {title}
+        </GhostTitleUI>
+        <CircleUI isActive={isActive} />
+        <LineUI />
+        <Progress isActive={isActive} />
       </StepUI>
     )
   }

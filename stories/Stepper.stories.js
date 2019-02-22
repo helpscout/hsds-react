@@ -8,6 +8,7 @@ import {
   text,
   select,
 } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
 
 const stories = storiesOf('Stepper', module)
@@ -25,6 +26,10 @@ stories.addDecorator(withKnobs)
 stories.add('Default', () => {
   const props = {
     currentIndex: number('currentIndex', 0),
+    isClickable: boolean('isClickable', false),
+    onChange: action('onChange'),
+    onStepClick: action('onStepClick'),
+    onComplete: action('onComplete'),
     steps: [
       {
         title: 'Content',
