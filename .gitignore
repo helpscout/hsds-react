@@ -22,7 +22,10 @@ public
 .env.production.local
 .cache
 yarn.lock
+.awcache
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+storybook-static

@@ -9,6 +9,12 @@ module.exports = (baseConfig, env, config) => {
     test: /\.(ts|tsx)$/,
     exclude: /node_modules|tests/,
     loader: require.resolve('awesome-typescript-loader'),
+    options: {
+      silent: true,
+      useCache: true,
+      usePrecompiledFiles: true,
+      transpileOnly: true,
+    },
   })
   config.resolve.extensions.push('.ts', '.tsx')
 
