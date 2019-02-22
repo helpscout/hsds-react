@@ -20,6 +20,7 @@ public
 .env.development.local
 .env.test.local
 .env.production.local
+.awcache
 .cache
 yarn.lock
 .awcache

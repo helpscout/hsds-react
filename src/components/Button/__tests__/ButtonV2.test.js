@@ -308,6 +308,13 @@ describe('Link', () => {
     expect(wrapper.find('button').length).toBeFalsy()
   })
 
+  test('Can render a link, if to is defined', () => {
+    const wrapper = mount(<Button to="/" />, { context: { router: {} } })
+
+    expect(wrapper.find('a').length).toBeTruthy()
+    expect(wrapper.find('button').length).toBeFalsy()
+  })
+
   test('Can render a link based props', () => {
     const wrapper = mount(<Button href="/" target="_blank" />)
     const el = wrapper.find('a').first()

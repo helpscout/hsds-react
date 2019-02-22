@@ -73,6 +73,12 @@ class Button extends Component<Props, State> {
     }
   }
 
+  isLink() {
+    const { href, 'data-bypass': dataBypass } = this.props
+
+    return href || dataBypass
+  }
+
   handleOnBlur = event => {
     this.setState({
       isFocused: false,
@@ -145,8 +151,7 @@ class Button extends Component<Props, State> {
   }
 
   getButtonUI() {
-    const { href } = this.props
-    const selector = href ? 'a' : 'button'
+    const selector = this.isLink() ? 'a' : 'button'
 
     return this.makeButtonUI(selector)
   }
