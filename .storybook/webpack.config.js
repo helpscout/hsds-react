@@ -39,5 +39,10 @@ module.exports = (baseConfig, env, config) => {
   })
   config.resolve.extensions.push('.scss')
 
+  // Removes process logging
+  config.plugins = config.plugins.filter(
+    plugin => plugin.constructor.name !== 'ProgressPlugin'
+  )
+
   return config
 }
