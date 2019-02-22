@@ -119,7 +119,7 @@ stories.add('selector', () => {
       'selector',
       {
         button: '',
-        link: '#',
+        link: '/',
       },
       ''
     ),
