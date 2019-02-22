@@ -8,12 +8,14 @@ export const config = {
   maxWidth: {
     default: '700px',
     superWidescreen: '1000px',
+    widest: '1200px',
   },
   transition: 'max-width 200ms ease',
 }
 
 export const PageUI = styled('div')`
-  ${baseStyles} margin-left: auto;
+  ${baseStyles};
+  margin-left: auto;
   margin-right: auto;
   max-width: ${config.maxWidth.default};
   min-width: ${config.minWidth};
@@ -25,6 +27,13 @@ export const PageUI = styled('div')`
       PageConfig.breakpoint.superWidescreen,
       `
       max-width: ${config.maxWidth.superWidescreen};
+    `
+    )};
+
+    ${breakpoint(
+      PageConfig.breakpoint.widest,
+      `
+      max-width: ${config.maxWidth.widest};
     `
     )};
   }

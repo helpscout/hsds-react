@@ -8,16 +8,18 @@ export const config = {
   paddingBottom: '11px',
   marginBottom: '27px',
   marginRight: {
-    superWidescreen: '60px',
+    superWidescreen: '50px',
   },
   width: {
     default: '100%',
     superWidescreen: '250px',
+    widest: '300px',
   },
 }
 
 export const HeaderUI = styled('header')`
-  ${baseStyles} margin-bottom: 0;
+  ${baseStyles};
+  margin-bottom: 0;
   width: ${config.width.default};
 
   &.is-withBorder {
@@ -38,6 +40,13 @@ export const HeaderUI = styled('header')`
         margin-right: ${config.marginRight.superWidescreen}
       `
     )};
+
+    ${breakpoint(
+      PageConfig.breakpoint.widest,
+      `
+        width: ${config.width.widest};
+      `
+    )};
   }
 `
 export const TitleUI = styled('div')`
@@ -45,7 +54,8 @@ export const TitleUI = styled('div')`
 `
 
 export const SubTitleUI = styled('div')`
-  ${baseStyles} margin-top: 5px;
+  ${baseStyles};
+  margin-top: 5px;
 `
 
 export const HeadingUI = styled(Heading)`
