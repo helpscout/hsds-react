@@ -27,6 +27,9 @@ export class Stepper extends React.PureComponent<Props> {
     currentIndex: 0,
     innerRef: noop,
     isClickable: false,
+    onChange: noop,
+    onComplete: noop,
+    onStepClick: noop,
     steps: [],
   }
 
