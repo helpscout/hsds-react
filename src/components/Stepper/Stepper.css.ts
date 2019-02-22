@@ -37,7 +37,7 @@ export const StepUI = styled('div')`
   flex-direction: column;
   padding-left: ${config.spacingOffset};
   padding-right: ${config.spacingOffset};
-  padding-bottom: calc(15px + ${config.circleSize});
+  padding-bottom: calc(12px + ${config.circleSize});
   position: relative;
   text-align: center;
 
