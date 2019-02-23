@@ -3,24 +3,30 @@ import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+
+import AutoDropDown from '../AutoDropdown'
+import Button from '../Button'
+import ControlGroup from '../ControlGroup'
 import Icon from '../Icon'
 
-import {
-  ButtonUI,
-  ButtonWrapperUI,
-  OptionsTriggerButtonUI,
-  OptionsDropdownUI,
-  VerticalDividerUI,
-} from './ButtonWithOptions.css'
+import { OptionsTriggerButtonUI } from './ButtonWithOptions.css'
 import { COMPONENT_KEY } from './ButtonWithOptions.utils'
 
 export interface Props {
-  className?: string
+  buttonRef: (ref: any) => void
   children?: any
+  className?: string
   disabled?: boolean
-  buttonRef: (node: HTMLElement) => void
-  onClick: (event: Event) => void
-  options: Array<any>
+  dropdownProps?: any
+  kind?: string
+  onClick?: (event: Event) => void
+  size?: string
+}
+
+const defaultDropdownProps = {
+  className: 'c-ButtonWithOptions__dropdown',
+  direction: 'right',
+  onTriggerClick: noop,
 }
 
 export class ButtonWithOptions extends React.PureComponent<Props> {
@@ -28,35 +34,47 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
 
   static defaultProps = {
     buttonRef: noop,
+    dropdownProps: {},
     disabled: false,
+    kind: 'primary',
     onClick: noop,
-    options: [],
+    size: 'lg',
   }
 
-  renderEndChatOptions() {
-    const { disabled } = this.props
-    const trigger = (
+  renderDropdownTrigger() {
+    const {
+      disabled,
+      dropdownProps: { onTriggerClick },
+      kind,
+      size,
+    } = this.props
+
+    return (
       <OptionsTriggerButtonUI
-        canRenderFocus={false}
+        className="c-ButtonWithOptions__dropdownTrigger"
         disabled={disabled}
-        kind="primary"
-        size="lg"
+        isLast
+        kind={kind}
+        onClick={onTriggerClick}
+        size={size}
         version={2}
       >
         <Icon name="caret-down" size="16" />
       </OptionsTriggerButtonUI>
     )
+  }
 
-    const { options } = this.props
+  renderEndChatOptions() {
+    const { disabled, dropdownProps: props } = this.props
+    const trigger = this.renderDropdownTrigger()
+    const dropdownProps = {
+      ...defaultDropdownProps,
+      disabled,
+      renderTrigger: trigger,
+      ...props,
+    }
 
-    return (
-      <OptionsDropdownUI
-        direction="left"
-        disabled={disabled}
-        items={options}
-        renderTrigger={trigger}
-      />
-    )
+    return <AutoDropDown {...dropdownProps} />
   }
 
   getClassName() {
@@ -65,28 +83,33 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, buttonRef, disabled, onClick, ...rest } = this.props
+    const {
+      buttonRef,
+      children,
+      disabled,
+      kind,
+      onClick,
+      size,
+      ...rest
+    } = this.props
 
     return (
-      <ButtonWrapperUI
-        {...getValidProps(rest)}
-        className={this.getClassName()}
-        disabled
-      >
-        <ButtonUI
-          buttonRef={buttonRef}
-          canRenderFocus={false}
-          disabled={disabled}
-          kind="primary"
-          onClick={onClick}
-          size="lg"
-          version={2}
-        >
-          {children}
-        </ButtonUI>
-        <VerticalDividerUI disabled />
-        {this.renderEndChatOptions()}
-      </ButtonWrapperUI>
+      <ControlGroup className={this.getClassName()} {...getValidProps(rest)}>
+        <ControlGroup.Item>
+          <Button
+            buttonRef={buttonRef}
+            className="c-ButtonWithOptions__button"
+            disabled={disabled}
+            kind={kind}
+            onClick={onClick}
+            size={size}
+            version={2}
+          >
+            {children}
+          </Button>
+        </ControlGroup.Item>
+        <ControlGroup.Item>{this.renderEndChatOptions()}</ControlGroup.Item>
+      </ControlGroup>
     )
   }
 }

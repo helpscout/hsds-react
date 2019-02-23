@@ -27,30 +27,58 @@ stories.addDecorator(withKnobs)
 const ItemSpec = createSpec({
   label: faker.lorem.words(),
   value: faker.lorem.words(),
-  onClick: () => value => console.log('Item Clicked!', value),
+  onClick: () => event => console.log('Item Clicked!', event),
 })
 
-stories.add('Default', () => {
-  const options = ItemSpec.generate(4)
+const dropdownProps = {
+  items: ItemSpec.generate(20),
+  onSelect: value => console.log(value),
+}
 
+stories.add('Default', () => {
   return (
     <ButtonWithOptions
-      options={options}
+      dropdownProps={dropdownProps}
+      kind="primary"
       onClick={() => alert('Button Clicked!')}
+      size="lg"
     >
       Submit
     </ButtonWithOptions>
   )
 })
 
-stories.add('Disabled', () => {
-  const options = ItemSpec.generate(4)
+stories.add('Sizes and Colours', () => {
+  return (
+    <div>
+      <ButtonWithOptions
+        dropdownProps={dropdownProps}
+        kind="tertiary"
+        size="sm"
+      >
+        Small
+      </ButtonWithOptions>
+      <ButtonWithOptions
+        dropdownProps={dropdownProps}
+        kind="primaryAlt"
+        size="md"
+      >
+        Medium
+      </ButtonWithOptions>
+      <ButtonWithOptions dropdownProps={dropdownProps} kind="primary" size="lg">
+        Primary
+      </ButtonWithOptions>
+    </div>
+  )
+})
 
+stories.add('Disabled', () => {
   return (
     <ButtonWithOptions
       disabled
-      options={options}
-      onClick={() => alert('Button Clicked!')}
+      dropdownProps={dropdownProps}
+      kind="secondary"
+      size="lg"
     >
       Submit
     </ButtonWithOptions>
