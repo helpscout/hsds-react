@@ -78,8 +78,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   getTriggerProps() {
     const { disabled, onBlur, onFocus } = this.props
 
-    console.log(disabled)
-
     return {
       disabled,
       onBlur,

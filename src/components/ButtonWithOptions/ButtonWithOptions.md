@@ -10,10 +10,11 @@ A ButtonWithOptions component is a wrapper component for [Button V2](../Button/d
 
 ## Props
 
-| Prop      | Type       | Default                                    | Description                                 |
-| --------- | ---------- | ------------------------------------------ | ------------------------------------------- |
-| className | `string`   |                                            | The className of the component.             |
-| disabled  | `bool`     | Disable the button so it can't be clicked. |
-| buttonRef | `function` |                                            | Retrieves the `button` DOM node.            |
-| options   | `array`    | `[]`                                       | Items to render in Dropdown.                |
-| onClick   | `function` |                                            | The callback when the component is clicked. |
+| Prop          | Type       | Default                                    | Description                                 |
+| ------------- | ---------- | ------------------------------------------ | ------------------------------------------- |
+| className     | `string`   |                                            | The className of the component.             |
+| disabled      | `bool`     | Disable the button so it can't be clicked. |
+| dropdownProps | `object`   |                                            | Any valid V2 Dropdown props.                |
+| buttonRef     | `function` |                                            | Retrieves the `button` DOM node.            |
+| options       | `array`    | `[]`                                       | Items to render in Dropdown.                |
+| onClick       | `function` |                                            | The callback when the component is clicked. |
