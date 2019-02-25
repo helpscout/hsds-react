@@ -39,7 +39,7 @@ export class Item extends React.Component<Props> {
   }
 
   render() {
-    const { children, innerRef, ...rest } = this.props
+    const { children, href, innerRef, to, ...rest } = this.props
 
     return (
       <ItemUI
@@ -47,7 +47,9 @@ export class Item extends React.Component<Props> {
         className={this.getClassName()}
         innerRef={innerRef}
       >
-        <NavLink {...this.getLinkProps()}>{children}</NavLink>
+        <NavLink {...this.getLinkProps()} className="c-NavItemLink">
+          {children}
+        </NavLink>
       </ItemUI>
     )
   }

@@ -34,9 +34,10 @@ export class Nav extends React.Component<Props> {
       <NavUI
         {...getValidProps(rest)}
         className={this.getClassName()}
+        data-location={location}
         innerRef={innerRef}
       >
-        <ForceRouterRenderer {...this.props}>{children}</ForceRouterRenderer>
+        {children}
       </NavUI>
     )
   }
