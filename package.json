@@ -70,7 +70,8 @@
   },
   "peerDependencies": {
     "react": "^16 || ^15",
-    "react-dom": "^16 || ^15"
+    "react-dom": "^16 || ^15",
+    "react-router": "^4"
   },
   "dependencies": {
     "@helpscout/fancy": "2.2.4",
