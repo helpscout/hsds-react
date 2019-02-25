@@ -115,8 +115,6 @@ LineUI.defaultProps = {
 }
 
 export const ProgressLineUI = styled(LineUI)`
-  border-bottom-right-radius: ${config.lineHeight};
-  border-top-right-radius: ${config.lineHeight};
   background: ${config.progressLineColor};
   transition: transform ${config.transition};
   transform: scaleX(0);
