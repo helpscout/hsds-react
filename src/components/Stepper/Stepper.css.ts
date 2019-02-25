@@ -89,6 +89,7 @@ export const CircleUI = styled('div')`
   margin-left: calc(${config.circleSize} / 2 * -1);
   height: ${config.circleSize};
   width: ${config.circleSize};
+  transform: translateZ(0);
   transition: all ${config.circleTransition};
   will-change: box-shadow, border;
   z-index: 1;
@@ -123,6 +124,6 @@ export const ProgressLineUI = styled(LineUI)`
   will-change: transform;
 
   &.is-active {
-    transform: scaleX(1);
+    transform: scaleX(1.1);
   }
 `
