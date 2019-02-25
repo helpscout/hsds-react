@@ -12,7 +12,7 @@ import { StepperStep } from './Stepper.types'
 
 export interface Props {
   className?: string
-  currentIndex?: number
+  currentIndex?: any
   innerRef: (node: HTMLElement) => void
   isClickable: boolean
   onChange: (Step: any) => void
@@ -75,6 +75,8 @@ export class Stepper extends React.PureComponent<Props> {
   getMatchIndex(): number {
     const { currentIndex } = this.props
     const matchIndex = isDefined(currentIndex) ? currentIndex : -1
+
+    console.log('matchIndex', isDefined(currentIndex), matchIndex, currentIndex)
 
     return matchIndex
   }
