@@ -126,7 +126,7 @@ describe('data-bypass', () => {
     expect(wrapper.prop('data-bypass')).toBe(false)
   })
 
-  test('Adds data-bypass="true" if to is not defined', () => {
+  test('Adds data-bypass="true" if to is defined', () => {
     class Composed extends React.Component {
       render() {
         return <div />
