@@ -1,7 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Nav from '../src/components/Nav'
-import NavLink from '../src/components/NavLink'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 import {
   withKnobs,
@@ -29,10 +28,10 @@ stories.add('Default', () => (
   <Router>
     <div>
       <Nav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/one">One</NavLink>
-        <NavLink to="/two">Two</NavLink>
-        <NavLink to="/three">Three</NavLink>
+        <Nav.Item to="/">Home</Nav.Item>
+        <Nav.Item to="/one">One</Nav.Item>
+        <Nav.Item to="/two">Two</Nav.Item>
+        <Nav.Item to="/three">Three</Nav.Item>
       </Nav>
       <Route exact path="/" component={RouteComponent} />
       <Route exact path="/one" component={RouteComponent} />

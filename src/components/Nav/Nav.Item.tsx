@@ -53,6 +53,8 @@ export class Item extends React.Component<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(ITEM_COMPONENT_KEY)(Item)
+const PropConnectedComponent = propConnect(ITEM_COMPONENT_KEY, { pure: false })(
+  Item
+)
 
-export default NavLink
+export default PropConnectedComponent
