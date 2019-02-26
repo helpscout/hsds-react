@@ -81,7 +81,7 @@ export const CircleUI = styled('div')`
   background: ${config.backgroundColor};
   box-shadow: 0 0 0 3px ${config.backgroundColor};
   border: 3px solid currentColor;
-  border-radius: 9999px;
+  border-radius: 50%;
   color: ${config.inactiveColor};
   position: absolute;
   bottom: 0;

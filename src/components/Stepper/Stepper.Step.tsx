@@ -56,11 +56,13 @@ export class Step extends React.PureComponent<Props> {
         innerRef={innerRef}
         title={title}
       >
-        <Text size="14">{title}</Text>
+        <Text className="c-StepperStepTitle" size="14">
+          {title}
+        </Text>
         <GhostTitleUI size="14" aria-hidden>
           {title}
         </GhostTitleUI>
-        <CircleUI isActive={isActive} />
+        <CircleUI className="c-StepperStepCircle" isActive={isActive} />
         <LineUI />
         <Progress isActive={isActive} />
       </StepUI>
