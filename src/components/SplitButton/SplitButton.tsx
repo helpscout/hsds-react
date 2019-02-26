@@ -82,6 +82,9 @@ export class SplitButton extends React.PureComponent<Props> {
       ...dropdownPropsRest,
       disabled,
       renderTrigger: trigger,
+      triggerProps: {
+        tabIndex: -1,
+      },
     }
 
     return <AutoDropDown {...props} />

@@ -126,13 +126,14 @@ export class Trigger extends React.PureComponent<Props> {
 namespaceComponent(COMPONENT_KEY.Trigger)(Trigger)
 const PropConnectedTrigger = propConnect(COMPONENT_KEY.Trigger)(Trigger)
 
-const ConnectedTrigger: any = connect(
-  // mapStateToProps
-  (state: any) => {
-    const { isOpen, triggerId, triggerStyle } = state
+export const mapStateToProps = (state: any) => {
+  const { isOpen, triggerId, triggerProps, triggerStyle } = state
 
-    return { isOpen, id: triggerId, style: triggerStyle }
-  },
+  return { ...triggerProps, isOpen, id: triggerId, style: triggerStyle }
+}
+
+const ConnectedTrigger: any = connect(
+  mapStateToProps,
   // mapDispatchToProps
   {
     toggleOpen,

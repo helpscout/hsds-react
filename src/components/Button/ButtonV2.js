@@ -24,24 +24,17 @@ type Props = {
   innerRef: (ref: any) => void,
   isActive: boolean,
   isBlock: boolean,
-  isFocused: boolean,
   isFirst: boolean,
   isNotOnly: boolean,
   isLast: boolean,
   isSuffix: boolean,
-  onBlur: (event: Event) => void,
-  onFocus: (event: Event) => void,
   size: ButtonSize,
   state?: UIState,
   submit: boolean,
   theme?: string,
 }
 
-type State = {
-  isFocused: boolean,
-}
-
-class Button extends Component<Props, State> {
+class Button extends Component<Props> {
   static defaultProps = {
     allowContentEventPropogation: true,
     buttonRef: noop,
@@ -55,8 +48,6 @@ class Button extends Component<Props, State> {
     isNotOnly: false,
     isLast: false,
     isSuffix: false,
-    onBlur: noop,
-    onFocus: noop,
     size: 'md',
     submit: false,
   }
@@ -69,14 +60,6 @@ class Button extends Component<Props, State> {
     const { href, 'data-bypass': dataBypass } = this.props
 
     return href || dataBypass
-  }
-
-  handleOnBlur = event => {
-    this.props.onBlur(event)
-  }
-
-  handleOnFocus = event => {
-    this.props.onFocus(event)
   }
 
   shouldShowFocus = () => {
@@ -180,9 +163,7 @@ class Button extends Component<Props, State> {
     )
 
     const type = submit ? 'submit' : 'button'
-    const focusMarkup = this.getFocusMarkup()
 
-    const childrenMarkup = this.getChildrenMarkup()
     const ButtonUI = this.getButtonUI()
 
     return (
@@ -190,17 +171,15 @@ class Button extends Component<Props, State> {
         {...getValidProps(rest)}
         className={componentClassName}
         innerRef={this.setInnerRef}
-        onBlur={this.handleOnBlur}
-        onFocus={this.handleOnFocus}
         type={type}
       >
         <ButtonContentUI
           className="c-ButtonV2__content"
           allowContentEventPropogation={allowContentEventPropogation}
         >
-          {childrenMarkup}
+          {this.getChildrenMarkup()}
         </ButtonContentUI>
-        {focusMarkup}
+        {this.getFocusMarkup()}
       </ButtonUI>
     )
   }
