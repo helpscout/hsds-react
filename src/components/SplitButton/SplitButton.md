@@ -1,11 +1,11 @@
-# ButtonWithOptions
+# SplitButton
 
-A ButtonWithOptions component is a wrapper component for [Button V2](../Button/docs/ButtonV2.md) and [`Dropdown V2`](../Dropdown/V2/docs/Dropdown.md) components. It provides a primary function of HTML button along with an additional options menu.
+A SplitButton component is a wrapper component for [Button V2](../Button/docs/ButtonV2.md) and [`Dropdown V2`](../Dropdown/V2/docs/Dropdown.md) components. It provides a primary function of HTML button along with an additional options menu.
 
 ## Example
 
 ```jsx
-<ButtonWithOptions options={[...options]}>Submit</ButtonWithOptions>
+<SplitButton options={[...options]}>Submit</SplitButton>
 ```
 
 ## Props

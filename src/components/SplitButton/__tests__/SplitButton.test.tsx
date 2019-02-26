@@ -1,17 +1,17 @@
 import * as React from 'react'
 import { mount, render } from 'enzyme'
-import { ButtonWithOptions } from '../ButtonWithOptions'
+import { SplitButton } from '../SplitButton'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = render(<ButtonWithOptions />)
+    const wrapper = render(<SplitButton />)
 
-    expect(wrapper.hasClass('c-ButtonWithOptions')).toBeTruthy()
+    expect(wrapper.hasClass('c-SplitButton')).toBeTruthy()
   })
 
   test('Can render custom className', () => {
     const customClassName = 'blue'
-    const wrapper = render(<ButtonWithOptions className={customClassName} />)
+    const wrapper = render(<SplitButton className={customClassName} />)
 
     expect(wrapper.hasClass(customClassName)).toBeTruthy()
   })
@@ -19,8 +19,8 @@ describe('className', () => {
 
 describe('onClick prop', () => {
   const spy = jest.fn()
-  const wrapper = mount(<ButtonWithOptions onClick={spy} />)
-  const el = wrapper.find('button.c-ButtonWithOptions__button')
+  const wrapper = mount(<SplitButton onClick={spy} />)
+  const el = wrapper.find('button.c-SplitButton__button')
 
   el.simulate('click')
 
@@ -28,29 +28,29 @@ describe('onClick prop', () => {
 })
 
 describe('size prop', () => {
-  const wrapper = mount(<ButtonWithOptions size="sm" />)
+  const wrapper = mount(<SplitButton size="sm" />)
 
   test('applies prop to button', () => {
-    const el = wrapper.find('button.c-ButtonWithOptions__button')
+    const el = wrapper.find('button.c-SplitButton__button')
     expect(el.hasClass('is-sm')).toBe(true)
   })
 
   test('applies prop to dropdown trigger', () => {
-    const el = wrapper.find('button.c-ButtonWithOptions__dropdownTrigger')
+    const el = wrapper.find('button.c-SplitButton__dropdownTrigger')
     expect(el.hasClass('is-sm')).toBe(true)
   })
 })
 
 describe('kind prop', () => {
-  const wrapper = mount(<ButtonWithOptions kind="secondary" />)
+  const wrapper = mount(<SplitButton kind="secondary" />)
 
   test('applies prop to button', () => {
-    const el = wrapper.find('button.c-ButtonWithOptions__button')
+    const el = wrapper.find('button.c-SplitButton__button')
     expect(el.hasClass('is-secondary')).toBe(true)
   })
 
   test('applies kind prop to dropdown trigger', () => {
-    const el = wrapper.find('button.c-ButtonWithOptions__dropdownTrigger')
+    const el = wrapper.find('button.c-SplitButton__dropdownTrigger')
     expect(el.hasClass('is-secondary')).toBe(true)
   })
 })
@@ -58,8 +58,8 @@ describe('kind prop', () => {
 describe('disabled prop', () => {
   it('disables button', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ButtonWithOptions disabled onClick={spy} />)
-    const el = wrapper.find('button.c-ButtonWithOptions__button')
+    const wrapper = mount(<SplitButton disabled onClick={spy} />)
+    const el = wrapper.find('button.c-SplitButton__button')
 
     el.simulate('click')
 
@@ -71,9 +71,9 @@ describe('disabled prop', () => {
     const spy = jest.fn()
     const dropdownProps = { onTriggerClick: spy }
     const wrapper = mount(
-      <ButtonWithOptions disabled dropdownProps={dropdownProps} />
+      <SplitButton disabled dropdownProps={dropdownProps} />
     )
-    const el = wrapper.find('button.c-ButtonWithOptions__dropdownTrigger')
+    const el = wrapper.find('button.c-SplitButton__dropdownTrigger')
 
     el.simulate('click')
 
@@ -82,7 +82,7 @@ describe('disabled prop', () => {
   })
 
   it('disables dropdown', () => {
-    const wrapper = mount(<ButtonWithOptions disabled />)
+    const wrapper = mount(<SplitButton disabled />)
     const el = wrapper.find('AutoDropdown')
 
     expect(el.prop('disabled')).toBe(true)
@@ -93,9 +93,9 @@ describe('dropdownProps', () => {
   test('applies props to Dropdown trigger', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <ButtonWithOptions dropdownProps={{ onTriggerClick: spy }} />
+      <SplitButton dropdownProps={{ onTriggerClick: spy }} />
     )
-    const el = wrapper.find('button.c-ButtonWithOptions__dropdownTrigger')
+    const el = wrapper.find('button.c-SplitButton__dropdownTrigger')
 
     el.simulate('click')
 
@@ -106,9 +106,9 @@ describe('dropdownProps', () => {
 describe('Button', () => {
   test('Internally renders Button component', () => {
     const wrapper = mount(
-      <ButtonWithOptions>
+      <SplitButton>
         <div className="child">Hello</div>
-      </ButtonWithOptions>
+      </SplitButton>
     )
     const o = wrapper.find('Button')
 
@@ -119,9 +119,9 @@ describe('Button', () => {
 describe('AutoDropDown', () => {
   test('Internally renders AutoDropdown component', () => {
     const wrapper = mount(
-      <ButtonWithOptions>
+      <SplitButton>
         <div className="child">Hello</div>
-      </ButtonWithOptions>
+      </SplitButton>
     )
     const o = wrapper.find('AutoDropdown')
 

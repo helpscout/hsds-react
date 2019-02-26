@@ -9,8 +9,8 @@ import Button from '../Button'
 import ControlGroup from '../ControlGroup'
 import Icon from '../Icon'
 
-import { OptionsTriggerButtonUI } from './ButtonWithOptions.css'
-import { COMPONENT_KEY } from './ButtonWithOptions.utils'
+import { OptionsTriggerButtonUI } from './SplitButton.css'
+import { COMPONENT_KEY } from './SplitButton.utils'
 
 export interface Props {
   buttonRef?: (ref: any) => void
@@ -24,13 +24,13 @@ export interface Props {
 }
 
 const defaultDropdownProps = {
-  className: 'c-ButtonWithOptions__dropdown',
+  className: 'c-SplitButton__dropdown',
   direction: 'right',
   onTriggerClick: noop,
 }
 
-export class ButtonWithOptions extends React.PureComponent<Props> {
-  static className = 'c-ButtonWithOptions'
+export class SplitButton extends React.PureComponent<Props> {
+  static className = 'c-SplitButton'
 
   static defaultProps = {
     buttonRef: noop,
@@ -44,9 +44,7 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
   renderButton() {
     const { dropdownProps, ...rest } = this.props
 
-    return (
-      <Button {...rest} version={2} className="c-ButtonWithOptions__button" />
-    )
+    return <Button {...rest} version={2} className="c-SplitButton__button" />
   }
 
   renderDropdownTrigger() {
@@ -59,7 +57,7 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
 
     return (
       <OptionsTriggerButtonUI
-        className="c-ButtonWithOptions__dropdownTrigger"
+        className="c-SplitButton__dropdownTrigger"
         disabled={disabled}
         isLast
         kind={kind}
@@ -91,7 +89,7 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
 
   getClassName() {
     const { className } = this.props
-    return classNames(ButtonWithOptions.className, className)
+    return classNames(SplitButton.className, className)
   }
 
   render() {
@@ -104,6 +102,6 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(ButtonWithOptions)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(SplitButton)
 
 export default PropConnectedComponent
