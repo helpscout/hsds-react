@@ -166,22 +166,11 @@ describe('Focus', () => {
     const o = wrapper.find('span.c-ButtonV2Focus')
 
     expect(o.length).toBe(1)
-    expect(wrapper.find('button.c-ButtonV2').hasClass('is-focused')).toBe(true)
   })
 
   test('Does not render FocusUI on certain buttons', () => {
     const wrapper = mount(<Button kind="link" />)
     wrapper.simulate('focus')
-
-    const o = wrapper.find('span.c-ButtonV2Focus')
-
-    expect(o.length).toBe(0)
-  })
-
-  test('Removes FocusUI on blur', () => {
-    const wrapper = mount(<Button kind="primary" />)
-    wrapper.simulate('focus')
-    wrapper.simulate('blur')
 
     const o = wrapper.find('span.c-ButtonV2Focus')
 

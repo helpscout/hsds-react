@@ -40,6 +40,7 @@ export const initialState = {
   stateReducer: state => state,
   subscribe: noop,
   trigger: 'Dropdown',
+  triggerProps: {},
   triggerStyle: {},
   withScrollLock: true,
   zIndex: 1080,

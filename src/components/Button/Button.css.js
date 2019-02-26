@@ -242,8 +242,18 @@ export const makeButtonUI = (selector: 'button') => {
       text-decoration: none;
     }
 
+    &:active,
+    &:active:focus {
+      .c-ButtonV2Focus {
+        display: none;
+      }
+    }
+
     &:focus {
       z-index: 2;
+      .c-ButtonV2Focus {
+        display: block;
+      }
     }
 
     &.is-first {
@@ -425,6 +435,7 @@ export const FocusUI = styled('span')`
   border-radius: ${config.borderRadius}px;
   bottom: -${config.focusOutlineOffset}px;
   box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${config.focusOutlineColor};
+  display: none;
   left: -${config.focusOutlineOffset}px;
   pointer-events: none;
   position: absolute;
