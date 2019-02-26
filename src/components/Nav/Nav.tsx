@@ -5,7 +5,7 @@ import ForceRouterRenderer from '../ForceRouterRenderer'
 import Item from './Nav.Item'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { NavUI } from './Nav.css'
+import { NavUI, ListUI } from './Nav.css'
 import { COMPONENT_KEY } from './Nav.utils'
 
 export interface Props {
@@ -34,10 +34,9 @@ export class Nav extends React.Component<Props> {
       <NavUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        data-location={location}
         innerRef={innerRef}
       >
-        {children}
+        <ListUI className="c-NavList">{children}</ListUI>
       </NavUI>
     )
   }

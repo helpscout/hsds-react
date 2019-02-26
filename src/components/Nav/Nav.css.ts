@@ -8,13 +8,22 @@ export const config = {
   indicatorTransition: 'opacity 100ms ease',
 }
 
-export const NavUI = styled('div', { pure: false })`
+export const NavUI = styled('nav', { pure: false })`
+  --BlueConfigGlobalFontSize: 14px;
   ${baseStyles};
   display: flex;
   margin: 0 auto;
 `
 
-export const ItemUI = styled('div', { pure: false })`
+export const ListUI = styled('ul', { pure: false })`
+  ${baseStyles};
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`
+
+export const ItemUI = styled('li', { pure: false })`
   padding: 0 10px;
   transform: translateZ(0);
 
@@ -24,25 +33,32 @@ export const ItemUI = styled('div', { pure: false })`
   }
 
   .c-NavItemLink {
+    color: ${getColor('charcoal.200')};
     display: block;
     text-decoration: none !important;
+
+    &:hover {
+      color: ${getColor('charcoal.300')};
+    }
+
+    &.is-active {
+      color: ${getColor('charcoal.500')};
+    }
   }
 `
 
 export const ContentUI = styled('div')`
-  padding: 15px 6px 15px 5px;
+  padding: 20px 7px 20px 5px;
   position: relative;
   text-align: center;
 `
 
 export const TitleUI = styled(Text)`
-  color: ${getColor('charcoal.200')};
   display: block;
 
   ${({ isActive }) =>
     isActive &&
     `
-    color: ${getColor('charcoal.500')};
     font-weight: 500;
   `};
 `
