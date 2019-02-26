@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import ButtonWithOptions from '../src/components/ButtonWithOptions'
+import SplitButton from '../src/components/SplitButton'
 
 import {
   withKnobs,
@@ -12,11 +12,11 @@ import {
 import { createSpec, faker } from '@helpscout/helix'
 import { withArtboard } from '@helpscout/artboard'
 
-const stories = storiesOf('ButtonWithOptions', module)
+const stories = storiesOf('SplitButton', module)
 
 stories.addDecorator(
   withArtboard({
-    id: 'hsds-ButtonWithOptions',
+    id: 'hsds-SplitButton',
     width: 500,
     height: 300,
     withCenterGuides: false,
@@ -37,50 +37,42 @@ const dropdownProps = {
 
 stories.add('Default', () => {
   return (
-    <ButtonWithOptions
+    <SplitButton
       dropdownProps={dropdownProps}
       kind="primary"
       onClick={() => alert('Button Clicked!')}
       size="lg"
     >
       Submit
-    </ButtonWithOptions>
+    </SplitButton>
   )
 })
 
 stories.add('Sizes and Colours', () => {
   return (
     <div>
-      <ButtonWithOptions
-        dropdownProps={dropdownProps}
-        kind="tertiary"
-        size="sm"
-      >
+      <SplitButton dropdownProps={dropdownProps} kind="tertiary" size="sm">
         Small
-      </ButtonWithOptions>
-      <ButtonWithOptions
-        dropdownProps={dropdownProps}
-        kind="primaryAlt"
-        size="md"
-      >
+      </SplitButton>
+      <SplitButton dropdownProps={dropdownProps} kind="primaryAlt" size="md">
         Medium
-      </ButtonWithOptions>
-      <ButtonWithOptions dropdownProps={dropdownProps} kind="primary" size="lg">
+      </SplitButton>
+      <SplitButton dropdownProps={dropdownProps} kind="primary" size="lg">
         Primary
-      </ButtonWithOptions>
+      </SplitButton>
     </div>
   )
 })
 
 stories.add('Disabled', () => {
   return (
-    <ButtonWithOptions
+    <SplitButton
       disabled
       dropdownProps={dropdownProps}
       kind="secondary"
       size="lg"
     >
       Submit
-    </ButtonWithOptions>
+    </SplitButton>
   )
 })
