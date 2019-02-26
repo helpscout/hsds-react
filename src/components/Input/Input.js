@@ -665,7 +665,8 @@ export class Input extends Component<Props, State> {
 
     const componentProps = {
       ...getValidProps(rest),
-      autoFocus,
+      /* We manually set autoFocus after component mounts. */
+      autoFocus: false,
       className: fieldClassName,
       id,
       onChange: this.handleOnChange,
