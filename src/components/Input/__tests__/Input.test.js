@@ -55,10 +55,11 @@ describe('Autofocus', () => {
   })
 
   test('Autofocuses if specified', () => {
+    jest.useFakeTimers()
     const wrapper = mount(<Input autoFocus />)
     const input = wrapper.find('input')
-
-    expect(input.prop('autoFocus')).toBeTruthy()
+    jest.runAllTimers()
+    expect(wrapper.state('isFocused')).toBeTruthy()
   })
 })
 

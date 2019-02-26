@@ -216,15 +216,15 @@ export class Input extends Component<Props, State> {
   forceAutoFocus() {
     const { forceAutoFocusTimeout } = this.props
 
-    this.setState({
-      isFocused: true,
-    })
-
     setTimeout(() => {
       /* istanbul ignore else */
       if (this.inputNode) {
         this.inputNode.focus()
       }
+
+      this.setState({
+        isFocused: true,
+      })
     }, forceAutoFocusTimeout)
   }
 
@@ -662,11 +662,10 @@ export class Input extends Component<Props, State> {
     const id = props.id || this.state.id
 
     const BaseFieldComponent = multiline ? FieldTextAreaUI : FieldUI
-
     const componentProps = {
       ...getValidProps(rest),
       /* We manually set autoFocus after component mounts. */
-      autoFocus: false,
+      autoFocus: this.state.isFocused,
       className: fieldClassName,
       id,
       onChange: this.handleOnChange,
