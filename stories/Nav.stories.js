@@ -18,6 +18,7 @@ stories.addDecorator(
     width: 500,
     height: 200,
     withCenterGuides: false,
+    showInterface: false,
   })
 )
 stories.addDecorator(withKnobs)
