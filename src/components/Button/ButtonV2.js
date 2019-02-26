@@ -65,14 +65,6 @@ class Button extends Component<Props, State> {
 
   makeButtonUI = memoize(makeButtonUI)
 
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      isFocused: props.isFocused,
-    }
-  }
-
   isLink() {
     const { href, 'data-bypass': dataBypass } = this.props
 
@@ -80,16 +72,10 @@ class Button extends Component<Props, State> {
   }
 
   handleOnBlur = event => {
-    this.setState({
-      isFocused: false,
-    })
     this.props.onBlur(event)
   }
 
   handleOnFocus = event => {
-    this.setState({
-      isFocused: true,
-    })
     this.props.onFocus(event)
   }
 
@@ -101,8 +87,8 @@ class Button extends Component<Props, State> {
       'secondaryAlt',
       'tertiary',
     ]
+
     return (
-      this.state.isFocused &&
       !this.props.disabled &&
       this.props.canRenderFocus &&
       includes(paddedButtonKinds, this.props.kind)
@@ -178,14 +164,11 @@ class Button extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { isFocused } = this.state
-
     const componentClassName = classNames(
       'c-ButtonV2',
       isActive && 'is-active',
       isBlock && 'is-block',
       isFirst && 'is-first',
-      isFocused && 'is-focused',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
       isSuffix && 'is-suffix',
