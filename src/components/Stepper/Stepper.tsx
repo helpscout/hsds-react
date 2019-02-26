@@ -76,8 +76,6 @@ export class Stepper extends React.PureComponent<Props> {
     const { currentIndex } = this.props
     const matchIndex = isDefined(currentIndex) ? currentIndex : -1
 
-    console.log('matchIndex', isDefined(currentIndex), matchIndex, currentIndex)
-
     return matchIndex
   }
 
