@@ -13,7 +13,7 @@ import { OptionsTriggerButtonUI } from './ButtonWithOptions.css'
 import { COMPONENT_KEY } from './ButtonWithOptions.utils'
 
 export interface Props {
-  buttonRef: (ref: any) => void
+  buttonRef?: (ref: any) => void
   children?: any
   className?: string
   disabled?: boolean
@@ -41,6 +41,14 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
     size: 'lg',
   }
 
+  renderButton() {
+    const { dropdownProps, ...rest } = this.props
+
+    return (
+      <Button {...rest} version={2} className="c-ButtonWithOptions__button" />
+    )
+  }
+
   renderDropdownTrigger() {
     const {
       disabled,
@@ -64,17 +72,21 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
     )
   }
 
-  renderEndChatOptions() {
-    const { disabled, dropdownProps: props } = this.props
+  renderDropdown() {
     const trigger = this.renderDropdownTrigger()
-    const dropdownProps = {
+    const {
+      disabled,
+      dropdownProps: { onTriggerClick, ...dropdownPropsRest },
+    } = this.props
+
+    const props = {
       ...defaultDropdownProps,
+      ...dropdownPropsRest,
       disabled,
       renderTrigger: trigger,
-      ...props,
     }
 
-    return <AutoDropDown {...dropdownProps} />
+    return <AutoDropDown {...props} />
   }
 
   getClassName() {
@@ -83,32 +95,10 @@ export class ButtonWithOptions extends React.PureComponent<Props> {
   }
 
   render() {
-    const {
-      buttonRef,
-      children,
-      disabled,
-      kind,
-      onClick,
-      size,
-      ...rest
-    } = this.props
-
     return (
-      <ControlGroup className={this.getClassName()} {...getValidProps(rest)}>
-        <ControlGroup.Item>
-          <Button
-            buttonRef={buttonRef}
-            className="c-ButtonWithOptions__button"
-            disabled={disabled}
-            kind={kind}
-            onClick={onClick}
-            size={size}
-            version={2}
-          >
-            {children}
-          </Button>
-        </ControlGroup.Item>
-        <ControlGroup.Item>{this.renderEndChatOptions()}</ControlGroup.Item>
+      <ControlGroup className={this.getClassName()}>
+        <ControlGroup.Item>{this.renderButton()}</ControlGroup.Item>
+        <ControlGroup.Item>{this.renderDropdown()}</ControlGroup.Item>
       </ControlGroup>
     )
   }
