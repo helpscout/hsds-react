@@ -87,7 +87,7 @@ class Text extends React.PureComponent<Props> {
       lineHeightReset && 'is-lineHeightReset',
       linkStyle && 'is-linkStyle',
       selector && `is-${selector}`,
-      shade && `is-${shade}`,
+      shade && `is-shade-${shade}`,
       size && `is-${size}`,
       state && `is-${state}`,
       subtle && 'is-subtle',

@@ -9,16 +9,18 @@ import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './NavLink.utils'
 
 export const NavLink = ({
-  to,
-  exact,
-  strict,
-  location,
-  activeClassName,
-  className,
-  activeStyle,
-  style,
-  isActive: getIsActive,
   'aria-current': ariaCurrent,
+  activeClassName,
+  activeStyle,
+  children,
+  className,
+  exact,
+  isActive: getIsActive,
+  location,
+  render,
+  strict,
+  style,
+  to,
   ...rest
 }) => {
   const path = typeof to === 'object' ? to.pathname : to
@@ -49,7 +51,9 @@ export const NavLink = ({
             className={componentClassName}
             style={isActive ? { ...style, ...activeStyle } : style}
             aria-current={(isActive && ariaCurrent) || null}
-          />
+          >
+            {render ? render({ isActive }) : children}
+          </Link>
         )
       }}
     />

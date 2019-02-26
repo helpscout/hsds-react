@@ -32,7 +32,12 @@ stories.add('Default', () => (
         <Nav.Item to="/">Home</Nav.Item>
         <Nav.Item to="/one">One</Nav.Item>
         <Nav.Item to="/two">Two</Nav.Item>
-        <Nav.Item to="/three">Three</Nav.Item>
+        <Nav.Item to="/three" error="Something went wrong">
+          Three
+        </Nav.Item>
+        <Nav.Item to="/four" disabled>
+          Four
+        </Nav.Item>
       </Nav>
       <Route exact path="/" component={RouteComponent} />
       <Route exact path="/one" component={RouteComponent} />
