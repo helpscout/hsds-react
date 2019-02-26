@@ -4,6 +4,7 @@ import React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './utils'
+import { StaticUI } from './Static.css'
 
 type Props = {
   align: 'left' | 'center' | 'right' | '',
@@ -24,9 +25,9 @@ const Static = (props: Props) => {
   )
 
   return (
-    <div className={componentClassName} {...rest}>
+    <StaticUI className={componentClassName} {...rest}>
       {children}
-    </div>
+    </StaticUI>
   )
 }
 

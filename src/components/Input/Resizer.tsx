@@ -3,6 +3,7 @@ import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { repeat } from '../../utilities/strings'
+import { ResizerUI, GhostUI } from './Resizer.css'
 
 // Thanks Stephen <3
 export const OFFSET_CHAR = 'R'
@@ -36,6 +37,9 @@ export class Resizer extends React.PureComponent<Props> {
     onResize: noop,
     seamless: false,
   }
+
+  static className = 'c-InputResizer'
+
   contentNode: RefNode
   minimumLinesNode: RefNode
   _isMounted = false
@@ -64,7 +68,7 @@ export class Resizer extends React.PureComponent<Props> {
   getClassName() {
     const { className } = this.props
 
-    return classNames('c-InputResizer', className)
+    return classNames(Resizer.className, className)
   }
 
   getContentClassName() {
@@ -139,15 +143,15 @@ export class Resizer extends React.PureComponent<Props> {
     const { contents } = this.props
 
     return (
-      <div aria-hidden className={this.getClassName()}>
+      <ResizerUI aria-hidden className={this.getClassName()}>
         <EventListener event="resize" handler={this.handleOnResize} />
-        <div
-          ref={this.setContentNodeRef}
+        <GhostUI
+          innerRef={this.setContentNodeRef}
           className={this.getContentClassName()}
           dangerouslySetInnerHTML={{ __html: this.getFinalContents(contents) }}
         />
         {this.renderMinimumLines()}
-      </div>
+      </ResizerUI>
     )
   }
 }

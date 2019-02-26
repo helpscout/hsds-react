@@ -81,7 +81,7 @@ describe('InputGhost', () => {
 
   test('Does not render content InputGhost if minimumLines is falsey', () => {
     const wrapper = mount(<Resizer minimumLines={0} />)
-    const o = wrapper.find('.c-InputGhost')
+    const o = wrapper.find('div.c-InputGhost')
 
     expect(o.length).toBe(1)
   })
