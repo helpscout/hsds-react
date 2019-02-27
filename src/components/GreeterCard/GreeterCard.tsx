@@ -43,13 +43,22 @@ export class GreeterCard extends React.PureComponent<Props> {
 
   renderTitle() {
     const { title } = this.props
-    return title ? <TitleUI size="h4">{title}</TitleUI> : null
+    return title ? (
+      <TitleUI size="h4" data-cy="beacon-greeter-title">
+        {title}
+      </TitleUI>
+    ) : null
   }
 
   renderSubtitle() {
     const { subtitle } = this.props
     return subtitle ? (
-      <SubtitleUI size="h5" weight={400} light>
+      <SubtitleUI
+        size="h5"
+        weight={400}
+        light
+        data-cy="beacon-greeter-subtitle"
+      >
         {subtitle}
       </SubtitleUI>
     ) : null
@@ -58,12 +67,18 @@ export class GreeterCard extends React.PureComponent<Props> {
   renderBody() {
     const { body, title, subtitle } = this.props
     const withMargin = title || subtitle
-    return body ? <BodyUI withMargin={withMargin}>{body}</BodyUI> : null
+    return body ? (
+      <BodyUI withMargin={withMargin} data-cy="beacon-greeter-body-content">
+        {body}
+      </BodyUI>
+    ) : null
   }
 
   renderAction() {
     const { action } = this.props
-    return action ? <ActionUI>{action()}</ActionUI> : null
+    return action ? (
+      <ActionUI data-cy="beacon-greeter-cta">{action()}</ActionUI>
+    ) : null
   }
 
   render() {
