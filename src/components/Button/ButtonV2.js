@@ -57,9 +57,11 @@ class Button extends Component<Props> {
   makeButtonUI = memoize(makeButtonUI)
 
   isLink() {
-    const { href, 'data-bypass': dataBypass } = this.props
+    // TODO: Resolve data-bypass
+    // const { href, 'data-bypass': dataBypass } = this.props
+    // return href || dataBypass
 
-    return href || dataBypass
+    return this.props.href
   }
 
   shouldShowFocus = () => {
