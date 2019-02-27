@@ -21,6 +21,7 @@ export interface Props {
   kind?: string
   onClick?: (event: Event) => void
   size?: string
+  state?: string
 }
 
 const defaultDropdownProps = {
@@ -53,6 +54,7 @@ export class SplitButton extends React.PureComponent<Props> {
       dropdownProps: { onTriggerClick },
       kind,
       size,
+      state,
     } = this.props
 
     return (
@@ -63,6 +65,7 @@ export class SplitButton extends React.PureComponent<Props> {
         kind={kind}
         onClick={onTriggerClick}
         size={size}
+        state={state}
         version={2}
       >
         <Icon name="caret-down" size="16" />
