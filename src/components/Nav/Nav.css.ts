@@ -19,7 +19,7 @@ export const ListUI = styled('ul', { pure: false })`
   ${baseStyles};
   display: flex;
   list-style: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
 `
 
