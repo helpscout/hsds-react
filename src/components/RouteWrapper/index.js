@@ -47,13 +47,13 @@ const RouteWrapper = WrappedComponent => {
     render() {
       const { fetch, href, to, 'data-bypass': dataByPass, ...rest } = this.props
 
-      const dataByPassValue = isDefined(dataByPass) ? dataByPass : !!to
+      // TODO: Resolve data-bypass
+      // const dataByPassValue = isDefined(dataByPass) ? dataByPass : !!to
 
       return (
         <WrappedComponent
           {...rest}
           href={href || to}
-          data-bypass={dataByPassValue}
           onClick={this.handleOnClick}
         />
       )
