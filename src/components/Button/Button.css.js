@@ -173,6 +173,12 @@ export const config = {
   focusOutlineOffset: 2,
   focusOutlineColor: getColor('blue.400'),
   size: {
+    xl: {
+      fontSize: 14,
+      height: 54,
+      minWidth: '120px',
+      padding: 20,
+    },
     lg: {
       fontSize: 14,
       height: 40,
@@ -277,15 +283,28 @@ export const makeButtonUI = (selector: 'button') => {
 }
 
 function makePrimaryStyles(name = 'primary', props: Object = {}): string {
-  const { theme } = props
+  const { theme = {} } = props
   const backgroundColor =
-    (theme && theme.brandColor) || config[name].backgroundColor
-  const color = (theme && theme.brandTextColor) || config[name].color
+    theme.backgroundColorUI || theme.brandColor || config[name].backgroundColor
+  const color =
+    theme.textColorInteractive || theme.brandTextColor || config[name].color
+
+  const backgroundColorHover =
+    theme.backgroundColorUIHover || config.backgroundColorHover
+  const borderColorHover = backgroundColorHover
+  const backgroundColorActive =
+    theme.backgroundColorUIActive || config.backgroundColorActive
+  const borderColorActive = backgroundColorActive
 
   return makeButtonKindStyles(name, {
     ...config[name],
     backgroundColor,
+    borderColor: backgroundColor,
     color,
+    backgroundColorHover,
+    borderColorHover,
+    backgroundColorActive,
+    borderColorActive,
   })
 }
 
