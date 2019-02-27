@@ -10,6 +10,7 @@ export interface Props {
 
 export default class GreeterCardButton extends React.PureComponent<Props> {
   static defaultProps = {
+    'data-cy': 'beacon-greeter-cta',
     kind: 'primary',
     isBlock: true,
     size: 'xl',

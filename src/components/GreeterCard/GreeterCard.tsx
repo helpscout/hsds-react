@@ -4,6 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Button from './GreeterCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import Animate from '../Animate'
 import {
   GreeterCardUI,
   TitleUI,
@@ -15,12 +16,15 @@ import { COMPONENT_KEY } from './GreeterCard.utils'
 
 export interface Props {
   action?: Function
-  align?: 'left' | 'right'
-  animationSequence?: string
+  align: 'left' | 'right'
+  animationDuration?: number
+  animationEasing?: string
+  animationSequence: string
   body?: string
   className?: string
   children?: any
   innerRef: (node: HTMLElement) => void
+  in: boolean
   subtitle?: string
   title?: string
 }
@@ -31,6 +35,7 @@ export class GreeterCard extends React.PureComponent<Props> {
     align: 'right',
     animationSequence: 'fade up',
     innerRef: noop,
+    in: true,
   }
 
   static Button = Button
@@ -85,26 +90,40 @@ export class GreeterCard extends React.PureComponent<Props> {
   renderAction() {
     const { action } = this.props
     return action ? (
-      <ActionUI data-cy="beacon-greeter-cta">{action()}</ActionUI>
+      <ActionUI data-cy="beacon-greeter-cta-wrapper">{action()}</ActionUI>
     ) : null
   }
 
   render() {
-    const { animationSequence, children, innerRef, ...rest } = this.props
+    const {
+      animationDuration,
+      animationEasing,
+      animationSequence,
+      children,
+      innerRef,
+      in: inProp,
+      ...rest
+    } = this.props
 
     return (
-      <GreeterCardUI
-        {...getValidProps(rest)}
-        className={this.getClassName()}
-        innerRef={innerRef}
+      <Animate
+        in={inProp}
+        duration={animationDuration}
+        easing={animationEasing}
         sequence={animationSequence}
       >
-        {this.renderTitle()}
-        {this.renderSubtitle()}
-        {this.renderBody()}
-        {children}
-        {this.renderAction()}
-      </GreeterCardUI>
+        <GreeterCardUI
+          {...getValidProps(rest)}
+          className={this.getClassName()}
+          innerRef={innerRef}
+        >
+          {this.renderTitle()}
+          {this.renderSubtitle()}
+          {this.renderBody()}
+          {children}
+          {this.renderAction()}
+        </GreeterCardUI>
+      </Animate>
     )
   }
 }

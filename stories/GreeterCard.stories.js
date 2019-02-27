@@ -32,6 +32,7 @@ stories.addDecorator(
 
 class Story extends React.Component {
   render() {
+    const show = boolean('show', true)
     const actionProp = boolean('Has Action?', true)
       ? () => (
           <GreeterCard.Button onClick={action('Clicked!')}>
@@ -39,13 +40,6 @@ class Story extends React.Component {
           </GreeterCard.Button>
         )
       : null
-    const align = select('Align', { Right: 'right', Left: 'left' }, 'right')
-    const body = text(
-      'Body',
-      'The J&G Support Team are always happy to answer your questions and lend a hand with the app. Let’s talk...'
-    )
-    const subtitle = text('Subtitle', 'The J&G Team is here')
-    const title = text('Title', 'Need help?')
 
     const brandColor = select(
       'Brand Color',
@@ -61,16 +55,25 @@ class Story extends React.Component {
 
     const theme = { ...makeBrandColors(brandColor) }
 
+    const props = {
+      in: show,
+      action: actionProp,
+      animationDuration: number('animationDuration', 300),
+      animationEasing: text('animationEasing', 'ease-in-out'),
+      animationSequence: text('animationSequence', 'fade up'),
+      align: select('Align', { Right: 'right', Left: 'left' }, 'right'),
+      body: text(
+        'Body',
+        'The J&G Support Team are always happy to answer your questions and lend a hand with the app. Let’s talk...'
+      ),
+      subtitle: text('Subtitle', 'The J&G Team is here'),
+      title: text('Title', 'Need help?'),
+    }
+
     return (
       <ThemeProvider theme={theme}>
         <div>
-          <GreeterCard
-            action={actionProp}
-            align={align}
-            body={body}
-            subtitle={subtitle}
-            title={title}
-          />
+          <GreeterCard {...props} />
         </div>
       </ThemeProvider>
     )
