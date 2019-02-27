@@ -4,12 +4,14 @@ import Button from '../Button'
 import Heading from '../Heading'
 import Text from '../Text'
 import baseStyles from '../../styles/resets/baseStyles.css'
-import { FONT_FAMILY } from '../../styles/configs/constants'
 import { getColor } from '../../styles/utilities/color'
+import {
+  addFontSmoothing,
+  makeFontFamily,
+  setFontSize,
+} from '../../styles/utilities/font'
 
-const fontFamily = `
-  font-family: 'Barlow', ${FONT_FAMILY} !important;
-`
+const fontFamily = makeFontFamily('Barlow')
 
 export const GreeterCardUI = styled(Animate)`
   ${baseStyles};
@@ -36,18 +38,16 @@ export const TitleUI = styled(Heading)`
 `
 
 export const SubtitleUI = styled(Heading)`
+  ${setFontSize(13)};
   ${fontFamily};
 
-  font-size: 13px !important;
   margin-top: 6px;
 `
 
 export const BodyUI = styled(Text)`
+  ${setFontSize(14)};
   ${fontFamily};
 
-  color: ${getColor('charcoal.400')}!important;
-  display: block;
-  font-size: 14px !important;
   letter-spacing: 0.37px;
   margin-top: ${({ withMargin }) => (withMargin ? '12px' : '0')};
 `
@@ -57,9 +57,9 @@ export const ActionUI = styled('div')`
 `
 
 export const ActionButtonUI = styled(Button)`
+  ${setFontSize(14)};
   ${fontFamily};
+  ${addFontSmoothing()};
 
-  -webkit-font-smoothing: antialiased;
-  font-size: 14px !important;
   letter-spacing: 0.5px;
 `
