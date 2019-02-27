@@ -1,6 +1,7 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Button from './GreeterCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import {
@@ -31,6 +32,8 @@ export class GreeterCard extends React.PureComponent<Props> {
     animationSequence: 'fade up',
     innerRef: noop,
   }
+
+  static Button = Button
 
   getClassName() {
     const { align, className } = this.props
@@ -68,7 +71,12 @@ export class GreeterCard extends React.PureComponent<Props> {
     const { body, title, subtitle } = this.props
     const withMargin = title || subtitle
     return body ? (
-      <BodyUI withMargin={withMargin} data-cy="beacon-greeter-body-content">
+      <BodyUI
+        block
+        withMargin={withMargin}
+        data-cy="beacon-greeter-body-content"
+        shade="slightlyMuted"
+      >
         {body}
       </BodyUI>
     ) : null
