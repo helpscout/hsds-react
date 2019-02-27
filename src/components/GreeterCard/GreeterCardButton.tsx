@@ -4,6 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 
 export interface Props {
   children?: any
+  onClick?: Function
 }
 
 export default class GreeterCardButton extends React.Component<Props> {
