@@ -291,3 +291,9 @@ stories.add('Stateful', () => {
 
   return <Example />
 })
+
+stories.add('Disabled', () => {
+  const items = ItemSpec.generate(100)
+
+  return <Dropdown disabled items={items} />
+})

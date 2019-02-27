@@ -14,6 +14,7 @@ export interface Props {
   children?: any
   className?: string
   closeDropdown: () => void
+  disabled: boolean
   innerRef: (node: HTMLElement) => void
   id?: string
   isOpen: boolean
@@ -28,6 +29,7 @@ export interface Props {
 
 export class Trigger extends React.PureComponent<Props> {
   static defaultProps = {
+    disabled: false,
     innerRef: noop,
     isOpen: false,
     onBlur: noop,
@@ -85,12 +87,25 @@ export class Trigger extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, onBlur, onFocus, innerRef, isOpen, ...rest } = this.props
+    const {
+      className,
+      disabled,
+      onBlur,
+      onFocus,
+      innerRef,
+      isOpen,
+      ...rest
+    } = this.props
+
     const componentClassName = classNames(
       className,
       isOpen && 'is-open',
       'c-DropdownV2Trigger'
     )
+
+    if (disabled) {
+      return <div {...getValidProps(rest)} className={componentClassName} />
+    }
 
     return (
       <TriggerUI
@@ -111,13 +126,14 @@ export class Trigger extends React.PureComponent<Props> {
 namespaceComponent(COMPONENT_KEY.Trigger)(Trigger)
 const PropConnectedTrigger = propConnect(COMPONENT_KEY.Trigger)(Trigger)
 
-const ConnectedTrigger: any = connect(
-  // mapStateToProps
-  (state: any) => {
-    const { isOpen, triggerId, triggerStyle } = state
+export const mapStateToProps = (state: any) => {
+  const { isOpen, triggerId, triggerProps, triggerStyle } = state
 
-    return { isOpen, id: triggerId, style: triggerStyle }
-  },
+  return { ...triggerProps, isOpen, id: triggerId, style: triggerStyle }
+}
+
+const ConnectedTrigger: any = connect(
+  mapStateToProps,
   // mapDispatchToProps
   {
     toggleOpen,
