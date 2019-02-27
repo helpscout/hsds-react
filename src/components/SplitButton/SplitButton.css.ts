@@ -1,6 +1,5 @@
 import styled from '../styled'
 import Button from '../Button'
-import { config } from '../Button/Button.css.js'
 import { getColor } from '../../styles/utilities/color'
 
 export const OptionsTriggerButtonUI = styled(Button)`
@@ -17,7 +16,7 @@ export const OptionsTriggerButtonUI = styled(Button)`
       box-shadow: -1px 0 0 ${getColor('red.600')};
     }
     &[disabled] {
-      box-shadow: -1px 0 0 ${config.primary.disabledBorderColor};
+      box-shadow: -1px 0 0 ${getColor('grey.600')};
     }
   }
 
@@ -25,7 +24,7 @@ export const OptionsTriggerButtonUI = styled(Button)`
     box-shadow: -1px 0 0 ${getColor('purple.600')};
 
     &[disabled] {
-      box-shadow: -1px 0 0 ${config.primaryAlt.disabledBorderColor};
+      box-shadow: -1px 0 0 ${getColor('grey.600')};
     }
   }
 
