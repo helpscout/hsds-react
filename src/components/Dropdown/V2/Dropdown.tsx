@@ -25,6 +25,7 @@ export interface State {
 export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
     ...initialState,
+    disabled: false,
     innerRef: noop,
     menuRef: noop,
     setMenuNode: noop,
@@ -75,9 +76,10 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   getTriggerProps() {
-    const { onBlur, onFocus } = this.props
+    const { disabled, onBlur, onFocus } = this.props
 
     return {
+      disabled,
       onBlur,
       onFocus,
       innerRef: this.setTriggerNodeRef,

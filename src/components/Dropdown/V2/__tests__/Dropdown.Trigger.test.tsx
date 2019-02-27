@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import createStore from '../Dropdown.store'
 import { Provider } from '@helpscout/wedux'
 import Keys from '../../../../constants/Keys'
-import ConnectedTrigger, { Trigger } from '../Dropdown.Trigger'
+import ConnectedTrigger, { Trigger, mapStateToProps } from '../Dropdown.Trigger'
 import { hasClass, getAttribute } from '../../../../tests/helpers/enzyme'
 
 describe('className', () => {
@@ -190,5 +190,20 @@ describe('ConnectedTrigger', () => {
 
     expect(wrapper).toBeTruthy()
     expect(el.length).toBeTruthy()
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('Can pass triggerProps to Trigger', () => {
+    const triggerProps = {
+      zIndex: 999,
+      tabIndex: -1,
+      'aria-hidden': true,
+    }
+    const props = mapStateToProps({
+      triggerProps,
+    })
+
+    expect(props).toEqual(triggerProps)
   })
 })
