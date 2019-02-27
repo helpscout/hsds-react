@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import Flexy from '../src/components/Flexy'
 import SplitButton from '../src/components/SplitButton'
 
 import {
@@ -35,6 +36,40 @@ const dropdownProps = {
   onSelect: value => console.log(value),
 }
 
+const buildGrid = ({ disabled = false } = {}) => {
+  const style = { marginBottom: '3px' }
+
+  return (
+    <Flexy>
+      <Flexy.Item>
+        {['tertiary', 'primary', 'primaryAlt'].map(kind => (
+          <SplitButton
+            disabled={disabled}
+            dropdownProps={dropdownProps}
+            kind={kind}
+            style={style}
+          >
+            Click Me
+          </SplitButton>
+        ))}
+      </Flexy.Item>
+      <Flexy.Item>
+        {['success', 'danger'].map(state => (
+          <SplitButton
+            disabled={disabled}
+            dropdownProps={dropdownProps}
+            kind="primary"
+            state={state}
+            style={style}
+          >
+            Click Me
+          </SplitButton>
+        ))}
+      </Flexy.Item>
+    </Flexy>
+  )
+}
+
 stories.add('Default', () => {
   return (
     <SplitButton
@@ -64,15 +99,6 @@ stories.add('Sizes and Colours', () => {
   )
 })
 
-stories.add('Disabled', () => {
-  return (
-    <SplitButton
-      disabled
-      dropdownProps={dropdownProps}
-      kind="secondary"
-      size="lg"
-    >
-      Submit
-    </SplitButton>
-  )
-})
+stories.add('Colors', () => buildGrid())
+
+stories.add('Disabled', () => buildGrid({ disabled: true }))

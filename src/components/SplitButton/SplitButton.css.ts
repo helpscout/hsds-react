@@ -12,13 +12,20 @@ export const OptionsTriggerButtonUI = styled(Button)`
     &.is-success {
       box-shadow: -1px 0 0 ${getColor('green.600')};
     }
-    &.is-error {
+    &.is-danger {
       box-shadow: -1px 0 0 ${getColor('red.600')};
+    }
+    &[disabled] {
+      box-shadow: -1px 0 0 ${getColor('grey.600')};
     }
   }
 
   &.is-primaryAlt {
     box-shadow: -1px 0 0 ${getColor('purple.600')};
+
+    &[disabled] {
+      box-shadow: -1px 0 0 ${getColor('grey.600')};
+    }
   }
 
   .c-ButtonV2__content {
