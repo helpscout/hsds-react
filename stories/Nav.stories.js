@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Nav from '../src/components/Nav'
+import ForceRouterRenderer from '../src/components/ForceRouterRenderer'
 import Toolbar from '../src/components/Toolbar'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 import {
@@ -48,8 +49,10 @@ stories.add('Default', () => (
   </Router>
 ))
 
-stories.add('Toolbar', () => (
-  <Router>
+stories.add('Toolbar', () => {
+  // Solution to work around React-Router's rendering
+  // https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/blocked-updates.md
+  const NavBar = () => (
     <Toolbar>
       <Toolbar.Block>
         <Nav>
@@ -63,11 +66,19 @@ stories.add('Toolbar', () => (
             Four
           </Nav.Item>
         </Nav>
+      </Toolbar.Block>
+    </Toolbar>
+  )
+
+  return (
+    <Router>
+      <div>
+        <NavBar />
         <Route exact path="/" component={RouteComponent} />
         <Route exact path="/one" component={RouteComponent} />
         <Route exact path="/two" component={RouteComponent} />
         <Route exact path="/three" component={RouteComponent} />
-      </Toolbar.Block>
-    </Toolbar>
-  </Router>
-))
+      </div>
+    </Router>
+  )
+})

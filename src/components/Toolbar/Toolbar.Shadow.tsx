@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
+import { ShadowUI } from './Toolbar.css'
 
 const defaultProps = {
   placement: 'top',
@@ -14,7 +15,7 @@ const Shadow = props => {
     className
   )
 
-  return <div className={componentClassName} {...rest} />
+  return <ShadowUI {...rest} className={componentClassName} />
 }
 
 Shadow.defaultProps = defaultProps

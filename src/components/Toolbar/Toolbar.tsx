@@ -1,11 +1,11 @@
 import * as React from 'react'
-import Flexy from '../Flexy'
 import Block from './Toolbar.Block'
 import Item from './Toolbar.Item'
 import Shadow from './Toolbar.Shadow'
 import propConnect from '../PropProvider/propConnect'
 import { ToolbarPlacement, ToolbarSize, ToolbarTheme } from './Toolbar.types'
 import { classNames } from '../../utilities/classNames'
+import { WrapperUI, ToolbarUI } from './Toolbar.css'
 import { COMPONENT_KEY } from './Toolbar.utils'
 
 export interface Props {
@@ -66,12 +66,12 @@ export class Toolbar extends React.PureComponent<Props> {
     } = this.props
 
     return (
-      <div className="c-ToolbarWrapper">
-        <Flexy {...rest} className={this.getClassName()}>
+      <WrapperUI className="c-ToolbarWrapper">
+        <ToolbarUI {...rest} className={this.getClassName()}>
           {children}
-        </Flexy>
+        </ToolbarUI>
         {this.renderShadow()}
-      </div>
+      </WrapperUI>
     )
   }
 }
