@@ -2,7 +2,6 @@ import * as React from 'react'
 import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
-import EventListener from '../../EventListener'
 import Portal from '../../Portal'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
@@ -11,16 +10,17 @@ import Item from './Dropdown.Item'
 import Renderer from './Dropdown.Renderer'
 import {
   SELECTORS,
-  isDropRight,
   getItemProps,
   hasGroups,
+  isDropRight,
 } from './Dropdown.utils'
 import {
   closeDropdown,
   focusItem,
-  selectItem,
   onMenuMounted,
+  onMenuReposition,
   onMenuUnmounted,
+  selectItem,
 } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
@@ -28,6 +28,11 @@ import { renderRenderPropComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { namespaceComponent } from '../../../utilities/component'
 import { COMPONENT_KEY } from './Dropdown.utils'
+import { isBrowserEnv } from '../../../utilities/env'
+import { createUniqueIDFactory } from '../../../utilities/id'
+import { memoizeWithProps } from '../../../utilities/memoize'
+
+const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 
 export interface Props {
   animationDuration: number
@@ -35,18 +40,20 @@ export interface Props {
   children?: (props: any) => void
   className?: string
   closeDropdown: () => void
-  dropUp: boolean
   dropRight: boolean
+  dropUp: boolean
   focusItem: (...args: any[]) => void
   getState: (...args: any[]) => void
   id?: string
-  isLoading: boolean
-  menuOffsetTop: number
-  onMenuMounted: () => void
-  onMenuUnmounted: () => void
   innerRef: (node: HTMLElement) => void
+  isLoading: boolean
   isOpen: boolean
   items: Array<any>
+  menuOffsetTop: number
+  onMenuMounted: () => void
+  onMenuReposition: (props: any) => void
+  onMenuUnmounted: () => void
+  positionFixed: boolean
   renderEmpty?: any
   renderLoading?: any
   selectItem: (...args: any[]) => void
@@ -60,34 +67,40 @@ export class MenuContainer extends React.PureComponent<Props> {
     animationDuration: 80,
     animationSequence: 'fade down',
     closeDropdown: noop,
-    dropUp: false,
     dropRight: true,
-    getState: noop,
+    dropUp: false,
     focusItem: noop,
+    getState: noop,
     innerRef: noop,
-    items: [],
-    isOpen: true,
     isLoading: false,
+    isOpen: true,
+    items: [],
     menuOffsetTop: 0,
     onMenuMounted: noop,
+    onMenuReposition: noop,
     onMenuUnmounted: noop,
+    positionFixed: false,
     selectItem: noop,
     zIndex: 1080,
   }
 
+  id: string = uniqueID()
   node: HTMLElement
   parentNode: HTMLElement
   placementNode: HTMLElement
   wrapperNode: HTMLElement
+  memoSetPositionStylesOnNode: any
+  positionRAF: any = null
 
   componentDidMount() {
-    this.setPositionStylesOnNode()
+    this.memoSetPositionStylesOnNode = memoizeWithProps(
+      this.setPositionStylesOnNode
+    )
+    this.updateMenuNodePosition()
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.isOpen !== this.props.isOpen) {
-      this.setPositionStylesOnNode()
-    }
+  componentWillUnmount() {
+    this.forceHideMenuNode()
   }
 
   /* istanbul ignore next */
@@ -231,9 +244,12 @@ export class MenuContainer extends React.PureComponent<Props> {
     return this.renderMenu()
   }
 
+  getTargetNode = (): HTMLElement => {
+    return this.props.triggerNode || this.wrapperNode
+  }
+
   getStylePosition = (): any => {
-    const { triggerNode } = this.props
-    const targetNode = triggerNode || this.wrapperNode
+    const targetNode = this.getTargetNode()
 
     const rect = targetNode.getBoundingClientRect()
     const { height, top, left } = rect
@@ -244,44 +260,99 @@ export class MenuContainer extends React.PureComponent<Props> {
     }
   }
 
-  onPortalOpen = () => {
-    this.setPositionStylesOnNode()
-    this.props.onMenuMounted()
+  forceHideMenuNode = () => {
+    if (!this.placementNode) return
+    this.placementNode.style.display = 'none'
   }
 
-  setPositionStylesOnNode = () => {
-    const { menuOffsetTop, triggerNode, zIndex } = this.props
+  updateMenuNodePosition = () => {
+    this.memoSetPositionStylesOnNode(this.getPositionProps())
+  }
 
-    requestAnimationFrame(() => {
-      if (!this.node || !this.placementNode) return
-      // ...then get the left.
-      const { top, left } = this.getStylePosition()
+  /* istanbul ignore next */
+  repositionMenuNodeCycle = () => {
+    this.updateMenuNodePosition()
+    if (isBrowserEnv()) {
+      requestAnimationFrame(this.repositionMenuNodeCycle)
+    }
+  }
 
-      this.placementNode.style.position = 'fixed'
-      this.placementNode.style.top = `${Math.round(top)}px`
-      this.placementNode.style.left = `${Math.round(left)}px`
-      this.placementNode.style.zIndex = `${zIndex}`
+  onPortalOpen = () => {
+    this.props.onMenuMounted()
+    // Start the reposition cycle
+    this.positionRAF = requestAnimationFrame(this.repositionMenuNodeCycle)
+  }
 
-      if (triggerNode) {
-        this.placementNode.style.width = `${triggerNode.clientWidth}px`
-      }
+  onPortalClose = () => {
+    this.props.onMenuUnmounted()
+    // End the reposition cycle
+    cancelAnimationFrame(this.positionRAF)
+  }
 
-      /* istanbul ignore next */
-      // Skipping coverage for this method as it does almost exclusively DOM
-      // calculations, which isn't a JSDOM's forte.
-      if (this.shouldDropUp()) {
-        this.node.classList.add('is-dropUp')
-        if (triggerNode) {
-          this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
-            menuOffsetTop}px`
-        }
-      } else {
-        this.node.classList.remove('is-dropUp')
-        if (triggerNode) {
-          this.placementNode.style.marginTop = `${menuOffsetTop}px`
-        }
-      }
+  getPositionProps = () => {
+    const { positionFixed } = this.props
+
+    const defaultStyles = {
+      position: positionFixed,
+      top: 0,
+      left: 0,
+    }
+
+    if (!this.node || !this.placementNode) return defaultStyles
+
+    const { top, left } = this.getStylePosition()
+    const position = positionFixed ? 'fixed' : 'absolute'
+
+    return {
+      left,
+      position,
+      top,
+    }
+  }
+
+  setPositionStylesOnNode = positionProps => {
+    const { menuOffsetTop, onMenuReposition, triggerNode, zIndex } = this.props
+
+    if (!this.node || !this.placementNode) return
+
+    const { top, left, position } = positionProps
+
+    this.placementNode.style.position = position
+    this.placementNode.style.top = `${Math.round(top)}px`
+    this.placementNode.style.left = `${Math.round(left)}px`
+    this.placementNode.style.zIndex = `${zIndex}`
+
+    // Provide properties via stateReducer callback
+    onMenuReposition({
+      top: `${Math.round(top)}px`,
+      left: `${Math.round(left)}px`,
+      position,
+      triggerNode,
+      placementNode: this.placementNode,
+      menuNode: this.node,
+      zIndex: `${zIndex}`,
     })
+
+    /* istanbul ignore next */
+    // Skipping coverage for this method as it does almost exclusively DOM
+    // calculations, which isn't a JSDOM's forte.
+    if (triggerNode) {
+      this.placementNode.style.width = `${triggerNode.clientWidth}px`
+    }
+
+    /* istanbul ignore next */
+    if (this.shouldDropUp()) {
+      this.node.classList.add('is-dropUp')
+      if (triggerNode) {
+        this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
+          menuOffsetTop}px`
+      }
+    } else {
+      this.node.classList.remove('is-dropUp')
+      if (triggerNode) {
+        this.placementNode.style.marginTop = `${menuOffsetTop}px`
+      }
+    }
   }
 
   setNodeRef = node => {
@@ -299,12 +370,11 @@ export class MenuContainer extends React.PureComponent<Props> {
 
   render() {
     const {
-      animationSequence,
       animationDuration,
+      animationSequence,
       className,
       dropRight,
       focusItem,
-      onMenuUnmounted,
       isOpen,
       selectItem,
     } = this.props
@@ -319,9 +389,12 @@ export class MenuContainer extends React.PureComponent<Props> {
 
     return (
       <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
-        <EventListener event="resize" handler={this.setPositionStylesOnNode} />
         {isOpen && (
-          <Portal onOpen={this.onPortalOpen} onClose={onMenuUnmounted}>
+          <Portal
+            id={this.id}
+            onOpen={this.onPortalOpen}
+            onClose={this.onPortalClose}
+          >
             <div
               className="DropdownV2MenuContainerPlacementRoot"
               style={{ position: 'relative' }}
@@ -367,11 +440,12 @@ const ConnectedMenuContainer: any = connect(
     const {
       dropUp,
       getState,
-      isOpen,
       isLoading,
+      isOpen,
       items,
       menuId,
       menuOffsetTop,
+      positionFixed,
       renderEmpty,
       renderLoading,
       triggerId,
@@ -380,14 +454,15 @@ const ConnectedMenuContainer: any = connect(
     } = state
 
     return {
-      dropUp,
       dropRight: isDropRight(state),
+      dropUp,
       getState,
-      isOpen,
       id: menuId,
       isLoading,
+      isOpen,
       items,
       menuOffsetTop,
+      positionFixed,
       renderEmpty,
       renderLoading,
       triggerId,
@@ -399,9 +474,10 @@ const ConnectedMenuContainer: any = connect(
   {
     closeDropdown,
     focusItem,
-    selectItem,
     onMenuMounted,
+    onMenuReposition,
     onMenuUnmounted,
+    selectItem,
   }
 )(
   // @ts-ignore

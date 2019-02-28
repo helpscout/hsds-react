@@ -82,7 +82,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
       disabled,
       onBlur,
       onFocus,
-      innerRef: this.setTriggerNodeRef,
+      innerRef: node => this.setTriggerNodeRef(node),
     }
   }
 
@@ -113,13 +113,14 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   setTriggerNodeRef = (node: HTMLElement) => {
+    if (!node) return
     this.triggerNode = node
     this.props.triggerRef(node)
 
     /* istanbul ignore next */
     // Internally, for store
     // @ts-ignore
-    if (this.props.getState().triggerNode) return
+    if (this.props.getState().triggerNode === node) return
     this.props.setTriggerNode(node)
   }
 
