@@ -120,7 +120,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     /* istanbul ignore next */
     // Internally, for store
     // @ts-ignore
-    /* if (this.props.getState().triggerNode === node) return */
+    if (this.props.getState().triggerNode === node) return
     this.props.setTriggerNode(node)
   }
 
