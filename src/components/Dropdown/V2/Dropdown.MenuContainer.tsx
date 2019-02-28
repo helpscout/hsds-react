@@ -21,6 +21,7 @@ import {
   selectItem,
   onMenuMounted,
   onMenuUnmounted,
+  onMenuReposition,
 } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
@@ -44,6 +45,7 @@ export interface Props {
   menuOffsetTop: number
   onMenuMounted: () => void
   onMenuUnmounted: () => void
+  onMenuReposition: (props: any) => void
   innerRef: (node: HTMLElement) => void
   isOpen: boolean
   items: Array<any>
@@ -71,6 +73,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     menuOffsetTop: 0,
     onMenuMounted: noop,
     onMenuUnmounted: noop,
+    onMenuReposition: noop,
     selectItem: noop,
     zIndex: 1080,
   }
@@ -82,12 +85,6 @@ export class MenuContainer extends React.PureComponent<Props> {
 
   componentDidMount() {
     this.setPositionStylesOnNode()
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.isOpen !== this.props.isOpen) {
-      this.setPositionStylesOnNode()
-    }
   }
 
   /* istanbul ignore next */
@@ -262,6 +259,16 @@ export class MenuContainer extends React.PureComponent<Props> {
       this.placementNode.style.left = `${Math.round(left)}px`
       this.placementNode.style.zIndex = `${zIndex}`
 
+      this.props.onMenuReposition({
+        top: `${Math.round(top)}px`,
+        left: `${Math.round(left)}px`,
+        position: 'fixed',
+        triggerNode,
+        placementNode: this.placementNode,
+        menuNode: this.node,
+        zIndex: `${zIndex}`,
+      })
+
       if (triggerNode) {
         this.placementNode.style.width = `${triggerNode.clientWidth}px`
       }
@@ -402,6 +409,7 @@ const ConnectedMenuContainer: any = connect(
     selectItem,
     onMenuMounted,
     onMenuUnmounted,
+    onMenuReposition,
   }
 )(
   // @ts-ignore
