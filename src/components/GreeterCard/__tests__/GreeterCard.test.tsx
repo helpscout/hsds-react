@@ -7,15 +7,17 @@ import { Animate } from '../../index'
 describe('className', () => {
   test('Has default className', () => {
     const wrapper = render(<GreeterCard />)
+    const el = wrapper.find('.c-GreeterCard')
 
-    expect(wrapper.hasClass('c-GreeterCard')).toBeTruthy()
+    expect(el.length).toBeTruthy()
   })
 
   test('Can render custom className', () => {
     const customClassName = 'blue'
     const wrapper = render(<GreeterCard className={customClassName} />)
+    const el = wrapper.find('.c-GreeterCard')
 
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
+    expect(el.hasClass(customClassName)).toBeTruthy()
   })
 })
 
@@ -35,12 +37,26 @@ describe('Align', () => {
   })
 })
 
-describe('AnimationSequence', () => {
+describe('Animation', () => {
   test('Can customize animationSequence', () => {
     const wrapper = mount(<GreeterCard animationSequence="scale" />)
     const o = wrapper.find(Animate)
 
     expect(o.prop('sequence')).toBe('scale')
+  })
+
+  test('Can customize animationEasing', () => {
+    const wrapper = mount(<GreeterCard animationEasing="linear" />)
+    const o = wrapper.find(Animate)
+
+    expect(o.prop('easing')).toBe('linear')
+  })
+
+  test('Can customize animationDuration', () => {
+    const wrapper = mount(<GreeterCard animationDuration={123} />)
+    const o = wrapper.find(Animate)
+
+    expect(o.prop('duration')).toBe(123)
   })
 })
 

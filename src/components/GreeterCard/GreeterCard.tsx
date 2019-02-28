@@ -96,6 +96,7 @@ export class GreeterCard extends React.PureComponent<Props> {
 
   render() {
     const {
+      action,
       animationDuration,
       animationEasing,
       animationSequence,
@@ -107,6 +108,7 @@ export class GreeterCard extends React.PureComponent<Props> {
 
     return (
       <Animate
+        className="c-GreeterCardWrapper"
         in={inProp}
         duration={animationDuration}
         easing={animationEasing}

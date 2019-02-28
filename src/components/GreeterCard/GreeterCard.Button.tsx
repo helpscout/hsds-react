@@ -1,17 +1,20 @@
 import * as React from 'react'
 import { ActionButtonUI } from './GreeterCard.css'
+import { noop } from '../../utilities/other'
 
 export interface Props {
   children?: any
+  onClick: (event: any) => void
   kind?: string
   isBlock: boolean
   size?: string
 }
 
-export default class GreeterCardButton extends React.PureComponent<Props> {
+export class Button extends React.PureComponent<Props> {
   static defaultProps = {
     'data-cy': 'beacon-greeter-cta',
     kind: 'primary',
+    onClick: noop,
     isBlock: true,
     size: 'xl',
   }
@@ -26,3 +29,5 @@ export default class GreeterCardButton extends React.PureComponent<Props> {
     )
   }
 }
+
+export default Button
