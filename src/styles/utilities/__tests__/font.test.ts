@@ -1,11 +1,18 @@
 import { GLOBAL_FONT_SIZE_NAMESPACE } from '../variableFontSize'
 import {
+  addFontSmoothing,
   setFontSize,
   makeFontFamilyFactory,
   makeFontFamily,
   makeFontFamilyMono,
 } from '../font'
 import { FONT_FAMILY, FONT_FAMILY_MONO } from '../../configs/constants'
+
+describe('addFontSmoothing', () => {
+  test('Generates font-smoothing styles', () => {
+    expect(addFontSmoothing()).toContain('font-smoothing')
+  })
+})
 
 describe('setFontSize', () => {
   test('Renders with the global font CSS variable', () => {
