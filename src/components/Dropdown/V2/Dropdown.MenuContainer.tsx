@@ -88,6 +88,7 @@ export class MenuContainer extends React.PureComponent<Props> {
   placementNode: HTMLElement
   wrapperNode: HTMLElement
   id: string = uniqueID()
+  RAF: any = null
 
   componentDidMount() {
     this.setPositionStylesOnNode()
