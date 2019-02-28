@@ -35,6 +35,7 @@ export const initialState = {
   onOpen: noop,
   onSelect: noop,
   openClassName: 'is-open',
+  positionFixed: false,
   previousIndex: null,
   selectedItem: '',
   stateReducer: state => state,

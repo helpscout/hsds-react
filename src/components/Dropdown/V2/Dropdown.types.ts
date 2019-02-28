@@ -8,27 +8,27 @@ export interface DropdownMenuDimensions {
 
 export interface DropdownState extends DropdownMenuDimensions {
   closeOnSelect: boolean
-  id?: string
-  menuId?: string
-  triggerId?: string
-  isOpen: boolean
-  items: Array<any>
   direction: 'left' | 'right'
   dropUp: boolean
-  onOpen: () => void
+  id?: string
+  isOpen: boolean
+  items: Array<any>
+  menuId?: string
   onClose: () => void
+  onOpen: () => void
   onSelect: (item: Object, props: Object) => void
   renderItem?: any
   renderTrigger?: any
+  triggerId?: string
 }
 
 export interface DropdownProps extends DropdownMenuDimensions {
   activeClassName: string
   children?: (props: any) => void
   className?: string
-  closeOnSelect: boolean
   clearOnSelect: boolean
   closeDropdown: () => void
+  closeOnSelect: boolean
   direction: 'left' | 'right'
   disabled: boolean
   dropUp: boolean
@@ -44,8 +44,8 @@ export interface DropdownProps extends DropdownMenuDimensions {
   isOpen: boolean
   items: Array<any>
   menuId?: string
-  menuRef: (node: HTMLElement) => void
   menuOffsetTop: number
+  menuRef: (node: HTMLElement) => void
   onBlur: (...args: any[]) => void
   onClose: () => void
   onFocus: (...args: any[]) => void
@@ -54,6 +54,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   onOpen: () => void
   onSelect: (item: Object, props: Object) => void
   openClassName: string
+  positionFixed: boolean
   previousIndex?: null
   renderEmpty?: any
   renderItem?: any
