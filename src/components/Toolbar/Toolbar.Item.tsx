@@ -9,7 +9,7 @@ export interface Props {
   children?: any
 }
 
-class Item extends React.PureComponent<Props> {
+export class Item extends React.PureComponent<Props> {
   static className = 'c-ToolbarItem'
 
   getClassName() {

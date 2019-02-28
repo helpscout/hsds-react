@@ -6,7 +6,7 @@ const defaultProps = {
   placement: 'top',
 }
 
-const Shadow = props => {
+export const Shadow = props => {
   const { className, children, placement, ...rest } = props
 
   const componentClassName = classNames(

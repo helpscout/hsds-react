@@ -1,7 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Nav from '../src/components/Nav'
-import ForceRouterRenderer from '../src/components/ForceRouterRenderer'
 import Toolbar from '../src/components/Toolbar'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 import {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Block from '../Block'
+import { Block } from '../Toolbar.Block'
 import { Flexy } from '../../index'
 
 describe('ClassName', () => {

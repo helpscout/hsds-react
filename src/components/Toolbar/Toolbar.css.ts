@@ -84,7 +84,7 @@ export const ShadowUI = styled('div')`
 }
 `
 
-export const makeSizeStyles = () => {
+function makeSizeStyles() {
   return forEach(config.size, (size, value) => {
     return `
       &.is-size-${size} {
