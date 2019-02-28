@@ -1,7 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Flexy from '../src/components/Flexy'
+import Button from '../src/components/Button'
 import SplitButton from '../src/components/SplitButton'
+import Modal from '../src/components/Modal'
 
 import {
   withKnobs,
@@ -102,3 +104,39 @@ stories.add('Sizes and Colours', () => {
 stories.add('Colors', () => buildGrid())
 
 stories.add('Disabled', () => buildGrid({ disabled: true }))
+
+stories.add('Within Modal', () => {
+  const WordSpec = createSpec({
+    key: faker.random.uuid(),
+    children: faker.lorem.sentence(),
+  })
+
+  class Example extends React.Component {
+    state = { count: 0 }
+
+    increment = () => this.setState({ count: this.state.count + 1 })
+
+    render() {
+      return (
+        <Modal trigger={<Button>Open dis modal</Button>} isOpen={true}>
+          <Modal.Body>
+            <Button version={2} onClick={this.increment} kind="primaryAlt">
+              Update State
+            </Button>
+            <br />
+            {[...Array(this.state.count)].map(i => {
+              const content = WordSpec.generate()
+              return <p {...content} />
+            })}
+            <br />
+            <SplitButton dropdownProps={dropdownProps} kind="primary" size="lg">
+              Primary
+            </SplitButton>
+          </Modal.Body>
+        </Modal>
+      )
+    }
+  }
+
+  return <Example />
+})
