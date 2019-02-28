@@ -70,6 +70,7 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | minWidth            | `number`                 | `180`        | Minimum width for the menu.                                                     |
 | menuRef             | `Function`               |              | Retrieves the Dropdown Menu DOM node.                                           |
 | openClassName       | `string`                 | `is-open`    | ClassName for an open item (with a sub menu).                                   |
+| positionFixed       | `boolean`                | `false`      | Renders menu as position `fixed`. Otherwise, it's `absolute`.                   |
 | renderEmpty         | `Function`               |              | Callback to render the empty UI.                                                |
 | renderLoading       | `Function`               |              | Callback to render the loading UI.                                              |
 | renderItem          | `Function`               |              | Callback to customize how an item renders.                                      |
