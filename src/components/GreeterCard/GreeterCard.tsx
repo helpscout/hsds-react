@@ -63,7 +63,7 @@ export class GreeterCard extends React.PureComponent<Props> {
     return subtitle ? (
       <SubtitleUI
         size="h5"
-        weight={400}
+        weight={500}
         light
         data-cy="beacon-greeter-subtitle"
       >

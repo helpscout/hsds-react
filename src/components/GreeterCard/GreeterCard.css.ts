@@ -35,7 +35,7 @@ export const TitleUI = styled(Heading)`
 `
 
 export const SubtitleUI = styled(Heading)`
-  ${setFontSize(13)};
+  ${setFontSize(12)};
   margin-top: 6px;
 `
 
