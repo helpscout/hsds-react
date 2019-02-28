@@ -18,16 +18,22 @@ import {
 import { ITEM_COMPONENT_KEY } from './Nav.utils'
 
 export interface Props {
-  className?: string
   children?: any
+  className?: string
   disabled: boolean
   error: string
   exact: boolean
+  href?: string
   innerRef: (node: HTMLElement) => void
+  isActive?: any
+  location?: any
+  to?: string
+  strict?: boolean
 }
 
 export class Item extends React.Component<Props> {
   static className = 'c-NavItem'
+  static contentClassName = 'c-NavItemContent'
   static defaultProps = {
     disabled: false,
     error: '',
@@ -41,9 +47,10 @@ export class Item extends React.Component<Props> {
   }
 
   getLinkProps() {
-    const { exact, isActive, location, strict, to } = this.props
+    const { disabled, exact, isActive, location, strict, to } = this.props
 
     return {
+      disabled,
       exact,
       isActive,
       location,
@@ -59,7 +66,7 @@ export class Item extends React.Component<Props> {
     return (
       <ErrorWrapperUI>
         <Tooltip title={error}>
-          <Icon name="alert" state="error" />
+          <Icon name="alert" state="error" className="c-NavItemErrorIcon" />
         </Tooltip>
       </ErrorWrapperUI>
     )
@@ -68,7 +75,7 @@ export class Item extends React.Component<Props> {
   renderContent = ({ isActive }) => {
     const { children } = this.props
     const componentClassName = classNames(
-      'c-NavItemContent',
+      Item.contentClassName,
       isActive && 'is-active'
     )
 

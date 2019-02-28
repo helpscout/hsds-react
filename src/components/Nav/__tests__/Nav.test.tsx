@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount, render } from 'enzyme'
 import { Nav } from '../Nav'
+import Item from '../Nav.Item'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -22,5 +23,11 @@ describe('HTML props', () => {
     const wrapper = render(<Nav data-cy="blue" />)
 
     expect(wrapper.attr('data-cy')).toBe('blue')
+  })
+})
+
+describe('Sub-components', () => {
+  test('Has Item sub-component', () => {
+    expect(Nav.Item).toBe(Item)
   })
 })
