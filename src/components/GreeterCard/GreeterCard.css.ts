@@ -36,13 +36,11 @@ export const TitleUI = styled(Heading)`
 
 export const SubtitleUI = styled(Heading)`
   ${setFontSize(13)};
-  ${fontFamily};
   margin-top: 6px;
 `
 
 export const BodyUI = styled(Text)`
   ${setFontSize(14)};
-  ${fontFamily};
   letter-spacing: 0.37px;
   margin-top: ${({ withMargin }) => (withMargin ? '12px' : '0')};
 `
@@ -54,12 +52,4 @@ export const ActionUI = styled('div')`
 
 export const ActionButtonUI = styled(Button)`
   ${setFontSize(14)};
-  ${fontFamily};
-  ${addFontSmoothing()};
-  letter-spacing: 0.5px;
-
-  &.is-primary {
-    font-weight: bold;
-    font-weight: 600;
-  }
 `
