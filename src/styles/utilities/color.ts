@@ -60,7 +60,7 @@ export const getThemeBrandProp = (
   return get(props, `theme.brandColor.${path}`, fallback)
 }
 
-const defaultBrandColor = getColor('blue.500')
+export const defaultBrandColor = getColor('blue.500')
 
 /**
  * Generates a series of color variables based on a single HEX code used
