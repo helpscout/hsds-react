@@ -19,13 +19,11 @@ const stories = storiesOf('SplitButton', module)
 
 stories.addDecorator(
   withArtboard({
-    id: 'hsds-SplitButton',
     width: 500,
     height: 300,
     withCenterGuides: false,
   })
 )
-stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({
   label: faker.lorem.words(),
@@ -118,7 +116,7 @@ stories.add('Within Modal', () => {
 
     render() {
       return (
-        <Modal trigger={<Button>Open dis modal</Button>} isOpen={true}>
+        <Modal trigger={<Button>Open dis modal</Button>}>
           <Modal.Body>
             <Button version={2} onClick={this.increment} kind="primaryAlt">
               Update State
@@ -129,7 +127,13 @@ stories.add('Within Modal', () => {
               return <p {...content} />
             })}
             <br />
-            <SplitButton dropdownProps={dropdownProps} kind="primary" size="lg">
+            <SplitButton
+              dropdownProps={{
+                ...dropdownProps,
+              }}
+              kind="primary"
+              size="lg"
+            >
               Primary
             </SplitButton>
           </Modal.Body>

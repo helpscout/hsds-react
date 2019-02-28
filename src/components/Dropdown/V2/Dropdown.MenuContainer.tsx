@@ -248,8 +248,21 @@ export class MenuContainer extends React.PureComponent<Props> {
   }
 
   onPortalOpen = () => {
-    this.setPositionStylesOnNode()
+    /* this.setPositionStylesOnNode() */
     this.props.onMenuMounted()
+
+    const repeat = () => {
+      this.setPositionStylesOnNode()
+      requestAnimationFrame(repeat)
+    }
+
+    // FOLLOW TEST
+    this.RAF = requestAnimationFrame(repeat)
+  }
+
+  onPortalClose = () => {
+    this.props.onMenuUnmounted()
+    cancelAnimationFrame(this.RAF)
   }
 
   setPositionStylesOnNode = () => {
@@ -261,47 +274,45 @@ export class MenuContainer extends React.PureComponent<Props> {
       zIndex,
     } = this.props
 
-    requestAnimationFrame(() => {
-      if (!this.node || !this.placementNode) return
-      // ...then get the left.
-      const { top, left } = this.getStylePosition()
-      const positionType = positionFixed ? 'fixed' : 'absolute'
+    if (!this.node || !this.placementNode) return
+    // ...then get the left.
+    const { top, left } = this.getStylePosition()
+    const positionType = positionFixed ? 'fixed' : 'absolute'
 
-      this.placementNode.style.position = positionType
-      this.placementNode.style.top = `${Math.round(top)}px`
-      this.placementNode.style.left = `${Math.round(left)}px`
-      this.placementNode.style.zIndex = `${zIndex}`
+    this.placementNode.style.position = positionType
+    this.placementNode.style.top = `${Math.round(top)}px`
+    this.placementNode.style.left = `${Math.round(left)}px`
+    this.placementNode.style.zIndex = `${zIndex}`
 
-      onMenuReposition({
-        top: `${Math.round(top)}px`,
-        left: `${Math.round(left)}px`,
-        position: positionType,
-        triggerNode,
-        placementNode: this.placementNode,
-        menuNode: this.node,
-        zIndex: `${zIndex}`,
-      })
-
-      if (triggerNode) {
-        this.placementNode.style.width = `${triggerNode.clientWidth}px`
-      }
-
-      /* istanbul ignore next */
-      // Skipping coverage for this method as it does almost exclusively DOM
-      // calculations, which isn't a JSDOM's forte.
-      if (this.shouldDropUp()) {
-        this.node.classList.add('is-dropUp')
-        if (triggerNode) {
-          this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
-            menuOffsetTop}px`
-        }
-      } else {
-        this.node.classList.remove('is-dropUp')
-        if (triggerNode) {
-          this.placementNode.style.marginTop = `${menuOffsetTop}px`
-        }
-      }
+    onMenuReposition({
+      top: `${Math.round(top)}px`,
+      left: `${Math.round(left)}px`,
+      position: positionType,
+      triggerNode,
+      placementNode: this.placementNode,
+      menuNode: this.node,
+      zIndex: `${zIndex}`,
     })
+
+    if (triggerNode) {
+      this.placementNode.style.width = `${triggerNode.clientWidth}px`
+    }
+
+    /* istanbul ignore next */
+    // Skipping coverage for this method as it does almost exclusively DOM
+    // calculations, which isn't a JSDOM's forte.
+    if (this.shouldDropUp()) {
+      this.node.classList.add('is-dropUp')
+      if (triggerNode) {
+        this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
+          menuOffsetTop}px`
+      }
+    } else {
+      this.node.classList.remove('is-dropUp')
+      if (triggerNode) {
+        this.placementNode.style.marginTop = `${menuOffsetTop}px`
+      }
+    }
   }
 
   setNodeRef = node => {
@@ -325,7 +336,6 @@ export class MenuContainer extends React.PureComponent<Props> {
       dropRight,
       focusItem,
       isOpen,
-      onMenuUnmounted,
       selectItem,
     } = this.props
     const shouldDropUp = this.shouldDropUp()
@@ -344,7 +354,7 @@ export class MenuContainer extends React.PureComponent<Props> {
           <Portal
             id={this.id}
             onOpen={this.onPortalOpen}
-            onClose={onMenuUnmounted}
+            onClose={this.onPortalClose}
           >
             <div
               className="DropdownV2MenuContainerPlacementRoot"
