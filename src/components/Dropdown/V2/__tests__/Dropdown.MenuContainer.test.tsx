@@ -85,6 +85,8 @@ describe('Portal', () => {
   test('Fires onMenuMounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuMounted={spy} />)
+    // @ts-ignore
+    wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
     // @ts-ignore
     portal.props().onOpen()
@@ -95,6 +97,8 @@ describe('Portal', () => {
   test('Fires onMenuUnmounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuUnmounted={spy} />)
+    // @ts-ignore
+    wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
     // @ts-ignore
     portal.props().onClose()
@@ -107,6 +111,8 @@ describe('Portal', () => {
     const wrapper = mount(<MenuContainer isOpen={true} />)
     // @ts-ignore
     wrapper.instance().setPositionStylesOnNode = spy
+    // @ts-ignore
+    wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
     // @ts-ignore
     portal.props().onOpen()
@@ -442,5 +448,41 @@ describe('Empty', () => {
 
     expect(wrapper.find('Loading').length).toBeTruthy()
     expect(wrapper.find('Empty').length).toBeFalsy()
+  })
+})
+
+describe('Position', () => {
+  test('Renders position: absolute, by default', () => {
+    const wrapper = mount(<MenuContainer isOpen={true} positionFixed={false} />)
+    const inst = wrapper.instance()
+
+    // @ts-ignore
+    expect(inst.getPositionProps().position).toBe('absolute')
+  })
+
+  test('Renders position: fixed, if defined', () => {
+    const wrapper = mount(<MenuContainer isOpen={true} positionFixed={true} />)
+    const inst = wrapper.instance()
+
+    // @ts-ignore
+    expect(inst.getPositionProps().position).toBe('fixed')
+  })
+})
+
+describe('forceHideMenuNode', () => {
+  test('Forces the menu node to hide, on unmount', () => {
+    const wrapper = mount(<MenuContainer isOpen={true} />)
+    const placementNode = {
+      style: {
+        display: 'block',
+      },
+    }
+    const inst = wrapper.instance()
+    // @ts-ignore
+    inst.placementNode = placementNode
+
+    wrapper.unmount()
+
+    expect(placementNode.style.display).toBe('none')
   })
 })

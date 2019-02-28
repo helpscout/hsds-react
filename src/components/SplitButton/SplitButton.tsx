@@ -1,9 +1,7 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-
 import AutoDropDown from '../AutoDropdown'
 import Button from '../Button'
 import ControlGroup from '../ControlGroup'

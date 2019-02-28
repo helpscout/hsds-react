@@ -2,7 +2,6 @@ import * as React from 'react'
 import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
-import EventListener from '../../EventListener'
 import Portal from '../../Portal'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
@@ -29,7 +28,9 @@ import { renderRenderPropComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { namespaceComponent } from '../../../utilities/component'
 import { COMPONENT_KEY } from './Dropdown.utils'
+import { isBrowserEnv } from '../../../utilities/env'
 import { createUniqueIDFactory } from '../../../utilities/id'
+import { memoizeWithProps } from '../../../utilities/memoize'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 
@@ -83,15 +84,23 @@ export class MenuContainer extends React.PureComponent<Props> {
     zIndex: 1080,
   }
 
+  id: string = uniqueID()
   node: HTMLElement
   parentNode: HTMLElement
   placementNode: HTMLElement
   wrapperNode: HTMLElement
-  id: string = uniqueID()
-  RAF: any = null
+  memoSetPositionStylesOnNode: any
+  positionRAF: any = null
 
   componentDidMount() {
-    this.setPositionStylesOnNode()
+    this.memoSetPositionStylesOnNode = memoizeWithProps(
+      this.setPositionStylesOnNode
+    )
+    this.updateMenuNodePosition()
+  }
+
+  componentWillUnmount() {
+    this.forceHideMenuNode()
   }
 
   /* istanbul ignore next */
@@ -235,9 +244,12 @@ export class MenuContainer extends React.PureComponent<Props> {
     return this.renderMenu()
   }
 
+  getTargetNode = (): HTMLElement => {
+    return this.props.triggerNode || this.wrapperNode
+  }
+
   getStylePosition = (): any => {
-    const { triggerNode } = this.props
-    const targetNode = triggerNode || this.wrapperNode
+    const targetNode = this.getTargetNode()
 
     const rect = targetNode.getBoundingClientRect()
     const { height, top, left } = rect
@@ -248,60 +260,87 @@ export class MenuContainer extends React.PureComponent<Props> {
     }
   }
 
-  onPortalOpen = () => {
-    /* this.setPositionStylesOnNode() */
-    this.props.onMenuMounted()
+  forceHideMenuNode = () => {
+    if (!this.placementNode) return
+    this.placementNode.style.display = 'none'
+  }
 
-    const repeat = () => {
-      this.setPositionStylesOnNode()
-      requestAnimationFrame(repeat)
+  updateMenuNodePosition = () => {
+    this.memoSetPositionStylesOnNode(this.getPositionProps())
+  }
+
+  /* istanbul ignore next */
+  repositionMenuNodeCycle = () => {
+    this.updateMenuNodePosition()
+    if (isBrowserEnv()) {
+      requestAnimationFrame(this.repositionMenuNodeCycle)
     }
+  }
 
-    // FOLLOW TEST
-    this.RAF = requestAnimationFrame(repeat)
+  onPortalOpen = () => {
+    this.props.onMenuMounted()
+    // Start the reposition cycle
+    this.positionRAF = requestAnimationFrame(this.repositionMenuNodeCycle)
   }
 
   onPortalClose = () => {
     this.props.onMenuUnmounted()
-    cancelAnimationFrame(this.RAF)
+    // End the reposition cycle
+    cancelAnimationFrame(this.positionRAF)
   }
 
-  setPositionStylesOnNode = () => {
-    const {
-      menuOffsetTop,
-      onMenuReposition,
-      positionFixed,
-      triggerNode,
-      zIndex,
-    } = this.props
+  getPositionProps = () => {
+    const { positionFixed } = this.props
+
+    const defaultStyles = {
+      position: positionFixed,
+      top: 0,
+      left: 0,
+    }
+
+    if (!this.node || !this.placementNode) return defaultStyles
+
+    const { top, left } = this.getStylePosition()
+    const position = positionFixed ? 'fixed' : 'absolute'
+
+    return {
+      left,
+      position,
+      top,
+    }
+  }
+
+  setPositionStylesOnNode = positionProps => {
+    const { menuOffsetTop, onMenuReposition, triggerNode, zIndex } = this.props
 
     if (!this.node || !this.placementNode) return
-    // ...then get the left.
-    const { top, left } = this.getStylePosition()
-    const positionType = positionFixed ? 'fixed' : 'absolute'
 
-    this.placementNode.style.position = positionType
+    const { top, left, position } = positionProps
+
+    this.placementNode.style.position = position
     this.placementNode.style.top = `${Math.round(top)}px`
     this.placementNode.style.left = `${Math.round(left)}px`
     this.placementNode.style.zIndex = `${zIndex}`
 
+    // Provide properties via stateReducer callback
     onMenuReposition({
       top: `${Math.round(top)}px`,
       left: `${Math.round(left)}px`,
-      position: positionType,
+      position,
       triggerNode,
       placementNode: this.placementNode,
       menuNode: this.node,
       zIndex: `${zIndex}`,
     })
 
+    /* istanbul ignore next */
+    // Skipping coverage for this method as it does almost exclusively DOM
+    // calculations, which isn't a JSDOM's forte.
     if (triggerNode) {
       this.placementNode.style.width = `${triggerNode.clientWidth}px`
     }
 
     /* istanbul ignore next */
-    // Skipping coverage for this method as it does almost exclusively DOM
-    // calculations, which isn't a JSDOM's forte.
     if (this.shouldDropUp()) {
       this.node.classList.add('is-dropUp')
       if (triggerNode) {
@@ -350,7 +389,6 @@ export class MenuContainer extends React.PureComponent<Props> {
 
     return (
       <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
-        <EventListener event="resize" handler={this.setPositionStylesOnNode} />
         {isOpen && (
           <Portal
             id={this.id}
