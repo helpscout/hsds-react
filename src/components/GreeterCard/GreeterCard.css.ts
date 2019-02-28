@@ -20,6 +20,13 @@ export const GreeterCardUI = styled(Card)`
   border-radius: 8px;
   padding: 20px 20px 25px;
   width: 300px;
+
+  &.is-align-right {
+    border-bottom-right-radius: 4px;
+  }
+  &.is-align-left {
+    border-bottom-left-radius: 4px;
+  }
 `
 
 export const TitleUI = styled(Heading)`
@@ -50,4 +57,9 @@ export const ActionButtonUI = styled(Button)`
   ${fontFamily};
   ${addFontSmoothing()};
   letter-spacing: 0.5px;
+
+  &.is-primary {
+    font-weight: bold;
+    font-weight: 600;
+  }
 `
