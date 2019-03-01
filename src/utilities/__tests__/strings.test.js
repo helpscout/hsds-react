@@ -1,4 +1,5 @@
 import {
+  escapeHtml,
   isWord,
   nameToInitials,
   newlineToHTML,
@@ -156,5 +157,27 @@ describe('repeat', () => {
 
   test('Repeats characters to 0', () => {
     expect(repeat('a', 0)).toBe('')
+  })
+})
+
+describe('escapeHtml', () => {
+  it('should not escape non HTML characters', () => {
+    expect(escapeHtml('This contains no HTML')).toEqual('This contains no HTML')
+  })
+
+  it('should escape HTML tags', () => {
+    expect(escapeHtml('<p>Hello</p>')).toEqual('&lt;p&gt;Hello&lt;/p&gt;')
+  })
+
+  it('should escape double quotes', () => {
+    expect(escapeHtml('"Double quoted"')).toEqual('&quot;Double quoted&quot;')
+  })
+
+  it('should escape single quotes', () => {
+    expect(escapeHtml("'Single quoted'")).toEqual('&#x27;Single quoted&#x27;')
+  })
+
+  it('should escape ampersands', () => {
+    expect(escapeHtml('This & that')).toEqual('This &amp; that')
   })
 })
