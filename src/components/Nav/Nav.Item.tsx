@@ -65,8 +65,13 @@ export class Item extends React.Component<Props> {
 
     return (
       <ErrorWrapperUI>
-        <Tooltip title={error}>
-          <Icon name="alert" state="error" className="c-NavItemErrorIcon" />
+        <Tooltip data-cy="NavItemErrorTooltip" title={error}>
+          <Icon
+            data-cy="NavItemErrorIcon"
+            name="alert"
+            state="error"
+            className="c-NavItemErrorIcon"
+          />
         </Tooltip>
       </ErrorWrapperUI>
     )
