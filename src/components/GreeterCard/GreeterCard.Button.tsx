@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { ActionButtonUI } from './GreeterCard.css'
 import { noop } from '../../utilities/other'
+import Truncate from '../Truncate'
 
 export interface Props {
   children?: any
@@ -24,7 +25,7 @@ export class Button extends React.PureComponent<Props> {
 
     return (
       <ActionButtonUI {...rest} version={2}>
-        {children}
+        <Truncate>{children}</Truncate>
       </ActionButtonUI>
     )
   }
