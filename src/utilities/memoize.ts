@@ -1,4 +1,4 @@
-import * as memoize from 'memoize-one'
+import memoize from './memoize-one'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 
 export const shallowPropMemoizeIsEqual = (a: any, b: any): boolean => {
