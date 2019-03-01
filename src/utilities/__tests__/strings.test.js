@@ -1,5 +1,6 @@
 import {
-  escapeHtml,
+  autolink,
+  escapeHTML,
   isWord,
   nameToInitials,
   newlineToHTML,
@@ -160,24 +161,38 @@ describe('repeat', () => {
   })
 })
 
-describe('escapeHtml', () => {
+describe('escapeHTML', () => {
   it('should not escape non HTML characters', () => {
-    expect(escapeHtml('This contains no HTML')).toEqual('This contains no HTML')
+    expect(escapeHTML('This contains no HTML')).toEqual('This contains no HTML')
   })
 
   it('should escape HTML tags', () => {
-    expect(escapeHtml('<p>Hello</p>')).toEqual('&lt;p&gt;Hello&lt;/p&gt;')
+    expect(escapeHTML('<p>Hello</p>')).toEqual('&lt;p&gt;Hello&lt;/p&gt;')
   })
 
   it('should escape double quotes', () => {
-    expect(escapeHtml('"Double quoted"')).toEqual('&quot;Double quoted&quot;')
+    expect(escapeHTML('"Double quoted"')).toEqual('&quot;Double quoted&quot;')
   })
 
   it('should escape single quotes', () => {
-    expect(escapeHtml("'Single quoted'")).toEqual('&#x27;Single quoted&#x27;')
+    expect(escapeHTML("'Single quoted'")).toEqual('&#x27;Single quoted&#x27;')
   })
 
   it('should escape ampersands', () => {
-    expect(escapeHtml('This & that')).toEqual('This &amp; that')
+    expect(escapeHTML('This & that')).toEqual('This &amp; that')
+  })
+})
+
+describe('autolink', () => {
+  it('should autolink URLs with scheme', () => {
+    expect(autolink('This URL http://www.helpscout.com')).toEqual(
+      'This URL <a href="http://www.helpscout.com" target="_blank" rel="noopener">http://www.helpscout.com</a>'
+    )
+  })
+
+  it('should autolink URLs without scheme', () => {
+    expect(autolink('This domain helpscout.com')).toEqual(
+      'This domain <a href="http://helpscout.com" target="_blank" rel="noopener">helpscout.com</a>'
+    )
   })
 })

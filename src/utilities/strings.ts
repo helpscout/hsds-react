@@ -1,4 +1,5 @@
 import { isString } from './is'
+import linkifyHtml from 'linkifyjs/lib/linkify-html'
 
 export const nameToInitials = (name: string = ''): string => {
   // Returning early if undefined to avoid casting undefined to "undefined"
@@ -116,7 +117,13 @@ export const camelCase = (string: string): string => {
 // Taken from the React escapeTextForBrowser internal utility
 const escapeHtmlRegExp = /["'&<>]/
 
-export const escapeHtml = (string: string): string => {
+/**
+ * Escape HTML special characters in the string for output in the browser.
+ *
+ * @param {string} string
+ * @returns {string}
+ */
+export const escapeHTML = (string: string): string => {
   const match = escapeHtmlRegExp.exec(string)
 
   if (!match) {
@@ -158,4 +165,24 @@ export const escapeHtml = (string: string): string => {
   }
 
   return lastIndex !== index ? html + string.substring(lastIndex, index) : html
+}
+
+/**
+ * Autolinks URLs in the given string.
+ *
+ * This wraps the linkifyjs library so that if we change the underlying library
+ * we only need to change it in one place.
+ *
+ * @param {string} string
+ *
+ * @returns {string}
+ */
+export const autolink = (string: string): string => {
+  return linkifyHtml(string, {
+    className: '',
+    linkAttributes: {
+      rel: 'noopener',
+    },
+    target: '_blank',
+  })
 }

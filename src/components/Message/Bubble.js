@@ -9,7 +9,12 @@ import Text from '../Text'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { isWord } from '../../utilities/strings'
+import {
+  autolink,
+  escapeHTML,
+  isWord,
+  newlineToHTML,
+} from '../../utilities/strings'
 import { providerContextTypes } from './propTypes'
 import css, {
   BodyCSS,
@@ -110,7 +115,9 @@ export const Bubble = (props: Props, context: Context) => {
   const bodyMarkup = body ? (
     <MessageBubbleBody
       className="c-MessageBubble__body"
-      dangerouslySetInnerHTML={{ __html: body }}
+      dangerouslySetInnerHTML={{
+        __html: newlineToHTML(autolink(escapeHTML(body))),
+      }}
     />
   ) : (
     childrenMarkup
