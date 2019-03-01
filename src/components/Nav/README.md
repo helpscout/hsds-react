@@ -1,15 +1,10 @@
 # Nav
 
-This component does something special.
+This component is provides navigation interactions with support for [react-router](https://github.com/ReactTraining/react-router).
 
-## Example
+## Components
 
-```jsx
-<Nav />
-```
+`Nav` is comprised of smaller sub-components:
 
-## Props
-
-| Prop      | Type     | Default | Description                     |
-| --------- | -------- | ------- | ------------------------------- |
-| className | `string` |         | The className of the component. |
+* [Nav](./docs/Nav.md)
+* [Item](./docs/Item.md)
