@@ -26,20 +26,34 @@ stories.addDecorator(
 
 const RouteComponent = () => <div />
 
+const BaseNav = () => {
+  const itemHome = text('itemHomeText', 'Home')
+  const itemOne = text('itemOneText', 'One')
+  const itemTwo = text('itemTwoText', 'Two')
+  const itemThree = text('itemThreeText', 'Three')
+  const itemThreeError = text('itemThreeError', 'Something went wrong')
+  const itemFour = text('itemFourText', 'Four')
+  const itemFourDisabled = boolean('itemFourDisabled', true)
+
+  return (
+    <Nav>
+      <Nav.Item to="/">{itemHome}</Nav.Item>
+      <Nav.Item to="/one">{itemOne}</Nav.Item>
+      <Nav.Item to="/two">{itemTwo}</Nav.Item>
+      <Nav.Item to="/three" error={itemThreeError}>
+        {itemThree}
+      </Nav.Item>
+      <Nav.Item to="/four" disabled={itemFourDisabled}>
+        {itemFour}
+      </Nav.Item>
+    </Nav>
+  )
+}
+
 stories.add('Default', () => (
   <Router>
     <div>
-      <Nav>
-        <Nav.Item to="/">Home</Nav.Item>
-        <Nav.Item to="/one">One</Nav.Item>
-        <Nav.Item to="/two">Two</Nav.Item>
-        <Nav.Item to="/three" error="Something went wrong">
-          Three
-        </Nav.Item>
-        <Nav.Item to="/four" disabled>
-          Four
-        </Nav.Item>
-      </Nav>
+      <BaseNav />
       <Route exact path="/" component={RouteComponent} />
       <Route exact path="/one" component={RouteComponent} />
       <Route exact path="/two" component={RouteComponent} />
@@ -54,17 +68,7 @@ stories.add('Toolbar', () => {
   const NavBar = () => (
     <Toolbar>
       <Toolbar.Block>
-        <Nav>
-          <Nav.Item to="/">Home</Nav.Item>
-          <Nav.Item to="/one">One</Nav.Item>
-          <Nav.Item to="/two">Two</Nav.Item>
-          <Nav.Item to="/three" error="Something went wrong">
-            Three
-          </Nav.Item>
-          <Nav.Item to="/four" disabled>
-            Four
-          </Nav.Item>
-        </Nav>
+        <BaseNav />
       </Toolbar.Block>
     </Toolbar>
   )

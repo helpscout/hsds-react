@@ -58,10 +58,6 @@ export const ToolbarUI = styled(Flexy)`
   &.is-seamless {
     border: none;
   }
-
-  .${Nav.className} {
-    margin-bottom: -5px;
-  }
 `
 
 export const ShadowUI = styled('div')`
@@ -90,6 +86,10 @@ function makeSizeStyles() {
       &.is-size-${size} {
         padding-top: ${value};
         padding-bottom: ${value};
+
+        .${Nav.className} {
+          margin-bottom: calc(${value} * -1);
+        }
       }
     `
   })

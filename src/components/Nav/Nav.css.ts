@@ -55,6 +55,7 @@ export const ContentUI = styled('div')`
 
 export const TitleUI = styled(Text)`
   display: block;
+  min-height: 14px;
 
   ${({ isActive }) =>
     isActive &&
