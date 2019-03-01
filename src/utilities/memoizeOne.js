@@ -1,3 +1,7 @@
+// Vendorized memoize-one to improve stability with import/require
+// Source:
+// https://github.com/alexreardon/memoize-one
+
 const shallowEqual = function shallowEqual(newValue, oldValue) {
   return newValue === oldValue
 }
@@ -16,10 +20,10 @@ export function memoizeOne(resultFn, isEqual) {
     isEqual = simpleIsEqual
   }
 
-  var lastThis
-  var lastArgs = []
-  var lastResult
-  var calledOnce = false
+  let lastThis
+  let lastArgs = []
+  let lastResult
+  let calledOnce = false
 
   var result = function result() {
     for (
