@@ -113,6 +113,7 @@ export const camelCase = (string: string): string => {
     })
 }
 
+// Taken from the React escapeTextForBrowser internal utility
 const escapeHtmlRegExp = /["'&<>]/
 
 export const escapeHtml = (string: string): string => {
@@ -136,7 +137,7 @@ export const escapeHtml = (string: string): string => {
         escape = '&amp;'
         break
       case 39: // '
-        escape = '&#x27;' // modified from escape-html; used to be '&#39'
+        escape = '&#x27;'
         break
       case 60: // <
         escape = '&lt;'
