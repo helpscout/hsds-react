@@ -214,6 +214,11 @@ export const TriggerUI = styled('a')`
   display: inline-block;
   outline: none;
 
+  &.is-disabled {
+    color: ${getColor('charcoal.200')};
+    pointer-events: none;
+  }
+
   &.is-open {
     color: ${getColor('blue.700')};
   }

@@ -100,12 +100,9 @@ export class Trigger extends React.PureComponent<Props> {
     const componentClassName = classNames(
       className,
       isOpen && 'is-open',
+      disabled && 'is-disabled',
       'c-DropdownV2Trigger'
     )
-
-    if (disabled) {
-      return <div {...getValidProps(rest)} className={componentClassName} />
-    }
 
     return (
       <TriggerUI
@@ -113,6 +110,7 @@ export class Trigger extends React.PureComponent<Props> {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         className={componentClassName}
+        disabled={disabled}
         innerRef={innerRef}
         onBlur={onBlur}
         onFocus={onFocus}

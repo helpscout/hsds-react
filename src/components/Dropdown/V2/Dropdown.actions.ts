@@ -66,6 +66,15 @@ export const onMenuUnmounted = state => {
   })
 }
 
+export const onMenuReposition = (state, position) => {
+  return dispatch(state, {
+    type: actionTypes.MENU_REPOSITION,
+    payload: {
+      position,
+    },
+  })
+}
+
 export const setTriggerNode = (state, triggerNode) => {
   return dispatch(state, {
     type: actionTypes.SET_TRIGGER_NODE,
