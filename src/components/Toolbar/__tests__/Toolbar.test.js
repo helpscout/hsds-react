@@ -1,7 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import Toolbar from '../Toolbar'
-import { Flexy } from '../../index'
+import { mount, shallow } from 'enzyme'
+import { Toolbar } from '../Toolbar'
+import Flexy from '../../Flexy'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -35,7 +35,7 @@ describe('Children', () => {
 
 describe('Flexy', () => {
   test('Is constructed using Flexy', () => {
-    const wrapper = shallow(<Toolbar />)
+    const wrapper = mount(<Toolbar />)
     const o = wrapper.find(Flexy)
 
     expect(o.length).toBe(1)
@@ -43,7 +43,7 @@ describe('Flexy', () => {
   })
 
   test('Passes props to Flexy', () => {
-    const wrapper = shallow(<Toolbar just="right" />)
+    const wrapper = mount(<Toolbar just="right" />)
     const o = wrapper.find(Flexy)
 
     expect(o.prop('just')).toBe('right')

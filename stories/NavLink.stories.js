@@ -5,8 +5,7 @@ import { MemoryRouter as Router, Route } from 'react-router-dom'
 
 const stories = storiesOf('NavLink', module)
 
-NavLink.defaultProps = {
-  ...NavLink.defaultProps,
+const props = {
   activeStyle: { fontWeight: 'bold' },
   exact: true,
 }
@@ -17,13 +16,19 @@ stories.add('Default', () => {
       <div>
         <ul>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink {...props} to="/">
+              Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/about">About</NavLink>
+            <NavLink {...props} to="/about">
+              About
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/topics">Topics</NavLink>
+            <NavLink {...props} to="/topics">
+              Topics
+            </NavLink>
           </li>
         </ul>
 

@@ -23,7 +23,7 @@ describe('Shade', () => {
   test('Add shade styles if applied', () => {
     const wrapper = mount(<Text shade="muted" />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-muted')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-shade-muted')).toBe(true)
   })
 })
 
@@ -59,7 +59,7 @@ describe('Styles', () => {
   test('Applies muted styles if specified', () => {
     const wrapper = mount(<Text muted />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-muted')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-shade-muted')).toBe(true)
   })
 
   test('Applies subtle styles if specified', () => {
