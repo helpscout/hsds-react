@@ -33,10 +33,11 @@ stories.addDecorator(
 class Story extends React.Component {
   render() {
     const show = boolean('show', true)
+    const buttonText = text('buttonText', 'Action')
     const actionProp = boolean('Has Action?', true)
       ? () => (
           <GreeterCard.Button onClick={action('Clicked!')}>
-            Primary Button
+            {buttonText}
           </GreeterCard.Button>
         )
       : null
