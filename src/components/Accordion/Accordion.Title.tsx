@@ -2,16 +2,19 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Flexy from '../Flexy'
+import Link from '../Link'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
+import { memoize } from '../../utilities/memoize'
 import { noop } from '../../utilities/other'
-import { TitleUI } from './Accordion.css'
+import { makeTitleUI } from './Accordion.css'
 import { TitleProps } from './Accordion.types'
 import { COMPONENT_KEY } from './Accordion.utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
+  isLinkClassName: 'is-link',
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
@@ -23,13 +26,16 @@ export const classNameStrings = {
 
 const getComponentClassName = ({
   className,
+  href,
   isOpen,
   isPage,
   isSeamless,
   size,
+  to,
 }: TitleProps): string => {
   const {
     baseComponentClassName,
+    isLinkClassName,
     isOpenClassName,
     isPageClassName,
     isSeamlessClassName,
@@ -40,6 +46,7 @@ const getComponentClassName = ({
   } = classNameStrings
   return classNames(
     baseComponentClassName,
+    (href || to) && isLinkClassName,
     isOpen && isOpenClassName,
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
@@ -63,6 +70,12 @@ class Title extends React.Component<TitleProps> {
 
   static displayName = 'AccordionSectionTitle'
 
+  makeTitleUI = memoize(makeTitleUI)
+
+  isLink() {
+    return this.props.href || this.props.to
+  }
+
   handleClick = (event: Event | KeyboardEvent) => {
     event && event.preventDefault()
     const { isOpen, setOpen, uuid } = this.props
@@ -75,6 +88,12 @@ class Title extends React.Component<TitleProps> {
     if (event && (event.keyCode === ENTER || event.keyCode === SPACE)) {
       this.handleClick(event)
     }
+  }
+
+  getTitleUI() {
+    const selector = this.isLink() ? Link : 'div'
+
+    return this.makeTitleUI(selector)
   }
 
   render() {
@@ -100,9 +119,12 @@ class Title extends React.Component<TitleProps> {
       size: 18,
     }
 
+    const TitleUI = this.getTitleUI()
+    const restProps = this.isLink() ? rest : getValidProps(rest)
+
     return (
       <TitleUI
-        {...getValidProps(rest)}
+        {...restProps}
         aria-controls={ariaControls}
         aria-selected={isOpen}
         className={componentClassName}

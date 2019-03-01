@@ -49,6 +49,7 @@ export type SectionProps = {
 export type TitleProps = {
   children: Node
   className?: string
+  href?: string
   isOpen: boolean
   isPage: boolean
   isSeamless: boolean
@@ -56,6 +57,7 @@ export type TitleProps = {
   onClose?: (uuid: string) => void
   setOpen: (uuid: string, isOpen?: boolean) => void
   size?: Sizes
+  to?: string
   uuid: string
 }
 

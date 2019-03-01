@@ -8,6 +8,7 @@ export const AccordionUI = styled('div')`
   ${baseStyles};
   border: 1px solid rgba(193, 203, 212, 0.7);
   border-radius: 4px;
+  overflow: hidden;
 
   &.is-seamless {
     border: none;
@@ -80,52 +81,67 @@ export const SectionUI = styled('div')`
   }
 `
 
-export const TitleUI = styled('div')`
-  ${baseStyles};
-  cursor: pointer;
-  padding: 18px 20px;
+export const makeTitleUI = (selector: 'div') => {
+  return styled(selector)`
+    ${baseStyles};
+    color: currentColor;
+    cursor: pointer;
+    display: block;
+    padding: 18px 20px;
+    text-decoration: none;
 
-  &:hover,
-  &:focus,
-  &.is-open {
-    background-color: #f9fafa;
-  }
+    &:hover,
+    &:focus,
+    &.is-open {
+      background-color: #f9fafa;
+      color: currentColor;
+      text-decoration: none;
+    }
 
-  &.is-open {
-    border-bottom: 1px solid rgba(193, 203, 212, 0.7);
+    &.is-open {
+      border-bottom: 1px solid rgba(193, 203, 212, 0.7);
+
+      &.is-link {
+        border-bottom: none;
+      }
+
+      &.is-seamless {
+        border-bottom-color: transparent;
+      }
+    }
+
+    &.is-link {
+      outline: none;
+    }
+
+    &.is-md {
+      padding: 14px 20px;
+    }
+
+    &.is-sm {
+      padding: 8px 20px;
+    }
+
+    &.is-xs {
+      padding: 6px 20px;
+    }
 
     &.is-seamless {
-      border-bottom-color: transparent;
+      padding-left: 0;
+      padding-right: 0;
     }
-  }
 
-  &.is-md {
-    padding: 14px 20px;
-  }
+    &.is-page {
+      padding-left: 50px;
+      padding-right: 50px;
 
-  &.is-sm {
-    padding: 8px 20px;
-  }
-
-  &.is-xs {
-    padding: 6px 20px;
-  }
-
-  &.is-seamless {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  &.is-page {
-    padding-left: 50px;
-    padding-right: 50px;
-
-    ${breakpoint(
-      PageConfig.breakpoint.widescreen,
-      `
+      ${breakpoint(
+        PageConfig.breakpoint.widescreen,
+        `
       padding-left: 100px;
       padding-right: 100px;
     `
-    )};
-  }
-`
+      )};
+    }
+  `
+}
