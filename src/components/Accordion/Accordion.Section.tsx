@@ -1,19 +1,18 @@
-// @flow
-import type { SectionProps } from './types'
-import React, { Children, cloneElement, Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { BEM, classNames } from '../../utilities/classNames'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import propConnect from '../PropProvider/propConnect'
+import { classNames } from '../../utilities/classNames'
+import { isComponentNamed } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY, withUuid } from './utils'
-import { SectionUI } from './styles/Accordion.css.js'
+import { COMPONENT_KEY, withUuid } from './Accordion.utils'
+import { SectionProps } from './Accordion.types'
+import { SectionUI } from './Accordion.css'
 
-const bem = BEM('c-Accordion')
 const nextUuid = createUniqueIDFactory('AccordionSection')
 
 export const classNameStrings = {
-  baseComponentClassName: bem.element('Section'),
+  baseComponentClassName: 'c-Accordion__Section',
   isOpenClassName: 'is-open',
   isSeamlessClassName: 'is-seamless',
 }
@@ -36,8 +35,11 @@ const getComponentClassName = ({
   )
 }
 
-class Section extends Component<SectionProps> {
+export class Section extends React.Component<SectionProps> {
   static defaultProps = {
+    isOpen: false,
+    isPage: false,
+    isSeamless: false,
     sections: {},
     setOpen: noop,
   }
@@ -80,12 +82,12 @@ class Section extends Component<SectionProps> {
     }
 
     const content =
-      Children.count(children) > 0
-        ? Children.map(children, child => {
+      React.Children.count(children) > 0
+        ? React.Children.map(children, child => {
             const extraProps = isComponentNamed(child, COMPONENT_KEY.Title)
               ? { setOpen }
               : { duration }
-            return cloneElement(child, {
+            return React.cloneElement(child, {
               ...child.props,
               ...extraChildProps,
               ...extraProps,
@@ -103,6 +105,8 @@ class Section extends Component<SectionProps> {
 
 const enhancedSection = withUuid(nextUuid)(Section)
 
-namespaceComponent(COMPONENT_KEY.Section)(enhancedSection)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Section)(
+  enhancedSection
+)
 
-export default enhancedSection
+export default PropConnectedComponent

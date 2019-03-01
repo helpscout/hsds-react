@@ -1,18 +1,15 @@
-// @flow
-import type { BodyProps } from './types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Collapsible from '../Collapsible'
-import { BEM, classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import propConnect from '../PropProvider/propConnect'
+import Collapsible from '../Collapsible/index'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { BodyUI } from './styles/Accordion.css.js'
-import { COMPONENT_KEY } from './utils'
-
-const bem = BEM('c-Accordion__Section')
+import { BodyUI } from './Accordion.css'
+import { BodyProps } from './Accordion.types'
+import { COMPONENT_KEY } from './Accordion.utils'
 
 export const classNameStrings = {
-  baseComponentClassName: bem.element('Body'),
+  baseComponentClassName: 'c-Accordion__Section__Body',
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
@@ -52,8 +49,11 @@ const getComponentClassName = ({
   )
 }
 
-class Body extends Component<BodyProps> {
+class Body extends React.Component<BodyProps> {
   static defaultProps = {
+    isOpen: false,
+    isPage: false,
+    isSeamless: false,
     onOpen: noop,
     onClose: noop,
   }
@@ -103,6 +103,6 @@ class Body extends Component<BodyProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Body)(Body)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Body)(Body)
 
-export default Body
+export default PropConnectedComponent

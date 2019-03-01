@@ -1,9 +1,8 @@
-// @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
-import styled from '../../styled'
+import baseStyles from '../../styles/resets/baseStyles.css'
+import { breakpoint } from '../../styles/mixins/breakpoints.css'
+import styled from '../styled'
 
-import PageConfig from '../../Page/styles/Page.config.css'
+import PageConfig from '../Page/styles/Page.config.css'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};

@@ -1,10 +1,10 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import Accordion from '../Accordion'
+import { Accordion } from '../Accordion'
 import Collapsible from '../../Collapsible'
 import Section from '../Section'
-import Title, { classNameStrings as titleClassNames } from '../Title'
-import Body, { classNameStrings as classNames } from '../Body'
+import { Title, classNameStrings as titleClassNames } from '../Accordion.Title'
+import { Body, classNameStrings as classNames } from '../Accordion.Body'
 
 describe('ClassNames', () => {
   test('Has default className', () => {

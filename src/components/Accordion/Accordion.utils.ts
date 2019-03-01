@@ -1,5 +1,5 @@
-import type { WithUuidProps, WithUuidState } from './types'
-import React, { Component } from 'react'
+import { WithUuidProps, WithUuidState } from './Accordion.types'
+import * as React from 'react'
 
 export const COMPONENT_KEY = {
   Accordion: 'Accordion',
@@ -9,15 +9,16 @@ export const COMPONENT_KEY = {
 }
 
 export const withUuid = (nextUuid: Function) => (
-  WrappedComponent: Element<typeof Section>
-): Element<typeof Section> => {
-  class WithUuid extends Component<WithUuidProps, WithUuidState> {
+  WrappedComponent: any
+): any => {
+  class WithUuid extends React.Component<WithUuidProps, WithUuidState> {
     state = {
       uuid: nextUuid(),
     }
 
     render() {
       const { uuid } = this.state
+
       return React.createElement(WrappedComponent, {
         ...this.props,
         uuid,

@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Accordion from '../Accordion'
-import Section from '../Section'
-import Title, { classNameStrings as classNames } from '../Title'
+import { Accordion } from '../Accordion'
+import { Section } from '../Accordion.Section'
+import { Title, classNameStrings as classNames } from '../Accordion.Title'
 import Keys from '../../../constants/Keys'
 
 describe('ClassNames', () => {

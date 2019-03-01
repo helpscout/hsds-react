@@ -1,20 +1,17 @@
-// @flow
-import type { TitleProps } from './types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
-import { BEM, classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { TitleUI } from './styles/Accordion.css.js'
-import { COMPONENT_KEY } from './utils'
-
-const bem = BEM('c-Accordion__Section')
+import { TitleUI } from './Accordion.css'
+import { TitleProps } from './Accordion.types'
+import { COMPONENT_KEY } from './Accordion.utils'
 
 export const classNameStrings = {
-  baseComponentClassName: bem.element('Title'),
+  baseComponentClassName: 'c-Accordion__Section__Title',
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
@@ -54,20 +51,25 @@ const getComponentClassName = ({
   )
 }
 
-class Title extends Component<TitleProps> {
+class Title extends React.Component<TitleProps> {
   static defaultProps = {
+    isOpen: false,
+    isPage: false,
+    isSeamless: false,
     setOpen: noop,
+    onOpen: noop,
+    onClose: noop,
   }
 
   static displayName = 'AccordionSectionTitle'
 
-  handleClick = (event: Event | SyntheticKeyboardEvent<HTMLElement>) => {
+  handleClick = (event: Event | KeyboardEvent) => {
     event && event.preventDefault()
     const { isOpen, setOpen, uuid } = this.props
     setOpen(uuid, !isOpen)
   }
 
-  handleKeyPress = (event: SyntheticKeyboardEvent<HTMLElement>) => {
+  handleKeyPress = (event: KeyboardEvent) => {
     const { ENTER, SPACE } = Keys
     /* istanbul ignore else */
     if (event && (event.keyCode === ENTER || event.keyCode === SPACE)) {
@@ -121,6 +123,6 @@ class Title extends Component<TitleProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Title)(Title)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Title)(Title)
 
-export default Title
+export default PropConnectedComponent

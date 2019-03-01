@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Accordion from '../Accordion'
-import Section, { classNameStrings as classNames } from '../Section'
+import { Accordion } from '../Accordion'
+import { Section, classNameStrings as classNames } from '../Accordion, Section'
 
 describe('ClassNames', () => {
   test('Has default className', () => {
