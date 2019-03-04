@@ -137,7 +137,7 @@ const Item = (props: Props) => {
     <div
       className={contentClassName}
       dangerouslySetInnerHTML={{
-        __html: newlineToHTML(autolink(escapeHTML(body))),
+        __html: autolink(newlineToHTML(escapeHTML(body))),
       }}
     />
   ) : (

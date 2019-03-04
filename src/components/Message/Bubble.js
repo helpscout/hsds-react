@@ -116,7 +116,7 @@ export const Bubble = (props: Props, context: Context) => {
     <MessageBubbleBody
       className="c-MessageBubble__body"
       dangerouslySetInnerHTML={{
-        __html: newlineToHTML(autolink(escapeHTML(body))),
+        __html: autolink(newlineToHTML(escapeHTML(body))),
       }}
     />
   ) : (

@@ -30,7 +30,7 @@ const LineItem = (props: Props) => {
   const contentMarkup = body ? (
     <span
       dangerouslySetInnerHTML={{
-        __html: newlineToHTML(autolink(escapeHTML(body))),
+        __html: autolink(newlineToHTML(escapeHTML(body))),
       }}
     />
   ) : (
