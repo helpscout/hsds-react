@@ -1,12 +1,13 @@
+import styled from '../styled'
 import baseStyles from '../../styles/resets/baseStyles.css'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
-import styled from '../styled'
+import { getColor } from '../../styles/utilities/color'
 
 import PageConfig from '../Page/styles/Page.config.css'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};
-  border: 1px solid rgba(193, 203, 212, 0.7);
+  border: 1px solid ${getColor('border')};
   border-radius: 4px;
   overflow: hidden;
 
@@ -73,7 +74,7 @@ export const BodyUI = styled('div')`
 export const SectionUI = styled('div')`
   ${baseStyles};
 
-  border-bottom: 1px solid rgba(193, 203, 212, 0.7);
+  border-bottom: 1px solid ${getColor('border')};
 
   &.is-seamless,
   &:last-child {
@@ -99,7 +100,7 @@ export const makeTitleUI = (selector: 'div') => {
     }
 
     &.is-open {
-      border-bottom: 1px solid rgba(193, 203, 212, 0.7);
+      border-bottom: 1px solid ${getColor('border')};
 
       &.is-link {
         border-bottom: none;
