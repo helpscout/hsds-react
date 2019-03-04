@@ -80,7 +80,7 @@ export default {
         type: 'customer',
         id: 498747,
       },
-      body: "'Ello, Miss?",
+      body: "'Ello, <em>Miss?</em> http://www.helpscout.com",
       params: [],
       createdAt: '2018-02-09T19:46:05.705677Z',
       attachments: [],
