@@ -97,7 +97,6 @@
     "dash-get": "1.0.2",
     "highlight.js": "9.12.0",
     "linkifyjs": "^2.1.8",
-    "memoize-one": "^5.0.0",
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
     "prop-types": "^15",
