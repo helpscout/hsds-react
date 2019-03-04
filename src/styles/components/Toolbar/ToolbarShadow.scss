@@ -1,21 +1,2 @@
-.c-ToolbarShadow {
-  @import "../../resets/base";
-  $size: 8px;
-
-  background: linear-gradient(to bottom, black, rgba(black, 0));
-  height: $size;
-  opacity: 0.04;
-  position: absolute;
-  width: 100%;
-  z-index: 1;
-
-  &.is-placement-top {
-    bottom: -($size);
-    background: linear-gradient(to bottom, black, rgba(black, 0));
-  }
-
-  &.is-placement-bottom {
-    top: -($size);
-    background: linear-gradient(to top, black, rgba(black, 0));
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

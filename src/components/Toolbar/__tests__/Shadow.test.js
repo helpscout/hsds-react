@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Shadow from '../Shadow'
+import { Shadow } from '../Toolbar.Shadow'
 
 describe('ClassName', () => {
   test('Has default className', () => {

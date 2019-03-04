@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.13.3",
+  "version": "2.14.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -46,6 +46,16 @@
     "jest": "node scripts/test.js --env=jsdom ",
     "lint": "npm run lint:js",
     "lint:js": "eslint src/**/*.js --cache",
+    "open": "open ./",
+    "open:coverage": "open ./coverage/lcov-report/index.html",
+    "open:cov": "npm run open:coverage",
+    "open:pr": "open https://github.com/helpscout/hsds-react/pulls",
+    "open:prs": "npm run open:pr",
+    "open:issues": "open https://github.com/helpscout/hsds-react/issues",
+    "open:release": "open https://github.com/helpscout/hsds-react/releases",
+    "open:releases": "npm run open:release",
+    "new:issue": "open https://github.com/helpscout/hsds-react/issues/new",
+    "new:pr": "open https://github.com/helpscout/hsds-react/compare",
     "pretty": "npm run prettier",
     "remake:component": "remake component --output=src/components",
     "remake:story": "remake story --output=stories",
@@ -74,7 +84,7 @@
     "react-router-dom": "4.0.0-4.3.1"
   },
   "dependencies": {
-    "@helpscout/fancy": "2.2.4",
+    "@helpscout/fancy": "2.2.5",
     "@helpscout/react-utils": "1.0.6",
     "@helpscout/wedux": "0.0.11",
     "@seedcss/seed-button": "0.0.6",

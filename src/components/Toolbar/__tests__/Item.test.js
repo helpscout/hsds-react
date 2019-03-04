@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Item from '../Item'
+import { Item } from '../Toolbar.Item'
 import { Flexy } from '../../index'
 
 describe('ClassName', () => {

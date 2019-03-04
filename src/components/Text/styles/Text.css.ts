@@ -85,7 +85,7 @@ function makeShadeStyles(): string {
   return forEach(
     TEXT_SHADES,
     shade => `
-    &.is-${shade} {
+    &.is-shade-${shade} {
       color: ${getColor('text', shade)};
     }
   `
