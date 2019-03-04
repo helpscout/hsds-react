@@ -5,6 +5,7 @@ const palette = colorway
 const text = {
   default: 'currentColor',
   subtle: palette.charcoal['500'],
+  slightlyMuted: palette.charcoal['400'],
   muted: palette.charcoal['300'],
   faint: palette.charcoal['200'],
   extraMuted: palette.grey['600'],
