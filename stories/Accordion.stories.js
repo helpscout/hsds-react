@@ -178,14 +178,25 @@ stories.add('uses multiple custom ids', () => {
 
 stories.add('Row (Link)', () => {
   return (
-    <Accordion>
-      <Accordion.Section>
-        <Accordion.Title to="/">
-          <Text truncate weight={700}>
-            Words
-          </Text>
-        </Accordion.Title>
-      </Accordion.Section>
-    </Accordion>
+    <Page title="Accordion">
+      <Page.Card>
+        <Accordion isSeamless>
+          <Accordion.Section>
+            <Accordion.Title to="/">
+              <Text truncate weight={700}>
+                Section Row One
+              </Text>
+            </Accordion.Title>
+          </Accordion.Section>
+          <Accordion.Section>
+            <Accordion.Title to="/">
+              <Text truncate weight={700}>
+                Section Row Two
+              </Text>
+            </Accordion.Title>
+          </Accordion.Section>
+        </Accordion>
+      </Page.Card>
+    </Page>
   )
 })
