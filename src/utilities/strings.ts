@@ -183,6 +183,8 @@ export const convertLinksToHTML = (string: string): string => {
         url = `http://${url}`
       }
 
+      // Adding target blank and rel noopener for external links
+      // See: https://developers.google.com/web/tools/lighthouse/audits/noopener
       return `<a href="${url}" target="_blank" rel="noopener">${match}</a>`
     }
   )
