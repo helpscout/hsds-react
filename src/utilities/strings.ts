@@ -1,5 +1,4 @@
 import { isString } from './is'
-import linkifyHtml from 'linkifyjs/lib/linkify-html'
 
 export const nameToInitials = (name: string = ''): string => {
   // Returning early if undefined to avoid casting undefined to "undefined"
@@ -169,9 +168,6 @@ export const escapeHTML = (string: string): string => {
 
 /**
  * Autolinks URLs in the given string.
- *
- * This wraps the linkifyjs library so that if we change the underlying library
- * we only need to change it in one place.
  *
  * @param {string} string
  *
