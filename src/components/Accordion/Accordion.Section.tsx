@@ -1,8 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY, withUuid } from './Accordion.utils'
@@ -71,33 +71,19 @@ export class Section extends React.Component<SectionProps> {
       ? sections[sectionId]
       : this.props.isOpen
     const componentClassName = getComponentClassName({ ...this.props, isOpen })
-    const extraChildProps = {
-      onOpen,
-      onClose,
-      isOpen,
-      isPage,
-      isSeamless,
-      size,
+
+    const childProps = {
       uuid: sectionId,
     }
 
-    const content =
-      React.Children.count(children) > 0
-        ? React.Children.map(children, child => {
-            const extraProps = isComponentNamed(child, COMPONENT_KEY.Title)
-              ? { setOpen }
-              : { duration }
-            return React.cloneElement(child, {
-              ...child.props,
-              ...extraChildProps,
-              ...extraProps,
-            })
-          })
-        : null
+    const propProviderValue = {
+      [COMPONENT_KEY.Title]: childProps,
+      [COMPONENT_KEY.Body]: childProps,
+    }
 
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>
-        {content}
+        <PropProvider value={propProviderValue}>{children}</PropProvider>
       </SectionUI>
     )
   }

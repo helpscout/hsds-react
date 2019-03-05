@@ -28,3 +28,18 @@ export const withUuid = (nextUuid: Function) => (
 
   return WithUuid
 }
+
+export const mapConnectedPropsAsProps = connectedProps => {
+  const { isOpen: isOpenProp, sections, uuid, ...rest } = connectedProps
+  let isOpen = isOpenProp
+
+  if (sections) {
+    isOpen = Object.keys(sections).length ? sections[uuid] : isOpenProp
+  }
+
+  return {
+    ...rest,
+    isOpen,
+    uuid,
+  }
+}

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { AccordionProps, AccordionState } from './Accordion.types'
+import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import Body from './Accordion.Body'
 import Section from './Accordion.Section'
@@ -123,6 +124,31 @@ export class Accordion extends React.PureComponent<
     })
   }
 
+  getSubComponentProps() {
+    const { duration, isPage, isSeamless, size } = this.props
+    const { sections } = this.state
+
+    return {
+      duration,
+      isPage,
+      isSeamless,
+      onOpen: this.onOpen,
+      onClose: this.onClose,
+      sections,
+      setOpen: this.setOpen,
+      size,
+    }
+  }
+
+  getPropProviderProps = () => {
+    const props = this.getSubComponentProps()
+    return {
+      [COMPONENT_KEY.Section]: props,
+      [COMPONENT_KEY.Title]: props,
+      [COMPONENT_KEY.Body]: props,
+    }
+  }
+
   render() {
     const {
       allowMultiple,
@@ -134,28 +160,7 @@ export class Accordion extends React.PureComponent<
       size,
       ...rest
     } = this.props
-    const { sections } = this.state
     const componentClassName = getComponentClassName(this.props)
-    const extraProps = {
-      duration,
-      isPage,
-      isSeamless,
-      onOpen: this.onOpen,
-      onClose: this.onClose,
-      sections,
-      setOpen: this.setOpen,
-      size,
-    }
-
-    const content =
-      React.Children.count(children) > 0
-        ? React.Children.map(children, child =>
-            React.cloneElement(child, {
-              ...child.props,
-              ...extraProps,
-            })
-          )
-        : null
 
     return (
       <AccordionUI
@@ -163,7 +168,9 @@ export class Accordion extends React.PureComponent<
         className={componentClassName}
         role="tablist"
       >
-        {content}
+        <PropProvider value={this.getPropProviderProps()}>
+          {children}
+        </PropProvider>
       </AccordionUI>
     )
   }

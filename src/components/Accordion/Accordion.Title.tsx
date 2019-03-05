@@ -10,7 +10,7 @@ import { memoize } from '../../utilities/memoize'
 import { noop } from '../../utilities/other'
 import { makeTitleUI } from './Accordion.css'
 import { TitleProps } from './Accordion.types'
-import { COMPONENT_KEY } from './Accordion.utils'
+import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
@@ -145,6 +145,8 @@ class Title extends React.Component<TitleProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Title)(Title)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Title, {
+  mapConnectedPropsAsProps,
+})(Title)
 
 export default PropConnectedComponent

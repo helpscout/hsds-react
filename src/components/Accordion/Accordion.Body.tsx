@@ -6,7 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { BodyUI } from './Accordion.css'
 import { BodyProps } from './Accordion.types'
-import { COMPONENT_KEY } from './Accordion.utils'
+import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Body',
@@ -63,7 +63,7 @@ class Body extends React.Component<BodyProps> {
   handleOnOpen = () => {
     const { onOpen, uuid } = this.props
 
-    onOpen(uuid)
+    requestAnimationFrame(() => onOpen(uuid))
   }
 
   // This method is difficult to test through this component in enzyme
@@ -71,7 +71,7 @@ class Body extends React.Component<BodyProps> {
   handleOnClose = () => {
     const { onClose, uuid } = this.props
 
-    onClose(uuid)
+    requestAnimationFrame(() => onClose(uuid))
   }
 
   render() {
@@ -103,6 +103,8 @@ class Body extends React.Component<BodyProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Body)(Body)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Body, {
+  mapConnectedPropsAsProps,
+})(Body)
 
 export default PropConnectedComponent

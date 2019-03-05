@@ -93,6 +93,7 @@ stories.add('uses custom ids', () => {
     }
 
     updateSectionId = value => {
+      console.log(value)
       this.setState({
         value: parseInt(value, 10),
       })
