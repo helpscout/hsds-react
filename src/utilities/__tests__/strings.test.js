@@ -1,5 +1,5 @@
 import {
-  autolink,
+  convertLinksToHTML,
   escapeHTML,
   isWord,
   nameToInitials,
@@ -183,7 +183,7 @@ describe('escapeHTML', () => {
   })
 })
 
-describe('autolink', () => {
+describe('convertLinksToHTML', () => {
   const withUrls = [
     [
       'www.example.com',
@@ -377,7 +377,7 @@ describe('autolink', () => {
 
   withUrls.forEach(fixture => {
     it(`should autolink URLs in "${fixture[0]}"`, () => {
-      expect(autolink(fixture[0])).toEqual(fixture[1])
+      expect(convertLinksToHTML(fixture[0])).toEqual(fixture[1])
     })
   })
 
@@ -395,7 +395,7 @@ describe('autolink', () => {
 
   withoutUrls.forEach(fixture => {
     it(`should not autolink non URLs "${fixture}"`, () => {
-      expect(autolink(fixture)).toEqual(fixture)
+      expect(convertLinksToHTML(fixture)).toEqual(fixture)
     })
   })
 })

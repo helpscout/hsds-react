@@ -2,6 +2,7 @@
 import type { MessageBubble, MessageThemeContext } from './types'
 import React from 'react'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
+import compose from '@helpscout/react-utils/dist/compose'
 import Heading from '../Heading'
 import LoadingDots from '../LoadingDots'
 import Icon from '../Icon'
@@ -10,7 +11,7 @@ import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import {
-  autolink,
+  convertLinksToHTML,
   escapeHTML,
   isWord,
   newlineToHTML,
@@ -34,6 +35,8 @@ const MessageBubbleFrom = styled('div')(FromCSS)
 const MessageBubbleIconWrapper = styled('div')(IconWrapperCSS)
 const MessageBubbleTitle = styled(Heading)(TitleCSS)
 const MessageBubbleTyping = styled('div')(TypingCSS)
+
+const enhanceBody = compose(convertLinksToHTML, newlineToHTML, escapeHTML)
 
 export const Bubble = (props: Props, context: Context) => {
   const {
@@ -116,7 +119,7 @@ export const Bubble = (props: Props, context: Context) => {
     <MessageBubbleBody
       className="c-MessageBubble__body"
       dangerouslySetInnerHTML={{
-        __html: autolink(newlineToHTML(escapeHTML(body))),
+        __html: enhanceBody(body),
       }}
     />
   ) : (

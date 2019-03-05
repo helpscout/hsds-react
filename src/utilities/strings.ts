@@ -167,13 +167,11 @@ export const escapeHTML = (string: string): string => {
 }
 
 /**
- * Autolinks URLs in the given string.
- *
  * @param {string} string
  *
  * @returns {string}
  */
-export const autolink = (string: string): string => {
+export const convertLinksToHTML = (string: string): string => {
   const pattern = /(?:(https?:\/\/)|www\d{0,3}\.|www-|[a-z0-9.-]+\.[a-z]{2,4}(?=\/))(?:[^\s()<>]+)*(?:[^\s`!-()\[\]{};:'".,<>?«»“”‘’])/giu
 
   return string.replace(

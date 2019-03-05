@@ -8,7 +8,12 @@ import Heading from '../Heading'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { autolink, escapeHTML, newlineToHTML } from '../../utilities/strings'
+import {
+  convertLinksToHTML,
+  escapeHTML,
+  newlineToHTML,
+} from '../../utilities/strings'
+import compose from '@helpscout/react-utils/dist/compose'
 
 export const ITEM_TYPES = {
   lineItem: 'line_item',
@@ -37,6 +42,8 @@ type Props = {
   timestamp?: string,
   type?: 'line_item' | 'message' | 'note',
 }
+
+const enhanceBody = compose(convertLinksToHTML, newlineToHTML, escapeHTML)
 
 const Item = (props: Props) => {
   const {
@@ -137,7 +144,7 @@ const Item = (props: Props) => {
     <div
       className={contentClassName}
       dangerouslySetInnerHTML={{
-        __html: autolink(newlineToHTML(escapeHTML(body))),
+        __html: enhanceBody(body),
       }}
     />
   ) : (
