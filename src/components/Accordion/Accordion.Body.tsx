@@ -63,7 +63,7 @@ class Body extends React.Component<BodyProps> {
   handleOnOpen = () => {
     const { onOpen, uuid } = this.props
 
-    requestAnimationFrame(() => onOpen(uuid))
+    onOpen(uuid)
   }
 
   // This method is difficult to test through this component in enzyme
@@ -71,21 +71,11 @@ class Body extends React.Component<BodyProps> {
   handleOnClose = () => {
     const { onClose, uuid } = this.props
 
-    requestAnimationFrame(() => onClose(uuid))
+    onClose(uuid)
   }
 
   render() {
-    const {
-      className,
-      duration,
-      isOpen,
-      isPage,
-      onOpen,
-      onClose,
-      size,
-      uuid,
-      ...rest
-    } = this.props
+    const { duration, isOpen, uuid, ...rest } = this.props
     const id = `accordion__section__body--${uuid}`
     const componentClassName = getComponentClassName(this.props)
 

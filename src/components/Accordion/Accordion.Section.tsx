@@ -37,6 +37,7 @@ const getComponentClassName = ({
 
 export class Section extends React.Component<SectionProps> {
   static defaultProps = {
+    isLink: false,
     isOpen: false,
     isPage: false,
     isSeamless: false,
@@ -49,41 +50,41 @@ export class Section extends React.Component<SectionProps> {
     return id || uuid
   }
 
-  render() {
-    const {
-      className,
-      duration,
-      id,
-      isPage,
-      isSeamless,
-      children,
-      onOpen,
-      onClose,
-      sections,
-      setOpen,
-      size,
-      uuid,
-      ...rest
-    } = this.props
-
+  getIsOpen() {
+    const { isLink, sections } = this.props
     const sectionId = this.getId()
-    const isOpen = Object.keys(sections).length
+
+    if (isLink) {
+      return false
+    }
+
+    return !!(Object.keys(sections).length
       ? sections[sectionId]
-      : this.props.isOpen
-    const componentClassName = getComponentClassName({ ...this.props, isOpen })
+      : this.props.isOpen)
+  }
+
+  getProviderProps() {
+    const sectionId = this.getId()
 
     const childProps = {
       uuid: sectionId,
     }
 
-    const propProviderValue = {
+    return {
       [COMPONENT_KEY.Title]: childProps,
       [COMPONENT_KEY.Body]: childProps,
     }
+  }
+
+  render() {
+    const { id, children, ...rest } = this.props
+
+    const isOpen = this.getIsOpen()
+    const componentClassName = getComponentClassName({ ...this.props, isOpen })
 
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>
-        <PropProvider value={propProviderValue}>{children}</PropProvider>
+        <PropProvider value={this.getProviderProps()}>{children}</PropProvider>
       </SectionUI>
     )
   }

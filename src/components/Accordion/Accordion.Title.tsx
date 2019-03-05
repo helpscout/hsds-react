@@ -44,10 +44,13 @@ const getComponentClassName = ({
     isSizeMdClassName,
     isSizeLgClassName,
   } = classNameStrings
+
+  const isLink = href || to
+
   return classNames(
     baseComponentClassName,
-    (href || to) && isLinkClassName,
-    isOpen && isOpenClassName,
+    isLink && isLinkClassName,
+    !isLink && isOpen && isOpenClassName,
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
     size && size === 'xs' && isSizeXsClassName,
@@ -72,7 +75,13 @@ class Title extends React.Component<TitleProps> {
 
   makeTitleUI = memoize(makeTitleUI)
 
-  isLink() {
+  getIsOpen() {
+    if (this.getIsLink()) return false
+
+    return this.props.isOpen
+  }
+
+  getIsLink() {
     return this.props.href || this.props.to
   }
 
@@ -91,36 +100,40 @@ class Title extends React.Component<TitleProps> {
   }
 
   getTitleUI() {
-    const selector = this.isLink() ? Link : 'div'
+    const selector = this.getIsLink() ? Link : 'div'
 
     return this.makeTitleUI(selector)
   }
 
-  render() {
-    const {
-      className,
-      children,
-      isOpen,
-      isPage,
-      onOpen,
-      onClose,
-      setOpen,
+  renderIcon() {
+    const isOpen = this.getIsOpen()
+    const isLink = this.getIsLink()
+
+    let name = isOpen ? 'caret-up' : 'caret-down'
+    if (isLink) {
+      name = 'caret-right'
+    }
+
+    const size = isLink ? 14 : 18
+
+    const iconProps = {
+      faint: !isOpen,
+      name,
       size,
-      uuid,
-      ...rest
-    } = this.props
+    }
+
+    return <Icon {...iconProps} />
+  }
+
+  render() {
+    const { children, isOpen, uuid, ...rest } = this.props
 
     const id = `accordion__section__title--${uuid}`
     const ariaControls = `accordion__section__body--${uuid}`
     const componentClassName = getComponentClassName(this.props)
-    const iconProps = {
-      faint: !isOpen,
-      name: isOpen ? 'caret-up' : 'caret-down',
-      size: 18,
-    }
 
     const TitleUI = this.getTitleUI()
-    const restProps = this.isLink() ? rest : getValidProps(rest)
+    const restProps = this.getIsLink() ? rest : getValidProps(rest)
 
     return (
       <TitleUI
@@ -136,17 +149,26 @@ class Title extends React.Component<TitleProps> {
       >
         <Flexy>
           <Flexy.Block>{children}</Flexy.Block>
-          <Flexy.Item>
-            <Icon {...iconProps} />
-          </Flexy.Item>
+          <Flexy.Item>{this.renderIcon()}</Flexy.Item>
         </Flexy>
       </TitleUI>
     )
   }
 }
 
+const remappedProps = (props, ownProps) => {
+  const remappedConnectedProps = mapConnectedPropsAsProps(props)
+  const isLink = ownProps.to || ownProps.href
+  const isSeamless = isLink ? false : remappedConnectedProps.isSeamless
+
+  return {
+    ...remappedConnectedProps,
+    isSeamless,
+  }
+}
+
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Title, {
-  mapConnectedPropsAsProps,
+  mapConnectedPropsAsProps: remappedProps,
 })(Title)
 
 export default PropConnectedComponent

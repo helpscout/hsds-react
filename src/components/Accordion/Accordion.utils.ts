@@ -39,7 +39,7 @@ export const mapConnectedPropsAsProps = connectedProps => {
 
   return {
     ...rest,
-    isOpen,
+    isOpen: !!isOpen,
     uuid,
   }
 }

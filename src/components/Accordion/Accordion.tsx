@@ -5,6 +5,7 @@ import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import Body from './Accordion.Body'
 import Section from './Accordion.Section'
+import Link from './Accordion.Link'
 import Title from './Accordion.Title'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -58,6 +59,7 @@ export class Accordion extends React.PureComponent<
   AccordionState
 > {
   static Body = Body
+  static Link = Link
   static Section = Section
   static Title = Title
 
@@ -150,16 +152,7 @@ export class Accordion extends React.PureComponent<
   }
 
   render() {
-    const {
-      allowMultiple,
-      className,
-      children,
-      duration,
-      isPage,
-      isSeamless,
-      size,
-      ...rest
-    } = this.props
+    const { children, ...rest } = this.props
     const componentClassName = getComponentClassName(this.props)
 
     return (

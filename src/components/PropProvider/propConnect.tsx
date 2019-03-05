@@ -25,7 +25,7 @@ export interface Props {
 
 const defaultOptions = {
   pure: true,
-  mapConnectedPropsAsProps: props => props,
+  mapConnectedPropsAsProps: (props: any, ownProps: any) => props,
 }
 
 /**
@@ -117,11 +117,16 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
       }
 
       render() {
+        const { wrappedRef, ...ownProps } = this.props
+
         return (
           <Context.Consumer>
             {contextProps => (
               <WrappedComponent
-                {...mapConnectedPropsAsProps(this.getMergedProps(contextProps))}
+                {...mapConnectedPropsAsProps(
+                  this.getMergedProps(contextProps),
+                  ownProps
+                )}
               />
             )}
           </Context.Consumer>

@@ -35,6 +35,7 @@ export type SectionProps = {
   className?: string
   duration?: number
   id?: string
+  isLink: boolean
   isPage: boolean
   isOpen: boolean
   isSeamless: boolean

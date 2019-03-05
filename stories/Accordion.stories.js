@@ -93,7 +93,6 @@ stories.add('uses custom ids', () => {
     }
 
     updateSectionId = value => {
-      console.log(value)
       this.setState({
         value: parseInt(value, 10),
       })
@@ -182,20 +181,16 @@ stories.add('Row (Link)', () => {
     <Page title="Accordion">
       <Page.Card>
         <Accordion isSeamless>
-          <Accordion.Section>
-            <Accordion.Title to="/">
-              <Text truncate weight={700}>
-                Section Row One
-              </Text>
-            </Accordion.Title>
-          </Accordion.Section>
-          <Accordion.Section>
-            <Accordion.Title to="/">
-              <Text truncate weight={700}>
-                Section Row Two
-              </Text>
-            </Accordion.Title>
-          </Accordion.Section>
+          <Accordion.Link to="/">
+            <Text truncate weight={700}>
+              Link Row One
+            </Text>
+          </Accordion.Link>
+          <Accordion.Link to="/">
+            <Text truncate weight={700}>
+              Link Row Two
+            </Text>
+          </Accordion.Link>
         </Accordion>
       </Page.Card>
     </Page>
