@@ -294,7 +294,7 @@ export default {
         id: 4423,
       },
       body:
-        'Nononono, no, no! \'E\'s resting! They always look like that. See? <a target="_blank" href="https://upload.wikimedia.org/wikipedia/en/e/e7/DeadParrot.png">upload.wikimedia.org/wikipedia/en/e/e7/DeadParr...</a>',
+        "Nononono, no, no! 'E's resting! They always look like that. See? https://upload.wikimedia.org/wikipedia/en/e/e7/DeadParrot.png",
       params: [],
       createdAt: '2018-02-09T19:47:18.705677Z',
       attachments: [],
