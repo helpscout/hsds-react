@@ -35,16 +35,16 @@ describe('Children', () => {
     expect(el.text()).toContain('Hello')
   })
 
-  test('Renders dangerously-set body HTML', () => {
-    const body = '<h1 class="dangerous">Dangerous!</h1>'
-    const wrapper = mount(<LineItem body={body} />)
-    expect(wrapper.html()).toContain(body)
-  })
-
   test('Converts newlines to line break elements', () => {
     const body = 'Hello\n\nGoodbye'
     const wrapper = mount(<LineItem body={body} />)
     expect(wrapper.html()).toContain('Hello<br><br>Goodbye')
+  })
+
+  test('Escapes HTML in the body', () => {
+    const body = '<div>Mugatu</div>'
+    const wrapper = mount(<LineItem body={body} />)
+    expect(wrapper.html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
   })
 })
 

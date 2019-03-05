@@ -2,7 +2,8 @@
 import React from 'react'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { newlineToHTML } from '../../utilities/strings'
+import { escapeHTML, newlineToHTML } from '../../utilities/strings'
+import compose from '@helpscout/react-utils/dist/compose'
 
 type Props = {
   body?: string,
@@ -11,6 +12,8 @@ type Props = {
   createdAt?: string,
   timestamp?: string,
 }
+
+const enhanceBody = compose(newlineToHTML, escapeHTML)
 
 const LineItem = (props: Props) => {
   const { body, children, className, createdAt, timestamp, ...rest } = props
@@ -28,7 +31,11 @@ const LineItem = (props: Props) => {
   ) : null
 
   const contentMarkup = body ? (
-    <span dangerouslySetInnerHTML={{ __html: newlineToHTML(body) }} />
+    <span
+      dangerouslySetInnerHTML={{
+        __html: enhanceBody(body),
+      }}
+    />
   ) : (
     children
   )

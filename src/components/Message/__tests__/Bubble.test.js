@@ -139,11 +139,29 @@ describe('Content', () => {
     expect(wrapper.html()).not.toContain('Zoolander')
   })
 
-  test('Renders body as HTML', () => {
-    const html = '<div>Mugatu<br /></div>'
+  test('Renders body with autolinked URLs', () => {
+    const body = 'www.helpscout.com'
+    const wrapper = mount(<Bubble body={body} />)
+    const o = wrapper.find(ui.body).first()
+
+    expect(o.length).toBe(1)
+    expect(wrapper.html()).toContain('<a href="http://www.helpscout.com"')
+  })
+
+  test('Converts newlines to line break elements', () => {
+    const body = 'Hello\n\nGoodbye'
+    const wrapper = mount(<Bubble body={body} />)
+    const o = wrapper.find(ui.body).first()
+
+    expect(o.length).toBe(1)
+    expect(wrapper.html()).toContain('Hello<br><br>Goodbye')
+  })
+
+  test('Escapes HTML in the body', () => {
+    const html = '<div>Mugatu</div>'
     const wrapper = mount(<Bubble body={html} />)
     const o = wrapper.find(ui.body).first()
-    const parsedHTML = '<div>Mugatu<br></div>'
+    const parsedHTML = '&lt;div&gt;Mugatu&lt;/div&gt;'
 
     expect(o.length).toBe(1)
     expect(wrapper.html()).toContain(parsedHTML)
