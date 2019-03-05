@@ -84,7 +84,7 @@
     "react-router-dom": "4.0.0 - 4.3.1"
   },
   "dependencies": {
-    "@helpscout/fancy": "2.2.5",
+    "@helpscout/fancy": "2.2.6",
     "@helpscout/react-utils": "1.0.6",
     "@helpscout/wedux": "0.0.11",
     "@seedcss/seed-button": "0.0.6",
