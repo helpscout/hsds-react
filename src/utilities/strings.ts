@@ -178,11 +178,18 @@ export const escapeHTML = (string: string): string => {
  * @returns {string}
  */
 export const autolink = (string: string): string => {
-  return linkifyHtml(string, {
-    className: '',
-    linkAttributes: {
-      rel: 'noopener',
-    },
-    target: '_blank',
-  })
+  const pattern = /(?:(https?:\/\/)|www\d{0,3}\.|www-|[a-z0-9.-]+\.[a-z]{2,4}(?=\/))(?:[^\s()<>]+)*(?:[^\s`!-()\[\]{};:'".,<>?«»“”‘’])/giu
+
+  return string.replace(
+    new RegExp(pattern),
+    (match: string, scheme): string => {
+      let url = match
+      if (!scheme) {
+        // Add http as the default scheme
+        url = `http://${url}`
+      }
+
+      return `<a href="${url}" target="_blank" rel="noopener">${match}</a>`
+    }
+  )
 }
