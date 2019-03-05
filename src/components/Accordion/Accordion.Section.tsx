@@ -64,10 +64,13 @@ export class Section extends React.Component<SectionProps> {
   }
 
   getProviderProps() {
+    const { isOpen, setOpen } = this.props
     const sectionId = this.getId()
 
     const childProps = {
       uuid: sectionId,
+      isOpen,
+      setOpen,
     }
 
     return {
@@ -90,10 +93,10 @@ export class Section extends React.Component<SectionProps> {
   }
 }
 
-const enhancedSection = withUuid(nextUuid)(Section)
+export const SectionWithUuid = withUuid(nextUuid)(Section)
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Section)(
-  enhancedSection
+  SectionWithUuid
 )
 
 export default PropConnectedComponent

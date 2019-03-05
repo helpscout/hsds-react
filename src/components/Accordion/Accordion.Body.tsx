@@ -49,7 +49,7 @@ const getComponentClassName = ({
   )
 }
 
-class Body extends React.Component<BodyProps> {
+export class Body extends React.Component<BodyProps> {
   static defaultProps = {
     isOpen: false,
     isPage: false,

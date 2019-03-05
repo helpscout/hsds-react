@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Accordion } from '../Accordion'
-import { Section } from '../Accordion.Section'
-import { Title, classNameStrings as classNames } from '../Accordion.Title'
+import Accordion from '../Accordion'
+import Section, { SectionWithUuid } from '../Accordion.Section'
+import Title, { classNameStrings as classNames } from '../Accordion.Title'
 import Keys from '../../../constants/Keys'
 
 describe('ClassNames', () => {
@@ -88,25 +88,27 @@ describe('ClassNames', () => {
 })
 
 describe('setOpen', () => {
-  test('Attemps to open the section by uuid when clicked', () => {
+  test('Attempts to open the section by uuid when clicked', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Section setOpen={spy}>
+      <SectionWithUuid setOpen={spy}>
         <Title />
-      </Section>
+      </SectionWithUuid>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     const uuid = wrapper.state('uuid')
+
     o.simulate('click')
+
     expect(spy).toBeCalledWith(uuid, true)
   })
 
   test('Attempts to close the open section by uuid when clicked', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Section isOpen setOpen={spy}>
+      <SectionWithUuid isOpen setOpen={spy}>
         <Title />
-      </Section>
+      </SectionWithUuid>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     const uuid = wrapper.state('uuid')
@@ -118,9 +120,9 @@ describe('setOpen', () => {
     ;[Keys.ENTER, Keys.SPACE].forEach(keyCode => {
       const spy = jest.fn()
       const wrapper = mount(
-        <Section setOpen={spy}>
+        <SectionWithUuid setOpen={spy}>
           <Title />
-        </Section>
+        </SectionWithUuid>
       )
       const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       const uuid = wrapper.state('uuid')
@@ -133,9 +135,9 @@ describe('setOpen', () => {
     ;[Keys.ENTER, Keys.SPACE].forEach(keyCode => {
       const spy = jest.fn()
       const wrapper = mount(
-        <Section isOpen setOpen={spy}>
+        <SectionWithUuid isOpen setOpen={spy}>
           <Title />
-        </Section>
+        </SectionWithUuid>
       )
       const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       const uuid = wrapper.state('uuid')

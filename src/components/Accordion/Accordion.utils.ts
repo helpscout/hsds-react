@@ -1,5 +1,5 @@
-import { WithUuidProps, WithUuidState } from './Accordion.types'
 import * as React from 'react'
+import { WithUuidProps, WithUuidState } from './Accordion.types'
 
 export const COMPONENT_KEY = {
   Accordion: 'Accordion',
