@@ -184,7 +184,7 @@ describe('escapeHTML', () => {
 })
 
 describe('autolink', () => {
-  ;[
+  const withUrls = [
     [
       'www.example.com',
       '<a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a>',
@@ -373,12 +373,15 @@ describe('autolink', () => {
       'www.example.com www.helpscout.com',
       '<a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a> <a href="http://www.helpscout.com" target="_blank" rel="noopener">www.helpscout.com</a>',
     ],
-  ].forEach(fixture => {
+  ]
+
+  withUrls.forEach(fixture => {
     it(`should autolink URLs in "${fixture[0]}"`, () => {
       expect(autolink(fixture[0])).toEqual(fixture[1])
     })
   })
-  ;[
+
+  const withoutUrls = [
     'Lorem ipsum dolor sit amet.',
     'Lorem ipsum dolor.sit amet.',
     'Lorem ipsum dolor@sit amet',
@@ -388,7 +391,9 @@ describe('autolink', () => {
     'Lorem://ipsum',
     'Lorem://ipsum/dolor',
     'ftp://example.com',
-  ].forEach(fixture => {
+  ]
+
+  withoutUrls.forEach(fixture => {
     it(`should not autolink non URLs "${fixture}"`, () => {
       expect(autolink(fixture)).toEqual(fixture)
     })
