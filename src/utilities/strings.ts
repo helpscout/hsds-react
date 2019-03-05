@@ -112,3 +112,80 @@ export const camelCase = (string: string): string => {
       return index === 0 ? match.toLowerCase() : match.toUpperCase()
     })
 }
+
+// Taken from the React escapeTextForBrowser internal utility
+const escapeHtmlRegExp = /["'&<>]/
+
+/**
+ * Escape HTML special characters in the string for output in the browser.
+ *
+ * @param {string} string
+ * @returns {string}
+ */
+export const escapeHTML = (string: string): string => {
+  const match = escapeHtmlRegExp.exec(string)
+
+  if (!match) {
+    return string
+  }
+
+  let escape
+  let html = ''
+  let index
+  let lastIndex = 0
+
+  for (index = match.index; index < string.length; index++) {
+    switch (string.charCodeAt(index)) {
+      case 34: // "
+        escape = '&quot;'
+        break
+      case 38: // &
+        escape = '&amp;'
+        break
+      case 39: // '
+        escape = '&#x27;'
+        break
+      case 60: // <
+        escape = '&lt;'
+        break
+      case 62: // >
+        escape = '&gt;'
+        break
+      default:
+        continue
+    }
+
+    if (lastIndex !== index) {
+      html += string.substring(lastIndex, index)
+    }
+
+    lastIndex = index + 1
+    html += escape
+  }
+
+  return lastIndex !== index ? html + string.substring(lastIndex, index) : html
+}
+
+/**
+ * @param {string} string
+ *
+ * @returns {string}
+ */
+export const convertLinksToHTML = (string: string): string => {
+  const pattern = /(?:(https?:\/\/)|www\d{0,3}\.|www-|[a-z0-9.-]+\.[a-z]{2,4}(?=\/))(?:[^\s()<>]+)*(?:[^\s`!-()\[\]{};:'".,<>?«»“”‘’])/giu
+
+  return string.replace(
+    new RegExp(pattern),
+    (match: string, scheme): string => {
+      let url = match
+      if (!scheme) {
+        // Add http as the default scheme
+        url = `http://${url}`
+      }
+
+      // Adding target blank and rel noopener for external links
+      // See: https://developers.google.com/web/tools/lighthouse/audits/noopener
+      return `<a href="${url}" target="_blank" rel="noopener">${match}</a>`
+    }
+  )
+}
