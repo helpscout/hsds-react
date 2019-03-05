@@ -2,8 +2,9 @@ import styled from '../styled'
 import baseStyles from '../../styles/resets/baseStyles.css'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
 import { getColor } from '../../styles/utilities/color'
-
 import PageConfig from '../Page/styles/Page.config.css'
+import { classNameStrings as titleClassNames } from './Accordion.Title'
+import { setFontSize } from '../../styles/utilities/font'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};
@@ -85,6 +86,7 @@ export const SectionUI = styled('div')`
 export const makeTitleUI = (selector: 'div') => {
   return styled(selector)`
     ${baseStyles};
+    ${setFontSize(14)};
     color: currentColor;
     cursor: pointer;
     display: block;
@@ -94,7 +96,7 @@ export const makeTitleUI = (selector: 'div') => {
     &:hover,
     &:focus,
     &.is-open {
-      background-color: #f9fafa;
+      background-color: ${getColor('grey.200')};
       color: currentColor;
       text-decoration: none;
     }
@@ -113,6 +115,12 @@ export const makeTitleUI = (selector: 'div') => {
 
     &.is-link {
       outline: none;
+
+      &:hover {
+        .${titleClassNames.iconCaretClassName} {
+          color: ${getColor('text.slightlyMuted')};
+        }
+      }
     }
 
     &.is-md {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { text } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../src/index'
 import { faker } from '@helpscout/helix'
 
@@ -177,18 +178,21 @@ stories.add('uses multiple custom ids', () => {
 })
 
 stories.add('Row (Link)', () => {
+  const linkOneContent = text('linkOneContent', 'Link Row One')
+  const linkTwoContent = text('linkTwoContent', 'Link Row Two')
+
   return (
     <Page title="Accordion">
       <Page.Card>
         <Accordion isSeamless>
           <Accordion.Link to="/">
-            <Text truncate weight={700}>
-              Link Row One
+            <Text truncate weight={500}>
+              {linkOneContent}
             </Text>
           </Accordion.Link>
           <Accordion.Link to="/">
-            <Text truncate weight={700}>
-              Link Row Two
+            <Text truncate weight={500}>
+              {linkTwoContent}
             </Text>
           </Accordion.Link>
         </Accordion>

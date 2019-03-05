@@ -14,6 +14,7 @@ import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
+  iconCaretClassName: 'c-AccordionTitleCaretIcon',
   isLinkClassName: 'is-link',
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
@@ -117,6 +118,7 @@ class Title extends React.Component<TitleProps> {
     const size = isLink ? 14 : 18
 
     const iconProps = {
+      className: classNameStrings.iconCaretClassName,
       faint: !isOpen,
       name,
       size,
