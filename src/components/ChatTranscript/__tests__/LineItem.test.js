@@ -35,12 +35,6 @@ describe('Children', () => {
     expect(el.text()).toContain('Hello')
   })
 
-  test('Renders body with autolinked URLs', () => {
-    const body = 'www.helpscout.com'
-    const wrapper = mount(<LineItem body={body} />)
-    expect(wrapper.html()).toContain('<a href="http://www.helpscout.com"')
-  })
-
   test('Converts newlines to line break elements', () => {
     const body = 'Hello\n\nGoodbye'
     const wrapper = mount(<LineItem body={body} />)

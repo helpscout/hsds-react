@@ -2,7 +2,7 @@
 import React from 'react'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { escapeHTML } from '../../utilities/strings'
+import { escapeHTML, newlineToHTML } from '../../utilities/strings'
 
 type Props = {
   body?: string,
@@ -30,7 +30,7 @@ const LineItem = (props: Props) => {
   const contentMarkup = body ? (
     <span
       dangerouslySetInnerHTML={{
-        __html: escapeHTML(body),
+        __html: newlineToHTML(escapeHTML(body)),
       }}
     />
   ) : (
