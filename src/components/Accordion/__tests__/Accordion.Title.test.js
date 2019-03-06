@@ -146,3 +146,47 @@ describe('setOpen', () => {
     })
   })
 })
+
+describe('Link', () => {
+  test('Renders a link, if to is defined', () => {
+    const wrapper = mount(<Title to="/" isOpen={true} />)
+    const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-link')).toBeTruthy()
+  })
+
+  test('Renders a link, if href is defined', () => {
+    const wrapper = mount(<Title href="/" isOpen={true} />)
+    const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-link')).toBeTruthy()
+  })
+
+  test('Adjusts caret size, if link', () => {
+    const wrapper = mount(<Title />)
+    let icon = wrapper.find('Icon').first()
+
+    expect(icon.prop('size')).not.toBe(14)
+
+    wrapper.setProps({ href: '/' })
+    icon = wrapper.find('Icon').first()
+
+    expect(icon.prop('size')).toBe(14)
+  })
+})
+
+describe('isOpen', () => {
+  test('Renders open styles, if defined', () => {
+    const wrapper = mount(<Title isOpen={true} />)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeTruthy()
+  })
+
+  test('Always render non-open styles, if isLink', () => {
+    const wrapper = mount(<Title to="/" isOpen={true} />)
+    const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeFalsy()
+  })
+})

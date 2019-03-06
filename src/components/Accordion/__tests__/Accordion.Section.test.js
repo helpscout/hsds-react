@@ -84,3 +84,19 @@ describe('isOpen', () => {
     expect(el.hasClass(classNames.isOpenClassName)).toBe(true)
   })
 })
+
+describe('isOpen', () => {
+  test('Renders open styles, if defined', () => {
+    const wrapper = mount(<SectionWithUuid isOpen={true} />)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeTruthy()
+  })
+
+  test('Always render non-open styles, if isLink', () => {
+    const wrapper = mount(<SectionWithUuid isLink={true} isOpen={true} />)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeFalsy()
+  })
+})

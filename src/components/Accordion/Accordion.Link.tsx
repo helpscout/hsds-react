@@ -2,9 +2,11 @@ import * as React from 'react'
 import Section from './Accordion.Section'
 import Title from './Accordion.Title'
 
-const Link = props => {
+// Higher-order wrapper to render an enhanced Accordion.Section and
+// Accordion.Title
+export const Link = props => {
   const { children, isSeamless: isSeamlessProp, to, href, ...rest } = props
-  const isLink = to || href
+  const isLink = !!(to || href)
   const isSeamless = isLink ? false : isSeamlessProp
   const isOpen = false
 
