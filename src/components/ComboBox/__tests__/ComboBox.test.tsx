@@ -496,3 +496,29 @@ describe('onOpen/onClose', () => {
     expect(spy).toHaveBeenCalled()
   })
 })
+
+describe('shouldDropDirectionUpdate', () => {
+  test('Resolves to false, by default', () => {
+    const wrapper = mount(<ComboBox />)
+    const el = wrapper.find('Dropdown')
+
+    // @ts-ignore
+    expect(el.prop('shouldDropDirectionUpdate')()).toBe(false)
+  })
+
+  test('Can be customized', () => {
+    const spy = jest.fn()
+    const customShouldDropDirectionUpdate = () => {
+      spy()
+      return true
+    }
+    const wrapper = mount(
+      <ComboBox shouldDropDirectionUpdate={customShouldDropDirectionUpdate} />
+    )
+    const el = wrapper.find('Dropdown')
+
+    // @ts-ignore
+    expect(el.prop('shouldDropDirectionUpdate')()).toBe(true)
+    expect(spy).toHaveBeenCalled()
+  })
+})

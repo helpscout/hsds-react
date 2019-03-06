@@ -63,6 +63,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   selectedItem?: string | Object
   setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void
+  shouldDropDirectionUpdate: (Position: any) => boolean
   stateReducer: (...args: any[]) => void
   trigger: any
   triggerRef: (node: HTMLElement) => void

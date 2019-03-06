@@ -325,7 +325,13 @@ describe('Style/Direction', () => {
   })
 
   test('Renders dropUp styles, if defined', () => {
-    const wrapper = mount(<MenuContainer dropUp={true} />)
+    const wrapper = mount(<MenuContainer />)
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate = () => true
+
+    wrapper.setProps({ dropUp: true })
+    wrapper.update()
+
     const el = find(wrapper, baseSelector)
     const animate = wrapper.find('Animate')
 
@@ -484,5 +490,58 @@ describe('forceHideMenuNode', () => {
     wrapper.unmount()
 
     expect(placementNode.style.display).toBe('none')
+  })
+})
+
+describe('shouldDropDirectionUpdate', () => {
+  test('Gets called when position is being calculated', () => {
+    const spy = jest.fn()
+    const mockPositionProps = {}
+
+    const shouldDropDirectionUpdate = props => {
+      spy(props)
+      return true
+    }
+
+    const wrapper = mount(
+      <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
+    )
+    // Mocking Portal callbacks that open the Menu
+    // @ts-ignore
+    wrapper.instance().didOpen = true
+
+    // Mock triggering
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate(mockPositionProps)
+
+    expect(spy).toHaveBeenCalledWith(mockPositionProps)
+  })
+
+  test('Does not get called on the first positionMenuNodeCycle run', () => {
+    const spy = jest.fn()
+
+    const shouldDropDirectionUpdate = props => {
+      spy(props)
+      return true
+    }
+
+    const wrapper = mount(
+      <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
+    )
+    // Mocking Portal callbacks that open the Menu
+    // @ts-ignore
+    wrapper.instance().didOpen = false
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate()
+
+    expect(spy).not.toHaveBeenCalled()
+
+    // Mocking RAF loop, on the 2nd run
+    // @ts-ignore
+    wrapper.instance().didOpen = true
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate()
+
+    expect(spy).toHaveBeenCalled()
   })
 })

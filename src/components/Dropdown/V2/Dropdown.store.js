@@ -38,6 +38,7 @@ export const initialState = {
   positionFixed: false,
   previousIndex: null,
   selectedItem: '',
+  shouldDropDirectionUpdate: () => true,
   stateReducer: state => state,
   subscribe: noop,
   trigger: 'Dropdown',

@@ -26,6 +26,7 @@ export interface ComboBoxProps extends DropdownProps {
   renderMenuEnd?: () => void
   renderFooter?: () => void
   showInput: boolean
+  shouldDropDirectionUpdate: (Position: any) => boolean
 }
 
 export interface ComboBoxState {
@@ -57,6 +58,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     maxWidth: 222,
     noResultsLabel: 'No results',
     showInput: true,
+    shouldDropDirectionUpdate: () => false,
   }
 
   state = {
