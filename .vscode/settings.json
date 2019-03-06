@@ -22,8 +22,8 @@
   "eslint.enable": true,
   "workbench.colorCustomizations": {
     "statusBar.foreground": "#ffffff",
-    "statusBar.background": "#3197D6",
-    "statusBar.noFolderBackground": "#3197D6",
-    "statusBar.debuggingBackground": "#3197D6"
+    "statusBar.background": "#1292EE",
+    "statusBar.noFolderBackground": "#1292EE",
+    "statusBar.debuggingBackground": "#1292EE"
   }
 }
