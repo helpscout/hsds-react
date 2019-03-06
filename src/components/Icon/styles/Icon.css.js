@@ -132,12 +132,7 @@ function adjust24To20Scale(): string {
     &[height="24"],
     &[width="24"],
     &[viewBox*="24"] {
-      height: calc(24/20 * 100%);
-      width: calc(24/20 * 100%);
-      max-width: calc(24/20 * 100%);
-      position: relative;
-      top: calc((24/20 * 100 - 100) / 2 * -1%);
-      left: calc((24/20 * 100 - 100) / 2 * -1%);
+      transform: scale(${24 / 20});
     }
   `
 }
