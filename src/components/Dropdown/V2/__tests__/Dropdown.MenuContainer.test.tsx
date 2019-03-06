@@ -496,7 +496,6 @@ describe('forceHideMenuNode', () => {
 describe('shouldDropDirectionUpdate', () => {
   test('Gets called when position is being calculated', () => {
     const spy = jest.fn()
-    const mockPositionProps = {}
 
     const shouldDropDirectionUpdate = props => {
       spy(props)
@@ -512,9 +511,9 @@ describe('shouldDropDirectionUpdate', () => {
 
     // Mock triggering
     // @ts-ignore
-    wrapper.instance().shouldDropDirectionUpdate(mockPositionProps)
+    wrapper.instance().shouldDropDirectionUpdate()
 
-    expect(spy).toHaveBeenCalledWith(mockPositionProps)
+    expect(spy).toHaveBeenCalled()
   })
 
   test('Does not get called on the first positionMenuNodeCycle run', () => {
