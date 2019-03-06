@@ -35,7 +35,7 @@ type Props = {
   className?: string,
   createdAt?: string,
   id?: number | string,
-  isSafeBody?: boolean,
+  isBodySafe?: boolean,
   onAttachmentClick?: () => void,
   onDownloadAllAttachmentClick?: () => void,
   params?: any,
@@ -57,7 +57,7 @@ const Item = (props: Props) => {
     className,
     createdAt,
     id,
-    isSafeBody,
+    isBodySafe,
     onAttachmentClick,
     onDownloadAllAttachmentClick,
     params,
@@ -145,7 +145,7 @@ const Item = (props: Props) => {
 
   // Older transcripts will have a body that was sanitized by Chat API
   // With these items we do not need to escape HTML or convert URLs to links
-  const contentHTML = isSafeBody ? body : enhanceBody(body)
+  const contentHTML = isBodySafe ? body : enhanceBody(body)
 
   const contentMarkup = contentHTML ? (
     <div
