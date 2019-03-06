@@ -98,7 +98,7 @@ describe('Body', () => {
 
   test('Does not escape HTML in the body when it is safe', () => {
     const body = '<div>Mugatu</div>'
-    const wrapper = mount(<Item body={body} isSafeBody />)
+    const wrapper = mount(<Item body={body} isBodySafe />)
     const o = wrapper.find(ui.content)
 
     expect(o.html()).toContain(body)

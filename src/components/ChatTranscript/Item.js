@@ -83,7 +83,7 @@ const Item = (props: Props) => {
       body,
       createdAt,
       className: componentClassName,
-      isSafeBody,
+      isBodySafe,
       timestamp,
       ...rest,
     }

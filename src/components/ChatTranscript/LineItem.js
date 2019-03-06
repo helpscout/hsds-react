@@ -10,7 +10,7 @@ type Props = {
   children?: any,
   className?: string,
   createdAt?: string,
-  isSafeBody?: boolean,
+  isBodySafe?: boolean,
   timestamp?: string,
 }
 
@@ -22,7 +22,7 @@ const LineItem = (props: Props) => {
     children,
     className,
     createdAt,
-    isSafeBody,
+    isBodySafe,
     timestamp,
     ...rest
   } = props
@@ -39,7 +39,7 @@ const LineItem = (props: Props) => {
     </span>
   ) : null
 
-  const contentHTML = isSafeBody ? body : enhanceBody(body)
+  const contentHTML = isBodySafe ? body : enhanceBody(body)
 
   const contentMarkup = contentHTML ? (
     <span

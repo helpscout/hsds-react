@@ -137,7 +137,7 @@ stories.add('body', () => {
           name: 'Buddy',
         }}
         body="<em>Safe body <a href=&quot;http://helpscout.com&quot;>http://helpscout.com</a></em>"
-        isSafeBody
+        isBodySafe
         createdAt="9:41am"
         type="message"
       />

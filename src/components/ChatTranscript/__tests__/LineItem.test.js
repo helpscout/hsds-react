@@ -51,7 +51,7 @@ describe('Body', () => {
 
   test('Does not escape HTML when the body is safe', () => {
     const body = '<a href="http://helpscout.com">helpscout.com</a>'
-    const wrapper = mount(<LineItem body={body} isSafeBody />)
+    const wrapper = mount(<LineItem body={body} isBodySafe />)
     expect(wrapper.html()).toContain(body)
   })
 })
