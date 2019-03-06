@@ -36,7 +36,7 @@ export class Header extends React.PureComponent<Props> {
     if (collapsed) return <BadgeUI>{initial}</BadgeUI>
 
     return (
-      <Heading size="h3" weight={500}>
+      <Heading size="h3" weight={400}>
         {href ? <HeaderLinkUI href={href}>{label}</HeaderLinkUI> : label}
       </Heading>
     )
