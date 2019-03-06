@@ -58,30 +58,23 @@ describe('Children', () => {
 })
 
 describe('Body', () => {
-  test('Renders rawBody content', () => {
-    const wrapper = mount(<Item rawBody="Mugatu" body="Body" />)
+  test('Renders body content', () => {
+    const wrapper = mount(<Item body="Mugatu" />)
     const o = wrapper.find(ui.content)
 
     expect(o.text()).toContain('Mugatu')
   })
 
-  test('Renders body content when rawBody is not set', () => {
-    const wrapper = mount(<Item body="Mugatu" rawBody={null} />)
+  test('Renders body content over children', () => {
+    const wrapper = mount(<Item body="Mugatu">Zoolander</Item>)
     const o = wrapper.find(ui.content)
 
     expect(o.text()).toContain('Mugatu')
   })
 
-  test('Renders rawBody content over children', () => {
-    const wrapper = mount(<Item rawBody="Mugatu">Zoolander</Item>)
-    const o = wrapper.find(ui.content)
-
-    expect(o.text()).toContain('Mugatu')
-  })
-
-  test('Renders rawBody with autolinked URLs', () => {
+  test('Renders body with URLs converted to links', () => {
     const body = 'www.helpscout.com'
-    const wrapper = mount(<Item rawBody={body} />)
+    const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
 
     expect(o.html()).toContain('<a href="http://www.helpscout.com"')
@@ -89,23 +82,23 @@ describe('Body', () => {
 
   test('Converts newlines to line break elements', () => {
     const body = 'Hello\n\nGoodbye'
-    const wrapper = mount(<Item rawBody={body} />)
+    const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
 
     expect(o.html()).toContain('Hello<br><br>Goodbye')
   })
 
-  test('Escapes HTML in the rawBody', () => {
+  test('Escapes HTML in the body', () => {
     const body = '<div>Mugatu</div>'
-    const wrapper = mount(<Item rawBody={body} />)
+    const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
 
     expect(o.html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
   })
 
-  test('Does not escape HTML in the body', () => {
+  test('Does not escape HTML in the body when it is safe', () => {
     const body = '<div>Mugatu</div>'
-    const wrapper = mount(<Item body={body} rawBody={null} />)
+    const wrapper = mount(<Item body={body} isSafeBody />)
     const o = wrapper.find(ui.content)
 
     expect(o.html()).toContain(body)

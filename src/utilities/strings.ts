@@ -73,6 +73,10 @@ export const stripUrlPrefix = (url: string): string => {
 }
 
 export const newlineToHTML = (string: string): string => {
+  if (!string) {
+    return ''
+  }
+
   return string.trim().replace(/\r?\n/g, '<br>')
 }
 
@@ -123,6 +127,10 @@ const escapeHtmlRegExp = /["'&<>]/
  * @returns {string}
  */
 export const escapeHTML = (string: string): string => {
+  if (!string) {
+    return ''
+  }
+
   const match = escapeHtmlRegExp.exec(string)
 
   if (!match) {
@@ -172,6 +180,10 @@ export const escapeHTML = (string: string): string => {
  * @returns {string}
  */
 export const convertLinksToHTML = (string: string): string => {
+  if (!string) {
+    return ''
+  }
+
   const pattern = /(?:(https?:\/\/)|www\d{0,3}\.|www-|[a-z0-9.-]+\.[a-z]{2,4}(?=\/))(?:[^\s()<>]+)*(?:[^\s`!-()\[\]{};:'".,<>?«»“”‘’])/giu
 
   return string.replace(

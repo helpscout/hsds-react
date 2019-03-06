@@ -35,10 +35,10 @@ type Props = {
   className?: string,
   createdAt?: string,
   id?: number | string,
+  isSafeBody?: boolean,
   onAttachmentClick?: () => void,
   onDownloadAllAttachmentClick?: () => void,
   params?: any,
-  rawBody?: string,
   showDownloadAllAttachments?: boolean,
   timestamp?: string,
   type?: 'line_item' | 'message' | 'note',
@@ -57,10 +57,10 @@ const Item = (props: Props) => {
     className,
     createdAt,
     id,
+    isSafeBody,
     onAttachmentClick,
     onDownloadAllAttachmentClick,
     params,
-    rawBody,
     showDownloadAllAttachments,
     timestamp,
     type,
@@ -83,7 +83,7 @@ const Item = (props: Props) => {
       body,
       createdAt,
       className: componentClassName,
-      rawBody,
+      isSafeBody,
       timestamp,
       ...rest,
     }
@@ -143,8 +143,9 @@ const Item = (props: Props) => {
     </div>
   )
 
-  // Fallback to `body` for older transcripts where `rawBody` isn't set
-  const contentHTML = rawBody ? enhanceBody(rawBody) : body
+  // Older transcripts will have a body that was sanitized by Chat API
+  // With these items we do not need to escape HTML or convert URLs to links
+  const contentHTML = isSafeBody ? body : enhanceBody(body)
 
   const contentMarkup = contentHTML ? (
     <div

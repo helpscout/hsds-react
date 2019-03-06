@@ -37,34 +37,21 @@ describe('Children', () => {
 })
 
 describe('Body', () => {
-  test('Renders rawBody', () => {
-    const body = 'Body'
-    const rawBody = 'Raw body'
-    const wrapper = mount(<LineItem body={body} rawBody={rawBody} />)
-    expect(wrapper.html()).toContain(rawBody)
-  })
-
-  test('Renders body if rawBody is not set', () => {
-    const body = 'Body'
-    const wrapper = mount(<LineItem body={body} rawBody={null} />)
-    expect(wrapper.html()).toContain(body)
-  })
-
   test('Converts newlines to line break elements', () => {
-    const rawBody = 'Hello\n\nGoodbye'
-    const wrapper = mount(<LineItem rawBody={rawBody} />)
+    const body = 'Hello\n\nGoodbye'
+    const wrapper = mount(<LineItem body={body} />)
     expect(wrapper.html()).toContain('Hello<br><br>Goodbye')
   })
 
-  test('Escapes HTML in the rawBody', () => {
-    const rawBody = '<div>Mugatu</div>'
-    const wrapper = mount(<LineItem rawBody={rawBody} />)
+  test('Escapes HTML in the body', () => {
+    const body = '<div>Mugatu</div>'
+    const wrapper = mount(<LineItem body={body} />)
     expect(wrapper.html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
   })
 
-  test('Does not escape HTML in the body', () => {
+  test('Does not escape HTML when the body is safe', () => {
     const body = '<a href="http://helpscout.com">helpscout.com</a>'
-    const wrapper = mount(<LineItem body={body} />)
+    const wrapper = mount(<LineItem body={body} isSafeBody />)
     expect(wrapper.html()).toContain(body)
   })
 })

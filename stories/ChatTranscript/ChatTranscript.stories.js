@@ -61,7 +61,7 @@ stories.add('multiple attachments', () => {
     author: {
       name: 'Author name',
     },
-    rawBody: 'Chat Message body content. Stuff. Time.',
+    body: 'Chat Message body content. Stuff. Time.',
     createdAt: '9:41am',
     onAttachmentClick,
     onDownloadAllAttachmentClick,
@@ -77,7 +77,7 @@ stories.add('types', () => {
   return (
     <ChatTranscript>
       <ChatTranscript.Item
-        rawBody="Something\nhappened (This is a line_item)"
+        body="Something\nhappened (This is a line_item)"
         type="line_item"
         createdAt="10:45pm"
         timestamp="Monday, 10:45pm"
@@ -87,7 +87,7 @@ stories.add('types', () => {
         author={{
           name: 'Buddy',
         }}
-        rawBody="Not now Arctic Puffin! (This is a message)"
+        body="Not now Arctic Puffin! (This is a message)"
         createdAt="9:41am"
         type="message"
       />
@@ -97,7 +97,7 @@ stories.add('types', () => {
         author={{
           name: 'Buddy',
         }}
-        rawBody="Not now Arctic Puffin! (This is a message + attachments)"
+        body="Not now Arctic Puffin! (This is a message + attachments)"
         createdAt="9:41am"
         type="message"
       />
@@ -106,7 +106,7 @@ stories.add('types', () => {
         author={{
           name: 'Buddy',
         }}
-        rawBody="Not now Arctic Puffin! (This is a note)"
+        body="Not now Arctic Puffin! (This is a note)"
         createdAt="9:41am"
         type="note"
       />
@@ -116,13 +116,13 @@ stories.add('types', () => {
         author={{
           name: 'Buddy',
         }}
-        rawBody="Not now Arctic Puffin! (This is a note + attachments)"
+        body="Not now Arctic Puffin! (This is a note + attachments)"
         createdAt="9:41am"
         type="note"
       />
 
       <ChatTranscript.Item
-        rawBody="Something happened (This is a line_item)"
+        body="Something happened (This is a line_item)"
         type="line_item"
       />
     </ChatTranscript>
@@ -136,8 +136,8 @@ stories.add('body', () => {
         author={{
           name: 'Buddy',
         }}
-        body="This is a message `body` <a href=&quot;http://helpscout.com&quot;>http://helpscout.com</a> Bold"
-        rawBody="This is a message `rawBody` http://helpscout.com <em>Bold</em>"
+        body="<em>Safe body <a href=&quot;http://helpscout.com&quot;>http://helpscout.com</a></em>"
+        isSafeBody
         createdAt="9:41am"
         type="message"
       />
@@ -146,7 +146,7 @@ stories.add('body', () => {
         author={{
           name: 'Buddy',
         }}
-        body="This is a message `body` <a href=&quot;http://helpscout.com&quot;>http://helpscout.com</a> Bold"
+        body="<em>Unsafe body http://helpscout.com</em>"
         createdAt="9:41am"
         type="message"
       />
