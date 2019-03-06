@@ -34,7 +34,9 @@ describe('Children', () => {
 
     expect(el.text()).toContain('Hello')
   })
+})
 
+describe('Body', () => {
   test('Converts newlines to line break elements', () => {
     const body = 'Hello\n\nGoodbye'
     const wrapper = mount(<LineItem body={body} />)
@@ -45,6 +47,12 @@ describe('Children', () => {
     const body = '<div>Mugatu</div>'
     const wrapper = mount(<LineItem body={body} />)
     expect(wrapper.html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
+  })
+
+  test('Does not escape HTML when the body is safe', () => {
+    const body = '<a href="http://helpscout.com">helpscout.com</a>'
+    const wrapper = mount(<LineItem body={body} isBodySafe />)
+    expect(wrapper.html()).toContain(body)
   })
 })
 

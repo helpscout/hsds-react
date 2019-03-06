@@ -10,13 +10,22 @@ type Props = {
   children?: any,
   className?: string,
   createdAt?: string,
+  isBodySafe?: boolean,
   timestamp?: string,
 }
 
 const enhanceBody = compose(newlineToHTML, escapeHTML)
 
 const LineItem = (props: Props) => {
-  const { body, children, className, createdAt, timestamp, ...rest } = props
+  const {
+    body,
+    children,
+    className,
+    createdAt,
+    isBodySafe,
+    timestamp,
+    ...rest
+  } = props
 
   const componentClassName = classNames('c-ChatTranscriptLineItem', className)
 
@@ -30,10 +39,12 @@ const LineItem = (props: Props) => {
     </span>
   ) : null
 
-  const contentMarkup = body ? (
+  const contentHTML = isBodySafe ? body : enhanceBody(body)
+
+  const contentMarkup = contentHTML ? (
     <span
       dangerouslySetInnerHTML={{
-        __html: enhanceBody(body),
+        __html: contentHTML,
       }}
     />
   ) : (

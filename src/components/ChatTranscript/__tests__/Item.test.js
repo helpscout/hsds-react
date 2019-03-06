@@ -72,7 +72,7 @@ describe('Body', () => {
     expect(o.text()).toContain('Mugatu')
   })
 
-  test('Renders body with autolinked URLs', () => {
+  test('Renders body with URLs converted to links', () => {
     const body = 'www.helpscout.com'
     const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
@@ -94,6 +94,14 @@ describe('Body', () => {
     const o = wrapper.find(ui.content)
 
     expect(o.html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
+  })
+
+  test('Does not escape HTML in the body when it is safe', () => {
+    const body = '<div>Mugatu</div>'
+    const wrapper = mount(<Item body={body} isBodySafe />)
+    const o = wrapper.find(ui.content)
+
+    expect(o.html()).toContain(body)
   })
 })
 
