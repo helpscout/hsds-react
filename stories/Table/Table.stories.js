@@ -39,6 +39,10 @@ const Header = styled('header')`
 
 const FormLabelUI = styled(FormLabel)`
   margin-bottom: 10px;
+
+  & .c-FormLabel__label {
+    margin-right: 5px !important;
+  }
 `
 
 const InlineIllo = styled(Illo)`
@@ -52,12 +56,6 @@ const InputWithBorder = styled(Input)`
 `
 
 class ColumnCustomizer extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {}
-  }
-
   render() {
     const { columns } = this.props
 
@@ -66,54 +64,61 @@ class ColumnCustomizer extends Component {
         <Header>
           <FlexContainerForHeadings>
             <InlineIllo name="bulb" color="#116ce1" size="40" />
-            <Heading size="h3">Column Options</Heading>
+            <Heading size="h4">Column Options</Heading>
           </FlexContainerForHeadings>
         </Header>
 
         <FlexContainerForForms className="ColumnsCustomizer">
-          {columns.map(column => (
+          {columns.map((column, index) => (
             <FlexQuarter className="column" key={column.columnKey}>
-              <section>
-                <Text shade="muted">{column.columnKey}</Text>
-                <FormLabelUI label="Title">
-                  <Input
-                    size="sm"
-                    value={column.title}
-                    placeholder="Column Title"
-                    onChange={value => {
-                      this.handleValueChange(column.columnKey, 'title', value)
-                    }}
-                  />
-                </FormLabelUI>
-                <FormLabelUI label="Align">
-                  <Select
-                    name="align"
-                    size="sm"
-                    onChange={value => {
-                      this.handleValueChange(column.columnKey, 'align', value)
-                    }}
-                    options={['center', 'right', 'left']}
-                    value={column.align ? column.align : 'left'}
-                  />
-                </FormLabelUI>
+              <Text
+                style={{
+                  marginBottom: '10px',
+                  textAlign: 'right',
+                  display: 'block',
+                }}
+                shade="muted"
+              >
+                {`${index + 1}. ${column.columnKey}`}
+              </Text>
+              <FormLabelUI label="Title" isInline>
+                <Input
+                  size="sm"
+                  value={column.title}
+                  placeholder="Column Title"
+                  onChange={value => {
+                    this.handleValueChange(column.columnKey, 'title', value)
+                  }}
+                />
+              </FormLabelUI>
+              <FormLabelUI label="Align" isInline>
+                <Select
+                  name="align"
+                  size="sm"
+                  onChange={value => {
+                    this.handleValueChange(column.columnKey, 'align', value)
+                  }}
+                  options={['center', 'right', 'left']}
+                  value={column.align ? column.align : 'left'}
+                />
+              </FormLabelUI>
 
-                <FormLabelUI label="Width">
-                  <Input
-                    name="width"
-                    size="sm"
-                    value={column.width.replace('%', '')}
-                    placeholder="width"
-                    inlineSuffix="%"
-                    onChange={value => {
-                      this.handleValueChange(
-                        column.columnKey,
-                        'width',
-                        `${value}%`
-                      )
-                    }}
-                  />
-                </FormLabelUI>
-              </section>
+              <FormLabelUI label="Width" isInline>
+                <Input
+                  name="width"
+                  size="sm"
+                  value={column.width.replace('%', '')}
+                  placeholder="width"
+                  inlineSuffix="%"
+                  onChange={value => {
+                    this.handleValueChange(
+                      column.columnKey,
+                      'width',
+                      `${value}%`
+                    )
+                  }}
+                />
+              </FormLabelUI>
             </FlexQuarter>
           ))}
         </FlexContainerForForms>
@@ -129,12 +134,6 @@ class ColumnCustomizer extends Component {
 }
 
 class TableCustomizer extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {}
-  }
-
   render() {
     const { styleOptions, numberOfRows } = this.props
     const { border, tableWidth, background } = styleOptions
@@ -147,27 +146,29 @@ class TableCustomizer extends Component {
         <Header>
           <FlexContainerForHeadings>
             <InlineIllo name="bulb" color="#116ce1" size="40" />
-            <Heading size="h3">Table Options</Heading>
+            <Heading size="h4">Table Options</Heading>
           </FlexContainerForHeadings>
-        </Header>
-        <section>
-          <FormLabelUI label="Number of rows">
-            <Input
-              size="sm"
-              type="number"
-              value={numberOfRows}
-              onChange={value => {
-                this.handleValueChange('numberOfRows', value)
-              }}
-            />
-          </FormLabelUI>
-        </section>
-        <Header>
-          <Heading size="h4">Borders</Heading>
         </Header>
         <FlexContainerForForms>
           <FlexHalf>
-            <FormLabelUI label="tableBody">
+            <FormLabelUI label="Number of rows" isInline>
+              <Input
+                size="sm"
+                type="number"
+                value={numberOfRows}
+                onChange={value => {
+                  this.handleValueChange('numberOfRows', value)
+                }}
+              />
+            </FormLabelUI>
+          </FlexHalf>
+        </FlexContainerForForms>
+        <Header>
+          <Heading size="h5">Borders</Heading>
+        </Header>
+        <FlexContainerForForms>
+          <FlexHalf>
+            <FormLabelUI label="tableBody" isInline>
               <InputWithBorder
                 size="sm"
                 borderStyle={tableBody}
@@ -179,7 +180,7 @@ class TableCustomizer extends Component {
             </FormLabelUI>
           </FlexHalf>
           <FlexHalf>
-            <FormLabelUI label="tableHeader">
+            <FormLabelUI label="tableHeader" isInline>
               <InputWithBorder
                 size="sm"
                 borderStyle={tableHeader}
@@ -193,7 +194,7 @@ class TableCustomizer extends Component {
         </FlexContainerForForms>
         <FlexContainerForForms>
           <FlexHalf>
-            <FormLabelUI label="rows">
+            <FormLabelUI label="rows" isInline>
               <InputWithBorder
                 size="sm"
                 borderStyle={rows}
@@ -205,7 +206,7 @@ class TableCustomizer extends Component {
             </FormLabelUI>
           </FlexHalf>
           <FlexHalf>
-            <FormLabelUI label="columns">
+            <FormLabelUI label="columns" isInline>
               <InputWithBorder
                 size="sm"
                 borderStyle={columns}
@@ -218,11 +219,11 @@ class TableCustomizer extends Component {
           </FlexHalf>
         </FlexContainerForForms>
         <Header>
-          <Heading size="h4">Table Width</Heading>
+          <Heading size="h5">Table Width</Heading>
         </Header>
         <FlexContainerForForms>
           <FlexHalf>
-            <FormLabelUI label="min">
+            <FormLabelUI label="min" isInline>
               <Input
                 size="sm"
                 value={min}
@@ -233,7 +234,7 @@ class TableCustomizer extends Component {
             </FormLabelUI>
           </FlexHalf>
           <FlexHalf>
-            <FormLabelUI label="max">
+            <FormLabelUI label="max" isInline>
               <Input
                 size="sm"
                 value={max}
@@ -245,12 +246,13 @@ class TableCustomizer extends Component {
           </FlexHalf>
         </FlexContainerForForms>
         <Header>
-          <Heading size="h4">Background Colours</Heading>
+          <Heading size="h5">Background Colours</Heading>
         </Header>
         <FlexContainerForForms>
           <FlexHalf>
-            <FormLabelUI label="Color 1">
+            <FormLabelUI label="Color 1" isInline>
               <Input
+                style={{ width: '60px' }}
                 size="sm"
                 value={color1}
                 type="color"
@@ -261,9 +263,10 @@ class TableCustomizer extends Component {
             </FormLabelUI>
           </FlexHalf>
           <FlexHalf>
-            <FormLabelUI label="Color 2">
+            <FormLabelUI label="Color 2" isInline>
               <Input
                 size="sm"
+                style={{ width: '60px' }}
                 value={color2}
                 type="color"
                 onChange={value => {
@@ -417,6 +420,9 @@ class TableApp extends Component {
           }}
           onChangeTableOption={this.handleTableOptionChange}
         />
+        <Header>
+          <Heading size="h2">Table 👇</Heading>
+        </Header>
         <Table
           columns={columns}
           data={data}
