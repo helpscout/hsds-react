@@ -38,6 +38,7 @@ type Props = {
   onAttachmentClick?: () => void,
   onDownloadAllAttachmentClick?: () => void,
   params?: any,
+  rawBody?: string,
   showDownloadAllAttachments?: boolean,
   timestamp?: string,
   type?: 'line_item' | 'message' | 'note',
@@ -59,6 +60,7 @@ const Item = (props: Props) => {
     onAttachmentClick,
     onDownloadAllAttachmentClick,
     params,
+    rawBody,
     showDownloadAllAttachments,
     timestamp,
     type,
@@ -81,6 +83,7 @@ const Item = (props: Props) => {
       body,
       createdAt,
       className: componentClassName,
+      rawBody,
       timestamp,
       ...rest,
     }
@@ -140,11 +143,14 @@ const Item = (props: Props) => {
     </div>
   )
 
-  const contentMarkup = body ? (
+  // Fallback to `body` for older transcripts where `rawBody` isn't set
+  const contentHTML = rawBody ? enhanceBody(rawBody) : body
+
+  const contentMarkup = contentHTML ? (
     <div
       className={contentClassName}
       dangerouslySetInnerHTML={{
-        __html: enhanceBody(body),
+        __html: contentHTML,
       }}
     />
   ) : (

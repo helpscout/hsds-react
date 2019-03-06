@@ -14,6 +14,7 @@ export default {
         id: 498747,
       },
       body: "'Ello, I wish to\n\nregister a complaint",
+      rawBody: "'Ello, I wish to\n\nregister a complaint",
       params: [],
       createdAt: '2018-02-09T19:46:02.705677Z',
       attachments: [],
@@ -28,6 +29,7 @@ export default {
         id: null,
       },
       body: ' added custom field 65',
+      rawBody: ' added custom field 65',
       params: {
         fieldId: 65,
       },
@@ -44,6 +46,8 @@ export default {
         id: 498747,
       },
       body:
+        'Chat started (Champlin-Morar, http://gerlach.com/, Cross-group systematic definition)',
+      rawBody:
         'Chat started (Champlin-Morar, http://gerlach.com/, Cross-group systematic definition)',
       params: {
         event: {
@@ -67,6 +71,7 @@ export default {
         id: 4423,
       },
       body: 'Chat accepted by Grand Moff Tarkin',
+      rawBody: 'Chat accepted by Grand Moff Tarkin',
       params: [],
       createdAt: '2018-02-09T19:46:06.705677Z',
       attachments: [],
@@ -80,7 +85,9 @@ export default {
         type: 'customer',
         id: 498747,
       },
-      body: "'Ello, <em>Miss?</em> http://www.helpscout.com",
+      body:
+        'Ello, Miss? <a href="http://www.helpscout.com">http://www.helpscout.com</a>',
+      rawBody: 'Ello, <em>Miss?</em> http://www.helpscout.com',
       params: [],
       createdAt: '2018-02-09T19:46:05.705677Z',
       attachments: [],
@@ -95,6 +102,7 @@ export default {
         id: 4423,
       },
       body: 'What do you\n\nmean "miss"?',
+      rawBody: 'What do you\n\nmean "miss"?',
       params: [],
       createdAt: '2018-02-09T19:46:08.705677Z',
       attachments: [],
@@ -109,6 +117,7 @@ export default {
         id: 498747,
       },
       body: "I'm sorry, I have a cold. I wish to make a complaint!",
+      rawBody: "I'm sorry, I have a cold. I wish to make a complaint!",
       params: [],
       createdAt: '2018-02-09T19:46:23.705677Z',
       attachments: [
@@ -131,6 +140,7 @@ export default {
         id: 4423,
       },
       body: 'Tag "complaint" added by Grand Moff Tarkin',
+      rawBody: 'Tag "complaint" added by Grand Moff Tarkin',
       params: {
         tag: 3082,
       },
@@ -147,6 +157,7 @@ export default {
         id: 4423,
       },
       body: "We're closin' for lunch.",
+      rawBody: "We're closin' for lunch.",
       params: [],
       createdAt: '2018-02-09T19:46:26.705677Z',
       attachments: [],
@@ -162,6 +173,8 @@ export default {
       },
       body:
         'Never mind that, my lad. I wish to complain about this parrot what I purchased not half an hour ago from this very boutique.',
+      rawBody:
+        'Never mind that, my lad. I wish to complain about this parrot what I purchased not half an hour ago from this very boutique.',
       params: [],
       createdAt: '2018-02-09T19:46:28.705677Z',
       attachments: [],
@@ -176,6 +189,7 @@ export default {
         id: 4423,
       },
       body: 'Tag "norwegian-blue" added by Grand Moff Tarkin',
+      rawBody: 'Tag "norwegian-blue" added by Grand Moff Tarkin',
       params: {
         tag: 2525,
       },
@@ -193,6 +207,8 @@ export default {
       },
       body:
         "Oh yes, the, uh, the Norwegian Blue...What's,uh...What's wrong with it?",
+      rawBody:
+        "Oh yes, the, uh, the Norwegian Blue...What's,uh...What's wrong with it?",
       params: [],
       createdAt: '2018-02-09T19:46:37.705677Z',
       attachments: [],
@@ -208,6 +224,8 @@ export default {
       },
       body:
         "I'll tell you what's wrong with it, my lad. 'E's dead, that's what's wrong with it!",
+      rawBody:
+        "I'll tell you what's wrong with it, my lad. 'E's dead, that's what's wrong with it!",
       params: [],
       createdAt: '2018-02-09T19:46:39.705677Z',
       attachments: [],
@@ -222,6 +240,7 @@ export default {
         id: 4423,
       },
       body: "No, no, 'e's uh,...he's resting.",
+      rawBody: "No, no, 'e's uh,...he's resting.",
       params: [],
       createdAt: '2018-02-09T19:46:48.705677Z',
       attachments: [],
@@ -237,6 +256,8 @@ export default {
       },
       body:
         "Look, matey, I know a dead parrot when I see one, and I'm looking at one right now.",
+      rawBody:
+        "Look, matey, I know a dead parrot when I see one, and I'm looking at one right now.",
       params: [],
       createdAt: '2018-02-09T19:46:50.705677Z',
       attachments: [],
@@ -251,6 +272,7 @@ export default {
         id: 4423,
       },
       body: 'another dead bird',
+      rawBody: 'another dead bird',
       params: [],
       createdAt: '2018-02-09T19:47:06.705677Z',
       attachments: [],
@@ -266,6 +288,8 @@ export default {
       },
       body:
         "No no he's not dead, he's, he's restin'! Remarkable bird, the Norwegian Blue, idn'it, ay? Beautiful plumage!",
+      rawBody:
+        "No no he's not dead, he's, he's restin'! Remarkable bird, the Norwegian Blue, idn'it, ay? Beautiful plumage!",
       params: [],
       createdAt: '2018-02-09T19:47:05.705677Z',
       attachments: [],
@@ -280,6 +304,7 @@ export default {
         id: 498747,
       },
       body: "The plumage don't enter into it. It's stone dead.",
+      rawBody: "The plumage don't enter into it. It's stone dead.",
       params: [],
       createdAt: '2018-02-09T19:47:08.705677Z',
       attachments: [],
@@ -295,6 +320,8 @@ export default {
       },
       body:
         "Nononono, no, no! 'E's resting! They always look like that. See? https://upload.wikimedia.org/wikipedia/en/e/e7/DeadParrot.png",
+      rawBody:
+        "Nononono, no, no! 'E's resting! They always look like that. See? https://upload.wikimedia.org/wikipedia/en/e/e7/DeadParrot.png",
       params: [],
       createdAt: '2018-02-09T19:47:18.705677Z',
       attachments: [],
@@ -309,6 +336,8 @@ export default {
         id: 498747,
       },
       body:
+        'Page view (Monitored 4thgeneration moderator, http://barton.com/soluta-modi-quo-pariatur-rerum)',
+      rawBody:
         'Page view (Monitored 4thgeneration moderator, http://barton.com/soluta-modi-quo-pariatur-rerum)',
       params: {
         event: {
@@ -332,6 +361,8 @@ export default {
       },
       body:
         "All right then, if he's restin', I'll wake him up! 'Ello, Mister Polly Parrot! I've got a lovely fresh cuttle fish for you if you show...",
+      rawBody:
+        "All right then, if he's restin', I'll wake him up! 'Ello, Mister Polly Parrot! I've got a lovely fresh cuttle fish for you if you show...",
       params: [],
       createdAt: '2018-02-09T19:47:21.705677Z',
       attachments: [],
@@ -346,6 +377,7 @@ export default {
         id: 4423,
       },
       body: 'There, he moved!',
+      rawBody: 'There, he moved!',
       params: [],
       createdAt: '2018-02-09T19:47:33.705677Z',
       attachments: [],
@@ -360,6 +392,7 @@ export default {
         id: 498747,
       },
       body: "No, he didn't, that was you hitting the cage!",
+      rawBody: "No, he didn't, that was you hitting the cage!",
       params: [],
       createdAt: '2018-02-09T19:47:35.705677Z',
       attachments: [],
@@ -374,6 +407,7 @@ export default {
         id: 4423,
       },
       body: 'I never!!',
+      rawBody: 'I never!!',
       params: [],
       createdAt: '2018-02-09T19:47:37.705677Z',
       attachments: [],
@@ -388,6 +422,7 @@ export default {
         id: 498747,
       },
       body: 'Yes, you did!',
+      rawBody: 'Yes, you did!',
       params: [],
       createdAt: '2018-02-09T19:47:50.705677Z',
       attachments: [],
@@ -402,6 +437,7 @@ export default {
         id: 4423,
       },
       body: 'I never, never did anything...',
+      rawBody: 'I never, never did anything...',
       params: [],
       createdAt: '2018-02-09T19:47:52.705677Z',
       attachments: [],
@@ -417,6 +453,8 @@ export default {
       },
       body:
         "'ELLO POLLY!!!!! Testing! Testing! Testing! Testing! This is your nine o'clock alarm call!",
+      rawBody:
+        "'ELLO POLLY!!!!! Testing! Testing! Testing! Testing! This is your nine o'clock alarm call!",
       params: [],
       createdAt: '2018-02-09T19:48:18.705677Z',
       attachments: [],
@@ -431,6 +469,7 @@ export default {
         id: 498747,
       },
       body: "Now that's what I call a dead parrot.",
+      rawBody: "Now that's what I call a dead parrot.",
       params: [],
       createdAt: '2018-02-09T19:48:19.705677Z',
       attachments: [],
@@ -445,6 +484,7 @@ export default {
         id: 4423,
       },
       body: "No, no.....No, 'e's stunned!",
+      rawBody: "No, no.....No, 'e's stunned!",
       params: [],
       createdAt: '2018-02-09T19:48:21.705677Z',
       attachments: [],
@@ -459,6 +499,7 @@ export default {
         id: 498747,
       },
       body: 'STUNNED?!?',
+      rawBody: 'STUNNED?!?',
       params: [],
       createdAt: '2018-02-09T19:48:33.705677Z',
       attachments: [],
@@ -473,6 +514,8 @@ export default {
         id: 4423,
       },
       body:
+        "Yeah! You stunned him, just as he was wakin' up! Norwegian Blues stun easily, major.",
+      rawBody:
         "Yeah! You stunned him, just as he was wakin' up! Norwegian Blues stun easily, major.",
       params: [],
       createdAt: '2018-02-09T19:48:35.705677Z',
@@ -489,6 +532,8 @@ export default {
       },
       body:
         "Um...now look...now look, mate, I've definitely 'ad enough of this. That parrot is definitely deceased, and when I purchased it not 'alf an hour ago, you assured me that its total lack of movement was due to it bein' tired and shagged out following a prolonged squawk.",
+      rawBody:
+        "Um...now look...now look, mate, I've definitely 'ad enough of this. That parrot is definitely deceased, and when I purchased it not 'alf an hour ago, you assured me that its total lack of movement was due to it bein' tired and shagged out following a prolonged squawk.",
       params: [],
       createdAt: '2018-02-09T19:49:05.705677Z',
       attachments: [],
@@ -503,6 +548,7 @@ export default {
         id: 4423,
       },
       body: "Well, he's...he's, ah...probably pining for the fjords.",
+      rawBody: "Well, he's...he's, ah...probably pining for the fjords.",
       params: [],
       createdAt: '2018-02-09T19:49:07.705677Z',
       attachments: [],
@@ -517,6 +563,8 @@ export default {
         id: 498747,
       },
       body:
+        "PININ' for the FJORDS?!?!?!? What kind of talk is that?, look, why did he fall flat on his back the moment I got 'im home?",
+      rawBody:
         "PININ' for the FJORDS?!?!?!? What kind of talk is that?, look, why did he fall flat on his back the moment I got 'im home?",
       params: [],
       createdAt: '2018-02-09T19:49:20.705677Z',
@@ -533,6 +581,8 @@ export default {
       },
       body:
         "The Norwegian Blue prefers keepin' on it's back! Remarkable bird, id'nit, squire? Lovely plumage!",
+      rawBody:
+        "The Norwegian Blue prefers keepin' on it's back! Remarkable bird, id'nit, squire? Lovely plumage!",
       params: [],
       createdAt: '2018-02-09T19:49:22.705677Z',
       attachments: [],
@@ -547,6 +597,8 @@ export default {
         id: 498747,
       },
       body:
+        'Look, I took the liberty of examining that parrot when I got it home, and I discovered the only reason that it had been sitting on its perch in the first place was that it had been NAILED there.',
+      rawBody:
         'Look, I took the liberty of examining that parrot when I got it home, and I discovered the only reason that it had been sitting on its perch in the first place was that it had been NAILED there.',
       params: [],
       createdAt: '2018-02-09T19:49:33.705677Z',
@@ -563,6 +615,8 @@ export default {
       },
       body:
         "Well, o'course it was nailed there! If I hadn't nailed that bird down, it would have nuzzled up to those bars, bent 'em apart with its beak, and VOOM! Feeweeweewee!",
+      rawBody:
+        "Well, o'course it was nailed there! If I hadn't nailed that bird down, it would have nuzzled up to those bars, bent 'em apart with its beak, and VOOM! Feeweeweewee!",
       params: [],
       createdAt: '2018-02-09T19:49:35.705677Z',
       attachments: [],
@@ -578,6 +632,8 @@ export default {
       },
       body:
         '"VOOM"?!? Mate, this bird wouldn\'t "voom" if you put four million volts through it! \'E\'s bleedin\' demised!',
+      rawBody:
+        '"VOOM"?!? Mate, this bird wouldn\'t "voom" if you put four million volts through it! \'E\'s bleedin\' demised!',
       params: [],
       createdAt: '2018-02-09T19:49:48.705677Z',
       attachments: [],
@@ -592,6 +648,7 @@ export default {
         id: 4423,
       },
       body: "No no! 'E's pining!",
+      rawBody: "No no! 'E's pining!",
       params: [],
       createdAt: '2018-02-09T19:49:50.705677Z',
       attachments: [],
@@ -606,6 +663,8 @@ export default {
         id: 498747,
       },
       body:
+        " 'E's not pinin'! 'E's passed on! This parrot is no more! He has ceased to be! 'E's expired and gone to meet 'is maker! 'E's a stiff! Bereft of life, 'e rests in peace! If you hadn't nailed 'im to the perch 'e'd be pushing up the daisies! 'Is metabolic processes are now 'istory! 'E's off the twig! 'E's kicked the bucket, 'e's shuffled off 'is mortal coil, run down the curtain and joined the bleedin' choir invisible!! THIS IS AN EX-PARROT!!",
+      rawBody:
         " 'E's not pinin'! 'E's passed on! This parrot is no more! He has ceased to be! 'E's expired and gone to meet 'is maker! 'E's a stiff! Bereft of life, 'e rests in peace! If you hadn't nailed 'im to the perch 'e'd be pushing up the daisies! 'Is metabolic processes are now 'istory! 'E's off the twig! 'E's kicked the bucket, 'e's shuffled off 'is mortal coil, run down the curtain and joined the bleedin' choir invisible!! THIS IS AN EX-PARROT!!",
       params: [],
       createdAt: '2018-02-09T19:50:03.705677Z',
@@ -622,6 +681,8 @@ export default {
       },
       body:
         "Well, I'd better replace it, then. (he takes a quick peek behind the counter) Sorry squire, I've had a look 'round the back of the shop, and uh, we're right out of parrots.",
+      rawBody:
+        "Well, I'd better replace it, then. (he takes a quick peek behind the counter) Sorry squire, I've had a look 'round the back of the shop, and uh, we're right out of parrots.",
       params: [],
       createdAt: '2018-02-09T19:50:05.705677Z',
       attachments: [],
@@ -636,6 +697,7 @@ export default {
         id: 4440,
       },
       body: null,
+      rawBody: null,
       params: [],
       createdAt: '2018-02-09T19:55:28.648290Z',
       attachments: [],
