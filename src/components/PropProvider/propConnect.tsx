@@ -104,6 +104,7 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
         const style = this.getMergedStyleProp(contextProps)
 
         return {
+          'data-cy-component': namespace,
           'data-cy': namespace,
           ...namespacedProps,
           ...rest,
