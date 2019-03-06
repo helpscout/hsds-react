@@ -15,6 +15,16 @@ import {
 import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
 import { COMPONENT_KEY } from './ComboBox.utils'
 
+export const shouldDropDirectionUpdate = (positionProps: any = {}) => {
+  // Allow for the position to change, if ComboBox is set to dropUp
+  if (positionProps.dropUp) {
+    return true
+    // Otherwise, disable it
+  } else {
+    return false
+  }
+}
+
 export interface ComboBoxProps extends DropdownProps {
   closeOnInputTab: boolean
   customFilter?: (filterProps: Object, defaultFilter: any) => void
@@ -26,6 +36,7 @@ export interface ComboBoxProps extends DropdownProps {
   renderMenuEnd?: () => void
   renderFooter?: () => void
   showInput: boolean
+  shouldDropDirectionUpdate: (Position: any) => boolean
 }
 
 export interface ComboBoxState {
@@ -57,6 +68,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     maxWidth: 222,
     noResultsLabel: 'No results',
     showInput: true,
+    shouldDropDirectionUpdate,
   }
 
   state = {

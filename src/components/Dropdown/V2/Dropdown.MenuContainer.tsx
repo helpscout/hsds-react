@@ -57,6 +57,7 @@ export interface Props {
   renderEmpty?: any
   renderLoading?: any
   selectItem: (...args: any[]) => void
+  shouldDropDirectionUpdate: (Position: any) => boolean
   triggerId?: string
   triggerNode?: HTMLElement
   zIndex: number
@@ -80,11 +81,13 @@ export class MenuContainer extends React.PureComponent<Props> {
     onMenuReposition: noop,
     onMenuUnmounted: noop,
     positionFixed: false,
+    shouldDropDirectionUpdate: noop,
     selectItem: noop,
     zIndex: 1080,
   }
 
   id: string = uniqueID()
+  didOpen: boolean = false
   node: HTMLElement
   parentNode: HTMLElement
   placementNode: HTMLElement
@@ -107,7 +110,9 @@ export class MenuContainer extends React.PureComponent<Props> {
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
   shouldDropUp(): boolean {
+    // Always return true, if dropUp
     if (this.props.dropUp) return true
+
     if (!this.node || !this.wrapperNode) return false
 
     const { top } = this.wrapperNode.getBoundingClientRect()
@@ -120,6 +125,16 @@ export class MenuContainer extends React.PureComponent<Props> {
       return !hasWindowTopOverflow
     }
     return false
+  }
+
+  shouldDropDirectionUpdate(positionProps): boolean {
+    return (
+      this.didOpen &&
+      this.props.shouldDropDirectionUpdate({
+        ...positionProps,
+        dropUp: this.props.dropUp,
+      })
+    )
   }
 
   getMenuProps() {
@@ -272,6 +287,9 @@ export class MenuContainer extends React.PureComponent<Props> {
   /* istanbul ignore next */
   repositionMenuNodeCycle = () => {
     this.updateMenuNodePosition()
+    if (!this.didOpen) {
+      this.didOpen = true
+    }
     if (isBrowserEnv()) {
       requestAnimationFrame(this.repositionMenuNodeCycle)
     }
@@ -285,6 +303,7 @@ export class MenuContainer extends React.PureComponent<Props> {
 
   onPortalClose = () => {
     this.props.onMenuUnmounted()
+    this.didOpen = false
     // End the reposition cycle
     cancelAnimationFrame(this.positionRAF)
   }
@@ -310,12 +329,22 @@ export class MenuContainer extends React.PureComponent<Props> {
     }
   }
 
-  setPositionStylesOnNode = positionProps => {
+  setPositionStylesOnNode = positionData => {
     const { menuOffsetTop, onMenuReposition, triggerNode, zIndex } = this.props
 
     if (!this.node || !this.placementNode) return
 
-    const { top, left, position } = positionProps
+    const { top, left, position } = positionData
+
+    const positionProps = {
+      top: Math.round(top),
+      left: Math.round(left),
+      position,
+      triggerNode,
+      placementNode: this.placementNode,
+      menuNode: this.node,
+      zIndex,
+    }
 
     this.placementNode.style.position = position
     this.placementNode.style.top = `${Math.round(top)}px`
@@ -323,15 +352,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     this.placementNode.style.zIndex = `${zIndex}`
 
     // Provide properties via stateReducer callback
-    onMenuReposition({
-      top: `${Math.round(top)}px`,
-      left: `${Math.round(left)}px`,
-      position,
-      triggerNode,
-      placementNode: this.placementNode,
-      menuNode: this.node,
-      zIndex: `${zIndex}`,
-    })
+    onMenuReposition(positionProps)
 
     /* istanbul ignore next */
     // Skipping coverage for this method as it does almost exclusively DOM
@@ -341,7 +362,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     }
 
     /* istanbul ignore next */
-    if (this.shouldDropUp()) {
+    if (this.shouldDropUp() && this.shouldDropDirectionUpdate(positionProps)) {
       this.node.classList.add('is-dropUp')
       if (triggerNode) {
         this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
@@ -448,6 +469,7 @@ const ConnectedMenuContainer: any = connect(
       positionFixed,
       renderEmpty,
       renderLoading,
+      shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
       zIndex,
@@ -465,6 +487,7 @@ const ConnectedMenuContainer: any = connect(
       positionFixed,
       renderEmpty,
       renderLoading,
+      shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
       zIndex,

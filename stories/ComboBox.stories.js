@@ -50,6 +50,12 @@ stories.add('Default', () => {
   return <ComboBox itemFilterKey="label" items={items} isOpen={true} />
 })
 
+stories.add('DropUp', () => {
+  return (
+    <ComboBox itemFilterKey="label" items={items} isOpen={true} dropUp={true} />
+  )
+})
+
 stories.add('StateReducer', () => {
   const stateReducer = (state, action) => {
     console.group('State update')
