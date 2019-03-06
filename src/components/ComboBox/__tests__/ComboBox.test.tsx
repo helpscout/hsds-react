@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { ComboBox } from '../ComboBox'
+import { ComboBox, shouldDropDirectionUpdate } from '../ComboBox'
 import { hasClass } from '../../../tests/helpers/enzyme'
 
 jest.mock('../../Dropdown/V2/Dropdown.Card', () => {
@@ -504,6 +504,7 @@ describe('shouldDropDirectionUpdate', () => {
 
     // @ts-ignore
     expect(el.prop('shouldDropDirectionUpdate')()).toBe(false)
+    expect(shouldDropDirectionUpdate({})).toBe(false)
   })
 
   test('Can be customized', () => {
@@ -520,5 +521,13 @@ describe('shouldDropDirectionUpdate', () => {
     // @ts-ignore
     expect(el.prop('shouldDropDirectionUpdate')()).toBe(true)
     expect(spy).toHaveBeenCalled()
+  })
+
+  test('Allows for dropUp, by default', () => {
+    const props = {
+      dropUp: true,
+    }
+
+    expect(shouldDropDirectionUpdate(props)).toBe(true)
   })
 })

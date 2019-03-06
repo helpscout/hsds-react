@@ -110,7 +110,9 @@ export class MenuContainer extends React.PureComponent<Props> {
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
   shouldDropUp(): boolean {
+    // Always return true, if dropUp
     if (this.props.dropUp) return true
+
     if (!this.node || !this.wrapperNode) return false
 
     const { top } = this.wrapperNode.getBoundingClientRect()
@@ -126,7 +128,13 @@ export class MenuContainer extends React.PureComponent<Props> {
   }
 
   shouldDropDirectionUpdate(positionProps): boolean {
-    return this.didOpen && this.props.shouldDropDirectionUpdate(positionProps)
+    return (
+      this.didOpen &&
+      this.props.shouldDropDirectionUpdate({
+        ...positionProps,
+        dropUp: this.props.dropUp,
+      })
+    )
   }
 
   getMenuProps() {
