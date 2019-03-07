@@ -2,30 +2,55 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Flexy, Icon, Text } from '../src/index.js'
 import iconList from '../src/components/Icon/icons'
+import styled from '../src/components/styled'
+import { getColor } from '../src/styles/utilities/color'
 
 const stories = storiesOf('Icon', module)
 
+const IconGrid = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+`
+const WrapperUI = styled('div')`
+  flex: 0 0 80px;
+  text-align: center;
+  margin: 12px;
+  border: 1px solid ${getColor('grey.500')};
+  border-radius: 5px;
+  -webkit-box-align: start;
+  display: flex;
+  flex-direction: column;
+`
+const TextWrapper = styled(Text)`
+  margin-top: 'auto';
+  border-top: 1px solid ${getColor('grey.500')};
+  display: 'flex';
+  padding: 8px;
+  width: 100%;
+  color: ${getColor('charcoal.300')};
+`
+const IconWrapper = styled('div')`
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`
+
 stories.add('icons', () => {
   const icons = Object.keys(iconList).map(i => (
-    <div
-      style={{
-        display: 'inline-block',
-        margin: 12,
-        textAlign: 'center',
-        width: 80,
-        height: 40,
-      }}
-      key={i}
-    >
-      <Icon name={i} key={i} center />
-      <Text muted size="xs">
-        {i}
-      </Text>
-      <br />
-    </div>
+    <WrapperUI key={i}>
+      <IconWrapper>
+        <Icon name={i} key={i} center />
+      </IconWrapper>
+      <TextWrapper size="12">{i}</TextWrapper>
+    </WrapperUI>
   ))
 
-  return <div>{icons}</div>
+  return <IconGrid>{icons}</IconGrid>
 })
 
 stories.add('sizes', () => {
