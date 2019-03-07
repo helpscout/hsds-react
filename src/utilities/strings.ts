@@ -202,7 +202,7 @@ export const convertLinksToHTML = (string: string): string => {
 
         // Matched a URL
         let url = value
-        if (url.indexOf('http://') === -1 && url.indexOf('https://') === -1) {
+        if (url.indexOf('http://') !== 0 && url.indexOf('https://') !== 0) {
           // Add http as the default scheme
           url = `http://${url}`
         }
