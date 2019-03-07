@@ -33,6 +33,7 @@ import fabBuoy from '../../icons/fab-buoy.svg'
 import fabChat from '../../icons/fab-chat.svg'
 import fabQuestion from '../../icons/fab-question.svg'
 import fabSearch from '../../icons/fab-search.svg'
+import forward from '../../icons/forward.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import helpscoutLogo from '../../icons/helpscout-logo.svg'
 import imageAdd from '../../icons/image-add.svg'
@@ -98,6 +99,7 @@ const ICONS = {
   'fab-chat': fabChat,
   'fab-question': fabQuestion,
   'fab-search': fabSearch,
+  forward,
   fullscreen,
   'helpscout-logo': helpscoutLogo,
   'image-add': imageAdd,
