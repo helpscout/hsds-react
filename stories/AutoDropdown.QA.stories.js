@@ -118,7 +118,11 @@ stories.add('Within Modal', () => {
     children: faker.lorem.sentence(),
   })
 
-  const props = makeProps()
+  const props = {
+    ...makeProps(),
+    dropUp: boolean('dropUp', false),
+    forceDropDown: boolean('forceDropDown', true),
+  }
 
   class Example extends React.Component {
     state = { count: 0 }
@@ -129,7 +133,6 @@ stories.add('Within Modal', () => {
       return (
         <Modal trigger={<Button>Open Modal</Button>}>
           <Modal.Body>
-            <p>Dropdown should ALWAYS drop downwards</p>
             <Button version={2} onClick={this.increment} kind="primaryAlt">
               Update State
             </Button>
@@ -139,9 +142,7 @@ stories.add('Within Modal', () => {
               return <p {...content} />
             })}
             <br />
-            <AutoDropdown {...props} forceDropDown={true}>
-              Dropdown
-            </AutoDropdown>
+            <AutoDropdown {...props}>Dropdown</AutoDropdown>
           </Modal.Body>
         </Modal>
       )
