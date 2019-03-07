@@ -75,7 +75,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     this._isMounted = false
   }
 
-  shouldDropDirectionUpdate = (positionProps: any = {}) => {
+  shouldDropDirectionUpdate = positionProps => {
     if (this.state.inputValue) return false
 
     return this.props.shouldDropDirectionUpdate(positionProps)
