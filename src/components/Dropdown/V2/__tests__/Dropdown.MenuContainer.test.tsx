@@ -548,7 +548,7 @@ describe('shouldDropDirectionUpdate', () => {
   })
 })
 
-describe.only('setPositionStylesOnNode', () => {
+describe('setPositionStylesOnNode', () => {
   test('Does not call shouldDropDirectionUpdate, if forceDropDown', () => {
     const spy = jest.fn()
     const wrapper = mount(
