@@ -259,7 +259,7 @@ describe('convertLinksToHTML', () => {
     ],
     [
       'www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw',
-      '<a href="http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw" target="_blank" rel="noopener">www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw</a>',
+      '<a href="http://www.example.com/example?fdasfs=24fa3fd32&amp;asdsa=af5t34tw" target="_blank" rel="noopener">www.example.com/example?fdasfs=24fa3fd32&amp;asdsa=af5t34tw</a>',
     ],
     [
       'http://www.example.com/example?fdasfs=24fa3fd32',
@@ -267,7 +267,7 @@ describe('convertLinksToHTML', () => {
     ],
     [
       'http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw',
-      '<a href="http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw" target="_blank" rel="noopener">http://www.example.com/example?fdasfs=24fa3fd32&asdsa=af5t34tw</a>',
+      '<a href="http://www.example.com/example?fdasfs=24fa3fd32&amp;asdsa=af5t34tw" target="_blank" rel="noopener">http://www.example.com/example?fdasfs=24fa3fd32&amp;asdsa=af5t34tw</a>',
     ],
     [
       '(www-example.example.example.com).',
@@ -291,15 +291,15 @@ describe('convertLinksToHTML', () => {
     ],
     [
       '"http://www.example.com"',
-      '"<a href="http://www.example.com" target="_blank" rel="noopener">http://www.example.com</a>"',
+      '&quot;<a href="http://www.example.com" target="_blank" rel="noopener">http://www.example.com</a>&quot;',
     ],
     [
       "'http://www.example.com'",
-      '\'<a href="http://www.example.com" target="_blank" rel="noopener">http://www.example.com</a>\'',
+      '&#x27;<a href="http://www.example.com" target="_blank" rel="noopener">http://www.example.com</a>&#x27;',
     ],
     [
       '"example.com/"',
-      '"<a href="http://example.com/" target="_blank" rel="noopener">example.com/</a>"',
+      '&quot;<a href="http://example.com/" target="_blank" rel="noopener">example.com/</a>&quot;',
     ],
     [
       'http://mail.example.com/example/compose?to=example@example.com',
@@ -359,19 +359,103 @@ describe('convertLinksToHTML', () => {
     ],
     [
       '<p>www.example.com</p>',
-      '<p><a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a></p>',
-    ],
-    [
-      '<x>www.example.com</x>',
-      '<x><a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a></x>',
-    ],
-    [
-      '<pre/> www.example.com',
-      '<pre/> <a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a>',
+      '&lt;p&gt;<a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a>&lt;/p&gt;',
     ],
     [
       'www.example.com www.helpscout.com',
       '<a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a> <a href="http://www.helpscout.com" target="_blank" rel="noopener">www.helpscout.com</a>',
+    ],
+    [
+      'example@example.com',
+      '<a href="mailto:example@example.com">example@example.com</a>',
+    ],
+    [
+      "example.a'ddress@example.com",
+      '<a href="mailto:example.a&#x27;ddress@example.com">example.a&#x27;ddress@example.com</a>',
+    ],
+    [
+      'example+address@example.com',
+      '<a href="mailto:example+address@example.com">example+address@example.com</a>',
+    ],
+    [
+      'exam-ple@example.com',
+      '<a href="mailto:exam-ple@example.com">exam-ple@example.com</a>',
+    ],
+    [
+      'example@example.example.com',
+      '<a href="mailto:example@example.example.com">example@example.example.com</a>',
+    ],
+    [
+      'example@exam-ple.example.com',
+      '<a href="mailto:example@exam-ple.example.com">example@exam-ple.example.com</a>',
+    ],
+    [
+      'Lorem example@example.com ipsum.',
+      'Lorem <a href="mailto:example@example.com">example@example.com</a> ipsum.',
+    ],
+    [
+      'Lorem ipsum example@example.com dolor sit amet.',
+      'Lorem ipsum <a href="mailto:example@example.com">example@example.com</a> dolor sit amet.',
+    ],
+    [
+      'example@example.com.',
+      '<a href="mailto:example@example.com">example@example.com</a>.',
+    ],
+    [
+      'example@example.com,',
+      '<a href="mailto:example@example.com">example@example.com</a>,',
+    ],
+    [
+      'example@example.example.com.',
+      '<a href="mailto:example@example.example.com">example@example.example.com</a>.',
+    ],
+    [
+      'example@example.example.com　',
+      '<a href="mailto:example@example.example.com">example@example.example.com</a>　',
+    ],
+    [
+      'Привет example@example.com!',
+      'Привет <a href="mailto:example@example.com">example@example.com</a>!',
+    ],
+    [
+      '(example@example.com)',
+      '(<a href="mailto:example@example.com">example@example.com</a>)',
+    ],
+    [
+      '(example@example.example.com)',
+      '(<a href="mailto:example@example.example.com">example@example.example.com</a>)',
+    ],
+    [
+      '(example@example.com),',
+      '(<a href="mailto:example@example.com">example@example.com</a>),',
+    ],
+    [
+      '(example@example.com).',
+      '(<a href="mailto:example@example.com">example@example.com</a>).',
+    ],
+    [
+      'example@example.com).',
+      '<a href="mailto:example@example.com">example@example.com</a>).',
+    ],
+    [
+      '(example@example.com',
+      '(<a href="mailto:example@example.com">example@example.com</a>',
+    ],
+    [
+      'mailto:example@example.com',
+      'mailto:<a href="mailto:example@example.com">example@example.com</a>',
+    ],
+    [
+      '(mailto:example@example.com)or',
+      '(mailto:<a href="mailto:example@example.com">example@example.com</a>)or',
+    ],
+    [
+      'Email:example@example.com',
+      'Email:<a href="mailto:example@example.com">example@example.com</a>',
+    ],
+    [
+      'http://example.com?email=example@example.com',
+      '<a href="http://example.com?email=example@example.com" target="_blank" rel="noopener">http://example.com?email=example@example.com</a>',
     ],
   ]
 
@@ -391,6 +475,7 @@ describe('convertLinksToHTML', () => {
     'Lorem://ipsum',
     'Lorem://ipsum/dolor',
     'ftp://example.com',
+    'helpscout.com',
   ]
 
   withoutUrls.forEach(fixture => {

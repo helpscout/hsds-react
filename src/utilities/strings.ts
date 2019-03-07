@@ -184,20 +184,39 @@ export const convertLinksToHTML = (string: string): string => {
     return ''
   }
 
-  const pattern = /(?:(https?:\/\/)|www\d{0,3}\.|www-|[a-z0-9.-]+\.[a-z]{2,4}(?=\/))(?:[^\s()<>]+)*(?:[^\s`!-()\[\]{};:'".,<>?«»“”‘’])/giu
+  const emailPattern = "\\b[A-Z0-9._'%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}"
+  const urlPattern =
+    '(?:(?:https?:\\/\\/|www\\d{0,3}\\.|www-|[a-z0-9.-]+\\.[a-z]{2,4}(?=\\/))(?:[^\\s()<>]+)*(?:[^\\s`!-()\\[\\]{};:\'".,<>?«»“”‘’]))'
 
-  return string.replace(
-    new RegExp(pattern),
-    (match: string, scheme): string => {
-      let url = match
-      if (!scheme) {
-        // Add http as the default scheme
-        url = `http://${url}`
+  return string
+    .split(new RegExp(`(${urlPattern}|${emailPattern})`, 'giu'))
+    .reduce((accumulator: string, value: string, index: number): string => {
+      if (index % 2) {
+        if (value.match(new RegExp(`^${emailPattern}$`, 'ui'))) {
+          // Matched an email
+          return (
+            accumulator +
+            `<a href="mailto:${escapeHTML(value)}">${escapeHTML(value)}</a>`
+          )
+        }
+
+        // Matched a URL
+        let url = value
+        if (url.indexOf('http://') === -1 && url.indexOf('https://') === -1) {
+          // Add http as the default scheme
+          url = `http://${url}`
+        }
+
+        // Adding target blank and rel noopener for external links
+        // See: https://developers.google.com/web/tools/lighthouse/audits/noopener
+        return (
+          accumulator +
+          `<a href="${escapeHTML(
+            url
+          )}" target="_blank" rel="noopener">${escapeHTML(value)}</a>`
+        )
       }
 
-      // Adding target blank and rel noopener for external links
-      // See: https://developers.google.com/web/tools/lighthouse/audits/noopener
-      return `<a href="${url}" target="_blank" rel="noopener">${match}</a>`
-    }
-  )
+      return accumulator + escapeHTML(value)
+    }, '')
 }
