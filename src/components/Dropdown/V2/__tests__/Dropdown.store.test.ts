@@ -1,5 +1,11 @@
-import { dispatch } from '../Dropdown.store'
+import { initialState, dispatch } from '../Dropdown.store'
 import actionTypes from '../Dropdown.actionTypes'
+
+describe('initialState', () => {
+  test('shouldDropDirectionUpdate should resolve to true', () => {
+    expect(initialState.shouldDropDirectionUpdate()).toBe(true)
+  })
+})
 
 describe('dispatch', () => {
   test('Can update state', () => {
