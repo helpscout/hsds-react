@@ -1025,7 +1025,7 @@ describe('onEnterDown', () => {
     expect(keyDownSpy).toHaveBeenCalled()
   })
 
-  test('onKeyDown does not fire when a non-Enter key is pressed (down)', () => {
+  test('onEnterDown does not fire when a non-Enter key is pressed (down)', () => {
     const enterSpy = jest.fn()
     const keyDownSpy = jest.fn()
     const wrapper = mount(
@@ -1095,7 +1095,7 @@ describe('onEnterUp', () => {
     expect(keyUpSpy).toHaveBeenCalled()
   })
 
-  test('onKeyUp does not fire when a non-Enter key is pressed (up)', () => {
+  test('onEnterUp does not fire when a non-Enter key is pressed (up)', () => {
     const enterSpy = jest.fn()
     const keyUpSpy = jest.fn()
     const wrapper = mount(<Input onEnterUp={enterSpy} onKeyUp={keyUpSpy} />)
