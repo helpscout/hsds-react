@@ -42,6 +42,7 @@ export interface Props {
   closeDropdown: () => void
   dropRight: boolean
   dropUp: boolean
+  forceDropDown: boolean
   focusItem: (...args: any[]) => void
   getState: (...args: any[]) => void
   id?: string
@@ -63,28 +64,31 @@ export interface Props {
   zIndex: number
 }
 
+export const defaultProps = {
+  animationDuration: 80,
+  animationSequence: 'fade down',
+  closeDropdown: noop,
+  dropRight: true,
+  dropUp: false,
+  forceDropDown: false,
+  focusItem: noop,
+  getState: noop,
+  innerRef: noop,
+  isLoading: false,
+  isOpen: true,
+  items: [],
+  menuOffsetTop: 0,
+  onMenuMounted: noop,
+  onMenuReposition: noop,
+  onMenuUnmounted: noop,
+  positionFixed: false,
+  shouldDropDirectionUpdate: () => true,
+  selectItem: noop,
+  zIndex: 1080,
+}
+
 export class MenuContainer extends React.PureComponent<Props> {
-  static defaultProps = {
-    animationDuration: 80,
-    animationSequence: 'fade down',
-    closeDropdown: noop,
-    dropRight: true,
-    dropUp: false,
-    focusItem: noop,
-    getState: noop,
-    innerRef: noop,
-    isLoading: false,
-    isOpen: true,
-    items: [],
-    menuOffsetTop: 0,
-    onMenuMounted: noop,
-    onMenuReposition: noop,
-    onMenuUnmounted: noop,
-    positionFixed: false,
-    shouldDropDirectionUpdate: noop,
-    selectItem: noop,
-    zIndex: 1080,
-  }
+  static defaultProps = defaultProps
 
   id: string = uniqueID()
   didOpen: boolean = false
@@ -128,13 +132,12 @@ export class MenuContainer extends React.PureComponent<Props> {
   }
 
   shouldDropDirectionUpdate(positionProps): boolean {
-    return (
-      this.didOpen &&
-      this.props.shouldDropDirectionUpdate({
-        ...positionProps,
-        dropUp: this.props.dropUp,
-      })
-    )
+    if (!this.didOpen) return true
+
+    return this.props.shouldDropDirectionUpdate({
+      ...positionProps,
+      dropUp: this.props.dropUp,
+    })
   }
 
   getMenuProps() {
@@ -344,6 +347,7 @@ export class MenuContainer extends React.PureComponent<Props> {
       placementNode: this.placementNode,
       menuNode: this.node,
       zIndex,
+      didOpen: this.didOpen,
     }
 
     this.placementNode.style.position = position
@@ -362,7 +366,10 @@ export class MenuContainer extends React.PureComponent<Props> {
     }
 
     /* istanbul ignore next */
-    if (this.shouldDropUp() && this.shouldDropDirectionUpdate(positionProps)) {
+    if (this.props.forceDropDown) return
+    if (!this.shouldDropDirectionUpdate(positionProps)) return
+
+    if (this.shouldDropUp()) {
       this.node.classList.add('is-dropUp')
       if (triggerNode) {
         this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
@@ -399,11 +406,11 @@ export class MenuContainer extends React.PureComponent<Props> {
       isOpen,
       selectItem,
     } = this.props
+
     const shouldDropUp = this.shouldDropUp()
 
     const componentClassName = classNames(
       'c-DropdownV2MenuContainer',
-      shouldDropUp && 'is-dropUp',
       !dropRight && 'is-dropLeft',
       className
     )
@@ -460,6 +467,7 @@ const ConnectedMenuContainer: any = connect(
   (state: any) => {
     const {
       dropUp,
+      forceDropDown,
       getState,
       isLoading,
       isOpen,
@@ -478,6 +486,7 @@ const ConnectedMenuContainer: any = connect(
     return {
       dropRight: isDropRight(state),
       dropUp,
+      forceDropDown,
       getState,
       id: menuId,
       isLoading,

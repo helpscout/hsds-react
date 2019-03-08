@@ -53,8 +53,9 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | enableTabNavigation       | `boolean`                | `true`       | Enables Tab keypresses to navigate through items.                                                            |
 | envNode                   | `Document`/`HTMLElement` | `document`   | Node to bind global events.                                                                                  |
 | focusClassName            | `string`                 | `is-focused` | ClassName for a focused item.                                                                                |
+| forceDropDown             | `boolean`                | `false`      | Forces the dropdown to always drop downwards. Overrides `dropUp`.                                            |
 | index                     | `string`                 |              | Current selected item index.                                                                                 |
-| inputValue                | `string`                 |              |                                                                                                              | Used when constructing a filterable Dropdown. |
+| inputValue                | `string`                 |              | Used when constructing a filterable Dropdown.                                                                |
 | id                        | `string`                 |              | ID of the component.                                                                                         |
 | innerRef                  | `Function`               |              | Retrieves the Dropdown DOM node.                                                                             |
 | items                     | `Array<Object>`          | `[]`         | Items to render.                                                                                             |

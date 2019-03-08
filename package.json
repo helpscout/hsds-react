@@ -195,6 +195,7 @@
     "react-addons-test-utils": "15.6.2",
     "react-dev-utils": "^3.0.2",
     "react-dom": "^16.6.1",
+    "react-draggable": "^3.2.1",
     "react-frame-component": "^1.1.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
