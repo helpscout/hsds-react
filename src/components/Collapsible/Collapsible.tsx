@@ -44,20 +44,29 @@ class Collapsible extends React.Component<Props, any> {
     this._isMounted = false
   }
 
+  shouldFireStateCallback = (prevProps: Props, prevState: State) => {
+    return (
+      prevProps.isOpen !== this.props.isOpen &&
+      prevState.animationState !== this.state.animationState
+    )
+  }
+
   componentWillReceiveProps(nextProps: Props) {
     const { isOpen: willOpen } = nextProps
-    const { isOpen } = this.props
-
     /* istanbul ignore next */
-    if (isOpen !== willOpen) {
+    if (willOpen !== this.props.isOpen) {
       this.safeSetState({ animationState: 'measuring' })
     }
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     const { isOpen: wasOpen } = prevProps
+
     this.handleAnimation(wasOpen)
-    this.handleAnimationStateCallback()
+
+    if (this.shouldFireStateCallback(prevProps, prevState)) {
+      this.handleAnimationStateCallback()
+    }
   }
 
   safeSetState(state: Object) {

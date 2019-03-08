@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { MenuContainer } from '../Dropdown.MenuContainer'
+import { MenuContainer, defaultProps } from '../Dropdown.MenuContainer'
 import { initialState } from '../Dropdown.store'
 import { find, hasClass } from '../../../../tests/helpers/enzyme'
 import { MenuUI } from '../Dropdown.css.js'
@@ -335,7 +335,6 @@ describe('Style/Direction', () => {
     const el = find(wrapper, baseSelector)
     const animate = wrapper.find('Animate')
 
-    expect(hasClass(el, 'is-dropUp')).toBe(true)
     expect(animate.prop('sequence')).toContain('up')
   })
 
@@ -494,6 +493,10 @@ describe('forceHideMenuNode', () => {
 })
 
 describe('shouldDropDirectionUpdate', () => {
+  test('shouldDropDirectionUpdate should resolve to true', () => {
+    expect(defaultProps.shouldDropDirectionUpdate()).toBe(true)
+  })
+
   test('Gets called when position is being calculated', () => {
     const spy = jest.fn()
 
@@ -542,5 +545,139 @@ describe('shouldDropDirectionUpdate', () => {
     wrapper.instance().shouldDropDirectionUpdate()
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('setPositionStylesOnNode', () => {
+  test('Does not call shouldDropDirectionUpdate, if forceDropDown', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuContainer forceDropDown={true} shouldDropDirectionUpdate={spy} />
+    )
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Calls shouldDropDirectionUpdate, if forceDropDown is false', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuContainer forceDropDown={false} shouldDropDirectionUpdate={spy} />
+    )
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Adds dropUp styles, if applicable', () => {
+    const mockTriggerNode = document.createElement('div')
+    const wrapper = mount(<MenuContainer triggerNode={mockTriggerNode} />)
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    // Mock drop calculation
+    inst.shouldDropUp = () => true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(inst.node.classList.contains('is-dropUp')).toBeTruthy()
+    expect(window.getComputedStyle(inst.placementNode).marginTop).toContain('-')
+  })
+
+  test('Removes dropUp styles, if applicable', () => {
+    const mockTriggerNode = document.createElement('div')
+    const wrapper = mount(<MenuContainer triggerNode={mockTriggerNode} />)
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    // Mock dropUp DOM state
+    inst.node.classList.add('is-dropUp')
+
+    // Mock drop calculation
+    inst.shouldDropUp = () => false
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(inst.node.classList.contains('is-dropUp')).toBeFalsy()
+    expect(window.getComputedStyle(inst.placementNode).marginTop).not.toContain(
+      '-'
+    )
+  })
+
+  test('Does not adjust placementNode styles on dropUp, if triggerNode is not defined', () => {
+    const wrapper = mount(<MenuContainer />)
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    // Mock drop calculation
+    inst.shouldDropUp = () => true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(inst.node.classList.contains('is-dropUp')).toBeTruthy()
+    expect(window.getComputedStyle(inst.placementNode).marginTop).not.toContain(
+      '-'
+    )
   })
 })

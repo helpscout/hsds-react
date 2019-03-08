@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { includes } from './arrays'
-import { isFunction, isObject, isDefined } from './is'
+import { isFunction, isObject, isDefined, isString } from './is'
 
 let REGISTERED_COMPONENTS = {}
 export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
@@ -182,4 +182,21 @@ export const renderRenderPropComponent = (
     return renderProp(props)
   }
   return null
+}
+
+export const renderChildrenSafely = (
+  children: any,
+  baseTag = 'span',
+  props: any = {}
+) => {
+  const { children: childrenProp, ...rest } = props
+
+  if (isString(children)) {
+    return React.createElement(baseTag, {
+      ...rest,
+      dangerouslySetInnerHTML: { __html: children },
+    })
+  } else {
+    return React.createElement(baseTag, rest, children)
+  }
 }

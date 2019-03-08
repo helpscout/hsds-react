@@ -1,10 +1,19 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import { Button, Flexy, Icon, Input, styled } from '../src/index.js'
 
 const stories = storiesOf('Input', module)
 
-stories.add('default', () => <Input />)
+stories.add('Default', () => {
+  const props = {
+    onEnterDown: action('onEnterDown'),
+    onEnterUp: action('onEnterUp'),
+    onKeyDown: action('onKeyDown'),
+    onKeyUp: action('onKeyUp'),
+  }
+  return <Input {...props} />
+})
 
 stories.add('autocomplete', () => (
   <div style={{ width: 300 }}>

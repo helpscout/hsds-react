@@ -35,6 +35,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   enableTabNavigation: boolean
   envNode: any
   focusClassName: string
+  forceDropDown: boolean
   getState: (...args: any[]) => void
   id?: string
   index?: string

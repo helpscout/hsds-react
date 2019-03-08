@@ -36,7 +36,8 @@ const MessageBubbleIconWrapper = styled('div')(IconWrapperCSS)
 const MessageBubbleTitle = styled(Heading)(TitleCSS)
 const MessageBubbleTyping = styled('div')(TypingCSS)
 
-const enhanceBody = compose(convertLinksToHTML, newlineToHTML, escapeHTML)
+// convertLinksToHTML will escape for output as HTML
+const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
 
 export const Bubble = (props: Props, context: Context) => {
   const {

@@ -44,7 +44,8 @@ type Props = {
   type?: 'line_item' | 'message' | 'note',
 }
 
-const enhanceBody = compose(convertLinksToHTML, newlineToHTML, escapeHTML)
+// convertLinksToHTML will escape for output as HTML
+const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
 
 const Item = (props: Props) => {
   const {

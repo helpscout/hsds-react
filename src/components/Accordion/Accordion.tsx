@@ -1,15 +1,16 @@
-// @flow
-import type { AccordionProps, AccordionState } from './types'
-import React, { cloneElement, Children, PureComponent } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Body from './Body'
-import Section from './Section'
-import Title from './Title'
+import { AccordionProps, AccordionState } from './Accordion.types'
+import PropProvider from '../PropProvider'
+import propConnect from '../PropProvider/propConnect'
+import Body from './Accordion.Body'
+import Section from './Accordion.Section'
+import Link from './Accordion.Link'
+import Title from './Accordion.Title'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { AccordionUI } from './styles/Accordion.css.js'
-import { COMPONENT_KEY } from './utils'
+import { AccordionUI } from './Accordion.css'
+import { COMPONENT_KEY } from './Accordion.utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
@@ -53,12 +54,18 @@ const stringifyArray = arr => arr.sort().toString()
 const didOpenSectionIdsChange = (prevSectionIds, nextSectionIds) =>
   stringifyArray(prevSectionIds) !== stringifyArray(nextSectionIds)
 
-class Accordion extends PureComponent<AccordionProps, AccordionState> {
+export class Accordion extends React.PureComponent<
+  AccordionProps,
+  AccordionState
+> {
   static Body = Body
+  static Link = Link
   static Section = Section
   static Title = Title
 
   static defaultProps = {
+    isPage: false,
+    isSeamless: false,
     onOpen: noop,
     onClose: noop,
     openSectionIds: [],
@@ -83,8 +90,9 @@ class Accordion extends PureComponent<AccordionProps, AccordionState> {
     this.setState({ sections })
   }
 
-  getOpenSectionIds() {
+  getOpenSectionIds(): Array<any> {
     const { sections } = this.state
+
     return Object.keys(sections).reduce((accumulator, key) => {
       if (sections[key] && sections[key] === true) {
         return [...accumulator, key]
@@ -118,20 +126,11 @@ class Accordion extends PureComponent<AccordionProps, AccordionState> {
     })
   }
 
-  render() {
-    const {
-      allowMultiple,
-      className,
-      children,
-      duration,
-      isPage,
-      isSeamless,
-      size,
-      ...rest
-    } = this.props
+  getSubComponentProps() {
+    const { duration, isPage, isSeamless, size } = this.props
     const { sections } = this.state
-    const componentClassName = getComponentClassName(this.props)
-    const extraProps = {
+
+    return {
       duration,
       isPage,
       isSeamless,
@@ -141,16 +140,20 @@ class Accordion extends PureComponent<AccordionProps, AccordionState> {
       setOpen: this.setOpen,
       size,
     }
+  }
 
-    const content =
-      Children.count(children) > 0
-        ? Children.map(children, child =>
-            cloneElement(child, {
-              ...child.props,
-              ...extraProps,
-            })
-          )
-        : null
+  getPropProviderProps = () => {
+    const props = this.getSubComponentProps()
+    return {
+      [COMPONENT_KEY.Section]: props,
+      [COMPONENT_KEY.Title]: props,
+      [COMPONENT_KEY.Body]: props,
+    }
+  }
+
+  render() {
+    const { children, ...rest } = this.props
+    const componentClassName = getComponentClassName(this.props)
 
     return (
       <AccordionUI
@@ -158,12 +161,14 @@ class Accordion extends PureComponent<AccordionProps, AccordionState> {
         className={componentClassName}
         role="tablist"
       >
-        {content}
+        <PropProvider value={this.getPropProviderProps()}>
+          {children}
+        </PropProvider>
       </AccordionUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Accordion)(Accordion)
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Accordion)(Accordion)
 
-export default Accordion
+export default PropConnectedComponent

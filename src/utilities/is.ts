@@ -22,11 +22,11 @@ export function isArray<T>(value: unknown): value is Array<T> {
   return Array.isArray(value)
 }
 
-export function isBool<T>(value: unknown): value is Boolean {
+export function isBool<T>(value: unknown): value is boolean {
   return typeOf(value, 'boolean')
 }
 
-export function isBoolean<T>(value: unknown): value is Boolean {
+export function isBoolean<T>(value: unknown): value is boolean {
   return isBool(value)
 }
 
@@ -34,11 +34,11 @@ export function isFunction<T>(value: unknown): value is Function {
   return typeOf(value, 'function')
 }
 
-export function isNumber<T>(value: unknown): value is Number {
+export function isNumber<T>(value: unknown): value is number {
   return typeOf(value, 'number')
 }
 
-export function isString<T>(value: unknown): value is String {
+export function isString<T>(value: unknown): value is string {
   return typeOf(value, 'string')
 }
 

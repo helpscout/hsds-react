@@ -24,7 +24,9 @@ This component is to be used within a [`Section`](./Section.md).
 
 ## Props
 
-| Prop      | Type     | Description                                      |
-| --------- | -------- | ------------------------------------------------ |
-| children  | `any`    | Content to render.                               |
-| className | `string` | Custom class names to be added to the component. |
+| Prop      | Type     | Description                                         |
+| --------- | -------- | --------------------------------------------------- |
+| children  | `any`    | Content to render.                                  |
+| className | `string` | Custom class names to be added to the component.    |
+| href      | `string` | Renders a [Link](../../Link) with an href.          |
+| to        | `string` | Renders a routable [Link](../../Link) with an href. |
