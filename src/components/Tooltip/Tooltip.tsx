@@ -7,6 +7,7 @@ import Popper from './Tooltip.Popper'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
+import { renderChildrenSafely } from '../../utilities/component'
 import { TooltipUI } from './Tooltip.css'
 import { COMPONENT_KEY } from './Tooltip.utils'
 import { getColor } from '../../styles/utilities/color'
@@ -86,7 +87,7 @@ export class Tooltip extends React.PureComponent<Props> {
   renderContent = (renderProps?: any) => {
     const { renderContent, placement, title } = this.props
 
-    if (!this.hasRenderContentProp()) return title
+    if (!this.hasRenderContentProp()) return renderChildrenSafely(title)
 
     // @ts-ignore
     return renderContent({ ...renderProps, placement, title })

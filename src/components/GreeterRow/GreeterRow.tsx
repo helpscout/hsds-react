@@ -5,6 +5,7 @@ import Flexy from '../Flexy'
 import Text from '../Text'
 import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
+import { renderChildrenSafely } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { ContentUI, ErrorIconUI, PauseIconUI } from './GreeterRow.css'
 import { COMPONENT_KEY } from './GreeterRow.utils'
@@ -87,15 +88,16 @@ export class GreeterRow extends React.PureComponent<Props> {
     const { name } = this.props
     const shade = this.isPaused() ? 'faint' : 'default'
 
-    return (
-      <Text truncate weight={500} data-cy="greeter-name-row-name" shade={shade}>
-        {name}
-      </Text>
-    )
+    return renderChildrenSafely(name, Text, {
+      truncate: true,
+      weight: 500,
+      'data-cy': 'greeter-name-row-name',
+      shade,
+    })
   }
 
   render() {
-    const { children, innerRef, ...rest } = this.props
+    const { children, innerRef, name, ...rest } = this.props
 
     return (
       <AccordionLink

@@ -75,9 +75,9 @@ stories.add('is seamless', () => (
 ))
 
 stories.add('is seamless in page', () => (
-  <Page title="Accordion">
+  <Page>
     <Page.Card>
-      <Page.Header title="Accordion" subtitle="In seamless mode" />
+      <Page.Header subtitle="In seamless mode" />
       <Accordion>{createSections(data)}</Accordion>
     </Page.Card>
   </Page>
@@ -182,7 +182,7 @@ stories.add('Row (Link)', () => {
   const linkTwoContent = text('linkTwoContent', 'Link Row Two')
 
   return (
-    <Page title="Accordion">
+    <Page>
       <Page.Card>
         <Accordion isSeamless>
           <Accordion.Link to="/">

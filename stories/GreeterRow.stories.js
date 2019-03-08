@@ -15,7 +15,7 @@ import { withArtboard } from '@helpscout/artboard'
 const stories = storiesOf('GreeterRow', module)
 
 stories.add('Default', () => {
-  const greeterName = text('greeterName', 'Link Row One')
+  const greeterName = text('greeterName', '"Link Row One"')
   const isError = boolean('isError', false)
   const isPaused = boolean('isPaused', true)
   const errorMessage = text(
@@ -34,7 +34,7 @@ stories.add('Default', () => {
   const greeterTwoName = text('greeterTwoName', 'Link Row Two')
 
   return (
-    <Page title="Accordion">
+    <Page>
       <Page.Card>
         <Accordion isSeamless>
           <GreeterRow {...props} />
