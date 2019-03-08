@@ -3,22 +3,25 @@ import { storiesOf } from '@storybook/react'
 import faker from 'faker'
 import styled from '../../src/components/styled'
 import Table from '../../src/components/Table/Table'
-import Illo from '../../src/components/Illo'
+import Icon from '../../src/components/Icon'
 import FormLabel from '../../src/components/FormLabel'
 import Text from '../../src/components/Text'
 import Heading from '../../src/components/Heading'
 import Input from '../../src/components/Input'
 import Select from '../../src/components/Select'
+import PreviewCard from '../../src/components/PreviewCard'
+import Button from '../../src/components/Button'
 
 const stories = storiesOf('Table', module)
 
-const OptionsWrapper = styled('div')`
-  margin-bottom: 20px;
+const Wrapper = styled('div')`
+  margin-bottom: 30px;
 `
 const FlexContainerForForms = styled('div')`
   display: flex;
   align-content: flex-start;
   justify-content: space-between;
+  margin-bottom: 15px;
 `
 const FlexContainerForHeadings = styled('div')`
   display: flex;
@@ -43,10 +46,10 @@ const FormLabelUI = styled(FormLabel)`
   & .c-FormLabel__label {
     margin-right: 5px !important;
   }
-`
 
-const InlineIllo = styled(Illo)`
-  margin: 0 5px 0 0;
+  & .c-FormLabel__content {
+    margin-top: 0 !important;
+  }
 `
 
 const InputWithBorder = styled(Input)`
@@ -55,15 +58,28 @@ const InputWithBorder = styled(Input)`
   }
 `
 
+const IconUI = styled(Icon)`
+  margin-right: 5px;
+`
+
 class ColumnCustomizer extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      currentColumn: null,
+    }
+  }
+
   render() {
-    const { columns } = this.props
+    const { columns, sortedInfo } = this.props
+    const { currentColumn } = this.state
 
     return (
-      <OptionsWrapper>
+      <Wrapper>
         <Header>
           <FlexContainerForHeadings>
-            <InlineIllo name="bulb" color="#116ce1" size="40" />
+            <IconUI name="pencil-small" size="24" shade="faint" />
             <Heading size="h4">Column Options</Heading>
           </FlexContainerForHeadings>
         </Header>
@@ -71,6 +87,17 @@ class ColumnCustomizer extends Component {
         <FlexContainerForForms className="ColumnsCustomizer">
           {columns.map((column, index) => (
             <FlexQuarter className="column" key={column.columnKey}>
+              <Button
+                version={2}
+                kind="default"
+                size="sm"
+                style={{ marginLeft: 'auto', display: 'block' }}
+                onClick={() => {
+                  this.handleColumnInfoClick(column)
+                }}
+              >
+                <Icon name="info" size="20" />
+              </Button>
               <Text
                 style={{
                   marginBottom: '10px',
@@ -119,10 +146,61 @@ class ColumnCustomizer extends Component {
                   }}
                 />
               </FormLabelUI>
+              {column.sorter && (
+                <Text
+                  style={{ display: 'block', textAlign: 'right' }}
+                  shade="muted"
+                >
+                  Sortable
+                </Text>
+              )}
+              {sortedInfo.columnKey === column.columnKey && (
+                <Text
+                  style={{ display: 'block', textAlign: 'right' }}
+                  shade="muted"
+                >
+                  Sorted: <strong>{sortedInfo.order}</strong>
+                </Text>
+              )}
             </FlexQuarter>
           ))}
         </FlexContainerForForms>
-      </OptionsWrapper>
+
+        {currentColumn && this.renderColumnJSONConfig(currentColumn)}
+      </Wrapper>
+    )
+  }
+  handleColumnInfoClick = column => {
+    const { currentColumn } = this.state
+
+    this.setState({
+      currentColumn:
+        currentColumn == null || currentColumn.columnKey !== column.columnKey
+          ? column
+          : null,
+    })
+  }
+
+  renderColumnJSONConfig = column => {
+    return (
+      <PreviewCard title={`JSON config for column: ${column.title}`}>
+        <pre>
+          <code>
+            {JSON.stringify(
+              column,
+              function(key, val) {
+                if (typeof val === 'function') {
+                  let str = `${val}`
+                  let braceIndex = str.indexOf('{')
+                  return `${str.slice(0, braceIndex + 1)} ... }`
+                }
+                return val
+              },
+              2
+            )}
+          </code>
+        </pre>
+      </PreviewCard>
     )
   }
 
@@ -135,17 +213,17 @@ class ColumnCustomizer extends Component {
 
 class TableCustomizer extends Component {
   render() {
-    const { styleOptions, numberOfRows } = this.props
+    const { styleOptions, numberOfRows, containerWidth } = this.props
     const { border, tableWidth, background } = styleOptions
     const [color1, color2] = background
     const { tableBody, tableHeader, rows, columns } = border
     const { min, max } = tableWidth
 
     return (
-      <OptionsWrapper className="TableCustomizer">
+      <Wrapper className="TableCustomizer">
         <Header>
           <FlexContainerForHeadings>
-            <InlineIllo name="bulb" color="#116ce1" size="40" />
+            <IconUI name="pencil-small" size="24" shade="faint" />
             <Heading size="h4">Table Options</Heading>
           </FlexContainerForHeadings>
         </Header>
@@ -158,6 +236,21 @@ class TableCustomizer extends Component {
                 value={numberOfRows}
                 onChange={value => {
                   this.handleValueChange('numberOfRows', value)
+                }}
+              />
+            </FormLabelUI>
+          </FlexHalf>
+          <FlexHalf>
+            <FormLabelUI
+              label="Container Width"
+              isInline
+              helpText="Change to test the table scrolling"
+            >
+              <Input
+                size="sm"
+                value={containerWidth}
+                onChange={value => {
+                  this.handleValueChange('containerWidth', value)
                 }}
               />
             </FormLabelUI>
@@ -276,7 +369,7 @@ class TableCustomizer extends Component {
             </FormLabelUI>
           </FlexHalf>
         </FlexContainerForForms>
-      </OptionsWrapper>
+      </Wrapper>
     )
   }
 
@@ -299,7 +392,7 @@ class TableApp extends Component {
           columnKey: 'name',
           align: 'left',
           width: '30%',
-          renderHeaderCell: (column, sortedInfo) => {
+          renderHeaderCell: (column, { sortedInfo }) => {
             return (
               <strong
                 style={{
@@ -337,7 +430,7 @@ class TableApp extends Component {
           align: 'center',
           width: '35%',
           sorter: this.sortAlphabetically,
-          renderHeaderCell: (column, sortedInfo) => {
+          renderHeaderCell: (column, { sortedInfo }) => {
             return (
               <strong
                 style={{
@@ -391,6 +484,7 @@ class TableApp extends Component {
         columns: '2px solid #452840',
       },
       tableWidth: { min: '700px' },
+      containerWidth: '100%',
     }
   }
 
@@ -403,15 +497,18 @@ class TableApp extends Component {
       background,
       border,
       tableWidth,
+      containerWidth,
     } = this.state
 
     return (
-      <>
+      <Wrapper>
         <ColumnCustomizer
           columns={columns}
+          sortedInfo={sortedInfo}
           onChangeColumn={this.handleColumnChange}
         />
         <TableCustomizer
+          containerWidth={containerWidth}
           numberOfRows={data.length}
           styleOptions={{
             background,
@@ -431,8 +528,9 @@ class TableApp extends Component {
           background={background}
           border={border}
           tableWidth={tableWidth}
+          containerWidth={containerWidth}
         />
-      </>
+      </Wrapper>
     )
   }
 
@@ -441,7 +539,6 @@ class TableApp extends Component {
     const columnToChangeIndex = columns.findIndex(
       col => col.columnKey === columnKey
     )
-    console.log('columnToChangeIndex: ', columnToChangeIndex)
     const columnToChange = { ...columns[columnToChangeIndex] }
     columnToChange[field] = value
     const newColumns = [...columns]
@@ -456,6 +553,10 @@ class TableApp extends Component {
     if (option === 'numberOfRows') {
       this.setState({
         data: createFakeCustomers(value),
+      })
+    } else if (option === 'containerWidth') {
+      this.setState({
+        containerWidth: value,
       })
     } else {
       const [optionCategory, optionField] = option.split('.')

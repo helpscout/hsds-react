@@ -49,7 +49,7 @@ const HeaderCell = ({ column, loadingData, sortedInfo }) => (
     }}
   >
     {column.renderHeaderCell
-      ? column.renderHeaderCell(column, sortedInfo)
+      ? column.renderHeaderCell(column, { sortedInfo })
       : column.title}
   </HeaderCellUI>
 )
@@ -76,12 +76,14 @@ export default class Table extends Component {
       columnKey: null,
       order: null,
     },
+    containerWidth: '100%',
   }
 
   render() {
     const {
       data,
       tableWidth,
+      containerWidth,
       columns,
       border,
       background,
@@ -90,7 +92,11 @@ export default class Table extends Component {
     } = this.props
 
     return (
-      <TableWrapperUI ref={this.tableWrapper} loadingData={loadingData}>
+      <TableWrapperUI
+        ref={this.tableWrapper}
+        loadingData={loadingData}
+        containerWidth={containerWidth}
+      >
         <TableUI
           border={border}
           background={background}

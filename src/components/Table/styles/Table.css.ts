@@ -3,9 +3,10 @@ import styled from '../../styled'
 
 export const TableWrapperUI = styled('div')`
   ${baseStyles} overflow-x: auto;
-  width: 100%;
   transition: opacity 0.15s ease-in-out;
   ${({ loadingData }) => loadingData && 'opacity: 0.5;'};
+  ${({ containerWidth }) =>
+    containerWidth ? `width: ${containerWidth}` : 'width: 100%'};
 `
 
 export const TableUI = styled('table')`
