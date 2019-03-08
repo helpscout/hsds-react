@@ -1,7 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Accordion from '../Accordion'
-import Section, { classNameStrings as classNames } from '../Section'
+import Section, {
+  SectionWithUuid,
+  classNameStrings as classNames,
+} from '../Accordion.Section'
 
 describe('ClassNames', () => {
   test('Has default className', () => {
@@ -42,9 +45,9 @@ describe('ClassNames', () => {
 
 describe('Uuid', () => {
   test('Has a unique id', () => {
-    const wrapper1 = mount(<Section />)
+    const wrapper1 = mount(<SectionWithUuid />)
     const uuid1 = wrapper1.state('uuid')
-    const wrapper2 = mount(<Section />)
+    const wrapper2 = mount(<SectionWithUuid />)
     const uuid2 = wrapper2.state('uuid')
 
     expect(uuid1).toContain('AccordionSection')
@@ -55,7 +58,7 @@ describe('Uuid', () => {
 
 describe('isOpen', () => {
   test('Determines if it is open if sections includes its uuid', () => {
-    const wrapper = mount(<Section />)
+    const wrapper = mount(<SectionWithUuid />)
     const uuid = wrapper.state('uuid')
     let el = wrapper.find(`div.${classNames.baseComponentClassName}`)
 
@@ -69,7 +72,7 @@ describe('isOpen', () => {
   })
 
   test('Determines if it is open if sections includes its id', () => {
-    const wrapper = mount(<Section id="7" />)
+    const wrapper = mount(<SectionWithUuid id="7" />)
     let el = wrapper.find(`div.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass(classNames.isOpenClassName)).toBe(false)
@@ -79,5 +82,21 @@ describe('isOpen', () => {
     el = wrapper.find(`div.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass(classNames.isOpenClassName)).toBe(true)
+  })
+})
+
+describe('isOpen', () => {
+  test('Renders open styles, if defined', () => {
+    const wrapper = mount(<SectionWithUuid isOpen={true} />)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeTruthy()
+  })
+
+  test('Always render non-open styles, if isLink', () => {
+    const wrapper = mount(<SectionWithUuid isLink={true} isOpen={true} />)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeFalsy()
   })
 })

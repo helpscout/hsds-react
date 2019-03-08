@@ -27,5 +27,6 @@ This component is to be used within an [`Accordion`](./Accordion.md).
 | children  | `Accordion.Title|Accordion.Body` | Content to render.                                 |
 | className | `string`                         | Custom class names to be added to the component.   |
 | id        | `string`                         | The id used to track the section's open state.     |
+| isLink    | `boolean`                        | Renders a Link based UI.                           |
 | onOpen    | `function`                       | Callback to be invoked when the section is opened. |
 | onClose   | `function`                       | Callback to be invoked when the section is closed. |

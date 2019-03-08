@@ -43,6 +43,7 @@ import meatball from '../../icons/meatball.svg'
 import minimize from '../../icons/minimize.svg'
 import note from '../../icons/note.svg'
 import pencilSmall from '../../icons/pencil-small.svg'
+import pause from '../../icons/pause.svg'
 import plusLarge from '../../icons/plus-large.svg'
 import plusSmall from '../../icons/plus-small.svg'
 import reply from '../../icons/reply.svg'
@@ -108,6 +109,7 @@ const ICONS = {
   minimize,
   note,
   'option-dots': meatball,
+  pause,
   'pencil-small': pencilSmall,
   plus: plusLarge,
   'plus-large': plusLarge,

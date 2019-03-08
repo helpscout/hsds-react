@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Accordion from '../Accordion'
-import Section from '../Section'
-import Title, { classNameStrings as classNames } from '../Title'
+import Section, { SectionWithUuid } from '../Accordion.Section'
+import Title, { classNameStrings as classNames } from '../Accordion.Title'
 import Keys from '../../../constants/Keys'
 
 describe('ClassNames', () => {
@@ -88,25 +88,27 @@ describe('ClassNames', () => {
 })
 
 describe('setOpen', () => {
-  test('Attemps to open the section by uuid when clicked', () => {
+  test('Attempts to open the section by uuid when clicked', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Section setOpen={spy}>
+      <SectionWithUuid setOpen={spy}>
         <Title />
-      </Section>
+      </SectionWithUuid>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     const uuid = wrapper.state('uuid')
+
     o.simulate('click')
+
     expect(spy).toBeCalledWith(uuid, true)
   })
 
   test('Attempts to close the open section by uuid when clicked', () => {
     const spy = jest.fn()
     const wrapper = mount(
-      <Section isOpen setOpen={spy}>
+      <SectionWithUuid isOpen setOpen={spy}>
         <Title />
-      </Section>
+      </SectionWithUuid>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     const uuid = wrapper.state('uuid')
@@ -118,9 +120,9 @@ describe('setOpen', () => {
     ;[Keys.ENTER, Keys.SPACE].forEach(keyCode => {
       const spy = jest.fn()
       const wrapper = mount(
-        <Section setOpen={spy}>
+        <SectionWithUuid setOpen={spy}>
           <Title />
-        </Section>
+        </SectionWithUuid>
       )
       const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       const uuid = wrapper.state('uuid')
@@ -133,14 +135,58 @@ describe('setOpen', () => {
     ;[Keys.ENTER, Keys.SPACE].forEach(keyCode => {
       const spy = jest.fn()
       const wrapper = mount(
-        <Section isOpen setOpen={spy}>
+        <SectionWithUuid isOpen setOpen={spy}>
           <Title />
-        </Section>
+        </SectionWithUuid>
       )
       const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       const uuid = wrapper.state('uuid')
       o.simulate('keydown', { keyCode })
       expect(spy).toBeCalledWith(uuid, false)
     })
+  })
+})
+
+describe('Link', () => {
+  test('Renders a link, if to is defined', () => {
+    const wrapper = mount(<Title to="/" isOpen={true} />)
+    const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-link')).toBeTruthy()
+  })
+
+  test('Renders a link, if href is defined', () => {
+    const wrapper = mount(<Title href="/" isOpen={true} />)
+    const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-link')).toBeTruthy()
+  })
+
+  test('Adjusts caret size, if link', () => {
+    const wrapper = mount(<Title />)
+    let icon = wrapper.find('Icon').first()
+
+    expect(icon.prop('size')).not.toBe(14)
+
+    wrapper.setProps({ href: '/' })
+    icon = wrapper.find('Icon').first()
+
+    expect(icon.prop('size')).toBe(14)
+  })
+})
+
+describe('isOpen', () => {
+  test('Renders open styles, if defined', () => {
+    const wrapper = mount(<Title isOpen={true} />)
+    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeTruthy()
+  })
+
+  test('Always render non-open styles, if isLink', () => {
+    const wrapper = mount(<Title to="/" isOpen={true} />)
+    const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
+
+    expect(el.hasClass('is-open')).toBeFalsy()
   })
 })

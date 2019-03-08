@@ -7,6 +7,7 @@ import {
   getComponentKey,
   namespaceComponent,
   renderRenderPropComponent,
+  renderChildrenSafely,
   __clearRegisteredComponents,
 } from '../component'
 
@@ -225,5 +226,50 @@ describe('renderRenderPropComponent', () => {
     expect(renderRenderPropComponent(null)).toBe(null)
     expect(renderRenderPropComponent(undefined)).toBe(null)
     expect(renderRenderPropComponent('div')).toBe(null)
+  })
+})
+
+describe('renderChildrenSafely', () => {
+  test('Can render strings with escaped quotes', () => {
+    const wrapper = mount(renderChildrenSafely('"Hello"'))
+
+    expect(wrapper.text()).toBe('"Hello"')
+  })
+
+  test('Renders a component with safe HTML', () => {
+    const wrapper = mount(
+      renderChildrenSafely(<div className="CustomComponent">"Hello"</div>)
+    )
+    const el = wrapper.find('.CustomComponent')
+
+    expect(el.text()).toContain('Hello')
+  })
+
+  test('Can render a non-span HTML element', () => {
+    const wrapper = mount(renderChildrenSafely('"Hello"', 'p'))
+    const el = wrapper.filter('p')
+
+    expect(wrapper.text()).toBe('"Hello"')
+  })
+
+  test('Can extend an tag', () => {
+    const wrapper = mount(
+      renderChildrenSafely('"Hello"', 'em', { 'data-cy': 'Hello' })
+    )
+    const el = wrapper.find('em')
+
+    expect(el.text()).toContain('Hello')
+    expect(el.prop('data-cy')).toBe('Hello')
+  })
+
+  test('Can extend an existing Component', () => {
+    const Compo = props => <div {...props} />
+    const wrapper = mount(
+      renderChildrenSafely('"Hello"', Compo, { 'data-cy': 'Hello' })
+    )
+    const el = wrapper.find('div')
+
+    expect(el.text()).toContain('Hello')
+    expect(el.prop('data-cy')).toBe('Hello')
   })
 })

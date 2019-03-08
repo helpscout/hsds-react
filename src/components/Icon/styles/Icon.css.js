@@ -16,7 +16,7 @@ export const config = {
 }
 
 const css = `
-  ${baseStyles}
+  ${baseStyles};
   color: currentColor;
   display: block;
   height: ${config.size}px;
@@ -48,9 +48,9 @@ const css = `
     margin-left: ${config.offset}px;
   }
 
-  ${makeShadeStyles()}
-  ${makeSizeStyles()}
-  ${makeStateColorStyles()}
+  ${makeShadeStyles()};
+  ${makeSizeStyles()};
+  ${makeStateColorStyles()};
 
   &.withCaret {
     ${bem.element('icon')} {
@@ -69,6 +69,8 @@ const css = `
       height: 100%;
       max-width: 100%;
       width: 100%;
+
+      ${adjust24To20Scale()};
     }
 
     circle,
@@ -123,6 +125,16 @@ function makeStateColorStyles(): string {
     }
   `
   )
+}
+
+function adjust24To20Scale(): string {
+  return `
+    &[height="24"],
+    &[width="24"],
+    &[viewBox*="24"] {
+      transform: scale(${24 / 20});
+    }
+  `
 }
 
 export default css
