@@ -25,5 +25,6 @@
     "statusBar.background": "#1292EE",
     "statusBar.noFolderBackground": "#1292EE",
     "statusBar.debuggingBackground": "#1292EE"
-  }
+  },
+  "svg.preview.background": "black"
 }
