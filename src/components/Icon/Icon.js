@@ -33,6 +33,9 @@ type Props = {
 }
 
 const renameSVGIds = (svgHtml, name) => {
+  if (!svgHtml) {
+    return svgHtml
+  }
   const regexHash = new RegExp(`\#${name}`, 'gi')
   const regexQuote = new RegExp(`\"${name}`, 'gi')
   return svgHtml
