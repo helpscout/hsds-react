@@ -8,7 +8,8 @@ export const config = {
 }
 
 export const ActionsUI = styled('div')`
-  ${baseStyles} display: flex;
+  ${baseStyles};
+  display: flex;
   flex-direction: row-reverse;
   align-items: center;
   margin-left: -${config.spacing}px;

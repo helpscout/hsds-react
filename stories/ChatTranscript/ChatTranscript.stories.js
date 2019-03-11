@@ -128,3 +128,28 @@ stories.add('types', () => {
     </ChatTranscript>
   )
 })
+
+stories.add('body', () => {
+  return (
+    <ChatTranscript>
+      <ChatTranscript.Item
+        author={{
+          name: 'Buddy',
+        }}
+        body="<em>Safe body <a href=&quot;http://helpscout.com&quot;>http://helpscout.com</a></em>"
+        isBodySafe
+        createdAt="9:41am"
+        type="message"
+      />
+
+      <ChatTranscript.Item
+        author={{
+          name: 'Buddy',
+        }}
+        body="<em>Unsafe body http://helpscout.com</em>"
+        createdAt="9:41am"
+        type="message"
+      />
+    </ChatTranscript>
+  )
+})

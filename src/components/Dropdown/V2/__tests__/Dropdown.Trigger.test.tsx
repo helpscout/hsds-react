@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import createStore from '../Dropdown.store'
 import { Provider } from '@helpscout/wedux'
 import Keys from '../../../../constants/Keys'
-import ConnectedTrigger, { Trigger } from '../Dropdown.Trigger'
+import ConnectedTrigger, { Trigger, mapStateToProps } from '../Dropdown.Trigger'
 import { hasClass, getAttribute } from '../../../../tests/helpers/enzyme'
 
 describe('className', () => {
@@ -190,5 +190,36 @@ describe('ConnectedTrigger', () => {
 
     expect(wrapper).toBeTruthy()
     expect(el.length).toBeTruthy()
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('Can pass triggerProps to Trigger', () => {
+    const triggerProps = {
+      zIndex: 999,
+      tabIndex: -1,
+      'aria-hidden': true,
+    }
+    const props = mapStateToProps({
+      triggerProps,
+    })
+
+    expect(props).toEqual(triggerProps)
+  })
+})
+
+describe('Disable', () => {
+  test('Renders the disabled in the DOM node', () => {
+    const wrapper = mount(<Trigger disabled={true} />)
+    const el = wrapper.find('a.c-DropdownV2Trigger')
+
+    expect(el.prop('disabled')).toBe(true)
+  })
+
+  test('Renders disabled styles', () => {
+    const wrapper = mount(<Trigger disabled={true} />)
+    const el = wrapper.find('a.c-DropdownV2Trigger')
+
+    expect(el.hasClass('is-disabled')).toBe(true)
   })
 })

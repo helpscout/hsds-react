@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { MenuContainer } from '../Dropdown.MenuContainer'
+import { MenuContainer, defaultProps } from '../Dropdown.MenuContainer'
 import { initialState } from '../Dropdown.store'
 import { find, hasClass } from '../../../../tests/helpers/enzyme'
 import { MenuUI } from '../Dropdown.css.js'
@@ -85,6 +85,8 @@ describe('Portal', () => {
   test('Fires onMenuMounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuMounted={spy} />)
+    // @ts-ignore
+    wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
     // @ts-ignore
     portal.props().onOpen()
@@ -95,6 +97,8 @@ describe('Portal', () => {
   test('Fires onMenuUnmounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuUnmounted={spy} />)
+    // @ts-ignore
+    wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
     // @ts-ignore
     portal.props().onClose()
@@ -107,6 +111,8 @@ describe('Portal', () => {
     const wrapper = mount(<MenuContainer isOpen={true} />)
     // @ts-ignore
     wrapper.instance().setPositionStylesOnNode = spy
+    // @ts-ignore
+    wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
     // @ts-ignore
     portal.props().onOpen()
@@ -319,11 +325,16 @@ describe('Style/Direction', () => {
   })
 
   test('Renders dropUp styles, if defined', () => {
-    const wrapper = mount(<MenuContainer dropUp={true} />)
+    const wrapper = mount(<MenuContainer />)
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate = () => true
+
+    wrapper.setProps({ dropUp: true })
+    wrapper.update()
+
     const el = find(wrapper, baseSelector)
     const animate = wrapper.find('Animate')
 
-    expect(hasClass(el, 'is-dropUp')).toBe(true)
     expect(animate.prop('sequence')).toContain('up')
   })
 
@@ -442,5 +453,231 @@ describe('Empty', () => {
 
     expect(wrapper.find('Loading').length).toBeTruthy()
     expect(wrapper.find('Empty').length).toBeFalsy()
+  })
+})
+
+describe('Position', () => {
+  test('Renders position: absolute, by default', () => {
+    const wrapper = mount(<MenuContainer isOpen={true} positionFixed={false} />)
+    const inst = wrapper.instance()
+
+    // @ts-ignore
+    expect(inst.getPositionProps().position).toBe('absolute')
+  })
+
+  test('Renders position: fixed, if defined', () => {
+    const wrapper = mount(<MenuContainer isOpen={true} positionFixed={true} />)
+    const inst = wrapper.instance()
+
+    // @ts-ignore
+    expect(inst.getPositionProps().position).toBe('fixed')
+  })
+})
+
+describe('forceHideMenuNode', () => {
+  test('Forces the menu node to hide, on unmount', () => {
+    const wrapper = mount(<MenuContainer isOpen={true} />)
+    const placementNode = {
+      style: {
+        display: 'block',
+      },
+    }
+    const inst = wrapper.instance()
+    // @ts-ignore
+    inst.placementNode = placementNode
+
+    wrapper.unmount()
+
+    expect(placementNode.style.display).toBe('none')
+  })
+})
+
+describe('shouldDropDirectionUpdate', () => {
+  test('shouldDropDirectionUpdate should resolve to true', () => {
+    expect(defaultProps.shouldDropDirectionUpdate()).toBe(true)
+  })
+
+  test('Gets called when position is being calculated', () => {
+    const spy = jest.fn()
+
+    const shouldDropDirectionUpdate = props => {
+      spy(props)
+      return true
+    }
+
+    const wrapper = mount(
+      <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
+    )
+    // Mocking Portal callbacks that open the Menu
+    // @ts-ignore
+    wrapper.instance().didOpen = true
+
+    // Mock triggering
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Does not get called on the first positionMenuNodeCycle run', () => {
+    const spy = jest.fn()
+
+    const shouldDropDirectionUpdate = props => {
+      spy(props)
+      return true
+    }
+
+    const wrapper = mount(
+      <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
+    )
+    // Mocking Portal callbacks that open the Menu
+    // @ts-ignore
+    wrapper.instance().didOpen = false
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate()
+
+    expect(spy).not.toHaveBeenCalled()
+
+    // Mocking RAF loop, on the 2nd run
+    // @ts-ignore
+    wrapper.instance().didOpen = true
+    // @ts-ignore
+    wrapper.instance().shouldDropDirectionUpdate()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('setPositionStylesOnNode', () => {
+  test('Does not call shouldDropDirectionUpdate, if forceDropDown', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuContainer forceDropDown={true} shouldDropDirectionUpdate={spy} />
+    )
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Calls shouldDropDirectionUpdate, if forceDropDown is false', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <MenuContainer forceDropDown={false} shouldDropDirectionUpdate={spy} />
+    )
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Adds dropUp styles, if applicable', () => {
+    const mockTriggerNode = document.createElement('div')
+    const wrapper = mount(<MenuContainer triggerNode={mockTriggerNode} />)
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    // Mock drop calculation
+    inst.shouldDropUp = () => true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(inst.node.classList.contains('is-dropUp')).toBeTruthy()
+    expect(window.getComputedStyle(inst.placementNode).marginTop).toContain('-')
+  })
+
+  test('Removes dropUp styles, if applicable', () => {
+    const mockTriggerNode = document.createElement('div')
+    const wrapper = mount(<MenuContainer triggerNode={mockTriggerNode} />)
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    // Mock dropUp DOM state
+    inst.node.classList.add('is-dropUp')
+
+    // Mock drop calculation
+    inst.shouldDropUp = () => false
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(inst.node.classList.contains('is-dropUp')).toBeFalsy()
+    expect(window.getComputedStyle(inst.placementNode).marginTop).not.toContain(
+      '-'
+    )
+  })
+
+  test('Does not adjust placementNode styles on dropUp, if triggerNode is not defined', () => {
+    const wrapper = mount(<MenuContainer />)
+
+    // Setup
+    const inst = wrapper.instance() as any
+    inst.node = document.createElement('div')
+    inst.placementNode = document.createElement('div')
+    inst.didOpen = true
+
+    // Mock drop calculation
+    inst.shouldDropUp = () => true
+
+    const positionData = {
+      top: 0,
+      left: 0,
+      position: 'absolute',
+    }
+
+    // Mock execution
+    inst.setPositionStylesOnNode(positionData)
+
+    expect(inst.node.classList.contains('is-dropUp')).toBeTruthy()
+    expect(window.getComputedStyle(inst.placementNode).marginTop).not.toContain(
+      '-'
+    )
   })
 })

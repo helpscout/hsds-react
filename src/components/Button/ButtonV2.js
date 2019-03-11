@@ -1,6 +1,5 @@
 // @flow
 import type { ButtonKind, ButtonSize } from './types'
-import memoize from 'memoize-one'
 import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -8,6 +7,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
+import { memoize } from '../../utilities/memoize'
 import RouteWrapper from '../RouteWrapper'
 import { makeButtonUI, ButtonContentUI, FocusUI } from './Button.css.js'
 import { COMPONENT_KEY } from './utils'
@@ -24,24 +24,17 @@ type Props = {
   innerRef: (ref: any) => void,
   isActive: boolean,
   isBlock: boolean,
-  isFocused: boolean,
   isFirst: boolean,
   isNotOnly: boolean,
   isLast: boolean,
   isSuffix: boolean,
-  onBlur: (event: Event) => void,
-  onFocus: (event: Event) => void,
   size: ButtonSize,
   state?: UIState,
   submit: boolean,
   theme?: string,
 }
 
-type State = {
-  isFocused: boolean,
-}
-
-class Button extends Component<Props, State> {
+class Button extends Component<Props> {
   static defaultProps = {
     allowContentEventPropogation: true,
     buttonRef: noop,
@@ -55,8 +48,6 @@ class Button extends Component<Props, State> {
     isNotOnly: false,
     isLast: false,
     isSuffix: false,
-    onBlur: noop,
-    onFocus: noop,
     size: 'md',
     submit: false,
   }
@@ -65,32 +56,12 @@ class Button extends Component<Props, State> {
 
   makeButtonUI = memoize(makeButtonUI)
 
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      isFocused: props.isFocused,
-    }
-  }
-
   isLink() {
-    const { href, 'data-bypass': dataBypass } = this.props
+    // TODO: Resolve data-bypass
+    // const { href, 'data-bypass': dataBypass } = this.props
+    // return href || dataBypass
 
-    return href || dataBypass
-  }
-
-  handleOnBlur = event => {
-    this.setState({
-      isFocused: false,
-    })
-    this.props.onBlur(event)
-  }
-
-  handleOnFocus = event => {
-    this.setState({
-      isFocused: true,
-    })
-    this.props.onFocus(event)
+    return this.props.href
   }
 
   shouldShowFocus = () => {
@@ -101,8 +72,8 @@ class Button extends Component<Props, State> {
       'secondaryAlt',
       'tertiary',
     ]
+
     return (
-      this.state.isFocused &&
       !this.props.disabled &&
       this.props.canRenderFocus &&
       includes(paddedButtonKinds, this.props.kind)
@@ -178,14 +149,11 @@ class Button extends Component<Props, State> {
       ...rest
     } = this.props
 
-    const { isFocused } = this.state
-
     const componentClassName = classNames(
       'c-ButtonV2',
       isActive && 'is-active',
       isBlock && 'is-block',
       isFirst && 'is-first',
-      isFocused && 'is-focused',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
       isSuffix && 'is-suffix',
@@ -197,9 +165,7 @@ class Button extends Component<Props, State> {
     )
 
     const type = submit ? 'submit' : 'button'
-    const focusMarkup = this.getFocusMarkup()
 
-    const childrenMarkup = this.getChildrenMarkup()
     const ButtonUI = this.getButtonUI()
 
     return (
@@ -207,17 +173,15 @@ class Button extends Component<Props, State> {
         {...getValidProps(rest)}
         className={componentClassName}
         innerRef={this.setInnerRef}
-        onBlur={this.handleOnBlur}
-        onFocus={this.handleOnFocus}
         type={type}
       >
         <ButtonContentUI
           className="c-ButtonV2__content"
           allowContentEventPropogation={allowContentEventPropogation}
         >
-          {childrenMarkup}
+          {this.getChildrenMarkup()}
         </ButtonContentUI>
-        {focusMarkup}
+        {this.getFocusMarkup()}
       </ButtonUI>
     )
   }

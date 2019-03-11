@@ -8,7 +8,12 @@ import Heading from '../Heading'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { newlineToHTML } from '../../utilities/strings'
+import {
+  convertLinksToHTML,
+  escapeHTML,
+  newlineToHTML,
+} from '../../utilities/strings'
+import compose from '@helpscout/react-utils/dist/compose'
 
 export const ITEM_TYPES = {
   lineItem: 'line_item',
@@ -30,6 +35,7 @@ type Props = {
   className?: string,
   createdAt?: string,
   id?: number | string,
+  isBodySafe?: boolean,
   onAttachmentClick?: () => void,
   onDownloadAllAttachmentClick?: () => void,
   params?: any,
@@ -37,6 +43,9 @@ type Props = {
   timestamp?: string,
   type?: 'line_item' | 'message' | 'note',
 }
+
+// convertLinksToHTML will escape for output as HTML
+const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
 
 const Item = (props: Props) => {
   const {
@@ -49,6 +58,7 @@ const Item = (props: Props) => {
     className,
     createdAt,
     id,
+    isBodySafe,
     onAttachmentClick,
     onDownloadAllAttachmentClick,
     params,
@@ -74,6 +84,7 @@ const Item = (props: Props) => {
       body,
       createdAt,
       className: componentClassName,
+      isBodySafe,
       timestamp,
       ...rest,
     }
@@ -133,10 +144,16 @@ const Item = (props: Props) => {
     </div>
   )
 
-  const contentMarkup = body ? (
+  // Older transcripts will have a body that was sanitized by Chat API
+  // With these items we do not need to escape HTML or convert URLs to links
+  const contentHTML = isBodySafe ? body : enhanceBody(body)
+
+  const contentMarkup = contentHTML ? (
     <div
       className={contentClassName}
-      dangerouslySetInnerHTML={{ __html: newlineToHTML(body) }}
+      dangerouslySetInnerHTML={{
+        __html: contentHTML,
+      }}
     />
   ) : (
     <div className={contentClassName}>{children}</div>

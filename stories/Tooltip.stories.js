@@ -72,7 +72,7 @@ stories.add('Default', () => {
     triggerOn: triggerOn,
     placement: placement,
     showArrow: boolean('showArrow', true),
-    title: text('title', 'Hello'),
+    title: text('title', '"Hello"'),
     minWidth: number('minWidth', ''),
     maxWidth: number('maxWidth', ''),
   }

@@ -119,17 +119,19 @@ class Pop extends Component<Props, State> {
 
   shouldHandleHover = () => this.props.triggerOn === 'hover'
 
-  open = async () => {
-    await this.props.onBeforeOpen(this)
-    this.setState({ isOpen: true }, () => {
-      this.props.onOpen(this)
+  open = () => {
+    this.props.onBeforeOpen(this).then(() => {
+      this.setState({ isOpen: true }, () => {
+        this.props.onOpen(this)
+      })
     })
   }
 
-  close = async () => {
-    await this.props.onBeforeClose(this)
-    this.setState({ isOpen: false }, () => {
-      this.props.onClose(this)
+  close = () => {
+    this.props.onBeforeClose(this).then(() => {
+      this.setState({ isOpen: false }, () => {
+        this.props.onClose(this)
+      })
     })
   }
 

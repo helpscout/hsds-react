@@ -86,6 +86,6 @@ describe('Context', () => {
     let o = wrapper.find(ui.text).first()
 
     expect(o.getDOMNode().classList.contains('is-12')).toBe(true)
-    expect(o.getDOMNode().classList.contains('is-faint')).toBe(true)
+    expect(o.getDOMNode().classList.contains('is-shade-faint')).toBe(true)
   })
 })

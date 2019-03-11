@@ -25,6 +25,7 @@ export interface Props {
 
 const defaultOptions = {
   pure: true,
+  mapConnectedPropsAsProps: (props: any, ownProps: any) => props,
 }
 
 /**
@@ -35,7 +36,7 @@ const defaultOptions = {
  * @returns {React.Component} The connected React component.
  */
 function propConnect(name?: ConfigGetter, options: Object = {}) {
-  const { pure } = { ...defaultOptions, ...options }
+  const { pure, mapConnectedPropsAsProps } = { ...defaultOptions, ...options }
   // @ts-ignore
   let namespace: string = isString(name) ? name : ''
 
@@ -103,6 +104,7 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
         const style = this.getMergedStyleProp(contextProps)
 
         return {
+          'data-cy-component': namespace,
           'data-cy': namespace,
           ...namespacedProps,
           ...rest,
@@ -116,10 +118,17 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
       }
 
       render() {
+        const { wrappedRef, ...ownProps } = this.props
+
         return (
           <Context.Consumer>
             {contextProps => (
-              <WrappedComponent {...this.getMergedProps(contextProps)} />
+              <WrappedComponent
+                {...mapConnectedPropsAsProps(
+                  this.getMergedProps(contextProps),
+                  ownProps
+                )}
+              />
             )}
           </Context.Consumer>
         )

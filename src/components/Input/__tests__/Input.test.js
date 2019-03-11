@@ -55,10 +55,11 @@ describe('Autofocus', () => {
   })
 
   test('Autofocuses if specified', () => {
+    jest.useFakeTimers()
     const wrapper = mount(<Input autoFocus />)
     const input = wrapper.find('input')
-
-    expect(input.prop('autoFocus')).toBeTruthy()
+    jest.runAllTimers()
+    expect(wrapper.state('isFocused')).toBeTruthy()
   })
 })
 
@@ -966,5 +967,145 @@ describe('Action', () => {
 
     expect(wrapper.find('button.go').length).toBeTruthy()
     expect(wrapper.find('button.cancel').length).toBeTruthy()
+  })
+})
+
+describe('onEnterDown', () => {
+  test('Fires onEnterDown when key enter is pressed (down)', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnterDown={spy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keydown', {
+      keyCode: 13,
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onEnterDown when key enter + shift is pressed (down)', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnterDown={spy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keydown', {
+      keyCode: 13,
+      shiftKey: true,
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onEnterDown when key enter + shift is pressed (down)', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnterDown={spy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keydown', {
+      keyCode: 13,
+      ctrlKey: true,
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onKeyDown still fires when Enter key is pressed', () => {
+    const enterSpy = jest.fn()
+    const keyDownSpy = jest.fn()
+    const wrapper = mount(
+      <Input onEnterDown={enterSpy} onKeyDown={keyDownSpy} />
+    )
+    const el = wrapper.find('input')
+
+    el.simulate('keydown', {
+      keyCode: 13,
+    })
+
+    expect(enterSpy).toHaveBeenCalled()
+    expect(keyDownSpy).toHaveBeenCalled()
+  })
+
+  test('onEnterDown does not fire when a non-Enter key is pressed (down)', () => {
+    const enterSpy = jest.fn()
+    const keyDownSpy = jest.fn()
+    const wrapper = mount(
+      <Input onEnterDown={enterSpy} onKeyDown={keyDownSpy} />
+    )
+    const el = wrapper.find('input')
+
+    el.simulate('keydown', {
+      keyCode: 40,
+    })
+
+    expect(enterSpy).not.toHaveBeenCalled()
+    expect(keyDownSpy).toHaveBeenCalled()
+  })
+})
+
+describe('onEnterUp', () => {
+  test('Fires onEnterUp when key enter is pressed (up)', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnterUp={spy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keyup', {
+      keyCode: 13,
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onEnterUp when key enter + shift is pressed (up)', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnterUp={spy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keyup', {
+      keyCode: 13,
+      shiftKey: true,
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Fires onEnterUp when key enter + shift is pressed (up)', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnterUp={spy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keyup', {
+      keyCode: 13,
+      ctrlKey: true,
+    })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onKeyUp still fires when Enter key is pressed', () => {
+    const enterSpy = jest.fn()
+    const keyUpSpy = jest.fn()
+    const wrapper = mount(<Input onEnterUp={enterSpy} onKeyUp={keyUpSpy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keyup', {
+      keyCode: 13,
+    })
+
+    expect(enterSpy).toHaveBeenCalled()
+    expect(keyUpSpy).toHaveBeenCalled()
+  })
+
+  test('onEnterUp does not fire when a non-Enter key is pressed (up)', () => {
+    const enterSpy = jest.fn()
+    const keyUpSpy = jest.fn()
+    const wrapper = mount(<Input onEnterUp={enterSpy} onKeyUp={keyUpSpy} />)
+    const el = wrapper.find('input')
+
+    el.simulate('keyup', {
+      keyCode: 40,
+    })
+
+    expect(enterSpy).not.toHaveBeenCalled()
+    expect(keyUpSpy).toHaveBeenCalled()
   })
 })

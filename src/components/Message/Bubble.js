@@ -2,6 +2,7 @@
 import type { MessageBubble, MessageThemeContext } from './types'
 import React from 'react'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
+import compose from '@helpscout/react-utils/dist/compose'
 import Heading from '../Heading'
 import LoadingDots from '../LoadingDots'
 import Icon from '../Icon'
@@ -9,7 +10,12 @@ import Text from '../Text'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { isWord } from '../../utilities/strings'
+import {
+  convertLinksToHTML,
+  escapeHTML,
+  isWord,
+  newlineToHTML,
+} from '../../utilities/strings'
 import { providerContextTypes } from './propTypes'
 import css, {
   BodyCSS,
@@ -29,6 +35,9 @@ const MessageBubbleFrom = styled('div')(FromCSS)
 const MessageBubbleIconWrapper = styled('div')(IconWrapperCSS)
 const MessageBubbleTitle = styled(Heading)(TitleCSS)
 const MessageBubbleTyping = styled('div')(TypingCSS)
+
+// convertLinksToHTML will escape for output as HTML
+const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
 
 export const Bubble = (props: Props, context: Context) => {
   const {
@@ -110,7 +119,9 @@ export const Bubble = (props: Props, context: Context) => {
   const bodyMarkup = body ? (
     <MessageBubbleBody
       className="c-MessageBubble__body"
-      dangerouslySetInnerHTML={{ __html: body }}
+      dangerouslySetInnerHTML={{
+        __html: enhanceBody(body),
+      }}
     />
   ) : (
     childrenMarkup

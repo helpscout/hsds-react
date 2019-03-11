@@ -72,12 +72,36 @@ describe('Body', () => {
     expect(o.text()).toContain('Mugatu')
   })
 
-  test('Injects HTML from body content', () => {
-    const html = '<a href="#">Derek</a>'
-    const wrapper = mount(<Item body={html} />)
+  test('Renders body with URLs converted to links', () => {
+    const body = 'www.helpscout.com'
+    const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
 
-    expect(o.html()).toContain(html)
+    expect(o.html()).toContain('<a href="http://www.helpscout.com"')
+  })
+
+  test('Converts newlines to line break elements', () => {
+    const body = 'Hello\n\nGoodbye'
+    const wrapper = mount(<Item body={body} />)
+    const o = wrapper.find(ui.content)
+
+    expect(o.html()).toContain('Hello<br><br>Goodbye')
+  })
+
+  test('Escapes HTML in the body', () => {
+    const body = '<div>Mugatu</div>'
+    const wrapper = mount(<Item body={body} />)
+    const o = wrapper.find(ui.content)
+
+    expect(o.html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
+  })
+
+  test('Does not escape HTML in the body when it is safe', () => {
+    const body = '<div>Mugatu</div>'
+    const wrapper = mount(<Item body={body} isBodySafe />)
+    const o = wrapper.find(ui.content)
+
+    expect(o.html()).toContain(body)
   })
 })
 

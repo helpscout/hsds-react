@@ -12,6 +12,7 @@ stories.add('default', () => {
     <br />
     omgomgomg
     <br />
+    www.helpscout.com
   `
   return (
     <Message to avatar={<Avatar name="Buddy" />}>

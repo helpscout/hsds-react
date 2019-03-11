@@ -10,17 +10,15 @@ import {
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
-import { withArtboard } from '@helpscout/artboard'
 
 const stories = storiesOf('AutoDropdown', module)
-stories.addDecorator(withArtboard({ withCenterGuides: false }))
 stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
   value: faker.name.firstName(),
 })
-const items = ItemSpec.generate(15)
+const items = ItemSpec.generate(100)
 
 stories.add('Default', () => {
   const props = {
@@ -84,4 +82,18 @@ stories.add('Stateful', () => {
   }
 
   return <Example />
+})
+
+stories.add('Multiple instances', () => {
+  const renderTrigger = index => <span>{`Click ${index}`}</span>
+
+  return (
+    <ul>
+      {[...Array(100).keys()].map(i => (
+        <li key={i}>
+          <AutoDropdown items={items} renderTrigger={renderTrigger(i)} />
+        </li>
+      ))}
+    </ul>
+  )
 })

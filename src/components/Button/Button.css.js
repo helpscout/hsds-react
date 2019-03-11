@@ -173,6 +173,12 @@ export const config = {
   focusOutlineOffset: 2,
   focusOutlineColor: getColor('blue.400'),
   size: {
+    xl: {
+      fontSize: 14,
+      height: 54,
+      minWidth: '120px',
+      padding: 20,
+    },
     lg: {
       fontSize: 14,
       height: 40,
@@ -242,8 +248,18 @@ export const makeButtonUI = (selector: 'button') => {
       text-decoration: none;
     }
 
+    &:active,
+    &:active:focus {
+      .c-ButtonV2Focus {
+        display: none;
+      }
+    }
+
     &:focus {
       z-index: 2;
+      .c-ButtonV2Focus {
+        display: block;
+      }
     }
 
     &.is-first {
@@ -277,15 +293,28 @@ export const makeButtonUI = (selector: 'button') => {
 }
 
 function makePrimaryStyles(name = 'primary', props: Object = {}): string {
-  const { theme } = props
+  const { theme = {} } = props
   const backgroundColor =
-    (theme && theme.brandColor) || config[name].backgroundColor
-  const color = (theme && theme.brandTextColor) || config[name].color
+    theme.backgroundColorUI || theme.brandColor || config[name].backgroundColor
+  const color =
+    theme.textColorInteractive || theme.brandTextColor || config[name].color
+
+  const backgroundColorHover =
+    theme.backgroundColorUIHover || config.backgroundColorHover
+  const borderColorHover = backgroundColorHover
+  const backgroundColorActive =
+    theme.backgroundColorUIActive || config.backgroundColorActive
+  const borderColorActive = backgroundColorActive
 
   return makeButtonKindStyles(name, {
     ...config[name],
     backgroundColor,
+    borderColor: backgroundColor,
     color,
+    backgroundColorHover,
+    borderColorHover,
+    backgroundColorActive,
+    borderColorActive,
   })
 }
 
@@ -425,6 +454,7 @@ export const FocusUI = styled('span')`
   border-radius: ${config.borderRadius}px;
   bottom: -${config.focusOutlineOffset}px;
   box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${config.focusOutlineColor};
+  display: none;
   left: -${config.focusOutlineOffset}px;
   pointer-events: none;
   position: absolute;

@@ -15,7 +15,8 @@ export const config = {
 }
 
 export const SectionUI = styled('section')`
-  ${baseStyles} display: flex;
+  ${baseStyles};
+  display: flex;
   flex-direction: ${config.flexDirection.default};
   width: 100%;
   margin-bottom: ${config.marginBottom};

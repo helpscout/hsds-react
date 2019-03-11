@@ -16,4 +16,11 @@ export const STATUSES = ['error', 'info', 'success', 'warning']
 /**
  * Text
  */
-export const TEXT_SHADES = ['default', 'subtle', 'muted', 'faint', 'extraMuted']
+export const TEXT_SHADES = [
+  'default',
+  'subtle',
+  'slightlyMuted',
+  'muted',
+  'faint',
+  'extraMuted',
+]

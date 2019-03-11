@@ -67,6 +67,10 @@ To deploy the Storybook, run the following command:
 npm run deploy
 ```
 
+## Learning
+
+Check out our [videos](./VIDEOS.md) for learning resources.
+
 ## Blue?
 
 On Nov 8, 2018, we rebranded Blue to HSDS: React :tada:.

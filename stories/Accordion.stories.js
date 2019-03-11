@@ -1,21 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { text } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../src/index'
+import { faker } from '@helpscout/helix'
 
 const stories = storiesOf('Accordion', module)
 
-const body = `
-Laborum ex laboris exercitation exercitation. Laborum nisi excepteur sunt ut
-sint sunt non consectetur incididunt. In dolor nulla cupidatat adipisicing
-eiusmod commodo officia. Dolore ut tempor cillum voluptate minim quis cupidatat
-sit ea incididunt tempor irure ex consectetur. Aliqua enim consectetur ad
-sit. Ullamco aliquip ullamco commodo cupidatat culpa qui commodo. Do sint
-reprehenderit aute dolor veniam. Anim non deserunt do irure nostrud labore
-consequat. Enim voluptate nostrud id aliquip est. Nisi esse ea voluptate
-nostrud. Incididunt adipisicing aute elit in sint. Ipsum laborum labore dolor
-amet mollit Lorem. Mollit laborum cillum id occaecat et laboris labore pariatur
-do est.
-`
+const body = faker.lorem.paragraph()()
 
 const form = (
   <form>
@@ -84,9 +75,9 @@ stories.add('is seamless', () => (
 ))
 
 stories.add('is seamless in page', () => (
-  <Page title="Accordion">
+  <Page>
     <Page.Card>
-      <Page.Header title="Accordion" subtitle="In seamless mode" />
+      <Page.Header subtitle="In seamless mode" />
       <Accordion>{createSections(data)}</Accordion>
     </Page.Card>
   </Page>
@@ -184,4 +175,28 @@ stories.add('uses multiple custom ids', () => {
   }
 
   return <AccordionWithCustomIds />
+})
+
+stories.add('Row (Link)', () => {
+  const linkOneContent = text('linkOneContent', 'Link Row One')
+  const linkTwoContent = text('linkTwoContent', 'Link Row Two')
+
+  return (
+    <Page>
+      <Page.Card>
+        <Accordion isSeamless>
+          <Accordion.Link to="/">
+            <Text truncate weight={500}>
+              {linkOneContent}
+            </Text>
+          </Accordion.Link>
+          <Accordion.Link to="/">
+            <Text truncate weight={500}>
+              {linkTwoContent}
+            </Text>
+          </Accordion.Link>
+        </Accordion>
+      </Page.Card>
+    </Page>
+  )
 })

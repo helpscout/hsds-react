@@ -2,18 +2,30 @@
 import React from 'react'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { newlineToHTML } from '../../utilities/strings'
+import { escapeHTML, newlineToHTML } from '../../utilities/strings'
+import compose from '@helpscout/react-utils/dist/compose'
 
 type Props = {
   body?: string,
   children?: any,
   className?: string,
   createdAt?: string,
+  isBodySafe?: boolean,
   timestamp?: string,
 }
 
+const enhanceBody = compose(newlineToHTML, escapeHTML)
+
 const LineItem = (props: Props) => {
-  const { body, children, className, createdAt, timestamp, ...rest } = props
+  const {
+    body,
+    children,
+    className,
+    createdAt,
+    isBodySafe,
+    timestamp,
+    ...rest
+  } = props
 
   const componentClassName = classNames('c-ChatTranscriptLineItem', className)
 
@@ -27,8 +39,14 @@ const LineItem = (props: Props) => {
     </span>
   ) : null
 
-  const contentMarkup = body ? (
-    <span dangerouslySetInnerHTML={{ __html: newlineToHTML(body) }} />
+  const contentHTML = isBodySafe ? body : enhanceBody(body)
+
+  const contentMarkup = contentHTML ? (
+    <span
+      dangerouslySetInnerHTML={{
+        __html: contentHTML,
+      }}
+    />
   ) : (
     children
   )

@@ -119,8 +119,14 @@ export class Portal extends React.Component {
     }
 
     this.node = document.createElement('div')
-    this.node.className = className
-    this.node.id = id
+
+    if (className) {
+      this.node.className = className
+    }
+    if (id) {
+      this.node.id = id
+    }
+
     // Render to specified target, instead of document
     this.state.mountSelector.appendChild(this.node)
     this.renderPortalContent(props)

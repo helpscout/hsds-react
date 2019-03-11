@@ -75,6 +75,12 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     this._isMounted = false
   }
 
+  shouldDropDirectionUpdate = positionProps => {
+    if (this.state.inputValue) return false
+
+    return this.props.shouldDropDirectionUpdate(positionProps)
+  }
+
   safeSetState = (nextState, callback?) => {
     if (this._isMounted) {
       this.setState(nextState, callback)
@@ -239,6 +245,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
 
     return {
       ...rest,
+      shouldDropDirectionUpdate: this.shouldDropDirectionUpdate,
       isOpen,
       onMenuMount: this.onMenuMount,
       onMenuUnmount: this.onMenuUnmount,

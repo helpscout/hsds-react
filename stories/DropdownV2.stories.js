@@ -7,6 +7,7 @@ import Button from '../src/components/Button'
 import Input from '../src/components/Input'
 import styled from '../src/components/styled'
 import store from '../src/components/Dropdown/V2/Dropdown.store'
+import { boolean } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
 
 const stories = storiesOf('DropdownV2', module)
@@ -33,9 +34,12 @@ export const ItemSpec = createSpec({
 })
 
 stories.add('Dropdown/Default', () => {
-  const items = ItemSpec.generate(100)
+  const props = {
+    items: ItemSpec.generate(100),
+    disabled: boolean('disabled', false),
+  }
 
-  return <Dropdown items={items} />
+  return <Dropdown {...props} />
 })
 
 stories.add('Dropdown/Empty', () => {
@@ -290,4 +294,10 @@ stories.add('Stateful', () => {
   }
 
   return <Example />
+})
+
+stories.add('Disabled', () => {
+  const items = ItemSpec.generate(100)
+
+  return <Dropdown disabled items={items} />
 })

@@ -6,6 +6,7 @@ const actionTypes = [
   'FOCUS_ITEM',
   'MENU_MOUNT',
   'MENU_UNMOUNT',
+  'MENU_REPOSITION',
   'OPEN_DROPDOWN',
   'SELECT_ITEM',
   'SET_MENU_NODE',
