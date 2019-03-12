@@ -8,6 +8,7 @@ import {
   namespaceComponent,
   renderRenderPropComponent,
   renderChildrenSafely,
+  renderAsSingleChild,
   __clearRegisteredComponents,
 } from '../component'
 
@@ -271,5 +272,133 @@ describe('renderChildrenSafely', () => {
 
     expect(el.text()).toContain('Hello')
     expect(el.prop('data-cy')).toBe('Hello')
+  })
+})
+
+describe('renderAsSingleChild', () => {
+  const Comp = ({ children }) => renderAsSingleChild(children)
+
+  test('Can handle undefined children', () => {
+    const wrapper = mount(<Comp>{undefined}</Comp>)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  test('Can handle null children', () => {
+    const wrapper = mount(<Comp>{null}</Comp>)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  test('Can handle false children', () => {
+    const wrapper = mount(<Comp>{false}</Comp>)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  test('Can handle 0 children', () => {
+    const wrapper = mount(<Comp>{0}</Comp>)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  test('Can handle true children', () => {
+    const wrapper = mount(<Comp>{true}</Comp>)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  test('Can handle empty array of children', () => {
+    const wrapper = mount(<Comp>{[]}</Comp>)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  test('Can handle empty Object of children', () => {
+    const wrapper = mount(<Comp>{{}}</Comp>)
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  test('Can handle single child component', () => {
+    const wrapper = mount(
+      <Comp>
+        <p />
+      </Comp>
+    )
+
+    expect(wrapper.html()).toBeTruthy()
+    expect(wrapper.find('p').length).toBe(1)
+  })
+
+  test('Can handle multiple child components', () => {
+    const wrapper = mount(
+      <Comp>
+        <p />
+        <p />
+        <p />
+      </Comp>
+    )
+
+    expect(wrapper.html()).toBeTruthy()
+    expect(wrapper.find('p').length).toBe(3)
+  })
+
+  test('Can handle multiple child components', () => {
+    const wrapper = mount(
+      <Comp>
+        <p />
+        <p />
+        <p />
+      </Comp>
+    )
+
+    expect(wrapper.html()).toBeTruthy()
+    expect(wrapper.find('p').length).toBe(3)
+  })
+
+  test('Creates a wrapper for multiple child components', () => {
+    const wrapper = mount(
+      <Comp>
+        <p />
+        <p />
+        <p />
+      </Comp>
+    )
+
+    expect(wrapper.html()).toBeTruthy()
+    expect(wrapper.find('div').length).toBe(1)
+    expect(wrapper.find('p').length).toBe(3)
+  })
+
+  test('Can customize the wrapper baseTag', () => {
+    const Comp = ({ children }) => renderAsSingleChild(children, 'section')
+    const wrapper = mount(
+      <Comp>
+        <p />
+        <p />
+        <p />
+      </Comp>
+    )
+
+    expect(wrapper.html()).toBeTruthy()
+    expect(wrapper.find('section').length).toBe(1)
+    expect(wrapper.find('p').length).toBe(3)
+  })
+
+  test('Can customize the wrapper props', () => {
+    const Comp = ({ children }) =>
+      renderAsSingleChild(children, 'section', { className: 'Hello' })
+    const wrapper = mount(
+      <Comp>
+        <p />
+        <p />
+        <p />
+      </Comp>
+    )
+
+    expect(wrapper.html()).toBeTruthy()
+    expect(wrapper.find('section.Hello').length).toBe(1)
+    expect(wrapper.find('p').length).toBe(3)
   })
 })

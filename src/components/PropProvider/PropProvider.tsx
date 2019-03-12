@@ -2,6 +2,7 @@ import * as React from 'react'
 import { PropProviderProps } from './types'
 import Context from './Context'
 import { ThemeProvider } from '../styled'
+import { renderAsSingleChild } from '../../utilities/component'
 import { setGlobalApp, shallowMergeProps, propProviderDataAttr } from './utils'
 
 export interface Props {
@@ -16,16 +17,10 @@ class PropProvider extends React.Component<Props> {
     value: {},
   }
 
-  getChildren = () => {
+  renderChildren = () => {
     const { children } = this.props
 
-    if (!children) return null
-
-    if (React.Children.count(children) > 1) {
-      return <div className="c-PropProvider">{children}</div>
-    }
-
-    return React.Children.only(children)
+    return renderAsSingleChild(children, 'div', { className: 'c-PropProvider' })
   }
 
   enhanceContextProps = (contextProps: PropProviderProps) => {
@@ -48,7 +43,7 @@ class PropProvider extends React.Component<Props> {
             )}
           >
             <ThemeProvider theme={this.getThemeProviderProps(contextProps)}>
-              {this.getChildren()}
+              {this.renderChildren()}
             </ThemeProvider>
           </Context.Provider>
         )}
