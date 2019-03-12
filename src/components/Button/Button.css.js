@@ -1,4 +1,5 @@
 // @flow
+import get from 'dash-get'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'
@@ -293,7 +294,7 @@ export const makeButtonUI = (selector: 'button') => {
 }
 
 function makePrimaryStyles(name = 'primary', props: Object = {}): string {
-  const { theme = {} } = props
+  const theme = get(props, 'theme.brandColor', {})
   const backgroundColor =
     theme.backgroundColorUI || theme.brandColor || config[name].backgroundColor
   const color =
