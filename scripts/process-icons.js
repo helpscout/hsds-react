@@ -7,7 +7,7 @@ const util = require('util')
 const SVGO = require('svgo')
 
 // CONFIG
-const SVG_REGEX = '*.svg'
+const SVG_REGEX = '**/*.svg'
 
 const SVGOConfig = {
   plugins: [

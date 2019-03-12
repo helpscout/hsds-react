@@ -1,7 +1,9 @@
+import activity from '../../icons/activity.svg'
 import alert from '../../icons/alert.svg'
 import alignCenter from '../../icons/align-center.svg'
 import alignLeft from '../../icons/align-left.svg'
 import alignRight from '../../icons/align-right.svg'
+import animalsAndNature from '../../icons/animals-and-nature.svg'
 import arrowDownHuge from '../../icons/arrow-down-huge.svg'
 import arrowLeft from '../../icons/arrow-left.svg'
 import arrowLeftSmall from '../../icons/arrow-left-small.svg'
@@ -89,10 +91,12 @@ import fabChat from '../../icons/fab-chat.svg'
 import fabQuestion from '../../icons/fab-question.svg'
 import fabSearch from '../../icons/fab-search.svg'
 import fields from '../../icons/fields.svg'
+import flags from '../../icons/flags.svg'
 import folder from '../../icons/folder.svg'
 import folderCheck from '../../icons/folder-check.svg'
 import folderOpen from '../../icons/folder-open.svg'
 import folderOpenSmall from '../../icons/folder-open-small.svg'
+import foodAndDrink from '../../icons/food-and-drink.svg'
 import forward from '../../icons/forward.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import globe from '../../icons/globe.svg'
@@ -133,6 +137,7 @@ import newConvo from '../../icons/new-convo.svg'
 import newWindow from '../../icons/new-window.svg'
 import newWindowLarge from '../../icons/new-window-large.svg'
 import note from '../../icons/note.svg'
+import objects from '../../icons/objects.svg'
 import offline from '../../icons/offline.svg'
 import paperPlane from '../../icons/paper-plane.svg'
 import pause from '../../icons/pause.svg'
@@ -142,12 +147,14 @@ import personMultiple from '../../icons/person-multiple.svg'
 import personPlus from '../../icons/person-plus.svg'
 import personTick from '../../icons/person-tick.svg'
 import personX from '../../icons/person-x.svg'
+import playVideo from '../../icons/play-video.svg'
 import plusLarge from '../../icons/plus-large.svg'
 import plusMedium from '../../icons/plus-medium.svg'
 import plusSmall from '../../icons/plus-small.svg'
 import power from '../../icons/power.svg'
 import printer from '../../icons/printer.svg'
 import quote from '../../icons/quote.svg'
+import recordVideo from '../../icons/record-video.svg'
 import refresh from '../../icons/refresh.svg'
 import reply from '../../icons/reply.svg'
 import rosette from '../../icons/rosette.svg'
@@ -167,6 +174,7 @@ import starSmall from '../../icons/star-small.svg'
 import status from '../../icons/status.svg'
 import stop from '../../icons/stop.svg'
 import suitcase from '../../icons/suitcase.svg'
+import symbols from '../../icons/symbols.svg'
 import table from '../../icons/table.svg'
 import tag from '../../icons/tag.svg'
 import text from '../../icons/text.svg'
@@ -174,6 +182,7 @@ import tickLarge from '../../icons/tick-large.svg'
 import tickSmall from '../../icons/tick-small.svg'
 import toggle from '../../icons/toggle.svg'
 import trash from '../../icons/trash.svg'
+import travelAndPlaces from '../../icons/travel-and-places.svg'
 import trayLarge from '../../icons/tray-large.svg'
 import traySmall from '../../icons/tray-small.svg'
 import traySuccess from '../../icons/tray-success.svg'
@@ -182,17 +191,18 @@ import unassigned from '../../icons/unassigned.svg'
 import underline from '../../icons/underline.svg'
 import user from '../../icons/user.svg'
 import userX from '../../icons/user-x.svg'
-import video from '../../icons/video.svg'
 import workflow from '../../icons/workflow.svg'
 import workflowSmall from '../../icons/workflow-small.svg'
 import xLargeSingleArrowLeft from '../../icons/x-large-single-arrow-left.svg'
 import xLargeSingleArrowRight from '../../icons/x-large-single-arrow-right.svg'
 
 const ICONS = {
+  activity,
   alert,
   'align-center': alignCenter,
   'align-left': alignLeft,
   'align-right': alignRight,
+  'animals-and-nature': animalsAndNature,
   'arrow-down-huge': arrowDownHuge,
   'arrow-left-double-large': largeDoubleArrowLeft,
   'arrow-left-single-large': largeSingleArrowLeft,
@@ -286,10 +296,12 @@ const ICONS = {
   'fab-question': fabQuestion,
   'fab-search': fabSearch,
   fields,
+  flags,
   'folder-check': folderCheck,
   'folder-open-small': folderOpenSmall,
   'folder-open': folderOpen,
   folder,
+  'food-and-drink': foodAndDrink,
   forward,
   fullscreen,
   globe,
@@ -330,6 +342,7 @@ const ICONS = {
   'new-window-large': newWindowLarge,
   'new-window': newWindow,
   note,
+  objects,
   offline,
   'option-dots': meatball,
   'paper-plane': paperPlane,
@@ -340,6 +353,7 @@ const ICONS = {
   'person-plus': personPlus,
   'person-tick': personTick,
   'person-x': personX,
+  'play-video': playVideo,
   'plus-large': plusLarge,
   'plus-medium': plusMedium,
   'plus-small': plusSmall,
@@ -347,6 +361,7 @@ const ICONS = {
   power,
   printer,
   quote,
+  'record-video': recordVideo,
   refresh,
   reply,
   rosette,
@@ -366,6 +381,7 @@ const ICONS = {
   status,
   stop,
   suitcase,
+  symbols,
   table,
   tag,
   text,
@@ -374,6 +390,7 @@ const ICONS = {
   tick: tickLarge,
   toggle,
   trash,
+  'travel-and-places': travelAndPlaces,
   'tray-large': trayLarge,
   'tray-small': traySmall,
   'tray-success': traySuccess,
@@ -382,7 +399,6 @@ const ICONS = {
   underline,
   'user-x': userX,
   user,
-  video,
   'workflow-small': workflowSmall,
   workflow,
   'x-large-single-arrow-left': xLargeSingleArrowLeft,
