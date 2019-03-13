@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { includes } from './arrays'
-import { isFunction, isObject, isDefined, isString } from './is'
+import { isArray, isFunction, isObject, isDefined, isString } from './is'
 
 let REGISTERED_COMPONENTS = {}
 export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
@@ -199,4 +199,25 @@ export const renderChildrenSafely = (
   } else {
     return React.createElement(baseTag, rest, children)
   }
+}
+
+export const renderAsSingleChild = (
+  children: any,
+  baseTag: 'div',
+  props: any = {}
+) => {
+  if (!React.isValidElement(children) && !isArray(children)) return null
+
+  const count = React.Children.count(children)
+  if (!count) return null
+
+  const tag = baseTag || 'div'
+
+  // Render multiple children
+  if (count > 1) {
+    return React.createElement(tag, props, children)
+  }
+
+  // Render single child
+  return React.Children.only(children)
 }

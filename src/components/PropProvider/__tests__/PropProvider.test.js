@@ -11,6 +11,36 @@ describe('PropProvider', () => {
 
       expect(wrapper.html()).toBeFalsy()
     })
+
+    test('Can render single child', () => {
+      const wrapper = mount(
+        <PropProvider>
+          <p>One</p>
+        </PropProvider>
+      )
+
+      expect(wrapper.html()).toBeTruthy()
+      expect(wrapper.find('p').length).toBe(1)
+    })
+
+    test('Can render multiple children', () => {
+      const wrapper = mount(
+        <PropProvider>
+          <p>One</p>
+          <p>Two</p>
+          <p>Three</p>
+        </PropProvider>
+      )
+
+      expect(wrapper.html()).toBeTruthy()
+      expect(wrapper.find('p').length).toBe(3)
+    })
+
+    test('Can handle rendering of an empty array', () => {
+      const wrapper = mount(<PropProvider>{[]}</PropProvider>)
+
+      expect(wrapper.html()).toBeFalsy()
+    })
   })
 
   describe('Nesting/Scope', () => {
