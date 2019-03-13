@@ -54,7 +54,7 @@ class Story extends React.Component {
       getColor('green.500')
     )
 
-    const theme = { ...makeBrandColors(brandColor) }
+    const theme = { brandColor: makeBrandColors(brandColor) }
 
     const props = {
       in: show,
