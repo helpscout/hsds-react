@@ -32,6 +32,17 @@ type Props = {
   withCaret: boolean,
 }
 
+const renameSVGIds = (svgHtml, name) => {
+  if (!svgHtml) {
+    return svgHtml
+  }
+  const regexHash = new RegExp(`\#${name}`, 'gi')
+  const regexQuote = new RegExp(`\"${name}`, 'gi')
+  return svgHtml
+    .replace(regexHash, `#hsds-icons-${name}`)
+    .replace(regexQuote, `"hsds-icons-${name}`)
+}
+
 const Icon = (props: Props) => {
   const {
     center,
@@ -73,13 +84,15 @@ const Icon = (props: Props) => {
     className
   )
 
-  const src = { __html: ICONS[name] }
+  const src = { __html: renameSVGIds(ICONS[name], name) }
   const iconTitle = title || name
 
   const caretMarkup = withCaret ? (
     <span
       className="c-Icon__icon is-caret"
-      dangerouslySetInnerHTML={{ __html: ICONS['caret-down'] }}
+      dangerouslySetInnerHTML={{
+        __html: renameSVGIds(ICONS['caret-down'], 'caret-down'),
+      }}
       title="Caret"
     />
   ) : null
