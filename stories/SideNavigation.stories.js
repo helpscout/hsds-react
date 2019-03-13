@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs'
+import withAktiv from './utils/withAktiv'
 
 import {
   SideNavigation,
@@ -20,10 +21,12 @@ import { render } from 'enzyme'
 const renderSidebarFolders = () => {
   return (
     <SideNavigation.Section title="Folders">
-      <SideNavigation.Item>Folder 1</SideNavigation.Item>
-      <SideNavigation.Item>Folder 2</SideNavigation.Item>
-      <SideNavigation.Item>Folder 3</SideNavigation.Item>
-      <SideNavigation.Item>Folder 4</SideNavigation.Item>
+      <SideNavigation.Item muted>Completed Test</SideNavigation.Item>
+      <SideNavigation.Item count={13}>Need First Follow Up</SideNavigation.Item>
+      <SideNavigation.Item muted>Not spam</SideNavigation.Item>
+      <SideNavigation.Item count={84}>
+        T-shirt Pre-Processing
+      </SideNavigation.Item>
     </SideNavigation.Section>
   )
 }
@@ -38,18 +41,14 @@ const renderSidebarFooter = isFloating => {
         renderTrigger={
           <SideNavigation.Button
             icon={
-              <Icon
-                name="workflow"
-                offsetLeft={false}
-                withCaret={!isFloating}
-              />
+              <Icon name="cog" offsetLeft={false} withCaret={!isFloating} />
             }
           >
             Edit Mailbox
           </SideNavigation.Button>
         }
       />
-      <SideNavigation.Button icon={<Icon name="image-add" />}>
+      <SideNavigation.Button icon={<Icon name="new-convo" />}>
         New conversation
       </SideNavigation.Button>
     </SideNavigation.Footer>
@@ -159,47 +158,74 @@ class SidebarDefaultItems extends React.PureComponent {
       <SideNavigation.Section main={true}>
         <SideNavigation.Item
           icon={<Icon name="chat" />}
-          count={10}
           active={active === 'chat'}
           onClick={e => this.updateActiveItem('chat')}
         >
-          Chat
+          Chats
         </SideNavigation.Item>
         <SideNavigation.Item
-          icon={<Icon name="tag" />}
+          count={137}
+          icon={<Icon name="unassigned" />}
           active={active === 'unassigned'}
           onClick={e => this.updateActiveItem('unassigned')}
         >
           Unassigned
         </SideNavigation.Item>
         <SideNavigation.Item
-          icon={<Icon name="user" />}
+          count={1}
+          icon={<Icon name="mine" />}
           active={active === 'mine'}
           onClick={e => this.updateActiveItem('mine')}
         >
           Mine
         </SideNavigation.Item>
         <SideNavigation.Item
-          icon={<Icon name="document" />}
-          active={active === 'document'}
-          onClick={e => this.updateActiveItem('document')}
+          count={2}
+          icon={<Icon name="alert" />}
+          active={active === 'alert'}
+          onClick={e => this.updateActiveItem('alert')}
+        >
+          Needs attention
+        </SideNavigation.Item>
+        <SideNavigation.Item
+          count={88}
+          icon={<Icon name="drafts" />}
+          active={active === 'drafts'}
+          onClick={e => this.updateActiveItem('drafts')}
         >
           Draft
         </SideNavigation.Item>
         <SideNavigation.Item
-          muted={true}
-          active={active === 'muted'}
-          onClick={e => this.updateActiveItem('muted')}
+          count={131}
+          icon={<Icon name="assigned" />}
+          active={active === 'assigned'}
+          onClick={e => this.updateActiveItem('assigned')}
         >
-          Muted
+          Assigned
         </SideNavigation.Item>
-        <SideNavigation.Item disabled={true}>Disabled</SideNavigation.Item>
+        <SideNavigation.Item
+          muted={true}
+          icon={<Icon name="closed" />}
+          active={active === 'closed'}
+          onClick={e => this.updateActiveItem('closed')}
+        >
+          Closed
+        </SideNavigation.Item>
+        <SideNavigation.Item
+          muted={true}
+          icon={<Icon name="spam" />}
+          active={active === 'spam'}
+          onClick={e => this.updateActiveItem('spam')}
+        >
+          Spam
+        </SideNavigation.Item>
       </SideNavigation.Section>
     )
   }
 }
 
 const stories = storiesOf('SideNavigation', module)
+stories.addDecorator(withAktiv)
 stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => <SidebarWrapper>{storyFn()}</SidebarWrapper>)
 
@@ -226,7 +252,11 @@ stories.add('with dropdown header', () => {
       <SideNavigation.Header>
         <Dropdown
           items={items}
-          renderTrigger={<Heading size="h3">Dropdown </Heading>}
+          renderTrigger={
+            <Heading size="h3">
+              Dropdown <Icon name="caret-down" size="12" inline />
+            </Heading>
+          }
         />
       </SideNavigation.Header>
       <SidebarDefaultItems />
@@ -241,7 +271,11 @@ stories.add('with long list dropdown', () => {
       <SideNavigation.Header>
         <AutoDropdown
           items={items}
-          renderTrigger={<Heading size="h3">Dropdown </Heading>}
+          renderTrigger={
+            <Heading size="h3">
+              Dropdown <Icon name="caret-down" size="12" inline />
+            </Heading>
+          }
         />
       </SideNavigation.Header>
       <SidebarDefaultItems />
@@ -260,14 +294,16 @@ stories.add('with multiple section', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
     <SidebarDefaultItems />
-    {renderSidebarFolders()}
-    <SideNavigation.Section>
-      <SideNavigation.Item>Teams</SideNavigation.Item>
+    <SideNavigation.Section title="Section #1">
+      <SideNavigation.Item>Item #1</SideNavigation.Item>
+    </SideNavigation.Section>
+    <SideNavigation.Section title="Section #2">
+      <SideNavigation.Item>Item #1</SideNavigation.Item>
     </SideNavigation.Section>
   </SideNavigation>
 ))
 
-stories.add('with regular button', () => (
+stories.add('with CTA button', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
     <SidebarDefaultItems />
@@ -279,24 +315,16 @@ stories.add('with regular button', () => (
   </SideNavigation>
 ))
 
-stories.add('with titled section', () => (
-  <SideNavigation>
-    <SideNavigation.Header label="Help Scout" />
-    <SidebarDefaultItems />
-    {renderSidebarFolders()}
-  </SideNavigation>
-))
-
 stories.add('with linkable items', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
     <SidebarDefaultItems />
     <SideNavigation.Section title="Linkable">
       <SideNavigation.Item href="https://duckduckgo.com/">
-        Link 1
+        duckduckgo.com
       </SideNavigation.Item>
       <SideNavigation.Item href="https://google.com/">
-        Link 2
+        google.com
       </SideNavigation.Item>
     </SideNavigation.Section>
   </SideNavigation>
@@ -307,7 +335,6 @@ stories.add('with footer', () => {
     <SideNavigation>
       <SideNavigation.Header label="Help Scout" />
       <SidebarDefaultItems />
-      {renderSidebarFolders()}
       {renderSidebarFooter()}
     </SideNavigation>
   )
@@ -321,4 +348,22 @@ stories.add('is collapsed', () => {
 
 stories.add('is floating', () => {
   return <SidebarFloatingMenu />
+})
+
+const storiesHsApp = storiesOf('SideNavigation/HS App Demo', module)
+storiesHsApp.addDecorator(withAktiv)
+storiesHsApp.addDecorator(withKnobs)
+storiesHsApp.addDecorator(storyFn => (
+  <SidebarWrapper>{storyFn()}</SidebarWrapper>
+))
+
+storiesHsApp.add('HS App - Mailbox', () => {
+  return (
+    <SideNavigation>
+      <SideNavigation.Header label="Help Scout" />
+      <SidebarDefaultItems />
+      {renderSidebarFolders()}
+      {renderSidebarFooter()}
+    </SideNavigation>
+  )
 })
