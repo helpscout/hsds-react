@@ -2,6 +2,8 @@ import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import Text from '../src/components/Text'
 
+import { WithAktiv } from './utils/withAktiv'
+
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)
   .add('sizes', () => (
@@ -69,6 +71,18 @@ storiesOf('Text', module)
       <Text weight={100}>Font weight: 100</Text>
       <br />
     </div>
+  ))
+  .add('weights + hs-app font', () => (
+    <WithAktiv>
+      <div>
+        <Text weight={700}>Font weight: 700</Text>
+        <br />
+        <Text weight={500}>Font weight: 500</Text>
+        <br />
+        <Text weight={400}>Font weight: 400</Text>
+        <br />
+      </div>
+    </WithAktiv>
   ))
   .add('truncate', () => (
     <div>
