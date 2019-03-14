@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Flexy, Icon, Text } from '../src/index.js'
-import iconList from '../src/components/Icon/icons'
+import { ICONS as iconList } from '../src/components/Icon/utils'
 import styled from '../src/components/styled'
 import { getColor } from '../src/styles/utilities/color'
 

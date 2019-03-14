@@ -3,14 +3,13 @@ import type { IconSize } from './types'
 import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ICONS from './icons'
 import styled from '../styled'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Icon.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY, getIconComponent } from './utils'
 
 type Props = {
   center: boolean,
@@ -30,17 +29,6 @@ type Props = {
   subtle?: boolean,
   title?: string,
   withCaret: boolean,
-}
-
-const renameSVGIds = (svgHtml, name) => {
-  if (!svgHtml) {
-    return svgHtml
-  }
-  const regexHash = new RegExp(`\#${name}`, 'gi')
-  const regexQuote = new RegExp(`\"${name}`, 'gi')
-  return svgHtml
-    .replace(regexHash, `#hsds-icons-${name}`)
-    .replace(regexQuote, `"hsds-icons-${name}`)
 }
 
 const Icon = (props: Props) => {
@@ -84,17 +72,12 @@ const Icon = (props: Props) => {
     className
   )
 
-  const src = { __html: renameSVGIds(ICONS[name], name) }
   const iconTitle = title || name
 
   const caretMarkup = withCaret ? (
-    <span
-      className="c-Icon__icon is-caret"
-      dangerouslySetInnerHTML={{
-        __html: renameSVGIds(ICONS['caret-down'], 'caret-down'),
-      }}
-      title="Caret"
-    />
+    <span className="c-Icon__icon is-caret" title="Caret">
+      {getIconComponent('caret-down')}
+    </span>
   ) : null
 
   return (
@@ -105,11 +88,9 @@ const Icon = (props: Props) => {
       onClick={onClick}
       data-icon-name={name}
     >
-      <span
-        className="c-Icon__icon"
-        dangerouslySetInnerHTML={src}
-        title={iconTitle}
-      />
+      <span className="c-Icon__icon" title={iconTitle}>
+        {getIconComponent(name)}
+      </span>
       {caretMarkup}
       <VisuallyHidden>{iconTitle}</VisuallyHidden>
     </span>
