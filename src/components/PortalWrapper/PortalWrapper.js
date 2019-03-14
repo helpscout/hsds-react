@@ -21,9 +21,11 @@ import Content from './Content'
 const defaultOptions = {
   id: 'PortalWrapper',
   timeout: 100,
+  alwaysCloseIfLast: true,
 }
 
 const managerNamespace = 'BluePortalWrapperGlobalManager'
+const uniqueIndex = createUniqueIndexFactory(1000)
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   const extendedOptions = {
@@ -32,12 +34,12 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   }
 
   const uniqueID = createUniqueIDFactory(extendedOptions.id)
-  const uniqueIndex = createUniqueIndexFactory(1000)
 
   class PortalWrapper extends React.PureComponent {
     static propTypes = propTypes
     static defaultProps = {
       isOpen: false,
+      OMG_CLOSE: noop,
     }
     static contextTypes = {
       router: noop,
@@ -130,10 +132,10 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       this.triggerNode = null
     }
 
-    safeSetState(state) {
+    safeSetState(state, callback) {
       /* istanbul ignore else */
       if (this._isMounted) {
-        this.setState(state)
+        this.setState(state, callback)
       }
     }
 
@@ -185,10 +187,15 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    forceClosePortal() {
-      this.safeSetState({
-        isOpen: false,
-      })
+    forceClosePortal = () => {
+      this.safeSetState(
+        {
+          isOpen: false,
+        },
+        () => {
+          this.props.OMG_CLOSE()
+        }
+      )
     }
 
     sequenceClosePortal(onClose) {
@@ -299,6 +306,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
                 onClose={onClose}
                 portalIsOpen={portalIsOpen}
                 portalIsMounted={portalIsOpen}
+                forceClosePortal={this.forceClosePortal}
                 trigger={trigger}
                 zIndex={zIndex}
                 {...rest}

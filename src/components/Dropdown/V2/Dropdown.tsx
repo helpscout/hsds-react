@@ -44,7 +44,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     if (event.keyCode === Keys.ESCAPE) {
       event.preventDefault && event.preventDefault()
       this.focusTriggerNode()
-      this.closeMenu()
+      // this.closeMenu()
     }
   }
 

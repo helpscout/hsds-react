@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { storiesOf } from '@storybook/react'
 import {
+  AutoDropdown,
   Button,
   FormLabel,
   Heading,
@@ -272,8 +273,11 @@ stories.add('nested', () => (
               {ContentSpec.generate(2).map(({ id, content }) => (
                 <p key={id}>{content}</p>
               ))}
+              <AutoDropdown />
             </Modal.Body>
           </Modal>
+
+          <AutoDropdown />
         </Modal.Body>
       </Modal>
     </Modal.Body>

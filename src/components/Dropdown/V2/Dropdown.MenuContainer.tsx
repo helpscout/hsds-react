@@ -3,6 +3,7 @@ import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import Portal from '../../Portal'
+import PortalWrapper from '../../PortalWrapper'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
 import Group from './Dropdown.Group'
@@ -309,6 +310,7 @@ export class MenuContainer extends React.PureComponent<Props> {
     this.didOpen = false
     // End the reposition cycle
     cancelAnimationFrame(this.positionRAF)
+    this.props.closeDropdown()
   }
 
   getPositionProps = () => {
@@ -462,6 +464,10 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.MenuContainer)(
   MenuContainer
 )
 
+const PortalWrappedComponent = PortalWrapper({ id: 'DropdownMenuContainer' })(
+  PropConnectedComponent
+)
+
 const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
@@ -510,10 +516,12 @@ const ConnectedMenuContainer: any = connect(
     onMenuReposition,
     onMenuUnmounted,
     selectItem,
+    OMG_CLOSE: closeDropdown,
   }
 )(
   // @ts-ignore
-  PropConnectedComponent
+  // PropConnectedComponent
+  PortalWrappedComponent
 )
 
 export default ConnectedMenuContainer
