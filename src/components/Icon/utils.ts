@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 export const COMPONENT_KEY = 'Icon'
 
@@ -212,8 +212,6 @@ export const ICONS = {
   'x-large-single-arrow-right': true,
 }
 
-export default ICONS
-
 export const ALIASES = {
   'arrow-left-double-large': 'large-double-arrow-left',
   'arrow-left-single-large': 'large-single-arrow-left',
@@ -228,19 +226,19 @@ export const ALIASES = {
   tick: 'tick-large',
 }
 
-export const getIconComponent = name => {
+export const getIconComponent = (name: string) => {
   if (!name) return null
 
   const iconName = ALIASES[name] || name
   // Only attempt to retrieve supported icons
   if (!ICONS[iconName]) return null
-
+  // @ts-ignore
   const IconComponent = require(`../Icons/${iconName}`).default
 
   return IconComponent ? React.createElement(IconComponent) : null
 }
 
-export const renameSVGIds = (svgHtml, name) => {
+export const renameSVGIds = (svgHtml: string, name: string) => {
   if (!svgHtml) {
     return svgHtml
   }

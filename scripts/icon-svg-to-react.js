@@ -6,6 +6,7 @@ const mkdirp = require('mkdirp')
 const svgIconDir = path.resolve(__dirname, '../src/icons')
 const svgGlobIconPath = path.join(svgIconDir, '/*')
 const reactDir = path.resolve(__dirname, '../src/components/Icons')
+const iconComponentDir = path.resolve(__dirname, '../src/components/Icon')
 
 function readFile(filePath) {
   return fs.readFileSync(filePath, 'utf8')
@@ -57,11 +58,42 @@ function setupTargetDir() {
   }
 }
 
+function generateIconMap(iconPaths) {
+  const relativeIconDir = '../Icons/'
+
+  const iconMap = iconPaths
+    .map(iconPath => {
+      const fileBaseName = path.basename(iconPath).replace('.svg', '')
+      const fileName = path.join(relativeIconDir, fileBaseName)
+
+      return fileName
+    })
+    .reduce((map, fileName) => {
+      const [dirPath, iconName] = fileName.split(relativeIconDir)
+      return {
+        ...map,
+        [iconName]: fileName,
+      }
+    }, {})
+
+  const targetFilePath = path.join(iconComponentDir, '/iconMap.ts')
+  const jsonContent = JSON.stringify(iconMap, null, 2)
+  const content = `
+export default ${jsonContent}
+  `.trim()
+
+  // Generate the map to a .json file
+  console.log(`Generating ${targetFilePath}...`)
+  fs.writeFileSync(targetFilePath, content)
+}
+
 function iconSvgToReact() {
   setupTargetDir()
 
   const iconPaths = getIconPaths()
   iconPaths.forEach(convertSvgToReact)
+
+  generateIconMap(iconPaths)
 }
 
 // Run it!
