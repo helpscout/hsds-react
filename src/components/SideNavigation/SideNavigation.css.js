@@ -3,6 +3,7 @@ import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import Text from '../Text'
+import Dropdown from '../Dropdown/DropdownV2'
 import Heading from '../Heading'
 import { DropdownUI, TriggerUI } from '../Dropdown/V2/Dropdown.css'
 import { darken, lighten } from '../../utilities/color'
@@ -84,6 +85,15 @@ export const ButtonFooterUI = styled(Button)`
 
     :not(:first-child) {
       border-left: ${config.border};
+    }
+    .withCaret {
+      width: 36px;
+      margin-right: 0;
+    }
+    .c-Icon__icon.is-caret {
+      height: 14px;
+      top: calc(50% - 7px);
+      width: 14px;
     }
   }
 `
@@ -168,6 +178,17 @@ export const HeaderUI = styled('div')`
   }
 `
 
+export const DropdownHeaderTriggerUI = styled(Heading)`
+  font-weight: 400;
+  font-size: 20px;
+`
+
+export const DropdownHeaderUI = styled(Dropdown)`
+  .is-open ${DropdownHeaderTriggerUI} {
+    color: ${getColor('blue.600')};
+  }
+`
+
 export const HeaderLinkUI = styled('a')`
   color: ${getColor('charcoal.500')};
   text-decoration: none;
@@ -179,8 +200,10 @@ export const HeaderLinkUI = styled('a')`
 `
 
 export const SectionHeadingUI = styled(Heading)`
+  -webkit-font-smoothing: antialiased;
+
   &.is-small {
-    padding: 8px ${config.sidePadding} 4px;
+    padding: 8px ${config.sidePadding} 6px;
     color: ${getColor('grey.800')};
   }
 `

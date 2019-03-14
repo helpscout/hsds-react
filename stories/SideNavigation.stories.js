@@ -12,7 +12,11 @@ import {
   AutoDropdown,
 } from '../src/index.js'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
-import { SideNavigationHeaderUI } from '../src/components/SideNavigation/SideNavigation.css'
+import {
+  SideNavigationHeaderUI,
+  DropdownHeaderUI,
+  DropdownHeaderTriggerUI,
+} from '../src/components/SideNavigation/SideNavigation.css'
 import { ItemSpec } from './DropdownV2.stories'
 
 import styled from '../src/components/styled'
@@ -250,12 +254,13 @@ stories.add('with dropdown header', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header>
-        <Dropdown
+        <DropdownHeaderUI
           items={items}
-          renderTrigger={
-            <Heading size="h3">
-              Dropdown <Icon name="caret-down" size="12" inline />
-            </Heading>
+          selectedItem={items[0]}
+          trigger={
+            <DropdownHeaderTriggerUI>
+              Dropdown <Icon name="caret-down" inline size="12" />
+            </DropdownHeaderTriggerUI>
           }
         />
       </SideNavigation.Header>
@@ -308,7 +313,7 @@ stories.add('with CTA button', () => (
     <SideNavigation.Header label="Help Scout" />
     <SidebarDefaultItems />
     <SideNavigation.Section withPadding={true}>
-      <Button version={2} kind="secondary">
+      <Button version={2} kind="secondary" size="sm">
         Open mailbox
       </Button>
     </SideNavigation.Section>

@@ -194,14 +194,14 @@ export const config = {
     },
     sm: {
       fontSize: 13,
-      fontWeight: 600,
+      fontWeight: 500,
       height: 30,
       minWidth: 'initial',
       padding: 15,
     },
     xs: {
       fontSize: 13,
-      fontWeight: 600,
+      fontWeight: 500,
       height: 24,
       minWidth: 'initial',
       padding: 15,
