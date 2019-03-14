@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { ThemeProvider } from '../styled'
-import { getColor } from '../../styles/utilities/color'
+
+import Icon from '../Icon'
 
 import {
   TableWrapperUI,
   TableUI,
   HeaderCellUI,
   CellUI,
+  SortableCellUI,
 } from './styles/Table.css'
+
+import { defaultTheme, alternativeTheme } from './styles/themes'
 
 const Row = ({ row, columns }) => (
   <tr>
@@ -49,46 +53,49 @@ const Cell = ({ column, row }) => {
   )
 }
 
-const HeaderCell = ({ column, isLoading, sortedInfo }) => (
-  <HeaderCellUI
-    align={column.align}
-    cellWidth={column.width}
-    aria-sort={
-      sortedInfo.columnKey === column.columnKey && sortedInfo.order
-        ? sortedInfo.order
-        : 'none'
+const HeaderCell = ({ column, isLoading, sortedInfo }) => {
+  function renderCellContents() {
+    if (column.renderHeaderCell) {
+      return column.renderHeaderCell(column, { sortedInfo })
     }
-    onClick={() => {
-      if (!isLoading && column.sorter != null) {
-        column.sorter(column.columnKey)
+
+    if (column.sorter) {
+      return (
+        <SortableCellUI align={column.align}>
+          <span className="SortableCell_title">{column.title}</span>
+          {sortedInfo.columnKey === column.columnKey &&
+            sortedInfo.order && (
+              <Icon
+                name={
+                  sortedInfo.order === 'descending' ? 'caret-down' : 'caret-up'
+                }
+              />
+            )}
+        </SortableCellUI>
+      )
+    }
+
+    return column.title
+  }
+
+  return (
+    <HeaderCellUI
+      align={column.align}
+      cellWidth={column.width}
+      aria-sort={
+        sortedInfo.columnKey === column.columnKey && sortedInfo.order
+          ? sortedInfo.order
+          : 'none'
       }
-    }}
-  >
-    {column.renderHeaderCell
-      ? column.renderHeaderCell(column, { sortedInfo })
-      : column.title}
-  </HeaderCellUI>
-)
-
-export const defaultTheme = {
-  fontColorHeader: getColor('charcoal.500'),
-  fontColorBody: getColor('charcoal.500'),
-  fontColorAlternate: getColor('charcoal.500'),
-  bgColor: getColor('grey.200'),
-  bgAlternate: 'white',
-  bgHeader: 'white',
-  borderTableBody: `1px solid ${getColor('grey.500')}`,
-  borderTableHeader: 'none',
-  borderRows: `1px solid ${getColor('grey.500')}`,
-  borderColumns: 'none',
-}
-
-export const alternativeTheme = {
-  ...defaultTheme,
-  ...{
-    borderTableHeader: `1px solid ${getColor('grey.500')}`,
-    bgHeader: getColor('grey.400'),
-  },
+      onClick={() => {
+        if (!isLoading && column.sorter != null) {
+          column.sorter(column.columnKey)
+        }
+      }}
+    >
+      {renderCellContents()}
+    </HeaderCellUI>
+  )
 }
 
 export default class Table extends Component {

@@ -30,4 +30,3 @@ yarn-debug.log*
 yarn-error.log*
 
 storybook-static
-.vscode/settings.json

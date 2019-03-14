@@ -54,6 +54,17 @@ export default class TableCustomizer extends Component {
               size="sm"
               version={2}
               kind="secondary"
+              style={{ marginRight: '20px' }}
+              onClick={() => {
+                this.handleResetTableClick('alternative')
+              }}
+            >
+              Load alternative theme
+            </Button>
+            <Button
+              size="sm"
+              version={2}
+              kind="secondary"
               onClick={() => {
                 this.handleResetTableClick('custom')
               }}

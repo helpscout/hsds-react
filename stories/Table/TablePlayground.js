@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Table, { defaultTheme } from '../../src/components/Table/Table'
+import Table from '../../src/components/Table/Table'
 import Heading from '../../src/components/Heading'
 import ColumnCustomizer from './ColumnsCustomizer'
 import TableCustomizer from './TableCustomizer'
@@ -8,6 +8,10 @@ import Ellipsified from '../../src/components/Ellipsified/Ellipsified'
 import { Wrapper, Header } from './commonComponents'
 import { createFakeCustomers, sortData } from './utils'
 import { getColor } from '../../src/styles/utilities/color'
+import {
+  defaultTheme,
+  alternativeTheme,
+} from '../../src/components/Table/styles/themes'
 
 const customTheme = {
   fontColorHeader: '#ffffff',
@@ -171,7 +175,17 @@ export default class TablePlayground extends Component {
   }
 
   handleResetTable = theme => {
-    this.setState({ theme: theme === 'custom' ? customTheme : defaultTheme })
+    let themeToUse
+
+    if (theme === 'default') {
+      themeToUse = defaultTheme
+    } else if (theme === 'alternative') {
+      themeToUse = alternativeTheme
+    } else if (theme === 'custom') {
+      themeToUse = customTheme
+    }
+
+    this.setState({ theme: themeToUse })
   }
 
   handleTableOptionChange = (option, value) => {

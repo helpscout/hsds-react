@@ -1,6 +1,5 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from '../../styled'
-import { getColor } from '../../../styles/utilities/color'
 
 export const TableWrapperUI = styled('div')`
   ${baseStyles} overflow-x: auto;
@@ -137,6 +136,23 @@ export const CellUI = styled('td')`
   text-align: ${props => props.align || 'left'};
 `
 
+export const SortableCellUI = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: ${props => getCellAlignment(props.align)};
+  cursor: pointer;
+
+  .SortableCell_title {
+    margin: -2px 5px 0 0;
+  }
+
+  &:hover {
+    .SortableCell_title {
+      opacity: 0.8;
+    }
+  }
+`
+
 function generateTableWidthStyles(tableWidth) {
   let style = 'width: 100%;'
 
@@ -148,4 +164,10 @@ function generateTableWidthStyles(tableWidth) {
   }
 
   return style
+}
+
+function getCellAlignment(align) {
+  if (!align || align === 'left') return 'flex-start'
+  if (align === 'center') return 'center'
+  if (align === 'right') return 'flex-end'
 }

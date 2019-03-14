@@ -1,17 +1,20 @@
 import React from 'react'
 import styled from '../../src/components/styled'
 import { storiesOf } from '@storybook/react'
+import { createFakeCustomers } from './utils'
 
 import Heading from '../../src/components/Heading'
 import PreviewCard from '../../src/components/PreviewCard'
 import Ellipsified from '../../src/components/Ellipsified/Ellipsified'
-import Table, {
-  defaultTheme,
-  alternativeTheme,
-} from '../../src/components/Table/Table'
+import Table from '../../src/components/Table/Table'
 import TablePlayground from './TablePlayground'
 import TableWithPagination from './TableWithPagination'
-import { createFakeCustomers } from './utils'
+import TableWithSorting from './TableWithSorting'
+
+import {
+  defaultTheme,
+  alternativeTheme,
+} from '../../src/components/Table/styles/themes'
 
 const stories = storiesOf('Table', module)
 
@@ -215,4 +218,5 @@ stories.add('with compound columns', () => (
   </div>
 ))
 
+stories.add('with sorting', () => <TableWithSorting />)
 stories.add('playground', () => <TablePlayground />)
