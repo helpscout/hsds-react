@@ -17,7 +17,6 @@ const ItemSpec = createSpec({
   id: faker.random.uuid(),
   label: faker.company.companyName(),
   value: faker.company.companyName(),
-  onClick: () => (value, props) => console.log('Clicked!', value),
 })
 
 export interface Props {}

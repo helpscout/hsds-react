@@ -13,7 +13,7 @@ import Sidenav from './Sidenav'
 export interface Props {
   children?: any
   withInnerWrapper?: boolean
-  sidebarComponent?: any
+  sidenavComponent?: any
   contentComponent?: any
   navComponent?: any
 }
@@ -21,7 +21,8 @@ export interface Props {
 class HsApp extends React.PureComponent<Props> {
   static defaultProps = {
     withInnerWrapper: true,
-    sidebarComponent: null,
+    sidenavComponent: null,
+    navComponent: null,
     contentComponent: null,
   }
 
@@ -45,13 +46,13 @@ class HsApp extends React.PureComponent<Props> {
   }
 
   render() {
-    const { sidebarComponent, contentComponent, navComponent } = this.props
+    const { sidenavComponent, contentComponent, navComponent } = this.props
     return (
-      <HsAppUI>
+      <HsAppUI className="c-HsApp">
         {navComponent ? navComponent : <HsApp.Nav />}
         <AppLayoutUI>
           <AppContainerUI>
-            {sidebarComponent ? sidebarComponent : <HsApp.Sidenav />}
+            {sidenavComponent ? sidenavComponent : <HsApp.Sidenav />}
             {contentComponent ? (
               contentComponent
             ) : (
