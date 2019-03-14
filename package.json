@@ -76,8 +76,9 @@
     "version": "npm run build",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
     "prettier": "npm run prettier:base -- --write",
-    "update:icons": "node ./scripts/update-icons.js",
-    "process:icons": "node ./scripts/process-icons.js"
+    "icon:update": "node ./scripts/icon-update.js",
+    "icon:process": "node ./scripts/icon-process.js",
+    "icon:components": "node ./scripts/icon-svg-to-react.js"
   },
   "peerDependencies": {
     "react": "^16 || ^15",
