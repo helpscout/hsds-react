@@ -79,12 +79,12 @@ export const TableUI = styled('table')`
   /* Background */
   tr:nth-child(2n) td {
     ${({ background }) =>
-      background && background[0] && `background-color: ${background[0]}`}
+      background && background[0] && `background-color: ${background[0]};`}
   }
 
   tr:nth-child(2n + 1) td {
     ${({ background }) =>
-      background && background[1] && `background-color: ${background[1]}`}
+      background && background[1] && `background-color: ${background[1]};`};
   }
 `
 

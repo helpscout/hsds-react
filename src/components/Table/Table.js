@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { ThemeProvider } from '../styled'
+import { getColor } from '../../styles/utilities/color'
 
 import {
   TableWrapperUI,
@@ -7,43 +9,57 @@ import {
   CellUI,
 } from './styles/Table.css'
 
-const TCol = ({ column }) => (
-  <col
-    span="1"
-    style={{
-      width: column.width,
-    }}
-  />
-)
-
 const Row = ({ row, columns }) => (
   <tr>
-    {columns.map(column => (
-      <Cell column={column} row={row} key={`${row.id}_${column.columnKey}`} />
-    ))}
+    {columns.map(column => {
+      let key = Array.isArray(column.columnKey)
+        ? `${row.id}_${column.columnKey.join('_')}`
+        : `${row.id}_${column.columnKey}`
+
+      return <Cell column={column} row={row} key={key} />
+    })}
   </tr>
 )
 
-const Cell = ({ column, row }) => (
-  <CellUI align={column.align}>
-    {column.renderCell
-      ? column.renderCell(row[column.columnKey])
-      : row[column.columnKey]}
-  </CellUI>
-)
+const Cell = ({ column, row }) => {
+  if (Array.isArray(column.columnKey)) {
+    const cellData = {}
 
-const HeaderCell = ({ column, loadingData, sortedInfo }) => (
+    for (const colKey of column.columnKey) {
+      cellData[colKey] = row[colKey]
+    }
+
+    return (
+      <CellUI align={column.align}>
+        {column.renderCell
+          ? column.renderCell(cellData)
+          : Object.values(cellData).map(data => (
+              <div key={data.slice(4)}>{data}</div>
+            ))}
+      </CellUI>
+    )
+  }
+
+  return (
+    <CellUI align={column.align}>
+      {column.renderCell
+        ? column.renderCell(row[column.columnKey])
+        : row[column.columnKey]}
+    </CellUI>
+  )
+}
+
+const HeaderCell = ({ column, isLoading, sortedInfo }) => (
   <HeaderCellUI
     align={column.align}
+    cellWidth={column.width}
     aria-sort={
       sortedInfo.columnKey === column.columnKey && sortedInfo.order
         ? sortedInfo.order
         : 'none'
     }
-    role="columnheader"
-    scope="col"
     onClick={() => {
-      if (!loadingData && column.sorter != null) {
+      if (!isLoading && column.sorter != null) {
         column.sorter(column.columnKey)
       }
     }}
@@ -54,6 +70,27 @@ const HeaderCell = ({ column, loadingData, sortedInfo }) => (
   </HeaderCellUI>
 )
 
+export const defaultTheme = {
+  fontColorHeader: getColor('charcoal.500'),
+  fontColorBody: getColor('charcoal.500'),
+  fontColorAlternate: getColor('charcoal.500'),
+  bgColor: getColor('grey.200'),
+  bgAlternate: 'white',
+  bgHeader: 'white',
+  borderTableBody: `1px solid ${getColor('grey.500')}`,
+  borderTableHeader: 'none',
+  borderRows: `1px solid ${getColor('grey.500')}`,
+  borderColumns: 'none',
+}
+
+export const alternativeTheme = {
+  ...defaultTheme,
+  ...{
+    borderTableHeader: `1px solid ${getColor('grey.500')}`,
+    bgHeader: getColor('grey.400'),
+  },
+}
+
 export default class Table extends Component {
   constructor(props) {
     super(props)
@@ -61,22 +98,16 @@ export default class Table extends Component {
   }
 
   static defaultProps = {
-    background: ['#48ACE9', '#49D6EA'],
-    border: {
-      tableBody: '2px solid #452840',
-      tableHeader: '2px solid #E25C97',
-      rows: '2px solid #9652BB',
-      columns: '2px solid #452840',
-    },
     columns: [],
     data: [],
-    loadingData: false,
+    theme: defaultTheme,
     tableWidth: { min: '700px' },
+    containerWidth: '100%',
     sortedInfo: {
       columnKey: null,
       order: null,
     },
-    containerWidth: '100%',
+    isLoading: false,
   }
 
   render() {
@@ -85,47 +116,55 @@ export default class Table extends Component {
       tableWidth,
       containerWidth,
       columns,
-      border,
-      background,
       sortedInfo,
-      loadingData,
+      isLoading,
     } = this.props
 
+    const themeToUse = this.chooseTheme()
+
     return (
-      <TableWrapperUI
-        ref={this.tableWrapper}
-        loadingData={loadingData}
-        containerWidth={containerWidth}
-      >
-        <TableUI
-          border={border}
-          background={background}
-          tableWidth={tableWidth}
+      <ThemeProvider theme={themeToUse}>
+        <TableWrapperUI
+          ref={this.tableWrapper}
+          isLoading={isLoading}
+          containerWidth={containerWidth}
         >
-          <colgroup>
-            {columns.map(column => (
-              <TCol key={`col_${column.columnKey}`} column={column} />
-            ))}
-          </colgroup>
+          <TableUI tableWidth={tableWidth}>
+            <thead>
+              <tr>
+                {columns.map(column => {
+                  let key = Array.isArray(column.columnKey)
+                    ? column.columnKey.join('_')
+                    : column.columnKey
 
-          <thead>
-            <tr>
-              {columns.map(column => (
-                <HeaderCell
-                  key={column.columnKey}
-                  column={column}
-                  loadingData={loadingData}
-                  sortedInfo={sortedInfo}
-                />
+                  return (
+                    <HeaderCell
+                      key={key}
+                      column={column}
+                      isLoading={isLoading}
+                      sortedInfo={sortedInfo}
+                    />
+                  )
+                })}
+              </tr>
+            </thead>
+
+            <tbody>
+              {data.map(row => (
+                <Row row={row} columns={columns} key={row.id} />
               ))}
-            </tr>
-          </thead>
-
-          <tbody>
-            {data.map(row => <Row row={row} columns={columns} key={row.id} />)}
-          </tbody>
-        </TableUI>
-      </TableWrapperUI>
+            </tbody>
+          </TableUI>
+        </TableWrapperUI>
+      </ThemeProvider>
     )
+  }
+
+  chooseTheme = () => {
+    const { theme } = this.props
+
+    if (!theme || theme === 'default') return defaultTheme
+    if (theme === 'alternative') return alternativeTheme
+    return { ...defaultTheme, ...theme }
   }
 }
