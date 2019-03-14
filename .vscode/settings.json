@@ -24,7 +24,11 @@
     "statusBar.foreground": "#ffffff",
     "statusBar.background": "#1292EE",
     "statusBar.noFolderBackground": "#1292EE",
-    "statusBar.debuggingBackground": "#1292EE"
+    "statusBar.debuggingBackground": "#1292EE",
+    "titleBar.activeBackground": "#00b3e6",
+    "titleBar.inactiveBackground": "#00b3e699",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveForeground": "#15202b99"
   },
   "svg.preview.background": "black"
 }
