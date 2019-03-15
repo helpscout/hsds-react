@@ -167,13 +167,13 @@ export const enhancePopperStyles = (props: PopperStyles = {}) => {
   if (placement.indexOf('left') >= 0) {
     return {
       ...style,
-      left: `${(arrowSize * 2 + offset) * -1}px`,
+      left: `${arrowSize / 2 * -1}px`,
     }
   }
   if (placement.indexOf('right') >= 0) {
     return {
       ...style,
-      left: `${(arrowSize * 2 + offset) * 1}px`,
+      left: `${arrowSize / 2 * 1}px`,
     }
   }
 
