@@ -9,6 +9,7 @@ import {
   Modal,
   Link,
   PropProvider,
+  Popover,
   Input,
   Switch,
   Toolbar,
@@ -263,6 +264,10 @@ stories.add('nested', () => (
       <Modal trigger={<Link>Level 2</Link>}>
         <Modal.Body>
           <Heading>Level 2</Heading>
+
+          <Popover content="Popover! Let's go to level 3." zIndex={99999}>
+            <Button>Popover</Button>
+          </Popover>
           {ContentSpec.generate(2).map(({ id, content }) => (
             <p key={id}>{content}</p>
           ))}
