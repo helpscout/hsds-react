@@ -48,6 +48,7 @@ class Pop extends Component<Props, State> {
   static Reference = Reference
 
   node = null
+  _isMounted = false
 
   state = {
     id: uniqueID(),
@@ -55,16 +56,20 @@ class Pop extends Component<Props, State> {
   }
 
   componentDidMount() {
+    this._isMounted = true
     if (this.state.isOpen) {
       this.open()
     }
   }
 
   componentWillReceiveProps = (nextProps: Props) => {
-    const { isOpen } = nextProps
+    const { isOpen: wasOpen } = this.props
+    const { isOpen: willOpen } = nextProps
 
-    if (isOpen !== this.state.isOpen) {
-      if (isOpen) {
+    if (wasOpen === willOpen) return
+
+    if (willOpen !== this.state.isOpen) {
+      if (willOpen) {
         this.open()
       } else {
         this.close()
@@ -73,7 +78,14 @@ class Pop extends Component<Props, State> {
   }
 
   componentWillUnmount = () => {
+    this._isMounted = false
     this.node = null
+  }
+
+  safeSetState = (state, callback) => {
+    if (this._isMounted) {
+      this.setState(state, callback)
+    }
   }
 
   handleMouseMove = () => {
@@ -107,11 +119,6 @@ class Pop extends Component<Props, State> {
     this.close()
   }
 
-  handleOnEsc = () => {
-    if (!this.props.closeOnEscPress) return
-    this.close()
-  }
-
   handleOnPopperMouseLeave = () => {
     if (!this.shouldHandleHover()) return
     this.close()
@@ -121,7 +128,7 @@ class Pop extends Component<Props, State> {
 
   open = () => {
     this.props.onBeforeOpen(this).then(() => {
-      this.setState({ isOpen: true }, () => {
+      this.safeSetState({ isOpen: true }, () => {
         this.props.onOpen(this)
       })
     })
@@ -129,7 +136,7 @@ class Pop extends Component<Props, State> {
 
   close = () => {
     this.props.onBeforeClose(this).then(() => {
-      this.setState({ isOpen: false }, () => {
+      this.safeSetState({ isOpen: false }, () => {
         this.props.onClose(this)
       })
     })
@@ -170,7 +177,6 @@ class Pop extends Component<Props, State> {
       display && `is-display-${display}`,
       className
     )
-    const shouldShowPopper = this.state.isOpen
 
     const referenceMarkup = React.Children.map(
       children,
@@ -200,6 +206,7 @@ class Pop extends Component<Props, State> {
               className,
               close: this.close,
               id,
+              isOpen: this.state.isOpen,
               onContentClick: this.handleOnContentClick,
               onMouseLeave: this.handleOnPopperMouseLeave,
               modifiers,
@@ -219,10 +226,8 @@ class Pop extends Component<Props, State> {
           onMouseLeave={this.handleMouseLeave}
           onClick={this.handleClick}
         >
-          <EventListener event="click" handler={this.handleOnBodyClick} />
-          <KeypressListener keyCode={Keys.ESCAPE} handler={this.handleOnEsc} />
           {referenceMarkup}
-          {shouldShowPopper ? popperMarkup : null}
+          {popperMarkup}
         </PopUI>
       </Manager>
     )
