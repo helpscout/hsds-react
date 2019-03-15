@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { createFakeCustomers, sortData } from './utils'
-import Ellipsified from '../../src/components/Ellipsified/Ellipsified'
 import Table from '../../src/components/Table/Table'
-import { Wrapper, Header } from './commonComponents'
+import { Wrapper } from './commonComponents'
 
 export default class TablePlayground extends Component {
   constructor(props) {
@@ -12,11 +11,36 @@ export default class TablePlayground extends Component {
       data: createFakeCustomers({ amount: 10 }),
       columns: [
         {
-          title: 'Name',
-          columnKey: 'name',
-          align: 'left',
+          title: 'Customer (sorts by name)',
+          columnKey: ['name', 'companyName'],
           width: '30%',
+          sortKey: 'name',
           sorter: this.sortAlphabetically,
+          renderCell: ({ name, companyName }) => {
+            return (
+              <div>
+                <strong>{name}</strong>
+                <br />
+                <span>{companyName}</span>
+              </div>
+            )
+          },
+        },
+        {
+          title: 'Customer (sorts by company)',
+          columnKey: ['name', 'companyName'],
+          width: '30%',
+          sortKey: 'companyName',
+          sorter: this.sortAlphabetically,
+          renderCell: ({ name, companyName }) => {
+            return (
+              <div>
+                <strong>{name}</strong>
+                <br />
+                <span>{companyName}</span>
+              </div>
+            )
+          },
         },
         {
           title: 'Company',
@@ -24,19 +48,6 @@ export default class TablePlayground extends Component {
           align: 'center',
           width: '35%',
           sorter: this.sortAlphabetically,
-        },
-        {
-          title: 'Email',
-          columnKey: 'emails',
-          align: 'right',
-          width: '25%',
-          renderCell: email => <Ellipsified lines={1} text={email} />,
-        },
-        {
-          title: 'Last Seen',
-          columnKey: 'lastSeen',
-          align: 'right',
-          width: '10%',
         },
       ],
       sortedInfo: {

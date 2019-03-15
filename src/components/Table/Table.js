@@ -17,8 +17,8 @@ const Row = ({ row, columns }) => (
   <tr>
     {columns.map(column => {
       let key = Array.isArray(column.columnKey)
-        ? `${row.id}_${column.columnKey.join('_')}`
-        : `${row.id}_${column.columnKey}`
+        ? `cell_${row.id}_${column.sortKey}_${column.columnKey.join('_')}`
+        : `cell_${row.id}_${column.columnKey}`
 
       return <Cell column={column} row={row} key={key} />
     })}
@@ -60,10 +60,14 @@ const HeaderCell = ({ column, isLoading, sortedInfo }) => {
     }
 
     if (column.sorter) {
+      const colKey = Array.isArray(column.columnKey)
+        ? column.sortKey
+        : column.columnKey
+
       return (
         <SortableCellUI align={column.align}>
           <span className="SortableCell_title">{column.title}</span>
-          {sortedInfo.columnKey === column.columnKey &&
+          {sortedInfo.columnKey === colKey &&
             sortedInfo.order && (
               <Icon
                 name={
@@ -89,7 +93,9 @@ const HeaderCell = ({ column, isLoading, sortedInfo }) => {
       }
       onClick={() => {
         if (!isLoading && column.sorter != null) {
-          column.sorter(column.columnKey)
+          Array.isArray(column.columnKey)
+            ? column.sorter(column.sortKey)
+            : column.sorter(column.columnKey)
         }
       }}
     >
@@ -141,8 +147,10 @@ export default class Table extends Component {
               <tr>
                 {columns.map(column => {
                   let key = Array.isArray(column.columnKey)
-                    ? column.columnKey.join('_')
-                    : column.columnKey
+                    ? `headercell_${column.sortKey}_${column.columnKey.join(
+                        '_'
+                      )}`
+                    : `headercell_${column.columnKey}`
 
                   return (
                     <HeaderCell
@@ -158,7 +166,7 @@ export default class Table extends Component {
 
             <tbody>
               {data.map(row => (
-                <Row row={row} columns={columns} key={row.id} />
+                <Row row={row} columns={columns} key={`row_${row.id}`} />
               ))}
             </tbody>
           </TableUI>

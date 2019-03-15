@@ -164,15 +164,20 @@ stories.add('with pagination', () => <TableWithPagination />)
 
 const compoundColumns = [
   {
-    title: 'Customer',
+    title: 'Customer (name & company)',
     columnKey: ['name', 'companyName'],
-    width: '40%',
-    renderCell: ({ name, companyName }) => {
+    width: '33%',
+  },
+  {
+    title: 'Customer (name & email)',
+    columnKey: ['name', 'emails'],
+    width: '33%',
+    renderCell: ({ name, emails }) => {
       return (
         <div>
           <strong>{name}</strong>
           <br />
-          <span>{companyName}</span>
+          <span>{emails}</span>
         </div>
       )
     },
@@ -180,13 +185,8 @@ const compoundColumns = [
   {
     title: 'Email',
     columnKey: 'emails',
-    width: '35%',
+    width: '34%',
     renderCell: email => <Ellipsified lines={1} text={email} />,
-  },
-  {
-    title: 'Last Seen',
-    columnKey: 'lastSeen',
-    width: '25%',
   },
 ]
 
