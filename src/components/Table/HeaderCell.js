@@ -2,6 +2,7 @@ import React from 'react'
 
 import Icon from '../Icon'
 import { SortableCellUI, HeaderCellUI } from './styles/Table.css'
+import { TABLE_CLASSNAME } from './Table'
 
 function HeaderCell({ column, isLoading, sortedInfo }) {
   function renderCellContents() {
@@ -15,8 +16,13 @@ function HeaderCell({ column, isLoading, sortedInfo }) {
         : column.columnKey
 
       return (
-        <SortableCellUI align={column.align}>
-          <span className="SortableCell_title">{column.title}</span>
+        <SortableCellUI
+          align={column.align}
+          className={`${TABLE_CLASSNAME}__SortableHeaderCell`}
+        >
+          <span className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}>
+            {column.title}
+          </span>
           {sortedInfo.columnKey === colKey &&
             sortedInfo.order && (
               <Icon
@@ -34,6 +40,7 @@ function HeaderCell({ column, isLoading, sortedInfo }) {
 
   return (
     <HeaderCellUI
+      className={`${TABLE_CLASSNAME}__HeaderCell`}
       align={column.align}
       cellWidth={column.width}
       aria-sort={

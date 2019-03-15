@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from '../../src/components/styled'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import { createFakeCustomers } from './utils'
 
 import Heading from '../../src/components/Heading'
@@ -219,4 +219,11 @@ stories.add('with compound columns', () => (
 ))
 
 stories.add('with sorting', () => <TableWithSorting />)
+stories.add('with row click', () => (
+  <Table
+    columns={defaultColumns}
+    data={createFakeCustomers({ amount: 10 })}
+    onRowClick={action('click')}
+  />
+))
 stories.add('playground', () => <TablePlayground />)

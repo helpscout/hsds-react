@@ -1,16 +1,20 @@
 import React from 'react'
 
 import Cell from './Cell'
-import { generateCellKey } from './Table'
+import { generateCellKey, TABLE_CLASSNAME } from './Table'
 
-function Row({ row, columns }) {
+function Row({ row, columns, onRowClick }) {
   return (
-    <tr>
+    <tr className={`${TABLE_CLASSNAME}__Row`} onClick={handleRowClick}>
       {columns.map(column => (
         <Cell column={column} row={row} key={generateCellKey('cell', column)} />
       ))}
     </tr>
   )
+
+  function handleRowClick(event) {
+    onRowClick(row, event)
+  }
 }
 
 export default Row

@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { ThemeProvider } from '../styled'
+import { classNames } from '../../utilities/classNames'
 
 import Row from './Row'
 import HeaderCell from './HeaderCell'
@@ -7,7 +8,9 @@ import { TableWrapperUI, TableUI } from './styles/Table.css'
 
 import { defaultTheme, alternativeTheme } from './styles/themes'
 
-export default class Table extends Component {
+export const TABLE_CLASSNAME = 'c-Table'
+
+export default class Table extends PureComponent {
   constructor(props) {
     super(props)
     this.tableWrapper = React.createRef()
@@ -24,30 +27,44 @@ export default class Table extends Component {
       order: null,
     },
     isLoading: false,
+    onRowClick: () => {},
   }
 
   render() {
     const {
+      className,
+      wrapperClassName,
       data,
       tableWidth,
       containerWidth,
       columns,
       sortedInfo,
       isLoading,
+      onRowClick,
     } = this.props
 
-    const themeToUse = this.chooseTheme()
+    const tableWrapperClassName = classNames(
+      `${TABLE_CLASSNAME}__Wrapper`,
+      isLoading && `is-loading`,
+      wrapperClassName
+    )
+    const tableClassName = classNames(
+      TABLE_CLASSNAME,
+      isLoading && `is-loading`,
+      className
+    )
 
     return (
-      <ThemeProvider theme={themeToUse}>
+      <ThemeProvider theme={this.chooseTheme()}>
         <TableWrapperUI
+          className={tableWrapperClassName}
           ref={this.tableWrapper}
           isLoading={isLoading}
           containerWidth={containerWidth}
         >
-          <TableUI tableWidth={tableWidth}>
+          <TableUI tableWidth={tableWidth} className={tableClassName}>
             <thead>
-              <tr>
+              <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
                 {columns.map(column => (
                   <HeaderCell
                     key={generateCellKey('headercell', column)}
@@ -61,7 +78,12 @@ export default class Table extends Component {
 
             <tbody>
               {data.map(row => (
-                <Row row={row} columns={columns} key={`row_${row.id}`} />
+                <Row
+                  row={row}
+                  columns={columns}
+                  key={`row_${row.id}`}
+                  onRowClick={onRowClick}
+                />
               ))}
             </tbody>
           </TableUI>

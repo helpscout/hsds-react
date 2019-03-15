@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { CellUI } from './styles/Table.css'
+import { TABLE_CLASSNAME } from './Table'
 
 function Cell({ column, row }) {
   if (Array.isArray(column.columnKey)) {
@@ -11,7 +12,7 @@ function Cell({ column, row }) {
     }
 
     return (
-      <CellUI align={column.align}>
+      <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
         {column.renderCell
           ? column.renderCell(cellData)
           : Object.values(cellData).map(data => (
@@ -22,7 +23,7 @@ function Cell({ column, row }) {
   }
 
   return (
-    <CellUI align={column.align}>
+    <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
       {column.renderCell
         ? column.renderCell(row[column.columnKey])
         : row[column.columnKey]}
