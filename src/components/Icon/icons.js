@@ -1,7 +1,11 @@
-import { isBeaconEnv } from '../../utilities/env'
+const isBeaconEnv = process && process.env['BEACON_ENV']
 
-if (isBeaconEnv()) {
-  require('./icons.beacon')
+let icons
+
+if (isBeaconEnv) {
+  icons = require('./icons.beacon').default
 } else {
-  require('./icons.all')
+  icons = require('./icons.all').default
 }
+
+export default icons
