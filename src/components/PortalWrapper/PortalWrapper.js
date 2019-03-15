@@ -39,7 +39,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     static propTypes = propTypes
     static defaultProps = {
       isOpen: false,
-      OMG_CLOSE: noop,
     }
     static contextTypes = {
       router: noop,
@@ -188,14 +187,9 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     forceClosePortal = () => {
-      this.safeSetState(
-        {
-          isOpen: false,
-        },
-        () => {
-          this.props.OMG_CLOSE()
-        }
-      )
+      this.safeSetState({
+        isOpen: false,
+      })
     }
 
     sequenceClosePortal(onClose) {
