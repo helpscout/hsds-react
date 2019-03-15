@@ -11,6 +11,7 @@ import { darken, lighten } from '../../utilities/color'
 const config = {
   sidePadding: '18px',
   border: `1px solid ${getColor('grey.500')}`,
+  badgeHeight: '31px',
 }
 
 export const SideNavigationUI = styled('div')`
@@ -169,7 +170,12 @@ export const ItemUI = styled('div')`
 export const HeaderUI = styled('div')`
   padding: 0 ${config.sidePadding};
   color: ${getColor('charcoal.500')};
-  margin-bottom: 16px;
+  margin-bottom: calc(40px - ${config.badgeHeight});
+  height: ${config.badgeHeight};
+
+  ${Heading} {
+    margin-bottom: 0;
+  }
 
   &.is-collapsed {
     padding: 0;
@@ -210,11 +216,11 @@ export const BadgeUI = styled('span')`
   align-items: center;
   justify-content: center;
   background: ${getColor('blue.400')};
-  border-radius: 31px;
+  border-radius: ${config.badgeHeight};
   color: white;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 1px;
-  height: 31px;
-  width: 31px;
+  height: ${config.badgeHeight};
+  width: ${config.badgeHeight};
 `
