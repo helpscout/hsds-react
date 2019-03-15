@@ -9,3 +9,10 @@ export const isBrowserEnv = (): boolean => {
 }
 
 export const isNodeEnv = (): boolean => !isBrowserEnv()
+
+export const isBeaconEnv = (): boolean => {
+  // @ts-ignore
+  if (!isDefined(process)) return true
+  // @ts-ignore
+  return get(process, 'env.BEACON_ENV', false)
+}
