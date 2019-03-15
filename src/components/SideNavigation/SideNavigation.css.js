@@ -3,7 +3,7 @@ import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import Text from '../Text'
-import Dropdown from '../Dropdown/DropdownV2'
+
 import Heading from '../Heading'
 import { DropdownUI, TriggerUI } from '../Dropdown/V2/Dropdown.css'
 import { darken, lighten } from '../../utilities/color'
@@ -178,12 +178,9 @@ export const HeaderUI = styled('div')`
   }
 `
 
-export const DropdownHeaderTriggerUI = styled(Heading)`
-  font-weight: 400;
-  font-size: 20px;
-`
+export const DropdownHeaderTriggerUI = styled(Heading)``
 
-export const DropdownHeaderUI = styled(Dropdown)`
+export const DropdownHeaderUI = styled('div')`
   .is-open ${DropdownHeaderTriggerUI} {
     color: ${getColor('blue.600')};
   }

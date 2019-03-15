@@ -12,11 +12,7 @@ import {
   AutoDropdown,
 } from '../src/index.js'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
-import {
-  SideNavigationHeaderUI,
-  DropdownHeaderUI,
-  DropdownHeaderTriggerUI,
-} from '../src/components/SideNavigation/SideNavigation.css'
+import { SideNavigationHeaderUI } from '../src/components/SideNavigation/SideNavigation.css'
 import { ItemSpec } from './DropdownV2.stories'
 
 import styled from '../src/components/styled'
@@ -35,23 +31,14 @@ const renderSidebarFolders = () => {
   )
 }
 
-const footerItems = ItemSpec.generate(3)
+const renderSidebarFooter = () => {
+  const footerItems = ItemSpec.generate(3)
 
-const renderSidebarFooter = isFloating => {
   return (
     <SideNavigation.Footer>
-      <Dropdown
-        items={footerItems}
-        renderTrigger={
-          <SideNavigation.Button
-            icon={
-              <Icon name="cog" offsetLeft={false} withCaret={!isFloating} />
-            }
-          >
-            Edit Mailbox
-          </SideNavigation.Button>
-        }
-      />
+      <SideNavigation.DropdownFooter items={footerItems} iconName="cog">
+        Edit Mailbox
+      </SideNavigation.DropdownFooter>
       <SideNavigation.Button icon={<Icon name="new-convo" />}>
         New conversation
       </SideNavigation.Button>
@@ -107,7 +94,7 @@ class SidebarCollapsed extends React.PureComponent {
         onMouseLeave={this.handleMouseOut}
       >
         <SideNavigation.Header label={headerLabel} badge={badge} />
-        <SidebarDefaultItems />
+        <SidebarHsAppItems />
         {renderSidebarFolders()}
         {renderSidebarFooter()}
       </SideNavigation>
@@ -137,9 +124,9 @@ class SidebarFloatingMenu extends React.PureComponent {
         {isOpen && (
           <SideNavigationFloatingUI floatingMenu={true}>
             <SideNavigation.Header label="Help Scout" />
-            <SidebarDefaultItems />
+            <SidebarHsAppItems />
             {renderSidebarFolders()}
-            {renderSidebarFooter(true)}
+            {renderSidebarFooter()}
           </SideNavigationFloatingUI>
         )}
       </div>
@@ -147,7 +134,7 @@ class SidebarFloatingMenu extends React.PureComponent {
   }
 }
 
-class SidebarDefaultItems extends React.PureComponent {
+class SidebarHsAppItems extends React.PureComponent {
   state = {
     active: 'chat',
   }
@@ -238,14 +225,14 @@ stories.add('empty', () => <SideNavigation />)
 stories.add('with header', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
-    <SidebarDefaultItems />
+    <SidebarHsAppItems />
   </SideNavigation>
 ))
 
 stories.add('with linkable header', () => (
   <SideNavigation>
     <SideNavigation.Header href="https://duckduckgo.com/" label="Link" />
-    <SidebarDefaultItems />
+    <SidebarHsAppItems />
   </SideNavigation>
 ))
 
@@ -254,17 +241,11 @@ stories.add('with dropdown header', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header>
-        <DropdownHeaderUI
-          items={items}
-          selectedItem={items[0]}
-          trigger={
-            <DropdownHeaderTriggerUI>
-              Dropdown <Icon name="caret-down" inline size="12" />
-            </DropdownHeaderTriggerUI>
-          }
-        />
+        <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+          Dropdown
+        </SideNavigation.DropdownHeader>
       </SideNavigation.Header>
-      <SidebarDefaultItems />
+      <SidebarHsAppItems />
     </SideNavigation>
   )
 })
@@ -274,16 +255,11 @@ stories.add('with long list dropdown', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header>
-        <AutoDropdown
-          items={items}
-          renderTrigger={
-            <Heading size="h3">
-              Dropdown <Icon name="caret-down" size="12" inline />
-            </Heading>
-          }
-        />
+        <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+          Dropdown
+        </SideNavigation.DropdownHeader>
       </SideNavigation.Header>
-      <SidebarDefaultItems />
+      <SidebarHsAppItems />
     </SideNavigation>
   )
 })
@@ -291,14 +267,14 @@ stories.add('with long list dropdown', () => {
 stories.add('with custom width', () => (
   <SideNavigation width={200}>
     <SideNavigation.Header label="Help Scout" />
-    <SidebarDefaultItems />
+    <SidebarHsAppItems />
   </SideNavigation>
 ))
 
 stories.add('with multiple section', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
-    <SidebarDefaultItems />
+    <SidebarHsAppItems />
     <SideNavigation.Section title="Section #1">
       <SideNavigation.Item>Item #1</SideNavigation.Item>
     </SideNavigation.Section>
@@ -311,7 +287,7 @@ stories.add('with multiple section', () => (
 stories.add('with CTA button', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
-    <SidebarDefaultItems />
+    <SidebarHsAppItems />
     <SideNavigation.Section withPadding={true}>
       <Button version={2} kind="secondary" size="sm">
         Open mailbox
@@ -323,7 +299,7 @@ stories.add('with CTA button', () => (
 stories.add('with linkable items', () => (
   <SideNavigation>
     <SideNavigation.Header label="Help Scout" />
-    <SidebarDefaultItems />
+    <SidebarHsAppItems />
     <SideNavigation.Section title="Linkable">
       <SideNavigation.Item href="https://duckduckgo.com/">
         duckduckgo.com
@@ -339,7 +315,7 @@ stories.add('with footer', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header label="Help Scout" />
-      <SidebarDefaultItems />
+      <SidebarHsAppItems />
       {renderSidebarFooter()}
     </SideNavigation>
   )
@@ -366,7 +342,7 @@ storiesHsApp.add('HS App - Mailbox', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header label="Help Scout" />
-      <SidebarDefaultItems />
+      <SidebarHsAppItems />
       {renderSidebarFolders()}
       {renderSidebarFooter()}
     </SideNavigation>

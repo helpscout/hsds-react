@@ -3,6 +3,12 @@ import SideNavigation from './SideNavigation'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 SideNavigation.Button = propConnect(COMPONENT_KEY.Button)(SideNavigation.Button)
+SideNavigation.DropdownHeader = propConnect(COMPONENT_KEY.DropdownHeader)(
+  SideNavigation.DropdownHeader
+)
+SideNavigation.DropdownFooter = propConnect(COMPONENT_KEY.DropdownFooter)(
+  SideNavigation.DropdownFooter
+)
 SideNavigation.Footer = propConnect(COMPONENT_KEY.Footer)(SideNavigation.Footer)
 SideNavigation.Header = propConnect(COMPONENT_KEY.Header)(SideNavigation.Header)
 SideNavigation.Item = propConnect(COMPONENT_KEY.Item)(SideNavigation.Item)

@@ -9,12 +9,14 @@ import { ButtonUI, ButtonFooterUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
-  floatingMenu: boolean
+  floatingMenu?: boolean
   icon?: Icon
 }
 
 export class Button extends React.PureComponent<Props> {
-  static defaultProps = {}
+  static defaultProps = {
+    floatingMenu: false,
+  }
 
   render() {
     const { children, className, icon, floatingMenu, ...rest } = this.props

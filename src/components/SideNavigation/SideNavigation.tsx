@@ -4,11 +4,13 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 
 import PropProvider from '../PropProvider'
+import Button from './Button'
+import DropdownHeader from './DropdownHeader'
+import DropdownFooter from './DropdownFooter'
+import Footer from './Footer'
 import Header from './Header'
 import Item from './Item'
 import Section from './Section'
-import Footer from './Footer'
-import Button from './Button'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { SideNavigationUI } from './SideNavigation.css'
@@ -23,11 +25,13 @@ export interface Props {
 export class SideNavigation extends React.PureComponent<Props> {
   static defaultProps = {}
 
+  static Button = Button
+  static DropdownHeader = DropdownHeader
+  static DropdownFooter = DropdownFooter
+  static Footer = Footer
   static Header = Header
   static Item = Item
   static Section = Section
-  static Footer = Footer
-  static Button = Button
 
   getProviderValue() {
     const { collapsed, floatingMenu } = this.props
@@ -47,6 +51,9 @@ export class SideNavigation extends React.PureComponent<Props> {
         floatingMenu,
       },
       [COMPONENT_KEY.Button]: {
+        floatingMenu,
+      },
+      [COMPONENT_KEY.DropdownFooter]: {
         floatingMenu,
       },
     }
