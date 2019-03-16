@@ -48,7 +48,7 @@ import '@helpscout/hsds-react/adapters/embed'
 import '@helpscout/hsds-react/adapters/app'
 ```
 
-Note: This loads all the `svg` images, including [`Icon`](../../components/Icon) and [`Illo`](../../components/Illo).
+Note: This loads all the `svg` images, including [`Icon`](./src/components/Icon) and [`Illo`](./src/components/Illo).
 
 ## Testing
 
