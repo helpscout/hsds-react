@@ -10,7 +10,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Icon.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY, renameSVGIds } from './utils'
 
 type Props = {
   center: boolean,
@@ -30,17 +30,6 @@ type Props = {
   subtle?: boolean,
   title?: string,
   withCaret: boolean,
-}
-
-const renameSVGIds = (svgHtml, name) => {
-  if (!svgHtml) {
-    return svgHtml
-  }
-  const regexHash = new RegExp(`\#${name}`, 'gi')
-  const regexQuote = new RegExp(`\"${name}`, 'gi')
-  return svgHtml
-    .replace(regexHash, `#hsds-icons-${name}`)
-    .replace(regexQuote, `"hsds-icons-${name}`)
 }
 
 const Icon = (props: Props) => {
