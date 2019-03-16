@@ -50,7 +50,7 @@ const Illo = (props: Props) => {
     className
   )
 
-  const illoSet = global[ILLOS]
+  const illoSet = global[ILLOS] || {}
 
   const src = { __html: illoSet[name] }
   const iconTitle = title || name
