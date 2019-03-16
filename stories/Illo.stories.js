@@ -7,7 +7,10 @@ const stories = storiesOf('Illo', module)
 
 stories.add('Illo', () => {
   const icons = Object.keys(illosData).map(i => (
-    <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
+    <div
+      style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}
+      key={i}
+    >
       <Centralize>
         <Illo name={i} key={i} color="#116ce1" />
       </Centralize>

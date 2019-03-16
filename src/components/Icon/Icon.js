@@ -3,9 +3,9 @@ import type { IconSize } from './types'
 import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ICONS from './icons'
 import styled from '../styled'
 import VisuallyHidden from '../VisuallyHidden'
+import { ICONS } from '../../constants/global'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
@@ -84,14 +84,16 @@ const Icon = (props: Props) => {
     className
   )
 
-  const src = { __html: renameSVGIds(ICONS[name], name) }
+  const iconSet = global[ICONS] || {}
+
+  const src = { __html: renameSVGIds(iconSet[name], name) }
   const iconTitle = title || name
 
   const caretMarkup = withCaret ? (
     <span
       className="c-Icon__icon is-caret"
       dangerouslySetInnerHTML={{
-        __html: renameSVGIds(ICONS['caret-down'], 'caret-down'),
+        __html: renameSVGIds(iconSet['caret-down'], 'caret-down'),
       }}
       title="Caret"
     />

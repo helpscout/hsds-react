@@ -2,8 +2,8 @@
 import type { IlloSize } from './types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ILLOS from './illos'
 import Centralize from '../Centralize'
+import { ILLOS } from '../../constants/global'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -50,7 +50,9 @@ const Illo = (props: Props) => {
     className
   )
 
-  const src = { __html: ILLOS[name] }
+  const illoSet = global[ILLOS]
+
+  const src = { __html: illoSet[name] }
   const iconTitle = title || name
   const componentStyle = { ...style, color }
   const srcRawHTML = src.__html
