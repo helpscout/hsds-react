@@ -6,32 +6,31 @@ import caretDown from '../../icons/caret-down.svg'
 import caretLeft from '../../icons/caret-left.svg'
 import caretRight from '../../icons/caret-right.svg'
 import caretUp from '../../icons/caret-up.svg'
+import chat from '../../icons/chat.svg'
+import chatSquare from '../../icons/chat-square.svg'
 import clock from '../../icons/clock.svg'
 import clockSmall from '../../icons/clock-small.svg'
 import collapse from '../../icons/collapse.svg'
-import connection from '../../icons/connection.svg'
 import copy from '../../icons/copy.svg'
 import crossLarge from '../../icons/cross-large.svg'
 import crossMedium from '../../icons/cross-medium.svg'
 import crossMediumAlt from '../../icons/cross-medium-alt.svg'
 import crossSmall from '../../icons/cross-small.svg'
 import document from '../../icons/document.svg'
+import emoji from '../../icons/emoji.svg'
 import ellipsis from '../../icons/ellipsis.svg'
 import fabAntenna from '../../icons/fab-antenna.svg'
 import fabBuoy from '../../icons/fab-buoy.svg'
 import fabChat from '../../icons/fab-chat.svg'
 import fabQuestion from '../../icons/fab-question.svg'
 import fabSearch from '../../icons/fab-search.svg'
-import forward from '../../icons/forward.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import helpscoutLogo from '../../icons/helpscout-logo.svg'
 import hsLogo from '../../icons/hs-logo.svg'
 import image from '../../icons/image.svg'
 import imageAdd from '../../icons/image-add.svg'
 import imageLarge from '../../icons/image-large.svg'
-import imagePlus from '../../icons/image-plus.svg'
 import info from '../../icons/info.svg'
-import information from '../../icons/information.svg'
 import link from '../../icons/link.svg'
 import markup from '../../icons/markup.svg'
 import meatball from '../../icons/meatball.svg'
@@ -56,10 +55,12 @@ const ICONS = {
   'caret-left': caretLeft,
   'caret-right': caretRight,
   'caret-up': caretUp,
+  chat: chatSquare,
+  'chat-square': chatSquare,
+  'chat-round': chat,
   'clock-small': clockSmall,
   clock,
   collapse,
-  connection,
   copy,
   'cross-large': crossLarge,
   'cross-medium-alt': crossMediumAlt,
@@ -67,21 +68,21 @@ const ICONS = {
   'cross-small': crossSmall,
   document,
   ellipsis,
+  emoji,
   'fab-antenna': fabAntenna,
   'fab-buoy': fabBuoy,
   'fab-chat': fabChat,
   'fab-question': fabQuestion,
   'fab-search': fabSearch,
-  forward,
   fullscreen,
   'helpscout-logo': helpscoutLogo,
   'hs-logo': hsLogo,
   'image-add': imageAdd,
   'image-large': imageLarge,
-  'image-plus': imagePlus,
+  'image-plus': imageAdd,
   image,
   info,
-  information,
+  information: info,
   link,
   markup,
   meatball,
@@ -90,7 +91,6 @@ const ICONS = {
   plus: plusLarge,
   search,
   spinner,
-  text,
   'tick-large': tickLarge,
   'tick-small': tickSmall,
   tick: tickLarge,
