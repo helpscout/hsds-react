@@ -5,12 +5,17 @@ import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import VisuallyHidden from '../VisuallyHidden'
-import { ICONS } from '../../constants/global'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Icon.css.js'
 import { COMPONENT_KEY, renameSVGIds } from './utils'
+
+export let svgSet = {}
+
+export const load = svgs => {
+  svgSet = svgs
+}
 
 type Props = {
   center: boolean,
@@ -73,16 +78,14 @@ const Icon = (props: Props) => {
     className
   )
 
-  const iconSet = global[ICONS] || {}
-
-  const src = { __html: renameSVGIds(iconSet[name], name) }
+  const src = { __html: renameSVGIds(svgSet[name], name) }
   const iconTitle = title || name
 
   const caretMarkup = withCaret ? (
     <span
       className="c-Icon__icon is-caret"
       dangerouslySetInnerHTML={{
-        __html: renameSVGIds(iconSet['caret-down'], 'caret-down'),
+        __html: renameSVGIds(svgSet['caret-down'], 'caret-down'),
       }}
       title="Caret"
     />
