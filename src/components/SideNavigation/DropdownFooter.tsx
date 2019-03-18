@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -79,7 +78,5 @@ export class DropdownFooter extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.DropdownFooter)(DropdownFooter)
 
 export default DropdownFooter

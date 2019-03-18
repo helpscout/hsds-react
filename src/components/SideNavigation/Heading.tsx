@@ -1,7 +1,5 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import Heading from '../Heading'
 
@@ -27,7 +25,5 @@ export class SideNavigationHeading extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Heading)(SideNavigationHeading)
 
 export default SideNavigationHeading

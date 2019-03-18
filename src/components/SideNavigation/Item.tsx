@@ -1,9 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './SideNavigation.utils'
 import Icon from '../Icon'
 
 import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
@@ -65,7 +63,5 @@ export class Item extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Item)(Item)
 
 export default Item

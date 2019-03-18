@@ -1,8 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import SideNavigation from './SideNavigation'
 import { HeaderUI, BadgeUI, HeaderLinkUI } from './SideNavigation.css'
@@ -30,7 +28,6 @@ export class Header extends React.PureComponent<Props> {
     const { href, collapsable, label } = this.props
 
     const initial = this.getInitial()
-    console.log({ props: this.props, initial })
 
     if (!label && !initial) return null
     if (collapsable) return <BadgeUI>{initial}</BadgeUI>
@@ -57,7 +54,5 @@ export class Header extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Header)(Header)
 
 export default Header

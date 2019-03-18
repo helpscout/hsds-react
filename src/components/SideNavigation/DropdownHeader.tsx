@@ -1,7 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -66,7 +65,5 @@ export class DropdownHeader extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.DropdownHeader)(DropdownHeader)
 
 export default DropdownHeader

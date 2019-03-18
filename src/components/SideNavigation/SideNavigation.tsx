@@ -1,7 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 
 import PropProvider from '../PropProvider'
 import Button from './Button'
@@ -72,9 +71,6 @@ export class SideNavigation extends React.PureComponent<Props, States> {
         collapsable,
         floatingMenu,
       },
-      [COMPONENT_KEY.Section]: {
-        collapsable,
-      },
       [COMPONENT_KEY.Header]: {
         collapsable,
       },
@@ -143,7 +139,5 @@ export class SideNavigation extends React.PureComponent<Props, States> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.SideNavigation)(SideNavigation)
 
 export default SideNavigation
