@@ -14,7 +14,10 @@ import Item from './Item'
 import Section from './Section'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
-import { SideNavigationUI } from './SideNavigation.css'
+import {
+  SideNavigationUI,
+  SideNavigationCollapsableUI,
+} from './SideNavigation.css'
 
 export interface Props {
   className?: string
@@ -101,7 +104,7 @@ export class SideNavigation extends React.PureComponent<Props, States> {
     return this.state.dropdowns.length > 0
   }
 
-  render() {
+  renderSidenav() {
     const {
       children,
       className,
@@ -125,16 +128,32 @@ export class SideNavigation extends React.PureComponent<Props, States> {
       }
     }
 
+    const sidenavComponent = (
+      <SideNavigationUI
+        aria-label="SideNavigation"
+        {...getValidProps(rest)}
+        className={componentClassName}
+        style={styles}
+      >
+        {children}
+      </SideNavigationUI>
+    )
+
+    if (collapsable) {
+      return (
+        <SideNavigationCollapsableUI>
+          {sidenavComponent}
+        </SideNavigationCollapsableUI>
+      )
+    }
+
+    return sidenavComponent
+  }
+
+  render() {
     return (
       <PropProvider value={this.getProviderValue()}>
-        <SideNavigationUI
-          aria-label="SideNavigation"
-          {...getValidProps(rest)}
-          className={componentClassName}
-          style={styles}
-        >
-          {children}
-        </SideNavigationUI>
+        {this.renderSidenav()}
       </PropProvider>
     )
   }

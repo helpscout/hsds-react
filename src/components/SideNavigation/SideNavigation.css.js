@@ -13,6 +13,7 @@ const config = {
   sidePadding: '18px',
   border: `1px solid ${getColor('grey.500')}`,
   badgeHeight: '31px',
+  collapsableHeight: '60px',
 }
 
 export const FadeInOutUI = styled('div')`
@@ -220,6 +221,12 @@ export const BadgeUI = styled('span')`
   position: relative;
 `
 
+export const SideNavigationCollapsableUI = styled('div')`
+  position: relative;
+  height: 100%;
+  width: ${config.collapsableHeight};
+`
+
 export const SideNavigationUI = styled('div')`
   ${baseStyles};
   background-color: ${getColor('grey.300')};
@@ -231,7 +238,14 @@ export const SideNavigationUI = styled('div')`
   overflow: hidden;
 
   &.is-collapsable {
-    width: 60px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    width: ${config.collapsableHeight};
+    transition: width 0.05s ease-in-out;
+    will-change: width;
 
     &:hover,
     &.is-nav-always-visible {
