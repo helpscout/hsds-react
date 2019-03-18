@@ -13,9 +13,8 @@ import { COMPONENT_KEY, renameSVGIds } from './utils'
 
 export let svgSet = {}
 
-export const load = svgs => {
-  svgSet = svgs
-}
+export const load = (svgs = {}) => (svgSet = svgs)
+export const unload = () => load({})
 
 type Props = {
   center: boolean,

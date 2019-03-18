@@ -18,6 +18,26 @@ import '@helpscout/hsds-react/adapters/app'
 
 Note: This loads all the `svg` images, including [`Icon`](../../components/Icon) and [`Illo`](../../components/Illo).
 
+### Loading / Unloading SVG
+
+To manually load SVG sets without an adapter, you can use the `load` function from this component:
+
+```js
+import { load } from '@helpscout/hsds-react/components/Illo'
+
+const customSVGSet = { ... }
+
+load(customSVGSet)
+```
+
+To unload, or reset, the SVG set, you can use the `unload` function:
+
+```js
+import { unload } from '@helpscout/hsds-react/components/Illo'
+
+unload()
+```
+
 ## Example
 
 ```jsx
