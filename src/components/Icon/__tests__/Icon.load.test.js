@@ -2,11 +2,20 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Icon, { svgSet, load, unload } from '../Icon'
 
+afterEach(() => {
+  unload()
+})
+
 test('Is not set by default', () => {
   expect(svgSet).toEqual({})
 
   const wrapper = mount(<Icon name="activity" />)
   expect(wrapper.html()).not.toContain('svg')
+})
+
+test('load defaults to an empty object', () => {
+  load()
+  expect(svgSet).toEqual({})
 })
 
 test('Can be set with load', () => {
