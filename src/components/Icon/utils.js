@@ -7,8 +7,8 @@ export const renameSVGIds = (svgHtml, name) => {
     return svgHtml
   }
 
-  const regexHash = new RegExp(`\#${name}`, 'gi')
-  const regexQuote = new RegExp(`\"${name}`, 'gi')
+  const regexHash = new RegExp(`#${name}`, 'gi')
+  const regexQuote = new RegExp(`"${name}`, 'gi')
 
   return svgHtml
     .replace(regexHash, `#hsds-icons-${name}`)
