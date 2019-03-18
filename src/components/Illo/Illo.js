@@ -2,13 +2,17 @@
 import type { IlloSize } from './types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ILLOS from './illos'
 import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { IlloUI, IconUI } from './styles/Illo.css.js'
 import { COMPONENT_KEY } from './utils'
+
+export let svgSet = {}
+
+export const load = (svgs = {}) => (svgSet = svgs)
+export const unload = () => load({})
 
 type Props = {
   color?: string,
@@ -50,7 +54,7 @@ const Illo = (props: Props) => {
     className
   )
 
-  const src = { __html: ILLOS[name] }
+  const src = { __html: svgSet[name] }
   const iconTitle = title || name
   const componentStyle = { ...style, color }
   const srcRawHTML = src.__html

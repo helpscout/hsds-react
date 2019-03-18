@@ -4,6 +4,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { withOptions } from '@storybook/addon-options'
 import { withKnobs } from '@storybook/addon-knobs'
 import { StatsGraph } from '@helpscout/stats'
+import '../src/adapters/app'
 import '../src/styles/blue.scss'
 import './storybook.css'
 
