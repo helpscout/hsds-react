@@ -4,20 +4,38 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
+import { createUniqueIDFactory } from '../../utilities/id'
+import { noop } from '../../utilities/other'
+
 import Icon from '../Icon'
 import Dropdown from '../Dropdown/DropdownV2'
 import AutoDropdown from '../AutoDropdown'
 
 import { DropdownHeaderUI, DropdownHeaderTriggerUI } from './SideNavigation.css'
+import SideNavigation from './SideNavigation'
 
 export interface Props {
   className?: string
   items: Array<any>
   selectedItem: any
+  forceNavVisibleOn(id: string)
+  forceNavVisibleOff(id: string)
 }
+
+const UNIQUE_ID = createUniqueIDFactory(COMPONENT_KEY.DropdownHeader)
 
 export class DropdownHeader extends React.PureComponent<Props> {
   static defaultProps = {}
+
+  id = UNIQUE_ID()
+
+  handleOnClose = () => {
+    this.props.forceNavVisibleOff(this.id)
+  }
+
+  handleOnOpen = () => {
+    this.props.forceNavVisibleOn(this.id)
+  }
 
   render() {
     const { children, className, items, selectedItem, ...rest } = this.props
@@ -36,10 +54,12 @@ export class DropdownHeader extends React.PureComponent<Props> {
           className={componentClassName}
           items={items}
           selectedItem={selectedItem}
+          onClose={this.handleOnClose}
+          onOpen={this.handleOnOpen}
           trigger={
-            <DropdownHeaderTriggerUI weight={400} size="20">
+            <SideNavigation.Heading>
               {children} <Icon name="caret-down" inline size="12" />
-            </DropdownHeaderTriggerUI>
+            </SideNavigation.Heading>
           }
         />
       </DropdownHeaderUI>

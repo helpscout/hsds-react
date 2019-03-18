@@ -7,8 +7,10 @@ import PropProvider from '../PropProvider'
 import Button from './Button'
 import DropdownHeader from './DropdownHeader'
 import DropdownFooter from './DropdownFooter'
+import FadeInOut from './FadeInOut'
 import Footer from './Footer'
 import Header from './Header'
+import Heading from './Heading'
 import Item from './Item'
 import Section from './Section'
 import { COMPONENT_KEY } from './SideNavigation.utils'
@@ -18,36 +20,66 @@ import { SideNavigationUI } from './SideNavigation.css'
 export interface Props {
   className?: string
   width?: number
+  collapsable?: boolean
   collapsed?: boolean
   floatingMenu?: boolean
 }
+export interface States {
+  dropdowns: string[]
+}
 
-export class SideNavigation extends React.PureComponent<Props> {
+export class SideNavigation extends React.PureComponent<Props, States> {
   static defaultProps = {}
 
   static Button = Button
   static DropdownHeader = DropdownHeader
   static DropdownFooter = DropdownFooter
+  static FadeInOut = FadeInOut
   static Footer = Footer
   static Header = Header
+  static Heading = Heading
   static Item = Item
   static Section = Section
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      dropdowns: [],
+    }
+  }
+
+  forceNavVisibleOn = (dropdownId: string) => {
+    const { dropdowns } = this.state
+    if (!dropdowns.includes(dropdownId)) {
+      this.setState({ dropdowns: [...dropdowns, dropdownId] })
+    }
+  }
+
+  forceNavVisibleOff = dropdownId => {
+    const { dropdowns } = this.state
+
+    if (dropdowns.includes(dropdownId)) {
+      this.setState({ dropdowns: dropdowns.filter(id => id !== dropdownId) })
+    }
+  }
+
   getProviderValue() {
-    const { collapsed, floatingMenu } = this.props
+    const { collapsable, floatingMenu } = this.props
+
     return {
       [COMPONENT_KEY.Item]: {
-        collapsed,
+        collapsable,
         floatingMenu,
       },
       [COMPONENT_KEY.Section]: {
-        collapsed,
+        collapsable,
       },
       [COMPONENT_KEY.Header]: {
-        collapsed,
+        collapsable,
       },
       [COMPONENT_KEY.Footer]: {
-        collapsed,
+        collapsable,
         floatingMenu,
       },
       [COMPONENT_KEY.Button]: {
@@ -55,8 +87,22 @@ export class SideNavigation extends React.PureComponent<Props> {
       },
       [COMPONENT_KEY.DropdownFooter]: {
         floatingMenu,
+        forceNavVisibleOn: this.forceNavVisibleOn,
+        forceNavVisibleOff: this.forceNavVisibleOff,
+      },
+      [COMPONENT_KEY.DropdownHeader]: {
+        floatingMenu,
+        forceNavVisibleOn: this.forceNavVisibleOn,
+        forceNavVisibleOff: this.forceNavVisibleOff,
+      },
+      [COMPONENT_KEY.FadeInOut]: {
+        collapsable,
       },
     }
+  }
+
+  shouldMenuStayOpen() {
+    return this.state.dropdowns.length > 0
   }
 
   render() {
@@ -64,14 +110,15 @@ export class SideNavigation extends React.PureComponent<Props> {
       children,
       className,
       width,
-      collapsed,
+      collapsable,
       floatingMenu,
       ...rest
     } = this.props
 
     const componentClassName = classNames(
       'c-SideNavigation',
-      collapsed ? 'is-collapsed' : '',
+      collapsable ? 'is-collapsable' : '',
+      this.shouldMenuStayOpen() ? 'is-nav-always-visible' : '',
       className
     )
 

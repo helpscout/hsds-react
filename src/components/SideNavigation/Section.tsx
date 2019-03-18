@@ -5,6 +5,7 @@ import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { SectionUI, SectionHeadingUI } from './SideNavigation.css'
+import SideNavigation from './'
 
 export interface Props {
   className?: string
@@ -43,7 +44,11 @@ export class Section extends React.PureComponent<Props> {
 
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>
-        {title && <SectionHeadingUI size="small">{title}</SectionHeadingUI>}
+        {title && (
+          <SideNavigation.FadeInOut>
+            <SectionHeadingUI size="small">{title}</SectionHeadingUI>
+          </SideNavigation.FadeInOut>
+        )}
         {children}
       </SectionUI>
     )

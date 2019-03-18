@@ -7,6 +7,7 @@ import { COMPONENT_KEY } from './SideNavigation.utils'
 import Icon from '../Icon'
 
 import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
+import SideNavigation from './'
 
 export interface Props {
   className?: string
@@ -51,18 +52,14 @@ export class Item extends React.PureComponent<Props> {
       className
     )
 
-    const isCountDisplayed = count && !collapsed
-
-    if (collapsed && !icon) {
-      return null
-    }
-
     return (
       <ItemUI {...getValidProps(rest)} className={componentClassName}>
         <ButtonUI version={2} href={href} disabled={disabled} onClick={onClick}>
           {icon && <IconUI>{icon}</IconUI>}
-          {!collapsed && children}
-          {isCountDisplayed && <CountUI>{count}</CountUI>}
+          <SideNavigation.FadeInOut>
+            {children}
+            {count && <CountUI>{count}</CountUI>}
+          </SideNavigation.FadeInOut>
         </ButtonUI>
       </ItemUI>
     )

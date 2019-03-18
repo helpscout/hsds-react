@@ -39,6 +39,6 @@ export class Button extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Section)(Button)
+namespaceComponent(COMPONENT_KEY.Button)(Button)
 
 export default Button

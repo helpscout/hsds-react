@@ -5,11 +5,13 @@ import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import Icon from '../Icon'
+import SideNavigation from './SideNavigation'
 
 import { FooterUI } from './SideNavigation.css'
 
 export interface Props {
   className?: string
+  collapsable?: boolean
   collapsed?: boolean
   floatingMenu?: boolean
 }
@@ -18,7 +20,14 @@ export class Footer extends React.PureComponent<Props> {
   static defaultProps = {}
 
   render() {
-    const { children, className, collapsed, floatingMenu, ...rest } = this.props
+    const {
+      children,
+      className,
+      collapsed,
+      collapsable,
+      floatingMenu,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
       'c-SideNavigation__Footer',
@@ -27,15 +36,17 @@ export class Footer extends React.PureComponent<Props> {
       className
     )
 
+    const isCollapsed = collapsable && collapsed
+
     return (
       <FooterUI {...getValidProps(rest)} className={componentClassName}>
-        {collapsed && <Icon name="option-dots" />}
-        {!collapsed && children}
+        {isCollapsed && <Icon name="option-dots" />}
+        <SideNavigation.FadeInOut>{children}</SideNavigation.FadeInOut>
       </FooterUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Section)(Footer)
+namespaceComponent(COMPONENT_KEY.Footer)(Footer)
 
 export default Footer

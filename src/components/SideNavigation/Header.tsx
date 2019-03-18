@@ -4,12 +4,12 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
-import Heading from '../Heading'
+import SideNavigation from './SideNavigation'
 import { HeaderUI, BadgeUI, HeaderLinkUI } from './SideNavigation.css'
 
 export interface Props {
   badge?: string
-  collapsed?: boolean
+  collapsable?: boolean
   className?: string
   href?: string
   label?: string
@@ -27,34 +27,32 @@ export class Header extends React.PureComponent<Props> {
   }
 
   renderLabel() {
-    const { href, collapsed, label } = this.props
+    const { href, collapsable, label } = this.props
 
     const initial = this.getInitial()
+    console.log({ props: this.props, initial })
 
     if (!label && !initial) return null
-
-    if (collapsed) return <BadgeUI>{initial}</BadgeUI>
+    if (collapsable) return <BadgeUI>{initial}</BadgeUI>
 
     return (
-      <Heading size="h3" weight={400}>
-        {href ? <HeaderLinkUI href={href}>{label}</HeaderLinkUI> : label}
-      </Heading>
+      <SideNavigation.FadeInOut>
+        <SideNavigation.Heading>
+          {href ? <HeaderLinkUI href={href}>{label}</HeaderLinkUI> : label}
+        </SideNavigation.Heading>
+      </SideNavigation.FadeInOut>
     )
   }
 
   render() {
-    const { children, className, href, label, collapsed, ...rest } = this.props
+    const { children, className, href, label, ...rest } = this.props
 
-    const componentClassName = classNames(
-      'c-SideNavigation__Header',
-      collapsed ? 'is-collapsed' : '',
-      className
-    )
+    const componentClassName = classNames('c-SideNavigation__Header', className)
 
     return (
       <HeaderUI {...getValidProps(rest)} className={componentClassName}>
         {this.renderLabel()}
-        {!collapsed && children}
+        <SideNavigation.FadeInOut>{children}</SideNavigation.FadeInOut>
       </HeaderUI>
     )
   }

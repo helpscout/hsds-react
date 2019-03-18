@@ -1,10 +1,11 @@
 import styled from '../styled'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
+
 import Button from '../Button'
 import Text from '../Text'
-
 import Heading from '../Heading'
+
 import { DropdownUI, TriggerUI } from '../Dropdown/V2/Dropdown.css'
 import { darken, lighten } from '../../utilities/color'
 
@@ -14,19 +15,13 @@ const config = {
   badgeHeight: '31px',
 }
 
-export const SideNavigationUI = styled('div')`
-  ${baseStyles};
-  background-color: ${getColor('grey.300')};
-  border-right: ${config.border};
-  height: 100%;
-  width: 250px;
-  padding-top: 16px;
-  padding-bottom: 100px;
-  overflow: hidden;
-
-  &.is-collapsed {
-    width: 60px;
-  }
+export const FadeInOutUI = styled('div')`
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
 `
 
 export const IconUI = styled('span')`
@@ -184,10 +179,8 @@ export const HeaderUI = styled('div')`
   }
 `
 
-export const DropdownHeaderTriggerUI = styled(Heading)``
-
 export const DropdownHeaderUI = styled('div')`
-  .is-open ${DropdownHeaderTriggerUI} {
+  .is-open .c-SideNavigation__Heading {
     color: ${getColor('blue.600')};
   }
 `
@@ -223,4 +216,36 @@ export const BadgeUI = styled('span')`
   letter-spacing: 1px;
   height: ${config.badgeHeight};
   width: ${config.badgeHeight};
+  left: -4px;
+  position: relative;
+`
+
+export const SideNavigationUI = styled('div')`
+  ${baseStyles};
+  background-color: ${getColor('grey.300')};
+  border-right: ${config.border};
+  height: 100%;
+  width: 250px;
+  padding-top: 16px;
+  padding-bottom: 100px;
+  overflow: hidden;
+
+  &.is-collapsable {
+    width: 60px;
+
+    &:hover,
+    &.is-nav-always-visible {
+      width: 250px;
+
+      ${FadeInOutUI} {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.2s linear;
+      }
+
+      ${BadgeUI} {
+        display: none;
+      }
+    }
+  }
 `

@@ -9,8 +9,14 @@ SideNavigation.DropdownHeader = propConnect(COMPONENT_KEY.DropdownHeader)(
 SideNavigation.DropdownFooter = propConnect(COMPONENT_KEY.DropdownFooter)(
   SideNavigation.DropdownFooter
 )
+SideNavigation.FadeInOut = propConnect(COMPONENT_KEY.FadeInOut)(
+  SideNavigation.FadeInOut
+)
 SideNavigation.Footer = propConnect(COMPONENT_KEY.Footer)(SideNavigation.Footer)
 SideNavigation.Header = propConnect(COMPONENT_KEY.Header)(SideNavigation.Header)
+SideNavigation.Heading = propConnect(COMPONENT_KEY.Heading)(
+  SideNavigation.Heading
+)
 SideNavigation.Item = propConnect(COMPONENT_KEY.Item)(SideNavigation.Item)
 SideNavigation.Section = propConnect(COMPONENT_KEY.Section)(
   SideNavigation.Section

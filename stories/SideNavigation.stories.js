@@ -73,27 +73,17 @@ class SidebarWrapper extends React.PureComponent {
 }
 
 class SidebarCollapsed extends React.PureComponent {
-  state = {
-    isCollapsed: true,
-  }
-
-  handleMouseOver = () => {
-    this.setState({ isCollapsed: false })
-  }
-  handleMouseOut = () => {
-    this.setState({ isCollapsed: true })
-  }
-
   render() {
     const { badge, headerLabel } = this.props
+    const items = ItemSpec.generate(3)
 
     return (
-      <SideNavigation
-        collapsed={this.state.isCollapsed}
-        onMouseEnter={this.handleMouseOver}
-        onMouseLeave={this.handleMouseOut}
-      >
-        <SideNavigation.Header label={headerLabel} badge={badge} />
+      <SideNavigation collapsable>
+        <SideNavigation.Header badge={badge}>
+          <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+            {headerLabel}
+          </SideNavigation.DropdownHeader>
+        </SideNavigation.Header>
         <SidebarHsAppItems />
         {renderSidebarFolders()}
         {renderSidebarFooter()}
@@ -322,7 +312,7 @@ stories.add('with footer', () => {
 })
 
 stories.add('is collapsed', () => {
-  const badge = text('badgeLabel')
+  const badge = text('badgeLabel', 'HS')
   const headerLabel = text('headerLabel', 'Help Scout')
   return <SidebarCollapsed badge={badge} headerLabel={headerLabel} />
 })
@@ -341,7 +331,11 @@ storiesHsApp.addDecorator(storyFn => (
 storiesHsApp.add('HS App - Mailbox', () => {
   return (
     <SideNavigation>
-      <SideNavigation.Header label="Help Scout" />
+      <SideNavigation.Header>
+        <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+          Dropdown
+        </SideNavigation.DropdownHeader>
+      </SideNavigation.Header>
       <SidebarHsAppItems />
       {renderSidebarFolders()}
       {renderSidebarFooter()}
