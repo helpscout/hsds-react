@@ -2,6 +2,8 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
+import { COMPONENT_KEY } from './SideNavigation.utils'
+import { propConnect } from '../PropProvider'
 import Icon from '../Icon'
 import SideNavigation from './SideNavigation'
 
@@ -45,4 +47,4 @@ export class Footer extends React.PureComponent<Props> {
   }
 }
 
-export default Footer
+export default propConnect(COMPONENT_KEY.Footer)(Footer)

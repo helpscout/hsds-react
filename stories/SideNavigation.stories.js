@@ -330,6 +330,8 @@ storiesHsApp.addDecorator(storyFn => (
 ))
 
 storiesHsApp.add('HS App - Mailbox', () => {
+  const items = ItemSpec.generate(3)
+
   return (
     <SideNavigation>
       <SideNavigation.Header>

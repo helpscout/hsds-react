@@ -1,8 +1,9 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
 import { ButtonUI, ButtonFooterUI } from './SideNavigation.css'
@@ -39,6 +40,4 @@ export class Button extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Button)(Button)
-
-export default Button
+export default propConnect(COMPONENT_KEY.Button)(Button)

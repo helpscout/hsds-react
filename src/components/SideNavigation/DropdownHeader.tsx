@@ -5,10 +5,11 @@ import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
+import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
 import Dropdown from '../Dropdown/DropdownV2'
-import AutoDropdown from '../AutoDropdown'
+import AutoDropdown from '../AutoDropdown/AutoDropdown'
 
 import { DropdownHeaderUI, DropdownHeaderTriggerUI } from './SideNavigation.css'
 import SideNavigation from './SideNavigation'
@@ -43,8 +44,7 @@ export class DropdownHeader extends React.PureComponent<Props> {
       className
     )
 
-    const ElementName: AutoDropdown | Dropdown =
-      items.length > 10 ? AutoDropdown : Dropdown
+    const ElementName: any = items.length > 10 ? AutoDropdown : Dropdown
 
     return (
       <DropdownHeaderUI>
@@ -66,4 +66,4 @@ export class DropdownHeader extends React.PureComponent<Props> {
   }
 }
 
-export default DropdownHeader
+export default propConnect(COMPONENT_KEY.DropdownHeader)(DropdownHeader)

@@ -2,8 +2,10 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
+import { COMPONENT_KEY } from './SideNavigation.utils'
+import { propConnect } from '../PropProvider'
 import { SectionUI, SectionHeadingUI } from './SideNavigation.css'
-import SideNavigation from './'
+import FadeInOut from './FadeInOut'
 
 export interface Props {
   className?: string
@@ -37,9 +39,9 @@ export class Section extends React.PureComponent<Props> {
     return (
       <SectionUI {...getValidProps(rest)} className={componentClassName}>
         {title && (
-          <SideNavigation.FadeInOut>
+          <FadeInOut>
             <SectionHeadingUI size="small">{title}</SectionHeadingUI>
-          </SideNavigation.FadeInOut>
+          </FadeInOut>
         )}
         {children}
       </SectionUI>
@@ -47,4 +49,4 @@ export class Section extends React.PureComponent<Props> {
   }
 }
 
-export default Section
+export default propConnect(COMPONENT_KEY.Section)(Section)

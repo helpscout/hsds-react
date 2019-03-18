@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
+import { COMPONENT_KEY } from './SideNavigation.utils'
+import { propConnect } from '../PropProvider'
+
 import { FadeInOutUI } from './SideNavigation.css'
 
 export interface Props {
@@ -19,6 +22,10 @@ export class FadeInOut extends React.PureComponent<Props> {
       className
     )
 
+    if (!children) {
+      return null
+    }
+
     if (!collapsable) {
       return children
     }
@@ -27,4 +34,4 @@ export class FadeInOut extends React.PureComponent<Props> {
   }
 }
 
-export default FadeInOut
+export default propConnect(COMPONENT_KEY.FadeInOut)(FadeInOut)

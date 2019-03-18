@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
+
+import { COMPONENT_KEY } from './SideNavigation.utils'
+import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
 import SideNavigation from './SideNavigation'
@@ -79,4 +81,4 @@ export class DropdownFooter extends React.PureComponent<Props> {
   }
 }
 
-export default DropdownFooter
+export default propConnect(COMPONENT_KEY.DropdownFooter)(DropdownFooter)

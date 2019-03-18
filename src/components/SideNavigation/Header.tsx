@@ -2,7 +2,10 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
-import SideNavigation from './SideNavigation'
+import { COMPONENT_KEY } from './SideNavigation.utils'
+import { propConnect } from '../PropProvider'
+import FadeInOut from './FadeInOut'
+import Heading from './Heading'
 import { HeaderUI, BadgeUI, HeaderLinkUI } from './SideNavigation.css'
 
 export interface Props {
@@ -33,11 +36,11 @@ export class Header extends React.PureComponent<Props> {
     if (collapsable) return <BadgeUI>{initial}</BadgeUI>
 
     return (
-      <SideNavigation.FadeInOut>
-        <SideNavigation.Heading>
+      <FadeInOut>
+        <Heading>
           {href ? <HeaderLinkUI href={href}>{label}</HeaderLinkUI> : label}
-        </SideNavigation.Heading>
-      </SideNavigation.FadeInOut>
+        </Heading>
+      </FadeInOut>
     )
   }
 
@@ -49,10 +52,10 @@ export class Header extends React.PureComponent<Props> {
     return (
       <HeaderUI {...getValidProps(rest)} className={componentClassName}>
         {this.renderLabel()}
-        <SideNavigation.FadeInOut>{children}</SideNavigation.FadeInOut>
+        <FadeInOut>{children}</FadeInOut>
       </HeaderUI>
     )
   }
 }
 
-export default Header
+export default propConnect(COMPONENT_KEY.Header)(Header)

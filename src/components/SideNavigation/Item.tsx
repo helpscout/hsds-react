@@ -4,8 +4,10 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 
+import { namespaceComponent } from '../../utilities/component'
+import { propConnect } from '../PropProvider'
 import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
-import SideNavigation from './'
+import FadeInOut from './FadeInOut'
 
 export interface Props {
   className?: string
@@ -69,10 +71,10 @@ export class Item extends React.PureComponent<Props> {
           className={buttonClassName}
         >
           {icon && <IconUI>{icon}</IconUI>}
-          <SideNavigation.FadeInOut>
+          <FadeInOut>
             {children}
             {count && <CountUI>{count}</CountUI>}
-          </SideNavigation.FadeInOut>
+          </FadeInOut>
         </ButtonUI>
       </ItemUI>
     )
