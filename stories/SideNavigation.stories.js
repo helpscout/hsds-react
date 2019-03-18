@@ -165,6 +165,7 @@ class SidebarHsAppItems extends React.PureComponent {
           icon={<Icon name="alert" />}
           active={active === 'alert'}
           onClick={e => this.updateActiveItem('alert')}
+          danger={true}
         >
           Needs attention
         </SideNavigation.Item>

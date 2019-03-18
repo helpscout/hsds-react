@@ -14,6 +14,7 @@ export interface Props {
   icon?: Icon
   count?: number
   active?: boolean
+  danger?: boolean
   muted?: boolean
   disabled?: boolean
   onClick: (event: Event) => void
@@ -22,6 +23,7 @@ export interface Props {
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
     active: false,
+    danger: false,
     muted: false,
     disabled: false,
     onClick: noop,
@@ -39,6 +41,7 @@ export class Item extends React.PureComponent<Props> {
       disabled,
       onClick,
       collapsed,
+      danger,
       ...rest
     } = this.props
 
@@ -47,12 +50,24 @@ export class Item extends React.PureComponent<Props> {
       active ? 'is-active' : '',
       muted ? 'is-muted' : '',
       disabled ? 'is-disabled' : '',
+      danger ? 'is-danger' : '',
       className
+    )
+
+    const buttonClassName = classNames(
+      danger ? 'is-danger' : '',
+      active && !danger ? 'is-primary' : ''
     )
 
     return (
       <ItemUI {...getValidProps(rest)} className={componentClassName}>
-        <ButtonUI version={2} href={href} disabled={disabled} onClick={onClick}>
+        <ButtonUI
+          version={2}
+          href={href}
+          disabled={disabled}
+          onClick={onClick}
+          className={buttonClassName}
+        >
           {icon && <IconUI>{icon}</IconUI>}
           <SideNavigation.FadeInOut>
             {children}

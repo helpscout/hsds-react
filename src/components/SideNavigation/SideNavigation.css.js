@@ -14,6 +14,7 @@ const config = {
   border: `1px solid ${getColor('grey.500')}`,
   badgeHeight: '31px',
   collapsableHeight: '60px',
+  dangerColor: getColor('red.500'),
 }
 
 export const FadeInOutUI = styled('div')`
@@ -35,6 +36,7 @@ export const CountUI = styled(Text)`
 `
 
 export const ButtonUI = styled(Button)`
+  &.is-danger,
   &.is-default {
     color: ${getColor('charcoal.400')};
     border-radius: 0;
@@ -62,6 +64,19 @@ export const ButtonUI = styled(Button)`
     &:disabled,
     &.is-disabled {
       color: ${getColor('charcoal.200')};
+    }
+  }
+
+  &.is-danger {
+    ${IconUI} {
+      color: ${config.dangerColor};
+    }
+
+    &:hover {
+      color: ${config.dangerColor};
+      ${IconUI} {
+        color: ${config.dangerColor};
+      }
     }
   }
 `
@@ -143,8 +158,12 @@ export const ItemUI = styled('div')`
       color: ${getColor('charcoal.200')};
     }
   }
+
   &.is-active {
     ${ButtonUI}.is-default {
+      font-weight: bold;
+    }
+    ${ButtonUI}.is-primary {
       font-weight: bold;
       color: ${getColor('blue.600')};
 
@@ -153,6 +172,7 @@ export const ItemUI = styled('div')`
       }
     }
   }
+
   &.is-disabled {
     ${ButtonUI} {
       &.is-default:disabled {
