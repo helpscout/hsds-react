@@ -9,26 +9,17 @@ import FadeInOut from './FadeInOut'
 
 export interface Props {
   className?: string
-  main?: boolean
   title?: string
   withPadding?: boolean
 }
 
 export class Section extends React.PureComponent<Props> {
   static defaultProps = {
-    main: false,
     withPadding: false,
   }
 
   render() {
-    const {
-      children,
-      className,
-      title,
-      main,
-      withPadding,
-      ...rest
-    } = this.props
+    const { children, className, title, withPadding, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-SideNavigation__Section',

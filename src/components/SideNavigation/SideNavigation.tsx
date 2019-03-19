@@ -53,17 +53,12 @@ export class SideNavigation extends React.PureComponent<Props, States> {
 
   forceNavVisibleOn = (dropdownId: string) => {
     const { dropdowns } = this.state
-    if (!dropdowns.includes(dropdownId)) {
-      this.setState({ dropdowns: [...dropdowns, dropdownId] })
-    }
+    this.setState({ dropdowns: [...dropdowns, dropdownId] })
   }
 
   forceNavVisibleOff = dropdownId => {
     const { dropdowns } = this.state
-
-    if (dropdowns.includes(dropdownId)) {
-      this.setState({ dropdowns: dropdowns.filter(id => id !== dropdownId) })
-    }
+    this.setState({ dropdowns: dropdowns.filter(id => id !== dropdownId) })
   }
 
   getProviderValue() {

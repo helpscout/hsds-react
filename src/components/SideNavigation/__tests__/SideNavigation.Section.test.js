@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
+import FadeInOut from '../FadeInOut'
 import { SectionHeadingUI, SectionUI } from '../SideNavigation.css'
 
 describe('ClassName', () => {
@@ -39,6 +40,13 @@ describe('Children', () => {
 
     expect(el.text()).toContain('Hello')
   })
+
+  test('Wrap section title with FadeInOut', () => {
+    const wrapper = mount(<SideNavigation.Section title="Hello" />)
+    const el = wrapper.find(FadeInOut)
+
+    expect(el.text()).toContain('Hello')
+  })
 })
 
 describe('Heading', () => {
@@ -48,20 +56,5 @@ describe('Heading', () => {
     const el = wrapper.find(SectionHeadingUI)
 
     expect(el.text()).toContain(title)
-  })
-})
-
-describe('Collapsing', () => {
-  test('Does not render section if collapsed', () => {
-    const wrapper = mount(<SideNavigation.Section collapsed={true} />)
-
-    expect(wrapper.find(SectionUI)).toHaveLength(0)
-  })
-  test('Renders section if collapsed but set as main section', () => {
-    const wrapper = mount(
-      <SideNavigation.Section collapsed={true} main={true} />
-    )
-
-    expect(wrapper.find(SectionUI)).toHaveLength(1)
   })
 })

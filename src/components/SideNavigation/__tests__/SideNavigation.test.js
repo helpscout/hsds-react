@@ -2,7 +2,10 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import { SideNavigation } from '../SideNavigation'
 import { hasClass } from '../../../tests/helpers/enzyme'
-import { SideNavigationUI } from '../SideNavigation.css'
+import {
+  SideNavigationUI,
+  SideNavigationCollapsableUI,
+} from '../SideNavigation.css'
 
 describe('className', () => {
   test('Has a default className', () => {
@@ -17,10 +20,21 @@ describe('className', () => {
     expect(hasClass(wrapper, customClass)).toBe(true)
   })
 
-  test('Applies is-collapsed className if collapsed', () => {
-    const wrapper = mount(<SideNavigation collapsed={true} />)
+  test('Applies is-collapsable className if collapsed', () => {
+    const wrapper = mount(<SideNavigation collapsable={true} />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-collapsed')).toBeTruthy()
+    expect(
+      wrapper
+        .find(SideNavigationUI)
+        .getDOMNode()
+        .classList.contains('is-collapsable')
+    ).toBeTruthy()
+  })
+
+  test('Wraps the component with SideNavigationCollapsableUI', () => {
+    const wrapper = mount(<SideNavigation collapsable={true} />)
+
+    expect(wrapper.find(SideNavigationCollapsableUI).length).toBeTruthy()
   })
 })
 
@@ -30,5 +44,25 @@ describe('Width', () => {
     const wrapper = mount(<SideNavigation width={width} />)
     const el = wrapper.find(SideNavigationUI)
     expect(el.prop('style').width).toBe(`${width}px`)
+  })
+})
+
+describe('Dropdowns', () => {
+  test('Adds a dropdown id to the list', () => {
+    const wrapper = mount(<SideNavigation collapsable={true} />)
+    const dropdownId = 'test1'
+
+    wrapper.instance().forceNavVisibleOn(dropdownId)
+    expect(wrapper.state().dropdowns).toContain(dropdownId)
+  })
+
+  test('Removes a dropdown id from the list', () => {
+    const wrapper = mount(<SideNavigation collapsable={true} />)
+    const dropdownId = 'test1'
+
+    wrapper.instance().forceNavVisibleOn(dropdownId)
+    expect(wrapper.state().dropdowns).toContain(dropdownId)
+    wrapper.instance().forceNavVisibleOff(dropdownId)
+    expect(wrapper.state().dropdowns).not.toContain(dropdownId)
   })
 })

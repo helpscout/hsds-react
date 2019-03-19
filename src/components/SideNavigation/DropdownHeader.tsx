@@ -38,7 +38,13 @@ export class DropdownHeader extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, className, items, selectedItem, ...rest } = this.props
+    const {
+      children,
+      className,
+      items = [],
+      selectedItem,
+      ...rest
+    } = this.props
     const componentClassName = classNames(
       'c-SideNavigation__DropdownHeader',
       className

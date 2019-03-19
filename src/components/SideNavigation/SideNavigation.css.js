@@ -120,14 +120,6 @@ export const FooterUI = styled('div')`
     width: 100%;
   }
 
-  &.is-collapsed {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    color: ${getColor('charcoal.200')};
-  }
-
   &.is-floating-menu {
     display: flex;
     flex-direction: column;
@@ -267,6 +259,14 @@ export const SideNavigationUI = styled('div')`
     transition: width 0.05s ease-in-out;
     will-change: width;
 
+    ${FooterUI} {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      color: ${getColor('charcoal.200')};
+    }
+
     &:hover,
     &.is-nav-always-visible {
       width: 250px;
@@ -278,6 +278,10 @@ export const SideNavigationUI = styled('div')`
       }
 
       ${BadgeUI} {
+        display: none;
+      }
+
+      .c-SideNavigation__more {
         display: none;
       }
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
+import FadeInOut from '../FadeInOut'
 import { BadgeUI } from '../SideNavigation.css'
 
 describe('ClassName', () => {
@@ -31,15 +32,15 @@ describe('Children', () => {
 
     expect(el.text()).toContain('Hello')
   })
-  test('Does not render child if collapsed', () => {
+  test('Wrap children with FadeInOut', () => {
     const wrapper = mount(
-      <SideNavigation.Header collapsed={true}>
+      <SideNavigation.Header collapsable={true}>
         <div className="child">Hello</div>
       </SideNavigation.Header>
     )
-    const el = wrapper.find('div.child')
+    const el = wrapper.find(FadeInOut).find('div.child')
 
-    expect(el.length).toBeFalsy()
+    expect(el.length).toBeTruthy()
   })
 
   test('Renders a label', () => {
@@ -61,7 +62,7 @@ describe('Children', () => {
 })
 
 describe('Badge', () => {
-  test('Does not render when component is not collapsed', () => {
+  test('Does not render when component is not collapsable', () => {
     const badge = 'TE'
     const label = 'Hello'
 
@@ -71,12 +72,12 @@ describe('Badge', () => {
     expect(wrapper.text()).toBe(label)
   })
 
-  test('Renders when component is collapsed', () => {
+  test('Renders when component is collapsable', () => {
     const badge = 'TE'
     const label = 'Hello'
 
     const wrapper = mount(
-      <SideNavigation.Header badge={badge} label={label} collapsed={true} />
+      <SideNavigation.Header badge={badge} label={label} collapsable={true} />
     )
     const el = wrapper.find(BadgeUI)
     expect(el.length).toBeTruthy()
@@ -88,7 +89,7 @@ describe('Badge', () => {
     const label = 'Hello'
 
     const wrapper = mount(
-      <SideNavigation.Header badge={badge} label={label} collapsed={true} />
+      <SideNavigation.Header badge={badge} label={label} collapsable={true} />
     )
     const el = wrapper.find(BadgeUI)
     expect(el.text()).toBe(badge.toUpperCase())
@@ -98,7 +99,7 @@ describe('Badge', () => {
     const label = 'Hello'
 
     const wrapper = mount(
-      <SideNavigation.Header label={label} collapsed={true} />
+      <SideNavigation.Header label={label} collapsable={true} />
     )
     const el = wrapper.find(BadgeUI)
     expect(el.text()).toBe('H')
@@ -108,14 +109,14 @@ describe('Badge', () => {
     const label = 'Hi there'
 
     const wrapper = mount(
-      <SideNavigation.Header label={label} collapsed={true} />
+      <SideNavigation.Header label={label} collapsable={true} />
     )
     const el = wrapper.find(BadgeUI)
     expect(el.text()).toBe('HT')
   })
 
   test('Hides badge if no label and badge are setted', () => {
-    const wrapper = mount(<SideNavigation.Header collapsed={true} />)
+    const wrapper = mount(<SideNavigation.Header collapsable={true} />)
     const el = wrapper.find(BadgeUI)
     expect(el.length).toBeFalsy()
   })

@@ -19,12 +19,6 @@ describe('ClassName', () => {
     expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
   })
 
-  test('Applies collapsed classname', () => {
-    const wrapper = mount(<SideNavigation.Footer collapsed={true} />)
-
-    expect(wrapper.getDOMNode().classList.contains('is-collapsed')).toBeTruthy()
-  })
-
   test('Applies floating menu classname', () => {
     const wrapper = mount(<SideNavigation.Footer floatingMenu={true} />)
 
@@ -45,19 +39,9 @@ describe('Children', () => {
 
     expect(el.text()).toContain('Hello')
   })
-  test('Does not render child if collapsed', () => {
-    const wrapper = mount(
-      <SideNavigation.Footer collapsed={true}>
-        <div className="child">Hello</div>
-      </SideNavigation.Footer>
-    )
-    const el = wrapper.find('div.child')
-
-    expect(el.length).toBeFalsy()
-  })
 
   test('Renders a three dots icon when collapsed', () => {
-    const wrapper = mount(<SideNavigation.Footer collapsed={true} />)
+    const wrapper = mount(<SideNavigation.Footer collapsable={true} />)
 
     const el = wrapper.find(Icon)
 

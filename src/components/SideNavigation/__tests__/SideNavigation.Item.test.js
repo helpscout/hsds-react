@@ -1,8 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
-import { ItemUI, CountUI } from '../SideNavigation.css'
+import { ItemUI, CountUI, ButtonUI } from '../SideNavigation.css'
 import Icon from '../../Icon'
+import { Button } from '../Button'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -34,10 +35,21 @@ describe('ClassName', () => {
 
     expect(wrapper.getDOMNode().classList.contains('is-muted')).toBeTruthy()
   })
+  test('Applies is-danger className if danger', () => {
+    const wrapper = mount(<SideNavigation.Item danger={true} />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-danger')).toBeTruthy()
+    expect(
+      wrapper
+        .find(ButtonUI)
+        .getDOMNode()
+        .classList.contains('is-danger')
+    ).toBeTruthy()
+  })
 })
 
 describe('Rendering', () => {
-  test('Renders child if not collapsed', () => {
+  test('Renders child if not collapsable', () => {
     const wrapper = mount(
       <SideNavigation.Item>
         <div className="child">Hello</div>
@@ -46,22 +58,6 @@ describe('Rendering', () => {
     const el = wrapper.find('div.child')
 
     expect(el.length).toBeTruthy()
-  })
-
-  test('Does not render child if collapsed', () => {
-    const wrapper = mount(
-      <SideNavigation.Item collapsed={true}>
-        <div className="child">Hello</div>
-      </SideNavigation.Item>
-    )
-    const el = wrapper.find('div.child')
-
-    expect(el.length).toBeFalsy()
-  })
-  test('Does not render component if collapsed and no icon', () => {
-    const wrapper = mount(<SideNavigation.Item collapsed={true} />)
-
-    expect(wrapper.find(ItemUI).length).toBeFalsy()
   })
 })
 
@@ -87,11 +83,5 @@ describe('Count', () => {
     const el = wrapper.find(CountUI)
 
     expect(el.text()).toBe('10')
-  })
-  test('Does not render count if collapsed', () => {
-    const wrapper = mount(<SideNavigation.Item count={10} collapsed={true} />)
-    const el = wrapper.find(CountUI)
-
-    expect(el.length).toBeFalsy()
   })
 })
