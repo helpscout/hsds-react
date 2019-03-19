@@ -239,6 +239,12 @@ export const SideNavigationCollapsableUI = styled('div')`
   width: ${config.collapsableHeight};
 `
 
+export const SideNavigationFloatingUI = styled('div')`
+  position: relative;
+  height: 100%;
+  width: 100%;
+`
+
 export const SideNavigationUI = styled('nav')`
   ${baseStyles};
   background-color: ${getColor('grey.300')};

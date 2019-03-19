@@ -21,7 +21,12 @@ export class SideNavigationHeading extends React.PureComponent<Props> {
     )
 
     return (
-      <Heading size="h3" weight={400} className={componentClassName}>
+      <Heading
+        size="h3"
+        weight={400}
+        className={componentClassName}
+        id="SideNavigation__heading"
+      >
         {children}
       </Heading>
     )

@@ -126,6 +126,7 @@ export class SideNavigation extends React.PureComponent<Props, States> {
     const sidenavComponent = (
       <SideNavigationUI
         aria-label="SideNavigation"
+        aria-labelledby="SideNavigation__heading"
         {...getValidProps(rest)}
         className={componentClassName}
         style={styles}
