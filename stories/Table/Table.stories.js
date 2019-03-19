@@ -59,6 +59,30 @@ stories.add('default', () => (
     />
   </div>
 ))
+stories.add('ref', () => {
+  let ref
+
+  return (
+    <div>
+      <PreviewCard style={{ marginBottom: '20px' }}>
+        <Heading size="h4">Default theme</Heading>
+        <pre>
+          <code>theme = 'default' || undefined</code>
+        </pre>
+        <pre>
+          <code>{JSON.stringify(defaultTheme, null, 2)}</code>
+        </pre>
+      </PreviewCard>
+      <Table
+        columns={defaultColumns}
+        data={createFakeCustomers({ amount: 10 })}
+        innerRef={node => {
+          console.log(node)
+        }}
+      />
+    </div>
+  )
+})
 
 stories.add('alternative theme (built in)', () => (
   <div>

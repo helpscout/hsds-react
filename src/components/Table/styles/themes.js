@@ -7,6 +7,7 @@ export const defaultTheme = {
   bgColor: getColor('grey.200'),
   bgAlternate: 'white',
   bgHeader: 'white',
+  bgColorHover: getColor('grey.300'),
   borderTableBody: `1px solid ${getColor('grey.500')}`,
   borderTableHeader: 'none',
   borderRows: `1px solid ${getColor('grey.500')}`,

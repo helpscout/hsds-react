@@ -4,9 +4,8 @@ import styled from '../../styled'
 export const TableWrapperUI = styled('div')`
   ${baseStyles} overflow-x: auto;
   transition: opacity 0.15s ease-in-out;
-  ${({ isLoading }) => isLoading && 'opacity: 0.5;'};
-  ${({ containerWidth }) =>
-    containerWidth ? `width: ${containerWidth}` : 'width: 100%'};
+  width: ${props => props.containerWidth || '100%'};
+  opacity: ${props => (props.isLoading ? '0.5' : '1.0')};
 `
 
 export const TableUI = styled('table')`
@@ -122,6 +121,17 @@ export const TableUI = styled('table')`
   tr:nth-child(2n) td {
     background-color: ${props => props.theme.bgAlternate};
     color: ${props => props.theme.fontColorAlternate};
+  }
+
+  &.with-clickable-rows {
+    tr {
+      &:hover {
+        td {
+          background-color: ${props => props.theme.bgColorHover};
+          cursor: pointer;
+        }
+      }
+    }
   }
 `
 

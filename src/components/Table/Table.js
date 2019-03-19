@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react'
 import { ThemeProvider } from '../styled'
 import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 
 import Row from './Row'
 import HeaderCell from './HeaderCell'
+import OverflowScrollStrip from '../OverflowScrollStrip/OverflowScrollStrip'
 import { TableWrapperUI, TableUI } from './styles/Table.css'
 
 import { defaultTheme, alternativeTheme } from './styles/themes'
@@ -11,11 +13,6 @@ import { defaultTheme, alternativeTheme } from './styles/themes'
 export const TABLE_CLASSNAME = 'c-Table'
 
 export default class Table extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.tableWrapper = React.createRef()
-  }
-
   static defaultProps = {
     columns: [],
     data: [],
@@ -27,7 +24,8 @@ export default class Table extends PureComponent {
       order: null,
     },
     isLoading: false,
-    onRowClick: () => {},
+    onRowClick: null,
+    innerRef: noop,
   }
 
   render() {
@@ -50,46 +48,55 @@ export default class Table extends PureComponent {
     )
     const tableClassName = classNames(
       TABLE_CLASSNAME,
-      isLoading && `is-loading`,
+      isLoading && 'is-loading',
+      Boolean(onRowClick) && 'with-clickable-rows',
       className
     )
 
     return (
       <ThemeProvider theme={this.chooseTheme()}>
-        <TableWrapperUI
-          className={tableWrapperClassName}
-          ref={this.tableWrapper}
-          isLoading={isLoading}
-          containerWidth={containerWidth}
+        <OverflowScrollStrip
+          scrollableElementClassName={`${TABLE_CLASSNAME}__Wrapper`}
         >
-          <TableUI tableWidth={tableWidth} className={tableClassName}>
-            <thead>
-              <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
-                {columns.map(column => (
-                  <HeaderCell
-                    key={generateCellKey('headercell', column)}
-                    column={column}
-                    isLoading={isLoading}
-                    sortedInfo={sortedInfo}
+          <TableWrapperUI
+            className={tableWrapperClassName}
+            innerRef={this.setInnerRef}
+            isLoading={isLoading}
+            containerWidth={containerWidth}
+          >
+            <TableUI tableWidth={tableWidth} className={tableClassName}>
+              <thead>
+                <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
+                  {columns.map(column => (
+                    <HeaderCell
+                      key={generateCellKey('headercell', column)}
+                      column={column}
+                      isLoading={isLoading}
+                      sortedInfo={sortedInfo}
+                    />
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody>
+                {data.map(row => (
+                  <Row
+                    row={row}
+                    columns={columns}
+                    key={`row_${row.id}`}
+                    onRowClick={onRowClick}
                   />
                 ))}
-              </tr>
-            </thead>
-
-            <tbody>
-              {data.map(row => (
-                <Row
-                  row={row}
-                  columns={columns}
-                  key={`row_${row.id}`}
-                  onRowClick={onRowClick}
-                />
-              ))}
-            </tbody>
-          </TableUI>
-        </TableWrapperUI>
+              </tbody>
+            </TableUI>
+          </TableWrapperUI>
+        </OverflowScrollStrip>
       </ThemeProvider>
     )
+  }
+
+  setInnerRef = node => {
+    this.props.innerRef(node)
   }
 
   chooseTheme = () => {

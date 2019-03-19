@@ -13,7 +13,7 @@ function Row({ row, columns, onRowClick }) {
   )
 
   function handleRowClick(event) {
-    onRowClick(row, event)
+    onRowClick && onRowClick(row, event)
   }
 }
 
