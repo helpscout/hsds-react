@@ -55,8 +55,8 @@ describe('enhancePopperStyles', () => {
   test('Adjusts placement styles', () => {
     expect(enhancePopperStyles({ placement: 'top' }).top).toBe('-5px')
     expect(enhancePopperStyles({ placement: 'bottom' }).top).toBe('5px')
-    expect(enhancePopperStyles({ placement: 'left' }).left).toBe('-10px')
-    expect(enhancePopperStyles({ placement: 'right' }).left).toBe('10px')
+    expect(enhancePopperStyles({ placement: 'left' }).left).toBe('-2.5px')
+    expect(enhancePopperStyles({ placement: 'right' }).left).toBe('2.5px')
     expect(enhancePopperStyles({ placement: 'drrrr' }).left).toBe(undefined)
   })
 

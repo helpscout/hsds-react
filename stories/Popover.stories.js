@@ -12,7 +12,7 @@ import { withArtboard } from '@helpscout/artboard'
 import { action } from '@storybook/addon-actions'
 
 const stories = storiesOf('Popover', module)
-stories.addDecorator(withArtboard())
+stories.addDecorator(withArtboard({ width: 300, height: 100 }))
 stories.addDecorator(withKnobs)
 
 const actionLoggerProps = {
