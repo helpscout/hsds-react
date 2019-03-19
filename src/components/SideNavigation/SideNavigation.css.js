@@ -110,7 +110,7 @@ export const ButtonFooterUI = styled(Button)`
   }
 `
 
-export const FooterUI = styled('div')`
+export const FooterUI = styled('footer')`
   display: flex;
 
   ${DropdownUI}, ${ButtonFooterUI} {
@@ -175,7 +175,7 @@ export const ItemUI = styled('div')`
   }
 `
 
-export const HeaderUI = styled('div')`
+export const HeaderUI = styled('header')`
   padding: 0 ${config.sidePadding};
   color: ${getColor('charcoal.500')};
   margin-bottom: calc(40px - ${config.badgeHeight});
@@ -239,7 +239,7 @@ export const SideNavigationCollapsableUI = styled('div')`
   width: ${config.collapsableHeight};
 `
 
-export const SideNavigationUI = styled('div')`
+export const SideNavigationUI = styled('nav')`
   ${baseStyles};
   background-color: ${getColor('grey.300')};
   border-right: ${config.border};

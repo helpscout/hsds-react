@@ -107,7 +107,12 @@ class SidebarFloatingMenu extends React.PureComponent {
 
     return (
       <div>
-        <Button version={2} kind="secondary" onClick={this.toggleMenu}>
+        <Button
+          version={2}
+          kind="secondary"
+          size="sm"
+          onClick={this.toggleMenu}
+        >
           <Icon name="drag" />
         </Button>
 
