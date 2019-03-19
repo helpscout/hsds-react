@@ -45,6 +45,13 @@ describe('Fade', () => {
     expect(fade.length).toBe(1)
   })
 
+  test('Renders fade side elements', () => {
+    const wrapper = render(<Scrollable fadeLeft />)
+    const fade = wrapper.find('.c-Scrollable__fader')
+
+    expect(fade.length).toBe(1)
+  })
+
   test('Applies bottom fade styles on mount, if applicable', () => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
@@ -63,6 +70,26 @@ describe('Fade', () => {
     jest.runOnlyPendingTimers()
 
     expect(o.faderNodeBottom.style.transform).toBe('scaleY(1)')
+  })
+
+  test('Applies right fade styles on mount, if applicable', () => {
+    const wrapper = mount(<Scrollable fadeRight />)
+    const o = wrapper.instance()
+    const fade = o.faderNodeRight
+
+    expect(fade.style.transform).toBe('scaleX(0)')
+
+    const currentTarget = {
+      clientWidth: 100,
+      scrollWidth: 200,
+      scrollLeft: 30,
+    }
+
+    o.handleOnScroll({ currentTarget })
+
+    jest.runOnlyPendingTimers()
+
+    expect(o.faderNodeRight.style.transform).toBe('scaleX(1)')
   })
 
   test('Applies top fade styles when scrolled', () => {
@@ -98,6 +125,40 @@ describe('Fade', () => {
 
     expect(o.faderNodeBottom.style.transform).toContain('scaleY')
   })
+})
+
+test('Applies left fade styles when scrolled', () => {
+  const wrapper = mount(<Scrollable fadeLeft />)
+  const o = wrapper.instance()
+
+  const currentTarget = {
+    clientWidth: 100,
+    scrollWidth: 200,
+    scrollLeft: 30,
+  }
+
+  o.handleOnScroll({ currentTarget })
+
+  jest.runOnlyPendingTimers()
+
+  expect(o.faderNodeLeft.style.transform).toContain('scaleX')
+})
+
+test('Applies right fade styles when scrolled', () => {
+  const wrapper = mount(<Scrollable fadeRight />)
+  const o = wrapper.instance()
+
+  const currentTarget = {
+    clientWidth: 100,
+    scrollWidth: 200,
+    scrollLeft: 30,
+  }
+
+  o.handleOnScroll({ currentTarget })
+
+  jest.runOnlyPendingTimers()
+
+  expect(o.faderNodeRight.style.transform).toContain('scaleX')
 })
 
 describe('Content', () => {

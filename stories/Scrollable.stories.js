@@ -5,6 +5,8 @@ import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
 import { createSpec, faker } from '@helpscout/helix'
 import { Card, Image, Scrollable } from '../src/index.js'
+import styled from '../src/components/styled'
+import baseStyles from '../src/styles/resets/baseStyles.css.js'
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
@@ -13,9 +15,6 @@ const ContentSpec = createSpec({
 
 const stories = storiesOf('Scrollable', module)
 stories.addDecorator(withKnobs)
-stories.addDecorator(
-  withArtboard({ showInterface: false, withCenterGuides: false })
-)
 
 stories.add('Default', () => (
   <Card style={{ height: 400 }} seamless>
@@ -37,4 +36,61 @@ stories.add('Default', () => (
       </Card.Block>
     </Scrollable>
   </Card>
+))
+
+const MainContainer = styled('div')`
+  ${baseStyles} width: ${props => (props.fullWidth ? '100%' : '300px')};
+  box-sizing: border-box;
+  height: 300px;
+  background: dodgerblue;
+`
+const WideElement = styled('div')`
+  ${baseStyles} width: ${props => (props.fullWidth ? '700px' : '450px')};
+  height: 200px;
+  padding: 10px;
+  margin-top: 30px;
+  background: plum;
+`
+
+stories.add('Horizontal', () => (
+  <div>
+    <MainContainer className="MainContainer">
+      <Scrollable
+        onScroll={action('onScroll')}
+        fadeLeft={boolean('fadeLeft', true)}
+        fadeRight={boolean('fadeRight', true)}
+      >
+        Fader on both sides
+        <WideElement>This box is wider than the container at 450px</WideElement>
+      </Scrollable>
+    </MainContainer>
+  </div>
+))
+
+stories.add('Horizontal window resize', () => (
+  <MainContainer className="MainContainer" fullWidth>
+    <Scrollable fadeLeft fadeRight>
+      This container is 100% wide
+      <WideElement fullWidth>
+        This box is 700px, resize the window to see effect
+      </WideElement>
+    </Scrollable>
+  </MainContainer>
+))
+
+stories.add('scroll it all', () => (
+  <MainContainer className="MainContainer" style={{ height: '400px' }}>
+    <Scrollable
+      fadeLeft={boolean('fadeLeft', true)}
+      fadeRight={boolean('fadeRight', true)}
+      fadeBottom={boolean('fadeBottom', true)}
+      fade={boolean('fade', true)}
+    >
+      <WideElement style={{ height: '600px' }}>
+        {ContentSpec.generate(7).map(({ id, content }) => (
+          <p key={id}>{content}</p>
+        ))}
+      </WideElement>
+    </Scrollable>
+  </MainContainer>
 ))
