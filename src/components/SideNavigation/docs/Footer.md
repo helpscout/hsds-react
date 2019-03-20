@@ -14,8 +14,7 @@ A SideNavigation.Footer component is a layout-based component used within [SideN
 
 ## Props
 
-| Prop         | Type      | Description                                                |
-| ------------ | --------- | ---------------------------------------------------------- |
-| className    | `string`  | Custom class names to be added to the component.           |
-| collapsed    | `boolean` | When active, it replaces the footer with a three dots icon |
-| floatingMenu | `boolean` | When active it adds a border on top of the footer          |
+| Prop        | Type      | Description                                                                                                   |
+| ----------- | --------- | ------------------------------------------------------------------------------------------------------------- |
+| className   | `string`  | Custom class names to be added to the component.                                                              |
+| collapsable | `boolean` | When active, it replaces the footer with a three dots icon as the default. CSS :hover will show the full menu |

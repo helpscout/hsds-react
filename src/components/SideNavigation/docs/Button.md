@@ -15,8 +15,7 @@ Different style could be applied to this button depending of the context of the 
 
 ## Props
 
-| Prop         | Type      | Description                                                          |
-| ------------ | --------- | -------------------------------------------------------------------- |
-| className    | `string`  | Custom class names to be added to the component.                     |
-| floatingMenu | `boolean` | Flag to adjust the layout of the button (as a row when it's active). |
-| icon         | `Icon`    | Add an icon to the beginning of the button                           |
+| Prop      | Type     | Description                                      |
+| --------- | -------- | ------------------------------------------------ |
+| className | `string` | Custom class names to be added to the component. |
+| icon      | `Icon`   | Add an icon to the beginning of the button       |

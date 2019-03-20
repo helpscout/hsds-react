@@ -23,6 +23,5 @@ A SideNavigation.Section component is a layout-based component used within [Side
 | ----------- | --------- | ------------------------------------------------------------ |
 | main        | `boolean` | It keep the section visible when SideNavigation is collapsed |
 | className   | `string`  | Custom class names to be added to the component.             |
-| collapsed   | `boolean` | When active, it hides stop the section from being rendered   |
 | withPadding | `boolean` | It add the same padding as the Item inside the section       |
 | title       | `string`  | If it exists, it will add a heading to the section           |
