@@ -18,12 +18,13 @@ import assigned from '../../icons/assigned.svg'
 import at from '../../icons/at.svg'
 import attach from '../../icons/attach.svg'
 import attachLarge from '../../icons/attach-large.svg'
-import attachment from '../../icons/attachment.svg'
 import attachSmall from '../../icons/attach-small.svg'
 import bcc from '../../icons/bcc.svg'
 import bell from '../../icons/bell.svg'
 import bellSmall from '../../icons/bell-small.svg'
 import bold from '../../icons/bold.svg'
+import blockArrowDown from '../../icons/block-arrow-down.svg'
+import blockArrowUp from '../../icons/block-arrow-up.svg'
 import bubbleDots from '../../icons/bubble-dots.svg'
 import bubbleDotsDuplicate from '../../icons/bubble-dots-duplicate.svg'
 import bubbleDotsPlus from '../../icons/bubble-dots-plus.svg'
@@ -37,11 +38,14 @@ import caretDown from '../../icons/caret-down.svg'
 import caretLeft from '../../icons/caret-left.svg'
 import caretRight from '../../icons/caret-right.svg'
 import caretUp from '../../icons/caret-up.svg'
+import chevronUp from '../../icons/chevron-up.svg'
+import chevronDown from '../../icons/chevron-down.svg'
+import chevronLeft from '../../icons/chevron-left.svg'
+import chevronRight from '../../icons/chevron-right.svg'
 import chat from '../../icons/chat.svg'
-import chatActive from '../../icons/chat-active.svg'
 import chatSmall from '../../icons/chat-small.svg'
 import chatSquare from '../../icons/chat-square.svg'
-import check from '../../icons/check.svg'
+import checkmark from '../../icons/checkmark.svg'
 import checkboxLarge from '../../icons/checkbox-large.svg'
 import checkboxSmall from '../../icons/checkbox-small.svg'
 import circleArrowDown from '../../icons/circle-arrow-down.svg'
@@ -53,12 +57,10 @@ import circleMinus from '../../icons/circle-minus.svg'
 import circlePlus from '../../icons/circle-plus.svg'
 import circleTick from '../../icons/circle-tick.svg'
 import clock from '../../icons/clock.svg'
-import clockLarge from '../../icons/clock-large.svg'
 import clockSmall from '../../icons/clock-small.svg'
 import closed from '../../icons/closed.svg'
 import cloud from '../../icons/cloud.svg'
 import cog from '../../icons/cog.svg'
-import collapse from '../../icons/collapse.svg'
 import compose from '../../icons/compose.svg'
 import connection from '../../icons/connection.svg'
 import copy from '../../icons/copy.svg'
@@ -73,7 +75,6 @@ import documentIn from '../../icons/document-in.svg'
 import documentOut from '../../icons/document-out.svg'
 import dollar from '../../icons/dollar.svg'
 import drafts from '../../icons/drafts.svg'
-import drag from '../../icons/drag.svg'
 import dragHandle from '../../icons/drag-handle.svg'
 import duplicate from '../../icons/duplicate.svg'
 import ellipsis from '../../icons/ellipsis.svg'
@@ -101,12 +102,10 @@ import fullscreen from '../../icons/fullscreen.svg'
 import globe from '../../icons/globe.svg'
 import graph from '../../icons/graph.svg'
 import heart from '../../icons/heart.svg'
-import helpscoutLogo from '../../icons/helpscout-logo.svg'
 import house from '../../icons/house.svg'
 import hsLogo from '../../icons/hs-logo.svg'
 import hyphen from '../../icons/hyphen.svg'
 import image from '../../icons/image.svg'
-import imageAdd from '../../icons/image-add.svg'
 import imageLarge from '../../icons/image-large.svg'
 import imagePlus from '../../icons/image-plus.svg'
 import inbox from '../../icons/inbox.svg'
@@ -126,7 +125,6 @@ import lockClosed from '../../icons/lock-closed.svg'
 import lockOpen from '../../icons/lock-open.svg'
 import magazine from '../../icons/magazine.svg'
 import markup from '../../icons/markup.svg'
-import meatball from '../../icons/meatball.svg'
 import menuSmall from '../../icons/menu-small.svg'
 import mine from '../../icons/mine.svg'
 import minimize from '../../icons/minimize.svg'
@@ -178,7 +176,6 @@ import table from '../../icons/table.svg'
 import tag from '../../icons/tag.svg'
 import text from '../../icons/text.svg'
 import tickLarge from '../../icons/tick-large.svg'
-import tickSmall from '../../icons/tick-small.svg'
 import toggle from '../../icons/toggle.svg'
 import trash from '../../icons/trash.svg'
 import travelAndPlaces from '../../icons/travel-and-places.svg'
@@ -221,11 +218,13 @@ const ICONS = {
   'attach-large': attachLarge,
   'attach-small': attachSmall,
   attach,
-  attachment,
+  attachment: attach,
   bcc,
   'bell-small': bellSmall,
   bell,
   bin: trash,
+  'block-arrow-down': blockArrowDown,
+  'block-arrow-up': blockArrowUp,
   bold,
   'bubble-dots-duplicate': bubbleDotsDuplicate,
   'bubble-dots-plus': bubbleDotsPlus,
@@ -240,11 +239,16 @@ const ICONS = {
   'caret-left': caretLeft,
   'caret-right': caretRight,
   'caret-up': caretUp,
-  'chat-active': chatActive,
+  'chevron-down': chevronDown,
+  'chevron-left': chevronLeft,
+  'chevron-right': chevronRight,
+  'chevron-up': chevronUp,
+  'chat-active': bubbleDots,
   'chat-small': chatSmall,
   'chat-square': chatSquare,
   chat,
-  check,
+  check: tickLarge,
+  checkmark,
   'checkbox-large': checkboxLarge,
   'checkbox-small': checkboxSmall,
   'circle-arrow-down': circleArrowDown,
@@ -255,14 +259,14 @@ const ICONS = {
   'circle-minus': circleMinus,
   'circle-plus': circlePlus,
   'circle-tick': circleTick,
-  'clock-large': clockLarge,
+  'clock-large': clock,
   'clock-small': clockSmall,
   clock,
-  clockLarge,
+  clockLarge: clock,
   closed,
   cloud,
   cog,
-  collapse,
+  collapse: minus,
   compose,
   connection,
   copy,
@@ -279,7 +283,7 @@ const ICONS = {
   dollar,
   drafts,
   'drag-handle': dragHandle,
-  drag,
+  drag: dragHandle,
   duplicate,
   'ellipsis-small': ellipsisSmall,
   ellipsis,
@@ -306,11 +310,11 @@ const ICONS = {
   globe,
   graph,
   heart,
-  'helpscout-logo': helpscoutLogo,
+  'helpscout-logo': hsLogo,
   house,
   'hs-logo': hsLogo,
   hyphen,
-  'image-add': imageAdd,
+  'image-add': imagePlus,
   'image-large': imageLarge,
   'image-plus': imagePlus,
   image,
@@ -331,7 +335,7 @@ const ICONS = {
   'lock-open': lockOpen,
   magazine,
   markup,
-  meatball,
+  meatball: ellipsis,
   'menu-small': menuSmall,
   mine,
   minimize,
@@ -343,7 +347,7 @@ const ICONS = {
   note,
   objects,
   offline,
-  'option-dots': meatball,
+  'option-dots': ellipsis,
   'paper-plane': paperPlane,
   pause,
   'pencil-small': pencilSmall,
@@ -385,7 +389,7 @@ const ICONS = {
   tag,
   text,
   'tick-large': tickLarge,
-  'tick-small': tickSmall,
+  'tick-small': checkmark,
   tick: tickLarge,
   toggle,
   trash,
