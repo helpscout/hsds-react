@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { select } from '@storybook/addon-knobs'
 import { Flexy, Icon, Text } from '../src/index.js'
 import iconList from '../src/components/Icon/icons'
 import styled from '../src/components/styled'
@@ -41,10 +42,28 @@ const IconWrapper = styled('div')`
 `
 
 stories.add('icons', () => {
+  const size = select(
+    'size',
+    {
+      10: 10,
+      12: 12,
+      13: 13,
+      14: 14,
+      16: 16,
+      18: 18,
+      20: 20,
+      24: 24,
+      32: 32,
+      48: 48,
+      52: 52,
+    },
+    20
+  )
+
   const icons = Object.keys(iconList).map(i => (
     <WrapperUI key={i}>
       <IconWrapper>
-        <Icon name={i} key={i} center />
+        <Icon name={i} key={i} size={size} center />
       </IconWrapper>
       <TextWrapper size="12">{i}</TextWrapper>
     </WrapperUI>

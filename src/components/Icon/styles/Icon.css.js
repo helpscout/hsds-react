@@ -23,6 +23,8 @@ const css = `
   position: relative;
   width: ${config.size}px;
 
+  ${adjustIconScale()};
+
   &.is-center {
     margin-left: auto;
     margin-right: auto;
@@ -69,8 +71,6 @@ const css = `
       height: 100%;
       max-width: 100%;
       width: 100%;
-
-      ${adjust24To20Scale()};
     }
 
     circle,
@@ -127,13 +127,27 @@ function makeStateColorStyles(): string {
   )
 }
 
-function adjust24To20Scale(): string {
+function adjust20IconScale(scale): string {
   return `
-    &[height="24"],
-    &[width="24"],
-    &[viewBox*="24"] {
-      transform: scale(${24 / 20});
+    ${bem.element('icon')} {
+      svg {
+        &[height="20"],
+        &[width="20"],
+        &[viewBox*="20"] {
+          transform: scale(${scale});
+        }
+      }
     }
+  `
+}
+
+// Scales older 20x20 icons to have the same base size as the newer
+// 24x24 set. This allows them to have a consistent visual size when
+// rendered into their `div` container.
+
+function adjustIconScale(): string {
+  return `
+    ${adjust20IconScale(20 / 24)};
   `
 }
 
