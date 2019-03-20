@@ -37,6 +37,7 @@ export const FaderUI = styled('div')`
   position: absolute;
   transform: scaleY(0);
   z-index: 1;
+  pointer-events: none;
 
   &.is-rounded {
     border-top-left-radius: ${config.borderRadius};
