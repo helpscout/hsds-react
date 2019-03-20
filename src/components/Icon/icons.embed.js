@@ -1,5 +1,6 @@
 import alert from '../../icons/alert.svg'
 import arrowLeft from '../../icons/arrow-left.svg'
+import arrowLeftSmall from '../../icons/arrow-left-small.svg'
 import attachment from '../../icons/attachment.svg'
 import caretDown from '../../icons/caret-down.svg'
 import chatSquare from '../../icons/chat-square.svg'
@@ -21,6 +22,7 @@ import user from '../../icons/user.svg'
 
 const ICONS = {
   alert,
+  'arrow-left-small': arrowLeftSmall,
   'arrow-left': arrowLeft,
   attachment,
   'caret-down': caretDown,
