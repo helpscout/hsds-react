@@ -1,34 +1,34 @@
-import faker from 'faker'
+import { createSpec, derived, faker } from '@helpscout/helix'
 
 export function createFakeCustomers({ amount, multipleEmails, longNames }) {
-  const data = []
-  faker.seed(123)
+  const emailsAmount = multipleEmails ? Math.floor(Math.random() * 3) + 1 : 1
+  const emails = []
 
-  for (let index = 1; index <= amount; index++) {
-    const emails = []
-    const emailsAmount = multipleEmails ? Math.floor(Math.random() * 3) + 1 : 1
-
-    for (let j = 0; j < emailsAmount; j++) {
-      emails.push(faker.internet.email())
-    }
-
-    const customer = {
-      id: index,
-      name: `${faker.name.findName()} ${
-        longNames && faker.random.boolean()
-          ? `${faker.name.findName()} ${faker.name.findName()}`
-          : ''
-      }`.trim(),
-      jobTitle: faker.name.jobTitle(),
-      companyName: faker.company.companyName(),
-      lastSeen: `${faker.random.number()} days ago`,
-      emails: emails.length === 1 ? emails[0] : emails,
-    }
-
-    data.push(customer)
+  for (let j = 0; j < emailsAmount; j++) {
+    emails.push(faker.internet.email())
   }
 
-  return data
+  return createSpec({
+    id: faker.random.uuid(),
+    firstName: faker.name.firstName(),
+    middleName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    lastName2: faker.name.lastName(),
+    name: derived(props => {
+      const { firstName, middleName, lastName, lastName2 } = props
+      return !longNames
+        ? `${firstName} ${lastName}`
+        : `${firstName} ${middleName} ${lastName} ${lastName2}`
+    }),
+    jobTitle: faker.name.jobTitle(),
+    companyName: faker.company.companyName(),
+    days: faker.random.number(100),
+    lastSeen: derived(props => {
+      const { days } = props
+      return `${days} days ago`
+    }),
+    emails: emails.length === 1 ? emails[0] : emails,
+  }).generate(amount)
 }
 
 export function getCurrentPageData(data, pageNumber) {

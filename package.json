@@ -172,7 +172,6 @@
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.9.1",
     "eslint-scope": "3.7.1",
-    "faker": "^4.1.0",
     "flow-bin": "0.72.0",
     "fs-extra": "^3.0.1",
     "glob": "^7.1.3",
