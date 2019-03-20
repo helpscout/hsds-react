@@ -30,9 +30,8 @@ The SideNavigation component is comprised of smaller components:
 
 ## Props
 
-| Prop         | Type      | Description                                                                        |
-| ------------ | --------- | ---------------------------------------------------------------------------------- |
-| className    | `string`  | Custom class names to be added to the component.                                   |
-| collapsed    | `boolean` | Flag to hide all content except item icons inside the main section.                |
-| floatingMenu | `boolean` | Flag to adjust the layout on some children to use the sidebar in a drawer context. |
-| width        | `number`  | Force the width of the component.                                                  |
+| Prop        | Type      | Description                                                         |
+| ----------- | --------- | ------------------------------------------------------------------- |
+| className   | `string`  | Custom class names to be added to the component.                    |
+| collapsable | `boolean` | Flag to hide all content except item icons inside the main section. |
+| width       | `number`  | Force the width of the component.                                   |

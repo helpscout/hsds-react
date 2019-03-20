@@ -46,13 +46,6 @@ const renderSidebarFooter = () => {
   )
 }
 
-export const SideNavigationFloatingUI = styled(SideNavigation)`
-  position: absolute;
-  left: 8px;
-  top: 50px;
-  height: auto;
-`
-
 class SidebarWrapper extends React.PureComponent {
   render() {
     return (
@@ -88,43 +81,6 @@ class SidebarCollapsed extends React.PureComponent {
         {renderSidebarFolders()}
         {renderSidebarFooter()}
       </SideNavigation>
-    )
-  }
-}
-
-class SidebarFloatingMenu extends React.PureComponent {
-  state = {
-    isOpen: false,
-  }
-
-  toggleMenu = () => {
-    const { isOpen } = this.state
-    this.setState({ isOpen: !isOpen })
-  }
-
-  render() {
-    const { isOpen } = this.state
-
-    return (
-      <div>
-        <Button
-          version={2}
-          kind="secondary"
-          size="sm"
-          onClick={this.toggleMenu}
-        >
-          <Icon name="drag" />
-        </Button>
-
-        {isOpen && (
-          <SideNavigationFloatingUI floatingMenu={true}>
-            <SideNavigation.Header label="Help Scout" />
-            <SidebarHsAppItems />
-            {renderSidebarFolders()}
-            {renderSidebarFooter()}
-          </SideNavigationFloatingUI>
-        )}
-      </div>
     )
   }
 }
@@ -321,10 +277,6 @@ stories.add('is collapsed', () => {
   const badge = text('badgeLabel', 'HS')
   const headerLabel = text('headerLabel', 'Help Scout')
   return <SidebarCollapsed badge={badge} headerLabel={headerLabel} />
-})
-
-stories.add('is floating', () => {
-  return <SidebarFloatingMenu />
 })
 
 const storiesHsApp = storiesOf('SideNavigation/HS App Demo', module)
