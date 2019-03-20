@@ -8,10 +8,9 @@ import { noop } from '../../utilities/other'
 import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
-import Dropdown from '../Dropdown/DropdownV2'
 import AutoDropdown from '../AutoDropdown/AutoDropdown'
 
-import { DropdownHeaderUI, DropdownHeaderTriggerUI } from './SideNavigation.css'
+import { DropdownHeaderUI } from './SideNavigation.css'
 import SideNavigation from './SideNavigation'
 
 export interface Props {
@@ -50,20 +49,20 @@ export class DropdownHeader extends React.PureComponent<Props> {
       className
     )
 
-    const ElementName: any = items.length > 10 ? AutoDropdown : Dropdown
-
     return (
       <DropdownHeaderUI>
-        <ElementName
+        <AutoDropdown
           {...getValidProps(rest)}
           className={componentClassName}
           items={items}
           selectedItem={selectedItem}
           onClose={this.handleOnClose}
           onOpen={this.handleOnOpen}
+          menuOffsetTop={8}
+          limit={10}
           trigger={
             <SideNavigation.Heading>
-              {children} <Icon name="caret-down" inline size="12" />
+              {children} <Icon name="caret-down" inline size="14" />
             </SideNavigation.Heading>
           }
         />

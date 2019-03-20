@@ -37,7 +37,6 @@ export const CountUI = styled(Text)`
 `
 
 export const ButtonUI = styled(Button)`
-  &.is-danger,
   &.is-default {
     color: ${getColor('charcoal.400')};
     border-radius: 0;
@@ -66,17 +65,19 @@ export const ButtonUI = styled(Button)`
     &.is-disabled {
       color: ${getColor('charcoal.200')};
     }
-  }
 
-  &.is-danger {
-    ${IconUI} {
-      color: ${config.dangerColor};
-    }
-
-    &:hover {
-      color: ${config.dangerColor};
+    &.is-danger {
       ${IconUI} {
         color: ${config.dangerColor};
+      }
+
+      &:hover {
+        color: ${config.dangerColor};
+        background-color: ${getColor('grey.400')};
+
+        ${IconUI} {
+          color: ${config.dangerColor};
+        }
       }
     }
   }
@@ -149,6 +150,10 @@ export const ItemUI = styled('div')`
   &.is-muted {
     ${ButtonUI}.is-default {
       color: ${getColor('charcoal.200')};
+
+      &:hover {
+        color: ${getColor('charcoal.400')};
+      }
     }
   }
 

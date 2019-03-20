@@ -3,7 +3,6 @@ import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
 import {} from '../SideNavigation.css'
 import Icon from '../../Icon'
-import Dropdown from '../../Dropdown/DropdownV2'
 import AutoDropdown from '../../AutoDropdown/AutoDropdown'
 import { ItemSpec } from '../../../../stories/DropdownV2.stories'
 import { Trigger } from '../../Dropdown/V2/Dropdown.Trigger'
@@ -16,7 +15,7 @@ describe('ClassName', () => {
 
     expect(
       wrapper
-        .find(Dropdown)
+        .find(AutoDropdown)
         .getDOMNode()
         .classList.contains('c-SideNavigation__DropdownHeader')
     ).toBeTruthy()
@@ -30,7 +29,7 @@ describe('ClassName', () => {
 
     expect(
       wrapper
-        .find(Dropdown)
+        .find(AutoDropdown)
         .getDOMNode()
         .classList.contains(customClass)
     ).toBeTruthy()
@@ -48,18 +47,6 @@ describe('Children', () => {
     const el = wrapper.find(SideNavigation.Heading)
     expect(el.length).toBeTruthy()
     expect(el.text()).toContain('Hello')
-  })
-
-  test('Renders an AutoDropdown if items list length > 10', () => {
-    const items = ItemSpec.generate(11)
-    const wrapper = mount(
-      <SideNavigation.DropdownHeader items={items}>
-        <span>Hello</span>
-      </SideNavigation.DropdownHeader>
-    )
-
-    const el = wrapper.find(AutoDropdown)
-    expect(el.length).toBeTruthy()
   })
 })
 

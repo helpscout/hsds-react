@@ -73,7 +73,7 @@ class SidebarCollapsed extends React.PureComponent {
     return (
       <SideNavigation collapsable>
         <SideNavigation.Header badge={badge}>
-          <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+          <SideNavigation.DropdownHeader items={items} selectedItem={items[0]}>
             {headerLabel}
           </SideNavigation.DropdownHeader>
         </SideNavigation.Header>
@@ -193,7 +193,7 @@ stories.add('with dropdown header', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header>
-        <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+        <SideNavigation.DropdownHeader items={items} selectedItem={items[0]}>
           Dropdown
         </SideNavigation.DropdownHeader>
       </SideNavigation.Header>
@@ -207,7 +207,7 @@ stories.add('with long list dropdown', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header>
-        <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+        <SideNavigation.DropdownHeader items={items} selectedItem={items[0]}>
           Dropdown
         </SideNavigation.DropdownHeader>
       </SideNavigation.Header>
@@ -292,7 +292,7 @@ storiesHsApp.add('HS App - Mailbox', () => {
   return (
     <SideNavigation>
       <SideNavigation.Header>
-        <SideNavigation.DropdownHeader items={items} selectedItems={items[0]}>
+        <SideNavigation.DropdownHeader items={items} selectedItem={items[0]}>
           Dropdown
         </SideNavigation.DropdownHeader>
       </SideNavigation.Header>
