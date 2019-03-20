@@ -1,4 +1,4 @@
-export const COMPONENT_KEY = 'Scrollable'
+export const COMPONENT_KEY = 'Table'
 
 export function generateCellKey(element, column) {
   return Array.isArray(column.columnKey)

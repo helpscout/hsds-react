@@ -6,7 +6,7 @@ import { createFakeCustomers } from './utils'
 import Heading from '../../src/components/Heading'
 import PreviewCard from '../../src/components/PreviewCard'
 import Ellipsified from '../../src/components/Ellipsified/Ellipsified'
-import Table from '../../src/components/Table/Table'
+import { Table } from '../../src/index.js'
 import TablePlayground from './TablePlayground'
 import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
@@ -59,30 +59,6 @@ stories.add('default', () => (
     />
   </div>
 ))
-stories.add('ref', () => {
-  let ref
-
-  return (
-    <div>
-      <PreviewCard style={{ marginBottom: '20px' }}>
-        <Heading size="h4">Default theme</Heading>
-        <pre>
-          <code>theme = 'default' || undefined</code>
-        </pre>
-        <pre>
-          <code>{JSON.stringify(defaultTheme, null, 2)}</code>
-        </pre>
-      </PreviewCard>
-      <Table
-        columns={defaultColumns}
-        data={createFakeCustomers({ amount: 10 })}
-        innerRef={node => {
-          console.log(node)
-        }}
-      />
-    </div>
-  )
-})
 
 stories.add('alternative theme (built in)', () => (
   <div>
@@ -176,6 +152,64 @@ stories.add('with long names', () => (
   </div>
 ))
 
+const columsnWithCustomHeaderNameCell = [
+  {
+    title: 'Name',
+    columnKey: 'name',
+    width: '34%',
+    renderHeaderCell: column => (
+      <em
+        style={{
+          textShadow: '0 0 2px darkred, 0 0 8px firebrick',
+          fontSize: '18px',
+          color: 'white',
+        }}
+      >
+        {column.title}
+      </em>
+    ),
+  },
+  {
+    title: 'Company',
+    columnKey: 'companyName',
+    width: '33%',
+    renderHeaderCell: column => (
+      <em
+        style={{
+          textShadow: '0 0 2px darkblue, 0 0 8px indigo',
+          fontSize: '18px',
+          color: 'white',
+        }}
+      >
+        {column.title}
+      </em>
+    ),
+  },
+  {
+    title: 'Email',
+    columnKey: 'emails',
+    width: '33%',
+    renderHeaderCell: column => (
+      <em
+        style={{
+          textShadow: '0 0 2px darkgreen, 0 0 8px seagreen',
+          fontSize: '18px',
+          color: 'white',
+        }}
+      >
+        {column.title}
+      </em>
+    ),
+  },
+]
+
+stories.add('with custom header cell render', () => (
+  <Table
+    columns={columsnWithCustomHeaderNameCell}
+    data={createFakeCustomers({ amount: 5 })}
+  />
+))
+
 stories.add('with horizontal scroll', () => (
   <Table
     columns={defaultColumns}
@@ -243,6 +277,7 @@ stories.add('with compound columns', () => (
 ))
 
 stories.add('with sorting', () => <TableWithSorting />)
+
 stories.add('with row click', () => (
   <Table
     columns={defaultColumns}
@@ -250,4 +285,5 @@ stories.add('with row click', () => (
     onRowClick={action('click')}
   />
 ))
+
 stories.add('playground', () => <TablePlayground />)

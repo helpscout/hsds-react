@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { createFakeCustomers, sortData } from './utils'
-import Table from '../../src/components/Table/Table'
+import { Table } from '../../src/index.js'
 import { Wrapper } from './commonComponents'
 
 export default class TablePlayground extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Table from '../../src/components/Table/Table'
+import { Table } from '../../src/index.js'
 import Heading from '../../src/components/Heading'
 import ColumnCustomizer from './ColumnsCustomizer'
 import TableCustomizer from './TableCustomizer'
