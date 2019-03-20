@@ -116,20 +116,13 @@ export class SideNavigation extends React.PureComponent<Props, States> {
       className
     )
 
-    let styles: object = {}
-    if (width) {
-      styles = {
-        width: `${width}px`,
-      }
-    }
-
     const sidenavComponent = (
       <SideNavigationUI
         aria-label="SideNavigation"
         aria-labelledby="SideNavigation__heading"
         {...getValidProps(rest)}
         className={componentClassName}
-        style={styles}
+        width={width}
       >
         {children}
       </SideNavigationUI>

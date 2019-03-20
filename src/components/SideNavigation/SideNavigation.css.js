@@ -15,6 +15,7 @@ const config = {
   badgeHeight: '31px',
   collapsableHeight: '60px',
   dangerColor: getColor('red.500'),
+  baseNavWidth: '250px',
 }
 
 export const FadeInOutUI = styled('div')`
@@ -250,7 +251,7 @@ export const SideNavigationUI = styled('nav')`
   background-color: ${getColor('grey.300')};
   border-right: ${config.border};
   height: 100%;
-  width: 250px;
+  width: ${props => (props.width ? `${props.width}px` : config.baseNavWidth)};
   padding-top: 16px;
   padding-bottom: 100px;
   overflow: hidden;
@@ -275,7 +276,8 @@ export const SideNavigationUI = styled('nav')`
 
     &:hover,
     &.is-nav-always-visible {
-      width: 250px;
+      width: ${props =>
+        props.width ? `${props.width}px` : config.baseNavWidth};
 
       ${FadeInOutUI} {
         opacity: 1;

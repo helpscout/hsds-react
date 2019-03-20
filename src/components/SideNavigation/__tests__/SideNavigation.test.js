@@ -39,11 +39,11 @@ describe('className', () => {
 })
 
 describe('Width', () => {
-  test('Sets a custom width to the component', () => {
+  test('Sets a custom width to the css styled component', () => {
     const width = 150
     const wrapper = mount(<SideNavigation width={width} />)
     const el = wrapper.find(SideNavigationUI)
-    expect(el.prop('style').width).toBe(`${width}px`)
+    expect(el.prop('width')).toBe(width)
   })
 })
 
