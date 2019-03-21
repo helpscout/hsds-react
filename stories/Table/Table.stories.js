@@ -1,7 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { createFakeCustomers } from './utils'
+import {
+  createFakeCustomers,
+  defaultColumns,
+  columsnWithCustomNameCell,
+  columsnWithCustomHeaderNameCell,
+} from '../../src/components/Table/__tests__/utils'
 
 import Heading from '../../src/components/Heading'
 import PreviewCard from '../../src/components/PreviewCard'
@@ -17,30 +22,6 @@ import {
 } from '../../src/components/Table/styles/themes'
 
 const stories = storiesOf('Table', module)
-
-const defaultColumns = [
-  {
-    title: 'Name',
-    columnKey: 'name',
-    width: '25%',
-  },
-  {
-    title: 'Company',
-    columnKey: 'companyName',
-    width: '25%',
-  },
-  {
-    title: 'Email',
-    columnKey: 'emails',
-    width: '25%',
-    renderCell: email => <Ellipsified lines={1} text={email} />,
-  },
-  {
-    title: 'Last Seen',
-    columnKey: 'lastSeen',
-    width: '25%',
-  },
-]
 
 stories.add('default', () => (
   <div>
@@ -109,31 +90,6 @@ stories.add('with custom theme', () => (
   </div>
 ))
 
-const columsnWithCustomNameCell = [
-  {
-    title: 'Name',
-    columnKey: 'name',
-    width: '25%',
-    renderCell: name => <Ellipsified text={name} lines={2} lineHeight={16} />,
-  },
-  {
-    title: 'Company',
-    columnKey: 'companyName',
-    width: '25%',
-  },
-  {
-    title: 'Email',
-    columnKey: 'emails',
-    width: '25%',
-    renderCell: email => <Ellipsified lines={1} text={email} />,
-  },
-  {
-    title: 'Last Seen',
-    columnKey: 'lastSeen',
-    width: '25%',
-  },
-]
-
 stories.add('with long names', () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
@@ -151,57 +107,6 @@ stories.add('with long names', () => (
     />
   </div>
 ))
-
-const columsnWithCustomHeaderNameCell = [
-  {
-    title: 'Name',
-    columnKey: 'name',
-    width: '34%',
-    renderHeaderCell: column => (
-      <em
-        style={{
-          textShadow: '0 0 2px darkred, 0 0 8px firebrick',
-          fontSize: '18px',
-          color: 'white',
-        }}
-      >
-        {column.title}
-      </em>
-    ),
-  },
-  {
-    title: 'Company',
-    columnKey: 'companyName',
-    width: '33%',
-    renderHeaderCell: column => (
-      <em
-        style={{
-          textShadow: '0 0 2px darkblue, 0 0 8px indigo',
-          fontSize: '18px',
-          color: 'white',
-        }}
-      >
-        {column.title}
-      </em>
-    ),
-  },
-  {
-    title: 'Email',
-    columnKey: 'emails',
-    width: '33%',
-    renderHeaderCell: column => (
-      <em
-        style={{
-          textShadow: '0 0 2px darkgreen, 0 0 8px seagreen',
-          fontSize: '18px',
-          color: 'white',
-        }}
-      >
-        {column.title}
-      </em>
-    ),
-  },
-]
 
 stories.add('with custom header cell render', () => (
   <Table

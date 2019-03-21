@@ -1,12 +1,37 @@
 import React from 'react'
 import { createSpec, derived, faker } from '@helpscout/helix'
-import Ellipsified from '../../src/components/Ellipsified/Ellipsified'
+import Ellipsified from '../../Ellipsified/Ellipsified'
 
 export const defaultColumns = [
   {
     title: 'Name',
     columnKey: 'name',
     width: '25%',
+  },
+  {
+    title: 'Company',
+    columnKey: 'companyName',
+    width: '25%',
+  },
+  {
+    title: 'Email',
+    columnKey: 'emails',
+    width: '25%',
+  },
+  {
+    title: 'Last Seen',
+    columnKey: 'lastSeen',
+    width: '25%',
+  },
+]
+
+export const defaultColumnsCustomContent = [
+  {
+    title: 'Name',
+    columnKey: 'name',
+    width: '25%',
+    renderHeaderCell: column => <em>{column.title}</em>,
+    renderCell: name => <strong>{name}</strong>,
   },
   {
     title: 'Company',

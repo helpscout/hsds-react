@@ -48,7 +48,7 @@ export interface TableProps {
   theme?: Theme
   isLoading?: boolean
   sortedInfo?: SortedInfo
-  onRowClick?: (row: Data, event: Event) => void
+  onRowClick?: (row: Data) => void
   tableRef?: (node: HTMLElement) => void
   wrapperRef?: (node: HTMLElement) => void
 }
@@ -56,7 +56,7 @@ export interface TableProps {
 export interface RowProps {
   columns: Column[]
   row: Data
-  onRowClick?: (row: Data, event: Event) => void
+  onRowClick?: (row: Data) => void
 }
 
 export interface HeaderCellProps {
