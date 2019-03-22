@@ -2,12 +2,13 @@ import * as React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import SideNavigation from '../SideNavigation'
 import Icon from '../Icon'
+import { noop } from '../../utilities/other'
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
   label: faker.name.firstName(),
   value: faker.name.firstName(),
-  onClick: () => (value, props) => console.log('Clicked!', value),
+  onClick: noop,
 })
 
 export interface Props {
@@ -52,72 +53,31 @@ class Sidenav extends React.PureComponent<Props> {
   renderItems() {
     const { active } = this.state
 
+    const items = [
+      { name: 'chat', label: 'Chats' },
+      { name: 'unassigned', label: 'Unassigned' },
+      { name: 'mine', label: 'Mine' },
+      { name: 'alert', label: 'Needs attention' },
+      { name: 'drafts', label: 'Draft' },
+      { name: 'assigned', label: 'Assigned' },
+      { name: 'closed', label: 'Closed' },
+      { name: 'spam', label: 'Spam' },
+    ]
+
     return (
       <SideNavigation.Section main={true}>
-        <SideNavigation.Item
-          icon={<Icon name="chat" />}
-          active={active === 'chat'}
-          onClick={e => this.updateActiveItem('chat')}
-        >
-          Chats
-        </SideNavigation.Item>
-        <SideNavigation.Item
-          count={137}
-          icon={<Icon name="unassigned" />}
-          active={active === 'unassigned'}
-          onClick={e => this.updateActiveItem('unassigned')}
-        >
-          Unassigned
-        </SideNavigation.Item>
-        <SideNavigation.Item
-          count={1}
-          icon={<Icon name="mine" />}
-          active={active === 'mine'}
-          onClick={e => this.updateActiveItem('mine')}
-        >
-          Mine
-        </SideNavigation.Item>
-        <SideNavigation.Item
-          count={2}
-          icon={<Icon name="alert" />}
-          active={active === 'alert'}
-          onClick={e => this.updateActiveItem('alert')}
-          danger={true}
-        >
-          Needs attention
-        </SideNavigation.Item>
-        <SideNavigation.Item
-          count={88}
-          icon={<Icon name="drafts" />}
-          active={active === 'drafts'}
-          onClick={e => this.updateActiveItem('drafts')}
-        >
-          Draft
-        </SideNavigation.Item>
-        <SideNavigation.Item
-          count={131}
-          icon={<Icon name="assigned" />}
-          active={active === 'assigned'}
-          onClick={e => this.updateActiveItem('assigned')}
-        >
-          Assigned
-        </SideNavigation.Item>
-        <SideNavigation.Item
-          muted={true}
-          icon={<Icon name="closed" />}
-          active={active === 'closed'}
-          onClick={e => this.updateActiveItem('closed')}
-        >
-          Closed
-        </SideNavigation.Item>
-        <SideNavigation.Item
-          muted={true}
-          icon={<Icon name="spam" />}
-          active={active === 'spam'}
-          onClick={e => this.updateActiveItem('spam')}
-        >
-          Spam
-        </SideNavigation.Item>
+        {items.map(({ name, label }) => {
+          return (
+            <SideNavigation.Item
+              key={name}
+              icon={<Icon name={name} />}
+              active={active === name}
+              onClick={e => this.updateActiveItem(name)}
+            >
+              {label}
+            </SideNavigation.Item>
+          )
+        })}
       </SideNavigation.Section>
     )
   }
@@ -154,7 +114,7 @@ class Sidenav extends React.PureComponent<Props> {
 
   render() {
     return (
-      <SideNavigation>
+      <SideNavigation className="c-HsApp__Sidenav">
         {this.renderHeader()}
         {this.renderItems()}
         {this.renderSidebarFolders()}
