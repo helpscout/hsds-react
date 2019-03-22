@@ -275,12 +275,7 @@ export class Scrollable extends React.PureComponent<Props> {
         innerRef={innerRef}
       >
         {(fadeLeft || fadeRight) && (
-          <EventListener
-            event="resize"
-            handler={() => {
-              this.applyFade()
-            }}
-          />
+          <EventListener event="resize" handler={this.handleWindowResize} />
         )}
         {this.renderFaderLeft()}
         {this.renderFaderTop()}
@@ -291,6 +286,10 @@ export class Scrollable extends React.PureComponent<Props> {
         {this.renderFaderBottom()}
       </ScrollableUI>
     )
+  }
+
+  handleWindowResize = () => {
+    this.applyFade()
   }
 }
 

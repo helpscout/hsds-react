@@ -39,13 +39,15 @@ stories.add('Default', () => (
 ))
 
 const MainContainer = styled('div')`
-  ${baseStyles} width: ${props => (props.fullWidth ? '100%' : '300px')};
+  ${baseStyles};
+  width: ${props => (props.fullWidth ? '100%' : '300px')};
   box-sizing: border-box;
   height: 300px;
   background: dodgerblue;
 `
 const WideElement = styled('div')`
-  ${baseStyles} width: ${props => (props.fullWidth ? '700px' : '450px')};
+  ${baseStyles};
+  width: ${props => (props.fullWidth ? '700px' : '450px')};
   height: 200px;
   padding: 10px;
   margin-top: 30px;

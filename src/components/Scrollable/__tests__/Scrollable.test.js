@@ -204,6 +204,17 @@ describe('Events', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('Re applies fader on sides when the window resizes', () => {
+    const wrapper = mount(<Scrollable fadeLeft />)
+    const spy = jest.spyOn(wrapper.instance(), 'applyFade')
+
+    global.dispatchEvent(new Event('resize'))
+
+    wrapper.unmount()
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('scrollableRef', () => {
