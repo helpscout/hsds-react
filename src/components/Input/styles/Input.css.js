@@ -2,6 +2,7 @@ import styled from '../../styled/index'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
+import { makeFontFamilySystem } from '../../../styles/utilities/font'
 import forEach from '../../../styles/utilities/forEach'
 
 export const config = {
@@ -184,6 +185,7 @@ function makeStateStyles(): string {
 export function makeFieldStyles(): string {
   return `
     ${baseStyles};
+    ${makeFontFamilySystem()};
     appearance: none;
     background-color: transparent;
     border: none;

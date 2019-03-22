@@ -16,8 +16,8 @@ export const addFontSmoothing = (): string => {
 }
 
 export const makeFontFamilyFactory = (
-  fonts,
-  baseFont = FONT_FAMILY
+  fonts?: string,
+  baseFont: string = FONT_FAMILY
 ) => (): string => {
   if (!fonts) {
     return `font-family: ${baseFont};`
@@ -34,4 +34,8 @@ export const makeFontFamily = (fonts: string) => {
 
 export const makeFontFamilyMono = (fonts: string) => {
   return makeFontFamilyFactory(fonts, FONT_FAMILY_MONO)
+}
+
+export const makeFontFamilySystem = (): string => {
+  return `font-family: ${FONT_FAMILY};`
 }
