@@ -82,7 +82,7 @@ export class Arrow extends React.PureComponent<Props> {
         data-x-placement={placement}
         color={color}
         size={size}
-        style={style}
+        style={sanitizeStyles(style)}
       >
         <div
           {...getValidProps(rest)}
@@ -121,6 +121,18 @@ export const getPosition = (placement: string) => {
   if (!placement || placement.indexOf('-') < 0) return ''
 
   return placement.split('-')[1]
+}
+
+// This is primarily for popper.js within the test JSDOM environment
+// https://github.com/FezVrasta/popper.js/issues/478
+export const sanitizeStyles = style => {
+  const { left, top } = style
+
+  return {
+    ...style,
+    left: isNaN(left) ? 0 : left,
+    top: isNaN(top) ? 0 : top,
+  }
 }
 
 export default Arrow

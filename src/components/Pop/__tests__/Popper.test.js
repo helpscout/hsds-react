@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import Popper, { enhancePopperStyles } from '../Popper'
 import ReactPopper from '../../Popper/Popper'
 
-jest.mock('../../Portal', () => {
+jest.mock('../Pop.Portal', () => {
   const Portal = ({ children }) => <div>{children}</div>
 
   return Portal
