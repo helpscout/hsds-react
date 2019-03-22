@@ -160,7 +160,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
 
   scrollMenuToTop = () => {
     requestAnimationFrame(() => {
-      /* istanbul ignore else */
+      /* istanbul ignore next */
       if (!this.menuWrapperNode) return
       this.menuWrapperNode.scrollTop = 0
     })
