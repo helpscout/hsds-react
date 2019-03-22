@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { boolean } from '@storybook/addon-knobs'
 import { Button, Flexy, Icon, Input, styled } from '../src/index.js'
 
 const stories = storiesOf('Input', module)
@@ -246,6 +247,9 @@ const PaddedTextArea = styled('div')`
 `
 
 stories.add('Action', () => {
+  const error = boolean('error', false)
+  const state = error ? 'error' : null
+
   class Example extends React.Component {
     state = {
       isDisabled: true,
@@ -270,6 +274,7 @@ stories.add('Action', () => {
             type="text"
             onChange={this.onChange}
             value={this.state.value}
+            state={state}
             action={
               <Button
                 version={2}
@@ -291,6 +296,7 @@ stories.add('Action', () => {
             onChange={this.onChange}
             value={this.state.value}
             size="sm"
+            state={state}
             action={
               <Button
                 version={2}

@@ -69,8 +69,6 @@ const css = `
       height: 100%;
       max-width: 100%;
       width: 100%;
-
-      ${adjust24To20Scale()};
     }
 
     circle,
@@ -125,16 +123,6 @@ function makeStateColorStyles(): string {
     }
   `
   )
-}
-
-function adjust24To20Scale(): string {
-  return `
-    &[height="24"],
-    &[width="24"],
-    &[viewBox*="24"] {
-      transform: scale(${24 / 20});
-    }
-  `
 }
 
 export default css

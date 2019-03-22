@@ -206,15 +206,16 @@ export const renderAsSingleChild = (
   baseTag: 'div',
   props: any = {}
 ) => {
-  if (!React.isValidElement(children) && !isArray(children)) return null
+  const _isArray = isArray(children)
+  if (!React.isValidElement(children) && !_isArray) return null
 
   const count = React.Children.count(children)
   if (!count) return null
 
   const tag = baseTag || 'div'
 
-  // Render multiple children
-  if (count > 1) {
+  // Render multiple children, or an array
+  if (count > 1 || _isArray) {
     return React.createElement(tag, props, children)
   }
 

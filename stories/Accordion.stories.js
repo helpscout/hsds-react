@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { text } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../src/index'
 import { faker } from '@helpscout/helix'
+import { withAktiv, withHsApp } from './utils'
 
 const stories = storiesOf('Accordion', module)
 
@@ -200,3 +201,13 @@ stories.add('Row (Link)', () => {
     </Page>
   )
 })
+
+const storiesHsApp = storiesOf('Accordion/HS App', module)
+storiesHsApp.addDecorator(withAktiv)
+storiesHsApp.addDecorator(withHsApp)
+
+storiesHsApp.add('default', () => (
+  <Accordion onOpen={onOpen} onClose={onClose}>
+    {createSections(data)}
+  </Accordion>
+))

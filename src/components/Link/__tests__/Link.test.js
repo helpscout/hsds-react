@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Link from '..'
+import RouteLink, { Link } from '../Link'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
@@ -92,9 +92,9 @@ describe('RouteWrapper', () => {
   test('Specifying a `to` sets up router navigation, overrides default click', done => {
     const route = '/some/route/'
     const wrapper = wrap(
-      <Link href="/gator" to={route}>
+      <RouteLink href="/gator" to={route}>
         Gator
-      </Link>,
+      </RouteLink>,
       options
     )
     wrapper.simulate('click', clickEvent)
@@ -143,12 +143,11 @@ describe('RouteWrapper', () => {
     const fetch = () => Promise.resolve()
     const to = 'some/route'
     const wrapper = wrap(
-      <Link fetch={fetch} to={to}>
+      <RouteLink fetch={fetch} to={to}>
         Gator
-      </Link>,
+      </RouteLink>,
       options
     )
-    expect(wrapper.getElement().type).toBe('a')
     wrapper.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()
     setTimeout(() => {
@@ -163,5 +162,23 @@ describe('Styles', () => {
     const wrapper = wrap(<Link block />)
 
     expect(wrapper.hasClass('is-block')).toBeTruthy()
+  })
+})
+
+describe('voidOnClick', () => {
+  test('Is not void by default', () => {
+    const wrapper = wrap(<Link href="/gator">Gator</Link>)
+
+    expect(wrapper.prop('href')).not.toBe('javascript:void(0);')
+  })
+
+  test('Disables the href if voidOnClick is set', () => {
+    const wrapper = wrap(
+      <Link href="/gator" voidOnClick>
+        Gator
+      </Link>
+    )
+
+    expect(wrapper.prop('href')).toBe('javascript:void(0);')
   })
 })

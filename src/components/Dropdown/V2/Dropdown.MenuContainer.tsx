@@ -31,6 +31,7 @@ import { COMPONENT_KEY } from './Dropdown.utils'
 import { isBrowserEnv } from '../../../utilities/env'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { memoizeWithProps } from '../../../utilities/memoize'
+import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 
@@ -269,12 +270,12 @@ export class MenuContainer extends React.PureComponent<Props> {
   getStylePosition = (): any => {
     const targetNode = this.getTargetNode()
 
-    const rect = targetNode.getBoundingClientRect()
-    const { height, top, left } = rect
+    const rect = getComputedClientRect(targetNode)
+    const { top, left } = rect
 
     return {
       left,
-      top: top + height,
+      top,
     }
   }
 

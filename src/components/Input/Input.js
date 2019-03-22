@@ -752,8 +752,8 @@ export class Input extends Component<Props, State> {
               {this.getInputMarkup(props)}
               {this.getInlineSuffixMarkup()}
               {this.getSuffixMarkup()}
-              {this.getActionMarkup()}
               {this.getErrorMarkup()}
+              {this.getActionMarkup()}
               <Backdrop
                 className="c-Input__backdrop"
                 disabled={disabled}

@@ -34,6 +34,22 @@ npm start
 
 Check out HSDS's Storybook at http://localhost:8900/ in your browser!
 
+## SVG Adapter
+
+As of v2.18.0, the `svg` set is opt-in. This was done to reduce the compiled bundle size. To load the `svg` icons, add the appropriate adapter to your app.
+
+It is recommended that the adapter be loaded somewhere within your main entry point (e.g. `src/index.js`).
+
+```js
+// src/index.js
+// For a lighter-weight svg set for embeddables
+import '@helpscout/hsds-react/adapters/embed'
+// For the complete svg set
+import '@helpscout/hsds-react/adapters/app'
+```
+
+Note: This loads all the `svg` images, including [`Icon`](./src/components/Icon) and [`Illo`](./src/components/Illo).
+
 ## Testing
 
 To run Jest in watch mode, run:

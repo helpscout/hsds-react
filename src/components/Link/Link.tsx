@@ -1,30 +1,31 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import RouteWrapper from '../RouteWrapper'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { wordHasSpaces } from '../../utilities/strings'
-import RouteWrapper from '../RouteWrapper'
+import { LinkUI } from './Link.css'
 
-type Props = {
-  autoWordWrap: boolean,
-  block: boolean,
-  className?: string,
-  children?: any,
-  external: boolean,
-  href: string,
-  nodeRef: () => void,
-  onBlur: () => void,
-  onClick: () => void,
-  onFocus: () => void,
-  rel: string,
-  noUnderline: boolean,
-  target?: string,
-  to: string,
-  wordWrap: boolean,
+export interface Props {
+  autoWordWrap: boolean
+  block: boolean
+  className?: string
+  children?: any
+  external: boolean
+  href: string
+  nodeRef: (node: any) => void
+  onBlur: (event: Event) => void
+  onClick: (event: Event) => void
+  onFocus: (event: Event) => void
+  rel: string
+  noUnderline: boolean
+  target?: string
+  to: string
+  voidOnClick: boolean
+  wordWrap: boolean
 }
 
-class Link extends Component<Props> {
+export class Link extends React.PureComponent<Props> {
   static defaultProps = {
     autoWordWrap: true,
     block: false,
@@ -34,6 +35,17 @@ class Link extends Component<Props> {
     onBlur: noop,
     onClick: noop,
     onFocus: noop,
+    voidOnClick: false,
+  }
+
+  getHref() {
+    const { href, voidOnClick } = this.props
+
+    if (voidOnClick) {
+      return 'javascript:void(0);'
+    }
+
+    return href
   }
 
   render() {
@@ -43,7 +55,6 @@ class Link extends Component<Props> {
       children,
       className,
       external,
-      href,
       target,
       nodeRef,
       noUnderline,
@@ -67,16 +78,16 @@ class Link extends Component<Props> {
     const rel = isTargetExternal ? 'noopener noreferrer' : undefined
 
     return (
-      <a
+      <LinkUI
         {...getValidProps(rest)}
         className={componentClassName}
         target={linkTarget}
         rel={rel}
         ref={nodeRef}
-        href={href}
+        href={this.getHref()}
       >
         {children}
-      </a>
+      </LinkUI>
     )
   }
 }
