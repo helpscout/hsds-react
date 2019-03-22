@@ -1,11 +1,14 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
+import EventListener from '../EventListener'
 import ScrollLock from '../ScrollLock'
 import { classNames } from '../../utilities/classNames'
 import {
   getFadeTopStyles,
   getFadeBottomStyles,
+  getFadeLeftStyles,
+  getFadeRightStyles,
 } from '../../utilities/scrollFade'
 import { noop } from '../../utilities/other'
 import { ScrollableUI, ContentUI, FaderUI } from './Scrollable.css'
@@ -17,6 +20,8 @@ export interface Props {
   contentClassName?: string
   fade: boolean
   fadeBottom: boolean
+  fadeLeft: boolean
+  fadeRight: boolean
   faderSize: number
   innerRef: (node: HTMLElement) => void
   onScroll: (event: Event) => void
@@ -30,6 +35,8 @@ export class Scrollable extends React.PureComponent<Props> {
     backgroundColor: 'white',
     fade: false,
     fadeBottom: false,
+    fadeLeft: false,
+    fadeRight: false,
     faderSize: 28,
     innerRef: noop,
     onScroll: noop,
@@ -37,7 +44,9 @@ export class Scrollable extends React.PureComponent<Props> {
     isScrollLocked: true,
   }
 
+  faderNodeLeft: HTMLElement
   faderNodeTop: HTMLElement
+  faderNodeRight: HTMLElement
   faderNodeBottom: HTMLElement
   containerNode: HTMLElement
 
@@ -56,9 +65,15 @@ export class Scrollable extends React.PureComponent<Props> {
   }
 
   applyFadeStyles = event => {
-    const { fade, faderSize: offset, fadeBottom } = this.props
+    const {
+      faderSize: offset,
+      fade,
+      fadeLeft,
+      fadeRight,
+      fadeBottom,
+    } = this.props
 
-    if (!fade && !fadeBottom) return
+    if (!fade && !fadeBottom && !fadeRight && !fadeLeft) return
 
     if (fade && this.faderNodeTop) {
       const transformTop = getFadeTopStyles(event, offset)
@@ -70,6 +85,18 @@ export class Scrollable extends React.PureComponent<Props> {
       const transformBottom = getFadeBottomStyles(event, offset)
       this.faderNodeBottom.style.transform = transformBottom
       this.applyFadeStyleOffset(this.faderNodeBottom)
+    }
+
+    if (fadeLeft && this.faderNodeLeft) {
+      const transformLeft = getFadeLeftStyles(event, offset)
+      this.faderNodeLeft.style.transform = transformLeft
+      this.applyFadeStyleOffset(this.faderNodeLeft)
+    }
+
+    if (fadeRight && this.faderNodeRight) {
+      const transformRight = getFadeRightStyles(event, offset)
+      this.faderNodeRight.style.transform = transformRight
+      this.applyFadeStyleOffset(this.faderNodeRight)
     }
   }
 
@@ -89,7 +116,9 @@ export class Scrollable extends React.PureComponent<Props> {
   }
 
   setFaderNodeTopNode = node => (this.faderNodeTop = node)
+  setFaderNodeLeftNode = node => (this.faderNodeLeft = node)
   setFaderNodeBottomNode = node => (this.faderNodeBottom = node)
+  setFaderNodeRightNode = node => (this.faderNodeRight = node)
   setContainerNode = node => {
     this.containerNode = node
     this.props.scrollableRef(node)
@@ -110,6 +139,47 @@ export class Scrollable extends React.PureComponent<Props> {
       <FaderUI
         className={componentClassName}
         innerRef={this.setFaderNodeTopNode}
+        role="presentation"
+        style={{
+          color: backgroundColor,
+        }}
+      />
+    )
+  }
+
+  renderFaderLeft() {
+    const { backgroundColor, fadeLeft, fadeRight, rounded } = this.props
+
+    if (!fadeLeft) return
+    const componentClassName = classNames('c-Scrollable__fader', 'is-left')
+
+    return (
+      <FaderUI
+        fadeSides
+        rounded={rounded}
+        className={componentClassName}
+        innerRef={this.setFaderNodeLeftNode}
+        role="presentation"
+        style={{
+          color: backgroundColor,
+        }}
+      />
+    )
+  }
+
+  renderFaderRight() {
+    const { backgroundColor, fadeRight, fadeLeft, rounded } = this.props
+
+    if (!fadeRight) return
+
+    const componentClassName = classNames('c-Scrollable__fader', 'is-right')
+
+    return (
+      <FaderUI
+        fadeSides
+        rounded={rounded}
+        className={componentClassName}
+        innerRef={this.setFaderNodeRightNode}
         role="presentation"
         style={{
           color: backgroundColor,
@@ -143,7 +213,14 @@ export class Scrollable extends React.PureComponent<Props> {
   }
 
   renderContent() {
-    const { children, contentClassName } = this.props
+    const {
+      children,
+      contentClassName,
+      fade,
+      fadeLeft,
+      fadeRight,
+      isScrollLocked,
+    } = this.props
 
     const componentClassName = classNames(
       'c-ScrollableNode',
@@ -153,6 +230,9 @@ export class Scrollable extends React.PureComponent<Props> {
 
     return (
       <ContentUI
+        fade={fade}
+        fadeSides={fadeLeft || fadeRight}
+        isScrollLocked={isScrollLocked}
         className={componentClassName}
         onScroll={this.handleOnScroll}
         innerRef={this.setContainerNode}
@@ -175,6 +255,8 @@ export class Scrollable extends React.PureComponent<Props> {
       rounded,
       scrollableRef,
       isScrollLocked,
+      fadeLeft,
+      fadeRight,
       ...rest
     } = this.props
 
@@ -188,16 +270,26 @@ export class Scrollable extends React.PureComponent<Props> {
     return (
       <ScrollableUI
         {...getValidProps(rest)}
+        fadeSides={fadeLeft || fadeRight}
         className={componentClassName}
         innerRef={innerRef}
       >
+        {(fadeLeft || fadeRight) && (
+          <EventListener event="resize" handler={this.handleWindowResize} />
+        )}
+        {this.renderFaderLeft()}
         {this.renderFaderTop()}
         <ScrollLock isDisabled={!isScrollLocked}>
           {this.renderContent()}
         </ScrollLock>
+        {this.renderFaderRight()}
         {this.renderFaderBottom()}
       </ScrollableUI>
     )
+  }
+
+  handleWindowResize = () => {
+    this.applyFade()
   }
 }
 

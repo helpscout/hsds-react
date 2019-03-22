@@ -45,6 +45,20 @@ describe('Fade', () => {
     expect(fade.length).toBe(1)
   })
 
+  test('Renders left fade elements', () => {
+    const wrapper = render(<Scrollable fadeLeft />)
+    const fade = wrapper.find('.c-Scrollable__fader')
+
+    expect(fade.length).toBe(1)
+  })
+
+  test('Renders right fade elements', () => {
+    const wrapper = render(<Scrollable fadeRight />)
+    const fade = wrapper.find('.c-Scrollable__fader')
+
+    expect(fade.length).toBe(1)
+  })
+
   test('Applies bottom fade styles on mount, if applicable', () => {
     const wrapper = mount(<Scrollable fadeBottom />)
     const o = wrapper.instance()
@@ -63,6 +77,26 @@ describe('Fade', () => {
     jest.runOnlyPendingTimers()
 
     expect(o.faderNodeBottom.style.transform).toBe('scaleY(1)')
+  })
+
+  test('Applies right fade styles on mount, if applicable', () => {
+    const wrapper = mount(<Scrollable fadeLeft fadeRight />)
+    const o = wrapper.instance()
+    const fade = o.faderNodeRight
+
+    expect(fade.style.transform).toBe('scaleX(0)')
+
+    const currentTarget = {
+      clientWidth: 100,
+      scrollWidth: 200,
+      scrollLeft: 30,
+    }
+
+    o.handleOnScroll({ currentTarget })
+
+    jest.runOnlyPendingTimers()
+
+    expect(o.faderNodeRight.style.transform).toBe('scaleX(1)')
   })
 
   test('Applies top fade styles when scrolled', () => {
@@ -100,6 +134,40 @@ describe('Fade', () => {
   })
 })
 
+test('Applies left fade styles when scrolled', () => {
+  const wrapper = mount(<Scrollable fadeLeft fadeRight />)
+  const o = wrapper.instance()
+
+  const currentTarget = {
+    clientWidth: 100,
+    scrollWidth: 200,
+    scrollLeft: 30,
+  }
+
+  o.handleOnScroll({ currentTarget })
+
+  jest.runOnlyPendingTimers()
+
+  expect(o.faderNodeLeft.style.transform).toContain('scaleX')
+})
+
+test('Applies right fade styles when scrolled', () => {
+  const wrapper = mount(<Scrollable fadeLeft fadeRight />)
+  const o = wrapper.instance()
+
+  const currentTarget = {
+    clientWidth: 100,
+    scrollWidth: 200,
+    scrollLeft: 30,
+  }
+
+  o.handleOnScroll({ currentTarget })
+
+  jest.runOnlyPendingTimers()
+
+  expect(o.faderNodeRight.style.transform).toContain('scaleX')
+})
+
 describe('Content', () => {
   test('Renders content within the content node', () => {
     const wrapper = render(
@@ -135,11 +203,23 @@ describe('Styles', () => {
 
 describe('Events', () => {
   test('Fires onScroll callback when scrolled', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Scrollable onScroll={spy} />)
+    const onScrollSpy = jest.fn()
+    const wrapper = mount(<Scrollable onScroll={onScrollSpy} />)
     const o = wrapper.instance()
+    const applyFadeStylesSpy = jest.spyOn(o, 'applyFadeStyles')
 
     o.handleOnScroll()
+
+    expect(onScrollSpy).toHaveBeenCalled()
+    expect(applyFadeStylesSpy).toHaveBeenCalled()
+  })
+
+  test('Re applies fader on sides when the window resizes', () => {
+    const wrapper = mount(<Scrollable fadeLeft fadeRight />)
+    const spy = jest.spyOn(wrapper.instance(), 'applyFade')
+
+    global.dispatchEvent(new Event('resize'))
+    wrapper.unmount()
 
     expect(spy).toHaveBeenCalled()
   })
