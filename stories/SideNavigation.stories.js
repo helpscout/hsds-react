@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs'
 import withAktiv from './utils/withAktiv'
+import HsApp from '../src/components/HsApp'
 
 import {
   SideNavigation,
@@ -280,16 +281,11 @@ stories.add('is collapsed', () => {
 })
 
 const storiesHsApp = storiesOf('SideNavigation/HS App Demo', module)
-storiesHsApp.addDecorator(withAktiv)
 storiesHsApp.addDecorator(withKnobs)
-storiesHsApp.addDecorator(storyFn => (
-  <SidebarWrapper>{storyFn()}</SidebarWrapper>
-))
 
 storiesHsApp.add('HS App - Mailbox', () => {
   const items = ItemSpec.generate(3)
-
-  return (
+  const sidenav = (
     <SideNavigation>
       <SideNavigation.Header>
         <SideNavigation.DropdownHeader items={items} selectedItem={items[0]}>
@@ -300,5 +296,10 @@ storiesHsApp.add('HS App - Mailbox', () => {
       {renderSidebarFolders()}
       {renderSidebarFooter()}
     </SideNavigation>
+  )
+  return (
+    <HsApp sidenavComponent={sidenav}>
+      <Heading>CONTENT</Heading>
+    </HsApp>
   )
 })
