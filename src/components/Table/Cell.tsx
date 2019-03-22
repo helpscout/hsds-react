@@ -30,7 +30,7 @@ export default class Cell extends React.PureComponent<CellProps> {
     return (
       <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
         {column.renderCell
-          ? column.renderCell(row[column.columnKey])
+          ? column.renderCell({ [column.columnKey]: row[column.columnKey] })
           : row[column.columnKey]}
       </CellUI>
     )

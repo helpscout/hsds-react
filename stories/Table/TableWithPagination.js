@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
 import { Table } from '../../src/index.js'
-import Heading from '../../src/components/Heading'
 import Pagination from '../../src/components/Pagination'
-import { Wrapper, Header } from './commonComponents'
-import { createFakeCustomers, getCurrentPageData } from './utils'
+import { Wrapper } from './commonComponents'
+import {
+  createFakeCustomers,
+  getCurrentPageData,
+} from '../../src/components/Table/__tests__/utils'
 
 export default class TableWithPagination extends Component {
   constructor(props) {
@@ -43,7 +45,6 @@ export default class TableWithPagination extends Component {
     const {
       data,
       columns,
-      sortedInfo,
       isLoading,
       tableWidth,
       containerWidth,
@@ -53,14 +54,6 @@ export default class TableWithPagination extends Component {
 
     return (
       <Wrapper>
-        <Header>
-          <Heading size="h2">
-            Table with Pagination{' '}
-            <span role="img" aria-label="emoji">
-              👇
-            </span>
-          </Heading>
-        </Header>
         <Table
           columns={columns}
           data={paginatedData}

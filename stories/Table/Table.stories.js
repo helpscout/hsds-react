@@ -6,11 +6,11 @@ import {
   defaultColumns,
   columsnWithCustomNameCell,
   columsnWithCustomHeaderNameCell,
+  compoundColumns,
 } from '../../src/components/Table/__tests__/utils'
 
 import Heading from '../../src/components/Heading'
 import PreviewCard from '../../src/components/PreviewCard'
-import Ellipsified from '../../src/components/Ellipsified/Ellipsified'
 import { Table } from '../../src/index.js'
 import TablePlayground from './TablePlayground'
 import TableWithPagination from './TableWithPagination'
@@ -90,28 +90,18 @@ stories.add('with custom theme', () => (
   </div>
 ))
 
-stories.add('with long names', () => (
-  <div>
-    <PreviewCard style={{ marginBottom: '20px' }}>
-      <p>
-        The <strong>name</strong> column is "Ellipsified" to 2 lines
-      </p>
-      <p>
-        The <strong>email</strong> column is "Ellipsified" to 1 line
-      </p>
-    </PreviewCard>
-    <Table
-      columns={columsnWithCustomNameCell}
-      data={createFakeCustomers({ amount: 10, longNames: true })}
-      tableWidth={{ max: '800px', min: '500px' }}
-    />
-  </div>
-))
-
 stories.add('with custom header cell render', () => (
   <Table
     columns={columsnWithCustomHeaderNameCell}
     data={createFakeCustomers({ amount: 5 })}
+  />
+))
+
+stories.add('with custom cell rendering', () => (
+  <Table
+    columns={columsnWithCustomNameCell}
+    data={createFakeCustomers({ amount: 10, longNames: true })}
+    tableWidth={{ max: '800px', min: '500px' }}
   />
 ))
 
@@ -124,34 +114,6 @@ stories.add('with horizontal scroll', () => (
 ))
 
 stories.add('with pagination', () => <TableWithPagination />)
-
-const compoundColumns = [
-  {
-    title: 'Customer (name & company)',
-    columnKey: ['name', 'companyName'],
-    width: '33%',
-  },
-  {
-    title: 'Customer (name & email)',
-    columnKey: ['name', 'emails'],
-    width: '33%',
-    renderCell: ({ name, emails }) => {
-      return (
-        <div>
-          <strong>{name}</strong>
-          <br />
-          <span>{emails}</span>
-        </div>
-      )
-    },
-  },
-  {
-    title: 'Email',
-    columnKey: 'emails',
-    width: '34%',
-    renderCell: email => <Ellipsified lines={1} text={email} />,
-  },
-]
 
 stories.add('with compound columns', () => (
   <div>
@@ -191,7 +153,7 @@ stories.add('with row click', () => (
   />
 ))
 
-stories.add('collapsable', () => (
+stories.add('expandable', () => (
   <Table
     columns={defaultColumns}
     data={createFakeCustomers({ amount: 10 })}

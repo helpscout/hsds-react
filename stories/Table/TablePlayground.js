@@ -4,9 +4,12 @@ import { Table } from '../../src/index.js'
 import Heading from '../../src/components/Heading'
 import ColumnCustomizer from './ColumnsCustomizer'
 import TableCustomizer from './TableCustomizer'
-import Ellipsified from '../../src/components/Ellipsified/Ellipsified'
+import Truncate from '../../src/components/Truncate'
 import { Wrapper, Header } from './commonComponents'
-import { createFakeCustomers, sortData } from './utils'
+import {
+  createFakeCustomers,
+  sortData,
+} from '../../src/components/Table/__tests__/utils'
 import { getColor } from '../../src/styles/utilities/color'
 import {
   defaultTheme,
@@ -56,7 +59,7 @@ export default class TablePlayground extends Component {
               </strong>
             )
           },
-          renderCell: name => {
+          renderCell: ({ name }) => {
             return <em>{name}</em>
           },
           sorter: this.sortAlphabetically,
@@ -91,7 +94,11 @@ export default class TablePlayground extends Component {
           columnKey: 'emails',
           align: 'right',
           width: '25%',
-          renderCell: email => <Ellipsified lines={1} text={email} />,
+          renderCell: ({ emails }) => (
+            <Truncate type="end" limit={12}>
+              {emails}
+            </Truncate>
+          ),
         },
         {
           title: 'Last Seen',

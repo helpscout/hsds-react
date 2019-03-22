@@ -165,21 +165,6 @@ export const SortableCellUI = styled('div')`
   }
 `
 
-export const TableCollapserRowUI = styled('tr')`
-  cursor: pointer;
-
-  &:hover {
-    td {
-      text-decoration: underline;
-    }
-  }
-
-  td {
-    color: ${getColor('blue.500')};
-    height: 34px;
-  }
-`
-
 function generateTableWidthStyles(tableWidth) {
   let style = 'width: 100%;'
 

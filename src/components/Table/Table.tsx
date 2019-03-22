@@ -5,13 +5,10 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
+import Button from '../Button'
 import { COMPONENT_KEY, generateCellKey } from './Table.utils'
 
-import {
-  TableWrapperUI,
-  TableUI,
-  TableCollapserRowUI,
-} from './styles/Table.css'
+import { TableWrapperUI, TableUI } from './styles/Table.css'
 import { defaultTheme, alternativeTheme } from './styles/themes'
 
 import Row from './Row'
@@ -47,6 +44,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
     onRowClick: null,
     wrapperRef: noop,
     tableRef: noop,
+    onExpand: noop,
   }
 
   wrapperNode: HTMLElement
@@ -114,20 +112,19 @@ export class Table extends React.PureComponent<TableProps, TableState> {
                   onRowClick={onRowClick}
                 />
               ))}
-              {isTableCollapsed && (
-                <TableCollapserRowUI
-                  className={`${TABLE_CLASSNAME}__CollapserRow`}
-                >
-                  <td
-                    colSpan={columns.length}
-                    onClick={this.handleCollapserRowClick}
-                  >
-                    View all
-                  </td>
-                </TableCollapserRowUI>
-              )}
             </tbody>
           </TableUI>
+          {isTableCollapsed && (
+            <Button
+              version={2}
+              style={{ marginLeft: '14px' }}
+              kind="link"
+              className={`${TABLE_CLASSNAME}__Expander`}
+              onClick={this.handleExpanderClick}
+            >
+              View all
+            </Button>
+          )}
         </TableWrapperUI>
       </ThemeProvider>
     )
@@ -154,21 +151,13 @@ export class Table extends React.PureComponent<TableProps, TableState> {
   }
 
   setWrapperNode = node => {
-    const { wrapperRef } = this.props
     this.wrapperNode = node
-
-    if (wrapperRef) {
-      wrapperRef(node)
-    }
+    this.props.wrapperRef(node)
   }
 
   setTableNode = node => {
-    const { tableRef } = this.props
     this.tableNode = node
-
-    if (tableRef) {
-      tableRef(node)
-    }
+    this.props.tableRef(node)
   }
 
   chooseTheme = () => {
@@ -179,10 +168,12 @@ export class Table extends React.PureComponent<TableProps, TableState> {
     return { ...defaultTheme, ...theme }
   }
 
-  handleCollapserRowClick = () => {
+  handleExpanderClick = () => {
     this.setState({
       isTableCollapsed: !this.state.isTableCollapsed,
     })
+
+    this.props.onExpand(!!this.state.isTableCollapsed)
   }
 }
 

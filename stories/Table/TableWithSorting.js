@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { createFakeCustomers, sortData } from './utils'
+import {
+  createFakeCustomers,
+  sortData,
+} from '../../src/components/Table/__tests__/utils'
 import { Table } from '../../src/index.js'
 import { Wrapper } from './commonComponents'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { createSpec, derived, faker } from '@helpscout/helix'
-import Ellipsified from '../../Ellipsified/Ellipsified'
+import Truncate from '../../Truncate'
 
 export const defaultColumns = [
   {
@@ -31,7 +31,7 @@ export const defaultColumnsCustomContent = [
     columnKey: 'name',
     width: '25%',
     renderHeaderCell: column => <em>{column.title}</em>,
-    renderCell: name => <strong>{name}</strong>,
+    renderCell: ({ name }) => <strong>{name}</strong>,
   },
   {
     title: 'Company',
@@ -55,7 +55,13 @@ export const columsnWithCustomNameCell = [
     title: 'Name',
     columnKey: 'name',
     width: '25%',
-    renderCell: name => <Ellipsified text={name} lines={2} lineHeight={16} />,
+    renderCell: ({ name }) => (
+      <strong style={{ color: 'dodgerblue' }}>
+        <Truncate showTooltipOnTruncate type="end" limit={15}>
+          {name}
+        </Truncate>
+      </strong>
+    ),
   },
   {
     title: 'Company',
@@ -66,7 +72,11 @@ export const columsnWithCustomNameCell = [
     title: 'Email',
     columnKey: 'emails',
     width: '25%',
-    renderCell: email => <Ellipsified lines={1} text={email} />,
+    renderCell: ({ emails }) => (
+      <Truncate type="end" limit={12}>
+        {emails}
+      </Truncate>
+    ),
   },
   {
     title: 'Last Seen',
@@ -122,6 +132,38 @@ export const columsnWithCustomHeaderNameCell = [
       >
         {column.title}
       </em>
+    ),
+  },
+]
+
+export const compoundColumns = [
+  {
+    title: 'Customer (name & company)',
+    columnKey: ['name', 'companyName'],
+    width: '33%',
+  },
+  {
+    title: 'Customer (name & email)',
+    columnKey: ['name', 'emails'],
+    width: '33%',
+    renderCell: ({ name, emails }) => {
+      return (
+        <div>
+          <strong>{name}</strong>
+          <br />
+          <span>{emails}</span>
+        </div>
+      )
+    },
+  },
+  {
+    title: 'Email',
+    columnKey: 'emails',
+    width: '34%',
+    renderCell: ({ emails }) => (
+      <Truncate type="end" limit={15}>
+        {emails}
+      </Truncate>
     ),
   },
 ]
