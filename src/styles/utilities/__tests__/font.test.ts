@@ -5,6 +5,7 @@ import {
   makeFontFamilyFactory,
   makeFontFamily,
   makeFontFamilyMono,
+  makeFontFamilySystem,
 } from '../font'
 import { FONT_FAMILY, FONT_FAMILY_MONO } from '../../configs/constants'
 
@@ -54,5 +55,17 @@ describe('makeFontFamilyMono', () => {
     const fontFamily = makeFontFamilyMono('Roboto Mono')()
     expect(fontFamily).toContain(FONT_FAMILY_MONO)
     expect(fontFamily).toContain('Roboto Mono')
+  })
+})
+
+describe('makeFontFamilySystem', () => {
+  test('Sets system font family', () => {
+    const fontFamily = makeFontFamilySystem()
+    expect(fontFamily).toContain(FONT_FAMILY)
+  })
+
+  test('Does not use CSS var()', () => {
+    const fontFamily = makeFontFamilySystem()
+    expect(fontFamily).not.toContain('var')
   })
 })
