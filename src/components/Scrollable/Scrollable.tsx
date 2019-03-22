@@ -155,7 +155,7 @@ export class Scrollable extends React.PureComponent<Props> {
 
     return (
       <FaderUI
-        fadeSides={fadeLeft || fadeRight}
+        fadeSides
         rounded={rounded}
         className={componentClassName}
         innerRef={this.setFaderNodeLeftNode}
@@ -176,7 +176,7 @@ export class Scrollable extends React.PureComponent<Props> {
 
     return (
       <FaderUI
-        fadeSides={fadeLeft || fadeRight}
+        fadeSides
         rounded={rounded}
         className={componentClassName}
         innerRef={this.setFaderNodeRightNode}
