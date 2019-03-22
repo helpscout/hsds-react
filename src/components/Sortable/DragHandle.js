@@ -20,7 +20,7 @@ const DragHandle = SortableHandle(props => {
 
   return (
     <div className={componentClassName} onMouseDown={onDragStart} {...rest}>
-      <Icon name="drag" size="14" ignoreClick={false} />
+      <Icon name="drag-handle" ignoreClick={false} />
     </div>
   )
 })

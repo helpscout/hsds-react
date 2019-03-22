@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.16.3",
+  "version": "2.20.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -73,11 +73,12 @@
     "test:coverage": "npm run test:dev -- --coverage",
     "test:dev": "node scripts/test.js --env=jsdom",
     "test:coverage:fast": "npm run test:coverage -- --onlyChanged",
-    "version": "npm run build",
+    "version": "npm run make:version && git add . && npm run build",
     "prettier:base": "prettier \"src/**/*.js\" \"test/**/*.js\" \"stories/**/*.js\" --parser=flow",
     "prettier": "npm run prettier:base -- --write",
     "update:icons": "node ./scripts/update-icons.js",
-    "process:icons": "node ./scripts/process-icons.js"
+    "process:icons": "node ./scripts/process-icons.js",
+    "make:version": "node ./scripts/make-version.js"
   },
   "peerDependencies": {
     "react": "^16 || ^15",

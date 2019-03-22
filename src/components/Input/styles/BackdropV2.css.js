@@ -16,7 +16,7 @@ export const config = {
   boxShadow: `0 0 0 0 rgba(${getColor('border')}, 0)`,
   boxShadowCheckbox: '0 0.5px 1px rgba(0, 0, 0, 0.2) inset',
   focusOutlineWidth: 2,
-  focusOutlineColor: getColor('blue.400'),
+  focusOutlineColor: getColor('blue.500'),
   focusOutlineOffset: 1,
   transition:
     'box-shadow 100ms ease, background-color 100ms ease, border-color 100ms ease',

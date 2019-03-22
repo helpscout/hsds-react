@@ -10,6 +10,7 @@ import {
   isStateless,
 } from './utils'
 import { classNames } from '../../utilities/classNames'
+import { setPackageVersionToGlobal } from '../../utilities/info'
 import {
   namespaceComponent,
   isComponentNamespaced,
@@ -39,6 +40,8 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
   const { pure, mapConnectedPropsAsProps } = { ...defaultOptions, ...options }
   // @ts-ignore
   let namespace: string = isString(name) ? name : ''
+
+  setPackageVersionToGlobal()
 
   return function wrapWithComponent(WrappedComponent: any) {
     if (!isDefined(name)) {

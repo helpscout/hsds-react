@@ -3,14 +3,18 @@ import type { IconSize } from './types'
 import type { TextShade, UIState } from '../../constants/types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ICONS from './icons'
 import styled from '../styled'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Icon.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY, renameSVGIds } from './utils'
+
+export let svgSet = {}
+
+export const load = (svgs = {}) => (svgSet = svgs)
+export const unload = () => load({})
 
 type Props = {
   center: boolean,
@@ -30,17 +34,6 @@ type Props = {
   subtle?: boolean,
   title?: string,
   withCaret: boolean,
-}
-
-const renameSVGIds = (svgHtml, name) => {
-  if (!svgHtml) {
-    return svgHtml
-  }
-  const regexHash = new RegExp(`\#${name}`, 'gi')
-  const regexQuote = new RegExp(`\"${name}`, 'gi')
-  return svgHtml
-    .replace(regexHash, `#hsds-icons-${name}`)
-    .replace(regexQuote, `"hsds-icons-${name}`)
 }
 
 const Icon = (props: Props) => {
@@ -84,14 +77,14 @@ const Icon = (props: Props) => {
     className
   )
 
-  const src = { __html: renameSVGIds(ICONS[name], name) }
+  const src = { __html: renameSVGIds(svgSet[name], name) }
   const iconTitle = title || name
 
   const caretMarkup = withCaret ? (
     <span
       className="c-Icon__icon is-caret"
       dangerouslySetInnerHTML={{
-        __html: renameSVGIds(ICONS['caret-down'], 'caret-down'),
+        __html: renameSVGIds(svgSet['caret-down'], 'caret-down'),
       }}
       title="Caret"
     />

@@ -401,4 +401,48 @@ describe('renderAsSingleChild', () => {
     expect(wrapper.find('section.Hello').length).toBe(1)
     expect(wrapper.find('p').length).toBe(3)
   })
+
+  test('Can render a mapped Array of a single child', () => {
+    const InnerComponent = props => <p />
+    const data = [
+      {
+        id: 1,
+        key: 1,
+      },
+    ]
+    const Comp = ({ children }) =>
+      renderAsSingleChild(children, 'section', { className: 'Hello' })
+
+    const wrapper = mount(
+      <Comp>{data.map(d => <InnerComponent {...d} />)}</Comp>
+    )
+
+    expect(wrapper.find('p').length).toBe(1)
+  })
+
+  test('Can render a mapped Array of a multiple children', () => {
+    const InnerComponent = props => <p />
+    const data = [
+      {
+        id: 1,
+        key: 1,
+      },
+      {
+        id: 2,
+        key: 2,
+      },
+      {
+        id: 3,
+        key: 3,
+      },
+    ]
+    const Comp = ({ children }) =>
+      renderAsSingleChild(children, 'section', { className: 'Hello' })
+
+    const wrapper = mount(
+      <Comp>{data.map(d => <InnerComponent {...d} />)}</Comp>
+    )
+
+    expect(wrapper.find('p').length).toBe(3)
+  })
 })
