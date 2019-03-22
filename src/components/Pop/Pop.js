@@ -1,13 +1,10 @@
 // @flow
 import type { PopProps } from './types'
 import React, { Component } from 'react'
-import EventListener from '../EventListener'
-import KeypressListener from '../KeypressListener'
 import Manager from './Manager'
 import Arrow from './Arrow'
 import Popper from './Popper'
 import Reference from './Reference'
-import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
