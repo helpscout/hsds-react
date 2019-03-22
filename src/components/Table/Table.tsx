@@ -6,6 +6,7 @@ import { noop } from '../../utilities/other'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Button from '../Button'
+import Scrollable from '../Scrollable'
 import { COMPONENT_KEY, generateCellKey } from './Table.utils'
 
 import { TableWrapperUI, TableUI } from './styles/Table.css'
@@ -85,35 +86,37 @@ export class Table extends React.PureComponent<TableProps, TableState> {
           containerWidth={containerWidth}
           {...getValidProps(rest)}
         >
-          <TableUI
-            tableWidth={tableWidth}
-            className={tableClassNames}
-            innerRef={this.setTableNode}
-          >
-            <thead>
-              <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
-                {columns.map(column => (
-                  <HeaderCell
-                    key={generateCellKey('headercell', column)}
-                    column={column}
-                    isLoading={isLoading}
-                    sortedInfo={sortedInfo}
+          <Scrollable fadeLeft fadeRight>
+            <TableUI
+              tableWidth={tableWidth}
+              className={tableClassNames}
+              innerRef={this.setTableNode}
+            >
+              <thead>
+                <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
+                  {columns.map(column => (
+                    <HeaderCell
+                      key={generateCellKey('headercell', column)}
+                      column={column}
+                      isLoading={isLoading}
+                      sortedInfo={sortedInfo}
+                    />
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody>
+                {rowsToDisplay.map(row => (
+                  <Row
+                    row={row}
+                    columns={columns}
+                    key={`row_${row.id}`}
+                    onRowClick={onRowClick}
                   />
                 ))}
-              </tr>
-            </thead>
-
-            <tbody>
-              {rowsToDisplay.map(row => (
-                <Row
-                  row={row}
-                  columns={columns}
-                  key={`row_${row.id}`}
-                  onRowClick={onRowClick}
-                />
-              ))}
-            </tbody>
-          </TableUI>
+              </tbody>
+            </TableUI>
+          </Scrollable>
           {isTableCollapsed && (
             <Button
               version={2}

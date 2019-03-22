@@ -6,7 +6,6 @@ export const TableWrapperUI = styled('div')`
   ${baseStyles} overflow-x: auto;
   transition: opacity 0.15s ease-in-out;
   width: ${props => props.containerWidth || '100%'};
-  padding-bottom: 15px;
   opacity: ${props => (props.isLoading ? '0.5' : '1.0')};
 `
 
