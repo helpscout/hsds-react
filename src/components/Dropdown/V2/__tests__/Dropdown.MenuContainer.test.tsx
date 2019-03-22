@@ -119,6 +119,23 @@ describe('Portal', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('Refocuses triggerNode on close', () => {
+    const spy = jest.fn() as unknown
+    const mockTriggerNode = {
+      focus: spy,
+      getBoundingClientRect: () => ({ height: 0, top: 0, left: 0 }),
+    } as HTMLElement
+
+    const wrapper = mount(
+      <MenuContainer isOpen={true} triggerNode={mockTriggerNode} />
+    )
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.prop('onClose')()
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('Menu', () => {

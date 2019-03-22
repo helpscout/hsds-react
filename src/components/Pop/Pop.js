@@ -68,6 +68,7 @@ class Pop extends Component<Props, State> {
 
     if (wasOpen === willOpen) return
 
+    /* istanbul ignore else */
     if (willOpen !== this.state.isOpen) {
       if (willOpen) {
         this.open()
@@ -83,6 +84,7 @@ class Pop extends Component<Props, State> {
   }
 
   safeSetState = (state, callback) => {
+    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state, callback)
     }

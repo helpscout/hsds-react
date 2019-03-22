@@ -311,6 +311,14 @@ export class MenuContainer extends React.PureComponent<Props> {
     // End the reposition cycle
     cancelAnimationFrame(this.positionRAF)
     this.props.closeDropdown()
+    this.focusTriggerNode()
+  }
+
+  focusTriggerNode = () => {
+    const { triggerNode } = this.props
+    if (!triggerNode) return
+
+    triggerNode.focus()
   }
 
   getPositionProps = () => {

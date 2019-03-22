@@ -312,6 +312,7 @@ class Menu extends Component<Props, State> {
       closeMenuOnClick,
       enableCycling,
       enableTabNavigation,
+      forceClosePortal,
       isOpen,
       onBeforeClose,
       onBeforeOpen,
