@@ -7,17 +7,32 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import { COMPONENT_KEY, generateCellKey } from './Table.utils'
 
-import { TableWrapperUI, TableUI } from './styles/Table.css'
+import {
+  TableWrapperUI,
+  TableUI,
+  TableCollapserRowUI,
+} from './styles/Table.css'
 import { defaultTheme, alternativeTheme } from './styles/themes'
 
 import Row from './Row'
 import HeaderCell from './HeaderCell'
 
-import { TableProps } from './types'
+import { TableProps, TableState } from './types'
 
 export const TABLE_CLASSNAME = 'c-Table'
 
-export class Table extends React.PureComponent<TableProps> {
+export class Table extends React.PureComponent<TableProps, TableState> {
+  constructor(props) {
+    super(props)
+
+    const { maxRowsToDisplay, data } = this.props
+
+    this.state = {
+      isTableCollapsed:
+        maxRowsToDisplay != null && maxRowsToDisplay < data.length,
+    }
+  }
+
   static defaultProps = {
     columns: [],
     data: [],
@@ -42,26 +57,26 @@ export class Table extends React.PureComponent<TableProps> {
       className,
       tableClassName,
       data,
+      columns,
+      maxRowsToDisplay,
       tableWidth,
       containerWidth,
-      columns,
       sortedInfo,
       isLoading,
       onRowClick,
       ...rest
     } = this.props
 
-    const tableWrapperClassNames = classNames(
-      `${TABLE_CLASSNAME}__Wrapper`,
-      isLoading && `is-loading`,
-      className
-    )
-    const tableClassNames = classNames(
-      TABLE_CLASSNAME,
-      isLoading && 'is-loading',
-      Boolean(onRowClick) && 'with-clickable-rows',
-      tableClassName
-    )
+    const { isTableCollapsed } = this.state
+
+    const {
+      tableWrapperClassNames,
+      tableClassNames,
+    } = this.getComponentClassNames()
+
+    const rowsToDisplay = isTableCollapsed
+      ? data.slice(0, maxRowsToDisplay)
+      : [...data]
 
     return (
       <ThemeProvider theme={this.chooseTheme()}>
@@ -91,7 +106,7 @@ export class Table extends React.PureComponent<TableProps> {
             </thead>
 
             <tbody>
-              {data.map(row => (
+              {rowsToDisplay.map(row => (
                 <Row
                   row={row}
                   columns={columns}
@@ -99,11 +114,43 @@ export class Table extends React.PureComponent<TableProps> {
                   onRowClick={onRowClick}
                 />
               ))}
+              {isTableCollapsed && (
+                <TableCollapserRowUI
+                  className={`${TABLE_CLASSNAME}__CollapserRow`}
+                >
+                  <td
+                    colSpan={columns.length}
+                    onClick={this.handleCollapserRowClick}
+                  >
+                    View all
+                  </td>
+                </TableCollapserRowUI>
+              )}
             </tbody>
           </TableUI>
         </TableWrapperUI>
       </ThemeProvider>
     )
+  }
+
+  getComponentClassNames = () => {
+    const { className, tableClassName, isLoading, onRowClick } = this.props
+    const { isTableCollapsed } = this.state
+
+    const tableWrapperClassNames = classNames(
+      `${TABLE_CLASSNAME}__Wrapper`,
+      isLoading && 'is-loading',
+      isTableCollapsed && 'is-collapsed',
+      className
+    )
+    const tableClassNames = classNames(
+      TABLE_CLASSNAME,
+      isLoading && 'is-loading',
+      Boolean(onRowClick) && 'with-clickable-rows',
+      tableClassName
+    )
+
+    return { tableWrapperClassNames, tableClassNames }
   }
 
   setWrapperNode = node => {
@@ -130,6 +177,12 @@ export class Table extends React.PureComponent<TableProps> {
     if (!theme || theme === 'default') return defaultTheme
     if (theme === 'alternative') return alternativeTheme
     return { ...defaultTheme, ...theme }
+  }
+
+  handleCollapserRowClick = () => {
+    this.setState({
+      isTableCollapsed: !this.state.isTableCollapsed,
+    })
   }
 }
 

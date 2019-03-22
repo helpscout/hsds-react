@@ -1,10 +1,12 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from '../../styled'
+import { getColor } from '../../../styles/utilities/color'
 
 export const TableWrapperUI = styled('div')`
   ${baseStyles} overflow-x: auto;
   transition: opacity 0.15s ease-in-out;
   width: ${props => props.containerWidth || '100%'};
+  padding-bottom: 15px;
   opacity: ${props => (props.isLoading ? '0.5' : '1.0')};
 `
 
@@ -160,6 +162,21 @@ export const SortableCellUI = styled('div')`
     .SortableCell_title {
       opacity: 0.8;
     }
+  }
+`
+
+export const TableCollapserRowUI = styled('tr')`
+  cursor: pointer;
+
+  &:hover {
+    td {
+      text-decoration: underline;
+    }
+  }
+
+  td {
+    color: ${getColor('blue.500')};
+    height: 34px;
   }
 `
 

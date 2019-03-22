@@ -43,6 +43,7 @@ export interface TableProps {
   tableClassName?: string
   columns: Column[]
   data: Data[]
+  maxRowsToDisplay: number
   containerWidth?: string
   tableWidth?: TableWidth
   theme?: Theme
@@ -51,6 +52,10 @@ export interface TableProps {
   onRowClick?: (row: Data) => void
   tableRef?: (node: HTMLElement) => void
   wrapperRef?: (node: HTMLElement) => void
+}
+
+export interface TableState {
+  isTableCollapsed?: boolean
 }
 
 export interface RowProps {

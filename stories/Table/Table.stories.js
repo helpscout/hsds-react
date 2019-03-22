@@ -191,4 +191,12 @@ stories.add('with row click', () => (
   />
 ))
 
+stories.add('collapsable', () => (
+  <Table
+    columns={defaultColumns}
+    data={createFakeCustomers({ amount: 10 })}
+    maxRowsToDisplay={4}
+  />
+))
+
 stories.add('playground', () => <TablePlayground />)
