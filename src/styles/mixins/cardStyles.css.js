@@ -35,4 +35,27 @@ export const cardSubtleStyles = () => {
   return cardBaseStyles(subtle)
 }
 
+export const shadowlessCardBoxShadow = () => `
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0),
+    inset 0 0 0 1px ${rgba(getColor('grey.600'), 0.7)},
+    inset 0 -1px 0 0 ${getColor('grey.700')};
+`
+
+export const shadowlessBoxShadowHover = () => `
+  box-shadow:
+    0 3px 12px 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px ${getColor('grey.600')},
+    inset 0 -1px 0 0 ${getColor('grey.700')};
+`
+
+export const shadowlessBoxShadowWithHover = () => `
+  &.is-hoverable {
+    ${shadowlessCardBoxShadow()}
+    &:hover {
+      ${shadowlessBoxShadowHover()}
+    }
+  }
+`
+
 export default cardStyles

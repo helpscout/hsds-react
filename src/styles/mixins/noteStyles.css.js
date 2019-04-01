@@ -2,7 +2,7 @@ import { getColor } from '../utilities/color'
 
 export const noteBoxShadow = () => `
   box-shadow:
-    0px 1px 3px 0px rgba(179, 113, 0, 0.2),
+    0px 1px 3px 0px rgba(0, 0, 0, 0),
     inset 0px 0px 0px 1px ${getColor('yellow.400')};
 `
 
