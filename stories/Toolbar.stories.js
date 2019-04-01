@@ -14,7 +14,7 @@ stories.add('default', () => (
 ))
 
 stories.add('example', () => (
-  <Toolbar size="lg">
+  <Toolbar>
     <Toolbar.Item>
       <TagListSampleComponent />
     </Toolbar.Item>
