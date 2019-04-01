@@ -7,8 +7,9 @@ import { BEM } from '../../../utilities/classNames'
 const bem = BEM('.c-PreviewCard')
 
 const css = `
-  ${baseStyles}
-  ${shadowlessBoxShadowWithHover()}
+  ${baseStyles};
+  ${shadowlessBoxShadowWithHover()};
+  padding: 20px;
   text-decoration: none;
 
   &:hover {
@@ -23,6 +24,10 @@ const css = `
     ${bem.element('title')} {
       color: ${getColor('link.base')};
     }
+  }
+
+  &.is-hoverable {
+    border-radius: 5px;
   }
 
   &.is-note {

@@ -14,11 +14,6 @@ const css = `
       direction: rtl;
       text-align: right;
     }
-
-    .c-Card {
-      border-radius: 5px;
-      padding: 20px;
-    }
   }
 `
 
