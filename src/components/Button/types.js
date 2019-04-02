@@ -14,6 +14,8 @@ export type ButtonState =
 | 'success'
 
 export type ButtonSize =
+| 'xl'
+| 'lgxl'
 | 'lg'
 | 'md'
 | 'sm'
