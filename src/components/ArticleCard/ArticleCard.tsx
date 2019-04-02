@@ -39,8 +39,10 @@ export class ArticleCard extends React.PureComponent<Props> {
   renderTitle = () => {
     const { title, titleLimit, titleSize } = this.props
 
-    return (
-      !!title && (
+    if (!title) return
+
+    if (isString(title)) {
+      return (
         <TitleUI className="c-ArticleCard__title">
           <Text size={titleSize} weight="500">
             <Truncate limit={titleLimit} type="end">
@@ -49,7 +51,9 @@ export class ArticleCard extends React.PureComponent<Props> {
           </Text>
         </TitleUI>
       )
-    )
+    }
+
+    return <div className="c-ArticleCard__titleMarkup">{title}</div>
   }
 
   renderContentMarkup() {

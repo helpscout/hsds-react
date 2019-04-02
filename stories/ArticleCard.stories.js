@@ -88,18 +88,19 @@ const ArticleSpec = createSpec({
 const article = ArticleSpec.generate()
 
 stories.add('Default', () => {
-  const { content, title } = article
+  const { content, title: articleTitle } = article
 
   const metaHeaderConfig = boolean('metaHeader', false)
+  const titleConfig = boolean('title', false)
   const footerConfig = boolean('footer', false)
   const consecutive = boolean('Multiple Cards', false)
 
   const props = {
     content: text('content', content),
     href: text('href', '#'),
-    title: text('title', title),
     isHovered: boolean('isHovered', false),
     metaHeader: metaHeaderConfig && metaHeader(),
+    title: titleConfig && title(articleTitle),
     footer: footerConfig && footer(),
   }
 
@@ -144,6 +145,15 @@ function metaHeader() {
       </Flexy.Item>
     </Flexy>
   )
+}
+
+function title(title) {
+  console.log(title)
+  const TitleUI = styled('div')`
+    margin-bottom: 10px;
+    color: red;
+  `
+  return <TitleUI>{title}</TitleUI>
 }
 
 function footer() {
