@@ -569,9 +569,10 @@ export class Input extends Component<Props, State> {
           title={errorMessage}
         >
           <Icon
-            name={errorIcon}
-            state={STATES.error}
             className="c-Input__errorIcon"
+            name={errorIcon}
+            size={24}
+            state={STATES.error}
           />
         </Tooltip>
       </InlinePrefixSuffixUI>
