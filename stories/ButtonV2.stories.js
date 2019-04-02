@@ -38,6 +38,12 @@ const makeButtonVariations = (props = {}) => {
         </Flexy>
         <h5>Sizes</h5>
         <Flexy just="left">
+          <Button {...props} size="xl">
+            Button
+          </Button>
+          <Button {...props} size="lgxl">
+            Button
+          </Button>
           <Button {...props} size="lg">
             Button
           </Button>
@@ -74,6 +80,7 @@ stories.add('everything', () => (
       {makeButtonVariations({ kind: 'default', state: 'danger' })}
       {makeButtonVariations({ kind: 'primary', state: 'danger' })}
       {makeButtonVariations({ kind: 'primary', state: 'success' })}
+      {makeButtonVariations({ kind: 'primary', state: 'warning' })}
     </ContainerUI>
   </PropProvider>
 ))
