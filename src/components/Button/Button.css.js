@@ -263,6 +263,7 @@ export const makeButtonUI = (selector: 'button') => {
     &:hover,
     &:active,
     &:focus {
+      outline: none;
       text-decoration: none;
     }
 
