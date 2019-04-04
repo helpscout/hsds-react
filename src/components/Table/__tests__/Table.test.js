@@ -281,6 +281,17 @@ describe('Sortable', () => {
 
     expect(compoundColumnSpy).toHaveBeenCalled()
     expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)
+
+    wrapper.setProps({
+      sortedInfo: {
+        columnKey: 'name',
+        order: 'descending',
+      },
+    })
+
+    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
+      'descending'
+    )
   })
 })
 
