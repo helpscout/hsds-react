@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react'
 import { createSpec, derived, faker } from '@helpscout/helix'
 import Truncate from '../../Truncate'
