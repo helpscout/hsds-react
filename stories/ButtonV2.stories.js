@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { withKnobs, select } from '@storybook/addon-knobs'
+import { boolean, select } from '@storybook/addon-knobs'
 import {
   Button,
   ControlGroup,
@@ -12,7 +12,6 @@ import {
 import styled from '../src/components/styled'
 
 const stories = storiesOf('Button/V2', module)
-stories.addDecorator(withKnobs)
 
 const ContainerUI = styled('div')`
   background: #f1f3f5;
@@ -62,11 +61,40 @@ const makeButtonVariations = (props = {}) => {
   )
 }
 
-stories.add('default', () => (
-  <Button kind="secondary" version={2}>
-    Button
-  </Button>
-))
+stories.add('Default', () => {
+  const props = {
+    isLoading: boolean('isLoading', false),
+    kind: select(
+      'selector',
+      {
+        primary: 'primary',
+        primaryAlt: 'primaryAlt',
+        secondary: 'secondary',
+        secondaryAlt: 'secondaryAlt',
+        default: 'default',
+        link: 'link',
+      },
+      'secondary'
+    ),
+    size: select(
+      'size',
+      {
+        xl: 'xl',
+        lgxl: 'lgxl',
+        lg: 'lg',
+        md: 'md',
+        sm: 'sm',
+        xs: 'xs',
+      },
+      'lg'
+    ),
+  }
+  return (
+    <Button {...props} version={2}>
+      Click Me
+    </Button>
+  )
+})
 
 stories.add('everything', () => (
   <PropProvider value={{ Button: { version: 2 } }}>

@@ -1,6 +1,7 @@
 // @flow
 import get from 'dash-get'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
+import Spinner from '../Spinner'
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
@@ -506,3 +507,13 @@ export const FocusUI = styled('span')`
     }
   }
 `
+
+export const SpinnerUI = styled(Spinner)`
+  margin-left: 8px;
+  position: relative;
+  top: -0.5px;
+`
+
+SpinnerUI.defaultProps = {
+  size: 12,
+}
