@@ -43,6 +43,19 @@ stories.add('content', () => (
             and Bob Newhart...
           </PreviewCard>
         </Message.Content>
+        <Message.Chat read timestamp="9:42.am">
+          Nam accumsan ex mi, nec ullamcorper lectus pulvinar mollis. In quis
+          ligula quis mauris ultrices consectetur in non tortor. Ut ac ligula
+          quam. Nulla vel eros nec augue consequat consequat ac non ex. Nam
+          ultrices elementum congue. Maecenas id elementum diam. Integer ipsum
+          lacus, iaculis id mi eget, ornare gravida mauris. Curabitur
+          consectetur pharetra diam. Mauris vel sodales massa. Etiam eget
+          eleifend sapien, vel vestibulum metus. Etiam varius mauris ipsum, non
+          vestibulum eros imperdiet ac. Maecenas velit urna, varius nec
+          vestibulum eu, vehicula id enim. Sed feugiat erat sit amet orci
+          tincidunt malesuada eget eget nunc. Mauris quis vestibulum justo.
+          Curabitur id commodo nisl.
+        </Message.Chat>
       </Message>
       <Message to avatar={<Avatar name="Buddy" />}>
         <Message.Chat read timestamp="9:41am" isNote>
@@ -62,6 +75,19 @@ stories.add('content', () => (
             and Bob Newhart...
           </PreviewCard>
         </Message.Content>
+        <Message.Chat read timestamp="9:42.am" isNote>
+          Nam accumsan ex mi, nec ullamcorper lectus pulvinar mollis. In quis
+          ligula quis mauris ultrices consectetur in non tortor. Ut ac ligula
+          quam. Nulla vel eros nec augue consequat consequat ac non ex. Nam
+          ultrices elementum congue. Maecenas id elementum diam. Integer ipsum
+          lacus, iaculis id mi eget, ornare gravida mauris. Curabitur
+          consectetur pharetra diam. Mauris vel sodales massa. Etiam eget
+          eleifend sapien, vel vestibulum metus. Etiam varius mauris ipsum, non
+          vestibulum eros imperdiet ac. Maecenas velit urna, varius nec
+          vestibulum eu, vehicula id enim. Sed feugiat erat sit amet orci
+          tincidunt malesuada eget eget nunc. Mauris quis vestibulum justo.
+          Curabitur id commodo nisl.
+        </Message.Chat>
       </Message>
     </div>
   </ScopeProvider>

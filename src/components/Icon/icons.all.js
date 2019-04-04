@@ -275,6 +275,7 @@ const ICONS = {
   'cross-medium': crossMedium,
   'cross-small': crossSmall,
   crossLarge,
+  cross: crossLarge,
   cursor,
   dashboard,
   'document-in': documentIn,

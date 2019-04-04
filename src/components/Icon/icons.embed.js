@@ -34,6 +34,7 @@ const ICONS = {
   copy,
   'cross-large': crossLarge,
   'cross-small': crossSmall,
+  cross: crossLarge,
   fullscreen,
   'helpscout-logo': hsLogo,
   'hs-logo': hsLogo,

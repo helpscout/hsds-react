@@ -44,6 +44,17 @@ export const config = {
       colorHover: 'white',
       colorActive: 'white',
     },
+    warning: {
+      backgroundColor: getColor('yellow.600'),
+      backgroundColorHover: getColor('yellow.700'),
+      backgroundColorActive: getColor('yellow.800'),
+      borderColor: getColor('yellow.600'),
+      borderColorHover: getColor('yellow.700'),
+      borderColorActive: getColor('yellow.800'),
+      color: 'white',
+      colorHover: 'white',
+      colorActive: 'white',
+    },
   },
   primaryAlt: {
     backgroundColor: getColor('purple.500'),
@@ -180,6 +191,12 @@ export const config = {
       minWidth: '120px',
       padding: 20,
     },
+    lgxl: {
+      fontSize: 14,
+      height: 50,
+      minWidth: '120px',
+      padding: 20,
+    },
     lg: {
       fontSize: 14,
       height: 40,
@@ -246,6 +263,7 @@ export const makeButtonUI = (selector: 'button') => {
     &:hover,
     &:active,
     &:focus {
+      outline: none;
       text-decoration: none;
     }
 
@@ -354,6 +372,7 @@ function makeButtonKindStyles(kind: string, config: Object): string {
 
       ${makeDangerStyles(config)}
       ${makeSuccessStyles(config)}
+      ${makeWarningStyles(config)}
 
       ${makeDisabledStyles(`
         background: ${config.disabledBackgroundColor} !important;
@@ -393,6 +412,10 @@ function makeDangerStyles(config: Object): string {
 
 function makeSuccessStyles(config: Object): string {
   return makeButtonStateStyles(config, 'success')
+}
+
+function makeWarningStyles(config: Object): string {
+  return makeButtonStateStyles(config, 'warning')
 }
 
 function makeDisabledStyles(content: string): string {

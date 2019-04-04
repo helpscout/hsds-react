@@ -25,7 +25,12 @@ class OptionIcon extends Component<Props> {
 
     return (
       <OptionIconUI {...getValidProps(rest)} className={componentClassName}>
-        <Icon className="c-OptionIcon__icon" name={icon} title={title} />
+        <Icon
+          className="c-OptionIcon__icon"
+          name={icon}
+          title={title}
+          size={24}
+        />
       </OptionIconUI>
     )
   }
