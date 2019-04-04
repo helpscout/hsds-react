@@ -23,6 +23,7 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
             : 'none'
         }
         onClick={() => {
+          /* istanbul ignore else */
           if (!isLoading && column.sorter != null) {
             Array.isArray(column.columnKey)
               ? column.sorter(column.sortKey)

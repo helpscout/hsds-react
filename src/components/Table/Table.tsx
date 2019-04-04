@@ -172,11 +172,14 @@ export class Table extends React.PureComponent<TableProps, TableState> {
   }
 
   handleExpanderClick = () => {
-    this.setState({
-      isTableCollapsed: !this.state.isTableCollapsed,
-    })
-
-    this.props.onExpand(!!this.state.isTableCollapsed)
+    this.setState(
+      {
+        isTableCollapsed: !this.state.isTableCollapsed,
+      },
+      () => {
+        this.props.onExpand(!!this.state.isTableCollapsed)
+      }
+    )
   }
 }
 

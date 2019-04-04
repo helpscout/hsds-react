@@ -1,6 +1,5 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from '../../styled'
-import { getColor } from '../../../styles/utilities/color'
 
 export const TableWrapperUI = styled('div')`
   ${baseStyles} overflow-x: auto;

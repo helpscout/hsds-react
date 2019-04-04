@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
 import { Table, TABLE_CLASSNAME } from '../Table'
+import { defaultTheme, alternativeTheme } from '../styles/themes'
 
 import {
   createFakeCustomers,
@@ -90,12 +91,31 @@ describe('Table Body', () => {
     expect(cellsInRow.at(3).text()).toBe(customer.lastSeen)
   })
 
-  test('Custom cells', () => {
+  test('Custom cell rendering on compound columns', () => {
+    const columns = [
+      {
+        title: 'Customer',
+        columnKey: ['name', 'companyName'],
+        width: '30%',
+        renderCell: ({ name, companyName }) => {
+          return (
+            <div>
+              <strong className="name">{name}</strong>
+              <br />
+              <span className="companyName">{companyName}</span>
+            </div>
+          )
+        },
+      },
+      {
+        title: 'Name',
+        columnKey: 'name',
+        width: '30%',
+      },
+    ]
+
     const wrapper = mount(
-      <Table
-        columns={defaultColumnsCustomContent}
-        data={createFakeCustomers({ amount: 5 })}
-      />
+      <Table columns={columns} data={createFakeCustomers({ amount: 5 })} />
     )
     const tbody = wrapper.find('tbody')
     const rows = tbody.find('tr')
@@ -104,9 +124,66 @@ describe('Table Body', () => {
     expect(
       cellsInRow
         .first()
-        .find('strong')
+        .find('.name')
         .exists()
     ).toBeTruthy()
+    expect(
+      cellsInRow
+        .first()
+        .find('.companyName')
+        .exists()
+    ).toBeTruthy()
+  })
+})
+
+describe('Theme', () => {
+  test('Renders default without specifying theme', () => {
+    const customers = createFakeCustomers({ amount: 10 })
+    const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
+
+    expect(wrapper.instance().chooseTheme()).toEqual(defaultTheme)
+  })
+
+  test('Renders default theme', () => {
+    const customers = createFakeCustomers({ amount: 10 })
+    const wrapper = mount(
+      <Table columns={defaultColumns} data={customers} theme="default" />
+    )
+
+    expect(wrapper.instance().chooseTheme()).toEqual(defaultTheme)
+  })
+
+  test('Renders alternative theme', () => {
+    const customers = createFakeCustomers({ amount: 10 })
+    const wrapper = mount(
+      <Table columns={defaultColumns} data={customers} theme="alternative" />
+    )
+
+    expect(wrapper.instance().chooseTheme()).toEqual(alternativeTheme)
+  })
+
+  test('Renders custom theme', () => {
+    const customers = createFakeCustomers({ amount: 10 })
+    const purpleTheme = {
+      fontColorHeader: 'rebeccapurple',
+      fontColorBody: 'rebeccapurple',
+      fontColorAlternate: 'plum',
+      bgHeader: 'gold',
+      bgColor: 'plum',
+      bgAlternate: 'rebeccapurple',
+      borderTableBody: '1px solid blueviolet',
+      borderTableHeader: '1px solid blueviolet',
+      borderRows: '1px solid blueviolet',
+      borderColumns: '1px solid blueviolet',
+    }
+    const wrapper = mount(
+      <Table columns={defaultColumns} data={customers} theme={purpleTheme} />
+    )
+
+    expect(wrapper.instance().chooseTheme()).toEqual({
+      ...defaultTheme,
+      ...purpleTheme,
+    })
   })
 })
 
@@ -138,7 +215,7 @@ describe('Clickable Rows', () => {
 })
 
 describe('Sortable', () => {
-  test('Fires sorter function when header cell is clicked', () => {
+  test('Fires i function when header cell is clicked', () => {
     const customers = createFakeCustomers({ amount: 5 })
     const regularColumnSpy = jest.fn()
     const compoundColumnSpy = jest.fn()
@@ -158,18 +235,39 @@ describe('Sortable', () => {
         sorter: compoundColumnSpy,
       },
     ]
-    const wrapper = mount(<Table columns={columns} data={customers} />)
+    const wrapper = mount(
+      <Table
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: null,
+          order: null,
+        }}
+      />
+    )
 
     // Regular column sorting, should be called with 'columnKey'
     const nameHeaderCell = wrapper.find(`thead th`).first()
+    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe('none')
 
     nameHeaderCell.simulate('click')
 
+    wrapper.setProps({
+      sortedInfo: {
+        columnKey: 'name',
+        order: 'ascending',
+      },
+    })
+
+    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
+      'ascending'
+    )
     expect(regularColumnSpy).toHaveBeenCalled()
     expect(regularColumnSpy).toHaveBeenCalledWith(columns[0].columnKey)
     expect(
       nameHeaderCell.find(`.${TABLE_CLASSNAME}__SortableHeaderCell`).exists()
     ).toBeTruthy()
+
     expect(
       nameHeaderCell
         .find(`.${TABLE_CLASSNAME}__SortableHeaderCell__title`)
@@ -183,5 +281,59 @@ describe('Sortable', () => {
 
     expect(compoundColumnSpy).toHaveBeenCalled()
     expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)
+  })
+})
+
+describe('Expandable', () => {
+  test('Table is collapsed on initial state to the value of maxRowsToDisplay', () => {
+    const wrapper = mount(
+      <Table
+        columns={defaultColumns}
+        data={createFakeCustomers({ amount: 10 })}
+        maxRowsToDisplay={4}
+      />
+    )
+    const tbody = wrapper.find('tbody')
+    const rows = tbody.find('tr')
+
+    expect(wrapper.state('isTableCollapsed')).toBeTruthy()
+    expect(rows.length).toBe(4)
+  })
+
+  test('Table expands on click of Expander', () => {
+    const wrapper = mount(
+      <Table
+        columns={defaultColumns}
+        data={createFakeCustomers({ amount: 10 })}
+        maxRowsToDisplay={4}
+      />
+    )
+    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+
+    expander.simulate('click')
+
+    const tbody = wrapper.find('tbody')
+    const rows = tbody.find('tr')
+
+    expect(wrapper.state('isTableCollapsed')).toBeFalsy()
+    expect(rows.length).toBe(10)
+  })
+
+  test('Table fires onExpand on click of Expander', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Table
+        columns={defaultColumns}
+        data={createFakeCustomers({ amount: 10 })}
+        maxRowsToDisplay={4}
+        onExpand={spy}
+      />
+    )
+    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+
+    expander.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledWith(wrapper.state('isTableCollapsed'))
   })
 })
