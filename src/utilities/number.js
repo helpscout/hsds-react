@@ -1,3 +1,5 @@
+import { isDefined, isNumber } from './is'
+
 export const isEven = (number: string): boolean => number % 2 === 0
 
 export const isOdd = (number: string): boolean => !isEven(number)
@@ -9,8 +11,8 @@ export const getMiddleIndex = (number: string): number => {
 }
 
 export const formatNumber = num => {
-  if (num === null || num === undefined) {
-    return num
-  }
+  if (!isDefined(num)) return num
+  if (!isNumber(num)) return num
+
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
