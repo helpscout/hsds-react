@@ -3,7 +3,8 @@ import { mount } from 'enzyme'
 import { Pagination } from '../Pagination'
 import { NavigationUI } from '../Pagination.css'
 import { hasClass } from '../../../tests/helpers/enzyme'
-
+import { simulateKeyPress } from '../../KeypressListener/__tests__/KeypressListener.test'
+import Keys from '../../../constants/Keys'
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Pagination />)
@@ -404,5 +405,43 @@ describe('Clicks', () => {
     )
     wrapper.instance().handleNextClick({ preventDefault: jest.fn() })
     expect(changeWatcher).not.toHaveBeenCalled()
+  })
+})
+
+describe('Keyboard', () => {
+  test('Pressing j navigate to previous page', () => {
+    const totalItems = 17
+    const rangePerPage = 5
+    const changeWatcher = jest.fn()
+
+    mount(
+      <Pagination
+        showNavigation={true}
+        totalItems={totalItems}
+        rangePerPage={rangePerPage}
+        activePage={2}
+        onChange={changeWatcher}
+      />
+    )
+    simulateKeyPress(Keys.KEY_J)
+    expect(changeWatcher).toHaveBeenCalledWith(1)
+  })
+
+  test('Pressing k navigate to next page', () => {
+    const totalItems = 17
+    const rangePerPage = 5
+    const changeWatcher = jest.fn()
+
+    mount(
+      <Pagination
+        showNavigation={true}
+        totalItems={totalItems}
+        rangePerPage={rangePerPage}
+        activePage={1}
+        onChange={changeWatcher}
+      />
+    )
+    simulateKeyPress(Keys.KEY_K)
+    expect(changeWatcher).toHaveBeenCalledWith(2)
   })
 })

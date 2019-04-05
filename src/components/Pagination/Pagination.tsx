@@ -6,6 +6,8 @@ import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Pagination.utils'
 import pluralize from '../../utilities/pluralize'
+import KeypressListener from '../KeypressListener'
+import Keys from '../../constants/Keys'
 
 import {
   PaginationUI,
@@ -149,6 +151,18 @@ export class Pagination extends React.PureComponent<Props> {
 
     return (
       <NavigationUI>
+        <KeypressListener
+          keyCode={Keys.KEY_J}
+          handler={this.handlePrevClick}
+          noModifier
+          type="keyup"
+        />
+        <KeypressListener
+          keyCode={Keys.KEY_K}
+          handler={this.handleNextClick}
+          noModifier
+          type="keyup"
+        />
         {isNotFirstPage && [
           <ButtonIconUI
             key="firstButton"
@@ -156,6 +170,7 @@ export class Pagination extends React.PureComponent<Props> {
             onClick={this.handleFirstClick}
             className="c-Pagination__firstButton"
             disabled={isLoading}
+            title="First page"
           >
             <Icon name="arrow-left-double-large" size="24" center />
           </ButtonIconUI>,
@@ -165,6 +180,7 @@ export class Pagination extends React.PureComponent<Props> {
             onClick={this.handlePrevClick}
             className="c-Pagination__prevButton"
             disabled={isLoading}
+            title="Previous page (j)"
           >
             <Icon name="arrow-left-single-large" size="24" center />
           </ButtonIconUI>,
@@ -175,6 +191,7 @@ export class Pagination extends React.PureComponent<Props> {
           disabled={isLastPage || isLoading}
           onClick={this.handleNextClick}
           className="c-Pagination__nextButton"
+          title="Next page (k)"
         >
           <Icon name="arrow-right-single-large" size="24" center />
         </ButtonIconUI>
@@ -183,6 +200,7 @@ export class Pagination extends React.PureComponent<Props> {
           disabled={isLastPage || isLoading}
           onClick={this.handleEndClick}
           className="c-Pagination__lastButton"
+          title="Last page"
         >
           <Icon name="arrow-right-double-large" size="24" center />
         </ButtonIconUI>
