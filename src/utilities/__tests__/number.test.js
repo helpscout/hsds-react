@@ -49,5 +49,6 @@ describe('formatNumber', () => {
     expect(formatNumber(null)).toBe(null)
     expect(formatNumber(-10028.444)).toBe('-10,028.444')
     expect(formatNumber(1032234234028.4)).toBe('1,032,234,234,028.4')
+    expect(formatNumber('test')).toBe('test')
   })
 })
