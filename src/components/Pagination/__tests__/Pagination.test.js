@@ -155,6 +155,28 @@ describe('Navigation', () => {
     expect(last.props('disabled')).toBeTruthy()
   })
 
+  test('Disables all buttons when loading', () => {
+    const wrapper = mount(
+      <Pagination
+        isLoading={true}
+        showNavigation={true}
+        totalItems={15}
+        rangePerPage={5}
+        activePage={3}
+      />
+    )
+
+    const first = wrapper.find('Button.c-Pagination__firstButton').first()
+    const prev = wrapper.find('Button.c-Pagination__prevButton').first()
+    const next = wrapper.find('Button.c-Pagination__nextButton').first()
+    const last = wrapper.find('Button.c-Pagination__lastButton').first()
+
+    expect(first.props('disabled')).toBeTruthy()
+    expect(prev.props('disabled')).toBeTruthy()
+    expect(next.props('disabled')).toBeTruthy()
+    expect(last.props('disabled')).toBeTruthy()
+  })
+
   test('Sets 1 as the minimum for currentPage', () => {
     const wrapper = mount(
       <Pagination

@@ -20,6 +20,7 @@ import Icon from '../Icon'
 export interface Props {
   activePage: number
   className?: string
+  isLoading?: boolean
   innerRef: (node: HTMLElement) => void
   onChange: (nextPageNumber: number) => void
   rangePerPage: number
@@ -33,6 +34,7 @@ export interface Props {
 export class Pagination extends React.PureComponent<Props> {
   static defaultProps = {
     activePage: 1,
+    isLoading: false,
     innerRef: noop,
     onChange: noop,
     rangePerPage: 50,
@@ -140,6 +142,7 @@ export class Pagination extends React.PureComponent<Props> {
   }
 
   renderNavigation() {
+    const { isLoading } = this.props
     const currentPage = this.getCurrentPage()
     const isNotFirstPage = currentPage > 1
     const isLastPage = currentPage >= this.getNumberOfPages()
@@ -152,6 +155,7 @@ export class Pagination extends React.PureComponent<Props> {
             version={2}
             onClick={this.handleFirstClick}
             className="c-Pagination__firstButton"
+            disabled={isLoading}
           >
             <Icon name="arrow-left-double-large" size="24" center />
           </ButtonIconUI>,
@@ -160,6 +164,7 @@ export class Pagination extends React.PureComponent<Props> {
             version={2}
             onClick={this.handlePrevClick}
             className="c-Pagination__prevButton"
+            disabled={isLoading}
           >
             <Icon name="arrow-left-single-large" size="24" center />
           </ButtonIconUI>,
@@ -167,7 +172,7 @@ export class Pagination extends React.PureComponent<Props> {
 
         <ButtonIconUI
           version={2}
-          disabled={isLastPage}
+          disabled={isLastPage || isLoading}
           onClick={this.handleNextClick}
           className="c-Pagination__nextButton"
         >
@@ -175,7 +180,7 @@ export class Pagination extends React.PureComponent<Props> {
         </ButtonIconUI>
         <ButtonIconUI
           version={2}
-          disabled={isLastPage}
+          disabled={isLastPage || isLoading}
           onClick={this.handleEndClick}
           className="c-Pagination__lastButton"
         >
