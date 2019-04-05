@@ -8,6 +8,7 @@ import { COMPONENT_KEY } from './Pagination.utils'
 import pluralize from '../../utilities/pluralize'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
+import { formatNumber } from '../../utilities/number'
 
 import {
   PaginationUI,
@@ -124,7 +125,9 @@ export class Pagination extends React.PureComponent<Props> {
   renderRange() {
     const { separator, subject } = this.props
     const totalItems = this.getTotalItems()
-    const totalNode = <span className="c-Pagination__total">{totalItems}</span>
+    const totalNode = (
+      <span className="c-Pagination__total">{formatNumber(totalItems)}</span>
+    )
 
     if (!totalItems) {
       return subject ? totalNode : null
@@ -132,9 +135,9 @@ export class Pagination extends React.PureComponent<Props> {
 
     return (
       <Text className="c-Pagination__range">
-        <RangeUI>{this.getStartRange()}</RangeUI>
+        <RangeUI>{formatNumber(this.getStartRange())}</RangeUI>
         {` `}-{` `}
-        <RangeUI>{this.getEndRange()}</RangeUI>
+        <RangeUI>{formatNumber(this.getEndRange())}</RangeUI>
         {` `}
         {separator}
         {` `}

@@ -7,3 +7,10 @@ export const getMiddleIndex = (number: string): number => {
 
   return isOdd(number) ? middle : middle - 1
 }
+
+export const formatNumber = num => {
+  if (num === null || num === undefined) {
+    return num
+  }
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}

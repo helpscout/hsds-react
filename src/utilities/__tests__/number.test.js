@@ -1,4 +1,4 @@
-import { isEven, isOdd, getMiddleIndex } from '../number'
+import { isEven, isOdd, getMiddleIndex, formatNumber } from '../number'
 
 describe('isEven', () => {
   test('Should detect even numbers', () => {
@@ -37,5 +37,17 @@ describe('getMiddleIndex', () => {
     expect(getMiddleIndex(9)).toBe(4)
     expect(getMiddleIndex(99)).toBe(49)
     expect(getMiddleIndex(100)).toBe(49)
+  })
+})
+
+describe('formatNumber', () => {
+  test('Should format number', () => {
+    expect(formatNumber(4)).toBe('4')
+    expect(formatNumber(5000)).toBe('5,000')
+    expect(formatNumber(4500.23)).toBe('4,500.23')
+    expect(formatNumber(0)).toBe('0')
+    expect(formatNumber(null)).toBe(null)
+    expect(formatNumber(-10028.444)).toBe('-10,028.444')
+    expect(formatNumber(1032234234028.4)).toBe('1,032,234,234,028.4')
   })
 })
