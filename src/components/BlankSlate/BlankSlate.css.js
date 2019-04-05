@@ -36,7 +36,7 @@ export const BlankSlateUI = styled('div')`
   justify-content: center;
   text-align: center;
   flex-direction: column;
-  padding: 56px 0 68px;
+  padding: 56px 8px 68px;
 
   &.align-top {
     justify-content: flex-start;
