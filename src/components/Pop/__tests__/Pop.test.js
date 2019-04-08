@@ -2,7 +2,7 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Pop from '../Pop'
 
-jest.mock('../../Portal', () => {
+jest.mock('../Pop.Portal', () => {
   const Portal = ({ children }) => <div>{children}</div>
   return Portal
 })
@@ -209,6 +209,75 @@ describe('Pop', () => {
       wrapper.unmount()
 
       expect(o.node).toBeFalsy()
+    })
+  })
+
+  describe('Controlled', () => {
+    test('Does not fire onOpen/onClose if isOpen remains the same on prop change', async () => {
+      const openSpy = jest.fn()
+      const closeSpy = jest.fn()
+      const wrapper = mount(
+        <Pop isOpen={true} onOpen={openSpy} onClose={closeSpy}>
+          <Pop.Reference />
+          <Pop.Popper>
+            {() => <div className="content">Content</div>}
+          </Pop.Popper>
+        </Pop>
+      )
+
+      await timeout()
+
+      expect(openSpy).toHaveBeenCalledTimes(1)
+      expect(closeSpy).toHaveBeenCalledTimes(0)
+
+      wrapper.setProps({ isOpen: true, anotherProp: true })
+
+      await timeout()
+
+      expect(openSpy).toHaveBeenCalledTimes(1)
+      expect(closeSpy).toHaveBeenCalledTimes(0)
+    })
+
+    test('Fires onOpen when isOpen prop changes to true', async () => {
+      const openSpy = jest.fn()
+      const wrapper = mount(
+        <Pop isOpen={false} onOpen={openSpy}>
+          <Pop.Reference />
+          <Pop.Popper>
+            {() => <div className="content">Content</div>}
+          </Pop.Popper>
+        </Pop>
+      )
+
+      await timeout()
+
+      expect(openSpy).toHaveBeenCalledTimes(0)
+
+      wrapper.setProps({ isOpen: true })
+      await timeout()
+
+      expect(openSpy).toHaveBeenCalledTimes(1)
+    })
+
+    test('Fires onClose when isOpen prop changes to false', async () => {
+      const closeSpy = jest.fn()
+      const wrapper = mount(
+        <Pop isOpen={true} onClose={closeSpy}>
+          <Pop.Reference />
+          <Pop.Popper>
+            {() => <div className="content">Content</div>}
+          </Pop.Popper>
+        </Pop>
+      )
+
+      await timeout()
+
+      expect(closeSpy).toHaveBeenCalledTimes(0)
+
+      wrapper.setProps({ isOpen: false })
+      await timeout()
+
+      expect(closeSpy).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -490,26 +559,6 @@ describe('Pop', () => {
       wrapper.instance().handleOnBodyClick({
         target: wrapper.instance().node,
       })
-
-      expect(spy).not.toHaveBeenCalled()
-    })
-
-    test('Closes on ESC press, if defined', async () => {
-      const spy = jest.fn()
-      const wrapper = mount(<Pop closeOnEscPress onClose={spy} />)
-
-      wrapper.instance().handleOnEsc()
-
-      await timeout()
-
-      expect(spy).toHaveBeenCalled()
-    })
-
-    test('Does not closes on ESC press, if defined', () => {
-      const spy = jest.fn()
-      const wrapper = mount(<Pop closeOnEscPress={false} onClose={spy} />)
-
-      wrapper.instance().handleOnEsc()
 
       expect(spy).not.toHaveBeenCalled()
     })

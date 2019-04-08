@@ -187,13 +187,13 @@ class Modal extends Component<Props> {
   }
 
   getCloseMarkup = () => {
-    const { closeIcon, closePortal } = this.props
+    const { closeIcon, forceClosePortal } = this.props
     const shouldRenderClose = closeIcon && !isHSApp(this.props)
 
     return (
       shouldRenderClose && (
         <CloseUI className="c-Modal__close" innerRef={this.setCloseNode}>
-          <CloseButton onClick={closePortal} />
+          <CloseButton onClick={forceClosePortal} />
         </CloseUI>
       )
     )
@@ -270,7 +270,7 @@ class Modal extends Component<Props> {
 
   getOverlayMarkup = () => {
     const {
-      closePortal,
+      forceClosePortal,
       overlayAnimationDelay,
       overlayAnimationDuration,
       overlayAnimationSequence,
@@ -281,7 +281,7 @@ class Modal extends Component<Props> {
     const props = {
       className: overlayClassName,
       isOpen: portalIsOpen,
-      onClick: closePortal,
+      onClick: forceClosePortal,
       overlayAnimationDelay,
       overlayAnimationDuration,
       overlayAnimationSequence,

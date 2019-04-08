@@ -37,17 +37,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   triggerNode: HTMLElement
   menuNode: HTMLElement
 
-  handleOnDocumentKeyDown = (event: KeyboardEvent) => {
-    if (!this.props.isOpen) return
-
-    /* istanbul ignore else */
-    if (event.keyCode === Keys.ESCAPE) {
-      event.preventDefault && event.preventDefault()
-      this.focusTriggerNode()
-      this.closeMenu()
-    }
-  }
-
   handleOnDocumentBodyClick = (event: Event) => {
     if (!event) return
     if (!this.menuNode) return
@@ -67,12 +56,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     if (!this.props.isOpen) return
     // Store calls onClose() callback
     this.props.closeDropdown()
-  }
-
-  focusTriggerNode() {
-    if (this.triggerNode && this.props.isOpen) {
-      this.triggerNode.focus()
-    }
   }
 
   getTriggerProps() {
@@ -140,11 +123,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
         innerRef={this.setNodeRef}
         id={id}
       >
-        <KeypressListener
-          handler={this.handleOnDocumentKeyDown}
-          type="keydown"
-          scope={envNode}
-        />
         <EventListener
           event="click"
           handler={this.handleOnDocumentBodyClick}

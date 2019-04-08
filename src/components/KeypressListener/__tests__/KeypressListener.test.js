@@ -14,6 +14,19 @@ export const simulateKeyPress = (keyCode, modifier) => {
 }
 
 describe('Events', () => {
+  test('Fires handler when a keypress happens without a keyCode', () => {
+    const spy = jest.fn()
+    mount(
+      <div>
+        <KeypressListener keyCode={undefined} handler={spy} />
+      </div>
+    )
+
+    simulateKeyPress(undefined)
+
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('Can trigger handler callback on keypress', () => {
     const spy = jest.fn()
     mount(
