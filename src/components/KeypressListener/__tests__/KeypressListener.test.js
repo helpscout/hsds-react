@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import KeypressListener from '..'
 import Keys from '../../../constants/Keys'
 
-const simulateKeyPress = (keyCode, modifier) => {
+export const simulateKeyPress = (keyCode, modifier) => {
   const event = new Event('keyup')
   event.keyCode = keyCode
   if (modifier) {

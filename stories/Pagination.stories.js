@@ -94,6 +94,20 @@ stories.add('end of navigation', () => {
   )
 })
 
+stories.add('isLoading', () => {
+  return (
+    <Pagination
+      {...getKnobsProps({
+        subject: subject(),
+        activePage: activePage(10),
+        isLoading: boolean('isLoading', true),
+      })}
+      showNavigation={true}
+      onChange={action('changePage')}
+    />
+  )
+})
+
 class PaginationWrapper extends React.Component {
   state = {
     activePage: 1,
