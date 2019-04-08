@@ -74,7 +74,10 @@ stories.add('icons', () => {
 
 stories.add('sizes', () => {
   const icons = ['14', '16', '18', '24'].map(i => (
-    <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
+    <div
+      key={i}
+      style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}
+    >
       <Icon name="emoji" size={i} key={i} center />
       <Text muted size="sm">
         {i}
@@ -156,8 +159,11 @@ stories.add('shades', () => {
 
 stories.add('withCaret', () => {
   const icons = ['14', '16', '18', '24'].map(i => (
-    <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
-      <Icon name="user" size={i} key={i} center withCaret />
+    <div
+      key={i}
+      style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}
+    >
+      <Icon name="assign" size={i} key={i} center withCaret />
       <Text muted size="sm">
         {i}
       </Text>
@@ -169,7 +175,7 @@ stories.add('withCaret', () => {
     <div>
       <Flexy just="left">
         <Flexy.Item>
-          <Icon name="user" withCaret />
+          <Icon name="assign" withCaret />
         </Flexy.Item>
         <Flexy.Item>
           <Text muted size="sm">
@@ -180,7 +186,7 @@ stories.add('withCaret', () => {
 
       <Flexy just="left">
         <Flexy.Item>
-          <Icon name="user" withCaret muted />
+          <Icon name="assign" withCaret muted />
         </Flexy.Item>
         <Flexy.Item>
           <Text muted size="sm">
@@ -191,7 +197,7 @@ stories.add('withCaret', () => {
 
       <Flexy just="left" style={{ color: 'red' }}>
         <Flexy.Item>
-          <Icon name="user" withCaret />
+          <Icon name="assign" withCaret />
         </Flexy.Item>
         <Flexy.Item>
           <Text muted size="sm">
