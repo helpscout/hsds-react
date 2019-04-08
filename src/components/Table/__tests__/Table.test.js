@@ -216,7 +216,7 @@ describe('Clickable Rows', () => {
 })
 
 describe('Sortable', () => {
-  test('Fires i function when header cell is clicked', () => {
+  test('Fires function when header cell is clicked', () => {
     const customers = createFakeCustomers({ amount: 5 })
     const regularColumnSpy = jest.fn()
     const compoundColumnSpy = jest.fn()
@@ -251,7 +251,10 @@ describe('Sortable', () => {
     const nameHeaderCell = wrapper.find(`thead th`).first()
     expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe('none')
 
-    nameHeaderCell.simulate('click')
+    nameHeaderCell
+      .find('div')
+      .first()
+      .simulate('click')
 
     wrapper.setProps({
       sortedInfo: {
@@ -278,7 +281,10 @@ describe('Sortable', () => {
     // Compound column sorting, should be called with 'sortKey'
     const customerHeaderCell = wrapper.find(`thead th`).at(1)
 
-    customerHeaderCell.simulate('click')
+    customerHeaderCell
+      .find('div')
+      .first()
+      .simulate('click')
 
     expect(compoundColumnSpy).toHaveBeenCalled()
     expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)

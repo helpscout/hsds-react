@@ -22,7 +22,6 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
             ? sortedInfo.order
             : 'none'
         }
-        onClick={this.handleClick}
       >
         {this.renderCellContents()}
       </HeaderCellUI>
@@ -33,7 +32,7 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
     const { column, sortedInfo } = this.props
 
     if (column.renderHeaderCell) {
-      return column.renderHeaderCell(column, { sortedInfo })
+      return column.renderHeaderCell(column, sortedInfo)
     }
 
     if (column.sorter) {
@@ -45,6 +44,7 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
         <SortableCellUI
           align={column.align}
           className={`${TABLE_CLASSNAME}__SortableHeaderCell`}
+          onClick={this.handleClick}
         >
           <span className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}>
             {column.title}

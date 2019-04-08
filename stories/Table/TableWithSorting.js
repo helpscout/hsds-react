@@ -51,6 +51,30 @@ export default class TablePlayground extends Component {
           align: 'center',
           width: '35%',
           sorter: this.sortAlphabetically,
+          renderHeaderCell: (column, sortedInfo) => {
+            return (
+              <div>
+                <em>{column.title}</em>
+                <button
+                  style={{
+                    cursor: 'pointer',
+                    marginLeft: '5px',
+                    padding: '5px',
+                    border: '0',
+                    background: 'lightgreen',
+                    fontSize: '18px',
+                  }}
+                  onClick={() => {
+                    this.sortAlphabetically(column.columnKey)
+                  }}
+                >
+                  {sortedInfo.order == null && 'Sort!'}
+                  {sortedInfo.order === 'descending' && '👇'}
+                  {sortedInfo.order === 'ascending' && '👆'}
+                </button>
+              </div>
+            )
+          },
         },
       ],
       sortedInfo: {
