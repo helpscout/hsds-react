@@ -49,7 +49,7 @@ export interface TableProps {
   theme?: Theme
   isLoading?: boolean
   sortedInfo?: SortedInfo
-  onRowClick?: (event: Event, row: Data) => void
+  onRowClick?: (row: Data, event: Event) => void
   onExpand: (isTableCollapsed: boolean) => void
   tableRef: (node: HTMLElement) => void
   wrapperRef: (node: HTMLElement) => void
@@ -62,7 +62,7 @@ export interface TableState {
 export interface RowProps {
   columns: Column[]
   row: Data
-  onRowClick?: (event: Event, row: Data) => void
+  onRowClick?: (row: Data, event: Event) => void
 }
 
 export interface HeaderCellProps {

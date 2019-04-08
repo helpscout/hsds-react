@@ -206,11 +206,12 @@ describe('Clickable Rows', () => {
     const tbody = wrapper.find('tbody')
     const firstRow = tbody.childAt(0)
     const o = firstRow.instance()
+    const event = undefined
 
     o.handleRowClick()
 
     expect(spy).toHaveBeenCalled()
-    expect(spy).toHaveBeenCalledWith(customers[0])
+    expect(spy).toHaveBeenCalledWith(customers[0], event)
   })
 })
 

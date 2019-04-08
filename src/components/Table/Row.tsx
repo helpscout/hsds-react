@@ -25,6 +25,6 @@ export default class Row extends React.PureComponent<RowProps> {
 
   handleRowClick = e => {
     const { row, onRowClick } = this.props
-    onRowClick && onRowClick(e, row)
+    onRowClick && onRowClick(row, e)
   }
 }
