@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import Truncate from '../Truncate'
 import { CellUI } from './styles/Table.css'
 import { TABLE_CLASSNAME } from './Table'
 
@@ -7,31 +8,44 @@ import { CellProps } from './types'
 
 export default class Cell extends React.PureComponent<CellProps> {
   render() {
+    const { column } = this.props
+
+    return Array.isArray(column.columnKey)
+      ? this.renderCompoundColumnsCell()
+      : this.renderSingleColumnCell()
+  }
+
+  renderCompoundColumnsCell = () => {
     const { column, row } = this.props
+    const cellData = {}
 
-    if (Array.isArray(column.columnKey)) {
-      const cellData = {}
-
-      for (const colKey of column.columnKey) {
-        cellData[colKey] = row[colKey]
-      }
-
-      return (
-        <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
-          {column.renderCell
-            ? column.renderCell(cellData)
-            : (Object as any)
-                .values(cellData)
-                .map(d => <div key={d.slice(4)}>{d}</div>)}
-        </CellUI>
-      )
+    for (const colKey of column.columnKey) {
+      cellData[colKey] = row[colKey]
     }
 
     return (
       <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
         {column.renderCell
-          ? column.renderCell({ [column.columnKey]: row[column.columnKey] })
-          : row[column.columnKey]}
+          ? column.renderCell(cellData)
+          : (Object as any)
+              .values(cellData)
+              .map(d => <div key={d.slice(4)}>{d}</div>)}
+      </CellUI>
+    )
+  }
+
+  renderSingleColumnCell = () => {
+    const { column, row } = this.props
+
+    return (
+      <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
+        {column.renderCell ? (
+          column.renderCell({
+            [column.columnKey as any]: row[column.columnKey as any],
+          })
+        ) : (
+          <Truncate>{row[column.columnKey as any]}</Truncate>
+        )}
       </CellUI>
     )
   }

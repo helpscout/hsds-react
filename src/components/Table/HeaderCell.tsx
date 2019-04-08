@@ -8,7 +8,7 @@ import { HeaderCellProps } from './types'
 
 export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
   render() {
-    const { column, isLoading, sortedInfo } = this.props
+    const { column, sortedInfo } = this.props
 
     return (
       <HeaderCellUI
@@ -22,14 +22,7 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
             ? sortedInfo.order
             : 'none'
         }
-        onClick={() => {
-          /* istanbul ignore else */
-          if (!isLoading && column.sorter != null) {
-            Array.isArray(column.columnKey)
-              ? column.sorter(column.sortKey)
-              : column.sorter(column.columnKey)
-          }
-        }}
+        onClick={this.handleClick}
       >
         {this.renderCellContents()}
       </HeaderCellUI>
@@ -70,5 +63,15 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
     }
 
     return column.title
+  }
+
+  handleClick = () => {
+    const { column, isLoading } = this.props
+    /* istanbul ignore else */
+    if (!isLoading && column.sorter != null) {
+      Array.isArray(column.columnKey)
+        ? column.sorter(column.sortKey)
+        : column.sorter(column.columnKey)
+    }
   }
 }
