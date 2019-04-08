@@ -23,23 +23,24 @@ const ItemSpec = createSpec({
   value: faker.name.firstName(),
 })
 
-const itemHome = text('itemHomeText', 'Home')
-const itemOne = text('itemOneText', 'One')
-const itemTwo = text('itemTwoText', 'Two')
-const itemThree = text('itemThreeText', 'Three')
-const itemThreeError = text('itemThreeError', 'Something went wrong')
-const itemFour = text('itemFourText', 'Four')
-const itemFourDisabled = boolean('itemFourDisabled', true)
-
 const routerDecorator = storyFn => {
   return <Router>{storyFn()}</Router>
 }
 
 const stories = storiesOf('TabBar', module)
+stories.addDecorator(withKnobs)
 stories.addDecorator(withAktiv)
 stories.addDecorator(routerDecorator)
 
 const renderTabBarItem = () => {
+  const itemHome = text('itemHomeText', 'Home')
+  const itemOne = text('itemOneText', 'One')
+  const itemTwo = text('itemTwoText', 'Two')
+  const itemThree = text('itemThreeText', 'Three')
+  const itemThreeError = text('itemThreeError', 'Something went wrong')
+  const itemFour = text('itemFourText', 'Four')
+  const itemFourDisabled = boolean('itemFourDisabled', true)
+
   return [
     <TabBar.Item key="home" to="/">
       {itemHome}
@@ -87,6 +88,7 @@ stories.add('with right dropdown', () => {
 })
 
 const storiesHsApp = storiesOf('TabBar/HS App', module)
+storiesHsApp.addDecorator(withKnobs)
 storiesHsApp.addDecorator(withHsApp)
 storiesHsApp.addDecorator(routerDecorator)
 storiesHsApp.add('with right content', () => {
