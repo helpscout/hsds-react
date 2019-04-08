@@ -1,6 +1,6 @@
 # Submitting for review
 
-In this guide, we'll walk through add submitting for our [fully test](testing.md) [custom `Strong` component](creating.md) for review!
+In this guide, we'll walk through submitting for our [fully test](testing.md) [custom `Strong` component](creating.md) for review!
 
 ## Create a pull request
 
