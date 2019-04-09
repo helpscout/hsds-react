@@ -240,7 +240,7 @@ export const config = {
   },
 }
 
-export const makeButtonUI = (selector: 'button') => {
+export const makeButtonUI = (selector = 'button') => {
   return styled(selector)`
     ${baseStyles};
     appearance: none;
@@ -311,7 +311,7 @@ export const makeButtonUI = (selector: 'button') => {
   `
 }
 
-function makePrimaryStyles(name = 'primary', props: Object = {}): string {
+function makePrimaryStyles(name = 'primary', props = {}) {
   const theme = get(props, 'theme.brandColor', {})
   const backgroundColor =
     theme.backgroundColorUI || theme.brandColor || config[name].backgroundColor
@@ -319,10 +319,10 @@ function makePrimaryStyles(name = 'primary', props: Object = {}): string {
     theme.textColorInteractive || theme.brandTextColor || config[name].color
 
   const backgroundColorHover =
-    theme.backgroundColorUIHover || config.backgroundColorHover
+    theme.backgroundColorUIHover || config[name].backgroundColorHover
   const borderColorHover = backgroundColorHover
   const backgroundColorActive =
-    theme.backgroundColorUIActive || config.backgroundColorActive
+    theme.backgroundColorUIActive || config[name].backgroundColorActive
   const borderColorActive = backgroundColorActive
 
   return makeButtonKindStyles(name, {
@@ -337,7 +337,7 @@ function makePrimaryStyles(name = 'primary', props: Object = {}): string {
   })
 }
 
-function makeButtonKindStyles(kind: string, config: Object): string {
+function makeButtonKindStyles(kind, config) {
   return `
     &.is-${kind} {
       background: ${config.backgroundColor};
@@ -383,7 +383,7 @@ function makeButtonKindStyles(kind: string, config: Object): string {
   `
 }
 
-function makeButtonStateStyles(config: Object, state: string): string {
+function makeButtonStateStyles(config, state) {
   if (!config.hasOwnProperty(state)) return ''
 
   return `
@@ -406,19 +406,19 @@ function makeButtonStateStyles(config: Object, state: string): string {
   `
 }
 
-function makeDangerStyles(config: Object): string {
+function makeDangerStyles(config) {
   return makeButtonStateStyles(config, 'danger')
 }
 
-function makeSuccessStyles(config: Object): string {
+function makeSuccessStyles(config) {
   return makeButtonStateStyles(config, 'success')
 }
 
-function makeWarningStyles(config: Object): string {
+function makeWarningStyles(config) {
   return makeButtonStateStyles(config, 'warning')
 }
 
-function makeDisabledStyles(content: string): string {
+function makeDisabledStyles(content) {
   return `
     &.is-disabled,
     &[disabled] {
@@ -429,7 +429,7 @@ function makeDisabledStyles(content: string): string {
   `
 }
 
-function makeButtonSizeStyles(): string {
+function makeButtonSizeStyles() {
   return forEach(
     config.size,
     (size, props) => `
@@ -445,7 +445,7 @@ function makeButtonSizeStyles(): string {
   )
 }
 
-function renderStyleForProp(config: Object, prop: string, attribute: ?string) {
+function renderStyleForProp(config, prop, attribute) {
   const attr = attribute || prop
 
   return config.hasOwnProperty(prop)
