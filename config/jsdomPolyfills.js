@@ -7,21 +7,34 @@
 
 // MIT license
 
-let lastTime = 0;
+let lastTime = 0
 if (!window.requestAnimationFrame)
   window.requestAnimationFrame = function(callback, element) {
-    const currTime = new Date().getTime();
-    const timeToCall = Math.max(0, 16 - (currTime - lastTime));
-    const id = window.setTimeout(function() { callback(currTime + timeToCall); },
-      timeToCall);
-    lastTime = currTime + timeToCall;
-    return id;
-  };
+    const currTime = new Date().getTime()
+    const timeToCall = Math.max(0, 16 - (currTime - lastTime))
+    const id = window.setTimeout(function() {
+      callback(currTime + timeToCall)
+    }, timeToCall)
+    lastTime = currTime + timeToCall
+    return id
+  }
 
 if (!window.cancelAnimationFrame)
   window.cancelAnimationFrame = function(id) {
-    clearTimeout(id);
-  };
+    clearTimeout(id)
+  }
 
-if (!window.SVGElement)
-  window.SVGElement = window.Element
+if (!window.SVGElement) window.SVGElement = window.Element
+
+if (!document.createRange)
+  document.createRange = function() {
+    const el = document.createElement('div')
+    return {
+      setStart: () => {},
+      setEnd: () => {},
+      commonAncestorContainer: {
+        nodeName: 'BODY',
+        ownerDocument: document,
+      },
+    }
+  }

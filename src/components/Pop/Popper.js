@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
-import Portal from '../Portal'
+import Portal from './Pop.Portal'
 import Arrow from './Arrow'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -61,8 +61,10 @@ export class Popper extends Component<Props> {
       arrowClassName,
       arrowColor,
       arrowSize,
-      className,
       children,
+      className,
+      close,
+      isOpen,
       offset,
       onClick,
       onMouseLeave,
@@ -91,7 +93,12 @@ export class Popper extends Component<Props> {
         positionFixed={positionFixed}
       >
         {({ ref, style, placement, arrowProps }) => (
-          <Portal className="PopPortal" id={this.getId()}>
+          <Portal
+            className="PopPortal"
+            id={this.getId()}
+            isOpen={isOpen}
+            onClose={close}
+          >
             <div
               {...getValidProps(rest)}
               className={componentClassName}

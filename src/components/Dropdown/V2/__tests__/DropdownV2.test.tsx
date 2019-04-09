@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import Dropdown from '../../DropdownV2'
 import createStore, { initialState } from '../Dropdown.store'
 
-jest.mock('../../../Portal', () => {
+jest.mock('../Dropdown.MenuPortal', () => {
   const Portal = props => <div>{props.children}</div>
   return {
     default: props => <Portal {...props} />,
@@ -107,11 +107,11 @@ describe('Store/Render', () => {
     const wrapper = mount(<Dropdown __store={store} subscribe={spy} />)
 
     // Dropdown uses setState during initialization
-    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(3)
 
     store.setState({ index: '123' })
 
-    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spy).toHaveBeenCalledTimes(4)
 
     wrapper.unmount()
 
@@ -120,6 +120,6 @@ describe('Store/Render', () => {
     store.setState({ isOpen: false })
     store.setState({ isOpen: true })
 
-    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spy).toHaveBeenCalledTimes(4)
   })
 })

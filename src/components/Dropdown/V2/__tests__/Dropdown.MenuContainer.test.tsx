@@ -5,7 +5,7 @@ import { initialState } from '../Dropdown.store'
 import { find, hasClass } from '../../../../tests/helpers/enzyme'
 import { MenuUI } from '../Dropdown.css.js'
 
-jest.mock('../../../Portal', () => {
+jest.mock('../Dropdown.MenuPortal', () => {
   const Portal = ({ children }) => <div>{children}</div>
   return {
     default: Portal,
@@ -61,25 +61,25 @@ describe('className', () => {
 })
 
 describe('Portal', () => {
-  test('Renders a Portal, if open', () => {
+  test('Renders a Portal', () => {
     const wrapper = mount(<MenuContainer isOpen={true} />)
     const el = wrapper.find('Portal')
 
     expect(el.length).toBeTruthy()
   })
 
-  test('Does not render Portal, if closed', () => {
+  test('Passes isOpen false to Portal, if closed', () => {
     const wrapper = mount(<MenuContainer isOpen={false} />)
     const el = wrapper.find('Portal')
 
-    expect(el.length).not.toBeTruthy()
+    expect(el.prop('isOpen')).toBe(false)
   })
 
-  test('Does not render if Portal is closed', () => {
-    const wrapper = mount(<MenuContainer isOpen={false} />)
-    const el = wrapper.find(baseSelector)
+  test('Passes isOpen true to Portal, if open', () => {
+    const wrapper = mount(<MenuContainer isOpen={true} />)
+    const el = wrapper.find('Portal')
 
-    expect(el.length).not.toBeTruthy()
+    expect(el.prop('isOpen')).toBe(true)
   })
 
   test('Fires onMenuMounted callback on mount', () => {
@@ -116,6 +116,23 @@ describe('Portal', () => {
     const portal = wrapper.find('Portal')
     // @ts-ignore
     portal.props().onOpen()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Refocuses triggerNode on close', () => {
+    const spy = jest.fn() as unknown
+    const mockTriggerNode = {
+      focus: spy,
+      getBoundingClientRect: () => ({ height: 0, top: 0, left: 0 }),
+    } as HTMLElement
+
+    const wrapper = mount(
+      <MenuContainer isOpen={true} triggerNode={mockTriggerNode} />
+    )
+    const portal = wrapper.find('Portal')
+    // @ts-ignore
+    portal.prop('onClose')()
 
     expect(spy).toHaveBeenCalled()
   })
