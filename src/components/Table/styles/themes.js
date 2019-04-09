@@ -21,3 +21,9 @@ export const alternativeTheme = {
     bgHeader: getColor('grey.400'),
   },
 }
+
+export const chooseTheme = theme => {
+  if (!theme || theme === 'default') return defaultTheme
+  if (theme === 'alternative') return alternativeTheme
+  return { ...defaultTheme, ...theme }
+}

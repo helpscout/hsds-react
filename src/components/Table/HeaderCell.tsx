@@ -7,62 +7,15 @@ import { TABLE_CLASSNAME } from './Table'
 import { HeaderCellProps } from './types'
 
 export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
-  render() {
+  getColumnSortStatus = () => {
     const { column, sortedInfo } = this.props
+    const colKey = Array.isArray(column.columnKey)
+      ? column.sortKey
+      : column.columnKey
 
-    return (
-      <HeaderCellUI
-        className={`${TABLE_CLASSNAME}__HeaderCell`}
-        align={column.align}
-        cellWidth={column.width}
-        aria-sort={
-          sortedInfo &&
-          sortedInfo.columnKey === column.columnKey &&
-          sortedInfo.order
-            ? sortedInfo.order
-            : 'none'
-        }
-      >
-        {this.renderCellContents()}
-      </HeaderCellUI>
-    )
-  }
-
-  renderCellContents = () => {
-    const { column, sortedInfo } = this.props
-
-    if (column.renderHeaderCell) {
-      return column.renderHeaderCell(column, sortedInfo)
-    }
-
-    if (column.sorter) {
-      const colKey = Array.isArray(column.columnKey)
-        ? column.sortKey
-        : column.columnKey
-
-      return (
-        <SortableCellUI
-          align={column.align}
-          className={`${TABLE_CLASSNAME}__SortableHeaderCell`}
-          onClick={this.handleClick}
-        >
-          <span className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}>
-            {column.title}
-          </span>
-          {sortedInfo &&
-            sortedInfo.columnKey === colKey &&
-            sortedInfo.order && (
-              <Icon
-                name={
-                  sortedInfo.order === 'descending' ? 'caret-down' : 'caret-up'
-                }
-              />
-            )}
-        </SortableCellUI>
-      )
-    }
-
-    return column.title
+    return sortedInfo && sortedInfo.columnKey === colKey && sortedInfo.order
+      ? sortedInfo.order
+      : 'none'
   }
 
   handleClick = () => {
@@ -73,5 +26,53 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
         ? column.sorter(column.sortKey)
         : column.sorter(column.columnKey)
     }
+  }
+
+  renderCellContents = () => {
+    const { column, sortedInfo } = this.props
+
+    if (column.renderHeaderCell) {
+      return column.renderHeaderCell(column, sortedInfo)
+    }
+
+    if (column.sorter) {
+      const columnSortStatus = this.getColumnSortStatus()
+
+      return (
+        <SortableCellUI
+          align={column.align}
+          className={`${TABLE_CLASSNAME}__SortableHeaderCell`}
+          onClick={this.handleClick}
+        >
+          <span className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}>
+            {column.title}
+          </span>
+          {columnSortStatus !== 'none' && (
+            <Icon
+              name={
+                columnSortStatus === 'descending' ? 'caret-down' : 'caret-up'
+              }
+            />
+          )}
+        </SortableCellUI>
+      )
+    }
+
+    return column.title
+  }
+
+  render() {
+    const { column } = this.props
+
+    return (
+      <HeaderCellUI
+        className={`${TABLE_CLASSNAME}__HeaderCell`}
+        align={column.align}
+        cellWidth={column.width}
+        aria-sort={this.getColumnSortStatus()}
+      >
+        {this.renderCellContents()}
+      </HeaderCellUI>
+    )
   }
 }

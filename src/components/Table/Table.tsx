@@ -10,7 +10,7 @@ import Scrollable from '../Scrollable'
 import { COMPONENT_KEY, generateCellKey } from './Table.utils'
 
 import { TableWrapperUI, TableUI } from './styles/Table.css'
-import { defaultTheme, alternativeTheme } from './styles/themes'
+import { defaultTheme, chooseTheme } from './styles/themes'
 
 import Row from './Row'
 import HeaderCell from './HeaderCell'
@@ -51,6 +51,47 @@ export class Table extends React.PureComponent<TableProps, TableState> {
   wrapperNode: HTMLElement
   tableNode: HTMLElement
 
+  setWrapperNode = node => {
+    this.wrapperNode = node
+    this.props.wrapperRef(node)
+  }
+
+  setTableNode = node => {
+    this.tableNode = node
+    this.props.tableRef(node)
+  }
+
+  getComponentClassNames = () => {
+    const { className, tableClassName, isLoading, onRowClick } = this.props
+    const { isTableCollapsed } = this.state
+
+    const tableWrapperClassNames = classNames(
+      `${TABLE_CLASSNAME}__Wrapper`,
+      isLoading && 'is-loading',
+      isTableCollapsed && 'is-collapsed',
+      className
+    )
+    const tableClassNames = classNames(
+      TABLE_CLASSNAME,
+      isLoading && 'is-loading',
+      Boolean(onRowClick) && 'with-clickable-rows',
+      tableClassName
+    )
+
+    return { tableWrapperClassNames, tableClassNames }
+  }
+
+  handleExpanderClick = () => {
+    this.setState(
+      {
+        isTableCollapsed: !this.state.isTableCollapsed,
+      },
+      () => {
+        this.props.onExpand(!!this.state.isTableCollapsed)
+      }
+    )
+  }
+
   render() {
     const {
       className,
@@ -63,6 +104,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
       sortedInfo,
       isLoading,
       onRowClick,
+      theme,
       ...rest
     } = this.props
 
@@ -78,7 +120,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
       : [...data]
 
     return (
-      <ThemeProvider theme={this.chooseTheme()}>
+      <ThemeProvider theme={chooseTheme(theme)}>
         <TableWrapperUI
           className={tableWrapperClassNames}
           innerRef={this.setWrapperNode}
@@ -117,6 +159,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
               </tbody>
             </TableUI>
           </Scrollable>
+
           {isTableCollapsed && (
             <Button
               version={2}
@@ -130,55 +173,6 @@ export class Table extends React.PureComponent<TableProps, TableState> {
           )}
         </TableWrapperUI>
       </ThemeProvider>
-    )
-  }
-
-  getComponentClassNames = () => {
-    const { className, tableClassName, isLoading, onRowClick } = this.props
-    const { isTableCollapsed } = this.state
-
-    const tableWrapperClassNames = classNames(
-      `${TABLE_CLASSNAME}__Wrapper`,
-      isLoading && 'is-loading',
-      isTableCollapsed && 'is-collapsed',
-      className
-    )
-    const tableClassNames = classNames(
-      TABLE_CLASSNAME,
-      isLoading && 'is-loading',
-      Boolean(onRowClick) && 'with-clickable-rows',
-      tableClassName
-    )
-
-    return { tableWrapperClassNames, tableClassNames }
-  }
-
-  setWrapperNode = node => {
-    this.wrapperNode = node
-    this.props.wrapperRef(node)
-  }
-
-  setTableNode = node => {
-    this.tableNode = node
-    this.props.tableRef(node)
-  }
-
-  chooseTheme = () => {
-    const { theme } = this.props
-
-    if (!theme || theme === 'default') return defaultTheme
-    if (theme === 'alternative') return alternativeTheme
-    return { ...defaultTheme, ...theme }
-  }
-
-  handleExpanderClick = () => {
-    this.setState(
-      {
-        isTableCollapsed: !this.state.isTableCollapsed,
-      },
-      () => {
-        this.props.onExpand(!!this.state.isTableCollapsed)
-      }
     )
   }
 }

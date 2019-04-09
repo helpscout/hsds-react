@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
 import { Table, TABLE_CLASSNAME } from '../Table'
-import { defaultTheme, alternativeTheme } from '../styles/themes'
+import { defaultTheme, alternativeTheme, chooseTheme } from '../styles/themes'
 
 import {
   createFakeCustomers,
@@ -141,7 +141,7 @@ describe('Theme', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
 
-    expect(wrapper.instance().chooseTheme()).toEqual(defaultTheme)
+    expect(chooseTheme(wrapper.prop('theme'))).toEqual(defaultTheme)
   })
 
   test('Renders default theme', () => {
@@ -150,7 +150,7 @@ describe('Theme', () => {
       <Table columns={defaultColumns} data={customers} theme="default" />
     )
 
-    expect(wrapper.instance().chooseTheme()).toEqual(defaultTheme)
+    expect(chooseTheme(wrapper.prop('theme'))).toEqual(defaultTheme)
   })
 
   test('Renders alternative theme', () => {
@@ -159,7 +159,7 @@ describe('Theme', () => {
       <Table columns={defaultColumns} data={customers} theme="alternative" />
     )
 
-    expect(wrapper.instance().chooseTheme()).toEqual(alternativeTheme)
+    expect(chooseTheme(wrapper.prop('theme'))).toEqual(alternativeTheme)
   })
 
   test('Renders custom theme', () => {
@@ -180,7 +180,7 @@ describe('Theme', () => {
       <Table columns={defaultColumns} data={customers} theme={purpleTheme} />
     )
 
-    expect(wrapper.instance().chooseTheme()).toEqual({
+    expect(chooseTheme(wrapper.prop('theme'))).toEqual({
       ...defaultTheme,
       ...purpleTheme,
     })

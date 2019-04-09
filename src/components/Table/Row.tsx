@@ -7,6 +7,11 @@ import { generateCellKey } from './Table.utils'
 import { RowProps } from './types'
 
 export default class Row extends React.PureComponent<RowProps> {
+  handleRowClick = e => {
+    const { row, onRowClick } = this.props
+    onRowClick && onRowClick(row, e)
+  }
+
   render() {
     const { row, columns } = this.props
 
@@ -21,10 +26,5 @@ export default class Row extends React.PureComponent<RowProps> {
         ))}
       </tr>
     )
-  }
-
-  handleRowClick = e => {
-    const { row, onRowClick } = this.props
-    onRowClick && onRowClick(row, e)
   }
 }

@@ -7,15 +7,7 @@ import { TABLE_CLASSNAME } from './Table'
 import { CellProps } from './types'
 
 export default class Cell extends React.PureComponent<CellProps> {
-  render() {
-    const { column } = this.props
-
-    return Array.isArray(column.columnKey)
-      ? this.renderCompoundColumnsCell()
-      : this.renderSingleColumnCell()
-  }
-
-  renderCompoundColumnsCell = () => {
+  getCompoundColumnCellData = () => {
     const { column, row } = this.props
     const cellData = {}
 
@@ -23,15 +15,26 @@ export default class Cell extends React.PureComponent<CellProps> {
       cellData[colKey] = row[colKey]
     }
 
+    return cellData
+  }
+
+  renderCompoundColumnsCell = () => {
+    const { column } = this.props
+    const cellData = this.getCompoundColumnCellData()
+
     return (
       <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
         {column.renderCell
           ? column.renderCell(cellData)
-          : (Object as any)
-              .values(cellData)
-              .map(d => <div key={d.slice(4)}>{d}</div>)}
+          : this.renderCompoundColumnCellDefaultMarkup(cellData)}
       </CellUI>
     )
+  }
+
+  renderCompoundColumnCellDefaultMarkup = cellData => {
+    return (Object as any)
+      .values(cellData)
+      .map(d => <div key={d.slice(4)}>{d}</div>)
   }
 
   renderSingleColumnCell = () => {
@@ -48,5 +51,13 @@ export default class Cell extends React.PureComponent<CellProps> {
         )}
       </CellUI>
     )
+  }
+
+  render() {
+    const { column } = this.props
+
+    return Array.isArray(column.columnKey)
+      ? this.renderCompoundColumnsCell()
+      : this.renderSingleColumnCell()
   }
 }
