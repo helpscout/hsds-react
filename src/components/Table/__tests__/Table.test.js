@@ -211,7 +211,7 @@ describe('Clickable Rows', () => {
     o.handleRowClick()
 
     expect(spy).toHaveBeenCalled()
-    expect(spy).toHaveBeenCalledWith(customers[0], event)
+    expect(spy).toHaveBeenCalledWith(event, customers[0])
   })
 })
 

@@ -9,7 +9,7 @@ import { RowProps } from './types'
 export default class Row extends React.PureComponent<RowProps> {
   handleRowClick = e => {
     const { row, onRowClick } = this.props
-    onRowClick && onRowClick(row, e)
+    onRowClick && onRowClick(e, row)
   }
 
   render() {

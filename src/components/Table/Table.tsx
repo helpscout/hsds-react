@@ -160,7 +160,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
             </TableUI>
           </Scrollable>
 
-          {isTableCollapsed && (
+          {isTableCollapsed ? (
             <Button
               version={2}
               style={{ marginLeft: '14px' }}
@@ -170,7 +170,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
             >
               View all
             </Button>
-          )}
+          ) : null}
         </TableWrapperUI>
       </ThemeProvider>
     )

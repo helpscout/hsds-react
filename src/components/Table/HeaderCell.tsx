@@ -13,9 +13,16 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
       ? column.sortKey
       : column.columnKey
 
-    return sortedInfo && sortedInfo.columnKey === colKey && sortedInfo.order
-      ? sortedInfo.order
-      : 'none'
+    const isTableSortedByThisColumn =
+      sortedInfo != null && sortedInfo.order && sortedInfo.columnKey === colKey
+
+    if (isTableSortedByThisColumn) {
+      // @ts-ignore
+      // TS complains that sortedInfo could be undefined, but given the conditional above, it can't
+      return sortedInfo.order
+    }
+
+    return 'none'
   }
 
   handleClick = () => {
@@ -47,13 +54,13 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
           <span className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}>
             {column.title}
           </span>
-          {columnSortStatus !== 'none' && (
+          {columnSortStatus !== 'none' ? (
             <Icon
               name={
                 columnSortStatus === 'descending' ? 'caret-down' : 'caret-up'
               }
             />
-          )}
+          ) : null}
         </SortableCellUI>
       )
     }
