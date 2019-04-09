@@ -20,7 +20,7 @@ const message = () =>
     `No results found for "boopable". Please try another search term.`
   )
 const title = (title = 'No Customers yet') => text('title', title)
-const illoName = (illoName = 'chatListBlankSlate') => text('illoName', illoName)
+const illoName = (illoName = 'spot-misc-empty') => text('illoName', illoName)
 
 const htmlMessage = (
   <span>
@@ -53,6 +53,7 @@ stories.add('Illo', () => {
     title: title(''),
     illoName: illoName(),
     message: htmlMessage,
+    illoSize: 90,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
 })
@@ -68,6 +69,7 @@ stories.add('Light background', () => {
     illoName: illoName(),
     lightBackground: boolean('lightBackground', true),
     message: htmlMessage,
+    illoSize: 90,
   }
   return <BlankSlate {...props} />
 })
@@ -81,7 +83,12 @@ storiesHsApp.addDecorator(
 storiesHsApp.addDecorator(withHsApp)
 
 storiesHsApp.add('default', () => {
-  const props = { title: title(), illoName: illoName(), message: htmlMessage }
+  const props = {
+    title: title(),
+    illoName: illoName(),
+    message: htmlMessage,
+    illoSize: number('illoSize', 90),
+  }
   return <BlankSlate {...getKnobsProps()} {...props} />
 })
 
@@ -92,6 +99,7 @@ storiesHsApp.add('Light background', () => {
     lightBackground: boolean('lightBackground', true),
     alignTop: boolean('alignTop', false),
     message: htmlMessage,
+    illoSize: 90,
   }
   return (
     <div style={{ height: '800px' }}>
@@ -107,6 +115,7 @@ storiesHsApp.add('Align top', () => {
     lightBackground: boolean('lightBackground', true),
     alignTop: boolean('alignTop', true),
     message: htmlMessage,
+    illoSize: 90,
   }
 
   return (

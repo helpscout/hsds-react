@@ -12,6 +12,7 @@ interface Props {
   message?: string | React.ReactNode
   title?: string
   illoName?: string
+  illoSize?: number
   lightBackground?: boolean
   alignTop?: boolean
 }
@@ -20,6 +21,7 @@ class BlankSlate extends React.PureComponent<Props> {
   static defaultProps = {
     lightBackground: false,
     alignTop: false,
+    illoSize: 80,
   }
 
   render() {
@@ -27,6 +29,7 @@ class BlankSlate extends React.PureComponent<Props> {
       className,
       children,
       illoName,
+      illoSize,
       title,
       message,
       lightBackground,
@@ -43,7 +46,7 @@ class BlankSlate extends React.PureComponent<Props> {
 
     return (
       <BlankSlateUI {...getValidProps(rest)} className={componentClassName}>
-        {illoName && <IlloUI name={illoName} size="80" />}
+        {illoName && <IlloUI name={illoName} size={illoSize} />}
         {title && <HeadingUI size="h3">{title}</HeadingUI>}
         {message && <TextUI>{message}</TextUI>}
       </BlankSlateUI>
