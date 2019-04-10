@@ -5,20 +5,22 @@ import Nav from '../Nav'
 import Toolbar from '../Toolbar'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { TabBarUI, RightContentUI, ToolbarUI } from './TabBar.css'
+import { TabBarUI, SecContentUI, ToolbarUI } from './TabBar.css'
 import { COMPONENT_KEY } from './TabBar.utils'
 
 export interface Props {
   className?: string
   children?: any
   innerRef: (node: HTMLElement) => void
-  rightContent?: any
+  secContent?: any
+  align?: 'left' | 'center' | 'right'
 }
 
 export class TabBar extends React.Component<Props> {
   static className = 'c-TabBar'
   static defaultProps = {
     innerRef: noop,
+    align: 'left',
   }
 
   static Item = Nav.Item
@@ -29,22 +31,21 @@ export class TabBar extends React.Component<Props> {
   }
 
   render() {
-    const { children, innerRef, rightContent, ...rest } = this.props
+    const { children, innerRef, secContent, align, ...rest } = this.props
 
     return (
       <TabBarUI
         {...getValidProps(rest)}
         className={this.getClassName()}
         innerRef={innerRef}
+        align={align}
       >
         <ToolbarUI placement="top">
           <Toolbar.Item>
             <Nav>{children}</Nav>
           </Toolbar.Item>
-          {rightContent && (
-            <Toolbar.Item>
-              <RightContentUI>{rightContent}</RightContentUI>
-            </Toolbar.Item>
+          {secContent && (
+            <SecContentUI align={align}>{secContent}</SecContentUI>
           )}
         </ToolbarUI>
       </TabBarUI>

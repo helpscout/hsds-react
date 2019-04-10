@@ -4,23 +4,51 @@ import Toolbar from '../Toolbar'
 import { getColor } from '../../styles/utilities/color'
 import baseStyles from '../../styles/resets/baseStyles.css'
 
+const getAlignment = align => {
+  switch (align) {
+    case 'center':
+      return 'center'
+    default:
+      return 'flex-start'
+  }
+}
+
+const getDirection = align => {
+  switch (align) {
+    case 'right':
+      return 'row-reverse'
+    default:
+      return 'row'
+  }
+}
+
 export const TabBarUI = styled('nav')`
   --BlueConfigGlobalFontSize: 14px;
   ${baseStyles};
   display: flex;
   margin: 0 auto;
 
+  .c-Toolbar {
+    justify-content: ${props => getAlignment(props.align)};
+    flex-direction: ${props => getDirection(props.align)};
+  }
+
   .c-ToolbarWrapper {
     width: 100%;
   }
 `
 
-export const RightContentUI = styled('div')`
+export const SecContentUI = styled(Toolbar.Item)`
   font-size: 14px;
   color: ${getColor('charcoal.200')};
   display: flex;
   align-items: center;
-  margin-bottom: calc(9px * -1);
+  margin-bottom: calc(8px * -1);
+
+  &.is-defaultItem {
+    margin-left: ${props => (props.align !== 'right' ? 'auto' : '0')};
+    margin-right: ${props => (props.align === 'right' ? 'auto' : '0')};
+  }
 
   b,
   strong {

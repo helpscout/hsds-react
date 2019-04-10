@@ -74,32 +74,53 @@ const dropdownContent = (
 
 stories.add('default', () => <TabBar>{renderTabBarItem()}</TabBar>)
 
-stories.add('with right content', () => {
-  const rightContent = (
+stories.add('center align', () => (
+  <TabBar align="center">{renderTabBarItem()}</TabBar>
+))
+
+stories.add('right align', () => (
+  <TabBar align="right">{renderTabBarItem()}</TabBar>
+))
+
+stories.add('with secondary content', () => {
+  const secContent = (
     <span>
       <b>13,456</b> items
     </span>
   )
-  return <TabBar rightContent={rightContent}>{renderTabBarItem()}</TabBar>
+  return <TabBar secContent={secContent}>{renderTabBarItem()}</TabBar>
 })
 
-stories.add('with right dropdown', () => {
-  return <TabBar rightContent={dropdownContent}>{renderTabBarItem()}</TabBar>
+stories.add('right align with secondary content', () => {
+  const secContent = (
+    <span>
+      <b>13,456</b> items
+    </span>
+  )
+  return (
+    <TabBar align="right" secContent={secContent}>
+      {renderTabBarItem()}
+    </TabBar>
+  )
+})
+
+stories.add('with secondary content dropdown', () => {
+  return <TabBar secContent={dropdownContent}>{renderTabBarItem()}</TabBar>
 })
 
 const storiesHsApp = storiesOf('TabBar/HS App', module)
 storiesHsApp.addDecorator(withKnobs)
 storiesHsApp.addDecorator(withHsApp)
 storiesHsApp.addDecorator(routerDecorator)
-storiesHsApp.add('with right content', () => {
-  const rightContent = (
+storiesHsApp.add('with secondary content', () => {
+  const secContent = (
     <span>
       <b>13,456</b> items
     </span>
   )
-  return <TabBar rightContent={rightContent}>{renderTabBarItem()}</TabBar>
+  return <TabBar secContent={secContent}>{renderTabBarItem()}</TabBar>
 })
 
-storiesHsApp.add('with right dropdown', () => {
-  return <TabBar rightContent={dropdownContent}>{renderTabBarItem()}</TabBar>
+storiesHsApp.add('with secondary dropdown', () => {
+  return <TabBar secContent={dropdownContent}>{renderTabBarItem()}</TabBar>
 })
