@@ -127,6 +127,7 @@ export class Input extends Component<Props, State> {
     isLast: false,
     isNotOnly: false,
     isSubtleReadOnly: false,
+    maxHeight: 320,
     moveCursorToEnd: false,
     multiline: null,
     offsetAmount: 0,
