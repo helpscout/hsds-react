@@ -64,6 +64,6 @@ export const ToolbarUI = styled(Toolbar)`
   padding-right: 0;
 
   &.is-placement-top.is-size-sm .c-Nav {
-    margin-bottom: calc(9px * -1);
+    /* margin-bottom: calc(9px * -1); */
   }
 `
