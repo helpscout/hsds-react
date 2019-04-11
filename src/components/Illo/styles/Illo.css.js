@@ -6,7 +6,7 @@ import forEach from '../../../styles/utilities/forEach'
 import { BEM } from '../../../utilities/classNames'
 
 export const ILLO_DEFAULT_SIZE = 40
-export const ILLO_SIZES = [ILLO_DEFAULT_SIZE, 60, 72, 80]
+export const ILLO_SIZES = [ILLO_DEFAULT_SIZE, 60, 72, 80, 90]
 
 const bem = BEM('.c-Illo')
 

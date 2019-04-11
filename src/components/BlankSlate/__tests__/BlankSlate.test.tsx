@@ -78,4 +78,13 @@ describe('Illo', () => {
     const component = wrapper.find(IlloUI)
     expect(component.length).toBeFalsy()
   })
+
+  test('Render illo size if set in props', () => {
+    const wrapper = mount(
+      <BlankSlate illoName="chatListBlankSlate" illoSize={90} />
+    )
+    const o = wrapper.find(IlloUI)
+
+    expect(o.first().prop('size')).toBe(90)
+  })
 })
