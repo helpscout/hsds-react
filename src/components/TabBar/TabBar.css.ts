@@ -2,6 +2,7 @@ import styled from '../styled'
 import Toolbar from '../Toolbar'
 
 import { getColor } from '../../styles/utilities/color'
+import { setFontSize } from '../../styles/utilities/font'
 import baseStyles from '../../styles/resets/baseStyles.css'
 
 const getAlignment = align => {
@@ -23,8 +24,9 @@ const getDirection = align => {
 }
 
 export const TabBarUI = styled('nav')`
-  --BlueConfigGlobalFontSize: 14px;
   ${baseStyles};
+  ${setFontSize(14)};
+
   display: flex;
   margin: 0 auto;
 
@@ -39,7 +41,7 @@ export const TabBarUI = styled('nav')`
 `
 
 export const SecContentUI = styled(Toolbar.Item)`
-  font-size: 14px;
+  ${setFontSize(14)};
   color: ${getColor('charcoal.200')};
   display: flex;
   align-items: center;
