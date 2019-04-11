@@ -35,6 +35,7 @@ export const BodyUI = styled('div')`
   ${baseStyles};
 
   display: block;
+  overflow: hidden;
   padding: 24px 20px;
 
   .is-closed & {
@@ -74,7 +75,6 @@ export const BodyUI = styled('div')`
 
 export const SectionUI = styled('div')`
   ${baseStyles};
-
   border-bottom: 1px solid ${getColor('border')};
 
   &.is-seamless,
@@ -99,6 +99,10 @@ export const makeTitleUI = (selector: 'div') => {
       background-color: ${getColor('grey.200')};
       color: currentColor;
       text-decoration: none;
+    }
+
+    &:focus {
+      outline: none;
     }
 
     &.is-open {

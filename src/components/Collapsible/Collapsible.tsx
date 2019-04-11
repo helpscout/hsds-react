@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
+import { CollapsibleUI } from './Collapsible.css'
 
 export interface Props {
   children?: any
@@ -217,15 +218,15 @@ class Collapsible extends React.Component<Props, any> {
     }
 
     return (
-      <div
+      <CollapsibleUI
         {...rest}
         aria-hidden={!isOpen}
         style={componentStyle}
         className={componentClassName}
-        ref={this.setNodeRef}
+        innerRef={this.setNodeRef}
       >
         <div ref={this.setHeightNodeRef}>{content}</div>
-      </div>
+      </CollapsibleUI>
     )
   }
 }
