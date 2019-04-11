@@ -103,6 +103,7 @@ export class GreeterCard extends React.PureComponent<Props> {
       children,
       innerRef,
       in: inProp,
+      title,
       ...rest
     } = this.props
 
