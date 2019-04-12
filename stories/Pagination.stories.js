@@ -8,6 +8,11 @@ import styled from '../src/components/styled'
 
 import { Pagination } from '../src/components'
 
+export const config = {
+  TOTAL_ITEMS: 255,
+  RANGE_PER_PAGE: 50,
+}
+
 const PaginationWrapperUI = styled('div')`
   min-width: 400px;
   max-width: 800px;
@@ -28,8 +33,8 @@ const activePage = (cPage = 1) => number('activePage', cPage)
 
 const getKnobsProps = otherKnobs => {
   return {
-    totalItems: number('totalItems', 255),
-    rangePerPage: number('rangePerPage', 50),
+    totalItems: number('totalItems', config.TOTAL_ITEMS),
+    rangePerPage: number('rangePerPage', config.RANGE_PER_PAGE),
     ...otherKnobs,
   }
 }
