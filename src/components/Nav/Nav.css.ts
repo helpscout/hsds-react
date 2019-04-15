@@ -6,6 +6,7 @@ import baseStyles from '../../styles/resets/baseStyles.css'
 
 export const config = {
   indicatorTransition: 'opacity 100ms ease',
+  padding: '10px',
 }
 
 export const NavUI = styled('nav', { pure: false })`
@@ -24,7 +25,7 @@ export const ListUI = styled('ul', { pure: false })`
 `
 
 export const ItemUI = styled('li', { pure: false })`
-  padding: 0 10px;
+  padding: 0;
   transform: translateZ(0);
 
   &.is-disabled {
@@ -36,6 +37,7 @@ export const ItemUI = styled('li', { pure: false })`
     color: ${getColor('charcoal.200')};
     display: block;
     text-decoration: none !important;
+    padding: 0 ${config.padding};
 
     &:hover {
       color: ${getColor('charcoal.300')};
@@ -81,13 +83,13 @@ export const ErrorWrapperUI = styled(Flexy.Item)`
 export const IndicatorUI = styled('div')`
   background: ${getColor('blue.500')};
   border-radius: 9999px;
-  bottom: 0;
+  bottom: -1px;
   height: 2px;
   opacity: 0;
   left: 0;
+  right: 0;
   position: absolute;
   transition: ${config.indicatorTransition};
-  width: 100%;
   will-change: opacity;
 
   ${({ isActive }) =>

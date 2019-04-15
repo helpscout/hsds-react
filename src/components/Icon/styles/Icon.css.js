@@ -10,8 +10,10 @@ const bem = BEM('.c-Icon')
 const ICON_SIZES = [8, 10, 12, 13, 14, 16, 18, 20, 24, 32, 48, 52]
 
 export const config = {
-  caretSize: 12,
-  offset: 4,
+  caretSize: 13,
+  marginOffset: 4,
+  offsetRight: '6px',
+  offsetTop: '1px',
   size: 20,
 }
 
@@ -41,11 +43,11 @@ const css = `
   }
 
   &.is-offsetLeft {
-    margin-right: ${config.offset}px;
+    margin-right: ${config.marginOffset}px;
   }
 
   &.is-offsetRight {
-    margin-left: ${config.offset}px;
+    margin-left: ${config.marginOffset}px;
   }
 
   ${makeShadeStyles()};
@@ -54,7 +56,7 @@ const css = `
 
   &.withCaret {
     ${bem.element('icon')} {
-      width: calc(100% - ${config.caretSize}px);
+      width: calc(100% - (${config.caretSize}px - ${config.offsetRight}));
     }
   }
 
@@ -81,7 +83,9 @@ const css = `
       height: ${config.caretSize}px;
       position: absolute;
       right: 0;
-      top: calc(50% - ${Math.round(config.caretSize / 2)}px);
+      top: calc(50% - ${Math.round(config.caretSize / 2)}px + ${
+  config.offsetTop
+});
       width: ${config.caretSize}px;
     }
   }

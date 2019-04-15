@@ -17,7 +17,7 @@ jest.mock('../../Animate', () => {
   }
 })
 
-jest.mock('../../Portal', () => {
+jest.mock('../../Dropdown/V2/Dropdown.MenuPortal', () => {
   const Portal = ({ children }) => <div>{children}</div>
   return {
     default: Portal,

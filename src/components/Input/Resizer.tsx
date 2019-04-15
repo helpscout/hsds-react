@@ -129,8 +129,8 @@ export class Resizer extends React.PureComponent<Props> {
     if (!minimumLines) return
 
     return (
-      <div
-        ref={this.setMinimumLinesNode}
+      <GhostUI
+        innerRef={this.setMinimumLinesNode}
         className={this.getContentClassName()}
         dangerouslySetInnerHTML={{
           __html: this.getContentsForMinimumLines(minimumLines),
