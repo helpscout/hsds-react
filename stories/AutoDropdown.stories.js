@@ -1,12 +1,6 @@
 import * as React from 'react'
 import { AutoDropdown } from '../src/components'
-import {
-  withKnobs,
-  boolean,
-  number,
-  select,
-  text,
-} from '@storybook/addon-knobs'
+import { withKnobs, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
@@ -18,7 +12,7 @@ const ItemSpec = createSpec({
   id: faker.random.uuid(),
   value: faker.name.firstName(),
 })
-const items = ItemSpec.generate(100)
+const items = ItemSpec.generate(2)
 
 stories.add('Default', () => {
   const props = {
@@ -27,6 +21,7 @@ stories.add('Default', () => {
     limit: number('limit', 15),
     onSelect: action('onSelect'),
   }
+
   return <AutoDropdown {...props} />
 })
 
@@ -82,6 +77,29 @@ stories.add('Stateful', () => {
   }
 
   return <Example />
+})
+
+stories.add('Stateful/With Multiple Selection', () => {
+  const CustomItem = props => {
+    return (
+      <div style={{ background: props.isActive ? 'blue' : 'white' }}>
+        <em>{props.value}</em>
+      </div>
+    )
+  }
+  const props = {
+    items,
+    dropUp: boolean('dropUp', false),
+    limit: number('limit', 1),
+    onSelect: action('onSelect'),
+    isOpen: boolean('isOpen', true),
+    closeOnSelect: boolean('closeOnSelect', false),
+    selectedItem: [items[0]],
+    // renderItem: CustomItem,
+    withMultipleSelection: boolean('withMultipleSelection', true),
+  }
+
+  return <AutoDropdown {...props} />
 })
 
 stories.add('Multiple instances', () => {

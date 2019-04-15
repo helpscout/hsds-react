@@ -111,7 +111,15 @@ export const decrementPathIndex = (
 /**
  * Item Helpers
  */
+
 export const itemIsActive = (selectedItem, item) => {
+  if (Array.isArray(selectedItem)) {
+    for (const selItem of selectedItem) {
+      if (itemIsActive(selItem, item)) return true
+    }
+    return false
+  }
+
   if (isObject(item) && isObject(selectedItem)) {
     const { id, value } = selectedItem
 
@@ -137,6 +145,21 @@ export const itemIsActive = (selectedItem, item) => {
   }
 
   return selectedItem === item
+}
+
+export const processSelectionOfItem = (currentSelection, item) => {
+  let removed = false
+  let selection: any[] = []
+
+  for (const presentItem of currentSelection) {
+    if (itemIsActive(presentItem, item)) {
+      removed = true
+    } else {
+      selection.push(presentItem)
+    }
+  }
+
+  return removed ? selection : selection.concat(item)
 }
 
 export const getItemFromCollection = (
@@ -267,7 +290,6 @@ export const getItemProps = (
   index?: string | number
 ): Object => {
   if (!state) return item
-
   const { dropUp, id, enableTabNavigation, indexMap, selectedItem } = state
   const { className, value, ...rest } = item
   const dropRight = isDropRight(state)

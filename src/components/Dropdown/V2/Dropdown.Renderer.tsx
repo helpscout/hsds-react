@@ -207,6 +207,7 @@ class Renderer extends React.PureComponent<any> {
       index,
       openClassName,
       previousIndex,
+      selectedItem,
     } = this.props
 
     if (!this.shouldRenderDOM()) return
@@ -238,20 +239,43 @@ class Renderer extends React.PureComponent<any> {
 
     if (!this.shouldRenderDOM()) return
 
-    // Render selected (active) styles
-    const previousSelectedNode = findItemDOMNodeById(
-      previousSelectedItem,
-      envNode
-    )
-    const selectedNode = findItemDOMNodeById(selectedItem, envNode)
+    if (Array.isArray(previousSelectedItem)) {
+      for (const item of previousSelectedItem) {
+        const previousSelectedNode = findItemDOMNodeById(item, envNode)
 
-    if (previousSelectedNode) {
-      previousSelectedNode.classList.remove(activeClassName)
+        if (previousSelectedNode) {
+          previousSelectedNode.classList.remove(activeClassName)
+        }
+      }
     }
 
-    if (selectedNode) {
-      selectedNode.classList.add(activeClassName)
-      setAriaActiveOnMenuFromItemNode(selectedNode)
+    if (Array.isArray(selectedItem)) {
+      for (const item of selectedItem) {
+        const selectedNode = findItemDOMNodeById(item, envNode)
+
+        if (selectedNode) {
+          selectedNode.classList.add(activeClassName)
+          setAriaActiveOnMenuFromItemNode(selectedNode)
+        }
+      }
+    }
+
+    if (!Array.isArray(selectedItem) && !Array.isArray(previousSelectedItem)) {
+      // Render selected (active) styles
+      const previousSelectedNode = findItemDOMNodeById(
+        previousSelectedItem,
+        envNode
+      )
+      const selectedNode = findItemDOMNodeById(selectedItem, envNode)
+
+      if (previousSelectedNode) {
+        previousSelectedNode.classList.remove(activeClassName)
+      }
+
+      if (selectedNode) {
+        selectedNode.classList.add(activeClassName)
+        setAriaActiveOnMenuFromItemNode(selectedNode)
+      }
     }
   }
 

@@ -108,9 +108,15 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   renderMenu() {
-    const { children } = this.props
+    const { children, withMultipleSelection } = this.props
 
-    return <MenuContainer children={children} innerRef={this.setMenuNodeRef} />
+    return (
+      <MenuContainer
+        children={children}
+        innerRef={this.setMenuNodeRef}
+        withMultipleSelection={withMultipleSelection}
+      />
+    )
   }
 
   render() {

@@ -144,6 +144,7 @@ export const ItemUI = styled('div')`
   &.is-active {
     > ${ActionUI}, &.is-option {
       font-weight: bold;
+      height: 32px;
     }
   }
 
@@ -233,4 +234,10 @@ export const SubMenuIncidatorUI = styled('div')`
   pointer-events: none;
   margin-right: -8px;
   min-width: 0;
+`
+
+export const ItemSelectedCheckUI = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `

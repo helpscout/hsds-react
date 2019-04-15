@@ -220,7 +220,9 @@ export class MenuContainer extends React.PureComponent<Props> {
     return items.map((item, index) => {
       /* istanbul ignore next */
       const indexProp = withIndex ? index : undefined
-      return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
+      const itemProps = this.getItemProps(item, indexProp)
+
+      return <Item {...itemProps}>{item.label}</Item>
     })
   }
 
@@ -489,6 +491,7 @@ const ConnectedMenuContainer: any = connect(
       shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
+      withMultipleSelection,
       zIndex,
     } = state
 
@@ -508,6 +511,7 @@ const ConnectedMenuContainer: any = connect(
       shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
+      withMultipleSelection,
       zIndex,
     }
   },

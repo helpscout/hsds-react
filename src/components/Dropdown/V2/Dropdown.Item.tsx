@@ -23,6 +23,7 @@ import {
 } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { COMPONENT_KEY } from './Dropdown.utils'
+import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 
 export interface Props {
   actionId?: string
@@ -67,6 +68,22 @@ export class Item extends React.PureComponent<Props> {
     type: 'item',
     value: '',
   }
+
+  constructor(props) {
+    super(props)
+
+    const internalState = props.getState()
+    const multiple = internalState.withMultipleSelection
+
+    this.state = {
+      renderItemMultipleDefault:
+        multiple && props.renderItem == null
+          ? ItemSelectedCheck
+          : props.renderItem,
+    }
+  }
+
+  // state = { renderItemMultipleDefault: this.props.renderItem != null && .withMultipleSelection };
 
   node: HTMLElement
   actionNode: HTMLElement
@@ -176,6 +193,11 @@ export class Item extends React.PureComponent<Props> {
   renderContent() {
     const { actionId, renderItem, children, label, value } = this.props
 
+    if (this.state.renderItemMultipleDefault) {
+      return this.state.renderItemMultipleDefault(
+        getCustomItemProps(this.props)
+      )
+    }
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }

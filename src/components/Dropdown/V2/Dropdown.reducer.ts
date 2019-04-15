@@ -1,5 +1,6 @@
 import actionTypes from './Dropdown.actionTypes'
 import { initialState } from './Dropdown.store'
+import { processSelectionOfItem } from './Dropdown.utils'
 import { isFunction } from '../../../utilities/is'
 
 export const initialItemState = {
@@ -50,11 +51,18 @@ const reducer = (state = initialState, action: any = {}) => {
       break
 
     case actionTypes.SELECT_ITEM:
+      const { selectedItem: payloadSelectedItem } = payload
+      const { selectedItem: stateSelectedItem, withMultipleSelection } = state
+
       nextState = {
         ...payload,
+        selectedItem: withMultipleSelection
+          ? processSelectionOfItem(stateSelectedItem, payloadSelectedItem)
+          : payloadSelectedItem,
         isOpen: state.closeOnSelect ? false : state.isOpen,
         previousSelectedItem: state.selectedItem,
       }
+
       break
 
     // Node references

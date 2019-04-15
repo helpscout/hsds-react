@@ -39,6 +39,7 @@ export const initialState = {
   positionFixed: false,
   previousIndex: null,
   selectedItem: '',
+  withMultipleSelection: false,
   shouldDropDirectionUpdate: () => true,
   stateReducer: state => state,
   subscribe: noop,

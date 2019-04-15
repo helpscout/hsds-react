@@ -7,6 +7,7 @@ import Button from '../src/components/Button'
 import Input from '../src/components/Input'
 import styled from '../src/components/styled'
 import store from '../src/components/Dropdown/V2/Dropdown.store'
+import { action } from '@storybook/addon-actions'
 import { boolean } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
 
@@ -287,6 +288,51 @@ stories.add('Stateful', () => {
             {...this.state}
             items={getItems()}
             stateReducer={nonCachedStateReducer}
+          />
+        </div>
+      )
+    }
+  }
+
+  return <Example />
+})
+
+stories.add('Stateful/Multiple Selection', () => {
+  class Example extends React.Component {
+    state = {
+      isOpen: true,
+      items: ItemSpec.generate(8),
+    }
+
+    add = () => {
+      this.setState({
+        items: [...this.state.items, ItemSpec.generate()],
+      })
+    }
+
+    remove = () => {
+      this.setState({
+        items: this.state.items.slice(0, -1),
+      })
+    }
+
+    render() {
+      const getItems = () => this.state.items
+      // Forces' Dropdown diff'ing
+      const nonCachedStateReducer = state => state
+
+      return (
+        <div>
+          <button onClick={this.add}>Add Item</button>
+          <button onClick={this.remove}>Remove Item</button>
+          <hr />
+          <Dropdown
+            {...this.state}
+            withMultipleSelection
+            selectedItem={[this.state.items[0], this.state.items[2]]}
+            items={getItems()}
+            stateReducer={nonCachedStateReducer}
+            onSelect={action('onSelect')}
           />
         </div>
       )

@@ -134,7 +134,9 @@ export const decrementIndex = (state, modifier: number = 1) => {
 /* istanbul ignore next */
 export const focusItem = (state, event: Event) => {
   const node = findClosestItemDOMNode(event.target as Element)
+
   if (!node) return
+
   const index = getIndexFromItemDOMNode(node)
   // Performance guard to prevent store from uppdating
   if (state.index === index) return
@@ -171,7 +173,7 @@ export const selectItemFromIndex = (state: any, event: any) => {
 
 /* istanbul ignore next */
 export const selectItem = (state, event: any, eventTarget?: any) => {
-  const { closeOnSelect, items, envNode } = state
+  const { closeOnSelect, items, envNode, withMultipleSelection } = state
   const node = eventTarget || findClosestItemDOMNode(event.target)
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
@@ -184,7 +186,8 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   if (item.items) return
 
   const triggerNode = findTriggerNode(envNode)
-  const selectedItem = !state.clearOnSelect ? item : null
+  const selectedItem =
+    !state.clearOnSelect || withMultipleSelection ? item : null
   const isMouseEvent = isDefined(event.pageX)
 
   const callbackProps = {
@@ -195,16 +198,19 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
 
   // Trigger select callback
   if (item && state.onSelect) {
+    console.log('Trigger select callback')
     state.onSelect(item.value, callbackProps)
   }
 
   // Trigger item.onClick callback
   if (item && item.onClick && !isMouseEvent) {
+    console.log('Trigger item.onClick callback')
     item.onClick(event)
   }
 
   // Trigger close callback from Provider
   if (closeOnSelect) {
+    console.log('Trigger close callback from Provider')
     state.onClose && state.onClose()
     // Refocus triggerNode
     // @ts-ignore
