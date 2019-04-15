@@ -23,12 +23,18 @@ const guides = [
 
 const stories = storiesOf('AvatarStack', module)
 stories.addDecorator(
-  withArtboard({ id: 'hsds-avatarstack', guides, width: 400, height: 100 })
+  withArtboard({
+    guides,
+    width: 400,
+    height: 100,
+    showGuides: false,
+    showInterface: false,
+  })
 )
 stories.addDecorator(withKnobs)
 
 stories.add('V2/Default', () => {
-  const avatars = number('avatars', 1)
+  const avatars = number('avatars', 5)
 
   const animationDuration = number('animationDuration', 300)
   const animationEasing = text('animationEasing', 'ease')
