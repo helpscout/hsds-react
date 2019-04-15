@@ -7,8 +7,8 @@ import Text from '../Text'
 import Illo from '../Illo'
 
 export const IlloUI = styled(Illo)`
-  padding-bottom: 18px;
   margin: 0;
+  margin-bottom: 18px;
   align-self: center;
 `
 

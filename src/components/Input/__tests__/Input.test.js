@@ -370,11 +370,11 @@ describe('Multiline', () => {
     expect(wrapper.state()).not.toBe(null)
   })
 
-  test('Does not set maxHeight on multiline by default', () => {
+  test('Has a maxHeight by default', () => {
     const wrapper = mount(<Input multiline={3} />)
     const el = wrapper.find('textarea')
 
-    expect(el.prop('style').maxHeight).toBeFalsy()
+    expect(el.prop('style').maxHeight).toBeTruthy()
   })
 
   test('Sets maxHeight on multiline, if specified', () => {

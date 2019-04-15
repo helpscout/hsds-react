@@ -3,3 +3,4 @@ export type IlloSize =
 | '60'
 | '72'
 | '80'
+| '90'
