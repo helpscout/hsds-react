@@ -40,7 +40,7 @@ const renderSidebarFooter = () => {
       <SideNavigation.DropdownFooter items={footerItems} iconName="cog">
         Edit Mailbox
       </SideNavigation.DropdownFooter>
-      <SideNavigation.Button icon={<Icon name="new-convo" />}>
+      <SideNavigation.Button iconName="new-convo">
         New conversation
       </SideNavigation.Button>
     </SideNavigation.Footer>
@@ -100,7 +100,7 @@ class SidebarHsAppItems extends React.PureComponent {
     return (
       <SideNavigation.Section main={true}>
         <SideNavigation.Item
-          icon={<Icon name="chat" />}
+          iconName="chat"
           active={active === 'chat'}
           onClick={e => this.updateActiveItem('chat')}
         >
@@ -108,7 +108,7 @@ class SidebarHsAppItems extends React.PureComponent {
         </SideNavigation.Item>
         <SideNavigation.Item
           count={137}
-          icon={<Icon name="unassigned" />}
+          iconName="unassigned"
           active={active === 'unassigned'}
           onClick={e => this.updateActiveItem('unassigned')}
         >
@@ -116,7 +116,7 @@ class SidebarHsAppItems extends React.PureComponent {
         </SideNavigation.Item>
         <SideNavigation.Item
           count={1}
-          icon={<Icon name="mine" />}
+          iconName="mine"
           active={active === 'mine'}
           onClick={e => this.updateActiveItem('mine')}
         >
@@ -124,7 +124,7 @@ class SidebarHsAppItems extends React.PureComponent {
         </SideNavigation.Item>
         <SideNavigation.Item
           count={2}
-          icon={<Icon name="alert" />}
+          iconName="alert"
           active={active === 'alert'}
           onClick={e => this.updateActiveItem('alert')}
           danger={true}
@@ -133,7 +133,7 @@ class SidebarHsAppItems extends React.PureComponent {
         </SideNavigation.Item>
         <SideNavigation.Item
           count={88}
-          icon={<Icon name="drafts" />}
+          iconName="drafts"
           active={active === 'drafts'}
           onClick={e => this.updateActiveItem('drafts')}
         >
@@ -141,7 +141,7 @@ class SidebarHsAppItems extends React.PureComponent {
         </SideNavigation.Item>
         <SideNavigation.Item
           count={131}
-          icon={<Icon name="assigned" />}
+          iconName="assigned"
           active={active === 'assigned'}
           onClick={e => this.updateActiveItem('assigned')}
         >
@@ -149,7 +149,7 @@ class SidebarHsAppItems extends React.PureComponent {
         </SideNavigation.Item>
         <SideNavigation.Item
           muted={true}
-          icon={<Icon name="closed" />}
+          iconName="closed"
           active={active === 'closed'}
           onClick={e => this.updateActiveItem('closed')}
         >
@@ -157,7 +157,7 @@ class SidebarHsAppItems extends React.PureComponent {
         </SideNavigation.Item>
         <SideNavigation.Item
           muted={true}
-          icon={<Icon name="spam" />}
+          iconName="spam"
           active={active === 'spam'}
           onClick={e => this.updateActiveItem('spam')}
         >

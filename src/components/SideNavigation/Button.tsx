@@ -11,6 +11,7 @@ import { ButtonUI, ButtonFooterUI } from './SideNavigation.css'
 export interface Props {
   className?: string
   floatingMenu?: boolean
+  iconName?: string
   icon?: Icon
 }
 
@@ -20,7 +21,14 @@ export class Button extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, className, icon, floatingMenu, ...rest } = this.props
+    const {
+      children,
+      className,
+      iconName,
+      icon,
+      floatingMenu,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames('c-SideNavigation__Button', className)
     const ElementName: ButtonUI | ButtonFooterUI = floatingMenu
@@ -33,6 +41,7 @@ export class Button extends React.PureComponent<Props> {
         {...getValidProps(rest)}
         className={componentClassName}
       >
+        {iconName && <Icon name={iconName} />}
         {icon && icon}
         {floatingMenu && children}
       </ElementName>

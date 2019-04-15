@@ -4,8 +4,6 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 
-import { namespaceComponent } from '../../utilities/component'
-import { propConnect } from '../PropProvider'
 import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
 import FadeInOut from './FadeInOut'
 
@@ -13,7 +11,7 @@ export interface Props {
   className?: string
   collapsed?: boolean
   href?: string
-  icon?: Icon
+  iconName?: string
   count?: number
   active?: boolean
   danger?: boolean
@@ -35,7 +33,7 @@ export class Item extends React.PureComponent<Props> {
     const {
       children,
       className,
-      icon,
+      iconName,
       count,
       href,
       active,
@@ -70,7 +68,11 @@ export class Item extends React.PureComponent<Props> {
           onClick={onClick}
           className={buttonClassName}
         >
-          {icon && <IconUI>{icon}</IconUI>}
+          {iconName && (
+            <IconUI>
+              <Icon name={iconName} size={24} />
+            </IconUI>
+          )}
           <FadeInOut>
             {children}
             {count && <CountUI>{count}</CountUI>}

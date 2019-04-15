@@ -30,6 +30,8 @@ export const FadeInOutUI = styled('div')`
 export const IconUI = styled('span')`
   color: ${getColor('grey.600')};
   margin-right: 10px;
+  margin-left: -2px;
+  margin-top: -1px;
 `
 
 export const CountUI = styled(Text)`
