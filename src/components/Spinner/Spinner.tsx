@@ -43,8 +43,7 @@ export class Spinner extends React.PureComponent<Props> {
 
   render() {
     const { color, shade, isRounded, speed, ...rest } = this.props
-    const size = this.getSize()
-    const spinnerSize = size
+    const spinnerSize = this.getSize()
 
     return (
       <SpinnerUI

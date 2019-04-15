@@ -299,6 +299,18 @@ export const makeButtonUI = (selector = 'button') => {
       width: 100%;
     }
 
+    &.is-loading {
+      &.is-spinButtonOnLoading {
+        animation: SpinButtonOnLoadAnimation 700ms linear infinite;
+        will-change: transform;
+        @keyframes SpinButtonOnLoadAnimation {
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
+    }
+
     ${makeButtonSizeStyles()}
 
     ${props => makePrimaryStyles('primary', props)}
@@ -472,6 +484,12 @@ export const ButtonContentUI = styled('span')`
       pointer-events: none;
     }
   `};
+
+  ${({ isLoading }) =>
+    isLoading &&
+    `
+    opacity: 0.35;
+  `};
 `
 
 export const FocusUI = styled('span')`
@@ -509,9 +527,12 @@ export const FocusUI = styled('span')`
 `
 
 export const SpinnerUI = styled(Spinner)`
-  margin-left: 8px;
-  position: relative;
-  top: -0.5px;
+  color: ${getColor('charcoal.500')};
+  margin: -6px 0 0 -6px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
 `
 
 SpinnerUI.defaultProps = {

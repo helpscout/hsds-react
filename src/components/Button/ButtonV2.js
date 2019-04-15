@@ -36,6 +36,7 @@ type Props = {
   isLoading: boolean,
   isSuffix: boolean,
   size: ButtonSize,
+  spinButtonOnLoading: boolean,
   state?: UIState,
   submit: boolean,
   theme?: string,
@@ -57,6 +58,7 @@ class Button extends Component<Props> {
     isLast: false,
     isSuffix: false,
     size: 'md',
+    spinButtonOnLoading: false,
     submit: false,
   }
 
@@ -152,6 +154,7 @@ class Button extends Component<Props> {
       isLoading,
       isSuffix,
       size,
+      spinButtonOnLoading,
       state,
       submit,
       theme,
@@ -174,6 +177,7 @@ class Button extends Component<Props> {
       isSuffix && 'is-suffix',
       kind && `is-${kind}`,
       size && `is-${size}`,
+      spinButtonOnLoading && 'is-spinButtonOnLoading',
       state && `is-${state}`,
       theme && `is-${theme}`,
       className
@@ -191,12 +195,13 @@ class Button extends Component<Props> {
         innerRef={this.setInnerRef}
         type={type}
       >
+        {isLoading ? <SpinnerUI /> : null}
         <ButtonContentUI
-          className="c-ButtonV2__content"
           allowContentEventPropogation={allowContentEventPropogation}
+          className="c-ButtonV2__content"
+          isLoading={isLoading}
         >
           {this.getChildrenMarkup()}
-          {isLoading ? <SpinnerUI /> : null}
         </ButtonContentUI>
         {this.getFocusMarkup()}
       </ButtonUI>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { boolean, select } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import {
   Button,
   ControlGroup,
@@ -63,9 +63,14 @@ const makeButtonVariations = (props = {}) => {
 
 stories.add('Default', () => {
   const props = {
+    children: text('children', 'Button'),
+    disabled: boolean('disabled', false),
+    disableOnLoading: boolean('disableOnLoading', true),
+    isActive: boolean('isActive', false),
+    isBlock: boolean('isBlock', false),
     isLoading: boolean('isLoading', false),
     kind: select(
-      'selector',
+      'kind',
       {
         primary: 'primary',
         primaryAlt: 'primaryAlt',
@@ -88,12 +93,9 @@ stories.add('Default', () => {
       },
       'lg'
     ),
+    spinButtonOnLoading: boolean('spinButtonOnLoading', false),
   }
-  return (
-    <Button {...props} version={2}>
-      Click Me
-    </Button>
-  )
+  return <Button {...props} version={2} />
 })
 
 stories.add('everything', () => (

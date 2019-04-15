@@ -41,6 +41,7 @@ Alternatively, [PropProvider](../../PropProvider) can be used to set this prop a
 | onFocus                      | `function` | `onFocus` event handler.                                                        |
 | kind                         | `string`   | Applies the specified style to the button.                                      |
 | size                         | `string`   | Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`.            |
+| spinButtonOnLoading          | `boolean`  | A special property that... spins the button if `isLoading`.                     |
 | state                        | `string`   | Applies state styles to the button.                                             |
 | submit                       | `boolean`  | Sets the `type` of the button to `"submit"`.                                    |
 | version                      | `number`   | Applies the version `2` variant of the button.                                  |
