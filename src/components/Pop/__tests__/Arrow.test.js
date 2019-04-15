@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Arrow, { getPlacement, getPosition } from '../Arrow'
+import Arrow, { getPlacement, getPosition, sanitizeStyles } from '../Arrow'
 import { resetStyles } from '../../styled/testHelpers'
 
 describe('Arrow', () => {
@@ -80,5 +80,28 @@ describe('getPosition', () => {
     expect(getPosition('right-end')).toBe('end')
     expect(getPosition('bottom-start')).toBe('start')
     expect(getPosition('left-end')).toBe('end')
+  })
+})
+
+describe('sanitizeStyles', () => {
+  test('Returns NaN as zero', () => {
+    const results = sanitizeStyles({ top: NaN, left: NaN })
+
+    expect(results.top).toBe(0)
+    expect(results.left).toBe(0)
+  })
+
+  test('Return zero as zero', () => {
+    const results = sanitizeStyles({ top: 0, left: 0 })
+
+    expect(results.top).toBe(0)
+    expect(results.left).toBe(0)
+  })
+
+  test('Return number as number', () => {
+    const results = sanitizeStyles({ top: 123, left: 456 })
+
+    expect(results.top).toBe(123)
+    expect(results.left).toBe(456)
   })
 })

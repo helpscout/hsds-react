@@ -85,9 +85,9 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     }
   }
 
-  safeSetState(nextState) {
+  safeSetState(state, callback) {
     if (this._isMounted) {
-      return this.setState(nextState)
+      return this.setState(state, callback)
     }
   }
 

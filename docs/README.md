@@ -17,3 +17,5 @@
   * [Adding documentation](./contributing/documentation.md)
   * [Submitting for review](./contributing/review.md)
   * [Publishing a release](./contributing/release.md)
+* [Integration](./integration/README.md)
+  * [Submitting for review](./integration/review.md)

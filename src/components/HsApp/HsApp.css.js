@@ -1,6 +1,6 @@
 import styled from '../styled'
-import baseStyles from '../../../src/styles/resets/baseStyles.css.js'
-import { getColor } from '../../../src/styles/utilities/color'
+import baseStyles from '../../styles/resets/baseStyles.css.js'
+import { getColor } from '../../styles/utilities/color'
 import Dropdown from '../Dropdown/DropdownV2'
 import Avatar from '../Avatar'
 

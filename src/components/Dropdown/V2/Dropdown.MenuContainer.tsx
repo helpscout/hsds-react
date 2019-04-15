@@ -2,9 +2,9 @@ import * as React from 'react'
 import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
-import Portal from '../../Portal'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
+import MenuPortal from './Dropdown.MenuPortal'
 import Group from './Dropdown.Group'
 import Item from './Dropdown.Item'
 import Renderer from './Dropdown.Renderer'
@@ -31,6 +31,7 @@ import { COMPONENT_KEY } from './Dropdown.utils'
 import { isBrowserEnv } from '../../../utilities/env'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { memoizeWithProps } from '../../../utilities/memoize'
+import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 
@@ -269,12 +270,12 @@ export class MenuContainer extends React.PureComponent<Props> {
   getStylePosition = (): any => {
     const targetNode = this.getTargetNode()
 
-    const rect = targetNode.getBoundingClientRect()
-    const { height, top, left } = rect
+    const rect = getComputedClientRect(targetNode)
+    const { top, left } = rect
 
     return {
       left,
-      top: top + height,
+      top,
     }
   }
 
@@ -309,6 +310,15 @@ export class MenuContainer extends React.PureComponent<Props> {
     this.didOpen = false
     // End the reposition cycle
     cancelAnimationFrame(this.positionRAF)
+    this.props.closeDropdown()
+    this.focusTriggerNode()
+  }
+
+  focusTriggerNode = () => {
+    const { triggerNode } = this.props
+    if (!triggerNode) return
+
+    triggerNode.focus()
   }
 
   getPositionProps = () => {
@@ -417,41 +427,40 @@ export class MenuContainer extends React.PureComponent<Props> {
 
     return (
       <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
-        {isOpen && (
-          <Portal
-            id={this.id}
-            onOpen={this.onPortalOpen}
-            onClose={this.onPortalClose}
+        <MenuPortal
+          id={this.id}
+          isOpen={isOpen}
+          onOpen={this.onPortalOpen}
+          onClose={this.onPortalClose}
+        >
+          <div
+            className="DropdownV2MenuContainerPlacementRoot"
+            style={{ position: 'relative' }}
+            ref={this.setPlacementNode}
           >
-            <div
-              className="DropdownV2MenuContainerPlacementRoot"
-              style={{ position: 'relative' }}
-              ref={this.setPlacementNode}
+            <Renderer />
+            <Animate
+              sequence={shouldDropUp ? 'fade up' : animationSequence}
+              in={isOpen}
+              mountOnEnter={false}
+              unmountOnExit={false}
+              duration={animationDuration}
+              timeout={animationDuration / 2}
             >
-              <Renderer />
-              <Animate
-                sequence={shouldDropUp ? 'fade up' : animationSequence}
-                in={isOpen}
-                mountOnEnter={false}
-                unmountOnExit={false}
-                duration={animationDuration}
-                timeout={animationDuration / 2}
+              <MenuContainerUI
+                className={componentClassName}
+                innerRef={this.setNodeRef}
+                onClick={selectItem}
+                onMouseMove={focusItem}
+                {...{
+                  [SELECTORS.menuRootAttribute]: true,
+                }}
               >
-                <MenuContainerUI
-                  className={componentClassName}
-                  innerRef={this.setNodeRef}
-                  onClick={selectItem}
-                  onMouseMove={focusItem}
-                  {...{
-                    [SELECTORS.menuRootAttribute]: true,
-                  }}
-                >
-                  {this.renderContent()}
-                </MenuContainerUI>
-              </Animate>
-            </div>
-          </Portal>
-        )}
+                {this.renderContent()}
+              </MenuContainerUI>
+            </Animate>
+          </div>
+        </MenuPortal>
       </div>
     )
   }
