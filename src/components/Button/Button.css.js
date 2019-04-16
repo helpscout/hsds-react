@@ -488,7 +488,7 @@ export const ButtonContentUI = styled('span')`
   ${({ isLoading }) =>
     isLoading &&
     `
-    opacity: 0.35;
+    opacity: 0;
   `};
 `
 
