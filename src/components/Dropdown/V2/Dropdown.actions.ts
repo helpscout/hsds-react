@@ -199,7 +199,6 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   const deselected =
     selectedItem == null ? undefined : itemIsActive(selectedItemsInState, item)
 
-  console.log('HSDS: selectItem -> selectedItem', selectedItem)
   const callbackProps = {
     event,
     item,

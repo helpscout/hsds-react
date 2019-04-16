@@ -220,9 +220,8 @@ export class MenuContainer extends React.PureComponent<Props> {
     return items.map((item, index) => {
       /* istanbul ignore next */
       const indexProp = withIndex ? index : undefined
-      const itemProps = this.getItemProps(item, indexProp)
 
-      return <Item {...itemProps}>{item.label}</Item>
+      return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
     })
   }
 

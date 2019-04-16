@@ -83,8 +83,6 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  // state = { renderItemMultipleDefault: this.props.renderItem != null && .allowMultipleSelection };
-
   node: HTMLElement
   actionNode: HTMLElement
   wrapperNode: HTMLElement
