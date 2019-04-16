@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Heading.css'
+import css from './Heading.css'
 import { COMPONENT_KEY } from './utils'
 
 export interface Props {
@@ -13,18 +13,27 @@ export interface Props {
   children?: any
   disableSelect: boolean
   light?: boolean
-  lineHeightReset?: boolean
+  lineHeightInherit: boolean
+  lineHeightReset: boolean
   linkStyle?: boolean
+  noWrap: boolean
   selector?: string
   size: HeadingSize
+  truncate: boolean
   weight?: number | string
+  wordWrap: boolean
 }
 
 class Heading extends React.PureComponent<Props> {
   static defaultProps = {
     center: false,
     disableSelect: false,
+    lineHeightInherit: false,
+    lineHeightReset: false,
     linkStyle: false,
+    truncate: false,
+    noWrap: false,
+    wordWrap: false,
   }
 
   render() {
@@ -34,11 +43,15 @@ class Heading extends React.PureComponent<Props> {
       className,
       disableSelect,
       light,
+      lineHeightInherit,
       lineHeightReset,
       linkStyle,
+      noWrap,
       selector,
       size,
+      truncate,
       weight,
+      wordWrap,
       ...rest
     } = this.props
 
@@ -47,10 +60,14 @@ class Heading extends React.PureComponent<Props> {
       center && 'is-center',
       disableSelect && 'is-disableSelect',
       light && 'is-light',
-      lineHeightReset && 'is-line-height-reset',
+      lineHeightInherit && 'is-lineHeightInherit',
+      lineHeightReset && 'is-lineHeightReset',
       linkStyle && 'is-linkStyle',
       size && `is-${size}`,
+      truncate && 'is-truncate',
       weight && `is-${weight}`,
+      noWrap && 'is-noWrap',
+      wordWrap && 'is-wordWrap',
       className
     )
 
