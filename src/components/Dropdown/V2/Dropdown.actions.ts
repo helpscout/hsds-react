@@ -185,7 +185,6 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
   const item = getItemFromCollection(items, itemValue)
-  const deselected = itemIsActive(selectedItemsInState, item)
 
   // Performance guard to prevent store from updating
   if (!index) return
@@ -197,7 +196,10 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   const selectedItem =
     !state.clearOnSelect || allowMultipleSelection ? item : null
   const isMouseEvent = isDefined(event.pageX)
+  const deselected =
+    selectedItem == null ? undefined : itemIsActive(selectedItemsInState, item)
 
+  console.log('HSDS: selectItem -> selectedItem', selectedItem)
   const callbackProps = {
     event,
     item,

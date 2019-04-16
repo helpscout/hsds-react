@@ -28,7 +28,7 @@ stories.add('Default', () => {
 stories.add('Stateful', () => {
   class Example extends React.Component {
     static defaultProps = {
-      onSelect: () => undefined,
+      onSelect: action('onSelect'),
     }
 
     state = {
@@ -50,12 +50,11 @@ stories.add('Stateful', () => {
       })
     }
 
-    handleOnSelect = value => {
+    handleOnSelect = (value, props) => {
       this.setState({
         selectedItem: value,
       })
-      this.props.onSelect(value)
-      console.log(value)
+      this.props.onSelect(value, props)
     }
 
     render() {
