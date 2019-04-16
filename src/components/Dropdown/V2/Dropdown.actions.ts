@@ -198,19 +198,16 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
 
   // Trigger select callback
   if (item && state.onSelect) {
-    console.log('Trigger select callback')
     state.onSelect(item.value, callbackProps)
   }
 
   // Trigger item.onClick callback
   if (item && item.onClick && !isMouseEvent) {
-    console.log('Trigger item.onClick callback')
     item.onClick(event)
   }
 
   // Trigger close callback from Provider
   if (closeOnSelect) {
-    console.log('Trigger close callback from Provider')
     state.onClose && state.onClose()
     // Refocus triggerNode
     // @ts-ignore

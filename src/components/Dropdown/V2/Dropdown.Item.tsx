@@ -198,6 +198,7 @@ export class Item extends React.PureComponent<Props> {
         getCustomItemProps(this.props)
       )
     }
+
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
     }

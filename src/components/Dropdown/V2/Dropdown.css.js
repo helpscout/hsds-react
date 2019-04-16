@@ -144,7 +144,6 @@ export const ItemUI = styled('div')`
   &.is-active {
     > ${ActionUI}, &.is-option {
       font-weight: bold;
-      height: 32px;
     }
   }
 
@@ -240,4 +239,5 @@ export const ItemSelectedCheckUI = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 20px;
 `

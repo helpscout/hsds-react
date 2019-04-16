@@ -12,7 +12,7 @@ const ItemSpec = createSpec({
   id: faker.random.uuid(),
   value: faker.name.firstName(),
 })
-const items = ItemSpec.generate(2)
+const items = ItemSpec.generate(15)
 
 stories.add('Default', () => {
   const props = {
@@ -80,13 +80,6 @@ stories.add('Stateful', () => {
 })
 
 stories.add('Stateful/With Multiple Selection', () => {
-  const CustomItem = props => {
-    return (
-      <div style={{ background: props.isActive ? 'blue' : 'white' }}>
-        <em>{props.value}</em>
-      </div>
-    )
-  }
   const props = {
     items,
     dropUp: boolean('dropUp', false),
@@ -95,8 +88,10 @@ stories.add('Stateful/With Multiple Selection', () => {
     isOpen: boolean('isOpen', true),
     closeOnSelect: boolean('closeOnSelect', false),
     selectedItem: [items[0]],
-    // renderItem: CustomItem,
     withMultipleSelection: boolean('withMultipleSelection', true),
+    subscribe: state => {
+      console.log('HSDS: state selected items', state.selectedItem)
+    },
   }
 
   return <AutoDropdown {...props} />
