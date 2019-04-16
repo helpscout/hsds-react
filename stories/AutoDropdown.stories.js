@@ -88,10 +88,7 @@ stories.add('Stateful/With Multiple Selection', () => {
     isOpen: boolean('isOpen', true),
     closeOnSelect: boolean('closeOnSelect', false),
     selectedItem: [items[0]],
-    withMultipleSelection: boolean('withMultipleSelection', true),
-    subscribe: state => {
-      console.log('HSDS: state selected items', state.selectedItem)
-    },
+    allowMultipleSelection: boolean('allowMultipleSelection', true),
   }
 
   return <AutoDropdown {...props} />

@@ -62,7 +62,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   renderLoading?: any
   renderTrigger?: any
   selectedItem?: string | Object
-  withMultipleSelection?: boolean
+  allowMultipleSelection?: boolean
   setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void
   shouldDropDirectionUpdate: (Position: any) => boolean

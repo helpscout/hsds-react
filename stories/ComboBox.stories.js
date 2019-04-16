@@ -86,7 +86,7 @@ stories.add('Stateful/With Multiple Selection', () => {
     onSelect: action('onSelect'),
     isOpen: boolean('isOpen', true),
     closeOnSelect: boolean('closeOnSelect', false),
-    withMultipleSelection: boolean('withMultipleSelection', true),
+    allowMultipleSelection: boolean('allowMultipleSelection', true),
   }
 
   return <ComboBox {...props} />

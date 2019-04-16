@@ -491,7 +491,7 @@ const ConnectedMenuContainer: any = connect(
       shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
-      withMultipleSelection,
+      allowMultipleSelection,
       zIndex,
     } = state
 
@@ -511,7 +511,7 @@ const ConnectedMenuContainer: any = connect(
       shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
-      withMultipleSelection,
+      allowMultipleSelection,
       zIndex,
     }
   },

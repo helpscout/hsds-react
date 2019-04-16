@@ -328,7 +328,7 @@ stories.add('Stateful/Multiple Selection', () => {
           <hr />
           <Dropdown
             {...this.state}
-            withMultipleSelection
+            allowMultipleSelection
             selectedItem={[this.state.items[0], this.state.items[2]]}
             items={getItems()}
             stateReducer={nonCachedStateReducer}

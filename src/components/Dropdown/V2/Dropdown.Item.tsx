@@ -73,7 +73,7 @@ export class Item extends React.PureComponent<Props> {
     super(props)
 
     const internalState = props.getState()
-    const multiple = internalState.withMultipleSelection
+    const multiple = internalState.allowMultipleSelection
 
     this.state = {
       renderItemMultipleDefault:
@@ -83,7 +83,7 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  // state = { renderItemMultipleDefault: this.props.renderItem != null && .withMultipleSelection };
+  // state = { renderItemMultipleDefault: this.props.renderItem != null && .allowMultipleSelection };
 
   node: HTMLElement
   actionNode: HTMLElement

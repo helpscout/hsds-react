@@ -5,6 +5,7 @@ import {
   incrementPathIndex,
   decrementPathIndex,
   getIndexMapFromItems,
+  itemIsActive,
 } from './Dropdown.utils'
 
 import {
@@ -173,11 +174,18 @@ export const selectItemFromIndex = (state: any, event: any) => {
 
 /* istanbul ignore next */
 export const selectItem = (state, event: any, eventTarget?: any) => {
-  const { closeOnSelect, items, envNode, withMultipleSelection } = state
+  const {
+    closeOnSelect,
+    items,
+    selectedItem: selectedItemsInState,
+    envNode,
+    allowMultipleSelection,
+  } = state
   const node = eventTarget || findClosestItemDOMNode(event.target)
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
   const item = getItemFromCollection(items, itemValue)
+  const deselected = itemIsActive(selectedItemsInState, item)
 
   // Performance guard to prevent store from updating
   if (!index) return
@@ -187,12 +195,13 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
 
   const triggerNode = findTriggerNode(envNode)
   const selectedItem =
-    !state.clearOnSelect || withMultipleSelection ? item : null
+    !state.clearOnSelect || allowMultipleSelection ? item : null
   const isMouseEvent = isDefined(event.pageX)
 
   const callbackProps = {
     event,
     item,
+    deselected,
     dropdownType: 'hsds-dropdown-v2',
   }
 
