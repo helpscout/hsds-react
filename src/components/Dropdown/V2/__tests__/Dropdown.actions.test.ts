@@ -32,6 +32,7 @@ jest.mock('../Dropdown.renderUtils', () => {
 jest.mock('../Dropdown.utils', () => {
   return {
     getItemFromCollection: () => mockItem,
+    itemIsActive: () => true,
   }
 })
 
@@ -294,7 +295,11 @@ describe('selectItem', () => {
 
   test('Fires the onSelect callback, on select', () => {
     const spy = jest.fn()
-    const state = { onSelect: spy, selectedItem: undefined }
+    const state = {
+      onSelect: spy,
+      selectedItem: undefined,
+      clearOnSelect: true,
+    }
     const event = {}
 
     selectItem(state, event)
@@ -302,6 +307,7 @@ describe('selectItem', () => {
     expect(spy).toHaveBeenCalledWith(mockItem.value, {
       dropdownType: 'hsds-dropdown-v2',
       event,
+      deselected: undefined,
       item: mockItem,
     })
   })

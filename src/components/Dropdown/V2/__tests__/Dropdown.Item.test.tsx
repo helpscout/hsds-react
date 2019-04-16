@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
+import ItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
 import {
   findDOMNode,
   hasClass,
@@ -147,6 +148,32 @@ describe('Items', () => {
   })
 })
 
+describe('ItemSelectedCheck', () => {
+  test('Renders with value', () => {
+    const wrapper = mount(<ItemSelectedCheck value="Jon" />)
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+    const icon = wrapper.find('.c-Icon').first()
+
+    expect(valueSpan.text()).toBe('Jon')
+    expect(icon).toHaveLength(0)
+  })
+  test('Does not Renders without value', () => {
+    const wrapper = mount(<ItemSelectedCheck />)
+
+    expect(wrapper.instance()).toBe(null)
+  })
+
+  test('Renders checkmark if active', () => {
+    const wrapper = mount(<ItemSelectedCheck value="Jon" isActive={true} />)
+
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+    const icon = wrapper.find('.c-Icon').first()
+
+    expect(valueSpan.text()).toBe('Jon')
+    expect(icon).toHaveLength(1)
+  })
+})
+
 describe('Events', () => {
   test('onClick callback fires', () => {
     const spy = jest.fn()
@@ -225,6 +252,49 @@ describe('renderItem', () => {
     const el = wrapper.find('div.ron')
 
     expect(el.length).toBeTruthy()
+  })
+
+  test('Can render custom markup for item when multiselect enabled', () => {
+    const CustomItem = (props = {}) => {
+      // @ts-ignore
+      return <div className="ron">{props.label}</div>
+    }
+
+    const wrapper = mount(
+      <Item
+        label="Champ"
+        renderItem={CustomItem}
+        getState={() => {
+          return {
+            allowMultipleSelection: true,
+          }
+        }}
+      />
+    )
+
+    const el = wrapper.find('div.ron')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Calls renderItemMultipleDefault to render default markup for item when multiselect enabled', () => {
+    const wrapper = mount(
+      <Item
+        label="Champ"
+        value="hello"
+        getState={() => {
+          return {
+            allowMultipleSelection: true,
+          }
+        }}
+        {...{ isActive: true }}
+      />
+    )
+    const spy = jest.fn()
+
+    wrapper.setState({ renderItemMultipleDefault: spy })
+
+    expect(spy).toHaveBeenCalled()
   })
 })
 

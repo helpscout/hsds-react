@@ -306,7 +306,7 @@ class Renderer extends React.PureComponent<any> {
     // It may feel "wrong"... But, this is FAR cheaper than
     // relying on React to do it.
 
-    // That is because we're doing with a single (more or less) calculcation
+    // That is because we're doing with a single (more or less) calculation
     // rather than spreading the work throughout the menu/item tree.
     // This is especially important if item nesting is going to be a thing.
     this.optimizedRender()

@@ -49,7 +49,11 @@ export interface Props {
   value: string
 }
 
-export class Item extends React.PureComponent<Props> {
+export interface State {
+  renderItemMultipleDefault?: any
+}
+
+export class Item extends React.PureComponent<Props, State> {
   static defaultProps = {
     getState: noop,
     disabled: false,
@@ -73,7 +77,7 @@ export class Item extends React.PureComponent<Props> {
     super(props)
 
     const internalState = props.getState()
-    const multiple = internalState.allowMultipleSelection
+    const multiple = internalState && internalState.allowMultipleSelection
 
     this.state = {
       renderItemMultipleDefault:
