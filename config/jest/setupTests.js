@@ -4,12 +4,4 @@ import { setupTests } from '@helpscout/cyan'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-beforeEach(() => {
-  jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb())
-})
-
-afterEach(() => {
-  window.requestAnimationFrame.mockRestore()
-})
-
 setupTests()
