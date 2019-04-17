@@ -51,15 +51,17 @@ const reducer = (state = initialState, action: any = {}) => {
       break
 
     case actionTypes.SELECT_ITEM:
-      const { selectedItem: payloadSelectedItem } = payload
-      const { selectedItem: stateSelectedItem, allowMultipleSelection } = state
-
       nextState = {
         ...payload,
-        selectedItem: allowMultipleSelection
-          ? processSelectionOfItem(stateSelectedItem, payloadSelectedItem)
-          : payloadSelectedItem,
         isOpen: state.closeOnSelect ? false : state.isOpen,
+        previousSelectedItem: state.selectedItem,
+      }
+
+      break
+
+    case actionTypes.CLEAR_SELECTION:
+      nextState = {
+        selectedItem: payload.selectedItem,
         previousSelectedItem: state.selectedItem,
       }
 

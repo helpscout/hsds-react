@@ -6,6 +6,8 @@ import {
   decrementPathIndex,
   getIndexMapFromItems,
   itemIsActive,
+  isSelectedItemEmpty,
+  processSelectionOfItem,
 } from './Dropdown.utils'
 
 import {
@@ -169,6 +171,14 @@ export const selectItemFromIndex = (state: any, event: any) => {
   const target = findItemDOMNode(state.index, state.envNode)
   if (!target) return
 
+  if (
+    state.allowMultipleSelection &&
+    state.selectionClearer &&
+    target.classList.contains('c-SelectionClearerItem')
+  ) {
+    return clearSelection(state, event)
+  }
+
   return selectItem(state, event, target)
 }
 
@@ -192,26 +202,37 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   if (item.disabled) return
   if (item.items) return
 
-  const triggerNode = findTriggerNode(envNode)
-  const selectedItem =
-    !state.clearOnSelect || allowMultipleSelection ? item : null
-  const isMouseEvent = isDefined(event.pageX)
-  const deselected =
-    selectedItem == null ? undefined : itemIsActive(selectedItemsInState, item)
+  let selectedItem
 
-  const callbackProps = {
-    event,
-    item,
-    deselected,
-    dropdownType: 'hsds-dropdown-v2',
+  if (!state.clearOnSelect) {
+    selectedItem = item
+  } else {
+    selectedItem = null
+  }
+
+  if (allowMultipleSelection) {
+    selectedItem = processSelectionOfItem(selectedItemsInState, item)
   }
 
   // Trigger select callback
   if (item && state.onSelect) {
-    state.onSelect(item.value, callbackProps)
+    const deselected =
+      selectedItem == null
+        ? undefined
+        : itemIsActive(selectedItemsInState, item)
+
+    state.onSelect(item.value, {
+      event,
+      item,
+      selection: selectedItem,
+      deselected,
+      dropdownType: 'hsds-dropdown-v2',
+    })
   }
 
   // Trigger item.onClick callback
+  const isMouseEvent = isDefined(event.pageX)
+
   if (item && item.onClick && !isMouseEvent) {
     item.onClick(event)
   }
@@ -219,7 +240,9 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   // Trigger close callback from Provider
   if (closeOnSelect) {
     state.onClose && state.onClose()
+
     // Refocus triggerNode
+    const triggerNode = findTriggerNode(envNode)
     // @ts-ignore
     triggerNode && triggerNode.focus()
   }
@@ -228,6 +251,41 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
     type: actionTypes.SELECT_ITEM,
     payload: {
       selectedItem,
+    },
+  })
+}
+
+export const clearSelection = (state, event) => {
+  const { selectedItem, closeOnSelect, envNode } = state
+
+  // Performance guard to prevent store from updating
+  if (isSelectedItemEmpty(selectedItem)) return
+
+  // Trigger select callback
+  if (state.onSelect) {
+    const callbackProps = {
+      event,
+      item: '',
+      dropdownType: 'hsds-dropdown-v2',
+    }
+
+    state.onSelect('', callbackProps)
+  }
+
+  // Trigger close callback from Provider
+  if (closeOnSelect) {
+    state.onClose && state.onClose()
+
+    // Refocus triggerNode
+    const triggerNode = findTriggerNode(envNode)
+    // @ts-ignore
+    triggerNode && triggerNode.focus()
+  }
+
+  return dispatch(state, {
+    type: actionTypes.CLEAR_SELECTION,
+    payload: {
+      selectedItem: '',
     },
   })
 }

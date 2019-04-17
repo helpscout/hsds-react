@@ -49,11 +49,7 @@ export interface Props {
   value: string
 }
 
-export interface State {
-  renderItemMultipleDefault?: any
-}
-
-export class Item extends React.PureComponent<Props, State> {
+export class Item extends React.PureComponent<Props> {
   static defaultProps = {
     getState: noop,
     disabled: false,
@@ -73,20 +69,6 @@ export class Item extends React.PureComponent<Props, State> {
     value: '',
   }
 
-  constructor(props) {
-    super(props)
-
-    const internalState = props.getState()
-    const multiple = internalState && internalState.allowMultipleSelection
-
-    this.state = {
-      renderItemMultipleDefault:
-        multiple && props.renderItem == null
-          ? ItemSelectedCheck
-          : props.renderItem,
-    }
-  }
-
   node: HTMLElement
   actionNode: HTMLElement
   wrapperNode: HTMLElement
@@ -101,8 +83,14 @@ export class Item extends React.PureComponent<Props, State> {
 
   handleOnClick = (event: Event) => {
     const { onClick } = this.props
+    const state: any = this.props.getState()
+    const { allowMultipleSelection, selectionClearer } = state
 
-    onClick(event, { hasSubMenu: this.hasSubMenu() })
+    if (allowMultipleSelection && selectionClearer) {
+      onClick(state, event)
+    } else {
+      onClick(event, { hasSubMenu: this.hasSubMenu() })
+    }
   }
 
   hasSubMenu(): boolean {
@@ -193,12 +181,20 @@ export class Item extends React.PureComponent<Props, State> {
   }
 
   renderContent() {
-    const { actionId, renderItem, children, label, value } = this.props
+    const {
+      actionId,
+      renderItem,
+      children,
+      label,
+      value,
+      getState,
+    } = this.props
+    const internalState: any = getState()
+    const allowMultipleSelection =
+      internalState != null && internalState.allowMultipleSelection
 
-    if (this.state.renderItemMultipleDefault) {
-      return this.state.renderItemMultipleDefault(
-        getCustomItemProps(this.props)
-      )
+    if (allowMultipleSelection && renderItem == null) {
+      return ItemSelectedCheck(getCustomItemProps(this.props))
     }
 
     if (renderItem) {
@@ -275,11 +271,12 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 const ConnectedItem: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { getState, renderItem } = state
+    const { getState, renderItem, selectedItem } = state
 
     return {
       getState,
       renderItem,
+      selectedItem,
     }
   }
 )(

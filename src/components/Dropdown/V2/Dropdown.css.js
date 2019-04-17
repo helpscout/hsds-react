@@ -147,6 +147,15 @@ export const ItemUI = styled('div')`
     }
   }
 
+  &.c-SelectionClearerItem {
+    border-bottom: 1px solid ${getColor('grey.600')};
+    padding-bottom: 12px;
+  }
+
+  &.c-SelectionClearerItem + .c-DropdownV2Item {
+    padding-top: 12px;
+  }
+
   &:focus {
     ${MenuUI} {
       color: initial;
@@ -240,4 +249,8 @@ export const ItemSelectedCheckUI = styled('div')`
   justify-content: space-between;
   align-items: center;
   height: 20px;
+
+  &.is-selectionClearer-active {
+    font-weight: bold;
+  }
 `

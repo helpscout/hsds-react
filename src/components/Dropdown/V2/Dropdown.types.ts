@@ -24,6 +24,7 @@ export interface DropdownState extends DropdownMenuDimensions {
 
 export interface DropdownProps extends DropdownMenuDimensions {
   activeClassName: string
+  allowMultipleSelection?: boolean
   children?: (props: any) => void
   className?: string
   clearOnSelect: boolean
@@ -62,7 +63,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   renderLoading?: any
   renderTrigger?: any
   selectedItem?: string | Object
-  allowMultipleSelection?: boolean
+  selectionClearer?: string
   setMenuNode: (node: HTMLElement) => void
   setTriggerNode: (node: HTMLElement) => void
   shouldDropDirectionUpdate: (Position: any) => boolean

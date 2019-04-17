@@ -21,6 +21,7 @@ import {
   onMenuReposition,
   onMenuUnmounted,
   selectItem,
+  clearSelection,
 } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
@@ -36,10 +37,12 @@ import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 
 export interface Props {
+  allowMultipleSelection?: boolean
   animationDuration: number
   animationSequence: string
   children?: (props: any) => void
   className?: string
+  clearSelection: (...args: any[]) => void
   closeDropdown: () => void
   dropRight: boolean
   dropUp: boolean
@@ -59,6 +62,7 @@ export interface Props {
   renderEmpty?: any
   renderLoading?: any
   selectItem: (...args: any[]) => void
+  selectionClearer?: string
   shouldDropDirectionUpdate: (Position: any) => boolean
   triggerId?: string
   triggerNode?: HTMLElement
@@ -85,6 +89,7 @@ export const defaultProps = {
   positionFixed: false,
   shouldDropDirectionUpdate: () => true,
   selectItem: noop,
+  clearSelection: noop,
   zIndex: 1080,
 }
 
@@ -142,7 +147,14 @@ export class MenuContainer extends React.PureComponent<Props> {
   }
 
   getMenuProps() {
-    const { dropRight, isOpen, items, id, triggerId } = this.props
+    const {
+      dropRight,
+      isOpen,
+      items,
+      id,
+      triggerId,
+      allowMultipleSelection,
+    } = this.props
 
     const shouldDropUp = this.shouldDropUp()
 
@@ -217,6 +229,38 @@ export class MenuContainer extends React.PureComponent<Props> {
     items: Array<any>
     withIndex?: boolean
   }) => {
+    const {
+      allowMultipleSelection,
+      clearSelection,
+      focusItem,
+      selectionClearer,
+    } = this.props
+
+    if (allowMultipleSelection && selectionClearer) {
+      const clearerItem = {
+        value: selectionClearer,
+        id: createUniqueIDFactory('hsds-dropdown-v2-theallclearer')(),
+        label: '',
+      }
+
+      return [clearerItem].concat(items).map((item, index) => {
+        const indexProp = withIndex ? index : undefined
+        if (item.id === clearerItem.id) {
+          return (
+            <Item
+              {...this.getItemProps(item, indexProp)}
+              className="c-SelectionClearerItem"
+              onMouseMove={focusItem}
+              onClick={clearSelection}
+              isSelectionClearer
+            />
+          )
+        }
+
+        return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
+      })
+    }
+
     return items.map((item, index) => {
       /* istanbul ignore next */
       const indexProp = withIndex ? index : undefined
@@ -476,6 +520,7 @@ const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
     const {
+      allowMultipleSelection,
       dropUp,
       forceDropDown,
       getState,
@@ -487,14 +532,16 @@ const ConnectedMenuContainer: any = connect(
       positionFixed,
       renderEmpty,
       renderLoading,
+      selectedItem,
+      selectionClearer,
       shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
-      allowMultipleSelection,
       zIndex,
     } = state
 
     return {
+      allowMultipleSelection,
       dropRight: isDropRight(state),
       dropUp,
       forceDropDown,
@@ -507,15 +554,17 @@ const ConnectedMenuContainer: any = connect(
       positionFixed,
       renderEmpty,
       renderLoading,
+      selectedItem,
+      selectionClearer,
       shouldDropDirectionUpdate,
       triggerId,
       triggerNode,
-      allowMultipleSelection,
       zIndex,
     }
   },
   // mapDispatchToProps
   {
+    clearSelection,
     closeDropdown,
     focusItem,
     onMenuMounted,

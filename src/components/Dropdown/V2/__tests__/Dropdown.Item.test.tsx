@@ -157,6 +157,7 @@ describe('ItemSelectedCheck', () => {
     expect(valueSpan.text()).toBe('Jon')
     expect(icon).toHaveLength(0)
   })
+
   test('Does not Renders without value', () => {
     const wrapper = mount(<ItemSelectedCheck />)
 

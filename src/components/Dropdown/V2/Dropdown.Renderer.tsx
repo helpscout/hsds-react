@@ -9,7 +9,12 @@ import {
   selectItemFromIndex,
   closeDropdown,
 } from './Dropdown.actions'
-import { getNextChildPath, getParentPath, isDropRight } from './Dropdown.utils'
+import {
+  itemIsActive,
+  getNextChildPath,
+  getParentPath,
+  isDropRight,
+} from './Dropdown.utils'
 import {
   didCloseSubMenu,
   findItemDOMNode,
@@ -207,7 +212,6 @@ class Renderer extends React.PureComponent<any> {
       index,
       openClassName,
       previousIndex,
-      selectedItem,
     } = this.props
 
     if (!this.shouldRenderDOM()) return
@@ -235,32 +239,27 @@ class Renderer extends React.PureComponent<any> {
       envNode,
       previousSelectedItem,
       selectedItem,
+      index,
+      indexMap,
+      allowMultipleSelection,
     } = this.props
 
     if (!this.shouldRenderDOM()) return
 
-    if (Array.isArray(previousSelectedItem)) {
-      for (const item of previousSelectedItem) {
-        const previousSelectedNode = findItemDOMNodeById(item, envNode)
+    if (allowMultipleSelection) {
+      const selectedNode = findItemDOMNode(index, envNode)
+      const itemId = indexMap[index - 1]
+      const nodeIsSelected = itemIsActive(selectedItem, { id: itemId })
 
-        if (previousSelectedNode) {
-          previousSelectedNode.classList.remove(activeClassName)
-        }
-      }
-    }
-
-    if (Array.isArray(selectedItem)) {
-      for (const item of selectedItem) {
-        const selectedNode = findItemDOMNodeById(item, envNode)
-
-        if (selectedNode) {
+      if (selectedNode) {
+        if (nodeIsSelected) {
           selectedNode.classList.add(activeClassName)
           setAriaActiveOnMenuFromItemNode(selectedNode)
+        } else {
+          selectedNode.classList.remove(activeClassName)
         }
       }
-    }
-
-    if (!Array.isArray(selectedItem) && !Array.isArray(previousSelectedItem)) {
+    } else {
       // Render selected (active) styles
       const previousSelectedNode = findItemDOMNodeById(
         previousSelectedItem,
@@ -328,35 +327,37 @@ const ConnectedRenderer: any = connect(
   (state: any) => {
     const {
       activeClassName,
+      allowMultipleSelection,
       enableTabNavigation,
       envNode,
       focusClassName,
-      lastInteractionType,
-      previousIndex,
       index,
       indexMap,
       inputValue,
       isOpen,
       items,
+      lastInteractionType,
       openClassName,
+      previousIndex,
       previousSelectedItem,
       selectedItem,
     } = state
 
     return {
       activeClassName,
+      allowMultipleSelection,
       enableTabNavigation,
       envNode,
       dropRight: isDropRight(state),
       focusClassName,
-      lastInteractionWasKeyboard: lastInteractionType === 'keyboard',
-      previousIndex,
       index,
       indexMap,
       inputValue,
       isOpen,
       items,
+      lastInteractionWasKeyboard: lastInteractionType === 'keyboard',
       openClassName,
+      previousIndex,
       previousSelectedItem,
       selectedItem,
     }

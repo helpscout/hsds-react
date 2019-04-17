@@ -290,6 +290,7 @@ export const getItemProps = (
   index?: string | number
 ): Object => {
   if (!state) return item
+
   const { dropUp, id, enableTabNavigation, indexMap, selectedItem } = state
   const { className, value, ...rest } = item
   const dropRight = isDropRight(state)
@@ -357,4 +358,11 @@ export const filterNonStoreProps = props => {
     }
     return nextProps
   }, {})
+}
+
+export const isSelectedItemEmpty = selectedItem => {
+  if (selectedItem == null) return true
+  if (selectedItem === '') return true
+  if (Array.isArray(selectedItem) && selectedItem.length === 0) return true
+  return false
 }

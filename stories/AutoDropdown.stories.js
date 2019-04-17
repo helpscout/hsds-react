@@ -86,8 +86,22 @@ stories.add('Stateful/With Multiple Selection', () => {
     onSelect: action('onSelect'),
     isOpen: boolean('isOpen', true),
     closeOnSelect: boolean('closeOnSelect', false),
-    selectedItem: [items[0]],
+    clearOnSelect: boolean('closeOnSelect', false),
+    selectedItem: [],
+    selectionClearer: 'All Items',
     allowMultipleSelection: boolean('allowMultipleSelection', true),
+    stateReducer: (state, action) => {
+      if (
+        action.type === '@@HSDS/DROPDOWN/SELECT_ITEM' ||
+        action.type === '@@HSDS/DROPDOWN/CLEAR_SELECTION'
+      ) {
+        console.group('stateReducer')
+        console.log('HSDS: action', action)
+        console.log('HSDS: state', state)
+        console.groupEnd('stateReducer')
+      }
+      return state
+    },
   }
 
   return <AutoDropdown {...props} />
