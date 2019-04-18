@@ -1,6 +1,5 @@
 import actionTypes from './Dropdown.actionTypes'
 import { initialState } from './Dropdown.store'
-import { processSelectionOfItem } from './Dropdown.utils'
 import { isFunction } from '../../../utilities/is'
 
 export const initialItemState = {
