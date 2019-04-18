@@ -59,6 +59,12 @@ export const smoothScrollTo = ({
       } else {
         node.scrollTo(0, scrollToPosition)
       }
+    } else {
+      if (isHorizontalScroll) {
+        node.scrollLeft = scrollToPosition
+      } else {
+        node.scrollTop = scrollToPosition
+      }
     }
 
     // Proceed with animation as long as we wanted it to.
