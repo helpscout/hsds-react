@@ -11,7 +11,6 @@ export class SampleComponent extends Component {
     this.state = {
       tags: TagSpec.generate(28),
     }
-    this.handleOnRemove = this.handleOnRemove.bind(this)
   }
 
   onBeforeRemove({ id }) {
@@ -23,16 +22,22 @@ export class SampleComponent extends Component {
     })
   }
 
-  handleOnRemove({ id }) {
+  handleOnRemove = ({ id }) => {
     this.setState({
       tags: this.state.tags.filter(tag => tag.id !== id),
     })
     console.log('removed:', id)
   }
 
+  handleOnRemoveAll = () => {
+    this.setState({
+      tags: [],
+    })
+    console.log('removed all tags')
+  }
+
   render() {
     const { tags } = this.state
-    const handleOnRemove = this.handleOnRemove
 
     console.log('tag count:', tags.length)
 
@@ -47,7 +52,8 @@ export class SampleComponent extends Component {
       <TagList
         onBeforeRemove={this.onBeforeRemove}
         isRemovable
-        onRemove={handleOnRemove}
+        onRemove={this.handleOnRemove}
+        onRemoveAll={this.handleOnRemoveAll}
         {...this.props}
       >
         {tagMarkup}

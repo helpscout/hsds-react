@@ -16,6 +16,7 @@ export interface Props {
   children?: any
   onBeforeRemove: any
   onRemove: (value: any) => void
+  onRemoveAll: () => void
   overflowFade: boolean
   isRemovable: boolean
   clearAll: boolean
@@ -26,6 +27,7 @@ export class TagList extends React.PureComponent<Props> {
   static defaultProps = {
     onBeforeRemove: promiseNoop,
     onRemove: noop,
+    onRemoveAll: noop,
     overflowFade: false,
     isRemovable: false,
     clearAll: false,
@@ -45,6 +47,7 @@ export class TagList extends React.PureComponent<Props> {
   }
 
   handleOnRemove = value => this.props.onRemove(value)
+  handleOnRemoveAll = value => this.props.onRemoveAll()
 
   renderContent() {
     const { onBeforeRemove, children, isRemovable, clearAll } = this.props
@@ -57,12 +60,15 @@ export class TagList extends React.PureComponent<Props> {
     const childrenMarkup = React.Children.map(children, (child, index) => {
       if (!isComponentNamed(child, TAG)) return null
 
-      const isLastChildWithClearAll = childrenLength - 1 === index && clearAll
+      const isLastChildWithClearAll =
+        childrenLength - 1 === index && clearAll && childrenLength > 1
       return (
         <Inline.Item>
           {React.cloneElement(child)}
           {isLastChildWithClearAll && (
-            <ClearAllUI key="clearAllButton">Clear all</ClearAllUI>
+            <ClearAllUI key="clearAllButton" onClick={this.handleOnRemoveAll}>
+              Clear all
+            </ClearAllUI>
           )}
         </Inline.Item>
       )
