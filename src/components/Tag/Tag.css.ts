@@ -10,14 +10,42 @@ import styled from '../styled'
 export const config = {
   borderRadius: 3,
   colors: {
-    default: getColor('charcoal.200'),
-    blue: getColor('blue.500'),
-    green: getColor('green.500'),
-    grey: getColor('charcoal.200'),
-    orange: getColor('orange.500'),
-    purple: getColor('purple.500'),
-    red: getColor('red.500'),
-    yellow: getColor('yellow.500'),
+    default: {
+      main: getColor('charcoal.200'),
+      secondary: 'white',
+    },
+    blue: {
+      main: getColor('blue.500'),
+      secondary: 'white',
+    },
+    green: {
+      main: getColor('green.500'),
+      secondary: 'white',
+    },
+    grey: {
+      main: getColor('charcoal.200'),
+      secondary: 'white',
+    },
+    orange: {
+      main: getColor('orange.500'),
+      secondary: 'white',
+    },
+    purple: {
+      main: getColor('purple.500'),
+      secondary: 'white',
+    },
+    red: {
+      main: getColor('red.500'),
+      secondary: 'white',
+    },
+    yellow: {
+      main: getColor('yellow.500'),
+      secondary: 'white',
+    },
+    lightBlue: {
+      main: getColor('blue.200'),
+      secondary: getColor('blue.700'),
+    },
   },
   height: {
     sm: 17,
@@ -63,7 +91,7 @@ export const TagUI = styled('div')`
   background-color: white;
   border-radius: ${config.borderRadius}px;
   border: 1px solid currentColor;
-  color: ${config.colors.default};
+  color: ${config.colors.default.main};
   display: flex;
   align-items: center;
   padding: ${config.padding.sm};
@@ -129,10 +157,6 @@ export const SpinnerUI = styled(Spinner)`
     position: relative;
     right: -1px;
   }
-
-  &.is-filled {
-    color: white;
-  }
 `
 
 export const IconUI = styled(Icon)`
@@ -149,7 +173,6 @@ export const IconUI = styled(Icon)`
 
   &.is-filled {
     opacity: 0.75;
-    color: white;
 
     &:hover {
       opacity: 1;
@@ -160,14 +183,14 @@ export const IconUI = styled(Icon)`
 function makeColorStyles(): string {
   return forEach(
     config.colors,
-    (color, value) => `
-    &.is-${color} {
-      color: ${value};
+    (colorName, { main, secondary }) => `
+    &.is-${colorName} {
+      color: ${main};
 
       &.is-filled {
-        background-color: ${value};
-        border-color: ${value};
-        color: white;
+        background-color: ${main};
+        border-color: ${main};
+        color: ${secondary};
       }
     }
   `
