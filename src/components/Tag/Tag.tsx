@@ -31,7 +31,7 @@ type TagColor =
   | 'red'
   | 'yellow'
 
-type TagSize = 'sm' | 'md' | 'lg'
+type TagSize = 'sm' | 'md'
 
 export interface Props {
   animationDuration?: number

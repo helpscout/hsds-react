@@ -63,4 +63,4 @@ export class SampleComponent extends Component {
 }
 
 stories.add('Default', () => <SampleComponent />)
-stories.add('Clear all', () => <SampleComponent clearAll showAll />)
+stories.add('Clear all', () => <SampleComponent clearAll showAll size="md" />)

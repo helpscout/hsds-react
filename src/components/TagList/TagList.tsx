@@ -21,6 +21,7 @@ export interface Props {
   isRemovable: boolean
   clearAll: boolean
   showAll: boolean
+  size?: 'lg' | 'md' | 'sm' | 'xs'
 }
 
 export class TagList extends React.PureComponent<Props> {
@@ -32,6 +33,7 @@ export class TagList extends React.PureComponent<Props> {
     isRemovable: false,
     clearAll: false,
     showAll: false,
+    size: 'xs',
   }
 
   static className = 'c-TagList'
@@ -47,10 +49,10 @@ export class TagList extends React.PureComponent<Props> {
   }
 
   handleOnRemove = value => this.props.onRemove(value)
-  handleOnRemoveAll = value => this.props.onRemoveAll()
+  handleOnRemoveAll = () => this.props.onRemoveAll()
 
   renderContent() {
-    const { onBeforeRemove, children, isRemovable, clearAll } = this.props
+    const { onBeforeRemove, children, isRemovable, clearAll, size } = this.props
 
     const providerProps = {
       [TAG]: { onBeforeRemove, isRemovable, onRemove: this.handleOnRemove },
@@ -76,7 +78,7 @@ export class TagList extends React.PureComponent<Props> {
 
     return (
       <PropProvider value={providerProps}>
-        <Inline size="xs">{childrenMarkup}</Inline>
+        <Inline size={size}>{childrenMarkup}</Inline>
       </PropProvider>
     )
   }

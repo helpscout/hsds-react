@@ -50,6 +50,16 @@ describe('Inline', () => {
     expect(inlineItem.length).toBe(1)
     expect(tag.length).toBe(1)
   })
+
+  test('Does set the size prop on the Inline component', () => {
+    const wrapper = mount(
+      <TagList size="md">
+        <Tag id={1} />
+      </TagList>
+    )
+    const inline = wrapper.find(Inline)
+    expect(inline.props().size).toBe('md')
+  })
 })
 
 describe('isRemovable', () => {
@@ -103,7 +113,7 @@ describe('onRemove', () => {
 })
 
 describe('onRemoveAll', () => {
-  test('Fires callback from clearAll, if specified', () => {
+  test('Fires callback from clearAll button, if specified', () => {
     const spy = jest.fn()
 
     const wrapper = mount(
@@ -112,10 +122,8 @@ describe('onRemoveAll', () => {
         <Tag id={2} />
       </TagList>
     )
-    const o = wrapper.find(ClearAllUI).first()
 
-    o.simulate('click')
-
+    wrapper.find(ClearAllUI).simulate('click')
     jest.runOnlyPendingTimers()
 
     expect(spy).toHaveBeenCalled()

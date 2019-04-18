@@ -26,3 +26,4 @@ A TagList component is a UI element that contains [Tag](../Tag) components.
 | overflowFade                  | `boolean`  | Wraps component in an [Overflow](../Overflow) component.               |
 | clearAll                      | `boolean`  | Display a Clear all button at the end of the list                      |
 | showAll                       | `boolean`  | Display all tag lines                                                  |
+| size                          | `string`   | Size of the spacing between each tag                                   |
