@@ -29,6 +29,14 @@ stories.add('Default', () => {
       },
       'grey'
     ),
+    size: select(
+      'size',
+      {
+        sm: 'md',
+        md: 'md',
+      },
+      'sm'
+    ),
     children: text('children', 'Ron'),
     filled: boolean('filled', false),
     pulsing: boolean('pulsing', false),

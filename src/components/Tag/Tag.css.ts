@@ -1,9 +1,10 @@
-import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
+
 import forEach from '../../styles/utilities/forEach'
 import Animate from '../Animate'
-import Flexy from '../Flexy'
 import Spinner from '../Spinner'
+import Icon from '../Icon'
+import Text from '../Text'
 import styled from '../styled'
 
 export const config = {
@@ -18,12 +19,29 @@ export const config = {
     red: getColor('red.500'),
     yellow: getColor('yellow.500'),
   },
-  height: 18,
-  padding: '1px 4px',
+  height: {
+    sm: 17,
+    md: 22,
+  },
+  padding: {
+    sm: '0 4px',
+    md: '0 8px',
+  },
 }
 
-export const BodyUI = styled(Flexy)`
+export const BodyUI = styled('div')`
   max-width: 100%;
+  display: flex;
+  align-items: center;
+  height: ${config.height.sm}px;
+`
+
+export const IconWrapperUI = styled('div')`
+  flex: 0 0 auto;
+`
+
+export const TextUI = styled(Text)`
+  flex: 1 1 auto;
 `
 
 export const AnimateUI = styled(Animate)`
@@ -31,8 +49,6 @@ export const AnimateUI = styled(Animate)`
 `
 
 export const TagWrapperUI = styled('div')`
-  ${baseStyles};
-  display: inline-block;
   max-width: 100%;
 
   &.is-display-block {
@@ -44,17 +60,30 @@ export const TagWrapperUI = styled('div')`
 `
 
 export const TagUI = styled('div')`
-  ${baseStyles};
   background-color: white;
   border-radius: ${config.borderRadius}px;
   border: 1px solid currentColor;
   color: ${config.colors.default};
-  display: block;
-  padding: ${config.padding};
-  height: ${config.height}px;
+  display: flex;
+  align-items: center;
+  padding: ${config.padding.sm};
+  height: ${config.height.sm}px;
   max-width: 100%;
 
   ${makeColorStyles()};
+
+  &.is-md {
+    padding: ${config.padding.md};
+    height: ${config.height.md}px;
+
+    .c-Tag__body {
+      height: ${config.height.md}px;
+    }
+  }
+
+  &.is-removable {
+    padding-right: 0;
+  }
 
   &.is-pulsing {
     animation: _Blue_Tag_Blink 4s infinite both;
@@ -88,10 +117,43 @@ export const TagUI = styled('div')`
 
 export const SpinnerUI = styled(Spinner)`
   color: currentColor;
-  padding: 0 1px;
+  height: 100%;
+  width: 20px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+  &.is-md {
+    width: 24px;
+    position: relative;
+    right: -1px;
+  }
 
   &.is-filled {
     color: white;
+  }
+`
+
+export const IconUI = styled(Icon)`
+  color: currentColor;
+  transition: 0.2s ease-in-out opacity;
+  height: 100%;
+  transform: scale(1.2);
+
+  &.is-md {
+    transform: scale(1);
+    position: relative;
+    right: -1px;
+  }
+
+  &.is-filled {
+    opacity: 0.75;
+    color: white;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 `
 
