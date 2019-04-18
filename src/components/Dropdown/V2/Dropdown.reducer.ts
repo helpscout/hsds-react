@@ -56,15 +56,14 @@ const reducer = (state = initialState, action: any = {}) => {
         isOpen: state.closeOnSelect ? false : state.isOpen,
         previousSelectedItem: state.selectedItem,
       }
-
       break
 
     case actionTypes.CLEAR_SELECTION:
       nextState = {
-        selectedItem: payload.selectedItem,
+        ...payload,
         previousSelectedItem: state.selectedItem,
+        isOpen: state.closeOnSelect ? false : state.isOpen,
       }
-
       break
 
     // Node references

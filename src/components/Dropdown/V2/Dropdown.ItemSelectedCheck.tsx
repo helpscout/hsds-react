@@ -8,13 +8,18 @@ const ItemSelectedCheck = props => {
   if (!props) return null
   if (!props.value) return null
 
-  const state = props.getState()
-  const { selectedItem } = state
-  const isClearerActive =
-    props.isSelectionClearer && isSelectedItemEmpty(selectedItem)
+  let isClearerActive = false
+
+  if (props.isSelectionClearer) {
+    const state = props.getState()
+    const { selectedItem } = state
+    isClearerActive = isSelectedItemEmpty(selectedItem)
+  }
+
   const componentClassnames = classNames(
     'c-ItemSelectedCheck',
     props.isSelectionClearer && 'selectionClearer',
+    /* istanbul ignore next */
     isClearerActive && 'is-selectionClearer-active'
   )
 

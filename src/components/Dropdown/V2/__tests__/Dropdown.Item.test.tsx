@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import { Item } from '../Dropdown.Item'
 import ItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
 import {
@@ -173,9 +173,53 @@ describe('ItemSelectedCheck', () => {
     expect(valueSpan.text()).toBe('Jon')
     expect(icon).toHaveLength(1)
   })
+
+  test('isSelectionClearer state', () => {
+    const wrapper = mount(
+      <ItemSelectedCheck
+        value="All Items"
+        isSelectionClearer={true}
+        getState={() => ({
+          selectedItem: 'hello',
+        })}
+      />
+    )
+
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+
+    expect(valueSpan.text()).toBe('All Items')
+    expect(hasClass(wrapper, 'selectionClearer')).toBeTruthy()
+  })
 })
 
 describe('Events', () => {
+  test('onClick callback fires', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Item onClick={spy} />)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onClick callback fires (selectionClearer)', () => {
+    const spy = jest.fn()
+    const state = {
+      allowMultipleSelection: true,
+      selectionClearer: 'All Items',
+    }
+    const wrapper = mount(<Item onClick={spy} getState={() => state} />)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalledWith(
+      state,
+      expect.objectContaining({
+        type: expect.any(String),
+      })
+    )
+  })
+
   test('onClick callback fires', () => {
     const spy = jest.fn()
     const wrapper = mount(<Item onClick={spy} />)
@@ -278,24 +322,18 @@ describe('renderItem', () => {
     expect(el.length).toBeTruthy()
   })
 
-  test('Calls renderItemMultipleDefault to render default markup for item when multiselect enabled', () => {
-    const wrapper = mount(
-      <Item
-        label="Champ"
-        value="hello"
-        getState={() => {
-          return {
-            allowMultipleSelection: true,
-          }
-        }}
-        {...{ isActive: true }}
-      />
-    )
-    const spy = jest.fn()
+  test('Renders default markup (itemSelectedCheck) for item when multiselect enabled', () => {
+    const wrapper = shallow(<Item label="Champ" value="hello" />)
 
-    wrapper.setState({ renderItemMultipleDefault: spy })
+    wrapper.setProps({
+      getState: () => ({
+        allowMultipleSelection: true,
+      }),
+    })
 
-    expect(spy).toHaveBeenCalled()
+    const itemSelectedCheck = wrapper.find(ItemSelectedCheck)
+
+    expect(itemSelectedCheck).toBeTruthy()
   })
 })
 

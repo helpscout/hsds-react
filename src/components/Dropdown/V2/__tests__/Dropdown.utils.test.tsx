@@ -20,6 +20,7 @@ import {
   pathResolve,
   filterNonStoreProps,
   processSelectionOfItem,
+  isSelectedItemEmpty,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -277,6 +278,32 @@ describe('processSelectionOfItem', () => {
       { id: 'ralph', value: 'Ralph' },
       { id: 'rene', value: 'Rene' },
     ])
+  })
+})
+
+describe('isSelectedItemEmpty', () => {
+  test('Checks if selected item is empty when null', () => {
+    const selectedItem = null
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(true)
+  })
+
+  test('Checks if selected item is empty when empty string', () => {
+    const selectedItem = ''
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(true)
+  })
+
+  test('Checks if selected item is empty when empty array', () => {
+    const selectedItem = []
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(true)
+  })
+
+  test('Checks if selected item is not empty', () => {
+    const selectedItem = ['hello']
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(false)
   })
 })
 

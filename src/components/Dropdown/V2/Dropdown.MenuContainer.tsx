@@ -244,6 +244,7 @@ export class MenuContainer extends React.PureComponent<Props> {
       }
 
       return [clearerItem].concat(items).map((item, index) => {
+        /* istanbul ignore next */
         const indexProp = withIndex ? index : undefined
         if (item.id === clearerItem.id) {
           return (
@@ -325,6 +326,7 @@ export class MenuContainer extends React.PureComponent<Props> {
   }
 
   forceHideMenuNode = () => {
+    /* istanbul ignore next */
     if (!this.placementNode) return
     this.placementNode.style.display = 'none'
   }
@@ -375,6 +377,7 @@ export class MenuContainer extends React.PureComponent<Props> {
       left: 0,
     }
 
+    /* istanbul ignore next */
     if (!this.node || !this.placementNode) return defaultStyles
 
     const { top, left } = this.getStylePosition()
@@ -390,6 +393,7 @@ export class MenuContainer extends React.PureComponent<Props> {
   setPositionStylesOnNode = positionData => {
     const { menuOffsetTop, onMenuReposition, triggerNode, zIndex } = this.props
 
+    /* istanbul ignore next */
     if (!this.node || !this.placementNode) return
 
     const { top, left, position } = positionData

@@ -100,6 +100,31 @@ describe('FocusItem', () => {
   })
 })
 
+describe('ClearSelection', () => {
+  test('Closes on select, if specified', () => {
+    const action = {
+      type: actionTypes.CLEAR_SELECTION,
+      payload: {
+        selectedItem: '',
+      },
+    }
+
+    const nextState = reducer(
+      {
+        ...initialState,
+        isOpen: true,
+        closeOnSelect: true,
+        selectedItem: ['hello', 'hola'],
+      },
+      action
+    )
+
+    expect(nextState.selectedItem).toBe('')
+    expect(nextState.previousSelectedItem).toEqual(['hello', 'hola'])
+    expect(nextState.isOpen).toBe(false)
+  })
+})
+
 describe('SelectItem', () => {
   test('Can select an item index', () => {
     const action = {
@@ -112,42 +137,6 @@ describe('SelectItem', () => {
 
     expect(nextState.selectedItem).toBe('2')
     expect(nextState.previousSelectedItem).toBe('0')
-  })
-
-  test('Multiselect: add to selection', () => {
-    const action = {
-      type: actionTypes.SELECT_ITEM,
-      payload: {
-        selectedItem: '2',
-      },
-    }
-    const nextState = reducer(
-      { ...initialState, selectedItem: '0', allowMultipleSelection: true },
-      action
-    )
-
-    expect(nextState.selectedItem).toEqual(['0', '2'])
-    expect(nextState.previousSelectedItem).toBe('0')
-  })
-
-  test('Multiselect: remove from selection', () => {
-    const action = {
-      type: actionTypes.SELECT_ITEM,
-      payload: {
-        selectedItem: '2',
-      },
-    }
-    const nextState = reducer(
-      {
-        ...initialState,
-        selectedItem: ['0', '2'],
-        allowMultipleSelection: true,
-      },
-      action
-    )
-
-    expect(nextState.selectedItem).toEqual(['0'])
-    expect(nextState.previousSelectedItem).toEqual(['0', '2'])
   })
 
   test('Closes on select, if specified', () => {

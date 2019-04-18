@@ -259,6 +259,7 @@ export const clearSelection = (state, event) => {
   const { selectedItem, closeOnSelect, envNode } = state
 
   // Performance guard to prevent store from updating
+  /* istanbul ignore next */
   if (isSelectedItemEmpty(selectedItem)) return
 
   // Trigger select callback

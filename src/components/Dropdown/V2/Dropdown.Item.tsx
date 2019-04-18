@@ -84,9 +84,8 @@ export class Item extends React.PureComponent<Props> {
   handleOnClick = (event: Event) => {
     const { onClick } = this.props
     const state: any = this.props.getState()
-    const { allowMultipleSelection, selectionClearer } = state
 
-    if (allowMultipleSelection && selectionClearer) {
+    if (state && state.allowMultipleSelection && state.selectionClearer) {
       onClick(state, event)
     } else {
       onClick(event, { hasSubMenu: this.hasSubMenu() })
