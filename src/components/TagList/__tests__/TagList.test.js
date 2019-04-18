@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import TagList from '../TagList'
 import { Icon, Inline, Overflow, Tag } from '../../index'
+import { ClearAllUI, TagListUI } from '../TagList.css'
 
 jest.useFakeTimers()
 
@@ -101,6 +102,49 @@ describe('onRemove', () => {
   })
 })
 
+describe('onRemoveAll', () => {
+  test('Fires callback from clearAll, if specified', () => {
+    const spy = jest.fn()
+
+    const wrapper = mount(
+      <TagList onRemoveAll={spy} isRemovable clearAll>
+        <Tag id={1} />
+        <Tag id={2} />
+      </TagList>
+    )
+    const o = wrapper.find(ClearAllUI).first()
+
+    o.simulate('click')
+
+    jest.runOnlyPendingTimers()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('clearAll', () => {
+  test('Adds a clearAll button if more than one tag', () => {
+    const wrapper = mount(
+      <TagList clearAll>
+        <Tag id={1} />
+        <Tag id={2} />
+      </TagList>
+    )
+    const o = wrapper.find(ClearAllUI).first()
+    expect(o.length).toBeTruthy()
+  })
+
+  test('Does not Add a clearAll button if list contains less or equal than one tag', () => {
+    const wrapper = mount(
+      <TagList clearAll>
+        <Tag id={1} />
+      </TagList>
+    )
+    const o = wrapper.find(ClearAllUI).first()
+    expect(o.length).toBeFalsy()
+  })
+})
+
 describe('Overflow', () => {
   test('Does not contain content in Overflow by default', () => {
     const wrapper = mount(
@@ -111,6 +155,20 @@ describe('Overflow', () => {
     const o = wrapper.find(Overflow)
 
     expect(o.length).toBe(0)
+  })
+
+  test('Does add a className to show all tags', () => {
+    const wrapper = mount(
+      <TagList showAll>
+        <Tag />
+      </TagList>
+    )
+    expect(
+      wrapper
+        .find(TagListUI)
+        .first()
+        .prop('className')
+    ).toContain('is-showingAll')
   })
 
   test('Wraps content in Overflow, if specified', () => {
