@@ -52,6 +52,10 @@ export const config = {
     sm: 17,
     md: 22,
   },
+  iconWidth: {
+    sm: 18,
+    md: 24,
+  },
   padding: {
     sm: '0 4px',
     md: '0 8px',
@@ -66,7 +70,16 @@ export const BodyUI = styled('div')`
 `
 
 export const IconWrapperUI = styled('div')`
-  flex: 0 0 auto;
+  width: ${config.iconWidth.sm}px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  &.is-md {
+    width: ${config.iconWidth.md}px;
+  }
 `
 
 export const TextUI = styled(Text)`
@@ -148,14 +161,13 @@ export const TagUI = styled('div')`
 export const SpinnerUI = styled(Spinner)`
   color: currentColor;
   height: 100%;
-  width: 20px;
+  width: 100%;
   text-align: center;
   justify-content: center;
   display: flex;
   align-items: center;
 
   &.is-md {
-    width: 24px;
     position: relative;
     right: -1px;
   }
@@ -165,6 +177,7 @@ export const IconUI = styled(Icon)`
   color: currentColor;
   transition: 0.2s ease-in-out opacity;
   height: 100%;
+  width: 100%;
   transform: scale(1.2);
 
   &.is-md {

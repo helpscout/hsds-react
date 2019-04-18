@@ -153,9 +153,9 @@ export class Tag extends React.PureComponent<Props, State> {
     )
 
     return (
-      <IconWrapperUI>
+      <IconWrapperUI className={spinnerAndIconClassNames}>
         {isRemoving && (
-          <SpinnerUI className={spinnerAndIconClassNames} size="sm" />
+          <SpinnerUI className={spinnerAndIconClassNames} size="xs" />
         )}
         {!isRemoving && (
           <IconUI
