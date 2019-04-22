@@ -132,7 +132,7 @@ describe('Image', () => {
 
     const crop = wrapper.find(`div${ui.crop}`)
 
-    expect(crop.prop('style')).toEqual({})
+    expect(crop.prop('style').background).toBeFalsy()
   })
 
   test('Sets `title` attribute to the `name`', () => {

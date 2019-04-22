@@ -2,7 +2,6 @@
 
 A Spinner component provides the UI to indicate a loading state.
 
-
 ## Example
 
 ```jsx
@@ -12,21 +11,13 @@ A Spinner component provides the UI to indicate a loading state.
 </div>
 ```
 
-
 ## Props
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| className | `string` | Custom class names to be added to the component. |
-| size | `string` | Determines the size of the spinner [Icon](../Icon). Default `md`. |
-
-
-### Sizes
-
-| Prop | Description |
-| --- | --- |
-| `xl` | Renders a 32x32 (px) spinner. |
-| `lg` | Renders a 24x24 (px) spinner. |
-| `md` | Renders a 20x20 (px) spinner. |
-| `sm` | Renders a 14x14 (px) spinner. |
-| `xs` | Renders a 10x10 (px) spinner. |
+| Prop      | Type              | Description                                                |
+| --------- | ----------------- | ---------------------------------------------------------- |
+| className | `string`          | Custom class names to be added to the component.           |
+| color     | `string`          | Color of the spinner. Default `currentColor`.              |
+| isRounded | `boolean`         | Rounds the stroke ends of the spinner SVG. Default `true`. |
+| shade     | `string`          | Determines the opacity of the spinner.                     |
+| size      | `number`/`string` | Determines the size of the spinner. Default `16`.          |
+| speed     | `number`          | Speed of the spinning animation (in `ms`). Default `1400`. |
