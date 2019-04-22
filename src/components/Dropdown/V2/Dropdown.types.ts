@@ -24,7 +24,7 @@ export interface DropdownState extends DropdownMenuDimensions {
 
 export interface DropdownProps extends DropdownMenuDimensions {
   activeClassName: string
-  allowMultipleSelection?: boolean
+  allowMultipleSelection: boolean
   children?: (props: any) => void
   className?: string
   clearOnSelect: boolean

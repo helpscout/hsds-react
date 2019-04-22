@@ -236,12 +236,12 @@ class Renderer extends React.PureComponent<any> {
   renderSelectedItem() {
     const {
       activeClassName,
+      allowMultipleSelection,
       envNode,
-      previousSelectedItem,
-      selectedItem,
       index,
       indexMap,
-      allowMultipleSelection,
+      previousSelectedItem,
+      selectedItem,
     } = this.props
 
     if (!this.shouldRenderDOM()) return

@@ -2,7 +2,7 @@ import { ItemIndex } from './Dropdown.types'
 import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
-import { isObject, isDefined, isNumber, isString } from '../../../utilities/is'
+import { isObject, isDefined, isArray, isString } from '../../../utilities/is'
 
 export const COMPONENT_KEY = {
   Block: 'DropdownBlock',
@@ -363,6 +363,6 @@ export const filterNonStoreProps = props => {
 export const isSelectedItemEmpty = selectedItem => {
   if (selectedItem == null) return true
   if (selectedItem === '') return true
-  if (Array.isArray(selectedItem) && selectedItem.length === 0) return true
+  if (isArray(selectedItem) && selectedItem.length === 0) return true
   return false
 }

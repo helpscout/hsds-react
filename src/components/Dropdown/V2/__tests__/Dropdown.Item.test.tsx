@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
 import ItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
 import {
@@ -45,6 +45,17 @@ describe('className', () => {
     const wrapper = mount(<Item className="ron" />)
 
     expect(hasClass(wrapper, 'ron')).toBe(true)
+  })
+
+  test('Selection Clearer className', () => {
+    const state = {
+      allowMultipleSelection: true,
+      selectionClearer: 'All Items',
+    }
+
+    const wrapper = mount(<Item getState={() => state} isSelectionClearer />)
+
+    expect(hasClass(wrapper, 'c-SelectionClearerItem')).toBe(true)
   })
 })
 
@@ -323,7 +334,7 @@ describe('renderItem', () => {
   })
 
   test('Renders default markup (itemSelectedCheck) for item when multiselect enabled', () => {
-    const wrapper = shallow(<Item label="Champ" value="hello" />)
+    const wrapper = mount(<Item label="Champ" value="hello" />)
 
     wrapper.setProps({
       getState: () => ({

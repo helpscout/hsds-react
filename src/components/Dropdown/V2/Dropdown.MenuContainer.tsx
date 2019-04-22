@@ -35,6 +35,7 @@ import { memoizeWithProps } from '../../../utilities/memoize'
 import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
+const clearerID = createUniqueIDFactory('hsds-dropdown-v2-theallclearer')
 
 export interface Props {
   allowMultipleSelection?: boolean
@@ -239,26 +240,30 @@ export class MenuContainer extends React.PureComponent<Props> {
     if (allowMultipleSelection && selectionClearer) {
       const clearerItem = {
         value: selectionClearer,
-        id: createUniqueIDFactory('hsds-dropdown-v2-theallclearer')(),
+        id: clearerID(),
         label: '',
       }
 
       return [clearerItem].concat(items).map((item, index) => {
         /* istanbul ignore next */
         const indexProp = withIndex ? index : undefined
+        const itemProps: any = this.getItemProps(item, indexProp)
+
         if (item.id === clearerItem.id) {
           return (
-            <Item
-              {...this.getItemProps(item, indexProp)}
-              className="c-SelectionClearerItem"
-              onMouseMove={focusItem}
-              onClick={clearSelection}
-              isSelectionClearer
-            />
+            <div key={clearerItem.id}>
+              <Item
+                {...itemProps}
+                onMouseMove={focusItem}
+                onClick={clearSelection}
+                isSelectionClearer
+              />
+              <Item type="divider" />
+            </div>
           )
         }
 
-        return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
+        return <Item {...itemProps}>{item.label}</Item>
       })
     }
 

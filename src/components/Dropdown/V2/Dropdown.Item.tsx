@@ -36,6 +36,7 @@ export interface Props {
   index: string
   innerRef: (node: HTMLElement) => void
   isHover: boolean
+  isSelectionClearer: boolean
   items: Array<any>
   onMouseEnter: (...args: any[]) => void
   onMouseMove: (...args: any[]) => void
@@ -56,6 +57,7 @@ export class Item extends React.PureComponent<Props> {
     index: '0',
     innerRef: noop,
     isHover: false,
+    isSelectionClearer: false,
     items: undefined,
     dropRight: true,
     dropUp: false,
@@ -235,13 +237,14 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { className, disabled, type } = this.props
+    const { className, disabled, type, isSelectionClearer } = this.props
     const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
       disabled && 'is-disabled',
       !hasSubMenu && 'is-option',
+      isSelectionClearer && 'c-SelectionClearerItem',
       className
     )
 

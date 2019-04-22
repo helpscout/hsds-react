@@ -98,14 +98,16 @@ export const setMenuNode = (state, menuNode) => {
 
 /* istanbul ignore next */
 export const incrementIndex = (state, modifier: number = 1) => {
-  const { envNode, index, indexMap, items } = state
+  const { envNode, index, indexMap, items, selectionClearer } = state
+
   if (!items.length) return
 
-  let prevIndex = index ? index : -1
-  prevIndex = `${prevIndex}`
-  const nextIndex = incrementPathIndex(prevIndex, modifier)
+  let prevIndex = `${index ? index : -1}`
+  let nextIndex = incrementPathIndex(prevIndex, modifier)
+  const isLastItemWhenClearerPresent =
+    selectionClearer != null && Number.parseInt(nextIndex) === items.length
 
-  if (!indexMap[nextIndex]) return
+  if (!indexMap[nextIndex] && !isLastItemWhenClearerPresent) return
 
   // This extra check is to support item filtering.
   // The next DOM node may not exist, depending on filtering results.
