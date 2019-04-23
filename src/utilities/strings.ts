@@ -293,7 +293,7 @@ export const convertLinksToHTML = (string: string): string => {
 
         if (url.match(new RegExp(`^${domainPattern}$`, 'ui'))) {
           // Only matched a domain name (without subdomain)
-          // Skip this as it could be the end/start of a sentance without whitespace.
+          // Skip this as it could be the end/start of a sentence without whitespace.
           // For example with "Hello Tom.how are you?" we should not match "Tom.how"
           return accumulator + url
         }
