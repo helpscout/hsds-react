@@ -17,6 +17,7 @@ import {
   IconUI,
   IconWrapperUI,
   TextUI,
+  FlexyBlockUI,
 } from './Tag.css'
 import { COMPONENT_KEY } from './Tag.utils'
 
@@ -206,15 +207,17 @@ export class Tag extends React.PureComponent<Props, State> {
         >
           <TagUI {...getValidProps(rest)} className={this.getClassName()}>
             <BodyUI className="c-Tag__body">
-              <TextUI allCaps={allCaps} block size={this.getFontSize()}>
-                <Truncate
-                  className="c-Tag__textWrapper"
-                  showTooltipOnTruncate={showTooltipOnTruncate}
-                >
-                  {this.renderChildren()}
-                </Truncate>
-              </TextUI>
-              {this.renderRemoveIcon()}
+              <FlexyBlockUI className="c-Tag__contentWrapper">
+                <TextUI allCaps={allCaps} block size={this.getFontSize()}>
+                  <Truncate
+                    className="c-Tag__textWrapper"
+                    showTooltipOnTruncate={showTooltipOnTruncate}
+                  >
+                    {this.renderChildren()}
+                  </Truncate>
+                </TextUI>
+                {this.renderRemoveIcon()}
+              </FlexyBlockUI>
             </BodyUI>
           </TagUI>
         </AnimateUI>

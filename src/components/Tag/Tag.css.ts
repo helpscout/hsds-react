@@ -6,6 +6,7 @@ import Animate from '../Animate'
 import Spinner from '../Spinner'
 import Icon from '../Icon'
 import Text from '../Text'
+import Flexy from '../Flexy'
 import styled from '../styled'
 
 export const config = {
@@ -62,11 +63,16 @@ export const config = {
   },
 }
 
-export const BodyUI = styled('div')`
+export const BodyUI = styled(Flexy)`
   max-width: 100%;
   display: flex;
   align-items: center;
   height: ${config.height.sm}px;
+`
+
+export const FlexyBlockUI = styled(Flexy.Block)`
+  display: flex;
+  align-items: center;
 `
 
 export const IconWrapperUI = styled('div')`
