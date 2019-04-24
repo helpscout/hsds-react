@@ -59,6 +59,13 @@ describe('Icon', () => {
 
     expect(el.length).toBeFalsy()
   })
+
+  test('Renders an icon if iconName is defined', () => {
+    const wrapper = mount(<SideNavigation.Button iconName="user" />)
+    const el = wrapper.find(Icon)
+
+    expect(el.length).toBeTruthy()
+  })
 })
 
 describe('Element', () => {
