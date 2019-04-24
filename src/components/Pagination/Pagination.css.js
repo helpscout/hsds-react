@@ -33,6 +33,7 @@ export const RangeUI = styled('span')`
 `
 
 export const ButtonIconUI = styled(Button)`
+  &.is-default:focus,
   &.is-default.is-focused {
     color: ${config.default.colorActive};
   }

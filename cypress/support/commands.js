@@ -16,5 +16,5 @@ Cypress.Commands.add('visitStory', (kind = '', name = '') => {
  * @param {string} name The name of the Story
  */
 function getStoryBookUrl(kind = 'ArticleCard', name = 'Content') {
-  return `iframe.html?selectedKind=${kind}%2FV2&selectedStory=${name}`
+  return `iframe.html?selectedKind=${kind}&selectedStory=${name}`
 }

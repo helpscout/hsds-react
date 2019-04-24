@@ -10,17 +10,21 @@ A Heading component is a light-weight text heading wrapper enhanced with a colle
 
 ## Props
 
-| Prop            | Type              | Description                                      |
-| --------------- | ----------------- | ------------------------------------------------ |
-| className       | `string`          | Custom class names to be added to the component. |
-| center          | `bool`            | Center aligns text.                              |
-| disableSelect   | `bool`            | Disables text selection.                         |
-| light           | `bool`            | Lightens the heading color.                      |
-| linkStyle       | `bool`            | Applies [Link](../Link) styles.                  |
-| lineHeightReset | `bool`            | Sets the line-height to `1`.                     |
-| selector        | `string`          | Determines HTML selector. Default is `div`.      |
-| size            | `string`          | Adjust heading size.                             |
-| weight          | `number`/`string` | Adjust text weight.                              |
+| Prop              | Type              | Description                                      |
+| ----------------- | ----------------- | ------------------------------------------------ |
+| className         | `string`          | Custom class names to be added to the component. |
+| center            | `boolean`         | Center aligns text.                              |
+| disableSelect     | `boolean`         | Disables text selection.                         |
+| light             | `boolean`         | Lightens the heading color.                      |
+| linkStyle         | `boolean`         | Applies [Link](../Link) styles.                  |
+| lineHeightInherit | `boolean`         | Inherit the line-height from a parent selector.  |
+| lineHeightReset   | `boolean`         | Resets the line-height to `1`.                   |
+| noWrap            | `boolean`         | Prevents text from wrapping.                     |
+| selector          | `string`          | Determines HTML selector. Default is `div`.      |
+| size              | `string`          | Adjust heading size.                             |
+| truncate          | `boolean`         | Enables CSS truncation for text.                 |
+| weight            | `number`/`string` | Adjust text weight.                              |
+| wordWrap          | `boolean`         | Enables CSS `word-break` for text.               |
 
 ### Sizes
 
