@@ -20,8 +20,9 @@
     "Lauren Brown",
     "Pierre-Luc Babin",
     "Buzz Usborne <hello@buzzusborne.com>",
-    "Alisdair McDiarmid",
-    "Juan Pablo Lomeli Diaz <juanpablo@thetinkertrain.codes>"
+    "Juan Pablo Lomeli Diaz <juanpablo@thetinkertrain.codes>",
+    "Terrence L. Jones",
+    "Alisdair McDiarmid"
   ],
   "scripts": {
     "prestart": "prestart && npm run colorway",
