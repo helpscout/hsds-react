@@ -20,7 +20,7 @@ type Props = {
 class StatusAvatar extends Component<Props> {
   static defaultProps = {
     isOnline: true,
-    shape: 'rounded',
+    shape: 'circle',
     size: 'smmd',
   }
 
