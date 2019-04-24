@@ -66,7 +66,7 @@ export class Message extends Component<Props> {
 
     const avatarMarkup = avatar
       ? React.cloneElement(avatar, {
-          shape: isThemeEmbed ? 'circle' : 'rounded',
+          shape: 'circle',
           size: isThemeEmbed ? 'xxs' : 'xs',
         })
       : null

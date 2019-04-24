@@ -9,7 +9,12 @@ import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import { memoize } from '../../utilities/memoize'
 import RouteWrapper from '../RouteWrapper'
-import { makeButtonUI, ButtonContentUI, FocusUI } from './Button.css.js'
+import {
+  makeButtonUI,
+  ButtonContentUI,
+  FocusUI,
+  SpinnerUI,
+} from './Button.css.js'
 import { COMPONENT_KEY } from './utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
 
@@ -20,6 +25,7 @@ type Props = {
   children?: any,
   className?: string,
   disabled: boolean,
+  disableOnLoading: boolean,
   kind: ButtonKind,
   innerRef: (ref: any) => void,
   isActive: boolean,
@@ -27,8 +33,10 @@ type Props = {
   isFirst: boolean,
   isNotOnly: boolean,
   isLast: boolean,
+  isLoading: boolean,
   isSuffix: boolean,
   size: ButtonSize,
+  spinButtonOnLoading: boolean,
   state?: UIState,
   submit: boolean,
   theme?: string,
@@ -40,6 +48,7 @@ class Button extends Component<Props> {
     buttonRef: noop,
     canRenderFocus: true,
     disable: false,
+    disableOnLoading: true,
     kind: 'default',
     innerRef: noop,
     isActive: false,
@@ -49,6 +58,7 @@ class Button extends Component<Props> {
     isLast: false,
     isSuffix: false,
     size: 'md',
+    spinButtonOnLoading: false,
     submit: false,
   }
 
@@ -132,6 +142,8 @@ class Button extends Component<Props> {
       allowContentEventPropogation,
       children,
       className,
+      disabled,
+      disableOnLoading,
       kind,
       innerRef,
       isActive,
@@ -139,8 +151,10 @@ class Button extends Component<Props> {
       isFirst,
       isNotOnly,
       isLast,
+      isLoading,
       isSuffix,
       size,
+      spinButtonOnLoading,
       state,
       submit,
       theme,
@@ -149,16 +163,21 @@ class Button extends Component<Props> {
       ...rest
     } = this.props
 
+    const isDisabled = disabled || (isLoading && disableOnLoading)
+
     const componentClassName = classNames(
       'c-ButtonV2',
       isActive && 'is-active',
       isBlock && 'is-block',
+      isDisabled && 'is-disabled',
       isFirst && 'is-first',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
+      isLoading && 'is-loading',
       isSuffix && 'is-suffix',
       kind && `is-${kind}`,
       size && `is-${size}`,
+      spinButtonOnLoading && 'is-spinButtonOnLoading',
       state && `is-${state}`,
       theme && `is-${theme}`,
       className
@@ -172,12 +191,15 @@ class Button extends Component<Props> {
       <ButtonUI
         {...getValidProps(rest)}
         className={componentClassName}
+        disabled={isDisabled}
         innerRef={this.setInnerRef}
         type={type}
       >
+        {isLoading ? <SpinnerUI /> : null}
         <ButtonContentUI
-          className="c-ButtonV2__content"
           allowContentEventPropogation={allowContentEventPropogation}
+          className="c-ButtonV2__content"
+          isLoading={isLoading}
         >
           {this.getChildrenMarkup()}
         </ButtonContentUI>

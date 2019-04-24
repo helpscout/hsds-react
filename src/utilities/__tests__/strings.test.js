@@ -457,6 +457,42 @@ describe('convertLinksToHTML', () => {
       'http://example.com?email=example@example.com',
       '<a href="http://example.com?email=example@example.com" target="_blank" rel="noopener">http://example.com?email=example@example.com</a>',
     ],
+    [
+      'example@example.engineering',
+      '<a href="mailto:example@example.engineering">example@example.engineering</a>',
+    ],
+    [
+      'example@example.designer',
+      '<a href="mailto:example@example.designer">example@example.designer</a>',
+    ],
+    [
+      'example@example.XNAAVERMGENSBERATUNGAPWB',
+      '<a href="mailto:example@example.XNAAVERMGENSBERATUNGAPWB">example@example.XNAAVERMGENSBERATUNGAPWB</a>',
+    ],
+    [
+      'example@example.XNAAVERMGENSBERATUNGAPWBABGSDGA',
+      '<a href="mailto:example@example.XNAAVERMGENSBERATUNGAPWB">example@example.XNAAVERMGENSBERATUNGAPWB</a>ABGSDGA',
+    ],
+    [
+      'www.example.engineering',
+      '<a href="http://www.example.engineering" target="_blank" rel="noopener">www.example.engineering</a>',
+    ],
+    [
+      'www.example.designer',
+      '<a href="http://www.example.designer" target="_blank" rel="noopener">www.example.designer</a>',
+    ],
+    [
+      'www.example.XNAAVERMGENSBERATUNGAPWB',
+      '<a href="http://www.example.XNAAVERMGENSBERATUNGAPWB" target="_blank" rel="noopener">www.example.XNAAVERMGENSBERATUNGAPWB</a>',
+    ],
+    [
+      'www.example.XNAAVERMGENSBERATUNGAPWBABGSDGA',
+      '<a href="http://www.example.XNAAVERMGENSBERATUNGAPWB" target="_blank" rel="noopener">www.example.XNAAVERMGENSBERATUNGAPWB</a>ABGSDGA',
+    ],
+    [
+      'http://www.test./path',
+      '<a href="http://www.test" target="_blank" rel="noopener">http://www.test</a>./path',
+    ],
   ]
 
   withUrls.forEach(fixture => {
@@ -474,8 +510,9 @@ describe('convertLinksToHTML', () => {
     'Lorem/ipsum',
     'Lorem://ipsum',
     'Lorem://ipsum/dolor',
-    'ftp://example.com',
     'helpscout.com',
+    'www.test./path',
+    'http://www.',
   ]
 
   withoutUrls.forEach(fixture => {
