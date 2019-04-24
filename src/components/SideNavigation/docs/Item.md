@@ -29,5 +29,5 @@ This component could point to a url, or have a onClick event attach to it so we 
 | count       | `number`  | It display the value as a right floating badge                                       |
 | disabled    | `boolean` | It fades the text and icon color, and no action could be executed from this item     |
 | href        | `string`  | It will transform the item in a link, pointing to the value of this prop             |
-| icon        | `Icon`    | It adds and icon at the beginning of the component                                   |
+| iconName    | `string`  | Add an icon to the beginning of the button by name.                                  |
 | muted       | `boolean` | It fades the text and icon color                                                     |

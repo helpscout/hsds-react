@@ -15,7 +15,8 @@ Different style could be applied to this button depending of the context of the 
 
 ## Props
 
-| Prop      | Type     | Description                                      |
-| --------- | -------- | ------------------------------------------------ |
-| className | `string` | Custom class names to be added to the component. |
-| icon      | `Icon`   | Add an icon to the beginning of the button       |
+| Prop      | Type     | Description                                         |
+| --------- | -------- | --------------------------------------------------- |
+| className | `string` | Custom class names to be added to the component.    |
+| icon      | `Icon`   | Render an icon to the beginning of the button.      |
+| iconName  | `string` | Add an icon to the beginning of the button by name. |
