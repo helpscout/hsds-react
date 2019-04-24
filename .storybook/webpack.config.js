@@ -3,7 +3,7 @@ const paths = require('../config/paths')
 const harvester = require('seed-harvester')
 const includePaths = harvester(['./src/scss'])
 
-module.exports = (baseConfig, env, config) => {
+module.exports = ({ config }) => {
   // Typescript
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
