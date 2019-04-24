@@ -63,10 +63,12 @@ describe('Rendering', () => {
 
 describe('Icon', () => {
   test('Renders icon component if available', () => {
-    const wrapper = mount(<SideNavigation.Item icon={<Icon name="user" />} />)
+    const iconName = 'user'
+    const wrapper = mount(<SideNavigation.Item iconName={iconName} />)
     const el = wrapper.find(Icon)
 
     expect(el.length).toBeTruthy()
+    expect(el.props().name).toBe(iconName)
   })
 
   test('Does not render icon if not available', () => {

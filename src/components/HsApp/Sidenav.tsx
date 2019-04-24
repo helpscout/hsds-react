@@ -70,7 +70,7 @@ class Sidenav extends React.PureComponent<Props> {
           return (
             <SideNavigation.Item
               key={name}
-              icon={<Icon name={name} />}
+              iconName={name}
               active={active === name}
               onClick={e => this.updateActiveItem(name)}
             >
