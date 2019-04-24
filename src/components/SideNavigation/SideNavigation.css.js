@@ -110,7 +110,7 @@ export const ButtonFooterUI = styled(Button)`
       height: 14px;
       top: calc(50% - 7px);
       width: 14px;
-    }
+    }z
   }
 `
 
@@ -189,7 +189,7 @@ export const HeaderUI = styled('header')`
   margin-bottom: calc(40px - ${config.badgeHeight});
   height: ${config.badgeHeight};
 
-  ${Heading} {
+  .c-Heading {
     margin-bottom: 0;
   }
 
