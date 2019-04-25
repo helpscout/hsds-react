@@ -61,6 +61,7 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
         wrappedRef: noop,
       }
       static displayName = displayName
+      static displayLabel = namespace
 
       wrappedInstance: any = null
 
