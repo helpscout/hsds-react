@@ -208,7 +208,20 @@ describe('Context', () => {
       expect(o.length).toBe(0)
     })
 
-    test('Always render Circle avatars for embed', () => {
+    test('Always render Circle avatars', () => {
+      const a = <Avatar name="Mugatu" shape="square" />
+      const wrapper = mount(
+        <Message.Provider>
+          <Message avatar={a} showAvatar from />
+        </Message.Provider>
+      )
+
+      const o = wrapper.find(Avatar)
+
+      expect(o.prop('shape')).toBe('circle')
+    })
+
+    test('Always render size xxs for embed', () => {
       const a = <Avatar name="Mugatu" shape="square" />
       const wrapper = mount(
         <Message.Provider theme="embed">
@@ -218,7 +231,7 @@ describe('Context', () => {
 
       const o = wrapper.find(Avatar)
 
-      expect(o.prop('shape')).toBe('circle')
+      expect(o.prop('size')).toBe('xxs')
     })
   })
 })

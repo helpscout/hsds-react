@@ -25,7 +25,7 @@ stories.addDecorator(storyFn => (
   </Artboard>
 ))
 
-const ItemSpec = createSpec({
+export const ItemSpec = createSpec({
   id: faker.random.uuid(),
   label: faker.name.firstName(),
   value: faker.name.firstName(),
