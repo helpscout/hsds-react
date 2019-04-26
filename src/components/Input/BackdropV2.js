@@ -3,7 +3,7 @@ import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isStateful } from './utils'
+import { hasErrorState, isStateful } from './utils'
 import { BackdropUI, FocusUI } from './styles/BackdropV2.css.js'
 
 type Props = {
@@ -75,7 +75,8 @@ class Backdrop extends Component<Props> {
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
       isRadio && 'is-radio',
-      isStateful(this.props) && 'is-stateful'
+      isStateful(this.props) && 'is-stateful',
+      hasErrorState(this.props) && `is-error`
     )
   }
 

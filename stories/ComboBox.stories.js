@@ -4,8 +4,11 @@ import Artboard from '@helpscout/artboard'
 import ComboBox from '../src/components/ComboBox'
 import InfiniteScroller from '../src/components/InfiniteScroller'
 import { createSpec, faker } from '@helpscout/helix'
+import { action } from '@storybook/addon-actions'
+import { withKnobs, boolean, number } from '@storybook/addon-knobs'
 
 const stories = storiesOf('ComboBox', module)
+stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => (
   <Artboard
     name="dropdown-v2"
@@ -74,6 +77,19 @@ stories.add('StateReducer', () => {
       stateReducer={stateReducer}
     />
   )
+})
+
+stories.add('Stateful/With Multiple Selection', () => {
+  const props = {
+    items,
+    dropUp: boolean('dropUp', false),
+    onSelect: action('onSelect'),
+    isOpen: boolean('isOpen', true),
+    closeOnSelect: boolean('closeOnSelect', false),
+    allowMultipleSelection: boolean('allowMultipleSelection', true),
+  }
+
+  return <ComboBox {...props} />
 })
 
 stories.add('Infinite Scroll', () => {

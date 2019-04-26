@@ -55,6 +55,20 @@ describe('Content', () => {
     expect(o.html()).toContain('Mugatu')
     expect(o.props().size).toBe('12')
   })
+
+  test('Adjusts fontSize when all caps', () => {
+    const wrapper12 = mount(<Tag>Mugatu</Tag>)
+    const o12 = wrapper12.find(Text)
+    expect(o12.props().size).toBe('12')
+
+    const wrapper10 = mount(
+      <Tag size="sm" allCaps>
+        Mugatu
+      </Tag>
+    )
+    const o10 = wrapper10.find(Text)
+    expect(o10.props().size).toBe('11')
+  })
 })
 
 describe('Remove', () => {
@@ -70,6 +84,15 @@ describe('Remove', () => {
 
     const icon = wrapper.find(Icon)
     expect(icon.length).toBe(1)
+  })
+
+  test('Renders different icon size if isRemovable', () => {
+    const wrapper = mount(<Tag isRemovable size="md" />)
+
+    expect(wrapper.find(Icon).props().size).toBe('24')
+
+    wrapper.setProps({ size: 'sm' })
+    expect(wrapper.find(Icon).props().size).toBe('18')
   })
 
   test('Does not fire callback on unmount', () => {
@@ -166,6 +189,13 @@ describe('Styles', () => {
     const o = wrapper.find('.c-Tag').first()
 
     expect(o.getDOMNode().classList.contains('is-red')).toBeTruthy()
+  })
+
+  test('Has size styles', () => {
+    const wrapper = mount(<Tag size="md" />)
+    const o = wrapper.find('.c-Tag').first()
+
+    expect(o.getDOMNode().classList.contains('is-md')).toBeTruthy()
   })
 
   test('Has display styles', () => {
