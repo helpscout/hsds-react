@@ -53,17 +53,13 @@ describe('Content', () => {
     const o = wrapper.find(Text)
 
     expect(o.html()).toContain('Mugatu')
-    expect(o.props().size).toBe('11')
+    expect(o.props().size).toBe('12')
   })
 
-  test('Adjusts fontSize based on size', () => {
-    const wrapper12 = mount(<Tag size="md">Mugatu</Tag>)
+  test('Adjusts fontSize when all caps', () => {
+    const wrapper12 = mount(<Tag>Mugatu</Tag>)
     const o12 = wrapper12.find(Text)
     expect(o12.props().size).toBe('12')
-
-    const wrapper11 = mount(<Tag size="sm">Mugatu</Tag>)
-    const o11 = wrapper11.find(Text)
-    expect(o11.props().size).toBe('11')
 
     const wrapper10 = mount(
       <Tag size="sm" allCaps>
@@ -71,7 +67,7 @@ describe('Content', () => {
       </Tag>
     )
     const o10 = wrapper10.find(Text)
-    expect(o10.props().size).toBe('10')
+    expect(o10.props().size).toBe('11')
   })
 })
 

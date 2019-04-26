@@ -97,12 +97,9 @@ export class Tag extends React.PureComponent<Props, State> {
   }
 
   getFontSize() {
-    const { size, allCaps } = this.props
+    const { allCaps } = this.props
 
-    let fontSize = 11
-    if (size === 'md') {
-      fontSize = 12
-    }
+    let fontSize = 12
     if (allCaps) {
       fontSize = fontSize - 1
     }

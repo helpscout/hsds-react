@@ -24,7 +24,7 @@ export const ClearAllUI = styled('button')`
   height: 100%;
   margin-left: 8px;
   color: ${getColor('charcoal.200')};
-  ${setFontSize(13)};
+  ${setFontSize(12)};
 
   &:hover {
     color: ${getColor('charcoal.400')};
