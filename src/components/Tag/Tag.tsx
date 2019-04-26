@@ -1,10 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
-import Centralize from '../Centralize'
 import Flexy from '../Flexy'
-import Icon from '../Icon'
-import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { noop, promiseNoop } from '../../utilities/other'
@@ -17,7 +14,6 @@ import {
   IconUI,
   IconWrapperUI,
   TextUI,
-  FlexyBlockUI,
 } from './Tag.css'
 import { COMPONENT_KEY } from './Tag.utils'
 
@@ -154,21 +150,23 @@ export class Tag extends React.PureComponent<Props, State> {
     )
 
     return (
-      <IconWrapperUI className={spinnerAndIconClassNames}>
-        {isRemoving && (
-          <SpinnerUI className={spinnerAndIconClassNames} size="xs" />
-        )}
-        {!isRemoving && (
-          <IconUI
-            name="cross-small"
-            size={iconSize}
-            clickable
-            onClick={this.handleOnRemove}
-            title="Remove"
-            className={spinnerAndIconClassNames}
-          />
-        )}
-      </IconWrapperUI>
+      <Flexy.Item className="c-Tag__iconWrapper">
+        <IconWrapperUI className={spinnerAndIconClassNames}>
+          {isRemoving && (
+            <SpinnerUI className={spinnerAndIconClassNames} size="xs" />
+          )}
+          {!isRemoving && (
+            <IconUI
+              name="cross-small"
+              size={iconSize}
+              clickable
+              onClick={this.handleOnRemove}
+              title="Remove"
+              className={spinnerAndIconClassNames}
+            />
+          )}
+        </IconWrapperUI>
+      </Flexy.Item>
     )
   }
 
@@ -206,8 +204,8 @@ export class Tag extends React.PureComponent<Props, State> {
           unmountOnExit
         >
           <TagUI {...getValidProps(rest)} className={this.getClassName()}>
-            <BodyUI className="c-Tag__body">
-              <FlexyBlockUI className="c-Tag__contentWrapper">
+            <BodyUI className="c-Tag__body" gap="none">
+              <Flexy.Block className="c-Tag__contentWrapper">
                 <TextUI allCaps={allCaps} block size={this.getFontSize()}>
                   <Truncate
                     className="c-Tag__textWrapper"
@@ -216,8 +214,8 @@ export class Tag extends React.PureComponent<Props, State> {
                     {this.renderChildren()}
                   </Truncate>
                 </TextUI>
-                {this.renderRemoveIcon()}
-              </FlexyBlockUI>
+              </Flexy.Block>
+              {this.renderRemoveIcon()}
             </BodyUI>
           </TagUI>
         </AnimateUI>

@@ -70,11 +70,6 @@ export const BodyUI = styled(Flexy)`
   height: ${config.height.sm}px;
 `
 
-export const FlexyBlockUI = styled(Flexy.Block)`
-  display: flex;
-  align-items: center;
-`
-
 export const IconWrapperUI = styled('div')`
   width: ${config.iconWidth.sm}px;
   height: 100%;
