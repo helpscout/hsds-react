@@ -5,11 +5,9 @@ import { DropdownProps } from './Dropdown.types'
 import propConnect from '../../PropProvider/propConnect'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
 import EventListener from '../../EventListener'
-import KeypressListener from '../../KeypressListener'
 import MenuContainer from './Dropdown.MenuContainer'
 import Trigger from './Dropdown.Trigger'
 import { DropdownUI } from './Dropdown.css.js'
-import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 import {
@@ -25,6 +23,7 @@ export interface State {
 export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
     ...initialState,
+    allowMultipleSelection: false,
     disabled: false,
     innerRef: noop,
     menuRef: noop,
@@ -108,9 +107,15 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 
   renderMenu() {
-    const { children } = this.props
+    const { children, allowMultipleSelection } = this.props
 
-    return <MenuContainer children={children} innerRef={this.setMenuNodeRef} />
+    return (
+      <MenuContainer
+        children={children}
+        innerRef={this.setMenuNodeRef}
+        allowMultipleSelection={allowMultipleSelection}
+      />
+    )
   }
 
   render() {

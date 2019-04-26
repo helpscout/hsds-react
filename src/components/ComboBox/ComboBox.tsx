@@ -155,7 +155,8 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     this.safeSetState({
       inputValue: '',
     })
-    this.scrollMenuToTop()
+
+    this.props.closeOnSelect && this.scrollMenuToTop()
   }
 
   scrollMenuToTop = () => {
