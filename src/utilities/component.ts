@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { includes } from './arrays'
+import { includes, last } from './arrays'
 import { isArray, isFunction, isObject, isDefined, isString } from './is'
 
 let REGISTERED_COMPONENTS = {}
@@ -221,4 +221,16 @@ export const renderAsSingleChild = (
 
   // Render single child
   return React.Children.only(children)
+}
+
+export const unwrapNamespace = (namespace: string): string => {
+  if (!namespace) return namespace
+
+  const token = '*||*'
+  const matches = namespace
+    .replace(/\(|\)/g, token)
+    .split(token)
+    .filter(n => n)
+
+  return last(matches)
 }
