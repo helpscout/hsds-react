@@ -2,11 +2,10 @@ import baseStyles from '../../styles/resets/baseStyles.css.js'
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'
 import { setFontSize } from '../../styles/utilities/font'
-import Inline from '../Inline'
 
 export const TagListUI = styled('div')`
   ${baseStyles};
-  max-height: 40px;
+  max-height: 36px;
   overflow: hidden;
   will-change: contents;
 

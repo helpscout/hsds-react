@@ -50,7 +50,7 @@ export const config = {
     },
   },
   height: {
-    sm: 17,
+    sm: 16,
     md: 22,
   },
   iconWidth: {
@@ -58,8 +58,8 @@ export const config = {
     md: 24,
   },
   padding: {
-    sm: '0 4px',
-    md: '0 8px',
+    sm: '0 4px 0',
+    md: '0 8px 0',
   },
 }
 
@@ -67,7 +67,8 @@ export const BodyUI = styled(Flexy)`
   max-width: 100%;
   display: flex;
   align-items: center;
-  height: ${config.height.sm}px;
+  height: ${config.height.sm - 2}px;
+  line-height: ${config.height.sm}px;
 `
 
 export const IconWrapperUI = styled('div')`
@@ -115,6 +116,10 @@ export const TagUI = styled('div')`
   max-width: 100%;
 
   ${makeColorStyles()};
+
+  &.is-filled {
+    padding-top: 0;
+  }
 
   &.is-md {
     padding: ${config.padding.md};
