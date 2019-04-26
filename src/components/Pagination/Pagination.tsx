@@ -23,13 +23,13 @@ import Icon from '../Icon'
 export interface Props {
   activePage: number
   className?: string
-  isLoading?: boolean
   innerRef: (node: HTMLElement) => void
+  isLoading?: boolean
   onChange: (nextPageNumber: number) => void
+  pluralizedSubject?: string
   rangePerPage: number
   separator?: string
   showNavigation?: boolean
-  pluralizedSubject?: string
   subject: string
   totalItems: number
 }
@@ -37,13 +37,13 @@ export interface Props {
 export class Pagination extends React.PureComponent<Props> {
   static defaultProps = {
     activePage: 1,
-    isLoading: false,
     innerRef: noop,
+    isLoading: false,
     onChange: noop,
     rangePerPage: 50,
     separator: 'of',
-    subject: '',
     showNavigation: true,
+    subject: '',
     totalItems: 0,
   }
 
@@ -87,7 +87,7 @@ export class Pagination extends React.PureComponent<Props> {
     return Math.max(totalItems, 0)
   }
 
-  isNavigationVisible() {
+  shouldShowNavigation() {
     const { showNavigation } = this.props
     return showNavigation && this.getNumberOfPages() > 1
   }
@@ -131,8 +131,8 @@ export class Pagination extends React.PureComponent<Props> {
       </span>
     )
 
-    if (!totalItems) {
-      return subject ? totalNode : null
+    if (!totalItems || !this.shouldShowNavigation()) {
+      return subject ? <RangeUI>{totalNode}</RangeUI> : null
     }
 
     return (
@@ -250,7 +250,7 @@ export class Pagination extends React.PureComponent<Props> {
             )}
           </Text>
         </InformationUI>
-        {this.isNavigationVisible() && this.renderNavigation()}
+        {this.shouldShowNavigation() && this.renderNavigation()}
       </PaginationUI>
     )
   }
