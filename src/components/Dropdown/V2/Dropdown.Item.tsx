@@ -23,6 +23,7 @@ import {
 } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { COMPONENT_KEY } from './Dropdown.utils'
+import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 
 export interface Props {
   actionId?: string
@@ -35,6 +36,7 @@ export interface Props {
   index: string
   innerRef: (node: HTMLElement) => void
   isHover: boolean
+  isSelectionClearer: boolean
   items: Array<any>
   onMouseEnter: (...args: any[]) => void
   onMouseMove: (...args: any[]) => void
@@ -55,6 +57,7 @@ export class Item extends React.PureComponent<Props> {
     index: '0',
     innerRef: noop,
     isHover: false,
+    isSelectionClearer: false,
     items: undefined,
     dropRight: true,
     dropUp: false,
@@ -82,8 +85,13 @@ export class Item extends React.PureComponent<Props> {
 
   handleOnClick = (event: Event) => {
     const { onClick } = this.props
+    const state: any = this.props.getState()
 
-    onClick(event, { hasSubMenu: this.hasSubMenu() })
+    if (state && state.allowMultipleSelection && state.selectionClearer) {
+      onClick(state, event)
+    } else {
+      onClick(event, { hasSubMenu: this.hasSubMenu() })
+    }
   }
 
   hasSubMenu(): boolean {
@@ -174,7 +182,21 @@ export class Item extends React.PureComponent<Props> {
   }
 
   renderContent() {
-    const { actionId, renderItem, children, label, value } = this.props
+    const {
+      actionId,
+      renderItem,
+      children,
+      label,
+      value,
+      getState,
+    } = this.props
+    const internalState: any = getState()
+    const allowMultipleSelection =
+      internalState != null && internalState.allowMultipleSelection
+
+    if (allowMultipleSelection && renderItem == null) {
+      return ItemSelectedCheck(getCustomItemProps(this.props))
+    }
 
     if (renderItem) {
       return renderItem(getCustomItemProps(this.props))
@@ -215,13 +237,14 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { className, disabled, type } = this.props
+    const { className, disabled, type, isSelectionClearer } = this.props
     const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
       'c-DropdownV2Item',
       disabled && 'is-disabled',
       !hasSubMenu && 'is-option',
+      isSelectionClearer && 'c-SelectionClearerItem',
       className
     )
 
@@ -250,11 +273,12 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 const ConnectedItem: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { getState, renderItem } = state
+    const { getState, renderItem, selectedItem } = state
 
     return {
       getState,
       renderItem,
+      selectedItem,
     }
   }
 )(
