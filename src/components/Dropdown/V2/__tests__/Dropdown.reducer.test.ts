@@ -100,6 +100,31 @@ describe('FocusItem', () => {
   })
 })
 
+describe('ClearSelection', () => {
+  test('Closes on select, if specified', () => {
+    const action = {
+      type: actionTypes.CLEAR_SELECTION,
+      payload: {
+        selectedItem: '',
+      },
+    }
+
+    const nextState = reducer(
+      {
+        ...initialState,
+        isOpen: true,
+        closeOnSelect: true,
+        selectedItem: ['hello', 'hola'],
+      },
+      action
+    )
+
+    expect(nextState.selectedItem).toBe('')
+    expect(nextState.previousSelectedItem).toEqual(['hello', 'hola'])
+    expect(nextState.isOpen).toBe(false)
+  })
+})
+
 describe('SelectItem', () => {
   test('Can select an item index', () => {
     const action = {

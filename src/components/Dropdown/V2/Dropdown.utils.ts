@@ -2,7 +2,7 @@ import { ItemIndex } from './Dropdown.types'
 import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
-import { isObject, isDefined, isNumber, isString } from '../../../utilities/is'
+import { isObject, isDefined, isArray, isString } from '../../../utilities/is'
 
 export const COMPONENT_KEY = {
   Block: 'DropdownBlock',
@@ -111,7 +111,15 @@ export const decrementPathIndex = (
 /**
  * Item Helpers
  */
+
 export const itemIsActive = (selectedItem, item) => {
+  if (Array.isArray(selectedItem)) {
+    for (const selItem of selectedItem) {
+      if (itemIsActive(selItem, item)) return true
+    }
+    return false
+  }
+
   if (isObject(item) && isObject(selectedItem)) {
     const { id, value } = selectedItem
 
@@ -137,6 +145,21 @@ export const itemIsActive = (selectedItem, item) => {
   }
 
   return selectedItem === item
+}
+
+export const processSelectionOfItem = (currentSelection, item) => {
+  let removed = false
+  let selection: any[] = []
+
+  for (const presentItem of currentSelection) {
+    if (itemIsActive(presentItem, item)) {
+      removed = true
+    } else {
+      selection.push(presentItem)
+    }
+  }
+
+  return removed ? selection : selection.concat(item)
 }
 
 export const getItemFromCollection = (
@@ -335,4 +358,11 @@ export const filterNonStoreProps = props => {
     }
     return nextProps
   }, {})
+}
+
+export const isSelectedItemEmpty = selectedItem => {
+  if (selectedItem == null) return true
+  if (selectedItem === '') return true
+  if (isArray(selectedItem) && selectedItem.length === 0) return true
+  return false
 }

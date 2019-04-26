@@ -42,7 +42,7 @@ module.exports = {
     '<rootDir>/config/polyfills.js',
     '<rootDir>/config/jsdomPolyfills.js',
   ],
-  setupTestFrameworkScriptFile: '<rootDir>/config/jest/setupTests.js',
+  setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.js'],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.test.(js|jsx|ts|tsx)',
     '<rootDir>/src/**/?(*.)(spec|test).js?(x)',

@@ -19,6 +19,8 @@ import {
   itemIsSelected,
   pathResolve,
   filterNonStoreProps,
+  processSelectionOfItem,
+  isSelectedItemEmpty,
 } from '../Dropdown.utils'
 
 describe('pathResolve', () => {
@@ -160,8 +162,30 @@ describe('itemIsActive', () => {
     expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
+  test('Can match an item by id inside an array of items', () => {
+    const selectedItem = [
+      { id: 'ron', value: 'Ron' },
+      { id: 'ralph', value: 'Ralph' },
+      { id: 'rene', value: 'Rene' },
+    ]
+    const item = { id: 'ron' }
+
+    expect(itemIsActive(selectedItem, item)).toBe(true)
+  })
+
   test('Can match an item based on value', () => {
     const selectedItem = { id: 'ron', value: 'Ron' }
+    const item = { value: 'Ron' }
+
+    expect(itemIsActive(selectedItem, item)).toBe(true)
+  })
+
+  test('Can match an item by value inside an array of items', () => {
+    const selectedItem = [
+      { id: 'ron', value: 'Ron' },
+      { id: 'ralph', value: 'Ralph' },
+      { id: 'rene', value: 'Rene' },
+    ]
     const item = { value: 'Ron' }
 
     expect(itemIsActive(selectedItem, item)).toBe(true)
@@ -174,8 +198,22 @@ describe('itemIsActive', () => {
     expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
+  test('Can match an item.value based on string selected value inside an array of items', () => {
+    const selectedItem = ['Ron', 'Ralph', 'Rene']
+    const item = { value: 'Ron' }
+
+    expect(itemIsActive(selectedItem, item)).toBe(true)
+  })
+
   test('Can match an item.id based on string selected value', () => {
     const selectedItem = 'ron'
+    const item = { id: 'ron' }
+
+    expect(itemIsActive(selectedItem, item)).toBe(true)
+  })
+
+  test('Can match an item.id based on string selected value inside an array of items', () => {
+    const selectedItem = ['ron', 'ralph', 'rene']
     const item = { id: 'ron' }
 
     expect(itemIsActive(selectedItem, item)).toBe(true)
@@ -188,6 +226,13 @@ describe('itemIsActive', () => {
     expect(itemIsActive(selectedItem, item)).toBe(true)
   })
 
+  test('Can exactly match an item inside an array of items', () => {
+    const selectedItem = ['ron', 'ralph', 'rene']
+    const item = 'ron'
+
+    expect(itemIsActive(selectedItem, item)).toBe(true)
+  })
+
   test('Returns false for non matches', () => {
     const selectedItem = { nope_id: 'ron' }
     const item = { id: 'ron', value: 'Ron' }
@@ -195,6 +240,70 @@ describe('itemIsActive', () => {
     expect(itemIsActive(selectedItem, item)).toBe(false)
     expect(itemIsActive(selectedItem, 'ron')).toBe(false)
     expect(itemIsActive('nope', 'ron')).toBe(false)
+  })
+
+  test('Returns false for non matches inside an array of items', () => {
+    const selectedItem = [{ nope_id: 'ron' }, { nope_id: 'ralph' }]
+    const item = { id: 'ron', value: 'Ron' }
+
+    expect(itemIsActive(selectedItem, item)).toBe(false)
+    expect(itemIsActive(selectedItem, 'ron')).toBe(false)
+    expect(itemIsActive('nope', 'ron')).toBe(false)
+  })
+})
+
+describe('processSelectionOfItem', () => {
+  test('Can add to the selection if item is not present', () => {
+    const selectedItem = [
+      { id: 'ron', value: 'Ron' },
+      { id: 'ralph', value: 'Ralph' },
+      { id: 'rene', value: 'Rene' },
+    ]
+    const item = { id: 'ringo', value: 'Ringo' }
+
+    expect(processSelectionOfItem(selectedItem, item)).toEqual(
+      selectedItem.concat(item)
+    )
+  })
+
+  test('Can remove from the selection if item is present', () => {
+    const selectedItem = [
+      { id: 'ron', value: 'Ron' },
+      { id: 'ralph', value: 'Ralph' },
+      { id: 'rene', value: 'Rene' },
+    ]
+    const item = { id: 'ron', value: 'Ron' }
+
+    expect(processSelectionOfItem(selectedItem, item)).toEqual([
+      { id: 'ralph', value: 'Ralph' },
+      { id: 'rene', value: 'Rene' },
+    ])
+  })
+})
+
+describe('isSelectedItemEmpty', () => {
+  test('Checks if selected item is empty when null', () => {
+    const selectedItem = null
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(true)
+  })
+
+  test('Checks if selected item is empty when empty string', () => {
+    const selectedItem = ''
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(true)
+  })
+
+  test('Checks if selected item is empty when empty array', () => {
+    const selectedItem = []
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(true)
+  })
+
+  test('Checks if selected item is not empty', () => {
+    const selectedItem = ['hello']
+
+    expect(isSelectedItemEmpty(selectedItem)).toBe(false)
   })
 })
 
