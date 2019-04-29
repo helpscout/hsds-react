@@ -1,5 +1,4 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import styled from '../styled'
@@ -12,28 +11,28 @@ import {
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
-import css from './styles/Overflow.css.js'
+import css from './styles/Overflow.css'
 
 type Props = {
-  backgroundColor?: string,
-  className?: string,
-  children?: any,
-  refApplyFade: (() => void) => void,
-  refScrollToEnd: (() => void) => void,
-  initialHeightAdjustDelay?: number,
-  isScrollable?: boolean,
-  onScroll: (event: Event) => void,
-  onWheel: (event: SyntheticWheelEvent<HTMLDivElement>) => void,
-  remapScrollDirections: boolean,
-  scrollableRef: (ref: ?HTMLElement) => void,
-  scrollOnClickFade: boolean,
+  backgroundColor?: string
+  className?: string
+  children?: any
+  refApplyFade: (...args: any[]) => void
+  refScrollToEnd: (...args: any[]) => void
+  initialHeightAdjustDelay?: number
+  isScrollable?: boolean
+  onScroll: (event: Event) => void
+  onWheel: (event: Event) => void
+  remapScrollDirections: boolean
+  scrollableRef: (ref?: HTMLElement) => void
+  scrollOnClickFade: boolean
 }
 
 type State = {
-  shouldFadeOnMount: boolean,
+  shouldFadeOnMount: boolean
 }
 
-export class Overflow extends Component<Props, State> {
+export class Overflow extends React.PureComponent<Props, State> {
   static defaultProps = {
     initialHeightAdjustDelay: 30,
     isScrollable: true,
@@ -52,10 +51,10 @@ export class Overflow extends Component<Props, State> {
 
   _isMounted: boolean = false
   faderSize: number = 32
-  faderNodeLeft: ?HTMLElement
-  faderNodeRight: ?HTMLElement
-  containerNode: HTMLElement
-  node: ?HTMLElement = null
+  faderNodeLeft: HTMLElement | null
+  faderNodeRight: HTMLElement | null
+  containerNode: HTMLElement | null
+  node: Element | Text | null
   scrollAmount = 0.7
   smoothScrollDuration = 200
 
@@ -86,7 +85,7 @@ export class Overflow extends Component<Props, State> {
     if (!this._isMounted || !this.node) return
 
     const containerNode = this.containerNode
-    const height = containerNode.clientHeight
+    const height = containerNode && containerNode.clientHeight
     const heightOffset = 20
 
     this.setState({
@@ -96,7 +95,8 @@ export class Overflow extends Component<Props, State> {
     /* istanbul ignore next */
     // JSDOM does not provide node.clientHeight, which prevents
     // us from testing this calculation
-    // $FlowFixMe
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.node.style.height = height ? `${height - heightOffset}px` : null
   }
 
@@ -110,9 +110,11 @@ export class Overflow extends Component<Props, State> {
     const transformRight = getFadeRightStyles(event, offset)
 
     requestAnimationFrame(() => {
-      // $FlowFixMe
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.faderNodeLeft.style.transform = transformLeft
-      // $FlowFixMe
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.faderNodeRight.style.transform = transformRight
     })
   }
@@ -142,7 +144,7 @@ export class Overflow extends Component<Props, State> {
    * @param   {WheelEvent} event
    */
   /* istanbul ignore next */
-  remapScrollDirections = (event: SyntheticWheelEvent<HTMLDivElement>) => {
+  remapScrollDirections = event => {
     /* istanbul ignore next */
     if (this.props.remapScrollDirections) {
       remapScrollingPlane(event)
@@ -156,11 +158,18 @@ export class Overflow extends Component<Props, State> {
   scrollLeft = () => {
     if (!this.props.scrollOnClickFade) return
 
-    const currentScrollAmount = this.containerNode.scrollLeft
-    const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
-    const scrollValue = currentScrollAmount - scrollAmount
+    const currentScrollAmount =
+      this.containerNode && this.containerNode.scrollLeft
+    const scrollAmount =
+      this.containerNode && this.containerNode.clientWidth * this.scrollAmount
+    const scrollValue =
+      currentScrollAmount && scrollAmount
+        ? currentScrollAmount - scrollAmount
+        : null
 
-    this.scrollContainerView(scrollValue)
+    if (scrollValue) {
+      this.scrollContainerView(scrollValue)
+    }
   }
 
   /**
@@ -169,11 +178,18 @@ export class Overflow extends Component<Props, State> {
   scrollRight = () => {
     if (!this.props.scrollOnClickFade) return
 
-    const currentScrollAmount = this.containerNode.scrollLeft
-    const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
-    const scrollValue = currentScrollAmount + scrollAmount
+    const currentScrollAmount =
+      this.containerNode && this.containerNode.scrollLeft
+    const scrollAmount =
+      this.containerNode && this.containerNode.clientWidth * this.scrollAmount
+    const scrollValue =
+      currentScrollAmount && scrollAmount
+        ? currentScrollAmount + scrollAmount
+        : null
 
-    this.scrollContainerView(scrollValue)
+    if (scrollValue) {
+      this.scrollContainerView(scrollValue)
+    }
   }
 
   /**
@@ -258,6 +274,8 @@ export class Overflow extends Component<Props, State> {
     )
 
     return (
+      // TODO: fix typescript complains
+      // @ts-ignore
       <div className={componentClassName} {...rest}>
         {faderLeftMarkup}
         <div
@@ -266,6 +284,8 @@ export class Overflow extends Component<Props, State> {
             this.containerNode = node
             scrollableRef(node)
           }}
+          // TODO: fix typescript complains
+          // @ts-ignore
           onScroll={this.handleOnScroll}
           onWheel={this.remapScrollDirections}
         >
