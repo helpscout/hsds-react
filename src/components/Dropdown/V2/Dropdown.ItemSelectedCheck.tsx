@@ -28,9 +28,11 @@ const ItemSelectedCheck = (props: any = defaultProps) => {
     isClearerActive && 'is-selectionClearer-active'
   )
 
+  const content = props.label || props.value
+
   return (
     <ItemSelectedCheckUI className={componentClassnames}>
-      <span className="c-ItemSelectedCheck__value">{props.value}</span>
+      <span className="c-ItemSelectedCheck__value">{content}</span>
       {props.isActive || isClearerActive ? <Icon name="check" /> : null}
     </ItemSelectedCheckUI>
   )
