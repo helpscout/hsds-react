@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
@@ -33,7 +32,7 @@ export const config = {
 }
 
 export const BackdropUI = styled('div')`
-  ${baseStyles}
+  ${baseStyles};
 
   background-color: ${config.backgroundColor};
   border: 1px solid;
@@ -90,7 +89,7 @@ export const BackdropUI = styled('div')`
     border-color: ${config.borderColorFill};
   }
 
-  ${makeStateStyles()}
+  ${makeStateStyles};
 
   &.is-custom {
     background-color: ${config.custom.backgroundColor};
@@ -152,10 +151,7 @@ export const FocusUI = styled('div')`
     top: -1px;
   }
 
-  &.is-error {
-    box-shadow: 0 0 0 ${config.focusErrorOutlineWidth}px
-      ${config.focusErrorOutlineColor};
-  }
+  ${makeFocusStateStyles};
 `
 
 function makeStateStyles() {
@@ -169,6 +165,18 @@ function makeStateStyles() {
         border-color: transparent !important;
         box-shadow: none !important;
       }
+    }
+  `
+  )
+}
+
+function makeFocusStateStyles() {
+  return forEach(
+    STATES,
+    state => `
+    &.is-${state} {
+      box-shadow: 0 0 0 ${config.focusErrorOutlineWidth}px
+      ${getColor('state', state, 'borderColor')};
     }
   `
   )
