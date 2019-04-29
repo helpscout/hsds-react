@@ -1,19 +1,19 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { OverlayUI } from './styles/Overlay.css.js'
+import { COMPONENT_KEY } from './Overlay.utils'
+import { OverlayUI } from './styles/Overlay.css'
 
 type Props = {
-  children?: any,
-  className?: string,
-  fixed: boolean,
-  transparent: boolean,
+  children?: any
+  className?: string
+  fixed: boolean
+  transparent: boolean
 }
 
-class Overlay extends Component<Props> {
+class Overlay extends React.PureComponent<Props> {
   static defaultProps = {
     fixed: false,
     transparent: false,
@@ -43,4 +43,4 @@ class Overlay extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(Overlay)
 
-export default Overlay
+export default propConnect(COMPONENT_KEY)(Overlay)

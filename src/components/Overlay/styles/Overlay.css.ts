@@ -1,6 +1,5 @@
-// @flow
-import styled from '../../styled'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import styled from '../../styled/index'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import { isHSApp } from '../../../styles/utilities/theme'
 
 export const config = {
