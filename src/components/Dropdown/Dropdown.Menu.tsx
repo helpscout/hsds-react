@@ -1,43 +1,41 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import enhanceComponentMethod from '@helpscout/react-utils/dist/enhanceComponentMethod'
-import Item from './Item'
-import EventListener from '../EventListener'
-import KeypressListener from '../KeypressListener'
-import Animate from '../Animate'
-import Card from '../Card'
-import Drop from '../Drop'
-import Scrollable from '../Scrollable'
+import Item from './Dropdown.Item'
+import EventListener from '../EventListener/index'
+import KeypressListener from '../KeypressListener/index'
+import Animate from '../Animate/index'
+import Card from '../Card/index'
+import Drop from '../Drop/index'
+import Scrollable from '../Scrollable/index'
 import Keys from '../../constants/Keys'
-import { includes } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { incrementFocusIndex } from '../../utilities/focus'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import { applyStylesToNode, isNodeScrollable } from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
-import type { DropdownDirection } from './types'
+import { DropdownDirection } from './Dropdown.types'
 
-type Props = {
-  children?: any,
-  className?: string,
-  closeMenuOnClick: boolean,
-  closePortal: () => void,
-  enableCycling: boolean,
-  enableTabNavigation: boolean,
-  isOpen: boolean,
-  onBeforeClose: () => void,
-  onBeforeOpen: () => void,
-  onClose: () => void,
-  onOpen: () => void,
-  onSelect: () => void,
-  selectedIndex: number,
-  trigger?: ?HTMLElement,
+interface DropdownProps {
+  children?: any
+  className?: string
+  closeMenuOnClick: boolean
+  closePortal: () => void
+  enableCycling: boolean
+  enableTabNavigation: boolean
+  isOpen: boolean
+  onBeforeClose: () => void
+  onBeforeOpen: () => void
+  onClose: () => void
+  onOpen: () => void
+  onSelect: () => void
+  selectedIndex: number
+  trigger?: HTMLElement
 }
 
-type State = {
-  focusIndex: ?number,
-  hoverIndex: ?number,
+interface DropDownState {
+  focusIndex?: number
+  hoverIndex?: number | null
 }
 
 const dropOptions = {
@@ -47,7 +45,7 @@ const dropOptions = {
   timeout: 0,
 }
 
-class Menu extends Component<Props, State> {
+class Menu extends React.PureComponent<DropdownProps, DropDownState> {
   static defaultProps = {
     closeMenuOnClick: true,
     enableCycling: false,
@@ -62,19 +60,20 @@ class Menu extends Component<Props, State> {
     parentMenuClose: PropTypes.func,
   }
 
-  items: Array<?any> = []
+  items: Array<any> = []
   isFocused: boolean = false
-  height: ?number = null
+  height: number | null = null
 
-  node: ?HTMLElement = null
-  wrapperNode: ?HTMLElement = null
-  contentNode: ?HTMLElement = null
-  scrollableNode: ?HTMLElement = null
-  listNode: ?HTMLElement = null
+  node: HTMLElement | null = null
+  wrapperNode: HTMLElement | null = null
+  contentNode: HTMLElement | null = null
+  scrollableNode: HTMLElement | null = null
+  listNode: HTMLElement | null = null
   _isMounted: boolean = false
 
-  constructor(props: Props) {
-    super()
+  constructor(props) {
+    super(props)
+
     this.state = {
       focusIndex:
         typeof props.selectedIndex === 'number' ? props.selectedIndex : null,
@@ -112,14 +111,14 @@ class Menu extends Component<Props, State> {
     })
   }
 
-  componentWillUpdate(nextProps: Props) {
+  componentWillUpdate(nextProps) {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.mapRefsToItems()
       this.isFocused = nextProps.isOpen
     }
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps) {
     if (this.props.isOpen !== prevProps.isOpen) {
       this.mapRefsToItems()
     }
@@ -157,7 +156,7 @@ class Menu extends Component<Props, State> {
     this.items = []
     Object.keys(this.refs).forEach((key, index) => {
       /* istanbul ignore else */
-      if (includes(key, 'item-')) {
+      if (key.indexOf('item-') >= 0) {
         const item = this.refs[key]
         this.items.push(item)
       }
@@ -300,7 +299,7 @@ class Menu extends Component<Props, State> {
     }
   }
 
-  handleOnMenuClick = (event: Event) => {
+  handleOnMenuClick = event => {
     event.stopPropagation()
   }
 
@@ -312,6 +311,8 @@ class Menu extends Component<Props, State> {
       closeMenuOnClick,
       enableCycling,
       enableTabNavigation,
+      // TODO: fix typescript complains
+      // @ts-ignore
       forceClosePortal,
       isOpen,
       onBeforeClose,
@@ -432,7 +433,7 @@ class Menu extends Component<Props, State> {
                 ref={node => {
                   this.contentNode = node
                 }}
-                style={{ height: this.height }}
+                style={{ height: this.height || undefined }}
               >
                 <Scrollable
                   scrollableRef={node => {
@@ -459,4 +460,7 @@ class Menu extends Component<Props, State> {
 }
 
 export const MenuComponent = Menu
+
+// TODO: fix typescript complains
+// @ts-ignore
 export default Drop(dropOptions)(Menu)

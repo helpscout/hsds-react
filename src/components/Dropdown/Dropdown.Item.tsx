@@ -1,41 +1,14 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
-import Flexy from '../Flexy'
-import Icon from '../Icon'
+import Flexy from '../Flexy/index'
+import Icon from '../Icon/index'
 import Keys from '../../constants/Keys'
-import { default as Menu, MenuComponent } from './Menu'
+import { default as Menu, MenuComponent } from './Dropdown.Menu'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { DropdownItemProps, DropdownItemState } from './Dropdown.types'
 
-type Props = {
-  children?: any,
-  className?: string,
-  disabled: boolean,
-  enableTabNavigation: boolean,
-  isHover?: boolean,
-  isFocused?: boolean,
-  isOpen?: boolean,
-  itemIndex: number,
-  itemRef: (ref: any) => void,
-  onBlur: (event: Event, reactEvent: Event, instance: Object) => void,
-  onClick: (event: Event, reactEvent: Event, instance: Object) => void,
-  onSelect: (value: any) => void,
-  onFocus: (event: Event, reactEvent: Event, instance: Object) => void,
-  onMouseEnter: (event: Event, reactEvent: Event, instance: Object) => void,
-  onMouseLeave: (event: Event, reactEvent: Event, instance: Object) => void,
-  onMenuClose: () => void,
-  onParentMenuClose: () => void,
-  value?: any,
-}
-
-type State = {
-  isOpen: ?boolean,
-  isHover: ?boolean,
-  isFocused: ?boolean,
-}
-
-class Item extends Component<Props, State> {
+class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
   static defaultProps = {
     disabled: false,
     enableTabNavigation: false,
@@ -54,12 +27,12 @@ class Item extends Component<Props, State> {
     parentMenuClose: PropTypes.func,
   }
 
-  node: ?HTMLElement = null
-  menu: ?any = null
+  node: HTMLElement | null = null
+  menu: any = null
   _isMounted: boolean = false
 
-  constructor(props: Props) {
-    super()
+  constructor(props: DropdownItemProps) {
+    super(props)
 
     this.state = {
       isOpen: props.isOpen,
@@ -92,7 +65,7 @@ class Item extends Component<Props, State> {
     }
   }
 
-  componentWillReceiveProps = (nextProps: Props) => {
+  componentWillReceiveProps = (nextProps: DropdownItemProps) => {
     const { isFocused, isHover, isOpen } = this.state
     if (
       nextProps.isFocused !== isFocused ||
@@ -187,6 +160,8 @@ class Item extends Component<Props, State> {
   getMenuFromChildren = () => {
     const { children } = this.props
     if (Array.isArray(children)) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       return children.find(child => this.getMenu(child))
     } else {
       return this.getMenu(children) ? children : null
@@ -266,15 +241,23 @@ class Item extends Component<Props, State> {
       </Flexy.Item>
     ) : null
 
+    // TODO: fix typescript complains
     return (
+      // @ts-ignore
       <div className={componentClassName} role="presentation" {...rest}>
         <div
           className="c-DropdownItem__link"
+          // @ts-ignore
           onBlur={handleOnBlur}
+          // @ts-ignore
           onClick={handleOnClick}
+          // @ts-ignore
           onFocus={handleOnFocus}
+          // @ts-ignore
           onMouseEnter={handleOnMouseEnter}
+          // @ts-ignore
           onMouseLeave={handleOnMouseLeave}
+          // @ts-ignore
           onKeyDown={handleOnEnter}
           tabIndex={-1}
           ref={node => {
