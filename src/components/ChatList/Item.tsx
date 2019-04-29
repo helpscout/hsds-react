@@ -1,5 +1,4 @@
-// @flow
-import React, { Component } from 'react'
+import * as React from 'react'
 import Animate from '../Animate'
 import Badge from '../Badge'
 import Flexy from '../Flexy'
@@ -15,7 +14,7 @@ import Timestamp from '../Timestamp'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './ChatList.utils'
 import {
   ItemUI,
   BlockUI,
@@ -32,22 +31,22 @@ import {
 } from './styles/Item.css.js'
 
 type Props = {
-  avatar?: any,
-  isAssigned: boolean,
-  isFocused: boolean,
-  isTyping: boolean,
-  isViewing: boolean,
-  isWaiting: boolean,
-  message: string,
-  messageLimit: number,
-  name: string,
-  newMessageCount: number,
-  tags?: any,
-  timestamp: string,
-  timestampFormatter: () => void,
+  avatar?: any
+  isAssigned: boolean
+  isFocused: boolean
+  isTyping: boolean
+  isViewing: boolean
+  isWaiting: boolean
+  message: string
+  messageLimit: number
+  name: string
+  newMessageCount: number
+  tags?: any
+  timestamp: string
+  timestampFormatter: () => void
 }
 
-class Item extends Component<Props> {
+class Item extends React.Component<Props> {
   static defaultProps = {
     isAssigned: false,
     isFocused: false,
@@ -63,6 +62,8 @@ class Item extends Component<Props> {
   render() {
     const {
       avatar,
+      // TODO: fix typescript complains
+      // @ts-ignore
       className,
       isAssigned,
       isFocused,

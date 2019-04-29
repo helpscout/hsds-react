@@ -1,12 +1,11 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Hr from '../Hr'
 import Illo from '../Illo'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './ChatList.utils'
 import {
   BlankSlateUI,
   IlloWrapperUI,
@@ -14,14 +13,14 @@ import {
 } from './styles/BlankSlate.css.js'
 
 type Props = {
-  className?: string,
-  children?: any,
-  illoName: string,
+  className?: string
+  children?: any
+  illoName: string
 }
 
 export const defaultMessage = "You're all caught-up"
 
-class BlankSlate extends Component<Props> {
+class BlankSlate extends React.PureComponent<Props> {
   static defaultProps = {
     illoName: 'chatListBlankSlate',
   }

@@ -1,19 +1,18 @@
-// @flow
-import React, { Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import BlankSlate from './BlankSlate'
 import Item from './Item'
 import { ChatListUI } from './styles/ChatList.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './ChatList.utils'
 
 type Props = {
-  className?: string,
-  children?: any,
+  className?: string
+  children?: any
 }
 
-class ChatList extends Component<Props> {
+class ChatList extends React.Component<Props> {
   static BlankSlate = BlankSlate
   static Item = Item
 
