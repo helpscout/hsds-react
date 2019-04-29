@@ -1,7 +1,7 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import EventListener from '../EventListener'
+import EventListener from '../EventListener/index'
 import { classNames } from '../../utilities/classNames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
 import {
@@ -36,9 +36,9 @@ const defaultProps = {
   zIndex: 1000,
 }
 
-class Positioner extends Component {
+class Positioner extends React.PureComponent {
   constructor(props) {
-    super()
+    super(props)
     /* istanbul ignore next */
     this.state = {
       direction: props.direction
@@ -46,27 +46,43 @@ class Positioner extends Component {
         : getDirections(),
     }
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.position = null
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.node = null
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.contentNode = null
     this.updatePosition = this.updatePosition.bind(this)
   }
 
   componentDidMount() {
     this.setTriggerNode()
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.updatePosition()
   }
 
   componentWillReceiveProps(nextProps) {
+    // TODO: fix typescript complains
+    // @ts-ignore
     if (nextProps.position !== this.position) {
       this.updatePosition(nextProps.position)
     }
   }
 
   setTriggerNode() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { trigger } = this.props
     /* istanbul ignore next */
+    // TODO: fix typescript complains
+    // @ts-ignore
     if (!this.triggerNode) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.triggerNode = isNodeElement(trigger)
         ? trigger
         : ReactDOM.findDOMNode(trigger)
@@ -74,9 +90,13 @@ class Positioner extends Component {
   }
 
   getPosition() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { direction, offset } = this.props
 
     /* istanbul ignore next */
+    // TODO: fix typescript complains
+    // @ts-ignore
     if (!this.triggerNode || !this.contentNode) return false
 
     /* istanbul ignore next */
@@ -84,7 +104,11 @@ class Positioner extends Component {
     // However, I'm unable to test it with this component due to the difficulty
     // of setting up Enzyme to recognize the triggerNode
     return getViewportPosition({
+      // TODO: fix typescript complains
+      // @ts-ignore
       triggerNode: this.triggerNode,
+      // TODO: fix typescript complains
+      // @ts-ignore
       contentNode: this.contentNode,
       offset: offset,
       direction: getDirections(direction),
@@ -93,6 +117,8 @@ class Positioner extends Component {
 
   /* istanbul ignore next */
   updatePosition(newPosition) {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { autoPosition, onUpdatePosition, position, zIndex } = this.props
 
     if (!autoPosition) return
@@ -108,30 +134,52 @@ class Positioner extends Component {
       zIndex,
     }
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     if (this.direction !== pos.direction) {
       this.setState({ direction: pos.direction })
     }
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.position = pos
 
     /* istanbul ignore next */
+    // TODO: fix typescript complains
+    // @ts-ignore
     applyStylesToNode(this.node, nodeStyles)
     onUpdatePosition(pos)
   }
 
   render() {
     const {
+      // TODO: fix typescript complains
+      // @ts-ignore
       autoPosition,
+      // TODO: fix typescript complains
+      // @ts-ignore
       className,
       children,
+      // TODO: fix typescript complains
+      // @ts-ignore
       offset,
+      // TODO: fix typescript complains
+      // @ts-ignore
       onUpdatePosition,
+      // TODO: fix typescript complains
+      // @ts-ignore
       position,
+      // TODO: fix typescript complains
+      // @ts-ignore
       trigger,
+      // TODO: fix typescript complains
+      // @ts-ignore
       zIndex,
       ...rest
     } = this.props
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { direction } = this.state
 
     const componentClassName = classNames(
@@ -149,14 +197,25 @@ class Positioner extends Component {
       <div
         className={componentClassName}
         ref={node => {
+          // TODO: fix typescript complains
+          // @ts-ignore
           this.node = node
         }}
         {...rest}
       >
-        <EventListener event="resize" handler={() => updatePosition()} />
+        <EventListener
+          event="resize"
+          handler={() => {
+            // TODO: fix typescript complains
+            // @ts-ignore
+            return updatePosition()
+          }}
+        />
         <div
           className="c-DropPositioner__content"
           ref={node => {
+            // TODO: fix typescript complains
+            // @ts-ignore
             this.contentNode = node
           }}
         >
@@ -167,8 +226,14 @@ class Positioner extends Component {
   }
 }
 
+// TODO: fix typescript complains
+// @ts-ignore
 Positioner.propTypes = propTypes
+// TODO: fix typescript complains
+// @ts-ignore
 Positioner.defaultProps = defaultProps
+// TODO: fix typescript complains
+// @ts-ignore
 Positioner.displayName = 'DropPositioner'
 
 export default Positioner
