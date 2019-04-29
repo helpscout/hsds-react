@@ -1,5 +1,5 @@
 import { SwitchSize, SwitchState, SwitchValue } from './types'
-import { FormLabelContextProps } from '../FormLabel/types'
+import { FormLabelContextProps } from '../FormLabel/FormLabel.types'
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
