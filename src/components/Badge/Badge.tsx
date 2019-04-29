@@ -1,21 +1,20 @@
-// @flow
-import type { UIStatus } from '../../constants/types'
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import styled from '../styled'
+import styled from '../styled/index'
 import { classNames } from '../../utilities/classNames'
-import css from './styles/Badge.css.js'
+import css from './styles/Badge.css'
+import { UIStatus } from '../../constants/types'
 
 type BadgeDisplay = 'block' | 'inlineBlock'
 type Props = {
-  children?: any,
-  className?: string,
-  count?: boolean,
-  display: BadgeDisplay,
-  size?: string,
-  status?: UIStatus,
-  isSquare?: boolean,
-  white?: boolean,
+  children?: any
+  className?: string
+  count?: boolean
+  display: BadgeDisplay
+  size?: string
+  status?: UIStatus
+  isSquare?: boolean
+  white?: boolean
 }
 
 const Badge = (props: Props) => {
