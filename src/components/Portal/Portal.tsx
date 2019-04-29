@@ -1,28 +1,27 @@
-import React from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import contextConnect from '../PropProvider/contextConnect'
 import PropProvider from '../PropProvider/PropProvider'
-import Container, { ID as portalContainerId } from './Container'
+import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
 import { isObject, isString } from '../../utilities/is'
 
-export const propTypes = {
-  className: PropTypes.string,
-  exact: PropTypes.bool,
-  id: PropTypes.string,
-  renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onBeforeOpen: PropTypes.func,
-  onOpen: PropTypes.func,
-  onBeforeClose: PropTypes.func,
-  onClose: PropTypes.func,
-  path: PropTypes.string,
-  timeout: PropTypes.number,
+export interface PortalProps {
+  className: string
+  exact: boolean
+  id: string
+  renderTo: string | object
+  onBeforeOpen: () => void
+  onOpen: () => void
+  onBeforeClose: () => void
+  onClose: () => void
+  path: string
+  timeout: number
 }
 
-export class Portal extends React.Component {
-  static propTypes = propTypes
+export class Portal extends React.Component<PortalProps> {
   static defaultProps = {
     propProviderContextApp: 'blue',
     propProviderContextValue: {},
@@ -58,6 +57,8 @@ export class Portal extends React.Component {
   /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.node.className = nextProps.className
     }
 
@@ -89,6 +90,8 @@ export class Portal extends React.Component {
     mountSelector =
       mountSelector || document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body
+    // TODO: fix typescript complains
+    // @ts-ignore
     return mountSelector || this.document.body // fallback
   }
 
@@ -104,6 +107,8 @@ export class Portal extends React.Component {
       >
         {children}
       </PropProvider>,
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.node
     )
   }
@@ -118,16 +123,24 @@ export class Portal extends React.Component {
       return
     }
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.node = document.createElement('div')
 
     if (className) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.node.className = className
     }
     if (id) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.node.id = id
     }
 
     // Render to specified target, instead of document
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.state.mountSelector.appendChild(this.node)
     this.renderPortalContent(props)
 
@@ -143,12 +156,18 @@ export class Portal extends React.Component {
 
     const { onClose } = props
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     ReactDOM.unmountComponentAtNode(this.node)
     // Unmount from specified target, instead of document
     if (
       this.state.mountSelector &&
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.node.parentNode === this.state.mountSelector
     ) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.state.mountSelector.removeChild(this.node)
     }
 
@@ -168,11 +187,15 @@ export class Portal extends React.Component {
       if (!this.isOpening && !this.isOpen) {
         this.isOpening = true
         onBeforeOpen(() => {
+          // TODO: fix typescript complains
+          // @ts-ignore
           this.mountPortal(props)
         })
       }
     } else {
       this.isOpening = true
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.mountPortal(props)
     }
   }
