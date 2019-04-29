@@ -1,37 +1,37 @@
-// @flow
-import type { AvatarShape, AvatarSize } from '../Avatar/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Avatar from '../Avatar'
-import Animate from '../Animate'
-import styled from '../styled'
+import propConnect from '../PropProvider/propConnect'
+import Avatar from '../Avatar/index'
+import Animate from '../Animate/index'
+import styled from '../styled/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
-import avatarGridWrapperCSS from './styles/AvatarGridWrapper.css.js'
-import avatarGridContainerCSS from './styles/AvatarGridContainer.css.js'
-import avatarGridCSS from './styles/AvatarGrid.css.js'
-import { COMPONENT_KEY } from './utils'
+import avatarGridWrapperCSS from './styles/AvatarGridWrapper.css'
+import avatarGridContainerCSS from './styles/AvatarGridContainer.css'
+import avatarGridCSS from './styles/AvatarGrid.css'
+import { COMPONENT_KEY } from './AvatarGrid.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 type Props = {
-  animationEasing: string,
-  animationSequence: string,
-  borderColor?: string,
-  center: boolean,
-  children?: any,
-  className?: string,
-  max: number,
-  outerBorderColor?: string,
-  shape: AvatarShape,
-  showStatusBorderColor: boolean,
-  size: AvatarSize,
+  animationEasing: string
+  animationSequence: string
+  borderColor?: string
+  center: boolean
+  children?: any
+  className?: string
+  max: number
+  outerBorderColor?: string
+  shape: AvatarShape
+  showStatusBorderColor: boolean
+  size: AvatarSize
 }
 
 const AvatarGridWrapper = styled('div')(avatarGridWrapperCSS)
 const AvatarGridContainer = styled('div')(avatarGridContainerCSS)
 const AvatarGridComponent = styled('div')(avatarGridCSS)
 
-class AvatarGrid extends Component<Props> {
+class AvatarGrid extends React.PureComponent<Props> {
   static defaultProps = {
     animationEasing: 'bounce',
     animationSequence: 'fade',
@@ -133,4 +133,6 @@ class AvatarGrid extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(AvatarGrid)
 
-export default AvatarGrid
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(AvatarGrid)
+
+export default PropConnectedComponent
