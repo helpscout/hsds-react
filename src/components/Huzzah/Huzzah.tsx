@@ -1,25 +1,24 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
-import styled from '../styled'
+import * as React from 'react'
+import styled from '../styled/index'
 import HUZZAHS from './huzzahs'
 import { classNames } from '../../utilities/classNames'
 import { sample } from '../../utilities/collection'
-import css from './styles/Huzzah.css.js'
+import css from './styles/Huzzah.css'
 
 export const DEFAULT_HUZZAH = 'donut'
 
 type HuzzahSize = 'lg' | 'md' | 'sm'
 
 type Props = {
-  children?: any,
-  className?: string,
-  isRandom: boolean,
-  name: string,
-  size: HuzzahSize,
-  styles: Object,
+  children?: any
+  className?: string
+  isRandom: boolean
+  name: string
+  size: HuzzahSize
+  styles: Object
 }
 
-class Huzzah extends Component<Props> {
+class Huzzah extends React.PureComponent<Props> {
   static defaultProps = {
     isRandom: false,
     name: DEFAULT_HUZZAH,
