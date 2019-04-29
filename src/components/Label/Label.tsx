@@ -1,22 +1,22 @@
-// @flow
-import type { UIState } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
-import Text from '../Text'
+import * as React from 'react'
+import { UIState } from '../../constants/types'
+import { propConnect } from 'components/PropProvider'
+import Text from '../Text/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
-import { LabelUI } from './styles/Label.css.js'
-import { COMPONENT_KEY } from './utils'
+import { LabelUI } from './styles/Label.css'
+import { COMPONENT_KEY } from './Label.utils'
 
 type Props = {
-  className?: string,
-  children?: any,
-  for: string,
-  isMarginless: boolean,
-  state?: UIState,
+  className?: string
+  children?: any
+  for: string
+  isMarginless: boolean
+  state?: UIState
 }
 
-class Label extends Component<Props> {
+class Label extends React.PureComponent<Props> {
   static defaultProps = {
     isMarginless: false,
     state: 'default',
@@ -57,4 +57,4 @@ class Label extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(Label)
 
-export default Label
+export default propConnect(COMPONENT_KEY)(Label)
