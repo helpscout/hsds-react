@@ -1,20 +1,20 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Icon from '../Icon'
+import Icon from '../Icon/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { OptionIconUI } from './styles/OptionIcon.css.js'
-import { COMPONENT_KEY } from './utils'
+import { OptionIconUI } from './styles/OptionIcon.css'
+import { COMPONENT_KEY } from './OptionIcon.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
-  icon: string,
-  title?: string,
+  children?: any
+  className?: string
+  icon: string
+  title?: string
 }
 
-class OptionIcon extends Component<Props> {
+class OptionIcon extends React.PureComponent<Props> {
   static defaultProps = {
     icon: 'chat',
   }
@@ -38,4 +38,4 @@ class OptionIcon extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(OptionIcon)
 
-export default OptionIcon
+export default propConnect(COMPONENT_KEY)(OptionIcon)
