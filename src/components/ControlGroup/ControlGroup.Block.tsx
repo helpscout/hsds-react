@@ -1,15 +1,14 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
-import Item from './Item'
+import * as React from 'react'
+import Item from './ControlGroup.Item'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './ControlGroup.utils'
 
 type Props = {
-  className?: string,
+  className?: string
 }
 
-class Block extends Component<Props> {
+class Block extends React.PureComponent<Props> {
   render() {
     const { className } = this.props
 

@@ -1,24 +1,23 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import {
   isComponentTypeControl,
   namespaceComponent,
 } from '../../utilities/component'
-import { ItemUI } from './styles/Item.css.js'
-import { COMPONENT_KEY } from './utils'
+import { ItemUI } from './styles/Item.css'
+import { COMPONENT_KEY } from './ControlGroup.utils'
 
 type Props = {
-  className?: string,
-  children?: any,
-  isBlock: boolean,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
+  className?: string
+  children?: any
+  isBlock: boolean
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
 }
 
-class Item extends Component<Props> {
+class Item extends React.PureComponent<Props> {
   static defaultProps = {
     isBlock: false,
     isFirst: false,

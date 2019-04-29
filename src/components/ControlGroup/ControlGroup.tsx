@@ -1,19 +1,18 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed, namespaceComponent } from '../../utilities/component'
-import Block from './Block'
-import Item from './Item'
-import { ControlGroupUI } from './styles/ControlGroup.css.js'
-import { COMPONENT_KEY } from './utils'
+import Block from './ControlGroup.Block'
+import Item from './ControlGroup.Item'
+import { ControlGroupUI } from './styles/ControlGroup.css'
+import { COMPONENT_KEY } from './ControlGroup.utils'
 
 type Props = {
-  className?: string,
-  children?: any,
+  className?: string
+  children?: any
 }
 
-class ControlGroup extends Component<Props> {
+class ControlGroup extends React.PureComponent<Props> {
   static Block = Block
   static Item = Item
 
