@@ -1,25 +1,24 @@
-// @flow
-import React, { Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Collapsible from '../Collapsible'
+import Collapsible from '../Collapsible/index'
 import Header from './Header'
 import Content from './Content'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { ChatInboxUI } from './styles/ChatInbox.css.js'
+import { COMPONENT_KEY } from './ChatInbox.utils'
+import { ChatInboxUI } from './styles/ChatInbox.css'
 
 type Props = {
-  isCollapsible: boolean,
-  isCollapsed: boolean,
+  isCollapsible: boolean
+  isCollapsed: boolean
 }
 
 type State = {
-  isCollapsed: boolean,
+  isCollapsed: boolean
 }
 
-class ChatInbox extends Component<Props, State> {
+class ChatInbox extends React.Component<Props, State> {
   static defaultProps = {
     isCollapsible: false,
     isCollapsed: true,
@@ -33,6 +32,8 @@ class ChatInbox extends Component<Props, State> {
     this.state = {
       isCollapsed: props.isCollapsed,
     }
+    // TODO: fix typescript complains
+    // @ts-ignore
     this._selfManageCollapse = props.isCollapsed !== undefined
   }
 
@@ -42,11 +43,15 @@ class ChatInbox extends Component<Props, State> {
     if (isCollapsible) {
       this.setState({ isCollapsed: !this.state.isCollapsed })
     }
+    // TODO: fix typescript complains
+    // @ts-ignore
     onClick && onClick(event)
   }
 
   render() {
     const {
+      // TODO: fix typescript complains
+      // @ts-ignore
       className,
       children,
       isCollapsed: propsIsCollapsed,
@@ -59,9 +64,13 @@ class ChatInbox extends Component<Props, State> {
     const componentClassName = classNames('c-ChatInbox', className)
 
     const contentMarkup = React.Children.map(children, (child, index) => {
+      // TODO: fix typescript complains
+      // @ts-ignore
       const childProps = child.props
 
       if (isComponentNamed(child, COMPONENT_KEY.Header)) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         return React.cloneElement(child, {
           key: index,
           isCollapsed,
@@ -80,6 +89,8 @@ class ChatInbox extends Component<Props, State> {
         )
       }
 
+      // TODO: fix typescript complains
+      // @ts-ignore
       return React.cloneElement(child, { key: index })
     })
 

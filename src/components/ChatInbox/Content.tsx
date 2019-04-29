@@ -1,17 +1,16 @@
-// @flow
-import React, { Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { ContentUI } from './styles/Content.css.js'
+import { COMPONENT_KEY } from './ChatInbox.utils'
+import { ContentUI } from './styles/Content.css'
 
 type Props = {
-  children?: any,
-  className?: string,
+  children?: any
+  className?: string
 }
 
-class Content extends Component<Props> {
+class Content extends React.Component<Props> {
   render() {
     const { className, children, ...rest } = this.props
 

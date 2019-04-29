@@ -1,5 +1,4 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
@@ -8,18 +7,18 @@ import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
-import { HeaderUI, ContentUI } from './styles/Header.css.js'
+import { COMPONENT_KEY } from './ChatInbox.utils'
+import { HeaderUI, ContentUI } from './styles/Header.css'
 
 type Props = {
-  avatars?: any,
-  count: number,
-  isCollapsed: boolean,
-  isCollapsible: boolean,
-  onClick: (event: Event) => void,
+  avatars?: any
+  count: number
+  isCollapsed: boolean
+  isCollapsible: boolean
+  onClick: (event: Event) => void
 }
 
-class Header extends Component<Props> {
+class Header extends React.PureComponent<Props> {
   static defaultProps = {
     count: 0,
     isCollapsible: false,
@@ -29,6 +28,8 @@ class Header extends Component<Props> {
   render() {
     const {
       avatars,
+      // TODO: fix typescript complains
+      // @ts-ignore
       className,
       count,
       children,

@@ -1,5 +1,4 @@
-// @flow
-import { propConnect } from '../PropProvider'
+import propConnect from '../PropProvider/propConnect'
 import ChatInbox from './ChatInbox'
 
 ChatInbox.Content = propConnect('ChatInboxContent')(ChatInbox.Content)
