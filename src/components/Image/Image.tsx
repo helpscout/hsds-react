@@ -1,30 +1,30 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import styled from '../styled'
+import styled from '../styled/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { calculateAspectRatioFit } from '../../utilities/images'
 import { allPropsDefined } from '../../utilities/is'
-import css from './styles/Image.css.js'
-import { COMPONENT_KEY } from './utils'
+import css from './styles/Image.css'
+import { COMPONENT_KEY } from './Image.utils'
 
 type ImageShape = 'rounded' | 'square' | ''
 type Props = {
-  alt?: string,
-  block: boolean,
-  className?: string,
-  height?: number,
-  maxHeight?: number,
-  maxWidth?: number,
-  src: string,
-  shape?: ImageShape,
-  style: Object,
-  title?: string,
-  width?: number,
+  alt?: string
+  block: boolean
+  className?: string
+  height?: number
+  maxHeight?: number
+  maxWidth?: number
+  src: string
+  shape?: ImageShape
+  style: Object
+  title?: string
+  width?: number
 }
 
-class Image extends Component<Props> {
+class Image extends React.PureComponent<Props> {
   static defaultProps = {
     shape: '',
     style: {},
@@ -85,4 +85,4 @@ export function enhanceStyleWithSize(props: Props): Object {
 
 namespaceComponent(COMPONENT_KEY)(Image)
 
-export default styled(Image)(css)
+export default propConnect(COMPONENT_KEY)(styled(Image)(css))
