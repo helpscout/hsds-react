@@ -1,33 +1,37 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import EventListener from '../EventListener'
+import EventListener from '../EventListener/index'
 import { classNames } from '../../utilities/classNames'
-import LoadingDots from '../LoadingDots'
+import LoadingDots from '../LoadingDots/index'
 import { isNodeElement, isNodeVisible } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 
-export const propTypes = {
-  className: PropTypes.string,
-  offset: PropTypes.number,
-  getScrollParent: PropTypes.func,
-  isLoading: PropTypes.bool,
-  onLoading: PropTypes.func,
-  onLoaded: PropTypes.func,
-}
-const defaultProps = {
-  getScrollParent: noop,
-  offset: 0,
-  isLoading: false,
-  onLoading: noop,
-  onLoaded: noop,
-  onScroll: noop,
+export interface InfiniteScrollerProps {
+  className: string
+  offset: number
+  isLoading: boolean
+  loading: boolean
+  scrollParent: HTMLElement
+  getScrollParent: (...args: any[]) => HTMLElement | Window | null
+  onLoading: (fn) => void
+  onLoaded: () => void
+  onScroll: (event, props) => void
 }
 
-class InfiniteScroller extends Component {
+export interface InfiniteScrollerState {
+  isLoading: boolean
+  nodeScope: HTMLElement | Window
+}
+
+class InfiniteScroller extends React.PureComponent<
+  InfiniteScrollerProps,
+  InfiniteScrollerState
+> {
   constructor(props) {
-    super()
+    super(props)
+
     this.state = {
       isLoading: props.isLoading,
       nodeScope: window,
@@ -36,6 +40,19 @@ class InfiniteScroller extends Component {
     this.node = null
     this.handleOnScroll = this.handleOnScroll.bind(this)
   }
+
+  static defaultProps = {
+    getScrollParent: noop,
+    offset: 0,
+    isLoading: false,
+    loading: false,
+    onLoading: noop,
+    onLoaded: noop,
+    onScroll: noop,
+  }
+
+  _isMounted: boolean | null
+  node: HTMLElement | null
 
   componentDidMount() {
     this._isMounted = true
@@ -62,7 +79,7 @@ class InfiniteScroller extends Component {
     if (nodeScope === window) {
       return window.scrollY
     } else {
-      return nodeScope.scrollTop
+      return (nodeScope as HTMLElement).scrollTop
     }
   }
 
@@ -127,10 +144,15 @@ class InfiniteScroller extends Component {
   getNodeScrollTop() {
     const { nodeScope } = this.state
     /* istanbul ignore next */
-    if (nodeScope !== window && nodeScope.scrollTop !== undefined) {
-      return nodeScope.scrollTop
+    if (
+      nodeScope !== window &&
+      (nodeScope as HTMLElement).scrollTop !== undefined
+    ) {
+      return (nodeScope as HTMLElement).scrollTop
     } else {
-      return nodeScope.scrollY
+      // TODO: fix typescript complains
+      // @ts-ignore
+      return (nodeScope as HTMLElement).scrollY
     }
   }
 
@@ -142,8 +164,8 @@ class InfiniteScroller extends Component {
     /* istanbul ignore next */
     if (nodeScope === window && nodeScope.scrollTo) {
       nodeScope.scrollTo(window.scrollX, scrollTop)
-    } else if (nodeScope.scrollTop !== undefined) {
-      nodeScope.scrollTop = scrollTop
+    } else if ((nodeScope as HTMLElement).scrollTop !== undefined) {
+      ;(nodeScope as HTMLElement).scrollTop = scrollTop
     }
   }
 
@@ -166,9 +188,14 @@ class InfiniteScroller extends Component {
       // This is a super fail-safe. This will always be parentNode, with the
       // exception of document or window. Cannot be tested in JSDOM/Enzyme,
       // since it prohibits mounting on document.body directly.
+
+      // TODO: fix typescript complains
+      // @ts-ignore
       nodeScope = node && node.parentNode ? node.parentNode : window
     }
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.setState({ nodeScope })
   }
 
@@ -215,8 +242,5 @@ class InfiniteScroller extends Component {
     )
   }
 }
-
-InfiniteScroller.propTypes = propTypes
-InfiniteScroller.defaultProps = defaultProps
 
 export default InfiniteScroller
