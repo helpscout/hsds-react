@@ -1,42 +1,42 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Context from './Context'
-import FormGroup from '../FormGroup'
+import Context from './ChoiceGroup.Context'
+import FormGroup from '../FormGroup/index'
 import FormLabelContext from '../FormLabel/Context'
 import get from '../../utilities/get'
 import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
-import { ChoiceGroupUI } from './styles/ChoiceGroup.css.js'
+import { ChoiceGroupUI } from './styles/ChoiceGroup.css'
 import { COMPONENT_KEY as RADIO_KEY } from '../Radio/utils'
 import { COMPONENT_KEY as RADIOCARD_KEY } from '../RadioCard/utils'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './ChoiceGroup.utils'
 
 type Props = {
-  align: 'horizontal' | 'vertical',
-  className: string,
-  choiceMaxWidth?: string | number,
-  children?: any,
-  isResponsive: boolean,
-  onBlur: (event: Event) => void,
-  onChange: (event: Event) => void,
-  onFocus: (event: Event) => void,
-  multiSelect: boolean,
-  name: string,
-  value: any,
+  align: 'horizontal' | 'vertical'
+  className: string
+  choiceMaxWidth?: string | number
+  children?: any
+  isResponsive: boolean
+  onBlur: (event: Event) => void
+  onChange: (event: Event) => void
+  onFocus: (event: Event) => void
+  multiSelect: boolean
+  name: string
+  value: any
 }
 
 type State = {
-  id: string,
-  multiSelect: boolean,
-  selectedValue: any,
+  id: string
+  multiSelect: boolean
+  selectedValue: any
 }
 
 const uniqueID = createUniqueIDFactory('ChoiceGroup')
 
-class ChoiceGroup extends Component<Props, State> {
+class ChoiceGroup extends React.PureComponent<Props, State> {
   static defaultProps = {
     align: 'vertical',
     isResponsive: false,
@@ -144,7 +144,8 @@ class ChoiceGroup extends Component<Props, State> {
       })
     )
   }
-
+  // TODO: fix typescript complains
+  // @ts-ignore
   getIdFromContextProps = (props: Object) => props.id || this.state.id
 
   render() {
@@ -194,4 +195,4 @@ class ChoiceGroup extends Component<Props, State> {
 
 namespaceComponent(COMPONENT_KEY)(ChoiceGroup)
 
-export default ChoiceGroup
+export default propConnect(COMPONENT_KEY)(ChoiceGroup)
