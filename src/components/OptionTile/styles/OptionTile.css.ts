@@ -1,6 +1,5 @@
-// @flow
-import FluffyCard from '../../FluffyCard'
-import styled from '../../styled'
+import FluffyCard from '../../FluffyCard/index'
+import styled from '../../styled/index'
 
 export const config = {
   headerOffset: 10,

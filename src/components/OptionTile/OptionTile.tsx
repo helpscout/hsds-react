@@ -1,6 +1,6 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
-import Container from './Container'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import Container from '../FluffyCard/FluffyCard.Container'
 import Centralize from '../Centralize'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
@@ -10,25 +10,25 @@ import {
   HeaderUI,
   ContentUI,
   TitleUI,
-} from './styles/OptionTile.css.js'
-import { COMPONENT_KEY } from './utils'
+} from './styles/OptionTile.css'
+import { COMPONENT_KEY } from './OptionTile.utils'
 import OptionIcon from '../OptionIcon'
 
 type Props = {
-  children?: any,
-  className?: string,
-  href?: string,
-  icon: string,
-  iconTitle?: string,
-  minHeight?: number | string,
-  to?: string,
-  title?: string,
-  style?: Object,
-  subtitle?: string,
-  textAlign: string,
+  children?: any
+  className?: string
+  href?: string
+  icon: string
+  iconTitle?: string
+  minHeight?: number | string
+  to?: string
+  title?: string
+  style?: Object
+  subtitle?: string
+  textAlign: string
 }
 
-class OptionTile extends Component<Props> {
+class OptionTile extends React.PureComponent<Props> {
   static defaultProps = {
     icon: 'chat',
     title: 'Title',
@@ -96,4 +96,4 @@ class OptionTile extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(OptionTile)
 
-export default OptionTile
+export default propConnect(COMPONENT_KEY)(OptionTile)
