@@ -1,11 +1,11 @@
-import { HeadingSize } from './types'
+import { HeadingSize } from './Heading.types'
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import css from './Heading.css'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Heading.utils'
 
 export interface Props {
   center: boolean
