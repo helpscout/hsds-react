@@ -9,8 +9,8 @@ import {
   SecondaryNavUI,
   AvatarUI,
 } from './HsApp.css'
-import Icon from '../Icon'
-import Text from '../Text'
+import Icon from '../Icon/index'
+import Text from '../Text/index'
 
 export interface Props {}
 

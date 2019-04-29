@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import SideNavigation from '../SideNavigation'
-import Icon from '../Icon'
+import SideNavigation from '../SideNavigation/index'
+import Icon from '../Icon/index'
 import { noop } from '../../utilities/other'
 
 const ItemSpec = createSpec({
