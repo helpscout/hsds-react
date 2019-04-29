@@ -248,7 +248,7 @@ describe('Sortable', () => {
     )
 
     // Regular column sorting, should be called with 'columnKey'
-    const nameHeaderCell = wrapper.find(`thead th`).first()
+    let nameHeaderCell = wrapper.find(`thead th`).first()
     expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe('none')
 
     nameHeaderCell
@@ -263,6 +263,7 @@ describe('Sortable', () => {
       },
     })
 
+    nameHeaderCell = wrapper.find(`thead th`).first()
     expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
       'ascending'
     )
@@ -296,6 +297,7 @@ describe('Sortable', () => {
       },
     })
 
+    nameHeaderCell = wrapper.find(`thead th`).first()
     expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
       'descending'
     )
