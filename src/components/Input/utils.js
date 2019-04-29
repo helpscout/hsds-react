@@ -66,8 +66,3 @@ export function isTextArea(node: HTMLElement): boolean {
 export function isStateful(props: Object): boolean {
   return props.state && includes(['error', 'success', 'warning'], props.state)
 }
-
-export function hasErrorState(props: Object): boolean {
-  const state = props.state
-  return state && state === 'error'
-}

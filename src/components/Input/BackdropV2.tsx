@@ -1,28 +1,27 @@
-// @flow
-import type { UIState } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { UIState } from '../../constants/types'
 import { classNames } from '../../utilities/classNames'
-import { hasErrorState, isStateful } from './utils'
-import { BackdropUI, FocusUI } from './styles/BackdropV2.css.js'
+import { isStateful } from './utils'
+import { BackdropUI, FocusUI } from './styles/BackdropV2.css'
 
-type Props = {
-  className?: string,
-  choiceKind?: string,
-  disabled: boolean,
-  isFilled: boolean,
-  isFocused: boolean,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
-  isSeamless: boolean,
-  kind?: string,
-  readOnly: boolean,
-  showFocus: boolean,
-  state?: ?UIState,
+export interface Props {
+  className?: string
+  choiceKind?: string
+  disabled: boolean
+  isFilled: boolean
+  isFocused: boolean
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
+  isSeamless: boolean
+  kind?: string
+  readOnly: boolean
+  showFocus: boolean
+  state?: UIState
 }
 
-class Backdrop extends Component<Props> {
+export class Backdrop extends React.PureComponent<Props> {
   static defaultProps = {
     disabled: false,
     isFilled: false,
@@ -66,7 +65,7 @@ class Backdrop extends Component<Props> {
   }
 
   getFocusClassNames = () => {
-    const { choiceKind, isFirst, isNotOnly, isLast } = this.props
+    const { choiceKind, isFirst, isNotOnly, isLast, state } = this.props
     const isRadio = choiceKind === 'radio'
 
     return classNames(
@@ -76,7 +75,7 @@ class Backdrop extends Component<Props> {
       isLast && 'is-last',
       isRadio && 'is-radio',
       isStateful(this.props) && 'is-stateful',
-      hasErrorState(this.props) && `is-error`
+      state && `is-${state}`
     )
   }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { boolean } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Button, Flexy, Icon, Input, styled } from '../src/index.js'
 
 const stories = storiesOf('Input', module)
@@ -12,6 +12,35 @@ stories.add('Default', () => {
     onEnterUp: action('onEnterUp'),
     onKeyDown: action('onKeyDown'),
     onKeyUp: action('onKeyUp'),
+    label: text('label', 'Label'),
+    hintText: text('hintText', ''),
+    helpText: text('helpText', ''),
+    placeholder: text('placeholder', 'Placeholder'),
+    size: select(
+      'size',
+      {
+        lg: 'lg',
+        md: 'md',
+        sm: 'sm',
+        xssm: 'xssm',
+        xs: 'xs',
+      },
+      'md'
+    ),
+    state: select(
+      'state',
+      {
+        default: 'default',
+        error: 'error',
+        success: 'success',
+        warning: 'warning',
+      },
+      'default'
+    ),
+    removeStateStylesOnFocus: boolean('removeStateStylesOnFocus', false),
+    errorMessage: text('errorMessage', ''),
+    inlinePrefix: text('inlinePrefix', ''),
+    inlineSuffix: text('inlineSuffix', ''),
   }
   return <Input {...props} />
 })
@@ -152,15 +181,24 @@ stories.add('readonly', () => (
 
 stories.add('states', () => (
   <div>
-    <Input state="error" />
+    <Input autoComplete="off" state="error" placeholder="Error" />
     <br />
     <Input
+      autoComplete="off"
       state="success"
+      placeholder="Success"
       helpText="You're Awesome!"
       hintText="You're awesome!"
     />
     <br />
-    <Input state="warning" removeStateStylesOnFocus />
+    <Input autoComplete="off" state="warning" placeholder="Warning" />
+    <br />
+    <Input
+      autoComplete="off"
+      state="warning"
+      placeholder="State styles will remove on focus"
+      removeStateStylesOnFocus
+    />
   </div>
 ))
 
