@@ -1,14 +1,13 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
-import Item from './Item'
+import * as React from 'react'
+import Item from './ChatTranscript.Item'
 import { classNames } from '../../utilities/classNames'
 
 type Props = {
-  className?: string,
-  children?: any,
+  className?: string
+  children?: any
 }
 
-class ChatTranscript extends Component<Props> {
+class ChatTranscript extends React.Component<Props> {
   static Item = Item
 
   render() {

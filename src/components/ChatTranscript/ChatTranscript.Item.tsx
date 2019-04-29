@@ -1,6 +1,5 @@
-// @flow
-import React from 'react'
-import LineItem from './LineItem'
+import * as React from 'react'
+import LineItem from './ChatTranscript.LineItem'
 import Attachment from '../Attachment'
 import AttachmentList from '../AttachmentList'
 import Flexy from '../Flexy'
@@ -8,11 +7,7 @@ import Heading from '../Heading'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import {
-  convertLinksToHTML,
-  escapeHTML,
-  newlineToHTML,
-} from '../../utilities/strings'
+import { convertLinksToHTML, newlineToHTML } from '../../utilities/strings'
 import compose from '@helpscout/react-utils/dist/compose'
 
 export const ITEM_TYPES = {
@@ -22,26 +17,26 @@ export const ITEM_TYPES = {
 }
 
 type Author = {
-  name?: string,
+  name?: string
 }
 
 type Props = {
-  action?: string,
-  attachments: Array<Object>,
-  author: Author,
-  body?: string,
-  chatId?: number | string,
-  children?: any,
-  className?: string,
-  createdAt?: string,
-  id?: number | string,
-  isBodySafe?: boolean,
-  onAttachmentClick?: () => void,
-  onDownloadAllAttachmentClick?: () => void,
-  params?: any,
-  showDownloadAllAttachments?: boolean,
-  timestamp?: string,
-  type?: 'line_item' | 'message' | 'note',
+  action?: string
+  attachments: Array<Object>
+  author: Author
+  body?: string
+  chatId?: number | string
+  children?: any
+  className?: string
+  createdAt?: string
+  id?: number | string
+  isBodySafe?: boolean
+  onAttachmentClick?: () => void
+  onDownloadAllAttachmentClick?: () => void
+  params?: any
+  showDownloadAllAttachments?: boolean
+  timestamp?: string
+  type?: 'line_item' | 'message' | 'note'
 }
 
 // convertLinksToHTML will escape for output as HTML
@@ -168,6 +163,8 @@ const Item = (props: Props) => {
       {attachments.map((attachment, index) => {
         /* istanbul ignore next */
         // Enzyme can't test keys :s
+        // TODO: fix typescript complains
+        // @ts-ignore
         const key = attachment.id ? attachment.id : `attachment-${index}`
 
         return (

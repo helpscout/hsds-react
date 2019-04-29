@@ -1,17 +1,16 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { escapeHTML, newlineToHTML } from '../../utilities/strings'
 import compose from '@helpscout/react-utils/dist/compose'
 
 type Props = {
-  body?: string,
-  children?: any,
-  className?: string,
-  createdAt?: string,
-  isBodySafe?: boolean,
-  timestamp?: string,
+  body?: string
+  children?: any
+  className?: string
+  createdAt?: string
+  isBodySafe?: boolean
+  timestamp?: string
 }
 
 const enhanceBody = compose(newlineToHTML, escapeHTML)
