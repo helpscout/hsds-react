@@ -1,7 +1,6 @@
-// @flow
-import type { ButtonKind, ButtonSize } from './types'
-import type { UIState } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { ButtonKind, ButtonSize } from './Button.types'
+import { UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
@@ -15,34 +14,34 @@ import {
   FocusUI,
   SpinnerUI,
 } from './Button.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Button.utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
 
 type Props = {
-  allowContentEventPropogation: boolean,
-  buttonRef: (ref: any) => void,
-  canRenderFocus: boolean,
-  children?: any,
-  className?: string,
-  disabled: boolean,
-  disableOnLoading: boolean,
-  kind: ButtonKind,
-  innerRef: (ref: any) => void,
-  isActive: boolean,
-  isBlock: boolean,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
-  isLoading: boolean,
-  isSuffix: boolean,
-  size: ButtonSize,
-  spinButtonOnLoading: boolean,
-  state?: UIState,
-  submit: boolean,
-  theme?: string,
+  allowContentEventPropogation: boolean
+  buttonRef: (ref: any) => void
+  canRenderFocus: boolean
+  children?: any
+  className?: string
+  disabled: boolean
+  disableOnLoading: boolean
+  kind: ButtonKind
+  innerRef: (ref: any) => void
+  isActive: boolean
+  isBlock: boolean
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
+  isLoading: boolean
+  isSuffix: boolean
+  size: ButtonSize
+  spinButtonOnLoading: boolean
+  state?: UIState
+  submit: boolean
+  theme?: string
 }
 
-class Button extends Component<Props> {
+class Button extends React.PureComponent<Props> {
   static defaultProps = {
     allowContentEventPropogation: true,
     buttonRef: noop,
@@ -70,7 +69,8 @@ class Button extends Component<Props> {
     // TODO: Resolve data-bypass
     // const { href, 'data-bypass': dataBypass } = this.props
     // return href || dataBypass
-
+    // TODO: fix typescript complains
+    // @ts-ignore
     return this.props.href
   }
 
