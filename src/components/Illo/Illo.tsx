@@ -1,13 +1,13 @@
-// @flow
-import type { IlloSize } from './types'
-import React from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { IlloSize } from './Illo.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Centralize from '../Centralize'
-import VisuallyHidden from '../VisuallyHidden'
+import Centralize from '../Centralize/index'
+import VisuallyHidden from '../VisuallyHidden/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { IlloUI, IconUI } from './styles/Illo.css.js'
-import { COMPONENT_KEY } from './utils'
+import { IlloUI, IconUI } from './styles/Illo.css'
+import { COMPONENT_KEY } from './Illo.utils'
 
 export let svgSet = {}
 
@@ -15,18 +15,18 @@ export const load = (svgs = {}) => (svgSet = svgs)
 export const unload = () => load({})
 
 type Props = {
-  color?: string,
-  colorSecondary?: string,
-  colorUi?: string,
-  colorUiDark?: string,
-  colorUiLight?: string,
-  colorUiTransparent?: string,
-  colorUiWhite?: string,
-  className?: string,
-  name: string,
-  size: IlloSize,
-  style?: Object,
-  title?: string,
+  color?: string
+  colorSecondary?: string
+  colorUi?: string
+  colorUiDark?: string
+  colorUiLight?: string
+  colorUiTransparent?: string
+  colorUiWhite?: string
+  className?: string
+  name: string
+  size: IlloSize
+  style?: Object
+  title?: string
 }
 
 const Illo = (props: Props) => {
@@ -94,7 +94,7 @@ const Illo = (props: Props) => {
 
 export const injectFillColorIntoSvg = (
   svgHTML: string,
-  props: Object = {
+  props: any = {
     primary: '',
     secondary: '',
     ui: '',
@@ -141,4 +141,4 @@ Illo.defaultProps = {
 
 namespaceComponent(COMPONENT_KEY)(Illo)
 
-export default Illo
+export default propConnect(COMPONENT_KEY)(Illo)
