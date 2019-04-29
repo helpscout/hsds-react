@@ -1,7 +1,6 @@
-// @flow
-import { propConnect } from '../PropProvider'
+import { propConnect } from '../PropProvider/index'
 import Grid from './Grid'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Grid.utils'
 
 Grid.Container = propConnect(COMPONENT_KEY.Container)(Grid.Container)
 Grid.Row = propConnect(COMPONENT_KEY.Row)(Grid.Row)

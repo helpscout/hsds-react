@@ -1,17 +1,19 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import Container from './Container'
-import Row from './Row'
-import Col from './Col'
+import { COMPONENT_KEY } from './Grid.utils'
+import Container from './Grid.Container'
+import Row from './Grid.Row'
+import Col from './Grid.Col'
 
-class Grid extends Component {
+class Grid extends React.PureComponent {
   static Container = Container
   static Row = Row
   static Col = Col
 
   render() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { className, children, ...rest } = this.props
 
     const componentClassName = classNames('c-Grid', className)

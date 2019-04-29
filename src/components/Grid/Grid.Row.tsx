@@ -1,20 +1,20 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { RowUI } from './styles/Row.css.js'
+import { COMPONENT_KEY } from './Grid.utils'
+import { RowUI } from './styles/Row.css'
 
 export type RowSize = 'md' | 'sm' | 'xs'
 export interface Props {
-  className?: string;
-  children?: any;
-  flex: boolean; // deprecating
-  isFlex: boolean;
-  size?: RowSize;
+  className?: string
+  children?: any
+  flex: boolean // deprecating
+  isFlex: boolean
+  size?: RowSize
 }
 
-class Row extends Component<Props> {
+class Row extends React.PureComponent<Props> {
   static defaultProps = {
     flex: false,
     isFlex: false,
@@ -38,6 +38,6 @@ class Row extends Component<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Row, Row)
+namespaceComponent(COMPONENT_KEY.Row)(Row)
 
 export default Row

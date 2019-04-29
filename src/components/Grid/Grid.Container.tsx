@@ -1,22 +1,22 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { ContainerUI } from './styles/Container.css.js'
+import { COMPONENT_KEY } from './Grid.utils'
+import { ContainerUI } from './styles/Container.css'
 
 export type ContainerSize = 'md' | 'sm' | 'xs'
 export interface Props {
-  className?: string;
-  children?: any;
-  fluid: boolean; // deprecating
-  responsive: boolean; // deprecating
-  isFluid: boolean;
-  isResponsive: boolean;
-  size: ContainerSize;
+  className?: string
+  children?: any
+  fluid: boolean // deprecating
+  responsive: boolean // deprecating
+  isFluid: boolean
+  isResponsive: boolean
+  size?: ContainerSize
 }
 
-class Container extends Component<Props> {
+class Container extends React.PureComponent<Props> {
   static defaultProps = {
     fluid: false,
     responsive: false,
@@ -52,6 +52,6 @@ class Container extends Component<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Container, Container)
+namespaceComponent(COMPONENT_KEY.Container)(Container)
 
 export default Container
