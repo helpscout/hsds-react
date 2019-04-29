@@ -1,25 +1,24 @@
-// @flow
-import type { PopProps } from './types'
-import React, { Component } from 'react'
-import Manager from './Manager'
-import Arrow from './Arrow'
-import Popper from './Popper'
-import Reference from './Reference'
+import * as React from 'react'
+import { PopProps } from './Pop.types'
+import Manager from './Pop.Manager'
+import Arrow from './Pop.Arrow'
+import Popper from './Pop.Popper'
+import Reference from './Pop.Reference'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { PopUI } from './Pop.css.js'
+import { PopUI } from './styles/Pop.css'
 
 type Props = PopProps
 
 type State = {
-  id: string,
-  isOpen: boolean,
+  id: string
+  isOpen: boolean
 }
 
 const uniqueID = createUniqueIDFactory('Pop')
 
-class Pop extends Component<Props, State> {
+class Pop extends React.Component<Props, State> {
   static defaultProps = {
     arrowSize: 5,
     closeOnBodyClick: false,

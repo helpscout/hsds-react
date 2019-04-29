@@ -1,11 +1,10 @@
-// @flow
-import type { PopProps, PopperStyles } from './types'
-import React, { Component } from 'react'
+import * as React from 'react'
+import { PopProps, PopperStyles } from './Pop.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ReactPopper from '../Popper/Popper'
-import Animate from '../Animate'
+import Animate from '../Animate/index'
 import Portal from './Pop.Portal'
-import Arrow from './Arrow'
+import Arrow from './Pop.Arrow'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
@@ -13,9 +12,16 @@ import { createUniqueIDFactory } from '../../utilities/id'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
-type Props = PopProps
+interface PopperProps extends PopProps {
+  arrowColor?: string
+  offset: number
+  positionFixed: boolean
+  onMouseLeave: (Pop: any) => void
+  onClick: (Event) => void
+  close: (Pop: any) => void
+}
 
-export class Popper extends Component<Props> {
+export class Popper extends React.Component<PopperProps> {
   static defaultProps = {
     animationDelay: 0,
     animationDuration: 0,
@@ -40,7 +46,7 @@ export class Popper extends Component<Props> {
     return this.props.id || this.id
   }
 
-  handleOnClick = (event: Event) => {
+  handleOnClick = event => {
     /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
@@ -149,7 +155,14 @@ export class Popper extends Component<Props> {
  * @param   {object} props
  * @returns {object}
  */
-export const enhancePopperStyles = (props: PopperStyles = {}) => {
+export const enhancePopperStyles = (
+  props: PopperStyles = {
+    arrowSize: 5,
+    offset: 0,
+    placement: 'top',
+    style: {},
+  }
+) => {
   const options = {
     arrowSize: props.arrowSize || 5,
     offset: props.offset || 0,

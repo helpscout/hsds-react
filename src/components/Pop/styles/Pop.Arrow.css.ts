@@ -1,7 +1,7 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/base.css.js'
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/base.css'
 
-const css = (props: Object) => {
+const css = props => {
   const { color, size } = props
   const sizePx = `${size}px`
 

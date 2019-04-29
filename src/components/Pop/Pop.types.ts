@@ -16,6 +16,7 @@ export type Placements =
   | 'left-start'
 
 export interface PopProps {
+  arrowSize: number
   animationDelay: number | string
   animationDuration: number | string
   animationEasing: string
@@ -36,12 +37,15 @@ export interface PopProps {
   placement: Placements
   triggerOn: 'click' | 'hover'
   showArrow: boolean
-  zIndex?: number
+  zIndex: number
+  onContentClick: (Pop: any) => void
+  onBeforeOpen: (Pop: any) => Promise<any>
+  onBeforeClose: (Pop: any) => Promise<any>
 }
 
 export type PopperStyles = {
-  arrowSize: string
-  offset: string
+  arrowSize: number
+  offset: number
   placement: Placements
-  style: Object
+  style: any
 }
