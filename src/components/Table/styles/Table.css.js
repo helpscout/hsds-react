@@ -14,6 +14,7 @@ export const TableUI = styled('table')`
   border-spacing: 0;
   table-layout: fixed;
   line-height: 16px;
+  border-collapse: separate;
 
   th,
   td {
