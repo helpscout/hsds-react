@@ -14,12 +14,10 @@
         "loose": true
       }
     ],
-    "@babel/preset-flow",
     "@babel/react"
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-transform-flow-strip-types",
     "inline-svg",
     "emotion"
   ]
