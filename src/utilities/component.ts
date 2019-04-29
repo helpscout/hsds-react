@@ -203,7 +203,7 @@ export const renderChildrenSafely = (
 
 export const renderAsSingleChild = (
   children: any,
-  baseTag: 'div',
+  baseTag?: 'div',
   props: any = {}
 ) => {
   const _isArray = isArray(children)
