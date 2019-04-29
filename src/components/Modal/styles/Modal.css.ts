@@ -1,4 +1,3 @@
-// @flow
 import styled from '../../styled'
 import { isHSApp } from '../../../styles/utilities/theme'
 import Animate from '../../Animate'

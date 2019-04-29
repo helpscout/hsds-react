@@ -1,25 +1,24 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Scrollable from '../Scrollable'
+import Scrollable from '../Scrollable/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
-import { BodyUI } from './styles/Body.css.js'
+import { COMPONENT_KEY } from './Modal.utils'
+import { BodyUI } from './styles/Modal.Body.css'
 
 type Props = {
-  children?: any,
-  className?: string,
-  innerRef: (node: HTMLElement) => void,
-  isSeamless: boolean,
-  onScroll: (event: Event) => void,
-  scrollable: boolean,
-  scrollableRef: Function,
-  scrollFade: boolean,
+  children?: any
+  className?: string
+  innerRef: (node: HTMLElement) => void
+  isSeamless: boolean
+  onScroll: (event: Event) => void
+  scrollable: boolean
+  scrollableRef: Function
+  scrollFade: boolean
 }
 
-class Body extends Component<Props> {
+class Body extends React.PureComponent<Props> {
   static defaultProps = {
     innerRef: noop,
     isSeamless: false,
@@ -34,7 +33,7 @@ class Body extends Component<Props> {
   }
 
   node: HTMLElement
-  scrollableNode: ?HTMLElement
+  scrollableNode: HTMLElement | null
 
   componentDidMount() {
     this.positionCloseNode()

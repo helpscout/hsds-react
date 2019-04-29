@@ -1,25 +1,24 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Animate from '../Animate'
-import BaseOverlay from '../Overlay'
+import Animate from '../Animate/index'
+import BaseOverlay from '../Overlay/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Modal.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
-  onClick: () => void,
-  isOpen: boolean,
-  overlayAnimationDelay: number,
-  overlayAnimationDuration: number,
-  overlayAnimationEasing: string,
-  overlayAnimationSequence: any,
+  children?: any
+  className?: string
+  onClick: () => void
+  isOpen: boolean
+  overlayAnimationDelay: number
+  overlayAnimationDuration: number
+  overlayAnimationEasing: string
+  overlayAnimationSequence: any
 }
 
-class Overlay extends Component<Props> {
+class Overlay extends React.PureComponent<Props> {
   static defaultProps = {
     onClick: noop,
     isOpen: true,

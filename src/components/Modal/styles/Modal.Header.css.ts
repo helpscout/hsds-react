@@ -1,4 +1,3 @@
-// @flow
 import Toolbar from '../../Toolbar'
 import styled from '../../styled'
 

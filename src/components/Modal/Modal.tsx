@@ -1,18 +1,17 @@
-// @flow
-import type { PortalProps } from '../Portal/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { PortalProps } from '../Portal/types'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Body from './Body'
-import Content from './Content'
-import Footer from './Footer'
-import Header from './Header'
-import Overlay from './Overlay'
-import CloseButton from '../CloseButton'
-import EventListener from '../EventListener'
-import KeypressListener from '../KeypressListener'
-import PortalWrapper from '../PortalWrapper'
+import Body from './Modal.Body'
+import Content from './Modal.Content'
+import Footer from './Modal.Footer'
+import Header from './Modal.Header'
+import Overlay from './Modal.Overlay'
+import CloseButton from '../CloseButton/index'
+import EventListener from '../EventListener/index'
+import KeypressListener from '../KeypressListener/index'
+import PortalWrapper from '../PortalWrapper/index'
 import { isHSApp } from '../PropProvider/utils'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
@@ -20,45 +19,45 @@ import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Modal.utils'
 import {
   ModalUI,
   InnerWrapperUI,
   AnimatedCardContainerUI,
   CardUI,
   CloseUI,
-} from './styles/Modal.css.js'
+} from './styles/Modal.css'
 
 type Props = PortalProps & {
-  cardClassName?: string,
-  children?: any,
-  className?: string,
-  closeIcon: boolean,
-  closeIconRepositionDelay: number,
-  closeIconOffset: number,
-  closePortal: () => void,
-  isOpen: boolean,
-  containTabKeyPress: boolean,
-  modalAnimationDelay: number,
-  modalAnimationDuration: number,
-  modalAnimationEasing: string,
-  modalAnimationSequence: number | string,
-  modalFocusTimeout: number,
-  overlayAnimationDelay: number,
-  overlayAnimationDuration: number,
-  overlayAnimationEasing: string,
-  overlayAnimationSequence: number | string,
-  overlayClassName?: string,
-  portalIsOpen: boolean,
-  seamless: boolean,
-  style: Object,
-  trigger?: any,
-  timeout: number,
-  wrapperClassName?: string,
-  zIndex: number,
+  cardClassName?: string
+  children?: any
+  className?: string
+  closeIcon: boolean
+  closeIconRepositionDelay: number
+  closeIconOffset: number
+  closePortal: () => void
+  isOpen: boolean
+  containTabKeyPress: boolean
+  modalAnimationDelay: number
+  modalAnimationDuration: number
+  modalAnimationEasing: string
+  modalAnimationSequence: number | string
+  modalFocusTimeout: number
+  overlayAnimationDelay: number
+  overlayAnimationDuration: number
+  overlayAnimationEasing: string
+  overlayAnimationSequence: number | string
+  overlayClassName?: string
+  portalIsOpen: boolean
+  seamless: boolean
+  style: Object
+  trigger?: any
+  timeout: number
+  wrapperClassName?: string
+  zIndex: number
 }
 
-type KeyboardEvent = SyntheticEvent<HTMLElement>
+type KeyboardEvent = Event
 
 const modalBaseZIndex = 1040
 const portalOptions = {
@@ -66,7 +65,7 @@ const portalOptions = {
   zIndex: modalBaseZIndex,
 }
 
-class Modal extends Component<Props> {
+class Modal extends React.PureComponent<Props> {
   static defaultProps = {
     closeIcon: true,
     closePortal: noop,
@@ -103,7 +102,7 @@ class Modal extends Component<Props> {
 
   documentNode: HTMLElement
   cardNode: HTMLElement
-  closeNode: ?HTMLElement
+  closeNode: HTMLElement
   scrollableNode: HTMLElement
 
   componentWillMount() {
@@ -208,6 +207,8 @@ class Modal extends Component<Props> {
         (isComponentNamed(child, COMPONENT_KEY.Content) ||
           isComponentNamed(child, COMPONENT_KEY.Body))
       ) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         return React.cloneElement(child, {
           scrollableRef: this.setScrollableNode,
         })

@@ -1,20 +1,19 @@
-// @flow
-import type { ToolbarSize } from '../Toolbar/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { ToolbarSize } from '../Toolbar/types'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { HeaderUI } from './styles/Header.css.js'
+import { COMPONENT_KEY } from './Modal.utils'
+import { HeaderUI } from './styles/Modal.Header.css'
 
 type Props = {
-  children?: any,
-  className?: string,
-  seamless: boolean,
-  shadow: boolean,
-  size: ToolbarSize,
+  children?: any
+  className?: string
+  seamless: boolean
+  shadow: boolean
+  size: ToolbarSize
 }
 
-class Header extends Component<Props> {
+class Header extends React.PureComponent<Props> {
   static defaultProps = {
     seamless: false,
     shadow: false,

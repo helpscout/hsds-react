@@ -1,7 +1,6 @@
-// @flow
 import styled from '../../styled'
 import { BEM } from '../../../utilities/classNames'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 
 const bem = BEM('.c-ModalBody')
 
@@ -16,12 +15,16 @@ export const BodyUI = styled('div')`
     padding: 20px;
   }
 
-  ${bem.element('scrollableContent')} {
+  ${// TODO: fix typescript complains
+  // @ts-ignore
+  bem.element('scrollableContent')} {
     padding: 20px;
   }
 
   &.is-seamless {
-    ${bem.element('scrollableContent')} {
+    ${// TODO: fix typescript complains
+    // @ts-ignore
+    bem.element('scrollableContent')} {
       padding: 0;
     }
   }

@@ -1,7 +1,6 @@
-// @flow
 import { propConnect } from '../PropProvider'
 import Modal from './Modal'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Modal.utils'
 
 Modal.Body = propConnect(COMPONENT_KEY.Body)(Modal.Body)
 Modal.Content = propConnect(COMPONENT_KEY.Content)(Modal.Content)

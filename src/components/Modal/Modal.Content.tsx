@@ -1,18 +1,17 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
-import { ContentUI } from './styles/Content.css.js'
+import { COMPONENT_KEY } from './Modal.utils'
+import { ContentUI } from './styles/Modal.Content.css'
 
 type Props = {
-  children?: any,
-  className?: string,
-  scrollableRef: (node: HTMLElement) => void,
+  children?: any
+  className?: string
+  scrollableRef: (node: HTMLElement) => void
 }
 
-class Content extends Component<Props> {
+class Content extends React.PureComponent<Props> {
   static defaultProps = {
     scrollableRef: noop,
   }
