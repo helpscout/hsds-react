@@ -1,9 +1,10 @@
 import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { HrUI } from './styles/Hr.css'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Hr.utils'
 
 export type HrSize = 'md' | 'sm' | 'xs' | 'none'
 
@@ -40,4 +41,4 @@ class Hr extends React.PureComponent<Props> {
 
 namespaceComponent(COMPONENT_KEY)(Hr)
 
-export default Hr
+export default propConnect(COMPONENT_KEY)(Hr)
