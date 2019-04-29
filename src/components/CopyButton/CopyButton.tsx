@@ -1,5 +1,5 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
@@ -8,28 +8,28 @@ import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
   ContentWrapperUI,
-} from './styles/CopyButton.css.js'
-import { COMPONENT_KEY } from './utils'
-import { ButtonSize } from '../Button/types'
+} from './styles/CopyButton.css'
+import { COMPONENT_KEY } from './CopyButton.utils'
+import { ButtonSize } from '../Button/Button.types'
 
 type Props = {
-  canRenderFocus: boolean,
-  children?: any,
-  className?: string,
-  icon: string,
-  kind: string,
-  onClick: (event: Event) => void,
-  onReset: () => void,
-  resetTimeout: number,
-  size: ButtonSize,
-  title?: string,
+  canRenderFocus: boolean
+  children?: any
+  className?: string
+  icon: string
+  kind: string
+  onClick: (event: Event) => void
+  onReset: () => void
+  resetTimeout: number
+  size: ButtonSize
+  title?: string
 }
 
 type State = {
-  shouldRenderConfirmation: boolean,
+  shouldRenderConfirmation: boolean
 }
 
-class CopyButton extends Component<Props, State> {
+class CopyButton extends React.PureComponent<Props, State> {
   static defaultProps = {
     canRenderFocus: false,
     icon: 'copy',
@@ -56,7 +56,7 @@ class CopyButton extends Component<Props, State> {
     this._isMounted = false
   }
 
-  safeSetState = (state: Object) => {
+  safeSetState = (state: any) => {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state)
@@ -141,4 +141,4 @@ class CopyButton extends Component<Props, State> {
 
 namespaceComponent(COMPONENT_KEY)(CopyButton)
 
-export default CopyButton
+export default propConnect('CopyButton')(CopyButton)
