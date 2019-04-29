@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { PropProviderProps, ConfigGetter } from './types'
+import { PropProviderProps, ConfigGetter } from './PropProvider.types'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
-import Context from './Context'
+import Context from './PropProvider.Context'
 import {
   getConfigProps,
   getGlobalApp,
   propProviderDataAttr,
   isStateless,
-} from './utils'
+} from './PropProvider.utils'
 import { classNames } from '../../utilities/classNames'
 import { setPackageVersionToGlobal } from '../../utilities/info'
 import {

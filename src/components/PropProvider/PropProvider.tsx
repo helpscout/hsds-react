@@ -1,9 +1,13 @@
 import * as React from 'react'
-import { PropProviderProps } from './types'
-import Context from './Context'
+import { PropProviderProps } from './PropProvider.types'
+import Context from './PropProvider.Context'
 import { ThemeProvider } from '../styled'
 import { renderAsSingleChild } from '../../utilities/component'
-import { setGlobalApp, shallowMergeProps, propProviderDataAttr } from './utils'
+import {
+  setGlobalApp,
+  shallowMergeProps,
+  propProviderDataAttr,
+} from './PropProvider.utils'
 
 export interface Props {
   app: string

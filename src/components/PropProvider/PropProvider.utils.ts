@@ -1,4 +1,8 @@
-import { AppNamespace, PropProviderProps, ConfigGetter } from './types'
+import {
+  AppNamespace,
+  PropProviderProps,
+  ConfigGetter,
+} from './PropProvider.types'
 import { isArray, isObject, isPlainObject, isString } from '../../utilities/is'
 
 /**
