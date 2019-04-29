@@ -1,12 +1,12 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import StatusBar from '../StatusBar'
+import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import pluralize from '../../utilities/pluralize'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './ChatSidebar.utils'
 import {
   ChatSidebarUI,
   StatusBarWrapperUI,
@@ -14,15 +14,15 @@ import {
 } from './styles/ChatSidebar.css.js'
 
 type Props = {
-  isShowStatusBar: boolean,
-  newMessageCount: number,
-  onHideStatusBar: () => void,
-  onShowStatusBar: () => void,
-  onScroll: () => void,
-  statusBarScrollTopOffset: number,
+  isShowStatusBar: boolean
+  newMessageCount: number
+  onHideStatusBar: () => void
+  onShowStatusBar: () => void
+  onScroll: () => void
+  statusBarScrollTopOffset: number
 }
 
-class ChatSidebar extends Component<Props> {
+class ChatSidebar extends React.PureComponent<Props> {
   static defaultProps = {
     isShowStatusBar: false,
     newMessageCount: 0,
@@ -33,7 +33,8 @@ class ChatSidebar extends Component<Props> {
   }
 
   constructor(props) {
-    super()
+    super(props)
+
     this.handleOnStatusBarClick = this.handleOnStatusBarClick.bind(this)
     this.handleOnStatusBarClose = this.handleOnStatusBarClose.bind(this)
     this.handleOnScroll = this.handleOnScroll.bind(this)
@@ -55,6 +56,8 @@ class ChatSidebar extends Component<Props> {
     // For now, this method has been extensively tested manually
     // within Storybook.
     smoothScrollTo({
+      // TODO: fix typescript complains
+      // @ts-ignore
       node: this.contentNode,
       position: 0,
     })
@@ -62,14 +65,19 @@ class ChatSidebar extends Component<Props> {
 
   handleOnStatusBarClose() {
     const { newMessageCount, onHideStatusBar } = this.props
+    // TODO: fix typescript complains
+    // @ts-ignore
     onHideStatusBar(newMessageCount)
   }
 
   hasScrolledEnoughForStatusBar() {
     const { statusBarScrollTopOffset } = this.props
-
+    // TODO: fix typescript complains
+    // @ts-ignore
     return this.contentNode
-      ? this.contentNode.scrollTop > statusBarScrollTopOffset
+      ? // TODO: fix typescript complains
+        // @ts-ignore
+        this.contentNode.scrollTop > statusBarScrollTopOffset
       : false
   }
 
@@ -100,15 +108,23 @@ class ChatSidebar extends Component<Props> {
     if (!isShowStatusBar) return
 
     this.canShowStatusBar()
-      ? onShowStatusBar(newMessageCount)
-      : onHideStatusBar(newMessageCount)
+      ? // TODO: fix typescript complains
+        // @ts-ignore
+        onShowStatusBar(newMessageCount)
+      : // TODO: fix typescript complains
+        // @ts-ignore
+        onHideStatusBar(newMessageCount)
   }
 
   render() {
     const {
       statusBarScrollTopOffset,
+      // TODO: fix typescript complains
+      // @ts-ignore
       className,
       children,
+      // TODO: fix typescript complains
+      // @ts-ignore
       onStatusBarClose,
       onHideStatusBar,
       onShowStatusBar,
@@ -141,6 +157,8 @@ class ChatSidebar extends Component<Props> {
           className="c-ChatSidebar__content"
           fade
           onScroll={handleOnScroll}
+          // TODO: fix typescript complains
+          // @ts-ignore
           scrollableRef={ref => (this.contentNode = ref)}
         >
           {children}
@@ -152,4 +170,4 @@ class ChatSidebar extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(ChatSidebar)
 
-export default ChatSidebar
+export default propConnect('ChatSidebar')(ChatSidebar)
