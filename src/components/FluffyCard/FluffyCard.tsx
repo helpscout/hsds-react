@@ -1,33 +1,32 @@
-// @flow
-import type { FluffyCardTextAlign } from './types'
-import React, { PureComponent as Component } from 'react'
-import Container from './Container'
+import * as React from 'react'
+import { FluffyCardTextAlign } from './FluffyCard.types'
+import Container from './FluffyCard.Container'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { FluffyCardUI } from './styles/FluffyCard.css.js'
-import { COMPONENT_KEY } from './utils'
+import { FluffyCardUI } from './styles/FluffyCard.css'
+import { COMPONENT_KEY } from './FluffyCard.utils'
 
 type Props = {
-  autoWordWrap?: boolean,
-  children?: any,
-  className?: string,
-  flex: boolean,
-  fullHeight: boolean,
-  hover: boolean,
-  href?: string,
-  innerRef: (node: HTMLElement) => void,
-  nodeRef: () => void,
-  onBlur: (event: Event) => void,
-  onClick: (event: Event) => void,
-  onFocus: (event: Event) => void,
-  seamless: boolean,
-  selector: 'string',
-  textAlign: FluffyCardTextAlign,
-  to?: string,
+  autoWordWrap?: boolean
+  children?: any
+  className?: string
+  flex: boolean
+  fullHeight: boolean
+  hover: boolean
+  href?: string
+  innerRef: (node: HTMLElement) => void
+  nodeRef: () => void
+  onBlur: (event: Event) => void
+  onClick: (event: Event) => void
+  onFocus: (event: Event) => void
+  seamless: boolean
+  selector: 'string'
+  textAlign: FluffyCardTextAlign
+  to?: string
 }
 
-class FluffyCard extends Component<Props> {
+class FluffyCard extends React.PureComponent<Props> {
   static defaultProps = {
     flex: false,
     floating: false,

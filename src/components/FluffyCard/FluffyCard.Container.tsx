@@ -1,17 +1,16 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { ContainerUI } from './styles/Container.css.js'
-import { COMPONENT_KEY } from './utils'
+import { ContainerUI } from './styles/Container.css'
+import { COMPONENT_KEY } from './FluffyCard.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
+  children?: any
+  className?: string
 }
 
-class Container extends Component<Props> {
+class Container extends React.PureComponent<Props> {
   render() {
     const { children, className, ...rest } = this.props
 

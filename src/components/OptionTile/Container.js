@@ -1,4 +1,3 @@
-// @flow
-import Container from '../FluffyCard/Container'
+import Container from '../FluffyCard/FluffyCard.Container'
 
 export default Container
