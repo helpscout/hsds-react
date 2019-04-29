@@ -1,29 +1,91 @@
-import baseStyles from '../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../styles/utilities/color'
+import baseStyles from '../../styles/resets/baseStyles.css.js'
+
 import forEach from '../../styles/utilities/forEach'
 import Animate from '../Animate'
-import Flexy from '../Flexy'
 import Spinner from '../Spinner'
+import Icon from '../Icon'
+import Text from '../Text'
+import Flexy from '../Flexy'
 import styled from '../styled'
 
 export const config = {
   borderRadius: 3,
   colors: {
-    default: getColor('charcoal.200'),
-    blue: getColor('blue.500'),
-    green: getColor('green.500'),
-    grey: getColor('charcoal.200'),
-    orange: getColor('orange.500'),
-    purple: getColor('purple.500'),
-    red: getColor('red.500'),
-    yellow: getColor('yellow.500'),
+    default: {
+      main: getColor('charcoal.200'),
+      secondary: 'white',
+    },
+    blue: {
+      main: getColor('blue.500'),
+      secondary: 'white',
+    },
+    green: {
+      main: getColor('green.500'),
+      secondary: 'white',
+    },
+    grey: {
+      main: getColor('charcoal.200'),
+      secondary: 'white',
+    },
+    orange: {
+      main: getColor('orange.500'),
+      secondary: 'white',
+    },
+    purple: {
+      main: getColor('purple.500'),
+      secondary: 'white',
+    },
+    red: {
+      main: getColor('red.500'),
+      secondary: 'white',
+    },
+    yellow: {
+      main: getColor('yellow.500'),
+      secondary: 'white',
+    },
+    lightBlue: {
+      main: getColor('blue.200'),
+      secondary: getColor('blue.700'),
+    },
   },
-  height: 18,
-  padding: '1px 4px',
+  height: {
+    sm: 16,
+    md: 22,
+  },
+  iconWidth: {
+    sm: 18,
+    md: 24,
+  },
+  padding: {
+    sm: '0 4px 0',
+    md: '0 8px 0',
+  },
 }
 
 export const BodyUI = styled(Flexy)`
   max-width: 100%;
+  display: flex;
+  align-items: center;
+  height: ${config.height.sm - 2}px;
+  line-height: ${config.height.sm}px;
+`
+
+export const IconWrapperUI = styled('div')`
+  width: ${config.iconWidth.sm}px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  &.is-md {
+    width: ${config.iconWidth.md}px;
+  }
+`
+
+export const TextUI = styled(Text)`
+  flex: 1 1 auto;
 `
 
 export const AnimateUI = styled(Animate)`
@@ -31,8 +93,6 @@ export const AnimateUI = styled(Animate)`
 `
 
 export const TagWrapperUI = styled('div')`
-  ${baseStyles};
-  display: inline-block;
   max-width: 100%;
 
   &.is-display-block {
@@ -48,13 +108,31 @@ export const TagUI = styled('div')`
   background-color: white;
   border-radius: ${config.borderRadius}px;
   border: 1px solid currentColor;
-  color: ${config.colors.default};
-  display: block;
-  padding: ${config.padding};
-  height: ${config.height}px;
+  color: ${config.colors.default.main};
+  display: flex;
+  align-items: center;
+  padding: ${config.padding.sm};
+  height: ${config.height.sm}px;
   max-width: 100%;
 
   ${makeColorStyles()};
+
+  &.is-filled {
+    padding-top: 0;
+  }
+
+  &.is-md {
+    padding: ${config.padding.md};
+    height: ${config.height.md}px;
+
+    .c-Tag__body {
+      height: ${config.height.md}px;
+    }
+  }
+
+  &.is-removable {
+    padding-right: 0;
+  }
 
   &.is-pulsing {
     animation: _Blue_Tag_Blink 4s infinite both;
@@ -88,24 +166,52 @@ export const TagUI = styled('div')`
 
 export const SpinnerUI = styled(Spinner)`
   color: currentColor;
-  padding: 0 1px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+  &.is-md {
+    position: relative;
+    right: -1px;
+  }
+`
+
+export const IconUI = styled(Icon)`
+  color: currentColor;
+  transition: 0.2s ease-in-out opacity;
+  height: 100%;
+  width: 100%;
+  transform: scale(1.2);
+
+  &.is-md {
+    transform: scale(1);
+    position: relative;
+    right: -1px;
+  }
 
   &.is-filled {
-    color: white;
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 `
 
 function makeColorStyles(): string {
   return forEach(
     config.colors,
-    (color, value) => `
-    &.is-${color} {
-      color: ${value};
+    (colorName, { main, secondary }) => `
+    &.is-${colorName} {
+      color: ${main};
 
       &.is-filled {
-        background-color: ${value};
-        border-color: ${value};
-        color: white;
+        background-color: ${main};
+        border-color: ${main};
+        color: ${secondary};
       }
     }
   `

@@ -9,6 +9,7 @@ import {
   openDropdown,
   closeDropdown,
   selectItem,
+  clearSelection,
 } from '../Dropdown.actions'
 
 const mockTriggerNode = {
@@ -32,6 +33,9 @@ jest.mock('../Dropdown.renderUtils', () => {
 jest.mock('../Dropdown.utils', () => {
   return {
     getItemFromCollection: () => mockItem,
+    itemIsActive: () => true,
+    processSelectionOfItem: jest.fn(() => []),
+    isSelectedItemEmpty: () => false,
   }
 })
 
@@ -292,9 +296,21 @@ describe('selectItem', () => {
     expect(nextState.selectedItem).toBeFalsy()
   })
 
+  test('Multiselect: processSelectionOfItem should be called', () => {
+    const state = { allowMultipleSelection: true, selectedItem: 'hello' }
+    const event = {}
+    const nextState = selectItem(state, event)
+
+    expect(nextState.selectedItem).toEqual([])
+  })
+
   test('Fires the onSelect callback, on select', () => {
     const spy = jest.fn()
-    const state = { onSelect: spy, selectedItem: undefined }
+    const state = {
+      onSelect: spy,
+      selectedItem: undefined,
+      clearOnSelect: true,
+    }
     const event = {}
 
     selectItem(state, event)
@@ -302,7 +318,9 @@ describe('selectItem', () => {
     expect(spy).toHaveBeenCalledWith(mockItem.value, {
       dropdownType: 'hsds-dropdown-v2',
       event,
+      deselected: undefined,
       item: mockItem,
+      selection: null,
     })
   })
 
@@ -340,5 +358,49 @@ describe('selectItem', () => {
     const nextState = selectItem(state, event)
 
     expect(mockTriggerNode.focus).toHaveBeenCalled()
+  })
+})
+
+describe('clearSelection', () => {
+  test('Clears the selection in state', () => {
+    const state = {
+      selectedItem: ['hello', 'hola'],
+      closeOnSelect: false,
+    }
+    const event = {}
+
+    const nextState = clearSelection(state, event)
+
+    expect(nextState.selectedItem).toBe('')
+  })
+
+  test('Runs onSelect when present', () => {
+    const spy = jest.fn()
+    const state = {
+      selectedItem: ['hello', 'hola'],
+      closeOnSelect: false,
+      onSelect: spy,
+    }
+    const event = {}
+
+    const nextState = clearSelection(state, event)
+
+    expect(nextState.selectedItem).toBe('')
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Runs onClose when present and closeOnSelect is true', () => {
+    const spy = jest.fn()
+    const state = {
+      selectedItem: ['hello', 'hola'],
+      closeOnSelect: true,
+      onClose: spy,
+    }
+    const event = {}
+
+    const nextState = clearSelection(state, event)
+
+    expect(nextState.selectedItem).toBe('')
+    expect(spy).toHaveBeenCalled()
   })
 })

@@ -38,7 +38,7 @@ class AvatarGrid extends Component<Props> {
     borderColor: 'transparent',
     center: true,
     max: 9,
-    shape: 'rounded',
+    shape: 'circle',
     showStatusBorderColor: true,
     size: 'md',
   }

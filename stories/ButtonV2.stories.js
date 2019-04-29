@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { withKnobs, select } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import {
   Button,
   ControlGroup,
@@ -12,7 +12,6 @@ import {
 import styled from '../src/components/styled'
 
 const stories = storiesOf('Button/V2', module)
-stories.addDecorator(withKnobs)
 
 const ContainerUI = styled('div')`
   background: #f1f3f5;
@@ -62,11 +61,42 @@ const makeButtonVariations = (props = {}) => {
   )
 }
 
-stories.add('default', () => (
-  <Button kind="secondary" version={2}>
-    Button
-  </Button>
-))
+stories.add('Default', () => {
+  const props = {
+    children: text('children', 'Button'),
+    disabled: boolean('disabled', false),
+    disableOnLoading: boolean('disableOnLoading', true),
+    isActive: boolean('isActive', false),
+    isBlock: boolean('isBlock', false),
+    isLoading: boolean('isLoading', false),
+    kind: select(
+      'kind',
+      {
+        primary: 'primary',
+        primaryAlt: 'primaryAlt',
+        secondary: 'secondary',
+        secondaryAlt: 'secondaryAlt',
+        default: 'default',
+        link: 'link',
+      },
+      'secondary'
+    ),
+    size: select(
+      'size',
+      {
+        xl: 'xl',
+        lgxl: 'lgxl',
+        lg: 'lg',
+        md: 'md',
+        sm: 'sm',
+        xs: 'xs',
+      },
+      'lg'
+    ),
+    spinButtonOnLoading: boolean('spinButtonOnLoading', false),
+  }
+  return <Button {...props} version={2} />
+})
 
 stories.add('everything', () => (
   <PropProvider value={{ Button: { version: 2 } }}>

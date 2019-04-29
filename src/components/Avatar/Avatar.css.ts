@@ -7,7 +7,7 @@ import styled from '../styled'
 export const config = {
   borderRadius: 3,
   borderWidth: 2,
-  boxShadow: '0 5px 8px rgb(0, 0, 0, 0.2)',
+  boxShadow: '0 5px 8px rgba(0, 0, 0, 0.2)',
   color: getColor('blue.500'),
   position: 'relative',
   size: {
@@ -68,7 +68,27 @@ export const CropUI = styled('div')`
   ${getBorderRadiusStyles()};
 
   &.is-withShadow {
-    box-shadow: ${config.boxShadow};
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0) inset, ${config.boxShadow};
+
+    &.is-imageLoaded {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 1) inset, ${config.boxShadow};
+    }
+  }
+`
+
+export const ImageWrapperUI = styled('div')`
+  backface-visibility: hidden;
+  display: block;
+  height: 100%;
+  opacity: 0;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0) scale(1.0125);
+  width: 100%;
+
+  ${getBorderRadiusStyles()};
+
+  &.is-herbieFullyLoaded {
+    opacity: 1;
   }
 `
 
@@ -78,11 +98,6 @@ export const ImageUI = styled('div')`
   display: block;
   height: 100%;
   width: 100%;
-  opacity: 0;
-
-  &.is-herbieFullyLoaded {
-    opacity: 1;
-  }
 `
 
 export const TitleUI = styled('div')`

@@ -16,6 +16,8 @@ export const config = {
   boxShadow: `0 0 0 0 rgba(${getColor('border')}, 0)`,
   boxShadowCheckbox: '0 0.5px 1px rgba(0, 0, 0, 0.2) inset',
   focusOutlineWidth: 2,
+  focusErrorOutlineWidth: 1,
+  focusErrorOutlineColor: getColor('red.500'),
   focusOutlineColor: getColor('blue.500'),
   focusOutlineOffset: 1,
   transition:
@@ -149,9 +151,14 @@ export const FocusUI = styled('div')`
     right: -1px;
     top: -1px;
   }
+
+  &.is-error {
+    box-shadow: 0 0 0 ${config.focusErrorOutlineWidth}px
+      ${config.focusErrorOutlineColor};
+  }
 `
 
-function makeStateStyles(): string {
+function makeStateStyles() {
   return forEach(
     STATES,
     state => `

@@ -323,3 +323,47 @@ describe('Link', () => {
     expect(wrapper.find('button').length).toBeTruthy()
   })
 })
+
+describe('Loading', () => {
+  test('Add loading className, if isLoading', () => {
+    const wrapper = mount(<Button isLoading />)
+    const el = wrapper.find('button')
+
+    expect(el.hasClass('is-loading')).toBeTruthy()
+  })
+
+  test('Renders a spinner if isLoading', () => {
+    const wrapper = mount(<Button isLoading />)
+    const el = wrapper.find('div.c-Spinner')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Does not renders a spinner if not isLoading', () => {
+    const wrapper = mount(<Button isLoading={false} />)
+    const el = wrapper.find('div.c-Spinner')
+
+    expect(el.length).toBeFalsy()
+  })
+
+  test('Becomes disabled if isLoading, by default', () => {
+    const wrapper = mount(<Button isLoading />)
+    const el = wrapper.find('button')
+
+    expect(el.prop('disabled')).toBe(true)
+  })
+
+  test('Does not become disabled, if specified', () => {
+    const wrapper = mount(<Button isLoading disableOnLoading={false} />)
+    const el = wrapper.find('button')
+
+    expect(el.prop('disabled')).toBe(false)
+  })
+
+  test('Add special spinButtonOnLoading, if isLoading and enabled', () => {
+    const wrapper = mount(<Button isLoading spinButtonOnLoading />)
+    const el = wrapper.find('button')
+
+    expect(el.hasClass('is-spinButtonOnLoading')).toBeTruthy()
+  })
+})

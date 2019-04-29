@@ -131,7 +131,11 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     }
 
     // Adjust index, if changed
-    if (isDefined(nextProps.index) && nextProps.index !== state.index) {
+    if (
+      nextProps.closeOnSelect &&
+      isDefined(nextProps.index) &&
+      nextProps.index !== state.index
+    ) {
       nextState = {
         ...nextState,
         ...updateIndex(state, nextProps.index),

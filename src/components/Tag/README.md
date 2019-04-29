@@ -20,6 +20,7 @@ A Tag component is a UI element that provide contextual labels for categories/ta
 | isRemovable                   | `boolean`         | Renders an `x` [Icon](../Icon), which can remove this component from the DOM. |
 | isRemoving                    | `boolean`         | Renders the [Spinner](../Spinner) and replaces the `x` [Icon](../Icon)        |
 | filled                        | `boolean`         | Applies a filled in color style to the component.                             |
+| size                          | `string`          | Apply a different size to the component                                       |
 | pulsing                       | `boolean`         | Applies a pulsing animation.                                                  |
 | `onBeforeRemove({id, value})` | `Promise`         | Function that returns a promise to resolve before removing.                   |
 | `onRemove({id, value})`       | `Function`        | Callback function when component is removed and unmounted.                    |
@@ -28,12 +29,20 @@ A Tag component is a UI element that provide contextual labels for categories/ta
 
 ### Colors
 
-| Value    | Description            |
-| -------- | ---------------------- |
-| `blue`   | Colors the tag blue.   |
-| `green`  | Colors the tag green.  |
-| `grey`   | Colors the tag grey.   |
-| `orange` | Colors the tag orange. |
-| `purple` | Colors the tag purple. |
-| `red`    | Colors the tag red.    |
-| `yellow` | Colors the tag yellow. |
+| Value       | Description                       |
+| ----------- | --------------------------------- |
+| `blue`      | Colors the tag blue.              |
+| `green`     | Colors the tag green.             |
+| `grey`      | Colors the tag grey.              |
+| `lightBlue` | Colors the tag with a light blue. |
+| `orange`    | Colors the tag orange.            |
+| `purple`    | Colors the tag purple.            |
+| `red`       | Colors the tag red.               |
+| `yellow`    | Colors the tag yellow.            |
+
+### Size
+
+| Value | Description                      |
+| ----- | -------------------------------- |
+| `sm`  | Default size value (17px height) |
+| `md`  | Bigger tag (22px height)         |

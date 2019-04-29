@@ -11,22 +11,21 @@ import {
 } from './HsApp.css'
 import Icon from '../Icon'
 import Text from '../Text'
-import { createSpec, faker } from '@helpscout/helix'
-
-const ItemSpec = createSpec({
-  id: faker.random.uuid(),
-  label: faker.company.companyName(),
-  value: faker.company.companyName(),
-})
 
 export interface Props {}
 
 class Nav extends React.PureComponent<Props> {
   renderDropdowns() {
+    const items = [
+      { value: 'one', label: 'One' },
+      { value: 'two', label: 'Two' },
+      { value: 'three', label: 'Three' },
+      { value: 'four', label: 'Four' },
+    ]
     return ['Mailboxes', 'Docs', 'Reports', 'Manage'].map(d => (
       <DropdownUI
         key={d}
-        items={ItemSpec.generate(8)}
+        items={items}
         trigger={
           <DropdownTriggerUI>
             <Text size="14">{d}</Text>{' '}
