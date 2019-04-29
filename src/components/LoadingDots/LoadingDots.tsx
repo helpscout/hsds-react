@@ -1,10 +1,9 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
 type Props = {
-  align?: 'left' | 'center' | 'right' | '',
-  className?: string,
+  align?: 'left' | 'center' | 'right' | ''
+  className?: string
 }
 
 const LoadingDots = (props: Props) => {
