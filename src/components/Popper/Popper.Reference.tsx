@@ -1,23 +1,21 @@
-// @flow
-import React from 'react'
-import { ManagerContext } from './Manager'
-import { safeInvoke, unwrapArray } from './utils'
-import type { Node } from 'react'
+import * as React from 'react'
+import { ManagerContext } from './Popper.Manager'
+import { safeInvoke, unwrapArray } from './Popper.utils'
 
-export type ReferenceChildrenProps = { ref: (?HTMLElement) => void }
+export type ReferenceChildrenProps = { ref: (HTMLElement?) => void }
 export type ReferenceProps = {
-  children: ReferenceChildrenProps => Node,
-  innerRef?: (?HTMLElement) => void,
+  children: ReferenceChildrenProps
+  innerRef?: (HTMLElement?) => void
 }
 
 type InnerReferenceProps = {
-  getReferenceRef?: (?HTMLElement) => void,
+  getReferenceRef?: (HTMLElement?) => void
 }
 
 class InnerReference extends React.Component<
   ReferenceProps & InnerReferenceProps
 > {
-  refHandler = (node: ?HTMLElement) => {
+  refHandler = (node?: HTMLElement) => {
     safeInvoke(this.props.innerRef, node)
     safeInvoke(this.props.getReferenceRef, node)
   }

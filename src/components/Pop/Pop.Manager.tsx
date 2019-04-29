@@ -1,3 +1,3 @@
-import Manager from '../Popper/Manager'
+import Manager from '../Popper/Popper.Manager'
 
 export default Manager
