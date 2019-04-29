@@ -1,37 +1,37 @@
-// @flow
-import type { BlockSelectorTag } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { BlockSelectorTag } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Link from '../Link'
+import propConnect from '../PropProvider/propConnect'
+import Link from '../Link/index'
 import Block from './Block'
-import styled from '../styled'
+import styled from '../styled/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Card.css.js'
-import { COMPONENT_KEY } from './utils'
+import css from './styles/Card.css'
+import { COMPONENT_KEY } from './Card.utils'
 
 export type Props = {
-  autoWordWrap?: boolean,
-  borderless?: boolean,
-  className?: string,
-  children?: any,
-  floating: boolean,
-  flex: boolean,
-  fullHeight: boolean,
-  hover: boolean,
-  href?: string,
-  innerRef: (node: HTMLElement) => void,
-  nodeRef: () => void,
-  onBlur: (event: Event) => void,
-  onClick: (event: Event) => void,
-  onFocus: (event: Event) => void,
-  seamless: boolean,
-  selector: BlockSelectorTag,
-  to?: string,
+  autoWordWrap?: boolean
+  borderless?: boolean
+  className?: string
+  children?: any
+  floating: boolean
+  flex: boolean
+  fullHeight: boolean
+  hover: boolean
+  href?: string
+  innerRef: (node: HTMLElement) => void
+  nodeRef: () => void
+  onBlur: (event: Event) => void
+  onClick: (event: Event) => void
+  onFocus: (event: Event) => void
+  seamless: boolean
+  selector: BlockSelectorTag
+  to?: string
 }
 
-class Card extends Component<Props> {
+class Card extends React.PureComponent<Props> {
   static defaultProps = {
     borderless: false,
     flex: false,
@@ -47,7 +47,7 @@ class Card extends Component<Props> {
     selector: 'div',
   }
   static Block = Block
-  node: ?HTMLElement = null
+  node = null
 
   componentWillUnmount() {
     this.node = null
@@ -125,4 +125,4 @@ const StyledCard = styled(Card)(css)
 
 namespaceComponent(COMPONENT_KEY.Card)(StyledCard)
 
-export default StyledCard
+export default propConnect('Card')(Card)

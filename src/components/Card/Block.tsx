@@ -1,28 +1,26 @@
-// @flow
-import type { UISize } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { UISize } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Scrollable from '../Scrollable'
-import styled from '../styled'
+import Scrollable from '../Scrollable/index'
+import styled from '../styled/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Block.css.js'
-import { COMPONENT_KEY } from './utils'
+import css from './styles/Block.css'
+import { COMPONENT_KEY } from './Card.utils'
 
 type Props = {
-  bgMuted: boolean,
-  children?: any,
-  className?: string,
-  flex?: boolean,
-  scrollable: boolean,
-  scrollableRef: () => void,
-  onScroll: () => void,
-  flex: boolean,
-  size?: UISize,
+  bgMuted: boolean
+  children?: any
+  className?: string
+  flex?: boolean
+  scrollable: boolean
+  scrollableRef: () => void
+  onScroll: () => void
+  size?: UISize
 }
 
-class Block extends Component<Props> {
+class Block extends React.PureComponent<Props> {
   static defaultProps = {
     onScroll: noop,
     scrollableRef: noop,
