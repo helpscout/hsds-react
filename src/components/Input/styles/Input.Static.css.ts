@@ -1,7 +1,7 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/baseStyles.css'
-import { config as inputConfig } from './styles/Input.css'
-import forEach from '../../styles/utilities/forEach'
+import styled from '../../styled/index'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { config as inputConfig } from './Input.css'
+import forEach from '../../../styles/utilities/forEach'
 
 export const config = {
   defaultHeight: inputConfig.size.md,

@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import styled from '../../styled/index'
@@ -10,12 +9,12 @@ export const config = {
 }
 
 export const AddOnUI = styled('div')`
-  ${baseStyles}
+  ${baseStyles};
   background-color: ${config.backgroundColor};
   border: 1px solid ${config.borderColor};
   align-items: center;
   background-color: _color(grey, 200);
-  border-radius ${config.borderRadius}px;
+  border-radius: ${config.borderRadius}px;
   display: flex;
   height: 100%;
   margin: 0;

@@ -1,20 +1,19 @@
-// @flow
 /* eslint react/no-deprecated: off */
-import type { UISize, UIState } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { UISize, UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
-import AddOn from './AddOn'
-import Backdrop from './BackdropV2'
-import Prefix from './Prefix'
-import Resizer from './Resizer'
-import Static from './Static'
-import Suffix from './Suffix'
-import HelpText from '../HelpText'
-import Icon from '../Icon'
-import Label from '../Label'
+import AddOn from './Input.AddOn'
+import Backdrop from './Input.BackdropV2'
+import Prefix from './Input.Prefix'
+import Resizer from './Input.Resizer'
+import Static from './Input.Static'
+import Suffix from './Input.Suffix'
+import HelpText from '../HelpText/index'
+import Icon from '../Icon/index'
+import Label from '../Label/index'
 import { scrollLockY } from '../ScrollLock/ScrollLock.utils'
-import Tooltip from '../Tooltip'
+import Tooltip from '../Tooltip/index'
 import { STATES } from '../../constants/index'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
@@ -29,91 +28,92 @@ import {
   getTextAreaLineTotal,
   moveCursorToEnd,
   isTextArea,
-} from './utils'
+} from './Input.utils'
 import {
   InputWrapperUI,
   InlinePrefixSuffixUI,
   FieldUI,
   FieldTextAreaUI,
   InputUI,
-} from './styles/Input.css.js'
+} from './styles/Input.css'
 
 const uniqueID = createUniqueIDFactory('Input')
 
 type InputNode = HTMLInputElement | HTMLTextAreaElement
-type InputEvent = SyntheticEvent<InputNode>
-type WheelEvent = SyntheticWheelEvent<InputNode>
+type InputEvent = Event
+type WheelEvent = Event
 type AnyInputEvent = InputEvent | WheelEvent | Event
 type InputValue = string
 
 type Props = {
-  action?: any,
-  autoFocus: boolean,
-  className: string,
-  disabled: boolean,
-  errorIcon?: string,
-  errorMessage?: string,
-  forceAutoFocusTimeout: number,
-  helpText: any,
-  hintText: any,
-  id: string,
-  inlinePrefix?: string,
-  inlineSuffix?: string,
-  innerRef: (ref: HTMLElement) => void,
-  inputRef: (ref: HTMLElement) => void,
-  isFirst: boolean,
-  isFocused: boolean,
-  isLast: boolean,
-  isNotOnly: boolean,
-  isSubtleReadOnly: boolean,
-  label: any,
-  maxHeight: number | string,
-  modalhelpText: string,
-  moveCursorToEnd: boolean,
-  multiline: boolean | number,
-  name: string,
-  offsetAmount: number,
-  onBlur: (event: AnyInputEvent) => void,
-  onChange: (value: InputValue) => void,
-  onEnterDown: (event: AnyInputEvent) => void,
-  onEnterUp: (event: AnyInputEvent) => void,
-  onFocus: (event: AnyInputEvent) => void,
-  onKeyDown: (event: AnyInputEvent) => void,
-  onKeyUp: (event: AnyInputEvent) => void,
-  onResize: (height: number) => void,
-  onStartTyping: (now?: number) => void,
-  onStopTyping: () => void,
-  onWheel: (event: AnyInputEvent) => void,
-  placeholder: string,
-  prefix: any,
-  readOnly: boolean,
-  refApplyCallStopTyping: (fn: () => void) => void,
-  removeStateStylesOnFocus: boolean,
-  resizable: boolean,
-  scrollLock: boolean,
-  seamless: boolean,
-  size: UISize,
-  state?: ?UIState,
-  style: Object,
-  suffix: any,
-  type: string,
-  typingThrottleInterval: number,
-  typingTimeoutDelay: number,
-  value: InputValue,
-  withTypingEvent: false,
+  action?: any
+  autoFocus: boolean
+  className: string
+  disabled: boolean
+  errorIcon?: string
+  errorMessage?: string
+  forceAutoFocusTimeout: number
+  hasInsertCarriageReturns: boolean
+  helpText: any
+  hintText: any
+  id: string
+  inlinePrefix?: string
+  inlineSuffix?: string
+  innerRef: (ref: HTMLElement) => void
+  inputRef: (ref: HTMLElement) => void
+  isFirst: boolean
+  isFocused: boolean
+  isLast: boolean
+  isNotOnly: boolean
+  isSubtleReadOnly: boolean
+  label: any
+  maxHeight: number | string
+  modalhelpText: string
+  moveCursorToEnd: boolean
+  multiline: boolean | number
+  name: string
+  offsetAmount: number
+  onBlur: (event: AnyInputEvent) => void
+  onChange: (value: InputValue) => void
+  onEnterDown: (event: AnyInputEvent) => void
+  onEnterUp: (event: AnyInputEvent) => void
+  onFocus: (event: AnyInputEvent) => void
+  onKeyDown: (event: AnyInputEvent) => void
+  onKeyUp: (event: AnyInputEvent) => void
+  onResize: (height: number) => void
+  onStartTyping: (now?: number) => void
+  onStopTyping: () => void
+  onWheel: (event: AnyInputEvent) => void
+  placeholder: string
+  prefix: any
+  readOnly: boolean
+  refApplyCallStopTyping: (fn: () => void) => void
+  removeStateStylesOnFocus: boolean
+  resizable: boolean
+  scrollLock: boolean
+  seamless: boolean
+  size: UISize
+  state?: UIState
+  style: Object
+  suffix: any
+  type: string
+  typingThrottleInterval: number
+  typingTimeoutDelay: number
+  value: InputValue
+  withTypingEvent: false
 }
 
 type State = {
-  id: string,
-  isFocused: boolean,
-  height: ?number,
-  state: ?UIState,
-  typingThrottle: ?IntervalID,
-  typingTimeout: ?TimeoutID,
-  value: InputValue,
+  id: string
+  isFocused: boolean
+  height: number | null
+  state: UIState
+  typingThrottle: number | undefined
+  typingTimeout: number | undefined
+  value: InputValue
 }
 
-export class Input extends Component<Props, State> {
+export class Input extends React.PureComponent<Props, State> {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
@@ -163,11 +163,12 @@ export class Input extends Component<Props, State> {
   static Static = Static
   static Suffix = Suffix
 
-  computedStyles: Object
-  inputNode: InputNode
+  computedStyles: Object | any
+  inputNode: InputNode | null
 
   constructor(props: Props) {
     super(props)
+
     this.state = {
       id: props.id || uniqueID(),
       isFocused: props.isFocused,
@@ -288,6 +289,8 @@ export class Input extends Component<Props, State> {
   }
 
   setTypingTimeout() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.setState({
       typingTimeout: setTimeout(() => {
         this.clearThrottler()
@@ -305,6 +308,8 @@ export class Input extends Component<Props, State> {
   }
 
   setThrottler() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.setState({
       typingThrottle: setInterval(
         this.props.onStartTyping,
@@ -325,6 +330,8 @@ export class Input extends Component<Props, State> {
 
   handleOnChange = (event: InputEvent) => {
     if (this.props.withTypingEvent) this.typingEvent()
+    // TODO: fix typescript complains
+    // @ts-ignore
     const value = event.currentTarget.value
     this.setState({ value })
     this.props.onChange(value)
@@ -386,6 +393,8 @@ export class Input extends Component<Props, State> {
     )}`
     this.setState({ value: newValue }, () => {
       this.props.onChange(this.state.value)
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.inputNode.setSelectionRange(cursorIndex + 1, cursorIndex + 1)
     })
   }
@@ -393,10 +402,14 @@ export class Input extends Component<Props, State> {
   handleOnKeyDown = (event: Event) => {
     const { hasInsertCarriageReturns } = this.props
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     if (event.keyCode === Keys.ENTER) {
       this.props.onEnterDown(event)
     }
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     if (hasInsertCarriageReturns && event.keyCode === Keys.ENTER) {
       this.insertCarriageReturnAtCursorIndex(event)
     }
@@ -406,6 +419,8 @@ export class Input extends Component<Props, State> {
   }
 
   handleOnKeyUp = (event: Event) => {
+    // TODO: fix typescript complains
+    // @ts-ignore
     if (event.keyCode === Keys.ENTER) {
       this.props.onEnterUp(event)
     }
@@ -430,6 +445,8 @@ export class Input extends Component<Props, State> {
     /* istanbul ignore next */
     requestAnimationFrame(() => {
       /* istanbul ignore next */
+      // TODO: fix typescript complains
+      // @ts-ignore
       moveCursorToEnd(this.inputNode)
     })
   }
@@ -450,8 +467,9 @@ export class Input extends Component<Props, State> {
     const computedStyles = window.getComputedStyle(this.inputNode)
 
     const { paddingBottom } = computedStyles
-
     this.computedStyles = {
+      // TODO: fix typescript complains
+      // @ts-ignore
       paddingBottom: parseInt(paddingBottom, 10),
     }
   }
@@ -509,6 +527,8 @@ export class Input extends Component<Props, State> {
     return (
       inlinePrefix && (
         <InlinePrefixSuffixUI
+          // TODO: fix typescript complains
+          // @ts-ignore
           className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
         >
           {inlinePrefix}
@@ -529,6 +549,8 @@ export class Input extends Component<Props, State> {
     return (
       inlineSuffix && (
         <InlinePrefixSuffixUI
+          // TODO: fix typescript complains
+          // @ts-ignore
           className={this.getInlinePrefixSuffixClassName({ type: 'suffix' })}
         >
           {inlineSuffix}
@@ -594,6 +616,8 @@ export class Input extends Component<Props, State> {
       multiline != null ? (
         <Resizer
           contents={value}
+          // TODO: fix typescript complains
+          // @ts-ignore
           currentHeight={height}
           minimumLines={this.getMultilineValue()}
           offsetAmount={offsetAmount}
@@ -632,6 +656,8 @@ export class Input extends Component<Props, State> {
       onEnterUp,
       onFocus,
       onResize,
+      // TODO: fix typescript complains
+      // @ts-ignore
       onScroll,
       onStartTyping,
       onStopTyping,

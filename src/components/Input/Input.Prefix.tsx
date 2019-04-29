@@ -1,16 +1,16 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { PrefixUI } from './styles/Input.css.js'
+import { COMPONENT_KEY } from './Input.utils'
+import { PrefixUI } from './styles/Input.css'
 
 export interface Props {
-  className?: string;
-  isSeamless: boolean;
+  className?: string
+  isSeamless: boolean
 }
 
-class Prefix extends Component<Props> {
+class Prefix extends React.PureComponent<Props> {
   static defaultProps = {
     isSeamless: false,
   }

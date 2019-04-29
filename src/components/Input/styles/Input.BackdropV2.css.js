@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
@@ -151,7 +150,7 @@ export const FocusUI = styled('div')`
   }
 `
 
-function makeStateStyles(): string {
+function makeStateStyles() {
   return forEach(
     STATES,
     state => `

@@ -1,28 +1,27 @@
-// @flow
-import type { UIState } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isStateful } from './utils'
-import { BackdropUI, FocusUI } from './styles/BackdropV2.css.js'
+import { isStateful } from './Input.utils'
+import { BackdropUI, FocusUI } from './styles/Input.BackdropV2.css'
 
 type Props = {
-  className?: string,
-  choiceKind?: string,
-  disabled: boolean,
-  isFilled: boolean,
-  isFocused: boolean,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
-  isSeamless: boolean,
-  kind?: string,
-  readOnly: boolean,
-  showFocus: boolean,
-  state?: ?UIState,
+  className?: string
+  choiceKind?: string
+  disabled: boolean
+  isFilled: boolean
+  isFocused: boolean
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
+  isSeamless: boolean
+  kind?: string
+  readOnly: boolean
+  showFocus: boolean
+  state?: UIState
 }
 
-class Backdrop extends Component<Props> {
+class Backdrop extends React.PureComponent<Props> {
   static defaultProps = {
     disabled: false,
     isFilled: false,

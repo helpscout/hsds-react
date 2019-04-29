@@ -1,9 +1,9 @@
 import * as React from 'react'
-import EventListener from '../EventListener'
+import EventListener from '../EventListener/index'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { repeat } from '../../utilities/strings'
-import { ResizerUI, GhostUI } from './Resizer.css'
+import { ResizerUI, GhostUI } from './styles/Input.Resizer.css'
 
 // Thanks Stephen <3
 export const OFFSET_CHAR = 'R'

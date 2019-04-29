@@ -1,16 +1,15 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { AddOnUI } from './styles/AddOn.css.js'
-import { COMPONENT_KEY } from './utils'
+import { AddOnUI } from './styles/Input.AddOn.css'
+import { COMPONENT_KEY } from './Input.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
+  children?: any
+  className?: string
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
 }
 
 const AddOn = (props: Props) => {

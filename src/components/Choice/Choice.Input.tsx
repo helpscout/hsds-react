@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ChoiceAlign, ChoiceType, ChoiceValue } from './Choice.types'
 import { UIState } from '../../constants/types'
-import Backdrop from '../Input/BackdropV2'
+import Backdrop from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'

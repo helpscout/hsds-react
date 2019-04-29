@@ -1,4 +1,3 @@
-// @flow
 import { includes } from '../../utilities/arrays'
 
 type InputNode = HTMLInputElement | HTMLTextAreaElement
@@ -17,7 +16,7 @@ export const COMPONENT_KEY = {
  * @param   {InputNode} textarea
  * @returns {number}
  */
-export const getTextAreaLineTotal = (textarea: ?InputNode): number => {
+export const getTextAreaLineTotal = (textarea: InputNode): number => {
   if (!textarea) return 0
   return textarea.value.split(/\r*\n/).length
 }
@@ -28,8 +27,10 @@ export const getTextAreaLineTotal = (textarea: ?InputNode): number => {
  * @param   {InputNode} textarea
  * @returns {number}
  */
-export const getTextAreaLineCurrent = (textarea: ?InputNode): number => {
+export const getTextAreaLineCurrent = (textarea: InputNode): number => {
   if (!textarea) return 0
+  // TODO: fix typescript complains
+  // @ts-ignore
   return textarea.value.substr(0, textarea.selectionStart).split('\n').length
 }
 
@@ -39,14 +40,18 @@ export const getTextAreaLineCurrent = (textarea: ?InputNode): number => {
  *
  * @param   {InputNode} inputNode
  */
-export const moveCursorToEnd = (input: ?InputNode) => {
+export const moveCursorToEnd = (input: InputNode) => {
   // Extra failsafe guard
   if (!input) return
   if (typeof input.selectionStart === 'number') {
     input.selectionStart = input.selectionEnd = input.value.length
+    // TODO: fix typescript complains
+    // @ts-ignore
   } else if (typeof input.createTextRange !== 'undefined') {
     input.focus()
     // $FlowFixMe
+    // TODO: fix typescript complains
+    // @ts-ignore
     let range = input.createTextRange()
     range.collapse(false)
     range.select()
@@ -63,6 +68,6 @@ export function isTextArea(node: HTMLElement): boolean {
   return !!(node && node.tagName === 'TEXTAREA')
 }
 
-export function isStateful(props: Object): boolean {
+export function isStateful(props: any): boolean {
   return props.state && includes(['error', 'success', 'warning'], props.state)
 }

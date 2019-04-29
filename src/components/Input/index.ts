@@ -1,7 +1,6 @@
-// @flow
 import { propConnect } from '../PropProvider'
 import Input from './Input'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Input.utils'
 
 Input.AddOn = propConnect(COMPONENT_KEY.AddOn)(Input.AddOn)
 Input.Prefix = propConnect(COMPONENT_KEY.Prefix)(Input.Prefix)

@@ -1,16 +1,15 @@
-// @flow
-import type { UISize } from '../../constants/types'
-import React from 'react'
+import * as React from 'react'
+import { UISize } from '../../constants/types'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { StaticUI } from './Static.css'
+import { COMPONENT_KEY } from './Input.utils'
+import { StaticUI } from './styles/Input.Static.css'
 
 type Props = {
-  align: 'left' | 'center' | 'right' | '',
-  children?: any,
-  className?: string,
-  size: UISize,
+  align: 'left' | 'center' | 'right' | ''
+  children?: any
+  className?: string
+  size: UISize
 }
 
 const Static = (props: Props) => {
