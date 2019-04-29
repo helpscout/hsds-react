@@ -1,22 +1,22 @@
-// @flow
-import type { Sizes } from '../Text/types'
-import type { TextShade, UIState } from '../../constants/types'
-import React from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { TextSize } from '../Text/types'
+import { TextShade, UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import Text from '../Text'
+import Text from '../Text/index'
 import { isString } from '../../utilities/is'
-import { HelpTextUI } from './styles/HelpText.css.js'
-import { COMPONENT_KEY } from './utils'
+import { HelpTextUI } from './styles/HelpText.css'
+import { COMPONENT_KEY } from './HelpText.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
-  isCompact: boolean,
-  shade?: TextShade,
-  size?: Sizes,
-  state?: ?UIState,
+  children?: any
+  className?: string
+  isCompact: boolean
+  shade?: TextShade
+  size?: TextSize
+  state?: UIState
 }
 
 const HelpText = (props: Props) => {
@@ -54,4 +54,4 @@ HelpText.defaultProps = {
 
 namespaceComponent(COMPONENT_KEY)(HelpText)
 
-export default HelpText
+export default propConnect(COMPONENT_KEY)(HelpText)
