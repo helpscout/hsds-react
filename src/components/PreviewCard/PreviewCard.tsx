@@ -1,6 +1,5 @@
-// @flow
-import React from 'react'
-import Context from './Context'
+import * as React from 'react'
+import Context from './PreviewCard.Context'
 import Card from '../Card'
 import Heading from '../Heading'
 import Text from '../Text'
@@ -9,10 +8,10 @@ import { classNames } from '../../utilities/classNames'
 import css from './styles/PreviewCard.css.js'
 
 type Props = {
-  children?: any,
-  className?: string,
-  isNote?: boolean,
-  title?: string,
+  children?: any
+  className?: string
+  isNote?: boolean
+  title?: string
 }
 
 const PreviewCard = (props: Props) => {

@@ -1,8 +1,7 @@
-// @flow
 import createContext from '@helpscout/react-utils/dist/createContext'
 
 export type PreviewCardContext = {
-  isNote?: boolean,
+  isNote?: boolean
 }
 
 const contextProps: PreviewCardContext = {
