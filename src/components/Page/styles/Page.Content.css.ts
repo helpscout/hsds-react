@@ -1,5 +1,5 @@
 import styled from '../../styled'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 
 export const ContentUI = styled('div')`
   ${baseStyles};

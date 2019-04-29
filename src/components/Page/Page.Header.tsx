@@ -3,8 +3,13 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { HeaderUI, TitleUI, SubTitleUI, HeadingUI } from './styles/Header.css'
-import { COMPONENT_KEY } from './utils'
+import {
+  HeaderUI,
+  TitleUI,
+  SubTitleUI,
+  HeadingUI,
+} from './styles/Page.Header.css'
+import { COMPONENT_KEY } from './Page.utils'
 
 export interface Props {
   children?: any

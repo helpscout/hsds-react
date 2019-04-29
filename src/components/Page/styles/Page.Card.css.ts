@@ -1,7 +1,7 @@
 import styled from '../../styled'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
-import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
+import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import PageConfig from './Page.config.css'
 
 export const config = {

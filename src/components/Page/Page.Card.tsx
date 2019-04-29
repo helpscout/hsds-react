@@ -2,8 +2,8 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { CardUI } from './styles/Card.css'
-import { COMPONENT_KEY } from './utils'
+import { CardUI } from './styles/Page.Card.css'
+import { COMPONENT_KEY } from './Page.utils'
 
 export interface Props {
   children?: any

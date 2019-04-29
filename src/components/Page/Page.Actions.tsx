@@ -1,10 +1,14 @@
-import { ActionsDirection } from './types'
+import { ActionsDirection } from './Page.types'
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { ActionsUI, ActionsBlockUI, ActionsItemUI } from './styles/Actions.css'
-import { COMPONENT_KEY } from './utils'
+import {
+  ActionsUI,
+  ActionsBlockUI,
+  ActionsItemUI,
+} from './styles/Page.Actions.css'
+import { COMPONENT_KEY } from './Page.utils'
 
 export interface Props {
   className?: string

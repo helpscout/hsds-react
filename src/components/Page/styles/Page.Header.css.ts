@@ -1,5 +1,5 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import { breakpoint } from '../../../styles/mixins/breakpoints.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import styled from '../../styled'
 import PageConfig from './Page.config.css'
 import Heading from '../../Heading'

@@ -1,16 +1,17 @@
 import * as React from 'react'
-import { COMPONENT_KEY } from './utils'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { SectionUI } from './styles/Section.css'
+import { ContentUI } from './styles/Page.Content.css'
+import { COMPONENT_KEY } from './Page.utils'
 
 export interface Props {
   children?: any
   className?: string
-  isResponsive?: boolean
+  isResponsive: boolean
 }
 
-class Section extends React.PureComponent<Props> {
+class Content extends React.PureComponent<Props> {
   static defaultProps = {
     isResponsive: false,
   }
@@ -19,19 +20,19 @@ class Section extends React.PureComponent<Props> {
     const { children, className, isResponsive, ...rest } = this.props
 
     const componentClassName = classNames(
-      'c-PageSection',
+      'c-PageContent',
       isResponsive && 'is-responsive',
       className
     )
 
     return (
-      <SectionUI className={componentClassName}>
-        {this.props.children}
-      </SectionUI>
+      <ContentUI {...getValidProps(rest)} className={componentClassName}>
+        {children}
+      </ContentUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Section)(Section)
+namespaceComponent(COMPONENT_KEY.Content)(Content)
 
-export default Section
+export default Content

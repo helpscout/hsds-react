@@ -1,15 +1,15 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Actions from './Actions'
-import Card from './Card'
-import Content from './Content'
-import Header from './Header'
-import Section from './Section'
+import Actions from './Page.Actions'
+import Card from './Page.Card'
+import Content from './Page.Content'
+import Header from './Page.Header'
+import Section from './Page.Section'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { PageUI } from './styles/Page.css'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Page.utils'
 
 export interface Props {
   children?: any
