@@ -1,17 +1,16 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { FormGroupUI } from './styles/FormGroup.css.js'
-import { COMPONENT_KEY } from './utils'
+import { FormGroupUI } from './styles/FormGroup.css'
+import { COMPONENT_KEY } from './FromGroup.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
+  children?: any
+  className?: string
 }
 
-class FormGroup extends Component<Props> {
+class FormGroup extends React.PureComponent<Props> {
   static Choice: any
   static Grid: any
 
