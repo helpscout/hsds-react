@@ -2,7 +2,7 @@ import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './PromoCard.utils'
 import { PromoCardUI, BorderUI, ContentUI } from './PromoCard.css'
 
 // Refactor this when FluffyCard is converted to TypeScript
