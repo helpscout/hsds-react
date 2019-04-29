@@ -1,5 +1,4 @@
-// @flow
-import React, { Component } from 'react'
+import * as React from 'react'
 import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
@@ -10,15 +9,15 @@ import { noop } from '../../utilities/other'
 import css from './styles/AttachmentList.css.js'
 
 type Props = {
-  children: Array<any> | string,
-  className?: string,
-  downloadAllLabel: string,
-  onDownloadAllClick: () => void,
-  showDownloadAll: boolean,
-  withOverflow: boolean,
+  children: Array<any> | string
+  className?: string
+  downloadAllLabel: string
+  onDownloadAllClick: () => void
+  showDownloadAll: boolean
+  withOverflow: boolean
 }
 
-export class AttachmentList extends Component<Props> {
+export class AttachmentList extends React.Component<Props> {
   static defaultProps = {
     children: [],
     downloadAllLabel: 'Download All',
