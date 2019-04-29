@@ -15,7 +15,7 @@ import {
   SpinnerUI,
 } from './Button.css.js'
 import { COMPONENT_KEY } from './Button.utils'
-import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
+import { COMPONENT_KEY as ICON_KEY } from '../Icon/Icon.utils'
 
 type Props = {
   allowContentEventPropogation: boolean

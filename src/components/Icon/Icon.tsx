@@ -1,15 +1,15 @@
-// @flow
-import type { IconSize } from './types'
-import type { TextShade, UIState } from '../../constants/types'
-import React from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { IconSize } from './Icon.types'
+import { TextShade, UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import styled from '../styled'
-import VisuallyHidden from '../VisuallyHidden'
+import styled from '../styled/index'
+import VisuallyHidden from '../VisuallyHidden/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Icon.css.js'
-import { COMPONENT_KEY, renameSVGIds } from './utils'
+import css from './styles/Icon.css'
+import { COMPONENT_KEY, renameSVGIds } from './Icon.utils'
 
 export let svgSet = {}
 
@@ -17,23 +17,23 @@ export const load = (svgs = {}) => (svgSet = svgs)
 export const unload = () => load({})
 
 type Props = {
-  center: boolean,
-  className?: string,
-  clickable: boolean,
-  ignoreClick: boolean,
-  faint?: boolean,
-  inline?: boolean,
-  muted?: boolean,
-  name: string,
-  onClick: () => void,
-  offsetLeft: boolean,
-  offsetRight: boolean,
-  shade?: TextShade,
-  state?: UIState,
-  size: IconSize,
-  subtle?: boolean,
-  title?: string,
-  withCaret: boolean,
+  center: boolean
+  className?: string
+  clickable: boolean
+  ignoreClick: boolean
+  faint?: boolean
+  inline?: boolean
+  muted?: boolean
+  name: string
+  onClick: () => void
+  offsetLeft: boolean
+  offsetRight: boolean
+  shade?: TextShade
+  state?: UIState
+  size: IconSize
+  subtle?: boolean
+  title?: string
+  withCaret: boolean
 }
 
 const Icon = (props: Props) => {
@@ -124,4 +124,4 @@ Icon.defaultProps = {
 
 namespaceComponent(COMPONENT_KEY)(Icon)
 
-export default styled(Icon)(css)
+export default propConnect(COMPONENT_KEY)(styled(Icon)(css))
