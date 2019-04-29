@@ -1,6 +1,6 @@
-import React from 'react'
-import Item from './Item'
-import Title from './Title'
+import * as React from 'react'
+import Item from './DetailList.Item'
+import Title from './DetailList.Title'
 import { classNames } from '../../utilities/classNames'
 
 const DetailList = props => {
