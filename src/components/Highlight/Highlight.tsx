@@ -1,19 +1,19 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import hljs from 'highlight.js/lib/highlight'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { HighlightUI } from './styles/Highlight.css.js'
+import { COMPONENT_KEY } from './Highlight.utils'
+import { HighlightUI } from './styles/Highlight.css'
 
 type Props = {
-  children?: any,
-  className?: string,
-  language: string,
+  children?: any
+  className?: string
+  language: string
 }
 
-class Highlight extends Component<Props> {
+class Highlight extends React.PureComponent<Props> {
   static defaultProps = {}
 
   highlightBlock = (node: HTMLElement) => {
@@ -36,4 +36,4 @@ class Highlight extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(Highlight)
 
-export default Highlight
+export default propConnect(COMPONENT_KEY)(Highlight)
