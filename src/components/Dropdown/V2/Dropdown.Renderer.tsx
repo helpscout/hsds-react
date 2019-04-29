@@ -249,7 +249,11 @@ class Renderer extends React.PureComponent<any> {
     if (allowMultipleSelection) {
       const selectedNode = findItemDOMNode(index, envNode)
       const itemId = indexMap[index - 1]
-      const nodeIsSelected = itemIsActive(selectedItem, { id: itemId })
+      const nodeIsSelected = itemIsActive(selectedItem, {
+        id: itemId,
+        // Fallback matcher, for items without `id`
+        value: itemId,
+      })
 
       if (selectedNode) {
         if (nodeIsSelected) {
