@@ -1,5 +1,5 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import CopyButton from '../CopyButton'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
@@ -7,20 +7,20 @@ import { namespaceComponent } from '../../utilities/component'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { noop } from '../../utilities/other'
 import { CopyInputUI } from './styles/CopyInput.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './CopyInput.utils'
 
 type InputNode = HTMLInputElement | HTMLTextAreaElement
 
 type Props = {
-  copyToClipboard: boolean,
-  className?: string,
-  innerRef: (node: InputNode) => void,
-  onCopy: (value: string) => void,
-  readOnly: boolean,
-  value: string,
+  copyToClipboard: boolean
+  className?: string
+  innerRef: (node: InputNode) => void
+  onCopy: (value: string) => void
+  readOnly: boolean
+  value: string
 }
 
-class CopyInput extends Component<Props> {
+class CopyInput extends React.PureComponent<Props> {
   static defaultProps = {
     copyToClipboard: true,
     innerRef: noop,
@@ -78,4 +78,4 @@ class CopyInput extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(CopyInput)
 
-export default CopyInput
+export default propConnect(COMPONENT_KEY)(CopyInput)
