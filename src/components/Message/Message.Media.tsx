@@ -1,50 +1,48 @@
-// @flow
-import type { Node } from 'react'
-import type { MessageBubble } from './types'
-import React, { Component } from 'react'
-import styled from '../styled'
-import Link from '../Link'
-import Spinner from '../Spinner'
-import Modal from '../Modal'
-import Chat from './Chat'
-import Caption from './Caption'
+import * as React from 'react'
+import { MessageBubble } from './Message.types'
+import styled from '../styled/index'
+import Link from '../Link/index'
+import Spinner from '../Spinner/index'
+import Modal from '../Modal/index'
+import Chat from './Message.Chat'
+import Caption from './Message.Caption'
 import classNames, { BEM } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
-import css, { ImageUI } from './styles/Media.css.js'
-import { COMPONENT_KEY } from './utils'
+import css, { ImageUI } from './styles/Media.css'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageBubble & {
-  className: string,
-  caption?: string,
-  errorMessage?: string,
-  error?: boolean | string,
-  imageAlt?: string,
-  imageUrl?: string,
-  height?: number,
-  isUploading?: boolean,
-  maxHeight: number,
-  maxWidth: number,
-  modalAnimationDuration: number,
-  modalAnimationEasing: string,
-  modalAnimationSequence: string,
-  modalClassName?: string,
-  modalCardClassName?: string,
-  modalWrapperClassName?: string,
-  overlayAnimationDuration: number,
-  onErrorTryAgainClick: (event: Event) => void,
-  onMediaClick: (event: Event) => void,
-  onMediaLoad: () => void,
-  openMediaInModal?: boolean,
-  thumbnailImageUrl?: string,
-  showErrorTryAgainLink: boolean,
-  tryAgainLabel: string,
-  width?: number,
+  className: string
+  caption?: string
+  errorMessage?: string
+  error?: boolean | string
+  imageAlt?: string
+  imageUrl?: string
+  height?: number
+  isUploading?: boolean
+  maxHeight: number
+  maxWidth: number
+  modalAnimationDuration: number
+  modalAnimationEasing: string
+  modalAnimationSequence: string
+  modalClassName?: string
+  modalCardClassName?: string
+  modalWrapperClassName?: string
+  overlayAnimationDuration: number
+  onErrorTryAgainClick: (event: Event) => void
+  onMediaClick: (event: Event) => void
+  onMediaLoad: () => void
+  openMediaInModal?: boolean
+  thumbnailImageUrl?: string
+  showErrorTryAgainLink: boolean
+  tryAgainLabel: string
+  width?: number
 }
 
-export class Media extends Component<Props> {
+export class Media extends React.Component<Props> {
   static defaultProps = {
     className: '',
     errorMessage: `Couldn't send.`,
@@ -70,7 +68,7 @@ export class Media extends Component<Props> {
    *
    * @returns {string} The caption text.
    */
-  getCaption = (): ?string => {
+  getCaption = (): string => {
     const { caption, error, errorMessage } = this.props
 
     let text = caption
@@ -79,11 +77,12 @@ export class Media extends Component<Props> {
       text = isString(error) ? error : errorMessage
     }
 
-    // $FlowFixMe
+    // TODO: fix typescript complains
+    // @ts-ignore
     return text
   }
 
-  getSpinnerMarkup = (): ?Node => {
+  getSpinnerMarkup = () => {
     return (
       this.props.isUploading && (
         <Spinner className="c-MessageMedia__loadingSpinner" size="xs" />
@@ -91,7 +90,7 @@ export class Media extends Component<Props> {
     )
   }
 
-  getCaptionMarkup = (): ?Node => {
+  getCaptionMarkup = () => {
     const captionText = this.getCaption()
     const spinnerMarkup = this.getSpinnerMarkup()
     const tryAgainMarkup = this.getTryAgainMarkup()
@@ -114,7 +113,7 @@ export class Media extends Component<Props> {
     src,
     maxHeight,
     maxWidth,
-  }: { src?: string, maxHeight?: number, maxWidth?: number } = {}): ?Node => {
+  }: { src?: string; maxHeight?: number; maxWidth?: number } = {}) => {
     const {
       height,
       onMediaClick,
@@ -148,7 +147,7 @@ export class Media extends Component<Props> {
     )
   }
 
-  getTryAgainMarkup = (): ?Node => {
+  getTryAgainMarkup = () => {
     const { error, showErrorTryAgainLink, tryAgainLabel } = this.props
 
     if (!error || !showErrorTryAgainLink) return null
@@ -255,16 +254,22 @@ export class Media extends Component<Props> {
             className={classNames(
               'c-MessageMedia__modal',
               modalClassName,
+              // TODO: fix typescript complains
+              // @ts-ignore
               bem.element('modal')
             )}
             cardClassName={classNames(
               'c-MessageMedia__modalCard',
               modalCardClassName,
+              // TODO: fix typescript complains
+              // @ts-ignore
               bem.element('modalCard')
             )}
             wrapperClassName={classNames(
               'c-MessageMedia__modalWrapper',
               modalWrapperClassName,
+              // TODO: fix typescript complains
+              // @ts-ignore
               bem.element('modalWrapper')
             )}
           >

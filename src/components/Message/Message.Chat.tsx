@@ -1,9 +1,8 @@
-// @flow
-import type { MessageBubble } from './types'
-import React, { PureComponent as Component } from 'react'
-import Bubble from './Bubble'
-import Caption from './Caption'
-import ChatBlock from './ChatBlock'
+import * as React from 'react'
+import { MessageBubble } from './Message.types'
+import Bubble from './Message.Bubble'
+import Caption from './Message.Caption'
+import ChatBlock from './Message.ChatBlock'
 import Flexy from '../Flexy'
 import Spinner from '../Spinner'
 import styled from '../styled'
@@ -11,19 +10,19 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Chat.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageBubble & {
-  bubbleClassName?: string,
-  captionSize?: string,
-  caption?: ?string,
-  errorMessage?: string,
-  error?: boolean | string,
-  isLoading?: boolean,
-  onBubbleClick: (event: Event) => void,
+  bubbleClassName?: string
+  captionSize?: string
+  caption?: string
+  errorMessage?: string
+  error?: boolean | string
+  isLoading?: boolean
+  onBubbleClick: (event: Event) => void
 }
 
-export class Chat extends Component<Props> {
+export class Chat extends React.PureComponent<Props> {
   static defaultProps = {
     onBubbleClick: noop,
     error: false,

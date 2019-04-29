@@ -1,6 +1,5 @@
-// @flow
-import type { MessageBubble, MessageThemeContext } from './types'
-import React from 'react'
+import * as React from 'react'
+import { MessageBubble, MessageThemeContext } from './Message.types'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
 import Heading from '../Heading'
@@ -24,7 +23,7 @@ import css, {
   TitleCSS,
   TypingCSS,
 } from './styles/Bubble.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageBubble
 type Context = MessageThemeContext

@@ -1,27 +1,26 @@
-// @flow
-import type { MessageBubble, MessageThemeContext } from './types'
-import React from 'react'
+import * as React from 'react'
+import { MessageBubble, MessageThemeContext } from './Message.types'
 import Link from '../Link'
 import Text from '../Text'
-import Chat from './Chat'
+import Chat from './Message.Chat'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { providerContextTypes } from './propTypes'
 import css, { TextCSS } from './styles/Attachment.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageBubble & {
-  errorMessage?: string,
-  error?: boolean | string,
-  filename?: string,
-  download?: boolean | string,
-  isUploading?: boolean,
-  onClick?: (event?: Event) => void,
-  openDownloadInNewTab?: boolean,
-  uploadingMessage?: string,
-  url?: string,
+  errorMessage?: string
+  error?: boolean | string
+  filename?: string
+  download?: boolean | string
+  isUploading?: boolean
+  onClick?: (event?: Event) => void
+  openDownloadInNewTab?: boolean
+  uploadingMessage?: string
+  url?: string
 }
 type Context = MessageThemeContext
 

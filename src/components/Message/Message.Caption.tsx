@@ -1,17 +1,16 @@
-// @flow
-import type { MessageThemeContext } from './types'
-import React from 'react'
-import Text from '../Text'
+import * as React from 'react'
+import { MessageThemeContext } from './Message.types'
+import Text from '../Text/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { providerContextTypes } from './propTypes'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = {
-  className?: string,
-  children?: any,
-  size?: string,
-  wordWrap: boolean,
+  className?: string
+  children?: any
+  size?: string
+  wordWrap: boolean
 }
 
 type Context = MessageThemeContext

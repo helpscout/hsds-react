@@ -1,7 +1,6 @@
-// @flow
 import Message from './Message'
 import { propConnect } from '../PropProvider'
-export { default as Provider } from './Provider'
+export { default as Provider } from './Message.Provider'
 
 Message.Action = propConnect('MessageAction')(Message.Action)
 Message.Attachment = propConnect('MessageAttachment')(Message.Attachment)

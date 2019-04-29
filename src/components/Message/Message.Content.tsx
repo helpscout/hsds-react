@@ -1,14 +1,13 @@
-// @flow
-import type { MessageChat } from './types'
-import React from 'react'
+import * as React from 'react'
+import { MessageChat } from './Message.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ChatBlock from './ChatBlock'
+import ChatBlock from './Message.ChatBlock'
 import styled from '../styled'
 import PreviewCardContext from '../PreviewCard/Context'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Content.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageChat
 

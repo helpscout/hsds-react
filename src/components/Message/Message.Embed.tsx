@@ -1,26 +1,25 @@
-// @flow
-import type { MessageChat, MessageThemeContext } from './types'
-import React, { Component } from 'react'
+import * as React from 'react'
+import { MessageChat, MessageThemeContext } from './Message.types'
 import styled from '../styled'
-import Chat from './Chat'
+import Chat from './Message.Chat'
 import LoadingDots from '../LoadingDots'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Embed.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageChat & {
-  className?: string,
-  html?: string,
+  className?: string
+  html?: string
 }
 
 type State = {
-  isLoading: boolean,
+  isLoading: boolean
 }
 
 type Context = MessageThemeContext
 
-class Embed extends Component<Props, State> {
+class Embed extends React.Component<Props, State> {
   static displayName = 'Message.Embed'
 
   state = {
@@ -76,6 +75,8 @@ class Embed extends Component<Props, State> {
         className={componentClassName}
       >
         <div
+          // TODO: fix typescript complains
+          // @ts-ignore
           dangerouslySetInnerHTML={{ __html: html }}
           className="c-MessageEmbed__html"
           ref={this.setNodeRef}

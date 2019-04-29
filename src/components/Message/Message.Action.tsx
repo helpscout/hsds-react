@@ -1,19 +1,18 @@
-// @flow
-import type { MessageChat, MessageThemeContext } from './types'
-import React from 'react'
+import * as React from 'react'
+import { MessageChat, MessageThemeContext } from './Message.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
-import ChatBlock from './ChatBlock'
+import ChatBlock from './Message.ChatBlock'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { providerContextTypes } from './propTypes'
 import css from './styles/Action.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageChat & {
-  className?: string,
-  icon?: string,
+  className?: string
+  icon?: string
 }
 type Context = MessageThemeContext
 

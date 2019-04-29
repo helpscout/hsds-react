@@ -1,10 +1,11 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import ThemeProvider from '../ThemeProvider'
 import { namespaceComponent } from '../../utilities/component'
 import { providerContextTypes } from './propTypes'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
+// TODO: fix typescript complains
+// @ts-ignore
 class Provider extends ThemeProvider {
   static propTypes = providerContextTypes
   static defaultProps = {

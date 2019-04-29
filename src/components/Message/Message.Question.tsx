@@ -1,12 +1,11 @@
-// @flow
-import React from 'react'
-import Chat from './Chat'
+import * as React from 'react'
+import Chat from './Message.Chat'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = {
-  primary?: boolean,
-  title?: string,
+  primary?: boolean
+  title?: string
 }
 
 const Question = (props: Props) => {

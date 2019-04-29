@@ -1,26 +1,25 @@
-// @flow
-import type { MessageChat } from './types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { MessageChat } from './Message.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
-import Action from './Action'
-import Bubble from './Bubble'
+import Action from './Message.Action'
+import Bubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { providerContextTypes } from './propTypes'
 import css from './styles/ChatBlock.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageChat & {
-  body?: string,
-  children?: any,
-  icon?: string,
-  meta?: any,
+  body?: string
+  children?: any
+  icon?: string
+  meta?: any
 }
 
-export class ChatBlock extends Component<Props> {
+export class ChatBlock extends React.PureComponent<Props> {
   static contextTypes = providerContextTypes
   static displayName = 'Message.ChatBlock'
 

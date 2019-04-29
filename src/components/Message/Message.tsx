@@ -1,21 +1,19 @@
-// @flow
-import type { Node } from 'react'
-import type { Message as MessageType } from './types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { Message as MessageType } from './Message.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Flexy from '../Flexy'
-import Text from '../Text'
-import Action from './Action'
-import Attachment from './Attachment'
-import Bubble from './Bubble'
-import Caption from './Caption'
-import Chat from './Chat'
-import Content from './Content'
-import Embed from './Embed'
-import Media from './Media'
-import Provider from './Provider'
-import Question from './Question'
-import styled from '../styled'
+import Flexy from '../Flexy/index'
+import Text from '../Text/index'
+import Action from './Message.Action'
+import Attachment from './Message.Attachment'
+import Bubble from './Message.Bubble'
+import Caption from './Message.Caption'
+import Chat from './Message.Chat'
+import Content from './Message.Content'
+import Embed from './Message.Embed'
+import Media from './Message.Media'
+import Provider from './Message.Provider'
+import Question from './Message.Question'
+import styled from '../styled/index'
 import { classNames } from '../../utilities/classNames'
 import {
   isComponentTypeChat,
@@ -23,15 +21,15 @@ import {
 } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { providerContextTypes } from './propTypes'
-import css from './styles/Message.css.js'
-import { COMPONENT_KEY } from './utils'
+import css from './styles/Message.css'
+import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageType & {
-  avatar?: any,
-  showAvatar?: boolean,
+  avatar?: any
+  showAvatar?: boolean
 }
 
-export class Message extends Component<Props> {
+export class Message extends React.PureComponent<Props> {
   static defaultProps = {
     showAvatar: true,
   }
@@ -78,7 +76,7 @@ export class Message extends Component<Props> {
     )
   }
 
-  getChildrenMarkup = (): ?Node => {
+  getChildrenMarkup = () => {
     const { children, from, ltr, rtl, to } = this.props
 
     return React.Children.map(children, child => {
@@ -93,7 +91,7 @@ export class Message extends Component<Props> {
     })
   }
 
-  getFromMarkup = (): ?Node => {
+  getFromMarkup = () => {
     const { from } = this.props
     const fromName = isString(from) ? from : null
 
