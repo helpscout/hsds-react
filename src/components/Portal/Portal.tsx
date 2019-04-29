@@ -7,19 +7,7 @@ import PropProvider from '../PropProvider/PropProvider'
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
 import { isObject, isString } from '../../utilities/is'
-
-export interface PortalProps {
-  className: string
-  exact: boolean
-  id: string
-  renderTo: string | object
-  onBeforeOpen: () => void
-  onOpen: () => void
-  onBeforeClose: () => void
-  onClose: () => void
-  path: string
-  timeout: number
-}
+import { PortalProps } from './Portal.types'
 
 export class Portal extends React.Component<PortalProps> {
   static defaultProps = {

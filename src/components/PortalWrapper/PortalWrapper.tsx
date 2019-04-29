@@ -1,11 +1,12 @@
-import React from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 import getComponentDefaultProp from '@helpscout/react-utils/dist/getComponentDefaultProp'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
-import Animate from '../Animate'
-import KeypressListener from '../KeypressListener'
-import Portal, { propTypes } from '../Portal/Portal'
+import Animate from '../Animate/index'
+import KeypressListener from '../KeypressListener/index'
+import Portal from '../Portal'
+import { PortalProps } from '../Portal/Portal.types'
 import Keys from '../../constants/Keys'
 import {
   createUniqueIDFactory,
@@ -17,6 +18,20 @@ import { isFunction } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 import Content from './Content'
+
+interface PortalWrapperProps extends PortalProps {
+  isOpen: boolean
+  trigger: any
+  isOpenProps: boolean
+  wrapperClassName: string
+}
+
+interface PortalWrapperState {
+  isOpen: boolean
+  id: string
+  timeout: number
+  wrapperClassName: string
+}
 
 const defaultOptions = {
   id: 'PortalWrapper',
@@ -35,8 +50,10 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
   const uniqueID = createUniqueIDFactory(extendedOptions.id)
 
-  class PortalWrapper extends React.PureComponent {
-    static propTypes = propTypes
+  class PortalWrapper extends React.PureComponent<
+    PortalWrapperProps,
+    PortalWrapperState
+  > {
     static defaultProps = {
       isOpen: false,
     }
@@ -131,7 +148,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       this.triggerNode = null
     }
 
-    safeSetState(state, callback) {
+    safeSetState(state, callback?) {
       /* istanbul ignore else */
       if (this._isMounted) {
         this.setState(state, callback)
@@ -141,6 +158,8 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     setTriggerNode() {
       /* istanbul ignore else */
       if (this.triggerComponent) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         this.triggerNode = ReactDOM.findDOMNode(this.triggerComponent)
       }
     }
@@ -148,6 +167,8 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     refocusTriggerNode() {
       /* istanbul ignore else */
       if (this.triggerNode) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         this.triggerNode.focus()
       }
     }
@@ -204,7 +225,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    handleOnClose = onClose => {
+    handleOnClose = (onClose?) => {
       const { onBeforeClose } = this.props
 
       if (isFunction(onClose)) {
@@ -271,7 +292,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const handleOnClose = this.handleOnClose
 
       const uniqueIndex = getUniqueIndex(id, options.id)
-      const zIndex = options.zIndex ? options.zIndex + uniqueIndex : null
+
+      const zIndex =
+        // TODO: fix typescript complains
+        // @ts-ignore
+        options.zIndex != null ? options.zIndex + uniqueIndex : null
 
       return (
         <Animate
