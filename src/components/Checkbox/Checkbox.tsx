@@ -1,15 +1,15 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import Choice from '../Choice'
+import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Checkbox.utils'
 
 type Props = {
-  className?: string,
+  className?: string
 }
 
-class Checkbox extends Component<Props> {
+class Checkbox extends React.PureComponent<Props> {
   render() {
     const { className, ...rest } = this.props
 
@@ -28,4 +28,4 @@ class Checkbox extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(Checkbox)
 
-export default Checkbox
+export default propConnect('Checkbox')(Checkbox)
