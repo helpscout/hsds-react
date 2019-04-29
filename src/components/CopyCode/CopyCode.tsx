@@ -1,26 +1,26 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Highlight from '../Highlight'
+import Highlight from '../Highlight/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
-import { COMPONENT_KEY } from './utils'
-import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css.js'
+import { COMPONENT_KEY } from './CopyCode.utils'
+import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css'
 import Keys from '../../constants/Keys'
 
 type Props = {
-  autoFocus: boolean,
-  className?: string,
-  code: string,
-  copyToClipboard: boolean,
-  innerRef: (node: HTMLElement) => void,
-  language?: string,
-  onCopy: (code: string) => void,
+  autoFocus: boolean
+  className?: string
+  code: string
+  copyToClipboard: boolean
+  innerRef: (node: HTMLElement) => void
+  language?: string
+  onCopy: (code: string) => void
 }
 
-class CopyCode extends Component<Props> {
+class CopyCode extends React.PureComponent<Props> {
   static defaultProps = {
     autoFocus: true,
     code: '',
@@ -37,7 +37,7 @@ class CopyCode extends Component<Props> {
     }
   }
 
-  handleOnKeyDown = (event: SyntheticKeyboardEvent<HTMLElement>) => {
+  handleOnKeyDown = (event: KeyboardEvent) => {
     if (event.ctrlKey || event.metaKey) {
       return true
     }
@@ -70,9 +70,7 @@ class CopyCode extends Component<Props> {
     this.codeNode && selectText(this.codeNode)
   }
 
-  preventEventDefault = (
-    event: SyntheticKeyboardEvent<HTMLElement> | Event
-  ) => {
+  preventEventDefault = (event: KeyboardEvent | Event) => {
     event && event.preventDefault()
     return false
   }
@@ -127,4 +125,4 @@ class CopyCode extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(CopyCode)
 
-export default CopyCode
+export default propConnect(COMPONENT_KEY)(CopyCode)
