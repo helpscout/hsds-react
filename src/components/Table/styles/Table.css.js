@@ -9,8 +9,9 @@ export const TableWrapperUI = styled('div')`
 `
 
 export const TableUI = styled('table')`
-  ${baseStyles} ${props =>
-    generateTableWidthStyles(props.tableWidth)} border-spacing: 0;
+  ${baseStyles};
+  ${props => generateTableWidthStyles(props.tableWidth)};
+  border-spacing: 0;
   table-layout: fixed;
   line-height: 16px;
 
@@ -30,7 +31,7 @@ export const TableUI = styled('table')`
 
   td {
     padding: 5px 14px;
-    height: 48px;
+    height: 62px;
     color: ${props => props.theme.fontColorBody};
   }
 
@@ -50,7 +51,7 @@ export const TableUI = styled('table')`
 
   /* Border radius */
   thead tr th:first-child {
-    border-top-left-radius: 3px;
+    border-top-left-radius: 4px;
   }
 
   tbody tr:first-child td:first-child {
@@ -61,7 +62,7 @@ export const TableUI = styled('table')`
         : '0'};
   }
   thead tr th:last-child {
-    border-top-right-radius: 3px;
+    border-top-right-radius: 4px;
   }
 
   tbody tr:first-child td:last-child {
@@ -77,7 +78,7 @@ export const TableUI = styled('table')`
   }
 
   tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 4px;
   }
 
   thead tr th:last-child {
@@ -85,7 +86,7 @@ export const TableUI = styled('table')`
   }
 
   tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 4px;
   }
 
   /* Borders: table body */
