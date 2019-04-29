@@ -1,14 +1,14 @@
-// @flow
-import type { ChoiceAlign, ChoiceType, ChoiceValue } from './types'
-import type { UIState } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { ChoiceAlign, ChoiceType, ChoiceValue } from './Choice.types'
+import { UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Input from './Input'
+import Input from './Choice.Input'
 import Flexy from '../Flexy'
 import HelpText from '../HelpText'
 import Text from '../Text'
 import VisuallyHidden from '../VisuallyHidden'
-import ChoiceGroupContext from '../ChoiceGroup/Context'
+import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { includes } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -20,42 +20,42 @@ import {
   ChoiceLabelTextUI,
   ChoiceHelpTextUI,
 } from './styles/Choice.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Choice.utils'
 
 type Props = {
-  align: ChoiceAlign,
-  autoFocus: boolean,
-  children?: any,
-  checked: boolean,
-  className?: string,
-  componentID: string,
-  disabled: boolean,
-  helpText?: string,
-  hideLabel: boolean,
-  id?: string,
-  inputRef: (node: HTMLElement) => void,
-  innerRef: (node: HTMLElement) => void,
-  kind?: string,
-  label?: string,
-  onBlur: (event: Event) => void,
-  onChange: (event: Event, checked: boolean) => void,
-  onFocus: (event: Event) => void,
-  name?: string,
-  readOnly: boolean,
-  stacked: boolean,
-  state?: UIState,
-  type: ChoiceType,
-  value: ChoiceValue,
+  align: ChoiceAlign
+  autoFocus: boolean
+  children?: any
+  checked: boolean
+  className?: string
+  componentID: string
+  disabled: boolean
+  helpText?: string
+  hideLabel: boolean
+  id?: string
+  inputRef: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
+  kind?: string
+  label?: string
+  onBlur: (event: Event) => void
+  onChange: (event: Event, checked: boolean) => void
+  onFocus: (event: Event) => void
+  name?: string
+  readOnly: boolean
+  stacked: boolean
+  state?: UIState
+  type: ChoiceType
+  value: ChoiceValue
 }
 
 type State = {
-  checked: boolean,
-  id: string,
+  checked: boolean
+  id: string
 }
 
 const uniqueID = createUniqueIDFactory('Choice')
 
-class Choice extends Component<Props, State> {
+class Choice extends React.PureComponent<Props, State> {
   static defaultProps = {
     autoFocus: false,
     checked: false,
@@ -73,7 +73,7 @@ class Choice extends Component<Props, State> {
   }
 
   constructor(props: Props) {
-    super()
+    super(props)
 
     this.state = {
       checked: props.checked,
@@ -90,6 +90,8 @@ class Choice extends Component<Props, State> {
 
   handleOnChange = (value: ChoiceValue, checked: boolean) => {
     this.setState({ checked })
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.props.onChange(value, checked)
   }
 
@@ -104,7 +106,11 @@ class Choice extends Component<Props, State> {
   handleOnBlurWithContext = (contextProps: Object) => {
     return (...args) => {
       this.handleOnBlur.apply(null, args)
+      // TODO: fix typescript complains
+      // @ts-ignore
       if (contextProps.onBlur) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         contextProps.onBlur.apply(null, args)
       }
     }
@@ -112,7 +118,11 @@ class Choice extends Component<Props, State> {
 
   handleOnChangeWithContext = (contextProps: Object) => {
     return (...args) => {
+      // TODO: fix typescript complains
+      // @ts-ignore
       if (contextProps.onChange) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         contextProps.onChange.apply(null, args)
         this.props.onChange.apply(null, args)
       } else {
@@ -124,7 +134,11 @@ class Choice extends Component<Props, State> {
   handleOnFocusWithContext = (contextProps: Object) => {
     return (...args) => {
       this.handleOnFocus.apply(null, args)
+      // TODO: fix typescript complains
+      // @ts-ignore
       if (contextProps.onFocus) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         contextProps.onFocus.apply(null, args)
       }
     }
@@ -201,7 +215,11 @@ class Choice extends Component<Props, State> {
     const { checked, id: choiceID } = this.state
 
     const isChecked =
+      // TODO: fix typescript complains
+      // @ts-ignore
       (contextProps.selectedValue &&
+        // TODO: fix typescript complains
+        // @ts-ignore
         includes(contextProps.selectedValue, value)) ||
       checked ||
       false
@@ -217,6 +235,8 @@ class Choice extends Component<Props, State> {
       inputRef,
       innerRef,
       kind,
+      // TODO: fix typescript complains
+      // @ts-ignore
       name: contextProps.name || name,
       onBlur: this.handleOnBlurWithContext(contextProps),
       onFocus: this.handleOnFocusWithContext(contextProps),
@@ -315,4 +335,4 @@ class Choice extends Component<Props, State> {
 
 namespaceComponent(COMPONENT_KEY)(Choice)
 
-export default Choice
+export default propConnect(COMPONENT_KEY)(Choice)

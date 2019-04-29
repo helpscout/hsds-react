@@ -1,7 +1,6 @@
-// @flow
-import type { ChoiceAlign, ChoiceType, ChoiceValue } from './types'
-import type { UIState } from '../../constants/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { ChoiceAlign, ChoiceType, ChoiceValue } from './Choice.types'
+import { UIState } from '../../constants/types'
 import Backdrop from '../Input/BackdropV2'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
@@ -12,40 +11,35 @@ import {
   InputIconUI,
   InputPlaceholderUI,
   InputRadioUI,
-} from './styles/Input.css.js'
+} from './styles/Input.css'
 
 type Props = {
-  autoFocus: boolean,
-  align: ChoiceAlign,
-  autoFocus: boolean,
-  children?: any,
-  checked: boolean,
-  className?: string,
-  disabled: boolean,
-  helpText?: string,
-  id?: string,
-  inputRef: (node: HTMLElement) => void,
-  innerRef: (node: HTMLElement) => void,
-  kind?: string,
-  onBlur: (event: Event) => void,
-  onChange: (
-    event: SyntheticEvent<HTMLInputElement>,
-    checked: boolean,
-    id?: string
-  ) => void,
-  onFocus: (event: Event) => void,
-  name?: string,
-  readOnly: boolean,
-  state?: UIState,
-  type: ChoiceType,
-  value: ChoiceValue,
+  autoFocus: boolean
+  align: ChoiceAlign
+  children?: any
+  checked: boolean
+  className?: string
+  disabled: boolean
+  helpText?: string
+  id?: string
+  inputRef: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
+  kind?: string
+  onBlur: (event: Event) => void
+  onChange: (event: Event, checked: boolean, id?: string) => void
+  onFocus: (event: Event) => void
+  name?: string
+  readOnly: boolean
+  state?: UIState
+  type: ChoiceType
+  value: ChoiceValue
 }
 
 type State = {
-  isFocused: boolean,
+  isFocused: boolean
 }
 
-class Input extends Component<Props, State> {
+class Input extends React.PureComponent<Props, State> {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
@@ -70,9 +64,11 @@ class Input extends Component<Props, State> {
     this.props.onBlur(event)
   }
 
-  handleOnChange = (event: SyntheticEvent<HTMLInputElement>) => {
+  handleOnChange = (event: Event) => {
     const { id, onChange, value } = this.props
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     onChange(value, event.target.checked, id)
     // Prevents duplicate firing of onChange event
     event.stopPropagation()
