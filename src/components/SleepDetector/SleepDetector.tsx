@@ -1,11 +1,25 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import { noop } from '../../utilities/other'
 
-class SleepDetector extends Component {
-  constructor() {
-    super()
-    this.state = {}
+export interface SleepDetectorProps {
+  buffer: number
+  interval: number
+  onWake: (fn?) => void
+}
+
+export interface SleepDetectorState {
+  lastRun: number
+  intervalId: number
+}
+
+class SleepDetector extends React.Component<
+  SleepDetectorProps,
+  SleepDetectorState
+> {
+  static defaultProps = {
+    buffer: 5000,
+    interval: 10000,
+    onWake: noop,
   }
 
   componentWillMount() {
@@ -24,6 +38,8 @@ class SleepDetector extends Component {
     }, interval)
 
     const lastRun = Date.now()
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.setState({ intervalId, lastRun })
   }
 
@@ -39,18 +55,6 @@ class SleepDetector extends Component {
   render() {
     return null
   }
-}
-
-SleepDetector.propTypes = {
-  buffer: PropTypes.number,
-  interval: PropTypes.number,
-  onWake: PropTypes.func.isRequired,
-}
-
-SleepDetector.defaultProps = {
-  buffer: 5000,
-  interval: 10000,
-  onWake: noop,
 }
 
 export default SleepDetector
