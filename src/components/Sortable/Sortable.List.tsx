@@ -1,12 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import { SortableContainer } from 'react-sortable-hoc'
 import { classNames } from '../../utilities/classNames'
-import { listTypes } from './propTypes'
-
-export const propTypes = Object.assign({}, listTypes, {
-  items: PropTypes.array,
-})
 
 const List = SortableContainer(props => {
   const {
@@ -39,7 +33,5 @@ const List = SortableContainer(props => {
     </div>
   )
 })
-
-List.propTypes = propTypes
 
 export default List

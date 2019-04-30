@@ -1,13 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import { SortableHandle } from 'react-sortable-hoc'
-import Icon from '../Icon'
+import Icon from '../Icon/index'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-
-export const propTypes = {
-  onDragStart: PropTypes.func,
-}
 
 const defaultProps = {
   onDragStart: noop,
@@ -25,7 +20,6 @@ const DragHandle = SortableHandle(props => {
   )
 })
 
-DragHandle.propTypes = propTypes
 DragHandle.defaultProps = defaultProps
 
 export default DragHandle

@@ -1,28 +1,27 @@
 import React, { PureComponent as Component } from 'react'
 import { arrayMove } from 'react-sortable-hoc'
 import { classNames } from '../../utilities/classNames'
-import DragHandle from './DragHandle'
-import Item from './Item'
-import List from './List'
-import { listTypes } from './propTypes'
+import DragHandle from './Sortable.DragHandle'
+import Item from './Sortable.Item'
+import List from './Sortable.List'
+import { SortableProps } from './Sortable.types'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 
-export const propTypes = listTypes
+class Sortable extends Component<SortableProps> {
+  constructor(props) {
+    super(props)
 
-const defaultProps = {
-  onSortStart: noop,
-  onSortMove: noop,
-  onSortEnd: noop,
-}
-
-class Sortable extends Component {
-  constructor() {
-    super()
     this.state = {
       items: [],
     }
     this.onSortEnd = this.onSortEnd.bind(this)
+  }
+
+  static defaultProps = {
+    onSortStart: noop,
+    onSortMove: noop,
+    onSortEnd: noop,
   }
 
   componentWillMount() {
@@ -43,12 +42,18 @@ class Sortable extends Component {
 
     const items = React.Children.map(children, (child, index) => {
       const sortableElement = includes(
+        // TODO: fix typescript complains
+        // @ts-ignore
         child.type.displayName,
         'sortableElement'
       )
+      // TODO: fix typescript complains
+      // @ts-ignore
       const key = child.props.id ? child.props.id : `item-${index}`
 
       if (sortableElement) {
+        // TODO: fix typescript complains
+        // @ts-ignore
         return React.cloneElement(child, {
           index,
           key,
@@ -56,10 +61,14 @@ class Sortable extends Component {
       }
 
       const childProps =
+        // TODO: fix typescript complains
+        // @ts-ignore
         child.props.sortable !== undefined ? { sortable: true } : {}
       return (
         <Item key={key} index={index}>
-          {React.cloneElement(child, childProps)}
+          {// TODO: fix typescript complains
+          // @ts-ignore
+          React.cloneElement(child, childProps)}
         </Item>
       )
     })
@@ -72,6 +81,8 @@ class Sortable extends Component {
   onSortEnd({ oldIndex, newIndex, collection }, event) {
     /* istanbul ignore next */
     this.setState({
+      // TODO: fix typescript complains
+      // @ts-ignore
       items: arrayMove(this.state.items, oldIndex, newIndex),
     })
     /* istanbul ignore next */
@@ -89,6 +100,8 @@ class Sortable extends Component {
       onSortEnd,
       ...rest
     } = this.props
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { items } = this.state
 
     const componentClassName = classNames('c-Sortable', className)
@@ -109,10 +122,14 @@ class Sortable extends Component {
   }
 }
 
-Sortable.propTypes = propTypes
-Sortable.defaultProps = defaultProps
+// TODO: fix typescript complains
+// @ts-ignore
 Sortable.DragHandle = DragHandle
+// TODO: fix typescript complains
+// @ts-ignore
 Sortable.Item = Item
+// TODO: fix typescript complains
+// @ts-ignore
 Sortable.List = List
 
 export default Sortable

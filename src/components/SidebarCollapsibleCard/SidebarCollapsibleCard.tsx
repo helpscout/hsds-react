@@ -7,7 +7,7 @@ import Collapsible from '../Collapsible'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
 import Icon from '../Icon'
-import SortableDragHandle from '../Sortable/DragHandle'
+import SortableDragHandle from '../Sortable/Sortable.DragHandle'
 import {
   SidebarCollapsibleCardProps,
   SidebarCollapsibleCardState,
