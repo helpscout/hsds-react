@@ -2,7 +2,6 @@
  * Removes style tags from the <head> and resets styled StyleSheets.
  */
 export const resetStyles = () => {
-  // $FlowFixMe
   document.head.innerHTML = ''
 }
 
@@ -22,6 +21,5 @@ export const getCSS = (el: HTMLElement) => el && window.getComputedStyle(el)
  * @returns {string}
  */
 export const getCSSProp = (el: HTMLElement, prop?: string) => {
-  // $FlowFixMe
   return prop ? getCSS(el)[prop] : ''
 }

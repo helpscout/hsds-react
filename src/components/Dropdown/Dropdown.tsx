@@ -120,7 +120,6 @@ export class Dropdown extends React.PureComponent<
     this.props.onClose()
 
     if (this.props.enableTabNavigation && this.triggerNode) {
-      // $FlowFixMe
       this.triggerNode.focus()
       this.isFocused = true
     } else {

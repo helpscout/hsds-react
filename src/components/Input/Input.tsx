@@ -207,7 +207,6 @@ export class Input extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
-    // $FlowFixMe
     this.inputNode = null
     this.props.withTypingEvent && this.clearTypingTimeout()
   }

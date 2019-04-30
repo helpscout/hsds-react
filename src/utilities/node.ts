@@ -173,9 +173,8 @@ export const isNodeVisible = (options: {
 
   const viewportHeight = isWindow
     ? window.innerHeight
-    : // $FlowFixMe
-      nodeScope.getBoundingClientRect().height
-  // $FlowFixMe
+    : nodeScope.getBoundingClientRect().height
+
   const viewportTop = isWindow ? window.scrollY : nodeScope.scrollTop
   const viewportBottom = isWindow
     ? window.innerHeight
@@ -246,9 +245,9 @@ export const getClosestNode = (node: Node, selector: string): Node => {
  */
 export const scrollIntoView = (node: Node) => {
   if (!isNodeElement(node)) return
-  // $FlowFixMe
+
   if (node['scrollIntoViewIfNeeded']) return node.scrollIntoViewIfNeeded()
   /* istanbul ignore else */
-  // $FlowFixMe
+
   if (node['scrollIntoView']) return node.scrollIntoView()
 }

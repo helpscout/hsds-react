@@ -49,7 +49,6 @@ export const moveCursorToEnd = (input: InputNode) => {
     // @ts-ignore
   } else if (typeof input.createTextRange !== 'undefined') {
     input.focus()
-    // $FlowFixMe
     // TODO: fix typescript complains
     // @ts-ignore
     let range = input.createTextRange()

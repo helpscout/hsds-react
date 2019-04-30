@@ -72,7 +72,7 @@ export class Overflow extends React.PureComponent<Props, State> {
 
   setNodes = () => {
     if (this.node || !this._isMounted) return
-    // $FlowFixMe
+
     this.node = ReactDOM.findDOMNode(this)
   }
 

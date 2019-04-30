@@ -73,7 +73,6 @@ export function enhanceStyleWithSize(props: Props): Object {
 
   if (!allPropsDefined(imageProps)) return style
 
-  // $FlowFixMe
   const aspect = calculateAspectRatioFit(imageProps)
 
   return {

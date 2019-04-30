@@ -118,7 +118,6 @@ class Button extends React.PureComponent<Props> {
     return React.Children.map(children, (child, index) => {
       if (!isComponentNamed(child, ICON_KEY)) return child
 
-      // $FlowFixMe
       const len = React.Children.count(children)
       const isFirst = index === 0
       const isLast = index === len - 1
