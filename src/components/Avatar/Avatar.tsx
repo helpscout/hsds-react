@@ -117,6 +117,8 @@ export class Avatar extends React.PureComponent<Props, State> {
 
     return (
       <AvatarCrop
+        animationDuration={animationDuration}
+        animationEasing={animationEasing}
         className={shapeClassnames}
         hasImage={hasImage}
         isImageLoaded={isImageLoaded}
