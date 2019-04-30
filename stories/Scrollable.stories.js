@@ -6,7 +6,7 @@ import { withArtboard } from '@helpscout/artboard'
 import { createSpec, faker } from '@helpscout/helix'
 import { Card, Image, Scrollable } from '../src/index.js'
 import styled from '../src/components/styled'
-import baseStyles from '../src/styles/resets/baseStyles.css.js'
+import baseStyles from '../src/styles/resets/baseStyles.css'
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),

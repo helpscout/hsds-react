@@ -1,6 +1,5 @@
-// @flow
 import { FONT_SIZE } from '../configs/constants'
-import fontFamilyStyles from './fontFamily.css.js'
+import fontFamilyStyles from './fontFamily.css'
 
 const css = `
   ${fontFamilyStyles}

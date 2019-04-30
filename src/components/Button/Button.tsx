@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { namespaceComponent } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import RouteWrapper from '../RouteWrapper/index'
+import RouteWrapper from '../RouteWrapper'
 import { COMPONENT_KEY } from './Button.utils'
 
 type ButtonSelector = 'a' | 'button' | 'input'

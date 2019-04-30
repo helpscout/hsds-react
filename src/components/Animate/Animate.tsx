@@ -6,7 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
-import { AnimateUI } from './styles/Animate.css.js'
+import { AnimateUI } from './styles/Animate.css'
 import { COMPONENT_KEY } from './utils'
 
 export interface Props {

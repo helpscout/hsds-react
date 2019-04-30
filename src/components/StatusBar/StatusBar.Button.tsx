@@ -1,11 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Icon from '../Icon/index'
+import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-
-export const propTypes = {
-  icon: PropTypes.string,
-}
 
 const Button = props => {
   const { children, className, icon, ...rest } = props
@@ -24,7 +19,6 @@ const Button = props => {
   )
 }
 
-Button.propTypes = propTypes
 Button.displayName = 'StatusBarButton'
 
 export default Button

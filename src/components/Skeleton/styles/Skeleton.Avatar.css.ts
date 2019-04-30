@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from '../../styled'
 import Block from '../Skeleton.Block'
 import { config as avatarConfig } from '../../Avatar/Avatar.css'
 import forEach from '../../../styles/utilities/forEach'

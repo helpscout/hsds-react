@@ -2,7 +2,7 @@ import styled from '../../styled'
 import { BEM } from '../../../utilities/classNames'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 
-const bem = BEM('.c-ModalBody')
+const bem: any = BEM('.c-ModalBody')
 
 export const BodyUI = styled('div')`
   ${baseStyles} display: flex;

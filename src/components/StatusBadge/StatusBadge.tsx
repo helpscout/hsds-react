@@ -1,7 +1,7 @@
 import * as React from 'react'
-import Animate from '../Animate/index'
-import Badge from '../Badge/index'
-import StatusDot from '../StatusDot/index'
+import Animate from '../Animate'
+import Badge from '../Badge'
+import StatusDot from '../StatusDot'
 import { classNames } from '../../utilities/classNames'
 
 const defaultProps = {

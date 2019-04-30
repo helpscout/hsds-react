@@ -9,7 +9,7 @@ import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Chat.css.js'
+import css from './styles/Chat.css'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageBubble & {

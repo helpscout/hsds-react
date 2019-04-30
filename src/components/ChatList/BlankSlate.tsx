@@ -6,11 +6,7 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './ChatList.utils'
-import {
-  BlankSlateUI,
-  IlloWrapperUI,
-  ContentUI,
-} from './styles/BlankSlate.css.js'
+import { BlankSlateUI, IlloWrapperUI, ContentUI } from './styles/BlankSlate.css'
 
 type Props = {
   className?: string

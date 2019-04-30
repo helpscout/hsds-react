@@ -1,4 +1,4 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import Grid from './Grid'
 import { COMPONENT_KEY } from './Grid.utils'
 

@@ -1,14 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { SortableElement } from 'react-sortable-hoc'
-import DragHandle from './DragHandle'
+import DragHandle from './Sortable.DragHandle'
 import { classNames } from '../../utilities/classNames'
 
-export const propTypes = {
-  classNames: PropTypes.string,
-  hideDragHandles: PropTypes.bool,
-  useDragHandle: PropTypes.bool,
-}
+// export interface SortableItemProps {
+//   classNames: string,
+//   hideDragHandles: boolean,
+//   useDragHandle: boolean,
+// }
 
 const Item = SortableElement(props => {
   const {
@@ -32,7 +31,5 @@ const Item = SortableElement(props => {
     </div>
   )
 })
-
-Item.propTypes = propTypes
 
 export default Item

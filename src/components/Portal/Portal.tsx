@@ -1,6 +1,5 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import contextConnect from '../PropProvider/contextConnect'
 import PropProvider from '../PropProvider/PropProvider'

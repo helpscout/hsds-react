@@ -1,5 +1,4 @@
-// @flow
-import fontFamilyStyles from './fontFamily.css.js'
+import fontFamilyStyles from './fontFamily.css'
 
 const css = `
   box-sizing: border-box;

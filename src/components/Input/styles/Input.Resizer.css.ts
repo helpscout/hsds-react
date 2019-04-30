@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 
 export const ResizerUI = styled('div')`

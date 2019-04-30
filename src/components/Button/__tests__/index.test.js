@@ -1,9 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Button from '../index'
+import Button from '../ButtonWrapped'
 import PropProvider from '../../PropProvider'
 
-describe('Button/Index', () => {
+describe('Button', () => {
   test('Renders Button V1 by default', () => {
     const wrapper = mount(<Button />)
     const o = wrapper.find('Button').last()

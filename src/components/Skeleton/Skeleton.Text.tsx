@@ -7,6 +7,7 @@ import { TextUI } from './styles/Skeleton.Text.css'
 class Text extends React.PureComponent {
   static defaultProps = {
     heading: false,
+    withAnimations: false,
     style: {},
     width: '70%',
   }

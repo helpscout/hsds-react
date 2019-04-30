@@ -1,4 +1,4 @@
-import baseStyles from '../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../styles/resets/baseStyles.css'
 import { getColor, getThemeBrandProp } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
 import variableFontSize from '../../styles/utilities/variableFontSize'

@@ -6,7 +6,7 @@ import styled from '../styled'
 import PreviewCardContext from '../PreviewCard/PreviewCard.Context'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Content.css.js'
+import css from './styles/Content.css'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageChat

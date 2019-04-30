@@ -11,7 +11,7 @@ import {
   isComponentNamed,
   getComponentKey,
 } from '../../utilities/component'
-import { AvatarListWrapperUI } from './styles/AvatarList.css.js'
+import { AvatarListWrapperUI } from './styles/AvatarList.css'
 import { COMPONENT_KEY } from './AvatarList.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 

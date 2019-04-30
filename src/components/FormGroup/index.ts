@@ -1,4 +1,4 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import FormGroup from './FormGroup'
 import Choice from './FromGroup.Choice'
 import Grid from './FromGroup.Grid'

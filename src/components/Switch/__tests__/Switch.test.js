@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Switch from '../Switch'
 import FormLabel from '../../FormLabel'
-import { SwitchUI, BackdropUI, ToggleUI } from '../styles/Switch.css.js'
+import { SwitchUI, BackdropUI, ToggleUI } from '../styles/Switch.css'
 
 describe('ClassName', () => {
   test('Has default className', () => {

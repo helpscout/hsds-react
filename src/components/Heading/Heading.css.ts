@@ -1,5 +1,5 @@
-import baseStyles from '../../styles/resets/baseStyles.css.js'
-import linkStyles from '../../styles/mixins/linkStyles.css.js'
+import baseStyles from '../../styles/resets/baseStyles.css'
+import linkStyles from '../../styles/mixins/linkStyles.css'
 import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
 import variableFontSize, {

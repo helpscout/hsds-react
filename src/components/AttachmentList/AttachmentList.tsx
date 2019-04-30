@@ -6,7 +6,7 @@ import Overflow from '../Overflow'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import css from './styles/AttachmentList.css.js'
+import css from './styles/AttachmentList.css'
 
 type Props = {
   children: Array<any> | string

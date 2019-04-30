@@ -1,7 +1,7 @@
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 
-const bem = BEM('.c-Overflow')
+const bem: any = BEM('.c-Overflow')
 
 const css = `
   ${baseStyles}

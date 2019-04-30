@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import { MenuContainer, defaultProps } from '../Dropdown.MenuContainer'
 import { initialState } from '../Dropdown.store'
 import { find, hasClass } from '../../../../tests/helpers/enzyme'
-import { MenuUI } from '../Dropdown.css.js'
+import { MenuUI } from '../Dropdown.css'
 
 jest.mock('../Dropdown.MenuPortal', () => {
   const Portal = ({ children }) => <div>{children}</div>

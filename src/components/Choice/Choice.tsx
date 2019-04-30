@@ -19,7 +19,7 @@ import {
   ChoiceLabelUI,
   ChoiceLabelTextUI,
   ChoiceHelpTextUI,
-} from './styles/Choice.css.js'
+} from './styles/Choice.css'
 import { COMPONENT_KEY } from './Choice.utils'
 
 type Props = {

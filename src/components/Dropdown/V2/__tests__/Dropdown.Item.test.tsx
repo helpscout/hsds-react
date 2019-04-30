@@ -7,7 +7,7 @@ import {
   getAttribute,
 } from '../../../../tests/helpers/enzyme'
 import { setMenuPositionStyles } from '../Dropdown.renderUtils'
-import { MenuUI } from '../Dropdown.css.js'
+import { MenuUI } from '../Dropdown.css'
 
 jest.mock('../Dropdown.utils')
 jest.mock('../Dropdown.renderUtils')

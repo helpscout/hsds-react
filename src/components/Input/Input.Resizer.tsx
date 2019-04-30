@@ -1,5 +1,5 @@
 import * as React from 'react'
-import EventListener from '../EventListener/index'
+import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { repeat } from '../../utilities/strings'

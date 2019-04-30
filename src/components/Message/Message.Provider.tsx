@@ -1,17 +1,17 @@
 import * as React from 'react'
 import ThemeProvider from '../ThemeProvider'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './propTypes'
+import { providerContextTypes } from './Message.types'
 import { COMPONENT_KEY } from './Message.utils'
 
 // TODO: fix typescript complains
 // @ts-ignore
 class Provider extends ThemeProvider {
-  static propTypes = providerContextTypes
+  static propTypes: providerContextTypes
   static defaultProps = {
     theme: 'admin',
   }
-  static childContextTypes = providerContextTypes
+  static childContextTypes: providerContextTypes
   static displayName = 'MessageProvider'
 
   render() {

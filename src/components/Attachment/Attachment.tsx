@@ -12,7 +12,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './utils'
-import css, { ErrorBorderUI } from './Attachment.css.js'
+import css, { ErrorBorderUI } from './Attachment.css'
 
 export const Provider = AttachmentProvider
 

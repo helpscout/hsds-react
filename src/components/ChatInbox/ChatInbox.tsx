@@ -1,6 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Collapsible from '../Collapsible/index'
+import Collapsible from '../Collapsible'
 import Header from './Header'
 import Content from './Content'
 import { classNames } from '../../utilities/classNames'

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
-import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
+import { MenuWrapperUI, MenuUI } from './Dropdown.css'
 import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'

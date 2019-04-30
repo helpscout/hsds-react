@@ -13,7 +13,7 @@ import {
   ActionContentUI,
   WrapperUI,
   SubMenuIncidatorUI,
-} from './Dropdown.css.js'
+} from './Dropdown.css'
 import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
 import { setMenuPositionStyles } from './Dropdown.renderUtils'
 import { classNames } from '../../../utilities/classNames'

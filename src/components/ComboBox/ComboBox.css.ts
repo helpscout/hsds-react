@@ -1,7 +1,7 @@
 import Dropdown from '../Dropdown/DropdownV2'
 import Input from '../Input'
 import Text from '../Text'
-import baseStyles from '../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../styles/resets/baseStyles.css'
 import styled from '../styled'
 
 export const InputUI = styled(Input)`

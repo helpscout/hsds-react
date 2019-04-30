@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import CopyButton from '../../CopyButton'
 import Highlight from '../../Highlight'
 import CopyCode from '../CopyCode'
-import { CopyCodeUI } from '../styles/CopyCode.css.js'
+import { CopyCodeUI } from '../styles/CopyCode.css'
 import Keys from '../../../constants/Keys'
 
 // Stub selection/range functions as they are not available in tests

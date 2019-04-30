@@ -1,4 +1,4 @@
-import baseStyles from '../../styles/resets/base.css.js'
+import baseStyles from '../../styles/resets/base.css'
 import styled from '../styled'
 import Pop from '../Pop'
 import { getColor } from '../../styles/utilities/color'

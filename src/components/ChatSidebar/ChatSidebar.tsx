@@ -11,7 +11,7 @@ import {
   ChatSidebarUI,
   StatusBarWrapperUI,
   ContentUI,
-} from './styles/ChatSidebar.css.js'
+} from './styles/ChatSidebar.css'
 
 type Props = {
   isShowStatusBar: boolean

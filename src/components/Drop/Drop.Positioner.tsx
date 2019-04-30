@@ -1,7 +1,6 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import EventListener from '../EventListener/index'
+import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
 import {
@@ -10,31 +9,23 @@ import {
 } from '../../utilities/nodePosition'
 import { noop } from '../../utilities/other'
 
-export const propTypes = {
-  autoPosition: PropTypes.bool,
-  direction: PropTypes.string,
-  offset: PropTypes.number,
-  onUpdatePosition: PropTypes.func,
-  position: PropTypes.shape({
-    direction: PropTypes.shape({
-      x: PropTypes.oneOf(['left', 'right', '']),
-      y: PropTypes.oneOf(['up', 'down']),
-    }),
-    left: PropTypes.number,
-    offsetTop: PropTypes.number,
-    top: PropTypes.number,
-  }),
-  trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
-  zIndex: PropTypes.number,
-}
-
-const defaultProps = {
-  autoPosition: true,
-  direction: 'down',
-  offset: 8,
-  onUpdatePosition: noop,
-  zIndex: 1000,
-}
+// export const propTypes = {
+//   autoPosition: PropTypes.bool,
+//   direction: PropTypes.string,
+//   offset: PropTypes.number,
+//   onUpdatePosition: PropTypes.func,
+//   position: PropTypes.shape({
+//     direction: PropTypes.shape({
+//       x: PropTypes.oneOf(['left', 'right', '']),
+//       y: PropTypes.oneOf(['up', 'down']),
+//     }),
+//     left: PropTypes.number,
+//     offsetTop: PropTypes.number,
+//     top: PropTypes.number,
+//   }),
+//   trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
+//   zIndex: PropTypes.number,
+// }
 
 class Positioner extends React.PureComponent {
   constructor(props) {
@@ -56,6 +47,14 @@ class Positioner extends React.PureComponent {
     // @ts-ignore
     this.contentNode = null
     this.updatePosition = this.updatePosition.bind(this)
+  }
+
+  static defaultProps = {
+    autoPosition: true,
+    direction: 'down',
+    offset: 8,
+    onUpdatePosition: noop,
+    zIndex: 1000,
   }
 
   componentDidMount() {
@@ -226,12 +225,6 @@ class Positioner extends React.PureComponent {
   }
 }
 
-// TODO: fix typescript complains
-// @ts-ignore
-Positioner.propTypes = propTypes
-// TODO: fix typescript complains
-// @ts-ignore
-Positioner.defaultProps = defaultProps
 // TODO: fix typescript complains
 // @ts-ignore
 Positioner.displayName = 'DropPositioner'

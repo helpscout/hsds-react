@@ -16,7 +16,7 @@ import {
   NavigationUI,
   RangeUI,
   ButtonIconUI,
-} from './Pagination.css.js'
+} from './Pagination.css'
 import Text from '../Text'
 import Icon from '../Icon'
 

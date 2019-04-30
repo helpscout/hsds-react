@@ -8,12 +8,7 @@ import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import { memoize } from '../../utilities/memoize'
 import RouteWrapper from '../RouteWrapper'
-import {
-  makeButtonUI,
-  ButtonContentUI,
-  FocusUI,
-  SpinnerUI,
-} from './Button.css.js'
+import { makeButtonUI, ButtonContentUI, FocusUI, SpinnerUI } from './Button.css'
 import { COMPONENT_KEY } from './Button.utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/Icon.utils'
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from '../styled/index'
+import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import css from './styles/VisuallyHidden.css'
 

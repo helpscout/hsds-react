@@ -1,6 +1,6 @@
 import { BEM } from '../../../utilities/classNames'
 
-const bem = BEM('.c-Truncate')
+const bem: any = BEM('.c-Truncate')
 
 const truncateStyles = `
   display: block;

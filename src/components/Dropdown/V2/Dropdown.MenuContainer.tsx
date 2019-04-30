@@ -22,7 +22,7 @@ import {
   onMenuUnmounted,
   selectItem,
 } from './Dropdown.actions'
-import { MenuContainerUI } from './Dropdown.css.js'
+import { MenuContainerUI } from './Dropdown.css'
 import { classNames } from '../../../utilities/classNames'
 import { renderRenderPropComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
@@ -91,7 +91,7 @@ export const defaultProps = {
 export class MenuContainer extends React.PureComponent<Props> {
   static defaultProps = defaultProps
 
-  id: string = uniqueID()
+  id: string = uniqueID('MenuContainer')
   didOpen: boolean = false
   node: HTMLElement
   parentNode: HTMLElement

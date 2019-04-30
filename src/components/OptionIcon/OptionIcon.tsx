@@ -1,7 +1,7 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Icon from '../Icon/index'
+import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { OptionIconUI } from './styles/OptionIcon.css'

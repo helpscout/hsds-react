@@ -1,12 +1,14 @@
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Text from './Text'
+import Text from './Skeleton.Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Skeleton.utils'
 
 class Paragraph extends Component {
   render() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { className, withAnimations, ...rest } = this.props
 
     const componentClassName = classNames('c-SkeletonParagraph', className)

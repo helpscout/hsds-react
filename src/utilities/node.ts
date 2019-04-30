@@ -117,7 +117,9 @@ export const getComputedOffsetLeft = (node: Node): number => {
   return node.getBoundingClientRect().left + offset / 2
 }
 
-export const getViewportHeight = (scope: Scope): number => {
+export const getViewportHeight = (scope?: Scope): number => {
+  if (!scope) return 0
+
   const node = getNodeScope(scope)
   const { height, offset } = getComputedHeightProps(node)
 
@@ -126,7 +128,8 @@ export const getViewportHeight = (scope: Scope): number => {
   return height > window.innerHeight ? height : window.innerHeight - offset
 }
 
-export const getViewportWidth = (scope: Scope): number => {
+export const getViewportWidth = (scope?: Scope): number => {
+  if (!scope) return 0
   const node = getNodeScope(scope)
   const { width, offset } = getComputedWidthProps(node)
 

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { SortableHandle } from 'react-sortable-hoc'
-import Icon from '../Icon/index'
+import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 

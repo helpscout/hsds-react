@@ -1,17 +1,16 @@
 import * as React from 'react'
 import { PortalProps } from '../Portal/Portal.types'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Body from './Modal.Body'
 import Content from './Modal.Content'
 import Footer from './Modal.Footer'
 import Header from './Modal.Header'
 import Overlay from './Modal.Overlay'
-import CloseButton from '../CloseButton/index'
-import EventListener from '../EventListener/index'
-import KeypressListener from '../KeypressListener/index'
-import PortalWrapper from '../PortalWrapper/index'
+import CloseButton from '../CloseButton'
+import EventListener from '../EventListener'
+import KeypressListener from '../KeypressListener'
+import PortalWrapper from '../PortalWrapper'
 import { isHSApp } from '../PropProvider/PropProvider.utils'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
@@ -92,8 +91,8 @@ class Modal extends React.PureComponent<ModalProps> {
     zIndex: 1,
   }
 
-  static childContextTypes = {
-    positionCloseNode: PropTypes.func,
+  static childContextTypes: {
+    positionCloseNode: () => void
   }
 
   static Body = Body
@@ -130,7 +129,7 @@ class Modal extends React.PureComponent<ModalProps> {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
 
-    const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
+    const focusableNodes = findFocusableNodes(this.cardNode)
     const focusedNodeIndex = this.getFocusNodeIndexFromEvent(event)
 
     if (focusedNodeIndex === focusableNodes.length - 1) {
@@ -154,7 +153,7 @@ class Modal extends React.PureComponent<ModalProps> {
     if (!event || !this.cardNode || !this.documentNode) return 0
 
     const focusedNode = event.target
-    const focusableNodes = findFocusableNodes(this.cardNode, this.documentNode)
+    const focusableNodes = findFocusableNodes(this.cardNode)
     const focusedNodeIndex = Array.prototype.indexOf.call(
       focusableNodes,
       focusedNode
@@ -348,4 +347,6 @@ class Modal extends React.PureComponent<ModalProps> {
 }
 
 export const ModalComponent = Modal
+// TODO: fix typescript complains
+// @ts-ignore
 export default PortalWrapper(portalOptions)(Modal)

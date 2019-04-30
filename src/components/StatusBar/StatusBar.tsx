@@ -1,7 +1,7 @@
 import * as React from 'react'
 // import { default as Collapsible } from '../Collapsible'
 import Collapsible from '../Collapsible'
-import Centralize from '../Centralize/index'
+import Centralize from '../Centralize'
 import Button from './StatusBar.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'

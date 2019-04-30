@@ -5,7 +5,7 @@ import Chat from './Message.Chat'
 import LoadingDots from '../LoadingDots'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Embed.css.js'
+import css from './styles/Embed.css'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageChat & {

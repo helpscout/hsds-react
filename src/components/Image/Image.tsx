@@ -1,7 +1,7 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import styled from '../styled/index'
+import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { calculateAspectRatioFit } from '../../utilities/images'
@@ -69,7 +69,7 @@ class Image extends React.PureComponent<Props> {
  */
 export function enhanceStyleWithSize(props: Props): Object {
   const { maxWidth, maxHeight, width, height, style } = props
-  const imageProps = { maxWidth, maxHeight, width, height }
+  const imageProps: any = { maxWidth, maxHeight, width, height }
 
   if (!allPropsDefined(imageProps)) return style
 

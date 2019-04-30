@@ -6,8 +6,8 @@ import ChatBlock from './Message.ChatBlock'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './propTypes'
-import css from './styles/Action.css.js'
+import { providerContextTypes } from './Message.types'
+import css from './styles/Action.css'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageChat & {
@@ -66,7 +66,7 @@ export const Action = (props: Props, context: Context) => {
   )
 }
 
-Action.contextTypes = providerContextTypes
+// Action.contextTypes = providerContextTypes
 
 namespaceComponent(COMPONENT_KEY.Action)(Action)
 

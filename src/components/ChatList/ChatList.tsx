@@ -4,7 +4,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import BlankSlate from './BlankSlate'
 import Item from './Item'
-import { ChatListUI } from './styles/ChatList.css.js'
+import { ChatListUI } from './styles/ChatList.css'
 import { COMPONENT_KEY } from './ChatList.utils'
 
 type Props = {

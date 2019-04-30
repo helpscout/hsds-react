@@ -1,10 +1,9 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import EventListener from '../EventListener/index'
+import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
-import LoadingDots from '../LoadingDots/index'
+import LoadingDots from '../LoadingDots'
 import { isNodeElement, isNodeVisible } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 

@@ -6,7 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { noop } from '../../utilities/other'
-import { CopyInputUI } from './styles/CopyInput.css.js'
+import { CopyInputUI } from './styles/CopyInput.css'
 import { COMPONENT_KEY } from './CopyInput.utils'
 
 type InputNode = HTMLInputElement | HTMLTextAreaElement

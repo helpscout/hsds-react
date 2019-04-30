@@ -1,4 +1,4 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import styled from '../../styled'

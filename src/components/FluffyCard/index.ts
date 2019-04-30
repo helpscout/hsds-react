@@ -1,4 +1,4 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import FluffyCard from './FluffyCard'
 
 FluffyCard.Container = propConnect('FluffyCardContainer')(FluffyCard.Container)

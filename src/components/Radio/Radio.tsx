@@ -1,7 +1,7 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import { RadioKind } from './Radio.types'
-import Choice from '../Choice/index'
+import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './Radio.utils'

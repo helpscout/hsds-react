@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { MessageBubble } from './Message.types'
-import styled from '../styled/index'
-import Link from '../Link/index'
-import Spinner from '../Spinner/index'
-import Modal from '../Modal/index'
+import styled from '../styled'
+import Link from '../Link'
+import Spinner from '../Spinner'
+import Modal from '../Modal'
 import Chat from './Message.Chat'
 import Caption from './Message.Caption'
 import classNames, { BEM } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { providerContextTypes } from './propTypes'
+import { providerContextTypes } from './Message.types'
 import css, { ImageUI } from './styles/Media.css'
 import { COMPONENT_KEY } from './Message.utils'
 
@@ -60,7 +60,7 @@ export class Media extends React.Component<Props> {
     tryAgainLabel: 'Try again',
     isUploading: false,
   }
-  static contextTypes = providerContextTypes
+  static contextTypes: providerContextTypes
   static displayName = 'Message.Media'
 
   /**
@@ -222,7 +222,7 @@ export class Media extends React.Component<Props> {
       error && 'is-error',
       className
     )
-    const bem = BEM(componentClassName)
+    const bem: any = BEM(componentClassName)
 
     const captionMarkup = caption && (
       <div className="c-MessageMedia__caption">

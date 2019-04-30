@@ -1,7 +1,7 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
-import Flexy from '../Flexy/index'
-import Icon from '../Icon/index'
+// import PropTypes from 'prop-types'
+import Flexy from '../Flexy'
+import Icon from '../Icon'
 import Keys from '../../constants/Keys'
 import { default as Menu, MenuComponent } from './Dropdown.Menu'
 import { classNames } from '../../utilities/classNames'
@@ -22,10 +22,10 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
     onSelect: noop,
   }
 
-  static childContextTypes = {
-    parentMenu: PropTypes.element,
-    parentMenuClose: PropTypes.func,
-  }
+  // static childContextTypes = {
+  //   parentMenu: PropTypes.element,
+  //   parentMenuClose: PropTypes.func,
+  // }
 
   node: HTMLElement | null = null
   menu: any = null

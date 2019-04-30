@@ -15,14 +15,14 @@ import {
   isWord,
   newlineToHTML,
 } from '../../utilities/strings'
-import { providerContextTypes } from './propTypes'
+import { providerContextTypes } from './Message.types'
 import css, {
   BodyCSS,
   FromCSS,
   IconWrapperCSS,
   TitleCSS,
   TypingCSS,
-} from './styles/Bubble.css.js'
+} from './styles/Bubble.css'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageBubble
@@ -150,7 +150,9 @@ export const Bubble = (props: Props, context: Context) => {
   )
 }
 
-Bubble.contextTypes = providerContextTypes
+// TODO: fix typescript complains
+// @ts-ignore
+// Bubble.contextTypes = providerContextTypes
 
 namespaceComponent(COMPONENT_KEY.Bubble)(Bubble)
 

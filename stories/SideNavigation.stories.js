@@ -1,23 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { withKnobs, boolean, text, select } from '@storybook/addon-knobs'
+import { withKnobs, text } from '@storybook/addon-knobs'
 import withAktiv from './utils/withAktiv'
 import HsApp from '../src/components/HsApp'
-
-import {
-  SideNavigation,
-  Flexy,
-  Heading,
-  Icon,
-  Button,
-  AutoDropdown,
-} from '../src/index.js'
-import Dropdown from '../src/components/Dropdown/DropdownV2'
-import { SideNavigationHeaderUI } from '../src/components/SideNavigation/SideNavigation.css'
+import { SideNavigation, Flexy, Heading, Button } from '../src/index.js'
 import { ItemSpec } from './DropdownV2.stories'
-
-import styled from '../src/components/styled'
-import { render } from 'enzyme'
 
 const renderSidebarFolders = () => {
   return (

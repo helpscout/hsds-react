@@ -1,13 +1,12 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
 import enhanceComponentMethod from '@helpscout/react-utils/dist/enhanceComponentMethod'
 import Item from './Dropdown.Item'
-import EventListener from '../EventListener/index'
-import KeypressListener from '../KeypressListener/index'
-import Animate from '../Animate/index'
-import Card from '../Card/index'
-import Drop from '../Drop/index'
-import Scrollable from '../Scrollable/index'
+import EventListener from '../EventListener'
+import KeypressListener from '../KeypressListener'
+import Animate from '../Animate'
+import Card from '../Card'
+import Drop from '../Drop'
+import Scrollable from '../Scrollable'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { incrementFocusIndex } from '../../utilities/focus'
@@ -55,10 +54,10 @@ class Menu extends React.PureComponent<DropdownProps, DropDownState> {
     onOpen: noop,
     onSelect: noop,
   }
-  static contextTypes = {
-    parentMenu: PropTypes.element,
-    parentMenuClose: PropTypes.func,
-  }
+  // static contextTypes = {
+  //   parentMenu: PropTypes.element,
+  //   parentMenuClose: PropTypes.func,
+  // }
 
   items: Array<any> = []
   isFocused: boolean = false
@@ -144,6 +143,8 @@ class Menu extends React.PureComponent<DropdownProps, DropDownState> {
     if (height !== this.height) {
       // Direct DOM manipulation to avoid component re-render from state change
       applyStylesToNode(this.contentNode, { height })
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.height = height
     }
   }

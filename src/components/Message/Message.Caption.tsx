@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { MessageThemeContext } from './Message.types'
-import Text from '../Text/index'
+import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './propTypes'
+import { providerContextTypes } from './Message.types'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = {
@@ -45,7 +45,6 @@ const Caption = (props: Props, context: Context) => {
 Caption.defaultProps = {
   wordWrap: true,
 }
-Caption.contextTypes = providerContextTypes
 
 namespaceComponent(COMPONENT_KEY.Caption)(Caption)
 

@@ -11,7 +11,6 @@ import {
   Avatar,
   AvatarStack,
   Icon,
-  styled,
 } from '../src/index.js'
 import AvatarSpec from './AvatarGrid/specs/Avatar'
 
