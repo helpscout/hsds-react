@@ -1,23 +1,23 @@
-// @flow
-import type { AvatarShape, AvatarSize } from '../Avatar/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import Avatar from '../Avatar'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './StatusAvatar.utils'
 
 type Props = {
-  className?: string,
-  isOnline: boolean,
-  shape: AvatarShape,
-  size: AvatarSize,
+  className?: string
+  isOnline: boolean
+  shape: AvatarShape
+  size: AvatarSize
 }
 
 /**
  * A enhanced wrapper that for Avatar, allowing for an easier way to indicate
  * Avatar state.
  */
-class StatusAvatar extends Component<Props> {
+class StatusAvatar extends React.PureComponent<Props> {
   static defaultProps = {
     isOnline: true,
     shape: 'circle',
@@ -49,4 +49,4 @@ class StatusAvatar extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(StatusAvatar)
 
-export default StatusAvatar
+export default propConnect(COMPONENT_KEY)(StatusAvatar)
