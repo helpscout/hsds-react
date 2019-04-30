@@ -5,9 +5,9 @@ import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 import { propConnect } from '../PropProvider'
 import Icon from '../Icon'
-import FadeInOut from './FadeInOut'
+import FadeInOut from './SideNavigation.FadeInOut'
 
-import { FooterUI } from './SideNavigation.css'
+import { FooterUI } from './styles/SideNavigation.css'
 
 export interface Props {
   className?: string

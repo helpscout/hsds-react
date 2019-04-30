@@ -1,13 +1,13 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/baseStyles.css.js'
-import { getColor } from '../../styles/utilities/color'
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { getColor } from '../../../styles/utilities/color'
 
-import Button from '../Button'
-import Text from '../Text'
-import Heading from '../Heading'
+import Button from '../../Button'
+import Text from '../../Text'
+import Heading from '../../Heading'
 
-import { DropdownUI, TriggerUI } from '../Dropdown/V2/Dropdown.css'
-import { darken, lighten } from '../../utilities/color'
+import { DropdownUI, TriggerUI } from '../../Dropdown/V2/Dropdown.css'
+import { darken, lighten } from '../../../utilities/color'
 
 const config = {
   sidePadding: '18px',
@@ -110,7 +110,7 @@ export const ButtonFooterUI = styled(Button)`
       height: 14px;
       top: calc(50% - 7px);
       width: 14px;
-    }z
+    }
   }
 `
 

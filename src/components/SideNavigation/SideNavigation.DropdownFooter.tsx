@@ -11,7 +11,7 @@ import Icon from '../Icon'
 import SideNavigation from './SideNavigation'
 import Dropdown from '../Dropdown/DropdownV2'
 
-import {} from './SideNavigation.css'
+import {} from './styles/SideNavigation.css'
 
 export interface Props {
   className?: string

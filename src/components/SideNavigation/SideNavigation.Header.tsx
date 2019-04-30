@@ -4,9 +4,9 @@ import { classNames } from '../../utilities/classNames'
 
 import { COMPONENT_KEY } from './SideNavigation.utils'
 import { propConnect } from '../PropProvider'
-import FadeInOut from './FadeInOut'
-import Heading from './Heading'
-import { HeaderUI, BadgeUI, HeaderLinkUI } from './SideNavigation.css'
+import FadeInOut from './SideNavigation.FadeInOut'
+import Heading from './SideNavigation.Heading'
+import { HeaderUI, BadgeUI, HeaderLinkUI } from './styles/SideNavigation.css'
 
 export interface Props {
   badge?: string

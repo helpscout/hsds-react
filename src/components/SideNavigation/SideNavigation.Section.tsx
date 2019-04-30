@@ -4,8 +4,8 @@ import { classNames } from '../../utilities/classNames'
 
 import { COMPONENT_KEY } from './SideNavigation.utils'
 import { propConnect } from '../PropProvider'
-import { SectionUI, SectionHeadingUI } from './SideNavigation.css'
-import FadeInOut from './FadeInOut'
+import { SectionUI, SectionHeadingUI } from './styles/SideNavigation.css'
+import FadeInOut from './SideNavigation.FadeInOut'
 
 export interface Props {
   className?: string

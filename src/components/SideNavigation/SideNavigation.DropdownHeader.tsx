@@ -4,13 +4,12 @@ import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './SideNavigation.utils'
 
 import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
 import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
 import AutoDropdown from '../AutoDropdown/AutoDropdown'
 
-import { DropdownHeaderUI } from './SideNavigation.css'
+import { DropdownHeaderUI } from './styles/SideNavigation.css'
 import SideNavigation from './SideNavigation'
 
 export interface Props {

@@ -4,8 +4,8 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 
-import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
-import FadeInOut from './FadeInOut'
+import { ItemUI, ButtonUI, CountUI, IconUI } from './styles/SideNavigation.css'
+import FadeInOut from './SideNavigation.FadeInOut'
 
 export interface Props {
   className?: string

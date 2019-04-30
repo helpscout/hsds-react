@@ -6,13 +6,13 @@ import { COMPONENT_KEY } from './SideNavigation.utils'
 import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
-import { ButtonUI, ButtonFooterUI } from './SideNavigation.css'
+import { ButtonUI, ButtonFooterUI } from './styles/SideNavigation.css'
 
 export interface Props {
   className?: string
   floatingMenu?: boolean
   iconName?: string
-  icon?: Icon
+  icon?: Element
 }
 
 export class Button extends React.PureComponent<Props> {
@@ -31,9 +31,7 @@ export class Button extends React.PureComponent<Props> {
     } = this.props
 
     const componentClassName = classNames('c-SideNavigation__Button', className)
-    const ElementName: ButtonUI | ButtonFooterUI = floatingMenu
-      ? ButtonUI
-      : ButtonFooterUI
+    const ElementName = floatingMenu ? ButtonUI : ButtonFooterUI
 
     return (
       <ElementName
