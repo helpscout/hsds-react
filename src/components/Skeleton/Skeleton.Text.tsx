@@ -1,10 +1,10 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { TextUI } from './styles/Text.css.js'
+import { COMPONENT_KEY } from './Skeleton.utils'
+import { TextUI } from './styles/Skeleton.Text.css'
 
-class Text extends Component {
+class Text extends React.PureComponent {
   static defaultProps = {
     heading: false,
     style: {},
@@ -13,11 +13,21 @@ class Text extends Component {
 
   render() {
     const {
+      // TODO: fix typescript complains
+      // @ts-ignore
       className,
       children,
+      // TODO: fix typescript complains
+      // @ts-ignore
       heading,
+      // TODO: fix typescript complains
+      // @ts-ignore
       size,
+      // TODO: fix typescript complains
+      // @ts-ignore
       style,
+      // TODO: fix typescript complains
+      // @ts-ignore
       width,
       ...rest
     } = this.props

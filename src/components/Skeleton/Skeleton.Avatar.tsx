@@ -1,19 +1,18 @@
-// @flow
-import type { AvatarShape, AvatarSize } from '../Avatar/types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { AvatarUI } from './styles/Avatar.css.js'
+import { COMPONENT_KEY } from './Skeleton.utils'
+import { AvatarUI } from './styles/Skeleton.Avatar.css'
 
 export interface Props {
-  className?: string;
-  children?: any;
-  shape: AvatarShape;
-  size: AvatarSize;
+  className?: string
+  children?: any
+  shape: AvatarShape
+  size: AvatarSize
 }
 
-class Avatar extends Component<Props> {
+class Avatar extends React.PureComponent<Props> {
   static defaultProps = {
     size: 'md',
     shape: 'circle',

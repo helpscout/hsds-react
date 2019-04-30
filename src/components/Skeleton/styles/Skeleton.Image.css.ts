@@ -1,5 +1,5 @@
 import styled from '../../styled'
-import Block from '../Block'
+import Block from '../Skeleton.Block'
 
 export const ImageUI = styled(Block)`
   border-radius: 4px;

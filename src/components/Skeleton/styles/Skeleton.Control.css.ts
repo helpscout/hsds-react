@@ -1,5 +1,5 @@
 import styled from '../../styled'
-import Block from '../Block'
+import Block from '../Skeleton.Block'
 import forEach from '../../../styles/utilities/forEach'
 
 export const config = {

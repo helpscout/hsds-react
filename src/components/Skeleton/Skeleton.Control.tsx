@@ -1,15 +1,17 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { ControlUI } from './styles/Control.css.js'
+import { COMPONENT_KEY } from './Skeleton.utils'
+import { ControlUI } from './styles/Skeleton.Control.css'
 
-class Control extends Component {
+class Control extends React.PureComponent {
   static defaultProps = {
     size: 'md',
   }
 
   render() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { className, size, ...rest } = this.props
 
     const componentClassName = classNames(

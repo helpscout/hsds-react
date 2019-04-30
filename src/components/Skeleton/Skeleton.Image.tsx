@@ -1,11 +1,13 @@
 import React, { PureComponent as Component } from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { ImageUI } from './styles/Image.css.js'
+import { COMPONENT_KEY } from './Skeleton.utils'
+import { ImageUI } from './styles/Skeleton.Image.css'
 
 class Image extends Component {
   render() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { className, ...rest } = this.props
 
     const componentClassName = classNames('c-SkeletonImage', className)

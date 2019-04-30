@@ -1,16 +1,18 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { BlockUI } from './styles/Block.css.js'
+import { COMPONENT_KEY } from './Skeleton.utils'
+import { BlockUI } from './styles/Skeleton.Block.css'
 
-class Block extends Component {
+class Block extends React.PureComponent {
   static defaultProps = {
     withAnimations: true,
   }
 
   render() {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const { className, children, withAnimations, ...rest } = this.props
 
     const componentClassName = classNames(

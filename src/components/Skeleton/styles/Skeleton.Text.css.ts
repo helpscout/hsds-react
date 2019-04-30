@@ -1,5 +1,5 @@
 import styled from '../../styled'
-import Block from '../Block'
+import Block from '../Skeleton.Block'
 
 export const TextUI = styled(Block)`
   border-radius: 9999px;
