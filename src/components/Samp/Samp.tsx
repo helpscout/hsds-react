@@ -1,8 +1,9 @@
 import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import { Props as TextProps } from '../Text/Text'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Samp.utils'
 
 export interface Props extends TextProps {}
 
@@ -14,4 +15,4 @@ class Samp extends React.PureComponent<Props> {
 
 namespaceComponent(COMPONENT_KEY)(Samp)
 
-export default Samp
+export default propConnect(COMPONENT_KEY)(Samp)
