@@ -10,14 +10,14 @@ describe('Input', () => {
         errorMessage: 'some error',
       }
       cy.render(<Input {...props} />)
-      cy.debug()
+
       expect(cy.get('.c-Input__errorIcon').exists()).toBeTruthy()
-      // expect(cy.get('.c-Tooltip').attr('title')).toBe('some error')
     })
 
     test('Can style the input to be red upon an error', () => {
       cy.render(<Input state={'error'} />)
       const input = cy.get('.c-InputField.is-error')
+
       expect(input.exists()).toBeTruthy()
       expect(input.style('color')).toBe('rgb(157, 31, 26)')
     })
@@ -25,6 +25,7 @@ describe('Input', () => {
     test('Can render a placeholder', () => {
       cy.render(<Input placeholder={'ho ho ho!'} />)
       const input = cy.get('input')
+
       expect(input.hasAttribute('placeholder')).toBeTruthy()
       expect(input.attr('placeholder')).toBe('ho ho ho!')
     })
@@ -35,12 +36,14 @@ describe('Input', () => {
         helpText: 'sub text',
       }
       cy.render(<Input {...props} />)
+
       expect(cy.get('label').text('label text')).toBeTruthy()
       expect(cy.get('.c-HelpText').text('sub text')).toBeTruthy()
     })
 
     test('Can render a multiline input with a max-height', () => {
       cy.render(<Input maxHeight={420} multiline={true} />)
+
       expect(cy.get('textArea').style('max-height')).toBe('420px')
     })
   })
