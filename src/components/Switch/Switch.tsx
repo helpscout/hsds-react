@@ -1,6 +1,7 @@
-import { SwitchSize, SwitchState, SwitchValue } from './types'
-import { FormLabelContextProps } from '../FormLabel/FormLabel.types'
 import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { SwitchSize, SwitchState, SwitchValue } from './Switch.types'
+import { FormLabelContextProps } from '../FormLabel/FormLabel.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
@@ -15,8 +16,8 @@ import {
   StateUI,
   BackdropUI,
   ToggleUI,
-} from './styles/Switch.css.js'
-import { COMPONENT_KEY } from './utils'
+} from './styles/Switch.css'
+import { COMPONENT_KEY } from './Switch.utils'
 
 export interface Props {
   className?: string
@@ -256,4 +257,4 @@ class Switch extends React.PureComponent<Props, State> {
 
 namespaceComponent(COMPONENT_KEY)(Switch)
 
-export default Switch
+export default propConnect(COMPONENT_KEY)(Switch)

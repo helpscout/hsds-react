@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
@@ -123,9 +122,7 @@ export const ToggleUI = styled('div')`
   top: ${config.toggle.offset}px;
   transition: ${config.transition.toggle};
 
-  ${makeToggleSizeStyles(config)}
-
-  &.is-active {
+  ${makeToggleSizeStyles(config)} &.is-active {
     width: 60%;
   }
 
@@ -139,7 +136,7 @@ export const ToggleUI = styled('div')`
     left: 50%;
     right: inherit;
 
-    ${makeToggleOffsetStyles(config)}
+    ${makeToggleOffsetStyles(config)};
   }
 
   @keyframes SwitchTogglePulse {
@@ -155,10 +152,9 @@ export const ToggleUI = styled('div')`
 
     100% {
       box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-   	  transform: scale(0.8);
+      transform: scale(0.8);
     }
   }
-}
 `
 
 export const StateUI = styled('div')`
@@ -178,7 +174,7 @@ function getWidth(size: number): number {
   return Math.floor(size * 2)
 }
 
-function makeSizeStyles(config: Object): string {
+function makeSizeStyles(config: any): string {
   return forEach(
     config.size,
     (size, value) => `
@@ -191,7 +187,7 @@ function makeSizeStyles(config: Object): string {
   )
 }
 
-function makeToggleSizeStyles(config: Object): string {
+function makeToggleSizeStyles(config: any): string {
   return forEach(
     config.size,
     (size, value) => `
@@ -203,7 +199,7 @@ function makeToggleSizeStyles(config: Object): string {
   )
 }
 
-function makeToggleOffsetStyles(config: Object): string {
+function makeToggleOffsetStyles(config: any): string {
   return forEach(
     config.size,
     (size, value) => `
