@@ -1,10 +1,10 @@
-import baseStyles from '../../styles/resets/baseStyles.css.js'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
-import Animate from '../Animate'
-import Flexy from '../Flexy'
-import Spinner from '../Spinner'
-import styled from '../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { getColor } from '../../../styles/utilities/color'
+import forEach from '../../../styles/utilities/forEach'
+import Animate from '../../Animate'
+import Flexy from '../../Flexy'
+import Spinner from '../../Spinner'
+import styled from '../../styled'
 
 export const config = {
   borderRadius: 3,

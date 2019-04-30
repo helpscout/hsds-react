@@ -7,7 +7,7 @@ import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed } from '../../utilities/component'
 import { noop, promiseNoop } from '../../utilities/other'
-import { TagListUI } from './TagList.css'
+import { TagListUI } from './styles/TagList.css'
 import { COMPONENT_KEY } from './TagList.utils'
 import { COMPONENT_KEY as TAG } from '../Tag/Tag.utils'
 

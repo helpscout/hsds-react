@@ -1,5 +1,5 @@
-import baseStyles from '../../styles/resets/baseStyles.css.js'
-import styled from '../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import styled from '../../styled'
 
 export const TagListUI = styled('div')`
   ${baseStyles};

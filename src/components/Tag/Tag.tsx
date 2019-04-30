@@ -8,7 +8,13 @@ import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { noop, promiseNoop } from '../../utilities/other'
-import { AnimateUI, TagWrapperUI, TagUI, BodyUI, SpinnerUI } from './Tag.css'
+import {
+  AnimateUI,
+  TagWrapperUI,
+  TagUI,
+  BodyUI,
+  SpinnerUI,
+} from './styles/Tag.css'
 import { COMPONENT_KEY } from './Tag.utils'
 
 type TagColor =
