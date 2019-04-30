@@ -1,13 +1,12 @@
-// @flow
-import React from 'react'
-import styled from '../styled'
+import * as React from 'react'
+import styled from '../styled/index'
 import { classNames } from '../../utilities/classNames'
-import css from './styles/VisuallyHidden.css.js'
+import css from './styles/VisuallyHidden.css'
 
 type Props = {
-  children?: any,
-  className?: string,
-  focusable: boolean,
+  children?: any
+  className?: string
+  focusable: boolean
 }
 
 const VisuallyHidden = (props: Props) => {
@@ -19,7 +18,7 @@ const VisuallyHidden = (props: Props) => {
     className
   )
 
-  const tabIndex = focusable ? 1 : null
+  const tabIndex = focusable ? 1 : undefined
 
   return (
     <span className={componentClassName} tabIndex={tabIndex} {...rest}>
