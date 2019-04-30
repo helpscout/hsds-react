@@ -1,30 +1,29 @@
-// @flow
-import type { StatusDotStatus, StatusDotSize } from './types'
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import { StatusDotStatus, StatusDotSize } from './StatusDot.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { StatusDotUI } from './styles/StatusDot.css.js'
+import { COMPONENT_KEY } from './StatusDot.utils'
+import { StatusDotUI } from './styles/StatusDot.css'
 
 type Props = {
-  borderColor: string,
-  className?: string,
-  children?: any,
-  icon?: string,
-  inline: boolean,
-  isUnread: boolean,
-  outerBorderColor?: string,
-  outerBorderWidth: number,
-  size: StatusDotSize,
-  status: StatusDotStatus,
-  style?: Object,
-  title?: string,
+  borderColor: string
+  className?: string
+  children?: any
+  icon?: string
+  inline: boolean
+  isUnread: boolean
+  outerBorderColor?: string
+  outerBorderWidth: number
+  size: StatusDotSize
+  status: StatusDotStatus
+  style?: any
+  title?: string
 }
 
-class StatusDot extends Component<Props> {
+class StatusDot extends React.PureComponent<Props> {
   static defaultProps = {
     inline: false,
     isUnread: false,
