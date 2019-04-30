@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Icon from '../Icon'
+import Icon from '../Icon/index'
 import { classNames } from '../../utilities/classNames'
 
 export const propTypes = {

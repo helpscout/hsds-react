@@ -1,36 +1,30 @@
-import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
-import { default as Collapsible, collapsibleTypes } from '../Collapsible'
-import Centralize from '../Centralize'
-import Button from './Button'
+import * as React from 'react'
+// import { default as Collapsible } from '../Collapsible'
+import Collapsible from '../Collapsible'
+import Centralize from '../Centralize/index'
+import Button from './StatusBar.Button'
 import { classNames } from '../../utilities/classNames'
-import { themeTypes } from './propTypes'
 import { noop } from '../../utilities/other'
-import { statusTypes } from '../../constants/propTypes'
+import { StatusBarProps, StatusBarState } from './StatusBar.types'
 
-export const propTypes = Object.assign({}, collapsibleTypes, {
-  closeOnClick: PropTypes.bool,
-  statusTypes,
-  themeTypes,
-})
-
-const defaultProps = {
-  isOpen: false,
-  onClick: noop,
-  onClose: noop,
-  onOpen: noop,
-  closeOnClick: true,
-  status: 'info',
-  theme: 'light',
-}
-
-class StatusBar extends Component {
+class StatusBar extends React.PureComponent<StatusBarProps, StatusBarState> {
   constructor(props) {
-    super()
+    super(props)
+
     this.state = {
       isOpen: props.isOpen,
     }
     this.handleOnClick = this.handleOnClick.bind(this)
+  }
+
+  static defaultProps = {
+    isOpen: false,
+    onClick: noop,
+    onClose: noop,
+    onOpen: noop,
+    closeOnClick: true,
+    status: 'info',
+    theme: 'light',
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,6 +37,7 @@ class StatusBar extends Component {
 
   handleOnClick() {
     const { closeOnClick, onClick } = this.props
+
     if (closeOnClick) {
       this.setState({ isOpen: false })
     }
@@ -87,9 +82,8 @@ class StatusBar extends Component {
   }
 }
 
-StatusBar.propTypes = propTypes
-StatusBar.defaultProps = defaultProps
-StatusBar.displayName = 'StatusBar'
+// TODO: fix typescript complains
+// @ts-ignore
 StatusBar.Button = Button
 
 export default StatusBar
