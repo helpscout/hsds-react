@@ -1,82 +1,82 @@
-// @flow
-import type { UISize, UIState } from '../../constants/types'
-import type {
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { UISize, UIState } from '../../constants/types'
+import {
   SelectGroup,
   SelectOptions,
   SelectOption,
   SelectValue,
-} from './types'
-import React, { PureComponent as Component } from 'react'
+} from './Select.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
-import Backdrop from '../Input/BackdropV2'
+import Backdrop from '../Input/Input.BackdropV2'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import Arrows from './Select.Arrows'
-import { STATES } from '../../constants/index'
+import { STATES } from '../../constants'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
-import { InputWrapperUI } from '../Input/styles/Input.css.js'
+import { COMPONENT_KEY } from './Select.utils'
+import { InputWrapperUI } from '../Input/styles/Input.css'
 import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
 
-type SelectEvent = SyntheticEvent<HTMLSelectElement>
+type SelectEvent = Event
 type SelectOptionProp =
   | SelectGroup
   | SelectOptions
   | SelectOption
-  | Array<any>
+  // | Array<any>
   | string
 
 type Props = {
-  autoFocus: boolean,
-  children?: any,
-  className: string,
-  disabled: boolean,
-  errorIcon: string,
-  errorMessage: string,
-  forceAutoFocusTimeout: number,
-  helpText: any,
-  hintText: any,
-  id: string,
-  isFocused: boolean,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
-  label: any,
-  name: string,
-  options: SelectOptionProp,
-  onBlur: (event: SelectEvent) => void,
-  onChange: (value: SelectValue) => void,
-  onFocus: (event: SelectEvent) => void,
-  placeholder: string,
-  prefix: string,
-  removeStateStylesOnFocus: boolean,
-  seamless: boolean,
-  style?: Object,
-  size: UISize,
-  state: UIState,
-  success: boolean,
-  value: string,
+  autoFocus: boolean
+  children?: any
+  className: string
+  disabled: boolean
+  errorIcon: string
+  errorMessage: string
+  forceAutoFocusTimeout: number
+  helpText: any
+  hintText: any
+  id: string
+  isFocused: boolean
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
+  label: any
+  name: string
+  options: SelectOptionProp
+  onBlur: (event: SelectEvent) => void
+  onChange: (value: SelectValue) => void
+  onFocus: (event: SelectEvent) => void
+  placeholder: string
+  prefix: string
+  removeStateStylesOnFocus: boolean
+  seamless: boolean
+  style?: Object
+  size: UISize
+  state: UIState
+  success: boolean
+  value: string
 }
 
 type State = {
-  id?: string,
-  isFocused: boolean,
-  state?: UIState,
-  value: SelectValue,
+  id?: string
+  isFocused: boolean
+  state?: UIState
+  value: SelectValue
 }
 
 const PLACEHOLDER_VALUE = '__placeholder__'
 
 const uniqueID = createUniqueIDFactory('Select')
 
-export class Select extends Component<Props, State> {
+export class Select extends React.PureComponent<Props, State> {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
@@ -95,10 +95,11 @@ export class Select extends Component<Props, State> {
   static Arrows = Arrows
 
   optionClassName = 'c-Select__option'
-  selectNode: ?HTMLSelectElement = null
+  selectNode: HTMLSelectElement | null
 
   constructor(props: Props) {
     super(props)
+
     this.state = {
       id: props.id || uniqueID(),
       isFocused: props.isFocused,
@@ -154,6 +155,8 @@ export class Select extends Component<Props, State> {
   }
 
   handleOnChange = (event: SelectEvent) => {
+    // TODO: fix typescript complains
+    // @ts-ignore
     const value = event.currentTarget.value
     this.props.onChange(value)
 
@@ -240,6 +243,8 @@ export class Select extends Component<Props, State> {
     return (
       prefix && (
         <InlinePrefixSuffixUI
+          // TODO: fix typescript complains
+          // @ts-ignore
           className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
         >
           {prefix}
@@ -286,31 +291,27 @@ export class Select extends Component<Props, State> {
     )
   }
 
-  renderOptions = (option: SelectOption) => {
+  renderOptions = option => {
     // HTML <optgroup> only allows for single level nesting
-    // $FlowFixMe
     const hasOptions =
-      !isString(option) &&
-      option.hasOwnProperty('value') &&
-      Array.isArray(option.value)
-
-    const optionDisabled = option.disabled
-    const optionLabel = option.label
-    const optionValue = option.value
+      option.hasOwnProperty('value') && Array.isArray(option.value)
 
     // Group
-    if (hasOptions) {
+    if (!isString(option) && hasOptions) {
       // Recursion!
       return (
         <optgroup
           className="c-Select__optGroup"
-          label={optionLabel}
-          key={optionLabel}
+          label={option.label}
+          key={option.label}
         >
-          {optionValue.map(this.renderOptions)}
+          {// TODO: fix typescript complains
+          // @ts-ignore
+          option.value.map(this.renderOptions)}
         </optgroup>
       )
     }
+
     // Option
     if (isString(option)) {
       return (
@@ -321,12 +322,12 @@ export class Select extends Component<Props, State> {
     } else {
       return (
         <option
-          key={optionValue}
+          key={option.value}
           className={this.optionClassName}
-          value={optionValue}
-          disabled={optionDisabled}
+          value={option.value}
+          disabled={option.disabled}
         >
-          {optionLabel}
+          {option.label}
         </option>
       )
     }
@@ -334,6 +335,8 @@ export class Select extends Component<Props, State> {
 
   setSelectNode = (node: HTMLSelectElement) => {
     this.selectNode = node
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.props.innerRef(node)
   }
 
@@ -347,6 +350,8 @@ export class Select extends Component<Props, State> {
       forceAutoFocusTimeout,
       helpText,
       hintText,
+      // TODO: fix typescript complains
+      // @ts-ignore
       innerRef,
       isFocused,
       isFirst,
@@ -467,4 +472,4 @@ export class Select extends Component<Props, State> {
 
 namespaceComponent(COMPONENT_KEY)(Select)
 
-export default Select
+export default propConnect(COMPONENT_KEY)(Select)
