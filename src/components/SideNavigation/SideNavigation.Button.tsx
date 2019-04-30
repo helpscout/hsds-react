@@ -3,19 +3,14 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import { SideNavigationButtonProps } from './SideNavigation.types'
+
 import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
 import { ButtonUI, ButtonFooterUI } from './styles/SideNavigation.css'
 
-export interface Props {
-  className?: string
-  floatingMenu?: boolean
-  iconName?: string
-  icon?: Element
-}
-
-export class Button extends React.PureComponent<Props> {
+export class Button extends React.PureComponent<SideNavigationButtonProps> {
   static defaultProps = {
     floatingMenu: false,
   }

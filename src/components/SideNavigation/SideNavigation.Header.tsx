@@ -3,20 +3,13 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import { SideNavigationHeaderProps } from './SideNavigation.types'
 import { propConnect } from '../PropProvider'
 import FadeInOut from './SideNavigation.FadeInOut'
 import Heading from './SideNavigation.Heading'
 import { HeaderUI, BadgeUI, HeaderLinkUI } from './styles/SideNavigation.css'
 
-export interface Props {
-  badge?: string
-  collapsable?: boolean
-  className?: string
-  href?: string
-  label?: string
-}
-
-export class Header extends React.PureComponent<Props> {
+export class Header extends React.PureComponent<SideNavigationHeaderProps> {
   static defaultProps = {}
 
   getInitial() {

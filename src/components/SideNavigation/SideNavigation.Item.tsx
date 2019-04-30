@@ -1,26 +1,16 @@
 import * as React from 'react'
+
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { SideNavigationItemProps } from './SideNavigation.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import Icon from '../Icon'
 
-import { ItemUI, ButtonUI, CountUI, IconUI } from './styles/SideNavigation.css'
+import Icon from '../Icon'
 import FadeInOut from './SideNavigation.FadeInOut'
 
-export interface Props {
-  className?: string
-  collapsed?: boolean
-  href?: string
-  iconName?: string
-  count?: number
-  active?: boolean
-  danger?: boolean
-  muted?: boolean
-  disabled?: boolean
-  onClick: (event: Event) => void
-}
+import { ItemUI, ButtonUI, CountUI, IconUI } from './styles/SideNavigation.css'
 
-export class Item extends React.PureComponent<Props> {
+export class Item extends React.PureComponent<SideNavigationItemProps> {
   static defaultProps = {
     active: false,
     danger: false,

@@ -13,24 +13,20 @@ import Heading from './SideNavigation.Heading'
 import Item from './SideNavigation.Item'
 import Section from './SideNavigation.Section'
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import {
+  SideNavigationProps,
+  SideNavigationState,
+} from './SideNavigation.types'
 
 import {
   SideNavigationUI,
   SideNavigationCollapsableUI,
 } from './styles/SideNavigation.css'
 
-export interface Props {
-  className?: string
-  width?: number
-  collapsable?: boolean
-  collapsed?: boolean
-  floatingMenu?: boolean
-}
-export interface States {
-  dropdowns: string[]
-}
-
-export class SideNavigation extends React.PureComponent<Props, States> {
+export class SideNavigation extends React.PureComponent<
+  SideNavigationProps,
+  SideNavigationState
+> {
   static defaultProps = {}
 
   static Button = Button

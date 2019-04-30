@@ -3,20 +3,14 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import { SideNavigationFooterProps } from './SideNavigation.types'
 import { propConnect } from '../PropProvider'
 import Icon from '../Icon'
 import FadeInOut from './SideNavigation.FadeInOut'
 
 import { FooterUI } from './styles/SideNavigation.css'
 
-export interface Props {
-  className?: string
-  collapsable?: boolean
-  collapsed?: boolean
-  floatingMenu?: boolean
-}
-
-export class Footer extends React.PureComponent<Props> {
+export class Footer extends React.PureComponent<SideNavigationFooterProps> {
   static defaultProps = {}
 
   render() {

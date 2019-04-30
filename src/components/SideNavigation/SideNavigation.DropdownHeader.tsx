@@ -2,6 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import { SideNavigationDropdownHeaderProps } from './SideNavigation.types'
 
 import { createUniqueIDFactory } from '../../utilities/id'
 import { propConnect } from '../PropProvider'
@@ -12,17 +13,11 @@ import AutoDropdown from '../AutoDropdown/AutoDropdown'
 import { DropdownHeaderUI } from './styles/SideNavigation.css'
 import SideNavigation from './SideNavigation'
 
-export interface Props {
-  className?: string
-  items: Array<any>
-  selectedItem: any
-  forceNavVisibleOn(id: string)
-  forceNavVisibleOff(id: string)
-}
-
 const UNIQUE_ID = createUniqueIDFactory(COMPONENT_KEY.DropdownHeader)
 
-export class DropdownHeader extends React.PureComponent<Props> {
+export class DropdownHeader extends React.PureComponent<
+  SideNavigationDropdownHeaderProps
+> {
   static defaultProps = {}
 
   id = UNIQUE_ID()

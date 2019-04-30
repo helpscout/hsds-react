@@ -5,6 +5,7 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import { SideNavigationDropdownFooterProps } from './SideNavigation.types'
 import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
@@ -13,19 +14,11 @@ import Dropdown from '../Dropdown/DropdownV2'
 
 import {} from './styles/SideNavigation.css'
 
-export interface Props {
-  className?: string
-  items: Array<any>
-  selectedItem: any
-  floatingMenu?: boolean
-  iconName: string
-  forceNavVisibleOn(id: string)
-  forceNavVisibleOff(id: string)
-}
-
 const UNIQUE_ID = createUniqueIDFactory(COMPONENT_KEY.DropdownFooter)
 
-export class DropdownFooter extends React.PureComponent<Props> {
+export class DropdownFooter extends React.PureComponent<
+  SideNavigationDropdownFooterProps
+> {
   static defaultProps = {
     forceNavVisibleOn: noop,
     forceNavVisibleOff: noop,

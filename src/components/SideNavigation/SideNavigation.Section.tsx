@@ -3,17 +3,12 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import { SideNavigationSectionProps } from './SideNavigation.types'
 import { propConnect } from '../PropProvider'
 import { SectionUI, SectionHeadingUI } from './styles/SideNavigation.css'
 import FadeInOut from './SideNavigation.FadeInOut'
 
-export interface Props {
-  className?: string
-  title?: string
-  withPadding?: boolean
-}
-
-export class Section extends React.PureComponent<Props> {
+export class Section extends React.PureComponent<SideNavigationSectionProps> {
   static defaultProps = {
     withPadding: false,
   }
