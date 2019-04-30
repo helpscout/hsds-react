@@ -1,9 +1,18 @@
 import * as React from 'react'
+import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { CropUI } from './Avatar.css'
 
 export const AvatarCrop = props => {
-  const { className, children, hasImage, isImageLoaded, withShadow } = props
+  const {
+    animationDuration,
+    animationEasing,
+    className,
+    children,
+    hasImage,
+    isImageLoaded,
+    withShadow,
+  } = props
 
   const componentClassName = classNames(
     'c-Avatar__crop',
@@ -13,7 +22,10 @@ export const AvatarCrop = props => {
   )
 
   const styles = {
-    backgroundColor: hasImage ? 'currentColor' : null,
+    backgroundColor: isImageLoaded ? 'transparent' : 'currentColor',
+    transition: `background-color ${animationDuration}ms ${getEasingTiming(
+      animationEasing
+    )}`,
   }
 
   return (
@@ -24,6 +36,8 @@ export const AvatarCrop = props => {
 }
 
 AvatarCrop.defaultProps = {
+  animationDuration: 160,
+  animationEasing: 'ease',
   hasImage: false,
   isImageLoaded: false,
   withShadow: false,
