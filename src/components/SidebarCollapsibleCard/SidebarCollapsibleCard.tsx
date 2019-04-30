@@ -1,42 +1,27 @@
-import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
-import {
-  default as Collapsible,
-  propTypes as collapsibleTypes,
-} from '../Collapsible'
-import EventListener from '../EventListener'
-import Flexy from '../Flexy'
-import Heading from '../Heading'
-import SortableDragHandle from '../Sortable/DragHandle'
-import Icon from '../Icon'
+import * as React from 'react'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { classNames } from '../../utilities/classNames'
-
-export const propTypes = Object.assign({}, collapsibleTypes, {
-  header: PropTypes.element,
-  title: PropTypes.string,
-  isOpen: PropTypes.bool,
-  sortable: PropTypes.bool,
-  onSortStart: PropTypes.func,
-  onSortEnd: PropTypes.func,
-})
-
-export const defaultProps = {
-  duration: 200,
-  durationOpen: 200,
-  durationClose: 100,
-  isOpen: false,
-  onSortStart: noop,
-  onSortEnd: noop,
-  sortable: false,
-}
+import EventListener from '../EventListener'
+import Collapsible from '../Collapsible'
+import Flexy from '../Flexy'
+import Heading from '../Heading'
+import Icon from '../Icon'
+import SortableDragHandle from '../Sortable/DragHandle'
+import {
+  SidebarCollapsibleCardProps,
+  SidebarCollapsibleCardState,
+} from './SidebarCollapsibleCard.types'
 
 const uniqueID = createUniqueIDFactory('SidebarCollapsibleCard')
 
-class SidebarCollapsibleCard extends Component {
+class SidebarCollapsibleCard extends React.PureComponent<
+  SidebarCollapsibleCardProps,
+  SidebarCollapsibleCardState
+> {
   constructor(props) {
-    super()
+    super(props)
+
     this.state = {
       id: props.id || uniqueID(),
       isOpen: props.isOpen,
@@ -48,13 +33,26 @@ class SidebarCollapsibleCard extends Component {
     this.handleOnSortEnd = this.handleOnSortEnd.bind(this)
   }
 
+  static defaultProps = {
+    duration: 200,
+    durationOpen: 200,
+    durationClose: 100,
+    isOpen: false,
+    onSortStart: noop,
+    onSortEnd: noop,
+    sortable: false,
+  }
+
+  isSorting: boolean
+  _prevIsOpen: boolean
+
   componentWillUpdate(nextProps, nextState) {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.handleToggleOpen()
     }
   }
 
-  handleToggleOpen(e) {
+  handleToggleOpen(e?) {
     e && e.preventDefault()
     this.setState({ isOpen: !this.state.isOpen })
   }
@@ -146,7 +144,7 @@ class SidebarCollapsibleCard extends Component {
           role="heading"
           aria-expanded={open}
           aria-controls={regionId}
-          tabIndex="1"
+          tabIndex={1}
         >
           <Flexy gap="sm">
             <Flexy.Block>{headerMarkup}</Flexy.Block>
@@ -176,8 +174,5 @@ class SidebarCollapsibleCard extends Component {
     )
   }
 }
-
-SidebarCollapsibleCard.propTypes = propTypes
-SidebarCollapsibleCard.defaultProps = defaultProps
 
 export default SidebarCollapsibleCard

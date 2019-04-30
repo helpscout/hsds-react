@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PortalProps } from '../Portal/types'
+import { PortalProps } from '../Portal/Portal.types'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -12,7 +12,7 @@ import CloseButton from '../CloseButton/index'
 import EventListener from '../EventListener/index'
 import KeypressListener from '../KeypressListener/index'
 import PortalWrapper from '../PortalWrapper/index'
-import { isHSApp } from '../PropProvider/utils'
+import { isHSApp } from '../PropProvider/PropProvider.utils'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed } from '../../utilities/component'
@@ -28,11 +28,12 @@ import {
   CloseUI,
 } from './styles/Modal.css'
 
-type Props = PortalProps & {
+interface ModalProps extends PortalProps {
   cardClassName?: string
   children?: any
   className?: string
   closeIcon: boolean
+  forceClosePortal: () => void
   closeIconRepositionDelay: number
   closeIconOffset: number
   closePortal: () => void
@@ -65,7 +66,7 @@ const portalOptions = {
   zIndex: modalBaseZIndex,
 }
 
-class Modal extends React.PureComponent<Props> {
+class Modal extends React.PureComponent<ModalProps> {
   static defaultProps = {
     closeIcon: true,
     closePortal: noop,
@@ -90,6 +91,7 @@ class Modal extends React.PureComponent<Props> {
     wrapperClassName: 'c-ModalWrapper',
     zIndex: 1,
   }
+
   static childContextTypes = {
     positionCloseNode: PropTypes.func,
   }
