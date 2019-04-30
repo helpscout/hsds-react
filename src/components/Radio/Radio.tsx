@@ -1,17 +1,17 @@
-// @flow
-import type { RadioKind } from './types'
-import React, { PureComponent as Component } from 'react'
-import Choice from '../Choice'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
+import { RadioKind } from './Radio.types'
+import Choice from '../Choice/index'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Radio.utils'
 
 type Props = {
-  className?: string,
-  kind: RadioKind,
+  className?: string
+  kind: RadioKind
 }
 
-class Radio extends Component<Props> {
+class Radio extends React.PureComponent<Props> {
   static defaultProps = {
     kind: 'default',
   }
@@ -35,4 +35,4 @@ class Radio extends Component<Props> {
 
 namespaceComponent(COMPONENT_KEY)(Radio)
 
-export default Radio
+export default propConnect(COMPONENT_KEY)(Radio)
