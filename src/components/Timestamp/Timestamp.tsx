@@ -1,22 +1,21 @@
-// @flow
-import React, { Component } from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Text from '../Text'
-import Time from './Time'
+import Time from './Timestamp.Time'
 
 type Props = {
-  children?: any,
-  className?: string,
-  formatter?: () => string,
-  live?: boolean,
-  muted?: boolean,
-  read: boolean,
-  timestamp?: string | number,
+  children?: any
+  className?: string
+  formatter?: () => string
+  live?: boolean
+  muted?: boolean
+  read: boolean
+  timestamp?: string | number
 }
 
-class Timestamp extends Component<Props> {
+class Timestamp extends React.Component<Props> {
   static defaultProps = {
     live: false,
     read: false,

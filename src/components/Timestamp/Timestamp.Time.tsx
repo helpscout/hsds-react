@@ -1,16 +1,15 @@
-// @flow
-import React, { Component } from 'react'
+import * as React from 'react'
 import { calculateTimeoutPeriod } from '../../utilities/timestamp'
-import type { Timestamp } from './types'
+import { Timestamp } from './Timestamp.types'
 
 type Props = {
-  className?: string,
-  formatter: (timestamp: Timestamp) => string,
-  live?: boolean,
-  timestamp?: Timestamp,
+  className?: string
+  formatter: (timestamp: Timestamp) => string
+  live?: boolean
+  timestamp?: Timestamp
 }
 
-class Time extends Component<Props> {
+class Time extends React.Component<Props> {
   static defaultProps = {
     formatter: (timestamp: Timestamp) => timestamp,
     live: false,
@@ -53,7 +52,7 @@ class Time extends Component<Props> {
     }
   }
 
-  tick(refresh: any) {
+  tick(refresh?: any) {
     const { live, timestamp } = this.props
 
     if (!this._isMounted || !live) {
@@ -63,6 +62,8 @@ class Time extends Component<Props> {
     const period = calculateTimeoutPeriod(timestamp)
 
     if (period > 0) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.timeoutId = setTimeout(this.tick.bind(this), period)
     }
 
@@ -75,8 +76,12 @@ class Time extends Component<Props> {
     const { className, formatter, timestamp } = this.props
 
     return (
+      // TODO: fix typescript complains
+      // @ts-ignore
       <time className={className} dateTime={timestamp}>
-        {formatter(timestamp)}
+        {// TODO: fix typescript complains
+        // @ts-ignore
+        formatter(timestamp)}
       </time>
     )
   }

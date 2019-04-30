@@ -43,7 +43,7 @@ type Props = {
   newMessageCount: number
   tags?: any
   timestamp: string
-  timestampFormatter: () => void
+  timestampFormatter: () => string
 }
 
 class Item extends React.Component<Props> {
