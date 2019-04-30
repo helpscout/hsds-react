@@ -1,33 +1,16 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import EventListener from '../EventListener'
 import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
 import styled from '../styled'
 import { truncateMiddle } from '../../utilities/strings'
-import css from './styles/Truncate.css.js'
+import css from './styles/Truncate.css'
+import { TruncateProps, TruncateState } from './Truncate.types'
 
-type Props = {
-  children?: any,
-  className?: string,
-  ellipsis?: string,
-  limit: number,
-  end?: number,
-  start?: number,
-  showTooltipOnTruncate: boolean,
-  text?: string,
-  title?: string,
-  tooltipProps: Object,
-  tooltipPlacement: string,
-  tooltipModifiers: Object,
-  type?: 'auto' | 'start' | 'middle' | 'end',
-}
-
-type State = {
-  isTruncated: boolean,
-}
-
-export class BaseComponent extends Component<Props, State> {
+export class Truncate extends React.PureComponent<
+  TruncateProps,
+  TruncateState
+> {
   static displayName = 'Truncate'
   static defaultProps = {
     ellipsis: '…',
@@ -38,10 +21,10 @@ export class BaseComponent extends Component<Props, State> {
     tooltipProps: {},
     type: 'auto',
   }
-  node: ?HTMLSpanElement = null
-  contentNode: ?HTMLSpanElement = null
+  node = null
+  contentNode = null
 
-  constructor(props: Props) {
+  constructor(props: TruncateProps) {
     super(props)
     this.state = {
       isTruncated: !!props.type,
@@ -61,7 +44,7 @@ export class BaseComponent extends Component<Props, State> {
     this.contentNode = null
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: TruncateProps) {
     if (nextProps.type !== this.props.type) {
       this.setState({
         isTruncated: this.isTruncated(nextProps),
@@ -78,7 +61,7 @@ export class BaseComponent extends Component<Props, State> {
     this.setState({ isTruncated })
   }
 
-  isTruncated = (props: Props = this.props): boolean => {
+  isTruncated = (props: TruncateProps = this.props): boolean => {
     if (props.type !== 'auto') {
       return this.getText(props) !== this.getTruncatedContent(props)
     } else {
@@ -86,23 +69,28 @@ export class BaseComponent extends Component<Props, State> {
       if (!this.node || !this.contentNode) return false
 
       // 1. Normalizes the display to allow for calculation
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.contentNode.style.display = 'initial'
       // 2. Calculate the differences
       const isContentTruncated =
+        // TODO: fix typescript complains
+        // @ts-ignore
         this.contentNode.offsetWidth > this.node.offsetWidth
       // 3. Resets the display
-      // $FlowFixMe
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.contentNode.style.display = null
 
       return isContentTruncated
     }
   }
 
-  getText = (props: Props = this.props) => {
+  getText = (props: TruncateProps = this.props) => {
     return this.props.text || this.props.children
   }
 
-  getTruncatedContent = (props: Props = this.props) => {
+  getTruncatedContent = (props: TruncateProps = this.props) => {
     return getTruncatedContent({ ...props, text: this.getText(props) })
   }
 
@@ -134,7 +122,11 @@ export class BaseComponent extends Component<Props, State> {
     const wordMarkup = (
       <span
         className="c-Truncate__content"
-        ref={ref => (this.contentNode = ref)}
+        ref={ref =>
+          // TODO: fix typescript complains
+          // @ts-ignore
+          (this.contentNode = ref)
+        }
       >
         {word}
       </span>
@@ -155,7 +147,11 @@ export class BaseComponent extends Component<Props, State> {
     return (
       <span
         className={componentClassName}
-        ref={ref => (this.node = ref)}
+        ref={ref =>
+          // TODO: fix typescript complains
+          // @ts-ignore
+          (this.node = ref)
+        }
         {...rest}
       >
         <EventListener event="resize" handler={this.handleOnResize} />
@@ -171,7 +167,7 @@ export class BaseComponent extends Component<Props, State> {
  * @param   {Object} props Component props.
  * @returns {string} The truncated content.
  */
-export function getTruncatedContent(props: Object): string {
+export function getTruncatedContent(props: any): string {
   const { ellipsis, limit, type, text } = props
 
   let truncateStart
@@ -199,4 +195,4 @@ export function getTruncatedContent(props: Object): string {
   return word
 }
 
-export default styled(BaseComponent)(css)
+export default styled(Truncate)(css)

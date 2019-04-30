@@ -16,7 +16,11 @@ const css = `
   &.is-auto {
     ${truncateStyles}
 
-    ${bem.element('content')} {
+    ${
+      // TODO: fix typescript complains
+      // @ts-ignore
+      bem.element('content')
+    } {
       ${truncateStyles}
     }
   }
