@@ -1,5 +1,4 @@
-// @flow
-import { propConnect } from '../PropProvider'
+import { propConnect } from '../PropProvider/index'
 import Timeline from './Timeline'
 
 // Sub-components

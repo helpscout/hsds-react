@@ -1,15 +1,14 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Item from './Item'
+import Item from './Timeline.Item'
 import { classNames } from '../../utilities/classNames'
 
 type Props = {
-  children?: any,
-  className?: string,
+  children?: any
+  className?: string
 }
 
-class Timeline extends Component<Props> {
+class Timeline extends React.PureComponent<Props> {
   static Item = Item
 
   render() {

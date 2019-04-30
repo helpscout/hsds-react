@@ -1,17 +1,16 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Timestamp from '../Timestamp'
 import { classNames } from '../../utilities/classNames'
 
 type Props = {
-  children?: any,
-  className?: string,
-  timestamp?: number | string,
+  children?: any
+  className?: string
+  timestamp?: number | string
 }
 
-class Item extends Component<Props> {
+class Item extends React.PureComponent<Props> {
   render() {
     const { children, className, timestamp, ...rest } = this.props
 
