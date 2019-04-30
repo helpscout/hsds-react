@@ -1,15 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Animate from '../Animate'
-import Badge from '../Badge'
-import StatusDot from '../StatusDot'
-import { statusTypes } from './propTypes'
+import * as React from 'react'
+import Animate from '../Animate/index'
+import Badge from '../Badge/index'
+import StatusDot from '../StatusDot/index'
 import { classNames } from '../../utilities/classNames'
-
-export const propTypes = {
-  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  status: statusTypes,
-}
 
 const defaultProps = {
   count: 0,
@@ -31,6 +24,7 @@ const StatusBadge = props => {
     title,
     ...rest
   } = props
+
   const statusDotProps = {
     borderColor,
     outerBorderColor,
@@ -59,7 +53,6 @@ const StatusBadge = props => {
   )
 }
 
-StatusBadge.propTypes = propTypes
 StatusBadge.defaultProps = defaultProps
 StatusBadge.displayName = 'StatusBadge'
 
