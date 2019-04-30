@@ -1,7 +1,7 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import Icon from '../Icon'
-import ChoiceGroupContext from '../ChoiceGroup/Context'
+import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
 import { namespaceComponent } from '../../utilities/component'
@@ -9,35 +9,36 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import Radio from '../Radio'
-import { RadioCardUI, IconWrapperUI, FocusUI } from './styles/RadioCard.css.js'
-import { COMPONENT_KEY } from './utils'
+import { RadioCardUI, IconWrapperUI, FocusUI } from './styles/RadioCard.css'
+import { COMPONENT_KEY } from './RadioCard.utils'
 
 type InputNode = HTMLInputElement
-type InputEvent = SyntheticEvent<InputNode>
+type InputEvent = Event
 
 type Props = {
-  checked: boolean,
-  className?: string,
-  icon: string | Function,
-  iconSize: number,
-  id?: string,
-  inputRef: (node: InputNode) => void,
-  innerRef: (node: InputNode) => void,
-  isFocused: boolean,
-  onBlur: (event: InputEvent) => void,
-  onFocus: (event: InputEvent) => void,
-  title?: string,
-  onChange: (value: any) => void,
+  checked: boolean
+  className?: string
+  icon: string | Function
+  iconSize: number
+  id?: string
+  inputRef: (node: InputNode) => void
+  innerRef: (node: InputNode) => void
+  isFocused: boolean
+  onBlur: (event: InputEvent) => void
+  onFocus: (event: InputEvent) => void
+  title?: string
+  onChange: (value: any) => void
+  value?: string
 }
 
 type State = {
-  id: string,
-  isFocused: boolean,
+  id: string
+  isFocused: boolean
 }
 
 const uniqueID = createUniqueIDFactory('RadioCard')
 
-class RadioCard extends Component<Props, State> {
+class RadioCard extends React.PureComponent<Props, State> {
   static defaultProps = {
     checked: false,
     onChange: noop,
@@ -84,6 +85,8 @@ class RadioCard extends Component<Props, State> {
     const { icon, iconSize } = this.props
 
     if (isFunction(icon)) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       return React.createElement(icon)
     }
 
@@ -100,7 +103,7 @@ class RadioCard extends Component<Props, State> {
     return isFocused && <FocusUI className="c-RadioCard__focus" />
   }
 
-  getCardMarkup = (contextProps: Object) => {
+  getCardMarkup = contextProps => {
     const { className, checked, icon, title, value, ...rest } = this.props
     const { id, isFocused } = this.state
 
@@ -158,4 +161,4 @@ class RadioCard extends Component<Props, State> {
 
 namespaceComponent(COMPONENT_KEY)(RadioCard)
 
-export default RadioCard
+export default propConnect(COMPONENT_KEY)(RadioCard)
