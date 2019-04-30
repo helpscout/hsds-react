@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Pagination } from '../Pagination'
-import { NavigationUI } from '../Pagination.css'
+import { NavigationUI, RangeUI, InformationUI } from '../Pagination.css'
 import { hasClass } from '../../../tests/helpers/enzyme'
 import { simulateKeyPress } from '../../KeypressListener/__tests__/KeypressListener.test'
 import Keys from '../../../constants/Keys'
@@ -220,6 +220,38 @@ describe('Range', () => {
     )
 
     expect(wrapper.instance().getNumberOfPages()).toBe(3)
+  })
+  test('Hides range if less than 2 pages', () => {
+    const totalItems = 5
+    const rangePerPage = 5
+    const wrapper = mount(
+      <Pagination
+        showNavigation={true}
+        totalItems={totalItems}
+        rangePerPage={rangePerPage}
+        activePage={1}
+      />
+    )
+
+    expect(wrapper.find('.c-Pagination__range').length).toBeFalsy()
+  })
+
+  test('Shows totalItems if less than 2 pages', () => {
+    const totalItems = 5
+    const rangePerPage = 5
+    const subject = 'Customers'
+    const wrapper = mount(
+      <Pagination
+        showNavigation={true}
+        totalItems={totalItems}
+        rangePerPage={rangePerPage}
+        activePage={1}
+        subject={subject}
+      />
+    )
+
+    expect(wrapper.find(RangeUI).text()).toBe(`${totalItems}`)
+    expect(wrapper.find(InformationUI).text()).toBe(`${totalItems} ${subject}`)
   })
   test('Sets numberOfPages on uneven number', () => {
     const totalItems = 17

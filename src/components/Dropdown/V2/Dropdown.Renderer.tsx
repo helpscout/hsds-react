@@ -9,7 +9,12 @@ import {
   selectItemFromIndex,
   closeDropdown,
 } from './Dropdown.actions'
-import { getNextChildPath, getParentPath, isDropRight } from './Dropdown.utils'
+import {
+  itemIsActive,
+  getNextChildPath,
+  getParentPath,
+  isDropRight,
+} from './Dropdown.utils'
 import {
   didCloseSubMenu,
   findItemDOMNode,
@@ -231,27 +236,49 @@ class Renderer extends React.PureComponent<any> {
   renderSelectedItem() {
     const {
       activeClassName,
+      allowMultipleSelection,
       envNode,
+      index,
+      indexMap,
       previousSelectedItem,
       selectedItem,
     } = this.props
 
     if (!this.shouldRenderDOM()) return
 
-    // Render selected (active) styles
-    const previousSelectedNode = findItemDOMNodeById(
-      previousSelectedItem,
-      envNode
-    )
-    const selectedNode = findItemDOMNodeById(selectedItem, envNode)
+    if (allowMultipleSelection) {
+      const selectedNode = findItemDOMNode(index, envNode)
+      const itemId = indexMap[index - 1]
+      const nodeIsSelected = itemIsActive(selectedItem, {
+        id: itemId,
+        // Fallback matcher, for items without `id`
+        value: itemId,
+      })
 
-    if (previousSelectedNode) {
-      previousSelectedNode.classList.remove(activeClassName)
-    }
+      if (selectedNode) {
+        if (nodeIsSelected) {
+          selectedNode.classList.add(activeClassName)
+          setAriaActiveOnMenuFromItemNode(selectedNode)
+        } else {
+          selectedNode.classList.remove(activeClassName)
+        }
+      }
+    } else {
+      // Render selected (active) styles
+      const previousSelectedNode = findItemDOMNodeById(
+        previousSelectedItem,
+        envNode
+      )
+      const selectedNode = findItemDOMNodeById(selectedItem, envNode)
 
-    if (selectedNode) {
-      selectedNode.classList.add(activeClassName)
-      setAriaActiveOnMenuFromItemNode(selectedNode)
+      if (previousSelectedNode) {
+        previousSelectedNode.classList.remove(activeClassName)
+      }
+
+      if (selectedNode) {
+        selectedNode.classList.add(activeClassName)
+        setAriaActiveOnMenuFromItemNode(selectedNode)
+      }
     }
   }
 
@@ -282,7 +309,7 @@ class Renderer extends React.PureComponent<any> {
     // It may feel "wrong"... But, this is FAR cheaper than
     // relying on React to do it.
 
-    // That is because we're doing with a single (more or less) calculcation
+    // That is because we're doing with a single (more or less) calculation
     // rather than spreading the work throughout the menu/item tree.
     // This is especially important if item nesting is going to be a thing.
     this.optimizedRender()
@@ -304,35 +331,37 @@ const ConnectedRenderer: any = connect(
   (state: any) => {
     const {
       activeClassName,
+      allowMultipleSelection,
       enableTabNavigation,
       envNode,
       focusClassName,
-      lastInteractionType,
-      previousIndex,
       index,
       indexMap,
       inputValue,
       isOpen,
       items,
+      lastInteractionType,
       openClassName,
+      previousIndex,
       previousSelectedItem,
       selectedItem,
     } = state
 
     return {
       activeClassName,
+      allowMultipleSelection,
       enableTabNavigation,
       envNode,
       dropRight: isDropRight(state),
       focusClassName,
-      lastInteractionWasKeyboard: lastInteractionType === 'keyboard',
-      previousIndex,
       index,
       indexMap,
       inputValue,
       isOpen,
       items,
+      lastInteractionWasKeyboard: lastInteractionType === 'keyboard',
       openClassName,
+      previousIndex,
       previousSelectedItem,
       selectedItem,
     }

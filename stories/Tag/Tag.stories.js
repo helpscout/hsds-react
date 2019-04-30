@@ -23,11 +23,20 @@ stories.add('Default', () => {
         grey: 'grey',
         green: 'green',
         blue: 'blue',
+        lightBlue: 'lightBlue',
         orange: 'orange',
         purple: 'purple',
         yellow: 'yellow',
       },
       'grey'
+    ),
+    size: select(
+      'size',
+      {
+        sm: 'md',
+        md: 'md',
+      },
+      'sm'
     ),
     children: text('children', 'Ron'),
     filled: boolean('filled', false),
@@ -61,6 +70,9 @@ stories.add('filled', () => (
     <Tag color="yellow" filled>
       Ron
     </Tag>
+    <Tag color="lightBlue" filled>
+      Ron
+    </Tag>
   </div>
 ))
 
@@ -85,6 +97,9 @@ stories.add('pulsing', () => (
       Ron
     </Tag>
     <Tag color="yellow" pulsing>
+      Ron
+    </Tag>
+    <Tag color="lightBlue" pulsing>
       Ron
     </Tag>
   </div>

@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.32.0",
+  "version": "2.39.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -84,8 +84,7 @@
   },
   "peerDependencies": {
     "react": "^16 || ^15",
-    "react-dom": "^16 || ^15",
-    "react-router-dom": "4.0.0 - 4.3.1"
+    "react-dom": "^16 || ^15"
   },
   "dependencies": {
     "@helpscout/fancy": "2.2.6",
@@ -100,11 +99,13 @@
     "compute-scroll-into-view": "1.0.11",
     "dash-get": "1.0.2",
     "highlight.js": "9.12.0",
+    "invariant": "2.2.4",
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
     "prop-types": "^15",
     "react-sortable-hoc": "0.6.7",
-    "react-transition-group": "2.5.3"
+    "react-transition-group": "2.5.3",
+    "warning": "4.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -126,6 +127,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-import-meta": "^7.0.0",
     "@babel/plugin-transform-flow-strip-types": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
@@ -145,16 +147,15 @@
     "@storybook/react": "^5.0.10",
     "@storybook/theming": "^5.0.10",
     "@types/enzyme": "^3.1.14",
-    "@types/jest": "^23.3.3",
+    "@types/jest": "^24.0.11",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.8",
     "@types/react-transition-group": "^2.0.14",
     "@types/storybook__react": "^4.0.1",
     "autoprefixer": "7.1.1",
     "awesome-typescript-loader": "^5.2.0",
-    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
-    "babel-jest": "^23.4.2",
+    "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.0",
     "babel-plugin-emotion": "^9.2.11",
     "babel-plugin-inline-svg": "0.1.0",
@@ -183,9 +184,9 @@
     "husky": "^1.0.0-rc.13",
     "istanbul-api": "1.2.2",
     "istanbul-reports": "1.1.4",
-    "jest": "^23.6.0",
-    "jest-cli": "^23.6.0",
-    "jest-watch-typeahead": "^0.2.0",
+    "jest": "^24.7.1",
+    "jest-cli": "^24.7.1",
+    "jest-watch-typeahead": "^0.3.0",
     "mkdirp": "0.5.1",
     "node-sass": "4.11.0",
     "np": "4.0.2",
@@ -218,7 +219,7 @@
     "style-loader": "0.18.2",
     "svgo": "^1.2.0",
     "svgsus": "^0.23.4",
-    "ts-jest": "^23.10.4",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.1.1",
     "webpack": "^4.25.1",
     "yargs": "^13.2.2"

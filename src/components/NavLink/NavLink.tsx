@@ -2,7 +2,7 @@
 // https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/modules/NavLink.js
 
 import * as React from 'react'
-import { Route } from 'react-router-dom'
+import Route from '../Route'
 import propConnect from '../PropProvider/propConnect'
 import Link from '../Link'
 import { classNames } from '../../utilities/classNames'

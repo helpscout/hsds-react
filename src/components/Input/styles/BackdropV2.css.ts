@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
@@ -16,6 +15,8 @@ export const config = {
   boxShadow: `0 0 0 0 rgba(${getColor('border')}, 0)`,
   boxShadowCheckbox: '0 0.5px 1px rgba(0, 0, 0, 0.2) inset',
   focusOutlineWidth: 2,
+  focusErrorOutlineWidth: 1,
+  focusErrorOutlineColor: getColor('red.500'),
   focusOutlineColor: getColor('blue.500'),
   focusOutlineOffset: 1,
   transition:
@@ -31,7 +32,7 @@ export const config = {
 }
 
 export const BackdropUI = styled('div')`
-  ${baseStyles}
+  ${baseStyles};
 
   background-color: ${config.backgroundColor};
   border: 1px solid;
@@ -88,7 +89,7 @@ export const BackdropUI = styled('div')`
     border-color: ${config.borderColorFill};
   }
 
-  ${makeStateStyles()}
+  ${makeStateStyles};
 
   &.is-custom {
     background-color: ${config.custom.backgroundColor};
@@ -149,9 +150,11 @@ export const FocusUI = styled('div')`
     right: -1px;
     top: -1px;
   }
+
+  ${makeFocusStateStyles};
 `
 
-function makeStateStyles(): string {
+function makeStateStyles() {
   return forEach(
     STATES,
     state => `
@@ -162,6 +165,18 @@ function makeStateStyles(): string {
         border-color: transparent !important;
         box-shadow: none !important;
       }
+    }
+  `
+  )
+}
+
+function makeFocusStateStyles() {
+  return forEach(
+    STATES,
+    state => `
+    &.is-${state} {
+      box-shadow: 0 0 0 ${config.focusErrorOutlineWidth}px
+      ${getColor('state', state, 'borderColor')};
     }
   `
   )

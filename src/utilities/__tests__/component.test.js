@@ -9,6 +9,7 @@ import {
   renderRenderPropComponent,
   renderChildrenSafely,
   renderAsSingleChild,
+  unwrapNamespace,
   __clearRegisteredComponents,
 } from '../component'
 
@@ -444,5 +445,30 @@ describe('renderAsSingleChild', () => {
     )
 
     expect(wrapper.find('p').length).toBe(3)
+  })
+})
+
+describe('unwrapNamespace', () => {
+  test('Returns falsy as is', () => {
+    expect(unwrapNamespace('')).toBe('')
+    expect(unwrapNamespace(null)).toBe(null)
+  })
+
+  test('Returns (flat) unwrapped namespace without modification', () => {
+    const namespace = 'someComponent'
+
+    expect(unwrapNamespace(namespace)).toBe('someComponent')
+  })
+
+  test('Unwraps a single level wrapper', () => {
+    const namespace = 'connect(someComponent)'
+
+    expect(unwrapNamespace(namespace)).toBe('someComponent')
+  })
+
+  test('Unwraps a multi-level wrapper', () => {
+    const namespace = 'propConnected(withRouter(connect(someComponent)))'
+
+    expect(unwrapNamespace(namespace)).toBe('someComponent')
   })
 })
