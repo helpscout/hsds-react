@@ -1,9 +1,9 @@
-import styled from '../styled'
-import Toolbar from '../Toolbar'
+import styled from '../../styled'
+import Toolbar from '../../Toolbar'
 
-import { getColor } from '../../styles/utilities/color'
-import { setFontSize } from '../../styles/utilities/font'
-import baseStyles from '../../styles/resets/baseStyles.css'
+import { getColor } from '../../../styles/utilities/color'
+import { setFontSize } from '../../../styles/utilities/font'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 
 const getAlignment = align => {
   switch (align) {
