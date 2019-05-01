@@ -14,6 +14,7 @@ module.exports = {
     '!src/components/Dropdown/V2/Dropdown.Renderer.tsx',
     '!src/components/Dropdown/V2/Dropdown.renderUtils.ts',
     '!src/components/Popper/**/*.{js,jsx}',
+    '!src/components/Route/**/*.{js,jsx,ts}',
     '!src/tests/helpers/**/*.{js,jsx}',
     '!src/utilities/browser.{js,jsx,ts}',
     '!src/utilities/env.{js,jsx,ts}',

@@ -56,5 +56,6 @@ export const selectText = (element: any) => {
     selectedText = selection.toString()
   }
 
+  /* istanbul ignore next */
   return selectedText || ''
 }

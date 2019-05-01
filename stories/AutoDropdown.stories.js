@@ -9,7 +9,6 @@ const stories = storiesOf('AutoDropdown', module)
 stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({
-  id: faker.random.uuid(),
   value: faker.name.firstName(),
 })
 const items = ItemSpec.generate(15)

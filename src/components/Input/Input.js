@@ -468,11 +468,7 @@ export class Input extends Component<Props, State> {
     const { hintText } = this.props
 
     return (
-      hintText && (
-        <HelpText className="c-Input__hintText" isCompact>
-          {hintText}
-        </HelpText>
-      )
+      hintText && <HelpText className="c-Input__hintText">{hintText}</HelpText>
     )
   }
 
