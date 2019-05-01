@@ -23,7 +23,6 @@ export interface Props extends PopProps {
   renderContent?: (props: any) => void
   theme?: string
   title?: any
-  zIndex?: number
 }
 
 export class Tooltip extends React.PureComponent<Props> {
@@ -122,6 +121,8 @@ export class Tooltip extends React.PureComponent<Props> {
         <Pop.Reference className="c-Tooltip__reference">
           {children}
         </Pop.Reference>
+        {/* // TODO: fix typescript complains
+        // @ts-ignore */}
         <Pop.Popper
           arrowClassName={this.getArrowClassName()}
           arrowColor={color}

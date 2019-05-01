@@ -10,7 +10,9 @@ class Reference extends React.Component<Props> {
       // TODO: fix typescript complains
       // @ts-ignore
       <ReactPopperReference>
-        // TODO: fix typescript complains // @ts-ignore
+        {/* 
+        // TODO: fix typescript complains
+        // @ts-ignore*/}
         {({ ref }) => (
           <ReferenceUI
             className="c-PopReference"

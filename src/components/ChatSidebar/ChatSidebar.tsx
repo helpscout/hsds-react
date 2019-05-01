@@ -55,6 +55,8 @@ class ChatSidebar extends React.PureComponent<Props> {
     //
     // For now, this method has been extensively tested manually
     // within Storybook.
+    // TODO: fix typescript complains
+    // @ts-ignore
     smoothScrollTo({
       // TODO: fix typescript complains
       // @ts-ignore

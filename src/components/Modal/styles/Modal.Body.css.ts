@@ -15,16 +15,12 @@ export const BodyUI = styled('div')`
     padding: 20px;
   }
 
-  ${// TODO: fix typescript complains
-  // @ts-ignore
-  bem.element('scrollableContent')} {
+  ${bem.element('scrollableContent')} {
     padding: 20px;
   }
 
   &.is-seamless {
-    ${// TODO: fix typescript complains
-    // @ts-ignore
-    bem.element('scrollableContent')} {
+    ${bem.element('scrollableContent')} {
       padding: 0;
     }
   }

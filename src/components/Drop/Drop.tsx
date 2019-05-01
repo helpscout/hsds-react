@@ -108,6 +108,8 @@ export const DropComponent: any = (
 }
 
 const Drop = (options = defaultOptions) => ComposedComponent => {
+  // TODO: fix typescript complains
+  // @ts-ignore
   return PortalWrapper(options)(DropComponent(options)(ComposedComponent))
 }
 

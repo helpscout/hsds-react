@@ -2,10 +2,11 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { SelectArrowsUI } from './Select.css'
+import { UIState } from '../../constants/types'
 
 export interface Props {
   className?: string
-  state: string
+  state?: UIState
 }
 
 export class SelectArrows extends React.PureComponent<Props> {

@@ -18,19 +18,19 @@ const logWrapper = fn => /* istanbul ignore next */ message => {
 /* istanbul ignore next */
 export const log = /* istanbul ignore next */ message => {
   /* istanbul ignore next */
-  return logWrapper(console.log, `Blue: ${message}`)
+  return logWrapper(console.log)(`Blue: ${message}`)
 }
 
 /* istanbul ignore next */
 export const warn = /* istanbul ignore next */ message => {
   /* istanbul ignore next */
-  return logWrapper(console.warn, `Blue: ${message}`)
+  return logWrapper(console.warn)(`Blue: ${message}`)
 }
 
 /* istanbul ignore next */
 export const error = /* istanbul ignore next */ message => {
   /* istanbul ignore next */
-  return logWrapper(console.error, `Blue: ${message}`)
+  return logWrapper(console.error)(`Blue: ${message}`)
 }
 
 /* istanbul ignore next */
@@ -40,5 +40,7 @@ export const Exception = (methodName, message) => {
     warn('helix: Exception(): Arguments need to be strings.')
   }
   /* istanbul ignore next */
+  // TODO: fix typescript complains
+  // @ts-ignore
   this.message = `Blue: ${methodName}(): ${message}`
 }

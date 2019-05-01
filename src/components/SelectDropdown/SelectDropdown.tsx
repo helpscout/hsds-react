@@ -12,6 +12,7 @@ import { COMPONENT_KEY } from './SelectDropdown.utils'
 import { find } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { UIState } from '../../constants/types'
 import {
   SelectDropdownUI,
   InputUI,
@@ -27,7 +28,7 @@ export interface Props extends DropdownProps {
   errorMessage?: string
   isFocused: boolean
   placeholder: string
-  state: string
+  state?: UIState
   value?: any
 }
 export interface State {

@@ -1,7 +1,7 @@
 export interface CollapsibleProps {
   children?: any
   className?: string
-  duration: number
+  duration?: number
   durationOpen?: number
   durationClose?: number
   isOpen: boolean

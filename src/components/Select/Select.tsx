@@ -60,7 +60,7 @@ type Props = {
   seamless: boolean
   style?: Object
   size: UISize
-  state: UIState
+  state?: UIState
   success: boolean
   value: string
 }

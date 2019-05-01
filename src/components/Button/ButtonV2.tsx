@@ -128,6 +128,8 @@ class Button extends React.PureComponent<Props> {
   getButtonUI() {
     const selector = this.isLink() ? 'a' : 'button'
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     return this.makeButtonUI(selector)
   }
 

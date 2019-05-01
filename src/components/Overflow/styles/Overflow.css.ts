@@ -10,11 +10,7 @@ const css = `
   transition: height 100ms ease;
   will-change: height;
 
-  ${
-    // TODO: fix typescript complains
-    // @ts-ignore
-    bem.element('container')
-  } {
+  ${bem.element('container')} {
     overflow-x: auto;
     padding-bottom: 20px;
     will-change: scroll-position;
@@ -24,21 +20,13 @@ const css = `
     }
   }
 
-  ${
-    // TODO: fix typescript complains
-    // @ts-ignore
-    bem.element('content')
-  } {
+  ${bem.element('content')} {
     position: relative;
     white-space: nowrap;
     z-index: 0;
   }
 
-  ${
-    // TODO: fix typescript complains
-    // @ts-ignore
-    bem.element('fader')
-  } {
+  ${bem.element('fader')} {
     bottom: 0;
     color: white;
     cursor: pointer;

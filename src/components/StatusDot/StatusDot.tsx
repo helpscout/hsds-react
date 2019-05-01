@@ -9,7 +9,7 @@ import { COMPONENT_KEY } from './StatusDot.utils'
 import { StatusDotUI } from './styles/StatusDot.css'
 
 type Props = {
-  borderColor: string
+  borderColor?: string
   className?: string
   children?: any
   icon?: string

@@ -9,25 +9,25 @@ import {
 } from '../../utilities/nodePosition'
 import { noop } from '../../utilities/other'
 
-// export const propTypes = {
-//   autoPosition: PropTypes.bool,
-//   direction: PropTypes.string,
-//   offset: PropTypes.number,
-//   onUpdatePosition: PropTypes.func,
-//   position: PropTypes.shape({
-//     direction: PropTypes.shape({
-//       x: PropTypes.oneOf(['left', 'right', '']),
-//       y: PropTypes.oneOf(['up', 'down']),
-//     }),
-//     left: PropTypes.number,
-//     offsetTop: PropTypes.number,
-//     top: PropTypes.number,
-//   }),
-//   trigger: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
-//   zIndex: PropTypes.number,
-// }
+export interface DropPositionerProps {
+  autoPosition: boolean
+  direction: string
+  offset: number
+  onUpdatePosition: (...args: any[]) => void
+  position?: {
+    direction: {
+      x: 'left' | 'right' | ''
+      y: 'up' | 'down'
+    }
+    left: number
+    offsetTop: number
+    top: number
+  }
+  trigger: Element | object
+  zIndex: number
+}
 
-class Positioner extends React.PureComponent {
+class Positioner extends React.PureComponent<DropPositionerProps> {
   constructor(props) {
     super(props)
     /* istanbul ignore next */
@@ -84,7 +84,9 @@ class Positioner extends React.PureComponent {
       // @ts-ignore
       this.triggerNode = isNodeElement(trigger)
         ? trigger
-        : ReactDOM.findDOMNode(trigger)
+        : // TODO: fix typescript complains
+          // @ts-ignore
+          ReactDOM.findDOMNode(trigger)
     }
   }
 

@@ -219,7 +219,9 @@ class Pop extends React.Component<Props, State> {
       // TODO: fix typescript complains
       // @ts-ignore
       <Manager>
-        // TODO: fix typescript complains // @ts-ignore
+        {/* 
+        // TODO: fix typescript complains
+        // @ts-ignore*/}
         <PopUI
           className={componentClassName}
           innerRef={this.setNodeRef}

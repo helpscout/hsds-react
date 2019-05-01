@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ToolbarSize } from '../Toolbar/types'
+import { ToolbarSize } from '../Toolbar/Toolbar.types'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './Modal.utils'

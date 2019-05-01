@@ -150,7 +150,7 @@ class Collapsible extends React.Component<CollapsibleProps, CollapsibleState> {
     return `${height || 0}px`
   }
 
-  getTransitionDuration(): number {
+  getTransitionDuration() {
     const { duration, durationOpen, durationClose } = this.props
     const { animationState } = this.state
     const openDuration = durationOpen !== undefined ? durationOpen : duration

@@ -220,6 +220,7 @@ export class Overflow extends React.PureComponent<Props, State> {
       position: amount,
       direction: 'x',
       duration: this.smoothScrollDuration,
+      callback: undefined,
     })
   }
 

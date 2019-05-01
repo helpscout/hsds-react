@@ -107,7 +107,7 @@ type State = {
   id: string
   isFocused: boolean
   height: number | null
-  state: UIState
+  state?: UIState
   typingThrottle: number | undefined
   typingTimeout: number | undefined
   value: InputValue
