@@ -9,16 +9,16 @@
           "firefox": 45,
           "chrome": 49,
           "safari": 10,
-          "node": "6.11"
+          "node": "8.11"
         }
       }
     ],
     "@babel/react"
   ],
   "plugins": [
+    "emotion",
     "@babel/plugin-proposal-class-properties",
-    "inline-svg",
-    "emotion"
+    "inline-svg"
   ],
   "exclude": ["node_modules"]
 }
