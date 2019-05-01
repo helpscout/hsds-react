@@ -5,6 +5,9 @@ import {
   incrementPathIndex,
   decrementPathIndex,
   getIndexMapFromItems,
+  itemIsActive,
+  isSelectedItemEmpty,
+  processSelectionOfItem,
 } from './Dropdown.utils'
 
 import {
@@ -95,14 +98,16 @@ export const setMenuNode = (state, menuNode) => {
 
 /* istanbul ignore next */
 export const incrementIndex = (state, modifier: number = 1) => {
-  const { envNode, index, indexMap, items } = state
+  const { envNode, index, indexMap, items, selectionClearer } = state
+
   if (!items.length) return
 
-  let prevIndex = index ? index : -1
-  prevIndex = `${prevIndex}`
-  const nextIndex = incrementPathIndex(prevIndex, modifier)
+  let prevIndex = `${index ? index : -1}`
+  let nextIndex = incrementPathIndex(prevIndex, modifier)
+  const isLastItemWhenClearerPresent =
+    selectionClearer != null && Number.parseInt(nextIndex) === items.length
 
-  if (!indexMap[nextIndex]) return
+  if (!indexMap[nextIndex] && !isLastItemWhenClearerPresent) return
 
   // This extra check is to support item filtering.
   // The next DOM node may not exist, depending on filtering results.
@@ -134,7 +139,9 @@ export const decrementIndex = (state, modifier: number = 1) => {
 /* istanbul ignore next */
 export const focusItem = (state, event: Event) => {
   const node = findClosestItemDOMNode(event.target as Element)
+
   if (!node) return
+
   const index = getIndexFromItemDOMNode(node)
   // Performance guard to prevent store from uppdating
   if (state.index === index) return
@@ -166,12 +173,26 @@ export const selectItemFromIndex = (state: any, event: any) => {
   const target = findItemDOMNode(state.index, state.envNode)
   if (!target) return
 
+  if (
+    state.allowMultipleSelection &&
+    state.selectionClearer &&
+    target.classList.contains('c-SelectionClearerItem')
+  ) {
+    return clearSelection(state, event)
+  }
+
   return selectItem(state, event, target)
 }
 
 /* istanbul ignore next */
 export const selectItem = (state, event: any, eventTarget?: any) => {
-  const { closeOnSelect, items, envNode } = state
+  const {
+    closeOnSelect,
+    items,
+    selectedItem: selectedItemsInState,
+    envNode,
+    allowMultipleSelection,
+  } = state
   const node = eventTarget || findClosestItemDOMNode(event.target)
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
@@ -183,22 +204,37 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   if (item.disabled) return
   if (item.items) return
 
-  const triggerNode = findTriggerNode(envNode)
-  const selectedItem = !state.clearOnSelect ? item : null
-  const isMouseEvent = isDefined(event.pageX)
+  let selectedItem
 
-  const callbackProps = {
-    event,
-    item,
-    dropdownType: 'hsds-dropdown-v2',
+  if (!state.clearOnSelect) {
+    selectedItem = item
+  } else {
+    selectedItem = null
+  }
+
+  if (allowMultipleSelection) {
+    selectedItem = processSelectionOfItem(selectedItemsInState, item)
   }
 
   // Trigger select callback
   if (item && state.onSelect) {
-    state.onSelect(item.value, callbackProps)
+    const deselected =
+      selectedItem == null
+        ? undefined
+        : itemIsActive(selectedItemsInState, item)
+
+    state.onSelect(item.value, {
+      event,
+      item,
+      selection: selectedItem,
+      deselected,
+      dropdownType: 'hsds-dropdown-v2',
+    })
   }
 
   // Trigger item.onClick callback
+  const isMouseEvent = isDefined(event.pageX)
+
   if (item && item.onClick && !isMouseEvent) {
     item.onClick(event)
   }
@@ -206,7 +242,9 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   // Trigger close callback from Provider
   if (closeOnSelect) {
     state.onClose && state.onClose()
+
     // Refocus triggerNode
+    const triggerNode = findTriggerNode(envNode)
     // @ts-ignore
     triggerNode && triggerNode.focus()
   }
@@ -215,6 +253,42 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
     type: actionTypes.SELECT_ITEM,
     payload: {
       selectedItem,
+    },
+  })
+}
+
+export const clearSelection = (state, event) => {
+  const { selectedItem, closeOnSelect, envNode } = state
+
+  // Performance guard to prevent store from updating
+  /* istanbul ignore next */
+  if (isSelectedItemEmpty(selectedItem)) return
+
+  // Trigger select callback
+  if (state.onSelect) {
+    const callbackProps = {
+      event,
+      item: '',
+      dropdownType: 'hsds-dropdown-v2',
+    }
+
+    state.onSelect('', callbackProps)
+  }
+
+  // Trigger close callback from Provider
+  if (closeOnSelect) {
+    state.onClose && state.onClose()
+
+    // Refocus triggerNode
+    const triggerNode = findTriggerNode(envNode)
+    // @ts-ignore
+    triggerNode && triggerNode.focus()
+  }
+
+  return dispatch(state, {
+    type: actionTypes.CLEAR_SELECTION,
+    payload: {
+      selectedItem: '',
     },
   })
 }

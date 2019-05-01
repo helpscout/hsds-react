@@ -1,10 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
-import Centralize from '../Centralize'
 import Flexy from '../Flexy'
-import Icon from '../Icon'
-import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { noop, promiseNoop } from '../../utilities/other'
@@ -14,11 +11,15 @@ import {
   TagUI,
   BodyUI,
   SpinnerUI,
+  IconUI,
+  IconWrapperUI,
+  TextUI,
 } from './styles/Tag.css'
 import { COMPONENT_KEY } from './Tag.utils'
 
 type TagColor =
   | 'blue'
+  | 'lightBlue'
   | 'green'
   | 'grey'
   | 'gray'
@@ -26,6 +27,8 @@ type TagColor =
   | 'purple'
   | 'red'
   | 'yellow'
+
+type TagSize = 'sm' | 'md'
 
 export interface Props {
   animationDuration?: number
@@ -43,6 +46,7 @@ export interface Props {
   pulsing?: boolean
   showTooltipOnTruncate: boolean
   value?: string | number
+  size?: TagSize
 }
 
 export interface State {
@@ -61,6 +65,7 @@ export class Tag extends React.PureComponent<Props, State> {
     onRemove: noop,
     showTooltipOnTruncate: true,
     value: '',
+    size: 'sm',
   }
   static className = 'c-Tag'
 
@@ -78,15 +83,27 @@ export class Tag extends React.PureComponent<Props, State> {
   }
 
   getClassName() {
-    const { className, color, filled, pulsing } = this.props
+    const { className, color, filled, pulsing, isRemovable, size } = this.props
 
     return classNames(
       Tag.className,
       color && `is-${color}`,
       filled && 'is-filled',
       pulsing && 'is-pulsing',
+      isRemovable && 'is-removable',
+      size && `is-${size}`,
       className
     )
+  }
+
+  getFontSize() {
+    const { allCaps } = this.props
+
+    let fontSize = 12
+    if (allCaps) {
+      fontSize = fontSize - 1
+    }
+    return `${fontSize}`
   }
 
   getWrapperClassName() {
@@ -118,24 +135,34 @@ export class Tag extends React.PureComponent<Props, State> {
   }
 
   renderRemoveIcon() {
-    const { filled, isRemovable } = this.props
+    const { filled, isRemovable, size } = this.props
     const { isRemoving } = this.state
 
     if (!isRemovable) return null
 
+    const iconSize = size === 'sm' ? '18' : '24'
+    const spinnerAndIconClassNames = classNames(
+      filled && 'is-filled',
+      `is-${size}`
+    )
+
     return (
       <Flexy.Item className="c-Tag__iconWrapper">
-        {isRemoving ? (
-          <SpinnerUI className={classNames(filled && 'is-filled')} size="xs" />
-        ) : (
-          <Icon
-            name="cross"
-            size="12"
-            clickable
-            onClick={this.handleOnRemove}
-            title="Remove"
-          />
-        )}
+        <IconWrapperUI className={spinnerAndIconClassNames}>
+          {isRemoving && (
+            <SpinnerUI className={spinnerAndIconClassNames} size="xs" />
+          )}
+          {!isRemoving && (
+            <IconUI
+              name="cross-small"
+              size={iconSize}
+              clickable
+              onClick={this.handleOnRemove}
+              title="Remove"
+              className={spinnerAndIconClassNames}
+            />
+          )}
+        </IconWrapperUI>
       </Flexy.Item>
     )
   }
@@ -174,26 +201,19 @@ export class Tag extends React.PureComponent<Props, State> {
           unmountOnExit
         >
           <TagUI {...getValidProps(rest)} className={this.getClassName()}>
-            <Centralize>
-              <BodyUI className="c-Tag__body" gap="xs">
-                <Flexy.Block className="c-Tag__contentWrapper">
-                  <Text
-                    allCaps={allCaps}
-                    block
-                    size={allCaps ? '10' : '12'}
-                    lineHeightReset
+            <BodyUI className="c-Tag__body" gap="none">
+              <Flexy.Block className="c-Tag__contentWrapper">
+                <TextUI allCaps={allCaps} block size={this.getFontSize()}>
+                  <Truncate
+                    className="c-Tag__textWrapper"
+                    showTooltipOnTruncate={showTooltipOnTruncate}
                   >
-                    <Truncate
-                      className="c-Tag__textWrapper"
-                      showTooltipOnTruncate={showTooltipOnTruncate}
-                    >
-                      {this.renderChildren()}
-                    </Truncate>
-                  </Text>
-                </Flexy.Block>
-                {this.renderRemoveIcon()}
-              </BodyUI>
-            </Centralize>
+                    {this.renderChildren()}
+                  </Truncate>
+                </TextUI>
+              </Flexy.Block>
+              {this.renderRemoveIcon()}
+            </BodyUI>
           </TagUI>
         </AnimateUI>
       </TagWrapperUI>

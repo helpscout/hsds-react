@@ -57,5 +57,6 @@ export const selectText = (element: any) => {
     }
   }
 
+  /* istanbul ignore next */
   return selectedText || ''
 }

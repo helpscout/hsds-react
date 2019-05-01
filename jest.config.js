@@ -14,6 +14,7 @@ module.exports = {
     '!src/components/Dropdown/V2/Dropdown.Renderer.tsx',
     '!src/components/Dropdown/V2/Dropdown.renderUtils.ts',
     '!src/components/Popper/**/*.{js,jsx}',
+    '!src/components/Route/**/*.{js,jsx,ts}',
     '!src/tests/helpers/**/*.{js,jsx}',
     '!src/utilities/browser.{js,jsx,ts}',
     '!src/utilities/env.{js,jsx,ts}',
@@ -42,7 +43,7 @@ module.exports = {
     '<rootDir>/config/polyfills.js',
     '<rootDir>/config/jsdomPolyfills.js',
   ],
-  setupTestFrameworkScriptFile: '<rootDir>/config/jest/setupTests.js',
+  setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.js'],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.test.(js|jsx|ts|tsx)',
     '<rootDir>/src/**/?(*.)(spec|test).js?(x)',

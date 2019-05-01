@@ -1,40 +1,41 @@
 // Source
-// https://github.com/ReactTraining/react-router/blob/master/packages/react-router/modules/matchPath.js
-
+// https://github.com/ReactTraining/react-router/blob/3d233bf0b6dd5bf68d9bac9c94273ae25646b207/packages/react-router/modules/matchPath.js
 import pathToRegexp from 'path-to-regexp'
 
-const cache = {}
+const patternCache = {}
 const cacheLimit = 10000
 let cacheCount = 0
 
-function compilePath(path, options) {
+const compilePath = (pattern, options) => {
   const cacheKey = `${options.end}${options.strict}${options.sensitive}`
-  const pathCache = cache[cacheKey] || (cache[cacheKey] = {})
+  const cache = patternCache[cacheKey] || (patternCache[cacheKey] = {})
 
-  if (pathCache[path]) return pathCache[path]
+  if (cache[pattern]) return cache[pattern]
 
   const keys = []
-  const regexp = pathToRegexp(path, keys, options)
-  const result = { regexp, keys }
+  const re = pathToRegexp(pattern, keys, options)
+  const compiledPattern = { re, keys }
 
   if (cacheCount < cacheLimit) {
-    pathCache[path] = result
+    cache[pattern] = compiledPattern
     cacheCount++
   }
 
-  return result
+  return compiledPattern
 }
 
 /**
- * Public API for matching a URL pathname to a path.
+ * Public API for matching a URL pathname to a path pattern.
  */
-function matchPath(pathname, options = {}) {
+const matchPath = (pathname, options = {}, parent) => {
   if (typeof options === 'string') options = { path: options }
 
   const { path, exact = false, strict = false, sensitive = false } = options
 
-  const { regexp, keys } = compilePath(path, { end: exact, strict, sensitive })
-  const match = regexp.exec(pathname)
+  if (path == null) return parent
+
+  const { re, keys } = compilePath(path, { end: exact, strict, sensitive })
+  const match = re.exec(pathname)
 
   if (!match) return null
 
@@ -44,7 +45,7 @@ function matchPath(pathname, options = {}) {
   if (exact && !isExact) return null
 
   return {
-    path, // the path used to match
+    path, // the path pattern used to match
     url: path === '/' && url === '' ? '/' : url, // the matched portion of the URL
     isExact, // whether or not we matched exactly
     params: keys.reduce((memo, key, index) => {

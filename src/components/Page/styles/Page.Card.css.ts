@@ -20,7 +20,7 @@ export const config = {
     default: 'column',
     superWidescreen: 'row',
   },
-  marginBottom: '20px',
+  marginBottom: '40px',
   padding: {
     default: '50px 50px',
     widescreen: '50px 100px',

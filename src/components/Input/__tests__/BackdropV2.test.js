@@ -122,4 +122,11 @@ describe('Focus', () => {
     expect(o.getDOMNode().classList.contains('is-notOnly')).toBe(false)
     expect(o.getDOMNode().classList.contains('is-last')).toBe(true)
   })
+
+  test('Can render error state styles', () => {
+    const wrapper = mount(<Backdrop isFocused state="error" />)
+    const o = wrapper.find('.c-InputBackdropV2__focus').first()
+
+    expect(o.getDOMNode().classList.contains('is-error')).toBe(true)
+  })
 })

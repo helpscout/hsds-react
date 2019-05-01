@@ -188,6 +188,37 @@ describe('Item', () => {
     expect(el.props().label).toBe('Ron')
     expect(el.props().value).toBe('ron')
   })
+
+  test('Renders Clearer', () => {
+    const items = [
+      {
+        value: 'ron',
+        label: 'Ron',
+      },
+      {
+        value: 'brian',
+        label: 'Brian',
+      },
+    ]
+    const getState = () => ({ ...initialState, items })
+
+    const wrapper = mount(
+      <MenuContainer
+        items={items}
+        isOpen
+        getState={getState}
+        allowMultipleSelection={true}
+        selectionClearer="All Items"
+      />
+    )
+
+    const menu = wrapper.find('Menu')
+    const els = menu.find('Item')
+    const el = els.first()
+
+    expect(els.length).toBeTruthy()
+    expect(el.props().value).toBe('All Items')
+  })
 })
 
 describe('Groups', () => {

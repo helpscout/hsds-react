@@ -7,7 +7,7 @@ import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed } from '../../utilities/component'
 import { noop, promiseNoop } from '../../utilities/other'
-import { TagListUI } from './styles/TagList.css'
+import { TagListUI, ClearAllUI } from './styles/TagList.css'
 import { COMPONENT_KEY } from './TagList.utils'
 import { COMPONENT_KEY as TAG } from '../Tag/Tag.utils'
 
@@ -16,44 +16,69 @@ export interface Props {
   children?: any
   onBeforeRemove: any
   onRemove: (value: any) => void
+  onRemoveAll: () => void
   overflowFade: boolean
   isRemovable: boolean
+  clearAll: boolean
+  showAll: boolean
+  size?: 'lg' | 'md' | 'sm' | 'xs'
 }
 
 export class TagList extends React.PureComponent<Props> {
   static defaultProps = {
     onBeforeRemove: promiseNoop,
     onRemove: noop,
+    onRemoveAll: noop,
     overflowFade: false,
     isRemovable: false,
+    clearAll: false,
+    showAll: false,
+    size: 'xs',
   }
 
   static className = 'c-TagList'
 
   getClassName() {
-    const { className } = this.props
+    const { className, showAll } = this.props
 
-    return classNames(TagList.className, className)
+    return classNames(
+      TagList.className,
+      showAll ? 'is-showingAll' : '',
+      className
+    )
   }
 
   handleOnRemove = value => this.props.onRemove(value)
+  handleOnRemoveAll = () => this.props.onRemoveAll()
 
   renderContent() {
-    const { onBeforeRemove, children, isRemovable } = this.props
+    const { onBeforeRemove, children, isRemovable, clearAll, size } = this.props
 
     const providerProps = {
       [TAG]: { onBeforeRemove, isRemovable, onRemove: this.handleOnRemove },
     }
 
-    const childrenMarkup = React.Children.map(children, child => {
+    const childrenLength = React.Children.count(children)
+    const childrenMarkup = React.Children.map(children, (child, index) => {
       if (!isComponentNamed(child, TAG)) return null
 
-      return <Inline.Item>{React.cloneElement(child)}</Inline.Item>
+      const isLastChildWithClearAll =
+        childrenLength - 1 === index && clearAll && childrenLength > 1
+      return (
+        <Inline.Item>
+          {React.cloneElement(child)}
+          {isLastChildWithClearAll && (
+            <ClearAllUI key="clearAllButton" onClick={this.handleOnRemoveAll}>
+              Clear all
+            </ClearAllUI>
+          )}
+        </Inline.Item>
+      )
     })
 
     return (
       <PropProvider value={providerProps}>
-        <Inline size="xs">{childrenMarkup}</Inline>
+        <Inline size={size}>{childrenMarkup}</Inline>
       </PropProvider>
     )
   }
