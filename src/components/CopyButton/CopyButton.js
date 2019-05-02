@@ -10,7 +10,7 @@ import {
   ContentWrapperUI,
 } from './styles/CopyButton.css.js'
 import { COMPONENT_KEY } from './utils'
-import { ButtonSize } from '../Button/types'
+import { ButtonSize } from '../Button/Button.types'
 
 type Props = {
   canRenderFocus: boolean,
