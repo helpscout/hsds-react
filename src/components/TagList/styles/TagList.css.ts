@@ -1,4 +1,4 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import styled from '../../styled'
 import { getColor } from '../../../styles/utilities/color'
 import { setFontSize } from '../../../styles/utilities/font'

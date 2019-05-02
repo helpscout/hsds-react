@@ -144,9 +144,8 @@ class ChoiceGroup extends React.PureComponent<Props, State> {
       })
     )
   }
-  // TODO: fix typescript complains
-  // @ts-ignore
-  getIdFromContextProps = (props: Object) => props.id || this.state.id
+
+  getIdFromContextProps = (props: any) => props.id || this.state.id
 
   render() {
     const {

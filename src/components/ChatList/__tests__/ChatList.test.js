@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import ChatList from '../ChatList'
 import BlankSlate from '../BlankSlate'

@@ -10,6 +10,7 @@ import { COMPONENT_KEY } from './ChatInbox.utils'
 import { ChatInboxUI } from './styles/ChatInbox.css'
 
 type Props = {
+  className?: string
   isCollapsible: boolean
   isCollapsed: boolean
 }
@@ -50,8 +51,6 @@ class ChatInbox extends React.Component<Props, State> {
 
   render() {
     const {
-      // TODO: fix typescript complains
-      // @ts-ignore
       className,
       children,
       isCollapsed: propsIsCollapsed,
@@ -63,14 +62,10 @@ class ChatInbox extends React.Component<Props, State> {
 
     const componentClassName = classNames('c-ChatInbox', className)
 
-    const contentMarkup = React.Children.map(children, (child, index) => {
-      // TODO: fix typescript complains
-      // @ts-ignore
+    const contentMarkup = React.Children.map(children, (child: any, index) => {
       const childProps = child.props
 
       if (isComponentNamed(child, COMPONENT_KEY.Header)) {
-        // TODO: fix typescript complains
-        // @ts-ignore
         return React.cloneElement(child, {
           key: index,
           isCollapsed,
@@ -89,8 +84,6 @@ class ChatInbox extends React.Component<Props, State> {
         )
       }
 
-      // TODO: fix typescript complains
-      // @ts-ignore
       return React.cloneElement(child, { key: index })
     })
 

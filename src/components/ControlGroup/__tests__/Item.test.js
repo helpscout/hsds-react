@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Item from '../Item'
+import Item from '../ControlGroup.Item'
 import Input from '../../Input'
 import Select from '../../Select'
 

@@ -2,6 +2,7 @@ module.exports = api => {
   const isTest = api.env('test')
   const plugins = [
     '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-transform-flow-strip-types',
     'inline-svg',
     'emotion',
   ]
@@ -26,6 +27,7 @@ module.exports = api => {
           loose: true,
         },
       ],
+      '@babel/preset-flow',
       '@babel/react',
     ],
     plugins: plugins,

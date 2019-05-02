@@ -44,6 +44,7 @@ type Props = {
   helpText: any
   hintText: any
   id: string
+  innerRef: (node: HTMLElement) => void
   isFocused: boolean
   isFirst: boolean
   isNotOnly: boolean
@@ -155,9 +156,8 @@ export class Select extends React.PureComponent<Props, State> {
   }
 
   handleOnChange = (event: SelectEvent) => {
-    // TODO: fix typescript complains
-    // @ts-ignore
-    const value = event.currentTarget.value
+    if (event == null || event.currentTarget == null) return
+    const value = (event.currentTarget as HTMLSelectElement).value
     this.props.onChange(value)
 
     this.setState({
@@ -225,7 +225,7 @@ export class Select extends React.PureComponent<Props, State> {
   }
 
   /* istanbul ignore next */
-  getInlinePrefixSuffixClassName({ type, icon }) {
+  getInlinePrefixSuffixClassName({ type, icon }: any) {
     const { seamless, state } = this.props
 
     return classNames(
@@ -243,8 +243,6 @@ export class Select extends React.PureComponent<Props, State> {
     return (
       prefix && (
         <InlinePrefixSuffixUI
-          // TODO: fix typescript complains
-          // @ts-ignore
           className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
         >
           {prefix}
@@ -305,9 +303,7 @@ export class Select extends React.PureComponent<Props, State> {
           label={option.label}
           key={option.label}
         >
-          {// TODO: fix typescript complains
-          // @ts-ignore
-          option.value.map(this.renderOptions)}
+          {option.value.map(this.renderOptions)}
         </optgroup>
       )
     }
@@ -335,8 +331,6 @@ export class Select extends React.PureComponent<Props, State> {
 
   setSelectNode = (node: HTMLSelectElement) => {
     this.selectNode = node
-    // TODO: fix typescript complains
-    // @ts-ignore
     this.props.innerRef(node)
   }
 
@@ -350,8 +344,6 @@ export class Select extends React.PureComponent<Props, State> {
       forceAutoFocusTimeout,
       helpText,
       hintText,
-      // TODO: fix typescript complains
-      // @ts-ignore
       innerRef,
       isFocused,
       isFirst,

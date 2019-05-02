@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Arrow, { getPlacement, getPosition, sanitizeStyles } from '../Arrow'
+import Arrow, { getPlacement, getPosition, sanitizeStyles } from '../Pop.Arrow'
 import { resetStyles } from '../../styled/testHelpers'
 
 describe('Arrow', () => {

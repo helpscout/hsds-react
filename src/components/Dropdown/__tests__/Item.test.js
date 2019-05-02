@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
-import Item from '../Item'
-import { default as Menu, MenuComponent } from '../Menu'
+import Item from '../Dropdown.Item'
+import { default as Menu, MenuComponent } from '../Dropdown.Menu'
 import Icon from '../../Icon'
 
 const LINK_CLASSNAME = 'c-DropdownItem__link'

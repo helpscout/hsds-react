@@ -121,12 +121,11 @@ export class Tooltip extends React.PureComponent<Props> {
         <Pop.Reference className="c-Tooltip__reference">
           {children}
         </Pop.Reference>
-        {/* // TODO: fix typescript complains
-        // @ts-ignore */}
         <Pop.Popper
           arrowClassName={this.getArrowClassName()}
           arrowColor={color}
           className={this.getClassName()}
+          {...rest}
         >
           {this.renderPopper}
         </Pop.Popper>

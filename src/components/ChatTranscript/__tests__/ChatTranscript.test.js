@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { shallow } from 'enzyme'
-import ChatTranscript from '..'
+import ChatTranscript from '../ChatTranscript'
 
 describe('ClassName', () => {
   test('Has default className', () => {

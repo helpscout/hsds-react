@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import DragHandle from '../DragHandle'
+import DragHandle from '../Sortable.DragHandle'
 
 describe('ClassName', () => {
   test('Has default className', () => {

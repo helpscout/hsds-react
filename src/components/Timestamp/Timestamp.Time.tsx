@@ -4,7 +4,7 @@ import { Timestamp } from './Timestamp.types'
 
 type Props = {
   className?: string
-  formatter: (timestamp: Timestamp) => string
+  formatter: (timestamp?: Timestamp) => string
   live?: boolean
   timestamp?: Timestamp
 }
@@ -76,12 +76,8 @@ class Time extends React.Component<Props> {
     const { className, formatter, timestamp } = this.props
 
     return (
-      // TODO: fix typescript complains
-      // @ts-ignore
       <time className={className} dateTime={timestamp}>
-        {// TODO: fix typescript complains
-        // @ts-ignore
-        formatter(timestamp)}
+        {formatter(timestamp)}
       </time>
     )
   }

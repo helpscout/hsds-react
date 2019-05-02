@@ -7,6 +7,21 @@ export interface DropProps {
   trigger: Object | Element
   direction: string
   wrapperClassName: string
+  className?: any
+  closePortal?: any
+  exact?: any
+  isOpen?: any
+  onBeforeClose?: any
+  onBeforeOpen?: any
+  onClose?: any
+  onOpen?: any
+  openPortal?: any
+  path?: any
+  portalIsOpen?: any
+  portalIsMounted?: any
+  style?: any
+  timeout?: any
+  zIndex?: any
 }
 
 const popoverWrapperBaseZIndex = 1020
@@ -30,40 +45,24 @@ export const DropComponent: any = (
     }
 
     render() {
-      // TODO: fix typescript complains
       const {
-        // @ts-ignore
         className,
-        // @ts-ignore
         closePortal,
         direction,
-        // @ts-ignore
         exact,
-        // @ts-ignore
         isOpen,
-        // @ts-ignore
         onBeforeClose,
-        // @ts-ignore
         onBeforeOpen,
-        // @ts-ignore
         onClose,
-        // @ts-ignore
         onOpen,
-        // @ts-ignore
         openPortal,
-        // @ts-ignore
         path,
-        // @ts-ignore
         portalIsOpen,
-        // @ts-ignore
         portalIsMounted,
-        // @ts-ignore
         style,
-        // @ts-ignore
         timeout,
         trigger,
         wrapperClassName,
-        // @ts-ignore
         zIndex: propsZindex,
         ...rest
       } = this.props

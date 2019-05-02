@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
-import Item from '../Item'
+import Item from '../Timeline.Item'
 import { Timestamp } from '../../..'
 
 describe('ClassName', () => {

@@ -7,7 +7,7 @@ import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { providerContextTypes } from './Message.types'
+import { providerContextTypes } from './proptypes'
 import css, { TextCSS } from './styles/Attachment.css'
 import { COMPONENT_KEY } from './Message.utils'
 
@@ -102,7 +102,7 @@ Attachment.defaultProps = {
 
 // TODO: fix typescript complains
 // @ts-ignore
-// Attachment.contextTypes = providerContextTypes
+Attachment.contextTypes = providerContextTypes
 
 namespaceComponent(COMPONENT_KEY.Attachment)(Attachment)
 

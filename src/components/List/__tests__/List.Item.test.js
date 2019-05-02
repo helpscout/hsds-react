@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, render } from 'enzyme'
 import { Item } from '../List.Item'
 

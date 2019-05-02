@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { cy } from '@helpscout/cyan'
 import ScrollLock from '../ScrollLock'
 import { handleWheelEvent } from '../ScrollLock.utils'

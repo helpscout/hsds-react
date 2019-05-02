@@ -6,14 +6,12 @@ import Container from './Grid.Container'
 import Row from './Grid.Row'
 import Col from './Grid.Col'
 
-class Grid extends React.PureComponent {
+class Grid extends React.PureComponent<any> {
   static Container = Container
   static Row = Row
   static Col = Col
 
   render() {
-    // TODO: fix typescript complains
-    // @ts-ignore
     const { className, children, ...rest } = this.props
 
     const componentClassName = classNames('c-Grid', className)

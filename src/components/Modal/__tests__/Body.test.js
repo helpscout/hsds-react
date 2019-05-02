@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
-import Body from '../Body'
+import Body from '../Modal.Body'
 import { Scrollable } from '../../index'
 
 describe('ClassName', () => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import { createSpec, faker } from '@helpscout/helix'
 import { Card, Text } from '../../../index'

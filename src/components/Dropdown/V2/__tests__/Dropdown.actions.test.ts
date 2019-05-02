@@ -1,4 +1,3 @@
-// @ts-ignore
 import {
   changeDirection,
   onMenuMounted,

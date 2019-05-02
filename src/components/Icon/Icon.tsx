@@ -124,4 +124,4 @@ Icon.defaultProps = {
 
 namespaceComponent(COMPONENT_KEY)(Icon)
 
-export default propConnect(COMPONENT_KEY)(styled(Icon)(css))
+export default styled(Icon)(css)

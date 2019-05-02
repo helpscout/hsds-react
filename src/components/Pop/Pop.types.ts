@@ -21,13 +21,13 @@ export interface PopProps {
   animationDuration: number | string
   animationEasing: string
   animationSequence: string | Array<string>
-  arrowClassName: string
+  arrowClassName?: string
   children?: any
   className?: string
-  closeOnBodyClick: boolean
-  closeOnEscPress: boolean
-  closeOnContentClick: boolean
-  closeOnMouseLeave: boolean
+  closeOnBodyClick?: boolean
+  closeOnEscPress?: boolean
+  closeOnContentClick?: boolean
+  closeOnMouseLeave?: boolean
   display: string
   id?: string
   isOpen: boolean

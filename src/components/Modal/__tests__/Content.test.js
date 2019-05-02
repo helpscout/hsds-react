@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Content from '../Content'
+import Content from '../Modal.Content'
 
 describe('ClassName', () => {
   test('Has default className', () => {

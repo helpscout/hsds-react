@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import ChatBlock from '../ChatBlock'
-import Content from '../Content'
+import ChatBlock from '../Message.ChatBlock'
+import Content from '../Message.Content'
 
 const cx = 'c-MessageContent'
 const ui = {

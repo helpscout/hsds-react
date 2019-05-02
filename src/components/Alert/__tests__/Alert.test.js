@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { render, mount } from 'enzyme'
 import { Alert, cx } from '../Alert'
 import { Badge, Button, CloseButton, Collapsible, Icon } from '../../index'

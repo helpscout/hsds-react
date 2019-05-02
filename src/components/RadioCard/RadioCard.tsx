@@ -18,7 +18,7 @@ type InputEvent = Event
 type Props = {
   checked: boolean
   className?: string
-  icon: string | Function
+  icon: string | Component
   iconSize: number
   id?: string
   inputRef: (node: InputNode) => void
@@ -85,8 +85,6 @@ class RadioCard extends React.PureComponent<Props, State> {
     const { icon, iconSize } = this.props
 
     if (isFunction(icon)) {
-      // TODO: fix typescript complains
-      // @ts-ignore
       return React.createElement(icon)
     }
 

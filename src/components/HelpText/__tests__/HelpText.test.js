@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import HelpText from '../HelpText'
 import Text from '../../Text'

@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Suffix from '../Suffix'
+import Suffix from '../Input.Suffix'
 
 describe('Input/Suffix', () => {
   describe('ClassName', () => {

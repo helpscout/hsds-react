@@ -3,7 +3,7 @@ import { MessageThemeContext } from './Message.types'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './Message.types'
+import { providerContextTypes } from './proptypes'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = {

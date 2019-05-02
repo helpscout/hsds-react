@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
 import Sortable from '..'
-import List from '../List'
-import SortableItem from '../Item'
+import List from '../Sortable.List'
+import SortableItem from '../Sortable.Item'
 import SidebarCollapsibleCard from '../../SidebarCollapsibleCard'
 
 describe('ClassName', () => {

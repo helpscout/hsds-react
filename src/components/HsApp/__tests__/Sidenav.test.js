@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Sidenav from '../Sidenav'
+import Sidenav from '../HsApp.Sidenav'
 import SideNavigation from '../../SideNavigation'
 import Button from '../../Button'
 

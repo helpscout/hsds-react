@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import AvatarGrid from '../AvatarGrid'
 import { Animate, Avatar, Text } from '../../index'

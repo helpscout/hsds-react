@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Block from '../Block'
+import Block from '../Skeleton.Block'
 
 describe('className', () => {
   test('Has default className', () => {

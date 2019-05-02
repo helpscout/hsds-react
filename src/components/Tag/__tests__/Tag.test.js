@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import { Tag } from '../Tag'
 import { Animate, Icon, Text } from '../../index'

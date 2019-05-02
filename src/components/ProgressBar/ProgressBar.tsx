@@ -3,7 +3,7 @@ import { UISize } from '../../constants/types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-type Value = number | string | null
+type Value = number | string
 
 type Props = {
   className?: string
@@ -26,22 +26,27 @@ class ProgressBar extends React.PureComponent<Props> {
   }
 
   getValue(val: Value): number {
-    const value = val !== null ? val : this.props.value
-    // TODO: fix typescript complains
-    // @ts-ignore
-    const barValue = parseFloat(value)
+    const value = val != null ? val : this.props.value
+    const barValue = parseFloat(`${value}`)
     const normalizedBarValue =
       barValue > 100 ? 100 : barValue < 0 ? 0 : barValue
 
     return normalizedBarValue
   }
 
-  getValueAsPercent(val: Value = null): string {
+  getValueAsPercent(val: Value): string {
     return `${this.getValue(val)}%`
   }
 
   render() {
-    const { className, description, size, value, ...rest } = this.props
+    const {
+      className,
+      description,
+      size,
+      value,
+      onChange,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
       'c-ProgressBar',
@@ -49,22 +54,16 @@ class ProgressBar extends React.PureComponent<Props> {
       className
     )
     const progresBarStyle = {
-      width: this.getValueAsPercent(),
+      width: this.getValueAsPercent(value),
     }
 
     return (
       <div
         className={componentClassName}
         role="progressbar"
-        // TODO: fix typescript complains
-        // @ts-ignore
-        aria-valuenow={value}
-        // TODO: fix typescript complains
-        // @ts-ignore
-        aria-valuemin="0"
-        // TODO: fix typescript complains
-        // @ts-ignore
-        aria-valuemax="100"
+        aria-valuenow={Number(value)}
+        aria-valuemin={0}
+        aria-valuemax={100}
         aria-valuetext={description}
         {...rest}
       >

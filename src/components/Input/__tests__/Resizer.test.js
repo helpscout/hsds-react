@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Resizer from '../Resizer'
+import Resizer from '../Input.Resizer'
 
 describe('onResize', () => {
   test('Is called when mounted', () => {

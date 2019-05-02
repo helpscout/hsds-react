@@ -30,6 +30,8 @@ export const NavLink = ({
   const escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
 
   return (
+    // TODO: fix typescript complains
+    // @ts-ignore
     <Route
       path={escapedPath}
       exact={exact}

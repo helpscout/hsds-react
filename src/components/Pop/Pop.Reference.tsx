@@ -7,12 +7,7 @@ type Props = any
 class Reference extends React.Component<Props> {
   render() {
     return (
-      // TODO: fix typescript complains
-      // @ts-ignore
       <ReactPopperReference>
-        {/* 
-        // TODO: fix typescript complains
-        // @ts-ignore*/}
         {({ ref }) => (
           <ReferenceUI
             className="c-PopReference"
@@ -31,6 +26,6 @@ const ReferenceUI = styled('span')`
 
 // TODO: fix typescript complains
 // @ts-ignore
-Reference.displayName = 'Pop.Reference'
+// Reference.displayName = 'Pop.Reference'
 
 export default Reference

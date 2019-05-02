@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { cy } from '@helpscout/cyan'
-import Input from '../index'
+import Input from '../Input'
 
 describe('Input', () => {
   describe('Rendering', () => {

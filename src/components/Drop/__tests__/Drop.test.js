@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
-import Drop from '..'
+import Drop from '../Drop'
 import { classNames } from '../../../utilities/classNames'
 
 jest.useFakeTimers()

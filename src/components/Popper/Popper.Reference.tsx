@@ -21,11 +21,11 @@ class InnerReference extends React.Component<
   }
 
   render() {
-    return unwrapArray(this.props.children)({ ref: this.refHandler })
+    return unwrapArray(this.props.children, { ref: this.refHandler })
   }
 }
 
-export default function Reference(props: ReferenceProps) {
+export default function Reference(props) {
   return (
     <ManagerContext.Consumer>
       {({ getReferenceRef }) => (

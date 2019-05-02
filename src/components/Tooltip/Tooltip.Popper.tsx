@@ -4,9 +4,10 @@ import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { PopperUI } from './Tooltip.css'
+import { PopProps } from '../Pop/Pop.types'
 import { POPPER_COMPONENT_KEY } from './Tooltip.utils'
 
-export interface Props {
+export interface Props extends PopProps {
   children: any
   className?: string
   innerRef: (node: HTMLElement) => void

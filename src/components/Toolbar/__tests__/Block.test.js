@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { shallow } from 'enzyme'
 import { Block } from '../Toolbar.Block'
 import { Flexy } from '../../index'

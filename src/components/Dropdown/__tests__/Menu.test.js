@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
-import { default as Menu, MenuComponent } from '../Menu'
-import Divider from '../Divider'
-import Item from '../Item'
+import { default as Menu, MenuComponent } from '../Dropdown.Menu'
+import Divider from '../Dropdown.Divider'
+import Item from '../Dropdown.Item'
 import Keys from '../../../constants/Keys'
 
 jest.useFakeTimers()

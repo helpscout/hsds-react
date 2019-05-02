@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
@@ -119,7 +119,7 @@ export class Overflow extends React.PureComponent<Props, State> {
     })
   }
 
-  handleOnScroll = (event: Event) => {
+  handleOnScroll = event => {
     const { onScroll } = this.props
     this.applyFadeStyles(event)
     onScroll(event)
@@ -158,18 +158,15 @@ export class Overflow extends React.PureComponent<Props, State> {
   scrollLeft = () => {
     if (!this.props.scrollOnClickFade) return
 
-    const currentScrollAmount =
-      this.containerNode && this.containerNode.scrollLeft
-    const scrollAmount =
-      this.containerNode && this.containerNode.clientWidth * this.scrollAmount
-    const scrollValue =
-      currentScrollAmount && scrollAmount
-        ? currentScrollAmount - scrollAmount
-        : null
+    // TODO: fix typescript complains
+    // @ts-ignore
+    const currentScrollAmount = this.containerNode.scrollLeft
+    // TODO: fix typescript complains
+    // @ts-ignore
+    const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
+    const scrollValue = currentScrollAmount - scrollAmount
 
-    if (scrollValue) {
-      this.scrollContainerView(scrollValue)
-    }
+    this.scrollContainerView(scrollValue)
   }
 
   /**
@@ -178,18 +175,15 @@ export class Overflow extends React.PureComponent<Props, State> {
   scrollRight = () => {
     if (!this.props.scrollOnClickFade) return
 
-    const currentScrollAmount =
-      this.containerNode && this.containerNode.scrollLeft
-    const scrollAmount =
-      this.containerNode && this.containerNode.clientWidth * this.scrollAmount
-    const scrollValue =
-      currentScrollAmount && scrollAmount
-        ? currentScrollAmount + scrollAmount
-        : null
+    // TODO: fix typescript complains
+    // @ts-ignore
+    const currentScrollAmount = this.containerNode.scrollLeft
+    // TODO: fix typescript complains
+    // @ts-ignore
+    const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
+    const scrollValue = currentScrollAmount + scrollAmount
 
-    if (scrollValue) {
-      this.scrollContainerView(scrollValue)
-    }
+    this.scrollContainerView(scrollValue)
   }
 
   /**
@@ -237,6 +231,7 @@ export class Overflow extends React.PureComponent<Props, State> {
       remapScrollDirections,
       scrollableRef,
       scrollOnClickFade,
+      onWheel,
       ...rest
     } = this.props
 
@@ -275,8 +270,6 @@ export class Overflow extends React.PureComponent<Props, State> {
     )
 
     return (
-      // TODO: fix typescript complains
-      // @ts-ignore
       <div className={componentClassName} {...rest}>
         {faderLeftMarkup}
         <div
@@ -285,8 +278,6 @@ export class Overflow extends React.PureComponent<Props, State> {
             this.containerNode = node
             scrollableRef(node)
           }}
-          // TODO: fix typescript complains
-          // @ts-ignore
           onScroll={this.handleOnScroll}
           onWheel={this.remapScrollDirections}
         >

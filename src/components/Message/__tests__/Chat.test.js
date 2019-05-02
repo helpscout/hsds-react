@@ -1,9 +1,9 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Bubble from '../Bubble'
-import ChatBlock from '../ChatBlock'
-import Chat from '../Chat'
-import Caption from '../Caption'
+import Bubble from '../Message.Bubble'
+import ChatBlock from '../Message.ChatBlock'
+import Chat from '../Message.Chat'
+import Caption from '../Message.Caption'
 
 const cx = 'c-MessageChat'
 const ui = {

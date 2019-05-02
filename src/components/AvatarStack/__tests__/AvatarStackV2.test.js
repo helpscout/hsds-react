@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import { AvatarStack } from '../AvatarStack'
 import AvatarStackV2 from '../AvatarStackV2'

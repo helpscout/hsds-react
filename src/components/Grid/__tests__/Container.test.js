@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Container from '../Container'
+import Container from '../Grid.Container'
 
 describe('ClassName', () => {
   test('Has the correct CSS class', () => {

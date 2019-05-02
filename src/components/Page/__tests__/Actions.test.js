@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Actions from '../Actions'
+import Actions from '../Page.Actions'
 
 describe('ClassName', () => {
   test('Has default className', () => {

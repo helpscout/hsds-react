@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Avatar from '../Avatar'
+import Avatar from '../Skeleton.Avatar'
 
 describe('className', () => {
   test('Has default className', () => {

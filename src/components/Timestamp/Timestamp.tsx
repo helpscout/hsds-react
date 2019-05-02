@@ -50,7 +50,11 @@ class Timestamp extends React.Component<Props> {
         <Flexy gap="xs" just="left">
           <Flexy.Item>
             <Text size="12" faint disableSelect noWrap>
-              <Time formatter={formatter} live={live} timestamp={timestamp} />
+              <Time
+                formatter={formatter}
+                live={live}
+                timestamp={`${timestamp}`}
+              />
             </Text>
           </Flexy.Item>
           <Flexy.Item>{readMarkup}</Flexy.Item>

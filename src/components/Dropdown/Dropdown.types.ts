@@ -27,12 +27,12 @@ export interface DropdownItemProps {
   isOpen?: boolean
   itemIndex: number
   itemRef: (ref: any) => void
-  onBlur: (event: Event, reactEvent: Event, instance: Object) => void
-  onClick: (event: Event, reactEvent: Event, instance: Object) => void
+  onBlur: (...args: any[]) => void
+  onClick: (...args: any[]) => void
   onSelect: (value: any) => void
-  onFocus: (event: Event, reactEvent: Event, instance: Object) => void
-  onMouseEnter: (event: Event, reactEvent: Event, instance: Object) => void
-  onMouseLeave: (event: Event, reactEvent: Event, instance: Object) => void
+  onFocus: (...args: any[]) => void
+  onMouseEnter: (...args: any[]) => void
+  onMouseLeave: (...args: any[]) => void
   onMenuClose: () => void
   onParentMenuClose: () => void
   value?: any

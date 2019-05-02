@@ -2,7 +2,7 @@ import {
   getTextAreaLineCurrent,
   getTextAreaLineTotal,
   isTextArea,
-} from '../utils'
+} from '../Input.utils'
 
 describe('getTextAreaLineCurrent', () => {
   test('Retrieves the correct line number for a single line', () => {

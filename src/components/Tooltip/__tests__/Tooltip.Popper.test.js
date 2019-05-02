@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import Popper from '../Tooltip.Popper'
 import { mount } from 'enzyme'
 

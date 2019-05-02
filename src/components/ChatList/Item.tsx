@@ -32,6 +32,7 @@ import {
 
 type Props = {
   avatar?: any
+  className?: string
   isAssigned: boolean
   isFocused: boolean
   isTyping: boolean
@@ -62,8 +63,6 @@ class Item extends React.Component<Props> {
   render() {
     const {
       avatar,
-      // TODO: fix typescript complains
-      // @ts-ignore
       className,
       isAssigned,
       isFocused,

@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Backdrop from '../BackdropV2'
+import Backdrop from '../Input.BackdropV2'
 
 describe('ClassName', () => {
   test('Has default className', () => {

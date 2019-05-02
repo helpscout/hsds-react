@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
 import { Dropdown } from '../Dropdown'
-import { MenuComponent } from '../Menu'
+import { MenuComponent } from '../Dropdown.Menu'
 
 describe('Classname', () => {
   test('Has default className', () => {

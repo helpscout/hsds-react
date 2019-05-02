@@ -80,6 +80,7 @@ type Props = {
   onFocus: (event: AnyInputEvent) => void
   onKeyDown: (event: AnyInputEvent) => void
   onKeyUp: (event: AnyInputEvent) => void
+  onScroll: (event: AnyInputEvent) => void
   onResize: (height: number) => void
   onStartTyping: (now?: number) => void
   onStopTyping: () => void
@@ -106,7 +107,7 @@ type Props = {
 type State = {
   id: string
   isFocused: boolean
-  height: number | null
+  height?: number
   state?: UIState
   typingThrottle: number | undefined
   typingTimeout: number | undefined
@@ -172,7 +173,6 @@ export class Input extends React.PureComponent<Props, State> {
     this.state = {
       id: props.id || uniqueID(),
       isFocused: props.isFocused,
-      height: null,
       state: props.state,
       typingThrottle: undefined,
       typingTimeout: undefined,
@@ -503,7 +503,7 @@ export class Input extends React.PureComponent<Props, State> {
   }
 
   /* istanbul ignore next */
-  getInlinePrefixSuffixClassName({ type, icon }) {
+  getInlinePrefixSuffixClassName({ type, icon }: any) {
     const { multiline, seamless, state } = this.props
 
     return classNames(
@@ -522,8 +522,6 @@ export class Input extends React.PureComponent<Props, State> {
     return (
       inlinePrefix && (
         <InlinePrefixSuffixUI
-          // TODO: fix typescript complains
-          // @ts-ignore
           className={this.getInlinePrefixSuffixClassName({ type: 'prefix' })}
         >
           {inlinePrefix}
@@ -544,8 +542,6 @@ export class Input extends React.PureComponent<Props, State> {
     return (
       inlineSuffix && (
         <InlinePrefixSuffixUI
-          // TODO: fix typescript complains
-          // @ts-ignore
           className={this.getInlinePrefixSuffixClassName({ type: 'suffix' })}
         >
           {inlineSuffix}
@@ -611,8 +607,6 @@ export class Input extends React.PureComponent<Props, State> {
       multiline != null ? (
         <Resizer
           contents={value}
-          // TODO: fix typescript complains
-          // @ts-ignore
           currentHeight={height}
           minimumLines={this.getMultilineValue()}
           offsetAmount={offsetAmount}
@@ -651,8 +645,6 @@ export class Input extends React.PureComponent<Props, State> {
       onEnterUp,
       onFocus,
       onResize,
-      // TODO: fix typescript complains
-      // @ts-ignore
       onScroll,
       onStartTyping,
       onStopTyping,

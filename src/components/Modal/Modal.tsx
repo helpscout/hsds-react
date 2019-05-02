@@ -1,6 +1,6 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { PortalProps } from '../Portal/Portal.types'
-import ReactDOM from 'react-dom'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Body from './Modal.Body'
 import Content from './Modal.Content'
@@ -91,8 +91,8 @@ class Modal extends React.PureComponent<ModalProps> {
     zIndex: 1,
   }
 
-  static childContextTypes: {
-    positionCloseNode: () => void
+  static childContextTypes = {
+    positionCloseNode: noop,
   }
 
   static Body = Body
@@ -208,8 +208,6 @@ class Modal extends React.PureComponent<ModalProps> {
         (isComponentNamed(child, COMPONENT_KEY.Content) ||
           isComponentNamed(child, COMPONENT_KEY.Body))
       ) {
-        // TODO: fix typescript complains
-        // @ts-ignore
         return React.cloneElement(child, {
           scrollableRef: this.setScrollableNode,
         })

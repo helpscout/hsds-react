@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Card from '../Card'
+import Card from '../Page.Card'
 
 describe('ClassName', () => {
   test('Has default className', () => {

@@ -1,1 +1,1 @@
-export type Timestamp = string | number
+export type Timestamp = string

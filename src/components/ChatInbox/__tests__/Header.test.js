@@ -1,8 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import Header from '../Header'
 import { Icon, Heading, Hr } from '../../index'
-import { baseComponentTest } from '../../../tests/helpers/components'
 
 describe('ClassName', () => {
   test('Has default className', () => {

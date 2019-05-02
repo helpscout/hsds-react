@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Divider from '../Divider'
+import Divider from '../Dropdown.Divider'
 
 describe('ClassName', () => {
   test('Has default className', () => {

@@ -27,6 +27,7 @@ interface DropdownProps {
   onBeforeOpen: () => void
   onClose: () => void
   onOpen: () => void
+  forceClosePortal: () => void
   onSelect: () => void
   selectedIndex: number
   trigger?: HTMLElement
@@ -54,14 +55,15 @@ class Menu extends React.PureComponent<DropdownProps, DropDownState> {
     onOpen: noop,
     onSelect: noop,
   }
-  // static contextTypes = {
-  //   parentMenu: PropTypes.element,
-  //   parentMenuClose: PropTypes.func,
-  // }
+
+  static contextTypes = {
+    parentMenu: Element,
+    parentMenuClose: noop,
+  }
 
   items: Array<any> = []
   isFocused: boolean = false
-  height: number | null = null
+  height: number | boolean | null = null
 
   node: HTMLElement | null = null
   wrapperNode: HTMLElement | null = null
@@ -143,8 +145,6 @@ class Menu extends React.PureComponent<DropdownProps, DropDownState> {
     if (height !== this.height) {
       // Direct DOM manipulation to avoid component re-render from state change
       applyStylesToNode(this.contentNode, { height })
-      // TODO: fix typescript complains
-      // @ts-ignore
       this.height = height
     }
   }
@@ -265,12 +265,12 @@ class Menu extends React.PureComponent<DropdownProps, DropDownState> {
     this.handleOnCloseParent()
   }
 
-  handleItemOnFocus = (event: Event, reactEvent: Event, item: any) => {
+  handleItemOnFocus = (event, reactEvent, item) => {
     const focusIndex = this.getIndexFromItem(item)
     this.safeSetState({ focusIndex })
   }
 
-  handleItemOnMouseEnter = (event: Event, reactEvent: Event, item: any) => {
+  handleItemOnMouseEnter = (event, reactEvent, item) => {
     const focusIndex = this.getIndexFromItem(item)
     const hoverIndex = focusIndex
     this.safeSetState({ focusIndex, hoverIndex })
@@ -312,8 +312,6 @@ class Menu extends React.PureComponent<DropdownProps, DropDownState> {
       closeMenuOnClick,
       enableCycling,
       enableTabNavigation,
-      // TODO: fix typescript complains
-      // @ts-ignore
       forceClosePortal,
       isOpen,
       onBeforeClose,
@@ -434,7 +432,7 @@ class Menu extends React.PureComponent<DropdownProps, DropDownState> {
                 ref={node => {
                   this.contentNode = node
                 }}
-                style={{ height: this.height || undefined }}
+                style={{ height: `${this.height}` || undefined }}
               >
                 <Scrollable
                   scrollableRef={node => {

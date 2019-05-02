@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import AddOn from '../AddOn'
+import AddOn from '../Input.AddOn'
 
 describe('ClassName', () => {
   test('Has default className', () => {

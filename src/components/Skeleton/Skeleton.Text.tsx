@@ -4,7 +4,7 @@ import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './Skeleton.utils'
 import { TextUI } from './styles/Skeleton.Text.css'
 
-class Text extends React.PureComponent {
+class Text extends React.PureComponent<any> {
   static defaultProps = {
     heading: false,
     withAnimations: false,
@@ -14,21 +14,11 @@ class Text extends React.PureComponent {
 
   render() {
     const {
-      // TODO: fix typescript complains
-      // @ts-ignore
       className,
       children,
-      // TODO: fix typescript complains
-      // @ts-ignore
       heading,
-      // TODO: fix typescript complains
-      // @ts-ignore
       size,
-      // TODO: fix typescript complains
-      // @ts-ignore
       style,
-      // TODO: fix typescript complains
-      // @ts-ignore
       width,
       ...rest
     } = this.props

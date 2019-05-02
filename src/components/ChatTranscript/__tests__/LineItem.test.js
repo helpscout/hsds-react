@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
-import LineItem from '../LineItem'
+import LineItem from '../ChatTranscript.LineItem'
 
 const ui = {
   content: '.c-ChatTranscriptLineItem__content',

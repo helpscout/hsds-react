@@ -1,6 +1,6 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import { Overflow } from '..'
+import { Overflow } from '../Overflow'
 
 jest.useFakeTimers()
 
@@ -174,7 +174,7 @@ describe('Height adjustments', () => {
 })
 
 describe('scrollableRef', () => {
-  class MyComponent extends Component {
+  class MyComponent extends React.PureComponent {
     constructor() {
       super()
       this.scrollable = null

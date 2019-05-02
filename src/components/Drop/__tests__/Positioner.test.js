@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Positioner from '../Positioner'
+import Positioner from '../Drop.Positioner'
 
 const simulateEvent = eventName => {
   window.dispatchEvent(new Event(eventName))

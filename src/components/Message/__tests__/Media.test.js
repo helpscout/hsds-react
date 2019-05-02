@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Chat from '../Chat'
-import { Media } from '../Media'
+import Chat from '../Message.Chat'
+import { Media } from '../Message.Media'
 import Message from '../Message'
 import { Image, Modal, Text } from '../../index'
 

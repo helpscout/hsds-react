@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { shallow } from 'enzyme'
-import Trigger from '../Trigger'
+import Trigger from '../Dropdown.Trigger'
 import { Button, Icon } from '../../'
 
 describe('ClassName', () => {

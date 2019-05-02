@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, render } from 'enzyme'
 import CopyButton from '../../CopyButton'
 import CopyInput from '../CopyInput'

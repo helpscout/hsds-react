@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import List from '../List'
+import List from '../Sortable.List'
 
 describe('ClassName', () => {
   test('Has default className', () => {

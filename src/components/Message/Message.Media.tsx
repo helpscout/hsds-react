@@ -10,7 +10,7 @@ import classNames, { BEM } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { providerContextTypes } from './Message.types'
+import { providerContextTypes } from './proptypes'
 import css, { ImageUI } from './styles/Media.css'
 import { COMPONENT_KEY } from './Message.utils'
 
@@ -60,7 +60,7 @@ export class Media extends React.Component<Props> {
     tryAgainLabel: 'Try again',
     isUploading: false,
   }
-  static contextTypes: providerContextTypes
+  static contextTypes = providerContextTypes
   static displayName = 'Message.Media'
 
   /**
@@ -71,14 +71,14 @@ export class Media extends React.Component<Props> {
   getCaption = (): string => {
     const { caption, error, errorMessage } = this.props
 
-    let text = caption
+    let text = caption || ''
 
-    if (error) {
-      text = isString(error) ? error : errorMessage
+    if (error && isString(error)) {
+      text = error
+    } else if (errorMessage) {
+      text = errorMessage
     }
 
-    // TODO: fix typescript complains
-    // @ts-ignore
     return text
   }
 
@@ -254,22 +254,16 @@ export class Media extends React.Component<Props> {
             className={classNames(
               'c-MessageMedia__modal',
               modalClassName,
-              // TODO: fix typescript complains
-              // @ts-ignore
               bem.element('modal')
             )}
             cardClassName={classNames(
               'c-MessageMedia__modalCard',
               modalCardClassName,
-              // TODO: fix typescript complains
-              // @ts-ignore
               bem.element('modalCard')
             )}
             wrapperClassName={classNames(
               'c-MessageMedia__modalWrapper',
               modalWrapperClassName,
-              // TODO: fix typescript complains
-              // @ts-ignore
               bem.element('modalWrapper')
             )}
           >

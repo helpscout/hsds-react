@@ -23,7 +23,7 @@ export type PopperChildrenProps = {
   style: StyleOffsets & StylePosition
   placement: Placement
   outOfBoundaries?: boolean
-  scheduleUpdate: () => void
+  scheduleUpdate?: () => void
   arrowProps: PopperArrowProps
 }
 
@@ -213,7 +213,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
   }
 
   render() {
-    return unwrapArray(this.props.children)({
+    return unwrapArray(this.props.children, {
       ref: this.setPopperNode,
       style: this.getPopperStyle(),
       placement: this.getPopperPlacement(),
@@ -230,7 +230,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
 const placements = PopperJS.placements
 export { placements }
 
-export default function Popper(props: PopperProps) {
+export default function Popper(props) {
   return (
     <ManagerContext.Consumer>
       {({ referenceNode }) => (

@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Prefix from '../Prefix'
+import Prefix from '../Input.Prefix'
 
 describe('Input/Prefix', () => {
   describe('ClassName', () => {

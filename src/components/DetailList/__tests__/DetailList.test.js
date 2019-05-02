@@ -1,19 +1,19 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Title from '../Title'
+import DetailList from '../DetailList'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = mount(<Title />)
-    const el = wrapper.find('dt.c-DetailListTitle')
+    const wrapper = mount(<DetailList />)
+    const el = wrapper.find('dl.c-DetailList')
 
     expect(el.length).toBe(1)
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<Title className={customClass} />)
-    const el = wrapper.find('dt.c-DetailListTitle')
+    const wrapper = mount(<DetailList className={customClass} />)
+    const el = wrapper.find('dl.c-DetailList')
 
     expect(el.hasClass(customClass)).toBeTruthy()
   })
@@ -22,9 +22,9 @@ describe('ClassName', () => {
 describe('Children', () => {
   test('Renders child', () => {
     const wrapper = mount(
-      <Title>
+      <DetailList>
         <div className="child">Hello</div>
-      </Title>
+      </DetailList>
     )
     const el = wrapper.find('div.child')
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import Divider from './Dropdown.Divider'
 import Header from './Dropdown.Header'
@@ -36,7 +36,7 @@ export class Dropdown extends React.PureComponent<
   static Trigger = Trigger
 
   isFocused: boolean
-  triggerNode: HTMLElement
+  triggerNode: HTMLElement | Component | null
   _isMounted: boolean
 
   constructor(props: DropdownProps) {
@@ -81,8 +81,6 @@ export class Dropdown extends React.PureComponent<
     const trigger = this.refs.trigger
     /* istanbul ignore next */
     if (!this.triggerNode) {
-      // TODO: fix typescript complains
-      // @ts-ignore
       this.triggerNode = isNodeElement(trigger)
         ? trigger
         : ReactDOM.findDOMNode(trigger)

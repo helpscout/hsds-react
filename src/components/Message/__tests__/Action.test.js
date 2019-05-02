@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import ChatBlock from '../ChatBlock'
-import Action from '../Action'
+import ChatBlock from '../Message.ChatBlock'
+import Action from '../Message.Action'
 import Message from '../Message'
 import { Text } from '../../'
 

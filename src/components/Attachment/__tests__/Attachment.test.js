@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow, render } from 'enzyme'
 import { Attachment } from '../Attachment'
 import { Provider } from '../index'

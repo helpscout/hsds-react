@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow, render } from 'enzyme'
 import Input from '../Input'
-import Resizer from '../Resizer'
+import Resizer from '../Input.Resizer'
 
 jest.useFakeTimers()
 
@@ -57,7 +57,6 @@ describe('Autofocus', () => {
   test('Autofocuses if specified', () => {
     jest.useFakeTimers()
     const wrapper = mount(<Input autoFocus />)
-    const input = wrapper.find('input')
     jest.runAllTimers()
     expect(wrapper.state('isFocused')).toBeTruthy()
   })

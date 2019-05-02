@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 export class WithAktiv extends React.Component {
   componentDidMount() {

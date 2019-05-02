@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { MessageBubble, MessageThemeContext } from './Message.types'
+import { providerContextTypes } from './proptypes'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
 import Heading from '../Heading'
@@ -15,7 +16,6 @@ import {
   isWord,
   newlineToHTML,
 } from '../../utilities/strings'
-import { providerContextTypes } from './Message.types'
 import css, {
   BodyCSS,
   FromCSS,
@@ -150,9 +150,7 @@ export const Bubble = (props: Props, context: Context) => {
   )
 }
 
-// TODO: fix typescript complains
-// @ts-ignore
-// Bubble.contextTypes = providerContextTypes
+Bubble.contextTypes = providerContextTypes
 
 namespaceComponent(COMPONENT_KEY.Bubble)(Bubble)
 

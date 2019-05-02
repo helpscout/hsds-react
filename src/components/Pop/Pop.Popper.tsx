@@ -93,14 +93,11 @@ export class Popper extends React.Component<PopperProps> {
     }
 
     return (
-      // TODO: fix typescript complains
-      // @ts-ignore
       <ReactPopper
         modifiers={modifiers}
         placement={placement}
         positionFixed={positionFixed}
       >
-        // @ts-ignore
         {({ ref, style, placement, arrowProps }) => (
           <Portal
             className="PopPortal"

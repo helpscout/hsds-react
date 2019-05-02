@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Row from '../Row'
+import Row from '../Grid.Row'
 
 describe('ClassName', () => {
   test('Has the correct CSS class', () => {

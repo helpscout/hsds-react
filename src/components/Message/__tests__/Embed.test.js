@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Embed from '../Embed'
+import Embed from '../Message.Embed'
 import LoadingDots from '../../LoadingDots'
 import Message from '../Message'
 

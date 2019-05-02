@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Static from '../Static'
+import Static from '../Input.Static'
 
 describe('ClassName', () => {
   test('Has the correct CSS class', () => {

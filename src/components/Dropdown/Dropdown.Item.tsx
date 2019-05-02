@@ -1,5 +1,4 @@
 import * as React from 'react'
-// import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
@@ -22,10 +21,10 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
     onSelect: noop,
   }
 
-  // static childContextTypes = {
-  //   parentMenu: PropTypes.element,
-  //   parentMenuClose: PropTypes.func,
-  // }
+  static childContextTypes = {
+    parentMenu: Element,
+    positionCloseNode: noop,
+  }
 
   node: HTMLElement | null = null
   menu: any = null
@@ -84,27 +83,27 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
     this._isMounted = false
   }
 
-  handleOnBlur = (event: Event, reactEvent: Event) => {
+  handleOnBlur = event => {
     const { onBlur } = this.props
-    onBlur(event, reactEvent, this)
+    onBlur(event, this)
     this.setState({
       isFocused: false,
     })
   }
 
-  handleOnEnter = (event: KeyboardEvent, reactEvent: Event) => {
+  handleOnEnter = event => {
     event.stopPropagation()
     /* istanbul ignore else */
     if (event.keyCode === Keys.ENTER) {
       if (this.menu) {
-        this.handleOnMouseEnter(event, reactEvent)
+        this.handleOnMouseEnter(event)
       } else {
-        this.handleOnClick(event, reactEvent)
+        this.handleOnClick(event)
       }
     }
   }
 
-  handleOnClick = (event: Event, reactEvent: Event) => {
+  handleOnClick = event => {
     const { disabled, onClick, onSelect, value } = this.props
 
     if (event) event.stopPropagation()
@@ -112,7 +111,7 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
 
     /* istanbul ignore else */
     if (!this.menu) {
-      onClick(event, reactEvent, this)
+      onClick(event, this)
       onSelect(value)
     } else {
       this.setState({
@@ -121,25 +120,25 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
     }
   }
 
-  handleOnFocus = (event: Event, reactEvent: Event) => {
+  handleOnFocus = event => {
     const { onFocus } = this.props
-    onFocus(event, reactEvent, this)
+    onFocus(event, this)
     this.setState({
       isFocused: true,
     })
   }
 
-  handleOnMouseEnter = (event: Event, reactEvent: Event) => {
+  handleOnMouseEnter = event => {
     const { onMouseEnter } = this.props
-    onMouseEnter(event, reactEvent, this)
+    onMouseEnter(event, this)
     this.setState({
       isHover: true,
     })
   }
 
-  handleOnMouseLeave = (event: Event, reactEvent: Event) => {
+  handleOnMouseLeave = event => {
     const { onMouseLeave } = this.props
-    onMouseLeave(event, reactEvent, this)
+    onMouseLeave(event, this)
     this.setState({
       isHover: false,
     })
@@ -152,16 +151,17 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
     onMenuClose()
   }
 
-  getMenu = (child: any) => {
-    if (!React.isValidElement(child)) return null
-    return child.type && (child.type === Menu || child.type === MenuComponent)
+  getMenu = (child): boolean => {
+    if (!React.isValidElement(child)) return false
+    return (
+      Boolean(child.type) &&
+      (child.type === Menu || child.type === MenuComponent)
+    )
   }
 
   getMenuFromChildren = () => {
     const { children } = this.props
     if (Array.isArray(children)) {
-      // TODO: fix typescript complains
-      // @ts-ignore
       return children.find(child => this.getMenu(child))
     } else {
       return this.getMenu(children) ? children : null
@@ -192,19 +192,12 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
       onClick,
       onFocus,
       onMouseEnter,
+      onMouseLeave,
       onMenuClose,
       onParentMenuClose,
       ...rest
     } = this.props
     const { isOpen, isHover, isFocused } = this.state
-
-    const handleOnBlur = this.handleOnBlur
-    const handleOnClick = this.handleOnClick
-    const handleOnFocus = this.handleOnFocus
-    const handleOnEnter = this.handleOnEnter
-    const handleOnMouseEnter = this.handleOnMouseEnter
-    const handleOnMouseLeave = this.handleOnMouseLeave
-    const handleOnMenuClose = this.handleOnMenuClose
 
     const componentClassName = classNames(
       'c-DropdownItem',
@@ -226,7 +219,7 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
               this.menu.props.selectedIndex !== undefined
                 ? this.menu.props.selectedIndex
                 : 0,
-            onClose: handleOnMenuClose,
+            onClose: this.handleOnMenuClose,
             trigger: this.node,
             direction: this.menu.props.direction
               ? this.menu.props.direction
@@ -241,24 +234,16 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
       </Flexy.Item>
     ) : null
 
-    // TODO: fix typescript complains
     return (
-      // @ts-ignore
       <div className={componentClassName} role="presentation" {...rest}>
         <div
           className="c-DropdownItem__link"
-          // @ts-ignore
-          onBlur={handleOnBlur}
-          // @ts-ignore
-          onClick={handleOnClick}
-          // @ts-ignore
-          onFocus={handleOnFocus}
-          // @ts-ignore
-          onMouseEnter={handleOnMouseEnter}
-          // @ts-ignore
-          onMouseLeave={handleOnMouseLeave}
-          // @ts-ignore
-          onKeyDown={handleOnEnter}
+          onBlur={this.handleOnBlur}
+          onClick={this.handleOnClick}
+          onFocus={this.handleOnFocus}
+          onMouseEnter={this.handleOnMouseEnter}
+          onMouseLeave={this.handleOnMouseLeave}
+          onKeyDown={this.handleOnEnter}
           tabIndex={-1}
           ref={node => {
             this.node = node

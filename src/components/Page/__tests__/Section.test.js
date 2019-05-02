@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Section from '../Section'
+import Section from '../Page.Section'
 
 describe('ClassName', () => {
   test('Has default className', () => {

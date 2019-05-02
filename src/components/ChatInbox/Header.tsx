@@ -12,6 +12,7 @@ import { HeaderUI, ContentUI } from './styles/Header.css'
 
 type Props = {
   avatars?: any
+  className?: string
   count: number
   isCollapsed: boolean
   isCollapsible: boolean
@@ -28,8 +29,6 @@ class Header extends React.PureComponent<Props> {
   render() {
     const {
       avatars,
-      // TODO: fix typescript complains
-      // @ts-ignore
       className,
       count,
       children,

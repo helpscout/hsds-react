@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
@@ -10,6 +10,7 @@ import {
 import { noop } from '../../utilities/other'
 
 export interface DropPositionerProps {
+  className?: string
   autoPosition: boolean
   direction: string
   offset: number
@@ -23,7 +24,7 @@ export interface DropPositionerProps {
     offsetTop: number
     top: number
   }
-  trigger: Element | object
+  trigger: Element | any
   zIndex: number
 }
 
@@ -37,14 +38,8 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
         : getDirections(),
     }
 
-    // TODO: fix typescript complains
-    // @ts-ignore
     this.position = null
-    // TODO: fix typescript complains
-    // @ts-ignore
     this.node = null
-    // TODO: fix typescript complains
-    // @ts-ignore
     this.contentNode = null
     this.updatePosition = this.updatePosition.bind(this)
   }
@@ -57,6 +52,11 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
     zIndex: 1000,
   }
 
+  position: any
+  node: any
+  triggerNode: any
+  contentNode: any
+
   componentDidMount() {
     this.setTriggerNode()
     // TODO: fix typescript complains
@@ -65,28 +65,18 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
   }
 
   componentWillReceiveProps(nextProps) {
-    // TODO: fix typescript complains
-    // @ts-ignore
     if (nextProps.position !== this.position) {
       this.updatePosition(nextProps.position)
     }
   }
 
   setTriggerNode() {
-    // TODO: fix typescript complains
-    // @ts-ignore
     const { trigger } = this.props
     /* istanbul ignore next */
-    // TODO: fix typescript complains
-    // @ts-ignore
     if (!this.triggerNode) {
-      // TODO: fix typescript complains
-      // @ts-ignore
       this.triggerNode = isNodeElement(trigger)
         ? trigger
-        : // TODO: fix typescript complains
-          // @ts-ignore
-          ReactDOM.findDOMNode(trigger)
+        : ReactDOM.findDOMNode(trigger)
     }
   }
 
@@ -96,8 +86,6 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
     const { direction, offset } = this.props
 
     /* istanbul ignore next */
-    // TODO: fix typescript complains
-    // @ts-ignore
     if (!this.triggerNode || !this.contentNode) return false
 
     /* istanbul ignore next */
@@ -105,11 +93,7 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
     // However, I'm unable to test it with this component due to the difficulty
     // of setting up Enzyme to recognize the triggerNode
     return getViewportPosition({
-      // TODO: fix typescript complains
-      // @ts-ignore
       triggerNode: this.triggerNode,
-      // TODO: fix typescript complains
-      // @ts-ignore
       contentNode: this.contentNode,
       offset: offset,
       direction: getDirections(direction),
@@ -117,7 +101,7 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
   }
 
   /* istanbul ignore next */
-  updatePosition(newPosition) {
+  updatePosition(newPosition?) {
     // TODO: fix typescript complains
     // @ts-ignore
     const { autoPosition, onUpdatePosition, position, zIndex } = this.props
@@ -141,40 +125,22 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
       this.setState({ direction: pos.direction })
     }
 
-    // TODO: fix typescript complains
-    // @ts-ignore
     this.position = pos
 
     /* istanbul ignore next */
-    // TODO: fix typescript complains
-    // @ts-ignore
     applyStylesToNode(this.node, nodeStyles)
     onUpdatePosition(pos)
   }
 
   render() {
     const {
-      // TODO: fix typescript complains
-      // @ts-ignore
       autoPosition,
-      // TODO: fix typescript complains
-      // @ts-ignore
       className,
       children,
-      // TODO: fix typescript complains
-      // @ts-ignore
       offset,
-      // TODO: fix typescript complains
-      // @ts-ignore
       onUpdatePosition,
-      // TODO: fix typescript complains
-      // @ts-ignore
       position,
-      // TODO: fix typescript complains
-      // @ts-ignore
       trigger,
-      // TODO: fix typescript complains
-      // @ts-ignore
       zIndex,
       ...rest
     } = this.props
@@ -198,8 +164,6 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
       <div
         className={componentClassName}
         ref={node => {
-          // TODO: fix typescript complains
-          // @ts-ignore
           this.node = node
         }}
         {...rest}
@@ -207,16 +171,12 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
         <EventListener
           event="resize"
           handler={() => {
-            // TODO: fix typescript complains
-            // @ts-ignore
             return updatePosition()
           }}
         />
         <div
           className="c-DropPositioner__content"
           ref={node => {
-            // TODO: fix typescript complains
-            // @ts-ignore
             this.contentNode = node
           }}
         >
@@ -229,6 +189,6 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
 
 // TODO: fix typescript complains
 // @ts-ignore
-Positioner.displayName = 'DropPositioner'
+// Positioner.displayName = 'DropPositioner'
 
 export default Positioner

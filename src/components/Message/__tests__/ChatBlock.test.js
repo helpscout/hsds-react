@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Action from '../Action'
-import ChatBlock from '../ChatBlock'
-import Bubble from '../Bubble'
+import Action from '../Message.Action'
+import ChatBlock from '../Message.ChatBlock'
+import Bubble from '../Message.Bubble'
 import Message from '../Message'
 import { Flexy, Timestamp } from '../../'
 

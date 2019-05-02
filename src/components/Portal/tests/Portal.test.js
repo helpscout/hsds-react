@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import Frame from 'react-frame-component'
 import { mount } from 'enzyme'
 import { Portal } from '../Portal'

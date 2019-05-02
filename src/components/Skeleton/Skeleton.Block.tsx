@@ -5,14 +5,12 @@ import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './Skeleton.utils'
 import { BlockUI } from './styles/Skeleton.Block.css'
 
-class Block extends React.PureComponent {
+class Block extends React.PureComponent<any> {
   static defaultProps = {
     withAnimations: true,
   }
 
   render() {
-    // TODO: fix typescript complains
-    // @ts-ignore
     const { className, children, withAnimations, ...rest } = this.props
 
     const componentClassName = classNames(

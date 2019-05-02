@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Bubble from '../Bubble'
+import Bubble from '../Message.Bubble'
 import Message from '../Message'
 import { LoadingDots, Text } from '../../index'
 

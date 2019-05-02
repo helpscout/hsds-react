@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Question from '../Question'
-import Chat from '../Chat'
+import Question from '../Message.Question'
+import Chat from '../Message.Chat'
 
 test('Returns a Chat component', () => {
   const wrapper = mount(<Question />)

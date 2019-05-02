@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, render } from 'enzyme'
 import { Table, TABLE_CLASSNAME } from '../Table'
 import { defaultTheme, alternativeTheme, chooseTheme } from '../styles/themes'

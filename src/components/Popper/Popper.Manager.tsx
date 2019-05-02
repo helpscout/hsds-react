@@ -7,7 +7,7 @@ export const ManagerContext = createContext({
 })
 
 export type ManagerProps = {
-  children: Node
+  children?: Element | any
 }
 
 type ManagerState = {

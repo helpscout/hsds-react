@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import FormGroupChoice from '../Choice'
+import FormGroupChoice from '../FromGroup.Choice'
 
 describe('FormGroupChoice', () => {
   describe('ClassName', () => {

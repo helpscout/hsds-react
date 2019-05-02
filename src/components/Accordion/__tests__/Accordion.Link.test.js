@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import { Link } from '../Accordion.Link'
 import { COMPONENT_KEY } from '../Accordion.utils'

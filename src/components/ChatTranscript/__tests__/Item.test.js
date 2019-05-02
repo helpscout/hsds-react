@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount, shallow } from 'enzyme'
-import { default as Item, ITEM_TYPES } from '../Item'
+import { default as Item, ITEM_TYPES } from '../ChatTranscript.Item'
 import { Attachment } from '../../index'
 
 const ui = {

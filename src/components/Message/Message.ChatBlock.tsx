@@ -8,7 +8,7 @@ import Timestamp from '../Timestamp'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './Message.types'
+import { providerContextTypes } from './proptypes'
 import css from './styles/ChatBlock.css'
 import { COMPONENT_KEY } from './Message.utils'
 
@@ -20,7 +20,7 @@ type Props = MessageChat & {
 }
 
 export class ChatBlock extends React.PureComponent<Props> {
-  static contextTypes: providerContextTypes
+  static contextTypes = providerContextTypes
   static displayName = 'Message.ChatBlock'
 
   getChildrenMarkup = () => {

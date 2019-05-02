@@ -5,7 +5,7 @@ import { hasClass } from '../../../tests/helpers/enzyme'
 import {
   SideNavigationUI,
   SideNavigationCollapsableUI,
-} from '../SideNavigation.css'
+} from '../styles/SideNavigation.css'
 
 describe('className', () => {
   test('Has a default className', () => {

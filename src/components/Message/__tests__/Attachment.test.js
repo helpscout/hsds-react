@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Attachment from '../Attachment'
-import Chat from '../Chat'
+import Attachment from '../Message.Attachment'
+import Chat from '../Message.Chat'
 import Message from '../Message'
 
 const cx = 'c-MessageAttachment'

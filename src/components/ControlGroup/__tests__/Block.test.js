@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Block from '../Block'
-import Item from '../Item'
+import Block from '../ControlGroup.Block'
+import Item from '../ControlGroup.Item'
 
 describe('ClassName', () => {
   test('Has default component className', () => {

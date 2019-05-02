@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Text from '../Text'
+import Text from '../Skeleton.Text'
 
 describe('className', () => {
   test('Has default className', () => {

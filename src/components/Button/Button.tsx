@@ -53,7 +53,7 @@ class Button extends React.PureComponent<Props> {
 
   static BlueComponentVersion = 1
 
-  setInnerRef = (node: HTMLElement) => {
+  setInnerRef = node => {
     this.props.buttonRef(node)
     this.props.innerRef(node)
   }
@@ -102,8 +102,6 @@ class Button extends React.PureComponent<Props> {
       <button
         {...getValidProps(rest)}
         aria-label={accessibilityLabel}
-        // TODO: fix typescript complains
-        // @ts-ignore
         ref={this.setInnerRef}
         className={componentClassName}
         disabled={disabled}

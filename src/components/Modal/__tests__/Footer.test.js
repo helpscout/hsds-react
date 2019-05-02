@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Footer from '../Footer'
+import Footer from '../Modal.Footer'
 import { Toolbar } from '../../index'
 
 describe('ClassName', () => {

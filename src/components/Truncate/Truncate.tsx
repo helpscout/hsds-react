@@ -122,11 +122,7 @@ export class Truncate extends React.PureComponent<
     const wordMarkup = (
       <span
         className="c-Truncate__content"
-        ref={ref =>
-          // TODO: fix typescript complains
-          // @ts-ignore
-          (this.contentNode = ref)
-        }
+        ref={(ref: any) => (this.contentNode = ref)}
       >
         {word}
       </span>
@@ -147,11 +143,7 @@ export class Truncate extends React.PureComponent<
     return (
       <span
         className={componentClassName}
-        ref={ref =>
-          // TODO: fix typescript complains
-          // @ts-ignore
-          (this.node = ref)
-        }
+        ref={(ref: any) => (this.node = ref)}
         {...rest}
       >
         <EventListener event="resize" handler={this.handleOnResize} />

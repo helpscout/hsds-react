@@ -75,9 +75,7 @@ class Embed extends React.Component<Props, State> {
         className={componentClassName}
       >
         <div
-          // TODO: fix typescript complains
-          // @ts-ignore
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: html || '' }}
           className="c-MessageEmbed__html"
           ref={this.setNodeRef}
         />

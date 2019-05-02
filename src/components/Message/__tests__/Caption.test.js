@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { shallow } from 'enzyme'
-import Caption from '../Caption'
+import Caption from '../Message.Caption'
 
 const cx = 'c-MessageCaption'
 

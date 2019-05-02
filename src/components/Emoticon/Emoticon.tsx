@@ -22,6 +22,16 @@ export interface Props {
   withAnimation: boolean
 }
 
+const Face = ({ isActive, isDisabled, ...rest }) => {
+  const className = classNames(
+    'c-Emoticon__face',
+    isActive && 'is-active',
+    isDisabled && 'is-disabled'
+  )
+
+  return <FaceUI {...rest} className={className} />
+}
+
 export class Emoticon extends React.PureComponent<Props> {
   static defaultProps = {
     center: false,
@@ -99,16 +109,6 @@ export class Emoticon extends React.PureComponent<Props> {
       </EmoticonUI>
     )
   }
-}
-
-const Face = ({ isActive, isDisabled, ...rest }) => {
-  const className = classNames(
-    'c-Emoticon__face',
-    isActive && 'is-active',
-    isDisabled && 'is-disabled'
-  )
-
-  return <FaceUI {...rest} className={className} />
 }
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY)(Emoticon)

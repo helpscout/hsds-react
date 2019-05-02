@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import PreviewCard from '../index'
-import Context from '../Context'
+import PreviewCard from '../PreviewCard'
+import Context from '../PreviewCard.Context'
 import { Card, Heading, Text } from '../../'
 
 const ui = {
@@ -18,7 +18,6 @@ describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
     const wrapper = mount(<PreviewCard className={customClass} />)
-    const el = wrapper.find('div.c-PreviewCard')
 
     expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
   })

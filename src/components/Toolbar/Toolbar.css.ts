@@ -34,7 +34,7 @@ export const ToolbarUI = styled(Flexy)`
   padding: 4px 8px;
   position: relative;
 
-  ${makeSizeStyles};
+  ${makeSizeStyles()};
 
   &.has-shadow {
     z-index: 1;
@@ -77,7 +77,6 @@ export const ShadowUI = styled('div')`
     top: calc(${config.shadowSize} * -1);
     background: linear-gradient(to top, black, rgba(0, 0, 0, 0));
   }
-}
 `
 
 function makeSizeStyles() {

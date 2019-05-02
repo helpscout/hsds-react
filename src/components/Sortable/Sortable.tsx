@@ -40,20 +40,14 @@ class Sortable extends Component<SortableProps> {
   remapChildrenToState(children = this.props.children) {
     if (!children) return
 
-    const items = React.Children.map(children, (child, index) => {
+    const items = React.Children.map(children, (child: any, index) => {
       const sortableElement = includes(
-        // TODO: fix typescript complains
-        // @ts-ignore
         child.type.displayName,
         'sortableElement'
       )
-      // TODO: fix typescript complains
-      // @ts-ignore
       const key = child.props.id ? child.props.id : `item-${index}`
 
       if (sortableElement) {
-        // TODO: fix typescript complains
-        // @ts-ignore
         return React.cloneElement(child, {
           index,
           key,
@@ -61,14 +55,10 @@ class Sortable extends Component<SortableProps> {
       }
 
       const childProps =
-        // TODO: fix typescript complains
-        // @ts-ignore
         child.props.sortable !== undefined ? { sortable: true } : {}
       return (
         <Item key={key} index={index}>
-          {// TODO: fix typescript complains
-          // @ts-ignore
-          React.cloneElement(child, childProps)}
+          {React.cloneElement(child, childProps)}
         </Item>
       )
     })
