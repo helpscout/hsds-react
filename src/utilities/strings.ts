@@ -277,10 +277,10 @@ export const convertLinksToHTML = (string: string): string => {
   }
 
   return string
-    .split(new RegExp(`(${urlPattern}|${emailPattern})`, 'giu'))
+    .split(new RegExp('(' + urlPattern + '|' + emailPattern + ')', 'gi'))
     .reduce((accumulator: string, value: string, index: number): string => {
       if (index % 2) {
-        if (value.match(new RegExp(`^${emailPattern}$`, 'ui'))) {
+        if (value.match(new RegExp('^' + emailPattern + '$', 'i'))) {
           // Matched an email
           return (
             accumulator +
@@ -291,7 +291,7 @@ export const convertLinksToHTML = (string: string): string => {
         // Matched a URL
         let url = value
 
-        if (url.match(new RegExp(`^${domainPattern}$`, 'ui'))) {
+        if (url.match(new RegExp(`^${domainPattern}$`, 'i'))) {
           // Only matched a domain name (without subdomain)
           // Skip this as it could be the end/start of a sentence without whitespace.
           // For example with "Hello Tom.how are you?" we should not match "Tom.how"
