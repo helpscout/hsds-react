@@ -1,4 +1,4 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { namespaceComponent } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
@@ -34,7 +34,7 @@ export interface Props {
   theme?: string
 }
 
-class Button extends Component<Props> {
+class Button extends React.PureComponent<Props> {
   static defaultProps = {
     block: false,
     buttonRef: noop,

@@ -1,4 +1,4 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
@@ -14,7 +14,7 @@ import {
 } from './Button.css.js'
 import { COMPONENT_KEY } from './Button.utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
-import { ButtonKind, ButtonSize } from './Button.types'
+import { ButtonKind, ButtonShape, ButtonSize } from './Button.types'
 import { UIState } from '../../constants/types'
 
 export interface Props {
@@ -35,6 +35,7 @@ export interface Props {
   isLast: boolean
   isLoading: boolean
   isSuffix: boolean
+  shape: ButtonShape
   size: ButtonSize
   spinButtonOnLoading: boolean
   state?: UIState
@@ -43,7 +44,7 @@ export interface Props {
   to?: string
 }
 
-class Button extends Component<Props> {
+class Button extends React.PureComponent<Props> {
   static defaultProps = {
     allowContentEventPropogation: true,
     buttonRef: noop,
@@ -58,6 +59,7 @@ class Button extends Component<Props> {
     isNotOnly: false,
     isLast: false,
     isSuffix: false,
+    shape: 'default',
     size: 'md',
     spinButtonOnLoading: false,
     submit: false,
@@ -91,13 +93,14 @@ class Button extends Component<Props> {
   }
 
   getFocusMarkup = () => {
-    const { isFirst, isNotOnly, isLast } = this.props
+    const { isFirst, isNotOnly, isLast, shape } = this.props
 
     const focusClassName = classNames(
       'c-ButtonV2Focus',
       isFirst && 'is-first',
       isNotOnly && 'is-notOnly',
-      isLast && 'is-last'
+      isLast && 'is-last',
+      shape && `is-shape-${shape}`
     )
 
     if (!this.shouldShowFocus()) return null
@@ -151,6 +154,7 @@ class Button extends Component<Props> {
       isLast,
       isLoading,
       isSuffix,
+      shape,
       size,
       spinButtonOnLoading,
       state,
@@ -174,6 +178,7 @@ class Button extends Component<Props> {
       isLoading && 'is-loading',
       isSuffix && 'is-suffix',
       kind && `is-${kind}`,
+      shape && `is-shape-${shape}`,
       size && `is-${size}`,
       spinButtonOnLoading && 'is-spinButtonOnLoading',
       state && `is-${state}`,

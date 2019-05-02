@@ -1,4 +1,4 @@
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import { propConnect } from '../PropProvider'
 import ButtonV2 from './ButtonV2'
 import Button from './Button'
@@ -9,7 +9,7 @@ export interface Props {
   version?: number
 }
 
-class WrappedButton extends Component<Props> {
+class WrappedButton extends React.PureComponent<Props> {
   render() {
     const { version, ...rest } = this.props
 

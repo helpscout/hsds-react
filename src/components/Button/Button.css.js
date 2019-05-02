@@ -185,6 +185,10 @@ export const config = {
   focusOutlineWidth: 2,
   focusOutlineOffset: 2,
   focusOutlineColor: getColor('blue.400'),
+  shape: {
+    default: '3px',
+    circle: '9999px',
+  },
   size: {
     xl: {
       fontSize: 14,
@@ -247,7 +251,6 @@ export const makeButtonUI = (selector = 'button') => {
     appearance: none;
     align-items: center;
     border: 1px solid transparent;
-    border-radius: ${config.borderRadius}px;
     cursor: pointer;
     display: inline-flex;
     font-weight: normal;
@@ -311,6 +314,7 @@ export const makeButtonUI = (selector = 'button') => {
       }
     }
 
+    ${makeButtonShapeStyles()}
     ${makeButtonSizeStyles()}
 
     ${props => makePrimaryStyles('primary', props)}
@@ -442,6 +446,17 @@ function makeDisabledStyles(content) {
   `
 }
 
+function makeButtonShapeStyles() {
+  return forEach(
+    config.shape,
+    (shape, value) => `
+    &.is-shape-${shape} {
+      border-radius: ${value};
+    }
+  `
+  )
+}
+
 function makeButtonSizeStyles() {
   return forEach(
     config.size,
@@ -494,7 +509,6 @@ export const ButtonContentUI = styled('span')`
 
 export const FocusUI = styled('span')`
   animation: ButtonFocusFadeIn 200ms;
-  border-radius: ${config.borderRadius}px;
   bottom: -${config.focusOutlineOffset}px;
   box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${config.focusOutlineColor};
   display: none;
@@ -524,6 +538,8 @@ export const FocusUI = styled('span')`
       opacity: 1;
     }
   }
+
+  ${makeButtonShapeStyles()};
 `
 
 export const SpinnerUI = styled(Spinner)`

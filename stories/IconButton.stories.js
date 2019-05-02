@@ -1,29 +1,22 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import IconButton from '../src/components/IconButton'
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
 
 const stories = storiesOf('IconButton', module)
-
-stories.addDecorator(
-  withArtboard({
-    width: 500,
-    height: 300,
-    withCenterGuides: false,
-    showInterface: false,
-  })
-)
 
 stories.add('Default', () => {
   const props = {
     icon: text('icon', 'search'),
+    iconSize: number('iconSize', 24),
+    shape: select(
+      'shape',
+      {
+        circle: 'circle',
+        default: 'default',
+      },
+      'circle'
+    ),
     kind: select(
       'kind',
       {
@@ -48,6 +41,8 @@ stories.add('Default', () => {
       },
       'lg'
     ),
+    isBorderless: boolean('isBorderless', true),
+    withCaret: boolean('withCaret', false),
   }
   return <IconButton {...props} />
 })
