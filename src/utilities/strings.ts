@@ -277,10 +277,10 @@ export const convertLinksToHTML = (string: string): string => {
   }
 
   return string
-    .split(new RegExp('(' + urlPattern + '|' + emailPattern + ')', 'gi'))
+    .split(new RegExp(`(${urlPattern}|${emailPattern})`, 'gi'))
     .reduce((accumulator: string, value: string, index: number): string => {
       if (index % 2) {
-        if (value.match(new RegExp('^' + emailPattern + '$', 'i'))) {
+        if (value.match(new RegExp(`^${emailPattern}$`, 'i'))) {
           // Matched an email
           return (
             accumulator +
