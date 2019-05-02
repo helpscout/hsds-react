@@ -24,6 +24,13 @@ export const ActionsUI = styled('div')`
   &.is-right {
     flex-direction: row-reverse;
   }
+
+  ${({ withStickyWrapper }) =>
+    withStickyWrapper &&
+    `
+    margin-top: 0;
+    margin-bottom: 0;
+  `};
 `
 
 export const ActionsItemUI = styled('div')`
@@ -35,6 +42,13 @@ export const ActionsBlockUI = styled('div')`
   flex: 1;
   max-width: 100%;
   min-width: 0;
+`
+
+export const StickyActionsWrapperUI = styled('div')`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `
 
 export default ActionsUI
