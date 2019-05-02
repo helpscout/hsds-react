@@ -43,7 +43,7 @@ class Actions extends React.PureComponent<Props, State> {
   componentDidMount() {
     const observerOptions = {
       root: null,
-      rootMargin: '0px',
+      rootMargin: '-10px',
       threshold: 1.0,
     }
     this.observer = new IntersectionObserver(
@@ -70,7 +70,7 @@ class Actions extends React.PureComponent<Props, State> {
     )
   }
 
-  handleOnIntersect = (changes, observer) => {
+  handleOnIntersect = changes => {
     const { isIntersecting } = changes[0]
     const isSticky = !isIntersecting
 
@@ -122,16 +122,6 @@ class Actions extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {
-      className,
-      direction,
-      innerRef,
-      primary,
-      serious,
-      secondary,
-      ...rest
-    } = this.props
-
     return (
       <div>
         <div ref={this.setNodeRef}>

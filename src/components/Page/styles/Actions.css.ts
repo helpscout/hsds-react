@@ -49,6 +49,11 @@ export const StickyActionsWrapperUI = styled('div')`
   bottom: 0;
   left: 0;
   right: 0;
+  background: white;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -3px 0 rgba(0, 0, 0, 0.03);
+  z-index: 1080;
 `
 
 export default ActionsUI
