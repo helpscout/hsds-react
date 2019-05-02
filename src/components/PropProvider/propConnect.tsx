@@ -14,6 +14,7 @@ import { setPackageVersionToGlobal } from '../../utilities/info'
 import {
   namespaceComponent,
   isComponentNamespaced,
+  unwrapNamespace,
 } from '../../utilities/component'
 import { isDefined, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
@@ -100,6 +101,12 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
         return style
       }
 
+      getDataNamespace = () => {
+        const dataNamespace = this.props['data-cy'] || namespace
+
+        return unwrapNamespace(dataNamespace)
+      }
+
       getMergedProps = (contextProps: PropProviderProps): Object => {
         const { wrappedRef, ...rest } = this.props
         const namespacedProps = this.getNamespacedProps(contextProps)
@@ -108,10 +115,10 @@ function propConnect(name?: ConfigGetter, options: Object = {}) {
 
         return {
           'data-cy-component': namespace,
-          'data-cy': namespace,
           ...namespacedProps,
           ...rest,
           className,
+          'data-cy': this.getDataNamespace(),
           style,
           [propProviderDataAttr]: getGlobalApp(contextProps),
           ref: !isStateless(WrappedComponent)

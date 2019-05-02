@@ -12,7 +12,7 @@ import Sidenav from './Sidenav'
 
 export interface Props {
   children?: any
-  withInnerWrapper?: boolean
+  withInnerWrapper: boolean
   sidenavComponent?: any
   contentComponent?: any
   navComponent?: any

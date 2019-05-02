@@ -4,16 +4,15 @@ import propConnect from '../PropProvider/propConnect'
 import { StatusDotStatus } from '../StatusDot/types'
 import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
-import VisuallyHidden from '../VisuallyHidden'
 import { includes } from '../../utilities/arrays'
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
+import AvatarCrop from './Avatar.Crop'
+import AvatarImage from './Avatar.Image'
 import {
   AvatarUI,
-  CropUI,
   CropBorderUI,
-  ImageUI,
   OuterBorderUI,
   StatusUI,
   TitleUI,
@@ -103,36 +102,41 @@ export class Avatar extends React.PureComponent<Props, State> {
     return classNames(shape && `is-${shape}`, size && `is-${size}`)
   }
 
-  getCropStyles = () => {
-    let styles = {}
-
-    if (this.hasImage()) {
-      styles = {
-        ...styles,
-        backgroundColor: 'currentColor',
-      }
-    }
-
-    styles = Object.keys(styles).length ? styles : {}
-
-    return styles
-  }
-
   renderCrop = () => {
-    const { withShadow } = this.props
-    const contentMarkup = this.getContentMarkup()
-    const styles = this.getCropStyles()
+    const {
+      animationDuration,
+      animationEasing,
+      image,
+      name,
+      withShadow,
+    } = this.props
 
-    const componentClassName = classNames(
-      'c-Avatar__crop',
-      withShadow && 'is-withShadow',
-      this.getShapeClassNames()
-    )
+    const hasImage = this.hasImage()
+    const isImageLoaded = image && this.isImageLoaded()
+    const shapeClassnames = this.getShapeClassNames()
 
     return (
-      <CropUI className={componentClassName} style={styles}>
-        {contentMarkup}
-      </CropUI>
+      <AvatarCrop
+        animationDuration={animationDuration}
+        animationEasing={animationEasing}
+        className={shapeClassnames}
+        hasImage={hasImage}
+        isImageLoaded={isImageLoaded}
+        withShadow={withShadow}
+      >
+        <AvatarImage
+          animationDuration={animationDuration}
+          animationEasing={animationEasing}
+          className={shapeClassnames}
+          hasImage={hasImage}
+          image={image}
+          isImageLoaded={isImageLoaded}
+          name={name}
+          title={this.getTitleMarkup()}
+          onError={this.onImageLoadedError}
+          onLoad={this.onImageLoadedSuccess}
+        />
+      </AvatarCrop>
     )
   }
 
@@ -182,42 +186,6 @@ export class Avatar extends React.PureComponent<Props, State> {
     const text = this.getText()
 
     return <TitleUI className={componentClassName}>{text}</TitleUI>
-  }
-
-  getContentMarkup = () => {
-    const { animationDuration, animationEasing, image, name } = this.props
-
-    const isImageLoaded = image && this.isImageLoaded()
-
-    const componentClassName = classNames(
-      'c-Avatar__image',
-      isImageLoaded && 'is-herbieFullyLoaded'
-    )
-
-    const imageStyle = {
-      backgroundImage: isImageLoaded ? `url('${image}')` : null,
-      transition: `opacity ${animationDuration}ms ${getEasingTiming(
-        animationEasing
-      )}`,
-    }
-
-    const titleMarkup = this.getTitleMarkup()
-    const contentMarkup = (
-      <ImageUI className={componentClassName} style={imageStyle}>
-        <div className="c-Avatar__name">
-          <VisuallyHidden>{name}</VisuallyHidden>
-          <img
-            alt={name}
-            onError={this.onImageLoadedError}
-            onLoad={this.onImageLoadedSuccess}
-            src={image}
-            style={{ display: 'none' }}
-          />
-        </div>
-      </ImageUI>
-    )
-
-    return this.hasImage() ? contentMarkup : titleMarkup
   }
 
   renderCropBorder = () => {

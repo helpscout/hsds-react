@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
+import ItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
 import {
   findDOMNode,
   hasClass,
@@ -44,6 +45,17 @@ describe('className', () => {
     const wrapper = mount(<Item className="ron" />)
 
     expect(hasClass(wrapper, 'ron')).toBe(true)
+  })
+
+  test('Selection Clearer className', () => {
+    const state = {
+      allowMultipleSelection: true,
+      selectionClearer: 'All Items',
+    }
+
+    const wrapper = mount(<Item getState={() => state} isSelectionClearer />)
+
+    expect(hasClass(wrapper, 'c-SelectionClearerItem')).toBe(true)
   })
 })
 
@@ -147,7 +159,78 @@ describe('Items', () => {
   })
 })
 
+describe('ItemSelectedCheck', () => {
+  test('Renders with value', () => {
+    const wrapper = mount(<ItemSelectedCheck value="Jon" />)
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+    const icon = wrapper.find('.c-Icon').first()
+
+    expect(valueSpan.text()).toBe('Jon')
+    expect(icon).toHaveLength(0)
+  })
+
+  test('Does not Renders without value', () => {
+    const wrapper = mount(<ItemSelectedCheck />)
+
+    expect(wrapper.instance()).toBe(null)
+  })
+
+  test('Renders checkmark if active', () => {
+    const wrapper = mount(<ItemSelectedCheck value="Jon" isActive={true} />)
+
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+    const icon = wrapper.find('.c-Icon').first()
+
+    expect(valueSpan.text()).toBe('Jon')
+    expect(icon).toHaveLength(1)
+  })
+
+  test('isSelectionClearer state', () => {
+    const wrapper = mount(
+      <ItemSelectedCheck
+        value="All Items"
+        isSelectionClearer={true}
+        getState={() => ({
+          selectedItem: 'hello',
+        })}
+      />
+    )
+
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+
+    expect(valueSpan.text()).toBe('All Items')
+    expect(hasClass(wrapper, 'selectionClearer')).toBeTruthy()
+  })
+})
+
 describe('Events', () => {
+  test('onClick callback fires', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Item onClick={spy} />)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onClick callback fires (selectionClearer)', () => {
+    const spy = jest.fn()
+    const state = {
+      allowMultipleSelection: true,
+      selectionClearer: 'All Items',
+    }
+    const wrapper = mount(<Item onClick={spy} getState={() => state} />)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalledWith(
+      state,
+      expect.objectContaining({
+        type: expect.any(String),
+      })
+    )
+  })
+
   test('onClick callback fires', () => {
     const spy = jest.fn()
     const wrapper = mount(<Item onClick={spy} />)
@@ -225,6 +308,43 @@ describe('renderItem', () => {
     const el = wrapper.find('div.ron')
 
     expect(el.length).toBeTruthy()
+  })
+
+  test('Can render custom markup for item when multiselect enabled', () => {
+    const CustomItem = (props = {}) => {
+      // @ts-ignore
+      return <div className="ron">{props.label}</div>
+    }
+
+    const wrapper = mount(
+      <Item
+        label="Champ"
+        renderItem={CustomItem}
+        getState={() => {
+          return {
+            allowMultipleSelection: true,
+          }
+        }}
+      />
+    )
+
+    const el = wrapper.find('div.ron')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Renders default markup (itemSelectedCheck) for item when multiselect enabled', () => {
+    const wrapper = mount(<Item label="Champ" value="hello" />)
+
+    wrapper.setProps({
+      getState: () => ({
+        allowMultipleSelection: true,
+      }),
+    })
+
+    const itemSelectedCheck = wrapper.find(ItemSelectedCheck)
+
+    expect(itemSelectedCheck).toBeTruthy()
   })
 })
 

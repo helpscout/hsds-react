@@ -4,11 +4,7 @@ import Button from '../Button'
 import Heading from '../Heading'
 import Text from '../Text'
 import baseStyles from '../../styles/resets/baseStyles.css'
-import {
-  addFontSmoothing,
-  makeFontFamily,
-  setFontSize,
-} from '../../styles/utilities/font'
+import { makeFontFamily, setFontSize } from '../../styles/utilities/font'
 
 const fontFamily = makeFontFamily('Barlow')
 
@@ -31,18 +27,21 @@ export const GreeterCardUI = styled(Card)`
 
 export const TitleUI = styled(Heading)`
   ${fontFamily};
+  line-height: 22px !important;
   margin-top: 5px;
 `
 
 export const SubtitleUI = styled(Heading)`
   ${setFontSize(12)};
+  line-height: 18px !important;
   margin-top: 6px;
 `
 
 export const BodyUI = styled(Text)`
-  ${setFontSize(14)};
-  letter-spacing: 0.37px;
+  ${setFontSize(13)};
+  line-height: 20px;
   margin-top: ${({ withMargin }) => (withMargin ? '12px' : '0')};
+  white-space: pre-wrap;
 `
 
 export const ActionUI = styled('div')`

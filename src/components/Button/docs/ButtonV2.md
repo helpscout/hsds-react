@@ -26,21 +26,24 @@ Alternatively, [PropProvider](../../PropProvider) can be used to set this prop a
 
 | Prop                         | Type       | Description                                                                     |
 | ---------------------------- | ---------- | ------------------------------------------------------------------------------- |
-| allowContentEventPropogation | `bool`     | Enables child events to pass through to Button. Default `true`.                 |
+| allowContentEventPropogation | `boolean`  | Enables child events to pass through to Button. Default `true`.                 |
 | className                    | `string`   | Custom class names to be added to the component.                                |
-| disabled                     | `bool`     | Disable the button so it can't be clicked.                                      |
+| disabled                     | `boolean`  | Disable the button so it can't be clicked.                                      |
+| disabledOnLoading            | `boolean`  | Disables the button when `isLoading` is true. Default `true`.                   |
 | fetch                        | `function` | function which returns a promise, will be invoked before routing the `to` route |
 | href                         | `string`   | Hyperlink for the button. This transforms the button to a `<a>` selector.       |
 | innerRef                     | `function` | Retrieves the `button` DOM node.                                                |
-| isFocused                    | `bool`     | Renders the focused style.                                                      |
-| isSuffix                     | `bool`     | Renders suffix styles.                                                          |
+| isFocused                    | `boolean`  | Renders the focused style.                                                      |
+| isLoading                    | `boolean`  | Renders a loading [Spinner](../../Spinner).                                     |
+| isSuffix                     | `boolean`  | Renders suffix styles.                                                          |
 | onBlur                       | `function` | `onBlur` event handler.                                                         |
 | onClick                      | `function` | `onClick` event handler.                                                        |
 | onFocus                      | `function` | `onFocus` event handler.                                                        |
 | kind                         | `string`   | Applies the specified style to the button.                                      |
 | size                         | `string`   | Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`.            |
+| spinButtonOnLoading          | `boolean`  | A special property that... spins the button if `isLoading`.                     |
 | state                        | `string`   | Applies state styles to the button.                                             |
-| submit                       | `bool`     | Sets the `type` of the button to `"submit"`.                                    |
+| submit                       | `boolean`  | Sets the `type` of the button to `"submit"`.                                    |
 | version                      | `number`   | Applies the version `2` variant of the button.                                  |
 | theme                        | `string`   | Applies a theme based style to the button.                                      |
 | to                           | `string`   | React Router path to navigate on click.                                         |

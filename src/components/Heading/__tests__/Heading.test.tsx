@@ -79,9 +79,35 @@ describe('Styles', () => {
   test('Applies line-height reset styles if specified', () => {
     const wrapper = mount(<Heading lineHeightReset />)
 
+    expect(wrapper.getDOMNode().classList.contains('is-lineHeightReset')).toBe(
+      true
+    )
+  })
+
+  test('Applies line-height inherit styles if specified', () => {
+    const wrapper = mount(<Heading lineHeightInherit />)
+
     expect(
-      wrapper.getDOMNode().classList.contains('is-line-height-reset')
+      wrapper.getDOMNode().classList.contains('is-lineHeightInherit')
     ).toBe(true)
+  })
+
+  test('Applies truncate styles if specified', () => {
+    const wrapper = mount(<Heading truncate />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-truncate')).toBe(true)
+  })
+
+  test('Applies word-wrap styles if specified', () => {
+    const wrapper = mount(<Heading wordWrap />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-wordWrap')).toBe(true)
+  })
+
+  test('Applies no word-wrap styles if specified', () => {
+    const wrapper = mount(<Heading noWrap />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-noWrap')).toBe(true)
   })
 
   test('Applies weight styles if specified', () => {

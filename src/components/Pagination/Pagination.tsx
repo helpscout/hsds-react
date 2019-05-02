@@ -23,13 +23,13 @@ import Icon from '../Icon'
 export interface Props {
   activePage: number
   className?: string
-  isLoading?: boolean
   innerRef: (node: HTMLElement) => void
+  isLoading?: boolean
   onChange: (nextPageNumber: number) => void
+  pluralizedSubject?: string
   rangePerPage: number
   separator?: string
   showNavigation?: boolean
-  pluralizedSubject?: string
   subject: string
   totalItems: number
 }
@@ -37,13 +37,13 @@ export interface Props {
 export class Pagination extends React.PureComponent<Props> {
   static defaultProps = {
     activePage: 1,
-    isLoading: false,
     innerRef: noop,
+    isLoading: false,
     onChange: noop,
     rangePerPage: 50,
     separator: 'of',
-    subject: '',
     showNavigation: true,
+    subject: '',
     totalItems: 0,
   }
 
@@ -87,7 +87,7 @@ export class Pagination extends React.PureComponent<Props> {
     return Math.max(totalItems, 0)
   }
 
-  isNavigationVisible() {
+  shouldShowNavigation() {
     const { showNavigation } = this.props
     return showNavigation && this.getNumberOfPages() > 1
   }
@@ -126,18 +126,24 @@ export class Pagination extends React.PureComponent<Props> {
     const { separator, subject } = this.props
     const totalItems = this.getTotalItems()
     const totalNode = (
-      <span className="c-Pagination__total">{formatNumber(totalItems)}</span>
+      <span className="c-Pagination__total" data-cy="Pagination-totalItems">
+        {formatNumber(totalItems)}
+      </span>
     )
 
-    if (!totalItems) {
-      return subject ? totalNode : null
+    if (!totalItems || !this.shouldShowNavigation()) {
+      return subject ? <RangeUI>{totalNode}</RangeUI> : null
     }
 
     return (
       <Text className="c-Pagination__range">
-        <RangeUI>{formatNumber(this.getStartRange())}</RangeUI>
+        <RangeUI data-cy="Pagination-startRange">
+          {formatNumber(this.getStartRange())}
+        </RangeUI>
         {` `}-{` `}
-        <RangeUI>{formatNumber(this.getEndRange())}</RangeUI>
+        <RangeUI data-cy="Pagination-endRange">
+          {formatNumber(this.getEndRange())}
+        </RangeUI>
         {` `}
         {separator}
         {` `}
@@ -174,6 +180,7 @@ export class Pagination extends React.PureComponent<Props> {
             className="c-Pagination__firstButton"
             disabled={isLoading}
             title="First page"
+            data-cy="Pagination-firstButton"
           >
             <Icon name="arrow-left-double-large" size="24" center />
           </ButtonIconUI>,
@@ -184,6 +191,7 @@ export class Pagination extends React.PureComponent<Props> {
             className="c-Pagination__prevButton"
             disabled={isLoading}
             title="Previous page (j)"
+            data-cy="Pagination-prevButton"
           >
             <Icon name="arrow-left-single-large" size="24" center />
           </ButtonIconUI>,
@@ -195,6 +203,7 @@ export class Pagination extends React.PureComponent<Props> {
           onClick={this.handleNextClick}
           className="c-Pagination__nextButton"
           title="Next page (k)"
+          data-cy="Pagination-nextButton"
         >
           <Icon name="arrow-right-single-large" size="24" center />
         </ButtonIconUI>
@@ -204,6 +213,7 @@ export class Pagination extends React.PureComponent<Props> {
           onClick={this.handleEndClick}
           className="c-Pagination__lastButton"
           title="Last page"
+          data-cy="Pagination-lastButton"
         >
           <Icon name="arrow-right-double-large" size="24" center />
         </ButtonIconUI>
@@ -240,7 +250,7 @@ export class Pagination extends React.PureComponent<Props> {
             )}
           </Text>
         </InformationUI>
-        {this.isNavigationVisible() && this.renderNavigation()}
+        {this.shouldShowNavigation() && this.renderNavigation()}
       </PaginationUI>
     )
   }

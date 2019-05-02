@@ -1,6 +1,7 @@
 // @flow
 import get from 'dash-get'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
+import Spinner from '../Spinner'
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
@@ -211,14 +212,14 @@ export const config = {
     },
     sm: {
       fontSize: 13,
-      fontWeight: 600,
+      fontWeight: 500,
       height: 30,
       minWidth: 'initial',
       padding: 15,
     },
     xs: {
       fontSize: 13,
-      fontWeight: 600,
+      fontWeight: 500,
       height: 24,
       minWidth: 'initial',
       padding: 15,
@@ -296,6 +297,18 @@ export const makeButtonUI = (selector = 'button') => {
     &.is-block {
       display: flex;
       width: 100%;
+    }
+
+    &.is-loading {
+      &.is-spinButtonOnLoading {
+        animation: SpinButtonOnLoadAnimation 700ms linear infinite;
+        will-change: transform;
+        @keyframes SpinButtonOnLoadAnimation {
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
     }
 
     ${makeButtonSizeStyles()}
@@ -471,6 +484,12 @@ export const ButtonContentUI = styled('span')`
       pointer-events: none;
     }
   `};
+
+  ${({ isLoading }) =>
+    isLoading &&
+    `
+    opacity: 0;
+  `};
 `
 
 export const FocusUI = styled('span')`
@@ -506,3 +525,16 @@ export const FocusUI = styled('span')`
     }
   }
 `
+
+export const SpinnerUI = styled(Spinner)`
+  color: ${getColor('charcoal.500')};
+  margin: -6px 0 0 -6px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+`
+
+SpinnerUI.defaultProps = {
+  size: 12,
+}

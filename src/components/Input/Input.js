@@ -127,6 +127,7 @@ export class Input extends Component<Props, State> {
     isLast: false,
     isNotOnly: false,
     isSubtleReadOnly: false,
+    maxHeight: 320,
     moveCursorToEnd: false,
     multiline: null,
     offsetAmount: 0,
@@ -467,11 +468,7 @@ export class Input extends Component<Props, State> {
     const { hintText } = this.props
 
     return (
-      hintText && (
-        <HelpText className="c-Input__hintText" isCompact>
-          {hintText}
-        </HelpText>
-      )
+      hintText && <HelpText className="c-Input__hintText">{hintText}</HelpText>
     )
   }
 
