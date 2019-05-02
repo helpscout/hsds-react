@@ -1,5 +1,5 @@
 import styled from '../styled'
-import Button from '../Button/ButtonV2'
+import Button from '../Button'
 import { config as buttonConfig } from '../Button/Button.css'
 import forEach from '../../styles/utilities/forEach'
 

@@ -69,6 +69,7 @@ export class IconButton extends React.PureComponent<Props> {
         {...rest}
         className={this.getClassName()}
         innerRef={innerRef}
+        version={2}
       >
         <Icon name={icon} size={this.getIconSize()} withCaret={withCaret} />
       </IconButtonUI>
