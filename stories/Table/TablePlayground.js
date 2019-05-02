@@ -41,7 +41,7 @@ export default class TablePlayground extends Component {
           columnKey: 'name',
           align: 'left',
           width: '30%',
-          renderHeaderCell: (column, { sortedInfo }) => {
+          renderHeaderCell: (column, sortedInfo) => {
             return (
               <strong>
                 {column.title}
@@ -70,7 +70,7 @@ export default class TablePlayground extends Component {
           align: 'center',
           width: '35%',
           sorter: this.sortAlphabetically,
-          renderHeaderCell: (column, { sortedInfo }) => {
+          renderHeaderCell: (column, sortedInfo) => {
             return (
               <strong>
                 {column.title}
