@@ -1,38 +1,37 @@
-// @flow
-import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { namespaceComponent } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Button.utils'
+import { UIState } from '../../constants/types'
 
-type ButtonSelector = 'a' | 'button' | 'input'
+export type ButtonSelector = 'a' | 'button' | 'input'
 
-type ButtonSize = 'lg' | 'md' | 'sm' | 'xs'
+export type ButtonSize = 'lg' | 'md' | 'sm' | 'xs'
 
-type Props = {
-  accessibilityLabel?: string,
-  block: boolean,
-  buttonRef: (ref: any) => void,
-  children?: any,
-  className?: string,
-  danger: boolean,
-  disabled: boolean,
-  innerRef: (ref: any) => void,
-  isActive: boolean,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
-  outline: boolean,
-  plain: boolean,
-  primary: boolean,
-  selector: ButtonSelector,
-  size: ButtonSize,
-  state?: UIState,
-  submit: boolean,
-  theme?: string,
+export interface Props {
+  accessibilityLabel?: string
+  block: boolean
+  buttonRef: (ref: any) => void
+  children?: any
+  className?: string
+  danger: boolean
+  disabled: boolean
+  innerRef: (ref: any) => void
+  isActive: boolean
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
+  outline: boolean
+  plain: boolean
+  primary: boolean
+  selector: ButtonSelector
+  size: ButtonSize
+  state?: UIState
+  submit: boolean
+  theme?: string
 }
 
 class Button extends Component<Props> {
@@ -56,7 +55,7 @@ class Button extends Component<Props> {
 
   static BlueComponentVersion = 1
 
-  setInnerRef = (node: HTMLElement) => {
+  setInnerRef = (node: any) => {
     this.props.buttonRef(node)
     this.props.innerRef(node)
   }

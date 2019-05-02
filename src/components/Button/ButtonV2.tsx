@@ -1,6 +1,3 @@
-// @flow
-import type { ButtonKind, ButtonSize } from './types'
-import type { UIState } from '../../constants/types'
 import React, { PureComponent as Component } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
@@ -15,31 +12,35 @@ import {
   FocusUI,
   SpinnerUI,
 } from './Button.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Button.utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
+import { ButtonKind, ButtonSize } from './Button.types'
+import { UIState } from '../../constants/types'
 
-type Props = {
-  allowContentEventPropogation: boolean,
-  buttonRef: (ref: any) => void,
-  canRenderFocus: boolean,
-  children?: any,
-  className?: string,
-  disabled: boolean,
-  disableOnLoading: boolean,
-  kind: ButtonKind,
-  innerRef: (ref: any) => void,
-  isActive: boolean,
-  isBlock: boolean,
-  isFirst: boolean,
-  isNotOnly: boolean,
-  isLast: boolean,
-  isLoading: boolean,
-  isSuffix: boolean,
-  size: ButtonSize,
-  spinButtonOnLoading: boolean,
-  state?: UIState,
-  submit: boolean,
-  theme?: string,
+export interface Props {
+  allowContentEventPropogation: boolean
+  buttonRef: (ref: any) => void
+  canRenderFocus: boolean
+  children?: any
+  className?: string
+  disabled: boolean
+  disableOnLoading: boolean
+  kind: ButtonKind
+  href?: string
+  innerRef: (ref: any) => void
+  isActive: boolean
+  isBlock: boolean
+  isFirst: boolean
+  isNotOnly: boolean
+  isLast: boolean
+  isLoading: boolean
+  isSuffix: boolean
+  size: ButtonSize
+  spinButtonOnLoading: boolean
+  state?: UIState
+  submit: boolean
+  theme?: string
+  to?: string
 }
 
 class Button extends Component<Props> {
@@ -70,11 +71,10 @@ class Button extends Component<Props> {
     // TODO: Resolve data-bypass
     // const { href, 'data-bypass': dataBypass } = this.props
     // return href || dataBypass
-
     return this.props.href
   }
 
-  shouldShowFocus = () => {
+  shouldShowFocus = (): boolean => {
     const paddedButtonKinds = [
       'primary',
       'primaryAlt',
@@ -100,11 +100,9 @@ class Button extends Component<Props> {
       isLast && 'is-last'
     )
 
-    return (
-      this.shouldShowFocus() && (
-        <FocusUI className={focusClassName} role="presentation" />
-      )
-    )
+    if (!this.shouldShowFocus()) return null
+
+    return <FocusUI className={focusClassName} role="presentation" />
   }
 
   setInnerRef = ref => {
