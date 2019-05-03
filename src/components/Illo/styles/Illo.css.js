@@ -1,4 +1,3 @@
-// @flow
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/base.css.js'
 import { getColor } from '../../../styles/utilities/color'
@@ -60,7 +59,7 @@ export const IconUI = styled('span')`
   }
 `
 
-function makeSizeStyles(): string {
+function makeSizeStyles() {
   return forEach(
     ILLO_SIZES,
     size => `

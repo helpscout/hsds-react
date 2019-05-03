@@ -1,4 +1,4 @@
-// @flow
+//
 import { isFunction, isString, isNumber } from '../../utilities/is'
 
 export const breakpoints = {

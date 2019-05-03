@@ -1,4 +1,4 @@
-// @flow
+//
 import styled from '../../styled'
 import Card from '../../Card'
 import Flexy from '../../Flexy'

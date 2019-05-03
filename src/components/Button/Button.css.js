@@ -1,4 +1,3 @@
-// @flow
 import get from 'dash-get'
 import baseStyles from '../../styles/resets/baseStyles.css.js'
 import Spinner from '../Spinner'

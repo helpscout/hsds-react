@@ -6,7 +6,6 @@ import Text from '../Text'
 import SelectArrows from '../Select/Select.Arrows'
 import Tooltip from '../Tooltip'
 import { initialState } from '../Dropdown/V2/Dropdown.store'
-import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
 import { itemIsActive } from '../Dropdown/V2/Dropdown.utils'
 import { COMPONENT_KEY } from './SelectDropdown.utils'
 import { find } from '../../utilities/arrays'
@@ -20,22 +19,15 @@ import {
   ErrorUI,
 } from './SelectDropdown.css'
 import { isObject } from '../../utilities/is'
+import {
+  SelectDropdownProps,
+  SelectDropdownState,
+} from './SelectDropdown.types'
 
-export interface Props extends DropdownProps {
-  onChange: (...args: any) => void
-  errorIcon: string
-  errorMessage?: string
-  isFocused: boolean
-  placeholder: string
-  state: string
-  value?: any
-}
-export interface State {
-  isFocused: boolean
-  selectedItem: any
-}
-
-export class SelectDropdown extends React.PureComponent<Props, State> {
+export class SelectDropdown extends React.PureComponent<
+  SelectDropdownProps,
+  SelectDropdownState
+> {
   static defaultProps = {
     ...initialState,
     clearOnSelect: false,

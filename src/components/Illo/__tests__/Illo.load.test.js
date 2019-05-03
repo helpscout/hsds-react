@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Illo, { svgSet, load, unload } from '../Illo'
+import Illo from '../Illo'
+import { svgSet, load, unload } from '../Illo.utils'
 
 afterEach(() => {
   unload()

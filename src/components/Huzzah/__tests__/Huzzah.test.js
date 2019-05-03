@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Huzzah, { DEFAULT_HUZZAH } from '../index'
+import Huzzah from '../Huzzah'
+import { DEFAULT_HUZZAH } from '../Huzzah.utils'
 
 describe('ClassName', () => {
   test('Renders default className', () => {

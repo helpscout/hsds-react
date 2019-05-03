@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow, render } from 'enzyme'
 import Input from '../Input'
-import Resizer from '../Resizer'
+import Resizer from '../Input.Resizer'
 
 jest.useFakeTimers()
 

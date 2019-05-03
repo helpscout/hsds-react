@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import StatusDot from '../StatusDot'
 import { Icon } from '../../index'
-import { StatusDotUI } from '../styles/StatusDot.css.js'
+import { StatusDotUI } from '../styles/StatusDot.css'
 
 describe('ClassName', () => {
   test('Has default className', () => {

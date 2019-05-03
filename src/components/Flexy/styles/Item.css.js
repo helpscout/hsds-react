@@ -1,4 +1,4 @@
-// @flow
+//
 import base from '../../../styles/resets/base.css.js'
 import styled from '../../styled/index'
 

@@ -2,13 +2,9 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { SelectArrowsUI } from './Select.css'
+import { SelectArrowProps } from './Select.types'
 
-export interface Props {
-  className?: string
-  state: string
-}
-
-export class SelectArrows extends React.PureComponent<Props> {
+export class SelectArrows extends React.PureComponent<SelectArrowProps> {
   static defaultProps = {
     state: 'default',
   }

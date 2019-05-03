@@ -1,4 +1,4 @@
-// @flow
+//
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { isHSApp } from '../../../styles/utilities/theme'

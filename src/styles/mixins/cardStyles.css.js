@@ -1,4 +1,4 @@
-// @flow
+//
 import { getColor, rgba } from '../utilities/color'
 
 export const cardBaseStyles = (subtle: boolean = false) => {

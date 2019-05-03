@@ -2,7 +2,7 @@ import * as React from 'react'
 import Text from '../Text'
 import { Props as TextProps } from '../Text/Text'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Samp.utils'
 
 export interface Props extends TextProps {}
 

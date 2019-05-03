@@ -9,6 +9,6 @@ export {
   getGlobalAppFromProps,
   isBeacon,
   isHSApp,
-} from './utils'
+} from './PropProvider.utils'
 
 export default PropProvider

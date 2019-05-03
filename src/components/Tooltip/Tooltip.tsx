@@ -8,7 +8,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import { renderChildrenSafely } from '../../utilities/component'
-import { TooltipUI } from './Tooltip.css'
+import { TooltipUI } from './styles/Tooltip.css'
 import { COMPONENT_KEY } from './Tooltip.utils'
 import { getColor } from '../../styles/utilities/color'
 

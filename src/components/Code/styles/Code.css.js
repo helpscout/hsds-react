@@ -1,4 +1,4 @@
-// @flow
+//
 import styled from '../../styled'
 
 export const config = {

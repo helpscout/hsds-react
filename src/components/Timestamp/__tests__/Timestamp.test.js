@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Timestamp from '..'
+import Timestamp from '../Timestamp'
 import { Icon, Text } from '../../'
 
 const cx = 'c-Timestamp'

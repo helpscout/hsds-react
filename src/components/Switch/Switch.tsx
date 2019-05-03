@@ -1,6 +1,6 @@
-import { SwitchSize, SwitchState, SwitchValue } from './types'
-import { FormLabelContextProps } from '../FormLabel/types'
 import * as React from 'react'
+import { SwitchSize, SwitchState, SwitchValue } from './Switch.types'
+import { FormLabelContextProps } from '../FormLabel/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
@@ -16,7 +16,7 @@ import {
   BackdropUI,
   ToggleUI,
 } from './styles/Switch.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Switch.utils'
 
 export interface Props {
   className?: string

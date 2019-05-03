@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Pagination } from '../Pagination'
-import { NavigationUI, RangeUI, InformationUI } from '../Pagination.css'
+import { NavigationUI, RangeUI, InformationUI } from '../styles/Pagination.css'
 import { hasClass } from '../../../tests/helpers/enzyme'
 import { simulateKeyPress } from '../../KeypressListener/__tests__/KeypressListener.test'
 import Keys from '../../../constants/Keys'
+
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Pagination />)
