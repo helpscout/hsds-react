@@ -2,7 +2,7 @@
 
 In this guide, we'll walk through creating a custom component in HSDS!
 
-All Components in HSDS are ar have been updated to TypeScript, do not fret! You can write your components in regular old JavaScript, just make sure the extensions are '.ts' or '.tsx' (if your file contains jsx, you want .tsx) things will work as normal.
+All Components in HSDS are or have been updated to TypeScript, do not fret! You can write your components in regular old JavaScript, just make sure the extensions are '.ts' or '.tsx' (if your file contains jsx, you want .tsx) things will work as normal.
 We do enocurage you to have a look at other components and follow how thay are put together, you might learn a thing or two, which is always a good thing!
 
 We'll be created a `Strong` component, an enhancement to the default HTML `strong` primitive.
@@ -243,7 +243,7 @@ hsds-react/
 Notice the convention to define the component prop types: `ComponentNameProps`, for state types use: `ComponentNameState`
 
 ```ts
-export type ComponentNameProps = {
+export type StrongProps = {
   children?: any
   className?: string
   isSuperBold: boolean
@@ -258,11 +258,11 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { StrongUI } from './styles/Strong.css.js'
-import { ComponentNameProps } from './Strong.types.ts'
+import { StrongProps } from './Strong.types.ts'
 
 export const COMPONENT_KEY = 'Strong'
 
-class Strong extends React.PureComponent<ComponentNameProps> {
+class Strong extends React.PureComponent<StrongProps> {
   static defaultProps = {
     isSuperBold: false,
   }
