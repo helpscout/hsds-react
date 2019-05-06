@@ -1,7 +1,7 @@
-import styled from '../styled'
-import Button from '../Button'
-import { config as buttonConfig } from '../Button/Button.css'
-import forEach from '../../styles/utilities/forEach'
+import styled from '../../styled/index'
+import Button from '../../Button/index'
+import { config as buttonConfig } from '../../Button/Button.css'
+import forEach from '../../../styles/utilities/forEach'
 
 export const config = {
   size: buttonConfig.size,

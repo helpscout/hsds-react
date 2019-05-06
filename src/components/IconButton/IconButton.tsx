@@ -4,7 +4,7 @@ import Button, { Props as ButtonPropsInterface } from '../Button/ButtonV2'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { IconButtonUI } from './IconButton.css'
+import { IconButtonUI } from './styles/IconButton.css'
 import { COMPONENT_KEY } from './IconButton.utils'
 
 export interface Props extends ButtonPropsInterface {

@@ -6,10 +6,7 @@ import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
 import { COMPONENT_KEY } from './Button.utils'
 import { UIState } from '../../constants/types'
-
-export type ButtonSelector = 'a' | 'button' | 'input'
-
-export type ButtonSize = 'lg' | 'md' | 'sm' | 'xs'
+import { ButtonSelector, ButtonSize } from './Button.types'
 
 export interface Props {
   accessibilityLabel?: string
