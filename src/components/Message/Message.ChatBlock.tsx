@@ -8,7 +8,7 @@ import Timestamp from '../Timestamp'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './proptypes'
+import { providerContextTypes } from './propTypes'
 import css from './styles/ChatBlock.css'
 import { COMPONENT_KEY } from './Message.utils'
 

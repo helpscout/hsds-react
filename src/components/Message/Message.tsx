@@ -20,7 +20,7 @@ import {
   namespaceComponent,
 } from '../../utilities/component'
 import { isString } from '../../utilities/is'
-import { providerContextTypes } from './proptypes'
+import { providerContextTypes } from './propTypes'
 import css from './styles/Message.css'
 import { COMPONENT_KEY } from './Message.utils'
 

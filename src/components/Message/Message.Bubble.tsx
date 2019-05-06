@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { MessageBubble, MessageThemeContext } from './Message.types'
-import { providerContextTypes } from './proptypes'
+import { providerContextTypes } from './propTypes'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
 import Heading from '../Heading'

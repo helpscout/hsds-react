@@ -6,7 +6,7 @@ import ChatBlock from './Message.ChatBlock'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './proptypes'
+import { providerContextTypes } from './propTypes'
 import css from './styles/Action.css'
 import { COMPONENT_KEY } from './Message.utils'
 

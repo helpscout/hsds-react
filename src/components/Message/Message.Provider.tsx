@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ThemeProvider from '../ThemeProvider'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './proptypes'
+import { providerContextTypes } from './propTypes'
 import { COMPONENT_KEY } from './Message.utils'
 
 // TODO: fix typescript complains
