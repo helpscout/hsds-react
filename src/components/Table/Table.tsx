@@ -42,6 +42,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
       order: null,
     },
     isLoading: false,
+    isScrollLocked: true,
     onRowClick: null,
     wrapperRef: noop,
     tableRef: noop,
@@ -103,6 +104,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
       containerWidth,
       sortedInfo,
       isLoading,
+      isScrollLocked,
       onRowClick,
       theme,
       ...rest
@@ -128,7 +130,12 @@ export class Table extends React.PureComponent<TableProps, TableState> {
           containerWidth={containerWidth}
           {...getValidProps(rest)}
         >
-          <Scrollable fadeLeft fadeRight>
+          <Scrollable
+            fadeLeft
+            fadeRight
+            scrollLockDirection="x"
+            isScrollLocked={isScrollLocked}
+          >
             <TableUI
               tableWidth={tableWidth}
               className={tableClassNames}

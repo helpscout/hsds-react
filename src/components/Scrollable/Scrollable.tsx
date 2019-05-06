@@ -28,6 +28,7 @@ export interface Props {
   rounded: boolean
   scrollableRef: (node: HTMLElement) => void
   isScrollLocked: boolean
+  scrollLockDirection?: string
 }
 
 export class Scrollable extends React.PureComponent<Props> {
@@ -255,6 +256,7 @@ export class Scrollable extends React.PureComponent<Props> {
       rounded,
       scrollableRef,
       isScrollLocked,
+      scrollLockDirection,
       fadeLeft,
       fadeRight,
       ...rest
@@ -279,7 +281,10 @@ export class Scrollable extends React.PureComponent<Props> {
         )}
         {this.renderFaderLeft()}
         {this.renderFaderTop()}
-        <ScrollLock isDisabled={!isScrollLocked}>
+        <ScrollLock
+          isDisabled={!isScrollLocked}
+          direction={scrollLockDirection}
+        >
           {this.renderContent()}
         </ScrollLock>
         {this.renderFaderRight()}

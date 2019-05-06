@@ -47,7 +47,8 @@ export interface TableProps {
   containerWidth?: string
   tableWidth?: TableWidth
   theme?: Theme
-  isLoading?: boolean
+  isLoading: boolean
+  isScrollLocked: boolean
   sortedInfo?: SortedInfo
   onRowClick?: (event: Event, row: Data) => void
   onExpand: (isTableCollapsed: boolean) => void
