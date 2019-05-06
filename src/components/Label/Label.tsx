@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { UIState } from '../../constants/types'
-import { propConnect } from '../PropProvider'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
