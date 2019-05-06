@@ -1,5 +1,4 @@
-// @flow
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import ControlGroup from './ControlGroup'
 
 ControlGroup.Block = propConnect('ControlGroupBlock')(ControlGroup.Block)

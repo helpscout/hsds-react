@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-import Truncate from '../Truncate'
+import Truncate from '../Truncate/index'
 import { CellUI } from './styles/Table.css'
 import { TABLE_CLASSNAME } from './Table'
 
-import { CellProps } from './types'
+import { CellProps } from './Table.types'
 
 export default class Cell extends React.PureComponent<CellProps> {
   getCompoundColumnCellData = () => {

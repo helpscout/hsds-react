@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-import Cell from './Cell'
+import Cell from './Table.Cell'
 import { TABLE_CLASSNAME } from './Table'
 import { generateCellKey } from './Table.utils'
 
-import { RowProps } from './types'
+import { RowProps } from './Table.types'
 
 export default class Row extends React.PureComponent<RowProps> {
   handleRowClick = e => {

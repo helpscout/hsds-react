@@ -1,4 +1,3 @@
-// @flow
 import { propConnect } from '../PropProvider'
 import FormGroup from './FormGroup'
 import Choice from './Choice'

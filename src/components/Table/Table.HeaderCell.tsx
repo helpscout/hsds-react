@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-import Icon from '../Icon'
+import Icon from '../Icon/index'
 import { SortableCellUI, HeaderCellUI } from './styles/Table.css'
 import { TABLE_CLASSNAME } from './Table'
 
-import { HeaderCellProps } from './types'
+import { HeaderCellProps } from './Table.types'
 
 export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
   getColumnSortStatus = () => {
