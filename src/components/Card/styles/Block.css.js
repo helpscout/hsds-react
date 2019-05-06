@@ -1,4 +1,3 @@
-//
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
 export const css = `

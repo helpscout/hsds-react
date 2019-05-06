@@ -1,4 +1,3 @@
-//
 import styled from '../../styled'
 import Flexy from '../../Flexy'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'

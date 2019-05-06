@@ -1,7 +1,6 @@
-//
 import { getColor, rgba } from '../utilities/color'
 
-export const cardBaseStyles = (subtle: boolean = false) => {
+export const cardBaseStyles = (subtle = false) => {
   const bottomColor = getColor('grey.600')
   const color = subtle ? getColor('grey.500') : getColor('grey.600')
   const colorHover = subtle ? getColor('grey.600') : getColor('grey.700')

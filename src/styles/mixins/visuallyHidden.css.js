@@ -1,4 +1,3 @@
-//
 const visuallyHidden = () => `
   border: 0!important;
   box-sizing: border-box;

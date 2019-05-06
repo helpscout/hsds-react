@@ -1,4 +1,3 @@
-//
 import FluffyCard from '../../FluffyCard'
 import styled from '../../styled'
 

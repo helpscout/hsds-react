@@ -1,4 +1,3 @@
-//
 import { isFunction, isString, isNumber } from '../../utilities/is'
 
 export const breakpoints = {
@@ -8,9 +7,9 @@ export const breakpoints = {
   lg: '992px',
 }
 
-type BreakpointValue = number | 'xs' | 'sm' | 'md' | 'lg'
+// type BreakpointValue = number | 'xs' | 'sm' | 'md' | 'lg'
 
-type BreakpointStyles = string | (() => string)
+// type BreakpointStyles = string | (() => string)
 
 /**
  * Generates a mobile-first @media query CSS rule.
@@ -19,10 +18,7 @@ type BreakpointStyles = string | (() => string)
  * @param   {Function|string} styles The styles to render.
  * @returns {string} The compiled @media query rule.
  */
-export function breakpoint(
-  value: BreakpointValue = 'md',
-  styles: BreakpointStyles
-): string {
+export function breakpoint(value = 'md', styles) {
   if (!isString(value) && !isNumber(value)) return ''
 
   const minWidth = breakpoints.hasOwnProperty(value)
@@ -31,18 +27,14 @@ export function breakpoint(
       ? `${value}px`
       : value
 
-  // $FlowFixMe
   const compiledStyles = isFunction(styles) ? styles() : styles
 
   return `@media (min-width: ${minWidth}) {
-    ${
-      // $FlowFixMe
-      compiledStyles
-    }
+    ${compiledStyles}
   }`
 }
 
-export function breakpointAll(content: string): string {
+export function breakpointAll(content) {
   return `
     ${content}
 

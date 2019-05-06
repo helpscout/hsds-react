@@ -89,7 +89,7 @@ export const CloseButtonUI = styled('button')`
   ${makeSizeStyles};
 `
 
-function makeSizeStyles(): string {
+function makeSizeStyles() {
   return forEach(
     config.sizes,
     (size, values) => `

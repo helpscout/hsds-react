@@ -1,6 +1,6 @@
 import { BEM } from '../../../utilities/classNames'
 
-const bem: any = BEM('.c-Truncate')
+const bem = BEM('.c-Truncate')
 
 const truncateStyles = `
   display: block;
@@ -16,11 +16,7 @@ const css = `
   &.is-auto {
     ${truncateStyles}
 
-    ${
-      // TODO: fix typescript complains
-      // @ts-ignore
-      bem.element('content')
-    } {
+    ${bem.element('content')} {
       ${truncateStyles}
     }
   }

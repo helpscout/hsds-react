@@ -1,4 +1,3 @@
-//
 import { FONT_SIZE } from '../configs/constants'
 import fontFamilyStyles from './fontFamily.css.js'
 

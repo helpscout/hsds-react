@@ -1,4 +1,3 @@
-//
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import visuallyHidden from '../../../styles/mixins/visuallyHidden.css.js'
 import styled from '../../styled'

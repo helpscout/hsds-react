@@ -1,4 +1,3 @@
-//
 import { getColor } from '../utilities/color'
 
 const linkStyles = () => `

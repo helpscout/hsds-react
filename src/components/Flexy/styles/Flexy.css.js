@@ -1,4 +1,3 @@
-//
 import base from '../../../styles/resets/base.css.js'
 import forEach from '../../../styles/utilities/forEach'
 import styled from '../../styled'
@@ -47,7 +46,7 @@ export const FlexyUI = styled('div')`
   ${makeGapStyles()};
 `
 
-function makeGapStyles(): string {
+function makeGapStyles() {
   return forEach(
     config.gapSize,
     (size, value) => `

@@ -1,4 +1,3 @@
-//
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import cardStyles from '../../../styles/mixins/cardStyles.css.js'
 

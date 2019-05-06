@@ -56,7 +56,7 @@ const css = `
   }
 `
 
-function makeStatusStyles(): string {
+function makeStatusStyles() {
   return forEach(
     STATUSES,
     status => `

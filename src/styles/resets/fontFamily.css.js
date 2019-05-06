@@ -1,4 +1,3 @@
-//
 import { FONT_FAMILY } from '../configs/constants'
 
 const css = `
