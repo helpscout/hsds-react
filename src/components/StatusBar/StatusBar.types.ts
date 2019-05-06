@@ -1,11 +1,11 @@
 import { CollapsibleProps } from '../Collapsible/Collapsible.types'
-import { statusTypes } from '../../constants/types'
+import { UIStatus } from '../../constants/types'
 
 export type themeTypes = 'light' | 'bold'
 
 export interface StatusBarProps extends CollapsibleProps {
   closeOnClick: boolean
-  status: statusTypes
+  status: UIStatus
   theme: themeTypes
   onClick: (...args: any[]) => void
 }
