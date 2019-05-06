@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Truncate from '../Truncate/index'
+import Truncate from '../Truncate'
 import { CellUI } from './styles/Table.css'
 import { TABLE_CLASSNAME } from './Table'
 

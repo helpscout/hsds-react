@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import ButtonV2 from './ButtonV2'
 import Button from './Button'
 import { namespaceComponent } from '../../utilities/component'

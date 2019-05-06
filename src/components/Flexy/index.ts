@@ -1,4 +1,4 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import Flexy from './Flexy'
 import { COMPONENT_KEY } from './utils'
 

@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from '../../styled'
 import forEach from '../../../styles/utilities/forEach'
 import { breakpointAll } from '../../../styles/mixins/breakpoints.css'
 

@@ -1,4 +1,4 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import Attachment from './Attachment'
 import { COMPONENT_KEY } from './utils'
 export { Provider } from './Attachment'

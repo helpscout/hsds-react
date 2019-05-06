@@ -1,4 +1,4 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import Samp from './Samp'
 import { COMPONENT_KEY } from './Samp.utils'
 
