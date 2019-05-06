@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
-import { CollapsibleUI } from './Collapsible.css'
+import { CollapsibleUI } from './styles/Collapsible.css'
 
 export interface Props {
   children?: any

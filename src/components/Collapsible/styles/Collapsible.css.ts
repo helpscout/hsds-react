@@ -1,5 +1,5 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/baseStyles.css'
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 
 export const CollapsibleUI = styled('div')`
   ${baseStyles};
