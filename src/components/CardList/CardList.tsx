@@ -3,7 +3,7 @@ import propConnect from '../PropProvider/propConnect'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
 import { isComponentTypeCard, getComponentKey } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './CardList.utils'
 import classNames from '../../utilities/classNames'
 
 export interface Props {

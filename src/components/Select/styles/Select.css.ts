@@ -1,7 +1,7 @@
-import styled from '../styled'
-import { makeFieldStyles } from '../Input/styles/Input.css'
-import { getColor } from '../../styles/utilities/color'
-export { InlinePrefixSuffixUI } from '../Input/styles/Input.css'
+import styled from '../../styled'
+import { makeFieldStyles } from '../../Input/styles/Input.css'
+import { getColor } from '../../../styles/utilities/color'
+export { InlinePrefixSuffixUI } from '../../Input/styles/Input.css'
 
 export const SelectUI = styled('div')`
   align-items: center;

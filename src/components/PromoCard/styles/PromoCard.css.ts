@@ -1,7 +1,7 @@
-import styled from '../styled'
-import FluffyCard from '../FluffyCard'
-import baseStyles from '../../styles/resets/baseStyles.css'
-import { getColor } from '../../styles/utilities/color'
+import styled from '../../styled'
+import FluffyCard from '../../FluffyCard'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { getColor } from '../../../styles/utilities/color'
 
 export const PromoCardUI = styled(FluffyCard)`
   border: 0;

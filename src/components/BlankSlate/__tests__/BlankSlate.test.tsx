@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { mount, render } from 'enzyme'
+import { mount } from 'enzyme'
 import BlankSlate from '../BlankSlate'
-import { TextUI, HeadingUI, IlloUI } from '../BlankSlate.css'
+import { TextUI, HeadingUI, IlloUI } from '../styles/BlankSlate.css'
 
 describe('ClassName', () => {
   test('Has default component className', () => {

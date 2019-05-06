@@ -16,7 +16,12 @@ import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Select.utils'
 import { InputWrapperUI } from '../Input/styles/Input.css'
-import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
+import {
+  SelectUI,
+  FieldUI,
+  InlinePrefixSuffixUI,
+  ItemUI,
+} from './styles/Select.css'
 import { SelectProps, SelectState, SelectEvent } from './Select.types'
 
 const PLACEHOLDER_VALUE = '__placeholder__'

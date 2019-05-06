@@ -1,6 +1,6 @@
 import styled from '../../styled'
 import Block from '../Skeleton.Block'
-import { config as avatarConfig } from '../../Avatar/Avatar.css'
+import { config as avatarConfig } from '../../Avatar/styles/Avatar.css'
 import forEach from '../../../styles/utilities/forEach'
 
 export const config = {

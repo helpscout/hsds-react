@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PopProps } from '../Pop/types'
+import { PopProps } from '../Pop/Pop.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Pop from '../Pop'

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { SwitchSize, SwitchState, SwitchValue } from './Switch.types'
-import { FormLabelContextProps } from '../FormLabel/types'
+import { FormLabelContextProps } from '../FormLabel/FormLabel.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'

@@ -3,7 +3,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import Button from '../../Button'
 
-import { config } from '../../Button/Button.css'
+import { config } from '../../Button/styles/Button.css'
 
 export const PaginationUI = styled('div')`
   ${baseStyles};

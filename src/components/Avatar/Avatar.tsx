@@ -16,7 +16,7 @@ import {
   OuterBorderUI,
   StatusUI,
   TitleUI,
-} from './Avatar.css'
+} from './styles/Avatar.css'
 import { COMPONENT_KEY, IMAGE_STATES } from './Avatar.utils'
 
 export interface Props {

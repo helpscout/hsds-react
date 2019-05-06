@@ -1,10 +1,10 @@
-import { getColor } from '../../styles/utilities/color'
-import variableFontSize from '../../styles/utilities/variableFontSize'
-import styled from '../styled'
+import { getColor } from '../../../styles/utilities/color'
+import variableFontSize from '../../../styles/utilities/variableFontSize'
+import styled from '../../styled'
 
-import Heading from '../Heading'
-import Text from '../Text'
-import Illo from '../Illo'
+import Heading from '../../Heading'
+import Text from '../../Text'
+import Illo from '../../Illo'
 
 export const IlloUI = styled(Illo)`
   margin: 0;

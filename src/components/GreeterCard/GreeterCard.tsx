@@ -11,7 +11,7 @@ import {
   SubtitleUI,
   BodyUI,
   ActionUI,
-} from './GreeterCard.css'
+} from './styles/GreeterCard.css'
 import { COMPONENT_KEY } from './GreeterCard.utils'
 
 export interface Props {

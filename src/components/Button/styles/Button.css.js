@@ -1,10 +1,10 @@
 import get from 'dash-get'
-import baseStyles from '../../styles/resets/baseStyles.css.js'
-import Spinner from '../Spinner'
-import styled from '../styled'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
-import variableFontSize from '../../styles/utilities/variableFontSize'
+import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import Spinner from '../../Spinner'
+import styled from '../../styled'
+import { getColor } from '../../../styles/utilities/color'
+import forEach from '../../../styles/utilities/forEach'
+import variableFontSize from '../../../styles/utilities/variableFontSize'
 
 export const config = {
   borderRadius: 3,

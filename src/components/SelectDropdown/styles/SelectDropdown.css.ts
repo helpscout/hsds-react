@@ -1,5 +1,5 @@
-import Backdrop from '../Input/Input.BackdropV2'
-import styled from '../styled'
+import Backdrop from '../../Input/Input.BackdropV2'
+import styled from '../../styled'
 
 export const SelectDropdownUI = styled('div')`
   .c-DropdownV2Trigger {

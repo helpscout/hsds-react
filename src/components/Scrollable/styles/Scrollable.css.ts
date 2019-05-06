@@ -1,4 +1,4 @@
-import styled from '../styled'
+import styled from '../../styled'
 
 export const config = {
   borderRadius: '4px',

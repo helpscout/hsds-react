@@ -1,8 +1,8 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/baseStyles.css.js'
-import { STATUSES } from '../../styles/configs/constants'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { STATUSES } from '../../../styles/configs/constants'
+import { getColor } from '../../../styles/utilities/color'
+import forEach from '../../../styles/utilities/forEach'
 
 export const config = {
   backgroundColor: getColor('state.warning.backgroundColor'),

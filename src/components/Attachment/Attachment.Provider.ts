@@ -1,4 +1,4 @@
-import ThemeProvider from '../ThemeProvider'
+import ThemeProvider from '../ThemeProvider/index'
 
 const propTypes = {
   theme: () => null,

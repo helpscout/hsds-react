@@ -2,8 +2,8 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
-import { BlockUI } from './styles/Block.css'
+import { COMPONENT_KEY } from './Flexy.utils'
+import { BlockUI } from './styles/Flexy.Block.css'
 
 export interface Props {
   children?: any

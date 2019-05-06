@@ -1,6 +1,6 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/baseStyles.css'
-import { getColor } from '../../styles/utilities/color'
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { getColor } from '../../../styles/utilities/color'
 
 export const config = {
   size: {

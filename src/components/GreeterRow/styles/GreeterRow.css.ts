@@ -1,7 +1,7 @@
-import styled from '../styled'
-import Flexy from '../Flexy'
-import Icon from '../Icon'
-import { getColor } from '../../styles/utilities/color'
+import styled from '../../styled'
+import Flexy from '../../Flexy'
+import Icon from '../../Icon'
+import { getColor } from '../../../styles/utilities/color'
 
 export const ErrorIconUI = styled(Icon)``
 
