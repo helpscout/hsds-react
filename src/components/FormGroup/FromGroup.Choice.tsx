@@ -1,20 +1,19 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { FormGroupChoiceUI } from './styles/Choice.css.js'
-import { COMPONENT_KEY } from './utils'
+import { FormGroupChoiceUI } from './styles/Choice.css'
+import { COMPONENT_KEY } from './FromGroup.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
-  isResponsive: boolean,
-  maxWidth?: string | number,
-  style: Object,
+  children?: any
+  className?: string
+  isResponsive: boolean
+  maxWidth?: string | number
+  style: Object
 }
 
-class Choice extends Component<Props> {
+class Choice extends React.PureComponent<Props> {
   static defaultProps = {
     isResponsive: false,
     style: {},

@@ -1,17 +1,16 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import GridComponent from '../Grid'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './FromGroup.utils'
 
 type Props = {
-  children?: any,
-  className?: string,
+  children?: any
+  className?: string
 }
 
-class Grid extends Component<Props> {
+class Grid extends React.PureComponent<Props> {
   render() {
     const { className, children, ...rest } = this.props
 

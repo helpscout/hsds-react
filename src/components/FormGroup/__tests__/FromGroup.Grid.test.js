@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
-import Grid from '../Grid'
+import Grid from '../FromGroup.Grid'
 import { default as GridComponent } from '../../Grid'
 
 describe('ClassName', () => {
