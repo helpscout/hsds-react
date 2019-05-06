@@ -1,5 +1,3 @@
-// @flow
-
 // Excluding most of the branches in these functions from test coverage.
 // Reason is because interactions are difficult to mock or are not supported
 // by JSDOM.
@@ -49,10 +47,13 @@ export const selectText = (element: any) => {
     const selection = window.getSelection()
     const range = document.createRange()
 
-    range.selectNodeContents(element)
-    selection.removeAllRanges()
+    range.selectNodeContents(element) // TODO: fix typescript complains
+    // @ts-ignore
+    selection.removeAllRanges() // TODO: fix typescript complains
+    // @ts-ignore
     selection.addRange(range)
-
+    // TODO: fix typescript complains
+    // @ts-ignore
     selectedText = selection.toString()
   }
 

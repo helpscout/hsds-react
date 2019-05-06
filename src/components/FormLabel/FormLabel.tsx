@@ -5,7 +5,7 @@ import HelpText from '../HelpText'
 import Label from '../Label'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { createUniqueIDFactory } from '../../utilities/id.js'
+import { createUniqueIDFactory } from '../../utilities/id'
 import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css'
 import { COMPONENT_KEY } from './utils'
 
@@ -28,6 +28,7 @@ const uniqueID = createUniqueIDFactory('FormControl')
 class FormLabel extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
+
     this.state = {
       id: props.for || props.id || uniqueID(),
     }

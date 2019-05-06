@@ -1,9 +1,8 @@
-// @flow
 import computeScrollIntoView from 'compute-scroll-into-view'
 import { isFirefox } from './browser'
 import { isMouseWheelYEvent } from './events'
 
-type ScrollEvent = SyntheticWheelEvent<HTMLDivElement> | WheelEvent
+type ScrollEvent = WheelEvent
 
 // Source
 // https://github.com/paypal/downshift/blob/master/src/utils.js#L25
@@ -38,7 +37,8 @@ export const remapScrollingPlane = (event: ScrollEvent) => {
   const node = event.currentTarget
 
   // Don't customize native shift + scroll interactions
-  // $FlowFixMe
+  // TODO: fix typescript complains
+  // @ts-ignore
   if (event.target.shiftKey) return
   if (!node) return
   if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
@@ -46,7 +46,8 @@ export const remapScrollingPlane = (event: ScrollEvent) => {
   }
 
   if (isMouseWheelYEvent(event)) {
-    // $FlowFixMe
+    // TODO: fix typescript complains
+    // @ts-ignore
     node.scrollLeft += event.deltaY
   }
 
