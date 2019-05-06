@@ -1,10 +1,10 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/baseStyles.css'
-import { breakpoint } from '../../styles/mixins/breakpoints.css'
-import { getColor } from '../../styles/utilities/color'
-import PageConfig from '../Page/styles/Page.config.css'
-import { classNameStrings as titleClassNames } from './Accordion.Title'
-import { setFontSize } from '../../styles/utilities/font'
+import styled from '../../styled/index'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { breakpoint } from '../../../styles/mixins/breakpoints.css'
+import { getColor } from '../../../styles/utilities/color'
+import PageConfig from '../../Page/styles/Page.config.css'
+import { classNameStrings as titleClassNames } from '../Accordion.Title'
+import { setFontSize } from '../../../styles/utilities/font'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};
