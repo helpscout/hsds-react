@@ -413,10 +413,15 @@ describe('convertLinksToHTML', () => {
       'example@example.example.com　',
       '<a href="mailto:example@example.example.com">example@example.example.com</a>　',
     ],
-    [
-      'Привет example@example.com!',
-      'Привет <a href="mailto:example@example.com">example@example.com</a>!',
-    ],
+
+    // Skipping this test due to updating the regex so we don't match every possible letter character.
+    // The large regex string was causing some bundle size problems.
+    //
+    // [
+    //   'Привет example@example.com!',
+    //   'Привет <a href="mailto:example@example.com">example@example.com</a>!',
+    // ],
+
     [
       '(example@example.com)',
       '(<a href="mailto:example@example.com">example@example.com</a>)',
