@@ -1,10 +1,9 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
 type Props = {
-  children?: any,
-  className?: string,
+  children?: any
+  className?: string
 }
 
 const Divider = (props: Props) => {

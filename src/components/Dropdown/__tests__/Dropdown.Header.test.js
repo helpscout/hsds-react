@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Header from '../Header'
+import Header from '../Dropdown.Header'
 
 describe('ClassName', () => {
   test('Has default className', () => {

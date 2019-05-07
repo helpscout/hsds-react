@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { MessageBubble, MessageThemeContext } from './Message.types'
-import { providerContextTypes } from './propTypes'
+import { noop } from '../../utilities/other'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
 import Heading from '../Heading'
@@ -150,7 +150,9 @@ export const Bubble = (props: Props, context: Context) => {
   )
 }
 
-Bubble.contextTypes = providerContextTypes
+Bubble.contextTypes = {
+  theme: noop,
+}
 
 namespaceComponent(COMPONENT_KEY.Bubble)(Bubble)
 

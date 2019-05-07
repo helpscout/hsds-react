@@ -20,7 +20,7 @@ import {
   namespaceComponent,
 } from '../../utilities/component'
 import { isString } from '../../utilities/is'
-import { providerContextTypes } from './propTypes'
+import { noop } from '../../utilities/other'
 import css from './styles/Message.css'
 import { COMPONENT_KEY } from './Message.utils'
 
@@ -33,7 +33,9 @@ export class Message extends React.PureComponent<Props> {
   static defaultProps = {
     showAvatar: true,
   }
-  static contextTypes = providerContextTypes
+  static contextTypes = {
+    theme: noop,
+  }
   static Action = Action
   static Attachment = Attachment
   static Bubble = Bubble

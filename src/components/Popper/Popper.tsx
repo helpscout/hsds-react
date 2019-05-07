@@ -1,50 +1,43 @@
-// @flow
-import React from 'react'
-import PopperJS, {
-  type Placement,
-  type Instance as PopperJS$Instance,
-  type Data,
-  type Modifiers,
-  type ReferenceObject,
-} from 'popper.js'
-import { ManagerContext } from './Manager'
-import { safeInvoke, unwrapArray } from './utils'
-import type { Node } from 'react'
+import * as React from 'react'
+import PopperJS from 'popper.js'
+import { ManagerContext } from './Popper.Manager'
+import { safeInvoke, unwrapArray } from './Popper.utils'
 
-type getRefFn = (?HTMLElement) => void
-type ReferenceElement = ReferenceObject | HTMLElement | null
-type StyleOffsets = { top: number, left: number }
+type ReferenceElement = any
+type StyleOffsets = { top: number; left: number }
 type StylePosition = { position: 'absolute' | 'fixed' }
 
 export type PopperArrowProps = {
-  ref: getRefFn,
-  style: StyleOffsets,
+  ref: any
+  style: StyleOffsets
 }
-export type PopperChildrenProps = {|
-  ref: getRefFn,
-  style: StyleOffsets & StylePosition,
-  placement: Placement,
-  outOfBoundaries: ?boolean,
-  scheduleUpdate: () => void,
-  arrowProps: PopperArrowProps,
-|}
-export type PopperChildren = PopperChildrenProps => Node
+
+export type PopperChildrenProps = {
+  ref: any
+  style: StyleOffsets & StylePosition
+  placement: any
+  outOfBoundaries?: boolean
+  scheduleUpdate: () => void
+  arrowProps: PopperArrowProps
+}
+
+export type PopperChildren = any
 
 export type PopperProps = {
-  children: PopperChildren,
-  eventsEnabled?: boolean,
-  innerRef?: getRefFn,
-  modifiers?: Modifiers,
-  placement?: Placement,
-  positionFixed?: boolean,
-  referenceElement?: ReferenceElement,
+  children: PopperChildren
+  eventsEnabled?: boolean
+  innerRef?: any
+  modifiers?: any
+  placement?: any
+  positionFixed?: boolean
+  referenceElement?: ReferenceElement
 }
 
 type PopperState = {
-  popperNode: ?HTMLElement,
-  arrowNode: ?HTMLElement,
-  popperInstance: ?PopperJS$Instance,
-  data: ?Data,
+  popperNode?: HTMLElement
+  arrowNode?: HTMLElement
+  popperInstance?: any
+  data?: any
 }
 
 const initialStyle = {
@@ -81,21 +74,23 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
   componentWillUnmount() {
     this._isMounted = false
     if (this.state.popperInstance) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.state.popperInstance.destroy()
     }
   }
 
-  safeSetState(state, callback) {
+  safeSetState(state, callback?) {
     if (this._isMounted) {
       return this.setState(state, callback)
     }
   }
 
-  setPopperNode = (popperNode: ?HTMLElement) => {
+  setPopperNode = popperNode => {
     safeInvoke(this.props.innerRef, popperNode)
     this.safeSetState({ popperNode })
   }
-  setArrowNode = (arrowNode: ?HTMLElement) => this.safeSetState({ arrowNode })
+  setArrowNode = arrowNode => this.safeSetState({ arrowNode })
 
   updateStateModifier = {
     enabled: true,
@@ -125,25 +120,37 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     !this.state.popperNode || !this.state.data
       ? initialStyle
       : {
+          // TODO: fix typescript complains
+          // @ts-ignore
           position: this.state.data.offsets.popper.position,
+          // TODO: fix typescript complains
+          // @ts-ignore
           ...this.state.data.styles,
         }
 
   getPopperPlacement = () =>
+    // TODO: fix typescript complains
+    // @ts-ignore
     !this.state.data ? undefined : this.state.data.placement
 
   getArrowStyle = () =>
     !this.state.arrowNode || !this.state.data
       ? initialArrowStyle
-      : this.state.data.arrowStyles
+      : // TODO: fix typescript complains
+        // @ts-ignore
+        this.state.data.arrowStyles
 
   getOutOfBoundariesState = () =>
+    // TODO: fix typescript complains
+    // @ts-ignore
     this.state.data ? this.state.data.hide : undefined
 
   initPopperInstance = () => {
     const { referenceElement } = this.props
     const { popperNode, popperInstance } = this.state
     if (referenceElement && popperNode && !popperInstance) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       const popperInstance = new PopperJS(
         referenceElement,
         popperNode,
@@ -157,6 +164,8 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
 
   destroyPopperInstance = (callback: () => boolean) => {
     if (this.state.popperInstance) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.state.popperInstance.destroy()
     }
     this.safeSetState({ popperInstance: undefined }, callback)
@@ -170,6 +179,8 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
 
   scheduleUpdate = () => {
     if (this.state.popperInstance) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.state.popperInstance.scheduleUpdate()
     }
   }

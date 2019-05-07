@@ -1,31 +1,22 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
-import Button from '../Button'
-import Icon from '../Icon'
+import * as React from 'react'
+import Button from '../Button/index'
+import Icon from '../Icon/index'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import type { DropdownDirection } from './types'
+import { DropdownTriggerProps } from './Dropdown.types'
 
-type Props = {
-  children?: any,
-  className?: string,
-  direction: DropdownDirection,
-  isActive: boolean,
-  onClick: (event: Event) => void,
-}
-
-class Trigger extends Component<Props> {
+class Trigger extends React.PureComponent<DropdownTriggerProps> {
   static defaultProps = {
     children: 'Dropdown',
     direction: 'down',
     onClick: noop,
     isActive: false,
   }
-  node: ?HTMLElement = null
+  node: HTMLElement | null = null
 
   /* istanbul ignore next */
   // Tested, but Istanbul isn't picking it up
-  handleOnClick = (event: Event) => {
+  handleOnClick = event => {
     event && event.preventDefault()
     this.props.onClick(event)
   }

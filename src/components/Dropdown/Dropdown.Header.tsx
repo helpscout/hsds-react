@@ -1,11 +1,10 @@
-// @flow
-import React from 'react'
-import Heading from '../Heading'
+import * as React from 'react'
+import Heading from '../Heading/index'
 import { classNames } from '../../utilities/classNames'
 
 type Props = {
-  children?: any,
-  className?: string,
+  children?: any
+  className?: string
 }
 
 const Header = (props: Props) => {

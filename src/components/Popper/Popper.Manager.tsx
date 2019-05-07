@@ -1,6 +1,4 @@
-// @flow
-import type { Node } from 'react'
-import React from 'react'
+import * as React from 'react'
 import createContext from '@helpscout/react-utils/dist/createContext'
 
 export const ManagerContext = createContext({
@@ -9,21 +7,22 @@ export const ManagerContext = createContext({
 })
 
 export type ManagerProps = {
-  children: Node,
+  children: Node
 }
 type ManagerState = {
   context: {
-    getReferenceRef?: (?HTMLElement) => void,
-    referenceNode?: ?HTMLElement,
-  },
+    getReferenceRef?: (HTMLElement?) => void
+    referenceNode?: HTMLElement
+  }
 }
 
 export default class Manager extends React.Component<
   ManagerProps,
   ManagerState
 > {
-  constructor() {
-    super()
+  constructor(popper) {
+    super(popper)
+
     this.state = {
       context: {
         getReferenceRef: this.getReferenceRef,
@@ -32,7 +31,7 @@ export default class Manager extends React.Component<
     }
   }
 
-  getReferenceRef = (referenceNode: ?HTMLElement) =>
+  getReferenceRef = referenceNode =>
     this.setState(({ context }) => ({
       context: { ...context, referenceNode },
     }))

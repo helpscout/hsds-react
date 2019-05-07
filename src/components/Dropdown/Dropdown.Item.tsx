@@ -1,41 +1,13 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
-import { default as Menu, MenuComponent } from './Menu'
+import { default as Menu, MenuComponent } from './Dropdown.Menu'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { DropdownItemProps, DropdownItemState } from './Dropdown.types'
 
-type Props = {
-  children?: any,
-  className?: string,
-  disabled: boolean,
-  enableTabNavigation: boolean,
-  isHover?: boolean,
-  isFocused?: boolean,
-  isOpen?: boolean,
-  itemIndex: number,
-  itemRef: (ref: any) => void,
-  onBlur: (event: Event, reactEvent: Event, instance: Object) => void,
-  onClick: (event: Event, reactEvent: Event, instance: Object) => void,
-  onSelect: (value: any) => void,
-  onFocus: (event: Event, reactEvent: Event, instance: Object) => void,
-  onMouseEnter: (event: Event, reactEvent: Event, instance: Object) => void,
-  onMouseLeave: (event: Event, reactEvent: Event, instance: Object) => void,
-  onMenuClose: () => void,
-  onParentMenuClose: () => void,
-  value?: any,
-}
-
-type State = {
-  isOpen: ?boolean,
-  isHover: ?boolean,
-  isFocused: ?boolean,
-}
-
-class Item extends Component<Props, State> {
+class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
   static defaultProps = {
     disabled: false,
     enableTabNavigation: false,
@@ -50,16 +22,16 @@ class Item extends Component<Props, State> {
   }
 
   static childContextTypes = {
-    parentMenu: PropTypes.element,
-    parentMenuClose: PropTypes.func,
+    parentMenu: noop,
+    parentMenuClose: noop,
   }
 
-  node: ?HTMLElement = null
-  menu: ?any = null
+  node: HTMLElement | null = null
+  menu: any = null
   _isMounted: boolean = false
 
-  constructor(props: Props) {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       isOpen: props.isOpen,
@@ -67,13 +39,13 @@ class Item extends Component<Props, State> {
       isFocused: props.isFocused,
     }
 
-    this.handleOnBlur = this.handleOnBlur.bind(this)
-    this.handleOnClick = this.handleOnClick.bind(this)
-    this.handleOnEnter = this.handleOnEnter.bind(this)
-    this.handleOnFocus = this.handleOnFocus.bind(this)
-    this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
-    this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
-    this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
+    // this.handleOnBlur = this.handleOnBlur.bind(this)
+    // this.handleOnClick = this.handleOnClick.bind(this)
+    // this.handleOnEnter = this.handleOnEnter.bind(this)
+    // this.handleOnFocus = this.handleOnFocus.bind(this)
+    // this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
+    // this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
+    // this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
   }
 
   componentWillMount = () => {
@@ -86,13 +58,14 @@ class Item extends Component<Props, State> {
 
   getChildContext = () => {
     const { onParentMenuClose } = this.props
+
     return {
       parentMenu: this.menu,
       parentMenuClose: onParentMenuClose,
     }
   }
 
-  componentWillReceiveProps = (nextProps: Props) => {
+  componentWillReceiveProps = nextProps => {
     const { isFocused, isHover, isOpen } = this.state
     if (
       nextProps.isFocused !== isFocused ||
@@ -111,27 +84,27 @@ class Item extends Component<Props, State> {
     this._isMounted = false
   }
 
-  handleOnBlur = (event: Event, reactEvent: Event) => {
+  handleOnBlur = event => {
     const { onBlur } = this.props
-    onBlur(event, reactEvent, this)
+    onBlur(event, this)
     this.setState({
       isFocused: false,
     })
   }
 
-  handleOnEnter = (event: KeyboardEvent, reactEvent: Event) => {
+  handleOnEnter = event => {
     event.stopPropagation()
     /* istanbul ignore else */
     if (event.keyCode === Keys.ENTER) {
       if (this.menu) {
-        this.handleOnMouseEnter(event, reactEvent)
+        this.handleOnMouseEnter(event)
       } else {
-        this.handleOnClick(event, reactEvent)
+        this.handleOnClick(event)
       }
     }
   }
 
-  handleOnClick = (event: Event, reactEvent: Event) => {
+  handleOnClick = event => {
     const { disabled, onClick, onSelect, value } = this.props
 
     if (event) event.stopPropagation()
@@ -139,7 +112,7 @@ class Item extends Component<Props, State> {
 
     /* istanbul ignore else */
     if (!this.menu) {
-      onClick(event, reactEvent, this)
+      onClick(event, this)
       onSelect(value)
     } else {
       this.setState({
@@ -148,25 +121,25 @@ class Item extends Component<Props, State> {
     }
   }
 
-  handleOnFocus = (event: Event, reactEvent: Event) => {
+  handleOnFocus = event => {
     const { onFocus } = this.props
-    onFocus(event, reactEvent, this)
+    onFocus(event, this)
     this.setState({
       isFocused: true,
     })
   }
 
-  handleOnMouseEnter = (event: Event, reactEvent: Event) => {
+  handleOnMouseEnter = event => {
     const { onMouseEnter } = this.props
-    onMouseEnter(event, reactEvent, this)
+    onMouseEnter(event, this)
     this.setState({
       isHover: true,
     })
   }
 
-  handleOnMouseLeave = (event: Event, reactEvent: Event) => {
+  handleOnMouseLeave = event => {
     const { onMouseLeave } = this.props
-    onMouseLeave(event, reactEvent, this)
+    onMouseLeave(event, this)
     this.setState({
       isHover: false,
     })
@@ -186,8 +159,9 @@ class Item extends Component<Props, State> {
 
   getMenuFromChildren = () => {
     const { children } = this.props
+
     if (Array.isArray(children)) {
-      return children.find(child => this.getMenu(child))
+      return children.find(child => Boolean(this.getMenu(child)))
     } else {
       return this.getMenu(children) ? children : null
     }
@@ -195,6 +169,7 @@ class Item extends Component<Props, State> {
 
   removeMenuFromChildren = () => {
     const { children } = this.props
+
     if (this.menu && Array.isArray(children)) {
       return children.filter(child => !this.getMenu(child))
     } else {
@@ -217,6 +192,7 @@ class Item extends Component<Props, State> {
       onClick,
       onFocus,
       onMouseEnter,
+      onMouseLeave,
       onMenuClose,
       onParentMenuClose,
       ...rest

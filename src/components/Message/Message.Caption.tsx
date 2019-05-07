@@ -3,7 +3,7 @@ import { MessageThemeContext } from './Message.types'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './propTypes'
+import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Message.utils'
 
 type Props = {
@@ -46,7 +46,9 @@ Caption.defaultProps = {
   wordWrap: true,
 }
 
-Caption.contextTypes = providerContextTypes
+Caption.contextTypes = {
+  theme: noop,
+}
 
 namespaceComponent(COMPONENT_KEY.Caption)(Caption)
 

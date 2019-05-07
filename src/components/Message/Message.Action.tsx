@@ -6,7 +6,7 @@ import ChatBlock from './Message.ChatBlock'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { providerContextTypes } from './propTypes'
+import { noop } from '../../utilities/other'
 import css from './styles/Action.css'
 import { COMPONENT_KEY } from './Message.utils'
 
@@ -68,7 +68,9 @@ export const Action = (props: Props, context: Context) => {
 
 // TODO: fix typescript complains
 // @ts-ignore
-Action.contextTypes = providerContextTypes
+Action.contextTypes = {
+  theme: noop,
+}
 
 namespaceComponent(COMPONENT_KEY.Action)(Action)
 

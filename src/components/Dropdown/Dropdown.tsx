@@ -1,12 +1,11 @@
-// @flow
-import React, { PureComponent as Component } from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
-import Divider from './Divider'
-import Header from './Header'
-import Item from './Item'
-import { default as Menu, MenuComponent } from './Menu'
-import Trigger from './Trigger'
+import Divider from './Dropdown.Divider'
+import Header from './Dropdown.Header'
+import Item from './Dropdown.Item'
+import { default as Menu, MenuComponent } from './Dropdown.Menu'
+import Trigger from './Dropdown.Trigger'
 import KeypressListener from '../KeypressListener'
 import { propConnect } from '../PropProvider'
 import Keys from '../../constants/Keys'
@@ -18,26 +17,12 @@ import {
 } from '../../utilities/focus'
 import { isNodeElement } from '../../utilities/node'
 import { noop } from '../../utilities/other'
-import type { DropdownDirection } from './types'
+import { DropdownProps, DropdownState } from './Dropdown.types'
 
-type Props = {
-  children?: any,
-  className?: string,
-  closeMenuOnClick: boolean,
-  direction: DropdownDirection,
-  enableTabNavigation: boolean,
-  isOpen: boolean,
-  onClose: () => void,
-  onSelect: () => void,
-  selectedIndex: number,
-}
-
-type State = {
-  isOpen: boolean,
-  selectedIndex: number,
-}
-
-export class Dropdown extends Component<Props, State> {
+export class Dropdown extends React.PureComponent<
+  DropdownProps,
+  DropdownState
+> {
   static defaultProps = {
     closeMenuOnClick: true,
     enableTabNavigation: false,
@@ -51,23 +36,24 @@ export class Dropdown extends Component<Props, State> {
   static Trigger = Trigger
 
   isFocused: boolean = false
-  triggerNode: ?HTMLElement | ?Element = null
+  triggerNode: HTMLElement | Element | null = null
   _isMounted: boolean = false
 
-  constructor(props: Props) {
-    super()
+  constructor(props) {
+    super(props)
+
     this.state = {
       isOpen: props.isOpen,
       selectedIndex: props.selectedIndex,
     }
 
-    this.handleOnBodyClick = this.handleOnBodyClick.bind(this)
-    this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
-    this.handleOnTriggerFocus = this.handleOnTriggerFocus.bind(this)
-    this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
-    this.handleDownArrow = this.handleDownArrow.bind(this)
-    this.handleTab = this.handleTab.bind(this)
-    this.handleShiftTab = this.handleShiftTab.bind(this)
+    // this.handleOnBodyClick = this.handleOnBodyClick.bind(this)
+    // this.handleOnTriggerClick = this.handleOnTriggerClick.bind(this)
+    // this.handleOnTriggerFocus = this.handleOnTriggerFocus.bind(this)
+    // this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
+    // this.handleDownArrow = this.handleDownArrow.bind(this)
+    // this.handleTab = this.handleTab.bind(this)
+    // this.handleShiftTab = this.handleShiftTab.bind(this)
   }
 
   componentDidMount = () => {
@@ -79,13 +65,13 @@ export class Dropdown extends Component<Props, State> {
     this._isMounted = false
   }
 
-  safeSetState = (newState: Object) => {
+  safeSetState = newState => {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(newState)
     }
   }
-  componentWillUpdate = (nextProps: Props) => {
+  componentWillUpdate = nextProps => {
     if (this.props.isOpen !== nextProps.isOpen) {
       this.safeSetState({ isOpen: nextProps.isOpen })
     }
@@ -95,10 +81,11 @@ export class Dropdown extends Component<Props, State> {
     const trigger = this.refs.trigger
     /* istanbul ignore next */
     if (!this.triggerNode) {
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.triggerNode = isNodeElement(trigger)
         ? trigger
-        : // $FlowFixMe
-          ReactDOM.findDOMNode(trigger)
+        : ReactDOM.findDOMNode(trigger)
     }
   }
 
@@ -133,7 +120,8 @@ export class Dropdown extends Component<Props, State> {
     this.props.onClose()
 
     if (this.props.enableTabNavigation && this.triggerNode) {
-      // $FlowFixMe
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.triggerNode.focus()
       this.isFocused = true
     } else {
@@ -148,9 +136,11 @@ export class Dropdown extends Component<Props, State> {
     }
   }
 
-  handleTab = (event: KeyboardEvent) => {
+  handleTab = event => {
     this.isFocused = false
+
     if (this.props.enableTabNavigation) return
+
     /* istanbul ignore else */
     if (this.state.isOpen) {
       event.preventDefault && event.preventDefault()
@@ -164,10 +154,13 @@ export class Dropdown extends Component<Props, State> {
       }
       return false
     }
+
+    return
   }
 
-  handleShiftTab = (event: KeyboardEvent) => {
+  handleShiftTab = event => {
     this.isFocused = false
+
     if (this.props.enableTabNavigation) return
     /* istanbul ignore else */
     if (this.state.isOpen) {
@@ -182,6 +175,8 @@ export class Dropdown extends Component<Props, State> {
       }
       return false
     }
+
+    return
   }
 
   render() {

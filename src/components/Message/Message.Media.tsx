@@ -10,7 +10,6 @@ import classNames, { BEM } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { providerContextTypes } from './propTypes'
 import css, { ImageUI } from './styles/Media.css'
 import { COMPONENT_KEY } from './Message.utils'
 
@@ -60,7 +59,10 @@ export class Media extends React.Component<Props> {
     tryAgainLabel: 'Try again',
     isUploading: false,
   }
-  static contextTypes = providerContextTypes
+  static contextTypes = {
+    theme: noop,
+  }
+
   static displayName = 'Message.Media'
 
   /**

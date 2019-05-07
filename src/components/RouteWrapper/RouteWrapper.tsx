@@ -1,7 +1,5 @@
-import React from 'react'
+import * as React from 'react'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
-import PropTypes from 'prop-types'
-import { isDefined } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import get from '../../utilities/get'
 
@@ -12,9 +10,9 @@ const RouteWrapper = WrappedComponent => {
     /* istanbul ignore next */
     'Component'
 
-  class Component extends React.PureComponent {
+  class Component extends React.PureComponent<any> {
     static contextTypes = {
-      router: PropTypes.object,
+      router: noop,
     }
 
     static defaultProps = {

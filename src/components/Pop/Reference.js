@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import ReactPopperReference from '../Popper/Reference'
+import ReactPopperReference from '../Popper/Popper.Reference'
 import styled from '../styled'
 
 type Props = any
