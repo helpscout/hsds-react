@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import * as React from 'react'
 import PopperJS from 'popper.js'
 import { ManagerContext } from './Popper.Manager'

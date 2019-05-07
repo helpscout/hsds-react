@@ -26,7 +26,11 @@ class ProgressBar extends React.PureComponent<Props> {
   }
 
   getValue(val: Value): number {
-    const value = val != null ? val : this.props.value
+    const value =
+      val != null
+        ? val
+        : /* istanbul ignore next */
+          this.props.value
     const barValue = parseFloat(`${value}`)
     const normalizedBarValue =
       barValue > 100 ? 100 : barValue < 0 ? 0 : barValue
@@ -53,7 +57,7 @@ class ProgressBar extends React.PureComponent<Props> {
       size && `is-${size}`,
       className
     )
-    const progresBarStyle = {
+    const progressBarStyle = {
       width: this.getValueAsPercent(value),
     }
 
@@ -67,7 +71,7 @@ class ProgressBar extends React.PureComponent<Props> {
         aria-valuetext={description}
         {...rest}
       >
-        <div className="c-ProgressBar__bar" style={progresBarStyle} />
+        <div className="c-ProgressBar__bar" style={progressBarStyle} />
       </div>
     )
   }

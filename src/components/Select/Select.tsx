@@ -106,7 +106,6 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
   }
 
   handleOnChange = (event: SelectEvent) => {
-    if (event == null || event.currentTarget == null) return
     const value = (event.currentTarget as HTMLSelectElement).value
     this.props.onChange(value)
 

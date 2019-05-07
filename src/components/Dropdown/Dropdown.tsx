@@ -154,7 +154,7 @@ export class Dropdown extends React.PureComponent<
       }
       return false
     }
-
+    /* istanbul ignore next */
     return
   }
 
@@ -175,7 +175,7 @@ export class Dropdown extends React.PureComponent<
       }
       return false
     }
-
+    /* istanbul ignore next */
     return
   }
 
