@@ -8,7 +8,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { PopProps, PopperStyles } from './Pop.types'
+import { PopProps } from './Pop.types'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
@@ -158,7 +158,7 @@ export class Popper extends React.Component<Props> {
  * @param   {object} props
  * @returns {object}
  */
-export const enhancePopperStyles = (props: PopperStyles) => {
+export const enhancePopperStyles = (props: any = {}) => {
   const options = {
     arrowSize: props.arrowSize || 5,
     offset: props.offset || 0,
@@ -166,7 +166,7 @@ export const enhancePopperStyles = (props: PopperStyles) => {
     style: props.style || {},
   }
 
-  const { arrowSize, offset, placement, style } = { ...options, ...props }
+  const { arrowSize, offset, placement, style } = options
 
   if (placement.indexOf('top') >= 0) {
     return {

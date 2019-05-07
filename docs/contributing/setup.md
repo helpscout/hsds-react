@@ -46,9 +46,7 @@ Fantastic ✌️! You've got HSDS up and running on your computer.
 
 ## Code editor
 
-You can use **whatever code editor you like**! HSDS is typed using [Flow](https://flow.org/). Because of this, we recommend using [Visual Studio Code](https://code.visualstudio.com/) as it has pretty great [Flow support](https://github.com/flowtype/flow-for-vscode).
-
-Note: You may need to [install Flow globally](https://preview.npmjs.com/package/flow-bin) on your computer.
+You can use **whatever code editor you like**! HSDS is typed using [TypeScript](https://www.typescriptlang.org/). Because of this, we recommend using [Visual Studio Code](https://code.visualstudio.com/).
 
 ## Git branch
 

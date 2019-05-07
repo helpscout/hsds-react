@@ -21,6 +21,7 @@ export interface PopProps {
   animationEasing: string
   animationSequence: string | Array<string>
   arrowClassName: string
+  arrowSize: number
   children?: any
   className?: string
   closeOnBodyClick: boolean

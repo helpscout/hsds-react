@@ -1,6 +1,4 @@
-// @flow
-import type { PopProps } from './types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import Manager from './Manager'
 import Arrow from './Arrow'
 import Popper from './Popper'
@@ -8,18 +6,23 @@ import Reference from './Reference'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { PopProps } from './Pop.types'
 import { PopUI } from './Pop.css'
 
-type Props = PopProps
+export interface Props extends PopProps {
+  onBeforeOpen: (instance: Pop) => Promise<any>
+  onBeforeClose: (instance: Pop) => Promise<any>
+  onContentClick: (event: React.MouseEvent) => void
+}
 
-type State = {
-  id: string,
-  isOpen: boolean,
+export interface State {
+  id: string
+  isOpen: boolean
 }
 
 const uniqueID = createUniqueIDFactory('Pop')
 
-class Pop extends Component<Props, State> {
+class Pop extends React.Component<Props, State> {
   static defaultProps = {
     arrowSize: 5,
     closeOnBodyClick: false,
@@ -112,7 +115,7 @@ class Pop extends Component<Props, State> {
     this.close()
   }
 
-  handleOnContentClick = event => {
+  handleOnContentClick = (event: React.MouseEvent) => {
     this.props.onContentClick(event)
     if (!this.props.closeOnContentClick) return
     this.close()
