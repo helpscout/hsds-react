@@ -13,6 +13,10 @@ import { PopProps } from './Pop.types'
 const uniqueID = createUniqueIDFactory('PopPopper')
 
 export interface Props extends PopProps {
+  animationDelay: number | string
+  animationDuration: number | string
+  animationEasing: string
+  animationSequence: string | Array<string>
   arrowColor?: string
   arrowSize: number
   offset: number
@@ -31,15 +35,24 @@ export class Popper extends React.Component<Props> {
     animationEasing: 'ease',
     animationSequence: 'fade',
     arrowSize: 5,
+    close: noop,
+    closeOnBodyClick: true,
+    closeOnContentClick: false,
+    closeOnEscPress: true,
+    closeOnMouseLeave: true,
+    display: 'inline-block',
+    isOpen: false,
     modifiers: {},
     offset: 0,
-    close: noop,
     onClick: noop,
+    onClose: noop,
     onContentClick: noop,
     onMouseLeave: noop,
+    onOpen: noop,
     placement: 'auto',
     positionFixed: false,
     showArrow: true,
+    triggerOn: 'click',
     zIndex: 1000,
   }
 

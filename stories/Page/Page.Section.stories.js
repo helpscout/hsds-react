@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Page } from '../../src/index.js'
+import { Page } from '../../src/index'
 import { App } from './decorators'
 
 const stories = storiesOf('Page/Section', module).addDecorator(App)

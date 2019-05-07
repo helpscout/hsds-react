@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ArticleCard, Card, CardList } from '../src/index.js'
+import { ArticleCard, Card, CardList } from '../src/index'
 import { createSpec, faker } from '@helpscout/helix'
 import { withKnobs, boolean, text, number } from '@storybook/addon-knobs'
 

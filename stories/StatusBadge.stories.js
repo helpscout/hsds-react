@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { StatusBadge } from '../src/index.js'
+import { StatusBadge } from '../src/index'
 
 const stories = storiesOf('StatusBadge', module)
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
-import { DetailList, Text } from '../src/index.js'
+import { DetailList, Text } from '../src/index'
 
 const fixture = createSpec({
   text: faker.lorem.sentence(),

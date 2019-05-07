@@ -13,7 +13,7 @@ import {
   Switch,
   Toolbar,
   styled,
-} from '../src/index.js'
+} from '../src/index'
 import { FrameProvider } from '../src/components/styled'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'

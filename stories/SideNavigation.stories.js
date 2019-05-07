@@ -4,7 +4,7 @@ import { withKnobs, text } from '@storybook/addon-knobs'
 import withAktiv from './utils/withAktiv'
 import HsApp from '../src/components/HsApp'
 
-import { SideNavigation, Flexy, Heading, Button } from '../src/index.js'
+import { SideNavigation, Flexy, Heading, Button } from '../src/index'
 import { ItemSpec } from './DropdownV2.stories'
 
 const renderSidebarFolders = () => {

@@ -8,7 +8,7 @@ import {
   select,
 } from '@storybook/addon-knobs'
 import { withArtboard, Guide, GuideContainer } from '@helpscout/artboard'
-import { Avatar, AvatarStack } from '../src/index.js'
+import { Avatar, AvatarStack } from '../src/index'
 import AvatarSpec from './Avatar/specs/Avatar'
 
 const guides = [

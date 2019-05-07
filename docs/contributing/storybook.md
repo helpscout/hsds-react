@@ -47,7 +47,7 @@ In our `Strong/index.js` file, we'll need to add:
 ```jsx
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Strong } from '../../src/index.js'
+import { Strong } from '../../src/index'
 
 const stories = storiesOf('Strong', module)
 

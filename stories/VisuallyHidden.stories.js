@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { VisuallyHidden } from '../src/index.js'
+import { VisuallyHidden } from '../src/index'
 
 storiesOf('VisuallyHidden', module)
   .add('default', () => (

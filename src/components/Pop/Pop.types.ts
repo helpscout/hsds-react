@@ -16,11 +16,11 @@ export type Placements =
   | 'left-start'
 
 export interface PopProps {
-  animationDelay: number | string
-  animationDuration: number | string
-  animationEasing: string
-  animationSequence: string | Array<string>
-  arrowClassName: string
+  animationDelay?: number | string
+  animationDuration?: number | string
+  animationEasing?: string
+  animationSequence?: string | Array<string>
+  arrowClassName?: string
   arrowSize: number
   children?: any
   className?: string

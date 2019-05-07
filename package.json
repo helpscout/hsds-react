@@ -103,7 +103,7 @@
     "invariant": "2.2.4",
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
-    "react-sortable-hoc": "0.6.7",
+    "react-sortable-hoc": "1.9.1",
     "react-transition-group": "2.5.3",
     "warning": "4.0.3"
   },
@@ -203,7 +203,7 @@
     "react-dev-utils": "^3.0.2",
     "react-dom": "^16.6.1",
     "react-draggable": "^3.2.1",
-    "react-frame-component": "^1.1.0",
+    "react-frame-component": "4.1.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-treebeard": "3.1.0",

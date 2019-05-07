@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { FormGroup, Flexy, Skeleton } from '../src/index.js'
+import { FormGroup, Flexy, Skeleton } from '../src/index'
 
 const stories = storiesOf('Skeleton', module)
 

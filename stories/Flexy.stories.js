@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Flexy } from '../src/index.js'
+import { Flexy } from '../src/index'
 import styled from '../src/components/styled'
 
 const stories = storiesOf('Flexy', module)

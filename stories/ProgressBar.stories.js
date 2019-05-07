@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ProgressBar } from '../src/index.js'
+import { ProgressBar } from '../src/index'
 
 storiesOf('ProgressBar', module)
   .add('default', () => <ProgressBar value={50} />)
