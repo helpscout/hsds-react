@@ -1,19 +1,21 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { ArrowUI } from './Arrow.css.js'
 import { noop } from '../../utilities/other'
+import { ArrowUI } from './Arrow.css'
 
-type Props = {
-  className?: string,
-  children?: any,
-  placement: string,
-  offset: number,
-  size: number,
-  showArrow: boolean,
-  theme: Object | string,
-  zIndex: number,
+export interface Props {
+  color?: string
+  className?: string
+  children?: any
+  innerRef: (node: HTMLElement) => void
+  placement: string
+  offset: number
+  size: number
+  style?: Object
+  showArrow: boolean
+  theme?: Object | string
+  zIndex: number
 }
 
 export class Arrow extends React.PureComponent<Props> {

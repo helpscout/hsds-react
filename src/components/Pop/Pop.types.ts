@@ -40,8 +40,8 @@ export interface PopProps {
 }
 
 export type PopperStyles = {
-  arrowSize: string
-  offset: string
+  arrowSize: number
+  offset: number
   placement: Placements
   style: Object
 }

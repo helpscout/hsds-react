@@ -4,7 +4,7 @@ import { safeInvoke, unwrapArray } from './Popper.utils'
 
 export type ReferenceChildrenProps = { ref: (HTMLElement?) => void }
 export type ReferenceProps = {
-  children: (ReferenceChildrenProps) => Node
+  children: (ReferenceChildrenProps) => any
   innerRef?: (HTMLElement?) => void
 }
 

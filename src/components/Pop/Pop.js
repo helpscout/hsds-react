@@ -8,7 +8,7 @@ import Reference from './Reference'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { PopUI } from './Pop.css.js'
+import { PopUI } from './Pop.css'
 
 type Props = PopProps
 

@@ -1,6 +1,4 @@
-// @flow
-import type { PopProps, PopperStyles } from './types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
@@ -10,12 +8,23 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { PopProps, PopperStyles } from './Pop.types'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
-type Props = PopProps
+export interface Props extends PopProps {
+  arrowColor?: string
+  arrowSize: number
+  offset: number
+  close: () => void
+  onClick: (event: React.MouseEvent) => void
+  onContentClick: (event: React.MouseEvent) => void
+  onMouseLeave: (event: React.MouseEvent) => void
+  positionFixed: boolean
+  zIndex: number
+}
 
-export class Popper extends Component<Props> {
+export class Popper extends React.Component<Props> {
   static defaultProps = {
     animationDelay: 0,
     animationDuration: 0,
@@ -40,7 +49,7 @@ export class Popper extends Component<Props> {
     return this.props.id || this.id
   }
 
-  handleOnClick = (event: Event) => {
+  handleOnClick = (event: React.MouseEvent) => {
     /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
@@ -149,7 +158,7 @@ export class Popper extends Component<Props> {
  * @param   {object} props
  * @returns {object}
  */
-export const enhancePopperStyles = (props: PopperStyles = {}) => {
+export const enhancePopperStyles = (props: PopperStyles) => {
   const options = {
     arrowSize: props.arrowSize || 5,
     offset: props.offset || 0,
@@ -157,7 +166,7 @@ export const enhancePopperStyles = (props: PopperStyles = {}) => {
     style: props.style || {},
   }
 
-  const { arrowSize, offset, placement, style } = options
+  const { arrowSize, offset, placement, style } = { ...options, ...props }
 
   if (placement.indexOf('top') >= 0) {
     return {
