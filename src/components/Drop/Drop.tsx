@@ -33,8 +33,9 @@ const defaultOptions = {
   zIndex: popoverWrapperBaseZIndex,
 }
 
+/* istanbul ignore next */
 export const DropComponent: any = (
-  /* istanbul ignore next */ options = defaultOptions
+  options = defaultOptions
 ) => ComposedComponent => {
   const portalOptions = Object.assign({}, defaultOptions, options)
 

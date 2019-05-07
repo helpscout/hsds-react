@@ -45,6 +45,7 @@ export const moveCursorToEnd = (input: InputNode) => {
   if (!input) return
   if (typeof input.selectionStart === 'number') {
     input.selectionStart = input.selectionEnd = input.value.length
+    /* istanbul ignore next */
     // TODO: fix typescript complains
     // @ts-ignore
   } else if (typeof input.createTextRange !== 'undefined') {

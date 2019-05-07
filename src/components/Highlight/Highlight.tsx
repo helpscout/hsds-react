@@ -16,6 +16,7 @@ class Highlight extends React.PureComponent<Props> {
   static defaultProps = {}
 
   highlightBlock = (node: HTMLElement) => {
+    /* istanbul ignore next */
     node && hljs && hljs.highlightBlock(node)
   }
 

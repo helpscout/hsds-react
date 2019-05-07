@@ -2,7 +2,22 @@ import {
   getTextAreaLineCurrent,
   getTextAreaLineTotal,
   isTextArea,
+  moveCursorToEnd,
 } from '../Input.utils'
+
+describe('moveCursorToEnd', () => {
+  test('Returns undefined if no node provided', () => {
+    expect(moveCursorToEnd()).toBeUndefined()
+  })
+
+  test('Moves cursor to end', () => {
+    const input = document.createElement('input')
+    input.value = 'stephen pomegranate'
+    moveCursorToEnd(input)
+
+    expect(input.selectionStart).toBe(19)
+  })
+})
 
 describe('getTextAreaLineCurrent', () => {
   test('Retrieves the correct line number for a single line', () => {

@@ -56,6 +56,12 @@ describe('Styles', () => {
     expect(wrapper.getDOMNode().classList.contains('is-readonly')).toBe(true)
   })
 
+  test('Can render is-radio styles', () => {
+    const wrapper = mount(<Backdrop choiceKind="radio" />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-radio')).toBe(true)
+  })
+
   test('Can render disabled styles', () => {
     const wrapper = mount(<Backdrop disabled />)
 
