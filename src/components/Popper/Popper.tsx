@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import * as React from 'react'
-import PopperJS from 'popper.js'
+import PopperJS from '../../utilities/popper.lib'
 import { ManagerContext } from './Popper.Manager'
 import { safeInvoke, unwrapArray } from './Popper.utils'
 

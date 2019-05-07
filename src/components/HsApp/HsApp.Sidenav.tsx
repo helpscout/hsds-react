@@ -1,25 +1,20 @@
 import * as React from 'react'
-import { createSpec, faker } from '@helpscout/helix'
 import SideNavigation from '../SideNavigation'
 import Icon from '../Icon'
-import { noop } from '../../utilities/other'
-
-const ItemSpec = createSpec({
-  id: faker.random.uuid(),
-  label: faker.name.firstName(),
-  value: faker.name.firstName(),
-  onClick: noop,
-})
 
 export interface Props {
   collapsable?: boolean
   badge?: string
+  footerItems: Array<unknown>
   headerLabel?: string
+  headerItems: Array<unknown>
 }
 
 class Sidenav extends React.PureComponent<Props> {
   static defaultProps = {
+    footerItems: [],
     headerLabel: 'Help Scout',
+    headerItems: [],
   }
 
   state = { active: 'chat' }
@@ -29,8 +24,7 @@ class Sidenav extends React.PureComponent<Props> {
   }
 
   renderHeader() {
-    const headerItems = ItemSpec.generate(3)
-    const { headerLabel, badge, collapsable } = this.props
+    const { headerLabel, badge, collapsable, headerItems } = this.props
 
     return (
       <SideNavigation.Header>
@@ -98,7 +92,7 @@ class Sidenav extends React.PureComponent<Props> {
   }
 
   renderSidebarFooter() {
-    const footerItems = ItemSpec.generate(3)
+    const { footerItems } = this.props
 
     return (
       <SideNavigation.Footer>
