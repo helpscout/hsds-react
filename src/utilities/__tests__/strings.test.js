@@ -225,10 +225,14 @@ describe('convertLinksToHTML', () => {
       'www.example.com　',
       '<a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a>　',
     ],
-    [
-      'Линк: https://ru.wikipedia.org/wiki/Футбол',
-      'Линк: <a href="https://ru.wikipedia.org/wiki/Футбол" target="_blank" rel="noopener">https://ru.wikipedia.org/wiki/Футбол</a>',
-    ],
+
+    // Skipping this test due to updating the regex so we don't match every possible letter character.
+    // The large regex string was causing some bundle size problems.
+    //
+    // [
+    //   'Линк: https://ru.wikipedia.org/wiki/Футбол',
+    //   'Линк: <a href="https://ru.wikipedia.org/wiki/Футбол" target="_blank" rel="noopener">https://ru.wikipedia.org/wiki/Футбол</a>',
+    // ],
     [
       '(http://www.example.com/)',
       '(<a href="http://www.example.com/" target="_blank" rel="noopener">http://www.example.com/</a>)',
