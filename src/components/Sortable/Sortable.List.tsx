@@ -1,4 +1,5 @@
 import * as React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { SortableContainer } from 'react-sortable-hoc'
 import { classNames } from '../../utilities/classNames'
 
@@ -28,7 +29,7 @@ const List = SortableContainer(props => {
     : null
 
   return (
-    <div className={componentClassName} {...rest}>
+    <div {...getValidProps(rest)} className={componentClassName}>
       {itemsMarkup}
     </div>
   )

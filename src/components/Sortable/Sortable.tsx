@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { arrayMove } from 'react-sortable-hoc'
+import arrayMove from 'array-move'
 import { classNames } from '../../utilities/classNames'
 import DragHandle from './Sortable.DragHandle'
 import Item from './Sortable.Item'
@@ -7,6 +7,8 @@ import List from './Sortable.List'
 import { SortableProps } from './Sortable.types'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
+
+export { default as arrayMove } from 'array-move'
 
 class Sortable extends React.PureComponent<SortableProps> {
   constructor(props) {
