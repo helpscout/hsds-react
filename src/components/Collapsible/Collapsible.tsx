@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
+import { CollapsibleUI } from './styles/Collapsible.css'
 import { CollapsibleProps, CollapsibleState } from './Collapsible.types'
 
 class Collapsible extends React.Component<CollapsibleProps, CollapsibleState> {
@@ -201,15 +202,15 @@ class Collapsible extends React.Component<CollapsibleProps, CollapsibleState> {
     }
 
     return (
-      <div
+      <CollapsibleUI
         {...rest}
         aria-hidden={!isOpen}
         style={componentStyle}
         className={componentClassName}
-        ref={this.setNodeRef}
+        innerRef={this.setNodeRef}
       >
         <div ref={this.setHeightNodeRef}>{content}</div>
-      </div>
+      </CollapsibleUI>
     )
   }
 }
