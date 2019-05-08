@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Avatar, ChatList } from '../../src/index.js'
+import { Avatar, ChatList } from '../../src/index'
 import AvatarSpec from '../Avatar/specs/Avatar'
 import ChatSpec from './specs/Chat'
 import ChatListItemStateExample from './ChatListItemStateExample'

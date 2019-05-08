@@ -1,11 +1,11 @@
-import { TextSize, TextShade, UIState } from './types'
 import * as React from 'react'
+import { TextSize, TextShade, UIState } from './Text.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import css from './styles/Text.css'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Text.utils'
 
 export interface Props {
   allCaps?: boolean

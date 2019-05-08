@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { ConfigGetter, PropProviderProps } from './types'
+import { ConfigGetter, PropProviderProps } from './PropProvider.types'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import Context from './Context'
-import { getGlobalApp, isStateless } from './utils'
+import { getGlobalApp, isStateless } from './PropProvider.utils'
 import { isDefined, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 

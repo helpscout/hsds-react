@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { HsApp } from '../src/index.js'
+import { HsApp } from '../src/index'
 
 const stories = storiesOf('HsApp', module)
 

@@ -1,4 +1,3 @@
-// @flow
 import styled from '../../styled'
 import { getColor } from '../../../styles/utilities/color'
 import Input from '../../Input'

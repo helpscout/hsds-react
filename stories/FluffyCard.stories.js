@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { FluffyCard } from '../src/index.js'
+import { FluffyCard } from '../src/index'
 
 const stories = storiesOf('FluffyCard', module)
 

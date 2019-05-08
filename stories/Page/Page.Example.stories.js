@@ -8,7 +8,7 @@ import {
   Input,
   Page,
   Switch,
-} from '../../src/index.js'
+} from '../../src/index'
 import { App } from './decorators'
 
 const stories = storiesOf('Page/Example', module).addDecorator(App)

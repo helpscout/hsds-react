@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Toolbar } from '../src/index.js'
+import { Toolbar } from '../src/index'
 import { SampleComponent as AvatarListSampleComponent } from './AvatarList.stories'
 import { SampleComponent as TagListSampleComponent } from './TagList.stories'
 

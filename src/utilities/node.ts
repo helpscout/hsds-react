@@ -117,7 +117,7 @@ export const getComputedOffsetLeft = (node: Node): number => {
   return node.getBoundingClientRect().left + offset / 2
 }
 
-export const getViewportHeight = (scope: Scope): number => {
+export const getViewportHeight = (scope?: Scope): number => {
   const node = getNodeScope(scope)
   const { height, offset } = getComputedHeightProps(node)
 
@@ -126,7 +126,7 @@ export const getViewportHeight = (scope: Scope): number => {
   return height > window.innerHeight ? height : window.innerHeight - offset
 }
 
-export const getViewportWidth = (scope: Scope): number => {
+export const getViewportWidth = (scope?: Scope): number => {
   const node = getNodeScope(scope)
   const { width, offset } = getComputedWidthProps(node)
 
@@ -173,9 +173,7 @@ export const isNodeVisible = (options: {
 
   const viewportHeight = isWindow
     ? window.innerHeight
-    : // $FlowFixMe
-      nodeScope.getBoundingClientRect().height
-  // $FlowFixMe
+    : nodeScope.getBoundingClientRect().height
   const viewportTop = isWindow ? window.scrollY : nodeScope.scrollTop
   const viewportBottom = isWindow
     ? window.innerHeight
@@ -246,9 +244,7 @@ export const getClosestNode = (node: Node, selector: string): Node => {
  */
 export const scrollIntoView = (node: Node) => {
   if (!isNodeElement(node)) return
-  // $FlowFixMe
   if (node['scrollIntoViewIfNeeded']) return node.scrollIntoViewIfNeeded()
   /* istanbul ignore else */
-  // $FlowFixMe
   if (node['scrollIntoView']) return node.scrollIntoView()
 }

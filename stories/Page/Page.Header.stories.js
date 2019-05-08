@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '../../src/components/styled'
 import { storiesOf } from '@storybook/react'
-import { Page } from '../../src/index.js'
+import { Page } from '../../src/index'
 import { App } from './decorators'
 
 const stories = storiesOf('Page/Header', module).addDecorator(App)

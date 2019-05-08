@@ -1,4 +1,3 @@
-// @flow
 import styled from '../../styled'
 import { isHSApp } from '../../../styles/utilities/theme'
 import Animate from '../../Animate'
@@ -68,7 +67,7 @@ export const CloseUI = styled('div')`
   z-index: 3;
 `
 
-function makeHSAppInnerWrapperStyles(props: Object): string {
+function makeHSAppInnerWrapperStyles(props) {
   if (!isHSApp(props)) return ''
 
   return `

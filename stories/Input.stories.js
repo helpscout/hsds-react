@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
-import { Button, Flexy, Icon, Input, styled } from '../src/index.js'
+import { Button, Flexy, Icon, Input, styled } from '../src/index'
 
 const stories = storiesOf('Input', module)
 

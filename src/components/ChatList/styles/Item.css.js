@@ -1,4 +1,3 @@
-// @flow
 import styled from '../../styled'
 import Card from '../../Card'
 import Flexy from '../../Flexy'
@@ -114,7 +113,7 @@ export const DividerWrapperUI = styled('div')`
   margin-left: -3px;
 `
 
-function makeBackgroundColorStyles(color: string): string {
+function makeBackgroundColorStyles(color) {
   return `
     background-color: ${color};
 

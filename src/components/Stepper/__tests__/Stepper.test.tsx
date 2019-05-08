@@ -2,8 +2,8 @@ import * as React from 'react'
 import { mount, shallow, render } from 'enzyme'
 import { Stepper } from '../Stepper'
 import Step from '../Stepper.Step'
-import { StepUI } from '../Stepper.css'
-import { StepperUI } from '../Stepper.css'
+import { StepUI } from '../styles/Stepper.css'
+import { StepperUI } from '../styles/Stepper.css'
 
 const mockSteps = [
   {

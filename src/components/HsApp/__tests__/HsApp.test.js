@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import HsApp from '../HsApp'
 
-import { InnerContentUI } from '../HsApp.css'
+import { InnerContentUI } from '../styles/HsApp.css'
 
 describe('ClassName', () => {
   test('Has default className', () => {

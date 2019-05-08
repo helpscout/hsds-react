@@ -1,1 +1,4 @@
-export { isBeacon, isHSApp } from '../../components/PropProvider/utils'
+export {
+  isBeacon,
+  isHSApp,
+} from '../../components/PropProvider/PropProvider.utils'

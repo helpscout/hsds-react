@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import ChatList from '../ChatList'
-import BlankSlate from '../BlankSlate'
-import Item from '../Item'
+import BlankSlate from '../ChatList.BlankSlate'
+import Item from '../ChatList.Item'
 
 describe('ClassName', () => {
   test('Has default className', () => {

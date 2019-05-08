@@ -46,6 +46,7 @@ Use `<Pagination>` in HSDS together with `<Table>`, see `TableWithPagination.js`
 | tableWidth       | `object{ min: string, max: string }`         | The <table> width                                                                                          |
 | theme            | `object`                                     | An object to customize the visual appearance of the table. See [Themes.md](/docs/Themes.md)                |
 | isLoading        | `boolean`                                    | Adds the 'is-loading' class to the component                                                               |
+| isScrollLocked   | `boolean`                                    | Whether to use `ScrollLock` with `direction="x"` on the Table.                                             |
 | sortedInfo       | `object{ columnKey: string, order: string }` | When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) |
 | onRowClick       | `function`                                   | Callback function when a row is clicked. Arguments are the event and the row clicked.                      |
 | tableRef         | `function`                                   | Retrieves the <table> node.                                                                                |

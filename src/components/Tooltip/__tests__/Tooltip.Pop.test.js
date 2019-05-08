@@ -4,7 +4,7 @@ import { mount } from 'enzyme'
 
 // Tests the Pop integration with Tooltip
 
-jest.mock('../Tooltip.css', () => {
+jest.mock('../styles/Tooltip.css', () => {
   const TooltipUI = ({ className, children }) => (
     <div className={className}>{children}</div>
   )

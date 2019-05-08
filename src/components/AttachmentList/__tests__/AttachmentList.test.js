@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { AttachmentList } from '../index'
+import { AttachmentList } from '../AttachmentList'
 import { Attachment, Icon } from '../../index'
 
 const ui = {

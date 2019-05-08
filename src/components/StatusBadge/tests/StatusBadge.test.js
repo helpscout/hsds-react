@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import StatusBadge from '../index'
 import { Animate, Badge, StatusDot } from '../../index'
 import { mount } from 'enzyme'

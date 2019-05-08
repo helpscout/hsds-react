@@ -1,4 +1,3 @@
-// @flow
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { isHSApp } from '../../../styles/utilities/theme'
@@ -36,7 +35,7 @@ export const OverlayUI = styled('div')`
   ${props => makeHSAppStyles(props)};
 `
 
-function makeHSAppStyles(props: Object): string {
+function makeHSAppStyles(props) {
   if (!isHSApp(props)) return ''
 
   return `

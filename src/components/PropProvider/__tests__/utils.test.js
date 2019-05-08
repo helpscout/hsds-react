@@ -11,7 +11,7 @@ import {
   propProviderDataAttr,
   shallowMergeProps,
   setGlobalApp,
-} from '../utils'
+} from '../PropProvider.utils'
 
 describe('getConfigProps', () => {
   test('Returns default config object, if no arguments', () => {

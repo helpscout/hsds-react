@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { OptionTile } from '../src/index.js'
+import { OptionTile } from '../src/index'
 import styled, { ThemeProvider } from '../src/components/styled'
 
 const stories = storiesOf('OptionTile', module)

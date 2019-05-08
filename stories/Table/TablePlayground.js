@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Table } from '../../src/index.js'
+import { Table } from '../../src/index'
 import Heading from '../../src/components/Heading'
 import ColumnCustomizer from './ColumnsCustomizer'
 import TableCustomizer from './TableCustomizer'
@@ -41,7 +41,7 @@ export default class TablePlayground extends Component {
           columnKey: 'name',
           align: 'left',
           width: '30%',
-          renderHeaderCell: (column, { sortedInfo }) => {
+          renderHeaderCell: (column, sortedInfo) => {
             return (
               <strong>
                 {column.title}
@@ -70,7 +70,7 @@ export default class TablePlayground extends Component {
           align: 'center',
           width: '35%',
           sorter: this.sortAlphabetically,
-          renderHeaderCell: (column, { sortedInfo }) => {
+          renderHeaderCell: (column, sortedInfo) => {
             return (
               <strong>
                 {column.title}

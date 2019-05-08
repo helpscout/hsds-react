@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
-import FadeInOut from '../FadeInOut'
-import { BadgeUI } from '../SideNavigation.css'
+import FadeInOut from '../SideNavigation.FadeInOut'
+import { BadgeUI } from '../styles/SideNavigation.css'
 
 describe('ClassName', () => {
   test('Has default className', () => {

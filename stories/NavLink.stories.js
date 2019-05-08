@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { NavLink, Link } from '../src/index.js'
+import { NavLink, Link } from '../src/index'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 
 const stories = storiesOf('NavLink', module)

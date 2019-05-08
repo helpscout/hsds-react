@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { select } from '@storybook/addon-knobs'
-import { Flexy, Icon, Text } from '../src/index.js'
+import { Flexy, Icon, Text } from '../src/index'
 import iconList from '../src/components/Icon/icons'
 import styled from '../src/components/styled'
 import { getColor } from '../src/styles/utilities/color'

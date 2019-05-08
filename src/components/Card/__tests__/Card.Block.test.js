@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import CardBlock from '../Block'
+import CardBlock from '../Card.Block'
 import Scrollable from '../../Scrollable'
 
 describe('ClassName', () => {

@@ -5,7 +5,7 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Progress from './Stepper.Progress'
-import { StepUI, LineUI, CircleUI, GhostTitleUI } from './Stepper.css'
+import { StepUI, LineUI, CircleUI, GhostTitleUI } from './styles/Stepper.css'
 import { STEP_COMPONENT_KEY } from './Stepper.utils'
 import { StepperStep } from './Stepper.types'
 
