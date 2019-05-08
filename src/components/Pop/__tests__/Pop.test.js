@@ -4,12 +4,16 @@ import Pop from '../Pop'
 
 jest.mock('../Pop.Portal', () => {
   const Portal = ({ children }) => <div>{children}</div>
-  return Portal
+  return {
+    default: Portal,
+  }
 })
 
 jest.mock('../../Animate', () => {
   const Animate = ({ children }) => <div>{children}</div>
-  return Animate
+  return {
+    default: Animate,
+  }
 })
 
 const cx = {

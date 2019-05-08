@@ -7,7 +7,7 @@ import forEach from '../utilities/forEach'
  *
  * @returns The compiled CSS styles.
  */
-export const makeStateColorStyles = (prop: string = 'color'): string => {
+export const makeStateColorStyles = (prop = 'color') => {
   return forEach(
     STATES,
     state => `

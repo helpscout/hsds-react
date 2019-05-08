@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { storiesOf } from '@storybook/react'
 import {
   AutoDropdown,
@@ -14,7 +13,7 @@ import {
   Switch,
   Toolbar,
   styled,
-} from '../src/index.js'
+} from '../src/index'
 import { FrameProvider } from '../src/components/styled'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
@@ -233,7 +232,7 @@ stories.add('custom close trigger', () => {
   }
 
   Contents.contextTypes = {
-    closePortal: PropTypes.func,
+    closePortal: () => {},
   }
 
   return (

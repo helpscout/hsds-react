@@ -14,7 +14,7 @@ import {
   TitleUI,
   IndicatorUI,
   ErrorWrapperUI,
-} from './Nav.css'
+} from './styles/Nav.css'
 import { ITEM_COMPONENT_KEY } from './Nav.utils'
 
 export interface Props {

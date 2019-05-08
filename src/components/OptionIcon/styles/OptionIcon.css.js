@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import styled from '../../styled'

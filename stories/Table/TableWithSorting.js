@@ -3,7 +3,7 @@ import {
   createFakeCustomers,
   sortData,
 } from '../../src/components/Table/__tests__/utils'
-import { Table } from '../../src/index.js'
+import { Table } from '../../src/index'
 import { Wrapper } from './commonComponents'
 
 export default class TablePlayground extends Component {

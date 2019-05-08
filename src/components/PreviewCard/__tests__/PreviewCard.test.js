@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import PreviewCard from '../index'
-import Context from '../Context'
+import PreviewCard from '../PreviewCard'
+import Context from '../PreviewCard.Context'
 import { Card, Heading, Text } from '../../'
 
 const ui = {

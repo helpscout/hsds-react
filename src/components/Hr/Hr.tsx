@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { HrUI } from './styles/Hr.css'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Hr.utils'
 
 export type HrSize = 'md' | 'sm' | 'xs' | 'none'
 

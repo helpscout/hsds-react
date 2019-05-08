@@ -3,18 +3,10 @@ import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { legacySizes } from './Spinner.utils'
-import { SpinnerUI, SpinnerSVGUI, SpinnerCircleUI } from './Spinner.css'
+import { SpinnerUI, SpinnerSVGUI, SpinnerCircleUI } from './styles/Spinner.css'
+import { SpinnerProps } from './Spinner.types'
 
-export interface Props {
-  className?: string
-  color: string
-  shade: string
-  isRounded: boolean
-  speed: number
-  size: string | number
-}
-
-export class Spinner extends React.PureComponent<Props> {
+export class Spinner extends React.PureComponent<SpinnerProps> {
   static className = 'c-Spinner'
   static defaultProps = {
     color: 'currentColor',

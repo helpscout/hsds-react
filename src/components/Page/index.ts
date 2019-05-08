@@ -1,6 +1,6 @@
 import { propConnect } from '../PropProvider'
 import Page from './Page'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Page.utils'
 
 Page.Actions = propConnect(COMPONENT_KEY.Actions)(Page.Actions)
 Page.Card = propConnect(COMPONENT_KEY.Card)(Page.Card)

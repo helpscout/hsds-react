@@ -5,7 +5,7 @@ import EMOTICONS from './Emoticon.icons'
 import { EmoticonName, EmoticonSize } from './Emoticon.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { EmoticonUI, FaceUI, IconUI } from './Emoticon.css.js'
+import { EmoticonUI, FaceUI, IconUI } from './styles/Emoticon.css'
 import { COMPONENT_KEY } from './Emoticon.utils'
 
 export interface Props {

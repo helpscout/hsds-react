@@ -9,7 +9,11 @@ import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed, getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
-import { AvatarStackUI, AvatarStackLayeringUI, ItemUI } from './AvatarStack.css'
+import {
+  AvatarStackUI,
+  AvatarStackLayeringUI,
+  ItemUI,
+} from './styles/AvatarStack.css'
 import { COMPONENT_KEY } from './AvatarStack.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
@@ -136,11 +140,11 @@ export class AvatarStack extends React.PureComponent<Props> {
 
     if (!shouldLayerStack) return { zIndex }
 
-    if (currentCount > 2 && isOdd(currentCount)) {
+    if (currentCount > 2 && isOdd(`${currentCount}`)) {
       if (isOdd(index)) {
         zIndex = zIndex + 1
       }
-      if (index === getMiddleIndex(currentCount)) {
+      if (index === getMiddleIndex(`${currentCount}`)) {
         zIndex = zIndex + 2
       }
     }

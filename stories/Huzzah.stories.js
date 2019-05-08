@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Centralize, Huzzah, Text } from '../src/index.js'
+import { Centralize, Huzzah, Text } from '../src/index'
 import huzzahSet from '../src/components/Huzzah/huzzahs'
 
 const stories = storiesOf('Huzzah', module)

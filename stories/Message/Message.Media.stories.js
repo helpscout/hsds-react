@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
-import { Avatar, Message } from '../../src/index.js'
+import { Avatar, Message } from '../../src/index'
 
 const stories = storiesOf('Message', module)
 stories.addDecorator(withKnobs)

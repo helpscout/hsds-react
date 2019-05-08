@@ -1,5 +1,5 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import Hr from './Hr'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Hr.utils'
 
 export default propConnect(COMPONENT_KEY)(Hr)

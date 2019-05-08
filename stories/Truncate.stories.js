@@ -1,7 +1,7 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
-import { Truncate } from '../src/index.js'
+import { Truncate } from '../src/index'
 
 const fixture = createSpec(faker.lorem.paragraph())
 

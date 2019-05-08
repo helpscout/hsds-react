@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Card, FormGroup, Grid, Input } from '../src/index.js'
+import { Card, FormGroup, Grid, Input } from '../src/index'
 
 storiesOf('Grid', module)
   .add('default', () => (

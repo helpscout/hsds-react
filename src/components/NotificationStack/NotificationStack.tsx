@@ -4,9 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed, namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY as NOTIFICATION } from '../Notification/utils'
-import { NotificationStackUI } from './NotificationStack.css'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY as NOTIFICATION } from '../Notification/Notification.utils'
+import { NotificationStackUI } from './styles/NotificationStack.css'
+import { COMPONENT_KEY } from './NotificationStack.utils'
 
 export interface Props {
   autoDismiss: boolean

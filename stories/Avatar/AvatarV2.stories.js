@@ -8,14 +8,12 @@ import {
   select,
 } from '@storybook/addon-knobs'
 import { withArtboard, Guide, GuideContainer } from '@helpscout/artboard'
-import { Avatar } from '../../src/index.js'
+import { Avatar } from '../../src/index'
 import AvatarSpec from './specs/Avatar'
-
-const guides = []
 
 const stories = storiesOf('Avatar', module)
 stories.addDecorator(
-  withArtboard({ id: 'hsds-avatar', guides, width: 300, height: 160 })
+  withArtboard({ width: 300, height: 160, withCenterGuides: false })
 )
 stories.addDecorator(withKnobs)
 
@@ -23,6 +21,7 @@ stories.add('V2/Default', () => {
   const animationDuration = number('animationDuration', 160)
   const animationEasing = text('animationEasing', 'ease')
 
+  const image = boolean('image')
   const size = select(
     'size',
     {
@@ -63,6 +62,7 @@ stories.add('V2/Default', () => {
     ...AvatarSpec.generate(),
     animationDuration,
     animationEasing,
+    image: image ? AvatarSpec.generate().image : null,
     shape,
     size,
     status,

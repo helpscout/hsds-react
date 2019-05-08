@@ -4,7 +4,7 @@ import Artboard, { GuideContainer, Guide } from '@helpscout/artboard'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, text, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { Notification } from '../src/index.js'
+import { Notification } from '../src/index'
 
 const NotificationSpec = createSpec({
   id: faker.random.uuid(),

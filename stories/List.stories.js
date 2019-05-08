@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, select } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
-import { List, Heading, Text } from '../src/index.js'
+import { List, Heading, Text } from '../src/index'
 
 const stories = storiesOf('List', module)
 stories.addDecorator(

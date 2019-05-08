@@ -1,4 +1,4 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageChatBlock')

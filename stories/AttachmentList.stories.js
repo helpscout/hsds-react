@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Attachment, AttachmentList } from '../src/index.js'
+import { Attachment, AttachmentList } from '../src/index'
 
 const stories = storiesOf('AttachmentList', module)
 const onClick = (event, attachment) => {

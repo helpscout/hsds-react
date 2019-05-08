@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Item from '../Item'
+import Item from '../ChatList.Item'
 import {
   Animate,
   Avatar,

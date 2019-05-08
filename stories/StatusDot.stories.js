@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { StatusDot } from '../src/index.js'
+import { StatusDot } from '../src/index'
 
 const stories = storiesOf('StatusDot', module)
 

@@ -1,13 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
-import {} from '../SideNavigation.css'
-import Icon from '../../Icon'
 import AutoDropdown from '../../AutoDropdown/AutoDropdown'
-import { ItemSpec } from '../../../../stories/DropdownV2.stories'
 import { Trigger } from '../../Dropdown/V2/Dropdown.Trigger'
-
-const items = ItemSpec.generate(3)
 
 describe('ClassName', () => {
   test('Has default className', () => {

@@ -8,7 +8,7 @@ import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { memoize } from '../../utilities/memoize'
 import { noop } from '../../utilities/other'
-import { makeTitleUI } from './Accordion.css'
+import { makeTitleUI } from './styles/Accordion.css'
 import { TitleProps } from './Accordion.types'
 import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 
@@ -103,6 +103,8 @@ class Title extends React.Component<TitleProps> {
   getTitleUI() {
     const selector = this.getIsLink() ? Link : 'div'
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     return this.makeTitleUI(selector)
   }
 

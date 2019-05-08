@@ -11,7 +11,7 @@ import {
 
 import Heading from '../../src/components/Heading'
 import PreviewCard from '../../src/components/PreviewCard'
-import { Table } from '../../src/index.js'
+import { Table } from '../../src/index'
 import TablePlayground from './TablePlayground'
 import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'

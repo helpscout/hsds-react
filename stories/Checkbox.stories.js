@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Checkbox, ChoiceGroup, Heading, Text } from '../src/index.js'
+import { Checkbox, ChoiceGroup, Heading, Text } from '../src/index'
 
 storiesOf('Checkbox', module)
   .add('default', () => <Checkbox label="Label" helpText="Help description" />)

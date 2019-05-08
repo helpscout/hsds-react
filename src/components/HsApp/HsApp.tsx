@@ -6,9 +6,9 @@ import {
   InnerContentUI,
   AppLayoutUI,
   AppContainerUI,
-} from './HsApp.css'
-import Nav from './Nav'
-import Sidenav from './Sidenav'
+} from './styles/HsApp.css'
+import Nav from './HsApp.Nav'
+import Sidenav from './HsApp.Sidenav'
 
 export interface Props {
   children?: any

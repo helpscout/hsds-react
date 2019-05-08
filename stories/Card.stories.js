@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Card, Heading } from '../src/index.js'
+import { Card, Heading } from '../src/index'
 
 storiesOf('Card', module)
   .add('default', () => <Card>Hello</Card>)

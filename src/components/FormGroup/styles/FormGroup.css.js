@@ -1,5 +1,4 @@
-// @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import styled from '../../styled'
 
 export const FormGroupUI = styled('div')`

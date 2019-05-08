@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Image } from '../src/index.js'
+import { Image } from '../src/index'
 
 const stories = storiesOf('Image', module)
 

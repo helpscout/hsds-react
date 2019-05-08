@@ -12,7 +12,7 @@ import {
   getComponentKey,
 } from '../../utilities/component'
 import { AvatarListWrapperUI } from './styles/AvatarList.css.js'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './AvatarList.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 export interface Props {

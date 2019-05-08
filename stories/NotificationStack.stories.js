@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { Notification, NotificationStack } from '../src/index.js'
+import { Notification, NotificationStack } from '../src/index'
 
 const NotificationSpec = createSpec({
   id: faker.random.uuid(),

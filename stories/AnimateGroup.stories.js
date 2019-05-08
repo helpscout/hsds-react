@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Animate, AnimateGroup, Card } from '../src/index.js'
+import { Animate, AnimateGroup, Card } from '../src/index'
 
 const stories = storiesOf('AnimateGroup', module)
 

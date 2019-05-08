@@ -3,7 +3,7 @@ import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ItemUI } from './Inline.css'
+import { ItemUI } from './styles/Inline.css'
 import { ITEM_COMPONENT_KEY } from './Inline.utils'
 
 export interface Props {
