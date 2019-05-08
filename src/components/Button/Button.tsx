@@ -1,15 +1,14 @@
 import * as React from 'react'
-import { UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { namespaceComponent } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
 import { COMPONENT_KEY } from './Button.utils'
+import { UIState } from '../../constants/types'
+import { ButtonSelector, ButtonSize } from './Button.types'
 
-type ButtonSelector = 'a' | 'button' | 'input'
-type ButtonSize = 'lg' | 'md' | 'sm' | 'xs'
-type Props = {
+export interface Props {
   accessibilityLabel?: string
   block: boolean
   buttonRef: (ref: any) => void

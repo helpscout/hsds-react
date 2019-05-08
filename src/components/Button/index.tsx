@@ -5,7 +5,7 @@ import Button from './Button'
 import { namespaceComponent } from '../../utilities/component'
 import { COMPONENT_KEY } from './Button.utils'
 
-type Props = {
+export interface Props {
   version?: number
 }
 

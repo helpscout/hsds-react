@@ -7,11 +7,11 @@ import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
   ContentWrapperUI,
-} from './styles/CopyButton.css'
+} from './styles/CopyButton.css.js'
 import { COMPONENT_KEY } from './CopyButton.utils'
 import { ButtonSize } from '../Button/Button.types'
 
-type Props = {
+export interface Props {
   canRenderFocus: boolean
   children?: any
   className?: string
@@ -24,7 +24,7 @@ type Props = {
   title?: string
 }
 
-type State = {
+export interface State {
   shouldRenderConfirmation: boolean
 }
 

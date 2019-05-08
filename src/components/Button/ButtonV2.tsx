@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { ButtonKind, ButtonSize } from './Button.types'
-import { UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
@@ -16,8 +14,10 @@ import {
 } from './styles/Button.css'
 import { COMPONENT_KEY } from './Button.utils'
 import { COMPONENT_KEY as ICON_KEY } from '../Icon/Icon.utils'
+import { ButtonKind, ButtonShape, ButtonSize } from './Button.types'
+import { UIState } from '../../constants/types'
 
-type Props = {
+export interface Props {
   allowContentEventPropogation: boolean
   buttonRef: (ref: any) => void
   canRenderFocus: boolean
@@ -26,6 +26,7 @@ type Props = {
   disabled: boolean
   disableOnLoading: boolean
   kind: ButtonKind
+  href?: string
   innerRef: (ref: any) => void
   isActive: boolean
   isBlock: boolean
@@ -34,11 +35,13 @@ type Props = {
   isLast: boolean
   isLoading: boolean
   isSuffix: boolean
+  shape: ButtonShape
   size: ButtonSize
   spinButtonOnLoading: boolean
   state?: UIState
   submit: boolean
   theme?: string
+  to?: string
 }
 
 class Button extends React.PureComponent<Props> {
@@ -56,6 +59,7 @@ class Button extends React.PureComponent<Props> {
     isNotOnly: false,
     isLast: false,
     isSuffix: false,
+    shape: 'default',
     size: 'md',
     spinButtonOnLoading: false,
     submit: false,
@@ -69,12 +73,13 @@ class Button extends React.PureComponent<Props> {
     // TODO: Resolve data-bypass
     // const { href, 'data-bypass': dataBypass } = this.props
     // return href || dataBypass
+
     // TODO: fix typescript complains
     // @ts-ignore
     return this.props.href
   }
 
-  shouldShowFocus = () => {
+  shouldShowFocus = (): boolean => {
     const paddedButtonKinds = [
       'primary',
       'primaryAlt',
@@ -91,20 +96,19 @@ class Button extends React.PureComponent<Props> {
   }
 
   getFocusMarkup = () => {
-    const { isFirst, isNotOnly, isLast } = this.props
+    const { isFirst, isNotOnly, isLast, shape } = this.props
 
     const focusClassName = classNames(
       'c-ButtonV2Focus',
       isFirst && 'is-first',
       isNotOnly && 'is-notOnly',
-      isLast && 'is-last'
+      isLast && 'is-last',
+      shape && `is-shape-${shape}`
     )
 
-    return (
-      this.shouldShowFocus() && (
-        <FocusUI className={focusClassName} role="presentation" />
-      )
-    )
+    if (!this.shouldShowFocus()) return null
+
+    return <FocusUI className={focusClassName} role="presentation" />
   }
 
   setInnerRef = ref => {
@@ -154,6 +158,7 @@ class Button extends React.PureComponent<Props> {
       isLast,
       isLoading,
       isSuffix,
+      shape,
       size,
       spinButtonOnLoading,
       state,
@@ -177,6 +182,7 @@ class Button extends React.PureComponent<Props> {
       isLoading && 'is-loading',
       isSuffix && 'is-suffix',
       kind && `is-${kind}`,
+      shape && `is-shape-${shape}`,
       size && `is-${size}`,
       spinButtonOnLoading && 'is-spinButtonOnLoading',
       state && `is-${state}`,
