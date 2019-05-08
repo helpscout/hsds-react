@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { NavLink, Link } from '../src/index'
-import { MemoryRouter as Router, Route } from 'react-router-dom'
+import { NavLink } from '../src/index.js'
+import { HashRouter as Router, Route } from 'react-router-dom'
 
 const stories = storiesOf('NavLink', module)
 
@@ -12,7 +12,7 @@ const props = {
 
 stories.add('Default', () => {
   const BasicExample = () => (
-    <Router>
+    <Router basename="/some/base">
       <div>
         <ul>
           <li>
@@ -58,13 +58,19 @@ stories.add('Default', () => {
       <h2>Topics</h2>
       <ul>
         <li>
-          <Link to={`${match.url}/rendering`}>Rendering with React</Link>
+          <NavLink {...props} to={`${match.url}/rendering`}>
+            Rendering with React
+          </NavLink>
         </li>
         <li>
-          <Link to={`${match.url}/components`}>Components</Link>
+          <NavLink {...props} to={`${match.url}/components`}>
+            Components
+          </NavLink>
         </li>
         <li>
-          <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
+          <NavLink {...props} to={`${match.url}/props-v-state`}>
+            Props v. State
+          </NavLink>
         </li>
       </ul>
 

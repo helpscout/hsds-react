@@ -1,64 +1,90 @@
 import * as React from 'react'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
+import getComponentName from '@helpscout/react-utils/dist/getComponentName'
+import { isModifierKeyPressed } from '../../utilities/keys'
+import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import get from '../../utilities/get'
+import { createLocation } from '../../utilities/history'
+
+export interface Props {
+  fetch: () => Promise<any>
+  href?: string
+  onClick: (event: Event) => void
+  replace: boolean
+  target?: string
+  to?: string
+}
 
 const RouteWrapper = WrappedComponent => {
-  const componentName =
-    WrappedComponent.displayName ||
-    WrappedComponent.name ||
-    /* istanbul ignore next */
-    'Component'
+  const namespace = getComponentName(WrappedComponent)
 
-  class Component extends React.PureComponent<any> {
+  class RouteWrapperComponent extends React.Component<Props> {
     static contextTypes = {
-      router: noop,
+      router: () => {},
     }
 
     static defaultProps = {
       onClick: noop,
       fetch: () => Promise.resolve(),
+      replace: false,
     }
 
-    static displayName = `withRoute(${componentName})`
+    static displayName = `withRoute(${namespace})`
 
     handleOnClick = event => {
-      const { fetch, to } = this.props
+      const { fetch, replace, to } = this.props
       const history = get(this, 'context.router.history')
 
       this.props.onClick(event)
 
       if (!to || !history) return
 
-      if (event && (event.metaKey || event.ctrlKey)) {
-        // Allow ctrl + clicks to function normally
+      // Allow ctrl + clicks + non-left-clicks to function normally
+      if (isModifierKeyPressed(event) || event.button) {
         return
       }
 
       event && event.preventDefault()
 
+      const method = replace ? history.replace : history.push
+
       fetch()
-        .then(() => history.push(to))
+        .then(() => method(to))
         .catch(console.log)
     }
 
-    render() {
-      const { fetch, href, to, 'data-bypass': dataByPass, ...rest } = this.props
+    getHref = () => {
+      const { href, to } = this.props
+      const createHref = get(this, 'context.router.history.createHref')
 
+      if (isString(to) && createHref) {
+        const contextLocation = get(this, 'context.router.route.location')
+        const location =
+          contextLocation && createLocation(to, null, null, contextLocation)
+
+        return location ? createHref(location) : /* istanbul ignore next */ ''
+      }
+
+      return to || href
+    }
+
+    render() {
+      const { fetch, replace, to, ...rest } = this.props
       // TODO: Resolve data-bypass
       // const dataByPassValue = isDefined(dataByPass) ? dataByPass : !!to
 
       return (
         <WrappedComponent
           {...rest}
-          href={href || to}
+          href={this.getHref()}
           onClick={this.handleOnClick}
         />
       )
     }
   }
 
-  return hoistNonReactStatics(Component, WrappedComponent)
+  return hoistNonReactStatics(RouteWrapperComponent, WrappedComponent)
 }
 
 export default RouteWrapper
