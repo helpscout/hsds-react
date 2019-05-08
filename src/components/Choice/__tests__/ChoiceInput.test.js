@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Input from '../Input'
+import Input from '../Choice.Input'
 
 describe('ClassName', () => {
   test('Has default className', () => {

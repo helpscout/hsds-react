@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { default as BlankSlate } from '../BlankSlate'
+import { default as BlankSlate } from '../ChatList.BlankSlate'
 import { Illo, Text } from '../../index'
 
 describe('ClassName', () => {

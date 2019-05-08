@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { TabBar } from '../src/index.js'
+import { TabBar } from '../src/index'
 import Dropdown from '../src/components/Dropdown/V2/'
 import Button from '../src/components/Button'
 

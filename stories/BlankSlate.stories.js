@@ -2,7 +2,7 @@ import React from 'react'
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
-import { BlankSlate } from '../src/index.js'
+import { BlankSlate } from '../src/index'
 
 import { withAktiv, withHsApp } from './utils'
 

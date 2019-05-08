@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
-import { CropUI } from './Avatar.css'
+import { CropUI } from './styles/Avatar.css'
 
 export const AvatarCrop = props => {
   const {

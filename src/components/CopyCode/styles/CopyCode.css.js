@@ -1,4 +1,3 @@
-// @flow
 import styled from '../../styled'
 import CopyButton from '../../CopyButton'
 import { getColor } from '../../../styles/utilities/color'

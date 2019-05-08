@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ChatTranscript } from '../../src/index.js'
+import { ChatTranscript } from '../../src/index'
 import fixture from './fixture/data'
 
 const stories = storiesOf('ChatTranscript', module)

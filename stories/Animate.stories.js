@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
-import { Animate, Card, Heading, Text } from '../src/index.js'
+import { Animate, Card, Heading, Text } from '../src/index'
 
 class AnimateOutExample extends Component {
   constructor() {

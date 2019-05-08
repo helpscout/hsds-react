@@ -1,25 +1,10 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
+import { CollapsibleUI } from './styles/Collapsible.css'
+import { CollapsibleProps, CollapsibleState } from './Collapsible.types'
 
-export interface Props {
-  children?: any
-  className?: string
-  duration: number
-  durationOpen?: number
-  durationClose?: number
-  isOpen: boolean
-  onOpen: () => void
-  onClose: () => void
-  style?: Object
-}
-
-export interface State {
-  animationState: string
-  height: number
-}
-
-class Collapsible extends React.Component<Props, any> {
+class Collapsible extends React.Component<CollapsibleProps, CollapsibleState> {
   static defaultProps = {
     duration: 300,
     isOpen: false,
@@ -27,7 +12,7 @@ class Collapsible extends React.Component<Props, any> {
     onClose: noop,
   }
 
-  state: State = {
+  state = {
     height: 0,
     animationState: 'idle',
   }
@@ -44,14 +29,14 @@ class Collapsible extends React.Component<Props, any> {
     this._isMounted = false
   }
 
-  shouldFireStateCallback = (prevProps: Props, prevState: State) => {
+  shouldFireStateCallback = (prevProps, prevState) => {
     return (
       prevProps.isOpen !== this.props.isOpen &&
       prevState.animationState !== this.state.animationState
     )
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps) {
     const { isOpen: willOpen } = nextProps
     /* istanbul ignore next */
     if (willOpen !== this.props.isOpen) {
@@ -59,7 +44,7 @@ class Collapsible extends React.Component<Props, any> {
     }
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps, prevState) {
     const { isOpen: wasOpen } = prevProps
 
     this.handleAnimation(wasOpen)
@@ -69,7 +54,7 @@ class Collapsible extends React.Component<Props, any> {
     }
   }
 
-  safeSetState(state: Object) {
+  safeSetState(state) {
     /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state)
@@ -164,7 +149,7 @@ class Collapsible extends React.Component<Props, any> {
     return `${height || 0}px`
   }
 
-  getTransitionDuration(): number {
+  getTransitionDuration() {
     const { duration, durationOpen, durationClose } = this.props
     const { animationState } = this.state
     const openDuration = durationOpen !== undefined ? durationOpen : duration
@@ -217,15 +202,15 @@ class Collapsible extends React.Component<Props, any> {
     }
 
     return (
-      <div
+      <CollapsibleUI
         {...rest}
         aria-hidden={!isOpen}
         style={componentStyle}
         className={componentClassName}
-        ref={this.setNodeRef}
+        innerRef={this.setNodeRef}
       >
         <div ref={this.setHeightNodeRef}>{content}</div>
-      </div>
+      </CollapsibleUI>
     )
   }
 }

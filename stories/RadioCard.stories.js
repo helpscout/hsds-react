@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ChoiceGroup, RadioCard } from '../src/index.js'
+import { ChoiceGroup, RadioCard } from '../src/index'
 
 const stories = storiesOf('RadioCard', module)
 

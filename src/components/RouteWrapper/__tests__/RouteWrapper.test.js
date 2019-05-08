@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { shallow } from 'enzyme'
-import RouteWrapper from '..'
+import RouteWrapper from '../RouteWrapper'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
@@ -18,13 +18,15 @@ const wrapperContext = {
 describe('Route fetching', () => {
   let options
   let push
+  let replace
   let history
   let preventDefault
   let clickEvent
 
   beforeEach(() => {
     push = jest.fn()
-    history = { push }
+    replace = jest.fn()
+    history = { replace, push }
     options = {
       context: {
         router: { history },
@@ -64,6 +66,45 @@ describe('Route fetching', () => {
     expect(preventDefault).toHaveBeenCalled()
     setTimeout(() => {
       expect(push).toHaveBeenCalledWith(to)
+      done()
+    })
+  })
+
+  test('Should default to history.push on click', done => {
+    class Composed extends React.Component {
+      render() {
+        return <div />
+      }
+    }
+    const WrappedComponent = RouteWrapper(Composed)
+    const wrapper = shallow(<WrappedComponent to="/url" />, options)
+
+    wrapper.simulate('click', clickEvent)
+
+    setTimeout(() => {
+      expect(push).toHaveBeenCalled()
+      expect(replace).not.toHaveBeenCalled()
+      done()
+    })
+  })
+
+  test('Should call history.replace on click, if specified', done => {
+    class Composed extends React.Component {
+      render() {
+        return <div />
+      }
+    }
+    const WrappedComponent = RouteWrapper(Composed)
+    const wrapper = shallow(
+      <WrappedComponent to="/url" replace={true} />,
+      options
+    )
+
+    wrapper.simulate('click', clickEvent)
+
+    setTimeout(() => {
+      expect(push).not.toHaveBeenCalled()
+      expect(replace).toHaveBeenCalled()
       done()
     })
   })

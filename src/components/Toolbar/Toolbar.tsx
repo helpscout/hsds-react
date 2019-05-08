@@ -5,7 +5,7 @@ import Shadow from './Toolbar.Shadow'
 import propConnect from '../PropProvider/propConnect'
 import { ToolbarPlacement, ToolbarSize, ToolbarTheme } from './Toolbar.types'
 import { classNames } from '../../utilities/classNames'
-import { WrapperUI, ToolbarUI } from './Toolbar.css'
+import { WrapperUI, ToolbarUI } from './styles/Toolbar.css'
 import { COMPONENT_KEY } from './Toolbar.utils'
 
 export interface Props {

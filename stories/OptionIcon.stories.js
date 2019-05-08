@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { OptionIcon } from '../src/index.js'
+import { OptionIcon } from '../src/index'
 import styled, { ThemeProvider } from '../src/components/styled'
 
 const stories = storiesOf('OptionIcon', module)

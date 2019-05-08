@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Grid, PropProvider, Radio, ChoiceGroup } from '../src/index.js'
+import { Grid, PropProvider, Radio, ChoiceGroup } from '../src/index'
 
 storiesOf('Radio', module)
   .add('default', () => <Radio label="Label" helpText="Help description" />)

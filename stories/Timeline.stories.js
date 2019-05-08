@@ -1,7 +1,7 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
-import { Link, Timeline, Text } from '../src/index.js'
+import { Link, Timeline, Text } from '../src/index'
 
 const fixture = createSpec({
   timestamp: '9:41am',

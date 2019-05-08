@@ -12,7 +12,7 @@ import {
   namespaceComponent,
   renderRenderPropComponent,
 } from '../../utilities/component'
-import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
+import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './styles/ComboBox.css'
 import { COMPONENT_KEY } from './ComboBox.utils'
 
 export interface ComboBoxProps extends DropdownProps {

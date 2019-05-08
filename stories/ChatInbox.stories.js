@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { AvatarList, ChatInbox, ChatList } from '../src/index.js'
+import { AvatarList, ChatInbox, ChatList } from '../src/index'
 import AvatarSpec from './Avatar/specs/Avatar'
 
 const stories = storiesOf('ChatInbox', module)

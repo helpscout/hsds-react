@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { CopyCode } from '../src/index.js'
+import { CopyCode } from '../src/index'
 
 // Import languages
 import hljs from 'highlight.js/lib/highlight'

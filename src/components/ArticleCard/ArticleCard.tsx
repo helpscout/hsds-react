@@ -5,7 +5,7 @@ import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './ArticleCard.utils'
 import {
   ArticleCardUI,
   ContentUI,

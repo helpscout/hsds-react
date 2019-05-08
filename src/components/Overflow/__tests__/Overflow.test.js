@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
-import { Overflow } from '..'
+import { Overflow } from '../Overflow'
 
 jest.useFakeTimers()
 

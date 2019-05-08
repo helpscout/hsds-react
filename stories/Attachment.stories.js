@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Attachment } from '../src/index.js'
+import { Attachment } from '../src/index'
 import { withKnobs, select, text } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 

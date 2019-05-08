@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Dropdown, Flexy, Hr, Link } from '../src/index.js'
+import { Dropdown, Flexy, Hr, Link } from '../src/index'
 
 const logAction = i => () => {
   console.log(`Action ${i}`)

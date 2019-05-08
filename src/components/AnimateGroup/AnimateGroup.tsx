@@ -4,8 +4,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent, getComponentKey } from '../../utilities/component'
-import { COMPONENT_KEY } from './utils'
+import { getComponentKey } from '../../utilities/component'
+import { COMPONENT_KEY } from './AnimateGroup.utils'
 
 export interface Props {
   appear?: any

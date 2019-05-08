@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { PopperUI } from './Tooltip.css'
+import { PopperUI } from './styles/Tooltip.css'
 import { POPPER_COMPONENT_KEY } from './Tooltip.utils'
 
 export interface Props {

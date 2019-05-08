@@ -1,9 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
-import { ItemUI, CountUI, ButtonUI } from '../SideNavigation.css'
+import { CountUI, ButtonUI } from '../styles/SideNavigation.css'
 import Icon from '../../Icon'
-import { Button } from '../Button'
 
 describe('ClassName', () => {
   test('Has default className', () => {

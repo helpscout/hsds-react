@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { LoadingDots, Text } from '../src/index.js'
+import { LoadingDots, Text } from '../src/index'
 
 storiesOf('LoadingDots', module)
   .add('default', () => <LoadingDots />)

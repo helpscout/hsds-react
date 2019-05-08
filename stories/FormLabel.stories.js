@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Page, FormLabel, FormGroup, Input, Switch } from '../src/index.js'
+import { Page, FormLabel, FormGroup, Input, Switch } from '../src/index'
 
 storiesOf('FormLabel', module)
   .add('default', () => (

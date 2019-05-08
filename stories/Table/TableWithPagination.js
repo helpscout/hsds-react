@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Table } from '../../src/index.js'
+import { Table } from '../../src/index'
 import Pagination from '../../src/components/Pagination'
 import { Wrapper } from './commonComponents'
 import {

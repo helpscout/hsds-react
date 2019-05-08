@@ -1,4 +1,3 @@
-// @flow
 import { BEM } from '../../../utilities/classNames'
 import baseStyles from '../../../styles/resets/base.css.js'
 import { STATES, TEXT_SHADES } from '../../../styles/configs/constants'
@@ -91,7 +90,7 @@ const css = `
   }
 `
 
-function makeShadeStyles(): string {
+function makeShadeStyles() {
   return forEach(
     TEXT_SHADES,
     shade => `
@@ -102,7 +101,7 @@ function makeShadeStyles(): string {
   )
 }
 
-function makeSizeStyles(): string {
+function makeSizeStyles() {
   return forEach(
     ICON_SIZES,
     size => `
@@ -118,7 +117,7 @@ function makeSizeStyles(): string {
   )
 }
 
-function makeStateColorStyles(): string {
+function makeStateColorStyles() {
   return forEach(
     STATES,
     state => `

@@ -1,8 +1,8 @@
-import { AttachmentProp } from './types'
 import * as React from 'react'
-import { UIState } from '../../constants/types.js'
+import { AttachmentProp } from './Attachment.types'
+import { UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import AttachmentProvider from './Provider'
+import AttachmentProvider from './Attachment.Provider'
 import CloseButton from '../CloseButton'
 import Image from '../Image'
 import Text from '../Text'
@@ -11,8 +11,8 @@ import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './utils'
-import css, { ErrorBorderUI } from './Attachment.css.js'
+import { COMPONENT_KEY } from './Attachment.utils'
+import css, { ErrorBorderUI } from './Attachment.css'
 
 export const Provider = AttachmentProvider
 

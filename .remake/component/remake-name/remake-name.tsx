@@ -7,9 +7,9 @@ import { <%= name %>UI } from './<%= name %>.css'
 import { COMPONENT_KEY } from './<%= name %>.utils'
 
 export interface Props {
-  className?: string,
-  children?: any,
-  innerRef: (node: HTMLElement) => void,
+  className?: string
+  children?: any
+  innerRef: (node: HTMLElement) => void
 }
 
 export class <%= name %> extends React.PureComponent<Props> {

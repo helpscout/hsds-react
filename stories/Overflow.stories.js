@@ -1,7 +1,7 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
-import { List, Overflow, Tag } from '../src/index.js'
+import { List, Overflow, Tag } from '../src/index'
 
 const ChatSpec = createSpec({
   id: faker.random.uuid(),

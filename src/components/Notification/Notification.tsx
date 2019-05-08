@@ -5,13 +5,13 @@ import Flexy from '../Flexy'
 import Message from '../Message'
 import Text from '../Text'
 import Truncate from '../Truncate'
-import Timer from './Timer'
-import { NotificationUI, TextUI } from './Notification.css'
+import Timer from './Notification.Timer'
+import { NotificationUI, TextUI } from './styles/Notification.css'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { stripUrlPrefix } from '../../utilities/strings'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Notification.utils'
 
 export const NOTIFICATION_TYPE = {
   image: 'image',

@@ -1,8 +1,7 @@
-// @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 import { getColor } from '../../../styles/utilities/color'
-import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css.js'
+import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
 
 const config = {
   embedBorderRadius: '3px',

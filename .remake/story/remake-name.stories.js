@@ -13,9 +13,13 @@ import { withArtboard } from '@helpscout/artboard'
 const stories = storiesOf('<%= name %>', module)
 
 stories.addDecorator(
-  withArtboard({ id: 'hsds-<%= name %>', width: 500, height: 300, withCenterGuides: false })
+  withArtboard({
+    width: 500,
+    height: 300,
+    withCenterGuides: false,
+    showInterface: false
+  })
 )
-stories.addDecorator(withKnobs)
 
 stories.add('Default', () => (
   <<%= name %> />
