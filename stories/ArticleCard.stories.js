@@ -12,7 +12,7 @@ import {
   AvatarStack,
   Icon,
   styled,
-} from '../src/index.js'
+} from '../src/index'
 import AvatarSpec from './AvatarGrid/specs/Avatar'
 
 const stories = storiesOf('ArticleCard', module)

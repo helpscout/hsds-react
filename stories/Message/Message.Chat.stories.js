@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { faker } from '@helpscout/helix'
-import { Avatar, Message } from '../../src/index.js'
+import { Avatar, Message } from '../../src/index'
 
 const stories = storiesOf('Message/Chat', module)
 

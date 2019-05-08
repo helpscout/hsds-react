@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import LoadingDots from '..'
+import LoadingDots from '../LoadingDots'
 
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {

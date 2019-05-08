@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Icon, { svgSet, load, unload } from '../Icon'
+import Icon from '../Icon'
+import { svgSet, load, unload } from '../Icon.utils'
 
 afterEach(() => {
   unload()

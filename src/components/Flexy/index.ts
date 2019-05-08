@@ -1,6 +1,6 @@
-import { propConnect } from '../PropProvider/index'
+import { propConnect } from '../PropProvider'
 import Flexy from './Flexy'
-import { COMPONENT_KEY } from './utils'
+import { COMPONENT_KEY } from './Flexy.utils'
 
 Flexy.Block = propConnect(COMPONENT_KEY.Block)(Flexy.Block)
 Flexy.Item = propConnect(COMPONENT_KEY.Item)(Flexy.Item)

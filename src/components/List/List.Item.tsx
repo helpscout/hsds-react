@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './List.utils'
-import { ItemUI } from './List.css'
+import { ItemUI } from './styles/List.css'
 
 export interface Props extends ListGenericProps {
   borderStyle: ListBorder

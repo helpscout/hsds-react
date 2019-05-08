@@ -3,34 +3,30 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 import PropProvider from '../PropProvider'
-import Button from './Button'
-import DropdownHeader from './DropdownHeader'
-import DropdownFooter from './DropdownFooter'
-import FadeInOut from './FadeInOut'
-import Footer from './Footer'
-import Header from './Header'
-import Heading from './Heading'
-import Item from './Item'
-import Section from './Section'
+import Button from './SideNavigation.Button'
+import DropdownHeader from './SideNavigation.DropdownHeader'
+import DropdownFooter from './SideNavigation.DropdownFooter'
+import FadeInOut from './SideNavigation.FadeInOut'
+import Footer from './SideNavigation.Footer'
+import Header from './SideNavigation.Header'
+import Heading from './SideNavigation.Heading'
+import Item from './SideNavigation.Item'
+import Section from './SideNavigation.Section'
 import { COMPONENT_KEY } from './SideNavigation.utils'
+import {
+  SideNavigationProps,
+  SideNavigationState,
+} from './SideNavigation.types'
 
 import {
   SideNavigationUI,
   SideNavigationCollapsableUI,
-} from './SideNavigation.css'
+} from './styles/SideNavigation.css'
 
-export interface Props {
-  className?: string
-  width?: number
-  collapsable?: boolean
-  collapsed?: boolean
-  floatingMenu?: boolean
-}
-export interface States {
-  dropdowns: string[]
-}
-
-export class SideNavigation extends React.PureComponent<Props, States> {
+export class SideNavigation extends React.PureComponent<
+  SideNavigationProps,
+  SideNavigationState
+> {
   static defaultProps = {}
 
   static Button = Button

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Avatar, Flexy } from '../../src/index.js'
+import { Avatar, Flexy } from '../../src/index'
 import { ThemeProvider } from '../../src/components/styled'
 import AvatarSpec from './specs/Avatar'
 

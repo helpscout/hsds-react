@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Message } from '../../src/index.js'
+import { Message } from '../../src/index'
 import { ScopeProvider } from '../../src/components/styled'
 
 const stories = storiesOf('Message/Provider', module)

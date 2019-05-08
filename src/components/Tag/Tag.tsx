@@ -14,7 +14,7 @@ import {
   IconUI,
   IconWrapperUI,
   TextUI,
-} from './Tag.css'
+} from './styles/Tag.css'
 import { COMPONENT_KEY } from './Tag.utils'
 
 type TagColor =

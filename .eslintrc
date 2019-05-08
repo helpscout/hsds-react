@@ -1,7 +1,7 @@
 {
   "extends": "react-app",
   "parser": "babel-eslint",
-  "plugins": ["flowtype"],
+  "plugins": [],
   "settings": {
     "react": {
       "createClass": "createReactClass",

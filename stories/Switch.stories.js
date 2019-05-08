@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Flexy, Hr, Switch, Text } from '../src/index.js'
+import { Flexy, Hr, Switch, Text } from '../src/index'
 
 const stories = storiesOf('Switch', module)
 

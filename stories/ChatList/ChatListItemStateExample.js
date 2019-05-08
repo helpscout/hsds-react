@@ -1,5 +1,5 @@
 import React, { PureComponent as Component } from 'react'
-import { Avatar, ChatList, List, Button } from '../../src/index.js'
+import { Avatar, ChatList, List, Button } from '../../src/index'
 import AvatarSpec from '../Avatar/specs/Avatar'
 import ChatSpec from './specs/Chat'
 

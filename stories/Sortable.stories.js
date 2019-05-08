@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Card, Sortable, SidebarCollapsibleCard } from '../src/index.js'
+import { Card, Sortable, SidebarCollapsibleCard } from '../src/index'
 
 storiesOf('Sortable', module)
   .add('default', () => (

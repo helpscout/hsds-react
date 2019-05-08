@@ -8,7 +8,7 @@ import {
   FormGroup,
   Icon,
   PropProvider,
-} from '../src/index.js'
+} from '../src/index'
 import styled from '../src/components/styled'
 
 const stories = storiesOf('Button/V2', module)

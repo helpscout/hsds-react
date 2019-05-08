@@ -4,7 +4,7 @@ import { withKnobs, boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
 import { createSpec, faker } from '@helpscout/helix'
-import { Card, Image, Scrollable } from '../src/index.js'
+import { Card, Image, Scrollable } from '../src/index'
 import styled from '../src/components/styled'
 import baseStyles from '../src/styles/resets/baseStyles.css.js'
 

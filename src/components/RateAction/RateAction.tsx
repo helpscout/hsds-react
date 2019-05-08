@@ -5,7 +5,7 @@ import Emoticon from '../Emoticon'
 import { EmoticonName, EmoticonSize } from '../Emoticon/Emoticon.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { RateActionUI } from './RateAction.css'
+import { RateActionUI } from './styles/RateAction.css'
 import { COMPONENT_KEY } from './RateAction.utils'
 
 export interface Props {

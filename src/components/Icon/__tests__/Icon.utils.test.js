@@ -1,4 +1,4 @@
-import { renameSVGIds } from '../utils'
+import { renameSVGIds } from '../Icon.utils'
 
 describe('renameSVGIds', () => {
   test('Returns the argument, if falsy', () => {

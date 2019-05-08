@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Spinner } from '../src/index.js'
+import { Spinner } from '../src/index'
 
 const stories = storiesOf('Spinner', module)
 

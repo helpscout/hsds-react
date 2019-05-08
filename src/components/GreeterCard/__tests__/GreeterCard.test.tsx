@@ -1,7 +1,12 @@
 import * as React from 'react'
 import { mount, render } from 'enzyme'
 import { GreeterCard } from '../GreeterCard'
-import { TitleUI, SubtitleUI, BodyUI, ActionUI } from '../GreeterCard.css'
+import {
+  TitleUI,
+  SubtitleUI,
+  BodyUI,
+  ActionUI,
+} from '../styles/GreeterCard.css'
 import { Animate } from '../../index'
 
 describe('className', () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Centralize, Illo, Text } from '../src/index.js'
+import { Centralize, Illo, Text } from '../src/index'
 import illosData from '../src/components/Illo/illos'
 
 const stories = storiesOf('Illo', module)

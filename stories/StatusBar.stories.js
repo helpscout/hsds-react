@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
-import { StatusBar } from '../src/index.js'
+import { StatusBar } from '../src/index'
 
 const stories = storiesOf('StatusBar', module)
 

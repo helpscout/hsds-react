@@ -1,6 +1,5 @@
-// @flow
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import { config as BubbleConfig } from './Bubble.css.js'
+import baseStyles from '../../../styles/resets/baseStyles.css'
+import { config as BubbleConfig } from './Bubble.css'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageChat')

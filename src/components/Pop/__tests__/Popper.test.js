@@ -6,7 +6,9 @@ import ReactPopper from '../../Popper/Popper'
 jest.mock('../Pop.Portal', () => {
   const Portal = ({ children }) => <div>{children}</div>
 
-  return Portal
+  return {
+    default: Portal,
+  }
 })
 
 const cleanUp = () => {

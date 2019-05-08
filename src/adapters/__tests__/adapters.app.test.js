@@ -2,11 +2,11 @@ import '../app'
 import {
   svgSet as iconSet,
   unload as unloadIcons,
-} from '../../components/Icon/Icon'
+} from '../../components/Icon/Icon.utils'
 import {
   svgSet as illoSet,
   unload as unloadIllos,
-} from '../../components/Illo/Illo'
+} from '../../components/Illo/Illo.utils'
 
 afterEach(() => {
   unloadIcons()

@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withArtboard } from '@helpscout/artboard'
 import { boolean, text } from '@storybook/addon-knobs'
-import { Link } from '../src/index.js'
+import { Link } from '../src/index'
 
 const stories = storiesOf('Link', module)
 

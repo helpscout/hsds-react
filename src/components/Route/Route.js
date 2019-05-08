@@ -1,7 +1,7 @@
 import warning from 'warning'
 import invariant from 'invariant'
 import React from 'react'
-import PropTypes from 'prop-types'
+import { noop } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 
 const isEmptyChildren = children => React.Children.count(children) === 0
@@ -11,28 +11,24 @@ const isEmptyChildren = children => React.Children.count(children) === 0
  * https://github.com/ReactTraining/react-router/blob/3d233bf0b6dd5bf68d9bac9c94273ae25646b207/packages/react-router/modules/Route.js
  */
 class Route extends React.Component {
-  static propTypes = {
-    computedMatch: PropTypes.object, // private, from <Switch>
-    path: PropTypes.string,
-    exact: PropTypes.bool,
-    strict: PropTypes.bool,
-    sensitive: PropTypes.bool,
-    component: PropTypes.func,
-    render: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    location: PropTypes.object,
-  }
+  // static propTypes = {
+  //   computedMatch: PropTypes.object, // private, from <Switch>
+  //   path: PropTypes.string,
+  //   exact: PropTypes.bool,
+  //   strict: PropTypes.bool,
+  //   sensitive: PropTypes.bool,
+  //   component: PropTypes.func,
+  //   render: PropTypes.func,
+  //   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  //   location: PropTypes.object,
+  // }
 
   static contextTypes = {
-    router: PropTypes.shape({
-      history: PropTypes.object.isRequired,
-      route: PropTypes.object.isRequired,
-      staticContext: PropTypes.object,
-    }),
+    router: noop,
   }
 
   static childContextTypes = {
-    router: PropTypes.object.isRequired,
+    router: noop,
   }
 
   getChildContext() {

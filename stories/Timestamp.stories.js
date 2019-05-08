@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Timestamp } from '../src/index.js'
+import { Timestamp } from '../src/index'
 
 const stories = storiesOf('Timestamp', module)
 

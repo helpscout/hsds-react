@@ -7,7 +7,7 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY, withUuid } from './Accordion.utils'
 import { SectionProps } from './Accordion.types'
-import { SectionUI } from './Accordion.css'
+import { SectionUI } from './styles/Accordion.css'
 
 const nextUuid = createUniqueIDFactory('AccordionSection')
 

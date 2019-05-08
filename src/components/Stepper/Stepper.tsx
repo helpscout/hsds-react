@@ -6,7 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
 import { isDefined } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { StepperUI, StepWrapperUI } from './Stepper.css'
+import { StepperUI, StepWrapperUI } from './styles/Stepper.css'
 import { COMPONENT_KEY } from './Stepper.utils'
 import { StepperStep } from './Stepper.types'
 

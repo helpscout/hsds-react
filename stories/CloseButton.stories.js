@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
-import { CloseButton } from '../src/index.js'
+import { CloseButton } from '../src/index'
 
 const stories = storiesOf('CloseButton', module)
 stories.addDecorator(withKnobs)

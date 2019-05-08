@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { PromoCard } from '../src/index.js'
+import { PromoCard } from '../src/index'
 import {
   withKnobs,
   boolean,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Flexy, Image, Scrollable } from '../src/index.js'
+import { Flexy, Image, Scrollable } from '../src/index'
 
 const stories = storiesOf('ScrollLock', module)
 

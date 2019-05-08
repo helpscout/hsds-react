@@ -1,5 +1,5 @@
-import styled from '../../styled/index'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
 import { makeFontFamilySystem } from '../../../styles/utilities/font'
@@ -143,11 +143,11 @@ export const InlinePrefixSuffixUI = styled('div')`
   }
 `
 
-function getHeight(height): string {
+function getHeight(height) {
   return `calc(${height} - ${config.borderWidth} * 2 - ${config.offset} * 2)`
 }
 
-function makeSizeStyles(): string {
+function makeSizeStyles() {
   return forEach(config.size, (size, props) => {
     const { height } = props
 
@@ -159,7 +159,7 @@ function makeSizeStyles(): string {
   })
 }
 
-function makeMinSizeStyles(): string {
+function makeMinSizeStyles() {
   return forEach(config.size, (size, props) => {
     const { height } = props
 
@@ -171,7 +171,7 @@ function makeMinSizeStyles(): string {
   })
 }
 
-function makeStateStyles(): string {
+function makeStateStyles() {
   return forEach(
     STATES,
     state => `
@@ -182,7 +182,7 @@ function makeStateStyles(): string {
   )
 }
 
-export function makeFieldStyles(): string {
+export function makeFieldStyles() {
   return `
     ${baseStyles};
     ${makeFontFamilySystem()};
