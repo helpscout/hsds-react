@@ -15,7 +15,7 @@ const simpleIsEqual = function simpleIsEqual(newArgs, lastArgs) {
   )
 }
 
-export function memoizeOne(resultFn, isEqual) {
+export function memoizeOne(resultFn, isEqual?) {
   if (isEqual === void 0) {
     isEqual = simpleIsEqual
   }

@@ -103,6 +103,8 @@ class Title extends React.Component<TitleProps> {
   getTitleUI() {
     const selector = this.getIsLink() ? Link : 'div'
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     return this.makeTitleUI(selector)
   }
 

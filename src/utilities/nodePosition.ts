@@ -19,7 +19,7 @@ export const getDirectionY = direction => {
   return direction.match(/up/) ? 'up' : direction.match(/down/) ? 'down' : ''
 }
 
-export const getDirections = direction => {
+export const getDirections = (direction?) => {
   return {
     x: getDirectionX(direction),
     y: getDirectionY(direction),

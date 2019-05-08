@@ -123,6 +123,9 @@ class Menu extends React.PureComponent<DropdownMenuProps, DropdownMenuState> {
     if (height !== this.height) {
       // Direct DOM manipulation to avoid component re-render from state change
       applyStylesToNode(this.contentNode, { height })
+
+      // TODO: fix typescript complains
+      // @ts-ignore
       this.height = height
     }
   }

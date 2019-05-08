@@ -18,7 +18,7 @@ export const findLastFocusableNode = nodeScope => {
   return focusableNodes[focusableNodes.length - 1]
 }
 
-export const findCurrentFocusedNodeIndex = (currentNode, nodeScope) => {
+export const findCurrentFocusedNodeIndex = (currentNode, nodeScope?) => {
   if (!isNodeElement(currentNode)) return
   const focusableNodes = findFocusableNodes(nodeScope)
   const currentNodeIndex = Array.prototype.indexOf.call(
@@ -28,7 +28,7 @@ export const findCurrentFocusedNodeIndex = (currentNode, nodeScope) => {
   return currentNodeIndex !== -1 ? currentNodeIndex : false
 }
 
-export const findNextFocusableNode = (currentNode, nodeScope) => {
+export const findNextFocusableNode = (currentNode, nodeScope?) => {
   if (!isNodeElement(currentNode)) return
 
   const scope = getNodeScope(nodeScope)
@@ -42,7 +42,7 @@ export const findNextFocusableNode = (currentNode, nodeScope) => {
   return nextNode
 }
 
-export const findPreviousFocusableNode = (currentNode, nodeScope) => {
+export const findPreviousFocusableNode = (currentNode, nodeScope?) => {
   if (!isNodeElement(currentNode)) return
 
   const scope = getNodeScope(nodeScope)
@@ -54,7 +54,7 @@ export const findPreviousFocusableNode = (currentNode, nodeScope) => {
   return prevNode
 }
 
-export const focusNextFocusableNode = (currentNode, nodeScope) => {
+export const focusNextFocusableNode = (currentNode, nodeScope?) => {
   const scope = getNodeScope(nodeScope)
   const node = findNextFocusableNode(currentNode, scope)
   node && node !== document
@@ -63,7 +63,7 @@ export const focusNextFocusableNode = (currentNode, nodeScope) => {
   return node
 }
 
-export const focusPreviousFocusableNode = (currentNode, nodeScope) => {
+export const focusPreviousFocusableNode = (currentNode, nodeScope?) => {
   const scope = getNodeScope(nodeScope)
   const node = findPreviousFocusableNode(currentNode, scope)
   node && node !== document
