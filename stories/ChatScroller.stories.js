@@ -8,7 +8,7 @@ import {
   Message,
   PreviewCard,
   Scrollable,
-} from '../src/index.js'
+} from '../src/index'
 
 const stories = storiesOf('ChatScroller', module)
 

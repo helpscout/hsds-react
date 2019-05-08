@@ -6,7 +6,7 @@ import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import Item from './List.Item'
 import { COMPONENT_KEY } from './List.utils'
-import { BulletListUI, NumberedListUI } from './List.css'
+import { BulletListUI, NumberedListUI } from './styles/List.css'
 
 export interface Props extends ListGenericProps {
   border: ListBorder

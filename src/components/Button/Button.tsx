@@ -52,7 +52,7 @@ class Button extends React.PureComponent<Props> {
 
   static BlueComponentVersion = 1
 
-  setInnerRef = (node: any) => {
+  setInnerRef = node => {
     this.props.buttonRef(node)
     this.props.innerRef(node)
   }

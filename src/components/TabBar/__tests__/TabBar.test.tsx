@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount, render } from 'enzyme'
 import { TabBar } from '../TabBar'
-import { SecContentUI, TabBarUI } from '../TabBar.css'
+import { SecContentUI, TabBarUI } from '../styles/TabBar.css'
 import Item from '../../Nav/Nav.Item'
 import Toolbar from '../../Toolbar'
 

@@ -8,7 +8,7 @@ import {
   select,
 } from '@storybook/addon-knobs'
 import { withArtboard, Guide, GuideContainer } from '@helpscout/artboard'
-import { Avatar } from '../../src/index.js'
+import { Avatar } from '../../src/index'
 import AvatarSpec from './specs/Avatar'
 
 const stories = storiesOf('Avatar', module)

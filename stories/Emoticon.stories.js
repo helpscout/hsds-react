@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Emoticon } from '../src/index.js'
+import { Emoticon } from '../src/index'
 import {
   withKnobs,
   boolean,

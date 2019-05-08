@@ -1,4 +1,3 @@
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
@@ -174,11 +173,11 @@ export const StateUI = styled('div')`
   z-index: 0;
 `
 
-function getWidth(size: number): number {
+function getWidth(size) {
   return Math.floor(size * 2)
 }
 
-function makeSizeStyles(config: Object): string {
+function makeSizeStyles(config) {
   return forEach(
     config.size,
     (size, value) => `
@@ -191,7 +190,7 @@ function makeSizeStyles(config: Object): string {
   )
 }
 
-function makeToggleSizeStyles(config: Object): string {
+function makeToggleSizeStyles(config) {
   return forEach(
     config.size,
     (size, value) => `
@@ -203,7 +202,7 @@ function makeToggleSizeStyles(config: Object): string {
   )
 }
 
-function makeToggleOffsetStyles(config: Object): string {
+function makeToggleOffsetStyles(config) {
   return forEach(
     config.size,
     (size, value) => `

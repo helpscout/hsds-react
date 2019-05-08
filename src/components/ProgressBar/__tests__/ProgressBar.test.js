@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { shallow } from 'enzyme'
-import ProgressBar from '..'
+import ProgressBar from '../ProgressBar'
 
 describe('Accessibility', () => {
   test('Has the correct aria tags', () => {
@@ -10,8 +10,8 @@ describe('Accessibility', () => {
     const props = wrapper.props()
 
     expect(props['aria-valuenow']).toBe(20)
-    expect(props['aria-valuemin']).toBe('0')
-    expect(props['aria-valuemax']).toBe('100')
+    expect(props['aria-valuemin']).toBe(0)
+    expect(props['aria-valuemax']).toBe(100)
     expect(props['aria-valuetext']).toBe('Loading stuff!')
   })
 

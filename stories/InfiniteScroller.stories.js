@@ -8,7 +8,7 @@ import {
   Modal,
   Scrollable,
   Text,
-} from '../src/index.js'
+} from '../src/index'
 
 const stories = storiesOf('InfiniteScroller', module)
 

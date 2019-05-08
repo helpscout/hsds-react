@@ -11,9 +11,9 @@ import {
   ButtonContentUI,
   FocusUI,
   SpinnerUI,
-} from './Button.css.js'
+} from './styles/Button.css'
 import { COMPONENT_KEY } from './Button.utils'
-import { COMPONENT_KEY as ICON_KEY } from '../Icon/utils'
+import { COMPONENT_KEY as ICON_KEY } from '../Icon/Icon.utils'
 import { ButtonKind, ButtonShape, ButtonSize } from './Button.types'
 import { UIState } from '../../constants/types'
 
@@ -73,6 +73,9 @@ class Button extends React.PureComponent<Props> {
     // TODO: Resolve data-bypass
     // const { href, 'data-bypass': dataBypass } = this.props
     // return href || dataBypass
+
+    // TODO: fix typescript complains
+    // @ts-ignore
     return this.props.href
   }
 
@@ -119,7 +122,6 @@ class Button extends React.PureComponent<Props> {
     return React.Children.map(children, (child, index) => {
       if (!isComponentNamed(child, ICON_KEY)) return child
 
-      // $FlowFixMe
       const len = React.Children.count(children)
       const isFirst = index === 0
       const isLast = index === len - 1
@@ -135,6 +137,8 @@ class Button extends React.PureComponent<Props> {
   getButtonUI() {
     const selector = this.isLink() ? 'a' : 'button'
 
+    // TODO: fix typescript complains
+    // @ts-ignore
     return this.makeButtonUI(selector)
   }
 

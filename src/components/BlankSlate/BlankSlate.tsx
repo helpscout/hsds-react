@@ -4,8 +4,13 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 
-import { COMPONENT_KEY } from './utils'
-import { BlankSlateUI, HeadingUI, TextUI, IlloUI } from './BlankSlate.css'
+import { COMPONENT_KEY } from './BlankSlate.utils'
+import {
+  BlankSlateUI,
+  HeadingUI,
+  TextUI,
+  IlloUI,
+} from './styles/BlankSlate.css'
 
 interface Props {
   className?: string

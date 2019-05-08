@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Choice from '../Choice'
-import ChoiceInput from '../Input'
+import ChoiceInput from '../Choice.Input'
 import ChoiceGroup from '../../ChoiceGroup'
 import HelpText from '../../HelpText'
 import Text from '../../Text'

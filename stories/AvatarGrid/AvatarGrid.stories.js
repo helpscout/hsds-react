@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
-import { Avatar, AvatarGrid } from '../../src/index.js'
+import { Avatar, AvatarGrid } from '../../src/index'
 import AvatarSpec from './specs/Avatar'
 
 const stories = storiesOf('AvatarGrid', module)

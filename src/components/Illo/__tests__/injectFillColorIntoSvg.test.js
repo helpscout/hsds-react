@@ -1,4 +1,4 @@
-import { injectFillColorIntoSvg } from '../Illo'
+import { injectFillColorIntoSvg } from '../Illo.utils'
 
 test('Returns empty string if invalid arguments', () => {
   expect(injectFillColorIntoSvg()).toBe('')

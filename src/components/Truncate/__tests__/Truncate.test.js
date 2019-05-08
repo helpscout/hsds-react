@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { mount } from 'enzyme'
 import Tooltip from '../../Tooltip'
-import { BaseComponent as Truncate } from '../index'
+import { Truncate } from '../Truncate'
 
 const fixture = createSpec(faker.lorem.paragraph())
 

@@ -3,7 +3,7 @@ import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { getEasingTiming } from '../../utilities/easing'
 import { noop } from '../../utilities/other'
-import { ImageWrapperUI, ImageUI } from './Avatar.css'
+import { ImageWrapperUI, ImageUI } from './styles/Avatar.css'
 
 export const AvatarImage = props => {
   const {

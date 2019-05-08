@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Avatar, Message } from '../../src/index.js'
+import { Avatar, Message } from '../../src/index'
 
 const stories = storiesOf('Message/Media', module)
 

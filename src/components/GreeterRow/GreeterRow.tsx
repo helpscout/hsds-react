@@ -7,7 +7,7 @@ import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
 import { renderChildrenSafely } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { ContentUI, ErrorIconUI, PauseIconUI } from './GreeterRow.css'
+import { ContentUI, ErrorIconUI, PauseIconUI } from './styles/GreeterRow.css'
 import { COMPONENT_KEY } from './GreeterRow.utils'
 
 export interface Props {

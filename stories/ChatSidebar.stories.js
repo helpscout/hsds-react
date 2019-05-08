@@ -8,7 +8,7 @@ import {
   ChatList,
   ChatSidebar,
   Flexy,
-} from '../src/index.js'
+} from '../src/index'
 import AvatarSpec from './Avatar/specs/Avatar'
 import ChatSpec from './ChatList/specs/Chat'
 

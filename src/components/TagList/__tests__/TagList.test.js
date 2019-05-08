@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import TagList from '../TagList'
 import { Icon, Inline, Overflow, Tag } from '../../index'
-import { ClearAllUI, TagListUI } from '../TagList.css'
+import { ClearAllUI, TagListUI } from '../styles/TagList.css'
 
 jest.useFakeTimers()
 

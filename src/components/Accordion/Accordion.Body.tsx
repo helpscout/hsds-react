@@ -1,10 +1,10 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
-import Collapsible from '../Collapsible/index'
+import Collapsible from '../Collapsible'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { BodyUI } from './Accordion.css'
+import { BodyUI } from './styles/Accordion.css'
 import { BodyProps } from './Accordion.types'
 import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 

@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
-import { Button, Collapsible } from '../src/index.js'
+import { Button, Collapsible } from '../src/index'
 
 class SampleComponent extends Component {
   constructor() {

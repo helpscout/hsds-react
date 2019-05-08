@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
-import { StatusDotStatus } from '../StatusDot/types'
+import { StatusDotStatus } from '../StatusDot/StatusDot.types'
 import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
 import { includes } from '../../utilities/arrays'
@@ -16,7 +16,7 @@ import {
   OuterBorderUI,
   StatusUI,
   TitleUI,
-} from './Avatar.css'
+} from './styles/Avatar.css'
 import { COMPONENT_KEY, IMAGE_STATES } from './Avatar.utils'
 
 export interface Props {

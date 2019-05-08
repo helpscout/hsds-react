@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { shallow } from 'enzyme'
-import RouteWrapper from '..'
+import RouteWrapper from '../RouteWrapper'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107

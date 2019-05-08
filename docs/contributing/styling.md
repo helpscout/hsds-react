@@ -36,7 +36,6 @@ The `.css.js` file extension is a convention HSDS uses to distinguish dedicated 
 Add the starting styled component boilerplate for `Strong.css.js`:
 
 ```jsx
-// @flow
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from '../../styled'
 

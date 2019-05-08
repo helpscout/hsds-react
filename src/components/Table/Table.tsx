@@ -12,10 +12,10 @@ import { COMPONENT_KEY, generateCellKey } from './Table.utils'
 import { TableWrapperUI, TableUI } from './styles/Table.css'
 import { defaultTheme, chooseTheme } from './styles/themes'
 
-import Row from './Row'
-import HeaderCell from './HeaderCell'
+import Row from './Table.Row'
+import HeaderCell from './Table.HeaderCell'
 
-import { TableProps, TableState } from './types'
+import { TableProps, TableState } from './Table.types'
 
 export const TABLE_CLASSNAME = 'c-Table'
 

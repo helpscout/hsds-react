@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Highlight } from '../../src/index.js'
+import { Highlight } from '../../src/index'
 
 // Import languages
 import hljs from 'highlight.js/lib/highlight'
