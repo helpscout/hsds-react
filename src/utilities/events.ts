@@ -48,6 +48,8 @@ export const removeEventListener = (target, eventName, handler, options) => {
  *
  * @returns {boolean}
  */
+// TODO: fix typescript complains
+// @ts-ignore
 export const isMouseWheelYEvent = (event: WheelEvent = {}): boolean => {
   const { deltaX, deltaY } = event
 
