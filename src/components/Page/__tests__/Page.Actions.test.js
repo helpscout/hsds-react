@@ -1,25 +1,27 @@
 import * as React from 'react'
-import { mount } from 'enzyme'
+import { cy } from '@helpscout/cyan'
 import Actions from '../Page.Actions'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = mount(<Actions />)
+    const wrapper = cy.render(<Actions />)
+    const el = wrapper.find('.c-PageActions')
 
-    expect(wrapper.getDOMNode().classList.contains('c-PageActions')).toBe(true)
+    expect(el.exists()).toBe(true)
   })
 
   test('Applies custom className if specified', () => {
     const className = 'channel-4'
-    const wrapper = mount(<Actions className={className} />)
+    const wrapper = cy.render(<Actions className={className} />)
+    const el = wrapper.find('.c-PageActions')
 
-    expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
+    expect(el.hasClass(className)).toBe(true)
   })
 })
 
 describe('Content', () => {
   test('Does not renders child content', () => {
-    const wrapper = mount(<Actions>Channel 4</Actions>)
+    const wrapper = cy.render(<Actions>Channel 4</Actions>)
 
     expect(wrapper.text()).not.toBe('Channel 4')
   })
@@ -27,55 +29,71 @@ describe('Content', () => {
 
 describe('Direction', () => {
   test('Renders right-aligned, by default', () => {
-    const wrapper = mount(<Actions />)
+    const wrapper = cy.render(<Actions />)
+    const el = wrapper.find('.c-PageActions')
 
-    expect(wrapper.getDOMNode().classList.contains('is-right')).toBe(true)
+    expect(el.hasClass('is-right')).toBe(true)
   })
 
   test('Can render left-aligned, if specified', () => {
-    const wrapper = mount(<Actions direction="left" />)
+    const wrapper = cy.render(<Actions direction="left" />)
+    const el = wrapper.find('.c-PageActions')
 
-    expect(wrapper.getDOMNode().classList.contains('is-right')).toBe(false)
-    expect(wrapper.getDOMNode().classList.contains('is-left')).toBe(true)
+    expect(el.hasClass('is-right')).toBe(false)
+    expect(el.hasClass('is-left')).toBe(true)
   })
 })
 
 describe('Slots', () => {
   test('Can render in primary slot', () => {
-    const wrapper = mount(<Actions primary={<button />} />)
+    const wrapper = cy.render(<Actions primary={<button />} />)
+    const el = wrapper.find('.c-PageActions')
 
-    expect(wrapper.find('button').length).toBe(1)
-    expect(wrapper.getDOMNode().classList.contains('withPrimary')).toBe(true)
+    expect(cy.get('button').length).toBe(1)
+    expect(el.hasClass('withPrimary')).toBe(true)
   })
 
   test('Can render in secondary slot', () => {
-    const wrapper = mount(
+    const wrapper = cy.render(
       <Actions
         primary={<button id="primary" />}
         secondary={<button id="secondary" />}
       />
     )
+    const el = wrapper.find('.c-PageActions')
 
-    expect(wrapper.find('#primary').length).toBe(1)
-    expect(wrapper.find('#secondary').length).toBe(1)
-    expect(wrapper.getDOMNode().classList.contains('withPrimary')).toBe(true)
-    expect(wrapper.getDOMNode().classList.contains('withSecondary')).toBe(true)
+    expect(cy.get('#primary').exists()).toBeTruthy()
+    expect(cy.get('#secondary').exists()).toBeTruthy()
+
+    expect(el.hasClass('withPrimary')).toBe(true)
+    expect(el.hasClass('withSecondary')).toBe(true)
   })
 
   test('Can render in serious slot', () => {
-    const wrapper = mount(
+    const wrapper = cy.render(
       <Actions
         primary={<button id="primary" />}
         secondary={<button id="secondary" />}
         serious={<button id="serious" />}
       />
     )
+    const el = wrapper.find('.c-PageActions')
 
-    expect(wrapper.find('#primary').length).toBe(1)
-    expect(wrapper.find('#secondary').length).toBe(1)
-    expect(wrapper.find('#serious').length).toBe(1)
-    expect(wrapper.getDOMNode().classList.contains('withPrimary')).toBe(true)
-    expect(wrapper.getDOMNode().classList.contains('withSecondary')).toBe(true)
-    expect(wrapper.getDOMNode().classList.contains('withSerious')).toBe(true)
+    expect(cy.get('#primary').exists()).toBeTruthy()
+    expect(cy.get('#secondary').exists()).toBeTruthy()
+    expect(cy.get('#serious').exists()).toBeTruthy()
+
+    expect(el.hasClass('withPrimary')).toBe(true)
+    expect(el.hasClass('withSecondary')).toBe(true)
+    expect(el.hasClass('withSerious')).toBe(true)
+  })
+})
+
+describe('Sticky', () => {
+  test('Does not render sticky wrapper, by default', () => {
+    const wrapper = cy.render(<Actions />)
+    const el = wrapper.find('.c-PageActions__stickyWrapper')
+
+    expect(el.exists()).toBeFalsy()
   })
 })

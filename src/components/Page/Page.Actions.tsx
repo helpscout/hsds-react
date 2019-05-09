@@ -107,7 +107,10 @@ export class Actions extends React.PureComponent<
 
     if (isStickyActive) {
       return (
-        <StickyActionsWrapperUI zIndex={zIndex}>
+        <StickyActionsWrapperUI
+          className="c-PageActions__stickyWrapper"
+          zIndex={zIndex}
+        >
           <Page isResponsive={isResponsive}>{content}</Page>
         </StickyActionsWrapperUI>
       )
