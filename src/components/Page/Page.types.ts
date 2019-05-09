@@ -14,6 +14,7 @@ export interface PageActionsProps {
   isSticky: boolean
   onStickyStart: (ndoe: HTMLElement) => void
   onStickyEnd: (ndoe: HTMLElement) => void
+  stickyOffset: number
   primary?: any
   secondary?: any
   serious?: any
@@ -30,6 +31,7 @@ export interface PageStickyActionsProps {
   innerRef: (node: HTMLElement) => void
   onStickyStart: (ndoe: HTMLElement) => void
   onStickyEnd: (ndoe: HTMLElement) => void
+  offset: number
 }
 
 export interface PageStickyActionsState {

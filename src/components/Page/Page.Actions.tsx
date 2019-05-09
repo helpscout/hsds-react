@@ -27,6 +27,7 @@ export class Actions extends React.PureComponent<
     onStickyEnd: noop,
     isResponsive: false,
     isSticky: false,
+    stickyOffset: 10,
     zIndex: 10,
   }
 
@@ -127,11 +128,14 @@ export class Actions extends React.PureComponent<
   }
 
   render() {
+    const { stickyOffset } = this.props
+
     return (
       <div data-cy="PageActionsWrapper">
         <StickyActions
           onStickyStart={this.handleOnStickyStart}
           onStickyEnd={this.handleOnStickyStop}
+          offset={stickyOffset}
         >
           {this.renderContent({ withStickyWrapper: false })}
         </StickyActions>

@@ -14,6 +14,7 @@ class StickyActions extends React.PureComponent<
 
   static defaultProps = {
     innerRef: noop,
+    offset: 10,
     onStickyStart: noop,
     onStickyEnd: noop,
   }
@@ -31,9 +32,10 @@ class StickyActions extends React.PureComponent<
   }
 
   observerStart() {
+    const { offset } = this.props
     const observerOptions = {
       root: null,
-      rootMargin: '-10px',
+      rootMargin: `0px 0px ${offset * -1}px 0px`,
       threshold: 1.0,
     }
     this.observer = new IntersectionObserver(
