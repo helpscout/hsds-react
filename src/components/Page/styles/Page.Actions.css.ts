@@ -1,4 +1,5 @@
 import baseStyles from '../../../styles/resets/baseStyles.css'
+import { getColor } from '../../../styles/utilities/color'
 import styled from '../../styled'
 
 export const config = {
@@ -25,35 +26,43 @@ export const ActionsUI = styled('div')`
     flex-direction: row-reverse;
   }
 
-  ${({ withStickyWrapper }) =>
+  ${({ withStickyWrapper, zIndex }) =>
     withStickyWrapper &&
     `
     margin-top: 0;
     margin-bottom: 0;
+    z-index: ${zIndex};
   `};
 `
 
 export const ActionsItemUI = styled('div')`
+  ${baseStyles};
   min-width: 0;
   margin: 0 ${config.spacing}px;
 `
 
 export const ActionsBlockUI = styled('div')`
+  ${baseStyles};
   flex: 1;
   max-width: 100%;
   min-width: 0;
 `
 
 export const StickyActionsWrapperUI = styled('div')`
+  ${baseStyles};
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background: white;
   padding: 10px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid ${getColor('border')};
   box-shadow: 0 -3px 0 rgba(0, 0, 0, 0.03);
-  z-index: 1080;
+
+  ${({ zIndex }) =>
+    `
+    z-index: ${zIndex};
+  `};
 `
 
 export default ActionsUI

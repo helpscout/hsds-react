@@ -1,5 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
 import Page from './Page'
 import {
   ActionsUI,
@@ -7,46 +8,30 @@ import {
   ActionsItemUI,
   StickyActionsWrapperUI,
 } from './styles/Page.Actions.css'
+import StickyActions from './Page.StickyActions'
 import { PageActionsProps, PageActionsState } from './Page.types'
 import { COMPONENT_KEY } from './Page.utils'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 
-export interface State {
-  isSticky: boolean
-}
-
-class Actions extends React.PureComponent<PageActionsProps, PageActionsState> {
-  node: HTMLElement
-  observer: IntersectionObserver
-
+export class Actions extends React.PureComponent<
+  PageActionsProps,
+  PageActionsState
+> {
   static className = 'c-PageActions'
 
   static defaultProps = {
     direction: 'right',
     innerRef: noop,
+    onStickyStart: noop,
+    onStickyEnd: noop,
+    isResponsive: false,
+    isSticky: false,
+    zIndex: 10,
   }
 
   state = {
-    isSticky: true,
-  }
-
-  componentDidMount() {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-10px',
-      threshold: 1.0,
-    }
-    this.observer = new IntersectionObserver(
-      this.handleOnIntersect,
-      observerOptions
-    )
-    this.observer.observe(this.node)
-  }
-
-  componentWillUnmount() {
-    this.observer.unobserve(this.node)
+    isStickyActive: this.props.isSticky,
   }
 
   getClassName() {
@@ -64,20 +49,38 @@ class Actions extends React.PureComponent<PageActionsProps, PageActionsState> {
 
   handleOnIntersect = changes => {
     const { isIntersecting } = changes[0]
-    const isSticky = !isIntersecting
+    const isStickyActive = !isIntersecting
 
     this.setState({
-      isSticky,
+      isStickyActive,
     })
   }
 
-  setNodeRef = node => {
-    this.node = node
+  handleOnStickyStart = node => {
+    this.setState({
+      isStickyActive: true,
+    })
+    this.props.onStickyStart(node)
+  }
+
+  handleOnStickyStop = node => {
+    this.setState({
+      isStickyActive: false,
+    })
+    this.props.onStickyEnd(node)
   }
 
   renderContent({ withStickyWrapper }) {
-    const { innerRef, primary, serious, secondary, ...rest } = this.props
-    const { isSticky } = this.state
+    const {
+      innerRef,
+      isResponsive,
+      primary,
+      serious,
+      secondary,
+      zIndex,
+      ...rest
+    } = this.props
+    const { isStickyActive } = this.state
 
     const content = (
       <ActionsUI
@@ -102,10 +105,10 @@ class Actions extends React.PureComponent<PageActionsProps, PageActionsState> {
 
     if (!withStickyWrapper) return content
 
-    if (isSticky) {
+    if (isStickyActive) {
       return (
-        <StickyActionsWrapperUI>
-          <Page isResponsive>{content}</Page>
+        <StickyActionsWrapperUI zIndex={zIndex}>
+          <Page isResponsive={isResponsive}>{content}</Page>
         </StickyActionsWrapperUI>
       )
     } else {
@@ -113,18 +116,28 @@ class Actions extends React.PureComponent<PageActionsProps, PageActionsState> {
     }
   }
 
+  renderStickyActions() {
+    const { isSticky } = this.props
+    const { isStickyActive } = this.state
+
+    if (!(isSticky && isStickyActive)) return null
+
+    return this.renderContent({ withStickyWrapper: true })
+  }
+
   render() {
     return (
       <div>
-        <div ref={this.setNodeRef}>
+        <StickyActions
+          onStickyStart={this.handleOnStickyStart}
+          onStickyEnd={this.handleOnStickyStop}
+        >
           {this.renderContent({ withStickyWrapper: false })}
-        </div>
-        {this.renderContent({ withStickyWrapper: true })}
+        </StickyActions>
+        {this.renderStickyActions()}
       </div>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Actions)(Actions)
-
-export default Actions
+export default propConnect(COMPONENT_KEY.Actions)(Actions)

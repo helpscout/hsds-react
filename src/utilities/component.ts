@@ -234,3 +234,13 @@ export const unwrapNamespace = (namespace: string): string => {
 
   return last(matches)
 }
+
+/**
+ * Checks to see of a component is a Stateless Functional Component.
+ *
+ * @param {any} Component The component to check.
+ * @returns {boolean} The result.
+ */
+export function isStateless(Component: any): boolean {
+  return !isString(Component) && !Component.prototype.render
+}

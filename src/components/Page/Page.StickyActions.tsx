@@ -1,0 +1,85 @@
+import * as React from 'react'
+import { StickyActionsUI } from './styles/Page.StickyActions.css'
+import { PageStickyActionsProps, PageStickyActionsState } from './Page.types'
+import { noop } from '../../utilities/other'
+
+class StickyActions extends React.PureComponent<
+  PageStickyActionsProps,
+  PageStickyActionsState
+> {
+  node: HTMLElement
+  observer: IntersectionObserver
+
+  static className = 'c-PageStickyActions'
+
+  static defaultProps = {
+    innerRef: noop,
+    onStickyStart: noop,
+    onStickyEnd: noop,
+  }
+
+  state = {
+    isSticky: true,
+  }
+
+  componentDidMount() {
+    this.observerStart()
+  }
+
+  componentWillUnmount() {
+    this.observerStop()
+  }
+
+  observerStart() {
+    if (!this.node) return
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-10px',
+      threshold: 1.0,
+    }
+    this.observer = new IntersectionObserver(
+      this.handleOnIntersect,
+      observerOptions
+    )
+    this.observer.observe(this.node)
+  }
+
+  observerStop() {
+    if (!this.node) return
+
+    this.observer.unobserve(this.node)
+  }
+
+  handleOnIntersect = changes => {
+    const { isIntersecting } = changes[0]
+    const isSticky = !isIntersecting
+
+    this.updateSticky(isSticky)
+  }
+
+  updateSticky = (isSticky: boolean) => {
+    const { onStickyStart, onStickyEnd } = this.props
+
+    if (this.state.isSticky !== isSticky) {
+      this.setState({ isSticky })
+
+      isSticky ? onStickyStart(this.node) : onStickyEnd(this.node)
+    }
+  }
+
+  setNodeRef = node => {
+    this.node = node
+    this.props.innerRef(node)
+  }
+
+  render() {
+    return (
+      <StickyActionsUI innerRef={this.setNodeRef}>
+        {this.props.children}
+      </StickyActionsUI>
+    )
+  }
+}
+
+export default StickyActions

@@ -1,5 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action as addonAction } from '@storybook/addon-actions'
+import { boolean, number } from '@storybook/addon-knobs'
 import {
   Button,
   ControlGroup,
@@ -13,78 +15,101 @@ import { App } from './decorators'
 
 const stories = storiesOf('Page/Example', module).addDecorator(App)
 
-stories.add('Responsive', () => (
-  <Page isResponsive>
-    <Page.Card>
-      <Page.Section>
-        <Page.Header
-          render={({ Title, Subtitle }) => (
-            <div>
-              <Title headingLevel="h1">Edit your account</Title>
-              <Subtitle>Welcome to the Dharma Initiative.</Subtitle>
-            </div>
-          )}
-        />
-        <Page.Content>
-          <FormGroup>
-            <FormLabel label="Site Name">
-              <Input value="Dashing Dash" />
-            </FormLabel>
-          </FormGroup>
-        </Page.Content>
-      </Page.Section>
+const action = name => (...args) => {
+  addonAction(name)(...args)
+  console.log(name, { args })
+}
 
-      <Page.Section>
-        <Page.Header
-          withBorder={false}
-          render={({ Title, Subtitle }) => (
-            <div>
-              <Title headingLevel="h2" isSecondary>
-                Default Settings
-              </Title>
-            </div>
-          )}
-        />
-        <ExampleContent />
-      </Page.Section>
-    </Page.Card>
+stories.add('Responsive', () => {
+  const isResponsive = boolean('isResponsive', true)
+  const isSticky = boolean('isSticky', true)
+  const zIndex = number('zIndex', 100)
 
-    <Page.Card>
-      <Page.Section>
-        <Page.Header
-          render={({ Title, Subtitle }) => (
-            <div>
-              <Title headingLevel="h2">More settings this way</Title>
-              <Subtitle>
-                Heading looks the same, but it's an H2! There should only be one
-                h1 per page ;)
-              </Subtitle>
-            </div>
-          )}
-        />
-        <ExampleContent />
-      </Page.Section>
-    </Page.Card>
+  return (
+    <Page isResponsive={isResponsive}>
+      <Page.Card>
+        <Page.Section>
+          <Page.Header
+            render={({ Title, Subtitle }) => (
+              <div>
+                <Title headingLevel="h1">Edit your account</Title>
+                <Subtitle>Welcome to the Dharma Initiative.</Subtitle>
+              </div>
+            )}
+          />
+          <Page.Content>
+            <FormGroup>
+              <FormLabel label="Site Name">
+                <Input value="Dashing Dash" />
+              </FormLabel>
+            </FormGroup>
+          </Page.Content>
+        </Page.Section>
 
-    <Page.Actions
-      primary={
-        <Button kind="primary" size="lg" version={2}>
-          Save
-        </Button>
-      }
-      secondary={
-        <Button size="md" version={2}>
-          Discard Changes
-        </Button>
-      }
-      serious={
-        <Button state="danger" size="md" version={2}>
-          Something serious!
-        </Button>
-      }
-    />
-  </Page>
-))
+        <Page.Section>
+          <Page.Header
+            withBorder={false}
+            render={({ Title, Subtitle }) => (
+              <div>
+                <Title headingLevel="h2" isSecondary>
+                  Default Settings
+                </Title>
+              </div>
+            )}
+          />
+          <ExampleContent />
+        </Page.Section>
+      </Page.Card>
+
+      <Page.Card>
+        <Page.Section>
+          <Page.Header
+            render={({ Title, Subtitle }) => (
+              <div>
+                <Title headingLevel="h2">More settings this way</Title>
+                <Subtitle>
+                  Heading looks the same, but it's an H2! There should only be
+                  one h1 per page ;)
+                </Subtitle>
+              </div>
+            )}
+          />
+          <ExampleContent />
+        </Page.Section>
+      </Page.Card>
+
+      <Page.Actions
+        isSticky={isSticky}
+        zIndex={zIndex}
+        primary={
+          <Button
+            kind="primary"
+            size="lg"
+            version={2}
+            onClick={action('Save Changes')}
+          >
+            Save Changes
+          </Button>
+        }
+        secondary={
+          <Button size="md" version={2} onClick={action('Discard Changes')}>
+            Discard Changes
+          </Button>
+        }
+        serious={
+          <Button
+            state="danger"
+            size="md"
+            version={2}
+            onClick={action('Something Serious')}
+          >
+            Something serious!
+          </Button>
+        }
+      />
+    </Page>
+  )
+})
 
 function ExampleContent() {
   return (

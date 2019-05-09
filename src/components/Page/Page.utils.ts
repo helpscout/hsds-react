@@ -1,12 +1,4 @@
-export const COMPONENT_KEY: {
-  Page: string
-  Actions: string
-  Card: string
-  Content: string
-  Header: string
-  Heading: string
-  Section: string
-} = {
+export const COMPONENT_KEY = {
   Page: 'Page',
   Actions: 'PageActions',
   Card: 'PageCard',
