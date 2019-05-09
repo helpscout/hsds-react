@@ -47,15 +47,6 @@ export class Actions extends React.PureComponent<
     )
   }
 
-  handleOnIntersect = changes => {
-    const { isIntersecting } = changes[0]
-    const isStickyActive = !isIntersecting
-
-    this.setState({
-      isStickyActive,
-    })
-  }
-
   handleOnStickyStart = node => {
     this.setState({
       isStickyActive: true,
@@ -84,20 +75,30 @@ export class Actions extends React.PureComponent<
 
     const content = (
       <ActionsUI
+        data-cy="PageActionsContent"
         {...getValidProps(rest)}
         className={this.getClassName()}
         innerRef={withStickyWrapper ? innerRef : null}
         withStickyWrapper={withStickyWrapper}
         role="toolbar"
       >
-        <ActionsItemUI className="c-PageActions__primary">
+        <ActionsItemUI
+          className="c-PageActions__primary"
+          data-cy="PageActionsPrimaryItemWrapper"
+        >
           {primary}
         </ActionsItemUI>
-        <ActionsItemUI className="c-PageActions__secondary">
+        <ActionsItemUI
+          className="c-PageActions__secondary"
+          data-cy="PageActionsSecondaryItemWrapper"
+        >
           {secondary}
         </ActionsItemUI>
         <ActionsBlockUI className="c-PageActions__block" />
-        <ActionsItemUI className="c-PageActions__serious">
+        <ActionsItemUI
+          className="c-PageActions__serious"
+          data-cy="PageActionsSeriousItemWrapper"
+        >
           {serious}
         </ActionsItemUI>
       </ActionsUI>
@@ -105,18 +106,15 @@ export class Actions extends React.PureComponent<
 
     if (!withStickyWrapper) return content
 
-    if (isStickyActive) {
-      return (
-        <StickyActionsWrapperUI
-          className="c-PageActions__stickyWrapper"
-          zIndex={zIndex}
-        >
-          <Page isResponsive={isResponsive}>{content}</Page>
-        </StickyActionsWrapperUI>
-      )
-    } else {
-      return null
-    }
+    return (
+      <StickyActionsWrapperUI
+        className="c-PageActions__stickyWrapper"
+        data-cy="PageActionsStickyWrapper"
+        zIndex={zIndex}
+      >
+        <Page isResponsive={isResponsive}>{content}</Page>
+      </StickyActionsWrapperUI>
+    )
   }
 
   renderStickyActions() {
@@ -130,7 +128,7 @@ export class Actions extends React.PureComponent<
 
   render() {
     return (
-      <div>
+      <div data-cy="PageActionsWrapper">
         <StickyActions
           onStickyStart={this.handleOnStickyStart}
           onStickyEnd={this.handleOnStickyStop}

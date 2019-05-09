@@ -31,8 +31,6 @@ class StickyActions extends React.PureComponent<
   }
 
   observerStart() {
-    if (!this.node) return
-
     const observerOptions = {
       root: null,
       rootMargin: '-10px',
@@ -46,9 +44,8 @@ class StickyActions extends React.PureComponent<
   }
 
   observerStop() {
-    if (!this.node) return
-
     this.observer.unobserve(this.node)
+    this.observer.disconnect()
   }
 
   handleOnIntersect = changes => {
