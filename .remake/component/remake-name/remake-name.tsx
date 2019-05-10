@@ -3,16 +3,11 @@ import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { <%= name %>UI } from './<%= name %>.css'
+import { <%= name %>Props } from './<%= name %>.types'
+import { <%= name %>UI } from './styles/<%= name %>.css'
 import { COMPONENT_KEY } from './<%= name %>.utils'
 
-export interface Props {
-  className?: string
-  children?: any
-  innerRef: (node: HTMLElement) => void
-}
-
-export class <%= name %> extends React.PureComponent<Props> {
+export class <%= name %> extends React.PureComponent<<%= name %>Props> {
   static className = 'c-<%= name %>'
   static defaultProps = {
     innerRef: noop
