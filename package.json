@@ -133,7 +133,7 @@
     "@babel/runtime": "^7.0.0",
     "@helpscout/artboard": "0.1.12",
     "@helpscout/colorway": "0.0.11",
-    "@helpscout/cyan": "0.9.1",
+    "@helpscout/cyan": "0.9.2",
     "@helpscout/helix": "^0.1.0",
     "@helpscout/prestart": "^0.0.9",
     "@helpscout/stats": "0.0.5",
