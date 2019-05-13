@@ -84,7 +84,7 @@ stories.add('Default', () => {
     }
 
     shouldRefocusOnClose = () => {
-      return this.value === 'None'
+      return this.state.value === 'None'
     }
 
     render() {

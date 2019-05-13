@@ -5,6 +5,7 @@ import {
   incrementPathIndex,
   decrementPathIndex,
   getIndexMapFromItems,
+  getSelectedItemIndex,
   itemIsActive,
   isSelectedItemEmpty,
   processSelectionOfItem,
@@ -34,7 +35,8 @@ export const toggleOpen = state => {
 }
 
 export const openDropdown = state => {
-  const { onOpen, isSelectFirstItemOnOpen } = state
+  const { onOpen, isFocusSelectedItemOnOpen, isSelectFirstItemOnOpen } = state
+  const selectedIndex = getSelectedItemIndex(state)
   const payload = {}
 
   // Trigger callback from Provider
@@ -42,6 +44,10 @@ export const openDropdown = state => {
 
   if (isSelectFirstItemOnOpen) {
     payload['index'] = '0'
+  }
+
+  if (isFocusSelectedItemOnOpen && selectedIndex) {
+    payload['index'] = selectedIndex
   }
 
   return dispatch(state, {

@@ -21,6 +21,7 @@ export const initialState = {
   isLoading: false,
   isMounted: false,
   isOpen: false,
+  isFocusSelectedItemOnOpen: false,
   isSelectFirstItemOnOpen: false,
   items: [],
   lastInteractionType: undefined,
