@@ -11,7 +11,7 @@ import './storybook.css'
 
 const withStats = storyFn => (
   <div>
-    <StatsGraph bottom={0} top="initial" right={5} />
+    <StatsGraph right={5} opacity={0.2} />
     {storyFn()}
   </div>
 )

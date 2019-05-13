@@ -1,11 +1,11 @@
 import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import { COMPONENT_KEY } from './Page.utils'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { SectionUI } from './styles/Page.Section.css'
 import { PageSectionProps } from './Page.types'
 
-class Section extends React.PureComponent<PageSectionProps> {
+export class Section extends React.PureComponent<PageSectionProps> {
   static defaultProps = {
     isResponsive: false,
   }
@@ -27,6 +27,4 @@ class Section extends React.PureComponent<PageSectionProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Section)(Section)
-
-export default Section
+export default propConnect(COMPONENT_KEY.Section)(Section)
