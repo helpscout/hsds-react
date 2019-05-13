@@ -60,6 +60,7 @@ export class MenuContainer extends React.PureComponent<
     onMenuUnmounted: noop,
     positionFixed: false,
     shouldDropDirectionUpdate: () => true,
+    shouldRefocusOnClose: () => true,
     selectItem: noop,
     clearSelection: noop,
     zIndex: 1080,

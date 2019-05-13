@@ -20,7 +20,8 @@ describe('className', () => {
 describe('HTML props', () => {
   test('Can render default HTML props', () => {
     const wrapper = cy.render(<ActionSelect data-cy="blue" />)
+    const el = wrapper.getByCy('blue')
 
-    expect(wrapper.attr('data-cy')).toBe('blue')
+    expect(el.exists()).toBeTruthy()
   })
 })
