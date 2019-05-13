@@ -26,7 +26,6 @@ export const ActionSelectUI = styled('div')`
 
 export const ContentUI = styled('div')`
   ${baseStyles};
-  background-color: ${config.backgroundColor};
   border-bottom-left-radius: ${config.borderRadius};
   border-bottom-right-radius: ${config.borderRadius};
   padding: ${config.padding};
@@ -45,6 +44,7 @@ export const ContentUI = styled('div')`
 
 export const ContentResizerUI = styled('div')`
   ${baseStyles};
+  background-color: ${config.backgroundColor};
   border: 1px solid ${config.borderColor};
   border-top: none;
   border-bottom-left-radius: ${config.borderRadius};

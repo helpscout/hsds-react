@@ -12,6 +12,7 @@ import { COMPONENT_KEY } from './ActionSelect.utils'
 export class ActionSelect extends React.PureComponent<ActionSelectProps> {
   static className = 'c-ActionSelect'
   static defaultProps = {
+    animationDuration: 160,
     animationEasing: 'ease',
     children: null,
     innerRef: noop,
@@ -59,7 +60,13 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
   }
 
   render() {
-    const { animationEasing, children, innerRef, ...rest } = this.props
+    const {
+      animationDuration,
+      animationEasing,
+      children,
+      innerRef,
+      ...rest
+    } = this.props
 
     return (
       <ActionSelectUI className={this.getClassName()} innerRef={innerRef}>
@@ -71,6 +78,7 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
           />
         </div>
         <ContentResizer
+          animationDuration={animationDuration}
           animationEasing={animationEasing}
           borderWidth={1}
           innerRef={this.setContentNode}

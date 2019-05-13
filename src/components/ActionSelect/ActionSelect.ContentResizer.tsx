@@ -7,11 +7,20 @@ import {
   ActionSelectContentResizerState,
 } from './ActionSelect.types'
 
+export const getInitialState = props => {
+  const { children } = props
+
+  return {
+    height: children ? 'auto' : 0,
+  }
+}
+
 export class ContentResizer extends React.PureComponent<
   ActionSelectContentResizerProps,
   ActionSelectContentResizerState
 > {
   static defaultProps = {
+    animationDuration: 160,
     animationEasing: 'ease',
     borderOffset: 1,
     innerRef: noop,
@@ -20,9 +29,7 @@ export class ContentResizer extends React.PureComponent<
   _isMounted: boolean = false
   node: HTMLDivElement
 
-  state = {
-    height: 'auto',
-  }
+  state = getInitialState(this.props)
 
   componentDidMount() {
     this._isMounted = true
@@ -68,16 +75,22 @@ export class ContentResizer extends React.PureComponent<
   }
 
   resetHeight = () => {
-    this.safeSetState({
-      height: 'auto',
-    })
+    this.safeSetState(getInitialState(this.props))
   }
 
   getResizeStyles = () => {
-    const { animationEasing, borderWidth } = this.props
+    const {
+      animationEasing,
+      animationDuration,
+      borderWidth,
+      children,
+    } = this.props
+    const { height } = this.state
+
     return {
-      borderWidth: this.props.children ? borderWidth : 0,
-      height: this.state.height,
+      borderWidth: children ? borderWidth : 0,
+      height,
+      transitionDuration: `${animationDuration}ms`,
       transitionTimingFunction: getEasingTiming(animationEasing),
     }
   }
