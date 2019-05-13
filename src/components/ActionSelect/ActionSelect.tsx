@@ -15,10 +15,12 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
     animationDuration: 160,
     animationEasing: 'ease',
     children: null,
+    'data-cy': 'ActionSelect',
     innerRef: noop,
     items: [],
     isAutoFocusNodeOnSelect: true,
     shouldRefocusOnClose: () => true,
+    onResize: noop,
     onSelect: noop,
   }
 
@@ -41,7 +43,7 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
 
   autoFocusChildNode = () => {
     requestAnimationFrame(() => {
-      if (!this.contentNode) return
+      if (!this.contentNode || !this.props.isAutoFocusNodeOnSelect) return
 
       const focusableNode = findFirstFocusableNode(this.contentNode)
 
@@ -65,14 +67,20 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
       animationEasing,
       children,
       innerRef,
+      onResize,
       ...rest
     } = this.props
 
     return (
-      <ActionSelectUI className={this.getClassName()} innerRef={innerRef}>
+      <ActionSelectUI
+        className={this.getClassName()}
+        data-cy={this.props['data-cy']}
+        innerRef={innerRef}
+      >
         <div className="c-ActionSelectDropdownWrapper">
           <SelectDropdown
             {...rest}
+            data-cy="ActionSelectDropdown"
             onSelect={this.handleOnSelect}
             shouldRefocusOnClose={this.handleShouldRefocusOnClose}
           />
@@ -82,6 +90,7 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
           animationEasing={animationEasing}
           borderWidth={1}
           innerRef={this.setContentNode}
+          onResize={onResize}
         >
           {children}
         </ContentResizer>

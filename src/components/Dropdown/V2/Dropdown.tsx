@@ -24,6 +24,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
     ...initialState,
     allowMultipleSelection: false,
+    'data-cy': 'Dropdown',
     disabled: false,
     innerRef: noop,
     menuRef: noop,
@@ -125,6 +126,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     return (
       <DropdownUI
         className={componentClassName}
+        data-cy={this.props['data-cy']}
         innerRef={this.setNodeRef}
         id={id}
       >

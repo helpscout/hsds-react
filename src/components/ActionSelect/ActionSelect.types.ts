@@ -4,6 +4,7 @@ export interface ActionSelectBaseProps {
   className?: string
   children?: any
   innerRef: (node: HTMLElement) => void
+  onResize: () => void
 }
 
 export interface ActionSelectProps extends ActionSelectBaseProps {

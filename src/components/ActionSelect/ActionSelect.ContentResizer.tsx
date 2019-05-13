@@ -23,7 +23,9 @@ export class ContentResizer extends React.PureComponent<
     animationDuration: 160,
     animationEasing: 'ease',
     borderOffset: 1,
+    'data-cy': 'ActionSelectContentResizer',
     innerRef: noop,
+    onResize: noop,
   }
 
   _isMounted: boolean = false
@@ -52,7 +54,7 @@ export class ContentResizer extends React.PureComponent<
     }
   }
 
-  handleResize(props) {
+  handleResize = props => {
     // Sets the initial height (px)
     this.resize(props)
     requestAnimationFrame(() => {
@@ -61,7 +63,8 @@ export class ContentResizer extends React.PureComponent<
     })
   }
 
-  resize(props) {
+  resize = props => {
+    /* istanbul ignore next */
     if (!this.node) return
 
     const { children } = props
@@ -72,6 +75,8 @@ export class ContentResizer extends React.PureComponent<
     this.safeSetState({
       height,
     })
+
+    this.props.onResize()
   }
 
   resetHeight = () => {
@@ -101,12 +106,17 @@ export class ContentResizer extends React.PureComponent<
   }
 
   render() {
+    const { children, onResize, ...rest } = this.props
+
     return (
       <ContentResizerUI
+        {...rest}
         style={this.getResizeStyles()}
         onTransitionEnd={this.resetHeight}
       >
-        <ContentUI innerRef={this.setNodeRef}>{this.props.children}</ContentUI>
+        <ContentUI data-cy="ActionSelectContent" innerRef={this.setNodeRef}>
+          {children}
+        </ContentUI>
       </ContentResizerUI>
     )
   }

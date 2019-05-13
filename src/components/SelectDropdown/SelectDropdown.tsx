@@ -177,7 +177,10 @@ export class SelectDropdown extends React.PureComponent<
 
   render() {
     return (
-      <SelectDropdownUI className="c-SelectDropdownWrapper">
+      <SelectDropdownUI
+        className="c-SelectDropdownWrapper"
+        data-cy="SelectDropdown"
+      >
         <AutoDropdown
           {...this.props}
           className={this.getClassName()}
