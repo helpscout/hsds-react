@@ -51,8 +51,8 @@ class StickyActions extends React.PureComponent<
   }
 
   handleOnIntersect = changes => {
-    const { isIntersecting } = changes[0]
-    const isSticky = !isIntersecting
+    const { intersectionRatio } = changes[0]
+    const isSticky = intersectionRatio !== 1
 
     this.updateSticky(isSticky)
   }

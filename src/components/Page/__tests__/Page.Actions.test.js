@@ -201,7 +201,7 @@ describe('Sticky', () => {
     // Mock the IntersectionObserver event
     changes = [
       {
-        isIntersecting: true,
+        intersectionRatio: 1,
       },
     ]
     handler(changes)
@@ -212,7 +212,7 @@ describe('Sticky', () => {
     // Mock the IntersectionObserver event
     changes = [
       {
-        isIntersecting: false,
+        intersectionRatio: 0.977,
       },
     ]
     handler(changes)

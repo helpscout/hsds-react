@@ -1,6 +1,7 @@
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import styled from '../../styled'
+import { config as pageConfig } from './Page.css'
 
 export const config = {
   marginBottom: 100,
@@ -63,6 +64,18 @@ export const StickyActionsWrapperUI = styled('div')`
     `
     z-index: ${zIndex};
   `};
+
+  /**
+   * Fixes for Firefox. The IntersectionObserver stops working as expected
+   * when horizontal scrolling occurs. In this scenario, we'll hide the
+   * sticky actions.
+   */
+  @media (max-width: ${parseInt(pageConfig.minWidth, 10) + 1}px) {
+    @-moz-document url-prefix() {
+      display: none;
+    }
+  }
+}
 `
 
 export default ActionsUI
