@@ -41,6 +41,7 @@ export const initialState = {
   previousIndex: null,
   selectedItem: '',
   shouldDropDirectionUpdate: () => true,
+  shouldRefocusOnClose: () => true,
   stateReducer: state => state,
   subscribe: noop,
   trigger: 'Dropdown',

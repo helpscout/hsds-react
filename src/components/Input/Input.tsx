@@ -399,10 +399,15 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   }
 
   getHelpTextMarkup() {
-    const { helpText } = this.props
+    const { helpText, label } = this.props
+    const isCompact = !!label
 
     return (
-      helpText && <HelpText className="c-Input__helpText">{helpText}</HelpText>
+      helpText && (
+        <HelpText className="c-Input__helpText" isCompact={isCompact}>
+          {helpText}
+        </HelpText>
+      )
     )
   }
 

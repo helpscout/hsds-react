@@ -16,7 +16,10 @@ export class Backdrop extends React.PureComponent<InputBackfropV2Props> {
     state: 'default',
   }
 
-  getComponentClassNames = () => {
+  static className = 'c-InputBackdropV2'
+  static focusClassName = 'c-InputBackdropV2__focus'
+
+  getClassName() {
     const {
       choiceKind,
       className,
@@ -32,7 +35,7 @@ export class Backdrop extends React.PureComponent<InputBackfropV2Props> {
     } = this.props
 
     return classNames(
-      'c-InputBackdropV2',
+      Backdrop.className,
       choiceKind && `is-${choiceKind}`,
       disabled && 'is-disabled',
       isFilled && 'is-filled',
@@ -48,12 +51,12 @@ export class Backdrop extends React.PureComponent<InputBackfropV2Props> {
     )
   }
 
-  getFocusClassNames = () => {
+  getFocusClassNames() {
     const { choiceKind, isFirst, isNotOnly, isLast, state } = this.props
     const isRadio = choiceKind === 'radio'
 
     return classNames(
-      'c-InputBackdropV2__focus',
+      Backdrop.focusClassName,
       isFirst && 'is-first',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
@@ -65,7 +68,7 @@ export class Backdrop extends React.PureComponent<InputBackfropV2Props> {
     )
   }
 
-  shouldShowFocus = () => {
+  shouldShowFocus() {
     const { isSeamless, isFocused, showFocus } = this.props
 
     return !isSeamless && isFocused && showFocus
@@ -83,7 +86,7 @@ export class Backdrop extends React.PureComponent<InputBackfropV2Props> {
     return (
       <BackdropUI
         {...getValidProps(this.props)}
-        className={this.getComponentClassNames()}
+        className={this.getClassName()}
         role="presentation"
       >
         {this.getFocusMarkup()}

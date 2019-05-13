@@ -192,15 +192,28 @@ export const selectItemFromIndex = (state: any, event: any) => {
   return selectItem(state, event, target)
 }
 
+export const closeAndRefocusTriggerNode = state => {
+  const { closeOnSelect, envNode, shouldRefocusOnClose } = state
+
+  // Trigger close callback from Provider
+  if (closeOnSelect && shouldRefocusOnClose(state)) {
+    state.onClose && state.onClose()
+
+    // Refocus triggerNode
+    const triggerNode = findTriggerNode(envNode)
+    // @ts-ignore
+    triggerNode && triggerNode.focus()
+  }
+}
+
 /* istanbul ignore next */
 export const selectItem = (state, event: any, eventTarget?: any) => {
   const {
-    closeOnSelect,
+    allowMultipleSelection,
     items,
     selectedItem: selectedItemsInState,
-    envNode,
-    allowMultipleSelection,
   } = state
+
   const node = eventTarget || findClosestItemDOMNode(event.target)
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
@@ -247,15 +260,7 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
     item.onClick(event)
   }
 
-  // Trigger close callback from Provider
-  if (closeOnSelect) {
-    state.onClose && state.onClose()
-
-    // Refocus triggerNode
-    const triggerNode = findTriggerNode(envNode)
-    // @ts-ignore
-    triggerNode && triggerNode.focus()
-  }
+  closeAndRefocusTriggerNode(state)
 
   return dispatch(state, {
     type: actionTypes.SELECT_ITEM,
@@ -266,7 +271,7 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
 }
 
 export const clearSelection = (state, event) => {
-  const { selectedItem, closeOnSelect, envNode } = state
+  const { selectedItem } = state
 
   // Performance guard to prevent store from updating
   /* istanbul ignore next */
@@ -283,15 +288,7 @@ export const clearSelection = (state, event) => {
     state.onSelect('', callbackProps)
   }
 
-  // Trigger close callback from Provider
-  if (closeOnSelect) {
-    state.onClose && state.onClose()
-
-    // Refocus triggerNode
-    const triggerNode = findTriggerNode(envNode)
-    // @ts-ignore
-    triggerNode && triggerNode.focus()
-  }
+  closeAndRefocusTriggerNode(state)
 
   return dispatch(state, {
     type: actionTypes.CLEAR_SELECTION,

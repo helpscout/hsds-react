@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { MenuContainer, defaultProps } from '../Dropdown.MenuContainer'
+import { MenuContainer } from '../Dropdown.MenuContainer'
 import { initialState } from '../Dropdown.store'
 import { find, hasClass } from '../../../../tests/helpers/enzyme'
 import { MenuUI } from '../Dropdown.css.js'
+
+const { defaultProps } = MenuContainer
 
 jest.mock('../Dropdown.MenuPortal', () => {
   const Portal = ({ children }) => <div>{children}</div>

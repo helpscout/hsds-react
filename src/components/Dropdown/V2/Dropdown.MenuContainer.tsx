@@ -33,69 +33,37 @@ import { isBrowserEnv } from '../../../utilities/env'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { memoizeWithProps } from '../../../utilities/memoize'
 import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
+import { DropdownMenuContainerProps } from './Dropdown.types'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 const clearerID = createUniqueIDFactory('hsds-dropdown-v2-theallclearer')
 
-export interface Props {
-  allowMultipleSelection?: boolean
-  animationDuration: number
-  animationSequence: string
-  children?: (props: any) => void
-  className?: string
-  clearSelection: (...args: any[]) => void
-  closeDropdown: () => void
-  dropRight: boolean
-  dropUp: boolean
-  forceDropDown: boolean
-  focusItem: (...args: any[]) => void
-  getState: (...args: any[]) => void
-  id?: string
-  innerRef: (node: HTMLElement) => void
-  isLoading: boolean
-  isOpen: boolean
-  items: Array<any>
-  menuOffsetTop: number
-  onMenuMounted: () => void
-  onMenuReposition: (props: any) => void
-  onMenuUnmounted: () => void
-  positionFixed: boolean
-  renderEmpty?: any
-  renderLoading?: any
-  selectItem: (...args: any[]) => void
-  selectionClearer?: string
-  shouldDropDirectionUpdate: (Position: any) => boolean
-  triggerId?: string
-  triggerNode?: HTMLElement
-  zIndex: number
-}
-
-export const defaultProps = {
-  animationDuration: 80,
-  animationSequence: 'fade down',
-  closeDropdown: noop,
-  dropRight: true,
-  dropUp: false,
-  forceDropDown: false,
-  focusItem: noop,
-  getState: noop,
-  innerRef: noop,
-  isLoading: false,
-  isOpen: true,
-  items: [],
-  menuOffsetTop: 0,
-  onMenuMounted: noop,
-  onMenuReposition: noop,
-  onMenuUnmounted: noop,
-  positionFixed: false,
-  shouldDropDirectionUpdate: () => true,
-  selectItem: noop,
-  clearSelection: noop,
-  zIndex: 1080,
-}
-
-export class MenuContainer extends React.PureComponent<Props> {
-  static defaultProps = defaultProps
+export class MenuContainer extends React.PureComponent<
+  DropdownMenuContainerProps
+> {
+  static defaultProps = {
+    animationDuration: 80,
+    animationSequence: 'fade down',
+    closeDropdown: noop,
+    dropRight: true,
+    dropUp: false,
+    forceDropDown: false,
+    focusItem: noop,
+    getState: noop,
+    innerRef: noop,
+    isLoading: false,
+    isOpen: true,
+    items: [],
+    menuOffsetTop: 0,
+    onMenuMounted: noop,
+    onMenuReposition: noop,
+    onMenuUnmounted: noop,
+    positionFixed: false,
+    shouldDropDirectionUpdate: () => true,
+    selectItem: noop,
+    clearSelection: noop,
+    zIndex: 1080,
+  }
 
   id: string = uniqueID()
   didOpen: boolean = false
@@ -148,14 +116,7 @@ export class MenuContainer extends React.PureComponent<Props> {
   }
 
   getMenuProps() {
-    const {
-      dropRight,
-      isOpen,
-      items,
-      id,
-      triggerId,
-      allowMultipleSelection,
-    } = this.props
+    const { dropRight, isOpen, items, id, triggerId } = this.props
 
     const shouldDropUp = this.shouldDropUp()
 
@@ -363,12 +324,13 @@ export class MenuContainer extends React.PureComponent<Props> {
     // End the reposition cycle
     cancelAnimationFrame(this.positionRAF)
     this.props.closeDropdown()
-    this.focusTriggerNode()
+    this.focusTriggerNodeOnClose()
   }
 
-  focusTriggerNode = () => {
-    const { triggerNode } = this.props
-    if (!triggerNode) return
+  focusTriggerNodeOnClose = () => {
+    const { shouldRefocusOnClose, triggerNode } = this.props
+
+    if (!shouldRefocusOnClose(this.props) || !triggerNode) return
 
     triggerNode.focus()
   }
@@ -544,6 +506,7 @@ const ConnectedMenuContainer: any = connect(
       selectedItem,
       selectionClearer,
       shouldDropDirectionUpdate,
+      shouldRefocusOnClose,
       triggerId,
       triggerNode,
       zIndex,
@@ -566,6 +529,7 @@ const ConnectedMenuContainer: any = connect(
       selectedItem,
       selectionClearer,
       shouldDropDirectionUpdate,
+      shouldRefocusOnClose,
       triggerId,
       triggerNode,
       zIndex,

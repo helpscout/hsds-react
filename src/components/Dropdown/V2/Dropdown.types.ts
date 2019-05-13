@@ -22,6 +22,40 @@ export interface DropdownState extends DropdownMenuDimensions {
   triggerId?: string
 }
 
+export interface DropdownMenuContainerProps {
+  allowMultipleSelection?: boolean
+  animationDuration: number
+  animationSequence: string
+  children?: (props: any) => void
+  className?: string
+  clearSelection: (...args: any[]) => void
+  closeDropdown: () => void
+  dropRight: boolean
+  dropUp: boolean
+  forceDropDown: boolean
+  focusItem: (...args: any[]) => void
+  getState: (...args: any[]) => void
+  id?: string
+  innerRef: (node: HTMLElement) => void
+  isLoading: boolean
+  isOpen: boolean
+  items: Array<any>
+  menuOffsetTop: number
+  onMenuMounted: () => void
+  onMenuReposition: (props: any) => void
+  onMenuUnmounted: () => void
+  positionFixed: boolean
+  renderEmpty?: any
+  renderLoading?: any
+  selectItem: (...args: any[]) => void
+  selectionClearer?: string
+  shouldDropDirectionUpdate: (Position: any) => boolean
+  shouldRefocusOnClose: (...args: any[]) => boolean
+  triggerId?: string
+  triggerNode?: HTMLElement
+  zIndex: number
+}
+
 export interface DropdownProps extends DropdownMenuDimensions {
   activeClassName: string
   allowMultipleSelection: boolean
