@@ -79,6 +79,7 @@ export class ContentResizer extends React.PureComponent<
     this.props.onResize()
   }
 
+  /* istanbul ignore next */
   resetHeight = () => {
     this.safeSetState(getInitialState(this.props))
   }

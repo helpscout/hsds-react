@@ -158,20 +158,4 @@ describe('Resize', () => {
 
     expect(spy).toHaveBeenCalledTimes(3)
   })
-
-  test('Resizes content height to auto when child is removed', () => {
-    const spy = jest.fn()
-    const Small = () => <div className="ChildContent" />
-
-    const wrapper = cy.render(
-      <ActionSelect
-        items={mockItems}
-        isOpen={true}
-        isAutoFocusNodeOnSelect={false}
-        onResize={spy}
-      >
-        <Small />
-      </ActionSelect>
-    )
-  })
 })
