@@ -34,11 +34,19 @@ export const toggleOpen = state => {
 }
 
 export const openDropdown = state => {
+  const { onOpen, isSelectFirstItemOnOpen } = state
+  const payload = {}
+
   // Trigger callback from Provider
-  state.onOpen && state.onOpen()
+  onOpen && state.onOpen()
+
+  if (isSelectFirstItemOnOpen) {
+    payload['index'] = '0'
+  }
 
   return dispatch(state, {
     type: actionTypes.OPEN_DROPDOWN,
+    payload,
   })
 }
 

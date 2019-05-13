@@ -44,6 +44,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   inputValue: string
   isLoading: boolean
   isOpen: boolean
+  isSelectFirstItemOnOpen: boolean
   items: Array<any>
   menuId?: string
   menuOffsetTop: number

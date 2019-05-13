@@ -21,6 +21,7 @@ export const initialState = {
   isLoading: false,
   isMounted: false,
   isOpen: false,
+  isSelectFirstItemOnOpen: false,
   items: [],
   lastInteractionType: undefined,
   maxHeight: 320,
