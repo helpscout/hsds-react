@@ -1,8 +1,8 @@
 export interface ActionSelectBaseProps {
-  animationEasing: string
   animationDuration: number
-  className?: string
+  animationEasing: string
   children?: any
+  className?: string
   innerRef: (node: HTMLElement) => void
   onResize: () => void
 }
