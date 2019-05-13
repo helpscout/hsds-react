@@ -1,5 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
 import Actions from './Page.Actions'
 import Card from './Page.Card'
 import Content from './Page.Content'
@@ -7,12 +8,11 @@ import Header from './Page.Header'
 import Section from './Page.Section'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { PageUI } from './styles/Page.css'
 import { COMPONENT_KEY } from './Page.utils'
 import { PageProps } from './Page.types'
 
-class Page extends React.PureComponent<PageProps> {
+export class Page extends React.PureComponent<PageProps> {
   static defaultProps = {
     isResponsive: false,
   }
@@ -34,6 +34,9 @@ class Page extends React.PureComponent<PageProps> {
         isResponsive,
       },
       [COMPONENT_KEY.Content]: {
+        isResponsive,
+      },
+      [COMPONENT_KEY.Actions]: {
         isResponsive,
       },
     }
@@ -58,6 +61,4 @@ class Page extends React.PureComponent<PageProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Page)(Page)
-
-export default Page
+export default propConnect(COMPONENT_KEY.Page)(Page)

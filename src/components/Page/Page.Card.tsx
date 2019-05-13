@@ -1,12 +1,12 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { CardUI } from './styles/Page.Card.css'
 import { COMPONENT_KEY } from './Page.utils'
 import { PageCardProps } from './Page.types'
 
-class Card extends React.PureComponent<PageCardProps> {
+export class Card extends React.PureComponent<PageCardProps> {
   render() {
     const { children, className, ...rest } = this.props
 
@@ -20,6 +20,4 @@ class Card extends React.PureComponent<PageCardProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Card)(Card)
-
-export default Card
+export default propConnect(COMPONENT_KEY.Card)(Card)

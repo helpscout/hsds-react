@@ -1,12 +1,12 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { ContentUI } from './styles/Page.Content.css'
 import { COMPONENT_KEY } from './Page.utils'
 import { PageContentProps } from './Page.types'
 
-class Content extends React.PureComponent<PageContentProps> {
+export class Content extends React.PureComponent<PageContentProps> {
   static defaultProps = {
     isResponsive: false,
   }
@@ -28,6 +28,4 @@ class Content extends React.PureComponent<PageContentProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Content)(Content)
-
-export default Content
+export default propConnect(COMPONENT_KEY.Content)(Content)

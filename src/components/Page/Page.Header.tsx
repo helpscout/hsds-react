@@ -1,8 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import {
   HeaderUI,
   TitleUI,
@@ -36,7 +36,7 @@ const Subtitle = ({ children }) => (
   </SubTitleUI>
 )
 
-class Header extends React.PureComponent<PageHeaderProps> {
+export class Header extends React.PureComponent<PageHeaderProps> {
   static defaultProps = {
     isResponsive: false,
     title: 'Title',
@@ -79,6 +79,4 @@ class Header extends React.PureComponent<PageHeaderProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Header)(Header)
-
-export default Header
+export default propConnect(COMPONENT_KEY.Header)(Header)
