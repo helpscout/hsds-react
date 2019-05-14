@@ -57,3 +57,25 @@ describe('Focus', () => {
     expect(spy).not.toHaveBeenCalled()
   })
 })
+
+describe('Accessibility', () => {
+  test('Aria live (polite) announces when open/closed', () => {
+    cy.render(<Dropdown label="Blue select" />)
+
+    const el = cy.getByCy('DropdownAriaLive')
+
+    expect(el.attr('aria-live')).toBe('polite')
+    expect(el.attr('role')).toBe('region')
+    expect(el.text()).toContain('Blue select')
+
+    expect(el.text()).toContain('closed')
+
+    cy.getByCy('DropdownTrigger').click()
+
+    expect(el.text()).toContain('opened')
+
+    cy.getByCy('DropdownTrigger').click()
+
+    expect(el.text()).toContain('closed')
+  })
+})

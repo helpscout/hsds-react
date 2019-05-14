@@ -1,15 +1,19 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
+import { getUniqueKeyFromItem } from '../Dropdown/V2/Dropdown.utils'
 import SelectDropdown from '../SelectDropdown'
 import ContentResizer from './ActionSelect.ContentResizer'
 import { classNames } from '../../utilities/classNames'
 import { findFirstFocusableNode } from '../../utilities/focus'
 import { noop } from '../../utilities/other'
-import { ActionSelectProps } from './ActionSelect.types'
+import { ActionSelectProps, ActionSelectState } from './ActionSelect.types'
 import { ActionSelectUI } from './styles/ActionSelect.css'
 import { COMPONENT_KEY } from './ActionSelect.utils'
 
-export class ActionSelect extends React.PureComponent<ActionSelectProps> {
+export class ActionSelect extends React.PureComponent<
+  ActionSelectProps,
+  ActionSelectState
+> {
   static className = 'c-ActionSelect'
   static defaultProps = {
     animationDuration: 160,
@@ -22,6 +26,10 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
     shouldRefocusOnClose: () => true,
     onResize: noop,
     onSelect: noop,
+  }
+
+  state = {
+    selectedItem: null,
   }
 
   contentNode: HTMLDivElement
@@ -39,6 +47,10 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
   handleOnSelect = (item, props) => {
     this.props.onSelect(item, props)
     this.autoFocusChildNode()
+
+    this.setState({
+      selectedItem: props.item,
+    })
   }
 
   autoFocusChildNode = () => {
@@ -71,6 +83,8 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
       ...rest
     } = this.props
 
+    const { selectedItem } = this.state
+
     return (
       <ActionSelectUI
         className={this.getClassName()}
@@ -91,6 +105,7 @@ export class ActionSelect extends React.PureComponent<ActionSelectProps> {
           borderWidth={1}
           innerRef={this.setContentNode}
           onResize={onResize}
+          selectedKey={getUniqueKeyFromItem(selectedItem)}
         >
           {children}
         </ContentResizer>

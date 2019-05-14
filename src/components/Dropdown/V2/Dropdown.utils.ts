@@ -330,6 +330,7 @@ export const getItemProps = (
       isActive && 'is-active',
       className
     ),
+    'aria-selected': isSelected,
     'aria-haspopup': hasSubMenu,
     [SELECTORS.indexAttribute]: itemIndex,
     [SELECTORS.valueAttribute]: value,

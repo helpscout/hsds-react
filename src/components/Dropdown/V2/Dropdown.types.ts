@@ -81,6 +81,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   isFocusSelectedItemOnOpen: boolean
   isSelectFirstItemOnOpen: boolean
   items: Array<any>
+  label?: string
   menuId?: string
   menuOffsetTop: number
   menuRef: (node: HTMLElement) => void

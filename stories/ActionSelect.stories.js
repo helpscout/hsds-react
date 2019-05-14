@@ -48,7 +48,7 @@ stories.add('Default', () => {
       switch (this.state.value) {
         case 'open-beacon':
           return (
-            <div>
+            <div role="region" aria-label="Open Beacon">
               <FormGroup>
                 <Input
                   label="Button text"
@@ -97,6 +97,7 @@ stories.add('Default', () => {
       return (
         <div style={{ padding: 20, maxWidth: 480, margin: 'auto' }}>
           <ActionSelect
+            label="Action Select"
             items={items}
             onSelect={this.onSelect}
             shouldRefocusOnClose={this.shouldRefocusOnClose}

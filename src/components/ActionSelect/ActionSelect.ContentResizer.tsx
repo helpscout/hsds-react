@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Animate from '../Animate'
 import { ContentUI, ContentResizerUI } from './styles/ActionSelect.css'
 import { getEasingTiming } from '../../utilities/easing'
 import { noop } from '../../utilities/other'
@@ -26,6 +27,7 @@ export class ContentResizer extends React.PureComponent<
     'data-cy': 'ActionSelectContentResizer',
     innerRef: noop,
     onResize: noop,
+    selectedKey: null,
   }
 
   _isMounted: boolean = false
@@ -106,6 +108,17 @@ export class ContentResizer extends React.PureComponent<
     this.props.innerRef(node)
   }
 
+  renderContent() {
+    const { animationDuration, children, selectedKey } = this.props
+    if (!children) return null
+
+    return (
+      <Animate duration={animationDuration} key={selectedKey} sequence="fade">
+        {children}
+      </Animate>
+    )
+  }
+
   render() {
     const { children, onResize, ...rest } = this.props
 
@@ -116,7 +129,7 @@ export class ContentResizer extends React.PureComponent<
         onTransitionEnd={this.resetHeight}
       >
         <ContentUI data-cy="ActionSelectContent" innerRef={this.setNodeRef}>
-          {children}
+          {this.renderContent()}
         </ContentUI>
       </ContentResizerUI>
     )
