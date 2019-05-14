@@ -32,7 +32,6 @@ export interface DropdownMenuContainerProps {
   className?: string
   clearSelection: (...args: any[]) => void
   closeDropdown: () => void
-  dropdownClassName: string
   dropRight: boolean
   dropUp: boolean
   forceDropDown: boolean
