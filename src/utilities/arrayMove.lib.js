@@ -2,6 +2,6 @@
  * Do not convert this file to TypeScript!
  * This exists to ensure that the imports work correctly.
  */
-import PopperJS from 'popper.js'
+import arrayMove from 'array-move'
 
-export default PopperJS
+export default arrayMove
