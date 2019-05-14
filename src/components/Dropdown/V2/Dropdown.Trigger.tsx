@@ -106,6 +106,7 @@ export class Trigger extends React.PureComponent<Props> {
 
     return (
       <TriggerUI
+        role="button"
         {...getValidProps(rest)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}

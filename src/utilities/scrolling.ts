@@ -1,4 +1,4 @@
-import computeScrollIntoView from 'compute-scroll-into-view'
+import computeScrollIntoView from './computeScrollIntoView.lib'
 import { isFirefox } from './browser'
 import { isMouseWheelYEvent } from './events'
 

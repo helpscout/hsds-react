@@ -25,6 +25,7 @@ export class Menu extends React.PureComponent<Props> {
     innerRef: noop,
     innerWrapperRef: noop,
     isSubMenu: false,
+    role: 'listbox',
     style: {},
     withScrollLock: true,
     zIndex: 1015,

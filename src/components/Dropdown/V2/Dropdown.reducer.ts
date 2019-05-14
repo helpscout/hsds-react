@@ -23,6 +23,7 @@ const reducer = (state = initialState, action: any = {}) => {
       nextState = {
         ...initialItemState,
         isOpen: true,
+        ...payload,
       }
       break
 

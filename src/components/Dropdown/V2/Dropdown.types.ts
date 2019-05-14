@@ -1,3 +1,5 @@
+export type WidthValue = number | string | null | undefined
+
 export interface DropdownMenuDimensions {
   maxHeight: number | string
   maxWidth: number | string
@@ -22,9 +24,44 @@ export interface DropdownState extends DropdownMenuDimensions {
   triggerId?: string
 }
 
+export interface DropdownMenuContainerProps {
+  allowMultipleSelection?: boolean
+  animationDuration: number
+  animationSequence: string
+  children?: (props: any) => void
+  className?: string
+  clearSelection: (...args: any[]) => void
+  closeDropdown: () => void
+  dropRight: boolean
+  dropUp: boolean
+  forceDropDown: boolean
+  focusItem: (...args: any[]) => void
+  getState: (...args: any[]) => void
+  id?: string
+  innerRef: (node: HTMLElement) => void
+  isLoading: boolean
+  isOpen: boolean
+  items: Array<any>
+  menuOffsetTop: number
+  onMenuMounted: () => void
+  onMenuReposition: (props: any) => void
+  onMenuUnmounted: () => void
+  positionFixed: boolean
+  renderEmpty?: any
+  renderLoading?: any
+  selectItem: (...args: any[]) => void
+  selectionClearer?: string
+  shouldDropDirectionUpdate: (Position: any) => boolean
+  shouldRefocusOnClose: (...args: any[]) => boolean
+  triggerId?: string
+  triggerNode?: HTMLElement
+  zIndex: number
+}
+
 export interface DropdownProps extends DropdownMenuDimensions {
   activeClassName: string
   allowMultipleSelection: boolean
+  cardBorderColor?: string
   children?: (props: any) => void
   className?: string
   clearOnSelect: boolean
@@ -44,7 +81,10 @@ export interface DropdownProps extends DropdownMenuDimensions {
   inputValue: string
   isLoading: boolean
   isOpen: boolean
+  isFocusSelectedItemOnOpen: boolean
+  isSelectFirstItemOnOpen: boolean
   items: Array<any>
+  label?: string
   menuId?: string
   menuOffsetTop: number
   menuRef: (node: HTMLElement) => void
@@ -72,6 +112,20 @@ export interface DropdownProps extends DropdownMenuDimensions {
   triggerRef: (node: HTMLElement) => void
   triggerStyle: any
   withScrollLock: boolean
+}
+
+export interface DropdownCardProps {
+  borderColor?: string
+  className?: string
+  children?: any
+  innerRef: (node: HTMLElement) => void
+  minWidth?: number | string
+  minHeight?: number | string
+  maxHeight?: number | string
+  maxWidth?: number | string
+  width?: WidthValue
+  triggerNode?: HTMLElement
+  style: Object
 }
 
 export type ItemIndex = string

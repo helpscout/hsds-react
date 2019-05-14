@@ -7,6 +7,7 @@ import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
 import EventListener from '../../EventListener'
 import MenuContainer from './Dropdown.MenuContainer'
 import Trigger from './Dropdown.Trigger'
+import VisuallyHidden from '../../VisuallyHidden'
 import { DropdownUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
@@ -24,6 +25,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
     ...initialState,
     allowMultipleSelection: false,
+    'data-cy': 'Dropdown',
     disabled: false,
     innerRef: noop,
     menuRef: noop,
@@ -118,6 +120,21 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     )
   }
 
+  renderAriaLive() {
+    const { id, label, isOpen } = this.props
+    const dropdownName = this.props['aria-label'] || label || id
+
+    return (
+      <VisuallyHidden
+        data-cy="DropdownAriaLive"
+        role="region"
+        aria-live="polite"
+      >
+        {isOpen ? `${dropdownName} is opened` : `${dropdownName} is closed`}
+      </VisuallyHidden>
+    )
+  }
+
   render() {
     const { className, envNode, id } = this.props
     const componentClassName = classNames(className, 'c-DropdownV2')
@@ -125,9 +142,11 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     return (
       <DropdownUI
         className={componentClassName}
+        data-cy={this.props['data-cy']}
         innerRef={this.setNodeRef}
         id={id}
       >
+        {this.renderAriaLive()}
         <EventListener
           event="click"
           handler={this.handleOnDocumentBodyClick}

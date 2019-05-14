@@ -330,6 +330,7 @@ export const getItemProps = (
       isActive && 'is-active',
       className
     ),
+    'aria-selected': isSelected,
     'aria-haspopup': hasSubMenu,
     [SELECTORS.indexAttribute]: itemIndex,
     [SELECTORS.valueAttribute]: value,
@@ -365,4 +366,11 @@ export const isSelectedItemEmpty = selectedItem => {
   if (selectedItem === '') return true
   if (isArray(selectedItem) && selectedItem.length === 0) return true
   return false
+}
+
+export const getSelectedItemIndex = state => {
+  const { selectedItem, indexMap } = state
+  const selectedKey = getUniqueKeyFromItem(selectedItem)
+
+  return Object.keys(indexMap).find(key => indexMap[key] === selectedKey)
 }

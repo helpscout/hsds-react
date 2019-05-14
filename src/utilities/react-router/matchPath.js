@@ -1,3 +1,7 @@
+/**
+ * Do not convert this file to TypeScript!
+ * This exists to ensure that the imports work correctly.
+ */
 // Source
 // https://github.com/ReactTraining/react-router/blob/3d233bf0b6dd5bf68d9bac9c94273ae25646b207/packages/react-router/modules/matchPath.js
 import pathToRegexp from 'path-to-regexp'

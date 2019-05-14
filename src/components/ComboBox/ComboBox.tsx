@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
 import propConnect from '../PropProvider/propConnect'
 import Dropdown from '../Dropdown/DropdownV2'
 import { isItemsEmpty } from '../Dropdown/V2/Dropdown.utils'
@@ -14,24 +13,7 @@ import {
 } from '../../utilities/component'
 import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './styles/ComboBox.css'
 import { COMPONENT_KEY } from './ComboBox.utils'
-
-export interface ComboBoxProps extends DropdownProps {
-  closeOnInputTab: boolean
-  customFilter?: (filterProps: Object, defaultFilter: any) => void
-  onInputChange: (value: string) => void
-  inputProps: any
-  itemFilterKey: string
-  noResultsLabel: string
-  renderMenuStart?: () => void
-  renderMenuEnd?: () => void
-  renderFooter?: () => void
-  showInput: boolean
-}
-
-export interface ComboBoxState {
-  inputValue: string
-  isOpen: boolean
-}
+import { ComboBoxProps, ComboBoxState } from './ComboBox.types'
 
 const defaultInputProps = {
   autoFocus: true,
@@ -235,28 +217,32 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   getDropdownProps = () => {
     const {
       className,
-      onInputChange,
+      enableTabNavigation,
       noResultsLabel,
+      onInputChange,
       showInput,
       ...rest
     } = this.props
     const { inputValue, isOpen } = this.state
 
     const componentClassName = classNames('c-ComboBox', className)
+    /* istanbul ignore next */
+    const shouldEnableTabNavigation =
+      enableTabNavigation || (enableTabNavigation && !showInput)
 
     return {
       ...rest,
-      shouldDropDirectionUpdate: this.shouldDropDirectionUpdate,
+      className: componentClassName,
+      enableTabNavigation: shouldEnableTabNavigation,
+      inputValue,
       isOpen,
+      isSelectFirstItemOnOpen: true,
+      onClick: this.handleOnClose,
       onMenuMount: this.onMenuMount,
       onMenuUnmount: this.onMenuUnmount,
       onOpen: this.handleOnOpen,
-      onClick: this.handleOnClose,
       onSelect: this.onSelect,
-      enableTabNavigation: !showInput,
-      className: componentClassName,
-      inputValue,
-      index: '0',
+      shouldDropDirectionUpdate: this.shouldDropDirectionUpdate,
     }
   }
 

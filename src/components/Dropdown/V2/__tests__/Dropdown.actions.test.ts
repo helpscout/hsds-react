@@ -36,6 +36,7 @@ jest.mock('../Dropdown.utils', () => {
     itemIsActive: () => true,
     processSelectionOfItem: jest.fn(() => []),
     isSelectedItemEmpty: () => false,
+    getSelectedItemIndex: () => undefined,
   }
 })
 
@@ -334,7 +335,11 @@ describe('selectItem', () => {
   })
 
   test('Closes Dropdown on select, if closeOnSelect', () => {
-    const state = { isOpen: true, closeOnSelect: true }
+    const state = {
+      isOpen: true,
+      closeOnSelect: true,
+      shouldRefocusOnClose: () => true,
+    }
     const event = {}
 
     const nextState = selectItem(state, event)
@@ -352,10 +357,14 @@ describe('selectItem', () => {
   })
 
   test('Refocuses triggerNode on select + close', () => {
-    const state = { isOpen: true, closeOnSelect: true }
+    const state = {
+      isOpen: true,
+      closeOnSelect: true,
+      shouldRefocusOnClose: () => true,
+    }
     const event = {}
 
-    const nextState = selectItem(state, event)
+    selectItem(state, event)
 
     expect(mockTriggerNode.focus).toHaveBeenCalled()
   })
@@ -366,6 +375,7 @@ describe('clearSelection', () => {
     const state = {
       selectedItem: ['hello', 'hola'],
       closeOnSelect: false,
+      shouldRefocusOnClose: () => true,
     }
     const event = {}
 
@@ -395,6 +405,7 @@ describe('clearSelection', () => {
       selectedItem: ['hello', 'hola'],
       closeOnSelect: true,
       onClose: spy,
+      shouldRefocusOnClose: () => true,
     }
     const event = {}
 

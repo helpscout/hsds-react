@@ -52,7 +52,7 @@ export const FieldUI = styled('select')`
 
 export const SelectArrowsUI = styled('div')`
   align-self: center;
-  color: ${getColor('charcoal.400')};
+  color: ${getColor('charcoal.600')};
   display: block;
   padding: 0 12px;
   pointer-events: none;
@@ -63,24 +63,23 @@ export const SelectArrowsUI = styled('div')`
   width: 18px;
   z-index: 1;
 
-  &::before {
-    border-bottom: 4px solid currentColor;
+  &::before,
+  &::after {
+    content: '';
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
-    bottom: 0;
-    content: '';
     margin: 2px;
     position: absolute;
   }
 
+  &::before {
+    border-bottom: 5px solid currentColor;
+    bottom: -1px;
+  }
+
   &::after {
-    border-top: 4px solid currentColor;
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    content: '';
-    margin: 2px;
-    position: absolute;
-    top: 0;
+    border-top: 5px solid currentColor;
+    top: -1px;
   }
 
   &.is-error {

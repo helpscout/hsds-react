@@ -211,7 +211,7 @@ export const DividerUI = styled('div')`
   height: 1px;
 `
 
-export const TriggerUI = styled('a')`
+export const TriggerUI = styled('span')`
   ${baseStyles};
   color: ${getColor('link.base')};
   cursor: pointer;

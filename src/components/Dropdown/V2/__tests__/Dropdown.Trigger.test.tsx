@@ -211,14 +211,14 @@ describe('mapStateToProps', () => {
 describe('Disable', () => {
   test('Renders the disabled in the DOM node', () => {
     const wrapper = mount(<Trigger disabled={true} />)
-    const el = wrapper.find('a.c-DropdownV2Trigger')
+    const el = wrapper.find('span.c-DropdownV2Trigger')
 
     expect(el.prop('disabled')).toBe(true)
   })
 
   test('Renders disabled styles', () => {
     const wrapper = mount(<Trigger disabled={true} />)
-    const el = wrapper.find('a.c-DropdownV2Trigger')
+    const el = wrapper.find('span.c-DropdownV2Trigger')
 
     expect(el.hasClass('is-disabled')).toBe(true)
   })

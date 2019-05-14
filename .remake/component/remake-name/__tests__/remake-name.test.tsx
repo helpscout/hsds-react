@@ -19,8 +19,9 @@ describe('className', () => {
 
 describe('HTML props', () => {
   test('Can render default HTML props', () => {
-    const wrapper = cy.render(<<%= name %> data-cy="blue" />)
+    cy.render(<<%= name %> data-cy="BlueBlueBlue" />)
+    const el = cy.getByCy('BlueBlueBlue')
 
-    expect(wrapper.attr('data-cy')).toBe('blue')
+    expect(el.exists()).toBeTruthy()
   })
 })
