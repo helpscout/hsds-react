@@ -26,6 +26,7 @@ export class ContentResizer extends React.PureComponent<
     borderOffset: 1,
     'data-cy': 'ActionSelectContentResizer',
     innerRef: noop,
+    isFadeContentOnOpen: true,
     onResize: noop,
     selectedKey: null,
   }
@@ -92,12 +93,15 @@ export class ContentResizer extends React.PureComponent<
       animationDuration,
       borderWidth,
       children,
+      isFadeContentOnOpen,
+      isOpen,
     } = this.props
     const { height } = this.state
 
     return {
       borderWidth: children ? borderWidth : 0,
       height,
+      opacity: isFadeContentOnOpen && isOpen ? 0.5 : 1,
       transitionDuration: `${animationDuration}ms`,
       transitionTimingFunction: getEasingTiming(animationEasing),
     }

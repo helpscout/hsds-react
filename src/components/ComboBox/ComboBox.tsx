@@ -217,6 +217,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   getDropdownProps = () => {
     const {
       className,
+      enableTabNavigation,
       noResultsLabel,
       onInputChange,
       showInput,
@@ -225,11 +226,14 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     const { inputValue, isOpen } = this.state
 
     const componentClassName = classNames('c-ComboBox', className)
+    /* istanbul ignore next */
+    const shouldEnableTabNavigation =
+      enableTabNavigation || (enableTabNavigation && !showInput)
 
     return {
       ...rest,
       className: componentClassName,
-      enableTabNavigation: !showInput,
+      enableTabNavigation: shouldEnableTabNavigation,
       inputValue,
       isOpen,
       isSelectFirstItemOnOpen: true,

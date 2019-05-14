@@ -135,6 +135,26 @@ describe('Focus', () => {
   })
 })
 
+describe('Open/Close', () => {
+  test('onOpen callback works', () => {
+    const spy = jest.fn()
+    cy.render(<ActionSelect onOpen={spy} />)
+
+    cy.getByCy('DropdownTrigger').click()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onClose callback works', () => {
+    const spy = jest.fn()
+    cy.render(<ActionSelect onClose={spy} isOpen />)
+
+    cy.getByCy('DropdownTrigger').click()
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
 describe('Resize', () => {
   test('Resizes content when child updates', () => {
     const spy = jest.fn()

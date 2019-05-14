@@ -9,6 +9,7 @@ import { noop } from '../../utilities/other'
 import { ActionSelectProps, ActionSelectState } from './ActionSelect.types'
 import { ActionSelectUI } from './styles/ActionSelect.css'
 import { COMPONENT_KEY } from './ActionSelect.utils'
+import { getColor } from '../../styles/utilities/color'
 
 export class ActionSelect extends React.PureComponent<
   ActionSelectProps,
@@ -16,23 +17,44 @@ export class ActionSelect extends React.PureComponent<
 > {
   static className = 'c-ActionSelect'
   static defaultProps = {
+    'data-cy': 'ActionSelect',
     animationDuration: 160,
     animationEasing: 'ease',
+    cardBorderColor: getColor('grey.700'),
     children: null,
-    'data-cy': 'ActionSelect',
+    enableTabNavigation: false,
     innerRef: noop,
-    items: [],
     isAutoFocusNodeOnSelect: true,
-    shouldRefocusOnClose: () => true,
+    isFadeContentOnOpen: true,
+    items: [],
+    onClose: noop,
+    onOpen: noop,
     onResize: noop,
     onSelect: noop,
+    shouldRefocusOnClose: () => true,
   }
 
   state = {
+    isOpen: this.props.isOpen,
     selectedItem: null,
   }
 
+  _isMounted = false
   contentNode: HTMLDivElement
+
+  componentDidMount() {
+    this._isMounted = true
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
+  }
+
+  safeSetState = (nextState, callback?) => {
+    if (this._isMounted) {
+      this.setState(nextState, callback)
+    }
+  }
 
   getClassName() {
     const { children, className } = this.props
@@ -48,9 +70,23 @@ export class ActionSelect extends React.PureComponent<
     this.props.onSelect(item, props)
     this.autoFocusChildNode()
 
-    this.setState({
+    this.safeSetState({
       selectedItem: props.item,
     })
+  }
+
+  handleOnOpen = () => {
+    this.safeSetState({
+      isOpen: true,
+    })
+    this.props.onOpen()
+  }
+
+  handleOnClose = () => {
+    this.safeSetState({
+      isOpen: false,
+    })
+    this.props.onClose()
   }
 
   autoFocusChildNode = () => {
@@ -94,6 +130,8 @@ export class ActionSelect extends React.PureComponent<
         <div className="c-ActionSelectDropdownWrapper">
           <SelectDropdown
             {...rest}
+            onOpen={this.handleOnOpen}
+            onClose={this.handleOnClose}
             data-cy="ActionSelectDropdown"
             onSelect={this.handleOnSelect}
             shouldRefocusOnClose={this.handleShouldRefocusOnClose}
@@ -106,6 +144,7 @@ export class ActionSelect extends React.PureComponent<
           innerRef={this.setContentNode}
           onResize={onResize}
           selectedKey={getUniqueKeyFromItem(selectedItem)}
+          isOpen={this.state.isOpen}
         >
           {children}
         </ContentResizer>

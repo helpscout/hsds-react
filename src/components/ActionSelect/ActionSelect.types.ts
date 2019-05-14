@@ -6,6 +6,7 @@ export interface ActionSelectBaseProps {
   children?: any
   className?: string
   innerRef: (node: HTMLElement) => void
+  isFadeContentOnOpen: boolean
   onResize: () => void
   selectedKey?: string
 }
@@ -21,11 +22,13 @@ export interface ActionSelectProps
 }
 
 export interface ActionSelectState {
+  isOpen: boolean
   selectedItem?: any
 }
 
 export interface ActionSelectContentResizerProps extends ActionSelectBaseProps {
   borderWidth: number
+  isOpen: boolean
 }
 
 export interface ActionSelectContentResizerState {

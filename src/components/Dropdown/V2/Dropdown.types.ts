@@ -1,3 +1,5 @@
+export type WidthValue = number | string | null | undefined
+
 export interface DropdownMenuDimensions {
   maxHeight: number | string
   maxWidth: number | string
@@ -30,6 +32,7 @@ export interface DropdownMenuContainerProps {
   className?: string
   clearSelection: (...args: any[]) => void
   closeDropdown: () => void
+  dropdownClassName: string
   dropRight: boolean
   dropUp: boolean
   forceDropDown: boolean
@@ -59,6 +62,7 @@ export interface DropdownMenuContainerProps {
 export interface DropdownProps extends DropdownMenuDimensions {
   activeClassName: string
   allowMultipleSelection: boolean
+  cardBorderColor?: string
   children?: (props: any) => void
   className?: string
   clearOnSelect: boolean
@@ -109,6 +113,20 @@ export interface DropdownProps extends DropdownMenuDimensions {
   triggerRef: (node: HTMLElement) => void
   triggerStyle: any
   withScrollLock: boolean
+}
+
+export interface DropdownCardProps {
+  borderColor?: string
+  className?: string
+  children?: any
+  innerRef: (node: HTMLElement) => void
+  minWidth?: number | string
+  minHeight?: number | string
+  maxHeight?: number | string
+  maxWidth?: number | string
+  width?: WidthValue
+  triggerNode?: HTMLElement
+  style: Object
 }
 
 export type ItemIndex = string

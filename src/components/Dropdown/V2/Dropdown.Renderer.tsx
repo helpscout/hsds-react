@@ -44,10 +44,17 @@ class Renderer extends React.PureComponent<any> {
     selectItemFromIndex: noop,
   }
 
-  handleTab = (event: Event) => {
+  modifier = 1
+
+  handleTab = (event: KeyboardEvent) => {
     const { closeDropdown, enableTabNavigation, items, index } = this.props
 
-    if (!enableTabNavigation) return
+    console.log('gogogogogo')
+    if (!enableTabNavigation) {
+      closeDropdown()
+      return
+    }
+
     requestAnimationFrame(() => {
       const target = document.activeElement
       const isLastItem = parseInt(index, 10) === items.length - 1
@@ -60,23 +67,26 @@ class Renderer extends React.PureComponent<any> {
       if (!isDOMNodeValidItem(target)) return
       event.preventDefault()
 
-      this.props.focusItem({ target })
+      if (event.shiftKey) {
+        this.moveUp()
+      } else {
+        this.moveDown()
+      }
     })
   }
 
   handleOnKeyDown = event => {
     const { dropRight } = this.props
-    const modifier = 1
 
     switch (event.keyCode) {
       case Keys.UP_ARROW:
         event.preventDefault()
-        this.props.decrementIndex(modifier)
+        this.moveUp()
         break
 
       case Keys.DOWN_ARROW:
         event.preventDefault()
-        this.props.incrementIndex(modifier)
+        this.moveDown()
         break
 
       case Keys.LEFT_ARROW:
@@ -109,6 +119,14 @@ class Renderer extends React.PureComponent<any> {
       default:
         break
     }
+  }
+
+  moveUp() {
+    this.props.decrementIndex(this.modifier)
+  }
+
+  moveDown() {
+    this.props.incrementIndex(this.modifier)
   }
 
   openSubMenu() {

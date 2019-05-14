@@ -22,6 +22,7 @@ This component renders extends the UI of a [SelectDropdown](../SelectDropdown), 
 | className               | `string`   |         | The className of the component.                                    |
 | innerRef                | `Function` |         | Retrieve the inner DOM node.                                       |
 | isAutoFocusNodeOnSelect | `boolean`  | `true`  | Autofocuses the first focusable node when an item is selected.     |
+| isFadeContentOnOpen     | `boolean`  | `true`  | Fades the content when the dropdown is open.                       |
 | onResize                | `Function` |         | Callback when the component's content resizes.                     |
 | shouldRefocusOnClose    | `Function` |         | Determines if the trigger should refocus when the dropdown closes. |
 

@@ -8,32 +8,20 @@ import { classNames } from '../../../utilities/classNames'
 import { namespaceComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { isDefined, isNumber } from '../../../utilities/is'
+import { DropdownCardProps, WidthValue } from './Dropdown.types'
 import { COMPONENT_KEY } from './Dropdown.utils'
-
-export interface Props {
-  className?: string
-  children?: any
-  innerRef: (node: HTMLElement) => void
-  minWidth?: number | string
-  minHeight?: number | string
-  maxHeight?: number | string
-  maxWidth?: number | string
-  width?: WidthValue
-  triggerNode?: HTMLElement
-  style: Object
-}
 
 export interface State {
   width?: WidthValue
 }
 
-type WidthValue = number | string | null | undefined
-
-export class Card extends React.PureComponent<Props> {
+export class Card extends React.PureComponent<DropdownCardProps> {
   static defaultProps = {
     innerRef: noop,
     style: {},
   }
+
+  static className = 'c-DropdownV2Card'
 
   state = {
     width: this.props.width,
@@ -62,10 +50,18 @@ export class Card extends React.PureComponent<Props> {
   }
 
   getStyles(): Object {
-    const { minWidth, minHeight, maxHeight, maxWidth, style } = this.props
+    const {
+      borderColor,
+      minWidth,
+      minHeight,
+      maxHeight,
+      maxWidth,
+      style,
+    } = this.props
 
     return {
       ...style,
+      borderColor,
       minWidth,
       minHeight,
       maxHeight,
@@ -77,7 +73,7 @@ export class Card extends React.PureComponent<Props> {
   render() {
     const { className, children, innerRef, ...rest } = this.props
 
-    const componentClassName = classNames('c-DropdownV2Card', className)
+    const componentClassName = classNames(Card.className, className)
 
     return (
       <CardUI
@@ -100,6 +96,7 @@ const ConnectedCard: any = connect(
   // mapStateToProps
   (state: any) => {
     const {
+      cardBorderColor,
       maxHeight,
       maxWidth,
       minHeight,
@@ -109,6 +106,7 @@ const ConnectedCard: any = connect(
     } = state
 
     return {
+      borderColor: cardBorderColor,
       maxHeight,
       maxWidth,
       minHeight,
