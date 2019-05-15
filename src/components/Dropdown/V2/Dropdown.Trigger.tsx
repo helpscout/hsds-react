@@ -50,11 +50,11 @@ export class Trigger extends React.PureComponent<Props> {
   handleOnKeyDown = (event: KeyboardEvent) => {
     switch (event.keyCode) {
       case Keys.DOWN_ARROW:
-        this.openDropdown()
+        this.openDropdown(event)
         break
 
       case Keys.ENTER:
-        this.openDropdown()
+        this.openDropdown(event)
         break
 
       case Keys.TAB:
@@ -70,10 +70,11 @@ export class Trigger extends React.PureComponent<Props> {
     this.props.onKeyDown(event)
   }
 
-  openDropdown() {
+  openDropdown(event) {
     const { isOpen, openDropdown } = this.props
 
     if (!isOpen) {
+      event.preventDefault()
       return openDropdown()
     }
   }
