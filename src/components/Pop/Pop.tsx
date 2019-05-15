@@ -1,4 +1,5 @@
 import * as React from 'react'
+import EventListener from '../EventListener'
 import Manager from './Manager'
 import Arrow from './Arrow'
 import Popper from './Popper'
@@ -6,13 +7,16 @@ import Reference from './Reference'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { PopProps } from './Pop.types'
+import { PopProps, PopInteraction } from './Pop.types'
 import { PopUI } from './Pop.css'
+import { INTERACTION_TYPE } from './Pop.utils'
 
 export interface Props extends PopProps {
   onBeforeOpen: (instance: Pop) => Promise<any>
   onBeforeClose: (instance: Pop) => Promise<any>
   onContentClick: (event: React.MouseEvent) => void
+  shouldClose: (...args: any) => boolean
+  shouldOpen: (...args: any) => boolean
 }
 
 export interface State {
@@ -25,19 +29,21 @@ const uniqueID = createUniqueIDFactory('Pop')
 class Pop extends React.Component<Props, State> {
   static defaultProps = {
     arrowSize: 5,
-    closeOnBodyClick: false,
-    closeOnEscPress: true,
+    closeOnBodyClick: true,
     closeOnContentClick: false,
+    closeOnEscPress: true,
     closeOnMouseLeave: true,
     display: 'inline-block',
-    placement: 'auto',
     isOpen: false,
     modifiers: {},
-    onContentClick: noop,
-    onBeforeOpen: () => Promise.resolve(),
     onBeforeClose: () => Promise.resolve(),
-    onOpen: noop,
+    onBeforeOpen: () => Promise.resolve(),
     onClose: noop,
+    onContentClick: noop,
+    onOpen: noop,
+    placement: 'auto',
+    shouldClose: () => true,
+    shouldOpen: () => true,
     showArrow: true,
     triggerOn: 'click',
     zIndex: 1000,
@@ -58,7 +64,7 @@ class Pop extends React.Component<Props, State> {
   componentDidMount() {
     this._isMounted = true
     if (this.state.isOpen) {
-      this.open()
+      this.open({ type: INTERACTION_TYPE.MOUNT })
     }
   }
 
@@ -71,9 +77,9 @@ class Pop extends React.Component<Props, State> {
     /* istanbul ignore else */
     if (willOpen !== this.state.isOpen) {
       if (willOpen) {
-        this.open()
+        this.open({ type: INTERACTION_TYPE.UPDATE_IS_OPEN })
       } else {
-        this.close()
+        this.close({ type: INTERACTION_TYPE.UPDATE_IS_OPEN })
       }
     }
   }
@@ -90,45 +96,47 @@ class Pop extends React.Component<Props, State> {
     }
   }
 
-  handleMouseMove = () => {
+  handleMouseMove = (event: React.MouseEvent) => {
     if (!this.shouldHandleHover()) return
     if (this.state.isOpen) return
-    this.open()
+    this.open({ type: INTERACTION_TYPE.MOUSE_MOVE, props: { event } })
   }
 
-  handleMouseLeave = () => {
+  handleMouseLeave = (event: React.MouseEvent) => {
     if (!this.shouldHandleHover()) return
     if (!this.props.closeOnMouseLeave) return
 
-    this.close()
+    this.close({ type: INTERACTION_TYPE.MOUSE_LEAVE, props: { event } })
   }
 
   handleClick = event => {
     if (this.shouldHandleHover()) return
     if (event) event.stopPropagation()
-    this.toggleOpen()
+    this.toggleOpen(event)
   }
 
   handleOnBodyClick = event => {
     if (!this.shouldHandleHover() && !this.props.closeOnBodyClick) return
     if (!event || event.target === this.node) return
-    this.close()
+    this.close({ type: INTERACTION_TYPE.BODY_CLICK, props: { event } })
   }
 
   handleOnContentClick = (event: React.MouseEvent) => {
     this.props.onContentClick(event)
     if (!this.props.closeOnContentClick) return
-    this.close()
+    this.close({ type: INTERACTION_TYPE.CONTENT_CLICK, props: { event } })
   }
 
-  handleOnPopperMouseLeave = () => {
+  handleOnPopperMouseLeave = event => {
     if (!this.shouldHandleHover()) return
-    this.close()
+    this.close({ type: INTERACTION_TYPE.POPPER_MOUSE_LEAVE, props: { event } })
   }
 
   shouldHandleHover = () => this.props.triggerOn === 'hover'
 
-  open = () => {
+  open = ({ type, props: extraProps }: PopInteraction) => {
+    if (!this.props.shouldOpen(type, extraProps)) return
+
     this.props.onBeforeOpen(this).then(() => {
       this.safeSetState({ isOpen: true }, () => {
         this.props.onOpen(this)
@@ -136,7 +144,9 @@ class Pop extends React.Component<Props, State> {
     })
   }
 
-  close = () => {
+  close = ({ type, props: extraProps }: PopInteraction) => {
+    if (!this.props.shouldClose(type, extraProps)) return
+
     this.props.onBeforeClose(this).then(() => {
       this.safeSetState({ isOpen: false }, () => {
         this.props.onClose(this)
@@ -144,11 +154,11 @@ class Pop extends React.Component<Props, State> {
     })
   }
 
-  toggleOpen = () => {
+  toggleOpen = (event: Event) => {
     if (this.state.isOpen) {
-      this.close()
+      this.close({ type: INTERACTION_TYPE.TOGGLE, props: { event } })
     } else {
-      this.open()
+      this.open({ type: INTERACTION_TYPE.TOGGLE, props: { event } })
     }
   }
 
@@ -207,6 +217,7 @@ class Pop extends React.Component<Props, State> {
               arrowSize,
               className,
               close: this.close,
+              'data-cy': `${this.props['data-cy']}Popper`,
               id,
               isOpen: this.state.isOpen,
               onContentClick: this.handleOnContentClick,
@@ -221,8 +232,14 @@ class Pop extends React.Component<Props, State> {
 
     return (
       <Manager>
+        <EventListener
+          event="click"
+          handler={this.handleOnBodyClick}
+          scope={document.body}
+        />
         <PopUI
           className={componentClassName}
+          data-cy={this.props['data-cy']}
           innerRef={this.setNodeRef}
           onMouseMove={this.handleMouseMove}
           onMouseLeave={this.handleMouseLeave}

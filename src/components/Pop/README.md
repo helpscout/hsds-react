@@ -8,6 +8,7 @@ This component is powered by [Popper.js](https://popper.js.org/) the evolution o
 
 The Toolbar component is comprised of smaller components:
 
+* [Pop](./docs/Pop.md)
 * [Arrow](./docs/Arrow.md)
 * [Manager](./docs/Manager.md)
 * [Popper](./docs/Popper.md)

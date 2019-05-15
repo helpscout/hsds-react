@@ -109,6 +109,8 @@ export class Popover extends React.PureComponent<Props> {
         contentClassName="c-PopoverContent"
         className={this.getClassName()}
         closeOnMouseLeave={false}
+        data-cy="Popover"
+        dataCyPopper="PopoverContent"
         innerRef={innerRef}
         renderContent={this.renderContent}
       />
