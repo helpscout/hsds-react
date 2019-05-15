@@ -117,13 +117,29 @@ class Pop extends React.Component<Props, State> {
 
   handleOnBodyClick = event => {
     if (!this.shouldHandleHover() && !this.props.closeOnBodyClick) return
-    if (!event || event.target === this.node) return
+    const popperNode = document.getElementById(this.state.id) as HTMLElement
+
+    if (
+      !event ||
+      event.target === this.node ||
+      // @ts-ignore
+      this.node.contains(event.target) ||
+      (popperNode && popperNode.contains(event.target))
+    ) {
+      return
+    }
+
     this.close({ type: INTERACTION_TYPE.BODY_CLICK, props: { event } })
   }
 
   handleOnContentClick = (event: React.MouseEvent) => {
     this.props.onContentClick(event)
-    if (!this.props.closeOnContentClick) return
+
+    if (!this.props.closeOnContentClick) {
+      event.stopPropagation()
+      return
+    }
+
     this.close({ type: INTERACTION_TYPE.CONTENT_CLICK, props: { event } })
   }
 
