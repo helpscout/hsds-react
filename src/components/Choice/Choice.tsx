@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { ChoiceAlign, ChoiceType, ChoiceValue } from './Choice.types'
-import { UIState } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Input from './Choice.Input'
 import Flexy from '../Flexy'
@@ -20,41 +18,11 @@ import {
   ChoiceHelpTextUI,
 } from './styles/Choice.css'
 import { COMPONENT_KEY } from './Choice.utils'
-
-type Props = {
-  align: ChoiceAlign
-  autoFocus: boolean
-  children?: any
-  checked: boolean
-  className?: string
-  componentID: string
-  disabled: boolean
-  helpText?: string
-  hideLabel: boolean
-  id?: string
-  inputRef: (node: HTMLElement) => void
-  innerRef: (node: HTMLElement) => void
-  kind?: string
-  label?: string
-  onBlur: (event: Event) => void
-  onChange: (event: Event, checked: boolean) => void
-  onFocus: (event: Event) => void
-  name?: string
-  readOnly: boolean
-  stacked: boolean
-  state?: UIState
-  type: ChoiceType
-  value: ChoiceValue
-}
-
-type State = {
-  checked: boolean
-  id: string
-}
+import { ChoiceValue, ChoiceProps, ChoiceState } from './Choice.types'
 
 const uniqueID = createUniqueIDFactory('Choice')
 
-class Choice extends React.PureComponent<Props, State> {
+class Choice extends React.PureComponent<ChoiceProps, ChoiceState> {
   static defaultProps = {
     autoFocus: false,
     checked: false,
@@ -66,21 +34,18 @@ class Choice extends React.PureComponent<Props, State> {
     onFocus: noop,
     inputRef: noop,
     innerRef: noop,
+    isBlock: false,
     readOnly: false,
     type: 'checkbox',
     value: '',
   }
 
-  constructor(props: Props) {
-    super(props)
-
-    this.state = {
-      checked: props.checked,
-      id: props.id || uniqueID(props.componentID),
-    }
+  state = {
+    checked: this.props.checked,
+    id: this.props.id || uniqueID(this.props.componentID),
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: ChoiceProps) {
     this.setState({
       checked: nextProps.checked,
       id: nextProps.id || this.state.id,
@@ -282,6 +247,7 @@ class Choice extends React.PureComponent<Props, State> {
       id,
       inputRef,
       innerRef,
+      isBlock,
       onBlur,
       onChange,
       onFocus,
@@ -302,6 +268,7 @@ class Choice extends React.PureComponent<Props, State> {
       `is-${type}`,
       checked && 'is-selected',
       disabled && 'is-disabled',
+      isBlock && 'is-block',
       kind && `is-${kind}`,
       readOnly && 'is-readonly',
       stacked && 'is-stacked',
@@ -313,6 +280,7 @@ class Choice extends React.PureComponent<Props, State> {
       'c-Choice__label',
       checked && 'is-selected',
       disabled && 'is-disabled',
+      isBlock && 'is-block',
       stacked && 'is-stacked'
     )
 

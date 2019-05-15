@@ -7,8 +7,8 @@ export const config = {
     labelDefault: getColor('text.muted'),
     labelSelected: getColor('text.default'),
   },
-  helpTextOffset: 24,
-  labelTextMargin: 10,
+  helpTextOffset: '24px',
+  labelTextMargin: '10px',
 }
 
 export const ChoiceUI = styled('div')`
@@ -16,8 +16,16 @@ export const ChoiceUI = styled('div')`
 `
 
 export const ChoiceLabelUI = styled('label')`
+  ${baseStyles};
   cursor: pointer;
+  display: inline-block;
   margin-bottom: 0;
+  vertical-align: middle;
+
+  &.is-block {
+    display: block;
+    vertical-align: initial;
+  }
 
   &.is-disabled {
     cursor: not-allowed;
@@ -33,7 +41,8 @@ export const ChoiceLabelUI = styled('label')`
 `
 
 export const ChoiceHelpTextUI = styled('div')`
-  margin-left: ${config.helpTextOffset}px;
+  ${baseStyles};
+  margin-left: ${config.helpTextOffset};
 
   &.is-stacked {
     margin-left: 0;
@@ -41,10 +50,12 @@ export const ChoiceHelpTextUI = styled('div')`
 `
 
 export const ChoiceLabelTextUI = styled('span')`
+  ${baseStyles};
+
   &.is-stacked {
     display: block;
     font-weight: bold;
-    margin-top: ${config.labelTextMargin}px;
+    margin-top: ${config.labelTextMargin};
   }
 `
 
