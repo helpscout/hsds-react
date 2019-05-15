@@ -18,7 +18,10 @@ import {
   getValueFromItemDOMNode,
   findTriggerNode,
 } from './Dropdown.renderUtils'
+
 import { dispatch } from './Dropdown.store'
+
+import { focusWithoutScrolling } from '../../../utilities/focus'
 
 export const changeDirection = state => {
   return dispatch(state, {
@@ -207,8 +210,7 @@ export const closeAndRefocusTriggerNode = state => {
 
     // Refocus triggerNode
     const triggerNode = findTriggerNode(envNode)
-    // @ts-ignore
-    triggerNode && triggerNode.focus()
+    focusWithoutScrolling(triggerNode)
   }
 }
 

@@ -1,4 +1,4 @@
-import { getNodeScope, isNodeElement } from './node'
+import { getNodeScope, getWindowFromNode, isNodeElement } from './node'
 
 export const FOCUSABLE_SELECTOR =
   'a,frame,iframe,input:not([type=hidden]),select,textarea,button:not([tabindex="-1"]),*[tabindex]:not([tabindex="-1"])'
@@ -128,4 +128,15 @@ export const incrementFocusIndex = options => {
   }
 
   return newFocusIndex
+}
+
+export const focusWithoutScrolling = node => {
+  const _window = getWindowFromNode(node)
+  // Cache the current position
+  const { scrollX, scrollY } = _window
+
+  node.focus()
+
+  // Immediately scroll to the cached position
+  _window.scrollTo(scrollX, scrollY)
 }

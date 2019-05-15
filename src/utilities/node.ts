@@ -1,4 +1,5 @@
 import closest from './closest'
+import get from './get'
 import { isNodeEnv } from './other'
 
 type Node = HTMLElement | any
@@ -247,4 +248,9 @@ export const scrollIntoView = (node: Node) => {
   if (node['scrollIntoViewIfNeeded']) return node.scrollIntoViewIfNeeded()
   /* istanbul ignore else */
   if (node['scrollIntoView']) return node.scrollIntoView()
+}
+
+export const getWindowFromNode = (node: Node) => {
+  if (!isNodeElement(node)) return window
+  return get(node, 'ownerDocument.defaultView', window)
 }

@@ -523,7 +523,7 @@ describe('Pop', () => {
     test('Closes on block click, if defined', async () => {
       const spy = jest.fn()
       const wrapper = mount(
-        <Pop closeOnBodyClick onClose={spy}>
+        <Pop closeOnBodyClick isOpen onClose={spy}>
           <Pop.Reference />
         </Pop>
       )
@@ -540,7 +540,7 @@ describe('Pop', () => {
     test('Does not close on block click, if defined', () => {
       const spy = jest.fn()
       const wrapper = mount(
-        <Pop closeOnBodyClick={false} onClose={spy}>
+        <Pop closeOnBodyClick={false} isOpen onClose={spy}>
           <Pop.Reference />
         </Pop>
       )

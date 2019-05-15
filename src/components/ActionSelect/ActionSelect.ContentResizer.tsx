@@ -28,6 +28,7 @@ export class ContentResizer extends React.PureComponent<
     innerRef: noop,
     isFadeContentOnOpen: true,
     onResize: noop,
+    resizeCount: 0,
     selectedKey: null,
   }
 
@@ -46,7 +47,7 @@ export class ContentResizer extends React.PureComponent<
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.children !== this.props.children) {
+    if (nextProps.resizeCount !== this.props.resizeCount) {
       this.handleResize(nextProps)
     }
   }

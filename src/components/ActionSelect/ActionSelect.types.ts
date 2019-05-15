@@ -23,12 +23,14 @@ export interface ActionSelectProps
 
 export interface ActionSelectState {
   isOpen: boolean
+  resizeCount: number
   selectedItem?: any
 }
 
 export interface ActionSelectContentResizerProps extends ActionSelectBaseProps {
   borderWidth: number
   isOpen: boolean
+  resizeCount: number
 }
 
 export interface ActionSelectContentResizerState {

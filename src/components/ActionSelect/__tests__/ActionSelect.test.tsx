@@ -156,10 +156,9 @@ describe('Open/Close', () => {
 })
 
 describe('Resize', () => {
-  test('Resizes content when child updates', () => {
+  test('Resizes content when an item is selected', () => {
     const spy = jest.fn()
     const Small = () => <div className="ChildContent" />
-    const Big = () => <div className="OtherContent" />
 
     const wrapper = cy.render(
       <ActionSelect
@@ -174,7 +173,30 @@ describe('Resize', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
 
-    wrapper.setProps({ children: <Big /> })
+    cy
+      .getByCy('DropdownItem')
+      .last()
+      .click()
+
+    expect(spy).toHaveBeenCalledTimes(3)
+  })
+
+  test('Resizes content when an selectedItem is updated', () => {
+    const spy = jest.fn()
+
+    const wrapper = cy.render(
+      <ActionSelect
+        items={mockItems}
+        isOpen={true}
+        isAutoFocusNodeOnSelect={false}
+        selectedItem={mockItems[1]}
+        onResize={spy}
+      />
+    )
+
+    expect(spy).toHaveBeenCalledTimes(1)
+
+    wrapper.setProps({ selectedItem: mockItems[0] })
 
     expect(spy).toHaveBeenCalledTimes(3)
   })

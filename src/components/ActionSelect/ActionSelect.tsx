@@ -36,6 +36,7 @@ export class ActionSelect extends React.PureComponent<
 
   state = {
     isOpen: this.props.isOpen,
+    resizeCount: 0,
     selectedItem: null,
   }
 
@@ -48,6 +49,12 @@ export class ActionSelect extends React.PureComponent<
 
   componentWillUnmount() {
     this._isMounted = false
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedItem !== this.props.selectedItem) {
+      this.resizeContent()
+    }
   }
 
   safeSetState = (nextState, callback?) => {
@@ -66,10 +73,17 @@ export class ActionSelect extends React.PureComponent<
     )
   }
 
+  resizeContent = () => {
+    this.safeSetState({
+      resizeCount: this.state.resizeCount + 1,
+    })
+  }
+
   handleOnSelect = (item, props) => {
     this.props.onSelect(item, props)
     this.autoFocusChildNode()
 
+    this.resizeContent()
     this.safeSetState({
       selectedItem: props.item,
     })
@@ -142,9 +156,10 @@ export class ActionSelect extends React.PureComponent<
           animationEasing={animationEasing}
           borderWidth={1}
           innerRef={this.setContentNode}
-          onResize={onResize}
-          selectedKey={getUniqueKeyFromItem(selectedItem)}
           isOpen={this.state.isOpen}
+          onResize={onResize}
+          resizeCount={this.state.resizeCount}
+          selectedKey={getUniqueKeyFromItem(selectedItem)}
         >
           {children}
         </ContentResizer>

@@ -216,6 +216,20 @@ describe('States', () => {
     wrapper.unmount()
   })
 
+  test('Applies isBlock styles, if specified', () => {
+    const wrapper = mount(<Choice isBlock={true} />)
+    const o = wrapper.find('div.c-Choice')
+
+    expect(o.prop('className')).toContain('is-block')
+  })
+
+  test('Does not render isBlock styles, by default', () => {
+    const wrapper = mount(<Choice />)
+    const o = wrapper.find('div.c-Choice')
+
+    expect(o.prop('className')).not.toContain('is-block')
+  })
+
   test('Applies checkbox styles if specified', () => {
     const wrapper = mount(<Choice type="checkbox" />)
     const o = wrapper.find('div.c-Choice')
