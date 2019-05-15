@@ -22,8 +22,8 @@ export const config = {
   },
   marginBottom: '40px',
   padding: {
-    default: '50px 50px',
-    widescreen: '50px 100px',
+    default: '50px 50px 65px',
+    widescreen: '50px 100px 65px',
     superWidescreen: '65px 50px',
     fullscreen: '65px 100px',
   },
