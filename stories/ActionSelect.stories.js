@@ -2,14 +2,10 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import ActionSelect from '../src/components/ActionSelect'
 import FormGroup from '../src/components/FormGroup'
+import Checkbox from '../src/components/Checkbox'
 import Input from '../src/components/Input'
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
 
 const stories = storiesOf('ActionSelect', module)
 
@@ -24,6 +20,7 @@ stories.add('Default', () => {
         'search-docs': {
           text: 'Do a search',
           query: '',
+          isEnabled: false,
         },
       },
     }
@@ -76,6 +73,15 @@ stories.add('Default', () => {
                   value={this.state.values['search-docs'].query}
                 />
               </FormGroup>
+              <FormGroup>
+                <Checkbox
+                  label="Enabled"
+                  onChange={(event, value) => {
+                    this.onChange('search-docs', 'isEnabled')(value)
+                  }}
+                  checked={this.state.values['search-docs'].isEnabled}
+                />
+              </FormGroup>
             </div>
           )
         default:
@@ -99,6 +105,7 @@ stories.add('Default', () => {
           <ActionSelect
             label="Action Select"
             items={items}
+            onResize={action('onResize')}
             onSelect={this.onSelect}
             shouldRefocusOnClose={this.shouldRefocusOnClose}
           >
