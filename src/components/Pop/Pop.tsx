@@ -116,6 +116,7 @@ class Pop extends React.Component<Props, State> {
   }
 
   handleOnBodyClick = event => {
+    if (!this.state.isOpen) return
     if (!this.shouldHandleHover() && !this.props.closeOnBodyClick) return
     const popperNode = document.getElementById(this.state.id) as HTMLElement
 
