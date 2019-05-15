@@ -51,6 +51,12 @@ export class ActionSelect extends React.PureComponent<
     this._isMounted = false
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedItem !== this.props.selectedItem) {
+      this.resizeContent()
+    }
+  }
+
   safeSetState = (nextState, callback?) => {
     if (this._isMounted) {
       this.setState(nextState, callback)
@@ -67,12 +73,18 @@ export class ActionSelect extends React.PureComponent<
     )
   }
 
+  resizeContent = () => {
+    this.safeSetState({
+      resizeCount: this.state.resizeCount + 1,
+    })
+  }
+
   handleOnSelect = (item, props) => {
     this.props.onSelect(item, props)
     this.autoFocusChildNode()
 
+    this.resizeContent()
     this.safeSetState({
-      resizeCount: this.state.resizeCount + 1,
       selectedItem: props.item,
     })
   }

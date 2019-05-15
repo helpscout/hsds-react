@@ -180,4 +180,24 @@ describe('Resize', () => {
 
     expect(spy).toHaveBeenCalledTimes(3)
   })
+
+  test('Resizes content when an selectedItem is updated', () => {
+    const spy = jest.fn()
+
+    const wrapper = cy.render(
+      <ActionSelect
+        items={mockItems}
+        isOpen={true}
+        isAutoFocusNodeOnSelect={false}
+        selectedItem={mockItems[1]}
+        onResize={spy}
+      />
+    )
+
+    expect(spy).toHaveBeenCalledTimes(1)
+
+    wrapper.setProps({ selectedItem: mockItems[0] })
+
+    expect(spy).toHaveBeenCalledTimes(3)
+  })
 })
