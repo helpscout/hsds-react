@@ -2,7 +2,8 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import styled from '../../styled'
 
 export const FormGroupChoiceUI = styled('div')`
-  ${baseStyles} margin-bottom: 8px;
+  ${baseStyles};
+  margin-bottom: 8px;
 
   &.is-responsive {
     flex: 1;

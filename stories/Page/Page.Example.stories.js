@@ -28,23 +28,14 @@ stories.add('Responsive', () => {
   return (
     <Page isResponsive={isResponsive}>
       <Page.Card>
-        <Page.Section>
-          <Page.Header
-            render={({ Title, Subtitle }) => (
-              <div>
-                <Title headingLevel="h1">Edit your account</Title>
-                <Subtitle>Welcome to the Dharma Initiative.</Subtitle>
-              </div>
-            )}
-          />
-          <Page.Content>
-            <FormGroup>
-              <FormLabel label="Site Name">
-                <Input value="Dashing Dash" />
-              </FormLabel>
-            </FormGroup>
-          </Page.Content>
-        </Page.Section>
+        <Page.Header
+          render={({ Title, Subtitle }) => (
+            <div>
+              <Title headingLevel="h1">Edit your account</Title>
+              <Subtitle>Welcome to the Dharma Initiative.</Subtitle>
+            </div>
+          )}
+        />
 
         <Page.Section>
           <Page.Header
