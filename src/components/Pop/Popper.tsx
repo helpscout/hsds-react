@@ -110,6 +110,7 @@ export class Popper extends React.Component<Props> {
 
     return (
       <ReactPopper
+        data-cy="PopPopper"
         modifiers={modifiers}
         placement={placement}
         positionFixed={positionFixed}

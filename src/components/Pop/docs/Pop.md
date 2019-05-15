@@ -25,15 +25,17 @@ This component is powered by [Popper.js](https://popper.js.org/) the evolution o
 | className           | `string`   | Custom class names to be added to the component.                   |
 | closeOnBodyClick    | `boolean`  | Closes component on `body` click. Default `false`.                 |
 | closeOnContentClick | `boolean`  | Closes component on inner content click. Default `false`.          |
-| closeOnMouseLeave   | `boolean`  | Closes component when the mouse leaves component . Default `true`. |
 | closeOnEscPress     | `boolean`  | Closes component on `ESC` key press. Default `true`.               |
+| closeOnMouseLeave   | `boolean`  | Closes component when the mouse leaves component . Default `true`. |
 | display             | `string`   | The CSS `display` of the component.                                |
 | isOpen              | `boolean`  | Open/close the component.                                          |
 | onBeforeClose       | `Function` | Callback before component opens. Returns a `Promise`.              |
 | onBeforeOpen        | `Function` | Callback before component opens. Returns a `Promise`.              |
 | onClose             | `Function` | Callback when component closes.                                    |
-| onOpen              | `Function` | Callback when component opens.                                     |
 | onContentClick      | `Function` | Callback when inner content is clicked.                            |
+| onOpen              | `Function` | Callback when component opens.                                     |
 | placement           | `string`   | Determines the alignment of the component's content.               |
-| triggerOn           | `string`   | Determines how to engage the component.                            |
+| shouldClose         | `Function` | Determines if the component should close. Returns `boolean`.       |
+| shouldOpen          | `Function` | Determines if the component should open. Returns `boolean`.        |
 | showArrow           | `boolean`  | Renders the [Arrow component](./Arrow.md). Default `true`.         |
+| triggerOn           | `string`   | Determines how to engage the component.                            |

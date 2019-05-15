@@ -46,3 +46,8 @@ export type PopperStyles = {
   placement: Placements
   style: Object
 }
+
+export type PopInteraction = {
+  type: string
+  props?: any
+}

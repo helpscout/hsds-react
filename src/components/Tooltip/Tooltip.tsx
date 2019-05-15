@@ -17,6 +17,7 @@ export interface Props extends PopProps {
   contentClassName?: string
   className?: string
   color: string
+  dataCyPopper: string
   innerRef: (node: HTMLElement) => void
   minWidth?: number | string
   maxWidth?: number | string
@@ -36,6 +37,7 @@ export class Tooltip extends React.PureComponent<Props> {
     color: getColor('charcoal.700'),
     closeOnContentClick: false,
     closeOnMouseLeave: true,
+    dataCyPopper: 'TooltipContent',
     innerRef: noop,
     isOpen: false,
     modifiers: {},
@@ -94,11 +96,12 @@ export class Tooltip extends React.PureComponent<Props> {
   }
 
   renderPopper = (renderProps?: any) => {
-    const { maxWidth, minWidth } = this.props
+    const { dataCyPopper, maxWidth, minWidth } = this.props
 
     return (
       <Popper
         className={this.getContentClassName()}
+        data-cy={dataCyPopper}
         style={{ maxWidth, minWidth }}
       >
         {this.renderContent(renderProps || /* istanbul ignore next */ {})}
@@ -119,7 +122,10 @@ export class Tooltip extends React.PureComponent<Props> {
 
     return (
       <TooltipUI {...rest} className={this.getClassName()}>
-        <Pop.Reference className="c-Tooltip__reference">
+        <Pop.Reference
+          className="c-Tooltip__reference"
+          data-cy={`${this.props['data-cy']}Reference`}
+        >
           {children}
         </Pop.Reference>
         <Pop.Popper

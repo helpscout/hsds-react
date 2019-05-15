@@ -20,6 +20,7 @@ export interface Props {
 
 export class Arrow extends React.PureComponent<Props> {
   static defaultProps = {
+    'data-cy': 'PopArrow',
     innerRef: noop,
     offset: 0,
     placement: 'top',
