@@ -32,6 +32,9 @@ class StickyActions extends React.PureComponent<
   }
 
   observerStart() {
+    /* istanbul ignore next */
+    if (!IntersectionObserver) return
+
     const { offset } = this.props
     const observerOptions = {
       root: null,
@@ -46,6 +49,9 @@ class StickyActions extends React.PureComponent<
   }
 
   observerStop() {
+    /* istanbul ignore next */
+    if (!IntersectionObserver) return
+
     this.observer.unobserve(this.node)
     this.observer.disconnect()
   }
