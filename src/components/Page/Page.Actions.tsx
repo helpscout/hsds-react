@@ -72,7 +72,6 @@ export class Actions extends React.PureComponent<
       zIndex,
       ...rest
     } = this.props
-    const { isStickyActive } = this.state
 
     const content = (
       <ActionsUI
