@@ -17,6 +17,7 @@ export interface ActionSelectProps
   children?: any
   isAutoFocusNodeOnSelect: boolean
   shouldRefocusOnClose: (...args: any[]) => boolean
+  shouldScrollIntoView: (...args: any[]) => boolean
   items: Array<any>
   onSelect: (item: Object, props: Object) => void
 }

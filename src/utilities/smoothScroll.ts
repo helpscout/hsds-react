@@ -5,7 +5,9 @@ import { isFunction } from './is'
 
 // Source:
 // https://gist.github.com/gre/1650294
-const easeInOutCubic = t => {
+
+export const linear = t => t
+export const easeInOutCubic = t => {
   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
 }
 
@@ -29,12 +31,21 @@ export const smoothScrollTo = ({
   duration,
   direction,
   callback,
+  timingFunction,
+}: {
+  node?: any
+  position?: any
+  duration?: number
+  direction?: string
+  callback?: any
+  timingFunction?: any
 }) => {
   const scrollNode = isNodeElement(node) ? node : window
   const isWindow = scrollNode === window
   const scrollDuration = duration || 500
   const scrollDirection = direction || 'y'
   const isHorizontalScroll = scrollDirection === 'x'
+  const scrollTimingFunction = timingFunction || easeInOutCubic
 
   let currentScrollPosition = isWindow ? window.scrollY : scrollNode.scrollTop
   if (isHorizontalScroll) {
@@ -51,7 +62,7 @@ export const smoothScrollTo = ({
     // Elapsed miliseconds since start of scrolling.
     const time = timestamp - start
     // Get percent of completion in range [0, 1].
-    const percent = easeInOutCubic(Math.min(time / scrollDuration, 1))
+    const percent = scrollTimingFunction(Math.min(time / scrollDuration, 1))
     const scrollToPosition = currentScrollPosition - diff * percent
 
     if (node.scrollTo) {
