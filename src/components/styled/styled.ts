@@ -1,7 +1,13 @@
 import { createStyled } from '@helpscout/fancy'
 import base from '../../styles/resets/base.css'
 import baseStyles from '../../styles/resets/baseStyles.css'
-import { getColor, rgba } from '../../styles/utilities/color'
+import {
+  darken,
+  getColor,
+  lighten,
+  rgb,
+  rgba,
+} from '../../styles/utilities/color'
 import {
   addFontSmoothing,
   makeFontFamily,
@@ -15,14 +21,17 @@ import { isBeacon, isHSApp } from '../../styles/utilities/theme'
 const extras = {
   addFontSmoothing,
   baseStyles,
+  darken,
   forEach,
   getColor,
   getShadow,
   isBeacon,
   isHSApp,
+  lighten,
   makeFontFamily,
   makeFontFamilyMono,
   resetStyles: base,
+  rgb,
   rgba,
   setFontSize,
 }

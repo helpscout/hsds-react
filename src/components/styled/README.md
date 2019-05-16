@@ -57,3 +57,21 @@ const Brick = styled('div')`
   `};
 `
 ```
+
+Extras include the following utilities:
+
+* `addFontSmoothing`
+* `baseStyles`
+* `darken`
+* `forEach`
+* `getColor`
+* `getShadow`
+* `isBeacon`
+* `isHSApp`
+* `lighten`
+* `makeFontFamily`
+* `makeFontFamilyMono`
+* `resetStyles`
+* `rgb`
+* `rgba`
+* `setFontSize`
