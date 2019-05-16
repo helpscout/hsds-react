@@ -60,7 +60,7 @@ export class ContentResizer extends React.PureComponent<
 
   handleResize = props => {
     // Sets the initial height (px)
-    this.resize(props)
+    this.resize(this.props)
     requestAnimationFrame(() => {
       // Sets the next (animation) height (px)
       this.resize(props)
