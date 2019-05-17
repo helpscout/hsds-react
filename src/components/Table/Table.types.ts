@@ -60,10 +60,28 @@ export interface TableState {
   isTableCollapsed?: boolean
 }
 
+export interface BodyProps {
+  columns: Column[]
+  isTableCollapsed?: boolean
+  maxRowsToDisplay?: number
+  rows: Data[]
+  onRowClick?: (event: Event, row: Data) => void
+}
+
+export interface BodyState {
+  rows: Data[]
+}
+
 export interface RowProps {
   columns: Column[]
   row: Data
   onRowClick?: (event: Event, row: Data) => void
+}
+
+export interface HeadProps {
+  columns: Column[]
+  isLoading?: boolean
+  sortedInfo?: SortedInfo
 }
 
 export interface HeaderCellProps {

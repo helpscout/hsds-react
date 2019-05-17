@@ -3,23 +3,26 @@ import * as React from 'react'
 import { ThemeProvider } from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+
+import * as equal from 'fast-deep-equal'
+
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
-import { COMPONENT_KEY, generateCellKey } from './Table.utils'
+import { COMPONENT_KEY } from './Table.utils'
 
 import { TableWrapperUI, TableUI } from './styles/Table.css'
 import { defaultTheme, chooseTheme } from './styles/themes'
 
-import Row from './Table.Row'
-import HeaderCell from './Table.HeaderCell'
+import Body from './Table.Body'
+import Head from './Table.Head'
 
 import { TableProps, TableState } from './Table.types'
 
 export const TABLE_CLASSNAME = 'c-Table'
 
-export class Table extends React.PureComponent<TableProps, TableState> {
+export class Table extends React.Component<TableProps, TableState> {
   constructor(props) {
     super(props)
 
@@ -93,6 +96,27 @@ export class Table extends React.PureComponent<TableProps, TableState> {
     )
   }
 
+  shouldComponentUpdate(nextProps: TableProps, nextState: TableState) {
+    if (nextState.isTableCollapsed !== this.state.isTableCollapsed) {
+      return true
+    }
+
+    const { columns, data, ...rest } = this.props
+    const { columns: columnsNext, data: dataNext, ...restNext } = nextProps
+    if (!equal(rest, restNext)) {
+      return true
+    }
+    if (!equal(columnsNext, columns)) {
+      return true
+    }
+
+    if (!equal(dataNext, data)) {
+      return true
+    }
+
+    return false
+  }
+
   render() {
     const {
       className,
@@ -117,10 +141,6 @@ export class Table extends React.PureComponent<TableProps, TableState> {
       tableClassNames,
     } = this.getComponentClassNames()
 
-    const rowsToDisplay = isTableCollapsed
-      ? data.slice(0, maxRowsToDisplay)
-      : [...data]
-
     return (
       <ThemeProvider theme={chooseTheme(theme)}>
         <TableWrapperUI
@@ -141,29 +161,19 @@ export class Table extends React.PureComponent<TableProps, TableState> {
               className={tableClassNames}
               innerRef={this.setTableNode}
             >
-              <thead>
-                <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
-                  {columns.map(column => (
-                    <HeaderCell
-                      key={generateCellKey('headercell', column)}
-                      column={column}
-                      isLoading={isLoading}
-                      sortedInfo={sortedInfo}
-                    />
-                  ))}
-                </tr>
-              </thead>
+              <Head
+                columns={columns}
+                isLoading={isLoading}
+                sortedInfo={sortedInfo}
+              />
 
-              <tbody>
-                {rowsToDisplay.map(row => (
-                  <Row
-                    row={row}
-                    columns={columns}
-                    key={`row_${row.id}`}
-                    onRowClick={onRowClick}
-                  />
-                ))}
-              </tbody>
+              <Body
+                rows={data}
+                columns={columns}
+                isTableCollapsed={isTableCollapsed}
+                maxRowsToDisplay={maxRowsToDisplay}
+                onRowClick={onRowClick}
+              />
             </TableUI>
           </Scrollable>
 
