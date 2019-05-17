@@ -28,7 +28,6 @@ export class ContentResizer extends React.PureComponent<
     innerRef: noop,
     isFadeContentOnOpen: true,
     onResize: noop,
-    onResizeEnd: noop,
     resizeCount: 0,
     selectedKey: null,
   }
@@ -87,7 +86,6 @@ export class ContentResizer extends React.PureComponent<
   /* istanbul ignore next */
   resetHeight = () => {
     this.safeSetState(getInitialState(this.props))
-    this.props.onResizeEnd()
   }
 
   getResizeStyles = () => {
