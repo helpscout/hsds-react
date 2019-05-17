@@ -54,6 +54,7 @@ export type TitleProps = {
   isOpen: boolean
   isPage: boolean
   isSeamless: boolean
+  onClick: (event: Event) => void
   onOpen?: (uuid: string) => void
   onClose?: (uuid: string) => void
   setOpen: (uuid: string, isOpen?: boolean) => void
