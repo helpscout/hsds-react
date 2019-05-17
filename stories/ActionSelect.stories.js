@@ -92,8 +92,8 @@ export class Example extends React.Component {
     return this.state.value === 'None'
   }
 
-  shouldScrollIntoView = () => {
-    return this.state.value !== 'None'
+  shouldScrollIntoView = item => {
+    return item !== 'None'
   }
 
   render() {
