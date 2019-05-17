@@ -20,7 +20,7 @@ export class ActionSelect extends React.PureComponent<
   static defaultProps = {
     'data-cy': 'ActionSelect',
     animationDuration: 200,
-    animationEasing: 'ease',
+    animationEasing: 'linear',
     cardBorderColor: getColor('grey.700'),
     children: null,
     enableTabNavigation: false,
@@ -81,9 +81,9 @@ export class ActionSelect extends React.PureComponent<
     })
   }
 
-  scrollIntoView = () => {
+  scrollIntoView = (item, props) => {
     /* istanbul ignore next */
-    if (!this.props.shouldScrollIntoView(this.props)) return
+    if (!this.props.shouldScrollIntoView(item, props)) return
 
     const { y } = this.contentNode.getBoundingClientRect() as DOMRect
     const position = y
@@ -102,7 +102,7 @@ export class ActionSelect extends React.PureComponent<
     this.autoFocusChildNode()
 
     this.resizeContent()
-    this.scrollIntoView()
+    this.scrollIntoView(item, props)
 
     this.safeSetState({
       selectedItem: props.item,
