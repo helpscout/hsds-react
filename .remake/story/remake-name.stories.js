@@ -11,8 +11,11 @@ import {
   select,
 } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
+import { jsxDecorator } from 'storybook-addon-jsx'
 
 const stories = storiesOf('<%= name %>', module)
+
+stories.addDecorator(jsxDecorator)
 
 stories.addDecorator(
   withArtboard({
