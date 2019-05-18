@@ -5,6 +5,7 @@ import { create } from '@storybook/theming'
 import { withKnobs } from '@storybook/addon-knobs'
 import { StatsGraph } from '@helpscout/stats'
 import { addReadme } from 'storybook-readme'
+import { withA11y } from '@storybook/addon-a11y'
 
 import '../src/adapters/app'
 import '../src/styles/blue.scss'
@@ -20,6 +21,7 @@ const withStats = storyFn => (
 addDecorator(withStats)
 addDecorator(withKnobs)
 addDecorator(addReadme)
+addDecorator(withA11y)
 
 addParameters({
   options: {
