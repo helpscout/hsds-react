@@ -139,6 +139,7 @@
     "@helpscout/stats": "0.0.5",
     "@storybook/addon-a11y": "^5.0.11",
     "@storybook/addon-actions": "^5.0.10",
+    "@storybook/addon-console": "^1.1.0",
     "@storybook/addon-knobs": "5.0.10",
     "@storybook/addon-links": "^5.0.10",
     "@storybook/addon-viewport": "^5.0.10",
