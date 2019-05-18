@@ -4,6 +4,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { create } from '@storybook/theming'
 import { withKnobs } from '@storybook/addon-knobs'
 import { StatsGraph } from '@helpscout/stats'
+import { addReadme } from 'storybook-readme'
 
 import '../src/adapters/app'
 import '../src/styles/blue.scss'
@@ -18,6 +19,7 @@ const withStats = storyFn => (
 
 addDecorator(withStats)
 addDecorator(withKnobs)
+addDecorator(addReadme)
 
 addParameters({
   options: {
@@ -31,9 +33,9 @@ addParameters({
     panelPosition: 'right',
     isToolshown: true,
   },
-})
-
-addParameters({
+  readme: {
+    codeTheme: 'a11y-dark',
+  },
   viewport: {
     viewports: {
       ...INITIAL_VIEWPORTS,

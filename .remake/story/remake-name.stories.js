@@ -1,6 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import <%= name %> from '../src/components/<%= name %>'
+import <%= name %>Readme from '../src/components//<%= name %>/README.md'
+
 import {
   withKnobs,
   boolean,
@@ -20,6 +22,10 @@ stories.addDecorator(
     showInterface: false
   })
 )
+
+stories.addParameters({
+  readme: { sidebar: <%= name %>Readme },
+})
 
 stories.add('Default', () => (
   <<%= name %> />
