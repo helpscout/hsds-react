@@ -142,6 +142,7 @@
     "@storybook/addon-console": "^1.1.0",
     "@storybook/addon-knobs": "5.0.10",
     "@storybook/addon-links": "^5.0.10",
+    "@storybook/addon-storysource": "^5.0.11",
     "@storybook/addon-viewport": "^5.0.10",
     "@storybook/addons": "^5.0.10",
     "@storybook/cli": "5.0.11",
