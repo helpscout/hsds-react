@@ -87,6 +87,10 @@ export class ActionSelect extends React.PureComponent<
 
     const { y } = this.contentNode.getBoundingClientRect() as DOMRect
     const position = y
+    const shouldScrollIntoView = window.scrollY < y
+
+    /* istanbul ignore next */
+    if (!shouldScrollIntoView) return
 
     smoothScrollTo({
       node: window,
