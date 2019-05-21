@@ -4,7 +4,7 @@ import { config as inputConfig } from './Input.css'
 import forEach from '../../../styles/utilities/forEach'
 
 export const config = {
-  defaultHeight: inputConfig.size.md,
+  defaultHeight: inputConfig.size.md.height,
   size: inputConfig.size,
 }
 
@@ -17,6 +17,11 @@ export const StaticUI = styled('div')`
 
   &.is-block {
     display: block;
+  }
+
+  &.is-centerAlign {
+    align-items: center;
+    display: flex;
   }
 
   &.is-left {

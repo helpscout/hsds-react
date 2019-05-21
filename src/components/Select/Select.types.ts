@@ -55,6 +55,7 @@ export type SelectProps = {
   state?: UIState
   success: boolean
   value: string
+  width: number | string
 }
 
 export type SelectState = {

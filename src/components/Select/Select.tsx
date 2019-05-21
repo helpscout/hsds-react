@@ -361,6 +361,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
       isLast,
       seamless,
       style: styleProp,
+      width,
     } = this.props
 
     const { isFocused, state } = this.state
@@ -381,10 +382,12 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     const prefixMarkup = this.getPrefixMarkup()
     const errorMarkup = this.getErrorMarkup()
 
+    const style = { ...styleProp, width }
+
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <InputWrapperUI className="c-InputWrapper" style={styleProp}>
+          <InputWrapperUI className="c-InputWrapper" style={style}>
             {labelMarkup}
             {hintTextMarkup}
             <SelectUI className={componentClassName}>

@@ -12,6 +12,7 @@ export type InputStaticProps = {
   align: 'left' | 'center' | 'right' | ''
   children?: any
   className?: string
+  isCenterAlign: boolean
   size: UISize
 }
 
@@ -37,6 +38,7 @@ export type InputProps = {
   inlineSuffix?: string
   innerRef: (ref: HTMLElement) => void
   inputRef: (ref: HTMLElement) => void
+  inputType: string
   isFirst: boolean
   isFocused: boolean
   isLast: boolean
@@ -77,6 +79,7 @@ export type InputProps = {
   typingThrottleInterval: number
   typingTimeoutDelay: number
   value: InputValue
+  width: string | number
   withTypingEvent: false
 }
 
