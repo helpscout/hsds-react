@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import <%= name %> from '../src/components/<%= name %>'
-import <%= name %>Readme from '../src/components//<%= name %>/README.md'
+import <%= name %>Readme from '../src/components/<%= name %>/README.md'
 
 import {
   withKnobs,
