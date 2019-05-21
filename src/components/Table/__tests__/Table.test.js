@@ -427,7 +427,7 @@ describe('Table.Body', () => {
       </table>
     ).find(Body)
 
-    expect(wrapper.instance().getRows()).toBe([])
+    expect(wrapper.instance().getRows()).toEqual([])
   })
 })
 
