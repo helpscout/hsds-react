@@ -19,6 +19,11 @@ export default class Body extends React.Component<BodyProps, BodyState> {
 
   getRows(props) {
     const { isTableCollapsed, rows, maxRowsToDisplay } = props
+
+    if (!rows) {
+      return []
+    }
+
     return isTableCollapsed ? rows.slice(0, maxRowsToDisplay) : [...rows]
   }
 

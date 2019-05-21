@@ -66,7 +66,7 @@ export class Table extends React.Component<TableProps, TableState> {
   }
 
   getComponentClassNames = () => {
-    const { className, tableClassName, isLoading, onRowClick } = this.props
+    const { className, tableClassName, onRowClick } = this.props
     const { isTableCollapsed } = this.state
 
     const tableWrapperClassNames = classNames(
@@ -95,7 +95,10 @@ export class Table extends React.Component<TableProps, TableState> {
   }
 
   shouldComponentUpdate(nextProps: TableProps, nextState: TableState) {
-    if (nextState.isTableCollapsed !== this.state.isTableCollapsed) {
+    if (
+      nextState &&
+      nextState.isTableCollapsed !== this.state.isTableCollapsed
+    ) {
       return true
     }
 
@@ -174,7 +177,7 @@ export class Table extends React.Component<TableProps, TableState> {
             </TableUI>
           </Scrollable>
 
-          {isLoading && <LoadingUI />}
+          {isLoading && <LoadingUI className={`${TABLE_CLASSNAME}__Loading`} />}
 
           {isTableCollapsed ? (
             <Button
