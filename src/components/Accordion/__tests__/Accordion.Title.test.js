@@ -1,4 +1,5 @@
 import React from 'react'
+import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import Accordion from '../Accordion'
 import Section, { SectionWithUuid } from '../Accordion.Section'
@@ -188,5 +189,25 @@ describe('isOpen', () => {
     const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass('is-open')).toBeFalsy()
+  })
+})
+
+describe('Events', () => {
+  test('onClick callback works', () => {
+    const spy = jest.fn()
+    const wrapper = cy.render(<Title onClick={spy} />)
+
+    wrapper.click()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onClick callback works for links', () => {
+    const spy = jest.fn()
+    const wrapper = cy.render(<Title onClick={spy} to="/" />)
+
+    wrapper.click()
+
+    expect(spy).toHaveBeenCalled()
   })
 })

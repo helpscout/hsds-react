@@ -68,6 +68,7 @@ class Title extends React.Component<TitleProps> {
     isPage: false,
     isSeamless: false,
     setOpen: noop,
+    onClick: noop,
     onOpen: noop,
     onClose: noop,
   }
@@ -87,6 +88,9 @@ class Title extends React.Component<TitleProps> {
   }
 
   handleClick = (event: Event | KeyboardEvent) => {
+    this.props.onClick(event)
+    if (this.getIsLink()) return
+
     event && event.preventDefault()
     const { isOpen, setOpen, uuid } = this.props
     setOpen(uuid, !isOpen)

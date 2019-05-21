@@ -143,7 +143,7 @@ export const ItemUI = styled('div')`
 
   &.is-active {
     > ${ActionUI}, &.is-option {
-      font-weight: bold;
+      font-weight: 500;
     }
   }
 

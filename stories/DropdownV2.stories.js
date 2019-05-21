@@ -3,13 +3,22 @@ import { storiesOf } from '@storybook/react'
 import { Provider } from '@helpscout/wedux'
 import Artboard from '@helpscout/artboard'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
+import DropdownReadme from '../src/components/Dropdown/V2/docs/Dropdown.md'
 import Button from '../src/components/Button'
 import store from '../src/components/Dropdown/V2/Dropdown.store'
 import { action } from '@storybook/addon-actions'
 import { boolean } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
+import { jsxDecorator } from 'storybook-addon-jsx'
 
 const stories = storiesOf('DropdownV2', module)
+
+stories.addDecorator(jsxDecorator)
+stories.addParameters({
+  readme: { sidebar: DropdownReadme },
+  a11y: { element: '.c-DropdownV2' },
+})
+
 stories.addDecorator(storyFn => (
   <Artboard
     name="dropdown-v2"
@@ -220,7 +229,13 @@ stories.add('Item/Custom', () => {
   const onSelect = value => console.log(value)
   const CustomItem = props => {
     return (
-      <div style={{ padding: '0px 20px', background: 'magenta' }}>
+      <div
+        style={{
+          padding: '0px 20px',
+          background: 'magenta',
+          display: 'inline',
+        }}
+      >
         Custom
         <br />
         <h2>{props.value}</h2>
