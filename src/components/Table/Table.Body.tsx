@@ -6,14 +6,7 @@ import Row from './Table.Row'
 
 import { BodyProps, BodyState } from './Table.types'
 
-if (process.env.NODE_ENV !== 'production') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React)
-}
-
 export default class Body extends React.Component<BodyProps, BodyState> {
-  static whyDidYouRender = true
-
   columnsCache = []
   state: BodyState = { rows: [] }
 
@@ -73,6 +66,7 @@ export default class Body extends React.Component<BodyProps, BodyState> {
   render() {
     const { columns, onRowClick } = this.props
     const { rows } = this.state
+
     return (
       <tbody>
         {rows.map(row => (

@@ -7,12 +7,8 @@ import { TABLE_CLASSNAME } from './Table'
 import { generateCellKey } from './Table.utils'
 
 import { HeadProps } from './Table.types'
-if (process.env.NODE_ENV !== 'production') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React)
-}
+
 export default class Head extends React.Component<HeadProps> {
-  static whyDidYouRender = true
   shouldComponentUpdate(nextProps) {
     const { columns, sortedInfo } = this.props
 

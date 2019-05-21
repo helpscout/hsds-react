@@ -5,7 +5,18 @@ export const TableWrapperUI = styled('div')`
   ${baseStyles} overflow-x: auto;
   transition: opacity 0.15s ease-in-out;
   width: ${props => props.containerWidth || '100%'};
-  opacity: ${props => (props.isLoading ? '0.5' : '1.0')};
+  position: relative;
+`
+
+export const LoadingUI = styled('div')`
+  position: absolute;
+  transition: opacity 0.15s ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.5;
+  background: #fff;
 `
 
 export const TableUI = styled('table')`

@@ -12,7 +12,7 @@ import Button from '../Button'
 import Scrollable from '../Scrollable'
 import { COMPONENT_KEY } from './Table.utils'
 
-import { TableWrapperUI, TableUI } from './styles/Table.css'
+import { TableWrapperUI, TableUI, LoadingUI } from './styles/Table.css'
 import { defaultTheme, chooseTheme } from './styles/themes'
 
 import Body from './Table.Body'
@@ -71,13 +71,11 @@ export class Table extends React.Component<TableProps, TableState> {
 
     const tableWrapperClassNames = classNames(
       `${TABLE_CLASSNAME}__Wrapper`,
-      isLoading && 'is-loading',
       isTableCollapsed && 'is-collapsed',
       className
     )
     const tableClassNames = classNames(
       TABLE_CLASSNAME,
-      isLoading && 'is-loading',
       Boolean(onRowClick) && 'with-clickable-rows',
       tableClassName
     )
@@ -146,7 +144,6 @@ export class Table extends React.Component<TableProps, TableState> {
         <TableWrapperUI
           className={tableWrapperClassNames}
           innerRef={this.setWrapperNode}
-          isLoading={isLoading}
           containerWidth={containerWidth}
           {...getValidProps(rest)}
         >
@@ -176,6 +173,8 @@ export class Table extends React.Component<TableProps, TableState> {
               />
             </TableUI>
           </Scrollable>
+
+          {isLoading && <LoadingUI />}
 
           {isTableCollapsed ? (
             <Button
