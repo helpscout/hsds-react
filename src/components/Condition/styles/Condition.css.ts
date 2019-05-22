@@ -1,4 +1,5 @@
 import Button from '../../Button'
+import Centralize from '../../Centralize'
 import Flexy from '../../Flexy'
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
@@ -11,13 +12,14 @@ export const config = {
   padding: '10px',
   optionsWidth: '170px',
   operatorBorderWidth: '2px',
+  operatorHeight: '56px',
 }
 
-export const ConditionWrapperUI = styled('div')`
+export const ConditionUI = styled('div')`
   ${baseStyles};
 `
 
-export const ConditionUI = styled(Flexy)`
+export const ConditionContentUI = styled(Flexy)`
   background-color: ${config.backgroundColor};
   border: ${config.border};
   border-radius: ${config.borderRadius};
@@ -83,3 +85,27 @@ export const ButtonUI = styled(Button)`
     }
   }
 `
+
+export const OperatorWrapperBaseUI = styled(Centralize)`
+  ${baseStyles};
+  position: relative;
+  height: ${config.operatorHeight};
+
+  &::before {
+    background: ${getColor('border.ui')};
+    bottom: 0;
+    content: '';
+    height: 100%;
+    left: 50%;
+    margin-left: -0.5px;
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+
+  > * {
+    z-index: 1;
+  }
+`
+
+export const AndWrapperUI = OperatorWrapperBaseUI

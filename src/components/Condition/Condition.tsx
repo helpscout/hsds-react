@@ -4,6 +4,7 @@ import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import { COMPONENT_KEY as FLEXY_COMPONENT_KEY } from '../Flexy/Flexy.utils'
 import Select from '../Select'
+import And from './Condition.And'
 import AddButton from './Condition.AddButton'
 import Operator from './Condition.Operator'
 import { classNames } from '../../utilities/classNames'
@@ -11,8 +12,8 @@ import { noop } from '../../utilities/other'
 import { ConditionProps } from './Condition.types'
 import { COMPONENT_KEY } from './Condition.utils'
 import {
-  ConditionWrapperUI,
   ConditionUI,
+  ConditionContentUI,
   OptionsWrapperUI,
   ContentWrapperUI,
 } from './styles/Condition.css'
@@ -21,10 +22,13 @@ export class Condition extends React.PureComponent<ConditionProps> {
   static className = 'c-Condition'
   static defaultProps = {
     innerRef: noop,
+    onChange: noop,
     options: [],
+    isWithAnd: false,
   }
 
   static AddButton = AddButton
+  static And = And
   static Operator = Operator
 
   getClassName() {
@@ -40,25 +44,38 @@ export class Condition extends React.PureComponent<ConditionProps> {
     }
   }
 
+  renderOperator() {
+    const { isWithAnd } = this.props
+    if (!isWithAnd) return null
+
+    return <And />
+  }
+
   render() {
-    const { children, innerRef, options, value, ...rest } = this.props
+    const { children, innerRef, options, onChange, value, ...rest } = this.props
 
     return (
-      <ConditionWrapperUI className="c-ConditionWrapper">
+      <ConditionUI
+        {...getValidProps(rest)}
+        className={this.getClassName()}
+        innerRef={innerRef}
+      >
+        {this.renderOperator()}
         <PropProvider value={this.getProviderProps()}>
-          <ConditionUI
-            {...getValidProps(rest)}
+          <ConditionContentUI
             align="top"
-            className={this.getClassName()}
-            innerRef={innerRef}
+            className="c-ConditionContent"
+            data-cy="ConditionContent"
           >
-            <OptionsWrapperUI>
-              <Select options={options} value={value} />
+            <OptionsWrapperUI data-cy="ConditionSelectWrapper">
+              <Select onChange={onChange} options={options} value={value} />
             </OptionsWrapperUI>
-            <ContentWrapperUI>{children}</ContentWrapperUI>
-          </ConditionUI>
+            <ContentWrapperUI data-cy="ConditionInnerContentWrapper">
+              {children}
+            </ContentWrapperUI>
+          </ConditionContentUI>
         </PropProvider>
-      </ConditionWrapperUI>
+      </ConditionUI>
     )
   }
 }

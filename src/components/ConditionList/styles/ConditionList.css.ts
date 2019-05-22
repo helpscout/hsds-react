@@ -12,6 +12,24 @@ export const config = {
 
 export const ConditionListUI = styled('div')`
   ${baseStyles};
+  position: relative;
+
+  &::before {
+    background: ${getColor('border.ui')};
+    bottom: 0;
+    content: '';
+    height: 100%;
+    left: 50%;
+    margin-left: -0.5px;
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   &.is-withOffset {
     margin-left: -10px;
@@ -31,24 +49,7 @@ export const ConditionListUI = styled('div')`
 
 export const OperatorWrapperBaseUI = styled(Centralize)`
   ${baseStyles};
-  position: relative;
   height: ${config.operatorHeight};
-
-  &::before {
-    background: ${getColor('border.ui')};
-    bottom: 0;
-    content: '';
-    height: 100%;
-    left: 50%;
-    margin-left: -0.5px;
-    position: absolute;
-    top: 0;
-    width: 1px;
-  }
-
-  > * {
-    z-index: 1;
-  }
 `
 
 export const AndWrapperUI = OperatorWrapperBaseUI

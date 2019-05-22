@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withMotion } from '@helpscout/motion'
 import Button from '../src/components/Button'
 import ConditionList from '../src/components/ConditionList'
 import Condition from '../src/components/Condition'
@@ -59,8 +60,8 @@ const options = [
   },
 ]
 
-const TimeOnPageCondition = ({ error, onRemove, value, time }) => (
-  <Condition options={options} value="time-on-page">
+const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => (
+  <Condition options={options} value="time-on-page" {...rest}>
     <ConditionField onRemove={onRemove}>
       <ConditionField.Item>
         <ConditionField.Static>Show after</ConditionField.Static>
@@ -97,9 +98,9 @@ const TimeOnPageCondition = ({ error, onRemove, value, time }) => (
   </Condition>
 )
 
-const PageViewCondition = ({ error, value }) => (
-  <Condition options={options} value="page-views">
-    <ConditionField>
+const PageViewCondition = ({ error, onRemove, value, ...rest }) => (
+  <Condition options={options} value="page-views" {...rest}>
+    <ConditionField onRemove={onRemove}>
       <ConditionField.Item>
         <Input
           inputType="number"
@@ -117,9 +118,9 @@ const PageViewCondition = ({ error, value }) => (
   </Condition>
 )
 
-const RepeatPageViewCondition = ({ error, value }) => (
-  <Condition options={options} value="repeat-page-views">
-    <ConditionField>
+const RepeatPageViewCondition = ({ error, onRemove, value, ...rest }) => (
+  <Condition options={options} value="repeat-page-views" {...rest}>
+    <ConditionField onRemove={onRemove}>
       <ConditionField.Item>
         <Input
           inputType="number"
@@ -137,9 +138,9 @@ const RepeatPageViewCondition = ({ error, value }) => (
   </Condition>
 )
 
-const PageScrollCondition = props => (
-  <Condition options={options} value="page-scroll">
-    <ConditionField>
+const PageScrollCondition = ({ onRemove, ...rest }) => (
+  <Condition options={options} value="page-scroll" {...rest}>
+    <ConditionField onRemove={onRemove}>
       <ConditionField.Block>
         <ConditionField.Static>
           Triggers when the scrollbar is used
@@ -207,19 +208,74 @@ class SpecificUrlCondition extends React.Component {
   }
 }
 
+const ComponentMap = {
+  'time-on-page': TimeOnPageCondition,
+  'repeat-page-views': RepeatPageViewCondition,
+  'page-views': PageViewCondition,
+  'page-scroll': PageScrollCondition,
+}
+
+const ConditionElement = ({ type, ...rest }) => {
+  const Component = ComponentMap[type] || ComponentMap['time-on-page']
+
+  return <Component {...rest} />
+}
+
+const AnimatedComponent = withMotion({
+  componentDidMount: ({ animate, node }) => {
+    return animate({
+      keyframes: [
+        {
+          height: [0, node.clientHeight],
+          opacity: [0, 1],
+        },
+      ],
+      duration: 350,
+      easing: 'linear',
+    }).finished.then(() => {
+      node.style.height = 'auto'
+    })
+  },
+  componentWillUnmount: ({ animate, node }) => {
+    node.style.height = `${node.clientHeight}px`
+
+    return animate({
+      keyframes: [
+        {
+          opacity: [1, 0],
+        },
+        {
+          height: 0,
+        },
+      ],
+      duration: 350,
+      easing: 'linear',
+    }).finished
+  },
+})(ConditionElement)
+
 class ConditionBuilder extends React.Component {
   state = {
-    conditions: [undefined],
+    conditions: ['time-on-page'],
   }
 
   handleOnAdd = () => {
     this.setState({
-      conditions: [...this.state.conditions, undefined],
+      conditions: [...this.state.conditions, 'time-on-page'],
     })
   }
 
   handleOnRemove = index => {
     const conditions = this.state.conditions.filter((url, i) => i !== index)
+    this.setState({
+      conditions,
+    })
+  }
+
+  handleOnChange = (value, index) => {
+    const conditions = this.state.conditions
+    conditions[index] = value
+
     this.setState({
       conditions,
     })
@@ -234,14 +290,18 @@ class ConditionBuilder extends React.Component {
         <RepeatPageViewCondition error={error} value={2} />
         <PageScrollCondition />
         <SpecificUrlCondition />
-        {this.state.conditions.map((condition, index) => (
-          <TimeOnPageCondition
-            error={error}
-            value={5}
-            key={index}
-            onRemove={() => this.handleOnRemove(index)}
-          />
-        ))}
+        {this.state.conditions.map((condition, index) => {
+          return (
+            <AnimatedComponent
+              key={condition}
+              type={condition}
+              onChange={value => this.handleOnChange(value, index)}
+              error={error}
+              value={5}
+              onRemove={() => this.handleOnRemove(index)}
+            />
+          )
+        })}
       </ConditionList>
     )
   }

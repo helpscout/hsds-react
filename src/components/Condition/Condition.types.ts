@@ -8,7 +8,9 @@ export interface ConditionProps extends ConditionBaseProps {
   className?: string
   children?: any
   innerRef: (node: HTMLElement) => void
+  isWithAnd: boolean
   options: Array<any>
+  onChange: (value: any) => void
   value: string
 }
 

@@ -1,14 +1,15 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import AddButton from './ConditionList.AddButton'
 import And from './ConditionList.And'
 import { classNames } from '../../utilities/classNames'
-import { getComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { ConditionListProps } from './ConditionList.types'
 import { ConditionListUI } from './styles/ConditionList.css'
 import { COMPONENT_KEY } from './ConditionList.utils'
+import { COMPONENT_KEY as CONDITION_COMPONENT_KEY } from '../Condition/Condition.utils'
 
 export class ConditionList extends React.Component<ConditionListProps> {
   static className = 'c-ConditionList'
@@ -34,22 +35,15 @@ export class ConditionList extends React.Component<ConditionListProps> {
   renderConditions() {
     const { children } = this.props
 
-    return React.Children.toArray(children).reduce((list, Component, index) => {
-      const key = getComponentKey(Component, index)
-      const enhancedCondition = React.cloneElement(Component, {
-        key,
-      })
-
-      if (index === 0) {
-        return [...list, enhancedCondition]
+    return React.Children.map(children, (child, index) => {
+      const isWithAnd = index > 0
+      const value = {
+        [CONDITION_COMPONENT_KEY.Condition]: {
+          isWithAnd,
+        },
       }
-
-      const OperatorComponent = React.createElement(And, {
-        key: index,
-      })
-
-      return [...list, OperatorComponent, enhancedCondition]
-    }, [])
+      return <PropProvider value={value}>{child}</PropProvider>
+    })
   }
 
   renderAddAction() {
