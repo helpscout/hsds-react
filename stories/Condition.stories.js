@@ -214,16 +214,13 @@ stories.add('Default', () => {
     <Page isResponsive={false}>
       <Page.Card>
         <Page.Section>
-          <ConditionList
-            isAddEnabled={isAddEnabled}
-            conditions={[
-              <TimeOnPageCondition error={error} value={5} />,
-              <PageViewCondition error={error} value={5} />,
-              <RepeatPageViewCondition error={error} value={2} />,
-              <PageScrollCondition />,
-              <SpecificUrlCondition />,
-            ]}
-          />
+          <ConditionList isAddEnabled={isAddEnabled}>
+            <TimeOnPageCondition error={error} value={5} />
+            <PageViewCondition error={error} value={5} />
+            <RepeatPageViewCondition error={error} value={2} />
+            <PageScrollCondition />
+            <SpecificUrlCondition />
+          </ConditionList>
         </Page.Section>
       </Page.Card>
     </Page>

@@ -4,16 +4,18 @@ import Condition from '../Condition'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = cy.render(<Condition />)
+    cy.render(<Condition />)
+    const el = cy.getByCy('Condition')
 
-    expect(wrapper.hasClass('c-Condition')).toBeTruthy()
+    expect(el.hasClass('c-Condition')).toBeTruthy()
   })
 
   test('Can render custom className', () => {
     const customClassName = 'blue'
-    const wrapper = cy.render(<Condition className={customClassName} />)
+    cy.render(<Condition className={customClassName} />)
+    const el = cy.getByCy('Condition')
 
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
+    expect(el.hasClass(customClassName)).toBeTruthy()
   })
 })
 
@@ -23,5 +25,32 @@ describe('HTML props', () => {
     const el = cy.getByCy('BlueBlueBlue')
 
     expect(el.exists()).toBeTruthy()
+  })
+})
+
+describe('Select', () => {
+  test('Renders a Select with options', () => {
+    const options = [
+      { value: 'brick', label: 'Brick' },
+      { value: 'ron', label: 'Ron' },
+    ]
+    cy.render(<Condition options={options} />)
+
+    const els = cy.get('select > option')
+
+    expect(cy.get('select').exists()).toBeTruthy()
+    expect(els.length).toBe(2)
+
+    expect(els.first().text()).toBe('Brick')
+  })
+
+  test('Can set the value of the Select', () => {
+    const options = [
+      { value: 'brick', label: 'Brick' },
+      { value: 'ron', label: 'Ron' },
+    ]
+    cy.render(<Condition options={options} value="ron" />)
+
+    expect(cy.get('select').value()).toBe('ron')
   })
 })

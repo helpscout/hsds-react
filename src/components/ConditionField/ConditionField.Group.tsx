@@ -1,9 +1,11 @@
 import * as React from 'react'
+import propConnect from '../PropProvider/propConnect'
 import AddButton from './ConditionField.AddButton'
 import Operator from '../Condition/Condition.Operator'
 import { getComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { ConditionFieldGroupProps } from './ConditionField.types'
+import { COMPONENT_KEY } from './ConditionField.utils'
 import { ConditionFieldUI } from './styles/ConditionField.css'
 
 export class Group extends React.PureComponent<ConditionFieldGroupProps> {
@@ -26,6 +28,7 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
       }
 
       const OperatorComponent = React.createElement(Operator, {
+        'data-cy': 'ConditionFieldOr',
         type: 'or',
         key: index,
       })
@@ -53,4 +56,6 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   }
 }
 
-export default Group
+const PropConnectedComponent = propConnect(COMPONENT_KEY.Group)(Group)
+
+export default PropConnectedComponent

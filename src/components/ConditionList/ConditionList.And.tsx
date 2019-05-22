@@ -14,7 +14,7 @@ export const And = props => {
     <AndWrapperUI
       {...rest}
       className={componentClassName}
-      data-cy="ConditiionListAndWrapper"
+      data-cy="ConditionListAndWrapper"
     >
       <Operator data-cy={props['data-cy']} type="and" isBorderless={false} />
     </AndWrapperUI>

@@ -7,13 +7,12 @@ import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { ConditionListProps } from './ConditionList.types'
-import { ConditionListUI, AddButtonWrapperUI } from './styles/ConditionList.css'
+import { ConditionListUI } from './styles/ConditionList.css'
 import { COMPONENT_KEY } from './ConditionList.utils'
 
-export class ConditionList extends React.PureComponent<ConditionListProps> {
+export class ConditionList extends React.Component<ConditionListProps> {
   static className = 'c-ConditionList'
   static defaultProps = {
-    conditions: [],
     innerRef: noop,
     onAdd: noop,
     isAddEnabled: true,
@@ -28,11 +27,11 @@ export class ConditionList extends React.PureComponent<ConditionListProps> {
   }
 
   renderConditions() {
-    const { conditions } = this.props
+    const { children } = this.props
 
-    return conditions.reduce((list, ConditionComponent, index) => {
-      const key = getComponentKey(ConditionComponent, index)
-      const enhancedCondition = React.cloneElement(ConditionComponent, {
+    return React.Children.toArray(children).reduce((list, Component, index) => {
+      const key = getComponentKey(Component, index)
+      const enhancedCondition = React.cloneElement(Component, {
         key,
       })
 

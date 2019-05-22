@@ -6,7 +6,7 @@ export const Static = props => {
   const { children, ...rest } = props
 
   return (
-    <Input.Static isCenterAlign {...rest}>
+    <Input.Static isCenterAlign data-cy="ConditionFieldStatic" {...rest}>
       <Text block shade="faint">
         {children}
       </Text>
