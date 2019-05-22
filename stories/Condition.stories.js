@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import Button from '../src/components/Button'
 import ConditionList from '../src/components/ConditionList'
 import Condition from '../src/components/Condition'
 import ConditionField from '../src/components/ConditionField'
@@ -58,9 +59,9 @@ const options = [
   },
 ]
 
-const TimeOnPageCondition = ({ error, value, time }) => (
+const TimeOnPageCondition = ({ error, onRemove, value, time }) => (
   <Condition options={options} value="time-on-page">
-    <ConditionField>
+    <ConditionField onRemove={onRemove}>
       <ConditionField.Item>
         <ConditionField.Static>Show after</ConditionField.Static>
       </ConditionField.Item>
@@ -69,7 +70,7 @@ const TimeOnPageCondition = ({ error, value, time }) => (
           <Flexy.Item>
             <Input
               inputType="number"
-              width={error ? 75 : 50}
+              width={error ? 75 : 55}
               value={value}
               state={error && 'error'}
             />
@@ -102,7 +103,7 @@ const PageViewCondition = ({ error, value }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
-          width={error ? 75 : 50}
+          width={error ? 75 : 55}
           value={value}
           state={error && 'error'}
         />
@@ -122,7 +123,7 @@ const RepeatPageViewCondition = ({ error, value }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
-          width={error ? 75 : 50}
+          width={error ? 75 : 55}
           value={value}
           state={error && 'error'}
         />
@@ -206,6 +207,46 @@ class SpecificUrlCondition extends React.Component {
   }
 }
 
+class ConditionBuilder extends React.Component {
+  state = {
+    conditions: [undefined],
+  }
+
+  handleOnAdd = () => {
+    this.setState({
+      conditions: [...this.state.conditions, undefined],
+    })
+  }
+
+  handleOnRemove = index => {
+    const conditions = this.state.conditions.filter((url, i) => i !== index)
+    this.setState({
+      conditions,
+    })
+  }
+
+  render() {
+    const { error, isAddEnabled } = this.props
+    return (
+      <ConditionList isAddEnabled={isAddEnabled} onAdd={this.handleOnAdd}>
+        <TimeOnPageCondition error={error} value={5} />
+        <PageViewCondition error={error} value={5} />
+        <RepeatPageViewCondition error={error} value={2} />
+        <PageScrollCondition />
+        <SpecificUrlCondition />
+        {this.state.conditions.map((condition, index) => (
+          <TimeOnPageCondition
+            error={error}
+            value={5}
+            key={index}
+            onRemove={() => this.handleOnRemove(index)}
+          />
+        ))}
+      </ConditionList>
+    )
+  }
+}
+
 stories.add('Default', () => {
   const error = boolean('error', false)
   const isAddEnabled = boolean('isAddEnabled', true)
@@ -214,15 +255,16 @@ stories.add('Default', () => {
     <Page isResponsive={false}>
       <Page.Card>
         <Page.Section>
-          <ConditionList isAddEnabled={isAddEnabled}>
-            <TimeOnPageCondition error={error} value={5} />
-            <PageViewCondition error={error} value={5} />
-            <RepeatPageViewCondition error={error} value={2} />
-            <PageScrollCondition />
-            <SpecificUrlCondition />
-          </ConditionList>
+          <ConditionBuilder error={error} isAddEnabled={isAddEnabled} />
         </Page.Section>
       </Page.Card>
+      <Page.Actions
+        primary={
+          <Button kind="primary" version={2}>
+            Save Changes
+          </Button>
+        }
+      />
     </Page>
   )
 })

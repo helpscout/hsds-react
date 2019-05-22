@@ -16,14 +16,19 @@ export class ConditionList extends React.Component<ConditionListProps> {
     innerRef: noop,
     onAdd: noop,
     isAddEnabled: true,
+    isWithOffset: false,
   }
 
   static AddButton = AddButton
   static And = And
 
   getClassName() {
-    const { className } = this.props
-    return classNames(ConditionList.className, className)
+    const { className, isWithOffset } = this.props
+    return classNames(
+      ConditionList.className,
+      isWithOffset && 'is-withOffset',
+      className
+    )
   }
 
   renderConditions() {

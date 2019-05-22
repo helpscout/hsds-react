@@ -1,5 +1,7 @@
 import Centralize from '../../Centralize'
+import PageConfig from '../../Page/styles/Page.config.css'
 import styled from '../../styled'
+import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 
@@ -10,6 +12,21 @@ export const config = {
 
 export const ConditionListUI = styled('div')`
   ${baseStyles};
+
+  &.is-withOffset {
+    margin-left: -10px;
+    margin-right: -10px;
+    width: calc(100% + 20px);
+
+    ${breakpoint(
+      PageConfig.breakpoint.widescreen,
+      `
+      margin-left: -60px;
+      margin-right: -60px;
+      width: calc(100% + 120px);
+    `
+    )};
+  }
 `
 
 export const OperatorWrapperBaseUI = styled(Centralize)`
