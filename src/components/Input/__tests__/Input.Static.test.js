@@ -1,26 +1,24 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { cy } from '@helpscout/cyan'
 import Static from '../Input.Static'
 
 describe('ClassName', () => {
   test('Has the correct CSS class', () => {
-    const wrapper = mount(<Static />)
+    const wrapper = cy.render(<Static />)
 
-    expect(
-      wrapper.getDOMNode().classList.contains('c-InputStatic')
-    ).toBeTruthy()
+    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
   })
 
   test('Accepts additional classNames', () => {
-    const wrapper = mount(<Static className="mugatu" />)
+    const wrapper = cy.render(<Static className="mugatu" />)
 
-    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
+    expect(wrapper.hasClass('mugatu')).toBeTruthy()
   })
 })
 
 describe('Children', () => {
   test('Can render child components', () => {
-    const wrapper = mount(
+    const wrapper = cy.render(
       <Static>
         <div className="mugatu" />
       </Static>
@@ -35,7 +33,7 @@ describe('Children', () => {
 describe('Style', () => {
   test('Accepts style prop', () => {
     const style = { background: 'red' }
-    const wrapper = mount(<Static style={style} />)
+    const wrapper = cy.render(<Static style={style} />)
 
     expect(wrapper.html()).toContain('style')
     expect(wrapper.html()).toContain('background')
@@ -45,43 +43,52 @@ describe('Style', () => {
 
 describe('Size', () => {
   test('Can render an additional size', () => {
-    const wrapper = mount(<Static size="md" />)
+    const wrapper = cy.render(<Static size="md" />)
 
-    expect(
-      wrapper.getDOMNode().classList.contains('c-InputStatic')
-    ).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-md')).toBeTruthy()
+    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
+    expect(wrapper.hasClass('is-md')).toBeTruthy()
   })
 })
 
 describe('Alignment', () => {
   test('Can be aligned left', () => {
-    const wrapper = mount(<Static align="left" />)
+    const wrapper = cy.render(<Static align="left" />)
 
-    expect(
-      wrapper.getDOMNode().classList.contains('c-InputStatic')
-    ).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-block')).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-left')).toBeTruthy()
+    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
+    expect(wrapper.hasClass('is-left')).toBeTruthy()
   })
 
   test('Can be aligned center', () => {
-    const wrapper = mount(<Static align="center" />)
+    const wrapper = cy.render(<Static align="center" />)
 
-    expect(
-      wrapper.getDOMNode().classList.contains('c-InputStatic')
-    ).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-block')).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-center')).toBeTruthy()
+    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
+    expect(wrapper.hasClass('is-center')).toBeTruthy()
   })
 
   test('Can be aligned right', () => {
-    const wrapper = mount(<Static align="right" />)
+    const wrapper = cy.render(<Static align="right" />)
 
-    expect(
-      wrapper.getDOMNode().classList.contains('c-InputStatic')
-    ).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-block')).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-right')).toBeTruthy()
+    expect(wrapper.hasClass('c-InputStatic')).toBeTruthy()
+    expect(wrapper.hasClass('is-right')).toBeTruthy()
+  })
+})
+
+describe('Display', () => {
+  test('Is not display: block, by default', () => {
+    const wrapper = cy.render(<Static />)
+
+    expect(wrapper.hasClass('is-block')).toBeFalsy()
+  })
+
+  test('Can be set to display: block', () => {
+    const wrapper = cy.render(<Static isBlock />)
+
+    expect(wrapper.hasClass('is-block')).toBeTruthy()
+  })
+
+  test('Can be set to center align items', () => {
+    const wrapper = cy.render(<Static isCenterAlign />)
+
+    expect(wrapper.hasClass('is-centerAlign')).toBeTruthy()
   })
 })

@@ -12,6 +12,7 @@ export type InputStaticProps = {
   align: 'left' | 'center' | 'right' | ''
   children?: any
   className?: string
+  isBlock: boolean
   isCenterAlign: boolean
   size: UISize
 }
