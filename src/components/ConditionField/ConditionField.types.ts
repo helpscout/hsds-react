@@ -6,4 +6,5 @@ export interface ConditionBaseProps {
 
 export interface ConditionFieldProps extends ConditionBaseProps {
   closeIcon: string
+  onRemove: () => void
 }

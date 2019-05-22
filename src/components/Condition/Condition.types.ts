@@ -10,7 +10,7 @@ export interface ConditionProps extends ConditionBaseProps {
   innerRef: (node: HTMLElement) => void
   isMultiCondition: boolean
   options: Array<any>
-  selectedItem: any
+  value: string
 }
 
 export interface ConditionFieldProps extends ConditionBaseProps {

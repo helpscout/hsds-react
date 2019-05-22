@@ -1,3 +1,4 @@
+import Button from '../../Button'
 import Flexy from '../../Flexy'
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
@@ -8,7 +9,13 @@ export const config = {
   border: `1px solid ${getColor('border.ui')}`,
   borderRadius: '3px',
   padding: '10px',
+  optionsWidth: '170px',
+  operatorBorderWidth: '2px',
 }
+
+export const ConditionWrapperUI = styled('div')`
+  ${baseStyles};
+`
 
 export const ConditionUI = styled(Flexy)`
   background-color: ${config.backgroundColor};
@@ -18,24 +25,61 @@ export const ConditionUI = styled(Flexy)`
 `
 
 export const OptionsWrapperUI = styled(Flexy.Item)`
-  width: 170px;
+  width: ${config.optionsWidth};
 `
 
 export const ContentWrapperUI = styled(Flexy.Block)``
 
+export const OperatorWrapperUI = styled('div')`
+  ${baseStyles};
+  margin: 5px 0;
+`
+
 export const OperatorUI = styled('div')`
   ${baseStyles};
   background: ${getColor('grey.600')};
-  border-radius: 2px;
-  box-shadow: 0 0 0 2px white;
+  border-radius: ${config.operatorBorderWidth};
+  box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
   color: white;
   display: inline-block;
-  margin: 5px 0;
   padding: 3px 5px;
   text-transform: uppercase;
   line-height: 1;
 
   &.is-borderless {
     box-shadow: none;
+  }
+`
+
+export const ButtonWrapperUI = styled('div')`
+  ${baseStyles};
+  ${({ align }) => `text-align: ${align};`};
+`
+
+export const ButtonUI = styled(Button)`
+  box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
+  margin-bottom: ${config.operatorBorderWidth};
+  margin-top: ${config.operatorBorderWidth};
+  text-transform: uppercase;
+
+  &.is-borderless {
+    box-shadow: none;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  .c-Icon {
+    margin: 0 0 0 -8px !important;
+  }
+
+  &.is-or {
+    .c-ButtonV2__content {
+      position: relative;
+      top: -1px;
+    }
+
+    .c-Icon {
+      margin: -0.5px -2px -0.5px -6px !important;
+    }
   }
 `

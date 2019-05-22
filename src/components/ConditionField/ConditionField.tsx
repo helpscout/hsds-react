@@ -1,6 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
+import Flexy from '../Flexy'
 import IconButton from '../IconButton'
 import Static from './ConditionField.Static'
 import { classNames } from '../../utilities/classNames'
@@ -19,9 +20,12 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     closeIcon: 'collapse',
     innerRef: noop,
     options: [],
+    onRemove: noop,
   }
 
   static Static = Static
+  static Block = Flexy.Block
+  static Item = Flexy.Item
 
   getClassName() {
     const { className } = this.props
@@ -29,13 +33,17 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   }
 
   render() {
-    const { children, closeIcon, innerRef, ...rest } = this.props
+    const { children, closeIcon, innerRef, onRemove, ...rest } = this.props
 
     return (
       <FieldUI {...getValidProps(rest)}>
-        <FieldContentWrapperUI>{children}</FieldContentWrapperUI>
+        <FieldContentWrapperUI>
+          <Flexy align="top" gap="md">
+            {children}
+          </Flexy>
+        </FieldContentWrapperUI>
         <FieldCloseWrapperUI>
-          <IconButton icon={closeIcon} />
+          <IconButton icon={closeIcon} onClick={onRemove} />
         </FieldCloseWrapperUI>
       </FieldUI>
     )

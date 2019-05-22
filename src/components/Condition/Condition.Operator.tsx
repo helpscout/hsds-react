@@ -3,7 +3,7 @@ import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './Condition.utils'
-import { OperatorUI } from './styles/Condition.css'
+import { OperatorWrapperUI, OperatorUI } from './styles/Condition.css'
 
 export const Operator = props => {
   const { className, isBorderless, type, ...rest } = props
@@ -12,15 +12,18 @@ export const Operator = props => {
   const componentClassName = classNames(
     Operator.className,
     isBorderless && 'is-borderless',
+    `is-${label}`,
     className
   )
 
   return (
-    <OperatorUI {...rest} className={componentClassName}>
-      <Text block lineHeightReset size="11">
-        {label}
-      </Text>
-    </OperatorUI>
+    <OperatorWrapperUI className="c-ConditionOperatorWrapper">
+      <OperatorUI {...rest} className={componentClassName}>
+        <Text block lineHeightReset size="11">
+          {label}
+        </Text>
+      </OperatorUI>
+    </OperatorWrapperUI>
   )
 }
 

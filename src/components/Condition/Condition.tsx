@@ -1,14 +1,17 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
+import { COMPONENT_KEY as FLEXY_COMPONENT_KEY } from '../Flexy/Flexy.utils'
 import Select from '../Select'
+import AddButton from './Condition.AddButton'
 import Operator from './Condition.Operator'
 import { classNames } from '../../utilities/classNames'
-import { isObject } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { ConditionProps } from './Condition.types'
 import { COMPONENT_KEY } from './Condition.utils'
 import {
+  ConditionWrapperUI,
   ConditionUI,
   OptionsWrapperUI,
   ContentWrapperUI,
@@ -22,6 +25,7 @@ export class Condition extends React.PureComponent<ConditionProps> {
     options: [],
   }
 
+  static AddButton = AddButton
   static Operator = Operator
 
   getClassName() {
@@ -29,27 +33,33 @@ export class Condition extends React.PureComponent<ConditionProps> {
     return classNames(Condition.className, className)
   }
 
-  getSelectedValue() {
-    const { selectedItem } = this.props
-
-    return isObject(selectedItem) ? selectedItem.value : selectedItem
+  getProviderProps() {
+    return {
+      [FLEXY_COMPONENT_KEY.Flexy]: {
+        baseSize: 5,
+      },
+    }
   }
 
   render() {
-    const { children, innerRef, options, selectedItem, ...rest } = this.props
+    const { children, innerRef, options, value, ...rest } = this.props
 
     return (
-      <ConditionUI
-        {...getValidProps(rest)}
-        align="top"
-        className={this.getClassName()}
-        innerRef={innerRef}
-      >
-        <OptionsWrapperUI>
-          <Select options={options} value={this.getSelectedValue()} />
-        </OptionsWrapperUI>
-        <ContentWrapperUI>{children}</ContentWrapperUI>
-      </ConditionUI>
+      <ConditionWrapperUI className="c-ConditionWrapper">
+        <PropProvider value={this.getProviderProps()}>
+          <ConditionUI
+            {...getValidProps(rest)}
+            align="top"
+            className={this.getClassName()}
+            innerRef={innerRef}
+          >
+            <OptionsWrapperUI>
+              <Select options={options} value={value} />
+            </OptionsWrapperUI>
+            <ContentWrapperUI>{children}</ContentWrapperUI>
+          </ConditionUI>
+        </PropProvider>
+      </ConditionWrapperUI>
     )
   }
 }
