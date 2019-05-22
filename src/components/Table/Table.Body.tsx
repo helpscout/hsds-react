@@ -3,21 +3,20 @@ import * as React from 'react'
 import * as equal from 'fast-deep-equal'
 
 import Row from './Table.Row'
-
 import { BodyProps, BodyState } from './Table.types'
 
 export default class Body extends React.Component<BodyProps, BodyState> {
-  columnsCache = []
   state: BodyState = { rows: [] }
+  columnsCache = this.getColumnsCache(this.props.columns)
 
-  constructor(props) {
-    super(props)
-    this.columnsCache = this.getColumnsCache(this.props.columns)
-
-    this.state.rows = this.getRows(props)
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!equal(nextProps.rows, prevState.rows)) {
+      return { rows: Body.getRows(nextProps) }
+    }
+    return null
   }
 
-  getRows(props: any = {}) {
+  static getRows(props: any = {}) {
     const { isTableCollapsed, rows, maxRowsToDisplay } = props
 
     if (!rows) {
@@ -34,14 +33,6 @@ export default class Body extends React.Component<BodyProps, BodyState> {
         key = key.join(',')
       }
       return key
-    })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { rows } = this.props
-
-    this.setState({
-      rows: this.getRows(nextProps),
     })
   }
 

@@ -420,14 +420,7 @@ describe('Table.Body', () => {
   })
 
   test('Body getRows should return an empty array if no rows props specified', () => {
-    const columns = defaultColumns
-    const wrapper = mount(
-      <table>
-        <Body columns={columns} />
-      </table>
-    ).find(Body)
-
-    expect(wrapper.instance().getRows()).toEqual([])
+    expect(Body.getRows()).toEqual([])
   })
 })
 
