@@ -47,6 +47,9 @@ function makeButtonHoverStyles() {
       &:hover {
         background: rgba(0, 0, 0, 0.03);
       }
+      &:focus {
+        background: rgba(0, 0, 0, 0.05);
+      }
       &:active {
         background: rgba(0, 0, 0, 0.08);
       }

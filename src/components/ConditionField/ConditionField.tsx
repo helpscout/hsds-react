@@ -3,6 +3,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Flexy from '../Flexy'
 import IconButton from '../IconButton'
+import Tooltip from '../Tooltip'
+import Group from './ConditionField.Group'
 import Static from './ConditionField.Static'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -21,9 +23,11 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     innerRef: noop,
     options: [],
     onRemove: noop,
+    removeTitle: 'Remove',
   }
 
   static Static = Static
+  static Group = Group
   static Block = Flexy.Block
   static Item = Flexy.Item
 
@@ -33,7 +37,14 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   }
 
   render() {
-    const { children, closeIcon, innerRef, onRemove, ...rest } = this.props
+    const {
+      children,
+      closeIcon,
+      innerRef,
+      onRemove,
+      removeTitle,
+      ...rest
+    } = this.props
 
     return (
       <FieldUI {...getValidProps(rest)}>
@@ -43,7 +54,13 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
           </Flexy>
         </FieldContentWrapperUI>
         <FieldCloseWrapperUI>
-          <IconButton icon={closeIcon} onClick={onRemove} />
+          <Tooltip title={removeTitle} animationDuration={60}>
+            <IconButton
+              data-cy="ConditionFieldRemoveButton"
+              icon={closeIcon}
+              onClick={onRemove}
+            />
+          </Tooltip>
         </FieldCloseWrapperUI>
       </FieldUI>
     )

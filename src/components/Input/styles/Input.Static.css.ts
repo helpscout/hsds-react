@@ -12,7 +12,7 @@ export const StaticUI = styled('div')`
   ${baseStyles};
   color: currentColor;
   display: inline-block;
-  height: ${config.defaultHeight};
+  min-height: ${config.defaultHeight};
   line-height: ${config.defaultHeight};
 
   &.is-block {
@@ -43,7 +43,7 @@ function makeSizeStyles(): string {
 
     return `
       &.is-${size} {
-        height: ${height};
+        min-height: ${height};
         line-height: ${height};
       }
     `

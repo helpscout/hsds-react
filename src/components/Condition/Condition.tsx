@@ -21,7 +21,6 @@ export class Condition extends React.PureComponent<ConditionProps> {
   static className = 'c-Condition'
   static defaultProps = {
     innerRef: noop,
-    isMultiCondition: false,
     options: [],
   }
 

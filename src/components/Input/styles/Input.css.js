@@ -31,6 +31,7 @@ export const config = {
 
 export const InputWrapperUI = styled('div')`
   ${baseStyles};
+  width: 100%;
 `
 
 export const InputUI = styled('div')`

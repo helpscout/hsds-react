@@ -12,7 +12,7 @@ import { STATES } from '../../constants'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { isString } from '../../utilities/is'
+import { isDefined, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Select.utils'
 import { InputWrapperUI } from '../Input/styles/Input.css'
@@ -382,7 +382,10 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     const prefixMarkup = this.getPrefixMarkup()
     const errorMarkup = this.getErrorMarkup()
 
-    const style = { ...styleProp, width }
+    const style = {
+      ...styleProp,
+      maxWidth: width,
+    }
 
     return (
       <FormLabelContext.Consumer>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import ConditionList from '../src/components/ConditionList'
 import Condition from '../src/components/Condition'
 import ConditionField from '../src/components/ConditionField'
 import Flexy from '../src/components/Flexy'
@@ -57,7 +58,7 @@ const options = [
   },
 ]
 
-const TimeOnPageCondition = ({ value, time }) => (
+const TimeOnPageCondition = ({ error, value, time }) => (
   <Condition options={options} value="time-on-page">
     <ConditionField>
       <ConditionField.Item>
@@ -66,7 +67,12 @@ const TimeOnPageCondition = ({ value, time }) => (
       <ConditionField.Block>
         <Flexy gap="xs">
           <Flexy.Item>
-            <Input inputType="number" width={50} value={value} />
+            <Input
+              inputType="number"
+              width={error ? 75 : 50}
+              value={value}
+              state={error && 'error'}
+            />
           </Flexy.Item>
           <Flexy.Block>
             <Select
@@ -90,11 +96,16 @@ const TimeOnPageCondition = ({ value, time }) => (
   </Condition>
 )
 
-const PageViewCondition = ({ value }) => (
+const PageViewCondition = ({ error, value }) => (
   <Condition options={options} value="page-views">
     <ConditionField>
       <ConditionField.Item>
-        <Input inputType="number" width={50} value={value} />
+        <Input
+          inputType="number"
+          width={error ? 75 : 50}
+          value={value}
+          state={error && 'error'}
+        />
       </ConditionField.Item>
       <ConditionField.Block>
         <ConditionField.Static>
@@ -105,11 +116,16 @@ const PageViewCondition = ({ value }) => (
   </Condition>
 )
 
-const RepeatPageViewCondition = ({ value }) => (
+const RepeatPageViewCondition = ({ error, value }) => (
   <Condition options={options} value="repeat-page-views">
     <ConditionField>
       <ConditionField.Item>
-        <Input inputType="number" width={50} value={value} />
+        <Input
+          inputType="number"
+          width={error ? 75 : 50}
+          value={value}
+          state={error && 'error'}
+        />
       </ConditionField.Item>
       <ConditionField.Block>
         <ConditionField.Static>
@@ -132,20 +148,82 @@ const PageScrollCondition = props => (
   </Condition>
 )
 
+class SpecificUrlCondition extends React.Component {
+  state = {
+    urls: [undefined],
+  }
+
+  handleOnAdd = () => {
+    this.setState({
+      urls: [...this.state.urls, undefined],
+    })
+  }
+
+  handleOnChange = (value, index) => {
+    const urls = this.state.urls
+    urls[index] = value
+
+    this.setState({
+      urls,
+    })
+  }
+
+  handleOnRemove = index => {
+    const urls = this.state.urls.filter((url, i) => i !== index)
+    this.setState({
+      urls,
+    })
+  }
+
+  render() {
+    const isAddEnabled = this.state.urls.length <= 2
+    const removeTitle = this.state.urls.length === 1 ? 'Remove' : 'Remove URL'
+    return (
+      <Condition options={options} value="specific-url">
+        <ConditionField.Group
+          onAdd={this.handleOnAdd}
+          isAddEnabled={isAddEnabled}
+        >
+          {this.state.urls.map((url, index) => (
+            <ConditionField
+              key={index}
+              onRemove={() => this.handleOnRemove(index)}
+              removeTitle={removeTitle}
+            >
+              <ConditionField.Block>
+                <Input
+                  autoComplete="off"
+                  onChange={value => this.handleOnChange(value, index)}
+                  placeholder="https://example.com/"
+                  value={url}
+                />
+              </ConditionField.Block>
+            </ConditionField>
+          ))}
+        </ConditionField.Group>
+      </Condition>
+    )
+  }
+}
+
 stories.add('Default', () => {
+  const error = boolean('error', false)
+  const isAddEnabled = boolean('isAddEnabled', true)
+
   return (
     <Page isResponsive={false}>
       <Page.Card>
         <Page.Section>
-          <TimeOnPageCondition value={5} />
-          <Condition.Operator type="and" />
-          <PageViewCondition value={5} />
-          <Condition.Operator type="and" />
-          <RepeatPageViewCondition value={2} />
-          <Condition.Operator type="and" />
-          <PageScrollCondition />
-          <Condition.AddButton type="and" />
-          <Condition.AddButton type="or" />
+          <ConditionList
+            isAddEnabled={isAddEnabled}
+            conditions={[
+              <TimeOnPageCondition error={error} value={5} />,
+              <PageViewCondition error={error} value={5} />,
+              <RepeatPageViewCondition error={error} value={2} />,
+              <PageScrollCondition />,
+              <SpecificUrlCondition />,
+            ]}
+          />
         </Page.Section>
       </Page.Card>
     </Page>

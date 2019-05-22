@@ -11,6 +11,7 @@ export interface Props extends ButtonPropsInterface {
   icon: string
   iconSize: number
   isBorderless: boolean
+  isWithHiddenTitle: boolean
   innerRef: (node: HTMLElement) => void
   withCaret: boolean
 }
@@ -23,6 +24,7 @@ export class IconButton extends React.PureComponent<Props> {
     iconSize: 24,
     innerRef: noop,
     isBorderless: true,
+    isWithHiddenTitle: false,
     kind: 'default',
     size: 'md',
     shape: 'circle',
@@ -60,6 +62,7 @@ export class IconButton extends React.PureComponent<Props> {
       icon,
       iconSize,
       innerRef,
+      isWithHiddenTitle,
       withCaret,
       ...rest
     } = this.props
@@ -71,7 +74,12 @@ export class IconButton extends React.PureComponent<Props> {
         innerRef={innerRef}
         version={2}
       >
-        <Icon name={icon} size={this.getIconSize()} withCaret={withCaret} />
+        <Icon
+          name={icon}
+          size={this.getIconSize()}
+          isWithHiddenTitle={isWithHiddenTitle}
+          withCaret={withCaret}
+        />
       </IconButtonUI>
     )
   }

@@ -2,7 +2,7 @@ import * as React from 'react'
 import Input from '../Input'
 import Text from '../Text'
 
-export const FieldStatic = props => {
+export const Static = props => {
   const { children, ...rest } = props
 
   return (
@@ -14,4 +14,4 @@ export const FieldStatic = props => {
   )
 }
 
-export default FieldStatic
+export default Static

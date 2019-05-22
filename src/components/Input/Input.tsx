@@ -702,7 +702,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
 
     const componentStyle = {
       ...styleProp,
-      width,
+      maxWidth: width,
     }
 
     return (

@@ -31,7 +31,7 @@ export const AddButton = props => {
         size={size}
         version={2}
       >
-        <Icon name="plus-small" size={iconSize} />
+        <Icon name="plus-small" isWithHiddenTitle={false} size={iconSize} />
         {label}
       </ButtonUI>
     </ButtonWrapperUI>
