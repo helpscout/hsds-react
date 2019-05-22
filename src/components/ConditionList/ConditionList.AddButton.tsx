@@ -2,26 +2,42 @@ import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './ConditionList.utils'
+import { ConditionListAddButtonProps } from './ConditionList.types'
 import { AddButtonWrapperUI } from './styles/ConditionList.css'
 
-export const AddButton = props => {
-  const { className, ...rest } = props
+export class AddButton extends React.PureComponent<
+  ConditionListAddButtonProps
+> {
+  static defaultProps = {
+    innerRef: noop,
+    onClick: noop,
+  }
 
-  const componentClassName = classNames(AddButton.className, className)
+  static className = 'c-ConditionListAddButton'
 
-  return (
-    <AddButtonWrapperUI data-cy="ConditionListAddButtonWrapper">
-      <Condition.AddButton
-        {...rest}
-        className={componentClassName}
-        type="and"
-      />
-    </AddButtonWrapperUI>
-  )
+  node: HTMLDivElement
+
+  getClassName() {
+    const { className } = this.props
+    return classNames(AddButton.className, className)
+  }
+
+  render() {
+    const { className, ...rest } = this.props
+
+    return (
+      <AddButtonWrapperUI data-cy="ConditionListAddButtonWrapper">
+        <Condition.AddButton
+          {...rest}
+          className={this.getClassName()}
+          type="and"
+        />
+      </AddButtonWrapperUI>
+    )
+  }
 }
-
-AddButton.className = 'c-ConditionListAddButton'
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY.AddButton)(AddButton)
 

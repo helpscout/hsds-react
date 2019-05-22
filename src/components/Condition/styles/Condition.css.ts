@@ -17,6 +17,7 @@ export const config = {
 
 export const ConditionUI = styled('div')`
   ${baseStyles};
+  color: ${getColor('text.subtle')};
 `
 
 export const ConditionContentUI = styled(Flexy)`

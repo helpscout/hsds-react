@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withMotion } from '@helpscout/motion'
+import { faker } from '@helpscout/helix'
 import Button from '../src/components/Button'
 import ConditionList from '../src/components/ConditionList'
 import Condition from '../src/components/Condition'
@@ -218,7 +219,11 @@ const ComponentMap = {
 const ConditionElement = ({ type, ...rest }) => {
   const Component = ComponentMap[type] || ComponentMap['time-on-page']
 
-  return <Component {...rest} />
+  return (
+    <div>
+      <Component {...rest} />
+    </div>
+  )
 }
 
 const AnimatedComponent = withMotion({
@@ -254,28 +259,37 @@ const AnimatedComponent = withMotion({
   },
 })(ConditionElement)
 
+const createCondition = value => ({
+  id: faker.random.uuid()(),
+  value,
+})
 class ConditionBuilder extends React.Component {
   state = {
-    conditions: ['time-on-page'],
+    conditions: [createCondition('time-on-page')],
   }
 
   handleOnAdd = () => {
     this.setState({
-      conditions: [...this.state.conditions, 'time-on-page'],
+      conditions: [...this.state.conditions, createCondition('time-on-page')],
     })
   }
 
-  handleOnRemove = index => {
-    const conditions = this.state.conditions.filter((url, i) => i !== index)
+  handleOnChange = (id, value) => {
+    const conditions = this.state.conditions.map(item => {
+      if (item.id !== id) return item
+
+      return {
+        ...item,
+        value,
+      }
+    })
     this.setState({
       conditions,
     })
   }
 
-  handleOnChange = (value, index) => {
-    const conditions = this.state.conditions
-    conditions[index] = value
-
+  handleOnRemove = id => {
+    const conditions = this.state.conditions.filter(item => item.id !== id)
     this.setState({
       conditions,
     })
@@ -293,12 +307,12 @@ class ConditionBuilder extends React.Component {
         {this.state.conditions.map((condition, index) => {
           return (
             <AnimatedComponent
-              key={condition}
-              type={condition}
-              onChange={value => this.handleOnChange(value, index)}
+              type={condition.value}
               error={error}
+              onChange={value => this.handleOnChange(condition.id, value)}
               value={5}
-              onRemove={() => this.handleOnRemove(index)}
+              key={condition.id}
+              onRemove={() => this.handleOnRemove(condition.id)}
             />
           )
         })}

@@ -254,3 +254,21 @@ export const getWindowFromNode = (node: Node) => {
   if (!isNodeElement(node)) return window
   return get(node, 'ownerDocument.defaultView', window)
 }
+
+export const isNodeWithinViewport = (options: any): boolean => {
+  const defaultOptions = {
+    offset: 0,
+  }
+
+  const mergedOptions = { ...defaultOptions, ...options }
+  const { node, offset } = mergedOptions
+
+  if (!isNodeElement(node)) return false
+
+  const { y } = node.getBoundingClientRect()
+
+  const position = y + offset + window.scrollY
+  const viewportPosition = window.scrollY + window.innerHeight
+
+  return position < viewportPosition
+}

@@ -17,3 +17,9 @@ export interface ConditionProps extends ConditionBaseProps {
 export interface ConditionFieldProps extends ConditionBaseProps {
   closeIcon: string
 }
+
+export interface ConditionAddButtonProps extends ConditionBaseProps {
+  onClick: (event: Event) => void
+  isBorderless: boolean
+  type: 'and' | 'or'
+}

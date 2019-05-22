@@ -1,4 +1,3 @@
-import Centralize from '../../Centralize'
 import PageConfig from '../../Page/styles/Page.config.css'
 import styled from '../../styled'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
@@ -47,14 +46,17 @@ export const ConditionListUI = styled('div')`
   }
 `
 
-export const OperatorWrapperBaseUI = styled(Centralize)`
+export const AndWrapperUI = styled('div')`
   ${baseStyles};
+  align-items: center;
+  display: flex;
+  justify-content: center;
   height: ${config.operatorHeight};
 `
 
-export const AndWrapperUI = OperatorWrapperBaseUI
-
-export const AddButtonWrapperUI = styled(OperatorWrapperBaseUI)`
+export const AddButtonWrapperUI = styled('div')`
   align-items: flex-end;
+  display: flex;
+  justify-content: center;
   height: ${config.operatorAddHeight};
 `
