@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.43.9",
+  "version": "2.44.0-table.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -100,6 +100,7 @@
     "array-move": "2.1.0",
     "compute-scroll-into-view": "1.0.11",
     "dash-get": "1.0.2",
+    "fast-deep-equal": "^2.0.1",
     "highlight.js": "9.12.0",
     "invariant": "2.2.4",
     "path-to-regexp": "2.4.0",
@@ -154,6 +155,7 @@
     "@types/react-dom": "^16.0.8",
     "@types/react-transition-group": "^2.0.14",
     "@types/storybook__react": "^4.0.1",
+    "@welldone-software/why-did-you-render": "^3.0.9",
     "autoprefixer": "7.1.1",
     "awesome-typescript-loader": "^5.2.0",
     "babel-eslint": "^9.0.0",
