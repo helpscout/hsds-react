@@ -143,7 +143,7 @@ export const ItemUI = styled('div')`
 
   &.is-active {
     > ${ActionUI}, &.is-option {
-      font-weight: bold;
+      font-weight: 500;
     }
   }
 
@@ -247,5 +247,15 @@ export const ItemSelectedCheckUI = styled('div')`
 
   &.is-selectionClearer-active {
     font-weight: bold;
+  }
+`
+
+export const SelectedCheckmarkUI = styled('div')`
+  width: 28px;
+  padding-left: 4px;
+  margin-left: auto;
+
+  .c-Icon {
+    right: -4px;
   }
 `

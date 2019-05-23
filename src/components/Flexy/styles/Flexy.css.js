@@ -4,16 +4,26 @@ import styled from '../../styled'
 
 export const config = {
   gapSize: {
-    xs: 4,
-    sm: 8,
-    md: 12,
-    lg: 16,
-    xl: 20,
+    4: {
+      xs: 4,
+      sm: 8,
+      md: 12,
+      lg: 16,
+      xl: 20,
+    },
+    5: {
+      xs: 5,
+      sm: 10,
+      md: 15,
+      lg: 20,
+      xl: 25,
+    },
   },
 }
 
 export const FlexyUI = styled('div')`
-  ${base} align-items: center;
+  ${base};
+  align-items: center;
   display: flex;
   justify-content: space-between;
 
@@ -43,12 +53,15 @@ export const FlexyUI = styled('div')`
     justify-content: flex-end;
   }
 
-  ${makeGapStyles()};
+  ${makeGapStyles};
 `
 
-function makeGapStyles() {
+function makeGapStyles(props) {
+  const { baseSize } = props
+  const gapSize = config.gapSize[baseSize]
+
   return forEach(
-    config.gapSize,
+    gapSize,
     (size, value) => `
     &.is-gap-${size} {
       > * {

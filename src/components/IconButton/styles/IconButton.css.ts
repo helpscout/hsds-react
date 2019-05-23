@@ -11,6 +11,10 @@ export const config = {
 export const IconButtonUI = styled(Button)`
   transition: ${config.transition};
 
+  .c-Button__content {
+    display: block;
+  }
+
   &.is-borderless,
   &.is-borderless:hover {
     border-color: transparent;
@@ -19,6 +23,9 @@ export const IconButtonUI = styled(Button)`
   ${makeButtonSizeStyles};
   ${makeButtonHoverStyles};
 
+  .c-Icon {
+    margin: auto;
+  }
   .c-Icon.withCaret {
     margin-left: -3px;
   }
@@ -46,6 +53,9 @@ function makeButtonHoverStyles() {
     &.is-kind-link {
       &:hover {
         background: rgba(0, 0, 0, 0.03);
+      }
+      &:focus {
+        background: rgba(0, 0, 0, 0.05);
       }
       &:active {
         background: rgba(0, 0, 0, 0.08);

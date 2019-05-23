@@ -25,5 +25,6 @@ This component renders extends the UI of a [SelectDropdown](../SelectDropdown), 
 | isFadeContentOnOpen     | `boolean`  | `true`  | Fades the content when the dropdown is open.                       |
 | onResize                | `Function` |         | Callback when the component's content resizes.                     |
 | shouldRefocusOnClose    | `Function` |         | Determines if the trigger should refocus when the dropdown closes. |
+| shouldScrollIntoView    | `Function` |         | Determines the component should scroll into view on select.        |
 
 For additional customization and props, check out [SelectDropdown](../SelectDropdown).

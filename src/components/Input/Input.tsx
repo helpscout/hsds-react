@@ -75,6 +75,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     scrollLock: false,
     seamless: false,
     state: '',
+    style: {},
     type: 'text',
     typingThrottleInterval: 500,
     typingTimeoutDelay: 5000,
@@ -117,7 +118,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     const prevState = this.state.state
 
     if (value !== prevValue) {
-      this.setState({ value })
+      this.setValue(value)
     }
 
     /* istanbul ignore else */
@@ -134,6 +135,19 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   componentWillUnmount() {
     this.inputNode = null
     this.props.withTypingEvent && this.clearTypingTimeout()
+  }
+
+  setValue = value => {
+    const { inputType } = this.props
+    let nextValue = value
+
+    if (inputType === 'number') {
+      nextValue = value.replace(/\D/g, '')
+    }
+
+    this.setState({ value: nextValue })
+
+    return nextValue
   }
 
   maybeForceAutoFocus() {
@@ -257,8 +271,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     // TODO: fix typescript complains
     // @ts-ignore
     const value = event.currentTarget.value
-    this.setState({ value })
-    this.props.onChange(value)
+    const nextValue = this.setValue(value)
+    this.props.onChange(nextValue)
   }
 
   handleOnInputBlur = (event: InputEvent) => {
@@ -665,6 +679,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       resizable,
       seamless,
       style: styleProp,
+      width,
     } = this.props
 
     const { isFocused, value, state } = this.state
@@ -685,10 +700,15 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       className
     )
 
+    const componentStyle = {
+      ...styleProp,
+      maxWidth: width,
+    }
+
     return (
       <FormLabelContext.Consumer>
         {(props: Object) => (
-          <InputWrapperUI className="c-InputWrapper" style={styleProp}>
+          <InputWrapperUI className="c-InputWrapper" style={componentStyle}>
             {this.getLabelMarkup()}
             {this.getHelpTextMarkup()}
             <InputUI className={componentClassName}>

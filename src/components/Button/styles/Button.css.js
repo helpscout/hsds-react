@@ -227,6 +227,13 @@ export const config = {
       minWidth: 'initial',
       padding: 15,
     },
+    xxs: {
+      fontSize: 11,
+      fontWeight: 500,
+      height: 20,
+      minWidth: 'initial',
+      padding: 6,
+    },
   },
   suffix: {
     backgroundColor: getColor('grey.200'),

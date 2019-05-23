@@ -17,6 +17,7 @@ const Icon = (props: IconProps) => {
     clickable,
     faint,
     ignoreClick,
+    isWithHiddenTitle,
     inline,
     muted,
     onClick,
@@ -78,7 +79,7 @@ const Icon = (props: IconProps) => {
         title={iconTitle}
       />
       {caretMarkup}
-      <VisuallyHidden>{iconTitle}</VisuallyHidden>
+      {isWithHiddenTitle ? <VisuallyHidden>{iconTitle}</VisuallyHidden> : null}
     </span>
   )
 }
@@ -87,6 +88,7 @@ Icon.defaultProps = {
   center: false,
   clickable: false,
   ignoreClick: true,
+  isWithHiddenTitle: true,
   muted: false,
   name: 'emoji',
   onClick: noop,

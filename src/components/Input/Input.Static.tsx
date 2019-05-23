@@ -6,12 +6,21 @@ import { StaticUI } from './styles/Input.Static.css'
 import { InputStaticProps } from './Input.types'
 
 const Static = (props: InputStaticProps) => {
-  const { align, className, children, size, ...rest } = props
+  const {
+    align,
+    className,
+    children,
+    isBlock,
+    isCenterAlign,
+    size,
+    ...rest
+  } = props
 
   const componentClassName = classNames(
     'c-InputStatic',
-    align && 'is-block',
     align && `is-${align}`,
+    isBlock && 'is-block',
+    isCenterAlign && 'is-centerAlign',
     size && `is-${size}`,
     className
   )
@@ -21,6 +30,12 @@ const Static = (props: InputStaticProps) => {
       {children}
     </StaticUI>
   )
+}
+
+Static.defaultProps = {
+  isBlock: false,
+  isCenterAlign: false,
+  size: 'md',
 }
 
 namespaceComponent(COMPONENT_KEY.Static)(Static)

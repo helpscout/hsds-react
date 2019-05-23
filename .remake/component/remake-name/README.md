@@ -1,6 +1,6 @@
 # <%= name %>
 
-This component does something special.
+A <%= name %> does something special.
 
 
 ## Example
@@ -14,4 +14,4 @@ This component does something special.
 | Prop            | Type       | Default     | Description                     |
 | --------------- | ---------- | ----------- | ------------------------------- |
 | className       | `string`   |             | The className of the component. |
-
+| innerRef        | `Function`  |            | Retrieve the inner DOM node.    |

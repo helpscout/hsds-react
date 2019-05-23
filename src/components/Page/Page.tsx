@@ -10,6 +10,8 @@ import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { PageUI } from './styles/Page.css'
 import { COMPONENT_KEY } from './Page.utils'
+import { COMPONENT_KEY as ACCORDION_COMPONENT_KEY } from '../Accordion/Accordion.utils'
+import { COMPONENT_KEY as CONDITIONLIST_COMPONENT_KEY } from '../ConditionList/ConditionList.utils'
 import { PageProps } from './Page.types'
 
 export class Page extends React.PureComponent<PageProps> {
@@ -26,7 +28,8 @@ export class Page extends React.PureComponent<PageProps> {
     const { isResponsive } = this.props
 
     return {
-      Accordion: { isPage: true, isSeamless: true },
+      [ACCORDION_COMPONENT_KEY.Accordion]: { isPage: true, isSeamless: true },
+      [CONDITIONLIST_COMPONENT_KEY.ConditionList]: { isWithOffset: true },
       [COMPONENT_KEY.Section]: {
         isResponsive,
       },

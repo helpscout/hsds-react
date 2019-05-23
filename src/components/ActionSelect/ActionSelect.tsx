@@ -5,6 +5,7 @@ import SelectDropdown from '../SelectDropdown'
 import ContentResizer from './ActionSelect.ContentResizer'
 import { classNames } from '../../utilities/classNames'
 import { findFirstFocusableNode } from '../../utilities/focus'
+import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 import { noop } from '../../utilities/other'
 import { ActionSelectProps, ActionSelectState } from './ActionSelect.types'
 import { ActionSelectUI } from './styles/ActionSelect.css'
@@ -18,8 +19,8 @@ export class ActionSelect extends React.PureComponent<
   static className = 'c-ActionSelect'
   static defaultProps = {
     'data-cy': 'ActionSelect',
-    animationDuration: 160,
-    animationEasing: 'ease',
+    animationDuration: 200,
+    animationEasing: 'linear',
     cardBorderColor: getColor('grey.700'),
     children: null,
     enableTabNavigation: false,
@@ -32,6 +33,7 @@ export class ActionSelect extends React.PureComponent<
     onResize: noop,
     onSelect: noop,
     shouldRefocusOnClose: () => true,
+    shouldScrollIntoView: () => true,
   }
 
   state = {
@@ -79,11 +81,35 @@ export class ActionSelect extends React.PureComponent<
     })
   }
 
+  scrollIntoView = (item, props) => {
+    /* istanbul ignore next */
+    if (!this.props.shouldScrollIntoView(item, props)) return
+
+    const { y } = this.contentNode.getBoundingClientRect() as DOMRect
+    const position = y
+    const shouldScrollIntoView = window.scrollY < y
+
+    /* istanbul ignore next */
+    if (!shouldScrollIntoView) return
+
+    // Ignoring since JSDOM does not have window scroll events.
+    /* istanbul ignore next */
+    smoothScrollTo({
+      node: window,
+      position,
+      direction: 'y',
+      duration: this.props.animationDuration,
+      timingFunction: linear,
+    })
+  }
+
   handleOnSelect = (item, props) => {
     this.props.onSelect(item, props)
     this.autoFocusChildNode()
 
     this.resizeContent()
+    this.scrollIntoView(item, props)
+
     this.safeSetState({
       selectedItem: props.item,
     })

@@ -31,9 +31,11 @@ export const config = {
 
 export const InputWrapperUI = styled('div')`
   ${baseStyles};
+  width: 100%;
 `
 
 export const InputUI = styled('div')`
+  ${baseStyles};
   align-items: center;
   background-color: transparent;
   border: none;
@@ -60,17 +62,22 @@ export const InputUI = styled('div')`
 `
 
 export const ItemUI = styled('div')`
+  ${baseStyles};
   position: relative;
   z-index: 1;
 `
 
 export const FieldUI = styled('input')`
+  ${baseStyles};
+
   &.c-InputField {
     ${makeFieldStyles};
   }
 `
 
 export const FieldTextAreaUI = styled('textarea')`
+  ${baseStyles};
+
   &.c-InputField {
     ${makeFieldStyles};
   }
@@ -103,6 +110,7 @@ export const SuffixUI = styled(ItemUI)`
 `
 
 export const InlinePrefixSuffixUI = styled('div')`
+  ${baseStyles};
   opacity: 0.3;
   padding-left: 4px;
   padding-right: 4px;
