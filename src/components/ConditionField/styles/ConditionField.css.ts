@@ -20,7 +20,11 @@ export const ConditionFieldUI = styled('div')`
 
 export const AddButtonWrapperUI = styled('div')`
   ${baseStyles};
-  margin: 5px 0;
+`
+
+export const AddButtonContentUI = styled('div')`
+  ${baseStyles};
+  padding: 5px 0;
 `
 
 export const OrWrapperUI = styled('div')`

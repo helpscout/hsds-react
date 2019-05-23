@@ -107,12 +107,14 @@ A ConditionFiekd.AddButton renders an "And" or "Or" interface. It is an action u
 
 ## Props
 
-| Prop           | Type       | Default | Description                                        |
-| -------------- | ---------- | ------- | -------------------------------------------------- |
-| className      | `string`   |         | The className of the component.                    |
-| innerRef       | `Function` |         | Retrieve the inner DOM node.                       |
-| isBorderless   | `boolean`  | `true`  | Renders a white border.                            |
-| onClick        | `Function` |         | Callback when component is clicked.                |
-| scrollDuration | `number`   | `300`   | Time (ms) it takes to scroll into view.            |
-| scrollOffset   | `number`   | `200`   | Amount (px) used to calculate scrolling into view. |
-| type           | `string`   | `or`    | The operator. (`and`/`or`)                         |
+| Prop              | Type       | Default | Description                                        |
+| ----------------- | ---------- | ------- | -------------------------------------------------- |
+| animationDuration | `number`   | `250`   | Time (ms) it takes to animate on mount/unmount.    |
+| animationEasing   | `string`   | `250`   | Time (ms) it takes to animate on mount/unmount.    |
+| className         | `string`   |         | The className of the component.                    |
+| innerRef          | `Function` |         | Retrieve the inner DOM node.                       |
+| isBorderless      | `boolean`  | `true`  | Renders a white border.                            |
+| onClick           | `Function` |         | Callback when component is clicked.                |
+| scrollDuration    | `number`   | `300`   | Time (ms) it takes to scroll into view.            |
+| scrollOffset      | `number`   | `200`   | Amount (px) used to calculate scrolling into view. |
+| type              | `string`   | `or`    | The operator. (`and`/`or`)                         |

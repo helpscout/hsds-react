@@ -37,20 +37,8 @@ const options = [
     value: 'repeat-page-views',
   },
   {
-    label: 'Page scroll',
-    value: 'page-scroll',
-  },
-  {
     label: 'Specific URL',
     value: 'specific-url',
-  },
-  {
-    label: 'Identify attribute',
-    value: 'identify-attribute',
-  },
-  {
-    label: 'Last page viewed',
-    value: 'last-page-viewed',
   },
 ]
 
@@ -108,7 +96,7 @@ const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => (
               inputType="number"
               maxLength="3"
               autoComplete="off"
-              width={error ? 75 : 55}
+              width={error ? 75 : 60}
               value={value}
               state={error && 'error'}
             />
@@ -143,7 +131,7 @@ const PageViewCondition = ({ error, onRemove, value, ...rest }) => (
           inputType="number"
           maxLength="3"
           autoComplete="off"
-          width={error ? 75 : 55}
+          width={error ? 75 : 60}
           value={value}
           state={error && 'error'}
         />
@@ -165,7 +153,7 @@ const RepeatPageViewCondition = ({ error, onRemove, value, ...rest }) => (
           inputType="number"
           maxLength="3"
           autoComplete="off"
-          width={error ? 75 : 55}
+          width={error ? 75 : 60}
           value={value}
           state={error && 'error'}
         />
@@ -280,7 +268,7 @@ const ComponentMap = {
   'time-on-page': TimeOnPageCondition,
   'repeat-page-views': RepeatPageViewCondition,
   'page-views': PageViewCondition,
-  'page-scroll': PageScrollCondition,
+  'specific-url': SpecificUrlCondition,
 }
 
 const ConditionElement = ({ type, ...rest }) => {
