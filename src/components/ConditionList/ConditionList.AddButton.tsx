@@ -13,6 +13,8 @@ export class AddButton extends React.PureComponent<
   static defaultProps = {
     innerRef: noop,
     onClick: noop,
+    scrollDuration: 300,
+    scrollOffset: 200,
   }
 
   static className = 'c-ConditionListAddButton'

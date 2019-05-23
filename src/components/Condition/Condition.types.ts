@@ -21,5 +21,7 @@ export interface ConditionFieldProps extends ConditionBaseProps {
 export interface ConditionAddButtonProps extends ConditionBaseProps {
   onClick: (event: Event) => void
   isBorderless: boolean
+  scrollDuration: number
+  scrollOffset: number
   type: 'and' | 'or'
 }

@@ -3,7 +3,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import AddButton from './ConditionList.AddButton'
-import And from './ConditionList.And'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionListProps } from './ConditionList.types'
@@ -18,10 +17,11 @@ export class ConditionList extends React.Component<ConditionListProps> {
     onAdd: noop,
     isAddEnabled: true,
     isWithOffset: false,
+    scrollDuration: 300,
+    scrollOffset: 200,
   }
 
   static AddButton = AddButton
-  static And = And
 
   getClassName() {
     const { className, isWithOffset } = this.props
@@ -47,10 +47,16 @@ export class ConditionList extends React.Component<ConditionListProps> {
   }
 
   renderAddAction() {
-    const { isAddEnabled, onAdd } = this.props
+    const { isAddEnabled, onAdd, scrollDuration, scrollOffset } = this.props
     if (!isAddEnabled) return null
 
-    return <AddButton onClick={onAdd} />
+    return (
+      <AddButton
+        onClick={onAdd}
+        scrollDuration={scrollDuration}
+        scrollOffset={scrollOffset}
+      />
+    )
   }
 
   render() {

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { cy } from '@helpscout/cyan'
 import ConditionList from '../ConditionList'
 import Condition from '../../Condition'
+import Page from '../../Page'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -57,7 +58,7 @@ describe('AddButton', () => {
 describe('And', () => {
   test('Does not render an And for no conditions', () => {
     cy.render(<ConditionList />)
-    const el = cy.get('ConditionListAnd')
+    const el = cy.get('ConditionAnd')
 
     expect(el.exists()).toBeFalsy()
   })
@@ -68,7 +69,7 @@ describe('And', () => {
         <Condition />
       </ConditionList>
     )
-    const el = cy.get('ConditionListAnd')
+    const el = cy.get('ConditionAnd')
 
     expect(el.exists()).toBeFalsy()
   })
@@ -80,7 +81,7 @@ describe('And', () => {
         <Condition />
       </ConditionList>
     )
-    const el = cy.getByCy('ConditionListAnd')
+    const el = cy.getByCy('ConditionAnd')
 
     expect(el.exists()).toBeTruthy()
   })
@@ -94,8 +95,33 @@ describe('And', () => {
         <Condition />
       </ConditionList>
     )
-    const el = cy.getByCy('ConditionListAnd')
+    const el = cy.getByCy('ConditionAnd')
 
     expect(el.length).toBe(3)
+  })
+})
+
+describe('Offset', () => {
+  test('Does not render with offset by default', () => {
+    const wrapper = cy.render(<ConditionList />)
+
+    expect(wrapper.hasClass('is-withOffset')).toBeFalsy()
+  })
+
+  test('Can render with offset', () => {
+    const wrapper = cy.render(<ConditionList isWithOffset={true} />)
+
+    expect(wrapper.hasClass('is-withOffset')).toBeTruthy()
+  })
+
+  test('Renders with offset within Page', () => {
+    cy.render(
+      <Page>
+        <ConditionList />
+      </Page>
+    )
+    const el = cy.getByCy('ConditionList')
+
+    expect(el.hasClass('is-withOffset')).toBeTruthy()
   })
 })

@@ -19,13 +19,14 @@ import {
 } from './styles/Condition.css'
 
 export class Condition extends React.PureComponent<ConditionProps> {
-  static className = 'c-Condition'
   static defaultProps = {
     innerRef: noop,
+    isWithAnd: false,
     onChange: noop,
     options: [],
-    isWithAnd: false,
   }
+
+  static className = 'c-Condition'
 
   static AddButton = AddButton
   static And = And
