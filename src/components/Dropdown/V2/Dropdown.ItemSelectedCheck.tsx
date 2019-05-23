@@ -3,7 +3,7 @@ import Icon from '../../Icon'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 import { isSelectedItemEmpty } from './Dropdown.utils'
-import { ItemSelectedCheckUI } from './Dropdown.css'
+import { ItemSelectedCheckUI, SelectedCheckmarkUI } from './Dropdown.css'
 
 const defaultProps = {
   value: '',
@@ -33,7 +33,9 @@ const ItemSelectedCheck = (props: any = defaultProps) => {
   return (
     <ItemSelectedCheckUI className={componentClassnames}>
       <span className="c-ItemSelectedCheck__value">{content}</span>
-      {props.isActive || isClearerActive ? <Icon name="check" /> : null}
+      <SelectedCheckmarkUI>
+        {props.isActive || isClearerActive ? <Icon name="check" /> : null}
+      </SelectedCheckmarkUI>
     </ItemSelectedCheckUI>
   )
 }

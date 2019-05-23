@@ -249,3 +249,13 @@ export const ItemSelectedCheckUI = styled('div')`
     font-weight: bold;
   }
 `
+
+export const SelectedCheckmarkUI = styled('div')`
+  width: 28px;
+  padding-left: 4px;
+  margin-left: auto;
+
+  .c-Icon {
+    right: -4px;
+  }
+`
