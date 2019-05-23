@@ -10,6 +10,7 @@ import { FlexyUI } from './styles/Flexy.css'
 
 export interface Props {
   align: Align
+  baseSize: number
   children?: any
   className?: string
   gap: Gap
@@ -19,16 +20,27 @@ export interface Props {
 class Flexy extends React.PureComponent<Props> {
   static defaultProps = {
     gap: 'sm',
+    baseSize: 4,
   }
+
+  static className = 'c-Flexy'
 
   static Block = Block
   static Item = Item
 
   render() {
-    const { align, children, className, gap, just, ...rest } = this.props
+    const {
+      align,
+      baseSize,
+      children,
+      className,
+      gap,
+      just,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
-      'c-Flexy',
+      Flexy.className,
       align && `is-align-${align} is-${align}`,
       gap && `is-gap-${gap}`,
       just && `is-just-${just}`,
@@ -36,7 +48,11 @@ class Flexy extends React.PureComponent<Props> {
     )
 
     return (
-      <FlexyUI {...getValidProps(rest)} className={componentClassName}>
+      <FlexyUI
+        {...getValidProps(rest)}
+        baseSize={baseSize}
+        className={componentClassName}
+      >
         {children}
       </FlexyUI>
     )

@@ -205,7 +205,7 @@ class Button extends React.PureComponent<Props> {
         {isLoading ? <SpinnerUI /> : null}
         <ButtonContentUI
           allowContentEventPropogation={allowContentEventPropogation}
-          className="c-ButtonV2__content"
+          className="c-ButtonV2__content c-Button__content"
           isLoading={isLoading}
         >
           {this.getChildrenMarkup()}

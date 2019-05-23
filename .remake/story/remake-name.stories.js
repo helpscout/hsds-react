@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import <%= name %> from '../src/components/<%= name %>'
-import <%= name %>Readme from '../src/components/<%= name %>/README.md'
+import ReadMe from '../src/components/<%= name %>/README.md'
 
 import {
   withKnobs,
@@ -27,7 +27,7 @@ stories.addDecorator(
 )
 
 stories.addParameters({
-  readme: { sidebar: <%= name %>Readme },
+  readme: { sidebar: ReadMe },
   a11y: { element: 'c-<%= name %>' },
 })
 

@@ -10,7 +10,7 @@ export type ButtonKind =
 
 export type ButtonShape = 'default' | 'circle'
 
-export type ButtonSize = 'xl' | 'lgxl' | 'lg' | 'md' | 'sm' | 'xs'
+export type ButtonSize = 'xl' | 'lgxl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs'
 
 export type ButtonState = 'default' | 'danger' | 'success'
 

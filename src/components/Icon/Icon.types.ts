@@ -15,13 +15,14 @@ export type IconSize =
   | '48'
   | '52'
 
-export type IconProps = {
+export interface IconProps {
   center: boolean
   className?: string
   clickable: boolean
   ignoreClick: boolean
   faint?: boolean
   inline?: boolean
+  isWithHiddenTitle: boolean
   muted?: boolean
   name: string
   onClick: () => void

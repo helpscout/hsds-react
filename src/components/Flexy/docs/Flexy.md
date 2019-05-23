@@ -9,7 +9,7 @@ For more information on the Flexy design pattern, check out [`seed-flexy`](http:
 ```jsx
 <Flexy>
   <Flexy.Item>
-    <Icon name='chat' />
+    <Icon name="chat" />
   </Flexy.Item>
   <Flexy.Block>
     <Heading>News Team!</Heading>
@@ -17,12 +17,12 @@ For more information on the Flexy design pattern, check out [`seed-flexy`](http:
 </Flexy>
 ```
 
-
 ## Props
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| align | `string` | Determines the vertical alignment of Flexy child elements. Default is `middle`. |
-| className | `string` | Custom class names to be added to the component. |
-| gap | `string` | Determines the amount of spacing between Flexy child elements. |
-| just | `string` | Determines the horizontal alignment of Flexy child elements. |
+| Prop      | Type     | Description                                                                     |
+| --------- | -------- | ------------------------------------------------------------------------------- |
+| align     | `string` | Determines the vertical alignment of Flexy child elements. Default is `middle`. |
+| baseSize  | `number` | Determines the gap (base) size between child elements.                          |
+| className | `string` | Custom class names to be added to the component.                                |
+| gap       | `string` | Determines the amount of spacing between Flexy child elements.                  |
+| just      | `string` | Determines the horizontal alignment of Flexy child elements.                    |
