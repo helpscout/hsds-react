@@ -5,12 +5,14 @@ import Flexy from '../Flexy'
 import IconButton from '../IconButton'
 import Tooltip from '../Tooltip'
 import Group from './ConditionField.Group'
+import Or from './ConditionField.Or'
 import Static from './ConditionField.Static'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionFieldProps } from './ConditionField.types'
 import { COMPONENT_KEY } from './ConditionField.utils'
 import {
+  FieldWrapperUI,
   FieldUI,
   FieldContentWrapperUI,
   FieldCloseWrapperUI,
@@ -21,6 +23,7 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   static defaultProps = {
     closeIcon: 'collapse',
     innerRef: noop,
+    isWithOr: false,
     onRemove: noop,
     removeTitle: 'Remove',
     tooltipDelay: 800,
@@ -37,6 +40,13 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     return classNames(ConditionField.className, className)
   }
 
+  renderOperator() {
+    const { isWithOr } = this.props
+    if (!isWithOr) return null
+
+    return <Or />
+  }
+
   render() {
     const {
       children,
@@ -50,26 +60,29 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     } = this.props
 
     return (
-      <FieldUI {...getValidProps(rest)} className={this.getClassName()}>
-        <FieldContentWrapperUI>
-          <Flexy align="top" gap="md">
-            {children}
-          </Flexy>
-        </FieldContentWrapperUI>
-        <FieldCloseWrapperUI>
-          <Tooltip
-            title={removeTitle}
-            animationDelay={tooltipDelay}
-            animationDuration={tooltipDuration}
-          >
-            <IconButton
-              data-cy="ConditionFieldRemoveButton"
-              icon={closeIcon}
-              onClick={onRemove}
-            />
-          </Tooltip>
-        </FieldCloseWrapperUI>
-      </FieldUI>
+      <FieldWrapperUI data-cy="ConditionFieldWrapper">
+        {this.renderOperator()}
+        <FieldUI {...getValidProps(rest)} className={this.getClassName()}>
+          <FieldContentWrapperUI data-cy="ConditionFieldContentWrapper">
+            <Flexy align="top" gap="md">
+              {children}
+            </Flexy>
+          </FieldContentWrapperUI>
+          <FieldCloseWrapperUI data-cy="ConditionFieldCloseWrapper">
+            <Tooltip
+              title={removeTitle}
+              animationDelay={tooltipDelay}
+              animationDuration={tooltipDuration}
+            >
+              <IconButton
+                data-cy="ConditionFieldRemoveButton"
+                icon={closeIcon}
+                onClick={onRemove}
+              />
+            </Tooltip>
+          </FieldCloseWrapperUI>
+        </FieldUI>
+      </FieldWrapperUI>
     )
   }
 }

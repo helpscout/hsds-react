@@ -21,6 +21,9 @@ export const And = props => {
   )
 }
 
+And.defaultProps = {
+  'data-cy': 'ConditionAnd',
+}
 And.className = 'c-ConditionAnd'
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY.And)(And)

@@ -54,6 +54,43 @@ const options = [
   },
 ]
 
+const ANIMATION_DURATION = 250
+const fadeInAnimation = ({ animate, node }) => {
+  node.style.opacity = '0'
+
+  return animate({
+    keyframes: [
+      {
+        height: [0, node.clientHeight],
+      },
+      {
+        opacity: [0, 1],
+      },
+    ],
+    duration: ANIMATION_DURATION,
+    easing: 'linear',
+  }).finished.then(() => {
+    node.style.height = 'auto'
+  })
+}
+
+const fadeOutAnimation = ({ animate, node }) => {
+  node.style.height = `${node.clientHeight}px`
+
+  return animate({
+    keyframes: [
+      {
+        opacity: [1, 0],
+      },
+      {
+        height: 0,
+      },
+    ],
+    duration: ANIMATION_DURATION,
+    easing: 'linear',
+  }).finished
+}
+
 const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => (
   <Condition options={options} value="time-on-page" {...rest}>
     <ConditionField onRemove={onRemove}>
@@ -65,6 +102,7 @@ const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => (
           <Flexy.Item>
             <Input
               inputType="number"
+              maxLength="3"
               autoComplete="off"
               width={error ? 75 : 55}
               value={value}
@@ -99,6 +137,7 @@ const PageViewCondition = ({ error, onRemove, value, ...rest }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
+          maxLength="3"
           autoComplete="off"
           width={error ? 75 : 55}
           value={value}
@@ -120,6 +159,7 @@ const RepeatPageViewCondition = ({ error, onRemove, value, ...rest }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
+          maxLength="3"
           autoComplete="off"
           width={error ? 75 : 55}
           value={value}
@@ -147,28 +187,62 @@ const PageScrollCondition = ({ onRemove, ...rest }) => (
   </Condition>
 )
 
+const URLConditionField = ({ onRemove, removeTitle, onChange, url }) => {
+  return (
+    <ConditionField onRemove={onRemove} removeTitle={removeTitle}>
+      <ConditionField.Block>
+        <Input
+          autoComplete="off"
+          onChange={onChange}
+          placeholder="https://example.com/"
+          value={url}
+        />
+      </ConditionField.Block>
+    </ConditionField>
+  )
+}
+
+const AnimatedURLConditionField = withMotion({
+  componentDidMount: fadeInAnimation,
+  componentWillUnmount: fadeOutAnimation,
+})(URLConditionField)
+
+const createUrlField = value => ({
+  id: faker.random.uuid()(),
+  value,
+})
 class SpecificUrlCondition extends React.Component {
   state = {
-    urls: [undefined],
+    urls: [createUrlField('')],
   }
 
   handleOnAdd = () => {
     this.setState({
-      urls: [...this.state.urls, undefined],
+      urls: [...this.state.urls, createUrlField('')],
     })
   }
 
-  handleOnChange = (value, index) => {
-    const urls = this.state.urls
-    urls[index] = value
+  handleOnChange = (value, id) => {
+    const urls = this.state.urls.map(url => {
+      if (url.id !== id) return url
+
+      return {
+        ...url,
+        value,
+      }
+    })
 
     this.setState({
       urls,
     })
   }
 
-  handleOnRemove = index => {
-    const urls = this.state.urls.filter((url, i) => i !== index)
+  handleOnRemove = id => {
+    let urls = this.state.urls.filter(url => url.id !== id)
+    if (urls.length === 0) {
+      urls = [createUrlField('')]
+    }
+
     this.setState({
       urls,
     })
@@ -184,20 +258,13 @@ class SpecificUrlCondition extends React.Component {
           isAddEnabled={isAddEnabled}
         >
           {this.state.urls.map((url, index) => (
-            <ConditionField
-              key={index}
-              onRemove={() => this.handleOnRemove(index)}
+            <AnimatedURLConditionField
+              key={url.id}
+              onRemove={() => this.handleOnRemove(url.id)}
+              onChange={value => this.handleOnChange(value, url.id)}
               removeTitle={removeTitle}
-            >
-              <ConditionField.Block>
-                <Input
-                  autoComplete="off"
-                  onChange={value => this.handleOnChange(value, index)}
-                  placeholder="https://example.com/"
-                  value={url}
-                />
-              </ConditionField.Block>
-            </ConditionField>
+              url={url.value}
+            />
           ))}
         </ConditionField.Group>
       </Condition>
@@ -223,36 +290,8 @@ const ConditionElement = ({ type, ...rest }) => {
 }
 
 const AnimatedComponent = withMotion({
-  componentDidMount: ({ animate, node }) => {
-    return animate({
-      keyframes: [
-        {
-          height: [0, node.clientHeight],
-          opacity: [0, 1],
-        },
-      ],
-      duration: 350,
-      easing: 'linear',
-    }).finished.then(() => {
-      node.style.height = 'auto'
-    })
-  },
-  componentWillUnmount: ({ animate, node }) => {
-    node.style.height = `${node.clientHeight}px`
-
-    return animate({
-      keyframes: [
-        {
-          opacity: [1, 0],
-        },
-        {
-          height: 0,
-        },
-      ],
-      duration: 350,
-      easing: 'linear',
-    }).finished
-  },
+  componentDidMount: fadeInAnimation,
+  componentWillUnmount: fadeOutAnimation,
 })(ConditionElement)
 
 const createCondition = value => ({

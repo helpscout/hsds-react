@@ -5,16 +5,18 @@ import ConditionField from '../ConditionField'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = cy.render(<ConditionField />)
+    cy.render(<ConditionField />)
+    const el = cy.getByCy('ConditionField')
 
-    expect(wrapper.hasClass('c-ConditionField')).toBeTruthy()
+    expect(el.hasClass('c-ConditionField')).toBeTruthy()
   })
 
   test('Can render custom className', () => {
     const customClassName = 'blue'
-    const wrapper = cy.render(<ConditionField className={customClassName} />)
+    cy.render(<ConditionField className={customClassName} />)
+    const el = cy.getByCy('ConditionField')
 
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
+    expect(el.hasClass(customClassName)).toBeTruthy()
   })
 })
 

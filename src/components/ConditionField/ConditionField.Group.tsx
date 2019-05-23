@@ -1,4 +1,5 @@
 import * as React from 'react'
+import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import AddButton from './ConditionField.AddButton'
 import Operator from '../Condition/Condition.Operator'
@@ -17,24 +18,15 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   renderFields() {
     const { children } = this.props
 
-    return React.Children.toArray(children).reduce((list, Component, index) => {
-      const key = getComponentKey(Component, index)
-      const enhancedComponent = React.cloneElement(Component, {
-        key,
-      })
-
-      if (index === 0) {
-        return [...list, enhancedComponent]
+    return React.Children.map(children, (child, index) => {
+      const isWithOr = index > 0
+      const value = {
+        [COMPONENT_KEY.Field]: {
+          isWithOr,
+        },
       }
-
-      const OperatorComponent = React.createElement(Operator, {
-        'data-cy': 'ConditionFieldOr',
-        type: 'or',
-        key: index,
-      })
-
-      return [...list, OperatorComponent, enhancedComponent]
-    }, [])
+      return <PropProvider value={value}>{child}</PropProvider>
+    })
   }
 
   renderAddAction() {
