@@ -27,7 +27,7 @@ stories.addDecorator(
 )
 
 stories.addParameters({
-  readme: { sidebar: <%= name %>ReadMe },
+  readme: { sidebar: ReadMe },
   a11y: { element: 'c-<%= name %>' },
 })
 

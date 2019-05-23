@@ -54,8 +54,10 @@ const options = [
   },
 ]
 
-const ANIMATION_DURATION = 250
+let ANIMATION_DURATION = 0
 const fadeInAnimation = ({ animate, node }) => {
+  if (!ANIMATION_DURATION) return Promise.resolve()
+
   node.style.opacity = '0'
 
   return animate({
@@ -75,6 +77,8 @@ const fadeInAnimation = ({ animate, node }) => {
 }
 
 const fadeOutAnimation = ({ animate, node }) => {
+  if (!ANIMATION_DURATION) return Promise.resolve()
+
   node.style.height = `${node.clientHeight}px`
 
   return animate({
@@ -303,6 +307,14 @@ class ConditionBuilder extends React.Component {
     conditions: [createCondition('time-on-page')],
   }
 
+  componentDidMount() {
+    ANIMATION_DURATION = 250
+  }
+
+  componentWillUnmount() {
+    ANIMATION_DURATION = 0
+  }
+
   handleOnAdd = () => {
     this.setState({
       conditions: [...this.state.conditions, createCondition('time-on-page')],
@@ -334,10 +346,6 @@ class ConditionBuilder extends React.Component {
     const { error, isAddEnabled } = this.props
     return (
       <ConditionList isAddEnabled={isAddEnabled} onAdd={this.handleOnAdd}>
-        <TimeOnPageCondition error={error} value={5} />
-        <PageViewCondition error={error} value={5} />
-        <RepeatPageViewCondition error={error} value={2} />
-        <PageScrollCondition />
         <SpecificUrlCondition />
         {this.state.conditions.map((condition, index) => {
           return (
