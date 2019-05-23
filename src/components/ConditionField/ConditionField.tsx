@@ -21,9 +21,10 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   static defaultProps = {
     closeIcon: 'collapse',
     innerRef: noop,
-    options: [],
     onRemove: noop,
     removeTitle: 'Remove',
+    tooltipDelay: 800,
+    tooltipDuration: 60,
   }
 
   static Static = Static
@@ -43,6 +44,8 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
       innerRef,
       onRemove,
       removeTitle,
+      tooltipDelay,
+      tooltipDuration,
       ...rest
     } = this.props
 
@@ -56,8 +59,8 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
         <FieldCloseWrapperUI>
           <Tooltip
             title={removeTitle}
-            animationDelay={800}
-            animationDuration={60}
+            animationDelay={tooltipDelay}
+            animationDuration={tooltipDuration}
           >
             <IconButton
               data-cy="ConditionFieldRemoveButton"

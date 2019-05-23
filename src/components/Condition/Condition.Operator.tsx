@@ -3,9 +3,10 @@ import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './Condition.utils'
+import { ConditionOperatorProps } from './Condition.types'
 import { OperatorWrapperUI, OperatorUI } from './styles/Condition.css'
 
-export const Operator = props => {
+export const Operator = (props: ConditionOperatorProps) => {
   const { className, isBorderless, type, ...rest } = props
   const label = type.toLowerCase() === 'and' ? 'and' : 'or'
 

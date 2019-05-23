@@ -25,3 +25,8 @@ export interface ConditionAddButtonProps extends ConditionBaseProps {
   scrollOffset: number
   type: 'and' | 'or'
 }
+
+export interface ConditionOperatorProps extends ConditionBaseProps {
+  isBorderless: boolean
+  type: 'and' | 'or'
+}

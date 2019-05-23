@@ -111,11 +111,11 @@ Note: Be sure the version for `Button` is at least version 2.
 
 ---
 
-## Input.AddOn
+# Input.AddOn
 
 This component renders a "prefix"/"suffix" UI when combined with an [`Input`](./Input.md) when used within a [`ControlGroup`](../../ControlGroup/).
 
-### Example
+## Example
 
 ```jsx
 <ControlGroup>
@@ -131,7 +131,7 @@ This component renders a "prefix"/"suffix" UI when combined with an [`Input`](./
 </ControlGroup>
 ```
 
-### Props
+## Props
 
 | Prop      | Type      | Description                                        |
 | --------- | --------- | -------------------------------------------------- |
@@ -143,7 +143,7 @@ This component renders a "prefix"/"suffix" UI when combined with an [`Input`](./
 
 ---
 
-## Input.Static
+# Input.Static
 
 `Input.Static` components are plain-text components with adjusted height properties to allow them to be aligned with Input components. `Input.Static` is typically used to contain horizontal-style form labels.
 
@@ -152,7 +152,7 @@ This component renders a "prefix"/"suffix" UI when combined with an [`Input`](./
 <Input multiline={3} placeholder="Please enter sign-off catch-phrase." autoFocus />
 ```
 
-### Props
+## Props
 
 | Prop  | Type     | Description                                |
 | ----- | -------- | ------------------------------------------ |

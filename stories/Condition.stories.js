@@ -9,16 +9,10 @@ import ConditionField from '../src/components/ConditionField'
 import Flexy from '../src/components/Flexy'
 import Input from '../src/components/Input'
 import Select from '../src/components/Select'
-import ConditionReadme from '../src/components/Condition/README.md'
+import ReadMe from '../src/components/Condition/README.md'
 import Page from '../src/components/Page'
 
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
+import { boolean } from '@storybook/addon-knobs'
 import { jsxDecorator } from 'storybook-addon-jsx'
 
 const stories = storiesOf('Condition', module)
@@ -26,8 +20,7 @@ const stories = storiesOf('Condition', module)
 stories.addDecorator(jsxDecorator)
 
 stories.addParameters({
-  readme: { sidebar: ConditionReadme },
-  a11y: { element: 'c-Condition' },
+  readme: { sidebar: ReadMe },
 })
 
 const options = [
@@ -72,6 +65,7 @@ const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => (
           <Flexy.Item>
             <Input
               inputType="number"
+              autoComplete="off"
               width={error ? 75 : 55}
               value={value}
               state={error && 'error'}
@@ -105,6 +99,7 @@ const PageViewCondition = ({ error, onRemove, value, ...rest }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
+          autoComplete="off"
           width={error ? 75 : 55}
           value={value}
           state={error && 'error'}
@@ -125,6 +120,7 @@ const RepeatPageViewCondition = ({ error, onRemove, value, ...rest }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
+          autoComplete="off"
           width={error ? 75 : 55}
           value={value}
           state={error && 'error'}
@@ -322,6 +318,13 @@ class ConditionBuilder extends React.Component {
 }
 
 stories.add('Default', () => {
+  const error = boolean('error', false)
+  const isWithAnd = boolean('isWithAnd', false)
+
+  return <TimeOnPageCondition error={error} value={5} isWithAnd={isWithAnd} />
+})
+
+stories.add('Builder', () => {
   const error = boolean('error', false)
   const isAddEnabled = boolean('isAddEnabled', true)
 

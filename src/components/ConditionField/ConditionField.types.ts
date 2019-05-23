@@ -8,6 +8,8 @@ export interface ConditionFieldProps extends ConditionBaseProps {
   closeIcon: string
   onRemove: () => void
   removeTitle: string
+  tooltipDelay: number
+  tooltipDuration: number
 }
 
 export interface ConditionFieldGroupProps extends ConditionBaseProps {

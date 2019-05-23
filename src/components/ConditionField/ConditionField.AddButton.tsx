@@ -12,17 +12,17 @@ export const AddButton = props => {
 
   return (
     <AddButtonWrapperUI data-cy="ConditionFieldAddButtonWrapper">
-      <Condition.AddButton
-        {...rest}
-        isBorderless
-        className={componentClassName}
-        type="or"
-      />
+      <Condition.AddButton {...rest} className={componentClassName} />
     </AddButtonWrapperUI>
   )
 }
 
 AddButton.className = 'c-ConditionFieldAddButton'
+
+AddButton.defaultProps = {
+  isBorderless: true,
+  type: 'or',
+}
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY.AddButton)(AddButton)
 
