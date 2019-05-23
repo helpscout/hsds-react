@@ -1,6 +1,8 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
 import { Table, TABLE_CLASSNAME } from '../Table'
+import Body from '../Table.Body'
+import Head from '../Table.Head'
 import { defaultTheme, alternativeTheme, chooseTheme } from '../styles/themes'
 
 import {
@@ -188,11 +190,10 @@ describe('Theme', () => {
 })
 
 describe('Is loading state', () => {
-  test('Applies is-loading className', () => {
+  test('Displays LoadingUI', () => {
     const wrapper = render(<Table isLoading />)
 
-    expect(wrapper.hasClass('is-loading')).toBeTruthy()
-    expect(wrapper.find('table').hasClass('is-loading')).toBeTruthy()
+    expect(wrapper.find(`.${TABLE_CLASSNAME}__Loading`).length).toBeTruthy()
   })
 })
 
@@ -355,5 +356,87 @@ describe('Expandable', () => {
 
     expect(spy).toHaveBeenCalled()
     expect(spy).toHaveBeenCalledWith(wrapper.state('isTableCollapsed'))
+  })
+})
+
+describe('Table', () => {
+  test('Table should update only if col really changed', () => {
+    const columns = defaultColumns
+    const data = createFakeCustomers({ amount: 10 })
+    const wrapper = mount(<Table columns={columns} data={data} />)
+
+    const actualProps = wrapper.props()
+
+    expect(
+      wrapper
+        .instance()
+        .shouldComponentUpdate({ ...actualProps, columns, data })
+    ).toBeFalsy()
+
+    expect(
+      wrapper
+        .instance()
+        .shouldComponentUpdate({ ...actualProps, columns, data: [] })
+    ).toBeTruthy()
+
+    expect(
+      wrapper
+        .instance()
+        .shouldComponentUpdate({ ...actualProps, columns: [], data })
+    ).toBeTruthy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate({
+        ...actualProps,
+        isLoading: true,
+        columns,
+        data,
+      })
+    ).toBeTruthy()
+  })
+})
+
+describe('Table.Body', () => {
+  test('Body should update only if props really changed', () => {
+    const columns = defaultColumns
+    const rows = createFakeCustomers({ amount: 10 })
+    const wrapper = mount(
+      <table>
+        <Body columns={columns} rows={rows} />
+      </table>
+    ).find(Body)
+
+    expect(
+      wrapper.instance().shouldComponentUpdate({ columns }, { rows })
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate({ columns }, { rows: [] })
+    ).toBeTruthy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate({ columns: [] }, { rows })
+    ).toBeTruthy()
+  })
+
+  test('Body getRows should return an empty array if no rows props specified', () => {
+    expect(Body.getRows()).toEqual([])
+  })
+})
+
+describe('Table.Head', () => {
+  test('Head should update only if columns were updated', () => {
+    const columns = defaultColumns
+    const wrapper = mount(
+      <table>
+        <Head columns={columns} />
+      </table>
+    ).find(Head)
+
+    expect(wrapper.instance().shouldComponentUpdate({ columns })).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate({ columns: [] })
+    ).toBeTruthy()
   })
 })

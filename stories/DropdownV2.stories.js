@@ -329,8 +329,11 @@ stories.add('Stateful/Multiple Selection', () => {
       })
     }
 
+    getItems() {
+      return this.state.items
+    }
+
     render() {
-      const getItems = () => this.state.items
       // Forces' Dropdown diff'ing
       const nonCachedStateReducer = state => state
 
@@ -343,7 +346,7 @@ stories.add('Stateful/Multiple Selection', () => {
             {...this.state}
             allowMultipleSelection
             selectedItem={[this.state.items[0], this.state.items[2]]}
-            items={getItems()}
+            items={this.getItems()}
             stateReducer={nonCachedStateReducer}
             onSelect={action('onSelect')}
           />
