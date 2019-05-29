@@ -196,27 +196,30 @@ export class Pagination extends React.PureComponent<Props> {
             <Icon name="arrow-left-single-large" size="24" center />
           </ButtonIconUI>,
         ]}
-
-        <ButtonIconUI
-          version={2}
-          disabled={isLastPage || isLoading}
-          onClick={this.handleNextClick}
-          className="c-Pagination__nextButton"
-          title="Next page (k)"
-          data-cy="Pagination-nextButton"
-        >
-          <Icon name="arrow-right-single-large" size="24" center />
-        </ButtonIconUI>
-        <ButtonIconUI
-          version={2}
-          disabled={isLastPage || isLoading}
-          onClick={this.handleEndClick}
-          className="c-Pagination__lastButton"
-          title="Last page"
-          data-cy="Pagination-lastButton"
-        >
-          <Icon name="arrow-right-double-large" size="24" center />
-        </ButtonIconUI>
+        {!isLastPage && [
+          <ButtonIconUI
+            key="nextButton"
+            version={2}
+            disabled={isLoading}
+            onClick={this.handleNextClick}
+            className="c-Pagination__nextButton"
+            title="Next page (k)"
+            data-cy="Pagination-nextButton"
+          >
+            <Icon name="arrow-right-single-large" size="24" center />
+          </ButtonIconUI>,
+          <ButtonIconUI
+            key="lastButton"
+            version={2}
+            disabled={isLoading}
+            onClick={this.handleEndClick}
+            className="c-Pagination__lastButton"
+            title="Last page"
+            data-cy="Pagination-lastButton"
+          >
+            <Icon name="arrow-right-double-large" size="24" center />
+          </ButtonIconUI>,
+        ]}
       </NavigationUI>
     )
   }
