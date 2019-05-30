@@ -140,7 +140,7 @@ describe('Navigation', () => {
     expect(last.length).toBeTruthy()
   })
 
-  test('Disables next & last button on last page', () => {
+  test('Hides next & last button on last page', () => {
     const wrapper = mount(
       <Pagination
         showNavigation={true}
@@ -150,11 +150,11 @@ describe('Navigation', () => {
       />
     )
 
-    const next = wrapper.find('Button.c-Pagination__nextButton').first()
-    const last = wrapper.find('Button.c-Pagination__lastButton').first()
+    const next = wrapper.find('Button.c-Pagination__nextButton')
+    const last = wrapper.find('Button.c-Pagination__lastButton')
 
-    expect(next.props('disabled')).toBeTruthy()
-    expect(last.props('disabled')).toBeTruthy()
+    expect(next.length).not.toBeTruthy()
+    expect(last.length).not.toBeTruthy()
   })
 
   test('Disables all buttons when loading', () => {
@@ -164,7 +164,7 @@ describe('Navigation', () => {
         showNavigation={true}
         totalItems={15}
         rangePerPage={5}
-        activePage={3}
+        activePage={2}
       />
     )
 
