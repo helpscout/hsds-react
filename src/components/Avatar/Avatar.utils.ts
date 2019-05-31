@@ -4,4 +4,6 @@ export const IMAGE_STATES = {
   loading: 'loading',
   loaded: 'loaded',
   failed: 'failed',
+  fallbackLoading: 'fallbackLoading',
+  fallbackLoaded: 'fallbackLoaded',
 }

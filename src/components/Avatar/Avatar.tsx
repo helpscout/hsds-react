@@ -25,6 +25,7 @@ export interface Props {
   borderColor?: string
   className?: string
   count?: number | string
+  fallbackImage?: string
   image?: string
   initials?: string
   light: boolean
@@ -50,6 +51,7 @@ export class Avatar extends React.PureComponent<Props, State> {
     animationDuration: 160,
     animationEasing: 'ease',
     borderColor: 'transparent',
+    fallbackImage: null,
     light: false,
     name: '',
     outerBorderColor: 'transparent',
@@ -66,15 +68,28 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   onImageLoadedError = () => {
+    const { imageLoaded } = this.state
+
+    const isLoading = imageLoaded === IMAGE_STATES.loading
+
+    const newImageLoaded =
+      this.props.fallbackImage && isLoading
+        ? IMAGE_STATES.fallbackLoading
+        : IMAGE_STATES.failed
+
     this.setState({
-      imageLoaded: IMAGE_STATES.failed,
+      imageLoaded: newImageLoaded,
     })
     this.props.onError && this.props.onError()
   }
 
   onImageLoadedSuccess = () => {
+    const { imageLoaded } = this.state
+    const isFallbackLoading = imageLoaded === IMAGE_STATES.fallbackLoading
     this.setState({
-      imageLoaded: IMAGE_STATES.loaded,
+      imageLoaded: isFallbackLoading
+        ? IMAGE_STATES.fallbackLoaded
+        : IMAGE_STATES.loaded,
     })
     this.props.onLoad && this.props.onLoad()
   }
@@ -86,13 +101,29 @@ export class Avatar extends React.PureComponent<Props, State> {
     return !!(image && imageLoaded === IMAGE_STATES.loaded)
   }
 
+  isFallbackImageLoaded = (): boolean => {
+    const { fallbackImage } = this.props
+    const { imageLoaded } = this.state
+
+    return !!(fallbackImage && imageLoaded === IMAGE_STATES.fallbackLoaded)
+  }
+
   hasImage = (): boolean => {
     const { image } = this.props
     const { imageLoaded } = this.state
 
     return !!(
       image &&
-      includes([IMAGE_STATES.loading, IMAGE_STATES.loaded], imageLoaded)
+      includes(
+        [
+          IMAGE_STATES.loading,
+          IMAGE_STATES.loaded,
+          ,
+          IMAGE_STATES.fallbackLoading,
+          IMAGE_STATES.fallbackLoaded,
+        ],
+        imageLoaded
+      )
     )
   }
 
@@ -107,13 +138,25 @@ export class Avatar extends React.PureComponent<Props, State> {
       animationDuration,
       animationEasing,
       image,
+      fallbackImage,
       name,
       withShadow,
     } = this.props
+    const { imageLoaded } = this.state
 
     const hasImage = this.hasImage()
-    const isImageLoaded = image && this.isImageLoaded()
+    const isFallbackImageLoaded = this.isFallbackImageLoaded()
+
+    const shouldUseFallbackImage =
+      isFallbackImageLoaded || imageLoaded === IMAGE_STATES.fallbackLoading
+
+    const isImageLoaded = shouldUseFallbackImage
+      ? isFallbackImageLoaded
+      : this.isImageLoaded()
+
     const shapeClassnames = this.getShapeClassNames()
+
+    const imageUrl = shouldUseFallbackImage ? fallbackImage : image
 
     return (
       <AvatarCrop
@@ -128,8 +171,9 @@ export class Avatar extends React.PureComponent<Props, State> {
           animationDuration={animationDuration}
           animationEasing={animationEasing}
           className={shapeClassnames}
+          fallbackImage={fallbackImage}
           hasImage={hasImage}
-          image={image}
+          image={imageUrl}
           isImageLoaded={isImageLoaded}
           name={name}
           title={this.getTitleMarkup()}
@@ -245,6 +289,7 @@ export class Avatar extends React.PureComponent<Props, State> {
       status,
       statusIcon,
       withShadow,
+      fallbackImage,
       ...rest
     } = this.props
 

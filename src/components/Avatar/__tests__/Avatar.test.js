@@ -123,6 +123,26 @@ describe('Image', () => {
     expect(image.exists()).toBeFalsy()
   })
 
+  test('Replaces image with fallback on error', () => {
+    const fallbackSrc = 'buddy2.jpg'
+    const wrapper = mount(
+      <Avatar
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        fallbackImage={fallbackSrc}
+      />
+    )
+    wrapper
+      .find('img')
+      .first()
+      .simulate('error')
+      .simulate('load')
+
+    const image = wrapper.update().find(`div${ui.image}`)
+
+    expect(image.prop('style').backgroundImage).toContain(fallbackSrc)
+  })
+
   test('Background style is unset on error', () => {
     const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
     wrapper
@@ -210,6 +230,14 @@ describe('Border color', () => {
     const o = wrapper.find(StatusDot)
 
     expect(o.prop('outerBorderColor')).toBe('red')
+  })
+
+  test('Add light classname to component and title', () => {
+    const wrapper = mount(<Avatar name="Buddy" light={true} />)
+    const classNames = wrapper.prop('className')
+
+    expect(classNames).toContain('is-light')
+    expect(wrapper.find(ui.initials).prop('className')).toContain('is-light')
   })
 })
 

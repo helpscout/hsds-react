@@ -11,8 +11,24 @@ stories.add('default', () => (
   <Avatar name={fixture.name} image={fixture.image} />
 ))
 
-stories.add('fallback', () => (
+stories.add('failed', () => (
   <Avatar name={fixture.name} image="https://notfound" />
+))
+
+stories.add('fallback', () => (
+  <Avatar
+    name={fixture.name}
+    image="https://notfound"
+    fallbackImage={fixture.image}
+  />
+))
+
+stories.add('fallback failed', () => (
+  <Avatar
+    name={fixture.name}
+    image="https://notfound"
+    fallbackImage="https://notfound2"
+  />
 ))
 
 stories.add('themed', () => (
