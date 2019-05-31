@@ -118,7 +118,6 @@ export class Avatar extends React.PureComponent<Props, State> {
         [
           IMAGE_STATES.loading,
           IMAGE_STATES.loaded,
-          ,
           IMAGE_STATES.fallbackLoading,
           IMAGE_STATES.fallbackLoaded,
         ],
