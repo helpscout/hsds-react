@@ -24,6 +24,7 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     closeIcon: 'collapse',
     innerRef: noop,
     isWithOr: false,
+    isWithRemove: true,
     onRemove: noop,
     removeTitle: 'Remove',
     tooltipDelay: 800,
@@ -52,6 +53,7 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
       children,
       closeIcon,
       innerRef,
+      isWithRemove,
       onRemove,
       removeTitle,
       tooltipDelay,
@@ -74,11 +76,13 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
               animationDelay={tooltipDelay}
               animationDuration={tooltipDuration}
             >
-              <IconButton
-                data-cy="ConditionFieldRemoveButton"
-                icon={closeIcon}
-                onClick={onRemove}
-              />
+              {isWithRemove ? (
+                <IconButton
+                  data-cy="ConditionFieldRemoveButton"
+                  icon={closeIcon}
+                  onClick={onRemove}
+                />
+              ) : null}
             </Tooltip>
           </FieldCloseWrapperUI>
         </FieldUI>

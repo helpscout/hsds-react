@@ -7,6 +7,7 @@ export interface ConditionBaseProps {
 export interface ConditionFieldProps extends ConditionBaseProps {
   closeIcon: string
   isWithOr: boolean
+  isWithRemove: boolean
   onRemove: () => void
   removeTitle: string
   tooltipDelay: number

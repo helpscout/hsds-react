@@ -28,6 +28,7 @@ A ConditionField is a single item that renders within a [Condition](../Condition
 | className       | `string`   |            | The className of the component.                                                       |
 | closeIcon       | `string`   | `collapse` | The [Icon](../Icon) to render.                                                        |
 | innerRef        | `Function` |            | Retrieve the inner DOM node.                                                          |
+| isWithRemove    | `boolean`  | `true`     | Whether to show the remove button or not.                                             |
 | onRemove        | `Function` |            | Callback when the remove [IconButton](../IconButton) is clicked.                      |
 | removeTitle     | `string`   |            | Title to show in the [Tooltip](../Tooltip) on the remove [IconButton](../IconButton). |
 | tooltipDelay    | `string`   |            | Delay before the [Tooltip](../Tooltip) renders, on hover.                             |
