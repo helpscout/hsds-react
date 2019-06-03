@@ -74,3 +74,54 @@ stories.add('Default', () => {
     </Condition>
   )
 })
+
+stories.add('No remove', () => {
+  const props = {
+    error: boolean('error', false),
+    isWithRemove: boolean('isWithRemove', false),
+    removeTitle: text('removeTitle', 'Remove'),
+    tooltipDelay: number('tooltipDelay', 800),
+    tooltipDuration: number('tooltipDuration', 60),
+  }
+
+  const { error } = props
+
+  return (
+    <Condition options={options} value="time-on-page">
+      <ConditionField {...props}>
+        <ConditionField.Item>
+          <ConditionField.Static>Show after</ConditionField.Static>
+        </ConditionField.Item>
+        <ConditionField.Block>
+          <Flexy gap="xs">
+            <Flexy.Item>
+              <Input
+                inputType="number"
+                autoComplete="off"
+                width={error ? 75 : 55}
+                value={5}
+                state={error && 'error'}
+              />
+            </Flexy.Item>
+            <Flexy.Block>
+              <Select
+                options={[
+                  {
+                    label: 'Seconds',
+                    value: 'seconds',
+                  },
+                  {
+                    label: 'Minutes',
+                    value: 'minutes',
+                  },
+                ]}
+                width={160}
+                value="seconds"
+              />
+            </Flexy.Block>
+          </Flexy>
+        </ConditionField.Block>
+      </ConditionField>
+    </Condition>
+  )
+})

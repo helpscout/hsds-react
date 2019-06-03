@@ -38,6 +38,13 @@ describe('onRemove', () => {
     expect(el.getTagName()).toBe('button')
   })
 
+  test('Does not render a remove button', () => {
+    cy.render(<ConditionField isWithRemove={false} />)
+    const el = cy.getByCy('ConditionFieldRemoveButton')
+
+    expect(el.exists()).toBeFalsy()
+  })
+
   test('Fires onRemove callback when remove button is clicked', () => {
     const spy = jest.fn()
     cy.render(<ConditionField onRemove={spy} />)
