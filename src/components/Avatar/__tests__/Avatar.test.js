@@ -175,6 +175,19 @@ describe('ClassNames', () => {
     expect(classNames).toContain('arctic')
     expect(classNames).toContain('puffin')
   })
+
+  test('Add light classname to component and title', () => {
+    const wrapper = mount(<Avatar name="Buddy" light={true} />)
+    const root = wrapper.find(`div${ui.root}`)
+
+    expect(root.props().className).toContain('is-light')
+    expect(
+      wrapper
+        .find(ui.initials)
+        .first()
+        .prop('className')
+    ).toContain('is-light')
+  })
 })
 
 describe('Border color', () => {
@@ -230,14 +243,6 @@ describe('Border color', () => {
     const o = wrapper.find(StatusDot)
 
     expect(o.prop('outerBorderColor')).toBe('red')
-  })
-
-  test('Add light classname to component and title', () => {
-    const wrapper = mount(<Avatar name="Buddy" light={true} />)
-    const classNames = wrapper.prop('className')
-
-    expect(classNames).toContain('is-light')
-    expect(wrapper.find(ui.initials).prop('className')).toContain('is-light')
   })
 })
 

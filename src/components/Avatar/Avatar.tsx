@@ -4,7 +4,6 @@ import propConnect from '../PropProvider/propConnect'
 import { StatusDotStatus } from '../StatusDot/StatusDot.types'
 import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
-import { includes } from '../../utilities/arrays'
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
@@ -17,7 +16,13 @@ import {
   StatusUI,
   TitleUI,
 } from './styles/Avatar.css'
-import { COMPONENT_KEY, IMAGE_STATES } from './Avatar.utils'
+import {
+  COMPONENT_KEY,
+  IMAGE_STATES,
+  hasImage,
+  isImageLoaded,
+  getImageUrl,
+} from './Avatar.utils'
 
 export interface Props {
   animationDuration: number
@@ -94,38 +99,6 @@ export class Avatar extends React.PureComponent<Props, State> {
     this.props.onLoad && this.props.onLoad()
   }
 
-  isImageLoaded = (): boolean => {
-    const { image } = this.props
-    const { imageLoaded } = this.state
-
-    return !!(image && imageLoaded === IMAGE_STATES.loaded)
-  }
-
-  isFallbackImageLoaded = (): boolean => {
-    const { fallbackImage } = this.props
-    const { imageLoaded } = this.state
-
-    return !!(fallbackImage && imageLoaded === IMAGE_STATES.fallbackLoaded)
-  }
-
-  hasImage = (): boolean => {
-    const { image } = this.props
-    const { imageLoaded } = this.state
-
-    return !!(
-      image &&
-      includes(
-        [
-          IMAGE_STATES.loading,
-          IMAGE_STATES.loaded,
-          IMAGE_STATES.fallbackLoading,
-          IMAGE_STATES.fallbackLoaded,
-        ],
-        imageLoaded
-      )
-    )
-  }
-
   getShapeClassNames = (): string => {
     const { shape, size } = this.props
 
@@ -133,47 +106,30 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   renderCrop = () => {
-    const {
-      animationDuration,
-      animationEasing,
-      image,
-      fallbackImage,
-      name,
-      withShadow,
-    } = this.props
-    const { imageLoaded } = this.state
-
-    const hasImage = this.hasImage()
-    const isFallbackImageLoaded = this.isFallbackImageLoaded()
-
-    const shouldUseFallbackImage =
-      isFallbackImageLoaded || imageLoaded === IMAGE_STATES.fallbackLoading
-
-    const isImageLoaded = shouldUseFallbackImage
-      ? isFallbackImageLoaded
-      : this.isImageLoaded()
+    const { animationDuration, animationEasing, name, withShadow } = this.props
 
     const shapeClassnames = this.getShapeClassNames()
 
-    const imageUrl = shouldUseFallbackImage ? fallbackImage : image
+    const _hasImage = hasImage(this.props, this.state)
+    const _isImageLoaded = isImageLoaded(this.props, this.state)
+    const _imageUrl = getImageUrl(this.props, this.state)
 
     return (
       <AvatarCrop
         animationDuration={animationDuration}
         animationEasing={animationEasing}
         className={shapeClassnames}
-        hasImage={hasImage}
-        isImageLoaded={isImageLoaded}
+        hasImage={_hasImage}
+        isImageLoaded={_isImageLoaded}
         withShadow={withShadow}
       >
         <AvatarImage
           animationDuration={animationDuration}
           animationEasing={animationEasing}
           className={shapeClassnames}
-          fallbackImage={fallbackImage}
-          hasImage={hasImage}
-          image={imageUrl}
-          isImageLoaded={isImageLoaded}
+          hasImage={_hasImage}
+          image={_imageUrl}
+          isImageLoaded={_isImageLoaded}
           name={name}
           title={this.getTitleMarkup()}
           onError={this.onImageLoadedError}
@@ -292,12 +248,12 @@ export class Avatar extends React.PureComponent<Props, State> {
       ...rest
     } = this.props
 
-    const hasImage = this.hasImage()
+    const _hasImage = hasImage(this.props, this.state)
 
     const componentClassName = classNames(
       'c-Avatar',
       borderColor && 'has-borderColor',
-      hasImage && 'has-image',
+      _hasImage && 'has-image',
       statusIcon && 'has-statusIcon',
       light && 'is-light',
       outerBorderColor && 'has-outerBorderColor',
