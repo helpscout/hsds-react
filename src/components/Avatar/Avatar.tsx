@@ -4,7 +4,6 @@ import propConnect from '../PropProvider/propConnect'
 import { StatusDotStatus } from '../StatusDot/StatusDot.types'
 import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
-import { includes } from '../../utilities/arrays'
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
@@ -17,7 +16,13 @@ import {
   StatusUI,
   TitleUI,
 } from './styles/Avatar.css'
-import { COMPONENT_KEY, IMAGE_STATES } from './Avatar.utils'
+import {
+  COMPONENT_KEY,
+  IMAGE_STATES,
+  hasImage,
+  isImageLoaded,
+  getImageUrl,
+} from './Avatar.utils'
 
 export interface Props {
   animationDuration: number
@@ -25,6 +30,7 @@ export interface Props {
   borderColor?: string
   className?: string
   count?: number | string
+  fallbackImage?: string
   image?: string
   initials?: string
   light: boolean
@@ -50,6 +56,7 @@ export class Avatar extends React.PureComponent<Props, State> {
     animationDuration: 160,
     animationEasing: 'ease',
     borderColor: 'transparent',
+    fallbackImage: null,
     light: false,
     name: '',
     outerBorderColor: 'transparent',
@@ -66,34 +73,30 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   onImageLoadedError = () => {
+    const { imageLoaded } = this.state
+
+    const isLoading = imageLoaded === IMAGE_STATES.loading
+
+    const newImageLoaded =
+      this.props.fallbackImage && isLoading
+        ? IMAGE_STATES.fallbackLoading
+        : IMAGE_STATES.failed
+
     this.setState({
-      imageLoaded: IMAGE_STATES.failed,
+      imageLoaded: newImageLoaded,
     })
     this.props.onError && this.props.onError()
   }
 
   onImageLoadedSuccess = () => {
+    const { imageLoaded } = this.state
+    const isFallbackLoading = imageLoaded === IMAGE_STATES.fallbackLoading
     this.setState({
-      imageLoaded: IMAGE_STATES.loaded,
+      imageLoaded: isFallbackLoading
+        ? IMAGE_STATES.fallbackLoaded
+        : IMAGE_STATES.loaded,
     })
     this.props.onLoad && this.props.onLoad()
-  }
-
-  isImageLoaded = (): boolean => {
-    const { image } = this.props
-    const { imageLoaded } = this.state
-
-    return !!(image && imageLoaded === IMAGE_STATES.loaded)
-  }
-
-  hasImage = (): boolean => {
-    const { image } = this.props
-    const { imageLoaded } = this.state
-
-    return !!(
-      image &&
-      includes([IMAGE_STATES.loading, IMAGE_STATES.loaded], imageLoaded)
-    )
   }
 
   getShapeClassNames = (): string => {
@@ -103,34 +106,30 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   renderCrop = () => {
-    const {
-      animationDuration,
-      animationEasing,
-      image,
-      name,
-      withShadow,
-    } = this.props
+    const { animationDuration, animationEasing, name, withShadow } = this.props
 
-    const hasImage = this.hasImage()
-    const isImageLoaded = image && this.isImageLoaded()
     const shapeClassnames = this.getShapeClassNames()
+
+    const _hasImage = hasImage(this.props, this.state)
+    const _isImageLoaded = isImageLoaded(this.props, this.state)
+    const _imageUrl = getImageUrl(this.props, this.state)
 
     return (
       <AvatarCrop
         animationDuration={animationDuration}
         animationEasing={animationEasing}
         className={shapeClassnames}
-        hasImage={hasImage}
-        isImageLoaded={isImageLoaded}
+        hasImage={_hasImage}
+        isImageLoaded={_isImageLoaded}
         withShadow={withShadow}
       >
         <AvatarImage
           animationDuration={animationDuration}
           animationEasing={animationEasing}
           className={shapeClassnames}
-          hasImage={hasImage}
-          image={image}
-          isImageLoaded={isImageLoaded}
+          hasImage={_hasImage}
+          image={_imageUrl}
+          isImageLoaded={_isImageLoaded}
           name={name}
           title={this.getTitleMarkup()}
           onError={this.onImageLoadedError}
@@ -245,15 +244,16 @@ export class Avatar extends React.PureComponent<Props, State> {
       status,
       statusIcon,
       withShadow,
+      fallbackImage,
       ...rest
     } = this.props
 
-    const hasImage = this.hasImage()
+    const _hasImage = hasImage(this.props, this.state)
 
     const componentClassName = classNames(
       'c-Avatar',
       borderColor && 'has-borderColor',
-      hasImage && 'has-image',
+      _hasImage && 'has-image',
       statusIcon && 'has-statusIcon',
       light && 'is-light',
       outerBorderColor && 'has-outerBorderColor',
