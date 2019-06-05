@@ -49,7 +49,7 @@
     "jest": "node scripts/test.js --env=jsdom ",
     "lint": "npm run lint:ts && npm run lint:js",
     "lint:js": "eslint src/**/*.js --cache",
-    "lint:ts": "eslint src/**/*.ts --cache",
+    "lint:ts": "eslint src/**/*.{ts,tsx} --cache",
     "open": "open ./",
     "open:coverage": "open ./coverage/lcov-report/index.html",
     "open:cov": "npm run open:coverage",
