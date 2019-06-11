@@ -1,3 +1,3 @@
 export default {
-  version: '2.45.4-beta-emoji-picker',
+  version: '2.46.1-beta-emoji-picker',
 }
