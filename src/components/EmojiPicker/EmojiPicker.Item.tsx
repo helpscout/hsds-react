@@ -1,21 +1,15 @@
 import * as React from 'react'
-import { classNames } from '../../utilities/classNames'
 import EmojiView from './EmojiPicker.View'
-import { EmojiItemUI } from './styles/EmojiPicker.css'
+import { classNames } from '../../utilities/classNames'
+import { ItemWrapperUI, ItemUI } from './styles/EmojiPicker.css'
+import { EmojiPickerItemProps } from './EmojiPicker.types'
 
-export interface Props {
-  className?: any
-  name?: string
-  renderItem?: any
-  size?: string
-  symbol?: string
-}
-
-class Item extends React.PureComponent<Props> {
-  static className = 'c-emojiPickerItem'
+class Item extends React.PureComponent<EmojiPickerItemProps> {
+  static className = 'c-EmojiPickerItem'
 
   static defaultProps = {
     className: '',
+    'data-cy': 'EmojiPickerItem',
     size: 'default',
   }
 
@@ -26,16 +20,14 @@ class Item extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, name, renderItem, symbol, ...rest } = this.props
-
-    if (renderItem) {
-      return renderItem(this.props)
-    }
+    const { className, name, size, symbol, ...rest } = this.props
 
     return (
-      <EmojiItemUI className={this.getClassName()} {...rest}>
-        <EmojiView name={name} symbol={symbol} />
-      </EmojiItemUI>
+      <ItemWrapperUI size={size}>
+        <ItemUI {...rest} className={this.getClassName()} size={size}>
+          <EmojiView name={name} symbol={symbol} />
+        </ItemUI>
+      </ItemWrapperUI>
     )
   }
 }

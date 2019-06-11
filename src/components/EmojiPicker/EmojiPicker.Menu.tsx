@@ -1,24 +1,19 @@
 import * as React from 'react'
-import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Dropdown from '../Dropdown/DropdownV2'
 import { getItemProps } from '../Dropdown/V2/Dropdown.utils'
-import { EmojiProps } from './EmojiPicker.types'
 import Item from './EmojiPicker.Item'
+import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
+import { EmojiPickerMenuProps } from './EmojiPicker.types'
+import { MenuUI } from './styles/EmojiPicker.css'
 
-export interface Props {
-  className?: string
-  items: Array<EmojiProps>
-  renderItem?: any
-  renderMenu?: any
-  size?: string
-}
-
-class Menu extends React.PureComponent<Props> {
+class Menu extends React.PureComponent<EmojiPickerMenuProps> {
   static className = 'c-EmojiPickerMenu'
 
   static defaultProps = {
     className: '',
+    'data-cy': 'EmojiPickerMenu',
     getItemProps: noop,
     items: [],
     size: 'default',
@@ -34,22 +29,27 @@ class Menu extends React.PureComponent<Props> {
     const { items, renderItem, size } = this.props
 
     return items.map((item, index) => {
-      const itemProps = { ...getItemProps(item, index), renderItem, size }
+      const itemProps = {
+        ...item,
+        ...getItemProps(item, index),
+        renderItem,
+        size,
+      } as any
 
       return <Item {...itemProps} />
     })
   }
 
   render() {
-    const { renderMenu } = this.props
+    const { renderMenu, ...rest } = this.props
 
     if (renderMenu) {
       return renderMenu(this.props)
     }
 
     return (
-      <Dropdown.Card className={this.getClassName()}>
-        <Dropdown.Menu>{this.renderItems()}</Dropdown.Menu>
+      <Dropdown.Card {...getValidProps(rest)} className={this.getClassName()}>
+        <MenuUI>{this.renderItems()}</MenuUI>
       </Dropdown.Card>
     )
   }

@@ -3,7 +3,7 @@ import Dropdown from '../../Dropdown/DropdownV2'
 import Icon from '../../Icon'
 import { getColor, rgba } from '../../../styles/utilities/color'
 
-const config = {
+export const config = {
   colors: {
     grey: 'grey.300',
     purple: 'purple.300',
@@ -17,15 +17,40 @@ const config = {
   },
 }
 
-export const EmojiItemUI = styled(Dropdown.Item)`
-  display: inline;
-  margin: 8px 5px !important;
-  padding: 5px !important;
+export const MenuUI = styled(Dropdown.Menu)`
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+`
+
+export const ItemWrapperUI = styled('div')`
+  align-items: center;
+  background: transparent;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  margin: 3px;
+
+  &:hover {
+    background: red;
+  }
 
   ${({ size }) =>
     size &&
     `
-  font-size: ${config.sizes[size]}
+    height: calc(${config.sizes[size]} + 10px);
+    width: calc(${config.sizes[size]} + 10px);
+  `}
+`
+
+export const ItemUI = styled(Dropdown.Item)`
+  ${({ size }) =>
+    size &&
+    `
+  font-size: ${config.sizes[size]};
+  padding: 0 !important;
+  height: ${config.sizes[size]};
+  width: ${config.sizes[size]};
 `};
 
   &.is-focused {

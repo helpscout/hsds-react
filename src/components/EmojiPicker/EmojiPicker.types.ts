@@ -17,3 +17,19 @@ export interface EmojiPickerProps {
   size?: string
   renderTrigger?: any
 }
+
+export interface EmojiPickerMenuProps {
+  className?: string
+  items: Array<EmojiProps>
+  renderItem?: any
+  renderMenu?: any
+  size: string
+}
+
+export interface EmojiPickerItemProps {
+  className: any
+  name: string
+  renderItem?: any
+  size: string
+  symbol?: string
+}

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Dropdown from '../Dropdown/DropdownV2'
@@ -59,7 +58,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
 
     return (
       <Dropdown
-        {...getValidProps(rest)}
+        {...rest}
         className={this.getClassName()}
         direction="left"
         dropUp

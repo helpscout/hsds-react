@@ -31,6 +31,7 @@ const onSelect = (item, props) => {
 
 stories.add('Default', () => {
   const props = {
+    isOpen: true,
     onSelect,
     size: select('size', { default: 'default', sm: 'sm', lg: 'lg' }, 'default'),
   }
@@ -60,26 +61,10 @@ const CustomMenu = ({ items, getItemProps }) => {
   )
 }
 
-stories.add('Custom Menu', () => {
-  return (
-    <EmojiPicker
-      emojiSet={emojiSet}
-      onSelect={onSelect}
-      renderMenu={CustomMenu}
-    />
-  )
-})
-
 const CustomItem = props => {
   return <Dropdown.Item {...props} value={props.symbol} />
 }
 
 stories.add('Custom Item', () => {
-  return (
-    <EmojiPicker
-      emojiSet={emojiSet}
-      onSelect={onSelect}
-      renderItem={CustomItem}
-    />
-  )
+  return <EmojiPicker emojiSet={emojiSet} onSelect={onSelect} />
 })
