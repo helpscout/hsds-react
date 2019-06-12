@@ -10,25 +10,89 @@ import {
   text,
   select,
 } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import { jsxDecorator } from 'storybook-addon-jsx'
 
+import styled from '../src/components/styled'
+
 const stories = storiesOf('EditableField', module)
-
-stories.addDecorator(jsxDecorator)
-
-stories.addDecorator(
-  withArtboard({
-    width: 500,
-    height: 300,
-    withCenterGuides: false,
-    showInterface: false,
+  .addParameters({
+    options: { showPanel: false, enableShortcuts: false, isFullscreen: true },
+    readme: { sidebar: ReadMe },
+    a11y: { element: 'c-EditableField' },
   })
-)
+  .addDecorator(jsxDecorator)
 
-stories.addParameters({
-  readme: { sidebar: ReadMe },
-  a11y: { element: 'c-EditableField' },
-})
+const FormUI = styled('form')`
+  width: 500px;
+  padding: 20px;
+  background-color: rgba(155, 155, 195, 0.1);
+  margin: 10px auto;
+  border: 1px solid rgba(155, 155, 195, 0.4);
+  border-radius: 3px;
+`
 
-stories.add('Default', () => <EditableField />)
+class EditableFieldApp extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      multipleInputValue: ['Juan', 'Pablo'],
+      singleInputValue: 'Help Scout',
+    }
+  }
+
+  render() {
+    const { multipleInputValue, singleInputValue } = this.state
+
+    return (
+      <div className="EditableFieldApp">
+        <h1>Inline Edit</h1>
+        <FormUI
+          onSubmit={e => {
+            e.preventDefault()
+          }}
+        >
+          <EditableField
+            label="Company"
+            name="company"
+            type="text"
+            value={singleInputValue}
+          />
+          <EditableField
+            label="Names"
+            name="names"
+            type="text"
+            value={multipleInputValue}
+          />
+        </FormUI>
+      </div>
+    )
+  }
+}
+
+const initialValue = ['Juan', 'Pablo']
+
+stories.add('Default', () => <EditableFieldApp />)
+
+/* <Field
+            label="city"
+            value={city}
+            isEditing={editingField === "city"}
+            onFieldFocus={this.handleFieldFocus}
+            onKeyUp={this.handleFieldKeyUp}
+          />
+          <Field
+            label="phone"
+            value={phone}
+            isEditing={editingField === "phone"}
+            onFieldFocus={this.handleFieldFocus}
+            onKeyUp={this.handleFieldKeyUp}
+          />
+          <Field
+            label="website"
+            value={website}
+            valueType="link"
+            isEditing={editingField === "website"}
+            onFieldFocus={this.handleFieldFocus}
+            onKeyUp={this.handleFieldKeyUp}
+          /> */
