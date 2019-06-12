@@ -5,7 +5,7 @@ import { noop } from '../../utilities/other'
 import Dropdown from '../Dropdown/DropdownV2'
 import { EmojiPickerProps } from './EmojiPicker.types'
 import { COMPONENT_KEY } from './EmojiPicker.utils'
-import { TriggerUI } from './styles/EmojiPicker.css'
+import { MenuUI, TriggerUI } from './styles/EmojiPicker.css'
 import Menu from './EmojiPicker.Menu'
 import Item from './EmojiPicker.Item'
 import EmojiView from './EmojiPicker.View'
@@ -16,6 +16,8 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
 
   static defaultProps = {
     className: '',
+    direction: 'left',
+    dropUp: true,
     innerRef: noop,
     onSelect: noop,
     emojiSet: emojiSet,
@@ -39,10 +41,12 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     return <TriggerUI className="c-EmojiPickerTrigger" size="24" />
   }
 
-  renderContent = items => {
-    const { renderItem, renderMenu, size } = this.props
+  renderMenu = props => {
+    return <MenuUI {...props} />
+  }
 
-    return <Menu {...{ renderItem, renderMenu, size, items }} />
+  renderItem = item => {
+    return <Item {...item} />
   }
 
   render() {
@@ -60,15 +64,13 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
       <Dropdown
         {...rest}
         className={this.getClassName()}
-        direction="left"
-        dropUp
         innerRef={innerRef}
         items={emojiSet}
         onSelect={onSelect}
+        renderMenu={this.renderMenu}
+        renderItem={this.renderItem}
         renderTrigger={this.getDropdownTrigger()}
-      >
-        {({ items }) => this.renderContent(items)}
-      </Dropdown>
+      />
     )
   }
 }

@@ -17,7 +17,7 @@ export const config = {
   },
 }
 
-export const MenuUI = styled(Dropdown.Menu)`
+export const MenuUI = styled('div')`
   display: flex;
   padding-left: 5px;
   padding-right: 5px;
@@ -43,7 +43,7 @@ export const ItemWrapperUI = styled('div')`
   `}
 `
 
-export const ItemUI = styled(Dropdown.Item)`
+export const ItemUI = styled('div')`
   ${({ size }) =>
     size &&
     `
