@@ -1,4 +1,4 @@
-import styled from '@helpscout/fancy'
+import styled from './styled'
 
 export * from '@helpscout/fancy'
 export default styled
