@@ -172,6 +172,7 @@ import socialHangouts from '../../icons/social-hangouts.svg'
 import socialIcq from '../../icons/social-icq.svg'
 import socialLinkedIn from '../../icons/social-linkedin.svg'
 import socialMsn from '../../icons/social-msn.svg'
+import socialQq from '../../icons/social-qq.svg'
 import socialQuora from '../../icons/social-quora.svg'
 import socialSkype from '../../icons/social-skype.svg'
 import socialTwitter from '../../icons/social-twitter.svg'
@@ -400,6 +401,7 @@ const ICONS = {
   'social-icq': socialIcq,
   'social-linked-in': socialLinkedIn,
   'social-msn': socialMsn,
+  'social-qq': socialQq,
   'social-quora': socialQuora,
   'social-skype': socialSkype,
   'social-twitter': socialTwitter,
