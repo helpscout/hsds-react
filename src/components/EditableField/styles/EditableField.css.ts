@@ -1,5 +1,6 @@
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
+import { getColor } from '../../../styles/utilities/color'
 
 export const EditableFieldUI = styled('div')`
   ${baseStyles};
@@ -14,31 +15,25 @@ export const LabelTextUI = styled('span')`
   display: block;
   margin-bottom: 5px;
   font-size: 13px;
-  color: rebeccapurple;
+  color: #a2b2be;
 `
 
-export const FieldStaticValueUI = styled('span')`
+export const FieldContentUI = styled('div')`
   ${baseStyles};
   position: relative;
-  color: plum;
-  width: 100%;
-  display: block;
-  height: 25px;
-  line-height: 25px;
-  padding: 0px 0px 6px;
-  font-size: 16px;
-  font-family: sans-serif;
-  z-index: 2;
-  pointer-events: none;
+  margin-bottom: 10px;
 
-  .is-editing & {
-    z-index: 1;
+  &:hover .c-EditableField__actions {
+    opacity: 1;
+    cursor: pointer;
   }
 `
 
 export const FieldInputUI = styled('input')`
   ${baseStyles};
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   font-size: 16px;
   border: none;
@@ -48,83 +43,133 @@ export const FieldInputUI = styled('input')`
   padding: 3px 0px;
   letter-spacing: 0;
   color: transparent;
+  background-color: #fff;
   font-family: sans-serif;
+  font-size: 15px;
   z-index: 1;
+
+  &::placeholder {
+    color: transparent;
+  }
 
   &:hover {
     cursor: pointer;
-    border-bottom: 2px dotted slategray;
+    border-bottom: 1px dashed #c6d0d8;
   }
 
   .is-editing & {
+    outline: none;
     z-index: 2;
     color: black;
-    border-bottom: 2px solid dodgerblue !important;
+    border-bottom: none !important;
+
+    &::placeholder {
+      color: #b7c2cc;
+    }
   }
 `
-
-export const FieldContentUI = styled('div')`
+export const FieldStaticValueUI = styled('span')`
   ${baseStyles};
   position: relative;
-  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+  height: 25px;
+  padding: 0px 0px 6px;
+  color: #3c5263;
+  font-size: 15px;
+  font-family: sans-serif;
+  line-height: 25px;
+  z-index: 2;
+  pointer-events: none;
+  white-space: nowrap;
 
-  &:hover .Field__actions {
-    opacity: 1;
-    cursor: pointer;
+  .is-editing & {
+    z-index: 1;
+  }
+
+  & .is-placeholder {
+    color: #b7c2cc;
+  }
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px dashed #c6d0d8;
   }
 `
+
+export const FocusIndicatorUI = styled('span')`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #1292ee;
+  transform-origin: bottom right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  z-index: 3;
+
+  .is-editing & {
+    transform-origin: bottom left;
+    transform: scaleX(1);
+  }
+`
+
 export const FieldActionsUI = styled('div')`
   ${baseStyles};
   position: absolute;
-  right: 0;
-  z-index: 3;
+  top: 2px;
+  left: 100%;
+  padding-left: 5px;
+  z-index: 4;
   opacity: 0;
+  display: inline-block;
+  height: 25px;
 
   .is-editing & {
     opacity: 1;
-    cursor: pointer;
   }
 `
 export const FieldButtonUI = styled('button')`
   ${baseStyles};
-  font-family: monospace;
   display: inline-block;
-  text-align: center;
-  border: 1px solid silver;
-  color: slategray;
-  border-radius: 2px;
+  vertical-align: middle;
   height: 20px;
   width: 20px;
   padding: 0;
-  background-color: transparent;
   margin: 0;
-  vertical-align: middle;
-  margin-left: 5px;
+  border: none;
+  background-color: transparent;
+  color: slategray;
   font-size: 12px;
+  font-family: monospace;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
   &:focus {
     outline: none;
   }
+
+  &.action-delete {
+    &:focus,
+    &:hover {
+      cursor: pointer;
+      color: ${getColor('red.500')};
+    }
+  }
 `
 
-// .Field__button--delete:focus,
-// .Field__button--delete:hover {
-//   color: red;
-//   border: 1px solid red;
-// }
-
-// .Field__button--copy:focus,
-// .Field__button--copy:hover {
-//   color: LightSeaGreen;
-//   border: 1px solid LightSeaGreen;
-// }
-
-// .Field__button--visit {
-//   text-decoration: none;
-//   line-height: 20px;
-// }
-
-/* 
-============================================
-EDITING
-============================================
-*/
+export const AddButtonUI = styled('button')`
+  display: block;
+  height: 22px;
+  width: 22px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  color: #c6d0d8;
+  background-color: #f6f7f8;
+  cursor: pointer;
+`

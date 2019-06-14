@@ -1,18 +1,21 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
-import { EditableFieldProps, EditableFieldState } from './EditableField.types'
+
 import {
   EditableFieldUI,
   LabelTextUI,
-  FieldActionsUI,
-  FieldButtonUI,
+  AddButtonUI,
 } from './styles/EditableField.css'
-import { COMPONENT_KEY } from './EditableField.utils'
 import EditableFieldInput from './EditableFieldInput'
+import Icon from '../Icon'
+
+import propConnect from '../PropProvider/propConnect'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { classNames } from '../../utilities/classNames'
+import { COMPONENT_KEY, getFieldIndex } from './EditableField.utils'
 import { key } from '../../constants/Keys'
+import { noop } from '../../utilities/other'
+
+import { EditableFieldProps, EditableFieldState } from './EditableField.types'
 
 export class EditableField extends React.PureComponent<
   EditableFieldProps,
@@ -42,7 +45,7 @@ export class EditableField extends React.PureComponent<
 
   getNewValue = ({ inputValue, name }) => {
     const { value } = this.state
-    const idx = Number(name.split('_')[1])
+    const idx = getFieldIndex(name)
 
     return Array.isArray(value)
       ? value.map((val, index) => {
@@ -88,28 +91,41 @@ export class EditableField extends React.PureComponent<
     }
   }
 
-  handleInputBlur = () => {
-    const { value, initialValue } = this.state
+  handleInputBlur = ({ name, e }) => {
+    const { onBlur } = this.props
 
-    if (value !== initialValue) {
-      this.setState({
-        initialValue: value,
-      })
+    if (onBlur) {
+      const { value } = this.state
+      onBlur({ e, name, value })
     }
   }
 
-  addInput = () => {
+  handleAddValue = () => {
     const { value } = this.state
+    const isNotSingleEmptyValue = value[value.length - 1] !== ''
 
-    if (value[value.length - 1] !== '') {
+    if (isNotSingleEmptyValue) {
       this.setState({
         value: value.concat(''),
       })
     }
   }
 
+  handleDeleteValue = ({ name }) => {
+    const { value } = this.state
+
+    if (Array.isArray(value)) {
+      const idx = getFieldIndex(name)
+      const newValue = value.filter((val, index) => index !== idx)
+
+      this.setState({ value: newValue.length > 0 ? newValue : [''] })
+    } else {
+      this.setState({ value: '' })
+    }
+  }
+
   renderInputFields() {
-    const { name, type } = this.props
+    const { name, type, ...rest } = this.props
     const { value } = this.state
 
     if (Array.isArray(value)) {
@@ -117,28 +133,34 @@ export class EditableField extends React.PureComponent<
         <div>
           {value.map((val, idx) => (
             <EditableFieldInput
+              {...getValidProps(rest)}
               name={`${name}_${idx}`}
               key={`${name}_${idx}`}
               type={type}
               value={val}
               onBlur={this.handleInputBlur}
               onChange={this.handleInputChange}
+              onDelete={this.handleDeleteValue}
               onKeyDown={this.handleInputKeyDown}
             />
           ))}
-          <button type="button" onClick={this.addInput}>
-            +
-          </button>
+          {value[0] !== '' ? (
+            <AddButtonUI type="button" onClick={this.handleAddValue}>
+              <Icon name="plus-medium" />
+            </AddButtonUI>
+          ) : null}
         </div>
       )
     }
     return (
       <EditableFieldInput
+        {...getValidProps(rest)}
         name={`${name}_0`}
         type={type}
         value={value}
         onBlur={this.handleInputBlur}
         onChange={this.handleInputChange}
+        onDelete={this.handleDeleteValue}
         onKeyDown={this.handleInputKeyDown}
       />
     )

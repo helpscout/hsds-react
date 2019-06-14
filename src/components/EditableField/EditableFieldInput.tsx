@@ -1,21 +1,27 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
-import {
-  EditableFieldInputProps,
-  EditableFieldInputState,
-} from './EditableField.types'
+
 import {
   FieldInputUI,
   FieldContentUI,
   FieldStaticValueUI,
+  FocusIndicatorUI,
   FieldActionsUI,
   FieldButtonUI,
 } from './styles/EditableField.css'
+import Icon from '../Icon'
+import Truncate from '../Truncate'
+
+import propConnect from '../PropProvider/propConnect'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { COMPONENT_KEY } from './EditableField.utils'
 import { key } from '../../constants/Keys'
+import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
+
+import {
+  EditableFieldInputProps,
+  EditableFieldInputState,
+} from './EditableField.types'
 
 export class EditableFieldInput extends React.PureComponent<
   EditableFieldInputProps,
@@ -70,18 +76,16 @@ export class EditableFieldInput extends React.PureComponent<
     )
   }
 
-  handleBlur = () => {
-    const { onBlur } = this.props
+  handleBlur = e => {
+    const { onBlur, name } = this.props
 
-    this.setState({
-      isEditing: false,
-    })
-
-    onBlur()
+    onBlur({ name, e })
   }
 
   handleChange = e => {
-    this.props.onChange({
+    const { onChange } = this.props
+
+    onChange({
       inputValue: e.currentTarget.value,
       name: this.props.name,
     })
@@ -93,6 +97,10 @@ export class EditableFieldInput extends React.PureComponent<
       const spanNode = this.spanRef
 
       onKeyDown({ e, name, spanNode })
+
+      this.setState({
+        isEditing: false,
+      })
     }
   }
 
@@ -104,13 +112,23 @@ export class EditableFieldInput extends React.PureComponent<
     }
   }
 
+  handleDeleteClick = () => {
+    const { name, onDelete } = this.props
+
+    onDelete({ name })
+
+    this.setState({
+      isEditing: false,
+    })
+  }
+
   getClassName() {
     const { className } = this.props
     return classNames(EditableFieldInput.className, className)
   }
 
   render() {
-    const { name, type, value } = this.props
+    const { name, placeholder, type, value, ...rest } = this.props
     const { isEditing } = this.state
 
     return (
@@ -118,15 +136,16 @@ export class EditableFieldInput extends React.PureComponent<
         className={classNames(this.getClassName(), isEditing && 'is-editing')}
       >
         <FieldInputUI
+          {...getValidProps(rest)}
           className="c-EditableField__input"
           id={name}
           innerRef={node => {
             this.inputRef = node
           }}
           name={name}
+          placeholder={placeholder}
           type={type}
           value={value}
-          onBlur={this.handleBlur}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onKeyDown={this.handleKeyDown}
@@ -139,8 +158,27 @@ export class EditableFieldInput extends React.PureComponent<
           tabIndex={isEditing ? '-1' : '0'}
           onKeyDown={this.handleSpanKeyDown}
         >
-          {value}
+          {value ? (
+            <Truncate>{value}</Truncate>
+          ) : (
+            <span className="is-placeholder">{placeholder}</span>
+          )}
         </FieldStaticValueUI>
+
+        <FocusIndicatorUI className="c-EditableField__focusIndicator" />
+
+        {value ? (
+          <FieldActionsUI className="c-EditableField__actions">
+            <FieldButtonUI
+              className="c-FieldButton action-delete"
+              tabIndex={isEditing ? '0' : '-1'}
+              type="button"
+              onClick={this.handleDeleteClick}
+            >
+              <Icon name="cross-medium" />
+            </FieldButtonUI>
+          </FieldActionsUI>
+        ) : null}
       </FieldContentUI>
     )
   }

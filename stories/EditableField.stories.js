@@ -23,9 +23,9 @@ const stories = storiesOf('EditableField', module)
   .addDecorator(jsxDecorator)
 
 const FormUI = styled('form')`
-  width: 500px;
+  width: 200px;
   padding: 20px;
-  background-color: rgba(155, 155, 195, 0.1);
+  background-color: white;
   margin: 10px auto;
   border: 1px solid rgba(155, 155, 195, 0.4);
   border-radius: 3px;
@@ -37,7 +37,7 @@ class EditableFieldApp extends React.Component {
 
     this.state = {
       multipleInputValue: ['Juan', 'Pablo'],
-      singleInputValue: 'Help Scout',
+      singleInputValue: 'Help Scout Help Scout Help Scout Help Scout',
     }
   }
 
@@ -55,6 +55,7 @@ class EditableFieldApp extends React.Component {
           <EditableField
             label="Company"
             name="company"
+            placeholder="Add a company name"
             type="text"
             value={singleInputValue}
           />
@@ -62,6 +63,7 @@ class EditableFieldApp extends React.Component {
             label="Names"
             name="names"
             type="text"
+            placeholder="Add a name"
             value={multipleInputValue}
           />
         </FormUI>
