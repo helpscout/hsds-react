@@ -11,7 +11,11 @@ import Icon from '../Icon'
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY, getFieldIndex } from './EditableField.utils'
+import {
+  COMPONENT_KEY,
+  getFieldIndex,
+  generateUniqueName,
+} from './EditableField.utils'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 
@@ -35,6 +39,7 @@ export class EditableField extends React.PureComponent<
     this.state = {
       initialValue: props.value,
       value: props.value,
+      editingField: '',
     }
   }
 
@@ -55,49 +60,108 @@ export class EditableField extends React.PureComponent<
       : inputValue
   }
 
-  handleInputChange = ({ inputValue, name }) => {
-    this.setState({
-      value: this.getNewValue({ inputValue, name }),
-    })
+  handleInputChange = ({ inputValue, name, event }) => {
+    const { onChange } = this.props
+
+    const newValue = this.getNewValue({ inputValue, name })
+
+    this.setState(
+      {
+        value: newValue,
+      },
+      () => {
+        if (onChange) {
+          onChange({ name, value: newValue, event })
+        }
+      }
+    )
   }
 
-  handleInputKeyDown = ({ e, name, spanNode }) => {
-    if (e.key === key.ENTER) {
-      const newValue = this.getNewValue({
-        inputValue: e.currentTarget.value,
-        name,
-      })
+  handleInputKeyDown = ({ event, name }) => {
+    return new Promise(resolve => {
+      const { onEnter, onEscape } = this.props
+      const { initialValue } = this.state
+      const { key: eventKey } = event
+      let newValue = initialValue
+      let newInitialValue = initialValue
+
+      if (eventKey === key.ENTER) {
+        newValue = this.getNewValue({
+          inputValue: event.currentTarget.value,
+          name,
+        })
+        newInitialValue = newValue
+      }
 
       this.setState(
         {
           value: newValue,
-          initialValue: newValue,
+          initialValue: newInitialValue,
+          editingField: '',
         },
         () => {
-          spanNode && spanNode.focus()
+          resolve()
+
+          if (eventKey === key.ENTER && onEnter) {
+            onEnter({ name, value: newValue, event })
+          }
+
+          if (eventKey === key.ESCAPE && onEscape) {
+            onEscape({ name, value: initialValue, event })
+          }
         }
       )
-    } else if (e.key === key.ESCAPE) {
-      const { initialValue } = this.state
+    })
+  }
 
+  handleInputFocus = ({ name, event }) => {
+    const { onFocus } = this.props
+
+    return new Promise(resolve => {
       this.setState(
         {
-          value: initialValue,
+          editingField: name,
         },
         () => {
-          spanNode && spanNode.focus()
+          resolve()
+
+          if (onFocus) {
+            const { value } = this.state
+
+            onFocus({ event, name, value })
+          }
         }
       )
+    })
+  }
+
+  handleInputBlur = ({ name, event }) => {
+    const { onInputBlur } = this.props
+    const { value } = this.state
+
+    if (onInputBlur) {
+      onInputBlur({ event, name, value })
     }
   }
 
-  handleInputBlur = ({ name, e }) => {
-    const { onBlur } = this.props
+  handleActionButtonBlur = ({ name, event }) => {
+    const { onFieldBlur } = this.props
+    const { value } = this.state
 
-    if (onBlur) {
-      const { value } = this.state
-      onBlur({ e, name, value })
-    }
+    return new Promise(resolve => {
+      this.setState(
+        {
+          editingField: '',
+        },
+        () => {
+          resolve()
+
+          if (onFieldBlur) {
+            onFieldBlur({ event, name, value })
+          }
+        }
+      )
+    })
   }
 
   handleAddValue = () => {
@@ -105,46 +169,76 @@ export class EditableField extends React.PureComponent<
     const isNotSingleEmptyValue = value[value.length - 1] !== ''
 
     if (isNotSingleEmptyValue) {
+      const { name } = this.props
+      const newValue = value.concat('')
+
       this.setState({
-        value: value.concat(''),
+        value: newValue,
+        editingField: `${name}_${newValue.length - 1}`,
       })
     }
   }
 
-  handleDeleteValue = ({ name }) => {
+  handleDeleteValue = ({ name, event }) => {
+    const { onDelete } = this.props
     const { value } = this.state
+    let newValue: string | string[] = ''
+    let newState: {
+      value: string | string[]
+      editingField: string
+    } = { value: '', editingField: '' }
 
     if (Array.isArray(value)) {
       const idx = getFieldIndex(name)
-      const newValue = value.filter((val, index) => index !== idx)
 
-      this.setState({ value: newValue.length > 0 ? newValue : [''] })
-    } else {
-      this.setState({ value: '' })
+      newValue = value.filter((__, index) => index !== idx)
+      newState.value = newValue.length > 0 ? newValue : ['']
     }
+
+    return new Promise(resolve => {
+      this.setState(newState, () => {
+        resolve()
+
+        if (onDelete) {
+          onDelete({ event, name, value: newValue })
+        }
+      })
+    })
   }
 
   renderInputFields() {
     const { name, type, ...rest } = this.props
-    const { value } = this.state
+    const { value, editingField } = this.state
+
+    let fieldName = generateUniqueName(name)
 
     if (Array.isArray(value)) {
+      const isNotSingleEmptyValue = value[0] !== ''
+
       return (
         <div>
-          {value.map((val, idx) => (
-            <EditableFieldInput
-              {...getValidProps(rest)}
-              name={`${name}_${idx}`}
-              key={`${name}_${idx}`}
-              type={type}
-              value={val}
-              onBlur={this.handleInputBlur}
-              onChange={this.handleInputChange}
-              onDelete={this.handleDeleteValue}
-              onKeyDown={this.handleInputKeyDown}
-            />
-          ))}
-          {value[0] !== '' ? (
+          {value.map((val, idx) => {
+            fieldName = generateUniqueName(name, idx)
+
+            return (
+              <EditableFieldInput
+                {...getValidProps(rest)}
+                name={fieldName}
+                isEditing={editingField === fieldName}
+                key={fieldName}
+                type={type}
+                value={val}
+                onActionButtonBlur={this.handleActionButtonBlur}
+                onBlur={this.handleInputBlur}
+                onChange={this.handleInputChange}
+                onDelete={this.handleDeleteValue}
+                onFocus={this.handleInputFocus}
+                onKeyDown={this.handleInputKeyDown}
+              />
+            )
+          })}
+
+          {isNotSingleEmptyValue ? (
             <AddButtonUI type="button" onClick={this.handleAddValue}>
               <Icon name="plus-medium" />
             </AddButtonUI>
@@ -155,12 +249,15 @@ export class EditableField extends React.PureComponent<
     return (
       <EditableFieldInput
         {...getValidProps(rest)}
-        name={`${name}_0`}
+        name={fieldName}
+        isEditing={editingField === fieldName}
         type={type}
         value={value}
+        onActionButtonBlur={this.handleActionButtonBlur}
         onBlur={this.handleInputBlur}
         onChange={this.handleInputChange}
         onDelete={this.handleDeleteValue}
+        onFocus={this.handleInputFocus}
         onKeyDown={this.handleInputKeyDown}
       />
     )
@@ -173,7 +270,7 @@ export class EditableField extends React.PureComponent<
       <EditableFieldUI {...getValidProps(rest)}>
         <label
           className="c-EditableField__label"
-          htmlFor={Array.isArray(value) ? `${name}_0` : name}
+          htmlFor={generateUniqueName(name)}
         >
           <LabelTextUI className="c-EditableField__labelText">
             {label}

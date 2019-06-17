@@ -18,17 +18,14 @@ import { key } from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-import {
-  EditableFieldInputProps,
-  EditableFieldInputState,
-} from './EditableField.types'
+import { EditableFieldInputProps } from './EditableField.types'
 
 export class EditableFieldInput extends React.PureComponent<
-  EditableFieldInputProps,
-  EditableFieldInputState
+  EditableFieldInputProps
 > {
   static className = 'c-EditableFieldInput'
   static defaultProps = {
+    isEditing: false,
     innerRef: noop,
     onBlur: noop,
     onChange: noop,
@@ -40,96 +37,90 @@ export class EditableFieldInput extends React.PureComponent<
   inputRef: HTMLInputElement
   spanRef: HTMLSpanElement
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isEditing: false,
-    }
-  }
-
   componentDidMount() {
-    const { value } = this.props
+    const { isEditing } = this.props
 
-    if (value === '') {
-      this.setState(
-        {
-          isEditing: true,
-        },
-        () => {
-          const inputNode = this.inputRef
-          inputNode && inputNode.focus()
-        }
-      )
-    }
-  }
+    if (isEditing) {
+      const inputNode = this.inputRef
 
-  handleFocus = () => {
-    this.setState(
-      {
-        isEditing: true,
-      },
-      () => {
-        const inputNode = this.inputRef
-        inputNode && inputNode.select()
-      }
-    )
-  }
-
-  handleBlur = e => {
-    const { onBlur, name } = this.props
-
-    onBlur({ name, e })
-  }
-
-  handleChange = e => {
-    const { onChange } = this.props
-
-    onChange({
-      inputValue: e.currentTarget.value,
-      name: this.props.name,
-    })
-  }
-
-  handleKeyDown = e => {
-    if (e.key === key.ENTER || e.key === key.ESCAPE) {
-      const { name, onKeyDown } = this.props
-      const spanNode = this.spanRef
-
-      onKeyDown({ e, name, spanNode })
-
-      this.setState({
-        isEditing: false,
-      })
-    }
-  }
-
-  handleSpanKeyDown = e => {
-    const inputNode = this.inputRef
-
-    if (e.key === key.ENTER) {
       inputNode && inputNode.focus()
     }
   }
 
-  handleDeleteClick = () => {
-    const { name, onDelete } = this.props
-
-    onDelete({ name })
-
-    this.setState({
-      isEditing: false,
-    })
-  }
-
   getClassName() {
     const { className } = this.props
+
     return classNames(EditableFieldInput.className, className)
   }
 
+  handleFocus = event => {
+    const { onFocus, name } = this.props
+
+    onFocus({ name, event }).then(() => {
+      const inputNode = this.inputRef
+
+      inputNode && inputNode.select()
+    })
+  }
+
+  handleBlur = event => {
+    const { onBlur, name } = this.props
+
+    onBlur({ name, event })
+  }
+
+  handleChange = event => {
+    const { onChange } = this.props
+
+    onChange({
+      inputValue: event.currentTarget.value,
+      name: this.props.name,
+      event,
+    })
+  }
+
+  handleKeyDown = event => {
+    if (event.key === key.ENTER || event.key === key.ESCAPE) {
+      const { name, onKeyDown } = this.props
+
+      onKeyDown({ event, name }).then(() => {
+        const spanNode = this.spanRef
+
+        spanNode && spanNode.focus()
+      })
+    }
+  }
+
+  handleDeleteClick = event => {
+    const { name, onDelete } = this.props
+
+    onDelete({ name, event }).then(() => {
+      const spanNode = this.spanRef
+
+      spanNode && spanNode.focus()
+    })
+  }
+
+  handleButtonBlur = event => {
+    const { name, onActionButtonBlur } = this.props
+
+    onActionButtonBlur({ name, event }).then(() => {
+      const spanNode = this.spanRef
+
+      spanNode && spanNode.removeAttribute('tabIndex')
+    })
+  }
+
+  handleSpanKeyDown = event => {
+    const inputNode = this.inputRef
+
+    if (event.key === key.ENTER) {
+      inputNode && inputNode.focus()
+    }
+  }
+
   render() {
-    const { name, placeholder, type, value, ...rest } = this.props
-    const { isEditing } = this.state
+    const { name, placeholder, isEditing, type, value, ...rest } = this.props
 
     return (
       <FieldContentUI
@@ -146,6 +137,7 @@ export class EditableFieldInput extends React.PureComponent<
           placeholder={placeholder}
           type={type}
           value={value}
+          onBlur={this.handleBlur}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onKeyDown={this.handleKeyDown}
@@ -155,7 +147,7 @@ export class EditableFieldInput extends React.PureComponent<
           innerRef={node => {
             this.spanRef = node
           }}
-          tabIndex={isEditing ? '-1' : '0'}
+          tabIndex={isEditing ? undefined : '0'}
           onKeyDown={this.handleSpanKeyDown}
         >
           {value ? (
@@ -174,6 +166,7 @@ export class EditableFieldInput extends React.PureComponent<
               tabIndex={isEditing ? '0' : '-1'}
               type="button"
               onClick={this.handleDeleteClick}
+              onBlur={this.handleButtonBlur}
             >
               <Icon name="cross-medium" />
             </FieldButtonUI>

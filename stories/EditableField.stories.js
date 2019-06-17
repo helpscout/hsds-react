@@ -60,6 +60,20 @@ class EditableFieldApp extends React.Component {
             value={singleInputValue}
           />
           <EditableField
+            label="Country"
+            name="country"
+            placeholder="Add a country name"
+            type="text"
+            value="Mexico"
+          />
+          <EditableField
+            label="City"
+            name="city"
+            placeholder="Add a city name"
+            type="text"
+            value="Guadalajara"
+          />
+          <EditableField
             label="Names"
             name="names"
             type="text"
@@ -71,8 +85,6 @@ class EditableFieldApp extends React.Component {
     )
   }
 }
-
-const initialValue = ['Juan', 'Pablo']
 
 stories.add('Default', () => <EditableFieldApp />)
 
