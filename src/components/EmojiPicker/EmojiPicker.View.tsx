@@ -1,4 +1,5 @@
 import * as React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 export interface Props {
@@ -27,7 +28,7 @@ class EmojiView extends React.PureComponent<Props> {
 
     return (
       <span
-        {...rest}
+        {...getValidProps(rest)}
         role="img"
         aria-label={name}
         className={this.getClassName()}

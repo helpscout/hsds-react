@@ -1,6 +1,7 @@
 import styled from '../../styled'
 import Icon from '../../Icon'
-import { getColor, rgba } from '../../../styles/utilities/color'
+
+const { getColor, rgba } = styled._
 
 export const config = {
   colors: {

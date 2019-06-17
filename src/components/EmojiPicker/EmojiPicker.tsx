@@ -20,6 +20,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     dropUp: true,
     enableLeftRightArrowNavigation: true,
     innerRef: noop,
+    minHeight: 'auto',
     onSelect: noop,
     emojiSet: emojiSet,
     size: 'default',
@@ -34,7 +35,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     return classNames(EmojiPicker.className, className)
   }
 
-  getDropdownTrigger() {
+  renderTrigger() {
     const { renderTrigger } = this.props
 
     if (renderTrigger) return renderTrigger
@@ -42,8 +43,8 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     return <TriggerUI className="c-EmojiPickerTrigger" size="24" />
   }
 
-  renderMenu = props => {
-    return <MenuUI {...props} />
+  renderMenu = menu => {
+    return <MenuUI {...menu} />
   }
 
   renderItem = item => {
@@ -51,27 +52,16 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
   }
 
   render() {
-    const {
-      children,
-      emojiSet,
-      size,
-      onSelect,
-      innerRef,
-      renderTrigger,
-      ...rest
-    } = this.props
+    const { children, emojiSet, size, ...rest } = this.props
 
     return (
       <Dropdown
         {...rest}
         className={this.getClassName()}
-        innerRef={innerRef}
         items={emojiSet}
-        onSelect={onSelect}
-        minHeight="auto"
         renderMenu={this.renderMenu}
         renderItem={this.renderItem}
-        renderTrigger={this.getDropdownTrigger()}
+        renderTrigger={this.renderTrigger()}
       />
     )
   }

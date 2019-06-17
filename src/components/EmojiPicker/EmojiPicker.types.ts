@@ -1,3 +1,5 @@
+import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
+
 export interface EmojiProps {
   colons: string
   hoverBackgroundColor: string
@@ -7,16 +9,10 @@ export interface EmojiProps {
   value: string
 }
 
-export interface EmojiPickerProps {
+export interface EmojiPickerProps extends DropdownProps {
   className?: string
-  enableLeftRightArrowNavigation: boolean
   emojiSet?: Array<EmojiProps>
-  innerRef: (node: HTMLElement) => void
-  onSelect: (item: Object, props: Object) => void
-  renderItem?: any
-  renderMenu?: any
   size?: string
-  renderTrigger?: any
 }
 
 export interface EmojiPickerMenuProps {
