@@ -18,6 +18,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     className: '',
     direction: 'left',
     dropUp: true,
+    enableLeftRightArrowNavigation: true,
     innerRef: noop,
     onSelect: noop,
     emojiSet: emojiSet,
@@ -67,6 +68,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
         innerRef={innerRef}
         items={emojiSet}
         onSelect={onSelect}
+        minHeight="auto"
         renderMenu={this.renderMenu}
         renderItem={this.renderItem}
         renderTrigger={this.getDropdownTrigger()}

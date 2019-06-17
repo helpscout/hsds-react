@@ -10,6 +10,7 @@ class Item extends React.PureComponent<EmojiPickerItemProps> {
   static defaultProps = {
     className: '',
     'data-cy': 'EmojiPickerItem',
+    hoverBackgroundColor: 'purple',
     size: 'default',
   }
 
@@ -20,11 +21,15 @@ class Item extends React.PureComponent<EmojiPickerItemProps> {
   }
 
   render() {
-    const { className, name, size, symbol, ...rest } = this.props
+    const { hoverBackgroundColor, name, size, symbol } = this.props
 
     return (
-      <ItemWrapperUI size={size}>
-        <ItemUI {...rest} className={this.getClassName()} size={size}>
+      <ItemWrapperUI
+        className="c-EmojiPickerItemWrapper"
+        hoverBackgroundColor={hoverBackgroundColor}
+        size={size}
+      >
+        <ItemUI className={this.getClassName()} size={size}>
           <EmojiView name={name} symbol={symbol} />
         </ItemUI>
       </ItemWrapperUI>

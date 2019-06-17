@@ -1,5 +1,4 @@
 import styled from '../../styled'
-import Dropdown from '../../Dropdown/DropdownV2'
 import Icon from '../../Icon'
 import { getColor, rgba } from '../../../styles/utilities/color'
 
@@ -10,6 +9,8 @@ export const config = {
     red: 'red.300',
     yellow: 'yellow.300',
   },
+  hoverBackgroundOpacity: 0.5,
+  hoverBackgroundActiveOpacity: 0.85,
   sizes: {
     default: '24px',
     sm: '16px',
@@ -21,6 +22,12 @@ export const MenuUI = styled('div')`
   display: flex;
   padding-left: 5px;
   padding-right: 5px;
+
+  .c-DropdownV2Item.is-option {
+    background: none !important;
+    padding: 0;
+    outline: none !important;
+  }
 `
 
 export const ItemWrapperUI = styled('div')`
@@ -30,9 +37,29 @@ export const ItemWrapperUI = styled('div')`
   display: flex;
   justify-content: center;
   margin: 3px;
+  transition: background 200ms linear;
 
+  .c-DropdownV2Item.is-focused &,
   &:hover {
-    background: red;
+    ${({ hoverBackgroundColor }) =>
+      hoverBackgroundColor &&
+      `
+        background-color: ${rgba(
+          getColor(`${config.colors[hoverBackgroundColor]}`),
+          config.hoverBackgroundOpacity
+        )};
+      `};
+  }
+
+  &:active {
+    ${({ hoverBackgroundColor }) =>
+      hoverBackgroundColor &&
+      `
+        background-color: ${rgba(
+          getColor(`${config.colors[hoverBackgroundColor]}`),
+          config.hoverBackgroundActiveOpacity
+        )};
+      `};
   }
 
   ${({ size }) =>
@@ -56,21 +83,14 @@ export const ItemUI = styled('div')`
   &.is-focused {
     &.is-option {
       border-radius: 50% !important;
-
-      ${({ hoverBackgroundColor }) =>
-        hoverBackgroundColor &&
-        `
-        background-color: ${rgba(
-          getColor(`${config.colors[hoverBackgroundColor]}`),
-          1
-        )};
-      `};
     }
   }
 
-  span {
-    display: inline-block;
-    line-height: 1.15;
+  .c-EmojiPickerView {
+    display: block;
+    line-height: 1;
+    position: relative;
+    top: 1px;
 
     ${({ size }) =>
       size &&

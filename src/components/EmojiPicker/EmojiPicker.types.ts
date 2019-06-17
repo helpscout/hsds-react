@@ -9,6 +9,7 @@ export interface EmojiProps {
 
 export interface EmojiPickerProps {
   className?: string
+  enableLeftRightArrowNavigation: boolean
   emojiSet?: Array<EmojiProps>
   innerRef: (node: HTMLElement) => void
   onSelect: (item: Object, props: Object) => void
@@ -28,6 +29,7 @@ export interface EmojiPickerMenuProps {
 
 export interface EmojiPickerItemProps {
   className: any
+  hoverBackgroundColor: string
   name: string
   renderItem?: any
   size: string
