@@ -162,8 +162,23 @@ import searchSmall from '../../icons/search-small.svg'
 import shoppingCart from '../../icons/shopping-cart.svg'
 import sign from '../../icons/sign.svg'
 import smallPaperclip from '../../icons/small-paperclip.svg'
+import socialAboutMe from '../../icons/social-aboutme.svg'
+import socialAol from '../../icons/social-aol.svg'
 import socialFacebook from '../../icons/social-facebook.svg'
+import socialFlicker from '../../icons/social-flicker.svg'
+import socialFoursquare from '../../icons/social-foursquare.svg'
+import socialGooglePlus from '../../icons/social-gplus.svg'
+import socialHangouts from '../../icons/social-hangouts.svg'
+import socialIcq from '../../icons/social-icq.svg'
+import socialLinkedIn from '../../icons/social-linkedin.svg'
+import socialMsn from '../../icons/social-msn.svg'
+import socialQq from '../../icons/social-qq.svg'
+import socialQuora from '../../icons/social-quora.svg'
+import socialSkype from '../../icons/social-skype.svg'
 import socialTwitter from '../../icons/social-twitter.svg'
+import socialXmpp from '../../icons/social-xmpp.svg'
+import socialYahoo from '../../icons/social-yahoo.svg'
+import socialYoutube from '../../icons/social-youtube.svg'
 import spam from '../../icons/spam.svg'
 import spinner from '../../icons/spinner.svg'
 import star from '../../icons/star.svg'
@@ -376,8 +391,23 @@ const ICONS = {
   'shopping-cart': shoppingCart,
   sign,
   'small-paperclip': smallPaperclip,
+  'social-about-me': socialAboutMe,
+  'social-aol': socialAol,
   'social-facebook': socialFacebook,
+  'social-flicker': socialFlicker,
+  'social-foursquare': socialFoursquare,
+  'social-google-plus': socialGooglePlus,
+  'social-hangouts': socialHangouts,
+  'social-icq': socialIcq,
+  'social-linked-in': socialLinkedIn,
+  'social-msn': socialMsn,
+  'social-qq': socialQq,
+  'social-quora': socialQuora,
+  'social-skype': socialSkype,
   'social-twitter': socialTwitter,
+  'social-xmpp': socialXmpp,
+  'social-yahoo': socialYahoo,
+  'social-youtube': socialYoutube,
   spam,
   spinner,
   'star-small': starSmall,

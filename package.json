@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.46.1-beta-emoji-picker",
+  "version": "2.47.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
