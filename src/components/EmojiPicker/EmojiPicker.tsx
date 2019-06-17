@@ -6,7 +6,6 @@ import Dropdown from '../Dropdown/DropdownV2'
 import { EmojiPickerProps } from './EmojiPicker.types'
 import { COMPONENT_KEY } from './EmojiPicker.utils'
 import { MenuUI, TriggerUI } from './styles/EmojiPicker.css'
-import Menu from './EmojiPicker.Menu'
 import Item from './EmojiPicker.Item'
 import EmojiView from './EmojiPicker.View'
 import { emojiSet } from './emojiSet'
@@ -27,7 +26,6 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
   }
 
   static EmojiView = EmojiView
-  static Menu = Menu
   static Item = Item
 
   getClassName() {
@@ -40,10 +38,20 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
 
     if (renderTrigger) return renderTrigger
 
-    return <TriggerUI className="c-EmojiPickerTrigger" size="24" />
+    return (
+      <TriggerUI
+        data-cy="EmojiPickerTrigger"
+        className="c-EmojiPickerTrigger"
+        size="24"
+      />
+    )
   }
 
   renderMenu = menu => {
+    const { renderMenu } = this.props
+
+    if (renderMenu) return renderMenu
+
     return <MenuUI {...menu} />
   }
 

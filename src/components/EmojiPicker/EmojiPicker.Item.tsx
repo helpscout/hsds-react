@@ -3,15 +3,19 @@ import EmojiView from './EmojiPicker.View'
 import { classNames } from '../../utilities/classNames'
 import { ItemWrapperUI, ItemUI } from './styles/EmojiPicker.css'
 import { EmojiPickerItemProps } from './EmojiPicker.types'
+import { defaultEmoji } from './emojiSet'
 
 class Item extends React.PureComponent<EmojiPickerItemProps> {
   static className = 'c-EmojiPickerItem'
 
   static defaultProps = {
-    className: '',
     'data-cy': 'EmojiPickerItem',
+    className: '',
     hoverBackgroundColor: 'purple',
+    name: defaultEmoji.name,
     size: 'default',
+    symbol: defaultEmoji.symbol,
+    value: defaultEmoji.value,
   }
 
   getClassName() {

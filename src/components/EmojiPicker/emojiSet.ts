@@ -1,12 +1,14 @@
+export const defaultEmoji = {
+  colons: ':unicorn_face:',
+  hoverBackgroundColor: 'purple',
+  name: 'Unicorn Face',
+  symbol: '🦄',
+  unified: '1f984',
+  value: 'Unicorn Face',
+}
+
 export const emojiSet = [
-  {
-    colons: ':unicorn_face:',
-    hoverBackgroundColor: 'purple',
-    name: 'Unicorn Face',
-    symbol: '🦄',
-    unified: '1f984',
-    value: 'Unicorn Face',
-  },
+  defaultEmoji,
   {
     colons: ':heart:',
     hoverBackgroundColor: 'red',

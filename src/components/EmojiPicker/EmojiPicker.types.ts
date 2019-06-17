@@ -12,6 +12,7 @@ export interface EmojiProps {
 export interface EmojiPickerProps extends DropdownProps {
   className?: string
   emojiSet?: Array<EmojiProps>
+  renderMenu?: any
   size?: string
 }
 

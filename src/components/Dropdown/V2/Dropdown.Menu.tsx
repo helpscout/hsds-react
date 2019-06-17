@@ -60,18 +60,22 @@ export class Menu extends React.PureComponent<Props> {
       ...getValidProps(rest),
       children,
       className: componentClassName,
-      // innerRef: renderMenu ? undefined : innerRef,
+      innerRef: renderMenu ? undefined : innerRef,
       style: this.getStyles(),
     }
 
-    const MenuComponent = renderMenu || MenuUI
+    const menuMarkup = renderMenu ? (
+      renderMenu(menuProps)
+    ) : (
+      <MenuUI {...menuProps} />
+    )
 
     return (
       <MenuWrapperUI
         className="c-DropdownV2MenuWrapper"
         innerRef={innerWrapperRef}
       >
-        <MenuComponent {...menuProps} />
+        {menuMarkup}
       </MenuWrapperUI>
     )
   }
