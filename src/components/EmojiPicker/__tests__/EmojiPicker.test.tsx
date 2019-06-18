@@ -19,6 +19,15 @@ describe('className', () => {
   })
 })
 
+describe('HTML props', () => {
+  test('Can render default HTML props', () => {
+    cy.render(<EmojiPicker data-cy="BlueBlueBlue" />)
+    const el = cy.getByCy('BlueBlueBlue')
+
+    expect(el.exists()).toBeTruthy()
+  })
+})
+
 describe('renderTrigger', () => {
   test('Has default trigger component', () => {
     cy.render(<EmojiPicker />)
@@ -43,11 +52,18 @@ describe('renderTrigger', () => {
   })
 })
 
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    cy.render(<EmojiPicker data-cy="BlueBlueBlue" />)
-    const el = cy.getByCy('BlueBlueBlue')
+describe('Menu/Item', () => {
+  test('Renders an Emoji correctly within a Menu/Item', () => {
+    cy.render(<EmojiPicker isOpen={true} />)
 
-    expect(el.exists()).toBeTruthy()
+    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeTruthy()
+    expect(cy.getByCy('EmojiPickerItem').exists()).toBeTruthy()
+
+    expect(
+      cy
+        .getByCy('EmojiPickerItem')
+        .find('[data-cy="EmojiPickerEmoji"]')
+        .exists()
+    ).toBeTruthy()
   })
 })

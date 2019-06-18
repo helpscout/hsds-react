@@ -12,6 +12,7 @@ class EmojiView extends React.PureComponent<Props> {
   static className = 'c-EmojiPickerView'
 
   static defaultProps = {
+    'data-cy': 'EmojiPickerEmoji',
     className: '',
     name: 'Unicorn Face',
     symbol: '🦄',

@@ -30,10 +30,15 @@ class Item extends React.PureComponent<EmojiPickerItemProps> {
     return (
       <ItemWrapperUI
         className="c-EmojiPickerItemWrapper"
+        data-cy="EmojiPickerItemWrapper"
         hoverBackgroundColor={hoverBackgroundColor}
         size={size}
       >
-        <ItemUI className={this.getClassName()} size={size}>
+        <ItemUI
+          data-cy="EmojiPickerItem"
+          className={this.getClassName()}
+          size={size}
+        >
           <EmojiView name={name} symbol={symbol} />
         </ItemUI>
       </ItemWrapperUI>

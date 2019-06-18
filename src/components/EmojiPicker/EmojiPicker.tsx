@@ -21,7 +21,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     innerRef: noop,
     minHeight: 'auto',
     onSelect: noop,
-    emojiSet: emojiSet,
+    emojiSet,
     size: 'default',
   }
 
@@ -48,7 +48,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
   }
 
   renderMenu = menu => {
-    return <MenuUI {...menu} />
+    return <MenuUI {...menu} data-cy="EmojiPickerMenu" />
   }
 
   renderItem = item => {
