@@ -1,7 +1,7 @@
 import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
 
 export interface EmojiProps {
-  colons: string
+  colons: Array<string>
   hoverBackgroundColor: string
   name: string
   symbol: string

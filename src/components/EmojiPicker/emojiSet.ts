@@ -1,5 +1,5 @@
 export const defaultEmoji = {
-  colons: ':unicorn_face:',
+  colons: [':unicorn_face:'],
   hoverBackgroundColor: 'purple',
   name: 'Unicorn Face',
   symbol: '🦄',
@@ -10,15 +10,15 @@ export const defaultEmoji = {
 export const emojiSet = [
   defaultEmoji,
   {
-    colons: ':heart:',
+    colons: [':heart:'],
     hoverBackgroundColor: 'red',
     name: 'Heavy Black Heart',
-    symbol: '❤️',
+    symbol: '❤',
     unified: '2764-fe0f',
     value: 'Heavy Black Heart',
   },
   {
-    colons: ':slightly_smiling_face:',
+    colons: [':slightly_smiling_face:'],
     hoverBackgroundColor: 'grey',
     name: 'Slightly Smiling Face',
     symbol: '🙂',
@@ -26,7 +26,7 @@ export const emojiSet = [
     value: 'Slightly Smiling Face',
   },
   {
-    colons: ':slightly_frowning_face:',
+    colons: [':slightly_frowning_face:'],
     hoverBackgroundColor: 'yellow',
     name: 'Slightly Frowning Face',
     symbol: '🙁',
@@ -34,7 +34,7 @@ export const emojiSet = [
     value: 'Slightly Frowning Face',
   },
   {
-    colons: ':+1:',
+    colons: [':+1:', ':thumbs_up:'],
     hoverBackgroundColor: 'yellow',
     name: 'Thumbs Up Sign',
     symbol: '👍',
@@ -42,7 +42,7 @@ export const emojiSet = [
     value: 'Thumbs Up Sign',
   },
   {
-    colons: ':-1:',
+    colons: [':-1:', ':thumbs_down'],
     hoverBackgroundColor: 'yellow',
     name: 'Thumbs Down Sign',
     symbol: '👎',
