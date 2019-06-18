@@ -37,7 +37,7 @@ class EditableFieldApp extends React.Component {
 
     this.state = {
       multipleInputValue: ['Juan', 'Pablo'],
-      singleInputValue: 'Help Scout Help Scout Help Scout Help Scout',
+      singleInputValue: 'Help Scout',
     }
   }
 
@@ -58,14 +58,12 @@ class EditableFieldApp extends React.Component {
             placeholder="Add a company name"
             type="text"
             value={singleInputValue}
-            actions={[
-              {
-                name: 'delete',
-                callBack() {
-                  console.log('delete')
-                },
+            actions={{
+              name: 'delete',
+              callback(obj) {
+                console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
               },
-            ]}
+            }}
           />
           <EditableField
             label="Country"
@@ -75,11 +73,17 @@ class EditableFieldApp extends React.Component {
             value="Mexico"
           />
           <EditableField
-            label="City"
-            name="city"
+            label="Website"
+            name="website"
             placeholder="Add a city name"
-            type="text"
-            value="Guadalajara"
+            type="url"
+            value="http://mysite.net"
+            actions={{
+              name: 'link',
+              callback(obj) {
+                console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+              },
+            }}
           />
           <EditableField
             label="Names"
@@ -87,6 +91,14 @@ class EditableFieldApp extends React.Component {
             type="text"
             placeholder="Add a name"
             value={multipleInputValue}
+            actions={[
+              {
+                name: 'delete',
+                callback(obj) {
+                  console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+                },
+              },
+            ]}
           />
         </FormUI>
       </div>

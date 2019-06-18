@@ -149,15 +149,26 @@ export class EditableField extends React.PureComponent<
   }
 
   handleInputBlur = ({ name, event }) => {
-    const { onInputBlur } = this.props
+    const { onFieldBlur } = this.props
     const { value } = this.state
 
-    if (onInputBlur) {
-      onInputBlur({ event, name, value })
-    }
+    return new Promise(resolve => {
+      this.setState(
+        {
+          editingField: '',
+        },
+        () => {
+          resolve()
+
+          if (onFieldBlur) {
+            onFieldBlur({ event, name, value })
+          }
+        }
+      )
+    })
   }
 
-  handleActionButtonBlur = ({ name, event }) => {
+  handleFieldBlur = ({ name, event }) => {
     const { onFieldBlur } = this.props
     const { value } = this.state
 
@@ -192,9 +203,10 @@ export class EditableField extends React.PureComponent<
     }
   }
 
-  handleDeleteValue = ({ name, event }) => {
-    const { onDelete } = this.props
+  handleDeleteAction = ({ action, name, event }) => {
     const { value } = this.state
+    const e = { ...event }
+
     let newValue: string | string[] = ''
     let newState: {
       value: string | string[]
@@ -208,15 +220,19 @@ export class EditableField extends React.PureComponent<
       newState.value = newValue.length > 0 ? newValue : ['']
     }
 
-    return new Promise(resolve => {
-      this.setState(newState, () => {
-        resolve()
-
-        if (onDelete) {
-          onDelete({ event, name, value: newValue })
-        }
-      })
+    this.setState(newState, () => {
+      if (action.callback && typeof action.callback === 'function') {
+        action.callback({ name, action, value, event: e })
+      }
     })
+  }
+
+  handleCustomAction = ({ action, name, event }) => {
+    const { value } = this.state
+
+    if (action.callback && typeof action.callback === 'function') {
+      action.callback({ name, action, value, event })
+    }
   }
 
   handleOnDocumentBodyClick = (event: Event) => {
@@ -250,7 +266,7 @@ export class EditableField extends React.PureComponent<
   }
 
   renderInputFields() {
-    const { name, type, ...rest } = this.props
+    const { name, type, actions, ...rest } = this.props
     const { value, editingField } = this.state
 
     let fieldName = generateUniqueName(name)
@@ -266,17 +282,18 @@ export class EditableField extends React.PureComponent<
             return (
               <EditableFieldInput
                 {...getValidProps(rest)}
+                actions={actions}
                 name={fieldName}
                 isEditing={editingField === fieldName}
                 key={fieldName}
                 type={type}
                 value={val}
-                onActionButtonBlur={this.handleActionButtonBlur}
-                onBlur={this.handleInputBlur}
+                onBlur={this.handleFieldBlur}
                 onChange={this.handleInputChange}
-                onDelete={this.handleDeleteValue}
                 onFocus={this.handleInputFocus}
                 onKeyDown={this.handleInputKeyDown}
+                customAction={this.handleCustomAction}
+                deleteAction={this.handleDeleteAction}
               />
             )
           })}
@@ -292,16 +309,17 @@ export class EditableField extends React.PureComponent<
     return (
       <EditableFieldInput
         {...getValidProps(rest)}
+        actions={actions}
         name={fieldName}
         isEditing={editingField === fieldName}
         type={type}
         value={value}
-        onActionButtonBlur={this.handleActionButtonBlur}
-        onBlur={this.handleInputBlur}
+        onBlur={this.handleFieldBlur}
         onChange={this.handleInputChange}
-        onDelete={this.handleDeleteValue}
         onFocus={this.handleInputFocus}
         onKeyDown={this.handleInputKeyDown}
+        customAction={this.handleCustomAction}
+        deleteAction={this.handleDeleteAction}
       />
     )
   }

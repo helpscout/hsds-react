@@ -1,5 +1,10 @@
 export const COMPONENT_KEY = 'EditableField'
 
+export const ACTION_ICONS = {
+  delete: 'cross-medium',
+  link: 'link',
+}
+
 export function getFieldIndex(name: string): number {
   return Number(name.split('_')[1])
 }

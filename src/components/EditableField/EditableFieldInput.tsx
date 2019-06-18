@@ -13,7 +13,7 @@ import Truncate from '../Truncate'
 
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { COMPONENT_KEY } from './EditableField.utils'
+import { ACTION_ICONS, COMPONENT_KEY } from './EditableField.utils'
 import { key } from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -58,19 +58,36 @@ export class EditableFieldInput extends React.PureComponent<
   componentDidMount() {
     const { isEditing } = this.props
 
+    this.calculateFieldWidth()
+
     if (isEditing) {
       const inputNode = this.inputRef
 
       inputNode && inputNode.focus()
     }
+  }
+
+  componentDidUpdate = () => {
+    this.calculateFieldWidth()
+  }
+
+  calculateFieldWidth = () => {
+    const { isEditing } = this.props
 
     const editableFieldInputNode = this.editableFieldInputRef
     const actionsNode = this.actionsRef
+    const staticValueNode = this.staticValueRef
+    const staticValueWidth = staticValueNode.getBoundingClientRect().width
 
-    if (editableFieldInputNode && actionsNode) {
-      const actionsWidth = actionsNode.getBoundingClientRect().width
-
-      editableFieldInputNode.style.width = `calc(100% - ${actionsWidth}px)`
+    if (isEditing) {
+      if (!actionsNode) {
+        editableFieldInputNode.style.width = '100%'
+      } else {
+        const actionsWidth = actionsNode.getBoundingClientRect().width
+        editableFieldInputNode.style.width = `calc(100% - ${actionsWidth}px)`
+      }
+    } else {
+      editableFieldInputNode.style.width = `${staticValueWidth}px`
     }
   }
 
@@ -90,10 +107,19 @@ export class EditableFieldInput extends React.PureComponent<
     })
   }
 
-  handleBlur = event => {
-    const { onBlur, name } = this.props
+  handleInputBlur = event => {
+    const { actions, name, onBlur } = this.props
 
-    onBlur({ name, event })
+    const emptyActions =
+      !actions || (Array.isArray(actions) && actions.length === 0)
+
+    if (emptyActions) {
+      onBlur({ name, event }).then(() => {
+        const staticValueNode = this.staticValueRef
+
+        staticValueNode && staticValueNode.removeAttribute('tabIndex')
+      })
+    }
   }
 
   handleChange = event => {
@@ -134,20 +160,23 @@ export class EditableFieldInput extends React.PureComponent<
     }
   }
 
-  handleDeleteClick = event => {
-    const { name, onDelete } = this.props
+  handleActionClick = ({ action, event }) => {
+    const { name, value } = this.props
 
-    onDelete({ name, event }).then(() => {
-      const staticValueNode = this.staticValueRef
-
-      staticValueNode && staticValueNode.focus()
-    })
+    if (action.name === 'delete') {
+      this.props.deleteAction({ action, name, event })
+    }
+    if (action.name === 'link') {
+      window && window.open(value)
+    } else {
+      this.props.customAction({ action, name, event })
+    }
   }
 
   handleButtonBlur = event => {
-    const { name, onActionButtonBlur } = this.props
+    const { name, onBlur } = this.props
 
-    onActionButtonBlur({ name, event }).then(() => {
+    onBlur({ name, event }).then(() => {
       const staticValueNode = this.staticValueRef
 
       staticValueNode && staticValueNode.removeAttribute('tabIndex')
@@ -185,7 +214,7 @@ export class EditableFieldInput extends React.PureComponent<
           placeholder={placeholder}
           type={type}
           value={value}
-          onBlur={this.handleBlur}
+          onBlur={this.handleInputBlur}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onKeyDown={this.handleKeyDown}
@@ -205,24 +234,42 @@ export class EditableFieldInput extends React.PureComponent<
 
         <FocusIndicatorUI className="c-EditableField__focusIndicator" />
 
-        {value ? (
-          <FieldActionsUI
-            className="c-EditableField__actions"
-            innerRef={this.setActionsNode}
-          >
-            <FieldButtonUI
-              className="c-FieldButton action-delete"
-              tabIndex={isEditing ? '0' : '-1'}
-              type="button"
-              onClick={this.handleDeleteClick}
-              onBlur={this.handleButtonBlur}
-            >
-              <Icon name="cross-medium" />
-            </FieldButtonUI>
-          </FieldActionsUI>
-        ) : null}
+        {this.renderActions()}
       </FieldContentUI>
     )
+  }
+
+  renderActions = () => {
+    const { actions, isEditing, value } = this.props
+
+    if (value && actions) {
+      const actionsArray = Array.isArray(actions) ? actions : [actions]
+
+      return (
+        <FieldActionsUI
+          className="c-EditableField__actions"
+          innerRef={this.setActionsNode}
+        >
+          {actionsArray.map(action => {
+            return (
+              <FieldButtonUI
+                className={`c-FieldButton action-${action.name}`}
+                key={action.name}
+                tabIndex={isEditing ? '0' : '-1'}
+                type="button"
+                onClick={event => {
+                  this.handleActionClick({ action, event })
+                }}
+                onBlur={this.handleButtonBlur}
+              >
+                <Icon name={action.icon || ACTION_ICONS[action.name]} />
+              </FieldButtonUI>
+            )
+          })}
+        </FieldActionsUI>
+      )
+    }
+    return null
   }
 }
 

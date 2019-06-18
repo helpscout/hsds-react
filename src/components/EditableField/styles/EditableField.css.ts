@@ -34,7 +34,7 @@ export const FieldInputUI = styled('input')`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  max-width: 100%;
   font-size: 16px;
   border: none;
   border-bottom: 2px solid transparent;
@@ -71,8 +71,8 @@ export const FieldInputUI = styled('input')`
 export const FieldStaticValueUI = styled('span')`
   ${baseStyles};
   position: relative;
-  display: block;
-  width: 100%;
+  display: inline-block;
+  max-width: 100%;
   height: 25px;
   padding: 0px 0px 6px;
   color: #3c5263;
@@ -144,8 +144,10 @@ export const FieldButtonUI = styled('button')`
   font-family: monospace;
   text-align: center;
 
-  &:hover {
+  &:hover,
+  &:focus {
     cursor: pointer;
+    color: #3c5263;
   }
 
   &:focus {
@@ -155,7 +157,6 @@ export const FieldButtonUI = styled('button')`
   &.action-delete {
     &:focus,
     &:hover {
-      cursor: pointer;
       color: ${getColor('red.500')};
     }
   }
