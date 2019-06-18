@@ -58,6 +58,14 @@ class EditableFieldApp extends React.Component {
             placeholder="Add a company name"
             type="text"
             value={singleInputValue}
+            actions={[
+              {
+                name: 'delete',
+                callBack() {
+                  console.log('delete')
+                },
+              },
+            ]}
           />
           <EditableField
             label="Country"

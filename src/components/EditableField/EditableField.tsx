@@ -6,6 +6,7 @@ import {
   AddButtonUI,
 } from './styles/EditableField.css'
 import EditableFieldInput from './EditableFieldInput'
+import EventListener from '../EventListener'
 import Icon from '../Icon'
 
 import propConnect from '../PropProvider/propConnect'
@@ -43,6 +44,12 @@ export class EditableField extends React.PureComponent<
     }
   }
 
+  editableFieldRef: HTMLDivElement
+
+  setEditableNode = node => {
+    this.editableFieldRef = node
+  }
+
   getClassName() {
     const { className } = this.props
     return classNames(EditableField.className, className)
@@ -62,7 +69,6 @@ export class EditableField extends React.PureComponent<
 
   handleInputChange = ({ inputValue, name, event }) => {
     const { onChange } = this.props
-
     const newValue = this.getNewValue({ inputValue, name })
 
     this.setState(
@@ -79,13 +85,16 @@ export class EditableField extends React.PureComponent<
 
   handleInputKeyDown = ({ event, name }) => {
     return new Promise(resolve => {
-      const { onEnter, onEscape } = this.props
+      const { onEnter, onEscape, onInputBlur } = this.props
       const { initialValue } = this.state
       const { key: eventKey } = event
+      const isShiftTab = event.shiftKey && eventKey === key.TAB
+      const isEnter = eventKey === key.ENTER
+      const isEscape = eventKey === key.ESCAPE
       let newValue = initialValue
       let newInitialValue = initialValue
 
-      if (eventKey === key.ENTER) {
+      if (isEnter || isShiftTab) {
         newValue = this.getNewValue({
           inputValue: event.currentTarget.value,
           name,
@@ -102,12 +111,16 @@ export class EditableField extends React.PureComponent<
         () => {
           resolve()
 
-          if (eventKey === key.ENTER && onEnter) {
+          if (isEnter && onEnter) {
             onEnter({ name, value: newValue, event })
           }
 
-          if (eventKey === key.ESCAPE && onEscape) {
+          if (isEscape && onEscape) {
             onEscape({ name, value: initialValue, event })
+          }
+
+          if (isShiftTab && onInputBlur) {
+            onInputBlur({ name, value: newValue, event })
           }
         }
       )
@@ -206,6 +219,36 @@ export class EditableField extends React.PureComponent<
     })
   }
 
+  handleOnDocumentBodyClick = (event: Event) => {
+    if (!event) return
+    if (!this.state.editingField) return
+
+    const targetNode = event.target
+    const editableFieldNode = this.editableFieldRef
+
+    if (targetNode instanceof Element) {
+      if (
+        editableFieldNode.contains(targetNode) ||
+        targetNode === editableFieldNode
+      ) {
+        return
+      }
+
+      const { value } = this.state
+
+      if (Array.isArray(value)) {
+        this.setState({
+          editingField: '',
+          value: value.filter(Boolean),
+        })
+      } else {
+        this.setState({
+          editingField: '',
+        })
+      }
+    }
+  }
+
   renderInputFields() {
     const { name, type, ...rest } = this.props
     const { value, editingField } = this.state
@@ -267,7 +310,7 @@ export class EditableField extends React.PureComponent<
     const { label, name, type, value, ...rest } = this.props
 
     return (
-      <EditableFieldUI {...getValidProps(rest)}>
+      <EditableFieldUI {...getValidProps(rest)} innerRef={this.setEditableNode}>
         <label
           className="c-EditableField__label"
           htmlFor={generateUniqueName(name)}
@@ -276,6 +319,7 @@ export class EditableField extends React.PureComponent<
             {label}
           </LabelTextUI>
         </label>
+        <EventListener event="click" handler={this.handleOnDocumentBodyClick} />
 
         {this.renderInputFields()}
       </EditableFieldUI>

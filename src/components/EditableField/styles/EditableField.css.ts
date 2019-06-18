@@ -117,14 +117,13 @@ export const FocusIndicatorUI = styled('span')`
 
 export const FieldActionsUI = styled('div')`
   ${baseStyles};
+  height: 25px;
+  padding-left: 5px;
   position: absolute;
   top: 2px;
   left: 100%;
-  padding-left: 5px;
   z-index: 4;
   opacity: 0;
-  display: inline-block;
-  height: 25px;
 
   .is-editing & {
     opacity: 1;

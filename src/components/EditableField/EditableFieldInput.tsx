@@ -34,8 +34,26 @@ export class EditableFieldInput extends React.PureComponent<
     value: '',
   }
 
+  actionsRef: HTMLDivElement
+  editableFieldInputRef: HTMLDivElement
   inputRef: HTMLInputElement
-  spanRef: HTMLSpanElement
+  staticValueRef: HTMLSpanElement
+
+  setActionsNode = node => {
+    this.actionsRef = node
+  }
+
+  setEditableFieldInputNode = node => {
+    this.editableFieldInputRef = node
+  }
+
+  setInputNode = node => {
+    this.inputRef = node
+  }
+
+  setStaticValueNode = node => {
+    this.staticValueRef = node
+  }
 
   componentDidMount() {
     const { isEditing } = this.props
@@ -44,6 +62,15 @@ export class EditableFieldInput extends React.PureComponent<
       const inputNode = this.inputRef
 
       inputNode && inputNode.focus()
+    }
+
+    const editableFieldInputNode = this.editableFieldInputRef
+    const actionsNode = this.actionsRef
+
+    if (editableFieldInputNode && actionsNode) {
+      const actionsWidth = actionsNode.getBoundingClientRect().width
+
+      editableFieldInputNode.style.width = `calc(100% - ${actionsWidth}px)`
     }
   }
 
@@ -59,7 +86,7 @@ export class EditableFieldInput extends React.PureComponent<
     onFocus({ name, event }).then(() => {
       const inputNode = this.inputRef
 
-      inputNode && inputNode.select()
+      // inputNode && inputNode.select()
     })
   }
 
@@ -80,13 +107,29 @@ export class EditableFieldInput extends React.PureComponent<
   }
 
   handleKeyDown = event => {
-    if (event.key === key.ENTER || event.key === key.ESCAPE) {
+    const isShiftTab = event.shiftKey && event.key === key.TAB
+    const isEnter = event.key === key.ENTER
+    const isEscape = event.key === key.ESCAPE
+
+    if (isEnter || isEscape) {
       const { name, onKeyDown } = this.props
 
       onKeyDown({ event, name }).then(() => {
-        const spanNode = this.spanRef
+        const staticValueNode = this.staticValueRef
 
-        spanNode && spanNode.focus()
+        if (staticValueNode) {
+          staticValueNode.setAttribute('tabIndex', '0')
+          staticValueNode.focus()
+        }
+      })
+    }
+    if (isShiftTab) {
+      const { name, onKeyDown } = this.props
+
+      onKeyDown({ event, name }).then(() => {
+        const staticValueNode = this.staticValueRef
+
+        staticValueNode && staticValueNode.removeAttribute('tabIndex')
       })
     }
   }
@@ -95,9 +138,9 @@ export class EditableFieldInput extends React.PureComponent<
     const { name, onDelete } = this.props
 
     onDelete({ name, event }).then(() => {
-      const spanNode = this.spanRef
+      const staticValueNode = this.staticValueRef
 
-      spanNode && spanNode.focus()
+      staticValueNode && staticValueNode.focus()
     })
   }
 
@@ -105,18 +148,24 @@ export class EditableFieldInput extends React.PureComponent<
     const { name, onActionButtonBlur } = this.props
 
     onActionButtonBlur({ name, event }).then(() => {
-      const spanNode = this.spanRef
+      const staticValueNode = this.staticValueRef
 
-      spanNode && spanNode.removeAttribute('tabIndex')
+      staticValueNode && staticValueNode.removeAttribute('tabIndex')
     })
   }
 
-  handleSpanKeyDown = event => {
+  handleStaticValueKeyDown = event => {
     const inputNode = this.inputRef
 
     if (event.key === key.ENTER) {
       inputNode && inputNode.focus()
     }
+  }
+
+  handleStaticValueBlur = () => {
+    const staticValueNode = this.staticValueRef
+
+    staticValueNode && staticValueNode.removeAttribute('tabIndex')
   }
 
   render() {
@@ -125,14 +174,13 @@ export class EditableFieldInput extends React.PureComponent<
     return (
       <FieldContentUI
         className={classNames(this.getClassName(), isEditing && 'is-editing')}
+        innerRef={this.setEditableFieldInputNode}
       >
         <FieldInputUI
           {...getValidProps(rest)}
           className="c-EditableField__input"
           id={name}
-          innerRef={node => {
-            this.inputRef = node
-          }}
+          innerRef={this.setInputNode}
           name={name}
           placeholder={placeholder}
           type={type}
@@ -144,11 +192,9 @@ export class EditableFieldInput extends React.PureComponent<
         />
         <FieldStaticValueUI
           className="c-EditableField__staticValue"
-          innerRef={node => {
-            this.spanRef = node
-          }}
-          tabIndex={isEditing ? undefined : '0'}
-          onKeyDown={this.handleSpanKeyDown}
+          innerRef={this.setStaticValueNode}
+          onBlur={this.handleStaticValueBlur}
+          onKeyDown={this.handleStaticValueKeyDown}
         >
           {value ? (
             <Truncate>{value}</Truncate>
@@ -160,7 +206,10 @@ export class EditableFieldInput extends React.PureComponent<
         <FocusIndicatorUI className="c-EditableField__focusIndicator" />
 
         {value ? (
-          <FieldActionsUI className="c-EditableField__actions">
+          <FieldActionsUI
+            className="c-EditableField__actions"
+            innerRef={this.setActionsNode}
+          >
             <FieldButtonUI
               className="c-FieldButton action-delete"
               tabIndex={isEditing ? '0' : '-1'}

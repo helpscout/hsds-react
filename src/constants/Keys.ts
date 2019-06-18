@@ -106,4 +106,5 @@ export default {
 export const key = {
   ENTER: 'Enter',
   ESCAPE: 'Escape',
+  TAB: 'Tab',
 }
