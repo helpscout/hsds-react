@@ -48,10 +48,6 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
   }
 
   renderMenu = menu => {
-    const { renderMenu } = this.props
-
-    if (renderMenu) return renderMenu
-
     return <MenuUI {...menu} />
   }
 
