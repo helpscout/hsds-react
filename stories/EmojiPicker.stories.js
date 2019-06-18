@@ -38,33 +38,3 @@ stories.add('Default', () => {
 
   return <EmojiPicker {...props} />
 })
-
-stories.add('Custom Trigger', () => {
-  const customTrigger = <span>Custom Trigger</span>
-  return <EmojiPicker trigger={customTrigger} onSelect={onSelect} />
-})
-
-const CustomMenu = ({ items, getItemProps }) => {
-  return (
-    <Dropdown.Card
-      className="c-custom-dropdown"
-      style={{ backgroundColor: 'blue' }}
-    >
-      <Dropdown.Menu>
-        {items.map((item, index) => {
-          const itemProps = getItemProps(item, index)
-
-          return <EmojiItem {...itemProps} />
-        })}
-      </Dropdown.Menu>
-    </Dropdown.Card>
-  )
-}
-
-const CustomItem = props => {
-  return <Dropdown.Item {...props} value={props.symbol} />
-}
-
-stories.add('Custom Item', () => {
-  return <EmojiPicker emojiSet={emojiSet} onSelect={onSelect} />
-})
