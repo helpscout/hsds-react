@@ -70,6 +70,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   direction: 'left' | 'right'
   disabled: boolean
   dropUp: boolean
+  enableLeftRightArrowNavigation: boolean
   enableTabNavigation: boolean
   envNode: any
   focusClassName: string

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import propConnect from '../../PropProvider/propConnect'
 import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
@@ -15,6 +16,7 @@ export interface Props {
   innerRef: (node: HTMLElement) => void
   innerWrapperRef: (node: HTMLElement) => void
   isSubMenu: boolean
+  renderMenu?: (props: any) => void
   style: Object
   withScrollLock: boolean
   zIndex: number
@@ -44,12 +46,28 @@ export class Menu extends React.PureComponent<Props> {
       innerRef,
       innerWrapperRef,
       isSubMenu,
+      renderMenu,
       ...rest
     } = this.props
+
     const componentClassName = classNames(
       'c-DropdownV2Menu',
       isSubMenu && 'is-subMenu',
       className
+    )
+
+    const menuProps = {
+      ...getValidProps(rest),
+      children,
+      className: componentClassName,
+      innerRef: renderMenu ? undefined : innerRef,
+      style: this.getStyles(),
+    }
+
+    const menuMarkup = renderMenu ? (
+      renderMenu(menuProps)
+    ) : (
+      <MenuUI {...menuProps} />
     )
 
     return (
@@ -57,14 +75,7 @@ export class Menu extends React.PureComponent<Props> {
         className="c-DropdownV2MenuWrapper"
         innerRef={innerWrapperRef}
       >
-        <MenuUI
-          {...rest}
-          className={componentClassName}
-          innerRef={innerRef}
-          style={this.getStyles()}
-        >
-          {children}
-        </MenuUI>
+        {menuMarkup}
       </MenuWrapperUI>
     )
   }
@@ -86,9 +97,10 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Menu)(Menu)
 const ConnectedMenu: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { withScrollLock } = state
+    const { renderMenu, withScrollLock } = state
 
     return {
+      renderMenu,
       withScrollLock,
     }
   }

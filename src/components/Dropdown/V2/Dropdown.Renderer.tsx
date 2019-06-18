@@ -35,6 +35,7 @@ class Renderer extends React.PureComponent<any> {
   static defaultProps = {
     activeClassName: 'is-active',
     decrementIndex: noop,
+    enableLeftRightArrowNavigation: false,
     enableTabNavigation: true,
     focusClassName: 'is-focused',
     focusItem: noop,
@@ -49,7 +50,6 @@ class Renderer extends React.PureComponent<any> {
   handleTab = (event: KeyboardEvent) => {
     const { closeDropdown, enableTabNavigation, items, index } = this.props
 
-    console.log('gogogogogo')
     if (!enableTabNavigation) {
       closeDropdown()
       return
@@ -76,7 +76,7 @@ class Renderer extends React.PureComponent<any> {
   }
 
   handleOnKeyDown = event => {
-    const { dropRight } = this.props
+    const { dropRight, enableLeftRightArrowNavigation } = this.props
 
     switch (event.keyCode) {
       case Keys.UP_ARROW:
@@ -91,19 +91,28 @@ class Renderer extends React.PureComponent<any> {
 
       case Keys.LEFT_ARROW:
         event.preventDefault()
-        if (dropRight) {
-          this.closeSubMenu()
+
+        if (enableLeftRightArrowNavigation) {
+          this.moveUp()
         } else {
-          this.openSubMenu()
+          if (dropRight) {
+            this.closeSubMenu()
+          } else {
+            this.openSubMenu()
+          }
         }
         break
 
       case Keys.RIGHT_ARROW:
         event.preventDefault()
-        if (dropRight) {
-          this.openSubMenu()
+        if (enableLeftRightArrowNavigation) {
+          this.moveDown()
         } else {
-          this.closeSubMenu()
+          if (dropRight) {
+            this.openSubMenu()
+          } else {
+            this.closeSubMenu()
+          }
         }
         break
 
@@ -350,6 +359,7 @@ const ConnectedRenderer: any = connect(
     const {
       activeClassName,
       allowMultipleSelection,
+      enableLeftRightArrowNavigation,
       enableTabNavigation,
       envNode,
       focusClassName,
@@ -368,6 +378,7 @@ const ConnectedRenderer: any = connect(
     return {
       activeClassName,
       allowMultipleSelection,
+      enableLeftRightArrowNavigation,
       enableTabNavigation,
       envNode,
       dropRight: isDropRight(state),
