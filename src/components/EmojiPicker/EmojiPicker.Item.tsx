@@ -1,5 +1,5 @@
 import * as React from 'react'
-import EmojiView from './EmojiPicker.View'
+import Emoji from './EmojiPicker.Emoji'
 import { classNames } from '../../utilities/classNames'
 import { ItemWrapperUI, ItemUI } from './styles/EmojiPicker.css'
 import { EmojiPickerItemProps } from './EmojiPicker.types'
@@ -39,7 +39,7 @@ class Item extends React.PureComponent<EmojiPickerItemProps> {
           className={this.getClassName()}
           size={size}
         >
-          <EmojiView name={name} symbol={symbol} />
+          <Emoji name={name} symbol={symbol} />
         </ItemUI>
       </ItemWrapperUI>
     )

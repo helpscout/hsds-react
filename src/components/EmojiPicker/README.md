@@ -20,3 +20,25 @@ const trigger = <button>Some Emoji!</button>
 | onSelect      | `Function` |           | Callback when item is selected.              |
 | renderTrigger | `Function` |           | Callback to customize how a trigger renders. |
 | size          | `string`   | `default` | The size of the emoji.                       |
+
+---
+
+# Emoji
+
+The Emoji component renders an individual emoji.
+
+## Example
+
+```jsx
+<div>
+  <EmojiPicker.Emoji symbol="🦄" name="Unicorn Face" />
+</div>
+```
+
+## Props
+
+| Prop      | Type     | Default | Description                     |
+| --------- | -------- | ------- | ------------------------------- |
+| className | `string` |         | The className of the component. |
+| name      | `string` |         | The name of the emoji.          |
+| symbol    | `string` |         | The emoji symbol.               |

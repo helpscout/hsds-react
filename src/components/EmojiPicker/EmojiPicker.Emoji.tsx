@@ -8,7 +8,7 @@ export interface Props {
   symbol: string
 }
 
-class EmojiView extends React.PureComponent<Props> {
+class Emoji extends React.PureComponent<Props> {
   static className = 'c-EmojiPickerView'
 
   static defaultProps = {
@@ -21,7 +21,7 @@ class EmojiView extends React.PureComponent<Props> {
   getClassName() {
     const { className } = this.props
 
-    return classNames(EmojiView.className, className)
+    return classNames(Emoji.className, className)
   }
 
   render() {
@@ -40,4 +40,4 @@ class EmojiView extends React.PureComponent<Props> {
   }
 }
 
-export default EmojiView
+export default Emoji

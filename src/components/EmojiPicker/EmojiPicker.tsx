@@ -7,7 +7,7 @@ import { EmojiPickerProps } from './EmojiPicker.types'
 import { COMPONENT_KEY } from './EmojiPicker.utils'
 import { MenuUI, TriggerUI } from './styles/EmojiPicker.css'
 import Item from './EmojiPicker.Item'
-import EmojiView from './EmojiPicker.View'
+import Emoji from './EmojiPicker.Emoji'
 import { emojiSet } from './emojiSet'
 
 export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
@@ -25,7 +25,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     size: 'default',
   }
 
-  static EmojiView = EmojiView
+  static Emoji = Emoji
   static Item = Item
 
   getClassName() {
