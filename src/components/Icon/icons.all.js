@@ -191,6 +191,8 @@ import table from '../../icons/table.svg'
 import tag from '../../icons/tag.svg'
 import text from '../../icons/text.svg'
 import tickLarge from '../../icons/tick-large.svg'
+import timeDayMoon from '../../icons/time-day-moon.svg'
+import timeDaySun from '../../icons/time-day-sun.svg'
 import toggle from '../../icons/toggle.svg'
 import trash from '../../icons/trash.svg'
 import travelAndPlaces from '../../icons/travel-and-places.svg'
@@ -422,6 +424,8 @@ const ICONS = {
   'tick-large': tickLarge,
   'tick-small': checkmark,
   tick: tickLarge,
+  'time-day-moon': timeDayMoon,
+  'time-day-sun': timeDaySun,
   toggle,
   trash,
   'travel-and-places': travelAndPlaces,
