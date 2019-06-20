@@ -73,7 +73,7 @@ const css = `
     }
 
     circle,
-    path[fill],
+    path,
     rect {
       fill: currentColor;
     }
