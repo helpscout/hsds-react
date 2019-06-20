@@ -13,6 +13,7 @@ import {
   ActionUI,
 } from './styles/GreeterCard.css'
 import { COMPONENT_KEY } from './GreeterCard.utils'
+import Truncate from '../Truncate'
 
 export interface Props {
   action?: Function
@@ -33,7 +34,7 @@ export class GreeterCard extends React.PureComponent<Props> {
   static className = 'c-GreeterCard'
   static defaultProps = {
     align: 'right',
-    animationSequence: 'fade up',
+    animationSequence: '',
     innerRef: noop,
     in: true,
   }
@@ -49,11 +50,19 @@ export class GreeterCard extends React.PureComponent<Props> {
     )
   }
 
+  getTruncatedText(text, limit) {
+    return (
+      <Truncate limit={limit} type="end">
+        {text}
+      </Truncate>
+    )
+  }
+
   renderTitle() {
     const { title } = this.props
     return title ? (
       <TitleUI size="h4" data-cy="beacon-greeter-title">
-        {title}
+        {this.getTruncatedText(title, 110)}
       </TitleUI>
     ) : null
   }
@@ -67,7 +76,7 @@ export class GreeterCard extends React.PureComponent<Props> {
         light
         data-cy="beacon-greeter-subtitle"
       >
-        {subtitle}
+        {this.getTruncatedText(subtitle, 110)}
       </SubtitleUI>
     ) : null
   }
@@ -82,7 +91,7 @@ export class GreeterCard extends React.PureComponent<Props> {
         data-cy="beacon-greeter-body-content"
         shade="slightlyMuted"
       >
-        {body}
+        {this.getTruncatedText(body, 1500)}
       </BodyUI>
     ) : null
   }
