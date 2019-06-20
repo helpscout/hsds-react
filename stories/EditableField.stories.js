@@ -31,6 +31,24 @@ const FormUI = styled('form')`
   border-radius: 3px;
 `
 
+const InputUI = styled('input')`
+  background-color: white;
+  border: 0;
+  padding: 5px 0;
+  font-size: 14px;
+  margin-bottom: 30px;
+  border-bottom: 1px dashed transparent;
+
+  &:hover {
+    cursor: pointer;
+    border-bottom: 1px dashed slategray;
+  }
+
+  &:focus {
+    cursor: initial;
+  }
+`
+
 class EditableFieldApp extends React.Component {
   constructor(props) {
     super(props)
@@ -61,7 +79,7 @@ class EditableFieldApp extends React.Component {
             actions={{
               name: 'delete',
               callback(obj) {
-                console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+                // console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
               },
             }}
           />
@@ -95,7 +113,7 @@ class EditableFieldApp extends React.Component {
               {
                 name: 'delete',
                 callback(obj) {
-                  console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+                  // console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
                 },
               },
             ]}

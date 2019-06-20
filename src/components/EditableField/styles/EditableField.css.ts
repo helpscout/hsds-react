@@ -8,7 +8,9 @@ export const EditableFieldUI = styled('div')`
   margin-bottom: 20px;
 `
 
-export const EditableFieldLabelUI = styled('label')``
+export const EditableFieldLabelUI = styled('label')`
+  ${baseStyles};
+`
 
 export const LabelTextUI = styled('span')`
   ${baseStyles};
@@ -21,11 +23,17 @@ export const LabelTextUI = styled('span')`
 export const FieldContentUI = styled('div')`
   ${baseStyles};
   position: relative;
+  height: 25px;
   margin-bottom: 10px;
 
   &:hover .c-EditableField__actions {
-    opacity: 1;
+    display: block;
     cursor: pointer;
+  }
+
+  &.is-editing:hover .c-EditableField__actions {
+    display: none;
+    cursor: initial;
   }
 `
 
@@ -35,13 +43,11 @@ export const FieldInputUI = styled('input')`
   top: 0;
   left: 0;
   max-width: 100%;
-  font-size: 16px;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: 1px solid transparent;
   height: 25px;
   line-height: 27px;
   padding: 3px 0px;
-  letter-spacing: 0;
   color: transparent;
   background-color: #fff;
   font-family: sans-serif;
@@ -57,11 +63,16 @@ export const FieldInputUI = styled('input')`
     border-bottom: 1px dashed #c6d0d8;
   }
 
-  .is-editing & {
+  &:focus {
     outline: none;
-    z-index: 2;
+  }
+
+  .is-editing & {
+    border-bottom: 1px solid transparent !important;
+    outline: none;
     color: black;
-    border-bottom: none !important;
+    z-index: 2;
+    cursor: initial;
 
     &::placeholder {
       color: #b7c2cc;
@@ -104,31 +115,28 @@ export const FocusIndicatorUI = styled('span')`
   right: 0;
   height: 2px;
   background-color: #1292ee;
-  transform-origin: bottom right;
+  transform-origin: bottom left;
   transform: scaleX(0);
   transition: transform 0.3s ease;
   z-index: 3;
 
   .is-editing & {
-    transform-origin: bottom left;
     transform: scaleX(1);
   }
 `
 
 export const FieldActionsUI = styled('div')`
   ${baseStyles};
-  height: 25px;
+  ${({ numberOfActions }) => `width: ${numberOfActions * 25}px;`}
+  height: 20px;
   padding-left: 5px;
   position: absolute;
-  top: 2px;
+  top: 3px;
   left: 100%;
   z-index: 4;
-  opacity: 0;
-
-  .is-editing & {
-    opacity: 1;
-  }
+  display: none;
 `
+
 export const FieldButtonUI = styled('button')`
   ${baseStyles};
   display: inline-block;

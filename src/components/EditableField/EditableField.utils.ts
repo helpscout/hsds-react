@@ -12,3 +12,7 @@ export function getFieldIndex(name: string): number {
 export function generateUniqueName(name: string, index?: number): string {
   return `${name}_${index || 0}`
 }
+
+export const deleteAction = {
+  name: 'delete',
+}

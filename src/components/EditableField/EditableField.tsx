@@ -14,13 +14,21 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import {
   COMPONENT_KEY,
-  getFieldIndex,
   generateUniqueName,
+  deleteAction,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
+import { createUniqueIDFactory } from '../../utilities/id'
 
-import { EditableFieldProps, EditableFieldState } from './EditableField.types'
+import {
+  EditableFieldProps,
+  EditableFieldState,
+  Value,
+  ValueObj,
+} from './EditableField.types'
+
+const nextUuid = createUniqueIDFactory('Field')
 
 export class EditableField extends React.PureComponent<
   EditableFieldProps,
@@ -37,10 +45,36 @@ export class EditableField extends React.PureComponent<
   constructor(props) {
     super(props)
 
+    const { actions, value } = props
+    let initialValue = value
+
+    if (Array.isArray(value)) {
+      initialValue = value.map(val => ({
+        value: val,
+        id: nextUuid(`${props.name}_`),
+      }))
+    }
+    let newActionsArray = []
+
+    if (actions !== null) {
+      if (actions === undefined) {
+        newActionsArray = [deleteAction]
+      } else {
+        newActionsArray = Array.isArray(actions) ? actions : [actions]
+        let isDeleteActionPresent =
+          newActionsArray.filter(action => action.name === 'delete').length > 0
+
+        newActionsArray = isDeleteActionPresent
+          ? newActionsArray
+          : newActionsArray.concat(deleteAction)
+      }
+    }
+
     this.state = {
-      initialValue: props.value,
-      value: props.value,
+      initialValue,
+      value: initialValue,
       editingField: '',
+      actions: newActionsArray,
     }
   }
 
@@ -57,11 +91,12 @@ export class EditableField extends React.PureComponent<
 
   getNewValue = ({ inputValue, name }) => {
     const { value } = this.state
-    const idx = getFieldIndex(name)
 
     return Array.isArray(value)
-      ? value.map((val, index) => {
-          if (index === idx) return inputValue
+      ? (value as ValueObj[]).map(val => {
+          if (val.id === name) {
+            return { ...val, value: inputValue }
+          }
           return val
         })
       : inputValue
@@ -86,7 +121,7 @@ export class EditableField extends React.PureComponent<
   handleInputKeyDown = ({ event, name }) => {
     return new Promise(resolve => {
       const { onEnter, onEscape, onInputBlur } = this.props
-      const { initialValue } = this.state
+      const { initialValue, value } = this.state
       const { key: eventKey } = event
       const isShiftTab = event.shiftKey && eventKey === key.TAB
       const isEnter = eventKey === key.ENTER
@@ -95,10 +130,21 @@ export class EditableField extends React.PureComponent<
       let newInitialValue = initialValue
 
       if (isEnter || isShiftTab) {
-        newValue = this.getNewValue({
-          inputValue: event.currentTarget.value,
-          name,
-        })
+        if (Array.isArray(value) && !event.currentTarget.value) {
+          const filteredValues = (value as ValueObj[]).filter(val =>
+            Boolean(val.value)
+          )
+
+          newValue =
+            filteredValues.length > 0
+              ? filteredValues
+              : [{ value: '', id: nextUuid(`${name}_`) }]
+        } else {
+          newValue = this.getNewValue({
+            inputValue: event.currentTarget.value,
+            name,
+          })
+        }
         newInitialValue = newValue
       }
 
@@ -194,30 +240,33 @@ export class EditableField extends React.PureComponent<
 
     if (isNotSingleEmptyValue) {
       const { name } = this.props
-      const newValue = value.concat('')
+      const id = nextUuid(`${name}_`)
+      const newValue = (value as ValueObj[]).concat({ value: '', id })
 
       this.setState({
         value: newValue,
-        editingField: `${name}_${newValue.length - 1}`,
+        editingField: id,
       })
     }
   }
 
   handleDeleteAction = ({ action, name, event }) => {
+    const { name: propsName } = this.props
     const { value } = this.state
     const e = { ...event }
 
-    let newValue: string | string[] = ''
+    let newValue: Value = ''
     let newState: {
-      value: string | string[]
+      value: Value
       editingField: string
     } = { value: '', editingField: '' }
 
     if (Array.isArray(value)) {
-      const idx = getFieldIndex(name)
-
-      newValue = value.filter((__, index) => index !== idx)
-      newState.value = newValue.length > 0 ? newValue : ['']
+      newValue = (value as ValueObj[]).filter(val => val.id !== name)
+      newState.value =
+        newValue.length > 0
+          ? newValue
+          : [{ value: '', id: nextUuid(`${propsName}_`) }]
     }
 
     this.setState(newState, () => {
@@ -235,27 +284,27 @@ export class EditableField extends React.PureComponent<
     }
   }
 
-  handleOnDocumentBodyClick = (event: Event) => {
+  handleOnDocumentBodyMouseDown = (event: Event) => {
     if (!event) return
     if (!this.state.editingField) return
 
     const targetNode = event.target
-    const editableFieldNode = this.editableFieldRef
 
     if (targetNode instanceof Element) {
-      if (
-        editableFieldNode.contains(targetNode) ||
-        targetNode === editableFieldNode
-      ) {
-        return
-      }
+      if (document.activeElement === targetNode) return
 
+      const { name } = this.props
       const { value } = this.state
 
       if (Array.isArray(value)) {
+        const newvalue = (value as ValueObj[]).filter(val => Boolean(val.value))
+
         this.setState({
           editingField: '',
-          value: value.filter(Boolean),
+          value:
+            newvalue.length > 0
+              ? newvalue
+              : [{ value: '', id: nextUuid(`${name}_`) }],
         })
       } else {
         this.setState({
@@ -266,28 +315,25 @@ export class EditableField extends React.PureComponent<
   }
 
   renderInputFields() {
-    const { name, type, actions, ...rest } = this.props
-    const { value, editingField } = this.state
-
-    let fieldName = generateUniqueName(name)
+    const { name, type, ...rest } = this.props
+    const { actions, value, editingField } = this.state
 
     if (Array.isArray(value)) {
-      const isNotSingleEmptyValue = value[0] !== ''
+      const isSingleEmptyValue =
+        value.length === 1 && (value as ValueObj[])[0].value === ''
 
       return (
         <div>
-          {value.map((val, idx) => {
-            fieldName = generateUniqueName(name, idx)
-
+          {(value as ValueObj[]).map(val => {
             return (
               <EditableFieldInput
                 {...getValidProps(rest)}
                 actions={actions}
-                name={fieldName}
-                isEditing={editingField === fieldName}
-                key={fieldName}
+                name={val.id}
+                isEditing={editingField === val.id}
+                key={val.id}
                 type={type}
-                value={val}
+                value={val.value}
                 onBlur={this.handleFieldBlur}
                 onChange={this.handleInputChange}
                 onFocus={this.handleInputFocus}
@@ -298,7 +344,7 @@ export class EditableField extends React.PureComponent<
             )
           })}
 
-          {isNotSingleEmptyValue ? (
+          {!isSingleEmptyValue ? (
             <AddButtonUI type="button" onClick={this.handleAddValue}>
               <Icon name="plus-medium" />
             </AddButtonUI>
@@ -306,6 +352,8 @@ export class EditableField extends React.PureComponent<
         </div>
       )
     }
+    const fieldName = generateUniqueName(name)
+
     return (
       <EditableFieldInput
         {...getValidProps(rest)}
@@ -337,7 +385,10 @@ export class EditableField extends React.PureComponent<
             {label}
           </LabelTextUI>
         </label>
-        <EventListener event="click" handler={this.handleOnDocumentBodyClick} />
+        <EventListener
+          event="mousedown"
+          handler={this.handleOnDocumentBodyMouseDown}
+        />
 
         {this.renderInputFields()}
       </EditableFieldUI>

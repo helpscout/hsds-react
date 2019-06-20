@@ -72,7 +72,7 @@ export class EditableFieldInput extends React.PureComponent<
   }
 
   calculateFieldWidth = () => {
-    const { isEditing } = this.props
+    const { actions, isEditing } = this.props
 
     const editableFieldInputNode = this.editableFieldInputRef
     const actionsNode = this.actionsRef
@@ -80,12 +80,14 @@ export class EditableFieldInput extends React.PureComponent<
     const staticValueWidth = staticValueNode.getBoundingClientRect().width
 
     if (isEditing) {
-      if (!actionsNode) {
-        editableFieldInputNode.style.width = '100%'
-      } else {
-        const actionsWidth = actionsNode.getBoundingClientRect().width
-        editableFieldInputNode.style.width = `calc(100% - ${actionsWidth}px)`
-      }
+      editableFieldInputNode.style.width = '100%'
+      // if (actionsNode) {
+      //     actionsNode.style.width = `${actions.length * 25}px`
+      // }
+      // else {
+      //   const actionsWidth = actionsNode.getBoundingClientRect().width
+      //   editableFieldInputNode.style.width = `calc(100% - ${actionsWidth}px)`
+      // }
     } else {
       editableFieldInputNode.style.width = `${staticValueWidth}px`
     }
@@ -100,26 +102,17 @@ export class EditableFieldInput extends React.PureComponent<
   handleFocus = event => {
     const { onFocus, name } = this.props
 
-    onFocus({ name, event }).then(() => {
-      const inputNode = this.inputRef
-
-      // inputNode && inputNode.select()
-    })
+    onFocus({ name, event })
   }
 
   handleInputBlur = event => {
-    const { actions, name, onBlur } = this.props
+    const { name, onBlur } = this.props
 
-    const emptyActions =
-      !actions || (Array.isArray(actions) && actions.length === 0)
+    onBlur({ name, event }).then(() => {
+      const staticValueNode = this.staticValueRef
 
-    if (emptyActions) {
-      onBlur({ name, event }).then(() => {
-        const staticValueNode = this.staticValueRef
-
-        staticValueNode && staticValueNode.removeAttribute('tabIndex')
-      })
-    }
+      staticValueNode && staticValueNode.removeAttribute('tabIndex')
+    })
   }
 
   handleChange = event => {
@@ -197,6 +190,39 @@ export class EditableFieldInput extends React.PureComponent<
     staticValueNode && staticValueNode.removeAttribute('tabIndex')
   }
 
+  renderActions = () => {
+    const { actions, value } = this.props
+
+    if (value && actions) {
+      const actionsArray = Array.isArray(actions) ? actions : [actions]
+
+      return (
+        <FieldActionsUI
+          className="c-EditableField__actions"
+          innerRef={this.setActionsNode}
+          numberOfActions={actionsArray.length}
+        >
+          {actionsArray.map(action => {
+            return (
+              <FieldButtonUI
+                className={`c-FieldButton action-${action.name}`}
+                key={action.name}
+                tabIndex="-1"
+                type="button"
+                onClick={event => {
+                  this.handleActionClick({ action, event })
+                }}
+              >
+                <Icon name={action.icon || ACTION_ICONS[action.name]} />
+              </FieldButtonUI>
+            )
+          })}
+        </FieldActionsUI>
+      )
+    }
+    return null
+  }
+
   render() {
     const { name, placeholder, isEditing, type, value, ...rest } = this.props
 
@@ -237,39 +263,6 @@ export class EditableFieldInput extends React.PureComponent<
         {this.renderActions()}
       </FieldContentUI>
     )
-  }
-
-  renderActions = () => {
-    const { actions, isEditing, value } = this.props
-
-    if (value && actions) {
-      const actionsArray = Array.isArray(actions) ? actions : [actions]
-
-      return (
-        <FieldActionsUI
-          className="c-EditableField__actions"
-          innerRef={this.setActionsNode}
-        >
-          {actionsArray.map(action => {
-            return (
-              <FieldButtonUI
-                className={`c-FieldButton action-${action.name}`}
-                key={action.name}
-                tabIndex={isEditing ? '0' : '-1'}
-                type="button"
-                onClick={event => {
-                  this.handleActionClick({ action, event })
-                }}
-                onBlur={this.handleButtonBlur}
-              >
-                <Icon name={action.icon || ACTION_ICONS[action.name]} />
-              </FieldButtonUI>
-            )
-          })}
-        </FieldActionsUI>
-      )
-    }
-    return null
   }
 }
 
