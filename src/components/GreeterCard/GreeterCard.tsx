@@ -91,7 +91,7 @@ export class GreeterCard extends React.PureComponent<Props> {
         data-cy="beacon-greeter-body-content"
         shade="slightlyMuted"
       >
-        {this.getTruncatedText(body, 1500)}
+        {this.getTruncatedText(body, 500)}
       </BodyUI>
     ) : null
   }
