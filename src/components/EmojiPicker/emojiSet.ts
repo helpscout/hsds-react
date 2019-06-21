@@ -12,10 +12,10 @@ export const emojiSet = [
   {
     colons: [':heart:'],
     hoverBackgroundColor: 'red',
-    name: 'Heavy Black Heart',
-    symbol: '❤',
+    name: 'Heart',
+    symbol: '❤️',
     unified: '2764-fe0f',
-    value: 'Heavy Black Heart',
+    value: 'Heart',
   },
   {
     colons: [':slightly_smiling_face:'],

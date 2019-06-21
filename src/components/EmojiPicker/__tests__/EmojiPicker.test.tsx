@@ -67,3 +67,32 @@ describe('Menu/Item', () => {
     ).toBeTruthy()
   })
 })
+
+describe('onOpen', () => {
+  it('should handle onOpen event', () => {
+    const onOpenSpy = jest.fn()
+    cy.render(<EmojiPicker onOpen={onOpenSpy} />)
+    const trigger = cy.get('.c-EmojiPickerTrigger')
+
+    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeFalsy()
+
+    trigger.click()
+
+    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeTruthy()
+    expect(onOpenSpy).toHaveBeenCalled()
+  })
+})
+
+describe('onClose', () => {
+  it('should handle onOpen event', () => {
+    const onCloseSpy = jest.fn()
+    cy.render(<EmojiPicker onClose={onCloseSpy} isOpen={true} />)
+
+    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeTruthy()
+
+    cy.type('{esc}')
+
+    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeFalsy()
+    expect(onCloseSpy).toHaveBeenCalled()
+  })
+})
