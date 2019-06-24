@@ -12,12 +12,16 @@ import { find } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import {
-  SelectDropdownUI,
-  InputUI,
-  LabelUI,
   BackdropUI,
   ErrorUI,
+  InputUI,
+  LabelUI,
+  SelectArrowDownUI,
+  SelectDropdownUI,
 } from './styles/SelectDropdown.css'
+
+import { FocusIndicatorUI } from '../EditableField/styles/EditableField.css'
+
 import { isObject } from '../../utilities/is'
 import {
   SelectDropdownProps,
@@ -45,6 +49,7 @@ export class SelectDropdown extends React.PureComponent<
     trigger: undefined,
     width: '100%',
     value: undefined,
+    fieldStyle: undefined,
   }
 
   state = {
@@ -157,20 +162,42 @@ export class SelectDropdown extends React.PureComponent<
   }
 
   renderTrigger() {
-    const { state } = this.props
+    const { state, fieldStyle } = this.props
     const { isFocused } = this.state
     const isError = state === 'error'
 
     return (
       <InputUI
-        className={classNames('c-SelectDropdownTrigger', isError && 'is-error')}
+        className={classNames(
+          'c-SelectDropdownTrigger',
+          isError && 'is-error',
+          fieldStyle === 'editableField' && 'is-editableField'
+        )}
       >
         <LabelUI className="c-SelectDropdownTriggerLabel">
           <Text truncate>{this.getLabel()}</Text>
         </LabelUI>
-        <SelectArrows state={state} />
+
+        {fieldStyle !== 'editableField' ? (
+          <SelectArrows state={state} />
+        ) : (
+          <SelectArrowDownUI>
+            <Icon name="chevron-down" />
+          </SelectArrowDownUI>
+        )}
+
         {this.renderError()}
-        <BackdropUI isFocused={isFocused} state={state} />
+
+        {fieldStyle !== 'editableField' ? (
+          <BackdropUI isFocused={isFocused} state={state} />
+        ) : (
+          <FocusIndicatorUI
+            className={classNames(
+              'c-SelectDropdownFocusIndicator',
+              isFocused && 'is-focused'
+            )}
+          />
+        )}
       </InputUI>
     )
   }

@@ -31,23 +31,7 @@ const FormUI = styled('form')`
   border-radius: 3px;
 `
 
-const InputUI = styled('input')`
-  background-color: white;
-  border: 0;
-  padding: 5px 0;
-  font-size: 14px;
-  margin-bottom: 30px;
-  border-bottom: 1px dashed transparent;
-
-  &:hover {
-    cursor: pointer;
-    border-bottom: 1px dashed slategray;
-  }
-
-  &:focus {
-    cursor: initial;
-  }
-`
+const PHONE_OPTIONS = ['Home', 'Work']
 
 class EditableFieldApp extends React.Component {
   constructor(props) {
@@ -83,12 +67,30 @@ class EditableFieldApp extends React.Component {
               },
             }}
           />
-          <EditableField
+          {/* <EditableField
             label="Country"
             name="country"
             placeholder="Add a country name"
             type="text"
             value="Mexico"
+          /> */}
+          <EditableField
+            label="Mobile Phone"
+            name="mobile"
+            placeholder="Add mobile phone"
+            type="tel"
+            valueOptions={PHONE_OPTIONS}
+            defaultOption={PHONE_OPTIONS[0]}
+            value={{ option: 'Home', value: '938438383' }}
+          />
+          <EditableField
+            label="Phone"
+            name="Phone"
+            placeholder="Add phone"
+            type="tel"
+            valueOptions={PHONE_OPTIONS}
+            defaultOption={PHONE_OPTIONS[1]}
+            value={[{ option: 'Home', value: '123456789' }]}
           />
           <EditableField
             label="Website"
@@ -125,26 +127,3 @@ class EditableFieldApp extends React.Component {
 }
 
 stories.add('Default', () => <EditableFieldApp />)
-
-/* <Field
-            label="city"
-            value={city}
-            isEditing={editingField === "city"}
-            onFieldFocus={this.handleFieldFocus}
-            onKeyUp={this.handleFieldKeyUp}
-          />
-          <Field
-            label="phone"
-            value={phone}
-            isEditing={editingField === "phone"}
-            onFieldFocus={this.handleFieldFocus}
-            onKeyUp={this.handleFieldKeyUp}
-          />
-          <Field
-            label="website"
-            value={website}
-            valueType="link"
-            isEditing={editingField === "website"}
-            onFieldFocus={this.handleFieldFocus}
-            onKeyUp={this.handleFieldKeyUp}
-          /> */

@@ -5,7 +5,7 @@ import {
   LabelTextUI,
   AddButtonUI,
 } from './styles/EditableField.css'
-import EditableFieldInput from './EditableFieldInput'
+import EditableFieldInput from './EditableField.Input'
 import EventListener from '../EventListener'
 import Icon from '../Icon'
 
@@ -14,21 +14,24 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import {
   COMPONENT_KEY,
-  generateUniqueName,
-  deleteAction,
+  createNewValueFieldFactory,
+  generateFieldActions,
+  normalizeFieldValue,
+  ACTION_ICONS,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { isArray } from '../../utilities/is'
 
 import {
   EditableFieldProps,
   EditableFieldState,
-  Value,
-  ValueObj,
+  FieldValue,
 } from './EditableField.types'
 
 const nextUuid = createUniqueIDFactory('Field')
+const createNewFieldValue = createNewValueFieldFactory(nextUuid)
 
 export class EditableField extends React.PureComponent<
   EditableFieldProps,
@@ -37,7 +40,6 @@ export class EditableField extends React.PureComponent<
   static className = 'c-EditableField'
   static defaultProps = {
     innerRef: noop,
-    initialValue: '',
     type: 'text',
     value: '',
   }
@@ -45,36 +47,38 @@ export class EditableField extends React.PureComponent<
   constructor(props) {
     super(props)
 
-    const { actions, value } = props
-    let initialValue = value
+    const { actions, name, value, defaultOption, valueOptions } = props
 
-    if (Array.isArray(value)) {
-      initialValue = value.map(val => ({
-        value: val,
-        id: nextUuid(`${props.name}_`),
-      }))
-    }
-    let newActionsArray = []
+    const initialFieldValue = normalizeFieldValue({
+      value,
+      name,
+      createNewFieldValue,
+    })
+    let defaultStateOption = null
 
-    if (actions !== null) {
-      if (actions === undefined) {
-        newActionsArray = [deleteAction]
+    if (valueOptions) {
+      if (defaultOption) {
+        defaultStateOption = defaultOption
       } else {
-        newActionsArray = Array.isArray(actions) ? actions : [actions]
-        let isDeleteActionPresent =
-          newActionsArray.filter(action => action.name === 'delete').length > 0
-
-        newActionsArray = isDeleteActionPresent
-          ? newActionsArray
-          : newActionsArray.concat(deleteAction)
+        defaultStateOption = valueOptions[0]
       }
     }
 
     this.state = {
-      initialValue,
-      value: initialValue,
-      editingField: '',
-      actions: newActionsArray,
+      actions: generateFieldActions(actions),
+      activeField: '',
+      fieldValue: initialFieldValue,
+      initialFieldValue,
+      multipleValuesEnabled: isArray(value),
+      valueOptions:
+        valueOptions && isArray(valueOptions)
+          ? valueOptions.map(option => ({
+              id: option,
+              label: option,
+              value: option,
+            }))
+          : null,
+      defaultOption: defaultStateOption,
     }
   }
 
@@ -89,30 +93,31 @@ export class EditableField extends React.PureComponent<
     return classNames(EditableField.className, className)
   }
 
-  getNewValue = ({ inputValue, name }) => {
-    const { value } = this.state
+  assignInputValueOnFieldValue = ({ inputValue, name }) => {
+    const { fieldValue } = this.state
 
-    return Array.isArray(value)
-      ? (value as ValueObj[]).map(val => {
-          if (val.id === name) {
-            return { ...val, value: inputValue }
-          }
-          return val
-        })
-      : inputValue
+    return fieldValue.map(val => {
+      if (val.id === name) {
+        return { ...val, value: inputValue }
+      }
+      return val
+    })
   }
 
   handleInputChange = ({ inputValue, name, event }) => {
     const { onChange } = this.props
-    const newValue = this.getNewValue({ inputValue, name })
+    const newFieldValue = this.assignInputValueOnFieldValue({
+      inputValue,
+      name,
+    })
 
     this.setState(
       {
-        value: newValue,
+        fieldValue: newFieldValue,
       },
       () => {
         if (onChange) {
-          onChange({ name, value: newValue, event })
+          onChange({ name, value: newFieldValue, event })
         }
       }
     )
@@ -120,56 +125,60 @@ export class EditableField extends React.PureComponent<
 
   handleInputKeyDown = ({ event, name }) => {
     return new Promise(resolve => {
-      const { onEnter, onEscape, onInputBlur } = this.props
-      const { initialValue, value } = this.state
+      const { onEnter, onEscape } = this.props
+      const {
+        initialFieldValue,
+        fieldValue,
+        defaultOption,
+        valueOptions,
+      } = this.state
       const { key: eventKey } = event
-      const isShiftTab = event.shiftKey && eventKey === key.TAB
       const isEnter = eventKey === key.ENTER
       const isEscape = eventKey === key.ESCAPE
-      let newValue = initialValue
-      let newInitialValue = initialValue
+      let newFieldValue = initialFieldValue
+      let newInitialFieldValue = initialFieldValue
 
-      if (isEnter || isShiftTab) {
-        if (Array.isArray(value) && !event.currentTarget.value) {
-          const filteredValues = (value as ValueObj[]).filter(val =>
-            Boolean(val.value)
-          )
+      if (isEnter) {
+        if (!event.currentTarget.value) {
+          const filteredValues = fieldValue.filter(val => Boolean(val.value))
 
-          newValue =
+          newFieldValue =
             filteredValues.length > 0
               ? filteredValues
-              : [{ value: '', id: nextUuid(`${name}_`) }]
+              : [
+                  createNewFieldValue({
+                    value: valueOptions
+                      ? { option: defaultOption, value: '' }
+                      : '',
+                    name: name,
+                  }),
+                ]
         } else {
-          newValue = this.getNewValue({
+          newFieldValue = this.assignInputValueOnFieldValue({
             inputValue: event.currentTarget.value,
             name,
           })
         }
-        newInitialValue = newValue
+        newInitialFieldValue = newFieldValue
       }
 
-      this.setState(
-        {
-          value: newValue,
-          initialValue: newInitialValue,
-          editingField: '',
-        },
-        () => {
-          resolve()
+      const newState: any = {
+        fieldValue: newFieldValue,
+        initialFieldValue: newInitialFieldValue,
+        activeField: '',
+      }
 
-          if (isEnter && onEnter) {
-            onEnter({ name, value: newValue, event })
-          }
+      this.setState(newState, () => {
+        resolve()
 
-          if (isEscape && onEscape) {
-            onEscape({ name, value: initialValue, event })
-          }
-
-          if (isShiftTab && onInputBlur) {
-            onInputBlur({ name, value: newValue, event })
-          }
+        if (isEnter && onEnter) {
+          onEnter({ name, value: newFieldValue, event })
         }
-      )
+
+        if (isEscape && onEscape) {
+          onEscape({ name, value: initialFieldValue, event })
+        }
+      })
     })
   }
 
@@ -179,36 +188,56 @@ export class EditableField extends React.PureComponent<
     return new Promise(resolve => {
       this.setState(
         {
-          editingField: name,
+          activeField: name,
         },
         () => {
           resolve()
 
           if (onFocus) {
-            const { value } = this.state
+            const { fieldValue } = this.state
 
-            onFocus({ event, name, value })
+            onFocus({ name, value: fieldValue, event })
           }
         }
       )
     })
   }
 
-  handleInputBlur = ({ name, event }) => {
-    const { onFieldBlur } = this.props
-    const { value } = this.state
+  handleOptionSelection = ({ name, selection }) => {
+    const { fieldValue } = this.state
+    let newFieldValue: FieldValue[] = []
+    let changed = false
+
+    for (const value of fieldValue) {
+      if (value.id === name && value.option !== selection) {
+        value.option = selection
+        changed = true
+      }
+
+      newFieldValue.push(value)
+    }
+
+    if (changed) {
+      this.setState({ fieldValue: newFieldValue })
+    }
+  }
+
+  handleOptionFocus = ({ name, event }) => {
+    // const { onFocus } = this.props
 
     return new Promise(resolve => {
       this.setState(
         {
-          editingField: '',
+          activeField: name,
         },
         () => {
           resolve()
 
-          if (onFieldBlur) {
-            onFieldBlur({ event, name, value })
-          }
+          // if (onFocus) {
+          //   const { fieldValue } = this.state
+
+          //   onFocus({ name, value: fieldValue, event })
+          // }
         }
       )
     })
@@ -216,18 +245,18 @@ export class EditableField extends React.PureComponent<
 
   handleFieldBlur = ({ name, event }) => {
     const { onFieldBlur } = this.props
-    const { value } = this.state
+    const { fieldValue } = this.state
 
     return new Promise(resolve => {
       this.setState(
         {
-          editingField: '',
+          activeField: '',
         },
         () => {
           resolve()
 
           if (onFieldBlur) {
-            onFieldBlur({ event, name, value })
+            onFieldBlur({ name, value: fieldValue, event })
           }
         }
       )
@@ -235,152 +264,143 @@ export class EditableField extends React.PureComponent<
   }
 
   handleAddValue = () => {
-    const { value } = this.state
-    const isNotSingleEmptyValue = value[value.length - 1] !== ''
+    const { fieldValue, defaultOption, valueOptions } = this.state
+    const isNotSingleEmptyValue = fieldValue[fieldValue.length - 1].value !== ''
 
     if (isNotSingleEmptyValue) {
       const { name } = this.props
-      const id = nextUuid(`${name}_`)
-      const newValue = (value as ValueObj[]).concat({ value: '', id })
+      const newValueObject = createNewFieldValue({
+        value: valueOptions ? { option: defaultOption, value: '' } : '',
+        name: name,
+      })
+      const newFieldValue = fieldValue.concat(newValueObject)
 
       this.setState({
-        value: newValue,
-        editingField: id,
+        fieldValue: newFieldValue,
+        activeField: newValueObject.id,
       })
     }
   }
 
   handleDeleteAction = ({ action, name, event }) => {
     const { name: propsName } = this.props
-    const { value } = this.state
+    const { fieldValue, defaultOption, valueOptions } = this.state
     const e = { ...event }
 
-    let newValue: Value = ''
-    let newState: {
-      value: Value
-      editingField: string
-    } = { value: '', editingField: '' }
+    const filteredFieldValue = fieldValue.filter(val => val.id !== name)
+    let newState: any = {}
 
-    if (Array.isArray(value)) {
-      newValue = (value as ValueObj[]).filter(val => val.id !== name)
-      newState.value =
-        newValue.length > 0
-          ? newValue
-          : [{ value: '', id: nextUuid(`${propsName}_`) }]
-    }
+    newState.fieldValue =
+      filteredFieldValue.length > 0
+        ? filteredFieldValue
+        : [
+            createNewFieldValue({
+              value: valueOptions ? { option: defaultOption, value: '' } : '',
+              name: propsName,
+            }),
+          ]
 
     this.setState(newState, () => {
       if (action.callback && typeof action.callback === 'function') {
-        action.callback({ name, action, value, event: e })
+        action.callback({ name, action, value: fieldValue, event: e })
       }
     })
   }
 
   handleCustomAction = ({ action, name, event }) => {
-    const { value } = this.state
+    const { fieldValue } = this.state
 
     if (action.callback && typeof action.callback === 'function') {
-      action.callback({ name, action, value, event })
+      action.callback({ name, action, value: fieldValue, event })
     }
   }
 
   handleOnDocumentBodyMouseDown = (event: Event) => {
     if (!event) return
-    if (!this.state.editingField) return
+    if (!this.state.activeField) return
 
     const targetNode = event.target
 
     if (targetNode instanceof Element) {
       if (document.activeElement === targetNode) return
+      if (this.editableFieldRef.contains(targetNode)) return
+      if (targetNode.classList.contains('c-DropdownV2Item')) return
 
       const { name } = this.props
-      const { value } = this.state
+      const { fieldValue, defaultOption, valueOptions } = this.state
 
-      if (Array.isArray(value)) {
-        const newvalue = (value as ValueObj[]).filter(val => Boolean(val.value))
+      const newFieldValue = fieldValue.filter(val => Boolean(val.value))
 
-        this.setState({
-          editingField: '',
-          value:
-            newvalue.length > 0
-              ? newvalue
-              : [{ value: '', id: nextUuid(`${name}_`) }],
-        })
-      } else {
-        this.setState({
-          editingField: '',
-        })
-      }
+      this.setState({
+        activeField: '',
+        fieldValue:
+          newFieldValue.length > 0
+            ? newFieldValue
+            : [
+                createNewFieldValue({
+                  value: valueOptions
+                    ? { option: defaultOption, value: '' }
+                    : '',
+                  name: name,
+                }),
+              ],
+      })
     }
   }
 
   renderInputFields() {
     const { name, type, ...rest } = this.props
-    const { actions, value, editingField } = this.state
-
-    if (Array.isArray(value)) {
-      const isSingleEmptyValue =
-        value.length === 1 && (value as ValueObj[])[0].value === ''
-
-      return (
-        <div>
-          {(value as ValueObj[]).map(val => {
-            return (
-              <EditableFieldInput
-                {...getValidProps(rest)}
-                actions={actions}
-                name={val.id}
-                isEditing={editingField === val.id}
-                key={val.id}
-                type={type}
-                value={val.value}
-                onBlur={this.handleFieldBlur}
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-                onKeyDown={this.handleInputKeyDown}
-                customAction={this.handleCustomAction}
-                deleteAction={this.handleDeleteAction}
-              />
-            )
-          })}
-
-          {!isSingleEmptyValue ? (
-            <AddButtonUI type="button" onClick={this.handleAddValue}>
-              <Icon name="plus-medium" />
-            </AddButtonUI>
-          ) : null}
-        </div>
-      )
-    }
-    const fieldName = generateUniqueName(name)
+    const {
+      actions,
+      activeField,
+      defaultOption,
+      fieldValue,
+      multipleValuesEnabled,
+      valueOptions,
+    } = this.state
 
     return (
-      <EditableFieldInput
-        {...getValidProps(rest)}
-        actions={actions}
-        name={fieldName}
-        isEditing={editingField === fieldName}
-        type={type}
-        value={value}
-        onBlur={this.handleFieldBlur}
-        onChange={this.handleInputChange}
-        onFocus={this.handleInputFocus}
-        onKeyDown={this.handleInputKeyDown}
-        customAction={this.handleCustomAction}
-        deleteAction={this.handleDeleteAction}
-      />
+      <div>
+        {fieldValue.map(val => {
+          return (
+            <EditableFieldInput
+              {...getValidProps(rest)}
+              actions={actions}
+              name={val.id}
+              isActive={activeField === val.id}
+              key={val.id}
+              type={type}
+              fieldValue={val}
+              defaultOption={defaultOption}
+              valueOptions={valueOptions}
+              onBlur={this.handleFieldBlur}
+              onChange={this.handleInputChange}
+              onFocus={this.handleInputFocus}
+              onOptionFocus={this.handleOptionFocus}
+              onOptionSelection={this.handleOptionSelection}
+              onKeyDown={this.handleInputKeyDown}
+              customAction={this.handleCustomAction}
+              deleteAction={this.handleDeleteAction}
+            />
+          )
+        })}
+
+        {multipleValuesEnabled ? (
+          <AddButtonUI type="button" onClick={this.handleAddValue}>
+            <Icon name={ACTION_ICONS['plus']} size="18" />
+          </AddButtonUI>
+        ) : null}
+      </div>
     )
   }
 
   render() {
     const { label, name, type, value, ...rest } = this.props
+    const { fieldValue } = this.state
 
     return (
       <EditableFieldUI {...getValidProps(rest)} innerRef={this.setEditableNode}>
-        <label
-          className="c-EditableField__label"
-          htmlFor={generateUniqueName(name)}
-        >
+        <label className="c-EditableField__label" htmlFor={fieldValue[0].id}>
           <LabelTextUI className="c-EditableField__labelText">
             {label}
           </LabelTextUI>
