@@ -14,11 +14,7 @@ export const ItemUI = styled('li')`
 `
 
 export const BadgeUI = styled(Badge)`
-  &.is-square {
-    background-color: ${getColor('grey.300')};
-    box-shadow: 0 0 0 1px ${getColor('grey.500')} inset;
-    margin-left: 5px;
-  }
+  margin-left: 5px;
 `
 
 export const BadgeItemUI = styled('div')`
