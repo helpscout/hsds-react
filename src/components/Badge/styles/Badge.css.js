@@ -33,11 +33,11 @@ const css = `
 
   &.is-square {
     border-radius: 3px;
-    color: ${getColor('grey.800')};
     font-weight: 400;
     padding: 4px 3px;
     font-size: 11px;
     line-height: 10px;
+    color: ${getColor('charcoal.300')};
     background-color: ${getColor('grey.300')};
     box-shadow: 0 0 0 1px ${getColor('grey.500')} inset;
   }

@@ -44,7 +44,7 @@ export const FilteredListUI = styled('ul')`
       margin-right: 10px;
     }
 
-    ${BadgeUI}.is-square {
+    ${BadgeUI} {
       margin-left: 10px;
     }
   }
