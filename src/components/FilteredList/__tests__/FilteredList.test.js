@@ -57,24 +57,6 @@ describe('Rendering', () => {
     const newProps = { items: ['test4@test.com', 'test@test.com'] }
     expect(wrapper.instance().shouldComponentUpdate(newProps)).toBeTruthy()
   })
-
-  it('De-dups list of items', () => {
-    const items = ['zim@example.com', 'gir@example.com', 'zim@example.com']
-    const wrapper = mount(<FilteredList items={items} />)
-    expect(wrapper.find(ItemUI).length).toBe(2)
-    expect(
-      wrapper
-        .find(ItemUI)
-        .first()
-        .text()
-    ).toBe(items[0])
-    expect(
-      wrapper
-        .find(ItemUI)
-        .last()
-        .text()
-    ).toBe(items[1])
-  })
 })
 
 describe('Inlined', () => {
@@ -148,7 +130,7 @@ describe('Tooltip', () => {
     expect(wrapper.find(Tooltip).length).toBeTruthy()
     expect(wrapper.find(Tooltip).find(BadgeUI)).toBeTruthy()
   })
-  it('Renders rest of unique items within the tooltip', () => {
+  it('Renders rest of items within the tooltip', () => {
     const items = [
       'test@test.com',
       'test2@test.com',
@@ -160,13 +142,90 @@ describe('Tooltip', () => {
     const component = <FilteredList items={items} limit={limit} />
     cy.render(component)
 
-    const filtereditems = [...Array.from(new Set(items))]
     expect(cy.getByCy('FilteredList.Badge').text()).toBe(
-      `+${filtereditems.length - limit}`
+      `+${items.length - limit}`
     )
 
     const wrapper = mount(component)
     const badgeItems = wrapper.instance().renderBadgeContent()
-    expect(badgeItems.length).toBe(filtereditems.length - limit)
+    expect(badgeItems.length).toBe(items.length - limit)
+  })
+})
+
+describe('Custom Renderer', () => {
+  it('Renders the item using a custom renderer', () => {
+    const items = [
+      { label: 'Google', href: 'https://google.com' },
+      { label: 'Bing', href: 'https://bing.com' },
+      { label: 'DuckDuckGo', href: 'https://duckduckgo.com' },
+    ]
+    const renderItem = item => {
+      return <a href={item.href}>{item.label}</a>
+    }
+
+    cy.render(
+      <FilteredList
+        renderItem={renderItem}
+        items={items}
+        limit={5}
+        inline
+        itemKey="label"
+      />
+    )
+
+    expect(cy.get('a').length).toBe(3)
+    expect(
+      cy
+        .get('a')
+        .first()
+        .text()
+    ).toBe('Google')
+  })
+
+  it('Renders the item using a different item key', () => {
+    const items = [
+      { label: 'Google', href: 'https://google.com' },
+      { label: 'Bing', href: 'https://bing.com' },
+      { label: 'DuckDuckGo', href: 'https://duckduckgo.com' },
+    ]
+
+    cy.render(<FilteredList items={items} itemKey="href" />)
+
+    expect(
+      cy
+        .getByCy('FilteredList.ItemLabel')
+        .first()
+        .text()
+    ).toBe('https://google.com')
+  })
+
+  it('Should update if the value of one item change ', () => {
+    const items = [
+      { label: 'Google', href: 'https://google.com' },
+      { label: 'Bing', href: 'https://bing.com' },
+      { label: 'DuckDuckGo', href: 'https://duckduckgo.com' },
+    ]
+    const renderItem = item => {
+      return <a href={item.href}>{item.label}</a>
+    }
+
+    const wrapper = mount(
+      <FilteredList
+        renderItem={renderItem}
+        items={items}
+        limit={5}
+        inline
+        itemKey="label"
+      />
+    )
+
+    const newItems = [
+      { label: 'New Google', href: 'https://google.com' },
+      { label: 'New Bing', href: 'https://bing.com' },
+      { label: 'New DuckDuckGo', href: 'https://duckduckgo.com' },
+    ]
+    expect(
+      wrapper.instance().shouldComponentUpdate({ items: newItems })
+    ).toBeTruthy()
   })
 })

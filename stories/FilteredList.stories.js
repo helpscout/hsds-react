@@ -23,3 +23,24 @@ stories.add('with Limit', () => (
 stories.add('inline', () => (
   <FilteredList items={items} limit={number('limit', 2)} inline />
 ))
+
+stories.add('custom renderer', () => {
+  const items = [
+    { label: 'Google', href: 'https://google.com' },
+    { label: 'Bing', href: 'https://bing.com' },
+    { label: 'DuckDuckGo', href: 'https://duckduckgo.com' },
+  ]
+  const renderItem = item => {
+    return <a href={item.href}>{item.label}</a>
+  }
+
+  return (
+    <FilteredList
+      renderItem={renderItem}
+      items={items}
+      limit={number('limit', 2)}
+      inline
+      itemKey="label"
+    />
+  )
+})

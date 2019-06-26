@@ -4,6 +4,7 @@ import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
+import { isString, isObject } from '../../utilities/is'
 import { COMPONENT_KEY } from './FilteredList.utils'
 
 import Text from '../Text'
@@ -18,15 +19,18 @@ import {
 } from './styles/FilteredList.css.js'
 
 export interface Props {
-  className: string
+  className?: string
   items: string[]
+  itemKey?: string
   limit: number
-  inline: boolean
+  inline?: boolean
+  renderItem?: (object) => React.ReactNode
 }
 
 export class FilteredList extends React.Component<Props> {
   static defaultProps = {
     items: [],
+    limit: 5,
   }
 
   shouldComponentUpdate(nextProps) {
@@ -36,32 +40,45 @@ export class FilteredList extends React.Component<Props> {
       return true
     }
 
-    if (nextProps.items.sort().join(':') !== items.sort().join(':')) {
+    const itemKey = items
+      .map(this.getItemValue)
+      .sort()
+      .join(':')
+
+    const nextItemKey = nextProps.items
+      .map(this.getItemValue)
+      .sort()
+      .join(':')
+
+    if (nextItemKey !== itemKey) {
       return true
     }
 
     return false
   }
 
-  getUniqueItems() {
-    return this.props.items.filter((value, index, self) => {
-      return self.indexOf(value) === index
-    })
+  getItemValue = item => {
+    if (!isString(item) && isObject(item) && this.props.itemKey) {
+      return item[this.props.itemKey]
+    }
+
+    return item
   }
 
   renderBadgeContent = () => {
-    const { limit } = this.props
-    const items = this.getUniqueItems()
-    return items.slice(limit, items.length).map(email => (
-      <BadgeItemUI data-cy="FilteredList.BadgeItem" key={email}>
-        {email}
-      </BadgeItemUI>
-    ))
+    const { limit, items } = this.props
+    return items.slice(limit, items.length).map(item => {
+      const value = this.getItemValue(item)
+      return (
+        <BadgeItemUI data-cy="FilteredList.BadgeItem" key={value}>
+          {value}
+        </BadgeItemUI>
+      )
+    })
   }
 
   renderBadge() {
-    const { limit } = this.props
-    const items = this.getUniqueItems()
+    const { limit, items } = this.props
 
     return (
       <Tooltip renderContent={this.renderBadgeContent}>
@@ -77,20 +94,21 @@ export class FilteredList extends React.Component<Props> {
   }
 
   renderItems() {
-    const { limit, inline } = this.props
-    const items = this.getUniqueItems()
+    const { limit, inline, renderItem, items } = this.props
 
     const itemsList = limit ? items.slice(0, limit) : items
     const isListFiltered = limit && items.length > limit
 
-    return itemsList.map((email, index) => {
+    return itemsList.map((item, index) => {
       const isLastItem = index + 1 >= limit
       const isBadgeVisible = isListFiltered && isLastItem
       const isSeparatorVisible = !isLastItem && inline
+      const value = this.getItemValue(item)
 
       return (
-        <ItemUI key={email} data-cy="FilteredList.Item">
-          <Text>{email}</Text>
+        <ItemUI key={value} data-cy="FilteredList.Item">
+          {renderItem && renderItem(item)}
+          {!renderItem && <Text data-cy="FilteredList.ItemLabel">{value}</Text>}
           {isBadgeVisible && this.renderBadge()}
           {isSeparatorVisible && this.renderSeparator()}
         </ItemUI>
