@@ -1,7 +1,6 @@
 import styled from '../../styled/index'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
-import Dropdown from '../../Dropdown/DropdownV2'
 
 export const EditableFieldInputUI = styled('div')`
   ${baseStyles};
@@ -37,8 +36,9 @@ export const InteractiveContentUI = styled('div')`
   }
 
   .is-active & {
+    pointer-events: none;
     z-index: 2;
-    border-bottom: 1px dashed transparent !important;
+    border-bottom-color: transparent !important;
   }
 `
 
@@ -59,9 +59,9 @@ export const OptionsWrapperUI = styled('div')`
   margin-right: 20px;
   font-size: 14px;
   line-height: 25px;
+  pointer-events: auto;
 `
 
-export const DropdownUI = styled(Dropdown)``
 export const TriggerUI = styled('div')`
   position: relative;
   width: 100%;
@@ -121,6 +121,7 @@ export const InputUI = styled('input')`
   color: transparent;
   font-size: 14px;
   background: white;
+  pointer-events: auto;
 
   &::placeholder {
     color: transparent;
@@ -159,6 +160,7 @@ export const InputUI = styled('input')`
     -webkit-appearance: none;
     margin: 0;
   }
+
   &[type='number'] {
     -moz-appearance: textfield;
   }

@@ -8,7 +8,6 @@ import {
   OptionsWrapperUI,
   OptionsDropdownUI,
   TriggerUI,
-  DropdownUI,
   StaticContentUI,
   StaticValueUI,
   StaticOptionUI,
@@ -16,8 +15,9 @@ import {
   FieldActionsUI,
   FieldButtonUI,
 } from './styles/EditableField.Input.css'
-import Icon from '../Icon'
 
+import Dropdown from '../Dropdown/DropdownV2'
+import Icon from '../Icon'
 import Truncate from '../Truncate'
 import Truncated from './EditableField.Truncate'
 
@@ -267,7 +267,7 @@ export class EditableFieldInput extends React.PureComponent<
         className="EditableField__optionsWrapper"
         onKeyDown={this.handleKeyDown}
       >
-        <DropdownUI
+        <Dropdown
           className="EditableField__Dropdown"
           items={valueOptions}
           shouldRefocusOnClose={() => false}
