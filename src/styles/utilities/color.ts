@@ -2,7 +2,7 @@ import colorScheme from '../configs/colors'
 import { darken, getColorShade, lighten } from '../../utilities/color'
 import { isNumber, isObject } from '../../utilities/is'
 import get from '../../utilities/get'
-export { darken, lighten, rgb, rgba } from '../../utilities/color'
+export { rgba } from '../../utilities/color'
 
 type Color = string
 type ColorArgs = any
