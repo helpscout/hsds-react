@@ -61,6 +61,14 @@ export class GreeterCard extends React.PureComponent<Props> {
     )
   }
 
+  getTruncatedText(text, limit) {
+    return (
+      <Truncate limit={limit} type="end">
+        {text}
+      </Truncate>
+    )
+  }
+
   renderTitle() {
     const { title } = this.props
     return title ? (

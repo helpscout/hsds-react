@@ -103,5 +103,11 @@ export const ItemUI = styled('div')`
 `
 
 export const TriggerUI = styled(Icon)`
-  color: ${getColor('yellow.500')};
+  color: ${getColor('grey.600')};
+
+  ${({ isOpen }) =>
+    isOpen &&
+    `
+    color: ${getColor('yellow.500')};
+  `};
 `
