@@ -23,6 +23,9 @@ export const GreeterCardUI = styled(Card)`
   &.is-align-left {
     border-bottom-left-radius: 4px;
   }
+  &.is-no-box-shadow {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0px 0px rgba(0, 0, 0, 0.15);
+  }
 `
 
 export const TitleUI = styled(Heading)`
