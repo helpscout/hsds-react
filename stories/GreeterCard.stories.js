@@ -58,6 +58,7 @@ class Story extends React.Component {
 
     const props = {
       in: show,
+      isWithBoxShadow: boolean('isWithBoxShadow', true),
       action: actionProp,
       animationDuration: number('animationDuration', 300),
       animationEasing: text('animationEasing', 'ease-in-out'),
