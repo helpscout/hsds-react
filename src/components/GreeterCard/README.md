@@ -22,7 +22,7 @@ This component renders a Greeter Card Notification with (optional) Title, Subtit
 | animationSequence | `string`   |           | [Animation](../Animate) style for this component. Default `fade up`. |
 | body              | `string`   |           | Main text of the Greeter.                                            |
 | className         | `string`   |           | The className of the component.                                      |
-| isNoBoxShadow     | `boolean`  | `false`   | Removes the box shadow.                                              |
+| isWithBoxShadow   | `boolean`  | `true`    | Removes the box shadow.                                              |
 | subtitle          | `string`   |           | Title of the Greeter.                                                |
 | title             | `string`   |           | Subtitle of the Greeter.                                             |
 

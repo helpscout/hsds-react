@@ -134,9 +134,9 @@ describe('Action', () => {
   })
 
   test('Should remove the box shadow', () => {
-    const wrapper = mount(<GreeterCard isNoBoxShadow={true} />)
+    const wrapper = mount(<GreeterCard isWithBoxShadow={false} />)
     const el = wrapper.find('div.c-GreeterCard')
 
-    expect(el.getDOMNode().classList.contains('is-no-box-shadow')).toBeTruthy()
+    expect(el.getDOMNode().classList.contains('is-with-box-shadow')).toBeFalsy()
   })
 })
