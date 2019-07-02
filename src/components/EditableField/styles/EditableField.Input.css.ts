@@ -56,7 +56,7 @@ export const OptionsWrapperUI = styled('div')`
   position: relative;
   width: 60px;
   height: 25px;
-  margin-right: 10px;
+  margin-right: 20px;
   font-size: 14px;
   line-height: 25px;
 `
@@ -68,7 +68,7 @@ export const TriggerUI = styled('div')`
 `
 
 export const OptionsDropdownUI = styled('div')`
-  width: 60px;
+  width: 70px;
   margin-bottom: 5px;
   background: white;
   font-size: 14px;
@@ -104,8 +104,12 @@ export const OptionsDropdownUI = styled('div')`
 
   & .c-Icon {
     position: absolute;
-    right: 0;
+    right: -5px;
     top: 5px;
+  }
+
+  & .c-Truncate {
+    width: 60px;
   }
 `
 
@@ -149,6 +153,15 @@ export const InputUI = styled('input')`
       color: #b7c2cc;
     }
   }
+
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
 `
 
 export const StaticContentUI = styled('div')`
@@ -169,6 +182,7 @@ export const StaticOptionUI = styled('span')`
   vertical-align: baseline;
   width: 70px;
   height: 25px;
+  margin-right: 10px;
   color: #3c5263;
   font-size: 14px;
   line-height: 25px;

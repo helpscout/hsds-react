@@ -18,8 +18,8 @@ export function normalizeFieldValue({
   value,
   name,
   createNewFieldValue,
-}): any[] {
-  let fieldValue: any[] = []
+}): FieldValue[] {
+  let fieldValue: FieldValue[] = []
 
   if (isArray(value)) {
     fieldValue = value.map(val => createNewFieldValue({ value: val, name }))

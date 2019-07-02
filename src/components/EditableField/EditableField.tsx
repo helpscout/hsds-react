@@ -243,8 +243,8 @@ export class EditableField extends React.PureComponent<
     })
   }
 
-  handleFieldBlur = ({ name, event }) => {
-    const { onFieldBlur } = this.props
+  handleBlur = ({ name, event }) => {
+    const { onBlur } = this.props
     const { fieldValue } = this.state
 
     return new Promise(resolve => {
@@ -255,8 +255,8 @@ export class EditableField extends React.PureComponent<
         () => {
           resolve()
 
-          if (onFieldBlur) {
-            onFieldBlur({ name, value: fieldValue, event })
+          if (onBlur) {
+            onBlur({ name, value: fieldValue, event })
           }
         }
       )
@@ -373,7 +373,7 @@ export class EditableField extends React.PureComponent<
               fieldValue={val}
               defaultOption={defaultOption}
               valueOptions={valueOptions}
-              onBlur={this.handleFieldBlur}
+              onBlur={this.handleBlur}
               onChange={this.handleInputChange}
               onFocus={this.handleInputFocus}
               onOptionFocus={this.handleOptionFocus}

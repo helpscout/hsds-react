@@ -13,17 +13,19 @@ import {
 import { jsxDecorator } from 'storybook-addon-jsx'
 
 import styled from '../src/components/styled'
+import baseStyles from '../src/styles/resets/baseStyles.css'
 
 const stories = storiesOf('EditableField', module)
   .addParameters({
-    options: { showPanel: false, enableShortcuts: false, isFullscreen: true },
+    options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
     readme: { sidebar: ReadMe },
     a11y: { element: 'c-EditableField' },
   })
   .addDecorator(jsxDecorator)
 
 const FormUI = styled('form')`
-  width: 200px;
+  ${baseStyles};
+  width: 300px;
   padding: 20px;
   background-color: white;
   margin: 10px auto;
@@ -31,99 +33,181 @@ const FormUI = styled('form')`
   border-radius: 3px;
 `
 
-const PHONE_OPTIONS = ['Home', 'Work']
+const NoteUI = styled('div')`
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(155, 155, 195, 0.1);
+  margin: 20px auto;
+  border: 1px solid #6bc0ff;
+  border-radius: 3px;
+  color: rgba(155, 155, 195, 1);
 
-class EditableFieldApp extends React.Component {
-  constructor(props) {
-    super(props)
+  p {
+    margin: 0 0 20px 0;
 
-    this.state = {
-      multipleInputValue: ['Juan', 'Pablo'],
-      singleInputValue: 'Help Scout',
+    &:last-child {
+      margin: 0;
     }
   }
+`
 
-  render() {
-    const { multipleInputValue, singleInputValue } = this.state
+const PHONE_OPTIONS = ['Home', 'Work', 'Other']
+const PAINT_OPTIONS = ['Acrylics', 'Oil', 'Pastels', 'Watercolour', 'Other']
 
-    return (
-      <div className="EditableFieldApp">
-        <h1>Inline Edit</h1>
-        <FormUI
-          onSubmit={e => {
-            e.preventDefault()
-          }}
-        >
-          <EditableField
-            label="Company"
-            name="company"
-            placeholder="Add a company name"
-            type="text"
-            value={singleInputValue}
-            actions={{
-              name: 'delete',
-              callback(obj) {
-                // console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
-              },
-            }}
-          />
-          {/* <EditableField
-            label="Country"
-            name="country"
-            placeholder="Add a country name"
-            type="text"
-            value="Mexico"
-          /> */}
-          <EditableField
-            label="Mobile Phone"
-            name="mobile"
-            placeholder="Add mobile phone"
-            type="tel"
-            valueOptions={PHONE_OPTIONS}
-            defaultOption={PHONE_OPTIONS[0]}
-            value={{ option: 'Home', value: '938438383' }}
-          />
-          <EditableField
-            label="Phone"
-            name="Phone"
-            placeholder="Add phone"
-            type="tel"
-            valueOptions={PHONE_OPTIONS}
-            defaultOption={PHONE_OPTIONS[1]}
-            value={[{ option: 'Home', value: '123456789' }]}
-          />
-          <EditableField
-            label="Website"
-            name="website"
-            placeholder="Add a city name"
-            type="url"
-            value="http://mysite.net"
-            actions={{
-              name: 'link',
-              callback(obj) {
-                console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
-              },
-            }}
-          />
-          <EditableField
-            label="Names"
-            name="names"
-            type="text"
-            placeholder="Add a name"
-            value={multipleInputValue}
-            actions={[
-              {
-                name: 'delete',
-                callback(obj) {
-                  // console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
-                },
-              },
-            ]}
-          />
-        </FormUI>
-      </div>
-    )
-  }
-}
+stories.add('Text', () => (
+  <FormUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Company"
+      name="company"
+      placeholder="Add a company name"
+      type="text"
+    />
+    <EditableField
+      label="Team"
+      name="team"
+      placeholder="Add a sports team name"
+      type="text"
+      value="Atlas"
+    />
+  </FormUI>
+))
 
-stories.add('Default', () => <EditableFieldApp />)
+stories.add('Text Multiple', () => (
+  <FormUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Films"
+      name="films"
+      type="text"
+      placeholder="Add a film name"
+    />
+    <EditableField
+      label="Musicians"
+      name="musicians"
+      type="text"
+      placeholder="Add a musician name"
+      value={['George Harrison', 'Neil Young']}
+    />
+  </FormUI>
+))
+
+stories.add('Email Multiple', () => (
+  <FormUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Emails"
+      name="email"
+      placeholder="Add your email"
+      type="email"
+      value={[
+        'art_vandelay@vandelayindustries.com',
+        'john_locke@dharma.org',
+        'pennypacker@kramerica.com',
+        'this_is_kind_of_long@annoyingemails.com',
+        'this_is_kind_of_long@evenmoreannoyingemails.com',
+      ]}
+    />
+  </FormUI>
+))
+
+stories.add('Url', () => (
+  <FormUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Website"
+      name="website"
+      placeholder="Add a website address"
+      type="url"
+      value="http://mysite.net"
+      actions={{
+        name: 'link',
+        callback(obj) {
+          console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+        },
+      }}
+    />
+  </FormUI>
+))
+
+stories.add('Number', () => (
+  <FormUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <NoteUI>
+      <p>
+        There is no special handling of inputs of type "number", other than
+        removing the little up/down buttons that browsers add.
+      </p>
+      <p>Using the up/down keys and scrolling still work as expected</p>
+    </NoteUI>
+    <EditableField
+      label="Amount"
+      name="amount"
+      placeholder="Add the amount"
+      type="number"
+      value="166"
+    />
+  </FormUI>
+))
+
+stories.add('With options', () => (
+  <FormUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Mobile Phone"
+      name="mobilephone"
+      placeholder="Add a mobile phone"
+      type="tel"
+      valueOptions={PHONE_OPTIONS}
+    />
+
+    <EditableField
+      label="Phone"
+      name="Phone"
+      placeholder="Add phone"
+      type="tel"
+      valueOptions={PHONE_OPTIONS}
+      defaultOption={PHONE_OPTIONS[2]}
+      value={{ option: 'Work', value: '123456789' }}
+    />
+  </FormUI>
+))
+
+stories.add('With options multiple', () => (
+  <FormUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Favourite Paint Colour"
+      name="paint"
+      placeholder="Add a colour"
+      type="text"
+      valueOptions={PAINT_OPTIONS}
+      value={[
+        { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
+        { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
+        { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
+      ]}
+    />
+  </FormUI>
+))

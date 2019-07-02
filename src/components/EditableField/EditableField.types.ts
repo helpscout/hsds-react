@@ -1,14 +1,15 @@
+export type Value = string | string[] | FieldValue[]
+
 export type FieldValue = {
   value: string
   id: string
   option?: string
 }
 
-export type Value = string | string[] | FieldValue[]
-
 export type FieldAction = {
   name: string
   icon?: string
+  callback?: (args: { name: string; value: FieldValue; event: Event }) => void
 }
 
 export type Option = {
@@ -18,7 +19,7 @@ export type Option = {
 }
 
 export interface EditableFieldProps {
-  actions?: any
+  actions?: FieldAction | FieldAction[]
   className?: string
   defaultOption?: string
   innerRef: (node: HTMLElement) => void
@@ -26,10 +27,9 @@ export interface EditableFieldProps {
   label: string
   name: string
   type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
-  value: string | string[]
-  valueOptions: string[]
-  onInputBlur: (args: { name: string; value: Value; event: Event }) => void
-  onFieldBlur: (args: { name: string; value: Value; event: Event }) => void
+  value: Value
+  valueOptions: string[] | Option[]
+  onBlur: (args: { name: string; value: Value; event: Event }) => void
   onChange: (args: { name: string; value: Value; event: Event }) => void
   onEnter: (args: { name: string; value: Value; event: Event }) => void
   onDelete: (args: { name: string; value: Value; event: Event }) => void

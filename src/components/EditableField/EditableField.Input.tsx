@@ -17,7 +17,9 @@ import {
   FieldButtonUI,
 } from './styles/EditableField.Input.css'
 import Icon from '../Icon'
+
 import Truncate from '../Truncate'
+import Truncated from './EditableField.Truncate'
 
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -266,18 +268,22 @@ export class EditableFieldInput extends React.PureComponent<
         onKeyDown={this.handleKeyDown}
       >
         <DropdownUI
+          className="EditableField__Dropdown"
           items={valueOptions}
           shouldRefocusOnClose={() => false}
           minWidth={75}
-          maxWidth={100}
+          maxWidth={200}
           onBlur={this.handleInputBlur}
           onFocus={this.handleOptionFocus}
           onSelect={this.handleDropdownSelect}
           triggerRef={this.setOptionsDropdownNode}
           renderTrigger={
-            <TriggerUI>
-              <OptionsDropdownUI className="EditableField__optionsDropdown">
-                {fieldValue.option || defaultOption}
+            <TriggerUI className="EditableField__optionsTrigger">
+              <OptionsDropdownUI
+                className="EditableField__optionsDropdown"
+                title={fieldValue.option || defaultOption}
+              >
+                <Truncate>{fieldValue.option || defaultOption}</Truncate>
                 <Icon name={ACTION_ICONS.valueOption} />
               </OptionsDropdownUI>
               <FocusIndicatorUI className="EditableField__focusIndicator" />
@@ -343,6 +349,7 @@ export class EditableFieldInput extends React.PureComponent<
               onChange={this.handleChange}
               onFocus={this.handleFocus}
               onKeyDown={this.handleKeyDown}
+              title={fieldValue.value}
             />
             <FocusIndicatorUI className="EditableField__focusIndicator" />
           </InputWrapperUI>
@@ -361,7 +368,10 @@ export class EditableFieldInput extends React.PureComponent<
             onKeyDown={this.handleStaticValueKeyDown}
           >
             {fieldValue.value ? (
-              <Truncate>{fieldValue.value}</Truncate>
+              <Truncated
+                string={fieldValue.value}
+                splitter={type === 'email' ? '@' : undefined}
+              />
             ) : (
               <span className="is-placeholder">{placeholder}</span>
             )}
