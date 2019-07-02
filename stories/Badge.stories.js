@@ -36,3 +36,9 @@ stories.add('size', () => (
     <br />
   </div>
 ))
+stories.add('square', () => (
+  <div>
+    <Badge isSquare>Regular</Badge>
+    <br />
+  </div>
+))
