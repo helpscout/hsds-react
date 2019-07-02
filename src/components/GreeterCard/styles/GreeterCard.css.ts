@@ -12,7 +12,7 @@ export const GreeterCardUI = styled(Card)`
   ${baseStyles};
   background-color: white;
   border-color: transparent !important;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px 20px 25px;
   width: 300px;
@@ -22,6 +22,9 @@ export const GreeterCardUI = styled(Card)`
   }
   &.is-align-left {
     border-bottom-left-radius: 4px;
+  }
+  &.is-with-box-shadow {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.15);
   }
 `
 
