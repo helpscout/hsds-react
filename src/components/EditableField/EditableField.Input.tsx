@@ -186,6 +186,14 @@ export class EditableFieldInput extends React.PureComponent<
 
       onKeyDown({ event, name }).then(() => {
         const staticValueNode = this.staticValueRef
+        const inputNode = this.inputRef
+
+        // In case the value is longer than the width of the input
+        // lets move the cursor to the very beginning
+        // when clicking the input the cursor will be at the expected position :)
+        if (inputNode && inputNode.setSelectionRange) {
+          inputNode.setSelectionRange(0, 0)
+        }
 
         if (staticValueNode) {
           staticValueNode.setAttribute('tabIndex', '0')

@@ -9,7 +9,7 @@ export const EditableFieldInputUI = styled('div')`
   margin-bottom: 10px;
 
   &:hover .EditableField__actions {
-    display: block;
+    opacity: 1;
     cursor: pointer;
   }
 
@@ -79,7 +79,7 @@ export const OptionsDropdownUI = styled('div')`
     color: black;
 
     & + .EditableField__focusIndicator {
-      bottom: 1px;
+      bottom: 0;
       transform: scaleX(1);
       height: 1px;
       background-color: #c6d0d8;
@@ -145,7 +145,7 @@ export const InputUI = styled('input')`
 
     & + .EditableField__focusIndicator {
       transform: scaleX(1);
-      bottom: 1px;
+      bottom: 0;
       height: 1px;
       background-color: #c6d0d8;
     }
@@ -170,6 +170,7 @@ export const StaticContentUI = styled('div')`
   position: relative;
   display: inline-block;
   max-width: 100%;
+  height: 25px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
@@ -217,7 +218,6 @@ export const StaticValueUI = styled('span')`
   height: 25px;
   width: 100%;
   max-width: 100%;
-  padding: 0px 3px 6px 0;
   color: #3c5263;
   font-size: 14px;
   line-height: 25px;
@@ -226,7 +226,7 @@ export const StaticValueUI = styled('span')`
   white-space: nowrap;
 
   .has-options & {
-    width: calc(100% - 70px);
+    width: calc(100% - 80px);
   }
 
   .is-active & {
@@ -239,13 +239,13 @@ export const StaticValueUI = styled('span')`
 
   &:focus {
     outline: none;
-    border-bottom: 1px dashed #c6d0d8;
+    outline: 1px dashed rgba(197, 208, 217, 0.5);
   }
 `
 
 export const FocusIndicatorUI = styled('span')`
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   right: 0;
   height: 2px;
@@ -263,7 +263,12 @@ export const FieldActionsUI = styled('div')`
   top: 1px;
   left: 100%;
   z-index: 4;
-  display: none;
+  opacity: 0;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
 `
 
 export const FieldButtonUI = styled('button')`

@@ -360,7 +360,7 @@ export class EditableField extends React.PureComponent<
     } = this.state
 
     return (
-      <div>
+      <div className="EditableField__main">
         {fieldValue.map(val => {
           return (
             <EditableFieldInput
@@ -399,9 +399,13 @@ export class EditableField extends React.PureComponent<
     const { fieldValue } = this.state
 
     return (
-      <EditableFieldUI {...getValidProps(rest)} innerRef={this.setEditableNode}>
-        <label className="c-EditableField__label" htmlFor={fieldValue[0].id}>
-          <LabelTextUI className="c-EditableField__labelText">
+      <EditableFieldUI
+        {...getValidProps(rest)}
+        className="c-EditableField"
+        innerRef={this.setEditableNode}
+      >
+        <label className="EditableField__label" htmlFor={fieldValue[0].id}>
+          <LabelTextUI className="EditableField__labelText">
             {label}
           </LabelTextUI>
         </label>

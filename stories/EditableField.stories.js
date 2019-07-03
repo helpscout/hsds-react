@@ -71,7 +71,7 @@ stories.add('Text', () => (
       name="team"
       placeholder="Add a sports team name"
       type="text"
-      value="Atlas"
+      value="00001111222233334444555566667777"
     />
   </FormUI>
 ))
