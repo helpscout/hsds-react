@@ -23,6 +23,7 @@ import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isArray } from '../../utilities/is'
+import * as equal from 'fast-deep-equal'
 
 import {
   EditableFieldProps,
@@ -42,6 +43,20 @@ export class EditableField extends React.PureComponent<
     innerRef: noop,
     type: 'text',
     value: '',
+    onInputFocus: noop,
+    onInputBlur: noop,
+    onInputChange: noop,
+
+    onOptionFocus: noop,
+    onOptionChange: noop,
+
+    onChange: noop,
+    onEnter: noop,
+    onEscape: noop,
+    onAdd: noop,
+    onCommit: noop,
+    onDelete: noop,
+    onDiscard: noop,
   }
 
   constructor(props) {
@@ -104,28 +119,54 @@ export class EditableField extends React.PureComponent<
     })
   }
 
+  handleInputFocus = ({ name, event }) => {
+    const { onInputFocus } = this.props
+    const { fieldValue } = this.state
+
+    this.setState({
+      activeField: name,
+    })
+    onInputFocus({ name, value: fieldValue, event })
+  }
+
+  handleInputBlur = ({ name, event }) => {
+    const { onInputBlur: onBlur } = this.props
+
+    return new Promise(resolve => {
+      const cachedEvent = { ...event }
+
+      this.setState(
+        {
+          activeField: '',
+        },
+        () => {
+          resolve()
+
+          const { fieldValue } = this.state
+          onBlur({ name, value: fieldValue, event: cachedEvent })
+        }
+      )
+    })
+  }
+
   handleInputChange = ({ inputValue, name, event }) => {
-    const { onChange } = this.props
+    const { onChange, onInputChange } = this.props
     const newFieldValue = this.assignInputValueOnFieldValue({
       inputValue,
       name,
     })
 
-    this.setState(
-      {
-        fieldValue: newFieldValue,
-      },
-      () => {
-        if (onChange) {
-          onChange({ name, value: newFieldValue, event })
-        }
-      }
-    )
+    this.setState({
+      fieldValue: newFieldValue,
+    })
+
+    onChange({ name, value: newFieldValue, event })
+    onInputChange({ name, value: newFieldValue, event })
   }
 
   handleInputKeyDown = ({ event, name }) => {
     return new Promise(resolve => {
-      const { onEnter, onEscape } = this.props
+      const { onEnter, onEscape, onCommit, onDiscard } = this.props
       const {
         initialFieldValue,
         fieldValue,
@@ -171,39 +212,35 @@ export class EditableField extends React.PureComponent<
       this.setState(newState, () => {
         resolve()
 
-        if (isEnter && onEnter) {
+        if (isEnter) {
           onEnter({ name, value: newFieldValue, event })
+          onCommit({ name, value: newFieldValue })
         }
 
-        if (isEscape && onEscape) {
+        if (isEscape) {
           onEscape({ name, value: initialFieldValue, event })
+          onDiscard({ value: initialFieldValue })
         }
       })
     })
   }
 
-  handleInputFocus = ({ name, event }) => {
-    const { onFocus } = this.props
+  handleOptionFocus = ({ name, event }) => {
+    const { onOptionFocus } = this.props
 
-    return new Promise(resolve => {
-      this.setState(
-        {
-          activeField: name,
-        },
-        () => {
-          resolve()
-
-          if (onFocus) {
-            const { fieldValue } = this.state
-
-            onFocus({ name, value: fieldValue, event })
-          }
-        }
-      )
+    this.setState({
+      activeField: name,
     })
+
+    if (onOptionFocus) {
+      const { fieldValue } = this.state
+
+      onOptionFocus({ name, value: fieldValue, event })
+    }
   }
 
   handleOptionSelection = ({ name, selection }) => {
+    const { onChange, onOptionChange, onCommit } = this.props
     const { fieldValue } = this.state
     let newFieldValue: FieldValue[] = []
     let changed = false
@@ -220,50 +257,14 @@ export class EditableField extends React.PureComponent<
     if (changed) {
       this.setState({ fieldValue: newFieldValue })
     }
-  }
 
-  handleOptionFocus = ({ name, event }) => {
-    // const { onFocus } = this.props
-
-    return new Promise(resolve => {
-      this.setState(
-        {
-          activeField: name,
-        },
-        () => {
-          resolve()
-
-          // if (onFocus) {
-          //   const { fieldValue } = this.state
-
-          //   onFocus({ name, value: fieldValue, event })
-          // }
-        }
-      )
-    })
-  }
-
-  handleBlur = ({ name, event }) => {
-    const { onBlur } = this.props
-    const { fieldValue } = this.state
-
-    return new Promise(resolve => {
-      this.setState(
-        {
-          activeField: '',
-        },
-        () => {
-          resolve()
-
-          if (onBlur) {
-            onBlur({ name, value: fieldValue, event })
-          }
-        }
-      )
-    })
+    onOptionChange({ name, selection, value: newFieldValue })
+    onChange({ name, value: newFieldValue })
+    onCommit({ name, value: this.state.fieldValue })
   }
 
   handleAddValue = () => {
+    const { onAdd } = this.props
     const { fieldValue, defaultOption, valueOptions } = this.state
     const isNotSingleEmptyValue = fieldValue[fieldValue.length - 1].value !== ''
 
@@ -279,11 +280,13 @@ export class EditableField extends React.PureComponent<
         fieldValue: newFieldValue,
         activeField: newValueObject.id,
       })
+
+      onAdd({ name, value: newFieldValue })
     }
   }
 
   handleDeleteAction = ({ action, name, event }) => {
-    const { name: propsName } = this.props
+    const { name: propsName, onCommit, onDelete } = this.props
     const { fieldValue, defaultOption, valueOptions } = this.state
     const e = { ...event }
 
@@ -305,6 +308,9 @@ export class EditableField extends React.PureComponent<
         action.callback({ name, action, value: fieldValue, event: e })
       }
     })
+
+    onDelete({ name, value: newState.fieldValue, event })
+    onCommit({ name, value: newState.fieldValue })
   }
 
   handleCustomAction = ({ action, name, event }) => {
@@ -327,24 +333,47 @@ export class EditableField extends React.PureComponent<
       if (targetNode.classList.contains('c-DropdownV2Item')) return
 
       const { name } = this.props
-      const { fieldValue, defaultOption, valueOptions } = this.state
+      const {
+        fieldValue,
+        initialFieldValue,
+        defaultOption,
+        valueOptions,
+      } = this.state
 
-      const newFieldValue = fieldValue.filter(val => Boolean(val.value))
+      let newFieldValue: FieldValue[] = []
+      let emptyFound: boolean = false
 
-      this.setState({
-        activeField: '',
-        fieldValue:
-          newFieldValue.length > 0
-            ? newFieldValue
-            : [
-                createNewFieldValue({
-                  value: valueOptions
-                    ? { option: defaultOption, value: '' }
-                    : '',
-                  name: name,
-                }),
-              ],
-      })
+      for (const val of fieldValue) {
+        if (Boolean(val.value)) {
+          newFieldValue.push(val)
+        } else {
+          emptyFound = true
+        }
+      }
+
+      this.setState(
+        {
+          activeField: '',
+          fieldValue:
+            newFieldValue.length > 0
+              ? newFieldValue
+              : [
+                  createNewFieldValue({
+                    value: valueOptions
+                      ? { option: defaultOption, value: '' }
+                      : '',
+                    name: name,
+                  }),
+                ],
+        },
+        () => {
+          if (emptyFound) {
+            this.props.onDiscard({ value: this.state.fieldValue })
+          } else if (!equal(initialFieldValue, this.state.fieldValue)) {
+            this.props.onCommit({ name, value: this.state.fieldValue })
+          }
+        }
+      )
     }
   }
 
@@ -373,11 +402,12 @@ export class EditableField extends React.PureComponent<
               fieldValue={val}
               defaultOption={defaultOption}
               valueOptions={valueOptions}
-              onBlur={this.handleBlur}
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
+              onInputFocus={this.handleInputFocus}
+              onInputBlur={this.handleInputBlur}
+              onInputChange={this.handleInputChange}
               onOptionFocus={this.handleOptionFocus}
               onOptionSelection={this.handleOptionSelection}
+              onChange={this.handleInputChange}
               onKeyDown={this.handleInputKeyDown}
               customAction={this.handleCustomAction}
               deleteAction={this.handleDeleteAction}

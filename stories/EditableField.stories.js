@@ -3,13 +3,7 @@ import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
 import ReadMe from '../src/components/EditableField/README.md'
 
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
 import { jsxDecorator } from 'storybook-addon-jsx'
 
 import styled from '../src/components/styled'
@@ -23,7 +17,7 @@ const stories = storiesOf('EditableField', module)
   })
   .addDecorator(jsxDecorator)
 
-const FormUI = styled('form')`
+const ContainerUI = styled('div')`
   ${baseStyles};
   width: 300px;
   padding: 20px;
@@ -55,7 +49,7 @@ const PHONE_OPTIONS = ['Home', 'Work', 'Other']
 const PAINT_OPTIONS = ['Acrylics', 'Oil', 'Pastels', 'Watercolour', 'Other']
 
 stories.add('Text', () => (
-  <FormUI
+  <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
@@ -73,11 +67,11 @@ stories.add('Text', () => (
       type="text"
       value="00001111222233334444555566667777"
     />
-  </FormUI>
+  </ContainerUI>
 ))
 
 stories.add('Text Multiple', () => (
-  <FormUI
+  <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
@@ -95,11 +89,11 @@ stories.add('Text Multiple', () => (
       placeholder="Add a musician name"
       value={['George Harrison', 'Neil Young']}
     />
-  </FormUI>
+  </ContainerUI>
 ))
 
 stories.add('Email Multiple', () => (
-  <FormUI
+  <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
@@ -117,11 +111,11 @@ stories.add('Email Multiple', () => (
         'this_is_kind_of_long@evenmoreannoyingemails.com',
       ]}
     />
-  </FormUI>
+  </ContainerUI>
 ))
 
 stories.add('Url', () => (
-  <FormUI
+  <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
@@ -139,11 +133,11 @@ stories.add('Url', () => (
         },
       }}
     />
-  </FormUI>
+  </ContainerUI>
 ))
 
 stories.add('Number', () => (
-  <FormUI
+  <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
@@ -162,11 +156,11 @@ stories.add('Number', () => (
       type="number"
       value="166"
     />
-  </FormUI>
+  </ContainerUI>
 ))
 
 stories.add('With options', () => (
-  <FormUI
+  <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
@@ -188,11 +182,11 @@ stories.add('With options', () => (
       defaultOption={PHONE_OPTIONS[2]}
       value={{ option: 'Work', value: '123456789' }}
     />
-  </FormUI>
+  </ContainerUI>
 ))
 
 stories.add('With options multiple', () => (
-  <FormUI
+  <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
@@ -209,5 +203,42 @@ stories.add('With options multiple', () => (
         { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
       ]}
     />
-  </FormUI>
+  </ContainerUI>
 ))
+
+stories
+  .addParameters({
+    options: { showPanel: true },
+  })
+  .add('Events', () => (
+    <ContainerUI
+      onSubmit={e => {
+        e.preventDefault()
+      }}
+    >
+      <EditableField
+        label="Favourite Paint Colour"
+        name="paint"
+        placeholder="Add a colour"
+        type="text"
+        valueOptions={PAINT_OPTIONS}
+        value={[
+          { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
+          { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
+          { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
+        ]}
+        onInputFocus={action('onInputFocus')}
+        onInputBlur={action('onInputBlur')}
+        onInputChange={action('onInputChange')}
+        onOptionFocus={action('onOptionFocus')}
+        onChange={action('onChange')}
+        onCommit={action('onCommit')}
+        onEnter={action('onEnter')}
+        onEscape={action('onEscape')}
+        onDelete={action('onDelete')}
+        onAdd={action('onAdd')}
+        onDiscard={action('onDiscard')}
+        onOptionChange={action('onOptionChange')}
+      />
+    </ContainerUI>
+  ))

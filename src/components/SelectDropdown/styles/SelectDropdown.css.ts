@@ -1,6 +1,5 @@
-import styled from '../../styled'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import Backdrop from '../../Input/Input.BackdropV2'
+import styled from '../../styled'
 
 export const SelectDropdownUI = styled('div')`
   .c-DropdownV2Trigger {
@@ -21,12 +20,6 @@ export const InputUI = styled('div')`
   padding-right: 16px;
   position: relative;
   text-decoration: none;
-
-  &.is-editableField {
-    ${baseStyles};
-    height: 25px;
-    padding: 0;
-  }
 
   &:hover {
     text-decoration: none;
@@ -54,14 +47,19 @@ export const LabelUI = styled('div')`
   text-decoration: none !important;
   z-index: 2;
 
-  .is-editableField & {
-    ${baseStyles};
-    height: 25px;
-    padding-right: 10px;
-  }
-
   * {
     text-decoration: none !important;
+  }
+`
+
+export const ArrowsUI = styled('div')`
+  background: blue;
+  height: 40px;
+  width: 40px;
+
+  &.is-error {
+    background: red;
+    right: 40px !important;
   }
 `
 
@@ -71,12 +69,6 @@ export const BackdropUI = styled(Backdrop)`
   &:not(.is-error) {
     border-left: 1px solid #c1cbd4 !important;
   }
-`
-
-export const SelectArrowDownUI = styled('div')`
-  position: absolute;
-  right: 0;
-  color: #3c5263;
 `
 
 export const ErrorUI = styled('div')`

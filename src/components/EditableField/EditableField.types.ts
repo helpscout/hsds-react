@@ -23,18 +23,27 @@ export interface EditableFieldProps {
   className?: string
   defaultOption?: string
   innerRef: (node: HTMLElement) => void
-  isActive: boolean
   label: string
   name: string
   type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
   value: Value
   valueOptions: string[] | Option[]
-  onBlur: (args: { name: string; value: Value; event: Event }) => void
-  onChange: (args: { name: string; value: Value; event: Event }) => void
+  onInputFocus: (args: { name: string; value: Value; event: Event }) => void
+  onInputBlur: (args: { name: string; value: Value; event: Event }) => void
+  onInputChange: (args: { name: string; value: Value; event: Event }) => void
+  onOptionFocus: (args: { name: string; value: Value; event: Event }) => void
+  onOptionChange: (args: {
+    name: string
+    selection: string
+    value: Value
+  }) => void
+  onChange: (args: { name: string; value: Value; event?: Event }) => void
   onEnter: (args: { name: string; value: Value; event: Event }) => void
-  onDelete: (args: { name: string; value: Value; event: Event }) => void
   onEscape: (args: { name: string; value: Value; event: Event }) => void
-  onFocus: (args: { name: string; value: Value; event: Event }) => void
+  onAdd: (args: { name: string; value: Value }) => void
+  onCommit: (args: { name: string; value: Value }) => void
+  onDelete: (args: { name: string; value: Value; event: Event }) => void
+  onDiscard: (args: { value: Value }) => void
 }
 
 export interface EditableFieldState {
@@ -58,13 +67,17 @@ export interface EditableFieldInputProps {
   placeholder: string
   type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
   valueOptions: Option[]
-  onActionButtonBlur: (args: { name: string; event: Event }) => Promise<any>
-  onBlur: (args: { name: string; event: Event }) => Promise<any>
-  onFocus: (args: { name: string; event: Event }) => Promise<any>
-  onChange: (args: { name: string; inputValue: string; event: Event }) => void
-  onKeyDown: (args: { name: string; event: Event }) => Promise<any>
+  onInputFocus: (args: { name: string; event: Event }) => Promise<any>
+  onInputBlur: (args: { name: string; event: Event }) => Promise<any>
+  onInputChange: (args: {
+    name: string
+    inputValue: string
+    event: Event
+  }) => void
   onOptionFocus: (args: { name: string; event: Event }) => void
   onOptionSelection: (args: { name: string; selection: string }) => void
+  onChange: (args: { name: string; inputValue: string; event?: Event }) => void
+  onKeyDown: (args: { name: string; event: Event }) => Promise<any>
   deleteAction: (args: {
     name: string
     action: FieldAction

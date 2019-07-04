@@ -28,10 +28,11 @@ import { classNames } from '../../utilities/classNames'
 import { isArray } from '../../utilities/is'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
+import * as equal from 'fast-deep-equal'
 
 import { EditableFieldInputProps, FieldAction } from './EditableField.types'
 
-export class EditableFieldInput extends React.PureComponent<
+export class EditableFieldInput extends React.Component<
   EditableFieldInputProps
 > {
   static className = 'c-EditableFieldInput'
@@ -105,7 +106,19 @@ export class EditableFieldInput extends React.PureComponent<
     }
   }
 
-  componentDidUpdate = () => {
+  shouldComponentUpdate(nextProps) {
+    if (!equal(this.props.fieldValue, nextProps.fieldValue)) {
+      return true
+    }
+
+    if (this.props.isActive !== nextProps.isActive) {
+      return true
+    }
+
+    return false
+  }
+
+  componentDidUpdate() {
     this.calculateFieldWidth()
   }
 
@@ -142,10 +155,20 @@ export class EditableFieldInput extends React.PureComponent<
     return classNames(EditableFieldInput.className, className)
   }
 
-  handleFocus = event => {
-    const { onFocus, name } = this.props
+  handleInputFocus = event => {
+    const { onInputFocus, name } = this.props
 
-    onFocus({ name, event })
+    onInputFocus({ name, event })
+  }
+
+  handleInputBlur = event => {
+    const { name, onInputBlur } = this.props
+
+    onInputBlur({ name, event }).then(() => {
+      const staticValueNode = this.staticValueRef
+
+      staticValueNode && staticValueNode.removeAttribute('tabIndex')
+    })
   }
 
   handleOptionFocus = event => {
@@ -154,24 +177,22 @@ export class EditableFieldInput extends React.PureComponent<
     onOptionFocus({ name, event })
   }
 
-  handleInputBlur = event => {
-    const { name, onBlur } = this.props
-
-    onBlur({ name, event }).then(() => {
-      const staticValueNode = this.staticValueRef
-
-      staticValueNode && staticValueNode.removeAttribute('tabIndex')
-    })
-  }
-
   handleChange = event => {
-    const { onChange } = this.props
+    const { onChange, onInputChange } = this.props
 
     onChange({
       inputValue: event.currentTarget.value,
       name: this.props.name,
       event,
     })
+
+    if (onInputChange) {
+      onInputChange({
+        inputValue: event.currentTarget.value,
+        name: this.props.name,
+        event,
+      })
+    }
   }
 
   handleKeyDown = event => {
@@ -355,7 +376,7 @@ export class EditableFieldInput extends React.PureComponent<
               value={fieldValue.value}
               onBlur={this.handleInputBlur}
               onChange={this.handleChange}
-              onFocus={this.handleFocus}
+              onFocus={this.handleInputFocus}
               onKeyDown={this.handleKeyDown}
               title={fieldValue.value}
             />

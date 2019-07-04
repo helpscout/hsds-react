@@ -12,16 +12,12 @@ import { find } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import {
-  BackdropUI,
-  ErrorUI,
+  SelectDropdownUI,
   InputUI,
   LabelUI,
-  SelectArrowDownUI,
-  SelectDropdownUI,
+  BackdropUI,
+  ErrorUI,
 } from './styles/SelectDropdown.css'
-
-import { FocusIndicatorUI } from '../EditableField/styles/EditableField.css'
-
 import { isObject } from '../../utilities/is'
 import {
   SelectDropdownProps,
@@ -49,7 +45,6 @@ export class SelectDropdown extends React.PureComponent<
     trigger: undefined,
     width: '100%',
     value: undefined,
-    fieldStyle: undefined,
   }
 
   state = {
@@ -162,42 +157,20 @@ export class SelectDropdown extends React.PureComponent<
   }
 
   renderTrigger() {
-    const { state, fieldStyle } = this.props
+    const { state } = this.props
     const { isFocused } = this.state
     const isError = state === 'error'
 
     return (
       <InputUI
-        className={classNames(
-          'c-SelectDropdownTrigger',
-          isError && 'is-error',
-          fieldStyle === 'editableField' && 'is-editableField'
-        )}
+        className={classNames('c-SelectDropdownTrigger', isError && 'is-error')}
       >
         <LabelUI className="c-SelectDropdownTriggerLabel">
           <Text truncate>{this.getLabel()}</Text>
         </LabelUI>
-
-        {fieldStyle !== 'editableField' ? (
-          <SelectArrows state={state} />
-        ) : (
-          <SelectArrowDownUI>
-            <Icon name="chevron-down" />
-          </SelectArrowDownUI>
-        )}
-
+        <SelectArrows state={state} />
         {this.renderError()}
-
-        {fieldStyle !== 'editableField' ? (
-          <BackdropUI isFocused={isFocused} state={state} />
-        ) : (
-          <FocusIndicatorUI
-            className={classNames(
-              'c-SelectDropdownFocusIndicator',
-              isFocused && 'is-focused'
-            )}
-          />
-        )}
+        <BackdropUI isFocused={isFocused} state={state} />
       </InputUI>
     )
   }
