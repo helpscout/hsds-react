@@ -25,7 +25,9 @@ stories.addParameters({
 
 stories.add('Default', () => {
   const props = {
-    isOpen: true,
+    shouldRefocusOnClose() {
+      return false
+    },
     onSelect: action('Emoji Selected'),
     size: select(
       'Emoji Size',

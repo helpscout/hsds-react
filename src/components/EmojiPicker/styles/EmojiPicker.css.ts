@@ -74,11 +74,11 @@ export const ItemUI = styled('div')`
   ${({ size }) =>
     size &&
     `
-  font-size: ${config.sizes[size]};
-  padding: 0 !important;
-  height: ${config.sizes[size]};
-  width: ${config.sizes[size]};
-`};
+    font-size: ${config.sizes[size]};
+    padding: 0 !important;
+    height: ${config.sizes[size]};
+    width: ${config.sizes[size]};
+  `}
 
   &.is-focused {
     &.is-option {
@@ -105,9 +105,9 @@ export const ItemUI = styled('div')`
 export const TriggerUI = styled(Icon)`
   color: ${getColor('grey.600')};
 
-  ${({ isOpen }) =>
-    isOpen &&
-    `
+  .c-DropdownV2Trigger:active &,
+  .c-DropdownV2Trigger:focus &,
+  .c-DropdownV2Trigger:hover & {
     color: ${getColor('yellow.500')};
-  `};
+  }
 `
