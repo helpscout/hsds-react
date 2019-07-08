@@ -20,7 +20,9 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
     enableLeftRightArrowNavigation: true,
     innerRef: noop,
     minHeight: 'auto',
+    onBlur: noop,
     onClose: noop,
+    onFocus: noop,
     onOpen: noop,
     onSelect: noop,
     emojiSet,
@@ -33,7 +35,7 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
   _isMounted: boolean = false
 
   state = {
-    isOpen: this.props.isOpen,
+    isOpen: false,
   }
 
   componentDidMount = () => {
