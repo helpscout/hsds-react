@@ -105,12 +105,6 @@ export const ItemUI = styled('div')`
 export const TriggerUI = styled(Icon)`
   color: ${getColor('grey.600')};
 
-  ${({ isOpen }) =>
-    isOpen &&
-    `
-    color: ${getColor('yellow.500')};
-  `};
-
   .c-DropdownV2Trigger:active &,
   .c-DropdownV2Trigger:focus &,
   .c-DropdownV2Trigger:hover & {

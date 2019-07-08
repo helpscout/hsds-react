@@ -32,50 +32,13 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
   static Emoji = Emoji
   static Item = Item
 
-  _isMounted: boolean = false
-
-  state = {
-    isOpen: false,
-  }
-
-  componentDidMount = () => {
-    this._isMounted = true
-  }
-  componentWillUnmount = () => {
-    this._isMounted = false
-  }
-
-  safeSetState = newState => {
-    /* istanbul ignore else */
-    if (this._isMounted) {
-      this.setState(newState)
-    }
-  }
-
   getClassName() {
     const { className } = this.props
     return classNames(EmojiPicker.className, className)
   }
 
-  handleOnOpen = () => {
-    this.safeSetState({
-      isOpen: true,
-    })
-
-    this.props.onOpen()
-  }
-
-  handleOnClose = () => {
-    this.safeSetState({
-      isOpen: false,
-    })
-
-    this.props.onClose()
-  }
-
   renderTrigger() {
     const { renderTrigger } = this.props
-    const { isOpen } = this.state
 
     if (renderTrigger) return renderTrigger
 
@@ -83,7 +46,6 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
       <TriggerUI
         data-cy="EmojiPickerTrigger"
         className="c-EmojiPickerTrigger"
-        isOpen={isOpen}
         size="24"
       />
     )
@@ -107,8 +69,6 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
         {...rest}
         className={this.getClassName()}
         items={emojiSet}
-        onClose={this.handleOnClose}
-        onOpen={this.handleOnOpen}
         renderMenu={this.renderMenu}
         renderItem={this.renderItem}
         renderTrigger={this.renderTrigger()}
