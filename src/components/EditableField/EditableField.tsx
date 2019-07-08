@@ -31,7 +31,7 @@ import {
   FieldValue,
 } from './EditableField.types'
 
-const nextUuid = createUniqueIDFactory('Field')
+const nextUuid = createUniqueIDFactory('EditableField')
 const createNewFieldValue = createNewValueFieldFactory(nextUuid)
 
 export class EditableField extends React.PureComponent<
@@ -40,16 +40,15 @@ export class EditableField extends React.PureComponent<
 > {
   static className = 'c-EditableField'
   static defaultProps = {
-    innerRef: noop,
     type: 'text',
     value: '',
+    multipleValues: false,
+    innerRef: noop,
     onInputFocus: noop,
     onInputBlur: noop,
     onInputChange: noop,
-
     onOptionFocus: noop,
     onOptionChange: noop,
-
     onChange: noop,
     onEnter: noop,
     onEscape: noop,
@@ -62,7 +61,14 @@ export class EditableField extends React.PureComponent<
   constructor(props) {
     super(props)
 
-    const { actions, name, value, defaultOption, valueOptions } = props
+    const {
+      actions,
+      name,
+      value,
+      defaultOption,
+      multipleValues,
+      valueOptions,
+    } = props
 
     const initialFieldValue = normalizeFieldValue({
       value,
@@ -84,7 +90,7 @@ export class EditableField extends React.PureComponent<
       activeField: '',
       fieldValue: initialFieldValue,
       initialFieldValue,
-      multipleValuesEnabled: isArray(value),
+      multipleValuesEnabled: isArray(value) || multipleValues,
       valueOptions:
         valueOptions && isArray(valueOptions)
           ? valueOptions.map(option => ({
@@ -101,6 +107,7 @@ export class EditableField extends React.PureComponent<
 
   setEditableNode = node => {
     this.editableFieldRef = node
+    this.props.innerRef(node)
   }
 
   getClassName() {
@@ -108,7 +115,7 @@ export class EditableField extends React.PureComponent<
     return classNames(EditableField.className, className)
   }
 
-  assignInputValueOnFieldValue = ({ inputValue, name }) => {
+  assignInputValueToFieldValue = ({ inputValue, name }) => {
     const { fieldValue } = this.state
 
     return fieldValue.map(val => {
@@ -126,11 +133,12 @@ export class EditableField extends React.PureComponent<
     this.setState({
       activeField: name,
     })
+
     onInputFocus({ name, value: fieldValue, event })
   }
 
   handleInputBlur = ({ name, event }) => {
-    const { onInputBlur: onBlur } = this.props
+    const { onInputBlur } = this.props
 
     return new Promise(resolve => {
       const cachedEvent = { ...event }
@@ -142,8 +150,11 @@ export class EditableField extends React.PureComponent<
         () => {
           resolve()
 
-          const { fieldValue } = this.state
-          onBlur({ name, value: fieldValue, event: cachedEvent })
+          onInputBlur({
+            name,
+            value: this.state.fieldValue,
+            event: cachedEvent,
+          })
         }
       )
     })
@@ -151,7 +162,7 @@ export class EditableField extends React.PureComponent<
 
   handleInputChange = ({ inputValue, name, event }) => {
     const { onChange, onInputChange } = this.props
-    const newFieldValue = this.assignInputValueOnFieldValue({
+    const newFieldValue = this.assignInputValueToFieldValue({
       inputValue,
       name,
     })
@@ -195,7 +206,7 @@ export class EditableField extends React.PureComponent<
                   }),
                 ]
         } else {
-          newFieldValue = this.assignInputValueOnFieldValue({
+          newFieldValue = this.assignInputValueToFieldValue({
             inputValue: event.currentTarget.value,
             name,
           })
@@ -232,11 +243,7 @@ export class EditableField extends React.PureComponent<
       activeField: name,
     })
 
-    if (onOptionFocus) {
-      const { fieldValue } = this.state
-
-      onOptionFocus({ name, value: fieldValue, event })
-    }
+    onOptionFocus({ name, value: this.state.fieldValue, event })
   }
 
   handleOptionSelection = ({ name, selection }) => {
@@ -275,11 +282,11 @@ export class EditableField extends React.PureComponent<
         name: name,
       })
       const newFieldValue = fieldValue.concat(newValueObject)
-
-      this.setState({
+      const newState: any = {
         fieldValue: newFieldValue,
         activeField: newValueObject.id,
-      })
+      }
+      this.setState(newState)
 
       onAdd({ name, value: newFieldValue })
     }
@@ -416,7 +423,11 @@ export class EditableField extends React.PureComponent<
         })}
 
         {multipleValuesEnabled ? (
-          <AddButtonUI type="button" onClick={this.handleAddValue}>
+          <AddButtonUI
+            className="EditableField_addButton"
+            type="button"
+            onClick={this.handleAddValue}
+          >
             <Icon name={ACTION_ICONS['plus']} size="18" />
           </AddButtonUI>
         ) : null}
@@ -431,12 +442,12 @@ export class EditableField extends React.PureComponent<
     return (
       <EditableFieldUI
         {...getValidProps(rest)}
-        className="c-EditableField"
+        className={this.getClassName()}
         innerRef={this.setEditableNode}
       >
         <label className="EditableField__label" htmlFor={fieldValue[0].id}>
           <LabelTextUI className="EditableField__labelText">
-            {label}
+            {label || name}
           </LabelTextUI>
         </label>
         <EventListener

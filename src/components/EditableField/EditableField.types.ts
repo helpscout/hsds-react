@@ -1,8 +1,8 @@
-export type Value = string | string[] | FieldValue[]
+export type Value = string | string[] | FieldValue | FieldValue[]
 
 export type FieldValue = {
   value: string
-  id: string
+  id?: string
   option?: string
 }
 
@@ -18,16 +18,20 @@ export type Option = {
   value: string
 }
 
+export type FieldType = 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+
 export interface EditableFieldProps {
-  actions?: FieldAction | FieldAction[]
+  actions?: FieldAction | FieldAction[] | null
   className?: string
   defaultOption?: string
-  innerRef: (node: HTMLElement) => void
-  label: string
+  label?: string
+  multipleValues: boolean
   name: string
-  type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+  placeholder?: string
+  type: FieldType
   value: Value
-  valueOptions: string[] | Option[]
+  valueOptions?: string[] | Option[]
+  innerRef: (node: HTMLElement) => void
   onInputFocus: (args: { name: string; value: Value; event: Event }) => void
   onInputBlur: (args: { name: string; value: Value; event: Event }) => void
   onInputChange: (args: { name: string; value: Value; event: Event }) => void

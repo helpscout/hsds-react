@@ -312,7 +312,9 @@ export class EditableFieldInput extends React.Component<
                 className="EditableField__optionsDropdown"
                 title={fieldValue.option || defaultOption}
               >
-                <Truncate>{fieldValue.option || defaultOption}</Truncate>
+                <Truncate className="EditableField__selectedOption">
+                  {fieldValue.option || defaultOption}
+                </Truncate>
                 <Icon name={ACTION_ICONS.valueOption} />
               </OptionsDropdownUI>
               <FocusIndicatorUI className="EditableField__focusIndicator" />
