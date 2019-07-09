@@ -62,37 +62,6 @@ describe('Label', () => {
   })
 })
 
-describe('Label', () => {
-  test('Renders label', () => {
-    cy.render(<EditableField name="company" />)
-    const el = cy.get('.EditableField__label')
-
-    expect(el.exists()).toBeTruthy()
-  })
-
-  test('The label has the correct "for" attribute based of name', () => {
-    cy.render(<EditableField name="company" />)
-    const el = cy.get('.EditableField__label')
-    const forAttr = el.getAttribute('for')
-
-    expect(forAttr).toContain('company')
-  })
-
-  test('Renders text based of "label" prop', () => {
-    cy.render(<EditableField name="company" label="Company" />)
-    const el = cy.get('.EditableField__labelText')
-
-    expect(el.getText()).toBe('Company')
-  })
-
-  test('Renders text if "label" prop not provided using "name"', () => {
-    cy.render(<EditableField name="company" />)
-    const el = cy.get('.EditableField__labelText')
-
-    expect(el.getText()).toBe('company')
-  })
-})
-
 describe('InnerRef', () => {
   test('Can retrieve innerRef DOM node', () => {
     const spy = jest.fn()
@@ -150,6 +119,134 @@ describe('Value', () => {
     expect(input0.getId() !== input1.getId()).toBeTruthy()
   })
 
+  test('Should update correct value on multivalue fields', () => {
+    const wrapper: any = mount(
+      <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
+    )
+
+    const initialValue = wrapper.state('fieldValue')
+    const goodbyeFieldName = initialValue[1].id
+
+    const val = wrapper.instance().assignInputValueToFieldValue({
+      inputValue: 'howdy',
+      name: goodbyeFieldName,
+    })
+
+    expect(val).toEqual([
+      expect.objectContaining({ value: 'hello' }),
+      expect.objectContaining({ value: 'howdy' }),
+      expect.objectContaining({ value: 'hola' }),
+    ])
+
+    const val2 = wrapper.instance().assignInputValueToFieldValue({
+      inputValue: 'howdy',
+      name: 'not there',
+    })
+
+    expect(val2).toEqual(initialValue)
+  })
+
+  test('handleInputKeyDown enter: commits value', () => {
+    const wrapper: any = mount(<EditableField name="company" value="hello" />)
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+
+    wrapper.instance().handleInputKeyDown({
+      event: {
+        key: 'Enter',
+        currentTarget: {
+          value: 'howdy',
+        },
+      },
+      name,
+    })
+
+    expect(wrapper.state('fieldValue')).toEqual([
+      {
+        id: name,
+        value: 'howdy',
+      },
+    ])
+  })
+
+  test('handleInputKeyDown enter: commits value (with options)', () => {
+    const wrapper: any = mount(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+
+    wrapper.instance().handleInputKeyDown({
+      event: {
+        key: 'Enter',
+        currentTarget: {
+          value: 'howdy',
+        },
+      },
+      name,
+    })
+
+    expect(wrapper.state('fieldValue')).toEqual([
+      {
+        id: name,
+        option: 'Work',
+        value: 'howdy',
+      },
+    ])
+  })
+
+  test('handleInputKeyDown enter: empty value (with options)', () => {
+    const wrapper: any = mount(
+      <EditableField
+        name="company"
+        value=""
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+
+    wrapper.instance().handleInputKeyDown({
+      event: {
+        key: 'Enter',
+        currentTarget: {
+          value: 'howdy',
+        },
+      },
+      name,
+    })
+
+    expect(wrapper.state('fieldValue')).toEqual([
+      {
+        id: name,
+        option: 'Home',
+        value: 'howdy',
+      },
+    ])
+  })
+
+  test('handleInputKeyDown esc: discards value', () => {
+    const wrapper: any = mount(<EditableField name="company" value="hello" />)
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+
+    wrapper.instance().handleInputKeyDown({
+      event: {
+        key: 'Esc',
+        currentTarget: {
+          value: 'howdy',
+        },
+      },
+      name,
+    })
+
+    expect(wrapper.state('fieldValue')).toEqual(initialValue)
+  })
+
   test('Should render add button when multiple values are passed', () => {
     cy.render(
       <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
@@ -157,6 +254,110 @@ describe('Value', () => {
 
     const button = cy.get('.EditableField_addButton')
     expect(button.exists()).toBeTruthy()
+  })
+
+  test('should add an input field when clicking the add button', () => {
+    cy.render(
+      <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
+    )
+
+    const button = cy.get('.EditableField_addButton')
+
+    expect(cy.get('input').length).toBe(3)
+    button.click()
+    expect(cy.get('input').length).toBe(4)
+  })
+
+  test('should add an input field when clicking the add button (with options)', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+
+    const button = cy.get('.EditableField_addButton')
+
+    expect(cy.get('input').length).toBe(1)
+    button.click()
+    expect(cy.get('input').length).toBe(2)
+    expect(
+      cy
+        .get('input')
+        .eq(1)
+        .value()
+    ).toBe('')
+  })
+
+  test('should not add input field after button was already clicked', () => {
+    cy.render(
+      <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
+    )
+
+    const button = cy.get('.EditableField_addButton')
+
+    expect(cy.get('input').length).toBe(3)
+    button.click()
+    expect(cy.get('input').length).toBe(4)
+    button.click()
+    expect(cy.get('input').length).toBe(4)
+  })
+
+  test('should remove an input field when clicking the delete action', () => {
+    const spy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={['hello', 'goodbye', 'hola']}
+        onDelete={spy}
+      />
+    )
+
+    const button = cy.get('.action-delete').eq(0)
+
+    expect(cy.get('input').length).toBe(3)
+    button.click()
+    expect(cy.get('input').length).toBe(2)
+
+    // Check that "hello" was removed
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        value: [
+          expect.objectContaining({ value: 'goodbye' }),
+          expect.objectContaining({ value: 'hola' }),
+        ],
+      })
+    )
+  })
+
+  test('should remove an input field when clicking the delete action (with options)', () => {
+    const spy = jest.fn()
+    cy.render(
+      <EditableField
+        name="company"
+        value={[
+          { option: 'Work', value: 'work_phone' },
+          { option: 'Home', value: 'home_phone' },
+        ]}
+        valueOptions={['Home', 'Work', 'Other']}
+        onDelete={spy}
+      />
+    )
+
+    const button = cy.get('.action-delete').eq(0)
+
+    expect(cy.get('input').length).toBe(2)
+    button.click()
+    expect(cy.get('input').length).toBe(1)
+
+    // Check that "work" was removed
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        value: [expect.objectContaining({ value: 'home_phone' })],
+      })
+    )
   })
 })
 
@@ -188,6 +389,44 @@ describe('Options', () => {
     )
 
     expect(cy.get('.EditableField__selectedOption').getText()).toBe('Work')
+  })
+
+  test('Option text should be the default with empty value', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        defaultOption="Other"
+        value=""
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+
+    expect(cy.get('.EditableField__selectedOption').getText()).toBe('Other')
+  })
+
+  test('Option text should be the default with empty value (obj case)', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        defaultOption="Other"
+        value={{ value: '123456789' }}
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+
+    expect(cy.get('.EditableField__selectedOption').getText()).toBe('Other')
+  })
+
+  test('With no value option text should be the default option passed', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        defaultOption="Other"
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+
+    expect(cy.get('.EditableField__selectedOption').getText()).toBe('Other')
   })
 
   test('With no value option text should be the first in the list', () => {
@@ -326,6 +565,23 @@ describe('Actions', () => {
     expect(cy.get('.action-link').exists()).toBeTruthy()
   })
 
+  test('should render passed actions in props (array)', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        value="hello"
+        actions={[
+          {
+            name: 'link',
+          },
+        ]}
+      />
+    )
+
+    expect(cy.get('.action-delete').exists()).toBeTruthy()
+    expect(cy.get('.action-link').exists()).toBeTruthy()
+  })
+
   test('Custom delete action', () => {
     const deleteSpy = jest.fn()
 
@@ -403,6 +659,23 @@ describe('Click outside field', () => {
     expect(wrapper.state('activeField')).toBe('')
     expect(returnValue).toBeUndefined()
   })
+
+  test('When document.body is clicked, if no event return', () => {
+    const wrapper: any = mount(<EditableField name="company" />)
+    // Make document.activeElement something other than document.body
+    wrapper
+      .find('input')
+      .first()
+      .getDOMNode()
+      .focus()
+
+    wrapper.setState({ activeField: '' })
+
+    const returnValue = wrapper.instance().handleOnDocumentBodyMouseDown()
+
+    expect(wrapper.state('activeField')).toBe('')
+    expect(returnValue).toBeUndefined()
+  })
 })
 
 describe('Events', () => {
@@ -458,6 +731,23 @@ describe('Events', () => {
 
     input.type('a')
 
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onAdd', () => {
+    const spy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={['hello', 'goodbye', 'hola']}
+        onAdd={spy}
+      />
+    )
+
+    const button = cy.get('.EditableField_addButton')
+
+    button.click()
     expect(spy).toHaveBeenCalled()
   })
 

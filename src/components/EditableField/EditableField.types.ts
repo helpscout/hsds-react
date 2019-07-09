@@ -61,16 +61,15 @@ export interface EditableFieldState {
 }
 
 export interface EditableFieldInputProps {
-  actions: FieldAction[]
+  actions?: FieldAction[]
   className?: string
-  defaultOption?: string
   fieldValue: FieldValue
-  innerRef: (node: HTMLElement) => void
   isActive: boolean
   name: string
   placeholder: string
   type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
-  valueOptions: Option[]
+  valueOptions?: Option[]
+  innerRef: (node: HTMLElement) => void
   onInputFocus: (args: { name: string; event: Event }) => Promise<any>
   onInputBlur: (args: { name: string; event: Event }) => Promise<any>
   onInputChange: (args: {
@@ -92,4 +91,9 @@ export interface EditableFieldInputProps {
     action: FieldAction
     event: Event
   }) => void
+}
+
+export interface TruncateProps {
+  string: string
+  splitter?: string
 }

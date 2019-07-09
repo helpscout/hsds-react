@@ -18,24 +18,41 @@ export function normalizeFieldValue({
   value,
   name,
   createNewFieldValue,
+  defaultOption,
 }): FieldValue[] {
   let fieldValue: FieldValue[] = []
 
   if (isArray(value)) {
-    fieldValue = value.map(val => createNewFieldValue({ value: val, name }))
+    fieldValue = value.map(val =>
+      createNewFieldValue({ value: val, name }, defaultOption)
+    )
   } else {
-    fieldValue.push(createNewFieldValue({ value, name }))
+    fieldValue.push(createNewFieldValue({ value, name }, defaultOption))
   }
 
   return fieldValue
 }
 
 export function createNewValueFieldFactory(uuidFn) {
-  return function createNewValueFieldObject({ value, name }): FieldValue {
+  return function createNewValueFieldObject(
+    { value, name },
+    defaultOption?
+  ): FieldValue {
     if (isObject(value)) {
-      return { ...value, id: uuidFn(`${name}_`) }
+      const fieldObj = { ...value, id: uuidFn(`${name}_`) }
+
+      if (defaultOption != null && !Boolean(value.option)) {
+        fieldObj.option = defaultOption
+      }
+
+      return fieldObj
     }
-    return { value, id: uuidFn(`${name}_`) }
+    const fieldObj: any = { value, id: uuidFn(`${name}_`) }
+    if (defaultOption != null) {
+      fieldObj.option = defaultOption
+    }
+
+    return fieldObj
   }
 }
 

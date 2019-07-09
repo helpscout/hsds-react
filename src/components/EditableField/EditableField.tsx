@@ -70,11 +70,6 @@ export class EditableField extends React.PureComponent<
       valueOptions,
     } = props
 
-    const initialFieldValue = normalizeFieldValue({
-      value,
-      name,
-      createNewFieldValue,
-    })
     let defaultStateOption = null
 
     if (valueOptions) {
@@ -84,6 +79,13 @@ export class EditableField extends React.PureComponent<
         defaultStateOption = valueOptions[0]
       }
     }
+
+    const initialFieldValue = normalizeFieldValue({
+      value,
+      name,
+      createNewFieldValue,
+      defaultOption: defaultStateOption,
+    })
 
     this.state = {
       actions: generateFieldActions(actions),
@@ -178,12 +180,7 @@ export class EditableField extends React.PureComponent<
   handleInputKeyDown = ({ event, name }) => {
     return new Promise(resolve => {
       const { onEnter, onEscape, onCommit, onDiscard } = this.props
-      const {
-        initialFieldValue,
-        fieldValue,
-        defaultOption,
-        valueOptions,
-      } = this.state
+      const { initialFieldValue, fieldValue, defaultOption } = this.state
       const { key: eventKey } = event
       const isEnter = eventKey === key.ENTER
       const isEscape = eventKey === key.ESCAPE
@@ -196,14 +193,16 @@ export class EditableField extends React.PureComponent<
 
           newFieldValue =
             filteredValues.length > 0
-              ? filteredValues
+              ? /* istanbul ignore next */
+                filteredValues
               : [
-                  createNewFieldValue({
-                    value: valueOptions
-                      ? { option: defaultOption, value: '' }
-                      : '',
-                    name: name,
-                  }),
+                  createNewFieldValue(
+                    {
+                      value: '',
+                      name,
+                    },
+                    defaultOption
+                  ),
                 ]
         } else {
           newFieldValue = this.assignInputValueToFieldValue({
@@ -272,15 +271,18 @@ export class EditableField extends React.PureComponent<
 
   handleAddValue = () => {
     const { onAdd } = this.props
-    const { fieldValue, defaultOption, valueOptions } = this.state
+    const { fieldValue, defaultOption } = this.state
     const isNotSingleEmptyValue = fieldValue[fieldValue.length - 1].value !== ''
 
     if (isNotSingleEmptyValue) {
       const { name } = this.props
-      const newValueObject = createNewFieldValue({
-        value: valueOptions ? { option: defaultOption, value: '' } : '',
-        name: name,
-      })
+      const newValueObject = createNewFieldValue(
+        {
+          value: '',
+          name,
+        },
+        defaultOption
+      )
       const newFieldValue = fieldValue.concat(newValueObject)
       const newState: any = {
         fieldValue: newFieldValue,
@@ -294,7 +296,7 @@ export class EditableField extends React.PureComponent<
 
   handleDeleteAction = ({ action, name, event }) => {
     const { name: propsName, onCommit, onDelete } = this.props
-    const { fieldValue, defaultOption, valueOptions } = this.state
+    const { fieldValue, defaultOption } = this.state
     const e = { ...event }
 
     const filteredFieldValue = fieldValue.filter(val => val.id !== name)
@@ -304,10 +306,13 @@ export class EditableField extends React.PureComponent<
       filteredFieldValue.length > 0
         ? filteredFieldValue
         : [
-            createNewFieldValue({
-              value: valueOptions ? { option: defaultOption, value: '' } : '',
-              name: propsName,
-            }),
+            createNewFieldValue(
+              {
+                value: '',
+                name: propsName,
+              },
+              defaultOption
+            ),
           ]
 
     this.setState(newState, () => {
@@ -335,22 +340,21 @@ export class EditableField extends React.PureComponent<
     const targetNode = event.target
 
     if (targetNode instanceof Element) {
+      /* istanbul ignore if */
       if (document.activeElement === targetNode) return
+      /* istanbul ignore if */
       if (this.editableFieldRef.contains(targetNode)) return
+      /* istanbul ignore if */
       if (targetNode.classList.contains('c-DropdownV2Item')) return
 
       const { name } = this.props
-      const {
-        fieldValue,
-        initialFieldValue,
-        defaultOption,
-        valueOptions,
-      } = this.state
+      const { fieldValue, initialFieldValue, defaultOption } = this.state
 
       let newFieldValue: FieldValue[] = []
       let emptyFound: boolean = false
 
       for (const val of fieldValue) {
+        /* istanbul ignore if */
         if (Boolean(val.value)) {
           newFieldValue.push(val)
         } else {
@@ -363,20 +367,23 @@ export class EditableField extends React.PureComponent<
           activeField: '',
           fieldValue:
             newFieldValue.length > 0
-              ? newFieldValue
+              ? /* istanbul ignore next */
+                newFieldValue
               : [
-                  createNewFieldValue({
-                    value: valueOptions
-                      ? { option: defaultOption, value: '' }
-                      : '',
-                    name: name,
-                  }),
+                  createNewFieldValue(
+                    {
+                      value: '',
+                      name,
+                    },
+                    defaultOption
+                  ),
                 ],
         },
         () => {
           if (emptyFound) {
             this.props.onDiscard({ value: this.state.fieldValue })
           } else if (!equal(initialFieldValue, this.state.fieldValue)) {
+            /* istanbul ignore next */
             this.props.onCommit({ name, value: this.state.fieldValue })
           }
         }
@@ -389,7 +396,6 @@ export class EditableField extends React.PureComponent<
     const {
       actions,
       activeField,
-      defaultOption,
       fieldValue,
       multipleValuesEnabled,
       valueOptions,
@@ -407,7 +413,6 @@ export class EditableField extends React.PureComponent<
               key={val.id}
               type={type}
               fieldValue={val}
-              defaultOption={defaultOption}
               valueOptions={valueOptions}
               onInputFocus={this.handleInputFocus}
               onInputBlur={this.handleInputBlur}

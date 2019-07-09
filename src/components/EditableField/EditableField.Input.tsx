@@ -38,12 +38,19 @@ export class EditableFieldInput extends React.Component<
   static className = 'c-EditableFieldInput'
   static defaultProps = {
     isActive: false,
+    fieldValue: '',
+    placeholder: '',
+    type: 'text',
     innerRef: noop,
-    onBlur: noop,
+    onInputFocus: noop,
+    onInputBlur: noop,
+    onInputChange: noop,
+    onOptionFocus: noop,
+    onOptionSelection: noop,
     onChange: noop,
     onKeyDown: noop,
-    type: 'text',
-    fieldValue: '',
+    deleteAction: noop,
+    customAction: noop,
   }
 
   actionsRef: HTMLDivElement
@@ -51,7 +58,6 @@ export class EditableFieldInput extends React.Component<
 
   interactiveContentRef: HTMLDivElement
   optionsDropdownRef: HTMLDivElement
-  inputWrapperRef: HTMLInputElement
   inputRef: HTMLInputElement
 
   staticContentRef: HTMLDivElement
@@ -72,10 +78,6 @@ export class EditableFieldInput extends React.Component<
 
   setOptionsDropdownNode = node => {
     this.optionsDropdownRef = node
-  }
-
-  setInputWrapperNode = node => {
-    this.inputWrapperRef = node
   }
 
   setInputNode = node => {
@@ -130,8 +132,7 @@ export class EditableFieldInput extends React.Component<
     let actionsWidth = 0
 
     if (actions) {
-      const actionsArray = isArray(actions) ? actions : [actions]
-      actionsWidth = actionsArray.length * 20
+      actionsWidth = actions.length * 20
     }
 
     if (isActive) {
@@ -141,6 +142,7 @@ export class EditableFieldInput extends React.Component<
         .width
 
       if (initialFieldWidth > staticContentWidth + actionsWidth) {
+        /* istanbul ignore next */
         editableFieldInputNode.style.width = `${staticContentWidth}px`
       } else {
         editableFieldInputNode.style.width = `${staticContentWidth -
@@ -231,12 +233,14 @@ export class EditableFieldInput extends React.Component<
       this.props.deleteAction({ action, name, event })
     }
     if (action.name === 'link') {
+      /* istanbul ignore next */
       window && window.open(fieldValue.value)
     } else {
       this.props.customAction({ action, name, event })
     }
   }
 
+  /* istanbul ignore next */
   handleStaticValueKeyDown = event => {
     const inputNode = this.inputRef
 
@@ -245,23 +249,25 @@ export class EditableFieldInput extends React.Component<
     }
   }
 
+  /* istanbul ignore next */
   handleStaticValueBlur = () => {
     const staticValueNode = this.staticValueRef
-
     staticValueNode && staticValueNode.removeAttribute('tabIndex')
   }
 
   renderActions = () => {
     const { actions } = this.props
-    const actionsArray: FieldAction[] = isArray(actions) ? actions : [actions]
 
     return (
       <FieldActionsUI
         className="EditableField__actions"
         innerRef={this.setActionsNode}
-        numberOfActions={actionsArray.length}
+        // ts complains about actions possibly being undefined
+        // but renderActions is never called if actions is undefined (same below in the mapping)
+        // @ts-ignore
+        numberOfActions={actions.length}
       >
-        {actionsArray.map(action => {
+        {(actions as any).map(action => {
           return (
             <FieldButtonUI
               className={`FieldButton action-${action.name}`}
@@ -289,7 +295,7 @@ export class EditableFieldInput extends React.Component<
   }
 
   renderInteractiveOptions = () => {
-    const { fieldValue, defaultOption, valueOptions } = this.props
+    const { fieldValue, valueOptions } = this.props
 
     return (
       <OptionsWrapperUI
@@ -310,10 +316,10 @@ export class EditableFieldInput extends React.Component<
             <TriggerUI className="EditableField__optionsTrigger">
               <OptionsDropdownUI
                 className="EditableField__optionsDropdown"
-                title={fieldValue.option || defaultOption}
+                title={fieldValue.option}
               >
                 <Truncate className="EditableField__selectedOption">
-                  {fieldValue.option || defaultOption}
+                  {fieldValue.option}
                 </Truncate>
                 <Icon name={ACTION_ICONS.valueOption} />
               </OptionsDropdownUI>
