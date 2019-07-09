@@ -16,7 +16,6 @@ stories.addParameters({
 stories.add('Default', () => {
   const props = {
     onEnterDown: action('onEnterDown'),
-    onFocus: action('onFocus'),
     onEnterUp: action('onEnterUp'),
     onKeyDown: action('onKeyDown'),
     onKeyUp: action('onKeyUp'),

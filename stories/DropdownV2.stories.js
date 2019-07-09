@@ -42,8 +42,6 @@ export const ItemSpec = createSpec({
 })
 
 stories.add('Dropdown/Default', () => {
-  console.log(ItemSpec.generate(5))
-
   const props = {
     items: ItemSpec.generate(100),
     disabled: boolean('disabled', false),
