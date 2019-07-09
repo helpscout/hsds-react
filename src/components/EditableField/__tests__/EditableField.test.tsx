@@ -623,6 +623,75 @@ describe('Actions', () => {
   })
 })
 
+describe('disabled', () => {
+  test('should put disabled attr on input', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+        disabled
+      />
+    )
+
+    expect(cy.get('input').getAttribute('disabled')).toBeDefined()
+  })
+
+  test('should put is-disabled classname', () => {
+    const wrapper = cy.render(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+        disabled
+      />
+    )
+
+    expect(wrapper.hasClass('is-disabled')).toBeTruthy()
+  })
+
+  test('should not render actions', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+        disabled
+      />
+    )
+
+    expect(cy.get('.EditableField__actions').exists()).toBeFalsy()
+    expect(cy.get('.action-delete').exists()).toBeFalsy()
+  })
+
+  test('should not render add button', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+        disabled
+      />
+    )
+
+    const button = cy.get('.EditableField_addButton')
+    expect(button.exists()).toBeFalsy()
+  })
+
+  test('dropdown trigger should be disabled', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+        disabled
+      />
+    )
+
+    expect(cy.getByCy('DropdownTrigger').getAttribute('disabled')).toBeDefined()
+  })
+})
+
 describe('Click outside field', () => {
   test('When document.body is clicked, the field is not active', () => {
     const wrapper: any = mount(<EditableField name="company" />)

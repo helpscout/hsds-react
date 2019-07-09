@@ -25,12 +25,11 @@ import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { ACTION_ICONS, COMPONENT_KEY } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
-import { isArray } from '../../utilities/is'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import * as equal from 'fast-deep-equal'
 
-import { EditableFieldInputProps, FieldAction } from './EditableField.types'
+import { EditableFieldInputProps } from './EditableField.types'
 
 export class EditableFieldInput extends React.Component<
   EditableFieldInputProps
@@ -38,6 +37,7 @@ export class EditableFieldInput extends React.Component<
   static className = 'c-EditableFieldInput'
   static defaultProps = {
     isActive: false,
+    disabled: false,
     fieldValue: '',
     placeholder: '',
     type: 'text',
@@ -295,7 +295,7 @@ export class EditableFieldInput extends React.Component<
   }
 
   renderInteractiveOptions = () => {
-    const { fieldValue, valueOptions } = this.props
+    const { disabled, fieldValue, valueOptions } = this.props
 
     return (
       <OptionsWrapperUI
@@ -305,6 +305,7 @@ export class EditableFieldInput extends React.Component<
         <Dropdown
           className="EditableField__Dropdown"
           items={valueOptions}
+          disabled={disabled}
           shouldRefocusOnClose={() => false}
           minWidth={75}
           maxWidth={200}
@@ -347,6 +348,7 @@ export class EditableFieldInput extends React.Component<
   render() {
     const {
       actions,
+      disabled,
       name,
       placeholder,
       isActive,
@@ -379,6 +381,7 @@ export class EditableFieldInput extends React.Component<
               id={name}
               innerRef={this.setInputNode}
               name={name}
+              disabled={disabled}
               placeholder={placeholder}
               type={type}
               value={fieldValue.value}
@@ -415,7 +418,9 @@ export class EditableFieldInput extends React.Component<
           </StaticValueUI>
         </StaticContentUI>
 
-        {actions && Boolean(fieldValue.value) ? this.renderActions() : null}
+        {actions && Boolean(fieldValue.value) && !disabled
+          ? this.renderActions()
+          : null}
       </EditableFieldInputUI>
     )
   }

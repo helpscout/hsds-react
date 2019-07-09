@@ -206,6 +206,41 @@ stories.add('With options multiple', () => (
   </ContainerUI>
 ))
 
+stories.add('Disabled', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Company"
+      name="company"
+      placeholder="Add a company name"
+      type="text"
+      value="Help Scout"
+      disabled
+    />
+    <EditableField
+      label="Musicians"
+      name="musicians"
+      type="text"
+      placeholder="Add a musician name"
+      value={['George Harrison', 'Neil Young']}
+      disabled
+    />
+    <EditableField
+      label="Phone"
+      name="Phone"
+      placeholder="Add phone"
+      type="tel"
+      valueOptions={PHONE_OPTIONS}
+      defaultOption={PHONE_OPTIONS[2]}
+      value={{ option: 'Work', value: '123456789' }}
+      disabled
+    />
+  </ContainerUI>
+))
+
 stories
   .addParameters({
     options: { showPanel: true },
@@ -216,6 +251,10 @@ stories
         e.preventDefault()
       }}
     >
+      <NoteUI>
+        This is pretty slow beacuse all the event callbakcs in the world are
+        being passed...! This would be extremely rare
+      </NoteUI>
       <EditableField
         label="Favourite Paint Colour"
         name="paint"

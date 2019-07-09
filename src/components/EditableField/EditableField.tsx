@@ -41,6 +41,7 @@ export class EditableField extends React.PureComponent<
   static className = 'c-EditableField'
   static defaultProps = {
     type: 'text',
+    disabled: false,
     value: '',
     multipleValues: false,
     innerRef: noop,
@@ -113,8 +114,12 @@ export class EditableField extends React.PureComponent<
   }
 
   getClassName() {
-    const { className } = this.props
-    return classNames(EditableField.className, className)
+    const { className, disabled } = this.props
+    return classNames(
+      EditableField.className,
+      className,
+      disabled && 'is-disabled'
+    )
   }
 
   assignInputValueToFieldValue = ({ inputValue, name }) => {
@@ -392,7 +397,7 @@ export class EditableField extends React.PureComponent<
   }
 
   renderInputFields() {
-    const { name, type, ...rest } = this.props
+    const { name, disabled, type, ...rest } = this.props
     const {
       actions,
       activeField,
@@ -409,6 +414,7 @@ export class EditableField extends React.PureComponent<
               {...getValidProps(rest)}
               actions={actions}
               name={val.id}
+              disabled={disabled}
               isActive={activeField === val.id}
               key={val.id}
               type={type}
@@ -427,7 +433,7 @@ export class EditableField extends React.PureComponent<
           )
         })}
 
-        {multipleValuesEnabled ? (
+        {multipleValuesEnabled && !disabled ? (
           <AddButtonUI
             className="EditableField_addButton"
             type="button"

@@ -35,6 +35,10 @@ export const InteractiveContentUI = styled('div')`
     border-bottom: 1px dashed #c6d0d8;
   }
 
+  .is-disabled &:hover {
+    cursor: initial;
+  }
+
   .is-active & {
     pointer-events: none;
     z-index: 2;
@@ -60,6 +64,10 @@ export const OptionsWrapperUI = styled('div')`
   font-size: 14px;
   line-height: 25px;
   pointer-events: auto;
+
+  .is-disabled & .EditableField__Dropdown:hover {
+    cursor: initial;
+  }
 `
 
 export const TriggerUI = styled('div')`

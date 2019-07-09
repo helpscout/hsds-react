@@ -24,6 +24,7 @@ export interface EditableFieldProps {
   actions?: FieldAction | FieldAction[] | null
   className?: string
   defaultOption?: string
+  disabled: boolean
   label?: string
   multipleValues: boolean
   name: string
@@ -63,6 +64,7 @@ export interface EditableFieldState {
 export interface EditableFieldInputProps {
   actions?: FieldAction[]
   className?: string
+  disabled: boolean
   fieldValue: FieldValue
   isActive: boolean
   name: string
