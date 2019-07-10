@@ -31,7 +31,6 @@ export const ItemWrapperUI = styled('div')`
   justify-content: center;
   margin: 3px;
   transform: scale(1);
-  transition: transform 0.15s cubic-bezier(0.2, 0, 0.13, 2);
 
   .c-DropdownV2Item.is-focused &,
   &:hover {
