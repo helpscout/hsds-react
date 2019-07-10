@@ -1,3 +1,3 @@
-import GreeterRow from './GreeterRow'
+import MessageRow from './MessageRow'
 
-export default GreeterRow
+export default MessageRow

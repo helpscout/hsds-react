@@ -1,3 +1,3 @@
-import GreeterCard from './GreeterCard'
+import MessageCard from './MessageCard'
 
-export default GreeterCard
+export default MessageCard

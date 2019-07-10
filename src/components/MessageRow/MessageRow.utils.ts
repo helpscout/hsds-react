@@ -1,1 +1,1 @@
-export const COMPONENT_KEY = 'GreeterRow'
+export const COMPONENT_KEY = 'MessageRow'

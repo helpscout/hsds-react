@@ -1,1 +1,1 @@
-export const COMPONENT_KEY = 'GreeterCard'
+export const COMPONENT_KEY = 'MessageCard'

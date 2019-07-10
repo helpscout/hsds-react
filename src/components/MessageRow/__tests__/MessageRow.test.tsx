@@ -1,17 +1,17 @@
 import * as React from 'react'
 import { mount, render } from 'enzyme'
-import { GreeterRow } from '../GreeterRow'
+import { MessageRow } from '../MessageRow'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = render(<GreeterRow />)
+    const wrapper = render(<MessageRow />)
 
-    expect(wrapper.hasClass('c-GreeterRow')).toBeTruthy()
+    expect(wrapper.hasClass('c-MessageRow')).toBeTruthy()
   })
 
   test('Can render custom className', () => {
     const customClassName = 'blue'
-    const wrapper = render(<GreeterRow className={customClassName} />)
+    const wrapper = render(<MessageRow className={customClassName} />)
 
     expect(wrapper.hasClass(customClassName)).toBeTruthy()
   })
@@ -19,7 +19,7 @@ describe('className', () => {
 
 describe('HTML props', () => {
   test('Can render default HTML props', () => {
-    const wrapper = render(<GreeterRow data-cy="blue" />)
+    const wrapper = render(<MessageRow data-cy="blue" />)
 
     expect(wrapper.attr('data-cy')).toBe('blue')
   })
@@ -27,8 +27,8 @@ describe('HTML props', () => {
 
 describe('Paused', () => {
   test('Renders a paused UI, if isPaused', () => {
-    const wrapper = mount(<GreeterRow isPaused={true} />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow isPaused={true} />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const icon = wrapper.find('Icon').first()
     const text = wrapper.find('Text').first()
 
@@ -39,8 +39,8 @@ describe('Paused', () => {
   })
 
   test('Does not render a paused UI, by default', () => {
-    const wrapper = mount(<GreeterRow />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const icon = wrapper.find('Icon').first()
     const text = wrapper.find('Text').first()
 
@@ -50,16 +50,16 @@ describe('Paused', () => {
   })
 
   test('Renders a paused title into Tooltip, if paused', () => {
-    const wrapper = mount(<GreeterRow isPaused={true} />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow isPaused={true} />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
 
     expect(tooltip.prop('title')).toBe('Paused')
   })
 
   test('Can customized Tooltip pausedMessage', () => {
-    const wrapper = mount(<GreeterRow isPaused={true} pausedMessage="NO GO" />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow isPaused={true} pausedMessage="NO GO" />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
 
     expect(tooltip.prop('title')).toBe('NO GO')
@@ -68,7 +68,7 @@ describe('Paused', () => {
 
 describe('Name', () => {
   test('Renders a name, instead of children', () => {
-    const wrapper = mount(<GreeterRow name="Mugatu">Derek</GreeterRow>)
+    const wrapper = mount(<MessageRow name="Mugatu">Derek</MessageRow>)
     const text = wrapper.find('Text').first()
 
     expect(text.text()).toBe('Mugatu')
@@ -77,8 +77,8 @@ describe('Name', () => {
 
 describe('Error', () => {
   test('Renders a error UI, if isError', () => {
-    const wrapper = mount(<GreeterRow isError={true} />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow isError={true} />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const icon = wrapper.find('Icon').first()
     const text = wrapper.find('Text').first()
 
@@ -90,8 +90,8 @@ describe('Error', () => {
   })
 
   test('Does not render a error UI, by default', () => {
-    const wrapper = mount(<GreeterRow />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const icon = wrapper.find('Icon').first()
     const text = wrapper.find('Text').first()
 
@@ -102,8 +102,8 @@ describe('Error', () => {
   })
 
   test('Renders a error title into Tooltip, if error', () => {
-    const wrapper = mount(<GreeterRow isError={true} />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow isError={true} />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
 
     expect(tooltip.prop('title')).toContain('paused')
@@ -111,8 +111,8 @@ describe('Error', () => {
   })
 
   test('Can customized Tooltip errorMessage', () => {
-    const wrapper = mount(<GreeterRow isPaused={true} pausedMessage="BAD!" />)
-    const el = wrapper.find(`div.${GreeterRow.className}`)
+    const wrapper = mount(<MessageRow isPaused={true} pausedMessage="BAD!" />)
+    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
 
     expect(tooltip.prop('title')).toBe('BAD!')
