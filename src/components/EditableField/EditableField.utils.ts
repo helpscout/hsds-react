@@ -5,7 +5,7 @@ export const COMPONENT_KEY = 'EditableField'
 
 export const ACTION_ICONS = {
   delete: 'cross-medium',
-  link: 'link',
+  link: 'new-window-large',
   plus: 'plus-medium',
   valueOption: 'chevron-down',
 }

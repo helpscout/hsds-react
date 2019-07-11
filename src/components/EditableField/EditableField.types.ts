@@ -56,7 +56,7 @@ export interface EditableFieldState {
   activeField: string
   defaultOption?: null | string
   fieldValue: FieldValue[]
-  initialFieldValue: Value
+  initialFieldValue: FieldValue[]
   multipleValuesEnabled: boolean
   valueOptions: any
 }
@@ -73,7 +73,7 @@ export interface EditableFieldInputProps {
   valueOptions?: Option[]
   innerRef: (node: HTMLElement) => void
   onInputFocus: (args: { name: string; event: Event }) => Promise<any>
-  onInputBlur: (args: { name: string; event: Event }) => Promise<any>
+  onInputBlur: (args: { name: string; event: Event }) => void
   onInputChange: (args: {
     name: string
     inputValue: string

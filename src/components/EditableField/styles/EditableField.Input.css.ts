@@ -6,7 +6,7 @@ export const EditableFieldInputUI = styled('div')`
   ${baseStyles};
   position: relative;
   height: 25px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 
   &:hover .EditableField__actions {
     opacity: 1;
@@ -16,6 +16,10 @@ export const EditableFieldInputUI = styled('div')`
   &.is-active:hover .EditableField__actions {
     display: none;
     cursor: initial;
+  }
+
+  &:hover .with-placeholder {
+    border-bottom: 1px dashed blue;
   }
 `
 
@@ -32,7 +36,7 @@ export const InteractiveContentUI = styled('div')`
 
   &:hover {
     cursor: pointer;
-    border-bottom: 1px dashed #c6d0d8;
+    border-bottom: 1px dashed #93a1b0;
   }
 
   .is-disabled &:hover {
@@ -54,6 +58,10 @@ export const InputWrapperUI = styled('div')`
   .has-options & {
     width: calc(100% - 70px);
   }
+
+  .is-empty & {
+    width: 100%;
+  }
 `
 
 export const OptionsWrapperUI = styled('div')`
@@ -67,6 +75,16 @@ export const OptionsWrapperUI = styled('div')`
 
   .is-disabled & .EditableField__Dropdown:hover {
     cursor: initial;
+  }
+
+  .is-empty & {
+    width: 0;
+    margin-right: 0;
+  }
+
+  .is-active.is-empty & {
+    width: 60px;
+    margin-right: 20px;
   }
 `
 
@@ -87,7 +105,6 @@ export const OptionsDropdownUI = styled('div')`
     color: black;
 
     & + .EditableField__focusIndicator {
-      bottom: 0;
       transform: scaleX(1);
       height: 1px;
       background-color: #c6d0d8;
@@ -140,20 +157,19 @@ export const InputUI = styled('input')`
 
     & + .EditableField__focusIndicator {
       transform: scaleX(1);
-      background-color: #1292ee;
+      background-color: #1292ee !important;
       height: 2px;
     }
   }
 
   .is-active & {
     outline: none;
-    color: black;
+    color: ${getColor('charcoal.600')};
     z-index: 2;
     cursor: initial;
 
     & + .EditableField__focusIndicator {
       transform: scaleX(1);
-      bottom: 0;
       height: 1px;
       background-color: #c6d0d8;
     }
@@ -190,16 +206,18 @@ export const StaticContentUI = styled('div')`
 
 export const StaticOptionUI = styled('span')`
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: bottom;
   width: 70px;
-  height: 25px;
+  height: 26px;
   margin-right: 10px;
-  color: #3c5263;
+  color: ${getColor('charcoal.600')};
   font-size: 14px;
+  font-weight: 500;
   line-height: 25px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
+  border-bottom: 1px solid transparent;
 
   .is-empty & {
     display: none;
@@ -216,33 +234,43 @@ export const StaticOptionUI = styled('span')`
 
   &:focus {
     outline: none;
-    border-bottom: 1px dashed #c6d0d8;
+    border-bottom: 1px dashed #93a1b0;
   }
 `
 
 export const StaticValueUI = styled('span')`
   display: inline-block;
-  vertical-align: baseline;
-  height: 25px;
+  vertical-align: bottom;
+  height: 26px;
   width: 100%;
   max-width: 100%;
-  color: #3c5263;
+  color: ${getColor('charcoal.600')};
   font-size: 14px;
   line-height: 25px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
+  border-bottom: 1px solid transparent;
 
   .has-options & {
     width: calc(100% - 80px);
   }
 
+  .has-options.is-empty & {
+    width: 100%;
+  }
+
   .is-active & {
     z-index: 1;
+    border-bottom: none !important;
+  }
+
+  &.with-placeholder {
+    border-bottom: 1px dashed #93a1b0;
   }
 
   & .is-placeholder {
-    color: #b7c2cc;
+    color: ${getColor('charcoal.600')};
   }
 
   &:focus {
@@ -271,6 +299,7 @@ export const FieldActionsUI = styled('div')`
   left: 100%;
   z-index: 4;
   opacity: 0;
+  text-align: right;
 
   &:hover {
     opacity: 1;

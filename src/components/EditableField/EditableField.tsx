@@ -23,6 +23,7 @@ import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isArray } from '../../utilities/is'
+import { find } from '../../utilities/arrays'
 import * as equal from 'fast-deep-equal'
 
 import {
@@ -138,6 +139,7 @@ export class EditableField extends React.PureComponent<
     const { fieldValue } = this.state
 
     this.setState({
+      focusedByLabel: false,
       activeField: name,
     })
 
@@ -146,25 +148,19 @@ export class EditableField extends React.PureComponent<
 
   handleInputBlur = ({ name, event }) => {
     const { onInputBlur } = this.props
+    const { fieldValue, focusedByLabel } = this.state
 
-    return new Promise(resolve => {
-      const cachedEvent = { ...event }
+    if (!focusedByLabel) {
+      this.setState({
+        activeField: '',
+      })
 
-      this.setState(
-        {
-          activeField: '',
-        },
-        () => {
-          resolve()
-
-          onInputBlur({
-            name,
-            value: this.state.fieldValue,
-            event: cachedEvent,
-          })
-        }
-      )
-    })
+      onInputBlur({
+        name,
+        value: fieldValue,
+        event,
+      })
+    }
   }
 
   handleInputChange = ({ inputValue, name, event }) => {
@@ -185,58 +181,58 @@ export class EditableField extends React.PureComponent<
   handleInputKeyDown = ({ event, name }) => {
     return new Promise(resolve => {
       const { onEnter, onEscape, onCommit, onDiscard } = this.props
-      const { initialFieldValue, fieldValue, defaultOption } = this.state
-      const { key: eventKey } = event
-      const isEnter = eventKey === key.ENTER
-      const isEscape = eventKey === key.ESCAPE
-      let newFieldValue = initialFieldValue
-      let newInitialFieldValue = initialFieldValue
+      const { initialFieldValue, fieldValue } = this.state
+      const inputValue = event.currentTarget.value
+      const isEnter = event.key === key.ENTER
+      const isEscape = event.key === key.ESCAPE
+      const cachedEvent = { ...event }
 
       if (isEnter) {
-        if (!event.currentTarget.value) {
-          const filteredValues = fieldValue.filter(val => Boolean(val.value))
-
-          newFieldValue =
-            filteredValues.length > 0
-              ? /* istanbul ignore next */
-                filteredValues
-              : [
-                  createNewFieldValue(
-                    {
-                      value: '',
-                      name,
-                    },
-                    defaultOption
-                  ),
-                ]
-        } else {
-          newFieldValue = this.assignInputValueToFieldValue({
-            inputValue: event.currentTarget.value,
-            name,
+        const impactedField = find(fieldValue, val => val.id === name)
+        // Case 1: value was not changed
+        // Just change active status
+        if (inputValue === impactedField.value) {
+          this.setState({ activeField: '' }, () => {
+            resolve()
           })
+        } else {
+          // Case 2: value was changed
+          // change active status, field value and update initialFieldValue
+          const updatedFieldValue = fieldValue.map(val => {
+            if (val.id === name) {
+              val.value = inputValue
+            }
+            return val
+          })
+
+          this.setState(
+            {
+              activeField: '',
+              fieldValue: updatedFieldValue,
+              initialFieldValue: updatedFieldValue,
+            },
+            () => {
+              resolve()
+
+              onEnter({ name, value: updatedFieldValue, event: cachedEvent })
+              onCommit({ name, value: updatedFieldValue })
+            }
+          )
         }
-        newInitialFieldValue = newFieldValue
       }
 
-      const newState: any = {
-        fieldValue: newFieldValue,
-        initialFieldValue: newInitialFieldValue,
-        activeField: '',
+      if (isEscape) {
+        // Change active status and return fieldValue to initialValue
+        this.setState(
+          { activeField: '', fieldValue: initialFieldValue },
+          () => {
+            resolve()
+
+            onEscape({ name, value: initialFieldValue, event: cachedEvent })
+            onDiscard({ value: initialFieldValue })
+          }
+        )
       }
-
-      this.setState(newState, () => {
-        resolve()
-
-        if (isEnter) {
-          onEnter({ name, value: newFieldValue, event })
-          onCommit({ name, value: newFieldValue })
-        }
-
-        if (isEscape) {
-          onEscape({ name, value: initialFieldValue, event })
-          onDiscard({ value: initialFieldValue })
-        }
-      })
     })
   }
 
@@ -300,34 +296,37 @@ export class EditableField extends React.PureComponent<
   }
 
   handleDeleteAction = ({ action, name, event }) => {
-    const { name: propsName, onCommit, onDelete } = this.props
+    const { onCommit, onDelete } = this.props
     const { fieldValue, defaultOption } = this.state
-    const e = { ...event }
+    const cachedEvent = { ...event }
+    let updatedFieldValue: FieldValue[]
 
-    const filteredFieldValue = fieldValue.filter(val => val.id !== name)
-    let newState: any = {}
+    // Clearing value
+    // When there is only one item in the fieldValue array
+    if (fieldValue.length === 1) {
+      const emptyValue = { ...fieldValue[0] }
 
-    newState.fieldValue =
-      filteredFieldValue.length > 0
-        ? filteredFieldValue
-        : [
-            createNewFieldValue(
-              {
-                value: '',
-                name: propsName,
-              },
-              defaultOption
-            ),
-          ]
+      emptyValue.value = ''
 
-    this.setState(newState, () => {
+      if (defaultOption != null) {
+        emptyValue.option = defaultOption
+      }
+
+      updatedFieldValue = [emptyValue]
+    } else {
+      // Deleting value
+      // Remove the item from the array
+      updatedFieldValue = fieldValue.filter(val => val.id !== name)
+    }
+
+    this.setState({ fieldValue: updatedFieldValue }, () => {
+      onDelete({ name, value: this.state.fieldValue, event })
+      onCommit({ name, value: this.state.fieldValue })
+
       if (action.callback && typeof action.callback === 'function') {
-        action.callback({ name, action, value: fieldValue, event: e })
+        action.callback({ name, action, value: fieldValue, event: cachedEvent })
       }
     })
-
-    onDelete({ name, value: newState.fieldValue, event })
-    onCommit({ name, value: newState.fieldValue })
   }
 
   handleCustomAction = ({ action, name, event }) => {
@@ -353,46 +352,53 @@ export class EditableField extends React.PureComponent<
       if (targetNode.classList.contains('c-DropdownV2Item')) return
 
       const { name } = this.props
-      const { fieldValue, initialFieldValue, defaultOption } = this.state
+      const { fieldValue, initialFieldValue } = this.state
 
-      let newFieldValue: FieldValue[] = []
-      let emptyFound: boolean = false
-
-      for (const val of fieldValue) {
-        /* istanbul ignore if */
-        if (Boolean(val.value)) {
-          newFieldValue.push(val)
+      // Case 1: single field
+      if (fieldValue.length === 1) {
+        this.setState(
+          {
+            activeField: '',
+          },
+          () => {
+            if (!equal(initialFieldValue, this.state.fieldValue)) {
+              this.props.onCommit({ name, value: this.state.fieldValue })
+            }
+          }
+        )
+      } else {
+        // Case 2: multiple values
+        if (equal(initialFieldValue, this.state.fieldValue)) {
+          // Case 2.A: value unchanged
+          this.setState({
+            activeField: '',
+          })
         } else {
-          emptyFound = true
+          // Case 2.B: value changed
+          let updatedFieldValue: FieldValue[] = []
+          let emptyFound: boolean = false
+
+          for (const val of fieldValue) {
+            /* istanbul ignore if */
+            if (Boolean(val.value)) {
+              updatedFieldValue.push(val)
+            } else {
+              emptyFound = true
+            }
+          }
+
+          this.setState(
+            { fieldValue: updatedFieldValue, activeField: '' },
+            () => {
+              if (emptyFound) {
+                this.props.onDiscard({ value: this.state.fieldValue })
+              } else {
+                this.props.onCommit({ name, value: this.state.fieldValue })
+              }
+            }
+          )
         }
       }
-
-      this.setState(
-        {
-          activeField: '',
-          fieldValue:
-            newFieldValue.length > 0
-              ? /* istanbul ignore next */
-                newFieldValue
-              : [
-                  createNewFieldValue(
-                    {
-                      value: '',
-                      name,
-                    },
-                    defaultOption
-                  ),
-                ],
-        },
-        () => {
-          if (emptyFound) {
-            this.props.onDiscard({ value: this.state.fieldValue })
-          } else if (!equal(initialFieldValue, this.state.fieldValue)) {
-            /* istanbul ignore next */
-            this.props.onCommit({ name, value: this.state.fieldValue })
-          }
-        }
-      )
     }
   }
 
@@ -439,11 +445,17 @@ export class EditableField extends React.PureComponent<
             type="button"
             onClick={this.handleAddValue}
           >
-            <Icon name={ACTION_ICONS['plus']} size="18" />
+            <Icon name={ACTION_ICONS['plus']} size="20" />
           </AddButtonUI>
         ) : null}
       </div>
     )
+  }
+
+  handleLabelClick = e => {
+    e.preventDefault()
+    const { fieldValue } = this.state
+    this.setState({ focusedByLabel: true, activeField: fieldValue[0].id })
   }
 
   render() {
@@ -456,7 +468,11 @@ export class EditableField extends React.PureComponent<
         className={this.getClassName()}
         innerRef={this.setEditableNode}
       >
-        <label className="EditableField__label" htmlFor={fieldValue[0].id}>
+        <label
+          className="EditableField__label"
+          htmlFor={fieldValue[0].id}
+          onClick={this.handleLabelClick}
+        >
           <LabelTextUI className="EditableField__labelText">
             {label || name}
           </LabelTextUI>

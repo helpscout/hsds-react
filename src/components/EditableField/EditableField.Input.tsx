@@ -97,15 +97,7 @@ export class EditableFieldInput extends React.Component<
   }
 
   componentDidMount() {
-    const { isActive } = this.props
-
     this.calculateFieldWidth()
-
-    if (isActive) {
-      const inputNode = this.inputRef
-
-      inputNode && inputNode.focus()
-    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -121,15 +113,28 @@ export class EditableFieldInput extends React.Component<
   }
 
   componentDidUpdate() {
+    const { isActive } = this.props
+    const inputNode = this.inputRef
     this.calculateFieldWidth()
+
+    if (isActive) {
+      if (document.activeElement !== this.optionsDropdownRef) {
+        inputNode && inputNode.focus()
+      }
+    }
   }
 
   calculateFieldWidth = () => {
     const { actions, isActive } = this.props
     const editableFieldInputNode = this.editableFieldInputRef
     const staticContentNode = this.staticContentRef
-    const staticContentWidth = staticContentNode.getBoundingClientRect().width
+    const placeholder = staticContentNode.querySelector('.is-placeholder')
+    let staticContentWidth = staticContentNode.getBoundingClientRect().width
     let actionsWidth = 0
+
+    if (placeholder) {
+      staticContentWidth = placeholder.getBoundingClientRect().width
+    }
 
     if (actions) {
       actionsWidth = actions.length * 20
@@ -141,7 +146,10 @@ export class EditableFieldInput extends React.Component<
       const initialFieldWidth = editableFieldInputNode.getBoundingClientRect()
         .width
 
-      if (initialFieldWidth > staticContentWidth + actionsWidth) {
+      if (
+        initialFieldWidth > staticContentWidth + actionsWidth ||
+        placeholder
+      ) {
         /* istanbul ignore next */
         editableFieldInputNode.style.width = `${staticContentWidth}px`
       } else {
@@ -166,11 +174,7 @@ export class EditableFieldInput extends React.Component<
   handleInputBlur = event => {
     const { name, onInputBlur } = this.props
 
-    onInputBlur({ name, event }).then(() => {
-      const staticValueNode = this.staticValueRef
-
-      staticValueNode && staticValueNode.removeAttribute('tabIndex')
-    })
+    onInputBlur({ name, event })
   }
 
   handleOptionFocus = event => {
@@ -206,11 +210,10 @@ export class EditableFieldInput extends React.Component<
 
     if ((isEnter && !isDropdownTrigger) || isEscape) {
       const { name, onKeyDown } = this.props
+      const staticValueNode = this.staticValueRef
+      const inputNode = this.inputRef
 
       onKeyDown({ event, name }).then(() => {
-        const staticValueNode = this.staticValueRef
-        const inputNode = this.inputRef
-
         // In case the value is longer than the width of the input
         // lets move the cursor to the very beginning
         // when clicking the input the cursor will be at the expected position :)
@@ -219,7 +222,7 @@ export class EditableFieldInput extends React.Component<
         }
 
         if (staticValueNode) {
-          staticValueNode.setAttribute('tabIndex', '0')
+          staticValueNode.setAttribute('tabindex', '0')
           staticValueNode.focus()
         }
       })
@@ -252,7 +255,7 @@ export class EditableFieldInput extends React.Component<
   /* istanbul ignore next */
   handleStaticValueBlur = () => {
     const staticValueNode = this.staticValueRef
-    staticValueNode && staticValueNode.removeAttribute('tabIndex')
+    staticValueNode && staticValueNode.removeAttribute('tabindex')
   }
 
   renderActions = () => {
@@ -402,7 +405,10 @@ export class EditableFieldInput extends React.Component<
           {valueOptions ? this.renderStaticOption() : null}
 
           <StaticValueUI
-            className="EditableField__staticValue"
+            className={classNames(
+              'EditableField__staticValue',
+              !fieldValue.value && 'with-placeholder'
+            )}
             innerRef={this.setStaticValueNode}
             onBlur={this.handleStaticValueBlur}
             onKeyDown={this.handleStaticValueKeyDown}
@@ -426,6 +432,8 @@ export class EditableFieldInput extends React.Component<
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(EditableFieldInput)
+const PropConnectedComponent = propConnect(`${COMPONENT_KEY}Input`)(
+  EditableFieldInput
+)
 
 export default PropConnectedComponent
