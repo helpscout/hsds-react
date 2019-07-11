@@ -1,18 +1,18 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Button from './GreeterCard.Button'
+import Button from './MessageCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Animate from '../Animate'
 import {
-  GreeterCardUI,
+  MessageCardUI,
   TitleUI,
   SubtitleUI,
   BodyUI,
   ActionUI,
-} from './styles/GreeterCard.css'
-import { COMPONENT_KEY } from './GreeterCard.utils'
+} from './styles/MessageCard.css'
+import { COMPONENT_KEY } from './MessageCard.utils'
 import Truncate from '../Truncate'
 
 export interface Props {
@@ -31,8 +31,8 @@ export interface Props {
   title?: string
 }
 
-export class GreeterCard extends React.PureComponent<Props> {
-  static className = 'c-GreeterCard'
+export class MessageCard extends React.PureComponent<Props> {
+  static className = 'c-MessageCard'
   static defaultProps = {
     align: 'right',
     animationSequence: '',
@@ -46,7 +46,7 @@ export class GreeterCard extends React.PureComponent<Props> {
   getClassName() {
     const { align, className, isWithBoxShadow } = this.props
     return classNames(
-      GreeterCard.className,
+      MessageCard.className,
       align && `is-align-${align}`,
       className,
       isWithBoxShadow && `is-with-box-shadow`
@@ -64,7 +64,7 @@ export class GreeterCard extends React.PureComponent<Props> {
   renderTitle() {
     const { title } = this.props
     return title ? (
-      <TitleUI size="h4" data-cy="beacon-greeter-title">
+      <TitleUI size="h4" data-cy="beacon-message-title">
         {this.getTruncatedText(title, 110)}
       </TitleUI>
     ) : null
@@ -77,7 +77,7 @@ export class GreeterCard extends React.PureComponent<Props> {
         size="h5"
         weight={500}
         light
-        data-cy="beacon-greeter-subtitle"
+        data-cy="beacon-message-subtitle"
       >
         {this.getTruncatedText(subtitle, 110)}
       </SubtitleUI>
@@ -91,7 +91,7 @@ export class GreeterCard extends React.PureComponent<Props> {
       <BodyUI
         block
         withMargin={withMargin}
-        data-cy="beacon-greeter-body-content"
+        data-cy="beacon-message-body-content"
         shade="slightlyMuted"
       >
         {this.getTruncatedText(body, 500)}
@@ -102,7 +102,7 @@ export class GreeterCard extends React.PureComponent<Props> {
   renderAction() {
     const { action } = this.props
     return action ? (
-      <ActionUI data-cy="beacon-greeter-cta-wrapper">{action()}</ActionUI>
+      <ActionUI data-cy="beacon-message-cta-wrapper">{action()}</ActionUI>
     ) : null
   }
 
@@ -121,13 +121,13 @@ export class GreeterCard extends React.PureComponent<Props> {
 
     return (
       <Animate
-        className="c-GreeterCardWrapper"
+        className="c-MessageCardWrapper"
         in={inProp}
         duration={animationDuration}
         easing={animationEasing}
         sequence={animationSequence}
       >
-        <GreeterCardUI
+        <MessageCardUI
           {...getValidProps(rest)}
           className={this.getClassName()}
           innerRef={innerRef}
@@ -137,12 +137,12 @@ export class GreeterCard extends React.PureComponent<Props> {
           {this.renderBody()}
           {children}
           {this.renderAction()}
-        </GreeterCardUI>
+        </MessageCardUI>
       </Animate>
     )
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(GreeterCard)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(MessageCard)
 
 export default PropConnectedComponent

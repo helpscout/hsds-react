@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import GreeterCard from '../src/components/GreeterCard'
+import MessageCard from '../src/components/MessageCard'
 import { ThemeProvider } from '../src/components/styled'
 import {
   withKnobs,
@@ -14,11 +14,11 @@ import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
 import { makeBrandColors } from '../src/styles/utilities/color'
 
-const stories = storiesOf('GreeterCard', module)
+const stories = storiesOf('MessageCard', module)
 
 stories.addDecorator(
   withArtboard({
-    id: 'hsds-GreeterCard',
+    id: 'hsds-MessageCard',
     width: 600,
     height: 400,
     withCenterGuides: false,
@@ -36,9 +36,9 @@ class Story extends React.Component {
     const buttonText = text('buttonText', 'Action')
     const actionProp = boolean('Has Action?', true)
       ? () => (
-          <GreeterCard.Button onClick={action('Clicked!')}>
+          <MessageCard.Button onClick={action('Clicked!')}>
             {buttonText}
-          </GreeterCard.Button>
+          </MessageCard.Button>
         )
       : null
 
@@ -75,7 +75,7 @@ class Story extends React.Component {
     return (
       <ThemeProvider theme={theme}>
         <div>
-          <GreeterCard {...props} />
+          <MessageCard {...props} />
         </div>
       </ThemeProvider>
     )
