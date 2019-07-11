@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ActionButtonUI } from './styles/MessageCard.css'
+import { ActionButtonUI } from './styles/GreeterCard.css'
 import { noop } from '../../utilities/other'
 import Truncate from '../Truncate'
 
@@ -13,7 +13,7 @@ export interface Props {
 
 export class Button extends React.PureComponent<Props> {
   static defaultProps = {
-    'data-cy': 'beacon-message-cta',
+    'data-cy': 'beacon-greeter-cta',
     kind: 'primary',
     onClick: noop,
     isBlock: true,

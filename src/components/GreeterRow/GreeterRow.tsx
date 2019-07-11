@@ -7,8 +7,8 @@ import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
 import { renderChildrenSafely } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { ContentUI, ErrorIconUI, PauseIconUI } from './styles/MessageRow.css'
-import { COMPONENT_KEY } from './MessageRow.utils'
+import { ContentUI, ErrorIconUI, PauseIconUI } from './styles/GreeterRow.css'
+import { COMPONENT_KEY } from './GreeterRow.utils'
 
 export interface Props {
   className?: string
@@ -21,22 +21,22 @@ export interface Props {
   name: any
 }
 
-export class MessageRow extends React.PureComponent<Props> {
-  static className = 'c-MessageRow'
+export class GreeterRow extends React.PureComponent<Props> {
+  static className = 'c-GreeterRow'
   static defaultProps = {
-    errorMessage: 'Message paused because of an issue',
+    errorMessage: 'Greeter paused because of an issue',
     innerRef: noop,
     isError: false,
     isPaused: false,
     pausedMessage: 'Paused',
-    name: 'Message',
+    name: 'Greeter',
   }
 
   getClassName() {
     const { className, isError } = this.props
 
     return classNames(
-      MessageRow.className,
+      GreeterRow.className,
       isError && 'is-error',
       this.isPaused() && 'is-paused',
       className
@@ -53,7 +53,7 @@ export class MessageRow extends React.PureComponent<Props> {
     return (
       <Flexy.Item>
         <Tooltip title={errorMessage} display="block">
-          <ErrorIconUI data-cy="message-name-row-icon-error" />
+          <ErrorIconUI data-cy="greeter-name-row-icon-error" />
         </Tooltip>
       </Flexy.Item>
     )
@@ -65,7 +65,7 @@ export class MessageRow extends React.PureComponent<Props> {
     return (
       <Flexy.Item>
         <Tooltip title={pausedMessage} display="block">
-          <PauseIconUI data-cy="message-name-row-icon-paused" />
+          <PauseIconUI data-cy="greeter-name-row-icon-paused" />
         </Tooltip>
       </Flexy.Item>
     )
@@ -91,7 +91,7 @@ export class MessageRow extends React.PureComponent<Props> {
     return renderChildrenSafely(name, Text, {
       truncate: true,
       weight: 500,
-      'data-cy': 'message-name-row-name',
+      'data-cy': 'greeter-name-row-name',
       shade,
     })
   }
@@ -101,8 +101,8 @@ export class MessageRow extends React.PureComponent<Props> {
 
     return (
       <AccordionLink
-        data-cy-component="MessageRow"
-        data-cy="message-name-row"
+        data-cy-component="GreeterRow"
+        data-cy="greeter-name-row"
         {...rest}
         className={this.getClassName()}
         innerRef={innerRef}
@@ -116,6 +116,6 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(MessageRow)
+const PropConnectedComponent = propConnect(COMPONENT_KEY)(GreeterRow)
 
 export default PropConnectedComponent

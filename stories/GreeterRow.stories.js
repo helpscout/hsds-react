@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Accordion from '../src/components/Accordion'
-import MessageRow from '../src/components/MessageRow'
+import GreeterRow from '../src/components/GreeterRow'
 import Page from '../src/components/Page'
 import {
   withKnobs,
@@ -12,33 +12,33 @@ import {
 } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 
-const stories = storiesOf('MessageRow', module)
+const stories = storiesOf('GreeterRow', module)
 
 stories.add('Default', () => {
-  const messageName = text('messageName', '"Link Row One"')
+  const greeterName = text('greeterName', '"Link Row One"')
   const isError = boolean('isError', false)
   const isPaused = boolean('isPaused', true)
   const errorMessage = text(
     'errorMessage',
-    'Message paused because of an issue'
+    'Greeter paused because of an issue'
   )
 
   const props = {
     errorMessage,
-    name: messageName,
+    name: greeterName,
     isError,
     isPaused,
     to: '/',
   }
 
-  const messageTwoName = text('messageTwoName', 'Link Row Two')
+  const greeterTwoName = text('greeterTwoName', 'Link Row Two')
 
   return (
     <Page>
       <Page.Card>
         <Accordion isSeamless>
-          <MessageRow {...props} />
-          <MessageRow name={messageTwoName} to="/" />
+          <GreeterRow {...props} />
+          <GreeterRow name={greeterTwoName} to="/" />
         </Accordion>
       </Page.Card>
     </Page>

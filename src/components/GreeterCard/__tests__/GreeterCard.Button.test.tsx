@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { Button } from '../MessageCard.Button'
+import { Button } from '../GreeterCard.Button'
 
 describe('Children', () => {
   test('Can render children', () => {

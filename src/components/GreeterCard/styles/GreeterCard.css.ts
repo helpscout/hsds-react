@@ -8,7 +8,7 @@ import { makeFontFamily, setFontSize } from '../../../styles/utilities/font'
 
 const fontFamily = makeFontFamily('Barlow')
 
-export const MessageCardUI = styled(Card)`
+export const GreeterCardUI = styled(Card)`
   ${baseStyles};
   background-color: white;
   border-color: transparent !important;
