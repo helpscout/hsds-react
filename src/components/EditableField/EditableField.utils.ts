@@ -76,3 +76,7 @@ export function generateFieldActions(actions): FieldAction[] | [] {
 
   return newActionsArray
 }
+
+export function isEllipsisActive(e) {
+  return e.offsetWidth < e.scrollWidth
+}

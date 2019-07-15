@@ -56,6 +56,7 @@ export interface EditableFieldState {
   activeField: string
   defaultOption?: null | string
   fieldValue: FieldValue[]
+  focusedByLabel: boolean
   initialFieldValue: FieldValue[]
   multipleValuesEnabled: boolean
   valueOptions: any
@@ -93,6 +94,11 @@ export interface EditableFieldInputProps {
     action: FieldAction
     event: Event
   }) => void
+}
+
+export interface EditableFieldInputState {
+  dynamicFieldWidth: string | null
+  staticContentWidth: number | null
 }
 
 export interface TruncateProps {

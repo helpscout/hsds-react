@@ -7,6 +7,8 @@ export const EditableFieldInputUI = styled('div')`
   position: relative;
   height: 25px;
   margin-bottom: 2px;
+  width: ${({ dynamicFieldWidth }) => `${dynamicFieldWidth}`};
+  transition: width 0.2s ease-in-out;
 
   &:hover .EditableField__actions {
     opacity: 1;
@@ -19,7 +21,7 @@ export const EditableFieldInputUI = styled('div')`
   }
 
   &:hover .with-placeholder {
-    border-bottom: 1px dashed blue;
+    border-bottom: 1px dashed ${getColor('blue.500')};
   }
 `
 
@@ -116,7 +118,7 @@ export const OptionsDropdownUI = styled('div')`
 
     & + .EditableField__focusIndicator {
       transform: scaleX(1);
-      background-color: #1292ee;
+      background-color: ${getColor('blue.500')};
       height: 2px;
     }
   }
@@ -157,7 +159,7 @@ export const InputUI = styled('input')`
 
     & + .EditableField__focusIndicator {
       transform: scaleX(1);
-      background-color: #1292ee !important;
+      background-color: ${getColor('blue.500')} !important;
       height: 2px;
     }
   }
@@ -179,6 +181,14 @@ export const InputUI = styled('input')`
     }
   }
 
+  .is-empty & {
+    cursor: pointer;
+  }
+
+  .is-empty &:focus {
+    cursor: initial;
+  }
+
   &[type='number']::-webkit-inner-spin-button,
   &[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -193,6 +203,7 @@ export const InputUI = styled('input')`
 export const StaticContentUI = styled('div')`
   position: relative;
   display: inline-block;
+  width: ${({ staticContentWidth }) => `${staticContentWidth}`};
   max-width: 100%;
   height: 25px;
   z-index: 2;
@@ -284,7 +295,7 @@ export const FocusIndicatorUI = styled('span')`
   left: 0;
   right: 0;
   height: 2px;
-  background-color: #1292ee;
+  background-color: ${getColor('blue.500')};
   transform-origin: bottom left;
   transform: scaleX(0);
   transition: transform 0.3s ease, background-color 0.3s ease;

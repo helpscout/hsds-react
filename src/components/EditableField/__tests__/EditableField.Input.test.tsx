@@ -13,25 +13,32 @@ describe('Should component update', () => {
       <EditableFieldInput name="greeting" fieldValue={val} />
     )
     const actualProps = wrapper.props()
+    const actualState = wrapper.state()
 
     expect(
-      wrapper.instance().shouldComponentUpdate({
-        ...actualProps,
-        fieldValue: {
-          value: 'hello',
-          id: 'greeting_0',
+      wrapper.instance().shouldComponentUpdate(
+        {
+          ...actualProps,
+          fieldValue: {
+            value: 'hello',
+            id: 'greeting_0',
+          },
         },
-      })
+        actualState
+      )
     ).toBeFalsy()
 
     expect(
-      wrapper.instance().shouldComponentUpdate({
-        ...actualProps,
-        fieldValue: {
-          value: 'hola',
-          id: 'greeting_0',
+      wrapper.instance().shouldComponentUpdate(
+        {
+          ...actualProps,
+          fieldValue: {
+            value: 'hola',
+            id: 'greeting_0',
+          },
         },
-      })
+        actualState
+      )
     ).toBeTruthy()
   })
 
@@ -44,19 +51,26 @@ describe('Should component update', () => {
       <EditableFieldInput name="greeting" fieldValue={val} isActive />
     )
     const actualProps = wrapper.props()
+    const actualState = wrapper.state()
 
     expect(
-      wrapper.instance().shouldComponentUpdate({
-        ...actualProps,
-        isActive: true,
-      })
+      wrapper.instance().shouldComponentUpdate(
+        {
+          ...actualProps,
+          isActive: true,
+        },
+        actualState
+      )
     ).toBeFalsy()
 
     expect(
-      wrapper.instance().shouldComponentUpdate({
-        ...actualProps,
-        isActive: false,
-      })
+      wrapper.instance().shouldComponentUpdate(
+        {
+          ...actualProps,
+          isActive: false,
+        },
+        actualState
+      )
     ).toBeTruthy()
   })
 })

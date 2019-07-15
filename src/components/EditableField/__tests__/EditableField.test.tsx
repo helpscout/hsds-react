@@ -342,6 +342,7 @@ describe('Value', () => {
           { option: 'Home', value: 'home_phone' },
         ]}
         valueOptions={['Home', 'Work', 'Other']}
+        defaultOption="Home"
         onDelete={spy}
       />
     )
@@ -692,8 +693,51 @@ describe('disabled', () => {
   })
 })
 
+describe('Label click event', () => {
+  test('should mark the state when clicking the label', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+        disabled
+      />
+    )
+    const label = wrapper.find('.EditableField__label').first()
+
+    label.simulate('click')
+
+    expect(wrapper.state('focusedByLabel')).toBeTruthy()
+  })
+})
+
 describe('Click outside field', () => {
-  test('When document.body is clicked, the field is not active', () => {
+  test('When document.body is clicked, the field is not active (single)', () => {
+    const commitSpy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" onCommit={commitSpy} />
+    )
+    // Make document.activeElement something other than document.body
+    wrapper
+      .find('input')
+      .first()
+      .getDOMNode()
+      .focus()
+
+    wrapper.setState({
+      activeField: 'company_67',
+      fieldValue: [{ value: '123', id: 'company_67' }],
+    })
+
+    wrapper.instance().handleOnDocumentBodyMouseDown({
+      target: document.body,
+    })
+
+    expect(wrapper.state('activeField')).toBe('')
+    expect(commitSpy).toHaveBeenCalled()
+  })
+
+  test('When document.body is clicked, the field is not active (multi, no change)', () => {
     const wrapper: any = mount(<EditableField name="company" />)
     // Make document.activeElement something other than document.body
     wrapper
@@ -702,12 +746,75 @@ describe('Click outside field', () => {
       .getDOMNode()
       .focus()
 
-    wrapper.setState({ activeField: 'company_0' })
+    wrapper.setState({
+      activeField: 'company_67',
+      fieldValue: [
+        { value: '123', id: 'company_67' },
+        { value: '12345', id: 'company_68' },
+      ],
+    })
+
     wrapper.instance().handleOnDocumentBodyMouseDown({
       target: document.body,
     })
 
     expect(wrapper.state('activeField')).toBe('')
+  })
+
+  test('When document.body is clicked, the field is not active (multi, empty value, discard)', () => {
+    const discardSpy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" onDiscard={discardSpy} />
+    )
+    // Make document.activeElement something other than document.body
+    wrapper
+      .find('input')
+      .first()
+      .getDOMNode()
+      .focus()
+
+    wrapper.setState({
+      activeField: 'company_67',
+      fieldValue: [
+        { value: '123', id: 'company_67' },
+        { value: '', id: 'company_68' },
+      ],
+    })
+
+    wrapper.instance().handleOnDocumentBodyMouseDown({
+      target: document.body,
+    })
+
+    expect(wrapper.state('activeField')).toBe('')
+    expect(discardSpy).toHaveBeenCalled()
+  })
+
+  test('When document.body is clicked, the field is not active (multi, empty value, discard)', () => {
+    const commitSpy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" onCommit={commitSpy} />
+    )
+    // Make document.activeElement something other than document.body
+    wrapper
+      .find('input')
+      .first()
+      .getDOMNode()
+      .focus()
+
+    wrapper.setState({
+      activeField: 'company_67',
+      fieldValue: [
+        { value: '123', id: 'company_67' },
+        { value: '12345', id: 'company_68' },
+      ],
+    })
+
+    wrapper.instance().handleOnDocumentBodyMouseDown({
+      target: document.body,
+    })
+
+    expect(wrapper.state('activeField')).toBe('')
+    expect(commitSpy).toHaveBeenCalled()
   })
 
   test('When document.body is clicked, if field is not active return', () => {
@@ -820,24 +927,50 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Pressing Enter', () => {
+  test('Pressing Enter: should commit if value changes', () => {
     const onEnterSpy = jest.fn()
     const onCommitSpy = jest.fn()
     const wrapper = mount(
       <EditableField
         name="company"
+        value={{ value: '1234567', id: '1' }}
         onEnter={onEnterSpy}
         onCommit={onCommitSpy}
       />
     )
 
-    wrapper
-      .find('input')
-      .first()
-      .simulate('keydown', { key: 'Enter' })
+    const input = wrapper.find('input').first()
+
+    // @ts-ignore
+    input.getDOMNode().value = '123'
+
+    input.simulate('keydown', { key: 'Enter' })
 
     expect(onEnterSpy).toHaveBeenCalled()
     expect(onCommitSpy).toHaveBeenCalled()
+  })
+
+  test('Pressing Enter: should not commit if value unchanged', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+      />
+    )
+
+    const input = wrapper.find('input').first()
+
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+
+    input.simulate('keydown', { key: 'Enter' })
+
+    expect(onEnterSpy).toHaveBeenCalled()
+    expect(onCommitSpy).not.toHaveBeenCalled()
   })
 
   test('Pressing escape', () => {
@@ -887,7 +1020,7 @@ describe('Events', () => {
     cy.render(
       <EditableField
         name="company"
-        value={{ option: 'Work', value: '123456789' }}
+        value={{ option: 'Work', value: '123456789', id: '1' }}
         valueOptions={['Home', 'Work', 'Other']}
         onOptionFocus={spy}
       />
