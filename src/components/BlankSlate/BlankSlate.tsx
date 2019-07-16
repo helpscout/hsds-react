@@ -23,6 +23,16 @@ interface Props {
   alignTop?: boolean
 }
 
+const getIllo = ({ illo, illoName, illoSize }) => {
+  if (illo) {
+    return illo
+  }
+
+  if (illoName) {
+    return <IlloUI name={illoName} size={illoSize} />
+  }
+}
+
 class BlankSlate extends React.PureComponent<Props> {
   static defaultProps = {
     lightBackground: false,
@@ -34,6 +44,7 @@ class BlankSlate extends React.PureComponent<Props> {
     const {
       className,
       children,
+      illo,
       illoName,
       illoSize,
       title,
@@ -52,7 +63,7 @@ class BlankSlate extends React.PureComponent<Props> {
 
     return (
       <BlankSlateUI {...getValidProps(rest)} className={componentClassName}>
-        {illoName && <IlloUI name={illoName} size={illoSize} />}
+        {getIllo({ illo, illoName, illoSize })}
         {title && <HeadingUI size="h3">{title}</HeadingUI>}
         {message && <TextUI>{message}</TextUI>}
       </BlankSlateUI>
