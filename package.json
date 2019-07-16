@@ -138,6 +138,7 @@
     "@helpscout/colorway": "0.0.11",
     "@helpscout/cyan": "0.11.3",
     "@helpscout/helix": "^0.1.0",
+    "@helpscout/hsds-illos": "^1.4.0",
     "@helpscout/prestart": "^0.0.9",
     "@helpscout/stats": "0.0.5",
     "@storybook/addon-a11y": "^5.0.11",
