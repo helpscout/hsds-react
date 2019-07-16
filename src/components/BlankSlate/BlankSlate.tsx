@@ -16,6 +16,7 @@ interface Props {
   className?: string
   message?: string | React.ReactNode
   title?: string
+  illo?: React.ReactNode
   illoName?: string
   illoSize?: number
   lightBackground?: boolean
