@@ -92,6 +92,66 @@ stories.add('Text Multiple', () => (
   </ContainerUI>
 ))
 
+stories.add('Fields as blocks', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Films"
+      name="films"
+      type="text"
+      placeholder="Add a film name"
+      renderFieldsAsBlocks
+    />
+
+    <EditableField
+      label="Musicians"
+      name="musicians"
+      type="text"
+      placeholder="Add a musician name"
+      renderFieldsAsBlocks
+      value={['George Harrison', 'Neil Young']}
+    />
+
+    <EditableField
+      label="Website"
+      name="website"
+      placeholder="Add a website address"
+      renderFieldsAsBlocks
+      type="url"
+      value="http://mysite.net"
+      actions={{
+        name: 'link',
+        callback(obj) {
+          console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+        },
+      }}
+    />
+
+    <EditableField
+      label="Mobile Phone"
+      name="mobilephone"
+      placeholder="Add a mobile phone"
+      renderFieldsAsBlocks
+      type="tel"
+      valueOptions={PHONE_OPTIONS}
+    />
+
+    <EditableField
+      label="Phone"
+      name="Phone"
+      placeholder="Add phone"
+      renderFieldsAsBlocks
+      type="tel"
+      valueOptions={PHONE_OPTIONS}
+      defaultOption={PHONE_OPTIONS[2]}
+      value={{ option: 'Work', value: '123456789' }}
+    />
+  </ContainerUI>
+))
+
 stories.add('Email Multiple', () => (
   <ContainerUI
     onSubmit={e => {

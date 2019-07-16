@@ -111,7 +111,9 @@ export class EditableFieldInput extends React.Component<
   }
 
   componentDidMount() {
-    this.calculateFieldWidth()
+    if (!this.props.renderAsBlock) {
+      this.calculateFieldWidth()
+    }
     this.setInputTitle()
   }
 
@@ -137,7 +139,10 @@ export class EditableFieldInput extends React.Component<
     const valueChanged =
       this.props.fieldValue.value !== prevProps.fieldValue.value
 
-    this.calculateFieldWidth(valueChanged)
+    if (!this.props.renderAsBlock) {
+      this.calculateFieldWidth(valueChanged)
+    }
+
     this.setInputTitle()
 
     if (isActive) {
@@ -395,7 +400,7 @@ export class EditableFieldInput extends React.Component<
   }
 
   renderActions = () => {
-    const { actions } = this.props
+    const { actions, renderAsBlock } = this.props
 
     return (
       <FieldActionsUI
@@ -405,6 +410,7 @@ export class EditableFieldInput extends React.Component<
         // but renderActions is never called if actions is undefined (same below in the mapping)
         // @ts-ignore
         numberOfActions={actions.length}
+        renderAsBlock={renderAsBlock}
       >
         {(actions as any).map(action => {
           return (
@@ -434,6 +440,7 @@ export class EditableFieldInput extends React.Component<
       isActive,
       name,
       placeholder,
+      renderAsBlock,
       type,
       valueOptions,
       ...rest
@@ -445,6 +452,7 @@ export class EditableFieldInput extends React.Component<
       <EditableFieldInputUI
         className={this.getClassName()}
         dynamicFieldWidth={dynamicFieldWidth}
+        renderAsBlock={renderAsBlock}
         innerRef={this.setEditableFieldInputNode}
       >
         <InteractiveContentUI
@@ -475,6 +483,7 @@ export class EditableFieldInput extends React.Component<
 
         <StaticContentUI
           className="EditableField__staticContent"
+          renderAsBlock={renderAsBlock}
           staticContentWidth={staticContentWidth}
           innerRef={this.setStaticContentNode}
         >

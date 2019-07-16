@@ -30,6 +30,7 @@ export interface EditableFieldProps {
   multipleValues: boolean
   name: string
   placeholder?: string
+  renderFieldsAsBlocks: boolean
   type: FieldType
   value: Value
   valueOptions?: string[] | Option[]
@@ -72,6 +73,7 @@ export interface EditableFieldInputProps {
   isActive: boolean
   name: string
   placeholder: string
+  renderAsBlock: boolean
   type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
   valueOptions?: Option[]
   innerRef: (node: HTMLElement) => void

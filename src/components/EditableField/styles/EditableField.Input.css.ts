@@ -7,7 +7,8 @@ export const EditableFieldInputUI = styled('div')`
   position: relative;
   height: 25px;
   margin-bottom: 2px;
-  width: ${({ dynamicFieldWidth }) => `${dynamicFieldWidth}`};
+  width: ${({ dynamicFieldWidth, renderAsBlock }) =>
+    renderAsBlock ? 'auto' : `${dynamicFieldWidth}`};
   transition: width 0.2s ease-in-out;
 
   &:hover .EditableField__actions {
@@ -212,7 +213,8 @@ export const InputUI = styled('input')`
 export const StaticContentUI = styled('div')`
   position: relative;
   display: inline-block;
-  width: ${({ staticContentWidth }) => `${staticContentWidth}px`};
+  width: ${({ staticContentWidth, renderAsBlock }) =>
+    renderAsBlock ? '100%' : `${staticContentWidth}px`};
   max-width: 100%;
   height: 25px;
   z-index: 2;
@@ -249,11 +251,11 @@ export const StaticOptionUI = styled('span')`
   }
 
   & .is-placeholder {
-    color: #b7c2cc;
+    color: ${getColor('charcoal.400')};
   }
 
   .is-disabled & {
-    color: ${getColor('charcoal.400')};
+    color: ${getColor('charcoal.200')};
   }
 
   &:focus {
@@ -298,7 +300,7 @@ export const StaticValueUI = styled('span')`
   }
 
   & .is-placeholder {
-    color: ${getColor('charcoal.600')};
+    color: ${getColor('charcoal.400')};
   }
 
   .is-disabled &.with-placeholder {
@@ -306,7 +308,7 @@ export const StaticValueUI = styled('span')`
   }
 
   .is-disabled & {
-    color: ${getColor('charcoal.400')};
+    color: ${getColor('charcoal.300')};
   }
 
   .is-disabled & .is-placeholder {
@@ -337,6 +339,8 @@ export const FieldActionsUI = styled('div')`
   position: absolute;
   top: 1px;
   left: 100%;
+  left: ${({ renderAsBlock, numberOfActions }) =>
+    renderAsBlock ? `calc(100% - ${numberOfActions * 25}px)` : '100%'};
   z-index: 4;
   opacity: 0;
   text-align: right;

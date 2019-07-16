@@ -46,6 +46,7 @@ export class EditableField extends React.Component<
     disabled: false,
     emphasizeTopValue: false,
     multipleValues: false,
+    renderFieldsAsBlocks: false,
     value: '',
     innerRef: noop,
     onInputFocus: noop,
@@ -413,7 +414,14 @@ export class EditableField extends React.Component<
   }
 
   renderInputFields() {
-    const { name, disabled, emphasizeTopValue, type, ...rest } = this.props
+    const {
+      name,
+      disabled,
+      emphasizeTopValue,
+      renderFieldsAsBlocks,
+      type,
+      ...rest
+    } = this.props
     const {
       actions,
       activeField,
@@ -437,6 +445,7 @@ export class EditableField extends React.Component<
               isActive={activeField === val.id}
               key={val.id}
               name={val.id}
+              renderAsBlock={renderFieldsAsBlocks}
               type={type}
               valueOptions={valueOptions}
               onInputFocus={this.handleInputFocus}
