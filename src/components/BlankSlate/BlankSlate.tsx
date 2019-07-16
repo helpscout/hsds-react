@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Illo from '../Illo'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 
@@ -23,14 +24,16 @@ interface Props {
   alignTop?: boolean
 }
 
-const getIllo = ({ illo, illoName, illoSize }) => {
+const getIllo = ({ illo, illoName, illoSize }: Props) => {
+  let content: React.ReactNode = null
+
   if (illo) {
-    return illo
+    content = illo
+  } else if (illoName) {
+    content = <Illo name={illoName} size={illoSize} />
   }
 
-  if (illoName) {
-    return <IlloUI name={illoName} size={illoSize} />
-  }
+  return content ? <IlloUI>{content}</IlloUI> : content
 }
 
 class BlankSlate extends React.PureComponent<Props> {

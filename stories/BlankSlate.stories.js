@@ -2,8 +2,8 @@ import React from 'react'
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
+import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
 import { BlankSlate } from '../src/index'
-
 import { withAktiv, withHsApp } from './utils'
 
 const stories = storiesOf('BlankSlate', module)
@@ -54,6 +54,15 @@ stories.add('Illo', () => {
     illoName: illoName(),
     message: htmlMessage,
     illoSize: 90,
+  }
+  return <BlankSlate {...getKnobsProps()} {...props} />
+})
+
+stories.add('Custom Illo', () => {
+  const props = {
+    title: title(''),
+    illo: <WrenchCat size={90} />,
+    message: htmlMessage,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
 })
