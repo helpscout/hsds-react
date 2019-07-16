@@ -23,6 +23,10 @@ export const EditableFieldInputUI = styled('div')`
   &:hover .with-placeholder {
     border-bottom: 1px dashed ${getColor('blue.500')};
   }
+
+  .is-disabled &:hover .with-placeholder {
+    border-bottom: 1px solid transparent;
+  }
 `
 
 export const InteractiveContentUI = styled('div')`
@@ -43,6 +47,7 @@ export const InteractiveContentUI = styled('div')`
 
   .is-disabled &:hover {
     cursor: initial;
+    border-bottom: 1px solid transparent;
   }
 
   .is-active & {
@@ -185,6 +190,10 @@ export const InputUI = styled('input')`
     cursor: pointer;
   }
 
+  .is-disabled & {
+    cursor: initial;
+  }
+
   .is-empty &:focus {
     cursor: initial;
   }
@@ -203,7 +212,7 @@ export const InputUI = styled('input')`
 export const StaticContentUI = styled('div')`
   position: relative;
   display: inline-block;
-  width: ${({ staticContentWidth }) => `${staticContentWidth}`};
+  width: ${({ staticContentWidth }) => `${staticContentWidth}px`};
   max-width: 100%;
   height: 25px;
   z-index: 2;
@@ -243,6 +252,10 @@ export const StaticOptionUI = styled('span')`
     color: #b7c2cc;
   }
 
+  .is-disabled & {
+    color: ${getColor('charcoal.400')};
+  }
+
   &:focus {
     outline: none;
     border-bottom: 1px dashed #93a1b0;
@@ -276,12 +289,28 @@ export const StaticValueUI = styled('span')`
     border-bottom: none !important;
   }
 
+  &.is-emphasized {
+    font-weight: 500;
+  }
+
   &.with-placeholder {
     border-bottom: 1px dashed #93a1b0;
   }
 
   & .is-placeholder {
     color: ${getColor('charcoal.600')};
+  }
+
+  .is-disabled &.with-placeholder {
+    border-bottom: 1px solid transparent;
+  }
+
+  .is-disabled & {
+    color: ${getColor('charcoal.400')};
+  }
+
+  .is-disabled & .is-placeholder {
+    color: ${getColor('charcoal.200')};
   }
 
   &:focus {

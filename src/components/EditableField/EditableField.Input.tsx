@@ -46,6 +46,7 @@ export class EditableFieldInput extends React.Component<
   static defaultProps = {
     isActive: false,
     disabled: false,
+    emphasize: false,
     fieldValue: '',
     placeholder: '',
     type: 'text',
@@ -155,13 +156,14 @@ export class EditableFieldInput extends React.Component<
     const emailNode =
       staticValueNode && staticValueNode.querySelector('.TruncateFirstChunk')
 
+    /* istanbul ignore if */
     if (
       (contentNode && isEllipsisActive(contentNode)) ||
       (emailNode && isEllipsisActive(emailNode))
     ) {
       const inputNode = this.inputRef
 
-      inputNode.setAttribute('title', fieldValue.value)
+      inputNode && inputNode.setAttribute('title', fieldValue.value)
     }
   }
 
@@ -228,21 +230,27 @@ export class EditableFieldInput extends React.Component<
   }
 
   handleInputFocus = event => {
-    const { onInputFocus, name } = this.props
+    const { name, onInputFocus } = this.props
 
     onInputFocus({ name, event })
   }
 
   handleInputBlur = event => {
     const { name, onInputBlur } = this.props
+    const optionsNode = this.optionsDropdownRef
+
+    /* istanbul ignore if */
+    if (optionsNode && optionsNode.classList.contains('is-open')) return
 
     onInputBlur({ name, event })
   }
 
   handleOptionFocus = event => {
-    const { onOptionFocus, name } = this.props
+    const { disabled, name, onOptionFocus } = this.props
 
-    onOptionFocus({ name, event })
+    if (!disabled) {
+      onOptionFocus({ name, event })
+    }
   }
 
   handleChange = event => {
@@ -320,41 +328,17 @@ export class EditableFieldInput extends React.Component<
     staticValueNode && staticValueNode.removeAttribute('tabindex')
   }
 
-  renderActions = () => {
-    const { actions } = this.props
-
-    return (
-      <FieldActionsUI
-        className="EditableField__actions"
-        innerRef={this.setActionsNode}
-        // ts complains about actions possibly being undefined
-        // but renderActions is never called if actions is undefined (same below in the mapping)
-        // @ts-ignore
-        numberOfActions={actions.length}
-      >
-        {(actions as any).map(action => {
-          return (
-            <FieldButtonUI
-              className={`FieldButton action-${action.name}`}
-              key={action.name}
-              tabIndex="-1"
-              type="button"
-              onClick={event => {
-                this.handleActionClick({ action, event })
-              }}
-            >
-              <Icon name={action.icon || ACTION_ICONS[action.name]} size="16" />
-            </FieldButtonUI>
-          )
-        })}
-      </FieldActionsUI>
-    )
-  }
-
   handleDropdownSelect = selection => {
-    const { name, onOptionSelection } = this.props
+    const { name, fieldValue, onOptionSelection } = this.props
 
     onOptionSelection({ name, selection })
+
+    if (fieldValue.id === name && fieldValue.option === selection) {
+      // Force React to render the new option
+      // I have no clue as to why is not triggering rerendering by itself
+      // when calling setState on EditableField:268
+      this.forceUpdate()
+    }
 
     this.optionsDropdownRef && this.optionsDropdownRef.focus()
   }
@@ -405,8 +389,39 @@ export class EditableFieldInput extends React.Component<
         className="EditableField__staticOption"
         innerRef={this.setStaticOptionNode}
       >
-        <Truncate>{fieldValue.option}:</Truncate>
+        <Truncate>{fieldValue.option}</Truncate>
       </StaticOptionUI>
+    )
+  }
+
+  renderActions = () => {
+    const { actions } = this.props
+
+    return (
+      <FieldActionsUI
+        className="EditableField__actions"
+        innerRef={this.setActionsNode}
+        // ts complains about actions possibly being undefined
+        // but renderActions is never called if actions is undefined (same below in the mapping)
+        // @ts-ignore
+        numberOfActions={actions.length}
+      >
+        {(actions as any).map(action => {
+          return (
+            <FieldButtonUI
+              className={`FieldButton action-${action.name}`}
+              key={action.name}
+              tabIndex="-1"
+              type="button"
+              onClick={event => {
+                this.handleActionClick({ action, event })
+              }}
+            >
+              <Icon name={action.icon || ACTION_ICONS[action.name]} size="16" />
+            </FieldButtonUI>
+          )
+        })}
+      </FieldActionsUI>
     )
   }
 
@@ -414,11 +429,12 @@ export class EditableFieldInput extends React.Component<
     const {
       actions,
       disabled,
+      emphasize,
+      fieldValue,
+      isActive,
       name,
       placeholder,
-      isActive,
       type,
-      fieldValue,
       valueOptions,
       ...rest
     } = this.props
@@ -467,7 +483,8 @@ export class EditableFieldInput extends React.Component<
           <StaticValueUI
             className={classNames(
               'EditableField__staticValue',
-              !fieldValue.value && 'with-placeholder'
+              !fieldValue.value && 'with-placeholder',
+              emphasize && 'is-emphasized'
             )}
             innerRef={this.setStaticValueNode}
             onBlur={this.handleStaticValueBlur}

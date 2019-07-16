@@ -35,16 +35,18 @@ import {
 const nextUuid = createUniqueIDFactory('EditableField')
 const createNewFieldValue = createNewValueFieldFactory(nextUuid)
 
-export class EditableField extends React.PureComponent<
+export class EditableField extends React.Component<
   EditableFieldProps,
   EditableFieldState
 > {
   static className = 'c-EditableField'
   static defaultProps = {
     type: 'text',
+    defaultOption: null,
     disabled: false,
-    value: '',
+    emphasizeTopValue: false,
     multipleValues: false,
+    value: '',
     innerRef: noop,
     onInputFocus: noop,
     onInputBlur: noop,
@@ -72,7 +74,7 @@ export class EditableField extends React.PureComponent<
       valueOptions,
     } = props
 
-    let defaultStateOption = null
+    let defaultStateOption: string | null = null
 
     if (valueOptions) {
       if (defaultOption) {
@@ -265,12 +267,12 @@ export class EditableField extends React.PureComponent<
     }
 
     if (changed) {
-      this.setState({ fieldValue: newFieldValue })
+      this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
+        onOptionChange({ name, selection, value: newFieldValue })
+        onChange({ name, value: newFieldValue })
+        onCommit({ name, value: newFieldValue })
+      })
     }
-
-    onOptionChange({ name, selection, value: newFieldValue })
-    onChange({ name, value: newFieldValue })
-    onCommit({ name, value: this.state.fieldValue })
   }
 
   handleAddValue = () => {
@@ -411,7 +413,7 @@ export class EditableField extends React.PureComponent<
   }
 
   renderInputFields() {
-    const { name, disabled, type, ...rest } = this.props
+    const { name, disabled, emphasizeTopValue, type, ...rest } = this.props
     const {
       actions,
       activeField,
@@ -422,17 +424,20 @@ export class EditableField extends React.PureComponent<
 
     return (
       <div className="EditableField__main">
-        {fieldValue.map(val => {
+        {fieldValue.map((val, index) => {
           return (
             <EditableFieldInput
               {...getValidProps(rest)}
               actions={actions}
-              name={val.id}
               disabled={disabled}
+              emphasize={
+                multipleValuesEnabled && emphasizeTopValue && index === 0
+              }
+              fieldValue={val}
               isActive={activeField === val.id}
               key={val.id}
+              name={val.id}
               type={type}
-              fieldValue={val}
               valueOptions={valueOptions}
               onInputFocus={this.handleInputFocus}
               onInputBlur={this.handleInputBlur}
@@ -462,9 +467,13 @@ export class EditableField extends React.PureComponent<
 
   handleLabelClick = e => {
     e.preventDefault()
+    const { disabled } = this.props
     const { fieldValue } = this.state
-    // @ts-ignore
-    this.setState({ focusedByLabel: true, activeField: fieldValue[0].id })
+
+    if (!disabled) {
+      // @ts-ignore
+      this.setState({ focusedByLabel: true, activeField: fieldValue[0].id })
+    }
   }
 
   render() {

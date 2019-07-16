@@ -1,5 +1,6 @@
 import { FieldAction, FieldValue } from './EditableField.types'
 import { isArray, isObject } from '../../utilities/is'
+import { find } from '../../utilities/arrays'
 
 export const COMPONENT_KEY = 'EditableField'
 
@@ -20,35 +21,30 @@ export function normalizeFieldValue({
   createNewFieldValue,
   defaultOption,
 }): FieldValue[] {
-  let fieldValue: FieldValue[] = []
-
-  if (isArray(value)) {
-    fieldValue = value.map(val =>
-      createNewFieldValue({ value: val, name }, defaultOption)
-    )
-  } else {
-    fieldValue.push(createNewFieldValue({ value, name }, defaultOption))
-  }
-
-  return fieldValue
+  return isArray(value)
+    ? value.map(val => createNewFieldValue({ value: val, name }, defaultOption))
+    : [createNewFieldValue({ value, name }, defaultOption)]
 }
 
 export function createNewValueFieldFactory(uuidFn) {
   return function createNewValueFieldObject(
     { value, name },
-    defaultOption?
+    defaultOption: string | null
   ): FieldValue {
+    // If it's an object already, grab the fields first
     if (isObject(value)) {
       const fieldObj = { ...value, id: uuidFn(`${name}_`) }
 
-      if (defaultOption != null && !Boolean(value.option)) {
+      if (defaultOption !== null && !Boolean(value.option)) {
         fieldObj.option = defaultOption
       }
 
       return fieldObj
     }
+
     const fieldObj: any = { value, id: uuidFn(`${name}_`) }
-    if (defaultOption != null) {
+
+    if (defaultOption !== null) {
       fieldObj.option = defaultOption
     }
 
@@ -57,24 +53,28 @@ export function createNewValueFieldFactory(uuidFn) {
 }
 
 export function generateFieldActions(actions): FieldAction[] | [] {
-  let newActionsArray: FieldAction[] = []
+  /**
+   * We need different handling of `null` and `undefined`,
+   * because by default the "delete" action gets added (so if actions is `undefined`, you get "delete")
+   * and if you explicitly want to remove this behaviour, you can pass `null`.
+   */
 
-  if (actions !== null) {
-    if (actions === undefined) {
-      newActionsArray = [deleteAction]
-    } else {
-      newActionsArray = Array.isArray(actions) ? actions : [actions]
+  if (actions === null) return []
 
-      let isDeleteActionPresent =
-        newActionsArray.filter(action => action.name === 'delete').length > 0
-
-      newActionsArray = isDeleteActionPresent
-        ? newActionsArray
-        : newActionsArray.concat(deleteAction)
-    }
+  if (actions === undefined) {
+    return [deleteAction]
   }
 
-  return newActionsArray
+  // User is also able to override the action
+  let actionsArray: FieldAction[] = Array.isArray(actions) ? actions : [actions]
+  let isDeleteActionPresent = find(
+    actionsArray,
+    action => action.name === 'delete'
+  )
+
+  return isDeleteActionPresent
+    ? actionsArray
+    : actionsArray.concat(deleteAction)
 }
 
 export function isEllipsisActive(e) {

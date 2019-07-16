@@ -23,9 +23,10 @@ export type FieldType = 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
 export interface EditableFieldProps {
   actions?: FieldAction | FieldAction[] | null
   className?: string
-  defaultOption?: string
+  defaultOption: string | null
   disabled: boolean
   label?: string
+  emphasizeTopValue: boolean
   multipleValues: boolean
   name: string
   placeholder?: string
@@ -54,7 +55,7 @@ export interface EditableFieldProps {
 export interface EditableFieldState {
   actions?: FieldAction[]
   activeField: string
-  defaultOption?: null | string
+  defaultOption: string | null
   fieldValue: FieldValue[]
   focusedByLabel: boolean
   initialFieldValue: FieldValue[]
@@ -66,6 +67,7 @@ export interface EditableFieldInputProps {
   actions?: FieldAction[]
   className?: string
   disabled: boolean
+  emphasize: boolean
   fieldValue: FieldValue
   isActive: boolean
   name: string

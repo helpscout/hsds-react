@@ -487,6 +487,23 @@ describe('Static Value', () => {
     expect(cy.get('.EditableField__staticValue').getText()).toBe('hello')
   })
 
+  test('should emphasize the value if emphasizeTopValue and multivalue enabled', () => {
+    cy.render(
+      <EditableField
+        name="company"
+        value={['hello', 'hola']}
+        placeholder="Add something"
+        emphasizeTopValue
+      />
+    )
+
+    expect(cy.get('.is-emphasized').exists()).toBeTruthy()
+    expect(cy.get('.is-emphasized').getText()).toBe('hello')
+    expect(
+      cy.get('.EditableField__staticValue').getComputedStyle('fontWeight')
+    ).toBe('500')
+  })
+
   test('should be on top if field not active', () => {
     cy.render(
       <EditableField name="company" value="hello" placeholder="Add something" />
@@ -520,14 +537,14 @@ describe('Static Value', () => {
       />
     )
 
-    expect(cy.get('.EditableField__staticOption').getText()).toBe('Work:')
+    expect(cy.get('.EditableField__staticOption').getText()).toBe('Work')
 
     cy.getByCy('DropdownTrigger').click()
     cy.getByCy('DropdownItem')
       .first()
       .click()
 
-    expect(cy.get('.EditableField__staticOption').getText()).toBe('Home:')
+    expect(cy.get('.EditableField__staticOption').getText()).toBe('Home')
   })
 })
 
@@ -700,7 +717,6 @@ describe('Label click event', () => {
         name="company"
         value={[{ option: 'Work', value: '123456789' }]}
         valueOptions={['Home', 'Work', 'Other']}
-        disabled
       />
     )
     const label = wrapper.find('.EditableField__label').first()
@@ -708,6 +724,22 @@ describe('Label click event', () => {
     label.simulate('click')
 
     expect(wrapper.state('focusedByLabel')).toBeTruthy()
+  })
+
+  test('should not run when disabled and clicking the label', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={[{ option: 'Work', value: '123456789' }]}
+        valueOptions={['Home', 'Work', 'Other']}
+        disabled
+      />
+    )
+    const label = wrapper.find('.EditableField__label').first()
+
+    label.simulate('click')
+
+    expect(wrapper.state('focusedByLabel')).toBeFalsy()
   })
 })
 

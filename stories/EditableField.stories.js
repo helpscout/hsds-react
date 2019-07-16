@@ -99,6 +99,7 @@ stories.add('Email Multiple', () => (
     }}
   >
     <EditableField
+      emphasizeTopValue
       label="Emails"
       name="email"
       placeholder="Add your email"
@@ -213,6 +214,13 @@ stories.add('Disabled', () => (
     }}
   >
     <EditableField
+      label="Film"
+      name="film"
+      placeholder="Add a film name"
+      type="text"
+      disabled
+    />
+    <EditableField
       label="Company"
       name="company"
       placeholder="Add a company name"
@@ -252,8 +260,9 @@ stories
       }}
     >
       <NoteUI>
-        This is pretty slow beacuse all the event callbakcs in the world are
-        being passed...! This would be extremely rare
+        This is pretty slow because all the event callbacks in the world are
+        being passed...! This would be <strong>extremely</strong> rare, and it
+        might mean that most likely something is wrong
       </NoteUI>
       <EditableField
         label="Favourite Paint Colour"
