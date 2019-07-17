@@ -216,7 +216,7 @@
     "remake-cli": "0.0.7",
     "rgb-hex": "2.1.0",
     "rimraf": "2.6.2",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "6.0.6",
     "sass-pathfinder": "^0.0.5",
     "seed-harvester": "^0.1.5",
     "sinon": "^5.0.10",
