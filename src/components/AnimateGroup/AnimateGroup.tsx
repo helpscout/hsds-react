@@ -96,7 +96,7 @@ export class AnimateGroup extends React.PureComponent<Props> {
 
     const componentClassName = classNames('c-AnimateGroup', className)
 
-    const transitionGroupProps = {
+    const transitionGroupProps: any = {
       appear,
       enter,
       exit,
