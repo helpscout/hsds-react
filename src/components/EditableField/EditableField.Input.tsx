@@ -49,6 +49,7 @@ export class EditableFieldInput extends React.Component<
     emphasize: false,
     fieldValue: '',
     placeholder: '',
+    renderAsBlock: false,
     type: 'text',
     innerRef: noop,
     onInputFocus: noop,
