@@ -134,7 +134,7 @@ export class ActionSelect extends React.PureComponent<
       if (!this.contentNode || !this.props.isAutoFocusNodeOnSelect) return
 
       const focusableNode = findFirstFocusableNode(this.contentNode)
-
+      /* istanbul ignore next */
       if (focusableNode) {
         focusableNode.focus()
       }
