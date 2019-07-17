@@ -26,6 +26,7 @@ export interface Props {
   children?: any
   innerRef: (node: HTMLElement) => void
   in: boolean
+  isWithBoxShadow: boolean
   subtitle?: string
   title?: string
 }
@@ -37,16 +38,18 @@ export class GreeterCard extends React.PureComponent<Props> {
     animationSequence: '',
     innerRef: noop,
     in: true,
+    isWithBoxShadow: true,
   }
 
   static Button = Button
 
   getClassName() {
-    const { align, className } = this.props
+    const { align, className, isWithBoxShadow } = this.props
     return classNames(
       GreeterCard.className,
       align && `is-align-${align}`,
-      className
+      className,
+      isWithBoxShadow && `is-with-box-shadow`
     )
   }
 

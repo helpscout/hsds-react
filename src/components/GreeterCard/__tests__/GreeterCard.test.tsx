@@ -132,4 +132,11 @@ describe('Action', () => {
     expect(o.length).toBe(1)
     expect(o.html()).toContain('Click here')
   })
+
+  test('Should remove the box shadow', () => {
+    const wrapper = mount(<GreeterCard isWithBoxShadow={false} />)
+    const el = wrapper.find('div.c-GreeterCard')
+
+    expect(el.getDOMNode().classList.contains('is-with-box-shadow')).toBeFalsy()
+  })
 })
