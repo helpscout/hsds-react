@@ -249,22 +249,24 @@ class Pop extends React.Component<Props, State> {
 
     return (
       <Manager>
-        <EventListener
-          event="click"
-          handler={this.handleOnBodyClick}
-          scope={document.body}
-        />
-        <PopUI
-          className={componentClassName}
-          data-cy={this.props['data-cy']}
-          innerRef={this.setNodeRef}
-          onMouseMove={this.handleMouseMove}
-          onMouseLeave={this.handleMouseLeave}
-          onClick={this.handleClick}
-        >
-          {referenceMarkup}
-          {popperMarkup}
-        </PopUI>
+        <div>
+          <EventListener
+            event="click"
+            handler={this.handleOnBodyClick}
+            scope={document.body}
+          />
+          <PopUI
+            className={componentClassName}
+            data-cy={this.props['data-cy']}
+            innerRef={this.setNodeRef}
+            onMouseMove={this.handleMouseMove}
+            onMouseLeave={this.handleMouseLeave}
+            onClick={this.handleClick}
+          >
+            {referenceMarkup}
+            {popperMarkup}
+          </PopUI>
+        </div>
       </Manager>
     )
   }
