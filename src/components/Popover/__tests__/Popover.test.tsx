@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { cy } from '@helpscout/cyan'
 import { mount, render } from 'enzyme'
 import { Popover } from '../Popover'
 
@@ -13,16 +14,16 @@ function mountContent(Component) {
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = render(<Popover />)
+    cy.render(<Popover />)
 
-    expect(wrapper.hasClass('c-Popover')).toBeTruthy()
+    expect(cy.get('.c-Popover').exists()).toBeTruthy()
   })
 
   test('Can render custom className', () => {
     const customClassName = 'blue'
-    const wrapper = render(<Popover className={customClassName} />)
+    cy.render(<Popover className={customClassName} />)
 
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
+    expect(cy.get(`.${customClassName}`).exists()).toBeTruthy()
   })
 })
 
