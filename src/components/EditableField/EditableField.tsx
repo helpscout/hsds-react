@@ -153,7 +153,7 @@ export class EditableField extends React.Component<
   handleInputBlur = ({ name, event }) => {
     const { onInputBlur } = this.props
     const { fieldValue, focusedByLabel } = this.state
-
+    /* istanbul ignore else */
     if (!focusedByLabel) {
       this.setState({
         activeField: '',
@@ -205,6 +205,7 @@ export class EditableField extends React.Component<
           // Case 2: value was changed
           // change active status, field value and update initialFieldValue
           const updatedFieldValue = fieldValue.map(val => {
+            /* istanbul ignore else */
             if (val.id === name) {
               val.value = inputValue
             }
@@ -259,6 +260,7 @@ export class EditableField extends React.Component<
     let changed = false
 
     for (const value of fieldValue) {
+      /* istanbul ignore else */
       if (value.id === name && value.option !== selection) {
         value.option = selection
         changed = true
@@ -266,7 +268,7 @@ export class EditableField extends React.Component<
 
       newFieldValue.push(value)
     }
-
+    /* istanbul ignore else */
     if (changed) {
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
         onOptionChange({ name, selection, value: newFieldValue })
@@ -313,9 +315,8 @@ export class EditableField extends React.Component<
       const emptyValue = { ...fieldValue[0] }
 
       emptyValue.value = ''
-
+      /* istanbul ignore next */
       if (defaultOption != null) {
-        /* istanbul ignore next */
         emptyValue.option = defaultOption
       }
 
@@ -349,7 +350,7 @@ export class EditableField extends React.Component<
     if (!this.state.activeField) return
 
     const targetNode = event.target
-
+    /* istanbul ignore else */
     if (targetNode instanceof Element) {
       /* istanbul ignore if */
       if (document.activeElement === targetNode) return
@@ -377,9 +378,9 @@ export class EditableField extends React.Component<
         )
       } else {
         // Case 2: multiple values
+        /* istanbul ignore next */
         if (equal(initialFieldValue, this.state.fieldValue)) {
           // Case 2.A: value unchanged
-          /* istanbul ignore next */
           // It's tested, go home Istanbul
           this.setState({
             activeField: '',

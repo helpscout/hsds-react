@@ -112,6 +112,7 @@ export class EditableFieldInput extends React.Component<
   }
 
   componentDidMount() {
+    /* istanbul ignore else */
     if (!this.props.renderAsBlock) {
       this.calculateFieldWidth()
     }
@@ -140,6 +141,7 @@ export class EditableFieldInput extends React.Component<
     const valueChanged =
       this.props.fieldValue.value !== prevProps.fieldValue.value
 
+    /* istanbul ignore else */
     if (!this.props.renderAsBlock) {
       this.calculateFieldWidth(valueChanged)
     }
@@ -253,7 +255,7 @@ export class EditableFieldInput extends React.Component<
 
   handleOptionFocus = event => {
     const { disabled, name, onOptionFocus } = this.props
-
+    /* istanbul ignore else */
     if (!disabled) {
       onOptionFocus({ name, event })
     }
@@ -267,7 +269,7 @@ export class EditableFieldInput extends React.Component<
       name: this.props.name,
       event,
     })
-
+    /* istanbul ignore else */
     if (onInputChange) {
       onInputChange({
         inputValue: event.currentTarget.value,
@@ -283,7 +285,7 @@ export class EditableFieldInput extends React.Component<
     const isDropdownTrigger = event.target.classList.contains(
       'c-DropdownV2Trigger'
     )
-
+    /* istanbul ignore else */
     if ((isEnter && !isDropdownTrigger) || isEscape) {
       const { name, onKeyDown } = this.props
       const staticValueNode = this.staticValueRef
@@ -293,10 +295,11 @@ export class EditableFieldInput extends React.Component<
         // In case the value is longer than the width of the input
         // lets move the cursor to the very beginning
         // when clicking the input the cursor will be at the expected position :)
+        /* istanbul ignore else */
         if (inputNode && inputNode.setSelectionRange) {
           inputNode.setSelectionRange(0, 0)
         }
-
+        /* istanbul ignore else */
         if (staticValueNode) {
           staticValueNode.setAttribute('tabindex', '0')
           staticValueNode.focus()
@@ -307,12 +310,12 @@ export class EditableFieldInput extends React.Component<
 
   handleActionClick = ({ action, event }) => {
     const { name, fieldValue } = this.props
-
+    /* istanbul ignore else */
     if (action.name === 'delete') {
       this.props.deleteAction({ action, name, event })
     }
+    /* istanbul ignore next */
     if (action.name === 'link') {
-      /* istanbul ignore next */
       window && window.open(fieldValue.value)
     } else {
       this.props.customAction({ action, name, event })
@@ -338,7 +341,7 @@ export class EditableFieldInput extends React.Component<
     const { name, fieldValue, onOptionSelection } = this.props
 
     onOptionSelection({ name, selection })
-
+    /* istanbul ignore else */
     if (fieldValue.id === name && fieldValue.option === selection) {
       // Force React to render the new option
       // I have no clue as to why is not triggering rerendering by itself
