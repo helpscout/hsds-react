@@ -105,8 +105,7 @@ describe('Focus', () => {
 
     expect(spy).not.toHaveBeenCalled()
 
-    cy
-      .getByCy('DropdownItem')
+    cy.getByCy('DropdownItem')
       .first()
       .click()
 
@@ -126,8 +125,7 @@ describe('Focus', () => {
       </ActionSelect>
     )
 
-    cy
-      .getByCy('DropdownItem')
+    cy.getByCy('DropdownItem')
       .first()
       .click()
 
@@ -173,8 +171,7 @@ describe('Resize', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
 
-    cy
-      .getByCy('DropdownItem')
+    cy.getByCy('DropdownItem')
       .last()
       .click()
 
@@ -199,5 +196,25 @@ describe('Resize', () => {
     wrapper.setProps({ selectedItem: mockItems[0] })
 
     expect(spy).toHaveBeenCalledTimes(3)
+  })
+
+  test('Don\t resize content if the selectedItem is the same', () => {
+    const spy = jest.fn()
+
+    const wrapper = cy.render(
+      <ActionSelect
+        items={mockItems}
+        isOpen={true}
+        isAutoFocusNodeOnSelect={false}
+        selectedItem={mockItems[1]}
+        onResize={spy}
+      />
+    )
+
+    expect(spy).toHaveBeenCalledTimes(1)
+
+    wrapper.setProps({ selectedItem: mockItems[1] })
+
+    expect(spy).not.toHaveBeenCalledTimes(3)
   })
 })

@@ -66,6 +66,7 @@ class StickyActions extends React.PureComponent<
   updateSticky = (isSticky: boolean) => {
     const { onStickyStart, onStickyEnd } = this.props
 
+    /* istanbul ignore else */
     if (this.state.isSticky !== isSticky) {
       this.setState({ isSticky })
 

@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import Illo from '../Illo'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 
@@ -16,10 +17,23 @@ interface Props {
   className?: string
   message?: string | React.ReactNode
   title?: string
+  illo?: React.ReactNode
   illoName?: string
   illoSize?: number
   lightBackground?: boolean
   alignTop?: boolean
+}
+
+const getIllo = ({ illo, illoName, illoSize }: Props) => {
+  let content: React.ReactNode = null
+
+  if (illo) {
+    content = illo
+  } else if (illoName) {
+    content = <Illo name={illoName} size={illoSize} />
+  }
+
+  return content ? <IlloUI>{content}</IlloUI> : content
 }
 
 class BlankSlate extends React.PureComponent<Props> {
@@ -33,6 +47,7 @@ class BlankSlate extends React.PureComponent<Props> {
     const {
       className,
       children,
+      illo,
       illoName,
       illoSize,
       title,
@@ -51,7 +66,7 @@ class BlankSlate extends React.PureComponent<Props> {
 
     return (
       <BlankSlateUI {...getValidProps(rest)} className={componentClassName}>
-        {illoName && <IlloUI name={illoName} size={illoSize} />}
+        {getIllo({ illo, illoName, illoSize })}
         {title && <HeadingUI size="h3">{title}</HeadingUI>}
         {message && <TextUI>{message}</TextUI>}
       </BlankSlateUI>

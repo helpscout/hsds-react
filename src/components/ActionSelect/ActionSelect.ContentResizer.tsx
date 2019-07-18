@@ -47,12 +47,14 @@ export class ContentResizer extends React.PureComponent<
   }
 
   componentWillReceiveProps(nextProps) {
+    /* istanbul ignore else */
     if (nextProps.resizeCount !== this.props.resizeCount) {
       this.handleResize(nextProps)
     }
   }
 
   safeSetState = (nextState, callback?) => {
+    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(nextState, callback)
     }

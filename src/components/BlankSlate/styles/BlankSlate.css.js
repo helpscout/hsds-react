@@ -4,9 +4,8 @@ import styled from '../../styled'
 
 import Heading from '../../Heading'
 import Text from '../../Text'
-import Illo from '../../Illo'
 
-export const IlloUI = styled(Illo)`
+export const IlloUI = styled('div')`
   margin: 0;
   margin-bottom: 18px;
   align-self: center;
