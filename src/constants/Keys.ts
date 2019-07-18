@@ -102,3 +102,9 @@ export default {
   CLOSE_BRACKET: 221,
   SINGLE_QUOTE: 222,
 }
+
+export const key = {
+  ENTER: 'Enter',
+  ESCAPE: 'Escape',
+  TAB: 'Tab',
+}
