@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import BlankSlate from '../BlankSlate'
-import { TextUI, HeadingUI, IlloUI } from '../styles/BlankSlate.css'
+import { TextUI, HeadingUI } from '../styles/BlankSlate.css'
+import Illo from '../../Illo'
+import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
 
 describe('ClassName', () => {
   test('Has default component className', () => {
@@ -68,14 +70,14 @@ describe('Illo', () => {
   test('Renders an illustration', () => {
     const illoName = 'chatListBlankSlate'
     const wrapper = mount(<BlankSlate illoName={illoName} />)
-    const component = wrapper.find(IlloUI)
+    const component = wrapper.find(Illo)
     expect(component.length).toBeTruthy()
     expect(component.first().prop('name')).toBe(illoName)
   })
 
   test('Does not render an illustration if no prop', () => {
     const wrapper = mount(<BlankSlate />)
-    const component = wrapper.find(IlloUI)
+    const component = wrapper.find(Illo)
     expect(component.length).toBeFalsy()
   })
 
@@ -83,8 +85,20 @@ describe('Illo', () => {
     const wrapper = mount(
       <BlankSlate illoName="chatListBlankSlate" illoSize={90} />
     )
-    const o = wrapper.find(IlloUI)
+    const o = wrapper.find(Illo)
 
+    expect(o.first().prop('size')).toBe(90)
+  })
+
+  test('Render custom illo', () => {
+    const wrapper = mount(<BlankSlate illo={<WrenchCat />} />)
+    expect(wrapper.find(Illo)).toHaveLength(0)
+    expect(wrapper.find(WrenchCat)).toHaveLength(1)
+  })
+
+  test('Maintains props on custom illo', () => {
+    const wrapper = mount(<BlankSlate illo={<WrenchCat size={90} />} />)
+    const o = wrapper.find(WrenchCat)
     expect(o.first().prop('size')).toBe(90)
   })
 })
