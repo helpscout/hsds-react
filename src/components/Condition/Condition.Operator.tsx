@@ -4,7 +4,7 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './Condition.utils'
 import { ConditionOperatorProps } from './Condition.types'
-import { OperatorWrapperUI, OperatorUI } from './styles/Condition.css'
+import { OperatorUI } from './styles/Condition.css'
 
 export const Operator = (props: ConditionOperatorProps) => {
   const { className, isBorderless, type, ...rest } = props
@@ -18,13 +18,11 @@ export const Operator = (props: ConditionOperatorProps) => {
   )
 
   return (
-    <OperatorWrapperUI className="c-ConditionOperatorWrapper">
-      <OperatorUI {...rest} className={componentClassName}>
-        <Text block lineHeightReset size="11">
-          {label}
-        </Text>
-      </OperatorUI>
-    </OperatorWrapperUI>
+    <OperatorUI {...rest} className={componentClassName}>
+      <Text block lineHeightReset size="11">
+        {label}
+      </Text>
+    </OperatorUI>
   )
 }
 
