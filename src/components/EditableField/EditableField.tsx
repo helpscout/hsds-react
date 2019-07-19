@@ -78,11 +78,7 @@ export class EditableField extends React.Component<
     let defaultStateOption: string | null = null
 
     if (valueOptions) {
-      if (defaultOption) {
-        defaultStateOption = defaultOption
-      } else {
-        defaultStateOption = valueOptions[0]
-      }
+      defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
     }
 
     const initialFieldValue = normalizeFieldValue({
