@@ -33,11 +33,6 @@ export const OptionsWrapperUI = styled(Flexy.Item)`
 
 export const ContentWrapperUI = styled(Flexy.Block)``
 
-export const OperatorWrapperUI = styled('div')`
-  ${baseStyles};
-  margin: 5px 0;
-`
-
 export const OperatorUI = styled('div')`
   ${baseStyles};
   background: ${getColor('grey.600')};
@@ -45,6 +40,7 @@ export const OperatorUI = styled('div')`
   box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
   color: white;
   display: inline-block;
+  margin: 5px 0;
   padding: 3px 5px;
   text-transform: uppercase;
   line-height: 1;
