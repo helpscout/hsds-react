@@ -185,17 +185,26 @@ export class EditableField extends React.Component<
   handleInputKeyDown = ({ event, name }) => {
     return new Promise(resolve => {
       const { onEnter, onEscape, onCommit, onDiscard } = this.props
-      const { initialFieldValue, fieldValue } = this.state
+      const {
+        initialFieldValue,
+        fieldValue,
+        multipleValuesEnabled,
+      } = this.state
       const inputValue = event.currentTarget.value
       const isEnter = event.key === key.ENTER
       const isEscape = event.key === key.ESCAPE
       const cachedEvent = { ...event }
 
       if (isEnter) {
-        const impactedField = find(fieldValue, val => val.id === name)
-        // Case 1: value was not changed
+        const impactedField = find(initialFieldValue, val => val.id === name)
+        // Case 1: in multi-value fields if value is empty
+        // Do nothing
+        if (multipleValuesEnabled && inputValue === '') {
+          return
+        }
+        // Case 2: value was not changed
         // Just change active status
-        if (inputValue === impactedField.value) {
+        else if (impactedField && inputValue === impactedField.value) {
           this.setState({ activeField: '' }, () => {
             resolve()
 
@@ -282,8 +291,9 @@ export class EditableField extends React.Component<
     const { onAdd } = this.props
     const { fieldValue, defaultOption } = this.state
     const isNotSingleEmptyValue = fieldValue[fieldValue.length - 1].value !== ''
-
+    /* istanbul ignore next */
     if (isNotSingleEmptyValue) {
+      // it is tested
       const { name } = this.props
       const newValueObject = createNewFieldValue(
         {
@@ -305,7 +315,7 @@ export class EditableField extends React.Component<
 
   handleDeleteAction = ({ action, name, event }) => {
     const { onCommit, onDelete } = this.props
-    const { fieldValue, defaultOption } = this.state
+    const { defaultOption, fieldValue } = this.state
     const cachedEvent = { ...event }
     let updatedFieldValue: FieldValue[]
 
@@ -327,14 +337,22 @@ export class EditableField extends React.Component<
       updatedFieldValue = fieldValue.filter(val => val.id !== name)
     }
 
-    this.setState({ fieldValue: updatedFieldValue }, () => {
-      onDelete({ name, value: this.state.fieldValue, event })
-      onCommit({ name, value: this.state.fieldValue })
+    this.setState(
+      { fieldValue: updatedFieldValue, initialFieldValue: updatedFieldValue },
+      () => {
+        onDelete({ name, value: this.state.fieldValue, event })
+        onCommit({ name, value: this.state.fieldValue })
 
-      if (action.callback && typeof action.callback === 'function') {
-        action.callback({ name, action, value: fieldValue, event: cachedEvent })
+        if (action.callback && typeof action.callback === 'function') {
+          action.callback({
+            name,
+            action,
+            value: fieldValue,
+            event: cachedEvent,
+          })
+        }
       }
-    })
+    )
   }
 
   handleCustomAction = ({ action, name, event }) => {
@@ -350,12 +368,11 @@ export class EditableField extends React.Component<
     if (!this.state.activeField) return
 
     const targetNode = event.target
+
     /* istanbul ignore else */
     if (targetNode instanceof Element) {
       /* istanbul ignore if */
       if (document.activeElement === targetNode) return
-      /* istanbul ignore if */
-      if (this.editableFieldRef.contains(targetNode)) return
       /* istanbul ignore if */
       if (targetNode.classList.contains('c-DropdownV2Item')) return
 
@@ -414,7 +431,26 @@ export class EditableField extends React.Component<
     }
   }
 
-  renderInputFields() {
+  renderAddButton = () => {
+    const { disabled } = this.props
+    const { fieldValue, multipleValuesEnabled } = this.state
+
+    const isLastValueEmpty = fieldValue[fieldValue.length - 1].value === ''
+    const isSingleAndEmpty = fieldValue.length === 1 && isLastValueEmpty
+
+    return multipleValuesEnabled && !isSingleAndEmpty && !disabled ? (
+      <AddButtonUI
+        className="EditableField_addButton"
+        type="button"
+        onClick={this.handleAddValue}
+        disabled={isLastValueEmpty}
+      >
+        <Icon name={ACTION_ICONS['plus']} size="20" />
+      </AddButtonUI>
+    ) : null
+  }
+
+  renderInputFields = () => {
     const {
       name,
       disabled,
@@ -462,15 +498,7 @@ export class EditableField extends React.Component<
           )
         })}
 
-        {multipleValuesEnabled && !disabled ? (
-          <AddButtonUI
-            className="EditableField_addButton"
-            type="button"
-            onClick={this.handleAddValue}
-          >
-            <Icon name={ACTION_ICONS['plus']} size="20" />
-          </AddButtonUI>
-        ) : null}
+        {this.renderAddButton()}
       </div>
     )
   }

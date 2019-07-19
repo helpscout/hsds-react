@@ -959,6 +959,27 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
+  test('onAdd: empty', () => {
+    const spy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={[
+          { id: 'hh_0', value: 'dd' },
+          { id: 'hh_1', value: 'fff' },
+          { id: 'hh_2', value: '' },
+        ]}
+        onAdd={spy}
+      />
+    )
+
+    const button = cy.get('.EditableField_addButton')
+
+    button.click()
+    expect(spy).not.toHaveBeenCalled()
+  })
+
   test('Pressing Enter: should commit if value changes', () => {
     const onEnterSpy = jest.fn()
     const onCommitSpy = jest.fn()
@@ -1002,6 +1023,29 @@ describe('Events', () => {
     input.simulate('keydown', { key: 'Enter' })
 
     expect(onEnterSpy).toHaveBeenCalled()
+    expect(onCommitSpy).not.toHaveBeenCalled()
+  })
+
+  test('Pressing Enter: should not commit if value empty', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        multipleValues
+        value="hello"
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+      />
+    )
+
+    const input = wrapper.find('input').first()
+
+    // @ts-ignore
+    input.getDOMNode().value = ''
+
+    input.simulate('keydown', { key: 'Enter' })
+
     expect(onCommitSpy).not.toHaveBeenCalled()
   })
 

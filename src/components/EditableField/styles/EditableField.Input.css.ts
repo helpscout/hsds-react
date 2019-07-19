@@ -13,7 +13,10 @@ export const EditableFieldInputUI = styled('div')`
 
   &:hover .EditableField__actions {
     opacity: 1;
-    cursor: pointer;
+  }
+
+  &:hover .EditableField__interactiveContent {
+    border-bottom: 1px dashed #93a1b0;
   }
 
   &.is-active:hover .EditableField__actions {
@@ -27,6 +30,15 @@ export const EditableFieldInputUI = styled('div')`
 
   .is-disabled &:hover .with-placeholder {
     border-bottom: 1px solid transparent;
+  }
+
+  .is-temporary-value {
+    position: absolute;
+    left: -99999px;
+    font-size: 14px;
+    visibility: hidden;
+    width: auto;
+    height: auto;
   }
 `
 
@@ -214,7 +226,7 @@ export const StaticContentUI = styled('div')`
   position: relative;
   display: inline-block;
   width: ${({ staticContentWidth, renderAsBlock }) =>
-    renderAsBlock ? '100%' : `${staticContentWidth}px`};
+    renderAsBlock ? '100%' : `${staticContentWidth}`};
   max-width: 100%;
   height: 25px;
   z-index: 2;
@@ -334,20 +346,18 @@ export const FocusIndicatorUI = styled('span')`
 `
 
 export const FieldActionsUI = styled('div')`
-  ${({ numberOfActions }) => `width: ${numberOfActions * 25}px;`}
-  height: 20px;
+  ${({ numberOfActions }) => `width: ${numberOfActions * 25 + 5}px;`}
+  height: 25px;
   position: absolute;
   top: 1px;
-  left: 100%;
   left: ${({ renderAsBlock, numberOfActions }) =>
-    renderAsBlock ? `calc(100% - ${numberOfActions * 25}px)` : '100%'};
+    renderAsBlock ? `calc(100% - ${numberOfActions * 25 + 5}px)` : '100%'};
   z-index: 4;
   opacity: 0;
   text-align: right;
 
   &:hover {
     opacity: 1;
-    cursor: pointer;
   }
 `
 
@@ -355,7 +365,7 @@ export const FieldButtonUI = styled('button')`
   display: inline-block;
   vertical-align: middle;
   height: 25px;
-  width: 20px;
+  width: 25px;
   padding: 0;
   margin: 0;
   border: none;

@@ -80,6 +80,7 @@ stories.add('Text Multiple', () => (
       label="Films"
       name="films"
       type="text"
+      multipleValues
       placeholder="Add a film name"
     />
     <EditableField

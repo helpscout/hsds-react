@@ -49,6 +49,12 @@ export const AddButtonUI = styled('button')`
     transform: translateZ(0);
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    color: #c6d0d8;
+    background-color: #f6f7f8;
+  }
+
   .c-Icon {
     margin: 0 auto;
   }

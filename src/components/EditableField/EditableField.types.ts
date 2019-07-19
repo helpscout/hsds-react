@@ -102,7 +102,7 @@ export interface EditableFieldInputProps {
 
 export interface EditableFieldInputState {
   dynamicFieldWidth: string | null
-  staticContentWidth: number | null
+  staticContentWidth: string | null
 }
 
 export interface TruncateProps {

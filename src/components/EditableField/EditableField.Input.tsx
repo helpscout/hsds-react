@@ -112,11 +112,22 @@ export class EditableFieldInput extends React.Component<
   }
 
   componentDidMount() {
-    /* istanbul ignore else */
+    const { isActive } = this.props
+
+    /* istanbul ignore next */
     if (!this.props.renderAsBlock) {
       this.calculateFieldWidth()
     }
+
     this.setInputTitle()
+
+    if (isActive) {
+      /* istanbul ignore next */
+      if (document.activeElement !== this.optionsDropdownRef) {
+        const inputNode = this.inputRef
+        inputNode && inputNode.focus()
+      }
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -137,19 +148,17 @@ export class EditableFieldInput extends React.Component<
 
   componentDidUpdate(prevProps) {
     const { isActive } = this.props
-    const inputNode = this.inputRef
-    const valueChanged =
-      this.props.fieldValue.value !== prevProps.fieldValue.value
-
     /* istanbul ignore else */
     if (!this.props.renderAsBlock) {
-      this.calculateFieldWidth(valueChanged)
+      this.calculateFieldWidth()
     }
 
     this.setInputTitle()
 
     if (isActive) {
       if (document.activeElement !== this.optionsDropdownRef) {
+        const inputNode = this.inputRef
+
         inputNode && inputNode.focus()
       }
     }
@@ -175,54 +184,86 @@ export class EditableFieldInput extends React.Component<
     }
   }
 
-  calculateFieldWidth = (valueChanged?) => {
-    const { actions, isActive } = this.props
-    const { dynamicFieldWidth, staticContentWidth } = this.state
+  getValueWidth = () => {
     const editableFieldInputNode = this.editableFieldInputRef
     const parentWidth = editableFieldInputNode.parentElement
       ? editableFieldInputNode.parentElement.getBoundingClientRect().width
       : /* istanbul ignore next */
         0
     const staticContentNode = this.staticContentRef
-    const placeholder = staticContentNode.querySelector('.is-placeholder')
-    const initializedFieldWidth = editableFieldInputNode.getBoundingClientRect()
-      .width
-    let fieldWidth =
-      dynamicFieldWidth == null
-        ? `${initializedFieldWidth}px`
-        : dynamicFieldWidth
-    let staticWidth =
-      staticContentWidth == null || valueChanged
-        ? staticContentNode.getBoundingClientRect().width
-        : staticContentWidth
-    let actionsWidth = 0
+    const staticOptionNode = staticContentNode.querySelector(
+      '.EditableField__staticOption'
+    )
+    const staticValueNode = staticContentNode.querySelector(
+      '.EditableField__staticValue'
+    )
+    const staticOptionWidth = staticOptionNode
+      ? staticOptionNode.getBoundingClientRect().width + 10
+      : 0
+    let contentWidth = 0
 
-    if (placeholder) {
-      staticWidth = placeholder.getBoundingClientRect().width
-    }
+    // A reliable way to get the width of dynamic content
+    // is by creating a temporary element
+    // and get its width
+    let temporaryValueNode: HTMLDivElement | null = document.createElement(
+      'div'
+    )
 
-    if (actions) {
-      actionsWidth = actions.length * 20
-    }
+    //@ts-ignore
+    // Never null
+    temporaryValueNode.textContent = staticValueNode.textContent
+
+    // To get an accurate width, apply the font styles of the field
+    temporaryValueNode.classList.add('is-temporary-value')
+    editableFieldInputNode.appendChild(temporaryValueNode)
+    contentWidth = Math.ceil(
+      temporaryValueNode.getBoundingClientRect().width + staticOptionWidth
+    )
+
+    // Clean up
+    editableFieldInputNode.removeChild(temporaryValueNode)
+    temporaryValueNode = null
+
+    // The max width should be the parent width
+    return contentWidth >= parentWidth
+      ? parentWidth
+      : /* istanbul ignore next */ contentWidth
+  }
+
+  calculateFieldWidth = () => {
+    const { actions, isActive } = this.props
 
     if (isActive) {
-      fieldWidth = '100%'
+      this.setState({
+        dynamicFieldWidth: '100%',
+        staticContentWidth: '100%',
+      })
     } else {
+      const editableFieldInputNode = this.editableFieldInputRef
+      const parentWidth = editableFieldInputNode.parentElement
+        ? editableFieldInputNode.parentElement.getBoundingClientRect().width
+        : /* istanbul ignore next */
+          0
+      const placeholderNode = this.staticContentRef.querySelector(
+        '.is-placeholder'
+      )
+      const staticContentWidth = placeholderNode
+        ? placeholderNode.getBoundingClientRect().width
+        : this.getValueWidth()
+      const actionsWidth = actions ? actions.length * 25 : 0
+
       // If we add the actions width to the static content width and it's actually larger than the container
       // take the actions width off to make space for them
-      /* istanbul ignore next */
-      if (staticWidth && staticWidth + actionsWidth > parentWidth) {
-        /* istanbul ignore next */
-        fieldWidth = `${staticWidth - actionsWidth}px`
-      } else {
-        fieldWidth = `${staticWidth}px`
-      }
-    }
+      const fieldCSSWidth =
+        staticContentWidth + actionsWidth > parentWidth
+          ? `${staticContentWidth - actionsWidth}px`
+          : `${staticContentWidth}px`
 
-    this.setState({
-      dynamicFieldWidth: fieldWidth,
-      staticContentWidth: staticWidth,
-    })
+      this.setState({
+        dynamicFieldWidth: fieldCSSWidth,
+        staticContentWidth: `${staticContentWidth}px`,
+      })
+    }
   }
 
   getClassName() {
