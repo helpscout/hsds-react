@@ -61,6 +61,14 @@ stories.add('states', () => {
       <Message.Chat read timestamp="9:41am" error="Something went wrong!">
         Error state, with custom message.
       </Message.Chat>
+      <Message.Chat
+        read
+        timestamp="9:41am"
+        caption="Caption before the bubble"
+        metaPosition="top"
+      >
+        With custom message & meta positioned before the bubble
+      </Message.Chat>
     </Message>
   )
 })

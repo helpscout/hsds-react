@@ -12,17 +12,25 @@ import { noop } from '../../utilities/other'
 import css from './styles/ChatBlock.css'
 import { COMPONENT_KEY } from './Message.utils'
 
+export type MetaPosition = 'top' | 'bottom'
+
 type Props = MessageChat & {
   body?: string
   children?: any
   icon?: string
   meta?: any
+  metaPosition?: string
 }
 
 export class ChatBlock extends React.PureComponent<Props> {
   static contextTypes = {
     theme: noop,
   }
+
+  static defaultProps = {
+    metaPosition: 'bottom',
+  }
+
   static displayName = 'Message.ChatBlock'
 
   getChildrenMarkup = () => {
@@ -64,6 +72,7 @@ export class ChatBlock extends React.PureComponent<Props> {
       isNote,
       ltr,
       meta,
+      metaPosition,
       read,
       rtl,
       timestamp,
@@ -87,6 +96,7 @@ export class ChatBlock extends React.PureComponent<Props> {
 
     return (
       <div {...getValidProps(rest)} className={componentClassName}>
+        {metaPosition !== 'bottom' && meta}
         <Flexy className="c-MessageChatBlock__flexy" gap="sm">
           {to && timestampMarkup}
           <Flexy.Item className="c-MessageChatBlock__block">
@@ -94,7 +104,7 @@ export class ChatBlock extends React.PureComponent<Props> {
           </Flexy.Item>
           {from && timestampMarkup}
         </Flexy>
-        {meta}
+        {metaPosition === 'bottom' && meta}
       </div>
     )
   }

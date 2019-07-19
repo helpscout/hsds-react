@@ -1,5 +1,7 @@
 import * as React from 'react'
+import cy from '@helpscout/cyan'
 import { mount } from 'enzyme'
+
 import Bubble from '../Message.Bubble'
 import ChatBlock from '../Message.ChatBlock'
 import Chat from '../Message.Chat'
@@ -187,5 +189,50 @@ describe('Loading', () => {
     expect(l.length).toBe(1)
     expect(c.length).toBe(1)
     expect(e.length).toBe(1)
+  })
+})
+
+describe('Meta', () => {
+  test('Renders meta', () => {
+    const wrapper = cy.render(<Chat caption="test" />)
+
+    expect(wrapper.get('.c-MessageChat__meta').exists()).toBeTruthy()
+    expect(wrapper.get('.c-MessageChat__meta').text()).toBe('test')
+  })
+
+  test('Renders meta before the bubble', () => {
+    const wrapper = cy.render(<Chat caption="test" metaPosition="top" />)
+
+    expect(
+      wrapper
+        .get('.c-MessageChatBlock')
+        .children()
+        .first()
+        .hasClassName('c-MessageChat__meta')
+    ).toBeTruthy()
+  })
+
+  test('Renders meta after bubble by default', () => {
+    const wrapper = cy.render(<Chat caption="test" />)
+
+    expect(
+      wrapper
+        .get('.c-MessageChatBlock')
+        .children()
+        .last()
+        .hasClassName('c-MessageChat__meta')
+    ).toBeTruthy()
+  })
+
+  test('Renders meta after bubble when passing random value', () => {
+    const wrapper = cy.render(<Chat caption="test" metaPostion="noclue" />)
+
+    expect(
+      wrapper
+        .get('.c-MessageChatBlock')
+        .children()
+        .last()
+        .hasClassName('c-MessageChat__meta')
+    ).toBeTruthy()
   })
 })

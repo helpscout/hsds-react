@@ -2,7 +2,7 @@ import * as React from 'react'
 import { MessageBubble } from './Message.types'
 import Bubble from './Message.Bubble'
 import Caption from './Message.Caption'
-import ChatBlock from './Message.ChatBlock'
+import ChatBlock, { MetaPosition } from './Message.ChatBlock'
 import Flexy from '../Flexy'
 import Spinner from '../Spinner'
 import styled from '../styled'
@@ -19,6 +19,7 @@ type Props = MessageBubble & {
   errorMessage?: string
   error?: boolean | string
   isLoading?: boolean
+  metaPosition?: MetaPosition
   onBubbleClick: (event: Event) => void
 }
 
@@ -28,6 +29,7 @@ export class Chat extends React.PureComponent<Props> {
     error: false,
     errorMessage: "Couldn't send.",
     isLoading: false,
+    metaPosition: 'bottom',
   }
   static displayName = 'Message.Chat'
 
@@ -37,6 +39,7 @@ export class Chat extends React.PureComponent<Props> {
       bubbleClassName,
       caption,
       captionSize,
+      metaPosition,
       children,
       className,
       error,
@@ -112,6 +115,7 @@ export class Chat extends React.PureComponent<Props> {
       <ChatBlock
         className={componentClassName}
         meta={metaMarkup}
+        metaPosition={metaPosition}
         read={read}
         {...chatProps}
         {...rest}
