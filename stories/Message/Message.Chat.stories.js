@@ -69,6 +69,22 @@ stories.add('states', () => {
       >
         With custom message & meta positioned before the bubble
       </Message.Chat>
+      <Message.Chat
+        read
+        timestamp="9:41am"
+        caption="Caption after the bubble"
+        metaPosition="bottom"
+      >
+        With custom message & meta positioned AFTER the bubble
+      </Message.Chat>
+      <Message.Chat
+        read
+        timestamp="9:41am"
+        caption="Caption before the bubble with jibberish metaPosition"
+        metaPosition="qwerty"
+      >
+        With custom message & meta positioned before the bubble with jibberish
+      </Message.Chat>
     </Message>
   )
 })
