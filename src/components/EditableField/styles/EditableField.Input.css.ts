@@ -104,6 +104,7 @@ export const OptionsWrapperUI = styled('div')`
     margin-right: 20px;
   }
 
+  .c-DropdownV2Trigger,
   .c-DropdownV2Trigger:hover {
     cursor: text;
   }

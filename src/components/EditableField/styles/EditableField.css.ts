@@ -28,7 +28,7 @@ export const AddButtonUI = styled('button')`
   height: 20px;
   width: 20px;
   padding: 0;
-  margin: 10px 0 0 0;
+  margin: 8px 0 0 0;
   border: none;
   color: #c6d0d8;
   background-color: #f6f7f8;
