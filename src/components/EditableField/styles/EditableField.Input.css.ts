@@ -122,7 +122,7 @@ export const OptionsDropdownUI = styled('div')`
   margin-bottom: 5px;
   background: white;
   font-size: 14px;
-  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
+  line-height: ${CONTENT_HEIGHT}px;
   color: transparent;
 
   .is-active & {
