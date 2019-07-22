@@ -468,7 +468,7 @@ export class EditableFieldInput extends React.Component<
                 this.handleActionClick({ action, event })
               }}
             >
-              <Icon name={action.icon || ACTION_ICONS[action.name]} size="16" />
+              <Icon name={action.icon || ACTION_ICONS[action.name]} size="24" />
             </FieldButtonUI>
           )
         })}

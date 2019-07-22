@@ -5,9 +5,9 @@ import { find } from '../../utilities/arrays'
 export const COMPONENT_KEY = 'EditableField'
 
 export const ACTION_ICONS = {
-  delete: 'cross-medium',
-  link: 'new-window-large',
-  plus: 'plus-medium',
+  delete: 'cross-small',
+  link: 'new-window',
+  plus: 'plus-small',
   valueOption: 'chevron-down',
 }
 

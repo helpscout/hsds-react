@@ -2,10 +2,14 @@ import styled from '../../styled/index'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 
+const WRAPPER_HEIGHT = 26
+const CONTENT_HEIGHT = 25
+const TIGHTNESS = 3 // How close should content and bottom border be
+
 export const EditableFieldInputUI = styled('div')`
   ${baseStyles};
   position: relative;
-  height: 25px;
+  height: ${CONTENT_HEIGHT}px;
   margin-bottom: 2px;
   width: ${({ dynamicFieldWidth, renderAsBlock }) =>
     renderAsBlock ? 'auto' : `${dynamicFieldWidth}`};
@@ -15,8 +19,9 @@ export const EditableFieldInputUI = styled('div')`
     opacity: 1;
   }
 
-  &:hover .EditableField__interactiveContent {
-    border-bottom: 1px dashed #93a1b0;
+  &:hover .EditableField__staticOption,
+  &:hover .EditableField__staticValue {
+    border-bottom: 1px dashed ${getColor('charcoal.200')};
   }
 
   &.is-active:hover .EditableField__actions {
@@ -44,7 +49,7 @@ export const EditableFieldInputUI = styled('div')`
 
 export const InteractiveContentUI = styled('div')`
   display: flex;
-  height: 26px;
+  height: ${WRAPPER_HEIGHT}px;
   width: 100%;
   max-width: 100%;
   position: absolute;
@@ -52,11 +57,6 @@ export const InteractiveContentUI = styled('div')`
   left: 0;
   z-index: 1;
   border-bottom: 1px solid transparent;
-
-  &:hover {
-    cursor: pointer;
-    border-bottom: 1px dashed #93a1b0;
-  }
 
   .is-disabled &:hover {
     cursor: initial;
@@ -72,7 +72,7 @@ export const InteractiveContentUI = styled('div')`
 
 export const InputWrapperUI = styled('div')`
   position: relative;
-  height: 25px;
+  height: ${CONTENT_HEIGHT}px;
   width: 100%;
 
   .has-options & {
@@ -87,10 +87,10 @@ export const InputWrapperUI = styled('div')`
 export const OptionsWrapperUI = styled('div')`
   position: relative;
   width: 60px;
-  height: 25px;
+  height: ${CONTENT_HEIGHT}px;
   margin-right: 20px;
   font-size: 14px;
-  line-height: 25px;
+  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
   pointer-events: auto;
 
   .is-disabled & .EditableField__Dropdown:hover {
@@ -106,6 +106,10 @@ export const OptionsWrapperUI = styled('div')`
     width: 60px;
     margin-right: 20px;
   }
+
+  .c-DropdownV2Trigger:hover {
+    cursor: text;
+  }
 `
 
 export const TriggerUI = styled('div')`
@@ -118,7 +122,7 @@ export const OptionsDropdownUI = styled('div')`
   margin-bottom: 5px;
   background: white;
   font-size: 14px;
-  line-height: 25px;
+  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
   color: transparent;
 
   .is-active & {
@@ -160,8 +164,8 @@ export const OptionsDropdownUI = styled('div')`
 
 export const InputUI = styled('input')`
   width: 100%;
-  height: 25px;
-  padding: 0;
+  height: ${CONTENT_HEIGHT}px;
+  padding: ${TIGHTNESS}px 0 0 0;
   border: none;
   color: transparent;
   font-size: 14px;
@@ -195,7 +199,8 @@ export const InputUI = styled('input')`
     }
 
     &::placeholder {
-      color: #b7c2cc;
+      color: ${getColor('charcoal.300')};
+      opacity: 1;
     }
   }
 
@@ -228,7 +233,7 @@ export const StaticContentUI = styled('div')`
   width: ${({ staticContentWidth, renderAsBlock }) =>
     renderAsBlock ? '100%' : `${staticContentWidth}`};
   max-width: 100%;
-  height: 25px;
+  height: ${CONTENT_HEIGHT}px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
@@ -241,13 +246,14 @@ export const StaticContentUI = styled('div')`
 export const StaticOptionUI = styled('span')`
   display: inline-block;
   vertical-align: bottom;
+  position: relative;
   width: 70px;
-  height: 26px;
+  height: ${WRAPPER_HEIGHT}px;
   margin-right: 10px;
   color: ${getColor('charcoal.600')};
   font-size: 14px;
   font-weight: 500;
-  line-height: 25px;
+  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
@@ -263,7 +269,7 @@ export const StaticOptionUI = styled('span')`
   }
 
   & .is-placeholder {
-    color: ${getColor('charcoal.400')};
+    color: ${getColor('charcoal.300')};
   }
 
   .is-disabled & {
@@ -279,12 +285,12 @@ export const StaticOptionUI = styled('span')`
 export const StaticValueUI = styled('span')`
   display: inline-block;
   vertical-align: bottom;
-  height: 26px;
+  height: ${WRAPPER_HEIGHT}px;
   width: 100%;
   max-width: 100%;
-  color: ${getColor('charcoal.600')};
+  color: ${getColor('charcoal.800')};
   font-size: 14px;
-  line-height: 25px;
+  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
@@ -308,11 +314,12 @@ export const StaticValueUI = styled('span')`
   }
 
   &.with-placeholder {
-    border-bottom: 1px dashed #93a1b0;
+    width: auto;
+    border-bottom: 1px dashed ${getColor('grey.800')};
   }
 
   & .is-placeholder {
-    color: ${getColor('charcoal.400')};
+    color: ${getColor('charcoal.300')};
   }
 
   .is-disabled &.with-placeholder {
@@ -347,7 +354,7 @@ export const FocusIndicatorUI = styled('span')`
 
 export const FieldActionsUI = styled('div')`
   ${({ numberOfActions }) => `width: ${numberOfActions * 25 + 5}px;`}
-  height: 25px;
+  height: ${CONTENT_HEIGHT}px;
   position: absolute;
   top: 1px;
   left: ${({ renderAsBlock, numberOfActions }) =>
@@ -364,8 +371,8 @@ export const FieldActionsUI = styled('div')`
 export const FieldButtonUI = styled('button')`
   display: inline-block;
   vertical-align: middle;
-  height: 25px;
-  width: 25px;
+  height: ${CONTENT_HEIGHT}px;
+  width: 20px;
   padding: 0;
   margin: 0;
   border: none;
@@ -373,6 +380,7 @@ export const FieldButtonUI = styled('button')`
   color: slategray;
   font-size: 12px;
   text-align: center;
+  overflow: hidden;
 
   &:hover,
   &:focus {
@@ -392,6 +400,7 @@ export const FieldButtonUI = styled('button')`
   }
 
   .c-Icon {
-    margin: 0 auto;
+    width: 24px;
+    transform: translateX(3px);
   }
 `

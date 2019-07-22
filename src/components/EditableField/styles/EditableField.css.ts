@@ -5,7 +5,7 @@ import { getColor } from '../../../styles/utilities/color'
 export const EditableFieldUI = styled('div')`
   ${baseStyles};
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `
 
 export const EditableFieldLabelUI = styled('label')`
@@ -45,12 +45,11 @@ export const AddButtonUI = styled('button')`
     color: white;
     background-color: ${getColor('blue.500')};
     box-shadow: 0 0 0 1px white, 0 0 0 3px ${getColor('blue.400')};
-
     transform: translateZ(0);
   }
 
   &:disabled {
-    cursor: not-allowed;
+    cursor: default;
     color: #c6d0d8;
     background-color: #f6f7f8;
   }
