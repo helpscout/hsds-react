@@ -333,7 +333,8 @@ export const StaticValueUI = styled('span')`
   }
 
   &:focus {
-    outline: 1px dashed rgba(197, 208, 217, 0.5);
+    outline: 0;
+    border-bottom: 1px dashed rgba(197, 208, 217, 0.5);
   }
 `
 
