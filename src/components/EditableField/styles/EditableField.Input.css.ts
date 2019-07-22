@@ -2,9 +2,7 @@ import styled from '../../styled/index'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 
-const WRAPPER_HEIGHT = 26
 const CONTENT_HEIGHT = 25
-const TIGHTNESS = 3 // How close should content and bottom border be
 
 export const EditableFieldInputUI = styled('div')`
   ${baseStyles};
@@ -49,7 +47,7 @@ export const EditableFieldInputUI = styled('div')`
 
 export const InteractiveContentUI = styled('div')`
   display: flex;
-  height: ${WRAPPER_HEIGHT}px;
+  height: ${CONTENT_HEIGHT}px;
   width: 100%;
   max-width: 100%;
   position: absolute;
@@ -72,7 +70,7 @@ export const InteractiveContentUI = styled('div')`
 
 export const InputWrapperUI = styled('div')`
   position: relative;
-  height: ${CONTENT_HEIGHT}px;
+  height: ${CONTENT_HEIGHT - 2}px;
   width: 100%;
 
   .has-options & {
@@ -90,7 +88,6 @@ export const OptionsWrapperUI = styled('div')`
   height: ${CONTENT_HEIGHT}px;
   margin-right: 20px;
   font-size: 14px;
-  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
   pointer-events: auto;
 
   .is-disabled & .EditableField__Dropdown:hover {
@@ -122,8 +119,8 @@ export const OptionsDropdownUI = styled('div')`
   margin-bottom: 5px;
   background: white;
   font-size: 14px;
-  line-height: ${CONTENT_HEIGHT + 3}px;
-  height: ${CONTENT_HEIGHT}px;
+  line-height: ${CONTENT_HEIGHT}px;
+  height: ${CONTENT_HEIGHT - 2}px;
   color: transparent;
 
   .is-active & {
@@ -166,7 +163,7 @@ export const OptionsDropdownUI = styled('div')`
 export const InputUI = styled('input')`
   width: 100%;
   height: ${CONTENT_HEIGHT}px;
-  padding: ${TIGHTNESS}px 0 0 0;
+  padding: 0;
   border: none;
   color: transparent;
   font-size: 14px;
@@ -249,12 +246,12 @@ export const StaticOptionUI = styled('span')`
   vertical-align: bottom;
   position: relative;
   width: 70px;
-  height: ${WRAPPER_HEIGHT}px;
+  height: ${CONTENT_HEIGHT - 2}px;
   margin-right: 10px;
   color: ${getColor('charcoal.600')};
   font-size: 14px;
   font-weight: 500;
-  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
+  line-height: ${CONTENT_HEIGHT}px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
@@ -286,12 +283,12 @@ export const StaticOptionUI = styled('span')`
 export const StaticValueUI = styled('span')`
   display: inline-block;
   vertical-align: bottom;
-  height: ${WRAPPER_HEIGHT}px;
+  height: ${CONTENT_HEIGHT - 2}px;
+  line-height: ${CONTENT_HEIGHT}px;
   width: 100%;
   max-width: 100%;
   color: ${getColor('charcoal.800')};
   font-size: 14px;
-  line-height: ${CONTENT_HEIGHT + TIGHTNESS}px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
@@ -302,7 +299,7 @@ export const StaticValueUI = styled('span')`
   }
 
   .has-options.is-empty & {
-    width: 100%;
+    width: auto;
   }
 
   .is-active & {
