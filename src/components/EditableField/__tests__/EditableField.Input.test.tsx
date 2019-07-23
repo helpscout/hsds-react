@@ -2,6 +2,14 @@ import * as React from 'react'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { EditableFieldInput } from '../EditableField.Input'
+import {
+  EF_I_COMPONENT_KEY,
+  EF_TRUNC_COMPONENT_KEY,
+  getComponentClassNames,
+} from '../EditableField.utils'
+
+const EF_I_CLASSNAMES: any = getComponentClassNames(EF_I_COMPONENT_KEY)
+const EF_TRUNC_CLASSNAMES: any = getComponentClassNames(EF_TRUNC_COMPONENT_KEY)
 
 describe('Should component update', () => {
   test('fieldValue', () => {
@@ -83,7 +91,7 @@ describe('calculateFieldWidth', () => {
     }
     cy.render(<EditableFieldInput name="greeting" fieldValue={val} isActive />)
 
-    const field = cy.get('.c-EditableFieldInput')
+    const field = cy.get(`.${EF_I_CLASSNAMES.component}`)
 
     expect(field.getComputedStyle('width')).toBe('100%')
   })
@@ -97,7 +105,7 @@ describe('calculateFieldWidth', () => {
       <EditableFieldInput name="greeting" fieldValue={val} isActive={false} />
     )
 
-    const field = cy.get('.c-EditableFieldInput')
+    const field = cy.get(`.${EF_I_CLASSNAMES.component}`)
 
     expect(field.getComputedStyle('width')).toContain('px')
   })
@@ -116,7 +124,7 @@ describe('calculateFieldWidth', () => {
       />
     )
 
-    const field = cy.get('.c-EditableFieldInput')
+    const field = cy.get(`.${EF_I_CLASSNAMES.component}`)
 
     expect(field.getComputedStyle('width')).toBe('100%')
   })
@@ -135,7 +143,7 @@ describe('calculateFieldWidth', () => {
       />
     )
 
-    const field = cy.get('.c-EditableFieldInput')
+    const field = cy.get(`.${EF_I_CLASSNAMES.component}`)
 
     expect(field.getComputedStyle('width')).toContain('px')
   })
@@ -150,12 +158,16 @@ describe('email type', () => {
 
     cy.render(<EditableFieldInput type="email" name="email" fieldValue={val} />)
 
-    expect(cy.get('.TruncatedWithSplitter').exists()).toBeTruthy()
-    expect(cy.get('.TruncateFirstChunk').exists()).toBeTruthy()
-    expect(cy.get('.TruncateSplitterChunk').exists()).toBeTruthy()
-    expect(cy.get('.TruncateSecondChunk').exists()).toBeTruthy()
-    expect(cy.get('.TruncateFirstChunk').text()).toBe('email')
-    expect(cy.get('.TruncateSplitterChunk').text()).toBe('@')
-    expect(cy.get('.TruncateSecondChunk').text()).toBe('somethingcool.com')
+    expect(cy.get(`.${EF_TRUNC_CLASSNAMES.withSplitter}`).exists()).toBeTruthy()
+    expect(cy.get(`.${EF_TRUNC_CLASSNAMES.firstChunk}`).exists()).toBeTruthy()
+    expect(
+      cy.get(`.${EF_TRUNC_CLASSNAMES.splitterChunk}`).exists()
+    ).toBeTruthy()
+    expect(cy.get(`.${EF_TRUNC_CLASSNAMES.secondChunk}`).exists()).toBeTruthy()
+    expect(cy.get(`.${EF_TRUNC_CLASSNAMES.firstChunk}`).text()).toBe('email')
+    expect(cy.get(`.${EF_TRUNC_CLASSNAMES.splitterChunk}`).text()).toBe('@')
+    expect(cy.get(`.${EF_TRUNC_CLASSNAMES.secondChunk}`).text()).toBe(
+      'somethingcool.com'
+    )
   })
 })

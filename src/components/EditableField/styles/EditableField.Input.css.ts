@@ -2,6 +2,13 @@ import styled from '../../styled/index'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 
+import {
+  EF_I_COMPONENT_KEY,
+  getComponentClassNames,
+} from '../EditableField.utils'
+
+const CLASSNAMES: any = getComponentClassNames(EF_I_COMPONENT_KEY)
+
 const CONTENT_HEIGHT = 25
 
 export const EditableFieldInputUI = styled('div')`
@@ -13,16 +20,15 @@ export const EditableFieldInputUI = styled('div')`
     renderAsBlock ? 'auto' : `${dynamicFieldWidth}`};
   transition: width 0.2s ease-in-out;
 
-  &:hover .EditableField__actions {
+  &:hover .${CLASSNAMES.actions} {
     opacity: 1;
   }
 
-  &:hover .EditableField__staticOption,
-  &:hover .EditableField__staticValue {
+  &:hover .${CLASSNAMES.staticOption}, &:hover .${CLASSNAMES.staticValue} {
     border-bottom: 1px dashed ${getColor('charcoal.200')};
   }
 
-  &.is-active:hover .EditableField__actions {
+  &.is-active:hover .${CLASSNAMES.actions} {
     display: none;
     cursor: initial;
   }
@@ -90,7 +96,7 @@ export const OptionsWrapperUI = styled('div')`
   font-size: 14px;
   pointer-events: auto;
 
-  .is-disabled & .EditableField__Dropdown:hover {
+  .is-disabled & ${`.${CLASSNAMES.dropDown}`}:hover {
     cursor: initial;
   }
 
@@ -104,8 +110,7 @@ export const OptionsWrapperUI = styled('div')`
     margin-right: 20px;
   }
 
-  .c-DropdownV2Trigger,
-  .c-DropdownV2Trigger:hover {
+  .${CLASSNAMES.dropDownTrigger}, ${`.${CLASSNAMES.dropDownTrigger}`}:hover {
     cursor: text;
   }
 `
@@ -127,17 +132,17 @@ export const OptionsDropdownUI = styled('div')`
   .is-active & {
     color: black;
 
-    & + .EditableField__focusIndicator {
+    & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
       height: 1px;
       background-color: #c6d0d8;
     }
   }
 
-  .is-active .c-DropdownV2Trigger:focus & {
+  .is-active ${`.${CLASSNAMES.dropDownTrigger}`}:focus & {
     outline: none;
 
-    & + .EditableField__focusIndicator {
+    & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
       background-color: ${getColor('blue.500')};
       height: 2px;
@@ -145,7 +150,7 @@ export const OptionsDropdownUI = styled('div')`
   }
 
   &:focus {
-    & + .EditableField__focusIndicator {
+    & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
     }
   }
@@ -178,7 +183,7 @@ export const InputUI = styled('input')`
   .is-active &:focus {
     outline: none;
 
-    & + .EditableField__focusIndicator {
+    & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
       background-color: ${getColor('blue.500')} !important;
       height: 2px;
@@ -191,7 +196,7 @@ export const InputUI = styled('input')`
     z-index: 2;
     cursor: initial;
 
-    & + .EditableField__focusIndicator {
+    & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
       height: 1px;
       background-color: #c6d0d8;
@@ -208,7 +213,7 @@ export const InputUI = styled('input')`
   }
 
   .is-disabled & {
-    cursor: initial;
+    cursor: not-allowed;
   }
 
   .is-empty &:focus {
@@ -334,6 +339,7 @@ export const StaticValueUI = styled('span')`
   }
 
   &:focus {
+    width: auto;
     outline: 0;
     border-bottom: 1px dashed rgba(197, 208, 217, 0.5);
   }
