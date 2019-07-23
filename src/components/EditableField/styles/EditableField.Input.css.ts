@@ -11,6 +11,20 @@ const CLASSNAMES: any = getComponentClassNames(EF_I_COMPONENT_KEY)
 
 const CONTENT_HEIGHT = 25
 
+const resetHSAppInputRules = `
+  border-radius: 0;
+  display: block;
+  margin: 0;
+  vertical-align: baseline;
+  border: none;
+  transition: none;
+  
+  &:focus {
+    border: none;
+    outline: 0;
+  }
+`
+
 export const EditableFieldInputUI = styled('div')`
   ${baseStyles};
   position: relative;
@@ -167,67 +181,72 @@ export const OptionsDropdownUI = styled('div')`
 `
 
 export const InputUI = styled('input')`
-  width: 100%;
-  height: ${CONTENT_HEIGHT}px;
-  padding: 0;
-  border: none;
-  color: transparent;
-  font-size: 14px;
-  background: white;
-  pointer-events: auto;
-
-  &::placeholder {
+  /* Guard styles from other globally applied rules for input tags */
+  &.${CLASSNAMES.input} {
+    ${resetHSAppInputRules}
+    width: 100%;
+    height: ${CONTENT_HEIGHT}px;
+    line-height: ${CONTENT_HEIGHT}px;
+    padding: 0;
+    border: none;
     color: transparent;
-  }
-
-  .is-active &:focus {
-    outline: none;
-
-    & + .${CLASSNAMES.focusIndicator} {
-      transform: scaleX(1);
-      background-color: ${getColor('blue.500')} !important;
-      height: 2px;
-    }
-  }
-
-  .is-active & {
-    outline: none;
-    color: ${getColor('charcoal.600')};
-    z-index: 2;
-    cursor: initial;
-
-    & + .${CLASSNAMES.focusIndicator} {
-      transform: scaleX(1);
-      height: 1px;
-      background-color: #c6d0d8;
-    }
+    font-size: 14px;
+    background: white;
+    pointer-events: auto;
 
     &::placeholder {
-      color: ${getColor('charcoal.300')};
-      opacity: 1;
+      color: transparent;
     }
-  }
 
-  .is-empty & {
-    cursor: pointer;
-  }
+    .is-active &:focus {
+      outline: none;
 
-  .is-disabled & {
-    cursor: not-allowed;
-  }
+      & + .${CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        background-color: ${getColor('blue.500')} !important;
+        height: 2px;
+      }
+    }
 
-  .is-empty &:focus {
-    cursor: initial;
-  }
+    .is-active & {
+      outline: none;
+      color: ${getColor('charcoal.600')};
+      z-index: 2;
+      cursor: initial;
 
-  &[type='number']::-webkit-inner-spin-button,
-  &[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+      & + .${CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        height: 1px;
+        background-color: #c6d0d8;
+      }
 
-  &[type='number'] {
-    -moz-appearance: textfield;
+      &::placeholder {
+        color: ${getColor('charcoal.300')};
+        opacity: 1;
+      }
+    }
+
+    .is-empty & {
+      cursor: pointer;
+    }
+
+    .is-disabled & {
+      cursor: not-allowed;
+    }
+
+    .is-empty &:focus {
+      cursor: initial;
+    }
+
+    &[type='number']::-webkit-inner-spin-button,
+    &[type='number']::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
   }
 `
 
