@@ -149,7 +149,7 @@ export const OptionsDropdownUI = styled('div')`
   color: transparent;
 
   .is-active & {
-    color: black;
+    color: ${getColor('charcoal.800')};
 
     & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
@@ -215,7 +215,7 @@ export const InputUI = styled('input')`
 
     .is-active & {
       outline: none;
-      color: ${getColor('charcoal.600')};
+      color: ${getColor('charcoal.800')};
       z-index: 2;
       cursor: initial;
 
@@ -278,7 +278,7 @@ export const StaticOptionUI = styled('span')`
   width: 70px;
   height: ${CONTENT_HEIGHT - 2}px;
   margin-right: 10px;
-  color: ${getColor('charcoal.600')};
+  color: ${getColor('charcoal.800')};
   font-size: 14px;
   font-weight: 500;
   line-height: ${CONTENT_HEIGHT}px;
