@@ -8,8 +8,37 @@ import {
 } from '../EditableField.utils'
 
 const CLASSNAMES: any = getComponentClassNames(EF_I_COMPONENT_KEY)
-
 const CONTENT_HEIGHT = 25
+const COLOURS = {
+  static: {
+    border: getColor('charcoal.200'),
+    disabled: getColor('charcoal.300'),
+    focused: 'rgba(197, 208, 217, 0.5)',
+    regular: getColor('charcoal.800'),
+    placeholder: {
+      regular: getColor('charcoal.300'),
+      disabled: getColor('charcoal.200'),
+      border: {
+        regular: getColor('grey.800'),
+        hover: getColor('blue.500'),
+      },
+    },
+  },
+  interactive: {
+    regular: getColor('charcoal.800'),
+    placeholder: getColor('charcoal.300'),
+  },
+  focusIndicator: {
+    active: getColor('blue.500'),
+    inactive: '#c6d0d8',
+  },
+  invisible: 'transparent',
+  button: {
+    regular: 'slategray',
+    hover: '#3c5263',
+    delete: getColor('red.500'),
+  },
+}
 
 const resetHSAppInputRules = `
   border-radius: 0;
@@ -39,7 +68,7 @@ export const EditableFieldInputUI = styled('div')`
   }
 
   &:hover .${CLASSNAMES.staticOption}, &:hover .${CLASSNAMES.staticValue} {
-    border-bottom: 1px dashed ${getColor('charcoal.200')};
+    border-bottom: 1px dashed ${COLOURS.static.border};
   }
 
   &.is-active:hover .${CLASSNAMES.actions} {
@@ -48,7 +77,7 @@ export const EditableFieldInputUI = styled('div')`
   }
 
   &:hover .with-placeholder {
-    border-bottom: 1px dashed ${getColor('blue.500')};
+    border-bottom: 1px dashed ${COLOURS.static.placeholder.border.hover};
   }
 
   .is-disabled
@@ -57,7 +86,7 @@ export const EditableFieldInputUI = styled('div')`
     .is-disabled
     &:hover
     .${CLASSNAMES.staticValue} {
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid ${COLOURS.invisible};
   }
 
   .is-temporary-value {
@@ -79,17 +108,17 @@ export const InteractiveContentUI = styled('div')`
   top: 0;
   left: 0;
   z-index: 1;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid ${COLOURS.invisible};
 
   .is-disabled &:hover {
     cursor: initial;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid ${COLOURS.invisible};
   }
 
   .is-active & {
     pointer-events: none;
     z-index: 2;
-    border-bottom-color: transparent !important;
+    border-bottom-color: ${COLOURS.invisible} !important;
   }
 `
 
@@ -146,7 +175,7 @@ export const OptionsDropdownUI = styled('div')`
   font-size: 14px;
   line-height: ${CONTENT_HEIGHT}px;
   height: ${CONTENT_HEIGHT - 2}px;
-  color: transparent;
+  color: ${COLOURS.invisible};
 
   .is-active & {
     color: ${getColor('charcoal.800')};
@@ -154,7 +183,7 @@ export const OptionsDropdownUI = styled('div')`
     & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
       height: 1px;
-      background-color: #c6d0d8;
+      background-color: ${COLOURS.focusIndicator.inactive};
     }
   }
 
@@ -163,7 +192,7 @@ export const OptionsDropdownUI = styled('div')`
 
     & + .${CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
-      background-color: ${getColor('blue.500')};
+      background-color: ${COLOURS.focusIndicator.active};
       height: 2px;
     }
   }
@@ -194,13 +223,13 @@ export const InputUI = styled('input')`
     line-height: ${CONTENT_HEIGHT}px;
     padding: 0;
     border: none;
-    color: transparent;
+    color: ${COLOURS.invisible};
     font-size: 14px;
     background: white;
     pointer-events: auto;
 
     &::placeholder {
-      color: transparent;
+      color: ${COLOURS.invisible};
     }
 
     .is-active &:focus {
@@ -208,14 +237,14 @@ export const InputUI = styled('input')`
 
       & + .${CLASSNAMES.focusIndicator} {
         transform: scaleX(1);
-        background-color: ${getColor('blue.500')} !important;
+        background-color: ${COLOURS.focusIndicator.active} !important;
         height: 2px;
       }
     }
 
     .is-active & {
       outline: none;
-      color: ${getColor('charcoal.800')};
+      color: ${COLOURS.interactive.regular};
       z-index: 2;
       cursor: initial;
 
@@ -226,7 +255,7 @@ export const InputUI = styled('input')`
       }
 
       &::placeholder {
-        color: ${getColor('charcoal.300')};
+        color: ${COLOURS.interactive.placeholder};
         opacity: 1;
       }
     }
@@ -278,14 +307,14 @@ export const StaticOptionUI = styled('span')`
   width: 70px;
   height: ${CONTENT_HEIGHT - 2}px;
   margin-right: 10px;
-  color: ${getColor('charcoal.800')};
+  color: ${COLOURS.static.regular};
   font-size: 14px;
   font-weight: 500;
   line-height: ${CONTENT_HEIGHT}px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid ${COLOURS.invisible};
 
   .is-empty & {
     display: none;
@@ -297,16 +326,16 @@ export const StaticOptionUI = styled('span')`
   }
 
   & .is-placeholder {
-    color: ${getColor('charcoal.300')};
+    color: ${COLOURS.static.placeholder.regular};
   }
 
   .is-disabled & {
-    color: ${getColor('charcoal.300')};
+    color: ${COLOURS.static.disabled};
   }
 
   &:focus {
     outline: none;
-    border-bottom: 1px dashed #93a1b0;
+    border-bottom: 1px dashed ${COLOURS.static.focused};
   }
 `
 
@@ -317,12 +346,12 @@ export const StaticValueUI = styled('span')`
   line-height: ${CONTENT_HEIGHT}px;
   width: 100%;
   max-width: 100%;
-  color: ${getColor('charcoal.800')};
+  color: ${COLOURS.static.regular};
   font-size: 14px;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid ${COLOURS.invisible};
 
   .has-options & {
     width: calc(100% - 80px);
@@ -343,29 +372,29 @@ export const StaticValueUI = styled('span')`
 
   &.with-placeholder {
     width: auto;
-    border-bottom: 1px dashed ${getColor('grey.800')};
+    border-bottom: 1px dashed ${COLOURS.static.placeholder.border.regular};
   }
 
   & .is-placeholder {
-    color: ${getColor('charcoal.300')};
+    color: ${COLOURS.static.placeholder.regular};
   }
 
   .is-disabled &.with-placeholder {
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid ${COLOURS.invisible};
   }
 
   .is-disabled & {
-    color: ${getColor('charcoal.300')};
+    color: ${COLOURS.static.disabled};
   }
 
   .is-disabled & .is-placeholder {
-    color: ${getColor('charcoal.200')};
+    color: ${COLOURS.static.placeholder.disabled};
   }
 
   &:focus {
     width: auto;
     outline: 0;
-    border-bottom: 1px dashed rgba(197, 208, 217, 0.5);
+    border-bottom: 1px dashed ${COLOURS.static.focused};
   }
 `
 
@@ -375,7 +404,7 @@ export const FocusIndicatorUI = styled('span')`
   left: 0;
   right: 0;
   height: 2px;
-  background-color: ${getColor('blue.500')};
+  background-color: ${COLOURS.focusIndicator.active};
   transform-origin: bottom left;
   transform: scaleX(0);
   transition: transform 0.3s ease, background-color 0.3s ease;
@@ -406,8 +435,8 @@ export const FieldButtonUI = styled('button')`
   padding: 0;
   margin: 0;
   border: none;
-  background-color: transparent;
-  color: slategray;
+  background-color: ${COLOURS.invisible};
+  color: ${COLOURS.button.regular};
   font-size: 12px;
   text-align: center;
   overflow: hidden;
@@ -415,7 +444,7 @@ export const FieldButtonUI = styled('button')`
   &:hover,
   &:focus {
     cursor: pointer;
-    color: #3c5263;
+    color: ${COLOURS.button.hover};
   }
 
   &:focus {
@@ -425,7 +454,7 @@ export const FieldButtonUI = styled('button')`
   &.action-delete {
     &:focus,
     &:hover {
-      color: ${getColor('red.500')};
+      color: ${COLOURS.button.delete};
     }
   }
 
