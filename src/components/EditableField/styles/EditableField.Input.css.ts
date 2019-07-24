@@ -51,7 +51,12 @@ export const EditableFieldInputUI = styled('div')`
     border-bottom: 1px dashed ${getColor('blue.500')};
   }
 
-  .is-disabled &:hover .with-placeholder {
+  .is-disabled
+    &:hover
+    .${CLASSNAMES.staticOption},
+    .is-disabled
+    &:hover
+    .${CLASSNAMES.staticValue} {
     border-bottom: 1px solid transparent;
   }
 
@@ -296,7 +301,7 @@ export const StaticOptionUI = styled('span')`
   }
 
   .is-disabled & {
-    color: ${getColor('charcoal.200')};
+    color: ${getColor('charcoal.300')};
   }
 
   &:focus {
