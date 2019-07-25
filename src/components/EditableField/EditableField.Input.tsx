@@ -25,8 +25,9 @@ import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import {
   ACTION_ICONS,
-  COMPONENT_KEY,
+  EF_I_COMPONENT_KEY,
   isEllipsisActive,
+  getComponentClassNames,
 } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
@@ -38,11 +39,13 @@ import {
   EditableFieldInputState,
 } from './EditableField.types'
 
+const CLASSNAMES: any = getComponentClassNames(EF_I_COMPONENT_KEY)
+
 export class EditableFieldInput extends React.Component<
   EditableFieldInputProps,
   EditableFieldInputState
 > {
-  static className = 'c-EditableFieldInput'
+  static className = CLASSNAMES.component
   static defaultProps = {
     isActive: false,
     disabled: false,
@@ -112,11 +115,22 @@ export class EditableFieldInput extends React.Component<
   }
 
   componentDidMount() {
-    /* istanbul ignore else */
+    const { isActive } = this.props
+
+    /* istanbul ignore next */
     if (!this.props.renderAsBlock) {
       this.calculateFieldWidth()
     }
+
     this.setInputTitle()
+
+    if (isActive) {
+      /* istanbul ignore next */
+      if (document.activeElement !== this.optionsDropdownRef) {
+        const inputNode = this.inputRef
+        inputNode && inputNode.focus()
+      }
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -137,19 +151,17 @@ export class EditableFieldInput extends React.Component<
 
   componentDidUpdate(prevProps) {
     const { isActive } = this.props
-    const inputNode = this.inputRef
-    const valueChanged =
-      this.props.fieldValue.value !== prevProps.fieldValue.value
-
     /* istanbul ignore else */
     if (!this.props.renderAsBlock) {
-      this.calculateFieldWidth(valueChanged)
+      this.calculateFieldWidth()
     }
 
     this.setInputTitle()
 
     if (isActive) {
       if (document.activeElement !== this.optionsDropdownRef) {
+        const inputNode = this.inputRef
+
         inputNode && inputNode.focus()
       }
     }
@@ -160,11 +172,12 @@ export class EditableFieldInput extends React.Component<
     const staticValueNode = this.staticValueRef
 
     const contentNode =
-      staticValueNode && staticValueNode.querySelector('.c-Truncate__content')
+      staticValueNode && staticValueNode.querySelector(`.${CLASSNAMES.content}`)
     const emailNode =
-      staticValueNode && staticValueNode.querySelector('.TruncateFirstChunk')
+      staticValueNode &&
+      staticValueNode.querySelector(`.${CLASSNAMES.firstChunk}`)
 
-    /* istanbul ignore if */
+    /* istanbul ignore next */
     if (
       (contentNode && isEllipsisActive(contentNode)) ||
       (emailNode && isEllipsisActive(emailNode))
@@ -175,54 +188,86 @@ export class EditableFieldInput extends React.Component<
     }
   }
 
-  calculateFieldWidth = (valueChanged?) => {
-    const { actions, isActive } = this.props
-    const { dynamicFieldWidth, staticContentWidth } = this.state
+  getValueWidth = () => {
     const editableFieldInputNode = this.editableFieldInputRef
     const parentWidth = editableFieldInputNode.parentElement
       ? editableFieldInputNode.parentElement.getBoundingClientRect().width
       : /* istanbul ignore next */
         0
     const staticContentNode = this.staticContentRef
-    const placeholder = staticContentNode.querySelector('.is-placeholder')
-    const initializedFieldWidth = editableFieldInputNode.getBoundingClientRect()
-      .width
-    let fieldWidth =
-      dynamicFieldWidth == null
-        ? `${initializedFieldWidth}px`
-        : dynamicFieldWidth
-    let staticWidth =
-      staticContentWidth == null || valueChanged
-        ? staticContentNode.getBoundingClientRect().width
-        : staticContentWidth
-    let actionsWidth = 0
+    const staticOptionNode = staticContentNode.querySelector(
+      `.${CLASSNAMES.staticOption}`
+    )
+    const staticValueNode = staticContentNode.querySelector(
+      `.${CLASSNAMES.staticValue}`
+    )
+    const staticOptionWidth = staticOptionNode
+      ? staticOptionNode.getBoundingClientRect().width + 10
+      : 0
+    let contentWidth = 0
 
-    if (placeholder) {
-      staticWidth = placeholder.getBoundingClientRect().width
-    }
+    // A reliable way to get the width of dynamic content
+    // is by creating a temporary element
+    // and get its width
+    let temporaryValueNode: HTMLDivElement | null = document.createElement(
+      'div'
+    )
 
-    if (actions) {
-      actionsWidth = actions.length * 20
-    }
+    //@ts-ignore
+    // Never null
+    temporaryValueNode.textContent = staticValueNode.textContent
+
+    // To get an accurate width, apply the font styles of the field
+    temporaryValueNode.classList.add(CLASSNAMES.isTemporaryValue)
+    editableFieldInputNode.appendChild(temporaryValueNode)
+    contentWidth = Math.ceil(
+      temporaryValueNode.getBoundingClientRect().width + staticOptionWidth
+    )
+
+    // Clean up
+    editableFieldInputNode.removeChild(temporaryValueNode)
+    temporaryValueNode = null
+
+    // The max width should be the parent width
+    return contentWidth >= parentWidth
+      ? parentWidth
+      : /* istanbul ignore next */ contentWidth
+  }
+
+  calculateFieldWidth = () => {
+    const { actions, isActive } = this.props
 
     if (isActive) {
-      fieldWidth = '100%'
+      this.setState({
+        dynamicFieldWidth: '100%',
+        staticContentWidth: '100%',
+      })
     } else {
+      const editableFieldInputNode = this.editableFieldInputRef
+      const parentWidth = editableFieldInputNode.parentElement
+        ? editableFieldInputNode.parentElement.getBoundingClientRect().width
+        : /* istanbul ignore next */
+          0
+      const placeholderNode = this.staticContentRef.querySelector(
+        `.${CLASSNAMES.isPlaceholder}`
+      )
+      const staticContentWidth = placeholderNode
+        ? placeholderNode.getBoundingClientRect().width
+        : this.getValueWidth()
+      const actionsWidth = actions ? actions.length * 25 : 0
+
       // If we add the actions width to the static content width and it's actually larger than the container
       // take the actions width off to make space for them
-      /* istanbul ignore next */
-      if (staticWidth && staticWidth + actionsWidth > parentWidth) {
-        /* istanbul ignore next */
-        fieldWidth = `${staticWidth - actionsWidth}px`
-      } else {
-        fieldWidth = `${staticWidth}px`
-      }
-    }
+      const fieldCSSWidth =
+        staticContentWidth + actionsWidth > parentWidth
+          ? `${staticContentWidth - actionsWidth}px`
+          : `${staticContentWidth}px`
 
-    this.setState({
-      dynamicFieldWidth: fieldWidth,
-      staticContentWidth: staticWidth,
-    })
+      this.setState({
+        dynamicFieldWidth: fieldCSSWidth,
+        staticContentWidth: `${staticContentWidth}px`,
+      })
+    }
   }
 
   getClassName() {
@@ -231,9 +276,9 @@ export class EditableFieldInput extends React.Component<
     return classNames(
       EditableFieldInput.className,
       className,
-      isActive && 'is-active',
-      valueOptions && 'has-options',
-      !Boolean(fieldValue.value) && 'is-empty'
+      isActive && CLASSNAMES.isActive,
+      valueOptions && CLASSNAMES.hasOptions,
+      !Boolean(fieldValue.value) && CLASSNAMES.isEmpty
     )
   }
 
@@ -283,7 +328,7 @@ export class EditableFieldInput extends React.Component<
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
     const isDropdownTrigger = event.target.classList.contains(
-      'c-DropdownV2Trigger'
+      CLASSNAMES.dropDownTrigger
     )
     /* istanbul ignore else */
     if ((isEnter && !isDropdownTrigger) || isEscape) {
@@ -357,11 +402,11 @@ export class EditableFieldInput extends React.Component<
 
     return (
       <OptionsWrapperUI
-        className="EditableField__optionsWrapper"
+        className={CLASSNAMES.optionsWrapper}
         onKeyDown={this.handleKeyDown}
       >
         <Dropdown
-          className="EditableField__Dropdown"
+          className={CLASSNAMES.dropdown}
           items={valueOptions}
           disabled={disabled}
           shouldRefocusOnClose={() => false}
@@ -372,17 +417,17 @@ export class EditableFieldInput extends React.Component<
           onSelect={this.handleDropdownSelect}
           triggerRef={this.setOptionsDropdownNode}
           renderTrigger={
-            <TriggerUI className="EditableField__optionsTrigger">
+            <TriggerUI className={CLASSNAMES.optionsTrigger}>
               <OptionsDropdownUI
-                className="EditableField__optionsDropdown"
+                className={CLASSNAMES.optionsDropdown}
                 title={fieldValue.option}
               >
-                <Truncate className="EditableField__selectedOption">
+                <Truncate className={CLASSNAMES.selectedOption}>
                   {fieldValue.option}
                 </Truncate>
                 <Icon name={ACTION_ICONS.valueOption} />
               </OptionsDropdownUI>
-              <FocusIndicatorUI className="EditableField__focusIndicator" />
+              <FocusIndicatorUI className={CLASSNAMES.focusIndicator} />
             </TriggerUI>
           }
         />
@@ -395,7 +440,7 @@ export class EditableFieldInput extends React.Component<
 
     return (
       <StaticOptionUI
-        className="EditableField__staticOption"
+        className={CLASSNAMES.staticOption}
         innerRef={this.setStaticOptionNode}
       >
         <Truncate>{fieldValue.option}</Truncate>
@@ -408,7 +453,7 @@ export class EditableFieldInput extends React.Component<
 
     return (
       <FieldActionsUI
-        className="EditableField__actions"
+        className={CLASSNAMES.actions}
         innerRef={this.setActionsNode}
         // ts complains about actions possibly being undefined
         // but renderActions is never called if actions is undefined (same below in the mapping)
@@ -419,7 +464,7 @@ export class EditableFieldInput extends React.Component<
         {(actions as any).map(action => {
           return (
             <FieldButtonUI
-              className={`FieldButton action-${action.name}`}
+              className={`${CLASSNAMES.fieldButton} action-${action.name}`}
               key={action.name}
               tabIndex="-1"
               type="button"
@@ -427,7 +472,7 @@ export class EditableFieldInput extends React.Component<
                 this.handleActionClick({ action, event })
               }}
             >
-              <Icon name={action.icon || ACTION_ICONS[action.name]} size="16" />
+              <Icon name={action.icon || ACTION_ICONS[action.name]} size="24" />
             </FieldButtonUI>
           )
         })}
@@ -460,15 +505,15 @@ export class EditableFieldInput extends React.Component<
         innerRef={this.setEditableFieldInputNode}
       >
         <InteractiveContentUI
-          className="EditableField__interactiveContent"
+          className={CLASSNAMES.interactiveContent}
           innerRef={this.setInteractiveContentNode}
         >
           {valueOptions ? this.renderInteractiveOptions() : null}
 
-          <InputWrapperUI className="EditableField__inputWrapper">
+          <InputWrapperUI className={CLASSNAMES.inputWrapper}>
             <InputUI
               {...getValidProps(rest)}
-              className="EditableField__input"
+              className={CLASSNAMES.input}
               id={name}
               innerRef={this.setInputNode}
               name={name}
@@ -481,12 +526,12 @@ export class EditableFieldInput extends React.Component<
               onFocus={this.handleInputFocus}
               onKeyDown={this.handleKeyDown}
             />
-            <FocusIndicatorUI className="EditableField__focusIndicator" />
+            <FocusIndicatorUI className={CLASSNAMES.focusIndicator} />
           </InputWrapperUI>
         </InteractiveContentUI>
 
         <StaticContentUI
-          className="EditableField__staticContent"
+          className={CLASSNAMES.staticContent}
           renderAsBlock={renderAsBlock}
           staticContentWidth={staticContentWidth}
           innerRef={this.setStaticContentNode}
@@ -495,9 +540,9 @@ export class EditableFieldInput extends React.Component<
 
           <StaticValueUI
             className={classNames(
-              'EditableField__staticValue',
-              !fieldValue.value && 'with-placeholder',
-              emphasize && 'is-emphasized'
+              CLASSNAMES.staticValue,
+              !fieldValue.value && CLASSNAMES.withPlaceholder,
+              emphasize && CLASSNAMES.isEmphasized
             )}
             innerRef={this.setStaticValueNode}
             onBlur={this.handleStaticValueBlur}
@@ -509,7 +554,7 @@ export class EditableFieldInput extends React.Component<
                 splitter={type === 'email' ? '@' : undefined}
               />
             ) : (
-              <span className="is-placeholder">{placeholder}</span>
+              <span className={CLASSNAMES.isPlaceholder}>{placeholder}</span>
             )}
           </StaticValueUI>
         </StaticContentUI>
@@ -522,7 +567,7 @@ export class EditableFieldInput extends React.Component<
   }
 }
 
-const PropConnectedComponent = propConnect(`${COMPONENT_KEY}Input`)(
+const PropConnectedComponent = propConnect(EF_I_COMPONENT_KEY)(
   EditableFieldInput
 )
 
