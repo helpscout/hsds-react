@@ -28,28 +28,34 @@ This will kick of HSDS's automated release scripts, powered by [np](https://gith
 
 Select what kind of release you would like to do:
 
-* patch
-* minor
-* major
+- patch
+- minor
+- major
 
 Our `Strong` component doesn't affect anything, and should be a non-breaking enhancement to the library. Let's select `patch` and hit `Enter`.
 
 Once you do, `np` will:
 
-* Run the linter
-* Run all Jest tests
-* Build/bundle `.js` files
-* Build/bunlde `.css`/`.js` files
-* Semver bump the `git` Tag
-* Semver bump the `version` in `package.json`
-* Publish to `npm`
-* Push newest version to Github
+- Run the linter
+- Run all Jest tests
+- Build/bundle `.js` files
+- Build/bunlde `.css`/`.js` files
+- Semver bump the `git` Tag
+- Semver bump the `version` in `package.json`
+- Publish to `npm`
+- Push newest version to Github
 
 (😻 `np` is amazing)
 
 ## Release notes
 
 HSDS is very transparent with it's [release notes](https://github.com/helpscout/hsds-react/releases). `np` should have automatically created a new version on Github. Edit that version with the appropriate descriptions/screenshots.
+
+You can follow that template to complete your release notes:
+
+**Release Title** should be the release tag name
+
+Title of the PR should start your release note, with a markdown H2 `## your PR title`.
 
 Pro Tip: If your pull request description is thorough. You can just copy/paste it as the release notes 😎.
 
@@ -63,7 +69,7 @@ Hope you have a fantastic day ❤️!
 
 ## See also
 
-* [npm](https://www.npmjs.com/)
-* [@helpscout/hsds-react](https://www.npmjs.com/package/@helpscout/hsds-react)
-* [np](https://github.com/sindresorhus/np)
-* [Release notes](https://github.com/helpscout/hsds-react/releases)
+- [npm](https://www.npmjs.com/)
+- [@helpscout/hsds-react](https://www.npmjs.com/package/@helpscout/hsds-react)
+- [np](https://github.com/sindresorhus/np)
+- [Release notes](https://github.com/helpscout/hsds-react/releases)
