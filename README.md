@@ -70,6 +70,16 @@ npm run test
 
 ## Publishing
 
+### Merging a PR
+
+To merge a PR when the release is completed, please do a _Squash and merge_ from the PR page. It will keep the history clean in the master branch
+
+We tend to do a release with only one PR at the time, _if possible_
+
+### Sending the release to NPM
+
+First, pull master locally to have the latest before publishing. _note that you could do a pre-release from any other branches, just follow the next step from your checked out branch_
+
 To publish and release a new version of HSDS, run the following command:
 
 ```
@@ -78,6 +88,20 @@ npm run release
 
 You'll be presented with a CLI prompt with options.
 Pick the one you want, and that's it! The script will take care of the rest (from testing to publishing).
+
+### How to complete the release on Github
+
+When the script finish publishing your release, it will open a Github page to tag the release.
+
+Then there is a couple of step to ensure all release look the same.
+
+**Release Title**
+It's the tag version
+
+**Release description**
+An h2 markdown tag (##) with the PR title, followed by the PR description.
+
+If multiple PR are merged in the same release, add another ## block with the other PR description.
 
 ## Deploying Storybook
 
