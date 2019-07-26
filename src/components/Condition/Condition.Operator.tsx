@@ -19,7 +19,7 @@ export const Operator = (props: ConditionOperatorProps) => {
 
   return (
     <OperatorUI {...rest} className={componentClassName}>
-      <Text block lineHeightReset size="11">
+      <Text block lineHeightReset size="11" weight={500}>
         {label}
       </Text>
     </OperatorUI>
