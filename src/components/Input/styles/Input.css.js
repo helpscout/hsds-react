@@ -109,6 +109,14 @@ export const SuffixUI = styled(ItemUI)`
   }
 `
 
+export const CharValidatorUI = styled('div')`
+  margin-right: 15px;
+  bottom: 11px;
+  position: relative;
+  text-align: right;
+  z-index: 3;
+`
+
 export const InlinePrefixSuffixUI = styled('div')`
   ${baseStyles};
   opacity: 0.3;
