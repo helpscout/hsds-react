@@ -308,10 +308,6 @@ export const StaticContentUI = styled('div')`
   .is-active & {
     z-index: 1;
   }
-
-  & .c-Truncate {
-    width: calc(100% - 20px);
-  }
 `
 
 export const StaticOptionUI = styled('span')`
@@ -407,6 +403,11 @@ export const StaticValueUI = styled('span')`
 
   .is-disabled & .is-placeholder {
     color: ${COLOURS.static.placeholder.disabled};
+  }
+
+  .c-Truncate {
+    width: ${({ renderAsBlock, numberOfActions }) =>
+      renderAsBlock ? `calc(100% - ${numberOfActions * 20}px)` : '100%'};
   }
 
   &:focus {

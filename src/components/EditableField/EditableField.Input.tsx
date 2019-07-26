@@ -436,12 +436,14 @@ export class EditableFieldInput extends React.Component<
   }
 
   renderStaticOption = () => {
-    const { fieldValue } = this.props
+    const { fieldValue, renderAsBlock, actions = [] } = this.props
 
     return (
       <StaticOptionUI
         className={CLASSNAMES.staticOption}
         innerRef={this.setStaticOptionNode}
+        numberOfActions={actions.length}
+        renderAsBlock={renderAsBlock}
       >
         <Truncate>{fieldValue.option}</Truncate>
       </StaticOptionUI>
@@ -482,7 +484,7 @@ export class EditableFieldInput extends React.Component<
 
   render() {
     const {
-      actions,
+      actions = [],
       disabled,
       emphasize,
       fieldValue,
@@ -547,6 +549,8 @@ export class EditableFieldInput extends React.Component<
             innerRef={this.setStaticValueNode}
             onBlur={this.handleStaticValueBlur}
             onKeyDown={this.handleStaticValueKeyDown}
+            numberOfActions={actions.length}
+            renderAsBlock={renderAsBlock}
           >
             {fieldValue.value ? (
               <Truncated
