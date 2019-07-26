@@ -1,6 +1,7 @@
 import styled from '../../styled/index'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
+import { FONT_FAMILY } from '../../../styles/configs/constants'
 
 import {
   EF_I_COMPONENT_KEY,
@@ -176,6 +177,14 @@ export const OptionsDropdownUI = styled('div')`
   line-height: ${CONTENT_HEIGHT}px;
   height: ${CONTENT_HEIGHT - 2}px;
   color: ${COLOURS.invisible};
+  font-family: ${FONT_FAMILY};
+
+  &:hover .c-Icon {
+    color: ${getColor('charcoal.200')};
+  }
+  .is-active &:hover .c-Icon {
+    color: ${getColor('charcoal.800')};
+  }
 
   .is-active & {
     color: ${getColor('charcoal.800')};
@@ -294,6 +303,7 @@ export const StaticContentUI = styled('div')`
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
+  font-family: ${FONT_FAMILY};
 
   .is-active & {
     z-index: 1;
@@ -336,6 +346,10 @@ export const StaticOptionUI = styled('span')`
   &:focus {
     outline: none;
     border-bottom: 1px dashed ${COLOURS.static.focused};
+  }
+
+  .c-Truncate {
+    width: 60px;
   }
 `
 
@@ -389,6 +403,11 @@ export const StaticValueUI = styled('span')`
 
   .is-disabled & .is-placeholder {
     color: ${COLOURS.static.placeholder.disabled};
+  }
+
+  .c-Truncate {
+    width: ${({ renderAsBlock, numberOfActions }) =>
+      renderAsBlock ? `calc(100% - ${numberOfActions * 20}px)` : '100%'};
   }
 
   &:focus {

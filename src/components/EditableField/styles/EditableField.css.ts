@@ -55,7 +55,9 @@ export const AddButtonUI = styled('button')`
   }
 
   .c-Icon {
-    margin: 0 auto;
+    position: relative;
+    left: -2px;
+    top: -2px;
   }
 
   &::-moz-focus-inner {

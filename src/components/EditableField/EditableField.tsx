@@ -459,7 +459,7 @@ export class EditableField extends React.Component<
         onClick={this.handleAddValue}
         disabled={isLastValueEmpty}
       >
-        <Icon name={ACTION_ICONS.plus} size="20" />
+        <Icon name={ACTION_ICONS.plus} size="24" />
       </AddButtonUI>
     ) : null
   }

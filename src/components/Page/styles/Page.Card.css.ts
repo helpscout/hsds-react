@@ -7,14 +7,14 @@ import PageConfig from './Page.config.css'
 export const config = {
   borderRadius: '4px',
   boxShadow: `
-    0px 0px 0px 1px rgba(0, 0, 0, 0.05),
-    0px 5px 10px 0px ${getColor('grey.300')},
-    0px 3px 3px 0px rgba(0, 0, 0, 0.05)
+    0 0 0 1px rgba(0, 0, 0, 0.04), 
+    0 2px 8px 0 rgba(0,0,0,0.04), 
+    0 5px 10px 0 rgba(99, 116, 134, 0.03)
   `,
   boxShadowHover: `
-    0px 0px 0px 1px ${getColor('grey.500')},
-    0px 5px 10px 1px ${getColor('grey.300')},
-    0px 3px 3px 0px rgba(0, 0, 0, 0.05)
+    rgb(214, 221, 227) 0px 0px 0px 1px, 
+    0 2px 8px 0 rgba(0,0,0,0.04), 
+    0 5px 10px 0 rgba(99, 116, 134, 0.03)
   `,
   flexDirection: {
     default: 'column',
