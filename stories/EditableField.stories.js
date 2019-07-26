@@ -8,6 +8,7 @@ import { jsxDecorator } from 'storybook-addon-jsx'
 
 import styled from '../src/components/styled'
 import baseStyles from '../src/styles/resets/baseStyles.css'
+import { withAktiv } from './utils'
 
 const stories = storiesOf('EditableField', module)
   .addParameters({
@@ -15,6 +16,7 @@ const stories = storiesOf('EditableField', module)
     readme: { sidebar: ReadMe },
     a11y: { element: 'c-EditableField' },
   })
+  .addDecorator(withAktiv)
   .addDecorator(jsxDecorator)
 
 const ContainerUI = styled('div')`
