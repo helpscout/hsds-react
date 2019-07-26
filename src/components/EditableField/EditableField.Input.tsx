@@ -254,6 +254,9 @@ export class EditableFieldInput extends React.Component<
       const staticContentWidth = placeholderNode
         ? placeholderNode.getBoundingClientRect().width
         : this.getValueWidth()
+
+      /* istanbul ignore next */
+
       const actionsWidth = actions ? actions.length * 25 : 0
 
       // If we add the actions width to the static content width and it's actually larger than the container
@@ -436,6 +439,7 @@ export class EditableFieldInput extends React.Component<
   }
 
   renderStaticOption = () => {
+    /* istanbul ignore next */
     const { fieldValue, renderAsBlock, actions = [] } = this.props
 
     return (
@@ -451,7 +455,7 @@ export class EditableFieldInput extends React.Component<
   }
 
   renderActions = () => {
-    const { actions, renderAsBlock } = this.props
+    const { actions = [], renderAsBlock } = this.props
 
     return (
       <FieldActionsUI
