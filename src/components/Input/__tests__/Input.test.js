@@ -1126,7 +1126,7 @@ describe('inputType', () => {
   })
 })
 
-describe.only('charValidator', () => {
+describe('charValidator', () => {
   test('it should render charValidator', () => {
     const wrapper = mount(<Input withCharValidator={true} />)
     expect(wrapper.find(Badge).length).toEqual(1)
