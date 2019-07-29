@@ -54,6 +54,8 @@ Note: Be sure the version for `Button` is at least version 2.
 | ------------------------ | -------------------------- | -------------------------------------------------------------------------- |
 | action                   | `React.Component`          | Embedded actions for the Input.                                            |
 | autoFocus                | `boolean`                  | Automatically focuses the input.                                           |
+| charValidatorLimit       | `number`                   | How many chars are allowed to be input.                                    |
+| charValidatorShowAt      | `boolean`                  | At how many chars input should the charValidator be shown.                 |
 | className                | `string`                   | Custom class names to be added to the component.                           |
 | disabled                 | `boolean`                  | Disable the input.                                                         |
 | errorIcon                | `string`                   | Icon that renders when the state is `error`.                               |
@@ -99,6 +101,7 @@ Note: Be sure the version for `Button` is at least version 2.
 | typingThrottleInterval   | `number`                   | Determines the rate limiting interval for firing `onStartTyping`.          |
 | typingTimeoutDelay       | `number`                   | Determines the delay of when `onStopTyping` fires after typing stops.      |
 | value                    | `string`                   | Initial value of the input.                                                |
+| withCharValidator        | `boolean`                  | Adds a char validator UI to the input.                                     |
 | withTypingEvent          | `boolean`                  | Enables typing `onStartTyping` and `onStopTyping` event callbacks.         |
 
 ### States
