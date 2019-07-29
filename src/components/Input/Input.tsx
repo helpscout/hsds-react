@@ -146,8 +146,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     const { inputType, charValidatorLimit, withCharValidator } = this.props
     let nextValue = value
 
-    if (withCharValidator && nextValue.length > charValidatorLimit) {
-      nextValue = nextValue.substring(0, charValidatorLimit)
+    if (withCharValidator && nextValue.length > charValidatorLimit + 1) {
+      nextValue = nextValue.substring(0, charValidatorLimit + 1)
     }
 
     if (inputType === 'number') {
@@ -563,9 +563,9 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     } = this.state
     const isVisible =
       charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
-    const currentCount = charValidatorLimit - count
-    const isTooMuch = count !== 0 && count >= charValidatorLimit
     if (!isVisible) return null
+    const currentCount = charValidatorLimit - count
+    const isTooMuch = count !== 0 && count >= charValidatorLimit + 1
     return (
       <CharValidatorUI>
         <Badge

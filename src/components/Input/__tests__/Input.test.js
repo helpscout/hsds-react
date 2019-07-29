@@ -3,6 +3,8 @@ import { cy } from '@helpscout/cyan'
 import { mount, shallow, render } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Input.Resizer'
+import Badge from '../../Badge'
+import { CharValidatorUI } from '../styles/Input.css'
 
 jest.useFakeTimers()
 
@@ -1121,5 +1123,54 @@ describe('inputType', () => {
 
     expect(el.attr('value')).toBe('123')
     expect(spy).toHaveBeenCalledWith('123')
+  })
+})
+
+describe.only('charValidator', () => {
+  test('it should render charValidator', () => {
+    const wrapper = mount(<Input withCharValidator={true} />)
+    expect(wrapper.find(Badge).length).toEqual(1)
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+  })
+  test('it should not render charValidator', () => {
+    const wrapper = mount(<Input />)
+    expect(wrapper.find(CharValidatorUI).length).toEqual(0)
+  })
+  test('it should not render charValidator, because showAt has not been reached', () => {
+    const wrapper = mount(
+      <Input
+        withCharValidator={true}
+        charValidatorShowAt={9}
+        value="12345678"
+      />
+    )
+    expect(wrapper.find(CharValidatorUI).length).toEqual(0)
+    expect(wrapper.find(Badge).length).toEqual(0)
+  })
+  test('it should render charValidator success', () => {
+    const wrapper = mount(
+      <Input
+        withCharValidator={true}
+        charValidatorShowAt={4}
+        charValidatorLimit={9}
+        value="12345678"
+      />
+    )
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+    const badge = wrapper.find(Badge)
+    expect(badge.props().status).toEqual('success')
+  })
+  test('it should render charValidator error', () => {
+    const wrapper = mount(
+      <Input
+        withCharValidator={true}
+        charValidatorShowAt={4}
+        charValidatorLimit={7}
+        value="12345678"
+      />
+    )
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+    const badge = wrapper.find(Badge)
+    expect(badge.props().status).toEqual('error')
   })
 })

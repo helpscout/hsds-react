@@ -115,29 +115,20 @@ stories.add('multiline + char validation', () => (
     <Input
       autoFocus
       multiline={3}
-      placeholder="This is a textarea!"
-      onResize={() => console.log('Resize')}
+      placeholder="Show at 0!"
       withCharValidator={true}
       charValidatorLimit={100}
       charValidatorShowAt={0}
+      resizable
     />
     <Input
       autoFocus
       multiline={3}
-      placeholder="This is a textarea!"
-      onResize={() => console.log('Resize')}
+      placeholder="Show at 20!"
       withCharValidator={true}
       charValidatorLimit={100}
-      charValidatorShowAt={5}
-    />
-    <Input
-      autoFocus
-      multiline={3}
-      placeholder="This is a textarea!"
-      onResize={() => console.log('Resize')}
-      withCharValidator={true}
-      charValidatorLimit={500}
-      charValidatorShowAt={250}
+      charValidatorShowAt={20}
+      resizable
     />
   </div>
 ))
