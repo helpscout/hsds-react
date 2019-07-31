@@ -211,8 +211,6 @@ export class EditableField extends React.Component<
             onEnter({ name, value: fieldValue, event: cachedEvent })
           })
         } else {
-          console.log('Case 2: value was changed')
-
           // Case 2: value was changed
           // change active status, field value and update initialFieldValue
           const updatedFieldValue = fieldValue.map(val => {
