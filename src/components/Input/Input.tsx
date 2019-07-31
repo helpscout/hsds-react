@@ -553,12 +553,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   }
 
   getCharValidatorMarkup() {
-    const {
-      withCharValidator,
-      charValidatorLimit,
-      charValidatorShowAt,
-    } = this.props
-    if (!withCharValidator) return null
+    if (!this.props.withCharValidator) return null
+    const { charValidatorLimit, charValidatorShowAt } = this.props
     const {
       value: { length: count },
     } = this.state
