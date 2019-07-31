@@ -30,8 +30,8 @@ export const AddButtonUI = styled('button')`
   padding: 0;
   margin: 8px 0 0 0;
   border: none;
-  color: #c6d0d8;
-  background-color: #f6f7f8;
+  color: ${getColor('grey.800')};
+  background-color: ${getColor('grey.300')};
   cursor: pointer;
   border-radius: 3px;
 
@@ -51,7 +51,7 @@ export const AddButtonUI = styled('button')`
   &:disabled {
     cursor: default;
     color: #c6d0d8;
-    background-color: #f6f7f8;
+    background-color: ${getColor('grey.300')};
   }
 
   .c-Icon {
