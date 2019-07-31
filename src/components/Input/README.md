@@ -55,7 +55,7 @@ Note: Be sure the version for `Button` is at least version 2.
 | action                   | `React.Component`          | Embedded actions for the Input.                                            |
 | autoFocus                | `boolean`                  | Automatically focuses the input.                                           |
 | charValidatorLimit       | `number`                   | How many chars are allowed to be input.                                    |
-| charValidatorShowAt      | `boolean`                  | At how many chars input should the charValidator be shown.                 |
+| charValidatorShowAt      | `number`                   | At how many chars input should the charValidator be shown.                 |
 | className                | `string`                   | Custom class names to be added to the component.                           |
 | disabled                 | `boolean`                  | Disable the input.                                                         |
 | errorIcon                | `string`                   | Icon that renders when the state is `error`.                               |
