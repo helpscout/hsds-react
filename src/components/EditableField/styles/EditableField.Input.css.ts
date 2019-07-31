@@ -142,6 +142,7 @@ export const OptionsWrapperUI = styled('div')`
   width: 60px;
   height: ${CONTENT_HEIGHT}px;
   margin-right: 20px;
+  font-family: ${FONT_FAMILY};
   font-size: 14px;
   pointer-events: auto;
 
@@ -173,6 +174,7 @@ export const OptionsDropdownUI = styled('div')`
   width: 70px;
   margin-bottom: 5px;
   background: white;
+  font-family: ${FONT_FAMILY};
   font-size: 14px;
   line-height: ${CONTENT_HEIGHT}px;
   height: ${CONTENT_HEIGHT - 2}px;
@@ -233,6 +235,7 @@ export const InputUI = styled('input')`
     padding: 0;
     border: none;
     color: ${COLOURS.invisible};
+    font-family: ${FONT_FAMILY};
     font-size: 14px;
     background: white;
     pointer-events: auto;
@@ -318,6 +321,7 @@ export const StaticOptionUI = styled('span')`
   height: ${CONTENT_HEIGHT - 2}px;
   margin-right: 10px;
   color: ${COLOURS.static.regular};
+  font-family: ${FONT_FAMILY};
   font-size: 14px;
   font-weight: 500;
   line-height: ${CONTENT_HEIGHT}px;
@@ -361,6 +365,7 @@ export const StaticValueUI = styled('span')`
   width: 100%;
   max-width: 100%;
   color: ${COLOURS.static.regular};
+  font-family: ${FONT_FAMILY};
   font-size: 14px;
   z-index: 2;
   pointer-events: none;
@@ -414,6 +419,10 @@ export const StaticValueUI = styled('span')`
     width: auto;
     outline: 0;
     border-bottom: 1px dashed ${COLOURS.static.focused};
+
+    .c-Truncate {
+      width: 100%;
+    }
   }
 `
 
@@ -432,7 +441,7 @@ export const FocusIndicatorUI = styled('span')`
 
 export const FieldActionsUI = styled('div')`
   ${({ numberOfActions }) => `width: ${numberOfActions * 25 + 5}px;`}
-  height: ${CONTENT_HEIGHT}px;
+  height: 21px;
   position: absolute;
   top: 1px;
   left: ${({ renderAsBlock, numberOfActions }) =>
@@ -447,38 +456,40 @@ export const FieldActionsUI = styled('div')`
 `
 
 export const FieldButtonUI = styled('button')`
-  display: inline-block;
-  vertical-align: middle;
-  height: ${CONTENT_HEIGHT}px;
-  width: 20px;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background-color: ${COLOURS.invisible};
-  color: ${COLOURS.button.regular};
-  font-size: 12px;
-  text-align: center;
-  overflow: hidden;
+  &.${CLASSNAMES.fieldButton} {
+    display: inline-block;
+    vertical-align: middle;
+    height: 21px;
+    width: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: ${COLOURS.invisible};
+    color: ${COLOURS.button.regular};
+    font-size: 12px;
+    text-align: center;
+    overflow: hidden;
 
-  &:hover,
-  &:focus {
-    cursor: pointer;
-    color: ${COLOURS.button.hover};
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &.action-delete {
-    &:focus,
-    &:hover {
-      color: ${COLOURS.button.delete};
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      color: ${COLOURS.button.hover};
     }
-  }
 
-  .c-Icon {
-    width: 24px;
-    transform: translateX(3px);
+    &:focus {
+      outline: none;
+    }
+
+    &.action-delete {
+      &:focus,
+      &:hover {
+        color: ${COLOURS.button.delete};
+      }
+    }
+
+    .c-Icon {
+      width: 24px;
+      transform: translateX(3px);
+    }
   }
 `

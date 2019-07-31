@@ -145,6 +145,7 @@ export class EditableFieldInput extends React.Component<
     if (this.state.dynamicFieldWidth !== nextState.dynamicFieldWidth) {
       return true
     }
+    console.log('shouldComponentUpdate')
 
     return false
   }
