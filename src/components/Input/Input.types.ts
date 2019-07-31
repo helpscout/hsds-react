@@ -26,6 +26,8 @@ export type InputValue = string
 export type InputProps = {
   action?: any
   autoFocus: boolean
+  charValidatorLimit: number
+  charValidatorShowAt: number
   className: string
   disabled: boolean
   errorIcon?: string
@@ -81,7 +83,8 @@ export type InputProps = {
   typingTimeoutDelay: number
   value: InputValue
   width: string | number
-  withTypingEvent: false
+  withCharValidator: boolean
+  withTypingEvent: boolean
 }
 
 export type InputState = {

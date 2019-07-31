@@ -3,6 +3,9 @@ import { cy } from '@helpscout/cyan'
 import { mount, shallow, render } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Input.Resizer'
+import Badge from '../../Badge'
+import Animate from '../../Animate'
+import { CharValidatorUI } from '../styles/Input.css'
 
 jest.useFakeTimers()
 
@@ -1121,5 +1124,72 @@ describe('inputType', () => {
 
     expect(el.attr('value')).toBe('123')
     expect(spy).toHaveBeenCalledWith('123')
+  })
+})
+
+describe('charValidator', () => {
+  test('it should render charValidator', () => {
+    const wrapper = mount(<Input withCharValidator={true} />)
+    expect(wrapper.find(Badge).length).toEqual(1)
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+  })
+  test('it should not render charValidator', () => {
+    const wrapper = mount(<Input />)
+    expect(wrapper.find(CharValidatorUI).length).toEqual(0)
+  })
+  test('it should not render charValidator, because showAt has not been reached', () => {
+    const wrapper = mount(
+      <Input
+        withCharValidator={true}
+        charValidatorShowAt={9}
+        value="12345678"
+      />
+    )
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+    const component = wrapper.find(Animate)
+    expect(component.props().in).toEqual(false)
+    expect(component.length).toEqual(1)
+  })
+  test('it should render charValidator success', () => {
+    const wrapper = mount(
+      <Input
+        withCharValidator={true}
+        charValidatorShowAt={4}
+        charValidatorLimit={9}
+        value="1234567"
+      />
+    )
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+    const component = wrapper.find(Animate)
+    expect(component.props().in).toEqual(true)
+    expect(component.length).toEqual(1)
+  })
+  test('it should render charValidator error', () => {
+    const wrapper = mount(
+      <Input
+        withCharValidator={true}
+        charValidatorShowAt={4}
+        charValidatorLimit={7}
+        value="12345678"
+      />
+    )
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+    const badge = wrapper.find(Badge)
+    expect(badge.props().status).toEqual('error')
+  })
+  test('it should trim the text', () => {
+    const wrapper = shallow(
+      <Input
+        withCharValidator={true}
+        charValidatorShowAt={4}
+        charValidatorLimit={7}
+        value=""
+      />
+    )
+    const result = wrapper
+      .instance()
+      .setValue('A very long string that should get trimmed')
+    expect(result).toEqual('A very ')
+    expect(result.length).toEqual(7)
   })
 })

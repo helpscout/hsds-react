@@ -1,5 +1,7 @@
 /* eslint react/no-deprecated: off */
 import * as React from 'react'
+import Animate from '../Animate'
+import Badge from '../Badge'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import AddOn from './Input.AddOn'
@@ -29,6 +31,7 @@ import {
   isTextArea,
 } from './Input.utils'
 import {
+  CharValidatorUI,
   InputWrapperUI,
   InlinePrefixSuffixUI,
   FieldUI,
@@ -42,6 +45,8 @@ const uniqueID = createUniqueIDFactory('Input')
 export class Input extends React.PureComponent<InputProps, InputState> {
   static defaultProps = {
     autoFocus: false,
+    charValidatorShowAt: 0,
+    charValidatorLimit: 500,
     disabled: false,
     errorIcon: 'alert',
     forceAutoFocusTimeout: 0,
@@ -80,6 +85,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     typingThrottleInterval: 500,
     typingTimeoutDelay: 5000,
     value: '',
+    withCharValidator: false,
     withTypingEvent: false,
   }
 
@@ -138,8 +144,12 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   }
 
   setValue = value => {
-    const { inputType } = this.props
+    const { inputType, charValidatorLimit, withCharValidator } = this.props
     let nextValue = value
+
+    if (withCharValidator && nextValue.length > charValidatorLimit) {
+      nextValue = nextValue.substring(0, charValidatorLimit)
+    }
 
     if (inputType === 'number') {
       nextValue = value.replace(/\D/g, '')
@@ -542,6 +552,37 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     return typeof multiline === 'number' ? multiline : 1
   }
 
+  getCharValidatorMarkup() {
+    if (!this.props.withCharValidator) return null
+    const { charValidatorLimit, charValidatorShowAt } = this.props
+    const {
+      value: { length: count },
+    } = this.state
+    const isVisible =
+      charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
+    const currentCount = charValidatorLimit - count
+    const isTooMuch = count !== 0 && count >= charValidatorLimit
+    return (
+      <CharValidatorUI>
+        <Animate
+          animateOnMount={true}
+          duration={250}
+          easing="bounce"
+          in={isVisible}
+          sequence="fade"
+          unmountOnExit
+        >
+          <Badge
+            status={isTooMuch ? 'error' : 'success'}
+            style={{ fontWeight: 100 }}
+          >
+            {count} / {charValidatorLimit}
+          </Badge>
+        </Animate>
+      </CharValidatorUI>
+    )
+  }
+
   getResizerMarkup() {
     const { multiline, offsetAmount, seamless } = this.props
 
@@ -732,6 +773,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
               />
               {this.getResizerMarkup()}
             </InputUI>
+            {this.getCharValidatorMarkup()}
             {this.getHintTextMarkup()}
           </InputWrapperUI>
         )}
