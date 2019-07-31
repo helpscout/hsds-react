@@ -127,7 +127,7 @@ stories.add('multiline + char validation', () => (
       placeholder="Show at 20!"
       withCharValidator={true}
       charValidatorLimit={100}
-      charValidatorShowAt={20}
+      charValidatorShowAt={5}
       resizable
     />
   </div>

@@ -1,5 +1,6 @@
 /* eslint react/no-deprecated: off */
 import * as React from 'react'
+import Animate from '../Animate'
 import Badge from '../Badge'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
@@ -563,17 +564,25 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     } = this.state
     const isVisible =
       charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
-    if (!isVisible) return null
     const currentCount = charValidatorLimit - count
     const isTooMuch = count !== 0 && count >= charValidatorLimit
     return (
       <CharValidatorUI>
-        <Badge
-          status={isTooMuch ? 'error' : 'success'}
-          style={{ fontWeight: 100 }}
+        <Animate
+          animateOnMount={true}
+          duration={250}
+          easing="bounce"
+          in={isVisible}
+          sequence="fade"
+          unmountOnExit
         >
-          {count} / {charValidatorLimit}
-        </Badge>
+          <Badge
+            status={isTooMuch ? 'error' : 'success'}
+            style={{ fontWeight: 100 }}
+          >
+            {count} / {charValidatorLimit}
+          </Badge>
+        </Animate>
       </CharValidatorUI>
     )
   }
