@@ -772,8 +772,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
                 state={state}
               />
               {this.getResizerMarkup()}
+              {this.getCharValidatorMarkup()}
             </InputUI>
-            {this.getCharValidatorMarkup()}
             {this.getHintTextMarkup()}
           </InputWrapperUI>
         )}
