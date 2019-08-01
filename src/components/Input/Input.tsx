@@ -581,7 +581,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
         >
           <Badge
             status={isTooMuch ? 'error' : 'success'}
-            style={{ fontWeight: 100 }}
+            style={{ fontWeight: 100, minWidth: 75 }}
           >
             {this.state.charValidatorText}
           </Badge>
