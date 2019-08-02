@@ -16,6 +16,7 @@ export const MessageCardUI = styled(Card)`
   border-radius: 8px;
   padding: 20px 20px 25px;
   width: 300px;
+  word-break: break-word;
 
   &.is-align-right {
     border-bottom-right-radius: 4px;
