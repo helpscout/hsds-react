@@ -121,13 +121,24 @@ stories.add('multiline + char validation', () => (
       charValidatorShowAt={0}
       resizable
     />
+    <br />
     <Input
       autoFocus
       multiline={3}
-      placeholder="Show at 20!"
+      placeholder="Show at 5!"
       withCharValidator={true}
       charValidatorLimit={100}
       charValidatorShowAt={5}
+      resizable
+    />
+    <br />
+    <Input
+      autoFocus
+      multiline={3}
+      placeholder="Show at 250"
+      withCharValidator={true}
+      charValidatorLimit={500}
+      charValidatorShowAt={250}
       resizable
     />
   </div>

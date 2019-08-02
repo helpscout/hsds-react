@@ -103,6 +103,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     super(props)
 
     this.state = {
+      charValidatorText: '',
       id: props.id || uniqueID(),
       isFocused: props.isFocused,
       state: props.state,
@@ -562,6 +563,13 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
     const currentCount = charValidatorLimit - count
     const isTooMuch = count !== 0 && count >= charValidatorLimit
+
+    if (isVisible) {
+      this.setState({
+        charValidatorText: `${count} / ${charValidatorLimit}`,
+      })
+    }
+
     return (
       <CharValidatorUI>
         <Animate
@@ -574,9 +582,9 @@ export class Input extends React.PureComponent<InputProps, InputState> {
         >
           <Badge
             status={isTooMuch ? 'error' : 'success'}
-            style={{ fontWeight: 100 }}
+            style={{ fontWeight: 100, minWidth: 75 }}
           >
-            {count} / {charValidatorLimit}
+            {this.state.charValidatorText}
           </Badge>
         </Animate>
       </CharValidatorUI>
@@ -772,8 +780,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
                 state={state}
               />
               {this.getResizerMarkup()}
+              {this.getCharValidatorMarkup()}
             </InputUI>
-            {this.getCharValidatorMarkup()}
             {this.getHintTextMarkup()}
           </InputWrapperUI>
         )}

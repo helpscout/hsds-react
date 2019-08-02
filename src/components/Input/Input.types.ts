@@ -92,6 +92,7 @@ export type InputState = {
   isFocused: boolean
   height?: number
   state?: UIState
+  charValidatorText: string
   typingThrottle: number | undefined
   typingTimeout: number | undefined
   value: InputValue
