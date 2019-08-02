@@ -2,6 +2,7 @@ import * as React from 'react'
 import { StickyActionsUI } from './styles/Page.StickyActions.css'
 import { PageStickyActionsProps, PageStickyActionsState } from './Page.types'
 import { noop } from '../../utilities/other'
+import { isIntersectionObserverSupported } from './Page.utils'
 
 class StickyActions extends React.PureComponent<
   PageStickyActionsProps,
@@ -33,7 +34,7 @@ class StickyActions extends React.PureComponent<
 
   observerStart() {
     /* istanbul ignore next */
-    if (!IntersectionObserver) return
+    if (!isIntersectionObserverSupported()) return
 
     const { offset } = this.props
     const observerOptions = {
@@ -50,7 +51,7 @@ class StickyActions extends React.PureComponent<
 
   observerStop() {
     /* istanbul ignore next */
-    if (!IntersectionObserver) return
+    if (!isIntersectionObserverSupported()) return
 
     this.observer.unobserve(this.node)
     this.observer.disconnect()
