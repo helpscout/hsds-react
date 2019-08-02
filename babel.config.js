@@ -2,7 +2,18 @@ module.exports = api => {
   const isTest = api.env('test')
   const plugins = [
     '@babel/plugin-proposal-class-properties',
-    'inline-svg',
+    [
+      'inline-svg',
+      {
+        svgo: {
+          plugins: [
+            {
+              removeViewBox: false,
+            },
+          ],
+        },
+      },
+    ],
     'emotion',
   ]
 
