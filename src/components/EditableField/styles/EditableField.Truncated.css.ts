@@ -1,6 +1,6 @@
 import styled from '../../styled/index'
 
-export const TruncateUI = styled('div')`
+export const TruncatedUI = styled('div')`
   display: flex;
   width: 100%;
   max-width: 100%;

@@ -1,11 +1,14 @@
 import * as React from 'react'
 
 import {
-  EditableFieldUI,
+  ComponentUI,
+  FieldUI,
   LabelTextUI,
   AddButtonUI,
 } from './styles/EditableField.css'
-import EditableFieldInput from './EditableField.Input'
+import { EditableFieldInput as Input } from './EditableField.Input'
+import { EditableFieldMask as Mask } from './EditableField.Mask'
+import { EditableFieldActions as Actions } from './EditableField.Actions'
 import EventListener from '../EventListener'
 import Icon from '../Icon'
 
@@ -16,9 +19,11 @@ import {
   EF_COMPONENT_KEY,
   createNewValueFieldFactory,
   generateFieldActions,
-  getComponentClassNames,
   normalizeFieldValue,
   ACTION_ICONS,
+  EDITABLEFIELD_CLASSNAMES,
+  OTHERCOMPONENTS_CLASSNAMES,
+  STATES_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
@@ -36,21 +41,19 @@ import {
 const nextUuid = createUniqueIDFactory(EF_COMPONENT_KEY)
 const createNewFieldValue = createNewValueFieldFactory(nextUuid)
 
-const CLASSNAMES: any = getComponentClassNames(EF_COMPONENT_KEY)
 const EMPTY_VALUE = ''
 
 export class EditableField extends React.Component<
   EditableFieldProps,
   EditableFieldState
 > {
-  static className = CLASSNAMES.component
+  static className = EDITABLEFIELD_CLASSNAMES.component
   static defaultProps = {
     type: 'text',
     defaultOption: null,
     disabled: false,
     emphasizeTopValue: false,
     multipleValues: false,
-    renderFieldsAsBlocks: false,
     value: EMPTY_VALUE,
     innerRef: noop,
     onInputFocus: noop,
@@ -108,6 +111,7 @@ export class EditableField extends React.Component<
           : null,
       defaultOption: defaultStateOption,
       focusedByLabel: false,
+      maskTabIndex: null,
     }
   }
 
@@ -123,7 +127,7 @@ export class EditableField extends React.Component<
     return classNames(
       EditableField.className,
       className,
-      disabled && CLASSNAMES.isDisabled
+      disabled && STATES_CLASSNAMES.isDisabled
     )
   }
 
@@ -145,6 +149,7 @@ export class EditableField extends React.Component<
     this.setState({
       focusedByLabel: false,
       activeField: name,
+      maskTabIndex: null,
     })
 
     onInputFocus({ name, value: fieldValue, event })
@@ -205,13 +210,13 @@ export class EditableField extends React.Component<
         // Case 2: value was not changed
         // Just change active status
         else if (impactedField && inputValue === impactedField.value) {
-          this.setState({ activeField: EMPTY_VALUE }, () => {
+          this.setState({ activeField: EMPTY_VALUE, maskTabIndex: '0' }, () => {
             resolve()
 
             onEnter({ name, value: fieldValue, event: cachedEvent })
           })
         } else {
-          // Case 2: value was changed
+          // Case 3: value was changed
           // change active status, field value and update initialFieldValue
           const updatedFieldValue = fieldValue.map(val => {
             /* istanbul ignore else */
@@ -226,6 +231,7 @@ export class EditableField extends React.Component<
               activeField: EMPTY_VALUE,
               fieldValue: updatedFieldValue,
               initialFieldValue: updatedFieldValue,
+              maskTabIndex: '0',
             },
             () => {
               resolve()
@@ -240,7 +246,11 @@ export class EditableField extends React.Component<
       if (isEscape) {
         // Change active status and return fieldValue to initialValue
         this.setState(
-          { activeField: EMPTY_VALUE, fieldValue: initialFieldValue },
+          {
+            activeField: EMPTY_VALUE,
+            fieldValue: initialFieldValue,
+            maskTabIndex: '0',
+          },
           () => {
             resolve()
 
@@ -250,6 +260,23 @@ export class EditableField extends React.Component<
         )
       }
     })
+  }
+
+  handleMaskValueKeyDown = ({ event, name }) => {
+    const isEnter = event.key === key.ENTER
+    const isEscape = event.key === key.ESCAPE
+
+    if (isEnter || isEscape) {
+      this.setState(
+        {
+          maskTabIndex: null,
+        },
+        () => {
+          const inputNode = document.getElementById(name)
+          isEnter && inputNode && inputNode.focus()
+        }
+      )
+    }
   }
 
   handleOptionFocus = ({ name, event }) => {
@@ -378,13 +405,17 @@ export class EditableField extends React.Component<
       // Avoid acting on anything that comes from the options/dropdown
       /* istanbul ignore next */
       if (
-        targetNode.classList.contains(CLASSNAMES.dropdownItem) ||
-        targetNode.classList.contains(CLASSNAMES.truncateContent)
+        targetNode.classList.contains(
+          OTHERCOMPONENTS_CLASSNAMES.dropdownItem
+        ) ||
+        targetNode.classList.contains(
+          OTHERCOMPONENTS_CLASSNAMES.truncateContent
+        )
       )
         return
 
       const optionsNode = this.editableFieldRef.querySelector(
-        `.${CLASSNAMES.optionsWrapper}`
+        `.${EDITABLEFIELD_CLASSNAMES.optionsWrapper}`
       )
       /* istanbul ignore next */
       if (optionsNode && optionsNode.contains(targetNode)) return
@@ -454,7 +485,7 @@ export class EditableField extends React.Component<
 
     return multipleValuesEnabled && !isSingleAndEmpty && !disabled ? (
       <AddButtonUI
-        className={CLASSNAMES.addButton}
+        className={EDITABLEFIELD_CLASSNAMES.addButton}
         type="button"
         onClick={this.handleAddValue}
         disabled={isLastValueEmpty}
@@ -464,51 +495,73 @@ export class EditableField extends React.Component<
     ) : null
   }
 
-  renderInputFields = () => {
-    const {
-      name,
-      disabled,
-      emphasizeTopValue,
-      renderFieldsAsBlocks,
-      type,
-      ...rest
-    } = this.props
+  renderFields = () => {
+    const { name, disabled, emphasizeTopValue, type, ...rest } = this.props
+
     const {
       actions,
       activeField,
       fieldValue,
       multipleValuesEnabled,
       valueOptions,
+      maskTabIndex,
     } = this.state
 
     return (
-      <div className={CLASSNAMES.mainContent}>
+      <div className={EDITABLEFIELD_CLASSNAMES.fieldWrapper}>
         {fieldValue.map((val, index) => {
+          const isActive = activeField === val.id
+
           return (
-            <EditableFieldInput
-              {...getValidProps(rest)}
-              actions={actions}
-              disabled={disabled}
-              emphasize={
-                multipleValuesEnabled && emphasizeTopValue && index === 0
-              }
-              fieldValue={val}
-              isActive={activeField === val.id}
+            <FieldUI
+              className={classNames(
+                EDITABLEFIELD_CLASSNAMES.field,
+                isActive && STATES_CLASSNAMES.isActive,
+                valueOptions && STATES_CLASSNAMES.hasOptions,
+                !Boolean(val.value) && STATES_CLASSNAMES.isEmpty
+              )}
               key={val.id}
-              name={val.id}
-              renderAsBlock={renderFieldsAsBlocks}
-              type={type}
-              valueOptions={valueOptions}
-              onInputFocus={this.handleInputFocus}
-              onInputBlur={this.handleInputBlur}
-              onInputChange={this.handleInputChange}
-              onOptionFocus={this.handleOptionFocus}
-              onOptionSelection={this.handleOptionSelection}
-              onChange={this.handleInputChange}
-              onKeyDown={this.handleInputKeyDown}
-              customAction={this.handleCustomAction}
-              deleteAction={this.handleDeleteAction}
-            />
+            >
+              <Input
+                {...getValidProps(rest)}
+                actions={actions}
+                disabled={disabled}
+                fieldValue={val}
+                isActive={isActive}
+                name={val.id}
+                type={type}
+                valueOptions={valueOptions}
+                onInputFocus={this.handleInputFocus}
+                onInputBlur={this.handleInputBlur}
+                onInputChange={this.handleInputChange}
+                onOptionFocus={this.handleOptionFocus}
+                onOptionSelection={this.handleOptionSelection}
+                onChange={this.handleInputChange}
+                onKeyDown={this.handleInputKeyDown}
+              />
+              <Mask
+                {...getValidProps(rest)}
+                actions={actions}
+                emphasize={
+                  multipleValuesEnabled && emphasizeTopValue && index === 0
+                }
+                fieldValue={val}
+                name={val.id}
+                type={type}
+                valueOptions={valueOptions}
+                maskTabIndex={maskTabIndex}
+                onValueKeyDown={this.handleMaskValueKeyDown}
+              />
+              {actions && Boolean(val.value) && !disabled ? (
+                <Actions
+                  actions={actions}
+                  fieldValue={val}
+                  name={val.id}
+                  customAction={this.handleCustomAction}
+                  deleteAction={this.handleDeleteAction}
+                />
+              ) : null}
+            </FieldUI>
           )
         })}
 
@@ -533,17 +586,17 @@ export class EditableField extends React.Component<
     const { fieldValue } = this.state
 
     return (
-      <EditableFieldUI
+      <ComponentUI
         {...getValidProps(rest)}
         className={this.getClassName()}
         innerRef={this.setEditableNode}
       >
         <label
-          className={CLASSNAMES.label}
+          className={EDITABLEFIELD_CLASSNAMES.label}
           htmlFor={fieldValue[0].id}
           onClick={this.handleLabelClick}
         >
-          <LabelTextUI className={CLASSNAMES.labelText}>
+          <LabelTextUI className={EDITABLEFIELD_CLASSNAMES.labelText}>
             {label || name}
           </LabelTextUI>
         </label>
@@ -552,8 +605,8 @@ export class EditableField extends React.Component<
           handler={this.handleOnDocumentBodyMouseDown}
         />
 
-        {this.renderInputFields()}
-      </EditableFieldUI>
+        {this.renderFields()}
+      </ComponentUI>
     )
   }
 }

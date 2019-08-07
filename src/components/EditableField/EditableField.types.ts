@@ -1,8 +1,8 @@
-export type Value = string | string[] | FieldValue | FieldValue[]
+export type Value = string | FieldValue
 
 export type FieldValue = {
   value: string
-  id?: string
+  id: string
   option?: string
 }
 
@@ -30,27 +30,42 @@ export interface EditableFieldProps {
   multipleValues: boolean
   name: string
   placeholder?: string
-  renderFieldsAsBlocks: boolean
   type: FieldType
-  value: Value
+  value: Value | Value[]
   valueOptions?: string[] | Option[]
   innerRef: (node: HTMLElement) => void
-  onInputFocus: (args: { name: string; value: Value; event: Event }) => void
-  onInputBlur: (args: { name: string; value: Value; event: Event }) => void
-  onInputChange: (args: { name: string; value: Value; event: Event }) => void
-  onOptionFocus: (args: { name: string; value: Value; event: Event }) => void
+  onInputFocus: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputBlur: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputChange: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onOptionFocus: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
   onOptionChange: (args: {
     name: string
     selection: string
-    value: Value
+    value: FieldValue[]
   }) => void
-  onChange: (args: { name: string; value: Value; event?: Event }) => void
-  onEnter: (args: { name: string; value: Value; event: Event }) => void
-  onEscape: (args: { name: string; value: Value; event: Event }) => void
-  onAdd: (args: { name: string; value: Value }) => void
-  onCommit: (args: { name: string; value: Value }) => void
-  onDelete: (args: { name: string; value: Value; event: Event }) => void
-  onDiscard: (args: { value: Value }) => void
+  onChange: (args: { name: string; value: FieldValue[]; event?: Event }) => void
+  onEnter: (args: { name: string; value: FieldValue[]; event: Event }) => void
+  onEscape: (args: { name: string; value: FieldValue[]; event: Event }) => void
+  onAdd: (args: { name: string; value: FieldValue[] }) => void
+  onCommit: (args: { name: string; value: FieldValue[] }) => void
+  onDelete: (args: { name: string; value: FieldValue[]; event: Event }) => void
+  onDiscard: (args: { value: FieldValue[] }) => void
 }
 
 export interface EditableFieldState {
@@ -62,22 +77,21 @@ export interface EditableFieldState {
   initialFieldValue: FieldValue[]
   multipleValuesEnabled: boolean
   valueOptions: any
+  maskTabIndex: string | null
 }
 
-export interface EditableFieldInputProps {
+export interface InputProps {
   actions?: FieldAction[]
   className?: string
   disabled: boolean
-  emphasize: boolean
   fieldValue: FieldValue
   isActive: boolean
   name: string
   placeholder: string
-  renderAsBlock: boolean
   type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
   valueOptions?: Option[]
   innerRef: (node: HTMLElement) => void
-  onInputFocus: (args: { name: string; event: Event }) => Promise<any>
+  onInputFocus: (args: { name: string; event: Event }) => void
   onInputBlur: (args: { name: string; event: Event }) => void
   onInputChange: (args: {
     name: string
@@ -98,11 +112,6 @@ export interface EditableFieldInputProps {
     action: FieldAction
     event: Event
   }) => void
-}
-
-export interface EditableFieldInputState {
-  dynamicFieldWidth: string | null
-  staticContentWidth: string | null
 }
 
 export interface TruncateProps {
