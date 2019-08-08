@@ -59,6 +59,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     isNotOnly: false,
     isSubtleReadOnly: false,
     maxHeight: 320,
+    maxLength: 524288,
     moveCursorToEnd: false,
     multiline: null,
     offsetAmount: 0,
