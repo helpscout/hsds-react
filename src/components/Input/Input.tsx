@@ -104,7 +104,6 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     super(props)
 
     this.state = {
-      charValidatorText: '',
       id: props.id || uniqueID(),
       isFocused: props.isFocused,
       state: props.state,
