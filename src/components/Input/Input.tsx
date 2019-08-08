@@ -571,8 +571,9 @@ export class Input extends React.PureComponent<InputProps, InputState> {
           unmountOnExit
         >
           <Badge
+            count={true}
             status={isTooMuch ? 'error' : 'success'}
-            style={{ minWidth: 75, fontWeight: 100 }}
+            style={{ minWidth: 75 }}
           >
             {nextText}
           </Badge>
