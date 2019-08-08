@@ -115,6 +115,8 @@ export const CharValidatorUI = styled('div')`
   position: absolute;
   text-align: right;
   z-index: 3;
+  -webkit-transform: translateY(0);
+}
 `
 
 export const InlinePrefixSuffixUI = styled('div')`
