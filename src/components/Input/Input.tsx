@@ -20,8 +20,8 @@ import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { isDefined } from '../../utilities/is'
 import { isModifierKeyPressed } from '../../utilities/keys'
+import { isDefined } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import {
   COMPONENT_KEY,
