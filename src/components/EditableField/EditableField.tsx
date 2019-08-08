@@ -266,6 +266,7 @@ export class EditableField extends React.PureComponent<
     })
   }
 
+  /* istanbul ignore next */
   handleMaskValueKeyDown = ({ event, name }) => {
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
@@ -407,6 +408,7 @@ export class EditableField extends React.PureComponent<
     if (targetNode instanceof Element) {
       /* istanbul ignore if */
       if (document.activeElement === targetNode) return
+      /* istanbul ignore if */
       if (targetNode.classList.contains(INPUT_CLASSNAMES.input)) return
 
       // Avoid acting on anything that comes from the options/dropdown

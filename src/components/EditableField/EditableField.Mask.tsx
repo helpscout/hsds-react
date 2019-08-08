@@ -11,6 +11,7 @@ import Truncate from '../Truncate'
 import { MASK_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import * as equal from 'fast-deep-equal'
+import { noop } from '../../utilities/other'
 
 import { MaskProps } from './EditableField.types'
 
@@ -19,6 +20,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
     emphasize: false,
     maskTabIndex: null,
     type: 'text',
+    onValueKeyDown: noop,
   }
 
   valueRef: HTMLSpanElement
@@ -39,6 +41,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
     return false
   }
 
+  /* istanbul ignore next */
   componentDidUpdate(prevProps) {
     const { name, maskTabIndex } = this.props
     const valueNode = this.valueRef
@@ -67,7 +70,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
 
   render() {
     const {
-      actions = [],
+      actions,
       emphasize,
       fieldValue,
       placeholder,
@@ -92,7 +95,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
           innerRef={this.setValueNode}
           onBlur={this.handleValueBlur}
           onKeyDown={this.handleValueKeyDown}
-          numberOfActions={actions.length}
+          numberOfActions={actions ? actions.length : 0}
         >
           {fieldValue.value ? (
             <Truncated

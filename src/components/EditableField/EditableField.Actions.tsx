@@ -29,7 +29,7 @@ export class EditableFieldActions extends React.Component<any> {
   }
 
   render() {
-    const { actions = [] } = this.props
+    const { actions } = this.props
 
     return (
       <ComponentUI

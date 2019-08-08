@@ -51,14 +51,9 @@ export class EditableFieldInput extends React.Component<InputProps> {
     customAction: noop,
   }
 
-  editableFieldInputRef: HTMLDivElement
   fieldInputContentRef: HTMLDivElement
   optionsDropdownRef: HTMLDivElement
   inputRef: HTMLInputElement
-
-  setEditableFieldInputNode = node => {
-    this.editableFieldInputRef = node
-  }
 
   setFieldInputContentNode = node => {
     this.fieldInputContentRef = node
@@ -145,7 +140,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
     const { name, onInputBlur } = this.props
     const optionsNode = this.optionsDropdownRef
 
-    /* istanbul ignore if */
+    /* istanbul ignore next */
     if (optionsNode && optionsNode.classList.contains('is-open')) return
 
     onInputBlur({ name, event })

@@ -93,11 +93,12 @@ export function findParentByClassName(
   childNode,
   className
 ): Element | undefined {
+  /* istanbul ignore next */
   if (!childNode) return
 
   let parent = childNode.parentElement
 
-  while (!parent.classList.contains(className)) {
+  while (parent != null && !parent.classList.contains(className)) {
     parent = parent.parentElement
   }
 
