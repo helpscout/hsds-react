@@ -59,6 +59,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     isNotOnly: false,
     isSubtleReadOnly: false,
     maxHeight: 320,
+    maxLength: 524288,
     moveCursorToEnd: false,
     multiline: null,
     offsetAmount: 0,
@@ -103,7 +104,6 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     super(props)
 
     this.state = {
-      charValidatorText: '',
       id: props.id || uniqueID(),
       isFocused: props.isFocused,
       state: props.state,
@@ -145,19 +145,14 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   }
 
   setValue = value => {
-    const { inputType, charValidatorLimit, withCharValidator } = this.props
+    const { inputType } = this.props
     let nextValue = value
-
-    if (withCharValidator && nextValue.length > charValidatorLimit) {
-      nextValue = nextValue.substring(0, charValidatorLimit)
-    }
 
     if (inputType === 'number') {
       nextValue = value.replace(/\D/g, '')
     }
 
     this.setState({ value: nextValue })
-
     return nextValue
   }
 
@@ -563,12 +558,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
     const currentCount = charValidatorLimit - count
     const isTooMuch = count !== 0 && count >= charValidatorLimit
-
-    if (isVisible) {
-      this.setState({
-        charValidatorText: `${count} / ${charValidatorLimit}`,
-      })
-    }
+    const nextText = `${count} / ${charValidatorLimit}`
 
     return (
       <CharValidatorUI>
@@ -582,9 +572,9 @@ export class Input extends React.PureComponent<InputProps, InputState> {
         >
           <Badge
             status={isTooMuch ? 'error' : 'success'}
-            style={{ fontWeight: 100, minWidth: 75 }}
+            style={{ minWidth: 75, fontWeight: 100 }}
           >
-            {this.state.charValidatorText}
+            {nextText}
           </Badge>
         </Animate>
       </CharValidatorUI>
@@ -614,6 +604,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   getInputMarkup = (props: any) => {
     const {
       autoFocus,
+      charValidatorLimit,
       className,
       disabled,
       errorIcon,
@@ -629,6 +620,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       isSubtleReadOnly,
       label,
       maxHeight,
+      maxLength,
       moveCursorToEnd,
       multiline,
       name,
@@ -657,6 +649,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       type,
       typingThrottleInterval,
       typingTimeoutDelay,
+      withCharValidator,
       withTypingEvent,
       ...rest
     } = this.props
@@ -697,6 +690,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       disabled,
       id,
       innerRef: this.setInputNodeRef,
+      maxLength: withCharValidator ? charValidatorLimit : maxLength,
       name,
       onBlur: this.handleOnInputBlur,
       onChange: this.handleOnChange,

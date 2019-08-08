@@ -48,6 +48,7 @@ export type InputProps = {
   isNotOnly: boolean
   isSubtleReadOnly: boolean
   label: any
+  maxLength: number
   maxHeight: number | string
   modalhelpText: string
   moveCursorToEnd: boolean
@@ -92,7 +93,6 @@ export type InputState = {
   isFocused: boolean
   height?: number
   state?: UIState
-  charValidatorText: string
   typingThrottle: number | undefined
   typingTimeout: number | undefined
   value: InputValue

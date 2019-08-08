@@ -1177,19 +1177,4 @@ describe('charValidator', () => {
     const badge = wrapper.find(Badge)
     expect(badge.props().status).toEqual('error')
   })
-  test('it should trim the text', () => {
-    const wrapper = shallow(
-      <Input
-        withCharValidator={true}
-        charValidatorShowAt={4}
-        charValidatorLimit={7}
-        value=""
-      />
-    )
-    const result = wrapper
-      .instance()
-      .setValue('A very long string that should get trimmed')
-    expect(result).toEqual('A very ')
-    expect(result.length).toEqual(7)
-  })
 })
