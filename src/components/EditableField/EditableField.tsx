@@ -22,6 +22,7 @@ import {
   normalizeFieldValue,
   ACTION_ICONS,
   EDITABLEFIELD_CLASSNAMES,
+  INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   STATES_CLASSNAMES,
 } from './EditableField.utils'
@@ -43,7 +44,7 @@ const createNewFieldValue = createNewValueFieldFactory(nextUuid)
 
 const EMPTY_VALUE = ''
 
-export class EditableField extends React.Component<
+export class EditableField extends React.PureComponent<
   EditableFieldProps,
   EditableFieldState
 > {
@@ -210,11 +211,14 @@ export class EditableField extends React.Component<
         // Case 2: value was not changed
         // Just change active status
         else if (impactedField && inputValue === impactedField.value) {
-          this.setState({ activeField: EMPTY_VALUE, maskTabIndex: '0' }, () => {
-            resolve()
+          this.setState(
+            { activeField: EMPTY_VALUE, maskTabIndex: name },
+            () => {
+              resolve()
 
-            onEnter({ name, value: fieldValue, event: cachedEvent })
-          })
+              onEnter({ name, value: fieldValue, event: cachedEvent })
+            }
+          )
         } else {
           // Case 3: value was changed
           // change active status, field value and update initialFieldValue
@@ -231,7 +235,7 @@ export class EditableField extends React.Component<
               activeField: EMPTY_VALUE,
               fieldValue: updatedFieldValue,
               initialFieldValue: updatedFieldValue,
-              maskTabIndex: '0',
+              maskTabIndex: name,
             },
             () => {
               resolve()
@@ -249,7 +253,7 @@ export class EditableField extends React.Component<
           {
             activeField: EMPTY_VALUE,
             fieldValue: initialFieldValue,
-            maskTabIndex: '0',
+            maskTabIndex: name,
           },
           () => {
             resolve()
@@ -296,14 +300,16 @@ export class EditableField extends React.Component<
     let changed = false
 
     for (const value of fieldValue) {
+      const temp = { ...value }
       /* istanbul ignore else */
-      if (value.id === name && value.option !== selection) {
-        value.option = selection
+      if (temp.id === name && temp.option !== selection) {
+        temp.option = selection
         changed = true
       }
 
-      newFieldValue.push(value)
+      newFieldValue.push(temp)
     }
+
     /* istanbul ignore else */
     if (changed) {
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
@@ -401,6 +407,7 @@ export class EditableField extends React.Component<
     if (targetNode instanceof Element) {
       /* istanbul ignore if */
       if (document.activeElement === targetNode) return
+      if (targetNode.classList.contains(INPUT_CLASSNAMES.input)) return
 
       // Avoid acting on anything that comes from the options/dropdown
       /* istanbul ignore next */

@@ -1,6 +1,11 @@
 import styled from '../../styled/index'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
-import { COLOURS, CONTENT_HEIGHT } from '../EditableField.utils'
+import {
+  COLOURS,
+  CONTENT_HEIGHT,
+  EDITABLEFIELD_CLASSNAMES,
+  TRUNCATED_CLASSNAMES,
+} from '../EditableField.utils'
 
 export const ComponentUI = styled('div')`
   position: relative;
@@ -77,7 +82,7 @@ export const MaskValueUI = styled('span')`
   white-space: nowrap;
   border-bottom: 1px solid ${COLOURS.invisible};
 
-  .has-options & {
+  .${EDITABLEFIELD_CLASSNAMES.field}.has-options & {
     width: calc(100% - 80px);
   }
 
@@ -115,7 +120,7 @@ export const MaskValueUI = styled('span')`
     color: ${COLOURS.mask.placeholder.disabled};
   }
 
-  .c-Truncate {
+  .${TRUNCATED_CLASSNAMES.component} {
     width: ${({ numberOfActions }) => `calc(100% - ${numberOfActions * 20}px)`};
   }
 

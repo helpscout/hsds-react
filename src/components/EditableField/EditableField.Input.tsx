@@ -17,9 +17,13 @@ import Truncate from '../Truncate'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import {
   ACTION_ICONS,
+  findParentByClassName,
   isEllipsisActive,
+  EDITABLEFIELD_CLASSNAMES,
+  MASK_CLASSNAMES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
+  TRUNCATED_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
@@ -71,7 +75,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
   componentDidMount() {
     const { isActive } = this.props
 
-    // this.setInputTitle()
+    this.setInputTitle()
 
     if (isActive) {
       /* istanbul ignore next */
@@ -97,7 +101,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
   componentDidUpdate() {
     const { isActive } = this.props
 
-    // this.setInputTitle()
+    this.setInputTitle()
 
     if (isActive) {
       if (document.activeElement !== this.optionsDropdownRef) {
@@ -108,26 +112,28 @@ export class EditableFieldInput extends React.Component<InputProps> {
     }
   }
 
-  // setInputTitle = () => {
-  //   const { fieldValue } = this.props
-  //   const staticValueNode = this.staticValueRef
+  setInputTitle = () => {
+    const { fieldValue } = this.props
+    const inputNode = this.inputRef
+    const parentNode = findParentByClassName(
+      inputNode,
+      EDITABLEFIELD_CLASSNAMES.field
+    )
 
-  //   const contentNode =
-  //     staticValueNode && staticValueNode.querySelector(`.${CLASSNAMES.content}`)
-  //   const emailNode =
-  //     staticValueNode &&
-  //     staticValueNode.querySelector(`.${CLASSNAMES.firstChunk}`)
+    if (!parentNode) return
 
-  //   /* istanbul ignore next */
-  //   if (
-  //     (contentNode && isEllipsisActive(contentNode)) ||
-  //     (emailNode && isEllipsisActive(emailNode))
-  //   ) {
-  //     const inputNode = this.inputRef
+    const contentNode = parentNode.querySelector(
+      `.${MASK_CLASSNAMES.value} .${OTHERCOMPONENTS_CLASSNAMES.truncateContent}`
+    )
+    const firstChunkNode = parentNode.querySelector(
+      `.${MASK_CLASSNAMES.value} .${TRUNCATED_CLASSNAMES.firstChunk}`
+    )
 
-  //     inputNode && inputNode.setAttribute('title', fieldValue.value)
-  //   }
-  // }
+    /* istanbul ignore next */
+    if (isEllipsisActive(contentNode) || isEllipsisActive(firstChunkNode)) {
+      inputNode && inputNode.setAttribute('title', fieldValue.value)
+    }
+  }
 
   handleInputFocus = event => {
     const { name, onInputFocus } = this.props
@@ -196,17 +202,9 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   handleDropdownSelect = selection => {
-    const { name, fieldValue, onOptionSelection } = this.props
+    const { name, onOptionSelection } = this.props
 
     onOptionSelection({ name, selection })
-    /* istanbul ignore else */
-    if (fieldValue.id === name && fieldValue.option === selection) {
-      // Force React to render the new option
-      // I have no clue as to why is not triggering rerendering by itself
-      // when calling setState on EditableField:268
-      this.forceUpdate()
-    }
-
     this.optionsDropdownRef && this.optionsDropdownRef.focus()
   }
 
@@ -231,10 +229,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
           triggerRef={this.setOptionsDropdownNode}
           renderTrigger={
             <TriggerUI className={INPUT_CLASSNAMES.optionsTrigger}>
-              <OptionsDropdownUI
-                className={INPUT_CLASSNAMES.optionsDropdown}
-                title={fieldValue.option}
-              >
+              <OptionsDropdownUI className={INPUT_CLASSNAMES.optionsDropdown}>
                 <Truncate className={INPUT_CLASSNAMES.selectedOption}>
                   {fieldValue.option}
                 </Truncate>

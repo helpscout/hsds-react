@@ -114,7 +114,20 @@ export interface InputProps {
   }) => void
 }
 
+export interface MaskProps {
+  actions?: FieldAction[]
+  emphasize: boolean
+  fieldValue: FieldValue
+  maskTabIndex: string | null
+  name: string
+  placeholder?: string
+  type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+  valueOptions?: Option[]
+  onValueKeyDown: (args: { name: string; event?: Event }) => void
+}
+
 export interface TruncateProps {
+  className?: string
   string: string
   splitter?: string
 }

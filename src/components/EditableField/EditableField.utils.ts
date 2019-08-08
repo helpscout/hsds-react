@@ -83,8 +83,25 @@ export function generateFieldActions(actions): FieldAction[] | [] {
 }
 
 /* istanbul ignore next */
-export function isEllipsisActive(e) {
-  return e.offsetWidth < e.scrollWidth
+export function isEllipsisActive(element): boolean {
+  if (!element) return false
+
+  return element.offsetWidth < element.scrollWidth
+}
+
+export function findParentByClassName(
+  childNode,
+  className
+): Element | undefined {
+  if (!childNode) return
+
+  let parent = childNode.parentElement
+
+  while (!parent.classList.contains(className)) {
+    parent = parent.parentElement
+  }
+
+  return parent
 }
 
 export const CONTENT_HEIGHT = 25
@@ -97,12 +114,6 @@ export const EDITABLEFIELD_CLASSNAMES = {
   field: `${EF_COMPONENT_KEY}__field`,
   label: `${EF_COMPONENT_KEY}__label`,
   labelText: `${EF_COMPONENT_KEY}__labelText`,
-}
-
-export const OTHERCOMPONENTS_CLASSNAMES = {
-  dropdownItem: 'c-DropdownV2Item',
-  truncateContent: 'c-Truncate__content',
-  dropdownTrigger: 'c-DropdownV2Trigger',
 }
 
 export const INPUT_CLASSNAMES = {
@@ -131,11 +142,16 @@ export const MASK_CLASSNAMES = {
 
 export const TRUNCATED_CLASSNAMES = {
   component: TRUNCATED_COMPONENT_KEY,
-  withSplitter: `${TRUNCATED_COMPONENT_KEY}__withSplitter`,
+  withSplitter: 'withSplitter',
   firstChunk: `${TRUNCATED_COMPONENT_KEY}__firstChunk`,
   splitterChunk: `${TRUNCATED_COMPONENT_KEY}__splitterChunk`,
   secondChunk: `${TRUNCATED_COMPONENT_KEY}__secondChunk`,
-  content: 'c-Truncate__content',
+}
+
+export const OTHERCOMPONENTS_CLASSNAMES = {
+  dropdownItem: 'c-DropdownV2Item',
+  truncateContent: 'c-Truncate__content',
+  dropdownTrigger: 'c-DropdownV2Trigger',
 }
 
 export const STATES_CLASSNAMES = {

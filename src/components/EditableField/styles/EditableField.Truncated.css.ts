@@ -1,11 +1,12 @@
-import styled from '../../styled/index'
+import styled from '../../styled'
+import { TRUNCATED_CLASSNAMES } from '../EditableField.utils'
 
 export const TruncatedUI = styled('div')`
   display: flex;
   width: 100%;
   max-width: 100%;
 
-  .TruncateFirstChunk {
+  .${TRUNCATED_CLASSNAMES.firstChunk} {
     flex-shrink: 2;
     min-width: 20px;
     white-space: nowrap;
