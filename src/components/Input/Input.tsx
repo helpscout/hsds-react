@@ -576,7 +576,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
               status={isTooMuch ? 'error' : 'success'}
               style={{ minWidth: 75, fontWeight: 100 }}
             >
-              {nextText ? nextText : null}
+              {nextText}
             </Badge>
           ) : null}
         </Animate>
