@@ -112,6 +112,7 @@ export const SuffixUI = styled(ItemUI)`
 export const CharValidatorUI = styled('div')`
   right: 15px;
   bottom: -7px;
+  min-height: 18px;
   position: absolute;
   text-align: right;
   z-index: 3;

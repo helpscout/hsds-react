@@ -558,7 +558,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
     const currentCount = charValidatorLimit - count
     const isTooMuch = count !== 0 && count >= charValidatorLimit
-    const nextText = isVisible && `${count} / ${charValidatorLimit}`
+    const nextText = `${count} / ${charValidatorLimit}`
 
     return (
       <CharValidatorUI>
@@ -570,14 +570,12 @@ export class Input extends React.PureComponent<InputProps, InputState> {
           sequence="fade"
           unmountOnExit
         >
-          {nextText ? (
-            <Badge
-              status={isTooMuch ? 'error' : 'success'}
-              style={{ minWidth: 75, fontWeight: 100 }}
-            >
-              {nextText}
-            </Badge>
-          ) : null}
+          <Badge
+            status={isTooMuch ? 'error' : 'success'}
+            style={{ minWidth: 75, fontWeight: 100 }}
+          >
+            {nextText}
+          </Badge>
         </Animate>
       </CharValidatorUI>
     )
