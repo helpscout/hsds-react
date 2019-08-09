@@ -1,13 +1,13 @@
 import baseStyles from '../../../styles/resets/baseStyles.css'
-import { getColor } from '../../../styles/utilities/color'
+import linkStyles from '../../../styles/mixins/linkStyles.css'
 
 const css = `
   ${baseStyles}
   padding-bottom: 4px;
   padding-top: 4px;
-
+  
   a {
-    color: ${getColor('charcoal.400')};
+    ${linkStyles()}
   }
 `
 
