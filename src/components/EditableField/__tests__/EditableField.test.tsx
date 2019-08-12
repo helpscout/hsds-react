@@ -3,13 +3,11 @@ import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { EditableField } from '../EditableField'
 import {
-  EF_COMPONENT_KEY,
-  EF_I_COMPONENT_KEY,
-  getComponentClassNames,
+  ACTIONS_CLASSNAMES,
+  EDITABLEFIELD_CLASSNAMES,
+  INPUT_CLASSNAMES,
+  MASK_CLASSNAMES,
 } from '../EditableField.utils'
-
-const EF_CLASSNAMES: any = getComponentClassNames(EF_COMPONENT_KEY)
-const EF_I_CLASSNAMES: any = getComponentClassNames(EF_I_COMPONENT_KEY)
 
 cy.useFakeTimers()
 
@@ -17,7 +15,7 @@ describe('className', () => {
   test('Has default className', () => {
     const wrapper = cy.render(<EditableField name="company" />)
 
-    expect(wrapper.hasClass(EF_CLASSNAMES.component)).toBeTruthy()
+    expect(wrapper.hasClass(EDITABLEFIELD_CLASSNAMES.component)).toBeTruthy()
   })
 
   test('Can render custom className', () => {
@@ -42,14 +40,14 @@ describe('HTML props', () => {
 describe('Label', () => {
   test('Renders label', () => {
     cy.render(<EditableField name="company" />)
-    const el = cy.get(`.${EF_CLASSNAMES.label}`)
+    const el = cy.get(`.${EDITABLEFIELD_CLASSNAMES.label}`)
 
     expect(el.exists()).toBeTruthy()
   })
 
   test('The label has the correct "for" attribute based of name', () => {
     cy.render(<EditableField name="company" />)
-    const el = cy.get(`.${EF_CLASSNAMES.label}`)
+    const el = cy.get(`.${EDITABLEFIELD_CLASSNAMES.label}`)
     const forAttr = el.getAttribute('for')
 
     expect(forAttr).toContain('company')
@@ -57,14 +55,14 @@ describe('Label', () => {
 
   test('Renders text based of "label" prop', () => {
     cy.render(<EditableField name="company" label="Company" />)
-    const el = cy.get(`.${EF_CLASSNAMES.labelText}`)
+    const el = cy.get(`.${EDITABLEFIELD_CLASSNAMES.labelText}`)
 
     expect(el.getText()).toBe('Company')
   })
 
   test('Renders text if "label" prop not provided using "name"', () => {
     cy.render(<EditableField name="company" />)
-    const el = cy.get(`.${EF_CLASSNAMES.labelText}`)
+    const el = cy.get(`.${EDITABLEFIELD_CLASSNAMES.labelText}`)
 
     expect(el.getText()).toBe('company')
   })
@@ -75,7 +73,7 @@ describe('InnerRef', () => {
     const spy = jest.fn()
     const wrapper = mount(<EditableField name="company" innerRef={spy} />)
     const o = wrapper
-      .find(`.${EF_CLASSNAMES.component}`)
+      .find(`.${EDITABLEFIELD_CLASSNAMES.component}`)
       .first()
       .getDOMNode()
 
@@ -181,7 +179,7 @@ describe('Value', () => {
     const wrapper: any = mount(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
@@ -260,7 +258,7 @@ describe('Value', () => {
       <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
     )
 
-    const button = cy.get(`.${EF_CLASSNAMES.addButton}`)
+    const button = cy.get(`.${EDITABLEFIELD_CLASSNAMES.addButton}`)
     expect(button.exists()).toBeTruthy()
   })
 
@@ -269,7 +267,7 @@ describe('Value', () => {
       <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
     )
 
-    const button = cy.get(`.${EF_CLASSNAMES.addButton}`)
+    const button = cy.get(`.${EDITABLEFIELD_CLASSNAMES.addButton}`)
 
     expect(cy.get('input').length).toBe(3)
     button.click()
@@ -280,12 +278,12 @@ describe('Value', () => {
     cy.render(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
 
-    const button = cy.get(`.${EF_CLASSNAMES.addButton}`)
+    const button = cy.get(`.${EDITABLEFIELD_CLASSNAMES.addButton}`)
 
     expect(cy.get('input').length).toBe(1)
     button.click()
@@ -303,7 +301,7 @@ describe('Value', () => {
       <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
     )
 
-    const button = cy.get(`.${EF_CLASSNAMES.addButton}`)
+    const button = cy.get(`.${EDITABLEFIELD_CLASSNAMES.addButton}`)
 
     expect(cy.get('input').length).toBe(3)
     button.click()
@@ -346,8 +344,8 @@ describe('Value', () => {
       <EditableField
         name="company"
         value={[
-          { option: 'Work', value: 'work_phone' },
-          { option: 'Home', value: 'home_phone' },
+          { option: 'Work', value: 'work_phone', id: '' },
+          { option: 'Home', value: 'home_phone', id: '' },
         ]}
         valueOptions={['Home', 'Work', 'Other']}
         defaultOption="Home"
@@ -375,7 +373,7 @@ describe('Options', () => {
     cy.render(
       <EditableField
         name="company"
-        value={{ option: 'Work', value: '123456789' }}
+        value={{ option: 'Work', value: '123456789', id: '' }}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
@@ -392,12 +390,12 @@ describe('Options', () => {
     cy.render(
       <EditableField
         name="company"
-        value={{ option: 'Work', value: '123456789' }}
+        value={{ option: 'Work', value: '123456789', id: '' }}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.selectedOption}`).getText()).toBe('Work')
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Work')
   })
 
   test('Option text should be the default with empty value', () => {
@@ -410,7 +408,9 @@ describe('Options', () => {
       />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.selectedOption}`).getText()).toBe('Other')
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe(
+      'Other'
+    )
   })
 
   test('Option text should be the default with empty value (obj case)', () => {
@@ -418,12 +418,14 @@ describe('Options', () => {
       <EditableField
         name="company"
         defaultOption="Other"
-        value={{ value: '123456789' }}
+        value={{ value: '123456789', id: '' }}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.selectedOption}`).getText()).toBe('Other')
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe(
+      'Other'
+    )
   })
 
   test('With no value option text should be the default option passed', () => {
@@ -435,7 +437,9 @@ describe('Options', () => {
       />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.selectedOption}`).getText()).toBe('Other')
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe(
+      'Other'
+    )
   })
 
   test('With no value option text should be the first in the list', () => {
@@ -443,7 +447,7 @@ describe('Options', () => {
       <EditableField name="company" valueOptions={['Home', 'Work', 'Other']} />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
   })
 
   test('With no value option text should be default passed in', () => {
@@ -455,14 +459,16 @@ describe('Options', () => {
       />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.selectedOption}`).getText()).toBe('Other')
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe(
+      'Other'
+    )
   })
 
   test('Change option text when clicking a dropdown item', () => {
     cy.render(
       <EditableField
         name="company"
-        value={{ option: 'Work', value: '123456789' }}
+        value={{ option: 'Work', value: '123456789', id: '' }}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
@@ -474,7 +480,7 @@ describe('Options', () => {
       .first()
       .click()
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
   })
 })
 
@@ -482,9 +488,7 @@ describe('Static Value', () => {
   test('should render the placeholder if no value present', () => {
     cy.render(<EditableField name="company" placeholder="Add something" />)
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.staticValue}`).getText()).toBe(
-      'Add something'
-    )
+    expect(cy.get(`.${MASK_CLASSNAMES.value}`).getText()).toBe('Add something')
   })
 
   test('should render the value if present', () => {
@@ -492,7 +496,7 @@ describe('Static Value', () => {
       <EditableField name="company" value="hello" placeholder="Add something" />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.staticValue}`).getText()).toBe('hello')
+    expect(cy.get(`.${MASK_CLASSNAMES.value}`).getText()).toBe('hello')
   })
 
   test('should emphasize the value if emphasizeTopValue and multivalue enabled', () => {
@@ -508,7 +512,7 @@ describe('Static Value', () => {
     expect(cy.get('.is-emphasized').exists()).toBeTruthy()
     expect(cy.get('.is-emphasized').getText()).toBe('hello')
     expect(
-      cy.get(`.${EF_I_CLASSNAMES.staticValue}`).getComputedStyle('fontWeight')
+      cy.get(`.${MASK_CLASSNAMES.value}`).getComputedStyle('fontWeight')
     ).toBe('500')
   })
 
@@ -518,7 +522,7 @@ describe('Static Value', () => {
     )
 
     expect(
-      cy.get(`.${EF_I_CLASSNAMES.staticContent}`).getComputedStyle('zIndex')
+      cy.get(`.${MASK_CLASSNAMES.component}`).getComputedStyle('zIndex')
     ).toBe('2')
   })
 
@@ -532,7 +536,7 @@ describe('Static Value', () => {
     input.focus()
 
     expect(
-      cy.get(`.${EF_I_CLASSNAMES.staticContent}`).getComputedStyle('zIndex')
+      cy.get(`.${MASK_CLASSNAMES.component}`).getComputedStyle('zIndex')
     ).toBe('1')
   })
 
@@ -540,19 +544,19 @@ describe('Static Value', () => {
     cy.render(
       <EditableField
         name="company"
-        value={{ option: 'Work', value: '123456789' }}
+        value={{ option: 'Work', value: '123456789', id: '' }}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.staticOption}`).getText()).toBe('Work')
+    expect(cy.get(`.${MASK_CLASSNAMES.option}`).getText()).toBe('Work')
 
     cy.getByCy('DropdownTrigger').click()
     cy.getByCy('DropdownItem')
       .first()
       .click()
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.staticOption}`).getText()).toBe('Home')
+    expect(cy.get(`.${MASK_CLASSNAMES.option}`).getText()).toBe('Home')
   })
 })
 
@@ -560,7 +564,7 @@ describe('Actions', () => {
   test('should render delete action by default', () => {
     cy.render(<EditableField name="company" value="hello" />)
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.actions}`).exists()).toBeTruthy()
+    expect(cy.get(`.${ACTIONS_CLASSNAMES.actions}`).exists()).toBeTruthy()
     expect(cy.get('.action-delete').exists()).toBeTruthy()
   })
 
@@ -654,7 +658,7 @@ describe('disabled', () => {
     cy.render(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
         disabled
       />
@@ -667,7 +671,7 @@ describe('disabled', () => {
     const wrapper = cy.render(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
         disabled
       />
@@ -680,13 +684,13 @@ describe('disabled', () => {
     cy.render(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
         disabled
       />
     )
 
-    expect(cy.get(`.${EF_I_CLASSNAMES.actions}`).exists()).toBeFalsy()
+    expect(cy.get(`.${ACTIONS_CLASSNAMES.actions}`).exists()).toBeFalsy()
     expect(cy.get('.action-delete').exists()).toBeFalsy()
   })
 
@@ -694,13 +698,13 @@ describe('disabled', () => {
     cy.render(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
         disabled
       />
     )
 
-    const button = cy.get(`.${EF_CLASSNAMES.addButton}`)
+    const button = cy.get(`.${EDITABLEFIELD_CLASSNAMES.addButton}`)
     expect(button.exists()).toBeFalsy()
   })
 
@@ -708,7 +712,7 @@ describe('disabled', () => {
     cy.render(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
         disabled
       />
@@ -723,11 +727,11 @@ describe('Label click event', () => {
     const wrapper = mount(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
-    const label = wrapper.find(`.${EF_CLASSNAMES.label}`).first()
+    const label = wrapper.find(`.${EDITABLEFIELD_CLASSNAMES.label}`).first()
 
     label.simulate('click')
 
@@ -738,12 +742,12 @@ describe('Label click event', () => {
     const wrapper = mount(
       <EditableField
         name="company"
-        value={[{ option: 'Work', value: '123456789' }]}
+        value={[{ option: 'Work', value: '123456789', id: '' }]}
         valueOptions={['Home', 'Work', 'Other']}
         disabled
       />
     )
-    const label = wrapper.find(`.${EF_CLASSNAMES.label}`).first()
+    const label = wrapper.find(`.${EDITABLEFIELD_CLASSNAMES.label}`).first()
 
     label.simulate('click')
 
@@ -961,7 +965,7 @@ describe('Events', () => {
       />
     )
 
-    const button = cy.get(`.${EF_CLASSNAMES.addButton}`)
+    const button = cy.get(`.${EDITABLEFIELD_CLASSNAMES.addButton}`)
 
     button.click()
     expect(spy).toHaveBeenCalled()
@@ -982,7 +986,7 @@ describe('Events', () => {
       />
     )
 
-    const button = cy.get(`.${EF_CLASSNAMES.addButton}`)
+    const button = cy.get(`.${EDITABLEFIELD_CLASSNAMES.addButton}`)
 
     button.click()
     expect(spy).not.toHaveBeenCalled()
@@ -1123,7 +1127,7 @@ describe('Events', () => {
     cy.render(
       <EditableField
         name="company"
-        value={{ option: 'Work', value: '123456789' }}
+        value={{ option: 'Work', value: '123456789', id: '' }}
         valueOptions={['Home', 'Work', 'Other']}
         onOptionChange={onOptionChangeSpy}
         onChange={onChangeSpy}

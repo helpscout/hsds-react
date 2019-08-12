@@ -106,7 +106,6 @@ stories.add('Fields as blocks', () => (
       name="films"
       type="text"
       placeholder="Add a film name"
-      renderFieldsAsBlocks
     />
 
     <EditableField
@@ -114,7 +113,6 @@ stories.add('Fields as blocks', () => (
       name="musicians"
       type="text"
       placeholder="Add a musician name"
-      renderFieldsAsBlocks
       value={['George Harrison', 'Neil Young']}
     />
 
@@ -122,7 +120,6 @@ stories.add('Fields as blocks', () => (
       label="Website"
       name="website"
       placeholder="Add a website address"
-      renderFieldsAsBlocks
       type="url"
       value="http://mysite.net"
       actions={{
@@ -137,7 +134,6 @@ stories.add('Fields as blocks', () => (
       label="Mobile Phone"
       name="mobilephone"
       placeholder="Add a mobile phone"
-      renderFieldsAsBlocks
       type="tel"
       valueOptions={PHONE_OPTIONS}
     />
@@ -146,11 +142,26 @@ stories.add('Fields as blocks', () => (
       label="Phone"
       name="Phone"
       placeholder="Add phone"
-      renderFieldsAsBlocks
       type="tel"
       valueOptions={PHONE_OPTIONS}
       defaultOption={PHONE_OPTIONS[2]}
       value={{ option: 'Work', value: '123456789' }}
+    />
+  </ContainerUI>
+))
+
+stories.add('Split fields', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Films"
+      name="films"
+      type="text"
+      placeholder="Add a film name"
+      value="My neighbour Totoro"
     />
   </ContainerUI>
 ))
