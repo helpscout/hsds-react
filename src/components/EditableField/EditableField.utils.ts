@@ -4,6 +4,7 @@ import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
 
 export const EF_COMPONENT_KEY = 'EditableField'
+export const COMPOSITE_COMPONENT_KEY = 'EditableFieldComposite'
 export const ACTIONS_COMPONENT_KEY = 'FieldActions'
 export const INPUT_COMPONENT_KEY = 'FieldInput'
 export const MASK_COMPONENT_KEY = 'FieldMask'
@@ -157,10 +158,13 @@ export const OTHERCOMPONENTS_CLASSNAMES = {
 
 export const STATES_CLASSNAMES = {
   hasOptions: 'has-options',
+  hasActiveFields: 'has-activeFields',
   isActive: 'is-active',
   isDisabled: 'is-disabled',
   isEmphasized: 'is-emphasized',
   isEmpty: 'is-empty',
+  isHidden: 'is-hidden',
+  isInline: 'is-inline',
   isPlaceholder: 'is-placeholder',
   isTemporaryValue: 'is-temporary-value',
   withPlaceholder: 'with-placeholder',

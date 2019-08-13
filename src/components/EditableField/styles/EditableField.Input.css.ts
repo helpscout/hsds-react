@@ -44,6 +44,10 @@ export const ComponentUI = styled('div')`
     z-index: 2;
     border-bottom-color: ${COLOURS.invisible} !important;
   }
+
+  &.is-inline {
+    position: relative;
+  }
 `
 
 export const InputWrapperUI = styled('div')`
@@ -206,6 +210,21 @@ export const InputUI = styled('input')`
 
     .is-empty &:focus {
       cursor: initial;
+    }
+
+    .has-activeFields & {
+      color: ${COLOURS.input.regular};
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        height: 1px;
+        background-color: ${COLOURS.focusIndicator.inactive};
+      }
+
+      &::placeholder {
+        color: ${COLOURS.input.placeholder};
+        opacity: 1;
+      }
     }
 
     &[type='number']::-webkit-inner-spin-button,

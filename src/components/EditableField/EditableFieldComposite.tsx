@@ -1,0 +1,278 @@
+import * as React from 'react'
+
+import {
+  ComponentUI,
+  ComposedMaskUI,
+} from './styles/EditableFieldComposite.css'
+
+import {
+  COMPOSITE_COMPONENT_KEY,
+  STATES_CLASSNAMES,
+} from './EditableField.utils'
+import { classNames } from '../../utilities/classNames'
+import { key } from '../../constants/Keys'
+import propConnect from '../PropProvider/propConnect'
+
+export class EditableFieldComposite extends React.PureComponent<any, any> {
+  constructor(props) {
+    super(props)
+
+    let fields: React.ReactElement<any>[] = []
+    let maskItems: { name: string; text: string }[] = []
+
+    React.Children.forEach(props.children, (child: React.ReactElement<any>) => {
+      let text = ''
+      if (child.props.value) {
+        text =
+          typeof child.props.value === 'string'
+            ? child.props.value
+            : child.props.value.value
+      }
+
+      maskItems.push({
+        name: child.props.name,
+        text,
+      })
+
+      fields.push(
+        React.cloneElement(child, {
+          key: child.props.name,
+          inline: true,
+          onInputFocus: this.handleFieldFocus(child.props.onInputFocus),
+          onInputBlur: this.handleFieldBlur(child.props.onInputBlur),
+          onInputChange: this.handleInputChange(child.props.onInputChange),
+          onEnter: this.handleEnter(child.props.onEnter),
+          onEscape: this.handleEscape(child.props.onEscape),
+        })
+      )
+    })
+
+    this.state = {
+      fields,
+      hasActiveFields: false,
+      inputState: null,
+      maskItems,
+    }
+  }
+
+  groupRef: HTMLDivElement
+  maskRef: HTMLDivElement
+
+  setGroupNode = node => {
+    this.groupRef = node
+  }
+
+  setMaskNode = node => {
+    this.maskRef = node
+  }
+
+  componentDidUpdate() {
+    if (this.state.inputState === 'blurred') {
+      /**
+       * Beware: Trickery ahead
+       *
+       * Scenario: we have 2 fields: "name" an "city"
+       *
+       * When do we hide the mask? On focus, always
+       * When do we show the mask? Can't be always on blur, because although it would technically work,
+       * we would get a flash of the mask when we move the focus from "name" to "city"
+       *
+       * We know that moving the focus from one input (name) to another (city) triggers this sequence:
+       * blur name, focus city
+       *
+       * Editable Field already takes care of adding a class when it's active, we just need to wait a bit
+       * so that the focus event gets triggered right after the blur, and that is when we act
+       */
+      setTimeout(() => {
+        let hasActiveFields = false
+        const Fields = this.groupRef.querySelectorAll('.EditableField__field')
+
+        Fields.forEach(field => {
+          if (field.classList.contains('is-active')) {
+            hasActiveFields = true
+          }
+        })
+
+        if (!hasActiveFields) {
+          this.setState({ inputState: null, hasActiveFields })
+        }
+      }, 100)
+    }
+  }
+
+  handleFieldFocus = passedFn => {
+    return () => {
+      passedFn && passedFn()
+
+      this.setState({ inputState: 'focused', hasActiveFields: true })
+
+      this.maskRef.removeAttribute('tabindex')
+    }
+  }
+
+  handleFieldBlur = passedFn => {
+    return () => {
+      passedFn && passedFn()
+
+      this.setState({ inputState: 'blurred' })
+    }
+  }
+
+  handleInputChange = passedFn => {
+    return ({ name, value }) => {
+      passedFn && passedFn()
+
+      const { maskItems } = this.state
+
+      this.setState({
+        maskItems: maskItems.map(m => {
+          if (name.includes(m.name)) {
+            return { ...m, text: value[0].value }
+          }
+          return m
+        }),
+      })
+    }
+  }
+
+  handleEnter = passedFn => {
+    return () => {
+      passedFn && passedFn()
+
+      this.setState({ inputState: null, hasActiveFields: false }, () => {
+        this.maskRef.setAttribute('tabindex', '0')
+        this.maskRef.focus()
+      })
+    }
+  }
+
+  handleEscape = passedFn => {
+    return ({ value, name }) => {
+      const { maskItems } = this.state
+      passedFn && passedFn()
+
+      this.setState(
+        {
+          inputState: null,
+          hasActiveFields: false,
+          maskItems: maskItems.map(m => {
+            if (name.includes(m.name)) {
+              return { ...m, text: value[0].value }
+            }
+            return m
+          }),
+        },
+        () => {
+          this.maskRef.setAttribute('tabindex', '0')
+          this.maskRef.focus()
+        }
+      )
+    }
+  }
+
+  handleMaskClick = name => {
+    if (name === 'placeholder') {
+      const input = this.groupRef.querySelector('input')
+
+      input && input.focus()
+      return
+    }
+
+    const inputs = this.groupRef.querySelectorAll('input')
+
+    if (inputs) {
+      for (let index = 0; index < inputs.length; index++) {
+        const element = inputs[index]
+
+        if (element.id.includes(name)) {
+          element.setSelectionRange &&
+            element.setSelectionRange(
+              element.value.length,
+              element.value.length
+            )
+          element.focus()
+          return
+        }
+      }
+    }
+  }
+
+  handleMaskKeyDown = event => {
+    const isEnter = event.key === key.ENTER
+    const isEscape = event.key === key.ESCAPE
+
+    if (isEnter) {
+      const input = this.groupRef.querySelector('input')
+
+      input && input.focus()
+      this.maskRef.removeAttribute('tabindex')
+    } else if (isEscape) {
+      this.maskRef.removeAttribute('tabindex')
+    }
+  }
+
+  renderMaskContent = () => {
+    const { placeholder } = this.props
+    const { maskItems } = this.state
+
+    const hasValues = maskItems.filter(m => Boolean(m.text)).length > 0
+
+    if (hasValues) {
+      return maskItems.map((m, index, self) =>
+        m.text ? (
+          <span
+            className="ComposedMask__item"
+            key={m.name}
+            onClick={() => {
+              this.handleMaskClick(m.name)
+            }}
+          >
+            {m.text}
+            {index !== self.length - 1 ? '\u00a0' : ''}
+          </span>
+        ) : (
+          ''
+        )
+      )
+    }
+
+    return (
+      <span
+        className="ComposedMask__item is-placeholder"
+        onClick={() => {
+          this.handleMaskClick('placeholder')
+        }}
+      >
+        {placeholder}
+      </span>
+    )
+  }
+
+  render() {
+    const { fields, hasActiveFields } = this.state
+
+    return (
+      <ComponentUI
+        className={classNames(
+          hasActiveFields && STATES_CLASSNAMES.hasActiveFields
+        )}
+        innerRef={this.setGroupNode}
+      >
+        {fields}
+        <ComposedMaskUI
+          className={classNames(hasActiveFields && STATES_CLASSNAMES.isHidden)}
+          innerRef={this.setMaskNode}
+          onKeyDown={this.handleMaskKeyDown}
+        >
+          {this.renderMaskContent()}
+        </ComposedMaskUI>
+      </ComponentUI>
+    )
+  }
+}
+
+const PropConnectedComponent = propConnect(COMPOSITE_COMPONENT_KEY)(
+  EditableFieldComposite
+)
+
+export default PropConnectedComponent

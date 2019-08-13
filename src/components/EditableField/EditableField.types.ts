@@ -6,6 +6,14 @@ export type FieldValue = {
   option?: string
 }
 
+export type InputFields = {
+  label?: string
+  name: string
+  placeholder?: string
+  type: FieldType
+  value: Value | Value[]
+}
+
 export type FieldAction = {
   name: string
   icon?: string
@@ -25,11 +33,13 @@ export interface EditableFieldProps {
   className?: string
   defaultOption: string | null
   disabled: boolean
-  label?: string
   emphasizeTopValue: boolean
+  inline: boolean
+  label?: string
   multipleValues: boolean
   name: string
   placeholder?: string
+  secondInput?: InputFields
   type: FieldType
   value: Value | Value[]
   valueOptions?: string[] | Option[]
@@ -85,6 +95,7 @@ export interface InputProps {
   className?: string
   disabled: boolean
   fieldValue: FieldValue
+  inline: boolean
   isActive: boolean
   name: string
   placeholder: string

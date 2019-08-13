@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
+import { EditableFieldComposite } from '../src/components/EditableField'
 import ReadMe from '../src/components/EditableField/README.md'
 
 import { action } from '@storybook/addon-actions'
@@ -95,74 +96,41 @@ stories.add('Text Multiple', () => (
   </ContainerUI>
 ))
 
-stories.add('Fields as blocks', () => (
+stories.add('Composite fields', () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
   >
-    <EditableField
-      label="Films"
-      name="films"
-      type="text"
-      placeholder="Add a film name"
-    />
+    <EditableFieldComposite placeholder="Add a name">
+      <EditableField
+        label="First Name"
+        name="first_name"
+        type="text"
+        placeholder="First Name"
+        value="Juan Pablo"
+        onInputFocus={() => {
+          console.log('execute!')
+        }}
+      />
+      <EditableField
+        label="Last Name"
+        name="last_name"
+        type="text"
+        placeholder="Last Name"
+        value="Lomeli Diaz"
+      />
+    </EditableFieldComposite>
 
-    <EditableField
-      label="Musicians"
-      name="musicians"
-      type="text"
-      placeholder="Add a musician name"
-      value={['George Harrison', 'Neil Young']}
-    />
-
-    <EditableField
-      label="Website"
-      name="website"
-      placeholder="Add a website address"
-      type="url"
-      value="http://mysite.net"
-      actions={{
-        name: 'link',
-        callback(obj) {
-          console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
-        },
-      }}
-    />
-
-    <EditableField
-      label="Mobile Phone"
-      name="mobilephone"
-      placeholder="Add a mobile phone"
-      type="tel"
-      valueOptions={PHONE_OPTIONS}
-    />
-
-    <EditableField
-      label="Phone"
-      name="Phone"
-      placeholder="Add phone"
-      type="tel"
-      valueOptions={PHONE_OPTIONS}
-      defaultOption={PHONE_OPTIONS[2]}
-      value={{ option: 'Work', value: '123456789' }}
-    />
-  </ContainerUI>
-))
-
-stories.add('Split fields', () => (
-  <ContainerUI
-    onSubmit={e => {
-      e.preventDefault()
-    }}
-  >
-    <EditableField
-      label="Films"
-      name="films"
-      type="text"
-      placeholder="Add a film name"
-      value="My neighbour Totoro"
-    />
+    <EditableFieldComposite placeholder="Add a pet">
+      <EditableField
+        label="Animal"
+        name="animal"
+        type="text"
+        placeholder="Animal"
+      />
+      <EditableField label="Name" name="name" type="text" placeholder="name" />
+    </EditableFieldComposite>
   </ContainerUI>
 ))
 

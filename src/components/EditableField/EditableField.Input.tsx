@@ -24,7 +24,9 @@ import {
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   TRUNCATED_CLASSNAMES,
+  STATES_CLASSNAMES,
 } from './EditableField.utils'
+import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import * as equal from 'fast-deep-equal'
@@ -34,9 +36,10 @@ import { InputProps } from './EditableField.types'
 export class EditableFieldInput extends React.Component<InputProps> {
   static className = INPUT_CLASSNAMES.component
   static defaultProps = {
-    isActive: false,
     disabled: false,
     fieldValue: '',
+    isActive: false,
+    inline: false,
     placeholder: '',
     type: 'text',
     innerRef: noop,
@@ -243,6 +246,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
       disabled,
       fieldValue,
       isActive,
+      inline,
       name,
       placeholder,
       type,
@@ -252,7 +256,10 @@ export class EditableFieldInput extends React.Component<InputProps> {
 
     return (
       <ComponentUI
-        className={INPUT_CLASSNAMES.content}
+        className={classNames(
+          INPUT_CLASSNAMES.content,
+          inline && STATES_CLASSNAMES.isInline
+        )}
         innerRef={this.setFieldInputContentNode}
       >
         {valueOptions ? this.renderOptions() : null}
