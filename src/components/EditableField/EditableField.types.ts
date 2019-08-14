@@ -40,6 +40,7 @@ export interface EditableFieldProps {
   name: string
   placeholder?: string
   secondInput?: InputFields
+  size: 'md' | 'lg'
   type: FieldType
   value: Value | Value[]
   valueOptions?: string[] | Option[]
@@ -141,4 +142,17 @@ export interface TruncateProps {
   className?: string
   string: string
   splitter?: string
+}
+
+export interface CompositeProps {
+  size: string
+  separator: string
+  placeholder?: string
+}
+
+export interface CompositeState {
+  fields: React.ReactElement<any>[]
+  hasActiveFields: boolean
+  inputState: null | 'blurred' | 'focused'
+  maskItems: { name: string; text: string }[]
 }

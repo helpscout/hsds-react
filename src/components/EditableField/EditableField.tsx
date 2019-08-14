@@ -56,6 +56,7 @@ export class EditableField extends React.PureComponent<
     emphasizeTopValue: false,
     inline: false,
     multipleValues: false,
+    size: 'md',
     value: EMPTY_VALUE,
     innerRef: noop,
     onInputFocus: noop,
@@ -125,11 +126,13 @@ export class EditableField extends React.PureComponent<
   }
 
   getClassName() {
-    const { className, disabled } = this.props
+    const { className, disabled, size } = this.props
+
     return classNames(
       EditableField.className,
       className,
-      disabled && STATES_CLASSNAMES.isDisabled
+      disabled && STATES_CLASSNAMES.isDisabled,
+      size === 'lg' && STATES_CLASSNAMES.isLarge
     )
   }
 
@@ -582,7 +585,7 @@ export class EditableField extends React.PureComponent<
 
   renderFieldsInline = () => {
     const { name, disabled, inline, type, ...rest } = this.props
-    const { activeField, fieldValue, maskTabIndex } = this.state
+    const { activeField, fieldValue } = this.state
 
     return (
       <div className={EDITABLEFIELD_CLASSNAMES.fieldWrapper}>

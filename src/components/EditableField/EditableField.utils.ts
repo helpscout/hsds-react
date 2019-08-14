@@ -106,7 +106,62 @@ export function findParentByClassName(
   return parent
 }
 
-export const CONTENT_HEIGHT = 25
+export const SIZES = {
+  field: {
+    height: {
+      medium: '25px',
+      large: '28px',
+    },
+    lineHeight: {
+      medium: '25px',
+      large: '28px',
+    },
+    font: {
+      large: '18px',
+      medium: '14px',
+    },
+  },
+  fieldLabel: {
+    font: {
+      medium: '11px',
+    },
+  },
+  floatingLabel: {
+    font: {
+      medium: '12px',
+    },
+  },
+  input: {
+    height: {
+      medium: '23px',
+      large: '28px',
+    },
+  },
+  mask: {
+    height: {
+      medium: '23px',
+      large: '28px',
+    },
+  },
+  compositeMask: {
+    font: {
+      large: '20px',
+      medium: '14px',
+    },
+    height: {
+      medium: '24px',
+      large: '27px',
+    },
+    lineHeight: {
+      medium: '25px',
+      large: '28px',
+    },
+  },
+  focusIndicator: {
+    active: '2px',
+    inactive: '1px',
+  },
+}
 
 export const EDITABLEFIELD_CLASSNAMES = {
   component: `c-${EF_COMPONENT_KEY}`,
@@ -116,6 +171,12 @@ export const EDITABLEFIELD_CLASSNAMES = {
   field: `${EF_COMPONENT_KEY}__field`,
   label: `${EF_COMPONENT_KEY}__label`,
   labelText: `${EF_COMPONENT_KEY}__labelText`,
+}
+
+export const COMPOSITE_CLASSNAMES = {
+  component: `c-${COMPOSITE_COMPONENT_KEY}`,
+  mask: 'ComposedMask',
+  maskItem: 'ComposedMask__item',
 }
 
 export const INPUT_CLASSNAMES = {
@@ -152,6 +213,7 @@ export const TRUNCATED_CLASSNAMES = {
 
 export const OTHERCOMPONENTS_CLASSNAMES = {
   dropdownItem: 'c-DropdownV2Item',
+  truncate: 'c-Truncate',
   truncateContent: 'c-Truncate__content',
   dropdownTrigger: 'c-DropdownV2Trigger',
   icon: 'c-Icon',
@@ -166,6 +228,7 @@ export const STATES_CLASSNAMES = {
   isEmpty: 'is-empty',
   isHidden: 'is-hidden',
   isInline: 'is-inline',
+  isLarge: 'is-large',
   isPlaceholder: 'is-placeholder',
   isTemporaryValue: 'is-temporary-value',
   withPlaceholder: 'with-placeholder',

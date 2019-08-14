@@ -8,12 +8,24 @@ import {
 import {
   COMPOSITE_COMPONENT_KEY,
   STATES_CLASSNAMES,
+  COMPOSITE_CLASSNAMES,
 } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
 import propConnect from '../PropProvider/propConnect'
 
-export class EditableFieldComposite extends React.PureComponent<any, any> {
+import { CompositeProps, CompositeState } from './EditableField.types'
+
+export class EditableFieldComposite extends React.PureComponent<
+  CompositeProps,
+  CompositeState
+> {
+  static className = COMPOSITE_CLASSNAMES.component
+  static defaultProps = {
+    size: 'md',
+    separator: '',
+  }
+
   constructor(props) {
     super(props)
 
@@ -38,6 +50,7 @@ export class EditableFieldComposite extends React.PureComponent<any, any> {
         React.cloneElement(child, {
           key: child.props.name,
           inline: true,
+          size: props.size,
           onInputFocus: this.handleFieldFocus(child.props.onInputFocus),
           onInputBlur: this.handleFieldBlur(child.props.onInputBlur),
           onInputChange: this.handleInputChange(child.props.onInputChange),
@@ -212,7 +225,7 @@ export class EditableFieldComposite extends React.PureComponent<any, any> {
   }
 
   renderMaskContent = () => {
-    const { placeholder } = this.props
+    const { placeholder, separator } = this.props
     const { maskItems } = this.state
 
     const hasValues = maskItems.filter(m => Boolean(m.text)).length > 0
@@ -221,14 +234,14 @@ export class EditableFieldComposite extends React.PureComponent<any, any> {
       return maskItems.map((m, index, self) =>
         m.text ? (
           <span
-            className="ComposedMask__item"
+            className={COMPOSITE_CLASSNAMES.maskItem}
             key={m.name}
             onClick={() => {
               this.handleMaskClick(m.name)
             }}
           >
             {m.text}
-            {index !== self.length - 1 ? '\u00a0' : ''}
+            {index !== self.length - 1 ? `${separator}\u00a0` : ''}
           </span>
         ) : (
           ''
@@ -238,7 +251,10 @@ export class EditableFieldComposite extends React.PureComponent<any, any> {
 
     return (
       <span
-        className="ComposedMask__item is-placeholder"
+        className={classNames(
+          COMPOSITE_CLASSNAMES.maskItem,
+          STATES_CLASSNAMES.isPlaceholder
+        )}
         onClick={() => {
           this.handleMaskClick('placeholder')
         }}
@@ -249,18 +265,24 @@ export class EditableFieldComposite extends React.PureComponent<any, any> {
   }
 
   render() {
+    const { size } = this.props
     const { fields, hasActiveFields } = this.state
 
     return (
       <ComponentUI
         className={classNames(
-          hasActiveFields && STATES_CLASSNAMES.hasActiveFields
+          EditableFieldComposite.className,
+          hasActiveFields && STATES_CLASSNAMES.hasActiveFields,
+          size === 'lg' && STATES_CLASSNAMES.isLarge
         )}
         innerRef={this.setGroupNode}
       >
         {fields}
         <ComposedMaskUI
-          className={classNames(hasActiveFields && STATES_CLASSNAMES.isHidden)}
+          className={classNames(
+            COMPOSITE_CLASSNAMES.mask,
+            hasActiveFields && STATES_CLASSNAMES.isHidden
+          )}
           innerRef={this.setMaskNode}
           onKeyDown={this.handleMaskKeyDown}
         >

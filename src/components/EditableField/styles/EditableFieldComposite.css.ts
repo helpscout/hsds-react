@@ -4,9 +4,12 @@ import { FONT_FAMILY } from '../../../styles/configs/constants'
 
 import {
   COLOURS,
+  SIZES,
   EDITABLEFIELD_CLASSNAMES,
   STATES_CLASSNAMES,
 } from '../EditableField.utils'
+
+const { compositeMask } = SIZES
 
 export const ComponentUI = styled('div')`
   ${baseStyles};
@@ -39,15 +42,15 @@ export const ComposedMaskUI = styled('div')`
   width: auto;
   top: 0;
   left: 0;
-  height: 24px;
-  line-height: 25px;
+  height: ${compositeMask.height.medium};
+  line-height: ${compositeMask.lineHeight.medium};
   font-family: ${FONT_FAMILY};
-  font-size: 14px;
+  font-size: ${compositeMask.font.medium};
 
   span {
     display: inline-block;
-    height: 24px;
-    line-height: 25px;
+    height: ${compositeMask.height.medium};
+    line-height: ${compositeMask.lineHeight.medium};
   }
 
   &:hover {
@@ -69,6 +72,17 @@ export const ComposedMaskUI = styled('div')`
 
     &:hover {
       border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
+    }
+  }
+
+  .${STATES_CLASSNAMES.isLarge} & {
+    height: ${compositeMask.height.large};
+    line-height: ${compositeMask.lineHeight.large};
+    font-size: ${compositeMask.font.large};
+
+    span {
+      height: ${compositeMask.height.large};
+      line-height: ${compositeMask.lineHeight.large};
     }
   }
 `

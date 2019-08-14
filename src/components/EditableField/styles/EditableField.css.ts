@@ -3,10 +3,14 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import {
   COLOURS,
+  SIZES,
   ACTIONS_CLASSNAMES,
   MASK_CLASSNAMES,
-  CONTENT_HEIGHT,
+  STATES_CLASSNAMES,
+  OTHERCOMPONENTS_CLASSNAMES,
 } from '../EditableField.utils'
+
+const { field, fieldLabel } = SIZES
 
 export const ComponentUI = styled('div')`
   ${baseStyles};
@@ -23,7 +27,7 @@ export const LabelTextUI = styled('span')`
   display: block;
   margin-bottom: 5px;
   color: ${getColor('grey.800')};
-  font-size: 11px;
+  font-size: ${fieldLabel.font.medium};
   font-weight: 500;
   letter-spacing: 0.7px;
   text-transform: uppercase;
@@ -32,10 +36,14 @@ export const LabelTextUI = styled('span')`
 export const FieldUI = styled('div')`
   ${baseStyles};
   position: relative;
-  height: ${CONTENT_HEIGHT}px;
+  height: ${field.height};
   margin-bottom: 2px;
   width: auto;
   transition: width 0.2s ease-in-out;
+
+  .${STATES_CLASSNAMES.isLarge} & {
+    height: ${field.height.large};
+  }
 
   &:hover .${ACTIONS_CLASSNAMES.actions} {
     opacity: 1;
@@ -58,14 +66,14 @@ export const FieldUI = styled('div')`
     cursor: initial;
   }
 
-  &:hover .with-placeholder {
+  &:hover .${STATES_CLASSNAMES.withPlaceholder} {
     border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
   }
 
-  .is-disabled
+  .${STATES_CLASSNAMES.isDisabled}
     &:hover
     .${MASK_CLASSNAMES.option},
-    .is-disabled
+    .${STATES_CLASSNAMES.isDisabled}
     &:hover
     .${MASK_CLASSNAMES.value} {
     border-bottom: 1px solid ${COLOURS.invisible};
@@ -74,7 +82,7 @@ export const FieldUI = styled('div')`
   .is-temporary-value {
     position: absolute;
     left: -99999px;
-    font-size: 14px;
+    font-size: ${field.font.medium};
     visibility: hidden;
     width: auto;
     height: auto;
@@ -112,7 +120,7 @@ export const AddButtonUI = styled('button')`
     background-color: ${getColor('grey.300')};
   }
 
-  .c-Icon {
+  .${OTHERCOMPONENTS_CLASSNAMES.icon} {
     position: relative;
     left: -2px;
     top: -2px;

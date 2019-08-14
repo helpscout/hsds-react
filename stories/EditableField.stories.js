@@ -1,11 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
-import { EditableFieldComposite } from '../src/components/EditableField'
-import ReadMe from '../src/components/EditableField/README.md'
 
 import { action } from '@storybook/addon-actions'
 import { jsxDecorator } from 'storybook-addon-jsx'
+import ReadMe from '../src/components/EditableField/README.md'
 
 import styled from '../src/components/styled'
 import baseStyles from '../src/styles/resets/baseStyles.css'
@@ -20,7 +19,7 @@ const stories = storiesOf('EditableField', module)
   .addDecorator(withAktiv)
   .addDecorator(jsxDecorator)
 
-const ContainerUI = styled('div')`
+export const ContainerUI = styled('div')`
   ${baseStyles};
   width: 300px;
   padding: 20px;
@@ -73,6 +72,23 @@ stories.add('Text', () => (
   </ContainerUI>
 ))
 
+stories.add('Text large', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Team"
+      name="team"
+      placeholder="Add a sports team name"
+      size="lg"
+      type="text"
+      value="Barcelona FC"
+    />
+  </ContainerUI>
+))
+
 stories.add('Text Multiple', () => (
   <ContainerUI
     onSubmit={e => {
@@ -96,41 +112,20 @@ stories.add('Text Multiple', () => (
   </ContainerUI>
 ))
 
-stories.add('Composite fields', () => (
+stories.add('Text Multiple Large', () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
   >
-    <EditableFieldComposite placeholder="Add a name">
-      <EditableField
-        label="First Name"
-        name="first_name"
-        type="text"
-        placeholder="First Name"
-        value="Juan Pablo"
-        onInputFocus={() => {
-          console.log('execute!')
-        }}
-      />
-      <EditableField
-        label="Last Name"
-        name="last_name"
-        type="text"
-        placeholder="Last Name"
-        value="Lomeli Diaz"
-      />
-    </EditableFieldComposite>
-
-    <EditableFieldComposite placeholder="Add a pet">
-      <EditableField
-        label="Animal"
-        name="animal"
-        type="text"
-        placeholder="Animal"
-      />
-      <EditableField label="Name" name="name" type="text" placeholder="name" />
-    </EditableFieldComposite>
+    <EditableField
+      label="Musicians"
+      name="musicians"
+      type="text"
+      placeholder="Add a musician name"
+      size="lg"
+      value={['George Harrison', 'Neil Young']}
+    />
   </ContainerUI>
 ))
 
@@ -220,6 +215,25 @@ stories.add('With options', () => (
       label="Phone"
       name="Phone"
       placeholder="Add phone"
+      type="tel"
+      valueOptions={PHONE_OPTIONS}
+      defaultOption={PHONE_OPTIONS[2]}
+      value={{ option: 'Work', value: '123456789' }}
+    />
+  </ContainerUI>
+))
+
+stories.add('With options large', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Phone"
+      name="Phone"
+      placeholder="Add phone"
+      size="lg"
       type="tel"
       valueOptions={PHONE_OPTIONS}
       defaultOption={PHONE_OPTIONS[2]}

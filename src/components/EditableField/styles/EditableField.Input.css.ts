@@ -4,11 +4,13 @@ import { FONT_FAMILY } from '../../../styles/configs/constants'
 
 import {
   COLOURS,
-  CONTENT_HEIGHT,
+  SIZES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   STATES_CLASSNAMES,
 } from '../EditableField.utils'
+
+const { field, floatingLabel, focusIndicator, input } = SIZES
 
 const resetHSAppInputRules = `
   border-radius: 0;
@@ -26,7 +28,7 @@ const resetHSAppInputRules = `
 
 export const ComponentUI = styled('div')`
   display: flex;
-  height: ${CONTENT_HEIGHT}px;
+  height: ${field.height.medium};
   width: 100%;
   max-width: 100%;
   position: absolute;
@@ -34,6 +36,10 @@ export const ComponentUI = styled('div')`
   left: 0;
   z-index: 1;
   border-bottom: 1px solid ${COLOURS.invisible};
+
+  .${STATES_CLASSNAMES.isLarge} & {
+    height: ${field.height.large};
+  }
 
   .${STATES_CLASSNAMES.isDisabled} &:hover {
     cursor: initial;
@@ -53,8 +59,12 @@ export const ComponentUI = styled('div')`
 
 export const InputWrapperUI = styled('div')`
   position: relative;
-  height: ${CONTENT_HEIGHT - 2}px;
+  height: ${input.height.medium};
   width: 100%;
+
+  .${STATES_CLASSNAMES.isLarge} & {
+    height: ${field.height.large};
+  }
 
   .${STATES_CLASSNAMES.hasOptions} & {
     width: calc(100% - 70px);
@@ -79,11 +89,11 @@ export const InputWrapperUI = styled('div')`
         value ? 'translateY(0)' : 'translateY(10px)'};
       position: absolute;
       z-index: 5;
-      top: -20px;
+      top: -18px;
       left: 0;
-      height: 25px;
-      line-height: 25px;
-      font-size: 12px;
+      height: ${field.height.medium};
+      line-height: ${field.lineHeight.medium};
+      font-size: ${floatingLabel.font.medium};
       color: ${COLOURS.floatingLabel};
     }
   }
@@ -92,11 +102,15 @@ export const InputWrapperUI = styled('div')`
 export const OptionsWrapperUI = styled('div')`
   position: relative;
   width: 60px;
-  height: ${CONTENT_HEIGHT}px;
+  height: ${field.height.medium};
   margin-right: 20px;
   font-family: ${FONT_FAMILY};
-  font-size: 14px;
+  font-size: ${field.font.medium};
   pointer-events: auto;
+
+  .${STATES_CLASSNAMES.isLarge} & {
+    height: ${field.height.large};
+  }
 
   .${STATES_CLASSNAMES.isDisabled} & ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
     cursor: initial;
@@ -125,18 +139,24 @@ export const TriggerUI = styled('div')`
 
 export const OptionsDropdownUI = styled('div')`
   width: 70px;
+  height: ${input.height.medium};
+  line-height: ${field.height.medium};
   margin-bottom: 5px;
-  background: white;
   font-family: ${FONT_FAMILY};
-  font-size: 14px;
-  line-height: ${CONTENT_HEIGHT}px;
-  height: ${CONTENT_HEIGHT - 2}px;
+  font-size: ${field.font.medium};
   color: ${COLOURS.invisible};
-  font-family: ${FONT_FAMILY};
+  background: white;
+
+  .${STATES_CLASSNAMES.isLarge} & {
+    height: ${field.height.large};
+    line-height: ${field.height.large};
+    font-size: ${field.font.large};
+  }
 
   &:hover .${OTHERCOMPONENTS_CLASSNAMES.icon} {
     color: ${getColor('charcoal.200')};
   }
+
   .${STATES_CLASSNAMES.isActive} &:hover .${OTHERCOMPONENTS_CLASSNAMES.icon} {
     color: ${getColor('charcoal.800')};
   }
@@ -146,7 +166,7 @@ export const OptionsDropdownUI = styled('div')`
 
     & + .${INPUT_CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
-      height: 1px;
+      height: ${focusIndicator.inactive};
       background-color: ${COLOURS.focusIndicator.inactive};
     }
   }
@@ -157,7 +177,7 @@ export const OptionsDropdownUI = styled('div')`
     & + .${INPUT_CLASSNAMES.focusIndicator} {
       transform: scaleX(1);
       background-color: ${COLOURS.focusIndicator.active};
-      height: 2px;
+      height: ${focusIndicator.active};
     }
   }
 
@@ -167,13 +187,13 @@ export const OptionsDropdownUI = styled('div')`
     }
   }
 
-  & .c-Icon {
+  & .${OTHERCOMPONENTS_CLASSNAMES.icon} {
     position: absolute;
     right: -5px;
     top: 3px;
   }
 
-  & .c-Truncate {
+  & .${OTHERCOMPONENTS_CLASSNAMES.truncate} {
     width: 60px;
   }
 `
@@ -183,28 +203,20 @@ export const InputUI = styled('input')`
   &.${INPUT_CLASSNAMES.input} {
     ${resetHSAppInputRules}
     width: 100%;
-    height: ${CONTENT_HEIGHT}px;
-    line-height: ${CONTENT_HEIGHT}px;
+    height: ${field.height.medium};
+    line-height: ${field.height.medium};
     padding: 0;
     border: none;
     color: ${COLOURS.invisible};
     font-family: ${FONT_FAMILY};
-    font-size: 14px;
+    font-size: ${field.font.medium};
     background: white;
     pointer-events: auto;
 
-    &::placeholder {
-      color: ${COLOURS.invisible};
-    }
-
-    .${STATES_CLASSNAMES.isActive} &:focus {
-      outline: none;
-
-      & + .${INPUT_CLASSNAMES.focusIndicator} {
-        transform: scaleX(1);
-        background-color: ${COLOURS.focusIndicator.active} !important;
-        height: 2px;
-      }
+    .${STATES_CLASSNAMES.isLarge} & {
+      height: ${field.height.large};
+      line-height: ${field.height.large};
+      font-size: ${field.font.large};
     }
 
     .${STATES_CLASSNAMES.isActive} & {
@@ -215,13 +227,23 @@ export const InputUI = styled('input')`
 
       & + .${INPUT_CLASSNAMES.focusIndicator} {
         transform: scaleX(1);
-        height: 1px;
+        height: ${focusIndicator.inactive};
         background-color: #c6d0d8;
       }
 
       &::placeholder {
         color: ${COLOURS.input.placeholder};
         opacity: 1;
+      }
+    }
+
+    .${STATES_CLASSNAMES.isActive} &:focus {
+      outline: none;
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        background-color: ${COLOURS.focusIndicator.active} !important;
+        height: ${focusIndicator.active};
       }
     }
 
@@ -242,7 +264,7 @@ export const InputUI = styled('input')`
 
       & + .${INPUT_CLASSNAMES.focusIndicator} {
         transform: scaleX(1);
-        height: 1px;
+        height: ${focusIndicator.inactive};
         background-color: ${COLOURS.focusIndicator.inactive};
       }
 
@@ -250,6 +272,10 @@ export const InputUI = styled('input')`
         color: ${COLOURS.input.placeholder};
         opacity: 1;
       }
+    }
+
+    &::placeholder {
+      color: ${COLOURS.invisible};
     }
 
     &[type='number']::-webkit-inner-spin-button,
@@ -269,7 +295,7 @@ export const FocusIndicatorUI = styled('span')`
   bottom: -1px;
   left: 0;
   right: 0;
-  height: 2px;
+  height: ${focusIndicator.active};
   background-color: ${COLOURS.focusIndicator.active};
   transform-origin: bottom left;
   transform: scaleX(0);
