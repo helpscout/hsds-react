@@ -154,6 +154,7 @@ export const OTHERCOMPONENTS_CLASSNAMES = {
   dropdownItem: 'c-DropdownV2Item',
   truncateContent: 'c-Truncate__content',
   dropdownTrigger: 'c-DropdownV2Trigger',
+  icon: 'c-Icon',
 }
 
 export const STATES_CLASSNAMES = {
@@ -189,6 +190,7 @@ export const COLOURS = {
     regular: getColor('charcoal.800'),
     placeholder: getColor('charcoal.300'),
   },
+  floatingLabel: getColor('grey.800'),
   focusIndicator: {
     active: getColor('blue.500'),
     inactive: '#c6d0d8',

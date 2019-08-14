@@ -7,6 +7,7 @@ import {
   CONTENT_HEIGHT,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
+  STATES_CLASSNAMES,
 } from '../EditableField.utils'
 
 const resetHSAppInputRules = `
@@ -34,18 +35,18 @@ export const ComponentUI = styled('div')`
   z-index: 1;
   border-bottom: 1px solid ${COLOURS.invisible};
 
-  .is-disabled &:hover {
+  .${STATES_CLASSNAMES.isDisabled} &:hover {
     cursor: initial;
     border-bottom: 1px solid ${COLOURS.invisible};
   }
 
-  .is-active & {
+  .${STATES_CLASSNAMES.isActive} & {
     pointer-events: none;
     z-index: 2;
     border-bottom-color: ${COLOURS.invisible} !important;
   }
 
-  &.is-inline {
+  &.${STATES_CLASSNAMES.isInline} {
     position: relative;
   }
 `
@@ -55,12 +56,36 @@ export const InputWrapperUI = styled('div')`
   height: ${CONTENT_HEIGHT - 2}px;
   width: 100%;
 
-  .has-options & {
+  .${STATES_CLASSNAMES.hasOptions} & {
     width: calc(100% - 70px);
   }
 
-  .is-empty & {
+  .${STATES_CLASSNAMES.isEmpty} & {
     width: 100%;
+  }
+
+  &::before {
+    opacity: 0;
+    will-change: opacity, transform;
+    transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+    pointer-events: none;
+  }
+
+  .${STATES_CLASSNAMES.hasActiveFields} & {
+    &::before {
+      content: ${({ placeholder }) => `"${placeholder}"`};
+      opacity: ${({ value }) => (value ? '1' : '0')};
+      transform: ${({ value }) =>
+        value ? 'translateY(0)' : 'translateY(10px)'};
+      position: absolute;
+      z-index: 5;
+      top: -20px;
+      left: 0;
+      height: 25px;
+      line-height: 25px;
+      font-size: 12px;
+      color: ${COLOURS.floatingLabel};
+    }
   }
 `
 
@@ -73,16 +98,16 @@ export const OptionsWrapperUI = styled('div')`
   font-size: 14px;
   pointer-events: auto;
 
-  .is-disabled & ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
+  .${STATES_CLASSNAMES.isDisabled} & ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
     cursor: initial;
   }
 
-  .is-empty & {
+  .${STATES_CLASSNAMES.isEmpty} & {
     width: 0;
     margin-right: 0;
   }
 
-  .is-active.is-empty & {
+  .${STATES_CLASSNAMES.isActive}.${STATES_CLASSNAMES.isEmpty} & {
     width: 60px;
     margin-right: 20px;
   }
@@ -109,14 +134,14 @@ export const OptionsDropdownUI = styled('div')`
   color: ${COLOURS.invisible};
   font-family: ${FONT_FAMILY};
 
-  &:hover .c-Icon {
+  &:hover .${OTHERCOMPONENTS_CLASSNAMES.icon} {
     color: ${getColor('charcoal.200')};
   }
-  .is-active &:hover .c-Icon {
+  .${STATES_CLASSNAMES.isActive} &:hover .${OTHERCOMPONENTS_CLASSNAMES.icon} {
     color: ${getColor('charcoal.800')};
   }
 
-  .is-active & {
+  .${STATES_CLASSNAMES.isActive} & {
     color: ${getColor('charcoal.800')};
 
     & + .${INPUT_CLASSNAMES.focusIndicator} {
@@ -172,7 +197,7 @@ export const InputUI = styled('input')`
       color: ${COLOURS.invisible};
     }
 
-    .is-active &:focus {
+    .${STATES_CLASSNAMES.isActive} &:focus {
       outline: none;
 
       & + .${INPUT_CLASSNAMES.focusIndicator} {
@@ -182,7 +207,7 @@ export const InputUI = styled('input')`
       }
     }
 
-    .is-active & {
+    .${STATES_CLASSNAMES.isActive} & {
       outline: none;
       color: ${COLOURS.input.regular};
       z-index: 2;
@@ -200,19 +225,19 @@ export const InputUI = styled('input')`
       }
     }
 
-    .is-empty & {
+    .${STATES_CLASSNAMES.isEmpty} & {
       cursor: pointer;
     }
 
-    .is-disabled & {
+    .${STATES_CLASSNAMES.isDisabled} & {
       cursor: not-allowed;
     }
 
-    .is-empty &:focus {
+    .${STATES_CLASSNAMES.isEmpty} &:focus {
       cursor: initial;
     }
 
-    .has-activeFields & {
+    .${STATES_CLASSNAMES.hasActiveFields} & {
       color: ${COLOURS.input.regular};
 
       & + .${INPUT_CLASSNAMES.focusIndicator} {
@@ -250,4 +275,5 @@ export const FocusIndicatorUI = styled('span')`
   transform: scaleX(0);
   transition: transform 0.3s ease, background-color 0.3s ease;
   z-index: 3;
+  will-change: transform, background-color;
 `

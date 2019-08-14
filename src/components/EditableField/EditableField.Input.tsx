@@ -264,7 +264,11 @@ export class EditableFieldInput extends React.Component<InputProps> {
       >
         {valueOptions ? this.renderOptions() : null}
 
-        <InputWrapperUI className={INPUT_CLASSNAMES.inputWrapper}>
+        <InputWrapperUI
+          className={INPUT_CLASSNAMES.inputWrapper}
+          placeholder={placeholder}
+          value={fieldValue.value}
+        >
           <InputUI
             {...getValidProps(rest)}
             className={INPUT_CLASSNAMES.input}

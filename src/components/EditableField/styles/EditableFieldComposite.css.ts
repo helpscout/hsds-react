@@ -39,14 +39,14 @@ export const ComposedMaskUI = styled('div')`
   width: auto;
   top: 0;
   left: 0;
-  height: 25px;
+  height: 24px;
   line-height: 25px;
   font-family: ${FONT_FAMILY};
   font-size: 14px;
 
   span {
     display: inline-block;
-    height: 25px;
+    height: 24px;
     line-height: 25px;
   }
 
