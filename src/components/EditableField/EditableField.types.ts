@@ -145,6 +145,7 @@ export interface TruncateProps {
 }
 
 export interface CompositeProps {
+  className?: string
   size: string
   separator: string
   placeholder?: string

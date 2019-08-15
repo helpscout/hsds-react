@@ -251,7 +251,7 @@ export const COLOURS = {
   },
   input: {
     regular: getColor('charcoal.800'),
-    placeholder: getColor('charcoal.300'),
+    placeholder: getColor('grey.800'),
   },
   floatingLabel: getColor('grey.800'),
   focusIndicator: {

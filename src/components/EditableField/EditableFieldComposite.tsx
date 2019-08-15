@@ -9,6 +9,7 @@ import {
   COMPOSITE_COMPONENT_KEY,
   STATES_CLASSNAMES,
   COMPOSITE_CLASSNAMES,
+  EDITABLEFIELD_CLASSNAMES,
 } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
@@ -98,10 +99,12 @@ export class EditableFieldComposite extends React.PureComponent<
        */
       setTimeout(() => {
         let hasActiveFields = false
-        const Fields = this.groupRef.querySelectorAll('.EditableField__field')
+        const Fields = this.groupRef.querySelectorAll(
+          `.${EDITABLEFIELD_CLASSNAMES.field}`
+        )
 
         Fields.forEach(field => {
-          if (field.classList.contains('is-active')) {
+          if (field && field.classList.contains(STATES_CLASSNAMES.isActive)) {
             hasActiveFields = true
           }
         })
@@ -228,10 +231,10 @@ export class EditableFieldComposite extends React.PureComponent<
     const { placeholder, separator } = this.props
     const { maskItems } = this.state
 
-    const hasValues = maskItems.filter(m => Boolean(m.text)).length > 0
+    const maskItemsWithValue = maskItems.filter(m => Boolean(m.text))
 
-    if (hasValues) {
-      return maskItems.map((m, index, self) =>
+    if (maskItemsWithValue.length > 0) {
+      return maskItemsWithValue.map((m, index, self) =>
         m.text ? (
           <span
             className={COMPOSITE_CLASSNAMES.maskItem}
@@ -265,12 +268,13 @@ export class EditableFieldComposite extends React.PureComponent<
   }
 
   render() {
-    const { size } = this.props
+    const { size, className } = this.props
     const { fields, hasActiveFields } = this.state
 
     return (
       <ComponentUI
         className={classNames(
+          className && className,
           EditableFieldComposite.className,
           hasActiveFields && STATES_CLASSNAMES.hasActiveFields,
           size === 'lg' && STATES_CLASSNAMES.isLarge

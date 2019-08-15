@@ -76,10 +76,10 @@ export const InputWrapperUI = styled('div')`
 
   &::before {
     opacity: 0;
-    will-change: transform, font-size, color;
-    transition-property: transform, font-size, color, opacity;
+    will-change: transform, font-size;
+    transition-property: transform, font-size;
     transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    transition-duration: 0.3s;
+    transition-duration: 0.15s;
     pointer-events: none;
   }
 
@@ -87,7 +87,7 @@ export const InputWrapperUI = styled('div')`
     &::before {
       content: ${({ placeholder }) => `"${placeholder}"`};
       opacity: ${({ value }) => `${value ? '1' : '0'}`};
-      transform: ${({ value }) => `translateY(${value ? '-17' : '0'}px)`};
+      transform: ${({ value }) => `translateY(${value ? -15 : -8}px)`};
       position: absolute;
       z-index: 5;
       top: 0;
@@ -97,8 +97,7 @@ export const InputWrapperUI = styled('div')`
       font-family: ${FONT_FAMILY};
       font-size: ${({ value }) =>
         `${value ? floatingLabel.font.medium : field.font.medium}`};
-      color: ${({ value }) =>
-        `${value ? COLOURS.floatingLabel : COLOURS.input.placeholder}`};
+      color: ${COLOURS.input.placeholder};
     }
   }
 `
