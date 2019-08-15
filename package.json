@@ -107,7 +107,7 @@
     "invariant": "2.2.4",
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
-    "react-sortable-hoc": "1.9.1",
+    "react-sortable-hoc": "^1.9.1",
     "react-transition-group": "2.5.3",
     "warning": "4.0.3"
   },

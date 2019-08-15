@@ -7,8 +7,26 @@ import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
 import { renderChildrenSafely } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { ContentUI, ErrorIconUI, PauseIconUI } from './styles/MessageRow.css'
+import {
+  ContentUI,
+  ErrorIconUI,
+  PauseIconUI,
+  HandleUI,
+  SortableItemUI,
+} from './styles/MessageRow.css'
 import { COMPONENT_KEY } from './MessageRow.utils'
+import { SortableElement, SortableHandle } from 'react-sortable-hoc'
+import Icon from '../Icon/'
+
+const DraggableHandle = SortableHandle(() => (
+  <HandleUI>
+    <Icon name="drag-handle" />
+  </HandleUI>
+))
+
+const SortableItem = SortableElement(({ index, children }) => {
+  return <SortableItemUI>{children}</SortableItemUI>
+})
 
 export interface Props {
   className?: string
@@ -97,21 +115,24 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, innerRef, name, ...rest } = this.props
+    const { children, index, innerRef, name, ...rest } = this.props
 
     return (
-      <AccordionLink
-        data-cy-component="MessageRow"
-        data-cy="message-name-row"
-        {...rest}
-        className={this.getClassName()}
-        innerRef={innerRef}
-      >
-        <ContentUI>
-          <Flexy.Block>{this.renderName()}</Flexy.Block>
-          {this.renderIcon()}
-        </ContentUI>
-      </AccordionLink>
+      <SortableItem index={index}>
+        <AccordionLink
+          data-cy-component="MessageRow"
+          data-cy="message-name-row"
+          {...rest}
+          className={this.getClassName()}
+          innerRef={innerRef}
+        >
+          <ContentUI>
+            <DraggableHandle />
+            <Flexy.Block>{this.renderName()}</Flexy.Block>
+            {this.renderIcon()}
+          </ContentUI>
+        </AccordionLink>
+      </SortableItem>
     )
   }
 }

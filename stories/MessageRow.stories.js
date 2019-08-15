@@ -2,7 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Accordion from '../src/components/Accordion'
 import MessageRow from '../src/components/MessageRow'
-import Page from '../src/components/Page'
 import {
   withKnobs,
   boolean,
@@ -34,13 +33,9 @@ stories.add('Default', () => {
   const messageTwoName = text('messageTwoName', 'Link Row Two')
 
   return (
-    <Page>
-      <Page.Card>
-        <Accordion isSeamless>
-          <MessageRow {...props} />
-          <MessageRow name={messageTwoName} to="/" />
-        </Accordion>
-      </Page.Card>
-    </Page>
+    <Accordion isSeamless>
+      <MessageRow {...props} />
+      <MessageRow name={messageTwoName} to="/" />
+    </Accordion>
   )
 })

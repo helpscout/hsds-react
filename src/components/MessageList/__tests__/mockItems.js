@@ -1,4 +1,4 @@
-export const mockItems = [
+const mockItems = [
   {
     id: '01ed9cbc-9689-4072-9bff-e74cbf835788',
     valid: true,
@@ -80,3 +80,5 @@ export const mockItems = [
     status: 'paused-invalid',
   },
 ]
+
+export default mockItems

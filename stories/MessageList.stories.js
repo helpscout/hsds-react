@@ -10,6 +10,7 @@ import {
   select,
 } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
+import mockItems from '../src/components/MessageList/__tests__/mockItems'
 
 const stories = storiesOf('MessageList', module)
 
@@ -19,7 +20,7 @@ stories.add('Default', () => {
   return (
     <Page>
       <Page.Card>
-        <MessageList />
+        <MessageList items={mockItems} />
       </Page.Card>
     </Page>
   )
