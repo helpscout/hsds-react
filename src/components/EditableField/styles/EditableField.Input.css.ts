@@ -76,25 +76,29 @@ export const InputWrapperUI = styled('div')`
 
   &::before {
     opacity: 0;
-    will-change: opacity, transform;
-    transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+    will-change: transform, font-size, color;
+    transition-property: transform, font-size, color, opacity;
+    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition-duration: 0.3s;
     pointer-events: none;
   }
 
   .${STATES_CLASSNAMES.hasActiveFields} & {
     &::before {
       content: ${({ placeholder }) => `"${placeholder}"`};
-      opacity: ${({ value }) => (value ? '1' : '0')};
-      transform: ${({ value }) =>
-        value ? 'translateY(0)' : 'translateY(10px)'};
+      opacity: ${({ value }) => `${value ? '1' : '0'}`};
+      transform: ${({ value }) => `translateY(${value ? '-17' : '0'}px)`};
       position: absolute;
       z-index: 5;
-      top: -18px;
+      top: 0;
       left: 0;
       height: ${field.height.medium};
       line-height: ${field.lineHeight.medium};
-      font-size: ${floatingLabel.font.medium};
-      color: ${COLOURS.floatingLabel};
+      font-family: ${FONT_FAMILY};
+      font-size: ${({ value }) =>
+        `${value ? floatingLabel.font.medium : field.font.medium}`};
+      color: ${({ value }) =>
+        `${value ? COLOURS.floatingLabel : COLOURS.input.placeholder}`};
     }
   }
 `
