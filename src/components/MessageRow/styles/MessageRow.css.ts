@@ -17,11 +17,8 @@ PauseIconUI.defaultProps = {
   name: 'pause',
 }
 
-export const ContentUI = styled(Flexy)`
-  padding-right: 5px;
-`
-
 export const HandleUI = styled('div')`
+  color: ${getColor('grey.700')};
   pointer-events: all;
   z-index: 9999;
   width: 20px;
@@ -30,6 +27,10 @@ export const HandleUI = styled('div')`
   position: absolute;
   left: 0;
   top: 20;
+`
+
+export const ContentUI = styled(Flexy)`
+  padding-right: 5px;
 `
 
 export const SortableItemUI = styled('div')`

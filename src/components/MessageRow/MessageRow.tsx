@@ -32,6 +32,7 @@ export interface Props {
   className?: string
   children?: any
   errorMessage?: string
+  isDragging: boolean
   isError: boolean
   isPaused: boolean
   innerRef: (node: HTMLElement) => void
@@ -52,7 +53,6 @@ export class MessageRow extends React.PureComponent<Props> {
 
   getClassName() {
     const { className, isError } = this.props
-
     return classNames(
       MessageRow.className,
       isError && 'is-error',
@@ -115,7 +115,7 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, index, innerRef, name, ...rest } = this.props
+    const { children, isDragging, index, innerRef, name, ...rest } = this.props
 
     return (
       <SortableItem index={index}>
@@ -125,6 +125,7 @@ export class MessageRow extends React.PureComponent<Props> {
           {...rest}
           className={this.getClassName()}
           innerRef={innerRef}
+          style={{ pointerEvents: isDragging ? 'none' : 'all' }}
         >
           <ContentUI>
             <DraggableHandle />

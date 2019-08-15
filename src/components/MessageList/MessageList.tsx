@@ -21,6 +21,13 @@ export class MessageList extends React.Component<Props> {
     items: [],
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      isDragging: false,
+    }
+  }
+
   render() {
     const { items } = this.props
 
@@ -30,6 +37,8 @@ export class MessageList extends React.Component<Props> {
 
     if (!items.length) return null
 
+    console.log(this.state)
+
     return (
       <SortableList
         lockAxis="y"
@@ -37,18 +46,31 @@ export class MessageList extends React.Component<Props> {
         // helperClass="sortableHelper"
         // lockAxis="y"
         items={items}
-        // lockOffset={10}
+        onSortStart={({ node, index, collection, isKeySorting }, event) => {
+          this.setState({
+            isDragging: true,
+          })
+        }}
+        onSortEnd={(
+          { oldIndex, newIndex, collection, isKeySorting },
+          event
+        ) => {
+          this.setState({
+            isDragging: false,
+          })
+        }}
+        lockOffset={0}
         // hideSortableGhost={false}
-        // lockToContainerEdges={true}
+        lockToContainerEdges={true}
         // useDragHandle={true}
         useDragHandle={true}
-        onSortEnd={this.onSortEnd}
       >
         <AccordionUI>
           {items.map((item, index) => (
             <MessageRow
               key={`item-${index}`}
               index={index}
+              isDragging={this.state.isDragging}
               sortIndex={index}
               message={item}
             />
