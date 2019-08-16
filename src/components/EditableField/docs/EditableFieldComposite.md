@@ -30,9 +30,9 @@ This component allows the grouping and in-lining of multiple single value Editab
 
 ## Props
 
-| Prop        | Type     | Default | Description                                                                                                     |
-| ----------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------- |
-| className   | `string` | ''      | The className of the component.                                                                                 |
-| placeholder | `string` | ''      | This is the text you see when all fields are empty.                                                             |
-| size        | `string` | "md"    | Default is "md", pass "lg" for the large option.                                                                |
-| separator   | `string` | ' '     | By default, each value will be separated with a non-breaking space, but you can pass any string here, like ",". |
+| Prop        | Type   | Default | Description                                                                                                     |
+| ----------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------- |
+| className   | string | `''`    | The className of the component.                                                                                 |
+| placeholder | string | `''`    | This is the text you see when all fields are empty.                                                             |
+| size        | string | `"md"`  | Default is "md", pass "lg" for the large option.                                                                |
+| separator   | string | `' '`   | By default, each value will be separated with a non-breaking space, but you can pass any string here, like ",". |
