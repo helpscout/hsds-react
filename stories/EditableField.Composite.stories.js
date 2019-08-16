@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
 import { EditableFieldComposite } from '../src/components/EditableField'
-import ReadMe from '../src/components/EditableField/README.md'
+import ReadMe from '../src/components/EditableField/docs/EditableFieldComposite.md'
 
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { withAktiv } from './utils'
@@ -12,7 +12,6 @@ const stories = storiesOf('EditableField/Composite', module)
   .addParameters({
     options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
     readme: { sidebar: ReadMe },
-    a11y: { element: 'c-EditableField' },
   })
   .addDecorator(withAktiv)
   .addDecorator(jsxDecorator)
