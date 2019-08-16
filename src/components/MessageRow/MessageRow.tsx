@@ -32,12 +32,15 @@ export interface Props {
   className?: string
   children?: any
   errorMessage?: string
+  index: number
   isDragging: boolean
+  isDraggingOnList: boolean
   isError: boolean
   isPaused: boolean
   innerRef: (node: HTMLElement) => void
   pausedMessage: string
   name: any
+  valid: boolean
 }
 
 export class MessageRow extends React.PureComponent<Props> {

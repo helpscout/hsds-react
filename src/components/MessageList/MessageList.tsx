@@ -28,6 +28,7 @@ export class MessageList extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
+      index: -1,
       isDragging: false,
     }
   }
