@@ -78,8 +78,8 @@ export const InputWrapperUI = styled('div')`
     opacity: 0;
     will-change: transform, font-size;
     transition-property: transform, font-size;
-    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    transition-duration: 0.15s;
+    transition-timing-function: linear;
+    transition-duration: 0.2s;
     pointer-events: none;
   }
 
@@ -87,7 +87,8 @@ export const InputWrapperUI = styled('div')`
     &::before {
       content: ${({ placeholder }) => `"${placeholder}"`};
       opacity: ${({ value }) => `${value ? '1' : '0'}`};
-      transform: ${({ value }) => `translateY(${value ? -15 : -8}px)`};
+      transform: ${({ value }) => `translateY(${value ? -15 : -10}px)`};
+      transform-origin: center left;
       position: absolute;
       z-index: 5;
       top: 0;
