@@ -19,6 +19,7 @@ PauseIconUI.defaultProps = {
 
 export const HandleUI = styled('div')`
   color: ${getColor('grey.700')};
+  cursor: row-resize;
   display: block;
   height: 20px;
   left: 15px;
