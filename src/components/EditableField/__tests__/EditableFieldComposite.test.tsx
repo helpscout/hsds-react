@@ -119,38 +119,6 @@ describe('Children', () => {
 
     expect(spy).toHaveBeenCalled()
   })
-
-  // test('onEnter still gets executed if passed on an EditableField', () => {
-  //   const spy = jest.fn()
-
-  //   const wrapper = cy.render(
-  //     <EditableFieldComposite>
-  //       <EditableField name="city" onEnter={spy} />
-  //       <EditableField name="country" />
-  //     </EditableFieldComposite>
-  //   )
-
-  //   const input = wrapper.find('input').first()
-  //   input.type('{enter}')
-
-  //   expect(spy).toHaveBeenCalled()
-  // })
-
-  // test('onEscape still gets executed if passed on an EditableField', () => {
-  //   const spy = jest.fn()
-
-  //   const wrapper = cy.render(
-  //     <EditableFieldComposite>
-  //       <EditableField name="city" onEscape={spy} />
-  //       <EditableField name="country" />
-  //     </EditableFieldComposite>
-  //   )
-
-  //   const input = wrapper.find('input').first()
-  //   input.type('{esc}')
-
-  //   expect(spy).toHaveBeenCalled()
-  // })
 })
 
 describe('Composite Mask', () => {
@@ -224,6 +192,85 @@ describe('Composite Mask', () => {
 
     expect(el.text()).toBe(`Barcelona,${'\u00a0'}Spain`)
   })
+
+  test('mask click: placeholder', () => {
+    const wrapper = mount(
+      <EditableFieldComposite>
+        <EditableField name="city" />
+        <EditableField name="country" />
+      </EditableFieldComposite>
+    )
+    const input = wrapper.find('input').first()
+    const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).first()
+
+    mask.simulate('click')
+
+    expect(document.activeElement).toBe(input.getDOMNode())
+  })
+
+  test('mask click: maskItem', () => {
+    const wrapper = mount(
+      <EditableFieldComposite>
+        <EditableField name="city" value="Barcelona" />
+        <EditableField name="country" value="Spain" />
+      </EditableFieldComposite>
+    )
+    const input = wrapper.find('input').first()
+    const input2 = wrapper.find('input').at(1)
+    const maskItem1 = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).first()
+    const maskItem2 = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).at(1)
+
+    maskItem1.simulate('click')
+    expect(document.activeElement).toBe(input.getDOMNode())
+
+    maskItem2.simulate('click')
+    expect(document.activeElement).toBe(input2.getDOMNode())
+  })
+
+  test('mask onEnter', () => {
+    const wrapper = mount(
+      <EditableFieldComposite>
+        <EditableField name="city" value="Barcelona" />
+        <EditableField name="country" value="Spain" />
+      </EditableFieldComposite>
+    )
+    const input = wrapper.find('input').first()
+    const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.mask}`).first()
+
+    input.simulate('keydown', { key: 'Enter' })
+    mask.simulate('keydown', { key: 'Enter' })
+
+    expect(document.activeElement).toBe(input.getDOMNode())
+    expect(
+      wrapper
+        .find(`.${COMPOSITE_CLASSNAMES.mask}`)
+        .first()
+        .getDOMNode()
+        .getAttribute('tabindex')
+    ).toBe(null)
+  })
+
+  test('mask onEscape', () => {
+    const wrapper = mount(
+      <EditableFieldComposite>
+        <EditableField name="city" value="Barcelona" />
+        <EditableField name="country" value="Spain" />
+      </EditableFieldComposite>
+    )
+    const input = wrapper.find('input').first()
+    const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.mask}`).first()
+
+    input.simulate('keydown', { key: 'Enter' })
+    mask.simulate('keydown', { key: 'Escape' })
+
+    expect(
+      wrapper
+        .find(`.${COMPOSITE_CLASSNAMES.mask}`)
+        .first()
+        .getDOMNode()
+        .getAttribute('tabindex')
+    ).toBe(null)
+  })
 })
 
 describe('Active Fields', () => {
@@ -274,6 +321,41 @@ describe('Active Fields', () => {
         .first()
         .hasClass(STATES_CLASSNAMES.isHidden)
     ).toBeTruthy()
+  })
+
+  test('component did update', () => {
+    jest.useFakeTimers()
+
+    const wrapper = mount(
+      <EditableFieldComposite>
+        <EditableField name="city" />
+        <EditableField name="country" />
+      </EditableFieldComposite>
+    )
+    const input = wrapper.find('input').first()
+    const input2 = wrapper.find('input').at(1)
+
+    input.simulate('focus')
+
+    expect(wrapper.state('hasActiveFields')).toBeTruthy()
+    expect(wrapper.state('inputState')).toBe('focused')
+
+    input.simulate('blur')
+    expect(wrapper.state('inputState')).toBe('blurred')
+
+    // Run the setTimeout in component did update
+    jest.runOnlyPendingTimers()
+
+    expect(wrapper.state('hasActiveFields')).toBeFalsy()
+    expect(wrapper.state('inputState')).toBe(null)
+
+    // Focus on 2nd input directly from first input should maintain active state
+    input.simulate('focus')
+    input2.simulate('focus')
+    jest.runOnlyPendingTimers()
+
+    expect(wrapper.state('hasActiveFields')).toBeTruthy()
+    expect(wrapper.state('inputState')).toBe('focused')
   })
 })
 

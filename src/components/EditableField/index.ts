@@ -1,5 +1,7 @@
 /* istanbul ignore next */
+
 import EditableField from './EditableField'
-/* istanbul ignore next */
+import EditableFieldComposite from './EditableFieldComposite'
+
 export default EditableField
-export { default as EditableFieldComposite } from './EditableFieldComposite'
+export { EditableFieldComposite }
