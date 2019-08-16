@@ -4,16 +4,21 @@ import MessageRow from '../MessageRow/'
 import { SortableContainer } from 'react-sortable-hoc'
 
 export interface Props {
-  items: Array
-  onSortEnd: () => {}
-  onSortStart: () => {}
+  items: Array<any>
+  onSortEnd: (any) => {}
+  onSortStart: (any) => {}
+}
+
+export interface State {
+  index: number
+  isDragging: boolean
 }
 
 const SortableList = SortableContainer(({ children }) => {
   return <div>{children}</div>
 })
 
-export class MessageList extends React.Component<Props> {
+export class MessageList extends React.Component<Props, State> {
   static defaultProps = {
     items: [],
     onSortEnd: () => {},
@@ -70,7 +75,6 @@ export class MessageList extends React.Component<Props> {
         onSortEnd={this.onSortEnd}
         lockOffset={10}
         lockToContainerEdges={true}
-        useDragHandle={true}
         useDragHandle={true}
       >
         <AccordionUI>
