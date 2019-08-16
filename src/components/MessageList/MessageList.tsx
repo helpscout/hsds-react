@@ -5,8 +5,8 @@ import { SortableContainer } from 'react-sortable-hoc'
 
 export interface Props {
   items: Array
-  onSortEnd: function
-  onSortStart: function
+  onSortEnd: () => {}
+  onSortStart: () => {}
 }
 
 const SortableList = SortableContainer(({ children }) => {
