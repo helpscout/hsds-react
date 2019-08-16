@@ -9,11 +9,7 @@ export interface Props {
   onSortStart: function
 }
 
-const showErrorIcon = message => {
-  return message.valid === false
-}
-
-const SortableList = SortableContainer(({ children, className }) => {
+const SortableList = SortableContainer(({ children }) => {
   return <div>{children}</div>
 })
 
@@ -31,55 +27,48 @@ export class MessageList extends React.Component<Props> {
     }
   }
 
+  onSortEnd = ({ oldIndex, newIndex, collection, isKeySorting }, event) => {
+    const isDragging = false
+    this.setState({
+      index: -1,
+      isDragging,
+    })
+    this.props.onSortEnd({
+      collection,
+      isDragging,
+      isKeySorting,
+      newIndex,
+      oldIndex,
+    })
+  }
+
+  onSortStart = ({ node, index, collection, isKeySorting }, event) => {
+    const isDragging = true
+    this.setState({
+      index,
+      isDragging,
+    })
+    this.props.onSortStart({
+      collection,
+      index,
+      node,
+      isDragging,
+      isKeySorting,
+    })
+  }
+
   render() {
     const { items } = this.props
-
-    const showErrorIcon = item => {
-      return item.valid === false
-    }
 
     if (!items.length) return null
 
     return (
       <SortableList
         lockAxis="y"
-        // axis="y"
-        // helperClass="sortableHelper"
-        // lockAxis="y"
         items={items}
-        onSortStart={({ node, index, collection, isKeySorting }, event) => {
-          const isDragging = true
-          this.setState({
-            index,
-            isDragging,
-          })
-          this.props.onSortStart({
-            collection,
-            index,
-            node,
-            isDragging,
-            isKeySorting,
-          })
-        }}
-        onSortEnd={(
-          { oldIndex, newIndex, collection, isKeySorting },
-          event
-        ) => {
-          const isDragging = false
-          this.setState({
-            index: -1,
-            isDragging,
-          })
-          this.props.onSortEnd({
-            collection,
-            isDragging,
-            isKeySorting,
-            newIndex,
-            oldIndex,
-          })
-        }}
-        lockOffset={0}
-        // hideSortableGhost={false}
+        onSortStart={this.onSortStart}
+        onSortEnd={this.onSortEnd}
+        lockOffset={10}
         lockToContainerEdges={true}
         useDragHandle={true}
         useDragHandle={true}
@@ -89,10 +78,14 @@ export class MessageList extends React.Component<Props> {
             return (
               <MessageRow
                 {...item}
-                key={`item-${index}`}
                 index={index}
+                isError={item.valid === false}
+                isPaused={
+                  item.status === 'not-started' || item.status === 'paused'
+                }
                 isDragging={this.state.index === index}
                 isDraggingOnList={this.state.isDragging}
+                key={`item-${item.id}`}
                 sortIndex={index}
               />
             )

@@ -52,21 +52,13 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   getClassName() {
-    const { className, isDragging, isError } = this.props
+    const { className, isDragging, isError, isPaused } = this.props
     return classNames(
       MessageRow.className,
       isError && 'is-error',
       'is-open',
-      this.isPaused() && 'is-paused',
+      isPaused && 'is-paused',
       className
-    )
-  }
-
-  isPaused() {
-    return (
-      this.props.valid ||
-      this.props.status === 'paused' ||
-      this.props.status === 'not-started'
     )
   }
 
@@ -95,7 +87,7 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   renderIcon() {
-    const { valid, isPaused } = this.props
+    const { isPaused, valid } = this.props
 
     if (!valid) {
       return this.renderErrorIcon()
@@ -108,8 +100,8 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   renderName() {
-    const { name } = this.props
-    const shade = this.isPaused() ? 'faint' : 'default'
+    const { name, isPaused } = this.props
+    const shade = isPaused ? 'faint' : 'default'
 
     return renderChildrenSafely(name, Text, {
       truncate: true,
