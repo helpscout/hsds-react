@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
-import { EditableFieldComposite } from '../EditableFieldComposite'
+import { EditableFieldComposite } from '../'
 import { EditableField } from '../EditableField'
 import {
   COMPOSITE_CLASSNAMES,
