@@ -35,6 +35,7 @@ export const ContentUI = styled(Flexy)`
 
 export const SortableItemUI = styled('div')`
   width: 100%;
+  border-bottom: 1px solid ${getColor('border')};
   pointer-events: all;
   z-index: 2;
   position: relative;

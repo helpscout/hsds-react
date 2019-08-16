@@ -6,6 +6,7 @@ import { SortableContainer } from 'react-sortable-hoc'
 export interface Props {
   items: Array
   onSortEnd: function
+  onSortStart: function
 }
 
 const showErrorIcon = message => {
@@ -19,6 +20,8 @@ const SortableList = SortableContainer(({ children, className }) => {
 export class MessageList extends React.Component<Props> {
   static defaultProps = {
     items: [],
+    onSortEnd: () => {},
+    onSortStart: () => {},
   }
 
   constructor(props) {
@@ -37,8 +40,6 @@ export class MessageList extends React.Component<Props> {
 
     if (!items.length) return null
 
-    console.log(this.state)
-
     return (
       <SortableList
         lockAxis="y"
@@ -47,34 +48,55 @@ export class MessageList extends React.Component<Props> {
         // lockAxis="y"
         items={items}
         onSortStart={({ node, index, collection, isKeySorting }, event) => {
+          const isDragging = true
           this.setState({
-            isDragging: true,
+            index,
+            isDragging,
+          })
+          this.props.onSortStart({
+            collection,
+            index,
+            node,
+            isDragging,
+            isKeySorting,
           })
         }}
         onSortEnd={(
           { oldIndex, newIndex, collection, isKeySorting },
           event
         ) => {
+          const isDragging = false
           this.setState({
-            isDragging: false,
+            index: -1,
+            isDragging,
+          })
+          this.props.onSortEnd({
+            collection,
+            isDragging,
+            isKeySorting,
+            newIndex,
+            oldIndex,
           })
         }}
         lockOffset={0}
         // hideSortableGhost={false}
         lockToContainerEdges={true}
-        // useDragHandle={true}
+        useDragHandle={true}
         useDragHandle={true}
       >
         <AccordionUI>
-          {items.map((item, index) => (
-            <MessageRow
-              key={`item-${index}`}
-              index={index}
-              isDragging={this.state.isDragging}
-              sortIndex={index}
-              message={item}
-            />
-          ))}
+          {items.map((item, index) => {
+            return (
+              <MessageRow
+                {...item}
+                key={`item-${index}`}
+                index={index}
+                isDragging={this.state.index === index}
+                isDraggingOnList={this.state.isDragging}
+                sortIndex={index}
+              />
+            )
+          })}
         </AccordionUI>
       </SortableList>
     )

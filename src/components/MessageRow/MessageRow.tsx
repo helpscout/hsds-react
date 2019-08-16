@@ -52,17 +52,22 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   getClassName() {
-    const { className, isError } = this.props
+    const { className, isDragging, isError } = this.props
     return classNames(
       MessageRow.className,
       isError && 'is-error',
+      'is-open',
       this.isPaused() && 'is-paused',
       className
     )
   }
 
   isPaused() {
-    return this.props.isError || this.props.isPaused
+    return (
+      this.props.valid ||
+      this.props.status === 'paused' ||
+      this.props.status === 'not-started'
+    )
   }
 
   renderErrorIcon() {
@@ -90,9 +95,9 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   renderIcon() {
-    const { isError, isPaused } = this.props
+    const { valid, isPaused } = this.props
 
-    if (isError) {
+    if (!valid) {
       return this.renderErrorIcon()
     }
     if (isPaused) {
@@ -115,17 +120,25 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, isDragging, index, innerRef, name, ...rest } = this.props
+    const {
+      children,
+      isDraggingOnList,
+      isDragging,
+      index,
+      innerRef,
+      name,
+      ...rest
+    } = this.props
 
     return (
-      <SortableItem index={index}>
+      <SortableItem index={index} isDragging={isDragging}>
         <AccordionLink
           data-cy-component="MessageRow"
           data-cy="message-name-row"
           {...rest}
           className={this.getClassName()}
           innerRef={innerRef}
-          style={{ pointerEvents: isDragging ? 'none' : 'all' }}
+          style={{ pointerEvents: isDraggingOnList ? 'none' : 'all' }}
         >
           <ContentUI>
             <DraggableHandle />
