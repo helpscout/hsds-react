@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AccordionUI, HandleUI } from './styles/MessageList.css'
+import { AccordionUI } from './styles/MessageList.css'
 import MessageRow from '../MessageRow/'
 import { SortableContainer } from 'react-sortable-hoc'
 
