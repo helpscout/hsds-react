@@ -39,6 +39,7 @@ export const ComponentUI = styled('div')`
 `
 export const ComposedMaskUI = styled('div')`
   position: absolute;
+  display: flex;
   z-index: 3;
   width: auto;
   top: 0;
