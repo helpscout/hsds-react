@@ -412,7 +412,7 @@ export class EditableField extends React.PureComponent<
     if (targetNode instanceof Element) {
       /* istanbul ignore if */
       if (document.activeElement === targetNode) return
-      /* istanbul ignore if */
+      /* istanbul ignore next */
       if (
         this.editableFieldRef.contains(targetNode) &&
         targetNode.classList.contains(INPUT_CLASSNAMES.input)

@@ -18,6 +18,7 @@ export const ComponentUI = styled('div')`
 
   .${EDITABLEFIELD_CLASSNAMES.component} {
     margin-right: 10px;
+    margin-bottom: 0;
 
     &:last-child {
       margin-right: 0;

@@ -133,7 +133,7 @@ export const InputUI = styled('input')`
       & + .${INPUT_CLASSNAMES.focusIndicator} {
         transform: scaleX(1);
         height: ${focusIndicator.inactive};
-        background-color: #c6d0d8;
+        background-color: ${COLOURS.focusIndicator.inactive};
       }
 
       &::placeholder {

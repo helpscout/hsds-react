@@ -10,6 +10,7 @@ import {
   STATES_CLASSNAMES,
   COMPOSITE_CLASSNAMES,
   EDITABLEFIELD_CLASSNAMES,
+  INPUT_CLASSNAMES,
 } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
@@ -106,9 +107,29 @@ export class EditableFieldComposite extends React.PureComponent<
         // It is tested (composite test: "component did update" line:326)
         /* istanbul ignore next */
         if (!hasActiveFields) {
+          // Let's remove the transition from all but the first focus indicator
+          const focusIndicators = Array.from(
+            this.groupRef.querySelectorAll(
+              `.${INPUT_CLASSNAMES.focusIndicator}`
+            )
+          ).slice(1)
+          /* istanbul ignore next */
+          focusIndicators.forEach((fi: HTMLElement) => {
+            fi.style.transition = 'none'
+          })
           this.setState({ inputState: null, hasActiveFields })
         }
       }, 100)
+    } else if (this.state.inputState === 'focused') {
+      // Let's reinstate the transition for the focus indicators
+      const focusIndicators = Array.from(
+        this.groupRef.querySelectorAll(`.${INPUT_CLASSNAMES.focusIndicator}`)
+      )
+
+      /* istanbul ignore next */
+      focusIndicators.forEach((fi: HTMLElement) => {
+        fi.removeAttribute('style')
+      })
     }
   }
 
