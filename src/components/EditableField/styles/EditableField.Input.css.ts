@@ -103,6 +103,98 @@ export const InputWrapperUI = styled('div')`
   }
 `
 
+export const InputUI = styled('input')`
+  /* Guard styles from other globally applied rules for input tags */
+  &.${INPUT_CLASSNAMES.input} {
+    ${resetHSAppInputRules}
+    width: 100%;
+    height: ${field.height.medium};
+    line-height: ${field.height.medium};
+    padding: 0;
+    border: none;
+    color: ${COLOURS.invisible};
+    font-family: ${FONT_FAMILY};
+    font-size: ${field.font.medium};
+    background: white;
+    pointer-events: auto;
+
+    .${STATES_CLASSNAMES.isLarge} & {
+      height: ${field.height.large};
+      line-height: ${field.height.large};
+      font-size: ${field.font.large};
+    }
+
+    .${STATES_CLASSNAMES.isActive} & {
+      outline: none;
+      color: ${COLOURS.input.regular};
+      z-index: 2;
+      cursor: initial;
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        height: ${focusIndicator.inactive};
+        background-color: #c6d0d8;
+      }
+
+      &::placeholder {
+        color: ${COLOURS.input.placeholder};
+        opacity: 1;
+      }
+    }
+
+    .${STATES_CLASSNAMES.isActive} &:focus {
+      outline: none;
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        background-color: ${COLOURS.focusIndicator.active} !important;
+        height: ${focusIndicator.active};
+      }
+    }
+
+    .${STATES_CLASSNAMES.isEmpty} & {
+      cursor: pointer;
+    }
+
+    .${STATES_CLASSNAMES.isDisabled} & {
+      cursor: not-allowed;
+    }
+
+    .${STATES_CLASSNAMES.isEmpty} &:focus {
+      cursor: initial;
+    }
+
+    .${STATES_CLASSNAMES.hasActiveFields} & {
+      color: ${COLOURS.input.regular};
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        height: ${focusIndicator.inactive};
+        background-color: ${COLOURS.focusIndicator.inactive};
+      }
+
+      &::placeholder {
+        color: ${COLOURS.input.placeholder};
+        opacity: 1;
+      }
+    }
+
+    &::placeholder {
+      color: ${COLOURS.invisible};
+    }
+
+    &[type='number']::-webkit-inner-spin-button,
+    &[type='number']::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+`
+
 export const OptionsWrapperUI = styled('div')`
   position: relative;
   width: 60px;
@@ -199,98 +291,6 @@ export const OptionsDropdownUI = styled('div')`
 
   & .${OTHERCOMPONENTS_CLASSNAMES.truncate} {
     width: 60px;
-  }
-`
-
-export const InputUI = styled('input')`
-  /* Guard styles from other globally applied rules for input tags */
-  &.${INPUT_CLASSNAMES.input} {
-    ${resetHSAppInputRules}
-    width: 100%;
-    height: ${field.height.medium};
-    line-height: ${field.height.medium};
-    padding: 0;
-    border: none;
-    color: ${COLOURS.invisible};
-    font-family: ${FONT_FAMILY};
-    font-size: ${field.font.medium};
-    background: white;
-    pointer-events: auto;
-
-    .${STATES_CLASSNAMES.isLarge} & {
-      height: ${field.height.large};
-      line-height: ${field.height.large};
-      font-size: ${field.font.large};
-    }
-
-    .${STATES_CLASSNAMES.isActive} & {
-      outline: none;
-      color: ${COLOURS.input.regular};
-      z-index: 2;
-      cursor: initial;
-
-      & + .${INPUT_CLASSNAMES.focusIndicator} {
-        transform: scaleX(1);
-        height: ${focusIndicator.inactive};
-        background-color: #c6d0d8;
-      }
-
-      &::placeholder {
-        color: ${COLOURS.input.placeholder};
-        opacity: 1;
-      }
-    }
-
-    .${STATES_CLASSNAMES.isActive} &:focus {
-      outline: none;
-
-      & + .${INPUT_CLASSNAMES.focusIndicator} {
-        transform: scaleX(1);
-        background-color: ${COLOURS.focusIndicator.active} !important;
-        height: ${focusIndicator.active};
-      }
-    }
-
-    .${STATES_CLASSNAMES.isEmpty} & {
-      cursor: pointer;
-    }
-
-    .${STATES_CLASSNAMES.isDisabled} & {
-      cursor: not-allowed;
-    }
-
-    .${STATES_CLASSNAMES.isEmpty} &:focus {
-      cursor: initial;
-    }
-
-    .${STATES_CLASSNAMES.hasActiveFields} & {
-      color: ${COLOURS.input.regular};
-
-      & + .${INPUT_CLASSNAMES.focusIndicator} {
-        transform: scaleX(1);
-        height: ${focusIndicator.inactive};
-        background-color: ${COLOURS.focusIndicator.inactive};
-      }
-
-      &::placeholder {
-        color: ${COLOURS.input.placeholder};
-        opacity: 1;
-      }
-    }
-
-    &::placeholder {
-      color: ${COLOURS.invisible};
-    }
-
-    &[type='number']::-webkit-inner-spin-button,
-    &[type='number']::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    &[type='number'] {
-      -moz-appearance: textfield;
-    }
   }
 `
 

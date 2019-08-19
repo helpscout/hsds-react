@@ -413,7 +413,11 @@ export class EditableField extends React.PureComponent<
       /* istanbul ignore if */
       if (document.activeElement === targetNode) return
       /* istanbul ignore if */
-      if (targetNode.classList.contains(INPUT_CLASSNAMES.input)) return
+      if (
+        this.editableFieldRef.contains(targetNode) &&
+        targetNode.classList.contains(INPUT_CLASSNAMES.input)
+      )
+        return
 
       // Avoid acting on anything that comes from the options/dropdown
       /* istanbul ignore next */
