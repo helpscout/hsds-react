@@ -4,7 +4,23 @@ import { Avatar, Flexy } from '../../src/index'
 import { ThemeProvider } from '../../src/components/styled'
 import AvatarSpec from './specs/Avatar'
 
+import { action } from '@storybook/addon-actions'
+import {
+  withKnobs,
+  boolean,
+  number,
+  text,
+  select,
+} from '@storybook/addon-knobs'
+
 const stories = storiesOf('Avatar', module)
+
+stories.addDecorator(
+  withKnobs({
+    escapeHTML: false,
+  })
+)
+
 const fixture = AvatarSpec.generate()
 
 stories.add('default', () => (
@@ -155,4 +171,33 @@ stories.add('border', () => (
       status="online"
     />
   </div>
+))
+
+const iconSize = [
+  '8',
+  '10',
+  '12',
+  '13',
+  '14',
+  '15',
+  '16',
+  '18',
+  '20',
+  '24',
+  '32',
+  '48',
+  '52',
+]
+stories.add('with action', () => (
+  <Flexy just="left">
+    <Avatar
+      name={fixture.name}
+      image={fixture.image}
+      actionable={boolean('Actionable', true)}
+      actionIcon={select('Icon', ['trash', 'plus-large', 'hyphen'], 'trash')}
+      actionIconSize={select('Icon Size', iconSize, '24')}
+      shape={select('Shape', ['circle', 'square', 'rounded'], 'circle')}
+      onActionClick={action('handle click action')}
+    />
+  </Flexy>
 ))

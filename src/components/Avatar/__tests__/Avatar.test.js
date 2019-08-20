@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { cy } from '@helpscout/cyan'
 import { Avatar } from '../Avatar'
 import { StatusDot } from '../../index'
 
@@ -352,5 +353,61 @@ describe('onLoad', () => {
     const img = wrapper.find('img').first()
     img.simulate('load')
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Action', () => {
+  test("Doesn't render the action", () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={false} />
+    )
+    expect(wrapper.exists()).toBeTruthy()
+    expect(cy.getByCy('Avatar.Action').exists()).toBeFalsy()
+  })
+
+  test('Adds action to Avatar', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} />
+    )
+    expect(wrapper.exists()).toBeTruthy()
+    expect(cy.getByCy('Avatar.Action').exists()).toBeTruthy()
+  })
+
+  test('Renders action default trash icon', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} />
+    )
+    expect(cy.get('.c-Icon').exists()).toBeTruthy()
+    expect(cy.get('.c-Icon').hasClassName('is-iconName-trash')).toBeTruthy()
+  })
+
+  test('Renders custom action icon', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} actionIcon="plus" />
+    )
+    expect(cy.get('.c-Icon').exists()).toBeTruthy()
+    expect(cy.get('.c-Icon').hasClassName('is-iconName-plus')).toBeTruthy()
+  })
+
+  test('Updates the shape of the Action based on parent prop', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} shape="rounded" />
+    )
+    expect(cy.getByCy('Avatar.Action').hasClassName('is-rounded')).toBeTruthy()
+  })
+
+  test('Evokes the callback when clicking on the Action component', () => {
+    const fn = jest.fn()
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        onActionClick={fn}
+      />
+    )
+    cy.getByCy('Avatar.Action').click()
+    expect(fn).toHaveBeenCalled()
   })
 })

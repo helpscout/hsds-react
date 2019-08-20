@@ -4,6 +4,8 @@ import propConnect from '../PropProvider/propConnect'
 import { StatusDotStatus } from '../StatusDot/StatusDot.types'
 import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
+import Icon from '../Icon'
+import { IconSize } from '../Icon/Icon.types'
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
@@ -15,6 +17,7 @@ import {
   OuterBorderUI,
   StatusUI,
   TitleUI,
+  ActionUI,
 } from './styles/Avatar.css'
 import {
   COMPONENT_KEY,
@@ -27,6 +30,9 @@ import {
 export interface Props {
   animationDuration: number
   animationEasing: string
+  actionable?: boolean
+  actionIcon?: string
+  actionIconSize?: IconSize
   borderColor?: string
   className?: string
   count?: number | string
@@ -37,6 +43,7 @@ export interface Props {
   name: string
   onLoad?: () => void
   onError?: () => void
+  onActionClick?: () => void
   outerBorderColor?: string
   showStatusBorderColor: boolean
   shape: AvatarShape
@@ -53,6 +60,9 @@ export interface State {
 
 export class Avatar extends React.PureComponent<Props, State> {
   static defaultProps = {
+    actionable: true,
+    actionIcon: 'trash',
+    actionIconSize: '24',
     animationDuration: 160,
     animationEasing: 'ease',
     borderColor: 'transparent',
@@ -105,6 +115,29 @@ export class Avatar extends React.PureComponent<Props, State> {
     return classNames(shape && `is-${shape}`, size && `is-${size}`)
   }
 
+  renderAction() {
+    const { actionable, actionIcon, actionIconSize, onActionClick } = this.props
+
+    if (!actionable) {
+      return null
+    }
+
+    const actionClassName = classNames(
+      'c-Avatar__action',
+      this.getShapeClassNames()
+    )
+
+    return (
+      <ActionUI
+        data-cy="Avatar.Action"
+        className={actionClassName}
+        onClick={onActionClick}
+      >
+        <Icon name={actionIcon} size={actionIconSize} />
+      </ActionUI>
+    )
+  }
+
   renderCrop = () => {
     const { animationDuration, animationEasing, name, withShadow } = this.props
 
@@ -135,6 +168,7 @@ export class Avatar extends React.PureComponent<Props, State> {
           onError={this.onImageLoadedError}
           onLoad={this.onImageLoadedSuccess}
         />
+        {this.renderAction()}
       </AvatarCrop>
     )
   }
