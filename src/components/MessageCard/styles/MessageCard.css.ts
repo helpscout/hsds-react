@@ -55,4 +55,5 @@ export const ActionUI = styled('div')`
 
 export const ActionButtonUI = styled(Button)`
   ${setFontSize(14)};
+  line-height: normal !important;
 `
