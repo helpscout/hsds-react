@@ -100,7 +100,7 @@ export class FilteredList extends React.Component<Props> {
     const isListFiltered = limit && items.length > limit
 
     return itemsList.map((item, index) => {
-      const isLastItem = index + 1 >= limit
+      const isLastItem = index + 1 >= itemsList.length
       const isBadgeVisible = isListFiltered && isLastItem
       const isSeparatorVisible = !isLastItem && inline
       const value = this.getItemValue(item)
