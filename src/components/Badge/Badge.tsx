@@ -56,7 +56,7 @@ class Badge extends React.Component<Props> {
 
     return (
       <BadgeUI
-        {...{ ...getValidProps(rest), color, inverted, white }}
+        {...{ ...getValidProps(rest), color, inverted }}
         className={componentClassName}
       >
         {children}
