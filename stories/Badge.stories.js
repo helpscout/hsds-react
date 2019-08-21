@@ -38,20 +38,38 @@ stories.add('square', () => (
 
 stories.add('inverted', () => (
   <div>
-    <Badge status="error" inverted={true}>Badger</Badge>
-    <Badge status="info" inverted={true}>Badger</Badge>
-    <Badge status="success" inverted={true}>Badger</Badge>
-    <Badge status="warning" inverted={true}>Badger</Badge>
+    <Badge status="error" inverted={true}>
+      Badger
+    </Badge>
+    <Badge status="info" inverted={true}>
+      Badger
+    </Badge>
+    <Badge status="success" inverted={true}>
+      Badger
+    </Badge>
+    <Badge status="warning" inverted={true}>
+      Badger
+    </Badge>
   </div>
 ))
 
 stories.add('custom color', () => (
   <div>
-    <Badge color={getColor('yellow.500')} inverted={true}>Badger</Badge>
-    <Badge color={getColor('charcoal.200')} inverted={true}>Badger</Badge>
-    <Badge color={getColor('red.500')} inverted={true}>Badger</Badge>
-    <Badge color={getColor('green.500')} inverted={true}>Badger</Badge>
-    <Badge color={getColor('blue.500')} inverted={true}>Badger</Badge>
+    <Badge color={getColor('yellow.500')} inverted={true}>
+      Badger
+    </Badge>
+    <Badge color={getColor('charcoal.200')} inverted={true}>
+      Badger
+    </Badge>
+    <Badge color={getColor('red.500')} inverted={true}>
+      Badger
+    </Badge>
+    <Badge color={getColor('green.500')} inverted={true}>
+      Badger
+    </Badge>
+    <Badge color={getColor('blue.500')} inverted={true}>
+      Badger
+    </Badge>
     <Badge color={getColor('yellow.500')}>Badger</Badge>
     <Badge color={getColor('charcoal.200')}>Badger</Badge>
     <Badge color={getColor('red.500')}>Badger</Badge>
