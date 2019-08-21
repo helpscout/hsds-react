@@ -193,20 +193,17 @@ describe('ClassNames', () => {
 
 describe('Border color', () => {
   test('Can apply borderColor', () => {
-    const wrapper = mount(<Avatar name="Buddy" borderColor="green" />)
-    const crop = wrapper.find(`div${ui.cropBorder}`)
-    const style = crop.props().style
+    const wrapper = cy.render(<Avatar name="Buddy" borderColor="green" />)
+    const crop = cy.get(`div${ui.cropBorder}`)
 
-    expect(style).toBeTruthy()
-    expect(style.borderColor).toBe('green')
+    expect(crop.getComputedStyle().borderColor).toBe('green')
   })
 
   test('Does not have a border by default', () => {
-    const wrapper = mount(<Avatar name="Buddy" />)
-    const crop = wrapper.find(`div${ui.cropBorder}`)
-    const style = crop.props().style
+    const wrapper = cy.render(<Avatar name="Buddy" />)
+    const crop = cy.get(`div${ui.cropBorder}`)
 
-    expect(style.borderColor).toBe('transparent')
+    expect(crop.getComputedStyle().borderColor).toBe('transparent')
   })
 
   test('CropBorder UI renders Avatar shape', () => {
@@ -249,20 +246,20 @@ describe('Border color', () => {
 
 describe('Outer border color', () => {
   test('Does not apply outerBorderColor by default', () => {
-    const wrapper = mount(<Avatar name="Buddy" />)
-    const el = wrapper.find(`div${ui.outerBorder}`)
-    const style = el.props().style
+    const wrapper = cy.render(<Avatar name="Buddy" />)
+    const el = cy.get(`div${ui.outerBorder}`)
 
-    expect(style.borderColor).toBe('transparent')
+    expect(el.getComputedStyle().borderColor).toBe('transparent')
   })
 
   test('Can apply outerBorderColor', () => {
-    const wrapper = mount(<Avatar name="Buddy" outerBorderColor="green" />)
-    const el = wrapper.find(`div${ui.outerBorder}`)
-    const style = el.props().style
+    const wrapper = cy.render(
+      <Avatar name="Buddy" outerBorderColor="green" shape="circle" />
+    )
+    const el = cy.get(`div${ui.outerBorder}`)
 
-    expect(style.borderColor).toContain('green')
-    expect(el.props().className).toContain(wrapper.prop('shape'))
+    expect(el.getComputedStyle().borderColor).toBe('green')
+    expect(el.hasClassName('is-circle')).toBeTruthy()
   })
 
   test('OuterBorder UI renders Avatar shape', () => {
@@ -373,6 +370,14 @@ describe('Action', () => {
     expect(cy.getByCy('Avatar.Action').exists()).toBeTruthy()
   })
 
+  test('Renders as a button element', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} />
+    )
+    expect(cy.getByCy('Avatar').exists()).toBeTruthy()
+    expect(cy.getByCy('Avatar').is('button')).toBeTruthy()
+  })
+
   test('Renders action default trash icon', () => {
     const wrapper = cy.render(
       <Avatar name="Buddy" size="sm" actionable={true} />
@@ -396,6 +401,13 @@ describe('Action', () => {
     expect(cy.getByCy('Avatar.Action').hasClassName('is-rounded')).toBeTruthy()
   })
 
+  test('Renders a focus border', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} shape="rounded" />
+    )
+    expect(cy.getByCy('Avatar.FocusBorder').exists()).toBeTruthy()
+  })
+
   test('Evokes the callback when clicking on the Action component', () => {
     const fn = jest.fn()
     const wrapper = cy.render(
@@ -407,7 +419,7 @@ describe('Action', () => {
         onActionClick={fn}
       />
     )
-    cy.getByCy('Avatar.Action').click()
+    cy.getByCy('Avatar').click()
     expect(fn).toHaveBeenCalled()
   })
 })

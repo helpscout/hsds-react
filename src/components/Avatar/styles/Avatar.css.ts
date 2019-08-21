@@ -4,6 +4,8 @@ import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import styled from '../../styled'
 
+import { config as buttonConfig } from '../../Button/styles/Button.css'
+
 export const config = {
   borderRadius: 3,
   borderWidth: 2,
@@ -88,19 +90,6 @@ export const ActionUI = styled('div')`
     opacity: 1;
     transform: translateY(0);
   }
-`
-
-export const AvatarUI = styled('div')`
-  ${baseStyles};
-  height: ${config.size.md.size}px;
-  position: relative;
-  width: ${config.size.md.size}px;
-
-  ${props => getColorStyles(props)} &.is-light {
-    color: ${getColor('grey.400')};
-  }
-
-  ${getSizeStyles()};
 `
 
 export const CropUI = styled('div')`
@@ -216,6 +205,32 @@ export const CropBorderUI = styled('div')`
   right: -${config.borderWidth}px;
   border-style: solid;
   border-width: ${config.borderWidth}px;
+  border-color: ${props =>
+    props.borderColor ? props.borderColor : 'transparent'};
+  ${getBorderRadiusStyles()};
+`
+
+export const FocusUI = styled('span')`
+  position: absolute;
+  top: -${config.borderWidth}px;
+  bottom: -${config.borderWidth}px;
+  left: -${config.borderWidth}px;
+  right: -${config.borderWidth}px;
+
+  animation: FocusFadeIn 200ms;
+  box-shadow: 0 0 0 ${buttonConfig.focusOutlineWidth}px
+    ${buttonConfig.focusOutlineColor};
+  display: none;
+  pointer-events: none;
+
+  @keyframes FocusFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
   ${getBorderRadiusStyles()};
 `
@@ -260,3 +275,57 @@ function getSizeStyles(): string {
     `
   })
 }
+
+export const AvatarUI = styled('div')`
+  ${baseStyles};
+  height: ${config.size.md.size}px;
+  position: relative;
+  width: ${config.size.md.size}px;
+
+  ${props => getColorStyles(props)} &.is-light {
+    color: ${getColor('grey.400')};
+  }
+
+  ${getSizeStyles()};
+`
+
+export const AvatarButtonUI = styled('button')`
+  ${baseStyles};
+  padding: 0;
+  border: none;
+  height: ${config.size.md.size}px;
+  position: relative;
+  width: ${config.size.md.size}px;
+  outline: none;
+
+  ${props => getColorStyles(props)} &.is-light {
+    color: ${getColor('grey.400')};
+  }
+
+  ${getSizeStyles()};
+
+  &:hover,
+  &:active,
+  &:focus {
+    outline: none;
+    text-decoration: none;
+  }
+
+  &:active,
+  &:active:focus {
+    .c-Avatar__focusBorder {
+      display: none;
+    }
+  }
+
+  &.is-active,
+  &:focus {
+    z-index: 2;
+    .c-Avatar__focusBorder {
+      display: block;
+    }
+    .c-Avatar__outerBorder {
+      opacity: 0;
+    }
+  }
+`
