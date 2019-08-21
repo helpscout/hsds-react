@@ -1,7 +1,8 @@
 const mockItems = [
   {
     id: '01ed9cbc-9689-4072-9bff-e74cbf835788',
-    valid: true,
+    isPaused: true,
+    isValid: true,
     name: 'Item A',
     title: 'Item A Title',
     to: '/message/item',
@@ -12,7 +13,8 @@ const mockItems = [
   },
   {
     id: '1b0b2ba3-785c-4aa2-a439-905a614cc3b0',
-    valid: false,
+    isPaused: false,
+    isValid: false,
     name: 'Item B',
     title: 'Item B Title',
     to: '/message/item',
@@ -23,7 +25,9 @@ const mockItems = [
   },
   {
     id: '46d89237-06b1-42ad-9a57-1f3d0b88dcb5',
-    valid: true,
+    isPaused: false,
+    isStarted: false,
+    isValid: true,
     name: 'Item C',
     title: 'Item C Title',
     to: '/message/item',
@@ -34,7 +38,8 @@ const mockItems = [
   },
   {
     id: '87f5536d-691e-4fc5-964d-18c6a03e903c',
-    valid: true,
+    isPaused: false,
+    isValid: true,
     name: 'Item D',
     title: 'Item D Title',
     to: '/message/item',
@@ -45,7 +50,8 @@ const mockItems = [
   },
   {
     id: '3e7c560f-5a22-4633-a564-2b3e1910419c',
-    valid: false,
+    isPaused: false,
+    isValid: false,
     name: 'Item E',
     title: 'Item E Title',
     to: '/message/item',
@@ -56,7 +62,8 @@ const mockItems = [
   },
   {
     id: 'f51152c0-5665-47e7-b2be-0479ff8941a4',
-    valid: true,
+    isPaused: false,
+    isValid: false,
     name: 'Item F',
     title: 'Item F Title',
     to: '/message/item',
@@ -67,7 +74,8 @@ const mockItems = [
   },
   {
     id: 'b690db2a-0df6-4056-b5ce-d90a28aabf0b',
-    valid: false,
+    isPaused: false,
+    isValid: false,
     name: 'Item G',
     title: 'Item G Title',
     to: '/message/item',
@@ -78,7 +86,8 @@ const mockItems = [
   },
   {
     id: 'd9072ac5-fab8-443a-9b5e-558d091a1c2f',
-    valid: true,
+    isPaused: false,
+    isValid: true,
     name: 'Item H',
     title: 'Item H Title',
     to: '/message/item',

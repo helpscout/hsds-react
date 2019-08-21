@@ -14,9 +14,10 @@ import {
   HandleUI,
   SortableItemUI,
 } from './styles/MessageRow.css'
-import { COMPONENT_KEY } from './MessageRow.utils'
 import { SortableElement, SortableHandle } from 'react-sortable-hoc'
-import Icon from '../Icon/'
+import Icon from '../Icon/index'
+
+const COMPONENT_KEY = 'MessageRow'
 
 const DraggableHandle = SortableHandle(() => (
   <HandleUI>
@@ -40,7 +41,7 @@ export interface Props {
   innerRef: (node: HTMLElement) => void
   pausedMessage: string
   name: any
-  valid: boolean
+  isValid: boolean
 }
 
 export class MessageRow extends React.PureComponent<Props> {
@@ -55,7 +56,7 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   getClassName() {
-    const { className, isDragging, isError, isPaused } = this.props
+    const { className, isError, isPaused } = this.props
     return classNames(
       MessageRow.className,
       isError && 'is-error',
@@ -90,9 +91,9 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   renderIcon() {
-    const { isPaused, valid } = this.props
+    const { isPaused, isValid } = this.props
 
-    if (!valid) {
+    if (!isValid) {
       return this.renderErrorIcon()
     }
     if (isPaused) {

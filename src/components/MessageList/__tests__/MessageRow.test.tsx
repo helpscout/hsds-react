@@ -6,7 +6,7 @@ const defaultProps = {
   index: -1,
   isDragging: false,
   isDraggingOnList: false,
-  valid: false
+  isValid: false
 }
 
 describe('className', () => {

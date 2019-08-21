@@ -2,13 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import MessageList from '../src/components/MessageList'
 import Page from '../src/components/Page'
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 import mockItems from '../src/components/MessageList/__tests__/mockItems'
 import arrayMove from 'array-move'

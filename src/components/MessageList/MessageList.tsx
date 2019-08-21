@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { AccordionUI } from './styles/MessageList.css'
-import MessageRow from '../MessageRow/'
+import MessageRow from './MessageRow'
 import { SortableContainer } from 'react-sortable-hoc'
 
 export interface Props {
@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export interface State {
-  index: number
+  indexOfDraggedItem: number
   isDragging: boolean
 }
 
@@ -28,7 +28,7 @@ export class MessageList extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
-      index: -1,
+      indexOfDraggedItem: -1,
       isDragging: false,
     }
   }
@@ -36,9 +36,10 @@ export class MessageList extends React.Component<Props, State> {
   onSortEnd = ({ oldIndex, newIndex, collection, isKeySorting }, event) => {
     const isDragging = false
     this.setState({
-      index: -1,
+      indexOfDraggedItem: -1,
       isDragging,
     })
+
     this.props.onSortEnd({
       collection,
       isDragging,
@@ -51,7 +52,7 @@ export class MessageList extends React.Component<Props, State> {
   onSortStart = ({ node, index, collection, isKeySorting }, event) => {
     const isDragging = true
     this.setState({
-      index,
+      indexOfDraggedItem: index,
       isDragging,
     })
     this.props.onSortStart({
@@ -85,10 +86,8 @@ export class MessageList extends React.Component<Props, State> {
                 {...item}
                 index={index}
                 isError={item.valid === false}
-                isPaused={
-                  item.status === 'not-started' || item.status === 'paused'
-                }
-                isDragging={this.state.index === index}
+                isPaused={item.isPaused}
+                isDragging={this.state.indexOfDraggedItem === index}
                 isDraggingOnList={this.state.isDragging}
                 key={`item-${item.id}`}
                 sortIndex={index}
