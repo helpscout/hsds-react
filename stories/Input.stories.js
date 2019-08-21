@@ -214,7 +214,7 @@ stories.add('suffix', () => (
 
 stories.add('seamless', () => <Input seamless autoFocus />)
 
-stories.add('disabled', () => <Input disabled autoFocus />)
+stories.add('disabled', () => <Input disabled />)
 
 stories.add('readonly', () => (
   <Input readOnly autoFocus value={`I can't turn left`} />
