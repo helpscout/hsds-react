@@ -45,7 +45,6 @@ stories.add('inverted', () => (
   </div>
 ))
 
-console.log('thing', getColor('yellow.900'), getColor('charcoal-200'))
 stories.add('custom color', () => (
   <div>
     <Badge color={getColor('yellow.500')} inverted={true}>Badger</Badge>
