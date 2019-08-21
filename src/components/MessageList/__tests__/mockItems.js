@@ -1,7 +1,8 @@
 const mockItems = [
   {
     id: '01ed9cbc-9689-4072-9bff-e74cbf835788',
-    isPaused: true,
+    isNotStarted: true,
+    isPaused: false,
     isValid: true,
     name: 'Item A',
     title: 'Item A Title',
@@ -51,7 +52,7 @@ const mockItems = [
   {
     id: '3e7c560f-5a22-4633-a564-2b3e1910419c',
     isPaused: false,
-    isValid: false,
+    isValid: true,
     name: 'Item E',
     title: 'Item E Title',
     to: '/message/item',
@@ -62,8 +63,9 @@ const mockItems = [
   },
   {
     id: 'f51152c0-5665-47e7-b2be-0479ff8941a4',
-    isPaused: false,
-    isValid: false,
+    isNotStarted: true,
+    isPaused: true,
+    isValid: true,
     name: 'Item F',
     title: 'Item F Title',
     to: '/message/item',

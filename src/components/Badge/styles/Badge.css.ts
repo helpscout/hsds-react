@@ -15,7 +15,7 @@ const BadgeUI = styled('div')`
   border-radius: 9999px;
   box-sizing: border-box;
   border: ${props => (props.inverted ? `1px solid ${props.color}` : 'none')};
-  color: ${props => (props.inverted ? props.color : 'white')};
+  color: ${props => (props.inverted ? props.textColor || props.color : props.textColor || 'white')};
   display: inline-block;
   font-weight: 500;
   min-width: 18px;

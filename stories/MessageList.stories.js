@@ -9,7 +9,7 @@ import arrayMove from 'array-move'
 const stories = storiesOf('MessageList', module)
 
 stories.add('MessageList', () => {
-  class Example extends React.Component {
+  class Messages extends React.Component {
     state = {
       items: mockItems,
     }
@@ -32,5 +32,5 @@ stories.add('MessageList', () => {
     }
   }
 
-  return <Example />
+  return <Messages />
 })

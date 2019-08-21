@@ -77,3 +77,14 @@ stories.add('custom color', () => (
     <Badge color={getColor('blue.500')}>Badger</Badge>
   </div>
 ))
+
+stories.add('custom textColor', () => (
+  <div>
+    <Badge color={getColor('yellow.500')} textColor={getColor('blue.500')} inverted={true}>
+      Badger
+    </Badge>
+    <Badge color={getColor('charcoal.200')} textColor={getColor('green.500')} inverted={true}>
+      Badger
+    </Badge>
+  </div>
+))

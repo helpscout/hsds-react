@@ -13,9 +13,10 @@ interface Props {
   count?: boolean
   display: BadgeDisplay
   inverted: boolean
+  isSquare?: boolean
   size?: string
   status?: UIStatus
-  isSquare?: boolean
+  textColor?: string
   white?: boolean
 }
 
@@ -24,6 +25,7 @@ class Badge extends React.Component<Props> {
     display: 'inlineBlock',
     inverted: false,
     color: '',
+    textColor: '',
   }
 
   static displayName = 'Badge'
@@ -39,6 +41,7 @@ class Badge extends React.Component<Props> {
       isSquare,
       size,
       status,
+      textColor,
       white,
       ...rest
     } = this.props
@@ -56,7 +59,7 @@ class Badge extends React.Component<Props> {
 
     return (
       <BadgeUI
-        {...{ ...getValidProps(rest), color, inverted }}
+        {...{ ...getValidProps(rest), color, inverted, textColor }}
         className={componentClassName}
       >
         {children}
