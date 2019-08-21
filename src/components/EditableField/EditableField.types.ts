@@ -6,6 +6,14 @@ export type FieldValue = {
   option?: string
 }
 
+export type InputFields = {
+  label?: string
+  name: string
+  placeholder?: string
+  type: FieldType
+  value: Value | Value[]
+}
+
 export type FieldAction = {
   name: string
   icon?: string
@@ -25,11 +33,14 @@ export interface EditableFieldProps {
   className?: string
   defaultOption: string | null
   disabled: boolean
-  label?: string
   emphasizeTopValue: boolean
+  inline: boolean
+  label?: string
   multipleValues: boolean
   name: string
   placeholder?: string
+  secondInput?: InputFields
+  size: 'md' | 'lg'
   type: FieldType
   value: Value | Value[]
   valueOptions?: string[] | Option[]
@@ -85,6 +96,7 @@ export interface InputProps {
   className?: string
   disabled: boolean
   fieldValue: FieldValue
+  inline: boolean
   isActive: boolean
   name: string
   placeholder: string
@@ -130,4 +142,18 @@ export interface TruncateProps {
   className?: string
   string: string
   splitter?: string
+}
+
+export interface CompositeProps {
+  className?: string
+  size: string
+  separator: string
+  placeholder?: string
+}
+
+export interface CompositeState {
+  fields: React.ReactElement<any>[]
+  hasActiveFields: boolean
+  inputState: null | 'blurred' | 'focused'
+  maskItems: { name: string; text: string }[]
 }

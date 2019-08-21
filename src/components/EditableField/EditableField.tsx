@@ -54,7 +54,9 @@ export class EditableField extends React.PureComponent<
     defaultOption: null,
     disabled: false,
     emphasizeTopValue: false,
+    inline: false,
     multipleValues: false,
+    size: 'md',
     value: EMPTY_VALUE,
     innerRef: noop,
     onInputFocus: noop,
@@ -124,11 +126,13 @@ export class EditableField extends React.PureComponent<
   }
 
   getClassName() {
-    const { className, disabled } = this.props
+    const { className, disabled, size } = this.props
+
     return classNames(
       EditableField.className,
       className,
-      disabled && STATES_CLASSNAMES.isDisabled
+      disabled && STATES_CLASSNAMES.isDisabled,
+      size === 'lg' && STATES_CLASSNAMES.isLarge
     )
   }
 
@@ -408,8 +412,12 @@ export class EditableField extends React.PureComponent<
     if (targetNode instanceof Element) {
       /* istanbul ignore if */
       if (document.activeElement === targetNode) return
-      /* istanbul ignore if */
-      if (targetNode.classList.contains(INPUT_CLASSNAMES.input)) return
+      /* istanbul ignore next */
+      if (
+        this.editableFieldRef.contains(targetNode) &&
+        targetNode.classList.contains(INPUT_CLASSNAMES.input)
+      )
+        return
 
       // Avoid acting on anything that comes from the options/dropdown
       /* istanbul ignore next */
@@ -579,6 +587,47 @@ export class EditableField extends React.PureComponent<
     )
   }
 
+  renderFieldsInline = () => {
+    const { name, disabled, inline, type, ...rest } = this.props
+    const { activeField, fieldValue } = this.state
+
+    return (
+      <div className={EDITABLEFIELD_CLASSNAMES.fieldWrapper}>
+        {fieldValue.map(val => {
+          const isActive = activeField === val.id
+
+          return (
+            <FieldUI
+              className={classNames(
+                EDITABLEFIELD_CLASSNAMES.field,
+                isActive && STATES_CLASSNAMES.isActive,
+                !Boolean(val.value) && STATES_CLASSNAMES.isEmpty
+              )}
+              key={val.id}
+            >
+              <Input
+                {...getValidProps(rest)}
+                disabled={disabled}
+                fieldValue={val}
+                isActive={isActive}
+                inline={inline}
+                name={val.id}
+                type={type}
+                onInputFocus={this.handleInputFocus}
+                onInputBlur={this.handleInputBlur}
+                onInputChange={this.handleInputChange}
+                onOptionFocus={this.handleOptionFocus}
+                onOptionSelection={this.handleOptionSelection}
+                onChange={this.handleInputChange}
+                onKeyDown={this.handleInputKeyDown}
+              />
+            </FieldUI>
+          )
+        })}
+      </div>
+    )
+  }
+
   handleLabelClick = e => {
     e.preventDefault()
     const { disabled } = this.props
@@ -591,8 +640,25 @@ export class EditableField extends React.PureComponent<
   }
 
   render() {
-    const { label, name, type, value, ...rest } = this.props
+    const { inline, label, name, type, value, ...rest } = this.props
     const { fieldValue } = this.state
+
+    if (inline) {
+      return (
+        <ComponentUI
+          {...getValidProps(rest)}
+          className={this.getClassName()}
+          innerRef={this.setEditableNode}
+          inline
+        >
+          <EventListener
+            event="mousedown"
+            handler={this.handleOnDocumentBodyMouseDown}
+          />
+          {this.renderFieldsInline()}
+        </ComponentUI>
+      )
+    }
 
     return (
       <ComponentUI

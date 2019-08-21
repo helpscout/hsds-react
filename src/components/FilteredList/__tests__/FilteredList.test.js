@@ -66,6 +66,12 @@ describe('Inlined', () => {
 
     expect(wrapper.find(SeparatorUI).length).toBeTruthy()
   })
+
+  it('Does not render separator when length of list is exceeded', () => {
+    const items = ['test@test.com']
+    const wrapper = mount(<FilteredList inline items={items} limit={3} />)
+    expect(wrapper.find(SeparatorUI).length).toEqual(0)
+  })
 })
 
 describe('Badge', () => {

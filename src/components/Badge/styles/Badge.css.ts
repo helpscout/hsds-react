@@ -1,16 +1,21 @@
 import { STATUSES } from '../../../styles/configs/constants'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+import styled from '../../styled'
+import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 
-const css = `
+const DEFAULT_COLOR = getColor('charcoal.200')
+
+const BadgeUI = styled('div')`
   ${baseStyles}
   ${variableFontSize({ fontSize: 12 })}
-  background-color: ${getColor('charcoal.200')};
+  background-color: ${props =>
+    props.inverted ? 'white' : props.color || DEFAULT_COLOR};
   border-radius: 9999px;
   box-sizing: border-box;
-  color: white;
+  border: ${props => (props.inverted ? `1px solid ${props.color}` : 'none')};
+  color: ${props => (props.inverted ? props.color : 'white')};
   display: inline-block;
   font-weight: 500;
   min-width: 18px;
@@ -18,7 +23,7 @@ const css = `
   padding: 3px 8px;
   text-align: center;
 
-  ${makeStatusStyles()}
+  ${props => makeStatusStyles(props)}
 
   &.is-sm {
     ${variableFontSize({ fontSize: 11 })}
@@ -56,15 +61,18 @@ const css = `
   }
 `
 
-function makeStatusStyles() {
-  return forEach(
-    STATUSES,
-    status => `
+function makeStatusStyles(props) {
+  return forEach(STATUSES, status => {
+    const statusColor = getColor('state', status, 'borderColor')
+
+    return `
     &.is-${status} {
-      background-color: ${getColor('state', status, 'borderColor')};
+      background-color: ${props.inverted ? 'white' : statusColor};
+      border: ${props.inverted ? `1px solid ${statusColor}` : 'none'};
+      color: ${props.inverted ? statusColor : 'white'};
     }
   `
-  )
+  })
 }
 
-export default css
+export default BadgeUI

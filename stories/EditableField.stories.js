@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
-import ReadMe from '../src/components/EditableField/README.md'
 
 import { action } from '@storybook/addon-actions'
 import { jsxDecorator } from 'storybook-addon-jsx'
+import ReadMe from '../src/components/EditableField/docs/README.md'
 
 import styled from '../src/components/styled'
 import baseStyles from '../src/styles/resets/baseStyles.css'
@@ -19,7 +19,7 @@ const stories = storiesOf('EditableField', module)
   .addDecorator(withAktiv)
   .addDecorator(jsxDecorator)
 
-const ContainerUI = styled('div')`
+export const ContainerUI = styled('div')`
   ${baseStyles};
   width: 300px;
   padding: 20px;
@@ -72,6 +72,23 @@ stories.add('Text', () => (
   </ContainerUI>
 ))
 
+stories.add('Text large', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Team"
+      name="team"
+      placeholder="Add a sports team name"
+      size="lg"
+      type="text"
+      value="Barcelona FC"
+    />
+  </ContainerUI>
+))
+
 stories.add('Text Multiple', () => (
   <ContainerUI
     onSubmit={e => {
@@ -95,73 +112,19 @@ stories.add('Text Multiple', () => (
   </ContainerUI>
 ))
 
-stories.add('Fields as blocks', () => (
+stories.add('Text Multiple Large', () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
   >
-    <EditableField
-      label="Films"
-      name="films"
-      type="text"
-      placeholder="Add a film name"
-    />
-
     <EditableField
       label="Musicians"
       name="musicians"
       type="text"
       placeholder="Add a musician name"
+      size="lg"
       value={['George Harrison', 'Neil Young']}
-    />
-
-    <EditableField
-      label="Website"
-      name="website"
-      placeholder="Add a website address"
-      type="url"
-      value="http://mysite.net"
-      actions={{
-        name: 'link',
-        callback(obj) {
-          console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
-        },
-      }}
-    />
-
-    <EditableField
-      label="Mobile Phone"
-      name="mobilephone"
-      placeholder="Add a mobile phone"
-      type="tel"
-      valueOptions={PHONE_OPTIONS}
-    />
-
-    <EditableField
-      label="Phone"
-      name="Phone"
-      placeholder="Add phone"
-      type="tel"
-      valueOptions={PHONE_OPTIONS}
-      defaultOption={PHONE_OPTIONS[2]}
-      value={{ option: 'Work', value: '123456789' }}
-    />
-  </ContainerUI>
-))
-
-stories.add('Split fields', () => (
-  <ContainerUI
-    onSubmit={e => {
-      e.preventDefault()
-    }}
-  >
-    <EditableField
-      label="Films"
-      name="films"
-      type="text"
-      placeholder="Add a film name"
-      value="My neighbour Totoro"
     />
   </ContainerUI>
 ))
@@ -252,6 +215,25 @@ stories.add('With options', () => (
       label="Phone"
       name="Phone"
       placeholder="Add phone"
+      type="tel"
+      valueOptions={PHONE_OPTIONS}
+      defaultOption={PHONE_OPTIONS[2]}
+      value={{ option: 'Work', value: '123456789' }}
+    />
+  </ContainerUI>
+))
+
+stories.add('With options large', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Phone"
+      name="Phone"
+      placeholder="Add phone"
+      size="lg"
       type="tel"
       valueOptions={PHONE_OPTIONS}
       defaultOption={PHONE_OPTIONS[2]}
