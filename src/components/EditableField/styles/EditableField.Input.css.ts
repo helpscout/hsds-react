@@ -5,6 +5,7 @@ import { FONT_FAMILY } from '../../../styles/configs/constants'
 import {
   COLOURS,
   SIZES,
+  FIELDSTATES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   STATES_CLASSNAMES,
@@ -147,7 +148,7 @@ export const InputUI = styled('input')`
 
       & + .${INPUT_CLASSNAMES.focusIndicator} {
         transform: scaleX(1);
-        background-color: ${COLOURS.focusIndicator.active} !important;
+        background-color: ${COLOURS.focusIndicator.active};
         height: ${focusIndicator.active};
       }
     }
@@ -158,6 +159,7 @@ export const InputUI = styled('input')`
 
     .${STATES_CLASSNAMES.isDisabled} & {
       cursor: not-allowed;
+      background-color: lightskyblue;
     }
 
     .${STATES_CLASSNAMES.isEmpty} &:focus {
@@ -300,10 +302,34 @@ export const FocusIndicatorUI = styled('span')`
   left: 0;
   right: 0;
   height: ${focusIndicator.active};
-  background-color: ${COLOURS.focusIndicator.active};
+  background-color: ${({ color }) => color};
   transform-origin: bottom left;
   transform: scaleX(0);
   transition: transform 0.3s ease, background-color 0.3s ease;
   z-index: 3;
   will-change: transform, background-color;
+
+  .is-error & {
+    transform: scaleX(1);
+  }
+`
+
+export const ValidationMessageUI = styled('div')`
+  position: absolute;
+  width: 100%;
+  height: 25px;
+  line-height: 25px;
+  top: 100%;
+  left: 0;
+`
+export const ValidationIconUI = styled('div')`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 0;
+  right: 0;
+
+  .${OTHERCOMPONENTS_CLASSNAMES.icon} {
+    color: ${({ color }) => color};
+  }
 `
