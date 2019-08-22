@@ -231,9 +231,9 @@ describe('Events', () => {
     )
   })
 
-  test('onClick callback fires', () => {
+  test('onClick callback fires when `preventSelect` is true', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Item onClick={spy} />)
+    const wrapper = mount(<Item onClick={spy} preventSelect />)
 
     wrapper.simulate('click')
 
