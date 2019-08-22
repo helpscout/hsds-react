@@ -4,6 +4,8 @@ import propConnect from '../PropProvider/propConnect'
 import { StatusDotStatus } from '../StatusDot/StatusDot.types'
 import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
+import Icon from '../Icon'
+import { IconSize } from '../Icon/Icon.types'
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
@@ -15,6 +17,9 @@ import {
   OuterBorderUI,
   StatusUI,
   TitleUI,
+  ActionUI,
+  AvatarButtonUI,
+  FocusUI,
 } from './styles/Avatar.css'
 import {
   COMPONENT_KEY,
@@ -27,6 +32,10 @@ import {
 export interface Props {
   animationDuration: number
   animationEasing: string
+  actionable?: boolean
+  actionIcon?: string
+  actionIconSize?: IconSize
+  active?: boolean
   borderColor?: string
   className?: string
   count?: number | string
@@ -37,6 +46,7 @@ export interface Props {
   name: string
   onLoad?: () => void
   onError?: () => void
+  onActionClick?: () => void
   outerBorderColor?: string
   showStatusBorderColor: boolean
   shape: AvatarShape
@@ -53,6 +63,10 @@ export interface State {
 
 export class Avatar extends React.PureComponent<Props, State> {
   static defaultProps = {
+    actionable: false,
+    actionIcon: 'trash',
+    actionIconSize: '24',
+    active: false,
     animationDuration: 160,
     animationEasing: 'ease',
     borderColor: 'transparent',
@@ -105,6 +119,25 @@ export class Avatar extends React.PureComponent<Props, State> {
     return classNames(shape && `is-${shape}`, size && `is-${size}`)
   }
 
+  renderAction() {
+    const { actionable, actionIcon, actionIconSize } = this.props
+
+    if (!actionable) {
+      return null
+    }
+
+    const actionClassName = classNames(
+      'c-Avatar__action',
+      this.getShapeClassNames()
+    )
+
+    return (
+      <ActionUI data-cy="Avatar.Action" className={actionClassName}>
+        <Icon name={actionIcon} size={actionIconSize} />
+      </ActionUI>
+    )
+  }
+
   renderCrop = () => {
     const { animationDuration, animationEasing, name, withShadow } = this.props
 
@@ -135,6 +168,7 @@ export class Avatar extends React.PureComponent<Props, State> {
           onError={this.onImageLoadedError}
           onLoad={this.onImageLoadedSuccess}
         />
+        {this.renderAction()}
       </AvatarCrop>
     )
   }
@@ -194,11 +228,9 @@ export class Avatar extends React.PureComponent<Props, State> {
       shape && `is-${shape}`
     )
 
-    const styles = {
-      borderColor,
-    }
-
-    return <CropBorderUI className={componentClassName} style={styles} />
+    return (
+      <CropBorderUI className={componentClassName} borderColor={borderColor} />
+    )
   }
 
   renderOuterBorder = () => {
@@ -208,11 +240,24 @@ export class Avatar extends React.PureComponent<Props, State> {
       shape && `is-${shape}`
     )
 
-    const styles = {
-      borderColor: outerBorderColor,
-    }
+    return (
+      <OuterBorderUI
+        className={componentClassName}
+        borderColor={outerBorderColor}
+      />
+    )
+  }
 
-    return <OuterBorderUI className={componentClassName} style={styles} />
+  renderFocusBorder = () => {
+    const { shape } = this.props
+    const componentClassName = classNames(
+      'c-Avatar__focusBorder',
+      shape && `is-${shape}`
+    )
+
+    return (
+      <FocusUI data-cy="Avatar.FocusBorder" className={componentClassName} />
+    )
   }
 
   getStyles() {
@@ -229,6 +274,8 @@ export class Avatar extends React.PureComponent<Props, State> {
 
   render() {
     const {
+      actionable,
+      active,
       borderColor,
       className,
       count,
@@ -245,6 +292,7 @@ export class Avatar extends React.PureComponent<Props, State> {
       statusIcon,
       withShadow,
       fallbackImage,
+      onActionClick,
       ...rest
     } = this.props
 
@@ -256,24 +304,33 @@ export class Avatar extends React.PureComponent<Props, State> {
       _hasImage && 'has-image',
       statusIcon && 'has-statusIcon',
       light && 'is-light',
+      active && 'is-active',
       outerBorderColor && 'has-outerBorderColor',
       status && `is-${status}`,
+      actionable && `has-action`,
       this.getShapeClassNames(),
       className
     )
 
+    const Component = actionable ? AvatarButtonUI : AvatarUI
+
+    const extraProps = actionable ? { onClick: onActionClick } : {}
+
     return (
-      <AvatarUI
+      <Component
         {...getValidProps(rest)}
+        data-cy="Avatar"
         className={componentClassName}
         style={this.getStyles()}
         title={name}
+        {...extraProps}
       >
         {this.renderCrop()}
         {this.renderStatus()}
         {this.renderCropBorder()}
         {this.renderOuterBorder()}
-      </AvatarUI>
+        {actionable && this.renderFocusBorder()}
+      </Component>
     )
   }
 }

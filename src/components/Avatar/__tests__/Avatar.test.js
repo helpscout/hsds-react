@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { cy } from '@helpscout/cyan'
 import { Avatar } from '../Avatar'
 import { StatusDot } from '../../index'
 
@@ -188,24 +189,28 @@ describe('ClassNames', () => {
         .prop('className')
     ).toContain('is-light')
   })
+
+  test('Add active classname to component', () => {
+    const wrapper = mount(<Avatar name="Buddy" active={true} />)
+    const root = wrapper.find(`div${ui.root}`)
+
+    expect(root.props().className).toContain('is-active')
+  })
 })
 
 describe('Border color', () => {
   test('Can apply borderColor', () => {
-    const wrapper = mount(<Avatar name="Buddy" borderColor="green" />)
-    const crop = wrapper.find(`div${ui.cropBorder}`)
-    const style = crop.props().style
+    const wrapper = cy.render(<Avatar name="Buddy" borderColor="green" />)
+    const crop = cy.get(`div${ui.cropBorder}`)
 
-    expect(style).toBeTruthy()
-    expect(style.borderColor).toBe('green')
+    expect(crop.getComputedStyle().borderColor).toBe('green')
   })
 
   test('Does not have a border by default', () => {
-    const wrapper = mount(<Avatar name="Buddy" />)
-    const crop = wrapper.find(`div${ui.cropBorder}`)
-    const style = crop.props().style
+    const wrapper = cy.render(<Avatar name="Buddy" />)
+    const crop = cy.get(`div${ui.cropBorder}`)
 
-    expect(style.borderColor).toBe('transparent')
+    expect(crop.getComputedStyle().borderColor).toBe('transparent')
   })
 
   test('CropBorder UI renders Avatar shape', () => {
@@ -248,20 +253,20 @@ describe('Border color', () => {
 
 describe('Outer border color', () => {
   test('Does not apply outerBorderColor by default', () => {
-    const wrapper = mount(<Avatar name="Buddy" />)
-    const el = wrapper.find(`div${ui.outerBorder}`)
-    const style = el.props().style
+    const wrapper = cy.render(<Avatar name="Buddy" />)
+    const el = cy.get(`div${ui.outerBorder}`)
 
-    expect(style.borderColor).toBe('transparent')
+    expect(el.getComputedStyle().borderColor).toBe('transparent')
   })
 
   test('Can apply outerBorderColor', () => {
-    const wrapper = mount(<Avatar name="Buddy" outerBorderColor="green" />)
-    const el = wrapper.find(`div${ui.outerBorder}`)
-    const style = el.props().style
+    const wrapper = cy.render(
+      <Avatar name="Buddy" outerBorderColor="green" shape="circle" />
+    )
+    const el = cy.get(`div${ui.outerBorder}`)
 
-    expect(style.borderColor).toContain('green')
-    expect(el.props().className).toContain(wrapper.prop('shape'))
+    expect(el.getComputedStyle().borderColor).toBe('green')
+    expect(el.hasClassName('is-circle')).toBeTruthy()
   })
 
   test('OuterBorder UI renders Avatar shape', () => {
@@ -352,5 +357,76 @@ describe('onLoad', () => {
     const img = wrapper.find('img').first()
     img.simulate('load')
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Action', () => {
+  test("Doesn't render the action", () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={false} />
+    )
+    expect(wrapper.exists()).toBeTruthy()
+    expect(cy.getByCy('Avatar.Action').exists()).toBeFalsy()
+  })
+
+  test('Adds action to Avatar', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} />
+    )
+    expect(wrapper.exists()).toBeTruthy()
+    expect(cy.getByCy('Avatar.Action').exists()).toBeTruthy()
+  })
+
+  test('Renders as a button element', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} />
+    )
+    expect(cy.getByCy('Avatar').exists()).toBeTruthy()
+    expect(cy.getByCy('Avatar').is('button')).toBeTruthy()
+  })
+
+  test('Renders action default trash icon', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} />
+    )
+    expect(cy.get('.c-Icon').exists()).toBeTruthy()
+    expect(cy.get('.c-Icon').hasClassName('is-iconName-trash')).toBeTruthy()
+  })
+
+  test('Renders custom action icon', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} actionIcon="plus" />
+    )
+    expect(cy.get('.c-Icon').exists()).toBeTruthy()
+    expect(cy.get('.c-Icon').hasClassName('is-iconName-plus')).toBeTruthy()
+  })
+
+  test('Updates the shape of the Action based on parent prop', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} shape="rounded" />
+    )
+    expect(cy.getByCy('Avatar.Action').hasClassName('is-rounded')).toBeTruthy()
+  })
+
+  test('Renders a focus border', () => {
+    const wrapper = cy.render(
+      <Avatar name="Buddy" size="sm" actionable={true} shape="rounded" />
+    )
+    expect(cy.getByCy('Avatar.FocusBorder').exists()).toBeTruthy()
+  })
+
+  test('Evokes the callback when clicking on the Action component', () => {
+    const fn = jest.fn()
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        onActionClick={fn}
+      />
+    )
+    cy.getByCy('Avatar').click()
+    expect(fn).toHaveBeenCalled()
   })
 })

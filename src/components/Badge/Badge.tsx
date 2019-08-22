@@ -1,15 +1,14 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import BadgeUI from './styles/Badge.css'
+import css from './styles/Badge.css'
 import { UIStatus } from '../../constants/types'
 
 type BadgeDisplay = 'block' | 'inlineBlock'
-
-interface Props {
+type Props = {
   children?: any
   className?: string
-  color?: string
   count?: boolean
   display: BadgeDisplay
   inverted: boolean
@@ -68,5 +67,6 @@ class Badge extends React.Component<Props> {
     )
   }
 }
+Badge.displayName = 'Badge'
 
-export default Badge
+export default styled(Badge)(css)
