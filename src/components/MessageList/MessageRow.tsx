@@ -8,7 +8,6 @@ import Text from '../Text'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
 import { ContentUI, HandleUI, SortableItemUI } from './styles/MessageRow.css'
 import { SortableElement, SortableHandle } from 'react-sortable-hoc'
 import Icon from '../Icon/index'
@@ -34,20 +33,23 @@ export interface Props {
   isDraggingOnList: boolean
   isNotStarted: boolean
   isPaused: boolean
+  isValid: boolean
   innerRef: (node: HTMLElement) => void
   notStartedMessage: string
   pausedMessage: string
   name: any
-  isValid: boolean
 }
 
 export class MessageRow extends React.PureComponent<Props> {
   static className = 'c-MessageRow'
   static defaultProps = {
     errorMessage: 'Message paused because of an issue',
-    innerRef: noop,
+    innerRef: () => {},
+    isDragging: false,
+    isDraggingOnList: false,
     isNotStarted: false,
     isPaused: false,
+    isValid: true,
     notStartedMessage: 'Message not finished setup',
     pausedMessage: 'Paused',
     name: 'Message',
