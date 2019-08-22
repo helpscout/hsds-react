@@ -4,6 +4,8 @@ import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import styled from '../../styled'
 
+import { config as buttonConfig } from '../../Button/styles/Button.css'
+
 export const config = {
   borderRadius: 3,
   borderWidth: 2,
@@ -42,17 +44,52 @@ export const config = {
   },
 }
 
-export const AvatarUI = styled('div')`
-  ${baseStyles};
-  height: ${config.size.md.size}px;
-  position: relative;
-  width: ${config.size.md.size}px;
+export const ActionUI = styled('div')`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgb(255, 255, 255);
 
-  ${props => getColorStyles(props)} &.is-light {
-    color: ${getColor('grey.400')};
+  &:before {
+    content: '';
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    transition: transform ease-in-out 0.15s;
+    transform: scale(0);
   }
 
-  ${getSizeStyles()};
+  ${getBorderRadiusStyles({ suffix: ':before' })};
+
+  .c-Icon {
+    opacity: 0;
+    transform: translateY(3px);
+    transition: opacity 0.2s, transform 0.3s;
+    position: relative;
+    z-index: 5;
+  }
+
+  &:hover:before {
+    opacity: 1;
+    transform: scale(1);
+  }
+  &:hover .c-Icon {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `
 
 export const CropUI = styled('div')`
@@ -64,6 +101,7 @@ export const CropUI = styled('div')`
   justify-content: center;
   overflow: hidden;
   width: 100%;
+  position: relative;
 
   ${getBorderRadiusStyles()};
 
@@ -167,6 +205,32 @@ export const CropBorderUI = styled('div')`
   right: -${config.borderWidth}px;
   border-style: solid;
   border-width: ${config.borderWidth}px;
+  border-color: ${props =>
+    props.borderColor ? props.borderColor : 'transparent'};
+  ${getBorderRadiusStyles()};
+`
+
+export const FocusUI = styled('span')`
+  position: absolute;
+  top: -${config.borderWidth}px;
+  bottom: -${config.borderWidth}px;
+  left: -${config.borderWidth}px;
+  right: -${config.borderWidth}px;
+
+  animation: FocusFadeIn 200ms;
+  box-shadow: 0 0 0 ${buttonConfig.focusOutlineWidth}px
+    ${buttonConfig.focusOutlineColor};
+  display: none;
+  pointer-events: none;
+
+  @keyframes FocusFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
   ${getBorderRadiusStyles()};
 `
@@ -184,15 +248,15 @@ function getColorStyles(props: Object): string {
   `
 }
 
-function getBorderRadiusStyles(): string {
+function getBorderRadiusStyles({ suffix = '' } = {}): string {
   return `
-    &.is-circle {
+    &.is-circle${suffix} {
       border-radius: 200%;
     }
-    &.is-rounded {
+    &.is-rounded${suffix} {
       border-radius: ${config.borderRadius}px;
     }
-    &.is-square {
+    &.is-square${suffix} {
       border-radius: 0;
     }
   `
@@ -211,3 +275,62 @@ function getSizeStyles(): string {
     `
   })
 }
+
+export const AvatarUI = styled('div')`
+  ${baseStyles};
+  height: ${config.size.md.size}px;
+  position: relative;
+  width: ${config.size.md.size}px;
+
+  ${props => getColorStyles(props)} &.is-light {
+    color: ${getColor('grey.400')};
+  }
+
+  ${getSizeStyles()};
+`
+
+export const AvatarButtonUI = styled('button')`
+  ${baseStyles};
+  padding: 0;
+  border: none;
+  height: ${config.size.md.size}px;
+  position: relative;
+  width: ${config.size.md.size}px;
+  outline: none;
+
+  ${props => getColorStyles(props)} &.is-light {
+    color: ${getColor('grey.400')};
+  }
+
+  ${getSizeStyles()};
+
+  &:hover,
+  &:active,
+  &:focus {
+    outline: none;
+    text-decoration: none;
+  }
+
+  &:active,
+  &:active:focus {
+    .c-Avatar__focusBorder {
+      display: none;
+    }
+  }
+
+  &.is-active,
+  &:focus {
+    z-index: 2;
+    .c-Avatar__focusBorder {
+      display: block;
+    }
+    .c-Avatar__outerBorder {
+      opacity: 0;
+    }
+  }
+
+  &.is-active .c-Avatar__focusBorder {
+    animation: none;
+    opacity: 1;
+  }
+`
