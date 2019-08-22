@@ -21,6 +21,21 @@ export const deleteAction: FieldAction = {
   name: 'delete',
 }
 
+export const FIELDTYPES = {
+  text: 'text',
+  email: 'email',
+  url: 'url',
+  tel: 'tel',
+  number: 'number',
+  textarea: 'textarea',
+}
+export const FIELDSIZES = { md: 'md', lg: 'lg' }
+export const FIELDSTATES = {
+  default: 'default',
+  error: 'error',
+  warning: 'warning',
+}
+
 export function normalizeFieldValue({
   value,
   name,
@@ -232,6 +247,8 @@ export const STATES_CLASSNAMES = {
   isPlaceholder: 'is-placeholder',
   isTemporaryValue: 'is-temporary-value',
   withPlaceholder: 'with-placeholder',
+  error: 'is-error',
+  warning: 'is-warning',
 }
 
 export const COLOURS = {
@@ -263,5 +280,9 @@ export const COLOURS = {
     regular: 'slategray',
     hover: '#3c5263',
     delete: getColor('red.500'),
+  },
+  states: {
+    default: getColor('blue.500'),
+    error: getColor('red.500'),
   },
 }

@@ -21,6 +21,9 @@ import {
   generateFieldActions,
   normalizeFieldValue,
   ACTION_ICONS,
+  FIELDTYPES,
+  FIELDSIZES,
+  FIELDSTATES,
   EDITABLEFIELD_CLASSNAMES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
@@ -29,7 +32,7 @@ import {
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { isArray } from '../../utilities/is'
+import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import * as equal from 'fast-deep-equal'
 
@@ -50,13 +53,14 @@ export class EditableField extends React.PureComponent<
 > {
   static className = EDITABLEFIELD_CLASSNAMES.component
   static defaultProps = {
-    type: 'text',
+    type: FIELDTYPES.text,
     defaultOption: null,
     disabled: false,
     emphasizeTopValue: false,
     inline: false,
     multipleValues: false,
-    size: 'md',
+    size: FIELDSIZES.md,
+    state: FIELDSTATES.default,
     value: EMPTY_VALUE,
     innerRef: noop,
     onInputFocus: noop,
@@ -78,10 +82,12 @@ export class EditableField extends React.PureComponent<
 
     const {
       actions,
+      disabled,
       name,
-      value,
       defaultOption,
       multipleValues,
+      state,
+      value,
       valueOptions,
     } = props
 
@@ -101,9 +107,14 @@ export class EditableField extends React.PureComponent<
     this.state = {
       actions: generateFieldActions(actions),
       activeField: EMPTY_VALUE,
+      defaultOption: defaultStateOption,
+      disabled,
       fieldValue: initialFieldValue,
+      focusedByLabel: false,
       initialFieldValue,
+      maskTabIndex: null,
       multipleValuesEnabled: isArray(value) || multipleValues,
+      state: state || FIELDSTATES.default,
       valueOptions:
         valueOptions && isArray(valueOptions)
           ? valueOptions.map(option => ({
@@ -112,9 +123,6 @@ export class EditableField extends React.PureComponent<
               value: option,
             }))
           : null,
-      defaultOption: defaultStateOption,
-      focusedByLabel: false,
-      maskTabIndex: null,
     }
   }
 
@@ -126,13 +134,14 @@ export class EditableField extends React.PureComponent<
   }
 
   getClassName() {
-    const { className, disabled, size } = this.props
+    const { className, size } = this.props
+    const { disabled } = this.state
 
     return classNames(
       EditableField.className,
       className,
       disabled && STATES_CLASSNAMES.isDisabled,
-      size === 'lg' && STATES_CLASSNAMES.isLarge
+      size === FIELDSIZES.lg && STATES_CLASSNAMES.isLarge
     )
   }
 
@@ -184,8 +193,12 @@ export class EditableField extends React.PureComponent<
       name,
     })
 
+    // @ts-ignore
     this.setState({
       fieldValue: newFieldValue,
+      disabled: false,
+      state: FIELDSTATES.default,
+      validationInfo: undefined,
     })
 
     onChange({ name, value: newFieldValue, event })
@@ -193,80 +206,142 @@ export class EditableField extends React.PureComponent<
   }
 
   handleInputKeyDown = ({ event, name }) => {
+    const isEnter = event.key === key.ENTER
+    const isEscape = event.key === key.ESCAPE
+
+    if (isEnter) {
+      return this.handleFieldEnterPress({ event, name })
+    } else if (isEscape) {
+      return this.handleFieldEscapePress({ event, name })
+    }
+    // This path is never taken, as handleInputKeyDown is only called on enter or escape from the input
+    // But typescript is being annoying about it
+    /* istanbul ignore next */
+    return new Promise((resolve, reject) => {
+      reject()
+    })
+  }
+
+  handleFieldEnterPress = ({ event, name }) => {
+    const { onEnter } = this.props
+    const { initialFieldValue, fieldValue, multipleValuesEnabled } = this.state
+    const inputValue = event.currentTarget.value
+    const impactedField = find(initialFieldValue, val => val.id === name)
+    const valueDidNotChange =
+      impactedField && inputValue === impactedField.value
+
     return new Promise(resolve => {
-      const { onEnter, onEscape, onCommit, onDiscard } = this.props
-      const {
-        initialFieldValue,
-        fieldValue,
-        multipleValuesEnabled,
-      } = this.state
-      const inputValue = event.currentTarget.value
-      const isEnter = event.key === key.ENTER
-      const isEscape = event.key === key.ESCAPE
       const cachedEvent = { ...event }
 
-      if (isEnter) {
-        const impactedField = find(initialFieldValue, val => val.id === name)
-        // Case 1: in multi-value fields if value is empty
-        // Do nothing
-        if (multipleValuesEnabled && inputValue === EMPTY_VALUE) {
-          return
-        }
-        // Case 2: value was not changed
-        // Just change active status
-        else if (impactedField && inputValue === impactedField.value) {
-          this.setState(
-            { activeField: EMPTY_VALUE, maskTabIndex: name },
-            () => {
-              resolve()
+      // Case 1: in multi-value fields if value is empty
+      // Do nothing
+      if (multipleValuesEnabled && inputValue === EMPTY_VALUE) {
+        return
+      }
+      // Case 2: value was not changed
+      // Just change active status
+      else if (valueDidNotChange) {
+        this.setState({ activeField: EMPTY_VALUE, maskTabIndex: name }, () => {
+          resolve()
 
-              onEnter({ name, value: fieldValue, event: cachedEvent })
-            }
-          )
-        } else {
-          // Case 3: value was changed
-          // change active status, field value and update initialFieldValue
-          const updatedFieldValue = fieldValue.map(val => {
-            /* istanbul ignore else */
-            if (val.id === name) {
-              val.value = inputValue
-            }
-            return val
+          onEnter({ name, value: fieldValue, event: cachedEvent })
+        })
+      } else {
+        // Case 3: value was changed
+        // Case 3A: with validation
+        const { validate } = this.props
+
+        if (isFunction(validate)) {
+          this.updateFieldValueStateWithValidation({
+            name,
+            resolve,
+            value: inputValue,
+            event: cachedEvent,
           })
-
-          this.setState(
-            {
-              activeField: EMPTY_VALUE,
-              fieldValue: updatedFieldValue,
-              initialFieldValue: updatedFieldValue,
-              maskTabIndex: name,
-            },
-            () => {
-              resolve()
-
-              onEnter({ name, value: updatedFieldValue, event: cachedEvent })
-              onCommit({ name, value: updatedFieldValue })
-            }
-          )
+        } else {
+          // Case 3B: without validation
+          this.updateFieldValueState({
+            name,
+            resolve,
+            value: inputValue,
+            event: cachedEvent,
+          })
         }
       }
+    })
+  }
 
-      if (isEscape) {
-        // Change active status and return fieldValue to initialValue
-        this.setState(
-          {
-            activeField: EMPTY_VALUE,
-            fieldValue: initialFieldValue,
-            maskTabIndex: name,
-          },
-          () => {
-            resolve()
+  updateFieldValueStateWithValidation = ({ value, name, event, resolve }) => {
+    const { validate } = this.props
+    this.setState({ disabled: true })
 
-            onEscape({ name, value: initialFieldValue, event: cachedEvent })
-            onDiscard({ value: initialFieldValue })
-          }
-        )
+    // @ts-ignore
+    validate({ value, name }).then(validation => {
+      if (validation.isValid) {
+        this.updateFieldValueState({ value, name, resolve, event })
+      } else {
+        // @ts-ignore
+        this.setState({
+          disabled: false,
+          state: validation.type,
+          validationInfo: validation,
+        })
       }
+    })
+  }
+
+  /**
+   * Change active status, field value, update initialFieldValue, enable field
+   */
+  updateFieldValueState = ({ value, event, name, resolve }) => {
+    const { onEnter, onCommit } = this.props
+    const { fieldValue } = this.state
+    const updatedFieldValue = fieldValue.map(val => {
+      /* istanbul ignore else */
+      if (val.id === name) {
+        val.value = value
+      }
+      return val
+    })
+
+    this.setState(
+      {
+        activeField: EMPTY_VALUE,
+        disabled: false,
+        fieldValue: updatedFieldValue,
+        initialFieldValue: updatedFieldValue,
+        maskTabIndex: name,
+        validationInfo: undefined,
+      },
+      () => {
+        resolve && resolve()
+
+        onEnter({ name, value: updatedFieldValue, event })
+        onCommit({ name, value: updatedFieldValue })
+      }
+    )
+  }
+
+  handleFieldEscapePress = ({ event, name }) => {
+    const { onEscape, onDiscard } = this.props
+    const { initialFieldValue } = this.state
+    const cachedEvent = { ...event }
+
+    return new Promise(resolve => {
+      // Change active status and return fieldValue to initialValue
+      this.setState(
+        {
+          activeField: EMPTY_VALUE,
+          fieldValue: initialFieldValue,
+          maskTabIndex: name,
+        },
+        () => {
+          resolve()
+
+          onEscape({ name, value: initialFieldValue, event: cachedEvent })
+          onDiscard({ value: initialFieldValue })
+        }
+      )
     })
   }
 
@@ -382,7 +457,7 @@ export class EditableField extends React.PureComponent<
         onDelete({ name, value: this.state.fieldValue, event })
         onCommit({ name, value: this.state.fieldValue })
 
-        if (action.callback && typeof action.callback === 'function') {
+        if (isFunction(action.callback)) {
           action.callback({
             name,
             action,
@@ -397,7 +472,7 @@ export class EditableField extends React.PureComponent<
   handleCustomAction = ({ action, name, event }) => {
     const { fieldValue } = this.state
 
-    if (action.callback && typeof action.callback === 'function') {
+    if (isFunction(action.callback)) {
       action.callback({ name, action, value: fieldValue, event })
     }
   }
@@ -437,23 +512,58 @@ export class EditableField extends React.PureComponent<
       /* istanbul ignore next */
       if (optionsNode && optionsNode.contains(targetNode)) return
 
-      const { name } = this.props
+      const { name, validate } = this.props
       const { fieldValue, initialFieldValue } = this.state
 
       // Case 1: single field
       if (fieldValue.length === 1) {
-        /* istanbul ignore next */
-        // It's tested, go home Istanbul
-        this.setState(
-          {
-            activeField: EMPTY_VALUE,
-          },
-          () => {
-            if (!equal(initialFieldValue, this.state.fieldValue)) {
-              this.props.onCommit({ name, value: this.state.fieldValue })
+        if (isFunction(validate)) {
+          this.setState({ disabled: true })
+
+          // @ts-ignore
+          validate({ value: this.state.fieldValue[0].value, name }).then(
+            validation => {
+              if (validation.isValid) {
+                this.setState(
+                  {
+                    activeField: EMPTY_VALUE,
+                    disabled: false,
+                    validationInfo: undefined,
+                  },
+                  () => {
+                    if (!equal(initialFieldValue, this.state.fieldValue)) {
+                      this.props.onCommit({
+                        name,
+                        value: this.state.fieldValue,
+                      })
+                    }
+                  }
+                )
+              } else {
+                // @ts-ignore
+                this.setState({
+                  disabled: false,
+                  state: validation.type,
+                  validationInfo: validation,
+                })
+              }
             }
-          }
-        )
+          )
+        } else {
+          /* istanbul ignore next */
+          // It's tested, go home Istanbul
+          this.setState(
+            {
+              activeField: EMPTY_VALUE,
+              disabled: false,
+            },
+            () => {
+              if (!equal(initialFieldValue, this.state.fieldValue)) {
+                this.props.onCommit({ name, value: this.state.fieldValue })
+              }
+            }
+          )
+        }
       } else {
         // Case 2: multiple values
         /* istanbul ignore next */
@@ -493,7 +603,7 @@ export class EditableField extends React.PureComponent<
   }
 
   renderAddButton = () => {
-    const { disabled } = this.props
+    const { disabled } = this.state
     const { fieldValue, multipleValuesEnabled } = this.state
 
     const isLastValueEmpty =
@@ -513,15 +623,17 @@ export class EditableField extends React.PureComponent<
   }
 
   renderFields = () => {
-    const { name, disabled, emphasizeTopValue, type, ...rest } = this.props
-
+    const { name, emphasizeTopValue, type, ...rest } = this.props
     const {
       actions,
       activeField,
+      disabled,
       fieldValue,
-      multipleValuesEnabled,
-      valueOptions,
       maskTabIndex,
+      multipleValuesEnabled,
+      state,
+      valueOptions,
+      validationInfo,
     } = this.state
 
     return (
@@ -546,7 +658,9 @@ export class EditableField extends React.PureComponent<
                 fieldValue={val}
                 isActive={isActive}
                 name={val.id}
+                state={state}
                 type={type}
+                validationInfo={validationInfo}
                 valueOptions={valueOptions}
                 onInputFocus={this.handleInputFocus}
                 onInputBlur={this.handleInputBlur}
@@ -588,8 +702,8 @@ export class EditableField extends React.PureComponent<
   }
 
   renderFieldsInline = () => {
-    const { name, disabled, inline, type, ...rest } = this.props
-    const { activeField, fieldValue } = this.state
+    const { name, inline, type, ...rest } = this.props
+    const { activeField, disabled, fieldValue } = this.state
 
     return (
       <div className={EDITABLEFIELD_CLASSNAMES.fieldWrapper}>

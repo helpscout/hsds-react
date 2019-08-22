@@ -346,3 +346,44 @@ stories
       />
     </ContainerUI>
   ))
+
+stories.add('Validation', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Company"
+      name="company"
+      placeholder="Add a company name"
+      type="text"
+      validate={validateFieldValue}
+    />
+  </ContainerUI>
+))
+
+function validateFieldValue({ name, value }) {
+  let isValid = value === 'help scout'
+
+  return new Promise(resolve => {
+    setTimeout(function() {
+      if (isValid) {
+        resolve({ isValid, name, value })
+      } else {
+        resolve({
+          isValid,
+          name,
+          value,
+          type: 'error',
+          message:
+            value === ''
+              ? "The company name can't be empty"
+              : 'That is definitely not right',
+          color: value === '' ? 'rebeccapurple' : 'salmon',
+          icon: value === '' ? 'activity' : 'alert',
+        })
+      }
+    }, 500)
+  })
+}
