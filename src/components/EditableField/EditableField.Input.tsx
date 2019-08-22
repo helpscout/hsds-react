@@ -36,7 +36,7 @@ import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import * as equal from 'fast-deep-equal'
 
-import { InputProps, Validation } from './EditableField.types'
+import { InputProps } from './EditableField.types'
 
 export class EditableFieldInput extends React.Component<InputProps> {
   static className = INPUT_CLASSNAMES.component
@@ -104,6 +104,10 @@ export class EditableFieldInput extends React.Component<InputProps> {
     }
 
     if (this.props.state !== nextProps.state) {
+      return true
+    }
+
+    if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
     }
 
@@ -256,8 +260,10 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   renderValidationInfo = () => {
-    const { state, validationInfo } = this.props
+    const { name, state, validationInfo } = this.props
 
+    if (!validationInfo) return null
+    if (name !== validationInfo.name) return null
     if (state === FIELDSTATES.default) return null
 
     const DEFAULT_ICON = 'alert'
@@ -290,6 +296,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
       placeholder,
       state,
       type,
+      validationInfo,
       valueOptions,
       ...rest
     } = this.props
@@ -299,10 +306,26 @@ export class EditableFieldInput extends React.Component<InputProps> {
         className={classNames(
           INPUT_CLASSNAMES.content,
           inline && STATES_CLASSNAMES.isInline,
-          state !== FIELDSTATES.default && STATES_CLASSNAMES.error
+          validationInfo &&
+            validationInfo.name === name &&
+            state !== FIELDSTATES.default &&
+            STATES_CLASSNAMES.error
         )}
         innerRef={this.setFieldInputContentNode}
       >
+        <div
+          style={{
+            position: 'absolute',
+            background: 'salmon',
+            top: '0px',
+            left: '-110px',
+            height: '20px',
+            lineHeight: '20px',
+            width: '100px',
+          }}
+        >
+          {fieldValue.validated ? 'validated' : 'not validated'}
+        </div>
         {valueOptions ? this.renderOptions() : null}
 
         <InputWrapperUI

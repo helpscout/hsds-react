@@ -360,10 +360,20 @@ stories.add('Validation', () => (
       type="text"
       validate={validateFieldValue}
     />
+    <EditableField
+      label="Films"
+      name="films"
+      type="text"
+      multipleValues
+      placeholder="Add a film name"
+      validate={validateFieldValue}
+    />
   </ContainerUI>
 ))
 
 function validateFieldValue({ name, value }) {
+  console.log('Validating')
+
   let isValid = value === 'help scout'
 
   return new Promise(resolve => {

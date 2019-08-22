@@ -4,6 +4,7 @@ export type FieldValue = {
   value: string
   id: string
   option?: string
+  validated: boolean
 }
 
 export type InputFields = {
@@ -34,7 +35,7 @@ export type Validation = {
   isValid: boolean
   name: string
   value: string
-  type?: FieldState
+  type: FieldState
   message?: string
   icon?: string
   color?: string

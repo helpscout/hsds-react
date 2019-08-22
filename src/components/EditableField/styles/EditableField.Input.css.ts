@@ -159,7 +159,7 @@ export const InputUI = styled('input')`
 
     .${STATES_CLASSNAMES.isDisabled} & {
       cursor: not-allowed;
-      background-color: lightskyblue;
+      color: ${COLOURS.input.placeholder};
     }
 
     .${STATES_CLASSNAMES.isEmpty} &:focus {
