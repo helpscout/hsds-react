@@ -32,7 +32,6 @@ export interface Props {
   index: number
   isDragging: boolean
   isDraggingOnList: boolean
-  isError: boolean
   isNotStarted: boolean
   isPaused: boolean
   innerRef: (node: HTMLElement) => void
@@ -47,7 +46,6 @@ export class MessageRow extends React.PureComponent<Props> {
   static defaultProps = {
     errorMessage: 'Message paused because of an issue',
     innerRef: noop,
-    isError: false,
     isNotStarted: false,
     isPaused: false,
     notStartedMessage: 'Message not finished setup',
@@ -56,14 +54,8 @@ export class MessageRow extends React.PureComponent<Props> {
   }
 
   getClassName() {
-    const { className, isError, isPaused } = this.props
-    return classNames(
-      MessageRow.className,
-      isError && 'is-error',
-      'is-open',
-      isPaused && 'is-paused',
-      className
-    )
+    const { className } = this.props
+    return classNames(MessageRow.className, 'is-open', className)
   }
 
   renderErrorBadge() {

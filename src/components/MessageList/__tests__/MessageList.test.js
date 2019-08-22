@@ -17,6 +17,11 @@ describe('message list', () => {
     const rows = wrapper.find(MessageRow)
     expect(rows.length).toEqual(8)
   })
+  test('if not items, should return null', () => {
+    const wrapper = mount(<MessageList {...{ ...defaultProps, items: [] }} />)
+    const rows = wrapper.find(MessageRow)
+    expect(rows.length).toEqual(0)
+  })
   test('should render AccordionUI', () => {
     const wrapper = mount(<MessageList {...defaultProps} />)
     const element = wrapper.find(AccordionUI)
