@@ -189,6 +189,13 @@ describe('ClassNames', () => {
         .prop('className')
     ).toContain('is-light')
   })
+
+  test('Add active classname to component', () => {
+    const wrapper = mount(<Avatar name="Buddy" active={true} />)
+    const root = wrapper.find(`div${ui.root}`)
+
+    expect(root.props().className).toContain('is-active')
+  })
 })
 
 describe('Border color', () => {

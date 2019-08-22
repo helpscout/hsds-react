@@ -35,6 +35,7 @@ export interface Props {
   actionable?: boolean
   actionIcon?: string
   actionIconSize?: IconSize
+  active?: boolean
   borderColor?: string
   className?: string
   count?: number | string
@@ -65,6 +66,7 @@ export class Avatar extends React.PureComponent<Props, State> {
     actionable: false,
     actionIcon: 'trash',
     actionIconSize: '24',
+    active: false,
     animationDuration: 160,
     animationEasing: 'ease',
     borderColor: 'transparent',
@@ -273,6 +275,7 @@ export class Avatar extends React.PureComponent<Props, State> {
   render() {
     const {
       actionable,
+      active,
       borderColor,
       className,
       count,
@@ -301,6 +304,7 @@ export class Avatar extends React.PureComponent<Props, State> {
       _hasImage && 'has-image',
       statusIcon && 'has-statusIcon',
       light && 'is-light',
+      active && 'is-active',
       outerBorderColor && 'has-outerBorderColor',
       status && `is-${status}`,
       actionable && `has-action`,

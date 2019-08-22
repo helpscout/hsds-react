@@ -328,4 +328,9 @@ export const AvatarButtonUI = styled('button')`
       opacity: 0;
     }
   }
+
+  &.is-active .c-Avatar__focusBorder {
+    animation: none;
+    opacity: 1;
+  }
 `

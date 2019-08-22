@@ -193,6 +193,7 @@ stories.add('with action', () => (
     <Avatar
       name={fixture.name}
       image={fixture.image}
+      active={boolean('Is Active', false)}
       actionable={boolean('Actionable', true)}
       actionIcon={select('Icon', ['trash', 'plus-large', 'hyphen'], 'trash')}
       actionIconSize={select('Icon Size', iconSize, '24')}
