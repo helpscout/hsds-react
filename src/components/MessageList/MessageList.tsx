@@ -19,6 +19,7 @@ const SortableList = SortableContainer(({ children }) => {
   return <div>{children}</div>
 })
 
+/* istanbul ignore next */
 export class MessageList extends React.Component<Props, State> {
   static defaultProps = {
     items: [],
