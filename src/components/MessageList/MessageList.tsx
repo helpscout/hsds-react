@@ -83,8 +83,6 @@ export class MessageList extends React.Component<Props, State> {
             <MessageRow
               {...item}
               index={index}
-              isError={item.valid === false}
-              isPaused={item.isPaused}
               isDragging={this.state.indexOfDraggedItem === index}
               isDraggingOnList={this.state.isDragging}
               key={`item-${item.id}`}

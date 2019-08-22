@@ -19,6 +19,38 @@ describe('message list', () => {
     expect(rows.length).toEqual(8)
     expect(container.length).toEqual(1)
   })
+  test('should render children correctly', () => {
+    const wrapper = mount(<MessageList {...defaultProps} />)
+    const rows = wrapper.find(MessageRow)
+    rows.forEach(row => {
+      const {
+        index,
+        id,
+        isDragging,
+        isPaused,
+        isNotStarted,
+        isValid,
+        message,
+        name,
+        status,
+        subtitle,
+        title,
+        to,
+      } = row.props()
+      const expectedItem = mockItems[index]
+      expect(id).toEqual(expectedItem.id)
+      expect(isDragging).toEqual(false)
+      expect(isPaused).toEqual(expectedItem.isPaused)
+      expect(isNotStarted).toEqual(expectedItem.isNotStarted)
+      expect(isValid).toEqual(expectedItem.isValid)
+      expect(name).toEqual(expectedItem.name)
+      expect(title).toEqual(expectedItem.title)
+      expect(to).toEqual(expectedItem.to)
+      expect(subtitle).toEqual(expectedItem.subtitle)
+      expect(message).toEqual(expectedItem.message)
+      expect(status).toEqual(expectedItem.status)
+    })
+  })
   test('if not items, should return null', () => {
     const wrapper = mount(<MessageList {...{ ...defaultProps, items: [] }} />)
     const rows = wrapper.find(MessageRow)
@@ -40,13 +72,11 @@ describe('message list sorting', () => {
       collection: {},
       index: 1,
     })
-
     wrapper.update()
-    const rows = wrapper.find(MessageRow).forEach(node => {
+    wrapper.find(MessageRow).forEach(node => {
       const { index, isDragging } = node.props()
       expect(isDragging).toEqual(index === 1)
     })
-
     expect(wrapper.state().isDragging).toEqual(true)
     expect(wrapper.state().indexOfDraggedItem).toEqual(1)
     expect(defaultProps.onSortStart).toHaveBeenCalledTimes(1)
@@ -65,6 +95,11 @@ describe('message list sorting', () => {
       isKeySorting: false,
       oldIndex: 1,
       newIndex: 3,
+    })
+    wrapper.update()
+    wrapper.find(MessageRow).forEach(node => {
+      const { isDragging } = node.props()
+      expect(isDragging).toEqual(false)
     })
     expect(wrapper.state().isDragging).toEqual(false)
     expect(wrapper.state().indexOfDraggedItem).toEqual(-1)
