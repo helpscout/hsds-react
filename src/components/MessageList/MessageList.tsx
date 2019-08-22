@@ -55,6 +55,7 @@ export class MessageList extends React.Component<Props, State> {
       indexOfDraggedItem: index,
       isDragging,
     })
+
     this.props.onSortStart({
       collection,
       index,

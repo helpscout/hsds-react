@@ -16,6 +16,7 @@ interface Props {
   isSquare?: boolean
   size?: string
   status?: UIStatus
+  style?: object
   textColor?: string
   white?: boolean
 }

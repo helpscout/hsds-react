@@ -8,13 +8,8 @@ import Text from '../Text'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
-import { renderChildrenSafely } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import {
-  ContentUI,
-  HandleUI,
-  SortableItemUI,
-} from './styles/MessageRow.css'
+import { ContentUI, HandleUI, SortableItemUI } from './styles/MessageRow.css'
 import { SortableElement, SortableHandle } from 'react-sortable-hoc'
 import Icon from '../Icon/index'
 
@@ -77,7 +72,9 @@ export class MessageRow extends React.PureComponent<Props> {
     return (
       <Flexy.Item>
         <Tooltip title={errorMessage} display="block">
-          <Badge color={getColor('red.700')} inverted={true} size="sm">Needs Attention</Badge>
+          <Badge color={getColor('red.700')} inverted={true} size="sm">
+            Needs Attention
+          </Badge>
         </Tooltip>
       </Flexy.Item>
     )
@@ -89,7 +86,9 @@ export class MessageRow extends React.PureComponent<Props> {
     return (
       <Flexy.Item>
         <Tooltip title={pausedMessage} display="block">
-          <Badge color={getColor('charcoal.200')} inverted={true} size="sm">Paused</Badge>
+          <Badge color={getColor('charcoal.200')} inverted={true} size="sm">
+            Paused
+          </Badge>
         </Tooltip>
       </Flexy.Item>
     )
@@ -101,7 +100,14 @@ export class MessageRow extends React.PureComponent<Props> {
     return (
       <Flexy.Item>
         <Tooltip title={notStartedMessage} display="block">
-          <Badge color={getColor('yellow.500')} inverted={true} size="sm" textColor={getColor('yellow.900')}>Finish Setup</Badge>
+          <Badge
+            color={getColor('yellow.500')}
+            inverted={true}
+            size="sm"
+            textColor={getColor('yellow.900')}
+          >
+            Finish Setup
+          </Badge>
         </Tooltip>
       </Flexy.Item>
     )
@@ -126,11 +132,9 @@ export class MessageRow extends React.PureComponent<Props> {
     const shade = isPaused || isNotStarted ? 'faint' : 'default'
 
     return (
-    <Text weight={500} state={!isValid ? 'error' : null} shade={shade}>
-      <Truncate>
-      { name }
-      </Truncate>
-    </Text>
+      <Text weight={500} state={!isValid ? 'error' : null} shade={shade}>
+        <Truncate>{name}</Truncate>
+      </Text>
     )
   }
 
