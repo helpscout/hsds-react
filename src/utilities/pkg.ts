@@ -1,3 +1,3 @@
 export default {
-  version: '2.57.0',
+  version: '2.57.1-beta-message-list-dnd',
 }
