@@ -21,7 +21,6 @@ describe('paused', () => {
     const badge = wrapper.find('Badge').first()
     const text = wrapper.find('Text').first()
 
-    expect(el.hasClass('is-paused')).toBeTruthy()
     expect(text.prop('shade')).toBe('faint')
     expect(badge.length).toBeTruthy()
     expect(badge.text()).toBe('Paused')
@@ -32,7 +31,6 @@ describe('paused', () => {
     const icon = wrapper.find('Icon').first()
     const text = wrapper.find('Text').first()
 
-    expect(el.hasClass('is-paused')).not.toBeTruthy()
     expect(text.prop('shade')).not.toBe('faint')
     expect(icon.prop('name')).not.toBe('pause')
   })
@@ -83,7 +81,6 @@ describe('error', () => {
     const icon = wrapper.find('Icon').first()
     const text = wrapper.find('Text').first()
 
-    expect(el.hasClass('is-paused')).not.toBeTruthy()
     expect(el.hasClass('is-error')).not.toBeTruthy()
     expect(text.prop('shade')).not.toBe('faint')
     expect(icon.prop('name')).not.toBe('alert')

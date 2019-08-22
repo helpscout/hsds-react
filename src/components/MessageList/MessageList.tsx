@@ -14,6 +14,7 @@ export interface State {
   isDragging: boolean
 }
 
+/* istanbul ignore next */
 const SortableList = SortableContainer(({ children }) => {
   return <div>{children}</div>
 })
@@ -25,15 +26,12 @@ export class MessageList extends React.Component<Props, State> {
     onSortStart: () => {},
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      indexOfDraggedItem: -1,
-      isDragging: false,
-    }
+  state = {
+    indexOfDraggedItem: -1,
+    isDragging: false,
   }
 
-  onSortEnd = ({ oldIndex, newIndex, collection, isKeySorting }, event) => {
+  onSortEnd = ({ oldIndex, newIndex, collection, isKeySorting }) => {
     const isDragging = false
     this.setState({
       indexOfDraggedItem: -1,
@@ -49,7 +47,7 @@ export class MessageList extends React.Component<Props, State> {
     })
   }
 
-  onSortStart = ({ node, index, collection, isKeySorting }, event) => {
+  onSortStart = ({ node, index, collection, isKeySorting }) => {
     const isDragging = true
     this.setState({
       indexOfDraggedItem: index,
@@ -81,20 +79,18 @@ export class MessageList extends React.Component<Props, State> {
         useDragHandle={true}
       >
         <AccordionUI>
-          {items.map((item, index) => {
-            return (
-              <MessageRow
-                {...item}
-                index={index}
-                isError={item.valid === false}
-                isPaused={item.isPaused}
-                isDragging={this.state.indexOfDraggedItem === index}
-                isDraggingOnList={this.state.isDragging}
-                key={`item-${item.id}`}
-                sortIndex={index}
-              />
-            )
-          })}
+          {items.map((item, index) => (
+            <MessageRow
+              {...item}
+              index={index}
+              isError={item.valid === false}
+              isPaused={item.isPaused}
+              isDragging={this.state.indexOfDraggedItem === index}
+              isDraggingOnList={this.state.isDragging}
+              key={`item-${item.id}`}
+              sortIndex={index}
+            />
+          ))}
         </AccordionUI>
       </SortableList>
     )

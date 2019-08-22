@@ -15,7 +15,9 @@ describe('message list', () => {
   test('should render 8 mock items', () => {
     const wrapper = mount(<MessageList {...defaultProps} />)
     const rows = wrapper.find(MessageRow)
+    const container = wrapper.find(AccordionUI)
     expect(rows.length).toEqual(8)
+    expect(container.length).toEqual(1)
   })
   test('if not items, should return null', () => {
     const wrapper = mount(<MessageList {...{ ...defaultProps, items: [] }} />)
@@ -38,6 +40,13 @@ describe('message list sorting', () => {
       collection: {},
       index: 1,
     })
+
+    wrapper.update()
+    const rows = wrapper.find(MessageRow).forEach(node => {
+      const { index, isDragging } = node.props()
+      expect(isDragging).toEqual(index === 1)
+    })
+
     expect(wrapper.state().isDragging).toEqual(true)
     expect(wrapper.state().indexOfDraggedItem).toEqual(1)
     expect(defaultProps.onSortStart).toHaveBeenCalledTimes(1)
