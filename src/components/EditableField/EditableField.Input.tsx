@@ -114,16 +114,16 @@ export class EditableFieldInput extends React.Component<InputProps> {
     return false
   }
 
-  componentDidUpdate() {
-    const { isActive, fieldValue } = this.props
+  componentDidUpdate(prevProps) {
+    const { isActive } = this.props
 
     this.setInputTitle()
 
     if (isActive) {
       if (document.activeElement !== this.optionsDropdownRef) {
-        const inputNode = this.inputRef
+        if (this.props.validationInfo === prevProps.validationInfo) {
+          const inputNode = this.inputRef
 
-        if (!fieldValue.validated) {
           inputNode && inputNode.focus()
         }
       }

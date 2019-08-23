@@ -353,7 +353,7 @@ stories.add('Validation', () => (
       e.preventDefault()
     }}
   >
-    {/* <EditableField
+    <EditableField
       label="Company"
       name="company"
       placeholder="Add a company name"
@@ -366,18 +366,26 @@ stories.add('Validation', () => (
       }}
     />
     <EditableField
-      label="Films"
-      name="films"
+      label="team"
+      name="team"
+      placeholder="Add a team name"
       type="text"
-      multipleValues
-      placeholder="Add a film name"
-      validate={validateFieldValue}
+      value="atlas"
       onCommit={({ name, value }) => {
         console.log('commited')
         // console.log('HSDS: name', name)
         // console.log('HSDS: value', value)
       }}
-    /> */}
+    />
+    <EditableField
+      label="Musicians"
+      name="musicians"
+      type="text"
+      placeholder="Add a musician name"
+      value={['George Harrison', 'Neil Young']}
+      validate={validateFieldValue}
+    />
+    {/*
     <EditableField
       label="Favourite Paint Colour"
       name="paint"
@@ -390,7 +398,7 @@ stories.add('Validation', () => (
         { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
       ]}
       validate={validateFieldValue}
-    />
+    /> */}
   </ContainerUI>
 ))
 

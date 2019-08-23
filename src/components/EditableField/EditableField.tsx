@@ -9,7 +9,6 @@ import {
 import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
-import EventListener from '../EventListener'
 import Icon from '../Icon'
 
 import propConnect from '../PropProvider/propConnect'
@@ -21,7 +20,6 @@ import {
   generateFieldActions,
   normalizeFieldValue,
   findChangedField,
-  ignoreClick,
   ACTION_ICONS,
   FIELDTYPES,
   FIELDSIZES,
@@ -36,7 +34,6 @@ import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
-import debounce from '../../utilities/debounce'
 
 import * as equal from 'fast-deep-equal'
 
@@ -80,6 +77,7 @@ export class EditableField extends React.Component<
     onCommit: noop,
     onDelete: noop,
     onDiscard: noop,
+    validate: () => Promise.resolve({ isValid: true }),
   }
 
   constructor(props) {
@@ -115,7 +113,6 @@ export class EditableField extends React.Component<
       defaultOption: defaultStateOption,
       disabled,
       fieldValue: initialFieldValue,
-      focusedByLabel: false,
       initialFieldValue,
       maskTabIndex: null,
       multipleValuesEnabled: isArray(value) || multipleValues,
@@ -166,10 +163,6 @@ export class EditableField extends React.Component<
       return true
     }
 
-    if (this.state.focusedByLabel !== nextState.focusedByLabel) {
-      return true
-    }
-
     if (this.state.disabled !== nextState.disabled) {
       return true
     }
@@ -210,30 +203,11 @@ export class EditableField extends React.Component<
     const { fieldValue } = this.state
 
     this.setState({
-      focusedByLabel: false,
       activeField: name,
       maskTabIndex: null,
     })
 
     onInputFocus({ name, value: fieldValue, event })
-  }
-
-  handleInputBlur = ({ name, event }) => {
-    const { onInputBlur } = this.props
-    const { fieldValue, focusedByLabel } = this.state
-    console.log('handleInputBlur')
-
-    /* istanbul ignore else */
-    if (!focusedByLabel) {
-      //@ts-ignore
-      this.handleFieldBlurDebounced(event)
-
-      onInputBlur({
-        name,
-        value: fieldValue,
-        event,
-      })
-    }
   }
 
   handleInputChange = ({ inputValue, name, event }) => {
@@ -273,7 +247,7 @@ export class EditableField extends React.Component<
   }
 
   handleFieldEnterPress = ({ event, name }) => {
-    const { onEnter } = this.props
+    const { validate, onEnter, onCommit } = this.props
     const { initialFieldValue, fieldValue, multipleValuesEnabled } = this.state
     const inputValue = event.currentTarget.value
     const impactedField = find(initialFieldValue, val => val.id === name)
@@ -298,100 +272,76 @@ export class EditableField extends React.Component<
         })
       } else {
         // Case 3: value was changed
-        // Case 3A: with validation
-        const { validate } = this.props
-        const impactedField = find(
-          this.state.fieldValue,
-          val => val.id === name
-        )
+        const impactedField = find(fieldValue, val => val.id === name)
 
-        if (isFunction(validate)) {
-          // Skip if the field was marked as validated
-          if (!impactedField.validated) {
-            this.updateFieldValueWithValidation({
+        // Skip if the field was marked as validated
+        if (!impactedField.validated) {
+          validate({ value: inputValue, name }).then(validation => {
+            let updatedFieldValue
+
+            if (validation.isValid) {
+              updatedFieldValue = this.updateFieldValue({
+                name,
+                value: inputValue,
+              })
+
+              this.setState(
+                // @ts-ignore
+                {
+                  activeField: EMPTY_VALUE,
+                  fieldValue: updatedFieldValue,
+                  initialFieldValue: updatedFieldValue,
+                  maskTabIndex: name,
+                  state: FIELDSTATES.default,
+                  validationInfo: undefined,
+                },
+                () => {
+                  resolve()
+                  onCommit({ name, value: updatedFieldValue })
+                }
+              )
+            } else {
+              updatedFieldValue = fieldValue.map(field => {
+                if (field.id === name) {
+                  return { ...field, validated: true }
+                }
+                return field
+              })
+
+              this.setState(
+                {
+                  activeField: name,
+                  state: validation.type,
+                  validationInfo: validation,
+                  fieldValue: updatedFieldValue,
+                },
+                () => {
+                  resolve()
+                }
+              )
+            }
+
+            onEnter({
               name,
-              resolve,
-              value: inputValue,
+              value: updatedFieldValue,
               event: cachedEvent,
             })
-          }
-        } else {
-          // Case 3B: without validation
-          this.updateFieldValue({
-            name,
-            resolve,
-            value: inputValue,
-            event: cachedEvent,
           })
         }
       }
     })
   }
 
-  updateFieldValueWithValidation = ({
-    value,
-    name,
-    event,
-    resolve,
-  }: {
-    value: string
-    name: string
-    event: Event
-    resolve?: any
-  }) => {
-    const { validate } = this.props
-
-    if (isFunction(validate)) {
-      this.setState({ disabled: true })
-
-      validate({ value, name }).then((validation: Validation) => {
-        if (validation.isValid) {
-          this.updateFieldValue({ value, name, resolve, event })
-        } else {
-          this.setState({
-            disabled: false,
-            state: validation.type,
-            validationInfo: validation,
-            fieldValue: this.state.fieldValue.map(field => {
-              if (field.id === name) {
-                return { ...field, validated: true }
-              }
-              return field
-            }),
-          })
-        }
-      })
-    }
-  }
-
-  /**
-   * Change active status, field value, update initialFieldValue, enable field
-   */
-  updateFieldValue = ({ value, event, name, resolve }) => {
-    const { onEnter, onCommit, validate } = this.props
+  updateFieldValue = ({ value, name }) => {
     const { fieldValue } = this.state
-    const updatedFieldValue = fieldValue.map(val => {
+
+    return fieldValue.map(val => {
       /* istanbul ignore else */
       if (val.id === name) {
-        return { ...val, value: value, validated: isFunction(validate) }
+        return { ...val, value: value, validated: true }
       }
       return val
     })
-
-    this.setState(
-      {
-        disabled: false,
-        fieldValue: updatedFieldValue,
-        initialFieldValue: updatedFieldValue,
-        maskTabIndex: name,
-        validationInfo: undefined,
-      },
-      () => {
-        resolve && resolve()
-        onEnter({ name, value: updatedFieldValue, event })
-        onCommit({ name, value: updatedFieldValue })
-      }
-    )
   }
 
   handleFieldEscapePress = ({ event, name }) => {
@@ -409,11 +359,11 @@ export class EditableField extends React.Component<
         },
         () => {
           resolve()
-
-          onEscape({ name, value: initialFieldValue, event: cachedEvent })
-          onDiscard({ value: initialFieldValue })
         }
       )
+
+      onEscape({ name, value: initialFieldValue, event: cachedEvent })
+      onDiscard({ value: initialFieldValue })
     })
   }
 
@@ -552,38 +502,59 @@ export class EditableField extends React.Component<
     }
   }
 
-  handleOusideFieldClick = (event: Event) => {
-    if (ignoreClick(event, this.editableFieldRef)) return
-
-    // @ts-ignore
-    this.handleFieldBlurDebounced(event)
-
-    this.setState({
-      activeField: EMPTY_VALUE,
-    })
-  }
-
-  handleBlur = event => {
+  handleInputBlur = ({ name, event }) => {
     const { fieldValue, initialFieldValue, multipleValuesEnabled } = this.state
-    const { name, validate } = this.props
-    const withValidation = isFunction(validate)
+    const { validate, onCommit, onInputBlur } = this.props
 
-    // Value unchanged
     if (equal(initialFieldValue, fieldValue)) {
+      this.setState({ activeField: EMPTY_VALUE })
+      onInputBlur({ name, value: fieldValue, event })
+
       return
     }
 
-    const updatedField =
+    const changedField =
       fieldValue.length === 1
         ? fieldValue[0]
         : findChangedField(initialFieldValue, fieldValue)
 
-    if (withValidation && updatedField.value && !updatedField.validated) {
-      this.updateFieldValueWithValidation({
-        value: updatedField.value,
-        name: updatedField.id,
-        event,
-      })
+    if (!changedField.value) {
+      if (!multipleValuesEnabled) {
+        this.setState({ activeField: EMPTY_VALUE })
+        onInputBlur({ name, value: fieldValue, event })
+        onCommit({ name, value: fieldValue })
+        return
+      }
+    }
+
+    if (changedField.value && !changedField.validated) {
+      validate({ value: changedField.value, name: changedField.id }).then(
+        validation => {
+          const updatedFieldValue = fieldValue.map(field => {
+            if (field.id === changedField.id) {
+              return { ...changedField, validated: true }
+            }
+            return field
+          })
+
+          if (validation.isValid) {
+            this.setState({
+              activeField: EMPTY_VALUE,
+              fieldValue: updatedFieldValue,
+            })
+
+            onCommit({ name, value: updatedFieldValue })
+          } else {
+            this.setState({
+              state: validation.type,
+              validationInfo: validation,
+              fieldValue: updatedFieldValue,
+            })
+          }
+        }
+      )
+
+      onInputBlur({ name, value: fieldValue, event })
 
       return
     }
@@ -595,32 +566,16 @@ export class EditableField extends React.Component<
       removedEmptyFields.length > 0
 
     if (shouldDiscardEmpty) {
-      this.setState(
-        {
-          fieldValue: removedEmptyFields,
-          activeField: EMPTY_VALUE,
-          disabled: false,
-        },
-        () => {
-          this.props.onDiscard({ value: this.state.fieldValue })
-          this.props.onCommit({ name, value: this.state.fieldValue })
-        }
-      )
+      this.setState({
+        fieldValue: removedEmptyFields,
+        activeField: EMPTY_VALUE,
+      })
 
-      return
+      this.props.onDiscard({ value: this.state.fieldValue })
+      this.props.onCommit({ name, value: this.state.fieldValue })
     }
-
-    this.setState(
-      {
-        disabled: false,
-      },
-      () => {
-        this.props.onCommit({ name, value: this.state.fieldValue })
-      }
-    )
+    return
   }
-
-  handleFieldBlurDebounced = debounce(this.handleBlur, 200, false)
 
   renderAddButton = () => {
     const {
@@ -770,17 +725,6 @@ export class EditableField extends React.Component<
     )
   }
 
-  handleLabelClick = e => {
-    e.preventDefault()
-    const { disabled } = this.props
-    const { fieldValue } = this.state
-
-    if (!disabled) {
-      // @ts-ignore
-      this.setState({ focusedByLabel: true, activeField: fieldValue[0].id })
-    }
-  }
-
   render() {
     const { inline, label, name, type, value, ...rest } = this.props
     const { fieldValue } = this.state
@@ -793,10 +737,6 @@ export class EditableField extends React.Component<
           innerRef={this.setEditableNode}
           inline
         >
-          <EventListener
-            event="mousedown"
-            handler={this.handleOusideFieldClick}
-          />
           {this.renderFieldsInline()}
         </ComponentUI>
       )
@@ -808,11 +748,9 @@ export class EditableField extends React.Component<
         className={this.getClassName()}
         innerRef={this.setEditableNode}
       >
-        <EventListener event="click" handler={this.handleOusideFieldClick} />
         <label
           className={EDITABLEFIELD_CLASSNAMES.label}
           htmlFor={fieldValue[0].id}
-          onClick={this.handleLabelClick}
         >
           <LabelTextUI className={EDITABLEFIELD_CLASSNAMES.labelText}>
             {label || name}
