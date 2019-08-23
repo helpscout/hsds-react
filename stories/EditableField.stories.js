@@ -353,12 +353,17 @@ stories.add('Validation', () => (
       e.preventDefault()
     }}
   >
-    <EditableField
+    {/* <EditableField
       label="Company"
       name="company"
       placeholder="Add a company name"
       type="text"
       validate={validateFieldValue}
+      onCommit={({ name, value }) => {
+        console.log('commited')
+        // console.log('HSDS: name', name)
+        // console.log('HSDS: value', value)
+      }}
     />
     <EditableField
       label="Films"
@@ -367,6 +372,24 @@ stories.add('Validation', () => (
       multipleValues
       placeholder="Add a film name"
       validate={validateFieldValue}
+      onCommit={({ name, value }) => {
+        console.log('commited')
+        // console.log('HSDS: name', name)
+        // console.log('HSDS: value', value)
+      }}
+    /> */}
+    <EditableField
+      label="Favourite Paint Colour"
+      name="paint"
+      placeholder="Add a colour"
+      type="text"
+      valueOptions={PAINT_OPTIONS}
+      value={[
+        { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
+        { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
+        { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
+      ]}
+      validate={validateFieldValue}
     />
   </ContainerUI>
 ))
@@ -374,7 +397,7 @@ stories.add('Validation', () => (
 function validateFieldValue({ name, value }) {
   console.log('Validating')
 
-  let isValid = value === 'help scout'
+  let isValid = value !== 'off'
 
   return new Promise(resolve => {
     setTimeout(function() {
@@ -386,12 +409,7 @@ function validateFieldValue({ name, value }) {
           name,
           value,
           type: 'error',
-          message:
-            value === ''
-              ? "The company name can't be empty"
-              : 'That is definitely not right',
-          color: value === '' ? 'rebeccapurple' : 'salmon',
-          icon: value === '' ? 'activity' : 'alert',
+          message: 'That is definitely not right',
         })
       }
     }, 500)
