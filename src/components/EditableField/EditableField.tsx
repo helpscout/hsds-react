@@ -20,6 +20,8 @@ import {
   createNewValueFieldFactory,
   generateFieldActions,
   normalizeFieldValue,
+  findChangedField,
+  ignoreClick,
   ACTION_ICONS,
   FIELDTYPES,
   FIELDSIZES,
@@ -34,6 +36,8 @@ import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
+import debounce from '../../utilities/debounce'
+
 import * as equal from 'fast-deep-equal'
 
 import {
@@ -48,7 +52,7 @@ const createNewFieldValue = createNewValueFieldFactory(nextUuid)
 
 const EMPTY_VALUE = ''
 
-export class EditableField extends React.PureComponent<
+export class EditableField extends React.Component<
   EditableFieldProps,
   EditableFieldState
 > {
@@ -129,6 +133,50 @@ export class EditableField extends React.PureComponent<
 
   editableFieldRef: HTMLDivElement
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!equal(this.props.value, nextProps.value)) {
+      return true
+    }
+
+    if (this.props.disabled !== nextProps.disabled) {
+      return true
+    }
+
+    if (this.props.state !== nextProps.state) {
+      return true
+    }
+
+    if (!equal(this.state.fieldValue, nextState.fieldValue)) {
+      return true
+    }
+
+    if (!equal(this.state.initialFieldValue, nextState.initialFieldValue)) {
+      return true
+    }
+
+    if (this.state.activeField !== nextState.activeField) {
+      return true
+    }
+
+    if (this.state.state !== nextState.state) {
+      return true
+    }
+
+    if (this.state.maskTabIndex !== nextState.maskTabIndex) {
+      return true
+    }
+
+    if (this.state.focusedByLabel !== nextState.focusedByLabel) {
+      return true
+    }
+
+    if (this.state.disabled !== nextState.disabled) {
+      return true
+    }
+
+    return false
+  }
+
   setEditableNode = node => {
     this.editableFieldRef = node
     this.props.innerRef(node)
@@ -173,11 +221,12 @@ export class EditableField extends React.PureComponent<
   handleInputBlur = ({ name, event }) => {
     const { onInputBlur } = this.props
     const { fieldValue, focusedByLabel } = this.state
+    console.log('handleInputBlur')
+
     /* istanbul ignore else */
     if (!focusedByLabel) {
-      this.setState({
-        activeField: EMPTY_VALUE,
-      })
+      //@ts-ignore
+      this.handleFieldBlurDebounced(event)
 
       onInputBlur({
         name,
@@ -259,7 +308,7 @@ export class EditableField extends React.PureComponent<
         if (isFunction(validate)) {
           // Skip if the field was marked as validated
           if (!impactedField.validated) {
-            this.updateFieldValueStateWithValidation({
+            this.updateFieldValueWithValidation({
               name,
               resolve,
               value: inputValue,
@@ -268,7 +317,7 @@ export class EditableField extends React.PureComponent<
           }
         } else {
           // Case 3B: without validation
-          this.updateFieldValueState({
+          this.updateFieldValue({
             name,
             resolve,
             value: inputValue,
@@ -279,7 +328,7 @@ export class EditableField extends React.PureComponent<
     })
   }
 
-  updateFieldValueStateWithValidation = ({
+  updateFieldValueWithValidation = ({
     value,
     name,
     event,
@@ -297,24 +346,19 @@ export class EditableField extends React.PureComponent<
 
       validate({ value, name }).then((validation: Validation) => {
         if (validation.isValid) {
-          this.updateFieldValueState({ value, name, resolve, event })
+          this.updateFieldValue({ value, name, resolve, event })
         } else {
-          this.setState(
-            {
-              disabled: false,
-              state: validation.type,
-              validationInfo: validation,
-              fieldValue: this.state.fieldValue.map(field => {
-                if (field.id === name) {
-                  return { ...field, validated: true }
-                }
-                return field
-              }),
-            },
-            () => {
-              // console.log(this.state.fieldValue)
-            }
-          )
+          this.setState({
+            disabled: false,
+            state: validation.type,
+            validationInfo: validation,
+            fieldValue: this.state.fieldValue.map(field => {
+              if (field.id === name) {
+                return { ...field, validated: true }
+              }
+              return field
+            }),
+          })
         }
       })
     }
@@ -323,7 +367,7 @@ export class EditableField extends React.PureComponent<
   /**
    * Change active status, field value, update initialFieldValue, enable field
    */
-  updateFieldValueState = ({ value, event, name, resolve }) => {
+  updateFieldValue = ({ value, event, name, resolve }) => {
     const { onEnter, onCommit, validate } = this.props
     const { fieldValue } = this.state
     const updatedFieldValue = fieldValue.map(val => {
@@ -336,7 +380,6 @@ export class EditableField extends React.PureComponent<
 
     this.setState(
       {
-        activeField: EMPTY_VALUE,
         disabled: false,
         fieldValue: updatedFieldValue,
         initialFieldValue: updatedFieldValue,
@@ -345,7 +388,6 @@ export class EditableField extends React.PureComponent<
       },
       () => {
         resolve && resolve()
-
         onEnter({ name, value: updatedFieldValue, event })
         onCommit({ name, value: updatedFieldValue })
       }
@@ -466,7 +508,7 @@ export class EditableField extends React.PureComponent<
     // Clearing value
     // When there is only one item in the fieldValue array
     if (fieldValue.length === 1) {
-      const emptyValue = { ...fieldValue[0] }
+      const emptyValue = { ...fieldValue[0], validated: false }
 
       emptyValue.value = EMPTY_VALUE
       /* istanbul ignore next */
@@ -482,7 +524,10 @@ export class EditableField extends React.PureComponent<
     }
 
     this.setState(
-      { fieldValue: updatedFieldValue, initialFieldValue: updatedFieldValue },
+      {
+        fieldValue: updatedFieldValue,
+        initialFieldValue: updatedFieldValue,
+      },
       () => {
         onDelete({ name, value: this.state.fieldValue, event })
         onCommit({ name, value: this.state.fieldValue })
@@ -507,164 +552,75 @@ export class EditableField extends React.PureComponent<
     }
   }
 
-  handleOnDocumentBodyMouseDown = (event: Event) => {
-    if (!event) return
-    if (!this.state.activeField) return
+  handleOusideFieldClick = (event: Event) => {
+    if (ignoreClick(event, this.editableFieldRef)) return
 
-    const { name, validate } = this.props
-    const { fieldValue, initialFieldValue } = this.state
-    const targetNode = event.target
+    // @ts-ignore
+    this.handleFieldBlurDebounced(event)
 
-    /* istanbul ignore else */
-    if (targetNode instanceof Element) {
-      /* istanbul ignore if */
-      if (document.activeElement === targetNode) return
-      /* istanbul ignore next */
-      if (
-        this.editableFieldRef.contains(targetNode) &&
-        targetNode.classList.contains(INPUT_CLASSNAMES.input)
-      )
-        return
-
-      // Avoid acting on anything that comes from the options/dropdown
-      /* istanbul ignore next */
-      if (
-        targetNode.classList.contains(
-          OTHERCOMPONENTS_CLASSNAMES.dropdownItem
-        ) ||
-        targetNode.classList.contains(
-          OTHERCOMPONENTS_CLASSNAMES.truncateContent
-        )
-      )
-        return
-
-      const optionsNode = this.editableFieldRef.querySelector(
-        `.${EDITABLEFIELD_CLASSNAMES.optionsWrapper}`
-      )
-      /* istanbul ignore next */
-      if (optionsNode && optionsNode.contains(targetNode)) return
-
-      // Case 1: single field
-      if (fieldValue.length === 1) {
-        if (isFunction(validate)) {
-          const field = this.state.fieldValue[0]
-
-          if (!field.validated) {
-            this.setState({ disabled: true })
-
-            validate({
-              value: field.value,
-              name: field.id,
-            }).then((validation: Validation) => {
-              if (validation.isValid) {
-                this.setState(
-                  {
-                    activeField: EMPTY_VALUE,
-                    disabled: false,
-                    validationInfo: undefined,
-                    fieldValue: this.state.fieldValue.map(field => {
-                      if (field.id === validation.name) {
-                        return { ...field, validated: true }
-                      }
-                      return field
-                    }),
-                  },
-                  () => {
-                    if (!equal(initialFieldValue, this.state.fieldValue)) {
-                      this.props.onCommit({
-                        name: this.state.fieldValue[0].id,
-                        value: this.state.fieldValue,
-                      })
-                    }
-                  }
-                )
-              } else {
-                this.setState({
-                  disabled: false,
-                  state: validation.type,
-                  validationInfo: validation,
-                  fieldValue: this.state.fieldValue.map(field => {
-                    if (field.id === validation.name) {
-                      return { ...field, validated: true }
-                    }
-                    return field
-                  }),
-                })
-              }
-            })
-          }
-        } else {
-          /* istanbul ignore next */
-          // It's tested, go home Istanbul
-          this.setState(
-            {
-              activeField: EMPTY_VALUE,
-              disabled: false,
-            },
-            () => {
-              if (!equal(initialFieldValue, this.state.fieldValue)) {
-                this.props.onCommit({ name, value: this.state.fieldValue })
-              }
-            }
-          )
-        }
-      } else {
-        // Case 2: multiple values
-        /* istanbul ignore next */
-        if (equal(initialFieldValue, this.state.fieldValue)) {
-          // Case 2.A: value unchanged
-          // It's tested, go home Istanbul
-          this.setState({
-            activeField: EMPTY_VALUE,
-          })
-        } else {
-          // Case 2.B: value changed
-          console.log('Case 2.B: value changed')
-
-          // With validation
-          let newestField = this.state.fieldValue[
-            this.state.fieldValue.length - 1
-          ]
-
-          if (
-            isFunction(validate) &&
-            newestField.value &&
-            !newestField.validated
-          ) {
-            this.updateFieldValueStateWithValidation({
-              value: newestField.value,
-              name: newestField.id,
-              event,
-            })
-
-            return
-          }
-          let updatedFieldValue: FieldValue[] = []
-          let emptyFound: boolean = false
-
-          for (const val of fieldValue) {
-            /* istanbul ignore if */
-            if (Boolean(val.value)) {
-              updatedFieldValue.push(val)
-            } else {
-              emptyFound = true
-            }
-          }
-
-          this.setState(
-            { fieldValue: updatedFieldValue, activeField: EMPTY_VALUE },
-            () => {
-              if (emptyFound) {
-                this.props.onDiscard({ value: this.state.fieldValue })
-              } else {
-                this.props.onCommit({ name, value: this.state.fieldValue })
-              }
-            }
-          )
-        }
-      }
-    }
+    this.setState({
+      activeField: EMPTY_VALUE,
+    })
   }
+
+  handleBlur = event => {
+    const { fieldValue, initialFieldValue, multipleValuesEnabled } = this.state
+    const { name, validate } = this.props
+    const withValidation = isFunction(validate)
+
+    // Value unchanged
+    if (equal(initialFieldValue, fieldValue)) {
+      return
+    }
+
+    const updatedField =
+      fieldValue.length === 1
+        ? fieldValue[0]
+        : findChangedField(initialFieldValue, fieldValue)
+
+    if (withValidation && updatedField.value && !updatedField.validated) {
+      this.updateFieldValueWithValidation({
+        value: updatedField.value,
+        name: updatedField.id,
+        event,
+      })
+
+      return
+    }
+
+    const removedEmptyFields = fieldValue.filter(field => Boolean(field.value))
+    const shouldDiscardEmpty =
+      multipleValuesEnabled &&
+      removedEmptyFields.length < fieldValue.length &&
+      removedEmptyFields.length > 0
+
+    if (shouldDiscardEmpty) {
+      this.setState(
+        {
+          fieldValue: removedEmptyFields,
+          activeField: EMPTY_VALUE,
+          disabled: false,
+        },
+        () => {
+          this.props.onDiscard({ value: this.state.fieldValue })
+          this.props.onCommit({ name, value: this.state.fieldValue })
+        }
+      )
+
+      return
+    }
+
+    this.setState(
+      {
+        disabled: false,
+      },
+      () => {
+        this.props.onCommit({ name, value: this.state.fieldValue })
+      }
+    )
+  }
+
+  handleFieldBlurDebounced = debounce(this.handleBlur, 200, false)
 
   renderAddButton = () => {
     const {
@@ -839,7 +795,7 @@ export class EditableField extends React.PureComponent<
         >
           <EventListener
             event="mousedown"
-            handler={this.handleOnDocumentBodyMouseDown}
+            handler={this.handleOusideFieldClick}
           />
           {this.renderFieldsInline()}
         </ComponentUI>
@@ -852,6 +808,7 @@ export class EditableField extends React.PureComponent<
         className={this.getClassName()}
         innerRef={this.setEditableNode}
       >
+        <EventListener event="click" handler={this.handleOusideFieldClick} />
         <label
           className={EDITABLEFIELD_CLASSNAMES.label}
           htmlFor={fieldValue[0].id}
@@ -861,11 +818,6 @@ export class EditableField extends React.PureComponent<
             {label || name}
           </LabelTextUI>
         </label>
-        <EventListener
-          event="mousedown"
-          handler={this.handleOnDocumentBodyMouseDown}
-        />
-
         {this.renderFields()}
       </ComponentUI>
     )

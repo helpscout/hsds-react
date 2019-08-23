@@ -115,7 +115,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   componentDidUpdate() {
-    const { isActive } = this.props
+    const { isActive, fieldValue } = this.props
 
     this.setInputTitle()
 
@@ -123,7 +123,9 @@ export class EditableFieldInput extends React.Component<InputProps> {
       if (document.activeElement !== this.optionsDropdownRef) {
         const inputNode = this.inputRef
 
-        inputNode && inputNode.focus()
+        if (!fieldValue.validated) {
+          inputNode && inputNode.focus()
+        }
       }
     }
   }
@@ -316,7 +318,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
         <div
           style={{
             position: 'absolute',
-            background: 'salmon',
+            background: fieldValue.validated ? 'lightgreen' : 'salmon',
             top: '0px',
             left: '-110px',
             height: '20px',
