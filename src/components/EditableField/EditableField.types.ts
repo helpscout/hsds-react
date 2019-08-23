@@ -91,7 +91,7 @@ export interface EditableFieldProps {
   onCommit: (args: { name: string; value: FieldValue[] }) => void
   onDelete: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onDiscard: (args: { value: FieldValue[] }) => void
-  validate?: (args: { value: string; name: string }) => Promise<Validation>
+  validate: (args: { value: string; name: string }) => Promise<Validation>
 }
 
 export interface EditableFieldState {
@@ -100,7 +100,6 @@ export interface EditableFieldState {
   defaultOption: string | null
   disabled: boolean
   fieldValue: FieldValue[]
-  focusedByLabel: boolean
   initialFieldValue: FieldValue[]
   maskTabIndex: string | null
   multipleValuesEnabled: boolean
