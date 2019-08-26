@@ -371,8 +371,9 @@ stories.add('Validation', () => (
       placeholder="Add a team name"
       type="text"
       value="atlas"
+      validate={validateFieldValue}
       onCommit={({ name, value }) => {
-        console.log('commited')
+        // console.log('commited')
         // console.log('HSDS: name', name)
         // console.log('HSDS: value', value)
       }}
