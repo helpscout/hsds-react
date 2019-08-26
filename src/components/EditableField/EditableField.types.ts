@@ -103,8 +103,7 @@ export interface EditableFieldState {
   initialFieldValue: FieldValue[]
   maskTabIndex: string | null
   multipleValuesEnabled: boolean
-  state: FieldState
-  validationInfo?: Validation
+  validationInfo: Validation[]
   valueOptions: any
 }
 
