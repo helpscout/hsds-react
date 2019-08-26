@@ -115,19 +115,19 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   componentDidUpdate(prevProps) {
-    const { isActive } = this.props
+    // const { isActive } = this.props
 
     this.setInputTitle()
 
-    if (isActive) {
-      if (document.activeElement !== this.optionsDropdownRef) {
-        if (this.props.validationInfo === prevProps.validationInfo) {
-          const inputNode = this.inputRef
+    // if (isActive) {
+    //   if (document.activeElement !== this.optionsDropdownRef) {
+    //     if (this.props.validationInfo === prevProps.validationInfo) {
+    //       const inputNode = this.inputRef
 
-          // inputNode && inputNode.focus()
-        }
-      }
-    }
+    //       // inputNode && inputNode.focus()
+    //     }
+    //   }
+    // }
   }
 
   setInputTitle = () => {
@@ -241,7 +241,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
           shouldRefocusOnClose={() => false}
           minWidth={75}
           maxWidth={200}
-          onBlur={this.handleInputBlur}
+          // onBlur={this.handleInputBlur}
           onFocus={this.handleOptionFocus}
           onSelect={this.handleDropdownSelect}
           triggerRef={this.setOptionsDropdownNode}
@@ -262,11 +262,10 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   renderValidationInfo = () => {
-    const { name, state, validationInfo } = this.props
+    const { name, validationInfo } = this.props
 
     if (!validationInfo) return null
     if (name !== validationInfo.name) return null
-    if (state === FIELDSTATES.default) return null
 
     const DEFAULT_ICON = 'alert'
 
@@ -274,16 +273,13 @@ export class EditableFieldInput extends React.Component<InputProps> {
       <>
         <ValidationIconUI
           color={
-            (validationInfo && validationInfo.color) || COLOURS.states[state]
+            validationInfo.color ||
+            COLOURS.states[validationInfo.type || 'default']
           }
         >
-          <Icon
-            name={(validationInfo && validationInfo.icon) || DEFAULT_ICON}
-          />
+          <Icon name={validationInfo.icon || DEFAULT_ICON} />
         </ValidationIconUI>
-        <ValidationMessageUI>
-          {validationInfo && validationInfo.message}
-        </ValidationMessageUI>
+        <ValidationMessageUI>{validationInfo.message}</ValidationMessageUI>
       </>
     )
   }
@@ -310,7 +306,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
           inline && STATES_CLASSNAMES.isInline,
           validationInfo &&
             validationInfo.name === name &&
-            state !== FIELDSTATES.default &&
             STATES_CLASSNAMES.error
         )}
         innerRef={this.setFieldInputContentNode}
@@ -363,9 +358,10 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   setFocusIndicatorColor = () => {
-    const { validationInfo, state } = this.props
+    const { validationInfo } = this.props
 
-    let color = COLOURS.states[state]
+    let color =
+      COLOURS.states[(validationInfo && validationInfo.type) || 'default']
 
     if (validationInfo && validationInfo.color) {
       color = validationInfo.color

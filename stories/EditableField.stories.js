@@ -353,7 +353,7 @@ stories.add('Validation', () => (
       e.preventDefault()
     }}
   >
-    <EditableField
+    {/* <EditableField
       label="Company"
       name="company"
       placeholder="Add a company name"
@@ -364,8 +364,8 @@ stories.add('Validation', () => (
         // console.log('HSDS: name', name)
         // console.log('HSDS: value', value)
       }}
-    />
-    <EditableField
+    /> */}
+    {/* <EditableField
       label="team"
       name="team"
       placeholder="Add a team name"
@@ -385,8 +385,8 @@ stories.add('Validation', () => (
       placeholder="Add a musician name"
       value={['George Harrison', 'Neil Young']}
       validate={validateFieldValue}
-    />
-    {/*
+    /> */}
+
     <EditableField
       label="Favourite Paint Colour"
       name="paint"
@@ -399,13 +399,11 @@ stories.add('Validation', () => (
         { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
       ]}
       validate={validateFieldValue}
-    /> */}
+    />
   </ContainerUI>
 ))
 
 function validateFieldValue({ name, value }) {
-  console.log('Validating')
-
   let isValid = value !== 'off'
 
   return new Promise(resolve => {
