@@ -51,7 +51,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
     innerRef: noop,
     onInputFocus: noop,
     onInputBlur: noop,
-    onInputChange: noop,
     onOptionFocus: noop,
     onOptionSelection: noop,
     onChange: noop,
@@ -115,19 +114,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   componentDidUpdate(prevProps) {
-    // const { isActive } = this.props
-
     this.setInputTitle()
-
-    // if (isActive) {
-    //   if (document.activeElement !== this.optionsDropdownRef) {
-    //     if (this.props.validationInfo === prevProps.validationInfo) {
-    //       const inputNode = this.inputRef
-
-    //       // inputNode && inputNode.focus()
-    //     }
-    //   }
-    // }
   }
 
   setInputTitle = () => {
@@ -178,21 +165,13 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   handleChange = event => {
-    const { onChange, onInputChange } = this.props
+    const { onChange } = this.props
 
     onChange({
       inputValue: event.currentTarget.value,
       name: this.props.name,
       event,
     })
-    /* istanbul ignore else */
-    if (onInputChange) {
-      onInputChange({
-        inputValue: event.currentTarget.value,
-        name: this.props.name,
-        event,
-      })
-    }
   }
 
   handleKeyDown = event => {

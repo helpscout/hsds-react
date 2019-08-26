@@ -19,14 +19,11 @@ import {
   createNewValueFieldFactory,
   generateFieldActions,
   normalizeFieldValue,
-  findChangedField,
   ACTION_ICONS,
   FIELDTYPES,
   FIELDSIZES,
   FIELDSTATES,
   EDITABLEFIELD_CLASSNAMES,
-  INPUT_CLASSNAMES,
-  OTHERCOMPONENTS_CLASSNAMES,
   STATES_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
@@ -66,7 +63,6 @@ export class EditableField extends React.Component<
     innerRef: noop,
     onInputFocus: noop,
     onInputBlur: noop,
-    onInputChange: noop,
     onOptionFocus: noop,
     onOptionChange: noop,
     onChange: noop,
@@ -339,7 +335,7 @@ export class EditableField extends React.Component<
   }
 
   handleInputChange = ({ inputValue, name, event }) => {
-    const { onChange, onInputChange } = this.props
+    const { onChange } = this.props
     const { validationInfo } = this.state
     const newFieldValue = this.assignInputValueToFieldValue({
       inputValue,
@@ -353,7 +349,6 @@ export class EditableField extends React.Component<
       },
       () => {
         onChange({ name, value: newFieldValue, event })
-        onInputChange({ name, value: newFieldValue, event })
       }
     )
   }
@@ -721,7 +716,6 @@ export class EditableField extends React.Component<
                 valueOptions={valueOptions}
                 onInputFocus={this.handleInputFocus}
                 onInputBlur={this.handleInputBlur}
-                onInputChange={this.handleInputChange}
                 onOptionFocus={this.handleOptionFocus}
                 onOptionSelection={this.handleOptionSelection}
                 onChange={this.handleInputChange}
@@ -786,7 +780,6 @@ export class EditableField extends React.Component<
                 type={type}
                 onInputFocus={this.handleInputFocus}
                 onInputBlur={this.handleInputBlur}
-                onInputChange={this.handleInputChange}
                 onOptionFocus={this.handleOptionFocus}
                 onOptionSelection={this.handleOptionSelection}
                 onChange={this.handleInputChange}

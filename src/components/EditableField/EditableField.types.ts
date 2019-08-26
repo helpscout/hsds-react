@@ -69,11 +69,6 @@ export interface EditableFieldProps {
     value: FieldValue[]
     event: Event
   }) => void
-  onInputChange: (args: {
-    name: string
-    value: FieldValue[]
-    event: Event
-  }) => void
   onOptionFocus: (args: {
     name: string
     value: FieldValue[]
@@ -123,11 +118,6 @@ export interface InputProps {
   innerRef: (node: HTMLElement) => void
   onInputFocus: (args: { name: string; event: Event }) => void
   onInputBlur: (args: { name: string; event: Event }) => void
-  onInputChange: (args: {
-    name: string
-    inputValue: string
-    event: Event
-  }) => void
   onOptionFocus: (args: { name: string; event: Event }) => void
   onOptionSelection: (args: { name: string; selection: string }) => void
   onChange: (args: { name: string; inputValue: string; event?: Event }) => void
