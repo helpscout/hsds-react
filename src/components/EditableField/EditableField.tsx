@@ -202,12 +202,144 @@ export class EditableField extends React.Component<
     const { onInputFocus } = this.props
     const { fieldValue } = this.state
 
-    this.setState({
-      activeField: name,
-      maskTabIndex: null,
-    })
+    this.setState(
+      {
+        activeField: name,
+        maskTabIndex: null,
+      },
+      () => {
+        // console.group('focus')
+        // console.log('activeField ', this.state.activeField)
+        // console.groupEnd()
+      }
+    )
 
     onInputFocus({ name, value: fieldValue, event })
+  }
+
+  handleInputBlur = ({ name, event }) => {
+    const {
+      activeField,
+      fieldValue,
+      initialFieldValue,
+      multipleValuesEnabled,
+    } = this.state
+    const { validate, onCommit, onInputBlur } = this.props
+
+    if (equal(initialFieldValue, fieldValue)) {
+      console.log('blur not changed')
+
+      this.setState({ activeField: EMPTY_VALUE }, () => {
+        onInputBlur({ name, value: fieldValue, event })
+      })
+
+      return
+    }
+
+    const changedField =
+      fieldValue.length === 1
+        ? fieldValue[0]
+        : findChangedField(initialFieldValue, fieldValue)
+
+    if (!changedField.value) {
+      if (!multipleValuesEnabled) {
+        console.log('blur changed value empty on multivalue')
+        this.setState({ activeField: EMPTY_VALUE }, () => {
+          onInputBlur({ name, value: fieldValue, event })
+          onCommit({ name, value: fieldValue })
+        })
+
+        return
+      }
+    }
+
+    if (changedField.value && !changedField.validated) {
+      console.log('blur changed')
+      validate({
+        value: changedField.value,
+        name: changedField.id,
+      }).then(validation => {
+        const updatedFieldValue = fieldValue.map(field => {
+          if (field.id === changedField.id) {
+            return { ...changedField, validated: true }
+          }
+          return field
+        })
+
+        if (validation.isValid) {
+          this.setState(
+            {
+              fieldValue: updatedFieldValue,
+              initialFieldValue: updatedFieldValue,
+            },
+            () => {
+              onCommit({ name, value: updatedFieldValue })
+
+              /**
+               * Managing "Active Field"
+               *
+               * One consequence of the 'blur' activity being _always_ async (the result of being executed inside a Promise)
+               * is that the normal sequence of events is no longer executed in the "regular" flow.
+               *
+               * Sync (previous behaviour):
+               * 1. blur (sets activeField to ''),
+               * 2.focus (sets activeField to whatever input was focused)
+               *
+               * Async (current behaviour):
+               * 1. blur ...validation Promise... ,
+               * 2. focus (sets activeField to whatever input was focused),
+               * 3. ...validation Promise comes back... blur sets activeField to '' <=== DAMN!
+               *
+               * To get back the correct behaviour, we leave 'focus' as is, which will _always_ set the activeField
+               * to the focused input, with this knowledge we know what to do on 'blur' _after_ it updated the fieldValue
+               * state, which in most cases is _after_ focus, but if focus happens after, the result is the same
+               */
+
+              const unchangedByFocusEvent =
+                this.state.activeField === activeField
+
+              this.setState({
+                activeField: unchangedByFocusEvent
+                  ? EMPTY_VALUE
+                  : this.state.activeField,
+              })
+            }
+          )
+        } else {
+          this.setState({
+            state: validation.type,
+            validationInfo: validation,
+            fieldValue: updatedFieldValue,
+          })
+        }
+
+        onInputBlur({ name, value: fieldValue, event })
+      })
+
+      return
+    }
+
+    console.log('blur, down there')
+
+    const removedEmptyFields = fieldValue.filter(field => Boolean(field.value))
+    const shouldDiscardEmpty =
+      multipleValuesEnabled &&
+      removedEmptyFields.length < fieldValue.length &&
+      removedEmptyFields.length > 0
+
+    if (shouldDiscardEmpty) {
+      this.setState(
+        {
+          fieldValue: removedEmptyFields,
+          activeField: EMPTY_VALUE,
+        },
+        () => {
+          this.props.onDiscard({ value: this.state.fieldValue })
+          this.props.onCommit({ name, value: this.state.fieldValue })
+        }
+      )
+    }
+    return
   }
 
   handleInputChange = ({ inputValue, name, event }) => {
@@ -500,81 +632,6 @@ export class EditableField extends React.Component<
     if (isFunction(action.callback)) {
       action.callback({ name, action, value: fieldValue, event })
     }
-  }
-
-  handleInputBlur = ({ name, event }) => {
-    const { fieldValue, initialFieldValue, multipleValuesEnabled } = this.state
-    const { validate, onCommit, onInputBlur } = this.props
-
-    if (equal(initialFieldValue, fieldValue)) {
-      this.setState({ activeField: EMPTY_VALUE })
-      onInputBlur({ name, value: fieldValue, event })
-
-      return
-    }
-
-    const changedField =
-      fieldValue.length === 1
-        ? fieldValue[0]
-        : findChangedField(initialFieldValue, fieldValue)
-
-    if (!changedField.value) {
-      if (!multipleValuesEnabled) {
-        this.setState({ activeField: EMPTY_VALUE })
-        onInputBlur({ name, value: fieldValue, event })
-        onCommit({ name, value: fieldValue })
-        return
-      }
-    }
-
-    if (changedField.value && !changedField.validated) {
-      validate({ value: changedField.value, name: changedField.id }).then(
-        validation => {
-          const updatedFieldValue = fieldValue.map(field => {
-            if (field.id === changedField.id) {
-              return { ...changedField, validated: true }
-            }
-            return field
-          })
-
-          if (validation.isValid) {
-            this.setState({
-              activeField: EMPTY_VALUE,
-              fieldValue: updatedFieldValue,
-            })
-
-            onCommit({ name, value: updatedFieldValue })
-          } else {
-            this.setState({
-              state: validation.type,
-              validationInfo: validation,
-              fieldValue: updatedFieldValue,
-            })
-          }
-        }
-      )
-
-      onInputBlur({ name, value: fieldValue, event })
-
-      return
-    }
-
-    const removedEmptyFields = fieldValue.filter(field => Boolean(field.value))
-    const shouldDiscardEmpty =
-      multipleValuesEnabled &&
-      removedEmptyFields.length < fieldValue.length &&
-      removedEmptyFields.length > 0
-
-    if (shouldDiscardEmpty) {
-      this.setState({
-        fieldValue: removedEmptyFields,
-        activeField: EMPTY_VALUE,
-      })
-
-      this.props.onDiscard({ value: this.state.fieldValue })
-      this.props.onCommit({ name, value: this.state.fieldValue })
-    }
-    return
   }
 
   renderAddButton = () => {

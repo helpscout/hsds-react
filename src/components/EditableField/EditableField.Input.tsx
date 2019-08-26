@@ -124,7 +124,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
         if (this.props.validationInfo === prevProps.validationInfo) {
           const inputNode = this.inputRef
 
-          inputNode && inputNode.focus()
+          // inputNode && inputNode.focus()
         }
       }
     }
