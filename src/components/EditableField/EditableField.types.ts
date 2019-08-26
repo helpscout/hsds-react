@@ -119,6 +119,7 @@ export interface InputProps {
   onInputFocus: (args: { name: string; event: Event }) => void
   onInputBlur: (args: { name: string; event: Event }) => void
   onOptionFocus: (args: { name: string; event: Event }) => void
+  onOptionBlur: (args: { name: string; event: Event }) => void
   onOptionSelection: (args: { name: string; selection: string }) => void
   onChange: (args: { name: string; inputValue: string; event?: Event }) => void
   onKeyDown: (args: { name: string; event: Event }) => Promise<any>

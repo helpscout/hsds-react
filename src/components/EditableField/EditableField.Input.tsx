@@ -53,6 +53,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
     onInputBlur: noop,
     onOptionFocus: noop,
     onOptionSelection: noop,
+    onOptionBlur: noop,
     onChange: noop,
     onKeyDown: noop,
     deleteAction: noop,
@@ -198,6 +199,12 @@ export class EditableFieldInput extends React.Component<InputProps> {
     }
   }
 
+  handleOptionsBlur = event => {
+    const { name, onOptionBlur } = this.props
+
+    onOptionBlur({ name, event })
+  }
+
   handleDropdownSelect = selection => {
     const { name, onOptionSelection } = this.props
 
@@ -220,7 +227,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
           shouldRefocusOnClose={() => false}
           minWidth={75}
           maxWidth={200}
-          // onBlur={this.handleInputBlur}
+          onBlur={this.handleOptionsBlur}
           onFocus={this.handleOptionFocus}
           onSelect={this.handleDropdownSelect}
           triggerRef={this.setOptionsDropdownNode}
