@@ -65,6 +65,7 @@ export class EditableField extends React.Component<
     onInputBlur: noop,
     onOptionFocus: noop,
     onOptionChange: noop,
+    onOptionBlur: noop,
     onChange: noop,
     onEnter: noop,
     onEscape: noop,
@@ -269,17 +270,18 @@ export class EditableField extends React.Component<
                * is that the normal sequence of events is no longer executed in the "regular" flow.
                *
                * Sync (previous behaviour):
-               * 1. blur (sets activeField to ''),
-               * 2.focus (sets activeField to whatever input was focused)
+               * 1. blur (sets activeField to '')
+               * 2. focus (sets activeField to whatever input was focused)
                *
                * Async (current behaviour):
-               * 1. blur ...validation Promise... ,
-               * 2. focus (sets activeField to whatever input was focused),
+               * 1. blur ...validation Promise...
+               * 2. focus (sets activeField to whatever input was focused)
                * 3. ...validation Promise comes back... blur sets activeField to '' <=== DAMN!
                *
                * To get back the correct behaviour, we leave 'focus' as is, which will _always_ set the activeField
-               * to the focused input, with this knowledge we know what to do on 'blur' _after_ it updated the fieldValue
-               * state, which in most cases is _after_ focus, but if focus happens after, the result is the same
+               * to the focused input. With that info, we can update the active field _after_ the blur
+               * setState, knowing that if the activeState in the state is different from what we had before
+               * it means the focus event kicked in.
                */
 
               const unchangedByFocusEvent =
@@ -530,18 +532,37 @@ export class EditableField extends React.Component<
     )
   }
 
+  handleOptionBlur = ({ name, event }) => {
+    const { onOptionBlur } = this.props
+
+    this.setState(
+      {
+        activeField: EMPTY_VALUE,
+      },
+      () => {
+        onOptionBlur({ name, value: this.state.fieldValue, event })
+      }
+    )
+  }
+
   handleOptionSelection = ({ name, selection }) => {
     const { onChange, onOptionChange, onCommit } = this.props
-    const { fieldValue } = this.state
+    const { fieldValue, validationInfo } = this.state
     let newFieldValue: FieldValue[] = []
     let changed = false
+    let hasBeenValidated = ''
 
     for (const value of fieldValue) {
       const temp = { ...value }
       /* istanbul ignore else */
+
       if (temp.id === name && temp.option !== selection) {
         temp.option = selection
         changed = true
+      }
+
+      if (temp.id === name && temp.validated) {
+        hasBeenValidated = temp.id
       }
 
       newFieldValue.push(temp)
@@ -549,10 +570,21 @@ export class EditableField extends React.Component<
 
     /* istanbul ignore else */
     if (changed) {
+      let isItemInvalid
+
+      if (hasBeenValidated !== '') {
+        isItemInvalid = find(
+          validationInfo,
+          val => val.name === hasBeenValidated
+        )
+      }
+
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
+        if (!isItemInvalid) {
+          onCommit({ name, value: newFieldValue })
+        }
         onOptionChange({ name, selection, value: newFieldValue })
         onChange({ name, value: newFieldValue })
-        onCommit({ name, value: newFieldValue })
       })
     }
   }
@@ -717,6 +749,7 @@ export class EditableField extends React.Component<
                 onInputFocus={this.handleInputFocus}
                 onInputBlur={this.handleInputBlur}
                 onOptionFocus={this.handleOptionFocus}
+                onOptionBlur={this.handleOptionBlur}
                 onOptionSelection={this.handleOptionSelection}
                 onChange={this.handleInputChange}
                 onKeyDown={this.handleInputKeyDown}

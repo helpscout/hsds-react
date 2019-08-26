@@ -399,6 +399,10 @@ stories.add('Validation', () => (
         { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
       ]}
       validate={validateFieldValue}
+      onCommit={({ name, value }) => {
+        console.log('HSDS: name', name)
+        console.log('HSDS: value', value)
+      }}
     />
   </ContainerUI>
 ))
