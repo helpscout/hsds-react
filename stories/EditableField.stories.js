@@ -365,7 +365,7 @@ stories.add('Validation', () => (
         // console.log('HSDS: value', value)
       }}
     /> */}
-    {/* <EditableField
+    <EditableField
       label="team"
       name="team"
       placeholder="Add a team name"
@@ -385,7 +385,7 @@ stories.add('Validation', () => (
       placeholder="Add a musician name"
       value={['George Harrison', 'Neil Young']}
       validate={validateFieldValue}
-    /> */}
+    />
 
     <EditableField
       label="Favourite Paint Colour"
