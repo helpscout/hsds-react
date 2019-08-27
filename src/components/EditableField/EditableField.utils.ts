@@ -42,9 +42,16 @@ export function normalizeFieldValue({
   createNewFieldValue,
   defaultOption,
 }): FieldValue[] {
-  return isArray(value)
-    ? value.map(val => createNewFieldValue({ value: val, name }, defaultOption))
-    : [createNewFieldValue({ value, name }, defaultOption)]
+  if (isArray(value)) {
+    if (value.length === 0) {
+      return [createNewFieldValue({ value: '', name }, defaultOption)]
+    }
+    return value.map(val =>
+      createNewFieldValue({ value: val, name }, defaultOption)
+    )
+  } else {
+    return [createNewFieldValue({ value, name }, defaultOption)]
+  }
 }
 
 export function createNewValueFieldFactory(uuidFn) {
@@ -55,7 +62,7 @@ export function createNewValueFieldFactory(uuidFn) {
     // If it's an object already, grab the fields first
     if (isObject(value)) {
       const fieldObj = {
-        id: uuidFn(`${name}_`),
+        id: value.id || uuidFn(`${name}_`),
         validated: false,
         disabled: false,
         ...value,

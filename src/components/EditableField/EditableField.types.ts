@@ -99,7 +99,7 @@ export interface EditableFieldState {
   actions?: FieldAction[]
   activeField: string
   defaultOption: string | null
-  disabledItem?: string
+  disabledItem: string
   fieldValue: FieldValue[]
   initialFieldValue: FieldValue[]
   maskTabIndex: string | null
