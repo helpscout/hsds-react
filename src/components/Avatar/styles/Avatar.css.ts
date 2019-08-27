@@ -297,6 +297,7 @@ export const AvatarButtonUI = styled('button')`
   position: relative;
   width: ${config.size.md.size}px;
   outline: none;
+  background: transparent;
 
   ${props => getColorStyles(props)} &.is-light {
     color: ${getColor('grey.400')};
