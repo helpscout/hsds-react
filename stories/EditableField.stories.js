@@ -49,6 +49,23 @@ const NoteUI = styled('div')`
 
 const PHONE_OPTIONS = ['Home', 'Work', 'Other']
 const PAINT_OPTIONS = ['Acrylics', 'Oil', 'Pastels', 'Watercolour', 'Other']
+const BARCELONA = {
+  value: 'FC Barcelona',
+  id: 'TEAM_1',
+  someOtherProp: 'the best, Jerry, the best',
+}
+const ARSENAL = {
+  value: 'Arsenal',
+  disabled: true,
+  id: 'TEAM_2',
+  someOtherProp: 'the best, Jerry, the best',
+}
+const ATLAS = {
+  value: 'Atlas',
+  disabled: true,
+  id: 'TEAM_3',
+  someOtherProp: 'the best, Jerry, the best',
+}
 
 stories.add('Text', () => (
   <ContainerUI
@@ -293,6 +310,13 @@ stories.add('Disabled', () => (
       disabled
     />
     <EditableField
+      label="Teams (individual fields disabled)"
+      name="teams"
+      type="text"
+      placeholder="Add a team name"
+      value={[ARSENAL, ATLAS, BARCELONA]}
+    />
+    <EditableField
       label="Phone"
       name="Phone"
       placeholder="Add phone"
@@ -353,18 +377,6 @@ stories.add('Validation', () => (
       e.preventDefault()
     }}
   >
-    {/* <EditableField
-      label="Company"
-      name="company"
-      placeholder="Add a company name"
-      type="text"
-      validate={validateFieldValue}
-      onCommit={({ name, value }) => {
-        console.log('commited')
-        // console.log('HSDS: name', name)
-        // console.log('HSDS: value', value)
-      }}
-    /> */}
     <EditableField
       label="team"
       name="team"
@@ -372,11 +384,7 @@ stories.add('Validation', () => (
       type="text"
       value="atlas"
       validate={validateFieldValue}
-      onCommit={({ name, value }) => {
-        // console.log('commited')
-        // console.log('HSDS: name', name)
-        // console.log('HSDS: value', value)
-      }}
+      onCommit={action('onCommit')}
     />
     <EditableField
       label="Musicians"
@@ -384,6 +392,7 @@ stories.add('Validation', () => (
       type="text"
       placeholder="Add a musician name"
       value={['George Harrison', 'Neil Young']}
+      onCommit={action('onCommit')}
       validate={validateFieldValue}
     />
 
@@ -399,10 +408,7 @@ stories.add('Validation', () => (
         { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
       ]}
       validate={validateFieldValue}
-      onCommit={({ name, value }) => {
-        console.log('HSDS: name', name)
-        console.log('HSDS: value', value)
-      }}
+      onCommit={action('onCommit')}
     />
   </ContainerUI>
 ))
@@ -426,3 +432,97 @@ function validateFieldValue({ name, value }) {
     }, 500)
   })
 }
+
+class ValuePropsApp extends React.Component {
+  state = {
+    value: BARCELONA,
+    multiValue: [ATLAS, ARSENAL, BARCELONA],
+  }
+
+  render() {
+    return (
+      <ContainerUI
+        onSubmit={e => {
+          e.preventDefault()
+        }}
+      >
+        <h2>Single value field</h2>
+        <EditableField
+          label="Team"
+          name="team"
+          placeholder="Add a sports team name"
+          type="text"
+          value={this.state.value}
+        />
+
+        <button
+          onClick={() => {
+            this.setState({ value: BARCELONA })
+          }}
+        >
+          Barcelona
+        </button>
+        <button
+          onClick={() => {
+            this.setState({ value: ARSENAL })
+          }}
+        >
+          Arsenal
+        </button>
+        <button
+          onClick={() => {
+            this.setState({ value: ATLAS })
+          }}
+        >
+          Atlas
+        </button>
+        <pre>
+          <code>{JSON.stringify(this.state.value, null, 2)}</code>
+        </pre>
+        <br />
+        <h2>Multiple value fields</h2>
+        <EditableField
+          label="Team"
+          name="team"
+          placeholder="Add a sports team name"
+          type="text"
+          value={this.state.multiValue}
+        />
+
+        <button
+          onClick={() => {
+            this.setState({ multiValue: [ATLAS, BARCELONA, ARSENAL] })
+          }}
+        >
+          3 teams
+        </button>
+        <button
+          onClick={() => {
+            this.setState({ multiValue: [ATLAS, ARSENAL] })
+          }}
+        >
+          2 teams
+        </button>
+        <button
+          onClick={() => {
+            this.setState({ multiValue: [ATLAS] })
+          }}
+        >
+          1 team
+        </button>
+        <button
+          onClick={() => {
+            this.setState({ multiValue: [] })
+          }}
+        >
+          No teams
+        </button>
+        <pre>
+          <code>{JSON.stringify(this.state.multiValue, null, 2)}</code>
+        </pre>
+      </ContainerUI>
+    )
+  }
+}
+
+stories.add('Value from props', () => <ValuePropsApp />)

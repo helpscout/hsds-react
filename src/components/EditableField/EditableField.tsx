@@ -81,7 +81,6 @@ export class EditableField extends React.Component<
 
     const {
       actions,
-      disabled,
       name,
       defaultOption,
       multipleValues,
@@ -106,6 +105,7 @@ export class EditableField extends React.Component<
       actions: generateFieldActions(actions),
       activeField: EMPTY_VALUE,
       defaultOption: defaultStateOption,
+      disabledItem: '',
       fieldValue: initialFieldValue,
       initialFieldValue,
       maskTabIndex: null,
@@ -162,6 +162,30 @@ export class EditableField extends React.Component<
     }
 
     return false
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!equal(this.props.value, prevProps.value)) {
+      const { name, defaultOption, value, valueOptions } = this.props
+
+      let defaultStateOption: any = null
+
+      if (valueOptions) {
+        defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
+      }
+
+      const initialFieldValue = normalizeFieldValue({
+        value,
+        name,
+        createNewFieldValue,
+        defaultOption: defaultStateOption,
+      })
+
+      this.setState({
+        fieldValue: initialFieldValue,
+        initialFieldValue,
+      })
+    }
   }
 
   setEditableNode = node => {
@@ -247,7 +271,7 @@ export class EditableField extends React.Component<
         value: changedField.value,
         name: changedField.id,
       }).then(validation => {
-        const updatedFieldValue = fieldValue.map(field => {
+        const updatedFieldValue = this.state.fieldValue.map(field => {
           if (field.id === changedField.id) {
             return { ...changedField, validated: true }
           }
@@ -604,7 +628,6 @@ export class EditableField extends React.Component<
     const { fieldValue, defaultOption } = this.state
     const isNotSingleEmptyValue =
       fieldValue[fieldValue.length - 1].value !== EMPTY_VALUE
-
     /* istanbul ignore next */
     if (isNotSingleEmptyValue) {
       // it is tested
@@ -623,6 +646,7 @@ export class EditableField extends React.Component<
       }
 
       this.setState(newState, () => {
+        console.log('adding')
         onAdd({ name, value: newFieldValue })
       })
     }
@@ -694,15 +718,12 @@ export class EditableField extends React.Component<
     const invalidValuePresent =
       validationInfo.filter(valItem => !valItem.isValid).length > 0
 
-    return multipleValuesEnabled &&
-      !isSingleAndEmpty &&
-      !disabled &&
-      !invalidValuePresent ? (
+    return multipleValuesEnabled && !isSingleAndEmpty && !disabled ? (
       <AddButtonUI
         className={EDITABLEFIELD_CLASSNAMES.addButton}
         type="button"
         onClick={this.handleAddValue}
-        disabled={isLastValueEmpty}
+        disabled={isLastValueEmpty || invalidValuePresent}
       >
         <Icon name={ACTION_ICONS.plus} size="24" />
       </AddButtonUI>
@@ -726,6 +747,7 @@ export class EditableField extends React.Component<
       <div className={EDITABLEFIELD_CLASSNAMES.fieldWrapper}>
         {fieldValue.map((val, index) => {
           const isActive = activeField === val.id
+          const isDisabled = val.disabled || disabledItem === val.id
           const valInfo = find(
             validationInfo,
             valItem => valItem.name === val.id
@@ -735,7 +757,7 @@ export class EditableField extends React.Component<
             <FieldUI
               className={classNames(
                 EDITABLEFIELD_CLASSNAMES.field,
-                disabledItem === val.id && STATES_CLASSNAMES.fieldDisabled,
+                isDisabled && STATES_CLASSNAMES.fieldDisabled,
                 isActive && STATES_CLASSNAMES.isActive,
                 valueOptions && STATES_CLASSNAMES.hasOptions,
                 !Boolean(val.value) && STATES_CLASSNAMES.isEmpty
@@ -745,7 +767,7 @@ export class EditableField extends React.Component<
               <Input
                 {...getValidProps(rest)}
                 actions={actions}
-                disabled={disabledItem === val.id}
+                disabled={isDisabled}
                 fieldValue={val}
                 isActive={isActive}
                 name={val.id}
@@ -764,7 +786,7 @@ export class EditableField extends React.Component<
               <Mask
                 {...getValidProps(rest)}
                 actions={actions}
-                disabled={disabledItem === val.id}
+                disabled={isDisabled}
                 emphasize={
                   multipleValuesEnabled && emphasizeTopValue && index === 0
                 }

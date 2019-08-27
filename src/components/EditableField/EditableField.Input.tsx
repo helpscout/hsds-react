@@ -303,20 +303,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
         )}
         innerRef={this.setFieldInputContentNode}
       >
-        <div
-          style={{
-            position: 'absolute',
-            background: fieldValue.validated ? 'lightgreen' : 'salmon',
-            top: '0px',
-            left: '-110px',
-            height: '20px',
-            lineHeight: '20px',
-            width: '100px',
-          }}
-        >
-          {fieldValue.validated ? 'validated' : 'not validated'}
-        </div>
-
         {valueOptions ? this.renderOptions() : null}
 
         <InputWrapperUI
