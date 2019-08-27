@@ -75,11 +75,17 @@ export class EditableFieldMask extends React.Component<MaskProps> {
       fieldValue,
       placeholder,
       type,
+      validationInfo,
       valueOptions,
     } = this.props
 
     return (
-      <ComponentUI className={MASK_CLASSNAMES.component}>
+      <ComponentUI
+        className={classNames(
+          MASK_CLASSNAMES.component,
+          validationInfo && STATES_CLASSNAMES.withValidation
+        )}
+      >
         {valueOptions ? (
           <MaskOptionUI className={MASK_CLASSNAMES.option}>
             <Truncate>{fieldValue.option}</Truncate>

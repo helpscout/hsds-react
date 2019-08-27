@@ -9,11 +9,11 @@ import {
   TriggerUI,
   FocusIndicatorUI,
   ValidationIconUI,
-  ValidationMessageUI,
 } from './styles/EditableField.Input.css'
 
 import Dropdown from '../Dropdown/DropdownV2'
 import Icon from '../Icon'
+import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -184,7 +184,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
     /* istanbul ignore else */
     if ((isEnter && !isDropdownTrigger) || isEscape) {
       const { name, onKeyDown } = this.props
-      // const staticValueNode = this.staticValueRef
       const inputNode = this.inputRef
 
       onKeyDown({ event, name }).then(() => {
@@ -256,17 +255,26 @@ export class EditableFieldInput extends React.Component<InputProps> {
     const DEFAULT_ICON = 'alert'
 
     return (
-      <>
-        <ValidationIconUI
-          color={
-            validationInfo.color ||
-            COLOURS.states[validationInfo.type || 'default']
-          }
+      <ValidationIconUI
+        color={
+          validationInfo.color ||
+          COLOURS.states[validationInfo.type || 'default']
+        }
+      >
+        <Tooltip
+          animationDelay={0}
+          animationDuration={0}
+          display="block"
+          placement="top-end"
+          title={validationInfo.message}
         >
-          <Icon name={validationInfo.icon || DEFAULT_ICON} />
-        </ValidationIconUI>
-        <ValidationMessageUI>{validationInfo.message}</ValidationMessageUI>
-      </>
+          <Icon
+            name={validationInfo.icon || DEFAULT_ICON}
+            size={20}
+            state={validationInfo.type}
+          />
+        </Tooltip>
+      </ValidationIconUI>
     )
   }
 
@@ -290,9 +298,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
         className={classNames(
           INPUT_CLASSNAMES.content,
           inline && STATES_CLASSNAMES.isInline,
-          validationInfo &&
-            validationInfo.name === name &&
-            STATES_CLASSNAMES.error
+          validationInfo && STATES_CLASSNAMES.withValidation
         )}
         innerRef={this.setFieldInputContentNode}
       >
@@ -309,6 +315,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
         >
           {fieldValue.validated ? 'validated' : 'not validated'}
         </div>
+
         {valueOptions ? this.renderOptions() : null}
 
         <InputWrapperUI

@@ -115,6 +115,10 @@ export const MaskValueUI = styled('span')`
     border-bottom: none !important;
   }
 
+  .${STATES_CLASSNAMES.withValidation} & {
+    border-bottom: none !important;
+  }
+
   &.${STATES_CLASSNAMES.isEmphasized} {
     font-weight: 500;
   }

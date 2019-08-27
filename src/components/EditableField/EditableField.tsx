@@ -761,10 +761,11 @@ export class EditableField extends React.Component<
                   multipleValuesEnabled && emphasizeTopValue && index === 0
                 }
                 fieldValue={val}
+                maskTabIndex={maskTabIndex}
                 name={val.id}
                 type={type}
                 valueOptions={valueOptions}
-                maskTabIndex={maskTabIndex}
+                validationInfo={valInfo}
                 onValueKeyDown={this.handleMaskValueKeyDown}
               />
               {actions && Boolean(val.value) && !disabled ? (
@@ -774,6 +775,7 @@ export class EditableField extends React.Component<
                   name={val.id}
                   customAction={this.handleCustomAction}
                   deleteAction={this.handleDeleteAction}
+                  validationInfo={valInfo}
                 />
               ) : null}
             </FieldUI>
