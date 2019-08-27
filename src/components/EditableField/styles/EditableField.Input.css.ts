@@ -42,7 +42,7 @@ export const ComponentUI = styled('div')`
     height: ${field.height.large};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} &:hover {
+  .${STATES_CLASSNAMES.fieldDisabled} &:hover {
     cursor: initial;
     border-bottom: 1px solid ${COLOURS.invisible};
   }
@@ -157,8 +157,10 @@ export const InputUI = styled('input')`
       cursor: pointer;
     }
 
-    .${STATES_CLASSNAMES.isDisabled} & {
+    .${STATES_CLASSNAMES.fieldDisabled} & {
       cursor: not-allowed;
+      pointer-events: none;
+      display: none;
       color: ${COLOURS.input.placeholder};
     }
 
@@ -210,7 +212,9 @@ export const OptionsWrapperUI = styled('div')`
     height: ${field.height.large};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} & ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
+  .${STATES_CLASSNAMES.fieldDisabled}
+    &
+    ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
     cursor: initial;
   }
 

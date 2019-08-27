@@ -4,7 +4,8 @@ export type FieldValue = {
   value: string
   id: string
   option?: string
-  validated: boolean
+  validated?: boolean
+  disabled?: boolean
 }
 
 export type InputFields = {
@@ -74,6 +75,11 @@ export interface EditableFieldProps {
     value: FieldValue[]
     event: Event
   }) => void
+  onOptionBlur: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
   onOptionChange: (args: {
     name: string
     selection: string
@@ -93,7 +99,7 @@ export interface EditableFieldState {
   actions?: FieldAction[]
   activeField: string
   defaultOption: string | null
-  disabled: boolean
+  disabledItem?: string
   fieldValue: FieldValue[]
   initialFieldValue: FieldValue[]
   maskTabIndex: string | null
@@ -137,6 +143,7 @@ export interface InputProps {
 
 export interface MaskProps {
   actions?: FieldAction[]
+  disabled: boolean
   emphasize: boolean
   fieldValue: FieldValue
   maskTabIndex: string | null

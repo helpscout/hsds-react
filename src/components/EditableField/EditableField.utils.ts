@@ -54,7 +54,12 @@ export function createNewValueFieldFactory(uuidFn) {
   ): FieldValue {
     // If it's an object already, grab the fields first
     if (isObject(value)) {
-      const fieldObj = { ...value, id: uuidFn(`${name}_`), validated: false }
+      const fieldObj = {
+        id: uuidFn(`${name}_`),
+        validated: false,
+        disabled: false,
+        ...value,
+      }
 
       if (defaultOption !== null && !Boolean(value.option)) {
         fieldObj.option = defaultOption
@@ -63,7 +68,12 @@ export function createNewValueFieldFactory(uuidFn) {
       return fieldObj
     }
 
-    const fieldObj: any = { value, id: uuidFn(`${name}_`), validated: false }
+    const fieldObj: any = {
+      value,
+      id: uuidFn(`${name}_`),
+      validated: false,
+      disabled: false,
+    }
 
     if (defaultOption !== null) {
       fieldObj.option = defaultOption
@@ -237,6 +247,7 @@ export const OTHERCOMPONENTS_CLASSNAMES = {
 export const STATES_CLASSNAMES = {
   hasOptions: 'has-options',
   hasActiveFields: 'has-activeFields',
+  fieldDisabled: 'field-disabled',
   isActive: 'is-active',
   isDisabled: 'is-disabled',
   isEmphasized: 'is-emphasized',

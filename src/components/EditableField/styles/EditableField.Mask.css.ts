@@ -29,6 +29,10 @@ export const ComponentUI = styled('div')`
   .${STATES_CLASSNAMES.isActive} & {
     z-index: 1;
   }
+
+  &.${STATES_CLASSNAMES.fieldDisabled} {
+    pointer-events: all;
+  }
 `
 
 export const MaskOptionUI = styled('span')`
@@ -67,8 +71,9 @@ export const MaskOptionUI = styled('span')`
     color: ${COLOURS.mask.placeholder.regular};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} & {
+  .${STATES_CLASSNAMES.fieldDisabled} & {
     color: ${COLOURS.mask.disabled};
+    pointer-events: all;
   }
 
   &:focus {
@@ -132,15 +137,15 @@ export const MaskValueUI = styled('span')`
     color: ${COLOURS.mask.placeholder.regular};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} &.${STATES_CLASSNAMES.withPlaceholder} {
+  .${STATES_CLASSNAMES.fieldDisabled} &.${STATES_CLASSNAMES.withPlaceholder} {
     border-bottom: 1px solid ${COLOURS.invisible};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} & {
+  .${STATES_CLASSNAMES.fieldDisabled} & {
     color: ${COLOURS.mask.disabled};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} & .${STATES_CLASSNAMES.isPlaceholder} {
+  .${STATES_CLASSNAMES.fieldDisabled} & .${STATES_CLASSNAMES.isPlaceholder} {
     color: ${COLOURS.mask.placeholder.disabled};
   }
 

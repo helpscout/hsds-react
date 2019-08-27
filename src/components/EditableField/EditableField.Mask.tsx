@@ -17,6 +17,7 @@ import { MaskProps } from './EditableField.types'
 
 export class EditableFieldMask extends React.Component<MaskProps> {
   static defaultProps = {
+    disabled: false,
     emphasize: false,
     maskTabIndex: null,
     type: 'text',
@@ -71,6 +72,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
   render() {
     const {
       actions,
+      disabled,
       emphasize,
       fieldValue,
       placeholder,
@@ -83,6 +85,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
       <ComponentUI
         className={classNames(
           MASK_CLASSNAMES.component,
+          disabled && STATES_CLASSNAMES.isDisabled,
           validationInfo && STATES_CLASSNAMES.withValidation
         )}
       >
