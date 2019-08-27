@@ -70,10 +70,10 @@ export const FieldUI = styled('div')`
     border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
   }
 
-  .${STATES_CLASSNAMES.isDisabled}
+  .${STATES_CLASSNAMES.fieldDisabled}
     &:hover
     .${MASK_CLASSNAMES.option},
-    .${STATES_CLASSNAMES.isDisabled}
+    .${STATES_CLASSNAMES.fieldDisabled}
     &:hover
     .${MASK_CLASSNAMES.value} {
     border-bottom: 1px solid ${COLOURS.invisible};

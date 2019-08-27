@@ -21,6 +21,7 @@ export const ComponentUI = styled('div')`
     opacity: 1;
   }
 
+  .${STATES_CLASSNAMES.fieldDisabled} &,
   &.${STATES_CLASSNAMES.withValidation} {
     display: none;
   }

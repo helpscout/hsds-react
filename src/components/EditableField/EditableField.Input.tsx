@@ -298,6 +298,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
         className={classNames(
           INPUT_CLASSNAMES.content,
           inline && STATES_CLASSNAMES.isInline,
+          disabled && STATES_CLASSNAMES.isDisabled,
           validationInfo && STATES_CLASSNAMES.withValidation
         )}
         innerRef={this.setFieldInputContentNode}
@@ -329,7 +330,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
             id={name}
             innerRef={this.setInputNode}
             name={name}
-            disabled={disabled}
             placeholder={placeholder}
             type={type}
             value={fieldValue.value}
