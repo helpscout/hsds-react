@@ -143,6 +143,7 @@ export interface MaskProps {
   name: string
   placeholder?: string
   type: FieldType
+  validationInfo?: Validation
   valueOptions?: Option[]
   onValueKeyDown: (args: { name: string; event?: Event }) => void
 }

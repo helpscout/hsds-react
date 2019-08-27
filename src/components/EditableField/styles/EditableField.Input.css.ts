@@ -309,25 +309,19 @@ export const FocusIndicatorUI = styled('span')`
   z-index: 3;
   will-change: transform, background-color;
 
-  .is-error & {
+  .${STATES_CLASSNAMES.withValidation} & {
     transform: scaleX(1);
   }
 `
 
-export const ValidationMessageUI = styled('div')`
-  position: absolute;
-  width: 100%;
-  height: 25px;
-  line-height: 25px;
-  top: 100%;
-  left: 0;
-`
 export const ValidationIconUI = styled('div')`
   position: absolute;
   width: 20px;
   height: 20px;
   top: 0;
   right: 0;
+  z-index: 10;
+  pointer-events: all;
 
   .${OTHERCOMPONENTS_CLASSNAMES.icon} {
     color: ${({ color }) => color};

@@ -246,9 +246,10 @@ export const STATES_CLASSNAMES = {
   isLarge: 'is-large',
   isPlaceholder: 'is-placeholder',
   isTemporaryValue: 'is-temporary-value',
-  withPlaceholder: 'with-placeholder',
   error: 'is-error',
   warning: 'is-warning',
+  withPlaceholder: 'with-placeholder',
+  withValidation: 'with-validation',
 }
 
 export const COLOURS = {
