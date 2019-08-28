@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount, shallow, render } from 'enzyme'
 import { MessageRow } from '../MessageRow'
+import AccordionLink from '../../Accordion/Accordion.Link'
 
 const defaultProps = {
   errorMessage: 'There was an error',
@@ -17,7 +18,6 @@ const defaultProps = {
 describe('paused', () => {
   test('renders a paused UI, if isPaused', () => {
     const wrapper = mount(<MessageRow {...defaultProps} isPaused={true} />)
-    const el = wrapper.find(`div.${MessageRow.className}`)
     const badge = wrapper.find('Badge').first()
     const text = wrapper.find('Text').first()
 
@@ -27,7 +27,6 @@ describe('paused', () => {
   })
   test('does not render a paused UI, by default', () => {
     const wrapper = mount(<MessageRow {...defaultProps} />)
-    const el = wrapper.find(`div.${MessageRow.className}`)
     const icon = wrapper.find('Icon').first()
     const text = wrapper.find('Text').first()
 
@@ -36,7 +35,6 @@ describe('paused', () => {
   })
   test('renders a paused title into Tooltip, if paused', () => {
     const wrapper = mount(<MessageRow {...defaultProps} isPaused={true} />)
-    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
     expect(tooltip.prop('title')).toBe('Paused')
   })
@@ -44,7 +42,6 @@ describe('paused', () => {
     const wrapper = mount(
       <MessageRow {...defaultProps} isPaused={true} pausedMessage="NO GO" />
     )
-    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
 
     expect(tooltip.prop('title')).toBe('NO GO')
@@ -67,7 +64,6 @@ describe('name', () => {
 describe('error', () => {
   test('renders a error UI, if isError', () => {
     const wrapper = mount(<MessageRow {...defaultProps} isValid={false} />)
-    const el = wrapper.find(`div.${MessageRow.className}`)
     const badge = wrapper.find('Badge').first()
     const text = wrapper.find('Text').first()
 
@@ -88,7 +84,6 @@ describe('error', () => {
 
   test('renders a error title into Tooltip, if error', () => {
     const wrapper = mount(<MessageRow {...defaultProps} isValid={false} />)
-    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
 
     expect(tooltip.prop('title')).toContain('There was an error')
@@ -98,9 +93,25 @@ describe('error', () => {
     const wrapper = mount(
       <MessageRow {...defaultProps} isPaused={true} pausedMessage="BAD!" />
     )
-    const el = wrapper.find(`div.${MessageRow.className}`)
     const tooltip = wrapper.find('Tooltip').first()
 
     expect(tooltip.prop('title')).toBe('BAD!')
+  })
+
+  test('should set hover to true', () => {
+    const wrapper = mount(<MessageRow />)
+    const el = wrapper.find(AccordionLink)
+    el.simulate('mouseover')
+    expect(wrapper.state('isHovering')).toEqual(true)
+    el.simulate('mouseleave')
+    expect(wrapper.state('isHovering')).toEqual(false)
+  })
+
+  test('should call event prevent default', () => {
+    const wrapper = mount(<MessageRow />)
+    const el = wrapper.find(AccordionLink)
+    const eventPreventDefaultSpy = jest.fn()
+    el.simulate('dragstart', { preventDefault: eventPreventDefaultSpy })
+    expect(eventPreventDefaultSpy).toHaveBeenCalled()
   })
 })

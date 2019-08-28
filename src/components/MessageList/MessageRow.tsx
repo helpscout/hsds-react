@@ -178,6 +178,7 @@ export class MessageRow extends React.PureComponent<Props, State> {
           onMouseOver={this.showHandle}
           onMouseLeave={this.hideHandle}
           onDragStart={event => {
+            // suppresses drag images on rest of components
             event.preventDefault()
           }}
           style={{ pointerEvents: isDraggingOnList ? 'none' : 'all' }}
