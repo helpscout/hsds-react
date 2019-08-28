@@ -1,18 +1,25 @@
 import styled from '../../styled'
 import Flexy from '../../Flexy'
 import { getColor } from '../../../styles/utilities/color'
+import Icon from '../../Icon/index'
+
+export const IconUI = styled(Icon)`
+  left: 1px;
+  top: 1px;
+`
 
 export const HandleUI = styled('div')`
   color: ${getColor('grey.700')};
-  cursor: row-resize;
+  cursor: move;
   display: block;
-  height: 20px;
+  height: 24px;
   left: 15px;
-  margin: 15px;
   pointer-events: all;
   position: absolute;
-  top: 0;
-  width: 20px;
+  top: 14px;
+  padding: 0;
+  margin: 0;
+  width: 24px;
 `
 
 export const ContentUI = styled(Flexy)`
@@ -26,4 +33,8 @@ export const SortableItemUI = styled('div')`
   position: relative;
   width: 100%;
   z-index: 2;
+  &.is-dragging {
+    background-color: ${getColor('grey.200')};
+    border-bottom: none;
+  }
 `

@@ -8,20 +8,24 @@ import Text from '../Text'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
-import { ContentUI, HandleUI, SortableItemUI } from './styles/MessageRow.css'
+import {
+  ContentUI,
+  HandleUI,
+  IconUI,
+  SortableItemUI,
+} from './styles/MessageRow.css'
 import { SortableElement, SortableHandle } from 'react-sortable-hoc'
-import Icon from '../Icon/index'
 
 const COMPONENT_KEY = 'MessageRow'
 
-const DraggableHandle = SortableHandle(() => (
+const DraggableHandle = SortableHandle(({ isVisible }) => (
   <HandleUI>
-    <Icon name="drag-handle" />
+    {isVisible ? <IconUI alt="" name="drag-handle" shade="faint" /> : null}
   </HandleUI>
 ))
 
-const SortableItem = SortableElement(({ index, children }) => {
-  return <SortableItemUI>{children}</SortableItemUI>
+const SortableItem = SortableElement(({ index, isDragging, children }) => {
+  return <SortableItemUI isDragging={isDragging}>{children}</SortableItemUI>
 })
 
 export interface Props {
@@ -40,7 +44,11 @@ export interface Props {
   name: any
 }
 
-export class MessageRow extends React.PureComponent<Props> {
+export interface State {
+  isHovering: boolean
+}
+
+export class MessageRow extends React.PureComponent<Props, State> {
   static className = 'c-MessageRow'
   static defaultProps = {
     errorMessage: 'Message paused because of an issue',
@@ -53,6 +61,10 @@ export class MessageRow extends React.PureComponent<Props> {
     notStartedMessage: 'Message not finished setup',
     pausedMessage: 'Paused',
     name: 'Message',
+  }
+
+  state = {
+    isHovering: false,
   }
 
   getClassName() {
@@ -132,6 +144,18 @@ export class MessageRow extends React.PureComponent<Props> {
     )
   }
 
+  hideHandle = () => {
+    this.setState({
+      isHovering: false,
+    })
+  }
+
+  showHandle = () => {
+    this.setState({
+      isHovering: true,
+    })
+  }
+
   render() {
     const {
       children,
@@ -151,10 +175,15 @@ export class MessageRow extends React.PureComponent<Props> {
           {...rest}
           className={this.getClassName()}
           innerRef={innerRef}
+          onMouseOver={this.showHandle}
+          onMouseLeave={this.hideHandle}
+          onDragStart={event => {
+            event.preventDefault()
+          }}
           style={{ pointerEvents: isDraggingOnList ? 'none' : 'all' }}
         >
           <ContentUI>
-            <DraggableHandle />
+            <DraggableHandle isVisible={this.state.isHovering} />
             <Flexy.Block>{this.renderName()}</Flexy.Block>
             {this.renderBadge()}
           </ContentUI>

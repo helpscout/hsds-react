@@ -72,6 +72,7 @@ export class MessageList extends React.Component<Props, State> {
     return (
       <SortableList
         lockAxis="y"
+        helperClass="is-dragging"
         items={items}
         onSortStart={this.onSortStart}
         onSortEnd={this.onSortEnd}
