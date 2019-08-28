@@ -268,11 +268,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
           placement="top-end"
           title={validationInfo.message}
         >
-          <Icon
-            name={validationInfo.icon || DEFAULT_ICON}
-            size={20}
-            state={validationInfo.type}
-          />
+          <Icon name={validationInfo.icon || DEFAULT_ICON} size={20} />
         </Tooltip>
       </ValidationIconUI>
     )

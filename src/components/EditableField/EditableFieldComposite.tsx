@@ -47,7 +47,7 @@ export class EditableFieldComposite extends React.PureComponent<
           size: props.size,
           onInputFocus: this.handleFieldFocus(child.props.onInputFocus),
           onInputBlur: this.handleFieldBlur(child.props.onInputBlur),
-          onInputChange: this.handleInputChange(child.props.onInputChange),
+          onChange: this.handleInputChange(child.props.onChange),
           onEnter: this.handleEnter(child.props.onEnter),
           onEscape: this.handleEscape(child.props.onEscape),
         })

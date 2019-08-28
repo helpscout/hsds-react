@@ -303,5 +303,6 @@ export const COLOURS = {
   states: {
     default: getColor('blue.500'),
     error: getColor('red.500'),
+    warning: getColor('yellow.500'),
   },
 }

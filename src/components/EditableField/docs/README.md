@@ -85,7 +85,7 @@ A special type of inputs that allow you to edit it inline
 Fires:
 
 - On pressing Enter on the Input
-- On making a change and clicking outside the field
+- On input blur
 - On selecting an option
 - On deleting/clearing the input value with “x”
 - On deleting a value from multi-value fields
