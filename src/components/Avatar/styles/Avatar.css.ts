@@ -330,6 +330,17 @@ export const AvatarButtonUI = styled('button')`
     }
   }
 
+  &:focus {
+    .c-Avatar__action:before {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .c-Avatar__action .c-Icon {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   &.is-active .c-Avatar__focusBorder {
     animation: none;
     opacity: 1;
