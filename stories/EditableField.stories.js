@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
 
 import { action } from '@storybook/addon-actions'
-import { jsxDecorator } from 'storybook-addon-jsx'
 import ReadMe from '../src/components/EditableField/docs/README.md'
 
 import styled from '../src/components/styled'
@@ -17,7 +16,6 @@ const stories = storiesOf('EditableField', module)
     a11y: { element: 'c-EditableField' },
   })
   .addDecorator(withAktiv)
-  .addDecorator(jsxDecorator)
 
 export const ContainerUI = styled('div')`
   ${baseStyles};
@@ -329,54 +327,26 @@ stories.add('Disabled', () => (
   </ContainerUI>
 ))
 
-stories
-  .addParameters({
-    options: { showPanel: true },
-  })
-  .add('Events', () => (
-    <ContainerUI
-      onSubmit={e => {
-        e.preventDefault()
-      }}
-    >
-      <NoteUI>
-        This is pretty slow because all the event callbacks in the world are
-        being passed...! This would be <strong>extremely</strong> rare, and it
-        might mean that most likely something is wrong
-      </NoteUI>
-      <EditableField
-        label="Favourite Paint Colour"
-        name="paint"
-        placeholder="Add a colour"
-        type="text"
-        valueOptions={PAINT_OPTIONS}
-        value={[
-          { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
-          { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
-          { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
-        ]}
-        onInputFocus={action('onInputFocus')}
-        onInputBlur={action('onInputBlur')}
-        onInputChange={action('onInputChange')}
-        onOptionFocus={action('onOptionFocus')}
-        onChange={action('onChange')}
-        onCommit={action('onCommit')}
-        onEnter={action('onEnter')}
-        onEscape={action('onEscape')}
-        onDelete={action('onDelete')}
-        onAdd={action('onAdd')}
-        onDiscard={action('onDiscard')}
-        onOptionChange={action('onOptionChange')}
-      />
-    </ContainerUI>
-  ))
-
 stories.add('Validation', () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
     }}
   >
+    <NoteUI>
+      Type:
+      <ul>
+        <li>
+          <strong>"off"</strong> to get the error style
+        </li>
+        <li>
+          <strong>"warn"</strong> to get a warning style
+        </li>
+        <li>
+          <strong>"other"</strong> to get a custom validation style
+        </li>
+      </ul>
+    </NoteUI>
     <EditableField
       label="team"
       name="team"
@@ -414,20 +384,40 @@ stories.add('Validation', () => (
 ))
 
 function validateFieldValue({ name, value }) {
-  let isValid = value !== 'off'
+  let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
 
   return new Promise(resolve => {
     setTimeout(function() {
       if (isValid) {
         resolve({ isValid, name, value })
       } else {
-        resolve({
-          isValid,
-          name,
-          value,
-          type: 'error',
-          message: 'That is definitely not right',
-        })
+        if (value === 'off') {
+          resolve({
+            isValid,
+            name,
+            value,
+            type: 'error',
+            message: 'That is definitely not right',
+          })
+        } else if (value === 'warn') {
+          resolve({
+            isValid,
+            name,
+            value,
+            type: 'warning',
+            message: "That's it, you have been warned",
+          })
+        } else if (value === 'other') {
+          resolve({
+            isValid,
+            name,
+            value,
+            type: 'other',
+            message: "I don't know what you're talking about, have a trophy",
+            color: '#57c28d',
+            icon: 'activity',
+          })
+        }
       }
     }, 500)
   })
@@ -475,6 +465,24 @@ class ValuePropsApp extends React.Component {
           }}
         >
           Atlas
+        </button>
+        <button
+          onClick={() => {
+            if (!this.state.loop) {
+              const interval = setInterval(() => {
+                this.setState({
+                  value: { ...ATLAS, disabled: !this.state.value.disabled },
+                })
+              }, 500)
+              this.setState({ loop: interval })
+            } else {
+              clearInterval(this.state.loop)
+              this.setState({ loop: null })
+            }
+          }}
+        >
+          Atlas enabling/disabling loop{' '}
+          {this.state.loop ? '(click again to turn off)' : ''}
         </button>
         <pre>
           <code>{JSON.stringify(this.state.value, null, 2)}</code>
@@ -526,3 +534,45 @@ class ValuePropsApp extends React.Component {
 }
 
 stories.add('Value from props', () => <ValuePropsApp />)
+
+stories
+  .addParameters({
+    options: { showPanel: true },
+  })
+  .add('Events', () => (
+    <ContainerUI
+      onSubmit={e => {
+        e.preventDefault()
+      }}
+    >
+      <NoteUI>
+        This is pretty slow because all the event callbacks in the world are
+        being passed...! This would be <strong>extremely</strong> rare, and it
+        might mean that most likely something is wrong
+      </NoteUI>
+      <EditableField
+        label="Favourite Paint Colour"
+        name="paint"
+        placeholder="Add a colour"
+        type="text"
+        valueOptions={PAINT_OPTIONS}
+        value={[
+          { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
+          { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
+          { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
+        ]}
+        onInputFocus={action('onInputFocus')}
+        onInputBlur={action('onInputBlur')}
+        onInputChange={action('onInputChange')}
+        onOptionFocus={action('onOptionFocus')}
+        onChange={action('onChange')}
+        onCommit={action('onCommit')}
+        onEnter={action('onEnter')}
+        onEscape={action('onEscape')}
+        onDelete={action('onDelete')}
+        onAdd={action('onAdd')}
+        onDiscard={action('onDiscard')}
+        onOptionChange={action('onOptionChange')}
+      />
+    </ContainerUI>
+  ))

@@ -30,7 +30,7 @@ export type Option = {
 
 export type FieldType = 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
 export type FieldSize = 'md' | 'lg'
-export type FieldState = 'default' | 'error' | 'warning'
+export type FieldState = 'default' | 'error' | 'warning' | 'other'
 
 export type Validation = {
   isValid: boolean
