@@ -38,7 +38,6 @@ export interface Props {
   isNotStarted: boolean
   isPaused: boolean
   isValid: boolean
-  innerRef: (node: HTMLElement) => void
   notStartedMessage: string
   pausedMessage: string
   name: any
@@ -52,7 +51,6 @@ export class MessageRow extends React.PureComponent<Props, State> {
   static className = 'c-MessageRow'
   static defaultProps = {
     errorMessage: 'Message paused because of an issue',
-    innerRef: () => {},
     isDragging: false,
     isDraggingOnList: false,
     isNotStarted: false,
@@ -162,7 +160,6 @@ export class MessageRow extends React.PureComponent<Props, State> {
       isDraggingOnList,
       isDragging,
       index,
-      innerRef,
       name,
       ...rest
     } = this.props
@@ -174,7 +171,6 @@ export class MessageRow extends React.PureComponent<Props, State> {
           data-cy="message-name-row"
           {...rest}
           className={this.getClassName()}
-          innerRef={innerRef}
           onMouseOver={this.showHandle}
           onMouseLeave={this.hideHandle}
           onDragStart={event => {
