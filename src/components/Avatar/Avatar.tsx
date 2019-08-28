@@ -20,6 +20,8 @@ import {
   ActionUI,
   AvatarButtonUI,
   FocusUI,
+  BorderAnimationUI,
+  CircleAnimationUI,
 } from './styles/Avatar.css'
 import {
   COMPONENT_KEY,
@@ -32,6 +34,7 @@ import {
 export interface Props {
   animationDuration: number
   animationEasing: string
+  animateActionBorder?: boolean
   actionable?: boolean
   actionIcon?: string
   actionIconSize?: IconSize
@@ -47,6 +50,7 @@ export interface Props {
   onLoad?: () => void
   onError?: () => void
   onActionClick?: () => void
+  onBorderAnimationCompleted?: () => void
   outerBorderColor?: string
   showStatusBorderColor: boolean
   shape: AvatarShape
@@ -249,15 +253,40 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   renderFocusBorder = () => {
-    const { shape } = this.props
+    const {
+      shape,
+      animateActionBorder,
+      onBorderAnimationCompleted,
+    } = this.props
     const componentClassName = classNames(
       'c-Avatar__focusBorder',
+      animateActionBorder && 'is-animating',
       shape && `is-${shape}`
     )
 
-    return (
-      <FocusUI data-cy="Avatar.FocusBorder" className={componentClassName} />
+    const borderAnimationClassName = classNames(
+      'c-Avatar__borderAnimation',
+      animateActionBorder && 'is-animating',
+      this.getShapeClassNames()
     )
+
+    return [
+      <FocusUI
+        key="focusBorder"
+        data-cy="Avatar.FocusBorder"
+        className={componentClassName}
+      />,
+      <BorderAnimationUI
+        key="borderAnimation"
+        className={borderAnimationClassName}
+        data-cy="Avatar.BorderAnimation"
+      >
+        <CircleAnimationUI
+          id="anime"
+          onAnimationEnd={onBorderAnimationCompleted}
+        />
+      </BorderAnimationUI>,
+    ]
   }
 
   getStyles() {

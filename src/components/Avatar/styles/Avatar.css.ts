@@ -276,6 +276,27 @@ function getSizeStyles(): string {
   })
 }
 
+function getBorderAnimationSizeStyles(): string {
+  return forEach(config.size, (size, props) => {
+    const { size: sz } = props
+    const svgSize = sz + config.borderWidth * 4
+    const c = svgSize / 2
+    const r = (sz + config.borderWidth * 3) / 2
+    return `
+      &.is-${size} {
+        height: ${svgSize}px;
+        width: ${svgSize}px;
+
+        circle {
+          cx: ${c};
+          cy: ${c};
+          r: ${r};
+        }
+      }
+    `
+  })
+}
+
 export const AvatarUI = styled('div')`
   ${baseStyles};
   height: ${config.size.md.size}px;
@@ -287,6 +308,44 @@ export const AvatarUI = styled('div')`
   }
 
   ${getSizeStyles()};
+`
+
+export const CircleAnimationUI = styled('circle')`
+  fill: transparent;
+  stroke: ${buttonConfig.focusOutlineColor};
+  stroke-width: ${config.borderWidth};
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  animation: rotate 1.2s ease-out;
+  animation-iteration-count: 1;
+
+  @keyframes rotate {
+    to {
+      stroke-dashoffset: 0;
+    }
+    65% {
+      opacity: 1;
+    }
+    80%,
+    100% {
+      opacity: 0;
+    }
+  }
+`
+
+export const BorderAnimationUI = styled('svg')`
+  position: absolute;
+  top: -${config.borderWidth * 2}px;
+  left: -${config.borderWidth * 2}px;
+  transform-origin: center;
+  transform: rotate(-90deg);
+  display: none;
+
+  &.is-animating {
+    display: block;
+  }
+
+  ${getBorderAnimationSizeStyles()};
 `
 
 export const AvatarButtonUI = styled('button')`
@@ -322,7 +381,7 @@ export const AvatarButtonUI = styled('button')`
   &.is-active,
   &:focus {
     z-index: 2;
-    .c-Avatar__focusBorder {
+    .c-Avatar__focusBorder:not(.is-animating) {
       display: block;
     }
     .c-Avatar__outerBorder {
@@ -341,7 +400,7 @@ export const AvatarButtonUI = styled('button')`
     }
   }
 
-  &.is-active .c-Avatar__focusBorder {
+  &.is-active .c-Avatar__focusBorder:not(.is-animating) {
     animation: none;
     opacity: 1;
   }

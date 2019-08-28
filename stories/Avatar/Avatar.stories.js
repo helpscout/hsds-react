@@ -195,6 +195,7 @@ stories.add('with action', () => (
       image={fixture.image}
       active={boolean('Is Active', false)}
       actionable={boolean('Actionable', true)}
+      animateActionBorder={boolean('Animate', false)}
       actionIcon={select('Icon', ['trash', 'plus-large', 'hyphen'], 'trash')}
       actionIconSize={select('Icon Size', iconSize, '24')}
       shape={select('Shape', ['circle', 'square', 'rounded'], 'circle')}

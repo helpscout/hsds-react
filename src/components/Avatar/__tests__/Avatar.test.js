@@ -13,6 +13,8 @@ const ui = {
   initials: '.c-Avatar__title',
 }
 
+jest.useFakeTimers()
+
 describe('Name', () => {
   test('Uses the `initials` attribute if specified', () => {
     const wrapper = mount(<Avatar name="Ron Burgandy" initials="XY" />)
@@ -415,6 +417,18 @@ describe('Action', () => {
     expect(cy.getByCy('Avatar.FocusBorder').exists()).toBeTruthy()
   })
 
+  test('Renders an animate svg', () => {
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        animateActionBorder={true}
+      />
+    )
+    expect(cy.getByCy('Avatar.BorderAnimation').exists()).toBeTruthy()
+  })
   test('Evokes the callback when clicking on the Action component', () => {
     const fn = jest.fn()
     const wrapper = cy.render(
