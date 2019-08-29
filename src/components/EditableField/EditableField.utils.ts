@@ -223,6 +223,7 @@ export const INPUT_CLASSNAMES = {
   optionsDropdown: `${INPUT_COMPONENT_KEY}__optionsDropdown`,
   selectedOption: `${INPUT_COMPONENT_KEY}__selectedOption`,
   focusIndicator: `${INPUT_COMPONENT_KEY}__focusIndicator`,
+  validation: `${INPUT_COMPONENT_KEY}__validation`,
 }
 
 export const ACTIONS_CLASSNAMES = {
@@ -306,4 +307,15 @@ export const COLOURS = {
     error: getColor('red.500'),
     warning: getColor('yellow.500'),
   },
+}
+
+export function getValidationColor(validationInfo?): string {
+  let color =
+    COLOURS.states[(validationInfo && validationInfo.type) || 'default']
+
+  if (validationInfo && validationInfo.color) {
+    color = validationInfo.color
+  }
+
+  return color
 }

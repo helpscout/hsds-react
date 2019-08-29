@@ -109,6 +109,14 @@ describe('Value', () => {
     expect(input.getValue()).toBe('hello')
   })
 
+  test('Should assign an empty value if passed empty array on props', () => {
+    cy.render(<EditableField name="company" value={[]} />)
+
+    const input = cy.get('input')
+
+    expect(input.getValue()).toBe('')
+  })
+
   test('Should render as many fields as values are passed', () => {
     cy.render(
       <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
@@ -863,6 +871,24 @@ describe('Events', () => {
     )
 
     cy.getByCy('DropdownTrigger').focus()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Blur option', () => {
+    const spy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={{ option: 'Work', value: '123456789', id: '1' }}
+        valueOptions={['Home', 'Work', 'Other']}
+        onOptionBlur={spy}
+      />
+    )
+
+    cy.getByCy('DropdownTrigger').focus()
+    cy.getByCy('DropdownTrigger').blur()
 
     expect(spy).toHaveBeenCalled()
   })
