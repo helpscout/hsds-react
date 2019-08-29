@@ -21,6 +21,7 @@ import {
   ACTION_ICONS,
   findParentByClassName,
   isEllipsisActive,
+  getValidationColor,
   FIELDTYPES,
   EDITABLEFIELD_CLASSNAMES,
   MASK_CLASSNAMES,
@@ -101,6 +102,8 @@ export class EditableFieldInput extends React.Component<InputProps> {
       return true
     }
 
+    // Below is tested
+    /* istanbul ignore next */
     if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
     }
@@ -250,10 +253,8 @@ export class EditableFieldInput extends React.Component<InputProps> {
 
     return (
       <ValidationIconUI
-        color={
-          validationInfo.color ||
-          COLOURS.states[validationInfo.type || 'default']
-        }
+        className={INPUT_CLASSNAMES.validation}
+        color={getValidationColor(validationInfo)}
       >
         <Tooltip
           animationDelay={0}
@@ -288,7 +289,9 @@ export class EditableFieldInput extends React.Component<InputProps> {
           INPUT_CLASSNAMES.content,
           inline && STATES_CLASSNAMES.isInline,
           disabled && STATES_CLASSNAMES.isDisabled,
-          validationInfo && STATES_CLASSNAMES.withValidation
+          validationInfo &&
+            name === validationInfo.name &&
+            STATES_CLASSNAMES.withValidation
         )}
         innerRef={this.setFieldInputContentNode}
       >
@@ -318,24 +321,11 @@ export class EditableFieldInput extends React.Component<InputProps> {
 
           <FocusIndicatorUI
             className={INPUT_CLASSNAMES.focusIndicator}
-            color={this.setFocusIndicatorColor()}
+            color={getValidationColor(validationInfo)}
           />
         </InputWrapperUI>
       </ComponentUI>
     )
-  }
-
-  setFocusIndicatorColor = () => {
-    const { validationInfo } = this.props
-
-    let color =
-      COLOURS.states[(validationInfo && validationInfo.type) || 'default']
-
-    if (validationInfo && validationInfo.color) {
-      color = validationInfo.color
-    }
-
-    return color
   }
 }
 

@@ -94,4 +94,40 @@ describe('Should component update', () => {
       wrapper.instance().shouldComponentUpdate(newProps, actualProps)
     ).toBeTruthy()
   })
+
+  test('validationInfo', () => {
+    const val = {
+      value: 'hello',
+      id: 'greeting_0',
+    }
+    const validationInfo: Validation = {
+      isValid: false,
+      name: 'email',
+      value: 'hello',
+      type: 'error',
+    }
+    const wrapper: any = mount(
+      <Actions name="email" fieldValue={val} actions={[]} />
+    )
+    const actualProps = wrapper.props()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(
+        {
+          ...actualProps,
+        },
+        actualProps
+      )
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(
+        {
+          ...actualProps,
+          validationInfo,
+        },
+        actualProps
+      )
+    ).toBeTruthy()
+  })
 })
