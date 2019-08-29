@@ -22,7 +22,6 @@ import {
   ACTION_ICONS,
   FIELDTYPES,
   FIELDSIZES,
-  FIELDSTATES,
   EDITABLEFIELD_CLASSNAMES,
   STATES_CLASSNAMES,
 } from './EditableField.utils'
@@ -58,7 +57,6 @@ export class EditableField extends React.Component<
     inline: false,
     multipleValues: false,
     size: FIELDSIZES.md,
-    state: FIELDSTATES.default,
     value: EMPTY_VALUE,
     innerRef: noop,
     onAdd: noop,
@@ -130,10 +128,6 @@ export class EditableField extends React.Component<
     }
 
     if (this.props.disabled !== nextProps.disabled) {
-      return true
-    }
-
-    if (this.props.state !== nextProps.state) {
       return true
     }
 
@@ -439,63 +433,67 @@ export class EditableField extends React.Component<
         if (!impactedField.validated) {
           this.setState({ disabledItem: name })
 
-          validate({ value: inputValue, name }).then(validation => {
-            let updatedFieldValue
+          validate({ value: inputValue, name })
+            .then(validation => {
+              let updatedFieldValue
 
-            if (validation.isValid) {
-              updatedFieldValue = this.updateFieldValue({
-                name,
-                value: inputValue,
-              })
+              if (validation.isValid) {
+                updatedFieldValue = this.updateFieldValue({
+                  name,
+                  value: inputValue,
+                })
 
-              this.setState(
-                {
-                  activeField: EMPTY_VALUE,
-                  disabledItem: '',
-                  fieldValue: updatedFieldValue,
-                  initialFieldValue: updatedFieldValue,
-                  maskTabIndex: name,
-                  validationInfo: validationInfo.filter(
-                    valItem => valItem.name === name
-                  ),
-                },
-                () => {
-                  resolve()
-                  onCommit({ name, value: updatedFieldValue })
-                  onEnter({
-                    name,
-                    value: updatedFieldValue,
-                    event: cachedEvent,
-                  })
-                }
-              )
-            } else {
-              updatedFieldValue = fieldValue.map(field => {
-                if (field.id === name) {
-                  return { ...field, validated: true }
-                }
-                return field
-              })
+                this.setState(
+                  {
+                    activeField: EMPTY_VALUE,
+                    disabledItem: '',
+                    fieldValue: updatedFieldValue,
+                    initialFieldValue: updatedFieldValue,
+                    maskTabIndex: name,
+                    validationInfo: validationInfo.filter(
+                      valItem => valItem.name === name
+                    ),
+                  },
+                  () => {
+                    resolve()
+                    onCommit({ name, value: updatedFieldValue })
+                    onEnter({
+                      name,
+                      value: updatedFieldValue,
+                      event: cachedEvent,
+                    })
+                  }
+                )
+              } else {
+                updatedFieldValue = fieldValue.map(field => {
+                  if (field.id === name) {
+                    return { ...field, validated: true }
+                  }
+                  return field
+                })
 
-              this.setState(
-                {
-                  activeField: name,
-                  disabledItem: '',
-                  fieldValue: updatedFieldValue,
-                  validationInfo: validationInfo.concat(validation),
-                },
-                () => {
-                  resolve()
+                this.setState(
+                  {
+                    activeField: name,
+                    disabledItem: '',
+                    fieldValue: updatedFieldValue,
+                    validationInfo: validationInfo.concat(validation),
+                  },
+                  () => {
+                    resolve()
 
-                  onEnter({
-                    name,
-                    value: updatedFieldValue,
-                    event: cachedEvent,
-                  })
-                }
-              )
-            }
-          })
+                    onEnter({
+                      name,
+                      value: updatedFieldValue,
+                      event: cachedEvent,
+                    })
+                  }
+                )
+              }
+            })
+            .catch(reason => {
+              console.log(reason)
+            })
         }
       }
     })
@@ -646,7 +644,6 @@ export class EditableField extends React.Component<
       }
 
       this.setState(newState, () => {
-        console.log('adding')
         onAdd({ name, value: newFieldValue })
       })
     }
@@ -731,7 +728,7 @@ export class EditableField extends React.Component<
   }
 
   renderFields = () => {
-    const { name, emphasizeTopValue, type, state, ...rest } = this.props
+    const { name, disabled, emphasizeTopValue, type, ...rest } = this.props
     const {
       actions,
       activeField,
@@ -771,7 +768,6 @@ export class EditableField extends React.Component<
                 fieldValue={val}
                 isActive={isActive}
                 name={val.id}
-                state={state}
                 type={type}
                 validationInfo={valInfo}
                 valueOptions={valueOptions}
@@ -798,7 +794,10 @@ export class EditableField extends React.Component<
                 validationInfo={valInfo}
                 onValueKeyDown={this.handleMaskValueKeyDown}
               />
-              {actions && Boolean(val.value) && disabledItem !== val.id ? (
+              {actions &&
+              Boolean(val.value) &&
+              disabledItem !== val.id &&
+              !disabled ? (
                 <Actions
                   actions={actions}
                   fieldValue={val}

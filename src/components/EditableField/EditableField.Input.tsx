@@ -21,7 +21,6 @@ import {
   ACTION_ICONS,
   findParentByClassName,
   isEllipsisActive,
-  FIELDSTATES,
   FIELDTYPES,
   EDITABLEFIELD_CLASSNAMES,
   MASK_CLASSNAMES,
@@ -46,7 +45,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
     isActive: false,
     inline: false,
     placeholder: '',
-    state: FIELDSTATES.default,
     type: FIELDTYPES.text,
     innerRef: noop,
     onInputFocus: noop,
@@ -103,10 +101,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
       return true
     }
 
-    if (this.props.state !== nextProps.state) {
-      return true
-    }
-
     if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
     }
@@ -114,10 +108,11 @@ export class EditableFieldInput extends React.Component<InputProps> {
     return false
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     this.setInputTitle()
   }
 
+  /* istanbul ignore next */
   setInputTitle = () => {
     const { fieldValue } = this.props
     const inputNode = this.inputRef
@@ -135,7 +130,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
       `.${MASK_CLASSNAMES.value} .${TRUNCATED_CLASSNAMES.firstChunk}`
     )
 
-    /* istanbul ignore next */
     if (isEllipsisActive(contentNode) || isEllipsisActive(firstChunkNode)) {
       inputNode && inputNode.setAttribute('title', fieldValue.value)
     }
@@ -175,13 +169,13 @@ export class EditableFieldInput extends React.Component<InputProps> {
     })
   }
 
+  /* istanbul ignore next */
   handleKeyDown = event => {
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
     const isDropdownTrigger = event.target.classList.contains(
       OTHERCOMPONENTS_CLASSNAMES.dropdownTrigger
     )
-    /* istanbul ignore else */
     if ((isEnter && !isDropdownTrigger) || isEscape) {
       const { name, onKeyDown } = this.props
       const inputNode = this.inputRef
@@ -282,7 +276,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
       inline,
       name,
       placeholder,
-      state,
       type,
       validationInfo,
       valueOptions,

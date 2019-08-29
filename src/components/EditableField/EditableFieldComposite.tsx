@@ -47,7 +47,7 @@ export class EditableFieldComposite extends React.PureComponent<
           size: props.size,
           onInputFocus: this.handleFieldFocus(child.props.onInputFocus),
           onInputBlur: this.handleFieldBlur(child.props.onInputBlur),
-          onChange: this.handleInputChange(child.props.onChange),
+          onChange: this.handleChange(child.props.onChange),
           onEnter: this.handleEnter(child.props.onEnter),
           onEscape: this.handleEscape(child.props.onEscape),
         })
@@ -151,7 +151,7 @@ export class EditableFieldComposite extends React.PureComponent<
     }
   }
 
-  handleInputChange = passedFn => {
+  handleChange = passedFn => {
     return ({ name, value }) => {
       passedFn && passedFn()
 
@@ -159,7 +159,7 @@ export class EditableFieldComposite extends React.PureComponent<
 
       this.setState({
         maskItems: maskItems.map(m => {
-          if (name.includes(m.name)) {
+          if (name && name.includes(m.name)) {
             return { ...m, text: value[0].value }
           }
           return m

@@ -11,14 +11,22 @@ import {
 } from './EditableField.utils'
 
 import * as equal from 'fast-deep-equal'
+import { noop } from '../../utilities/other'
 
-export class EditableFieldActions extends React.Component<any> {
+import { ActionsProps } from './EditableField.types'
+
+export class EditableFieldActions extends React.Component<ActionsProps> {
+  static defaultProps = {
+    deleteAction: noop,
+    customAction: noop,
+  }
+
   shouldComponentUpdate(nextProps) {
     if (this.props.fieldValue.value !== nextProps.fieldValue.value) {
       return true
     }
 
-    if (equal(this.props.validationInfo, nextProps.validationInfo)) {
+    if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
     }
 

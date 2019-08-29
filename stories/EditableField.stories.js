@@ -387,39 +387,37 @@ function validateFieldValue({ name, value }) {
   let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
 
   return new Promise(resolve => {
-    setTimeout(function() {
-      if (isValid) {
-        resolve({ isValid, name, value })
-      } else {
-        if (value === 'off') {
-          resolve({
-            isValid,
-            name,
-            value,
-            type: 'error',
-            message: 'That is definitely not right',
-          })
-        } else if (value === 'warn') {
-          resolve({
-            isValid,
-            name,
-            value,
-            type: 'warning',
-            message: "That's it, you have been warned",
-          })
-        } else if (value === 'other') {
-          resolve({
-            isValid,
-            name,
-            value,
-            type: 'other',
-            message: "I don't know what you're talking about, have a trophy",
-            color: '#57c28d',
-            icon: 'activity',
-          })
-        }
+    if (isValid) {
+      resolve({ isValid, name, value })
+    } else {
+      if (value === 'off') {
+        resolve({
+          isValid,
+          name,
+          value,
+          type: 'error',
+          message: 'That is definitely not right',
+        })
+      } else if (value === 'warn') {
+        resolve({
+          isValid,
+          name,
+          value,
+          type: 'warning',
+          message: "That's it, you have been warned",
+        })
+      } else if (value === 'other') {
+        resolve({
+          isValid,
+          name,
+          value,
+          type: 'other',
+          message: "I don't know what you're talking about, have a trophy",
+          color: '#57c28d',
+          icon: 'activity',
+        })
       }
-    }, 500)
+    }
   })
 }
 
