@@ -429,6 +429,7 @@ describe('Action', () => {
     )
     expect(cy.getByCy('Avatar.BorderAnimation').exists()).toBeTruthy()
   })
+
   test('Evokes the callback when clicking on the Action component', () => {
     const fn = jest.fn()
     const wrapper = cy.render(
@@ -442,5 +443,39 @@ describe('Action', () => {
     )
     cy.getByCy('Avatar').click()
     expect(fn).toHaveBeenCalled()
+  })
+
+  test('Evokes the callback when clicking on the Action component only if the action exists', () => {
+    const fn = jest.fn()
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        onActionClick={fn}
+      />
+    )
+    cy.getByCy('Avatar').click()
+    expect(fn).toHaveBeenCalled()
+
+    wrapper.setProps({ removingAvatarAnimation: true })
+    cy.getByCy('Avatar').click()
+    expect(fn).toHaveBeenCalledTimes(1)
+  })
+
+  test('Hide the action overlay when animating', () => {
+    const fn = jest.fn()
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        onActionClick={fn}
+        removingAvatarAnimation={true}
+      />
+    )
+    expect(cy.getByCy('Avatar.Action').exists()).toBeFalsy()
   })
 })

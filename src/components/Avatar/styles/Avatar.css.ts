@@ -122,11 +122,19 @@ export const ImageWrapperUI = styled('div')`
   overflow: hidden;
   transform: translate3d(0, 0, 0) scale(1.0125);
   width: 100%;
+  position: relative;
+  z-index: 2;
+
+  &.c-Avatar__imageStaticWrapper {
+    position: absolute;
+    z-index: 1;
+  }
 
   ${getBorderRadiusStyles()};
 
   &.is-herbieFullyLoaded {
     opacity: 1;
+    transition-delay: 0.8s !important;
   }
 `
 
@@ -341,10 +349,6 @@ export const BorderAnimationUI = styled('svg')`
   transform: rotate(-90deg);
   display: none;
 
-  &.is-animating {
-    display: block;
-  }
-
   ${getBorderAnimationSizeStyles()};
 `
 
@@ -378,10 +382,10 @@ export const AvatarButtonUI = styled('button')`
     }
   }
 
-  &.is-active,
-  &:focus {
+  &.is-active:not(.is-animating),
+  &:not(.is-animating):focus {
     z-index: 2;
-    .c-Avatar__focusBorder:not(.is-animating) {
+    .c-Avatar__focusBorder {
       display: block;
     }
     .c-Avatar__outerBorder {
@@ -389,7 +393,7 @@ export const AvatarButtonUI = styled('button')`
     }
   }
 
-  &:focus {
+  &:not(.is-animating):focus {
     .c-Avatar__action:before {
       opacity: 1;
       transform: scale(1);
@@ -400,8 +404,17 @@ export const AvatarButtonUI = styled('button')`
     }
   }
 
-  &.is-active .c-Avatar__focusBorder:not(.is-animating) {
+  &:not(.is-animating).is-active .c-Avatar__focusBorder {
     animation: none;
     opacity: 1;
+  }
+
+  &.is-animating {
+    .c-Avatar__imageMainWrapper {
+      opacity: 0;
+    }
+    .c-Avatar__borderAnimation {
+      display: block;
+    }
   }
 `
