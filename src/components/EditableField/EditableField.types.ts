@@ -55,7 +55,6 @@ export interface EditableFieldProps {
   placeholder?: string
   secondInput?: InputFields
   size: FieldSize
-  state: FieldState
   type: FieldType
   value: Value | Value[]
   valueOptions?: string[] | Option[]
@@ -117,7 +116,6 @@ export interface InputProps {
   isActive: boolean
   name: string
   placeholder: string
-  state: FieldState
   type: FieldType
   validationInfo?: Validation
   valueOptions?: Option[]
@@ -153,6 +151,23 @@ export interface MaskProps {
   validationInfo?: Validation
   valueOptions?: Option[]
   onValueKeyDown: (args: { name: string; event?: Event }) => void
+}
+
+export interface ActionsProps {
+  actions: FieldAction[]
+  name: string
+  fieldValue: FieldValue
+  validationInfo?: Validation
+  deleteAction: (args: {
+    name: string
+    action: FieldAction
+    event: Event
+  }) => void
+  customAction: (args: {
+    name: string
+    action: FieldAction
+    event: Event
+  }) => void
 }
 
 export interface TruncateProps {

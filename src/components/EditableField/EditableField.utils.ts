@@ -60,12 +60,13 @@ export function createNewValueFieldFactory(uuidFn) {
     defaultOption: string | null
   ): FieldValue {
     // If it's an object already, grab the fields first
+
     if (isObject(value)) {
       const fieldObj = {
+        ...value,
         id: value.id || uuidFn(`${name}_`),
         validated: false,
         disabled: false,
-        ...value,
       }
 
       if (defaultOption !== null && !Boolean(value.option)) {
