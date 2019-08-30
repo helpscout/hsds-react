@@ -22,6 +22,8 @@ import {
   OuterBorderUI,
   StatusUI,
   TitleUI,
+  config,
+  getCircleProps,
 } from './styles/Avatar.css'
 
 import {
@@ -279,7 +281,7 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   renderFocusBorder = () => {
-    const { shape, onRemoveAnimationEnd } = this.props
+    const { shape, onRemoveAnimationEnd, size } = this.props
 
     const componentClassName = classNames(
       'c-Avatar__focusBorder',
@@ -290,6 +292,9 @@ export class Avatar extends React.PureComponent<Props, State> {
       'c-Avatar__borderAnimation',
       this.getShapeClassNames()
     )
+
+    const sz = config.size[size].size
+    const { size: svgSize, ...circleProps } = getCircleProps(sz)
 
     return [
       <FocusUI
@@ -302,7 +307,11 @@ export class Avatar extends React.PureComponent<Props, State> {
         className={borderAnimationClassName}
         data-cy="Avatar.BorderAnimation"
       >
-        <CircleAnimationUI id="anime" onAnimationEnd={onRemoveAnimationEnd} />
+        <CircleAnimationUI
+          id="anime"
+          onAnimationEnd={onRemoveAnimationEnd}
+          {...circleProps}
+        />
       </BorderAnimationUI>,
     ]
   }

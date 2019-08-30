@@ -284,21 +284,32 @@ function getSizeStyles(): string {
   })
 }
 
+export function getCircleProps(sz) {
+  const size = sz + config.borderWidth * 4
+  const c = size / 2
+  const r = (sz + config.borderWidth * 3) / 2
+
+  return {
+    size,
+    cx: c,
+    cy: c,
+    r,
+  }
+}
+
 function getBorderAnimationSizeStyles(): string {
   return forEach(config.size, (size, props) => {
     const { size: sz } = props
-    const svgSize = sz + config.borderWidth * 4
-    const c = svgSize / 2
-    const r = (sz + config.borderWidth * 3) / 2
+    const { size: svgSize, ...rest } = getCircleProps(sz)
     return `
       &.is-${size} {
         height: ${svgSize}px;
         width: ${svgSize}px;
 
         circle {
-          cx: ${c};
-          cy: ${c};
-          r: ${r};
+          cx: ${rest.cx};
+          cy: ${rest.cy};
+          r: ${rest.r};
         }
       }
     `
