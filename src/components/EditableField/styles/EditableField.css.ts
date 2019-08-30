@@ -116,7 +116,7 @@ export const AddButtonUI = styled('button')`
   }
 
   &:disabled {
-    cursor: default;
+    cursor: not-allowed;
     color: #c6d0d8;
     background-color: ${getColor('grey.300')};
   }
