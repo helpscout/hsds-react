@@ -1002,6 +1002,43 @@ describe('enter press', () => {
     expect(onCommitSpy).not.toHaveBeenCalled()
   })
 
+  test('Pressing Enter: should not commit if value invalid', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: false,
+            name,
+            value,
+            type: 'error',
+            message: 'That is definitely not right',
+          })
+        }
+      />
+    )
+
+    const input = wrapper.find('input').first()
+
+    // @ts-ignore
+    input.getDOMNode().value = '8888'
+
+    input.simulate('keydown', { key: 'Enter' })
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(onEnterSpy).toHaveBeenCalled()
+      expect(onCommitSpy).not.toHaveBeenCalled()
+    })
+  })
+
   test('Pressing Enter: should not commit if value empty', () => {
     const onEnterSpy = jest.fn()
     const onCommitSpy = jest.fn()
@@ -1304,6 +1341,41 @@ describe('Input Blur', () => {
     expect(commitSpy).toHaveBeenCalled()
     expect(blurSpy).toHaveBeenCalled()
     expect(discardSpy).toHaveBeenCalled()
+  })
+
+  test('If value cleared in multivalue, it should not remove the only field left', () => {
+    const commitSpy = jest.fn()
+    const blurSpy = jest.fn()
+    const discardSpy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={['hello']}
+        onCommit={commitSpy}
+        onInputBlur={blurSpy}
+        onDiscard={discardSpy}
+      />
+    )
+
+    cy.get('input')
+      .first()
+      .focus()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
+    expect(cy.get('input').length).toBe(1)
+
+    cy.get('input')
+      .first()
+      .type('')
+    cy.get('input')
+      .first()
+      .blur()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+    expect(cy.get('input').length).toBe(1)
+    expect(commitSpy).toHaveBeenCalled()
+    expect(blurSpy).toHaveBeenCalled()
   })
 
   test('If value changed and valid, it should commit', () => {

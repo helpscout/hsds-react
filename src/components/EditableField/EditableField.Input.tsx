@@ -249,7 +249,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
     if (!validationInfo) return null
     if (name !== validationInfo.name) return null
 
-    const DEFAULT_ICON = 'alert'
+    const DEFAULT_ICON = 'alert-small'
 
     return (
       <ValidationIconUI
@@ -263,7 +263,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
           placement="top-end"
           title={validationInfo.message}
         >
-          <Icon name={validationInfo.icon || DEFAULT_ICON} size={20} />
+          <Icon name={validationInfo.icon || DEFAULT_ICON} size={24} />
         </Tooltip>
       </ValidationIconUI>
     )

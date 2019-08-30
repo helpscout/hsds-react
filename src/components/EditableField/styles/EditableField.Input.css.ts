@@ -320,8 +320,8 @@ export const FocusIndicatorUI = styled('span')`
 
 export const ValidationIconUI = styled('div')`
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   top: 0;
   right: 0;
   z-index: 10;

@@ -162,6 +162,8 @@ export class EditableField extends React.Component<
 
       let defaultStateOption: any = null
 
+      // tested
+      /* istanbul ignore next */
       if (valueOptions) {
         defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
       }
@@ -233,7 +235,6 @@ export class EditableField extends React.Component<
     const { validate, onCommit, onInputBlur } = this.props
 
     if (equal(initialFieldValue, fieldValue)) {
-      // console.log('HSDS: handleInputBlur -> same')
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: fieldValue, event })
       })
@@ -247,12 +248,8 @@ export class EditableField extends React.Component<
         : find(fieldValue, val => val.id === event.target.id)
 
     if (!changedField.value) {
-      // console.log('HSDS: handleInputBlur -> empty')
       if (!multipleValuesEnabled) {
-        // console.log('HSDS: handleInputBlur -> empty single')
-        console.log('HSDS: handleInputBlur -> handleInputBlur')
         this.setState({ activeField: EMPTY_VALUE }, () => {
-          // console.log('HSDS: handleInputBlur -> empty single aftersetstate')
           onInputBlur({ name, value: fieldValue, event })
           onCommit({ name, value: fieldValue })
         })
@@ -269,25 +266,28 @@ export class EditableField extends React.Component<
         name: changedField.id,
       }).then(validation => {
         const updatedFieldValue = this.state.fieldValue.map(field => {
+          // tested
+          /* istanbul ignore next */
           if (field.id === changedField.id) {
             return { ...changedField, validated: true }
           }
+          // tested
+          /* istanbul ignore next */
           return field
         })
 
         if (validation.isValid) {
-          // console.log('HSDS: handleInputBlur -> isvalid')
           this.setState(
             {
               disabledItem: '',
               fieldValue: updatedFieldValue,
               initialFieldValue: updatedFieldValue,
               validationInfo: validationInfo.filter(
-                valItem => valItem.name !== changedField.id
+                /* istanbul ignore next */ valItem =>
+                  valItem.name !== changedField.id
               ),
             },
             () => {
-              // console.log('HSDS: handleInputBlur -> isvalid after setstate')
               onCommit({ name, value: updatedFieldValue })
               onInputBlur({ name, value: fieldValue, event })
 
@@ -315,6 +315,7 @@ export class EditableField extends React.Component<
               const unchangedByFocusEvent =
                 this.state.activeField === activeField
 
+              /* istanbul ignore next */
               this.setState({
                 activeField: unchangedByFocusEvent
                   ? EMPTY_VALUE
@@ -323,7 +324,6 @@ export class EditableField extends React.Component<
             }
           )
         } else {
-          // console.log('HSDS: handleInputBlur -> not valid')
           this.setState(
             {
               disabledItem: '',
@@ -331,7 +331,6 @@ export class EditableField extends React.Component<
               validationInfo: validationInfo.concat(validation),
             },
             () => {
-              // console.log('HSDS: handleInputBlur -> not valid after setstate')
               onInputBlur({ name, value: fieldValue, event })
             }
           )
@@ -340,8 +339,6 @@ export class EditableField extends React.Component<
 
       return
     }
-
-    // console.log('HSDS: handleInputBlur -> down')
 
     const removedEmptyFields = fieldValue.filter(field => Boolean(field.value))
     const shouldDiscardEmpty =
@@ -356,7 +353,6 @@ export class EditableField extends React.Component<
           activeField: EMPTY_VALUE,
         },
         () => {
-          // console.log('HSDS: handleInputBlur -> down after setstate')
           this.props.onDiscard({ value: this.state.fieldValue })
           this.props.onCommit({ name, value: this.state.fieldValue })
           this.props.onInputBlur({ name, value: fieldValue, event })
@@ -364,6 +360,7 @@ export class EditableField extends React.Component<
       )
     } else {
       this.setState({ activeField: EMPTY_VALUE }, () => {
+        onCommit({ name, value: this.state.fieldValue })
         onInputBlur({ name, value: fieldValue, event })
       })
     }
@@ -382,7 +379,9 @@ export class EditableField extends React.Component<
     this.setState(
       {
         fieldValue: newFieldValue,
-        validationInfo: validationInfo.filter(valItem => valItem.name !== name),
+        validationInfo: validationInfo.filter(
+          /* istanbul ignore next */ valItem => valItem.name !== name
+        ),
       },
       () => {
         onChange({ name, value: newFieldValue, event })
@@ -441,6 +440,7 @@ export class EditableField extends React.Component<
         const impactedField = find(fieldValue, val => val.id === name)
 
         // Skip if the field was marked as validated
+        /* istanbul ignore else */
         if (!impactedField.validated) {
           this.setState({ disabledItem: name })
 
@@ -461,12 +461,12 @@ export class EditableField extends React.Component<
                   initialFieldValue: updatedFieldValue,
                   maskTabIndex: name,
                   validationInfo: validationInfo.filter(
-                    valItem => valItem.name === name
+                    /* istanbul ignore next */ valItem => valItem.name === name
                   ),
                 },
                 () => {
                   resolve()
-                  // console.log('HSDS: enterpress valid -> after setstate')
+
                   onCommit({ name, value: updatedFieldValue })
                   onEnter({
                     name,
@@ -477,9 +477,13 @@ export class EditableField extends React.Component<
               )
             } else {
               updatedFieldValue = fieldValue.map(field => {
+                // tested
+                /* istanbul ignore next */
                 if (field.id === name) {
                   return { ...field, validated: true }
                 }
+                // tested
+                /* istanbul ignore next */
                 return field
               })
 
@@ -507,11 +511,12 @@ export class EditableField extends React.Component<
     })
   }
 
+  // tested
+  /* istanbul ignore next */
   updateFieldValue = ({ value, name }) => {
     const { fieldValue } = this.state
 
     return fieldValue.map(val => {
-      /* istanbul ignore else */
       if (val.id === name) {
         return { ...val, value: value, validated: true }
       }
@@ -594,13 +599,13 @@ export class EditableField extends React.Component<
 
     for (const value of fieldValue) {
       const temp = { ...value }
-      /* istanbul ignore else */
-
+      /* istanbul ignore next */
       if (temp.id === name && temp.option !== selection) {
         temp.option = selection
         changed = true
       }
 
+      /* istanbul ignore next */
       if (temp.id === name && temp.validated) {
         hasBeenValidated = temp.id
       }
@@ -608,7 +613,7 @@ export class EditableField extends React.Component<
       newFieldValue.push(temp)
     }
 
-    /* istanbul ignore else */
+    /* istanbul ignore next */
     if (changed) {
       let isItemInvalid
 
@@ -620,8 +625,8 @@ export class EditableField extends React.Component<
       }
 
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
+        /* istanbul ignore next */
         if (!isItemInvalid) {
-          // console.log('HSDS: optionselection -> after setstate valid')
           onCommit({ name, value: newFieldValue })
         }
         onOptionChange({ name, selection, value: newFieldValue })
@@ -692,7 +697,6 @@ export class EditableField extends React.Component<
       },
       () => {
         onDelete({ name, value: this.state.fieldValue, event })
-        // console.log('HSDS: deleteaction')
         onCommit({ name, value: this.state.fieldValue })
 
         if (isFunction(action.callback)) {
