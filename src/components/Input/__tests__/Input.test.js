@@ -1160,7 +1160,7 @@ describe('charValidator', () => {
     expect(component.props().in).toEqual(true)
     expect(component.length).toEqual(1)
   })
-  test('it should render charValidator error', () => {
+  test('it should render charValidator badge error', () => {
     const wrapper = mount(
       <Input withCharValidator={true} charValidatorLimit={7} value="12345678" />
     )
@@ -1168,7 +1168,7 @@ describe('charValidator', () => {
     const badge = wrapper.find(Badge)
     expect(badge.props().status).toEqual('error')
   })
-  test('it should render charValidator error', () => {
+  test('it should render charValidator badge warning', () => {
     const wrapper = mount(
       <Input
         withCharValidator={true}
