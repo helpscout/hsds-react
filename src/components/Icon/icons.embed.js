@@ -1,4 +1,5 @@
 import alert from '../../icons/alert.svg'
+import alertSmall from '../../icons/alert-small.svg'
 import arrowLeft from '../../icons/arrow-left.svg'
 import arrowLeftSmall from '../../icons/arrow-left-small.svg'
 import attach from '../../icons/attach.svg'
@@ -23,6 +24,7 @@ import user from '../../icons/user.svg'
 
 const ICONS = {
   alert,
+  'alert-small': alertSmall,
   'arrow-left': arrowLeft,
   'arrow-left-small': arrowLeftSmall,
   attach,
