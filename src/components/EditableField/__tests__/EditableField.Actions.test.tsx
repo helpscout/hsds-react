@@ -70,19 +70,10 @@ describe('Should component update', () => {
       <Actions name="email" fieldValue={val} actions={[]} />
     )
     const actualProps = wrapper.props()
-    const newSameProps = {
+    const newPropsSame = {
       ...actualProps,
-      fieldValue: {
-        value: 'hello',
-        id: 'greeting_0',
-      },
     }
-
-    expect(
-      wrapper.instance().shouldComponentUpdate(newSameProps, actualProps)
-    ).toBeFalsy()
-
-    const newProps = {
+    const newPropsChanged = {
       ...actualProps,
       fieldValue: {
         value: 'hola',
@@ -90,8 +81,10 @@ describe('Should component update', () => {
       },
     }
 
+    expect(wrapper.instance().shouldComponentUpdate(newPropsSame)).toBeFalsy()
+
     expect(
-      wrapper.instance().shouldComponentUpdate(newProps, actualProps)
+      wrapper.instance().shouldComponentUpdate(newPropsChanged)
     ).toBeTruthy()
   })
 
@@ -110,24 +103,18 @@ describe('Should component update', () => {
       <Actions name="email" fieldValue={val} actions={[]} />
     )
     const actualProps = wrapper.props()
+    const newPropsSame = {
+      ...actualProps,
+    }
+    const newPropsChanged = {
+      ...actualProps,
+      validationInfo,
+    }
+
+    expect(wrapper.instance().shouldComponentUpdate(newPropsSame)).toBeFalsy()
 
     expect(
-      wrapper.instance().shouldComponentUpdate(
-        {
-          ...actualProps,
-        },
-        actualProps
-      )
-    ).toBeFalsy()
-
-    expect(
-      wrapper.instance().shouldComponentUpdate(
-        {
-          ...actualProps,
-          validationInfo,
-        },
-        actualProps
-      )
+      wrapper.instance().shouldComponentUpdate(newPropsChanged)
     ).toBeTruthy()
   })
 })
