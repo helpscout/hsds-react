@@ -1168,4 +1168,16 @@ describe('charValidator', () => {
     const badge = wrapper.find(Badge)
     expect(badge.props().status).toEqual('error')
   })
+  test('it should render charValidator error', () => {
+    const wrapper = mount(
+      <Input
+        withCharValidator={true}
+        charValidatorLimit={21}
+        value="only a fifth left"
+      />
+    )
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+    const badge = wrapper.find(Badge)
+    expect(badge.props().status).toEqual('warning')
+  })
 })
