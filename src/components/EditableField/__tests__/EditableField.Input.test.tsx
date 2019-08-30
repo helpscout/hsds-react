@@ -196,7 +196,7 @@ describe('validation', () => {
       cy
         .get(`.${OTHERCOMPONENTS_CLASSNAMES.icon}`)
         .getAttribute('data-icon-name')
-    ).toBe('alert')
+    ).toBe('alert-small')
   })
 
   test('should render custom icon', () => {
