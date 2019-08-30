@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { cy } from '@helpscout/cyan'
 import { Avatar } from '../Avatar'
+import { getCircleProps } from '../styles/Avatar.css'
 import { StatusDot } from '../../index'
 
 const ui = {
@@ -12,6 +13,8 @@ const ui = {
   image: '.c-Avatar__image',
   initials: '.c-Avatar__title',
 }
+
+jest.useFakeTimers()
 
 describe('Name', () => {
   test('Uses the `initials` attribute if specified', () => {
@@ -415,6 +418,19 @@ describe('Action', () => {
     expect(cy.getByCy('Avatar.FocusBorder').exists()).toBeTruthy()
   })
 
+  test('Renders an animate svg', () => {
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        animateActionBorder={true}
+      />
+    )
+    expect(cy.getByCy('Avatar.BorderAnimation').exists()).toBeTruthy()
+  })
+
   test('Evokes the callback when clicking on the Action component', () => {
     const fn = jest.fn()
     const wrapper = cy.render(
@@ -428,5 +444,52 @@ describe('Action', () => {
     )
     cy.getByCy('Avatar').click()
     expect(fn).toHaveBeenCalled()
+  })
+
+  test('Evokes the callback when clicking on the Action component only if the action exists', () => {
+    const fn = jest.fn()
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        onActionClick={fn}
+      />
+    )
+    cy.getByCy('Avatar').click()
+    expect(fn).toHaveBeenCalled()
+
+    wrapper.setProps({ removingAvatarAnimation: true })
+    cy.getByCy('Avatar').click()
+    expect(fn).toHaveBeenCalledTimes(1)
+  })
+
+  test('Hide the action overlay when animating', () => {
+    const fn = jest.fn()
+    const wrapper = cy.render(
+      <Avatar
+        name="Buddy"
+        size="sm"
+        actionable={true}
+        shape="rounded"
+        onActionClick={fn}
+        removingAvatarAnimation={true}
+      />
+    )
+    expect(cy.getByCy('Avatar.Action').exists()).toBeFalsy()
+  })
+
+  test('getCircleProps will return a full props object for svg circle', () => {
+    const size = 20
+    const props = getCircleProps(size)
+
+    expect(Object.keys(props).join('-')).toBe(
+      ['size', 'cx', 'cy', 'r'].join('-')
+    )
+    expect(props.size).toBe(28)
+    expect(props.cx).toBe(14)
+    expect(props.cy).toBe(14)
+    expect(props.r).toBe(13)
   })
 })
