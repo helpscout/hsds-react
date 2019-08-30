@@ -37,13 +37,11 @@ export interface Props {
   actionIcon?: string
   actionIconSize?: IconSize
   active?: boolean
-  animationBorderImage: boolean
   animationDuration: number
   animationEasing: string
   borderColor?: string
   className?: string
   count?: number | string
-  deleteAnimation?: boolean
   fallbackImage?: string
   image?: string
   initials?: string
@@ -77,7 +75,6 @@ export class Avatar extends React.PureComponent<Props, State> {
     animationDuration: 160,
     animationEasing: 'ease',
     borderColor: 'transparent',
-    deleteAnimation: true,
     fallbackImage: null,
     light: false,
     name: '',
