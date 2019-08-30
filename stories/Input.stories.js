@@ -115,7 +115,7 @@ stories.add('multiline + char validation', () => (
     <Input
       autoFocus
       multiline={3}
-      placeholder="Show at 0!"
+      placeholder="Show at char validation at 50, turn to yellow at 20, turn to red at 0 chars"
       withCharValidator={true}
       charValidatorLimit={100}
       resizable
@@ -292,7 +292,7 @@ stories.add('onStartTyping', () => {
   )
 })
 
-stories.add('speical key + return', () => (
+stories.add('special key + return', () => (
   <div>
     <Input hasInsertCarriageReturns={true} multiline={29} resizable />
   </div>
