@@ -1128,8 +1128,15 @@ describe('inputType', () => {
 })
 
 describe('charValidator', () => {
-  test('it should render charValidator', () => {
+  test('it should render charValidator without a badge', () => {
     const wrapper = mount(<Input withCharValidator={true} />)
+    expect(wrapper.find(Badge).length).toEqual(0)
+    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
+  })
+  test('it should render charValidator with a badge', () => {
+    const wrapper = mount(
+      <Input withCharValidator={true} charValidatorLimit="10" value="123456" />
+    )
     expect(wrapper.find(Badge).length).toEqual(1)
     expect(wrapper.find(CharValidatorUI).length).toEqual(1)
   })
@@ -1138,13 +1145,7 @@ describe('charValidator', () => {
     expect(wrapper.find(CharValidatorUI).length).toEqual(0)
   })
   test('it should not render charValidator, because showAt has not been reached', () => {
-    const wrapper = mount(
-      <Input
-        withCharValidator={true}
-        charValidatorShowAt={9}
-        value="12345678"
-      />
-    )
+    const wrapper = mount(<Input withCharValidator={true} value="12345678" />)
     expect(wrapper.find(CharValidatorUI).length).toEqual(1)
     const component = wrapper.find(Animate)
     expect(component.props().in).toEqual(false)
@@ -1152,12 +1153,7 @@ describe('charValidator', () => {
   })
   test('it should render charValidator success', () => {
     const wrapper = mount(
-      <Input
-        withCharValidator={true}
-        charValidatorShowAt={4}
-        charValidatorLimit={9}
-        value="1234567"
-      />
+      <Input withCharValidator={true} charValidatorLimit={9} value="1234567" />
     )
     expect(wrapper.find(CharValidatorUI).length).toEqual(1)
     const component = wrapper.find(Animate)
@@ -1166,12 +1162,7 @@ describe('charValidator', () => {
   })
   test('it should render charValidator error', () => {
     const wrapper = mount(
-      <Input
-        withCharValidator={true}
-        charValidatorShowAt={4}
-        charValidatorLimit={7}
-        value="12345678"
-      />
+      <Input withCharValidator={true} charValidatorLimit={7} value="12345678" />
     )
     expect(wrapper.find(CharValidatorUI).length).toEqual(1)
     const badge = wrapper.find(Badge)

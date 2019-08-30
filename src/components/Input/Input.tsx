@@ -31,6 +31,7 @@ import {
   isTextArea,
 } from './Input.utils'
 import {
+  CharValidatorText,
   CharValidatorUI,
   InputWrapperUI,
   InlinePrefixSuffixUI,
@@ -45,7 +46,6 @@ const uniqueID = createUniqueIDFactory('Input')
 export class Input extends React.PureComponent<InputProps, InputState> {
   static defaultProps = {
     autoFocus: false,
-    charValidatorShowAt: 0,
     charValidatorLimit: 500,
     disabled: false,
     errorIcon: 'alert',
@@ -550,15 +550,26 @@ export class Input extends React.PureComponent<InputProps, InputState> {
 
   getCharValidatorMarkup() {
     if (!this.props.withCharValidator) return null
-    const { charValidatorLimit, charValidatorShowAt } = this.props
+    const { charValidatorLimit } = this.props
     const {
       value: { length: count },
     } = this.state
-    const isVisible =
-      charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
-    const currentCount = charValidatorLimit - count
-    const isTooMuch = count !== 0 && count >= charValidatorLimit
-    const nextText = `${count} / ${charValidatorLimit}`
+
+    const charValidatorShowAt = charValidatorLimit / 2
+    const isTooMuch = count >= charValidatorLimit
+    const nextCount = charValidatorLimit - count
+    const isVisible = nextCount <= charValidatorShowAt
+    const isLessThanAFifth = nextCount <= charValidatorLimit * 0.2
+
+    function getBadgeColor() {
+      if (isTooMuch) {
+        return 'error'
+      } else if (isLessThanAFifth) {
+        return 'warning'
+      } else {
+        return 'success'
+      }
+    }
 
     return (
       <CharValidatorUI>
@@ -570,12 +581,10 @@ export class Input extends React.PureComponent<InputProps, InputState> {
           sequence="fade"
           unmountOnExit
         >
-          <Badge
-            count={true}
-            status={isTooMuch ? 'error' : 'success'}
-            style={{ minWidth: 75 }}
-          >
-            {nextText}
+          <Badge count={true} status={getBadgeColor()}>
+            <CharValidatorText chars={nextCount.toString().length}>
+              {nextCount}
+            </CharValidatorText>
           </Badge>
         </Animate>
       </CharValidatorUI>

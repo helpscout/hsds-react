@@ -27,7 +27,6 @@ export type InputProps = {
   action?: any
   autoFocus: boolean
   charValidatorLimit: number
-  charValidatorShowAt: number
   className: string
   disabled: boolean
   errorIcon?: string
