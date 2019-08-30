@@ -135,10 +135,6 @@ export class EditableField extends React.Component<
       return true
     }
 
-    if (!equal(this.state.initialFieldValue, nextState.initialFieldValue)) {
-      return true
-    }
-
     if (this.state.activeField !== nextState.activeField) {
       return true
     }
@@ -151,7 +147,9 @@ export class EditableField extends React.Component<
       return true
     }
 
-    if (this.props.disabled !== nextProps.disabled) {
+    // Tested
+    /* istanbul ignore next */
+    if (!equal(this.state.validationInfo, nextState.validationInfo)) {
       return true
     }
 
@@ -235,6 +233,7 @@ export class EditableField extends React.Component<
     const { validate, onCommit, onInputBlur } = this.props
 
     if (equal(initialFieldValue, fieldValue)) {
+      // console.log('HSDS: handleInputBlur -> same')
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: fieldValue, event })
       })
@@ -248,8 +247,12 @@ export class EditableField extends React.Component<
         : find(fieldValue, val => val.id === event.target.id)
 
     if (!changedField.value) {
+      // console.log('HSDS: handleInputBlur -> empty')
       if (!multipleValuesEnabled) {
+        // console.log('HSDS: handleInputBlur -> empty single')
+        console.log('HSDS: handleInputBlur -> handleInputBlur')
         this.setState({ activeField: EMPTY_VALUE }, () => {
+          // console.log('HSDS: handleInputBlur -> empty single aftersetstate')
           onInputBlur({ name, value: fieldValue, event })
           onCommit({ name, value: fieldValue })
         })
@@ -273,6 +276,7 @@ export class EditableField extends React.Component<
         })
 
         if (validation.isValid) {
+          // console.log('HSDS: handleInputBlur -> isvalid')
           this.setState(
             {
               disabledItem: '',
@@ -283,6 +287,7 @@ export class EditableField extends React.Component<
               ),
             },
             () => {
+              // console.log('HSDS: handleInputBlur -> isvalid after setstate')
               onCommit({ name, value: updatedFieldValue })
               onInputBlur({ name, value: fieldValue, event })
 
@@ -318,6 +323,7 @@ export class EditableField extends React.Component<
             }
           )
         } else {
+          // console.log('HSDS: handleInputBlur -> not valid')
           this.setState(
             {
               disabledItem: '',
@@ -325,6 +331,7 @@ export class EditableField extends React.Component<
               validationInfo: validationInfo.concat(validation),
             },
             () => {
+              // console.log('HSDS: handleInputBlur -> not valid after setstate')
               onInputBlur({ name, value: fieldValue, event })
             }
           )
@@ -333,6 +340,8 @@ export class EditableField extends React.Component<
 
       return
     }
+
+    // console.log('HSDS: handleInputBlur -> down')
 
     const removedEmptyFields = fieldValue.filter(field => Boolean(field.value))
     const shouldDiscardEmpty =
@@ -347,8 +356,10 @@ export class EditableField extends React.Component<
           activeField: EMPTY_VALUE,
         },
         () => {
+          // console.log('HSDS: handleInputBlur -> down after setstate')
           this.props.onDiscard({ value: this.state.fieldValue })
           this.props.onCommit({ name, value: this.state.fieldValue })
+          this.props.onInputBlur({ name, value: fieldValue, event })
         }
       )
     } else {
@@ -433,67 +444,64 @@ export class EditableField extends React.Component<
         if (!impactedField.validated) {
           this.setState({ disabledItem: name })
 
-          validate({ value: inputValue, name })
-            .then(validation => {
-              let updatedFieldValue
+          validate({ value: inputValue, name }).then(validation => {
+            let updatedFieldValue
 
-              if (validation.isValid) {
-                updatedFieldValue = this.updateFieldValue({
-                  name,
-                  value: inputValue,
-                })
+            if (validation.isValid) {
+              updatedFieldValue = this.updateFieldValue({
+                name,
+                value: inputValue,
+              })
 
-                this.setState(
-                  {
-                    activeField: EMPTY_VALUE,
-                    disabledItem: '',
-                    fieldValue: updatedFieldValue,
-                    initialFieldValue: updatedFieldValue,
-                    maskTabIndex: name,
-                    validationInfo: validationInfo.filter(
-                      valItem => valItem.name === name
-                    ),
-                  },
-                  () => {
-                    resolve()
-                    onCommit({ name, value: updatedFieldValue })
-                    onEnter({
-                      name,
-                      value: updatedFieldValue,
-                      event: cachedEvent,
-                    })
-                  }
-                )
-              } else {
-                updatedFieldValue = fieldValue.map(field => {
-                  if (field.id === name) {
-                    return { ...field, validated: true }
-                  }
-                  return field
-                })
+              this.setState(
+                {
+                  activeField: EMPTY_VALUE,
+                  disabledItem: '',
+                  fieldValue: updatedFieldValue,
+                  initialFieldValue: updatedFieldValue,
+                  maskTabIndex: name,
+                  validationInfo: validationInfo.filter(
+                    valItem => valItem.name === name
+                  ),
+                },
+                () => {
+                  resolve()
+                  // console.log('HSDS: enterpress valid -> after setstate')
+                  onCommit({ name, value: updatedFieldValue })
+                  onEnter({
+                    name,
+                    value: updatedFieldValue,
+                    event: cachedEvent,
+                  })
+                }
+              )
+            } else {
+              updatedFieldValue = fieldValue.map(field => {
+                if (field.id === name) {
+                  return { ...field, validated: true }
+                }
+                return field
+              })
 
-                this.setState(
-                  {
-                    activeField: name,
-                    disabledItem: '',
-                    fieldValue: updatedFieldValue,
-                    validationInfo: validationInfo.concat(validation),
-                  },
-                  () => {
-                    resolve()
+              this.setState(
+                {
+                  activeField: name,
+                  disabledItem: '',
+                  fieldValue: updatedFieldValue,
+                  validationInfo: validationInfo.concat(validation),
+                },
+                () => {
+                  resolve()
 
-                    onEnter({
-                      name,
-                      value: updatedFieldValue,
-                      event: cachedEvent,
-                    })
-                  }
-                )
-              }
-            })
-            .catch(reason => {
-              console.log(reason)
-            })
+                  onEnter({
+                    name,
+                    value: updatedFieldValue,
+                    event: cachedEvent,
+                  })
+                }
+              )
+            }
+          })
         }
       }
     })
@@ -613,6 +621,7 @@ export class EditableField extends React.Component<
 
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
         if (!isItemInvalid) {
+          // console.log('HSDS: optionselection -> after setstate valid')
           onCommit({ name, value: newFieldValue })
         }
         onOptionChange({ name, selection, value: newFieldValue })
@@ -683,6 +692,7 @@ export class EditableField extends React.Component<
       },
       () => {
         onDelete({ name, value: this.state.fieldValue, event })
+        // console.log('HSDS: deleteaction')
         onCommit({ name, value: this.state.fieldValue })
 
         if (isFunction(action.callback)) {
