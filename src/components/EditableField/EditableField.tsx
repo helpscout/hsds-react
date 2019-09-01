@@ -251,7 +251,15 @@ export class EditableField extends React.Component<
       if (!multipleValuesEnabled) {
         this.setState({ activeField: EMPTY_VALUE }, () => {
           onInputBlur({ name, value: fieldValue, event })
-          onCommit({ name, value: fieldValue })
+          onCommit({
+            name,
+            value: fieldValue,
+            data: {
+              cause: 'BLUR',
+              operation: 'UPDATE',
+              item: changedField,
+            },
+          })
         })
 
         return
@@ -288,7 +296,15 @@ export class EditableField extends React.Component<
               ),
             },
             () => {
-              onCommit({ name, value: updatedFieldValue })
+              onCommit({
+                name,
+                value: fieldValue,
+                data: {
+                  cause: 'BLUR',
+                  operation: 'UPDATE',
+                  item: changedField,
+                },
+              })
               onInputBlur({ name, value: fieldValue, event })
 
               /**
@@ -354,13 +370,29 @@ export class EditableField extends React.Component<
         },
         () => {
           this.props.onDiscard({ value: this.state.fieldValue })
-          this.props.onCommit({ name, value: this.state.fieldValue })
+          onCommit({
+            name,
+            value: this.state.fieldValue,
+            data: {
+              cause: 'BLUR',
+              operation: 'DELETE',
+              item: fieldValue.filter(field => !Boolean(field.value))[0],
+            },
+          })
           this.props.onInputBlur({ name, value: fieldValue, event })
         }
       )
     } else {
       this.setState({ activeField: EMPTY_VALUE }, () => {
-        onCommit({ name, value: this.state.fieldValue })
+        onCommit({
+          name,
+          value: this.state.fieldValue,
+          data: {
+            cause: 'BLUR',
+            operation: 'DELETE',
+            item: fieldValue.filter(field => !Boolean(field.value))[0],
+          },
+        })
         onInputBlur({ name, value: fieldValue, event })
       })
     }
@@ -466,8 +498,18 @@ export class EditableField extends React.Component<
                 },
                 () => {
                   resolve()
+                  onCommit({
+                    name,
+                    value: updatedFieldValue,
+                    data: {
+                      cause: 'ENTER',
+                      operation: 'UPDATE',
+                      item: updatedFieldValue.filter(
+                        field => field.id === name
+                      )[0],
+                    },
+                  })
 
-                  onCommit({ name, value: updatedFieldValue })
                   onEnter({
                     name,
                     value: updatedFieldValue,
@@ -627,7 +669,15 @@ export class EditableField extends React.Component<
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
         /* istanbul ignore next */
         if (!isItemInvalid) {
-          onCommit({ name, value: newFieldValue })
+          onCommit({
+            name,
+            value: newFieldValue,
+            data: {
+              cause: 'OPTION_SELECTION',
+              operation: 'UPDATE',
+              item: newFieldValue.filter(field => field.id === name)[0],
+            },
+          })
         }
         onOptionChange({ name, selection, value: newFieldValue })
         onChange({ name, value: newFieldValue })
@@ -697,7 +747,15 @@ export class EditableField extends React.Component<
       },
       () => {
         onDelete({ name, value: this.state.fieldValue, event })
-        onCommit({ name, value: this.state.fieldValue })
+        onCommit({
+          name,
+          value: this.state.fieldValue,
+          data: {
+            cause: 'DELETE_ACTION',
+            operation: 'DELETE',
+            item: fieldValue.filter(field => field.id === name)[0],
+          },
+        })
 
         if (isFunction(action.callback)) {
           action.callback({

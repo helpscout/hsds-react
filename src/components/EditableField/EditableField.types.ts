@@ -42,6 +42,12 @@ export type Validation = {
   color?: string
 }
 
+export type CommitData = {
+  cause: 'BLUR' | 'ENTER' | 'OPTION_SELECTION' | 'DELETE_ACTION'
+  operation: 'UPDATE' | 'DELETE'
+  item: Object
+}
+
 export interface EditableFieldProps {
   actions?: FieldAction | FieldAction[] | null
   className?: string
@@ -88,7 +94,11 @@ export interface EditableFieldProps {
   onEnter: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onEscape: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onAdd: (args: { name: string; value: FieldValue[] }) => void
-  onCommit: (args: { name: string; value: FieldValue[] }) => void
+  onCommit: (args: {
+    name: string
+    value: FieldValue[]
+    data: CommitData
+  }) => void
   onDelete: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onDiscard: (args: { value: FieldValue[] }) => void
   validate: (args: { value: string; name: string }) => Promise<Validation>
