@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
+import { EditableFieldComposite } from '../src/components/EditableField'
 
 import { action } from '@storybook/addon-actions'
 import ReadMe from '../src/components/EditableField/docs/README.md'
@@ -425,6 +426,7 @@ class ValuePropsApp extends React.Component {
   state = {
     value: BARCELONA,
     multiValue: [ATLAS, ARSENAL, BARCELONA],
+    compositeValue: ['Johnny', 'Cash'],
   }
 
   render() {
@@ -525,6 +527,42 @@ class ValuePropsApp extends React.Component {
         </button>
         <pre>
           <code>{JSON.stringify(this.state.multiValue, null, 2)}</code>
+        </pre>
+        <br />
+        <h2>Composite Fields</h2>
+        <EditableFieldComposite placeholder="Add a name">
+          <EditableField
+            label="First Name"
+            name="first_name"
+            type="text"
+            placeholder="First Name"
+            value={this.state.compositeValue[0]}
+          />
+          <EditableField
+            label="Last Name"
+            name="last_name"
+            type="text"
+            placeholder="Last Name"
+            value={this.state.compositeValue[1]}
+          />
+        </EditableFieldComposite>
+        <br />
+        <button
+          onClick={() => {
+            this.setState({ compositeValue: ['George', 'Harrison'] })
+          }}
+        >
+          George Harrison
+        </button>
+        <button
+          onClick={() => {
+            this.setState({ compositeValue: ['Johhny', 'Cash'] })
+          }}
+        >
+          Johhny Cash
+        </button>
+        <pre>
+          <code>{JSON.stringify(this.state.compositeValue, null, 2)}</code>
         </pre>
       </ContainerUI>
     )

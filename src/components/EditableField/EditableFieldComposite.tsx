@@ -15,6 +15,7 @@ import {
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
 import propConnect from '../PropProvider/propConnect'
+import * as equal from 'fast-deep-equal'
 
 import { CompositeProps, CompositeState } from './EditableField.types'
 
@@ -31,6 +32,28 @@ export class EditableFieldComposite extends React.PureComponent<
   constructor(props) {
     super(props)
 
+    const { fields, maskItems } = this.getChildrenFromProps(props)
+
+    this.state = {
+      fields,
+      hasActiveFields: false,
+      inputState: null,
+      maskItems,
+    }
+  }
+
+  groupRef: HTMLDivElement
+  maskRef: HTMLDivElement
+
+  setGroupNode = node => {
+    this.groupRef = node
+  }
+
+  setMaskNode = node => {
+    this.maskRef = node
+  }
+
+  getChildrenFromProps = (props): any => {
     let fields: React.ReactElement<any>[] = []
     let maskItems: { name: string; text: string }[] = []
 
@@ -54,26 +77,17 @@ export class EditableFieldComposite extends React.PureComponent<
       )
     })
 
-    this.state = {
-      fields,
-      hasActiveFields: false,
-      inputState: null,
-      maskItems,
+    return { fields, maskItems }
+  }
+
+  componentDidUpdate(prevProps) {
+    /* istanbul ignore next */
+    if (!equal(this.props.children, prevProps.children)) {
+      const { fields, maskItems } = this.getChildrenFromProps(this.props)
+
+      this.setState({ fields, maskItems })
     }
-  }
 
-  groupRef: HTMLDivElement
-  maskRef: HTMLDivElement
-
-  setGroupNode = node => {
-    this.groupRef = node
-  }
-
-  setMaskNode = node => {
-    this.maskRef = node
-  }
-
-  componentDidUpdate() {
     if (this.state.inputState === 'blurred') {
       /**
        * Beware: Trickery ahead
