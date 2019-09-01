@@ -35,6 +35,12 @@ export const FIELDSTATES = {
   error: 'error',
   warning: 'warning',
 }
+export const COMMIT_CAUSES = {
+  BLUR: 'BLUR',
+  ENTER: 'ENTER',
+  OPTION_SELECTION: 'OPTION_SELECTION',
+  DELETE_ACTION: 'DELETE_ACTION',
+}
 
 export function normalizeFieldValue({
   value,
@@ -66,7 +72,6 @@ export function createNewValueFieldFactory(uuidFn) {
         ...value,
         id: value.id || uuidFn(`${name}_`),
         validated: false,
-        disabled: false,
       }
 
       if (defaultOption !== null && !Boolean(value.option)) {
@@ -80,7 +85,6 @@ export function createNewValueFieldFactory(uuidFn) {
       value,
       id: uuidFn(`${name}_`),
       validated: false,
-      disabled: false,
     }
 
     if (defaultOption !== null) {

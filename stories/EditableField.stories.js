@@ -571,6 +571,63 @@ class ValuePropsApp extends React.Component {
 
 stories.add('Value from props', () => <ValuePropsApp />)
 
+class OnCommitApp extends React.Component {
+  state = {
+    passed: null,
+  }
+
+  render() {
+    return (
+      <ContainerUI
+        onSubmit={e => {
+          e.preventDefault()
+        }}
+      >
+        <EditableField
+          label="Teams (individual fields disabled)"
+          name="teams"
+          type="text"
+          placeholder="Add a team name"
+          value={[
+            BARCELONA,
+            { ...ARSENAL, disabled: false },
+            { ...ATLAS, disabled: false },
+          ]}
+          onCommit={passed => {
+            this.setState({ commit: passed })
+          }}
+        />
+        <EditableField
+          label="Favourite Paint Colour"
+          name="paint"
+          placeholder="Add a colour"
+          type="text"
+          valueOptions={PAINT_OPTIONS}
+          value={[
+            { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
+            { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
+            { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
+          ]}
+          validate={validateFieldValue}
+          onCommit={passed => {
+            this.setState({ commit: passed })
+          }}
+        />
+        <h3>Data passed to onCommit: </h3>
+        <pre>
+          <code>
+            {this.state.commit
+              ? JSON.stringify(this.state.commit, null, 2)
+              : ''}
+          </code>
+        </pre>
+      </ContainerUI>
+    )
+  }
+}
+
+stories.add('On Commit', () => <OnCommitApp />)
+
 stories
   .addParameters({
     options: { showPanel: true },
