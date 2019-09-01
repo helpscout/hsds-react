@@ -301,7 +301,11 @@ export class EditableField extends React.Component<
                 value: fieldValue,
                 data: {
                   cause: 'BLUR',
-                  operation: 'UPDATE',
+                  operation:
+                    /* istanbul ignore next */ updatedFieldValue.length >
+                    initialFieldValue.length
+                      ? 'CREATE'
+                      : 'UPDATE',
                   item: changedField,
                 },
               })
@@ -356,48 +360,53 @@ export class EditableField extends React.Component<
       return
     }
 
-    const removedEmptyFields = fieldValue.filter(field => Boolean(field.value))
-    const shouldDiscardEmpty =
-      multipleValuesEnabled &&
-      removedEmptyFields.length < fieldValue.length &&
-      removedEmptyFields.length > 0
+    /* istanbul ignore else */
+    if (this.state.valueOptions == null) {
+      const removedEmptyFields = fieldValue.filter(field =>
+        Boolean(field.value)
+      )
+      const shouldDiscardEmpty =
+        multipleValuesEnabled &&
+        removedEmptyFields.length < fieldValue.length &&
+        removedEmptyFields.length > 0
 
-    if (shouldDiscardEmpty) {
-      this.setState(
-        {
-          fieldValue: removedEmptyFields,
-          activeField: EMPTY_VALUE,
-        },
-        () => {
-          this.props.onDiscard({ value: this.state.fieldValue })
+      if (shouldDiscardEmpty) {
+        this.setState(
+          {
+            fieldValue: removedEmptyFields,
+            activeField: EMPTY_VALUE,
+          },
+          () => {
+            this.props.onDiscard({ value: this.state.fieldValue })
+            onCommit({
+              name,
+              value: this.state.fieldValue,
+              data: {
+                cause: 'BLUR',
+                operation: 'DELETE',
+                item: fieldValue.filter(field => !Boolean(field.value))[0],
+              },
+            })
+            this.props.onInputBlur({ name, value: fieldValue, event })
+          }
+        )
+      } else {
+        this.setState({ activeField: EMPTY_VALUE }, () => {
           onCommit({
             name,
             value: this.state.fieldValue,
             data: {
               cause: 'BLUR',
-              operation: 'DELETE',
+              operation: 'UPDATE',
               item: fieldValue.filter(field => !Boolean(field.value))[0],
             },
           })
-          this.props.onInputBlur({ name, value: fieldValue, event })
-        }
-      )
-    } else {
-      this.setState({ activeField: EMPTY_VALUE }, () => {
-        onCommit({
-          name,
-          value: this.state.fieldValue,
-          data: {
-            cause: 'BLUR',
-            operation: 'DELETE',
-            item: fieldValue.filter(field => !Boolean(field.value))[0],
-          },
+          onInputBlur({ name, value: fieldValue, event })
         })
-        onInputBlur({ name, value: fieldValue, event })
-      })
-    }
+      }
 
-    return
+      return
+    }
   }
 
   handleInputChange = ({ inputValue, name, event }) => {
@@ -503,7 +512,11 @@ export class EditableField extends React.Component<
                     value: updatedFieldValue,
                     data: {
                       cause: 'ENTER',
-                      operation: 'UPDATE',
+                      operation:
+                        /* istanbul ignore next */ updatedFieldValue.length >
+                        initialFieldValue.length
+                          ? 'CREATE'
+                          : 'UPDATE',
                       item: updatedFieldValue.filter(
                         field => field.id === name
                       )[0],
@@ -666,16 +679,18 @@ export class EditableField extends React.Component<
         )
       }
 
+      const item = newFieldValue.filter(field => field.id === name)[0]
+
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
         /* istanbul ignore next */
-        if (!isItemInvalid) {
+        if (!isItemInvalid && item.value !== '') {
           onCommit({
             name,
             value: newFieldValue,
             data: {
               cause: 'OPTION_SELECTION',
               operation: 'UPDATE',
-              item: newFieldValue.filter(field => field.id === name)[0],
+              item,
             },
           })
         }
