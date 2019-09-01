@@ -23,6 +23,12 @@ stories.add('with Limit', () => (
 stories.add('inline', () => (
   <FilteredList items={items} limit={number('limit', 2)} inline />
 ))
+stories.add('inline (multiple)', () => (
+  <FilteredList items={items.slice(0, 2)} inline />
+))
+stories.add('inline (single)', () => (
+  <FilteredList items={items.slice(0, 1)} inline />
+))
 
 stories.add('custom renderer', () => {
   const items = [

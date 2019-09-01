@@ -1,10 +1,26 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Avatar, Flexy } from '../../src/index'
+import { Avatar, Flexy, Button } from '../../src/index'
 import { ThemeProvider } from '../../src/components/styled'
 import AvatarSpec from './specs/Avatar'
 
+import { action } from '@storybook/addon-actions'
+import {
+  withKnobs,
+  boolean,
+  number,
+  text,
+  select,
+} from '@storybook/addon-knobs'
+
 const stories = storiesOf('Avatar', module)
+
+stories.addDecorator(
+  withKnobs({
+    escapeHTML: false,
+  })
+)
+
 const fixture = AvatarSpec.generate()
 
 stories.add('default', () => (
@@ -155,4 +171,86 @@ stories.add('border', () => (
       status="online"
     />
   </div>
+))
+
+const iconSize = [
+  '8',
+  '10',
+  '12',
+  '13',
+  '14',
+  '15',
+  '16',
+  '18',
+  '20',
+  '24',
+  '32',
+  '48',
+  '52',
+]
+const avatarSize = ['lg', 'md', 'smmd', 'sm', 'xs', 'xxs']
+
+stories.add('with action', () => (
+  <Flexy just="left">
+    <Avatar
+      name={fixture.name}
+      image={fixture.image}
+      active={boolean('Is Active', false)}
+      actionable={boolean('Actionable', true)}
+      animateActionBorder={boolean('Animate', false)}
+      actionIcon={select('Icon', ['trash', 'plus-large', 'hyphen'], 'trash')}
+      actionIconSize={select('Icon Size', iconSize, '24')}
+      size={select('Avatar Size', avatarSize, 'lg')}
+      shape={select('Shape', ['circle', 'square', 'rounded'], 'circle')}
+      onActionClick={action('handle click action')}
+      fallbackImage="https://d33v4339jhl8k0.cloudfront.net/customer-avatar/01.png"
+    />
+  </Flexy>
+))
+
+class AnimationSequence extends React.Component {
+  state = {
+    showLoadingAnimation: false,
+    forceShowFallbackImage: false,
+    fadeOutMainImage: false,
+    actionable: true,
+  }
+
+  startAnimation = () => {
+    this.setState({
+      removingAvatarAnimation: true,
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <Avatar
+          name={fixture.name}
+          image={fixture.image}
+          actionable={this.state.actionable}
+          removingAvatarAnimation={this.state.removingAvatarAnimation}
+          size="xl"
+          onActionClick={this.startAnimation}
+          fallbackImage="https://d33v4339jhl8k0.cloudfront.net/customer-avatar/01.png"
+        />
+        <Button
+          version={2}
+          onClick={() =>
+            this.setState({
+              removingAvatarAnimation: false,
+            })
+          }
+        >
+          Reset animation
+        </Button>
+      </div>
+    )
+  }
+}
+
+stories.add('with animation sequence', () => (
+  <Flexy just="left">
+    <AnimationSequence />
+  </Flexy>
 ))
