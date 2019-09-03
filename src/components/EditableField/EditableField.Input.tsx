@@ -6,6 +6,8 @@ import {
   InputWrapperUI,
   OptionsWrapperUI,
   OptionsDropdownUI,
+  TextAreaUI,
+  TextAreaWrapperUI,
   TriggerUI,
   FocusIndicatorUI,
   ValidationIconUI,
@@ -174,12 +176,18 @@ export class EditableFieldInput extends React.Component<InputProps> {
 
   /* istanbul ignore next */
   handleKeyDown = event => {
+    const { type } = this.props
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
     const isDropdownTrigger = event.target.classList.contains(
       OTHERCOMPONENTS_CLASSNAMES.dropdownTrigger
     )
+
     if ((isEnter && !isDropdownTrigger) || isEscape) {
+      if (type === 'textarea' && isEnter && !event.shiftKey) {
+        return
+      }
+
       const { name, onKeyDown } = this.props
       const inputNode = this.inputRef
 
@@ -269,7 +277,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
     )
   }
 
-  render() {
+  renderInput = () => {
     const {
       disabled,
       fieldValue,
@@ -281,6 +289,96 @@ export class EditableFieldInput extends React.Component<InputProps> {
       validationInfo,
       valueOptions,
       ...rest
+    } = this.props
+
+    return (
+      <InputWrapperUI
+        className={INPUT_CLASSNAMES.inputWrapper}
+        placeholder={placeholder}
+        value={fieldValue.value}
+      >
+        <InputUI
+          {...getValidProps(rest)}
+          className={INPUT_CLASSNAMES.input}
+          id={name}
+          innerRef={this.setInputNode}
+          name={name}
+          placeholder={placeholder}
+          type={type}
+          value={fieldValue.value}
+          onBlur={this.handleInputBlur}
+          onChange={this.handleChange}
+          onFocus={this.handleInputFocus}
+          onKeyDown={this.handleKeyDown}
+        />
+
+        {this.renderValidationInfo()}
+
+        <FocusIndicatorUI
+          className={INPUT_CLASSNAMES.focusIndicator}
+          color={getValidationColor(validationInfo)}
+        />
+      </InputWrapperUI>
+    )
+  }
+
+  renderTextArea = () => {
+    const {
+      disabled,
+      fieldValue,
+      isActive,
+      inline,
+      name,
+      placeholder,
+      type,
+      validationInfo,
+      valueOptions,
+      ...rest
+    } = this.props
+
+    return (
+      <TextAreaWrapperUI
+        className={INPUT_CLASSNAMES.textAreaWrapper}
+        value={fieldValue.value}
+      >
+        <TextAreaUI
+          {...getValidProps(rest)}
+          className={INPUT_CLASSNAMES.textArea}
+          id={name}
+          innerRef={this.setInputNode}
+          name={name}
+          placeholder={placeholder}
+          spellCheck="false"
+          hello="hello"
+          value={fieldValue.value}
+          onBlur={this.handleInputBlur}
+          onChange={this.handleChange}
+          onFocus={this.handleInputFocus}
+          onKeyDown={this.handleKeyDown}
+        />
+
+        {this.renderValidationInfo()}
+
+        <FocusIndicatorUI
+          className={INPUT_CLASSNAMES.focusIndicator}
+          color={getValidationColor(validationInfo)}
+        />
+
+        <span>
+          To save your notes press shift + enter, or click outside the box
+        </span>
+      </TextAreaWrapperUI>
+    )
+  }
+
+  render() {
+    const {
+      disabled,
+      inline,
+      name,
+      type,
+      validationInfo,
+      valueOptions,
     } = this.props
 
     return (
@@ -297,33 +395,8 @@ export class EditableFieldInput extends React.Component<InputProps> {
       >
         {valueOptions ? this.renderOptions() : null}
 
-        <InputWrapperUI
-          className={INPUT_CLASSNAMES.inputWrapper}
-          placeholder={placeholder}
-          value={fieldValue.value}
-        >
-          <InputUI
-            {...getValidProps(rest)}
-            className={INPUT_CLASSNAMES.input}
-            id={name}
-            innerRef={this.setInputNode}
-            name={name}
-            placeholder={placeholder}
-            type={type}
-            value={fieldValue.value}
-            onBlur={this.handleInputBlur}
-            onChange={this.handleChange}
-            onFocus={this.handleInputFocus}
-            onKeyDown={this.handleKeyDown}
-          />
-
-          {this.renderValidationInfo()}
-
-          <FocusIndicatorUI
-            className={INPUT_CLASSNAMES.focusIndicator}
-            color={getValidationColor(validationInfo)}
-          />
-        </InputWrapperUI>
+        {type === 'text' ? this.renderInput() : null}
+        {type === 'textarea' ? this.renderTextArea() : null}
       </ComponentUI>
     )
   }

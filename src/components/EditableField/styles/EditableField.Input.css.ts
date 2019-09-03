@@ -104,6 +104,101 @@ export const InputWrapperUI = styled('div')`
   }
 `
 
+export const TextAreaWrapperUI = styled('div')`
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+
+  .${STATES_CLASSNAMES.isEmpty} & {
+    height: ${field.height.medium};
+  }
+`
+
+export const TextAreaUI = styled('textarea')`
+  &.${INPUT_CLASSNAMES.textArea} {
+    ${resetHSAppInputRules}
+    width: 100%;
+    min-height: 200px;
+    padding: 0;
+    border: none;
+    color: ${COLOURS.invisible};
+    font-family: ${FONT_FAMILY};
+    font-size: ${field.font.medium};
+    background: white;
+    pointer-events: auto;
+    background-color: lightgreen;
+    resize: none;
+
+    .${STATES_CLASSNAMES.isEmpty} & {
+      min-height: ${field.height.medium};
+      height: ${field.height.medium};
+    }
+
+    .${STATES_CLASSNAMES.isActive} & {
+      outline: none;
+      color: ${COLOURS.input.regular};
+      z-index: 2;
+      cursor: initial;
+      min-height: 200px;
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        height: ${focusIndicator.inactive};
+        background-color: ${COLOURS.focusIndicator.inactive};
+      }
+
+      &::placeholder {
+        color: ${COLOURS.input.placeholder};
+        opacity: 1;
+      }
+    }
+
+    .${STATES_CLASSNAMES.isActive} &:focus {
+      outline: none;
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        background-color: ${COLOURS.focusIndicator.active};
+        height: ${focusIndicator.active};
+      }
+    }
+
+    .${STATES_CLASSNAMES.isEmpty} & {
+      cursor: pointer;
+    }
+
+    .${STATES_CLASSNAMES.fieldDisabled} & {
+      cursor: not-allowed;
+      pointer-events: none;
+      display: none;
+      color: ${COLOURS.input.placeholder};
+    }
+
+    .${STATES_CLASSNAMES.isEmpty} &:focus {
+      cursor: initial;
+    }
+
+    .${STATES_CLASSNAMES.hasActiveFields} & {
+      color: ${COLOURS.input.regular};
+
+      & + .${INPUT_CLASSNAMES.focusIndicator} {
+        transform: scaleX(1);
+        height: ${focusIndicator.inactive};
+        background-color: ${COLOURS.focusIndicator.inactive};
+      }
+
+      &::placeholder {
+        color: ${COLOURS.input.placeholder};
+        opacity: 1;
+      }
+    }
+
+    &::placeholder {
+      color: ${COLOURS.invisible};
+    }
+  }
+`
+
 export const InputUI = styled('input')`
   /* Guard styles from other globally applied rules for input tags */
   &.${INPUT_CLASSNAMES.input} {

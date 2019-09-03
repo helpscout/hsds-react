@@ -422,6 +422,21 @@ function validateFieldValue({ name, value }) {
   })
 }
 
+stories.add('Text Area', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Company"
+      name="company"
+      placeholder="Add a company name"
+      type="textarea"
+    />
+  </ContainerUI>
+))
+
 class ValuePropsApp extends React.Component {
   state = {
     value: BARCELONA,
