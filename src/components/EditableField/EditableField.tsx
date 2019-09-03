@@ -156,30 +156,31 @@ export class EditableField extends React.Component<
     return false
   }
 
-  componentDidUpdate(prevProps) {
-    if (!equal(this.props.value, prevProps.value)) {
-      const { name, defaultOption, value, valueOptions } = this.props
+  componentDidUpdate() {
+    const { name, defaultOption, value, valueOptions } = this.props
+    const { fieldValue } = this.state
 
-      let defaultStateOption: any = null
+    if (fieldValue.length === 1 && fieldValue[0].value === '') return
 
-      // tested
-      /* istanbul ignore next */
-      if (valueOptions) {
-        defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
-      }
+    let defaultStateOption: any = null
 
-      const initialFieldValue = normalizeFieldValue({
-        value,
-        name,
-        createNewFieldValue,
-        defaultOption: defaultStateOption,
-      })
-
-      this.setState({
-        fieldValue: initialFieldValue,
-        initialFieldValue,
-      })
+    // tested
+    /* istanbul ignore next */
+    if (valueOptions) {
+      defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
     }
+
+    const initialFieldValue = normalizeFieldValue({
+      value,
+      name,
+      createNewFieldValue,
+      defaultOption: defaultStateOption,
+    })
+
+    this.setState({
+      fieldValue: initialFieldValue,
+      initialFieldValue,
+    })
   }
 
   setEditableNode = node => {
