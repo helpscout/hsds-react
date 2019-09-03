@@ -39,7 +39,9 @@ class Sortable extends React.PureComponent<SortableProps> {
     }
   }
 
+  /* istanbul ignore next */
   remapChildrenToState(children = this.props.children) {
+    /* istanbul ignore next */
     if (!children) return
 
     const items = React.Children.map(children, (child: any, index) => {
