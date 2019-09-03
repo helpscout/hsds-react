@@ -1128,6 +1128,24 @@ describe('inputType', () => {
 })
 
 describe('charValidator', () => {
+  test('it should set the proper char validator count', () => {
+    const wrapper = mount(
+      <Input withCharValidator={true} charValidatorLimit="9" />
+    )
+    wrapper.instance().setValue('12345')
+    expect(wrapper.state().validatorCount).toEqual(4)
+  })
+
+  test('it should set a validator count only if the count is more than the value', () => {
+    const wrapper = mount(
+      <Input withCharValidator={true} charValidatorLimit="20" />
+    )
+    wrapper.instance().setValue('1234567891011')
+    expect(wrapper.state().validatorCount).toEqual(7)
+    wrapper.instance().setValue('12345')
+    expect(wrapper.state().validatorCount).toEqual(7)
+  })
+
   test('it should render charValidator without a badge', () => {
     const wrapper = mount(<Input withCharValidator={true} />)
     expect(wrapper.find(Badge).length).toEqual(0)
@@ -1135,7 +1153,12 @@ describe('charValidator', () => {
   })
   test('it should render charValidator with a badge', () => {
     const wrapper = mount(
-      <Input withCharValidator={true} charValidatorLimit="10" value="123456" />
+      <Input
+        isFocused={true}
+        withCharValidator={true}
+        charValidatorLimit="10"
+        value="123456"
+      />
     )
     expect(wrapper.find(Badge).length).toEqual(1)
     expect(wrapper.find(CharValidatorUI).length).toEqual(1)
@@ -1153,7 +1176,12 @@ describe('charValidator', () => {
   })
   test('it should render charValidator success', () => {
     const wrapper = mount(
-      <Input withCharValidator={true} charValidatorLimit={9} value="1234567" />
+      <Input
+        isFocused={true}
+        withCharValidator={true}
+        charValidatorLimit={9}
+        value="1234567"
+      />
     )
     expect(wrapper.find(CharValidatorUI).length).toEqual(1)
     const component = wrapper.find(Animate)
@@ -1162,7 +1190,12 @@ describe('charValidator', () => {
   })
   test('it should render charValidator badge error', () => {
     const wrapper = mount(
-      <Input withCharValidator={true} charValidatorLimit={7} value="12345678" />
+      <Input
+        isFocused={true}
+        withCharValidator={true}
+        charValidatorLimit={7}
+        value="12345678"
+      />
     )
     expect(wrapper.find(CharValidatorUI).length).toEqual(1)
     const badge = wrapper.find(Badge)
@@ -1171,8 +1204,9 @@ describe('charValidator', () => {
   test('it should render charValidator badge warning', () => {
     const wrapper = mount(
       <Input
-        withCharValidator={true}
         charValidatorLimit={21}
+        isFocused={true}
+        withCharValidator={true}
         value="only a fifth left"
       />
     )

@@ -110,6 +110,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       typingThrottle: undefined,
       typingTimeout: undefined,
       value: props.value,
+      validatorCount: props.charValidatorLimit - props.value.length,
     }
   }
 
@@ -145,7 +146,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   }
 
   setValue = value => {
-    const { inputType } = this.props
+    const { inputType, withCharValidator } = this.props
     let nextValue = value
 
     if (inputType === 'number') {
@@ -153,7 +154,17 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     }
 
     this.setState({ value: nextValue })
+    withCharValidator && this.setValidatorCount(nextValue)
     return nextValue
+  }
+
+  setValidatorCount(value) {
+    const { charValidatorLimit } = this.props
+    const validatorCount = charValidatorLimit - value.length
+
+    if (value.length >= validatorCount) {
+      this.setState({ validatorCount })
+    }
   }
 
   maybeForceAutoFocus() {
@@ -551,15 +562,12 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   getCharValidatorMarkup() {
     if (!this.props.withCharValidator) return null
     const { charValidatorLimit } = this.props
-    const {
-      value: { length: count },
-    } = this.state
+    const { value, isFocused, validatorCount } = this.state
 
     const charValidatorShowAt = charValidatorLimit / 2
-    const isTooMuch = count >= charValidatorLimit
-    const nextCount = charValidatorLimit - count
-    const isVisible = nextCount <= charValidatorShowAt
-    const isLessThanAFifth = nextCount <= charValidatorLimit * 0.2
+    const isTooMuch = validatorCount <= 0
+    const isLessThanAFifth = validatorCount <= charValidatorLimit * 0.2
+    const isVisible = isFocused && value.length > charValidatorShowAt
 
     function getBadgeColor() {
       if (isTooMuch) {
@@ -579,11 +587,12 @@ export class Input extends React.PureComponent<InputProps, InputState> {
           easing="bounce"
           in={isVisible}
           sequence="fade"
-          unmountOnExit
         >
           <Badge count={true} status={getBadgeColor()}>
-            <CharValidatorText chars={nextCount.toString().length}>
-              {nextCount}
+            <CharValidatorText
+              chars={this.state.validatorCount.toString().length}
+            >
+              {this.state.validatorCount}
             </CharValidatorText>
           </Badge>
         </Animate>

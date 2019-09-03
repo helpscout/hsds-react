@@ -94,6 +94,7 @@ export type InputState = {
   state?: UIState
   typingThrottle: number | undefined
   typingTimeout: number | undefined
+  validatorCount: number
   value: InputValue
 }
 
