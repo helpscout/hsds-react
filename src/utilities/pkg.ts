@@ -1,3 +1,3 @@
 export default {
-  version: '2.58.1-beta-validator',
+  version: '2.59.0',
 }
