@@ -425,7 +425,18 @@ function validateFieldValue({ name, value }) {
 class ValuePropsApp extends React.Component {
   state = {
     value: BARCELONA,
-    multiValue: [ATLAS, ARSENAL, BARCELONA],
+    multiValue: [
+      {
+        id: 1235693,
+        location: 'work',
+        value: 'brett@helpscout.com',
+      },
+      {
+        id: 1304233,
+        location: 'work',
+        value: 'some@new.email',
+      },
+    ],
     compositeValue: ['Johnny', 'Cash'],
   }
 
@@ -493,20 +504,51 @@ class ValuePropsApp extends React.Component {
           label="Team"
           name="team"
           placeholder="Add a sports team name"
-          type="text"
+          type="email"
           value={this.state.multiValue}
         />
 
         <button
           onClick={() => {
-            this.setState({ multiValue: [ATLAS, BARCELONA, ARSENAL] })
+            this.setState({
+              multiValue: [
+                {
+                  id: 1235693,
+                  location: 'work',
+                  value: 'brett@helpscout.com',
+                },
+                {
+                  id: 1304233,
+                  location: 'work',
+                  value: 'some@new.email',
+                },
+                {
+                  value: 'world@example.com',
+                  location: 'work',
+                  id: 133802774,
+                },
+              ],
+            })
           }}
         >
           3 teams
         </button>
         <button
           onClick={() => {
-            this.setState({ multiValue: [ATLAS, ARSENAL] })
+            this.setState({
+              multiValue: [
+                {
+                  id: 1235693,
+                  location: 'work',
+                  value: 'brett@helpscout.com',
+                },
+                {
+                  id: 1304233,
+                  location: 'work',
+                  value: 'some@new.email',
+                },
+              ],
+            })
           }}
         >
           2 teams
