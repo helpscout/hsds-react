@@ -425,18 +425,7 @@ function validateFieldValue({ name, value }) {
 class ValuePropsApp extends React.Component {
   state = {
     value: BARCELONA,
-    multiValue: [
-      {
-        id: 1235693,
-        location: 'work',
-        value: 'brett@helpscout.com',
-      },
-      {
-        id: 1304233,
-        location: 'work',
-        value: 'some@new.email',
-      },
-    ],
+    multiValue: ['barcelona', 'atlas'],
     compositeValue: ['Johnny', 'Cash'],
   }
 
@@ -504,30 +493,14 @@ class ValuePropsApp extends React.Component {
           label="Team"
           name="team"
           placeholder="Add a sports team name"
-          type="email"
+          type="text"
           value={this.state.multiValue}
         />
 
         <button
           onClick={() => {
             this.setState({
-              multiValue: [
-                {
-                  id: 1235693,
-                  location: 'work',
-                  value: 'brett@helpscout.com',
-                },
-                {
-                  id: 1304233,
-                  location: 'work',
-                  value: 'some@new.email',
-                },
-                {
-                  value: 'world@example.com',
-                  location: 'work',
-                  id: 133802774,
-                },
-              ],
+              multiValue: ['barcelona', 'atlas', 'arsenal'],
             })
           }}
         >
@@ -536,18 +509,7 @@ class ValuePropsApp extends React.Component {
         <button
           onClick={() => {
             this.setState({
-              multiValue: [
-                {
-                  id: 1235693,
-                  location: 'work',
-                  value: 'brett@helpscout.com',
-                },
-                {
-                  id: 1304233,
-                  location: 'work',
-                  value: 'some@new.email',
-                },
-              ],
+              multiValue: ['barcelona', 'atlas'],
             })
           }}
         >
