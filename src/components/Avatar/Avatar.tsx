@@ -12,15 +12,20 @@ import { nameToInitials } from '../../utilities/strings'
 import AvatarCrop from './Avatar.Crop'
 import AvatarImage from './Avatar.Image'
 import {
+  ActionUI,
+  AvatarButtonUI,
   AvatarUI,
+  BorderAnimationUI,
+  CircleAnimationUI,
   CropBorderUI,
+  FocusUI,
   OuterBorderUI,
   StatusUI,
   TitleUI,
-  ActionUI,
-  AvatarButtonUI,
-  FocusUI,
+  config,
+  getCircleProps,
 } from './styles/Avatar.css'
+
 import {
   COMPONENT_KEY,
   IMAGE_STATES,
@@ -30,12 +35,12 @@ import {
 } from './Avatar.utils'
 
 export interface Props {
-  animationDuration: number
-  animationEasing: string
   actionable?: boolean
   actionIcon?: string
   actionIconSize?: IconSize
   active?: boolean
+  animationDuration: number
+  animationEasing: string
   borderColor?: string
   className?: string
   count?: number | string
@@ -44,15 +49,17 @@ export interface Props {
   initials?: string
   light: boolean
   name: string
-  onLoad?: () => void
-  onError?: () => void
   onActionClick?: () => void
+  onError?: () => void
+  onLoad?: () => void
+  onRemoveAnimationEnd?: () => void
   outerBorderColor?: string
-  showStatusBorderColor: boolean
+  removingAvatarAnimation: boolean
   shape: AvatarShape
+  showStatusBorderColor: boolean
   size: AvatarSize
-  statusIcon?: string
   status?: StatusDotStatus
+  statusIcon?: string
   style: any
   withShadow: boolean
 }
@@ -120,9 +127,14 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   renderAction() {
-    const { actionable, actionIcon, actionIconSize } = this.props
+    const {
+      actionable,
+      actionIcon,
+      actionIconSize,
+      removingAvatarAnimation,
+    } = this.props
 
-    if (!actionable) {
+    if (!actionable || removingAvatarAnimation) {
       return null
     }
 
@@ -139,7 +151,14 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   renderCrop = () => {
-    const { animationDuration, animationEasing, name, withShadow } = this.props
+    const {
+      animationDuration,
+      animationEasing,
+      name,
+      withShadow,
+      fallbackImage,
+      removingAvatarAnimation,
+    } = this.props
 
     const shapeClassnames = this.getShapeClassNames()
 
@@ -159,7 +178,7 @@ export class Avatar extends React.PureComponent<Props, State> {
         <AvatarImage
           animationDuration={animationDuration}
           animationEasing={animationEasing}
-          className={shapeClassnames}
+          className={classNames('c-Avatar__imageMainWrapper', shapeClassnames)}
           hasImage={_hasImage}
           image={_imageUrl}
           isImageLoaded={_isImageLoaded}
@@ -168,6 +187,19 @@ export class Avatar extends React.PureComponent<Props, State> {
           onError={this.onImageLoadedError}
           onLoad={this.onImageLoadedSuccess}
         />
+        {removingAvatarAnimation && (
+          <AvatarImage
+            className={classNames(
+              'c-Avatar__imageStaticWrapper',
+              shapeClassnames
+            )}
+            hasImage={true}
+            image={fallbackImage}
+            isImageLoaded={true}
+            name={name}
+            title={this.getTitleMarkup()}
+          />
+        )}
         {this.renderAction()}
       </AvatarCrop>
     )
@@ -249,15 +281,39 @@ export class Avatar extends React.PureComponent<Props, State> {
   }
 
   renderFocusBorder = () => {
-    const { shape } = this.props
+    const { shape, onRemoveAnimationEnd, size } = this.props
+
     const componentClassName = classNames(
       'c-Avatar__focusBorder',
       shape && `is-${shape}`
     )
 
-    return (
-      <FocusUI data-cy="Avatar.FocusBorder" className={componentClassName} />
+    const borderAnimationClassName = classNames(
+      'c-Avatar__borderAnimation',
+      this.getShapeClassNames()
     )
+
+    const sz = config.size[size].size
+    const { size: svgSize, ...circleProps } = getCircleProps(sz)
+
+    return [
+      <FocusUI
+        key="focusBorder"
+        data-cy="Avatar.FocusBorder"
+        className={componentClassName}
+      />,
+      <BorderAnimationUI
+        key="borderAnimation"
+        className={borderAnimationClassName}
+        data-cy="Avatar.BorderAnimation"
+      >
+        <CircleAnimationUI
+          id="anime"
+          onAnimationEnd={onRemoveAnimationEnd}
+          {...circleProps}
+        />
+      </BorderAnimationUI>,
+    ]
   }
 
   getStyles() {
@@ -286,6 +342,7 @@ export class Avatar extends React.PureComponent<Props, State> {
       onLoad,
       outerBorderColor,
       showStatusBorderColor,
+      removingAvatarAnimation,
       size,
       shape,
       status,
@@ -308,6 +365,7 @@ export class Avatar extends React.PureComponent<Props, State> {
       outerBorderColor && 'has-outerBorderColor',
       status && `is-${status}`,
       actionable && `has-action`,
+      removingAvatarAnimation && 'is-animating',
       this.getShapeClassNames(),
       className
     )
