@@ -152,13 +152,14 @@ export class EditableField extends React.Component<
     return false
   }
 
+  /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
-    const { name, defaultOption, value, valueOptions } = nextProps
+    if (equal(nextProps.value, this.props.value)) return
 
+    const { name, defaultOption, value, valueOptions } = nextProps
     let defaultStateOption: any = null
 
     // tested
-    /* istanbul ignore next */
     if (valueOptions) {
       defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
     }
@@ -169,7 +170,6 @@ export class EditableField extends React.Component<
       defaultOption: defaultStateOption,
     })
 
-    /* istanbul ignore next */
     if (!equal(initialFieldValue, this.state.fieldValue)) {
       this.setState({
         fieldValue: initialFieldValue,
