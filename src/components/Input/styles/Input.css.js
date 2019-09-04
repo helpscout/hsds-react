@@ -120,6 +120,10 @@ export const CharValidatorUI = styled('div')`
 }
 `
 
+export const CharValidatorText = styled('div')`
+  min-width: ${props => Math.max(props.chars * 9, 18) + 'px'};
+`
+
 export const InlinePrefixSuffixUI = styled('div')`
   ${baseStyles};
   opacity: 0.3;

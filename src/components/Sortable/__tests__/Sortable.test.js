@@ -39,7 +39,6 @@ describe('Children', () => {
 
     expect(wrapper.state().items.length).toBe(3)
 
-    expect(o.type.displayName).toBe('sortableElement')
     expect(o.key).toBeTruthy()
   })
 
