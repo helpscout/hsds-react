@@ -27,7 +27,6 @@ export type InputProps = {
   action?: any
   autoFocus: boolean
   charValidatorLimit: number
-  charValidatorShowAt: number
   className: string
   disabled: boolean
   errorIcon?: string
@@ -95,6 +94,7 @@ export type InputState = {
   state?: UIState
   typingThrottle: number | undefined
   typingTimeout: number | undefined
+  validatorCount: number
   value: InputValue
 }
 

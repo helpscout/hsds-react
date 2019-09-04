@@ -45,54 +45,52 @@ export const COMMIT_CAUSES = {
 export function normalizeFieldValue({
   value,
   name,
-  createNewFieldValue,
   defaultOption,
 }): FieldValue[] {
   if (isArray(value)) {
     if (value.length === 0) {
-      return [createNewFieldValue({ value: '', name }, defaultOption)]
+      return [createNewValueFieldObject('', name, defaultOption)]
     }
-    return value.map(val =>
-      createNewFieldValue({ value: val, name }, defaultOption)
+    return value.map((val, idx) =>
+      createNewValueFieldObject(val, name, defaultOption, idx)
     )
   } else {
-    return [createNewFieldValue({ value, name }, defaultOption)]
+    return [createNewValueFieldObject(value, name, defaultOption)]
   }
 }
 
-export function createNewValueFieldFactory(uuidFn) {
-  return function createNewValueFieldObject(
-    { value, name },
-    defaultOption: string | null
-  ): FieldValue {
-    // If it's an object already, grab the fields first
-
-    if (isObject(value)) {
-      const fieldObj = {
-        ...value,
-        id: value.id || uuidFn(`${name}_`),
-        validated: false,
-      }
-
-      if (defaultOption !== null && !Boolean(value.option)) {
-        fieldObj.option = defaultOption
-      }
-
-      return fieldObj
-    }
-
-    const fieldObj: any = {
-      value,
-      id: uuidFn(`${name}_`),
+export function createNewValueFieldObject(
+  value,
+  name,
+  defaultOption,
+  idx = 0
+): FieldValue {
+  // If it's an object already, grab the fields first
+  if (isObject(value)) {
+    const fieldObj = {
+      ...value,
+      id: value.id || `${name}_${idx}`,
       validated: false,
     }
 
-    if (defaultOption !== null) {
+    if (defaultOption !== null && !Boolean(value.option)) {
       fieldObj.option = defaultOption
     }
 
     return fieldObj
   }
+
+  const fieldObj: any = {
+    value,
+    id: `${name}_${idx}`,
+    validated: false,
+  }
+
+  if (defaultOption !== null) {
+    fieldObj.option = defaultOption
+  }
+
+  return fieldObj
 }
 
 export function generateFieldActions(actions): FieldAction[] | [] {

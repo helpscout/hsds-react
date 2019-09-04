@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react'
 import EditableField from '../src/components/EditableField'
 import { EditableFieldComposite } from '../src/components/EditableField'
 
-import { action } from '@storybook/addon-actions'
 import ReadMe from '../src/components/EditableField/docs/README.md'
 
 import styled from '../src/components/styled'
@@ -355,7 +354,6 @@ stories.add('Validation', () => (
       type="text"
       value="atlas"
       validate={validateFieldValue}
-      onCommit={action('onCommit')}
     />
     <EditableField
       label="Musicians"
@@ -363,7 +361,6 @@ stories.add('Validation', () => (
       type="text"
       placeholder="Add a musician name"
       value={['George Harrison', 'Neil Young']}
-      onCommit={action('onCommit')}
       validate={validateFieldValue}
     />
 
@@ -379,7 +376,6 @@ stories.add('Validation', () => (
         { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
       ]}
       validate={validateFieldValue}
-      onCommit={action('onCommit')}
     />
   </ContainerUI>
 ))
@@ -440,7 +436,7 @@ stories.add('Text Area', () => (
 class ValuePropsApp extends React.Component {
   state = {
     value: BARCELONA,
-    multiValue: [ATLAS, ARSENAL, BARCELONA],
+    multiValue: ['barcelona', 'atlas'],
     compositeValue: ['Johnny', 'Cash'],
   }
 
@@ -514,14 +510,18 @@ class ValuePropsApp extends React.Component {
 
         <button
           onClick={() => {
-            this.setState({ multiValue: [ATLAS, BARCELONA, ARSENAL] })
+            this.setState({
+              multiValue: ['barcelona', 'atlas', 'arsenal'],
+            })
           }}
         >
           3 teams
         </button>
         <button
           onClick={() => {
-            this.setState({ multiValue: [ATLAS, ARSENAL] })
+            this.setState({
+              multiValue: ['barcelona', 'atlas'],
+            })
           }}
         >
           2 teams
@@ -586,7 +586,7 @@ class ValuePropsApp extends React.Component {
 
 stories.add('Value from props', () => <ValuePropsApp />)
 
-class OnCommitApp extends React.Component {
+class OnCommitApp extends React.PureComponent {
   state = {
     passed: null,
   }
@@ -642,45 +642,3 @@ class OnCommitApp extends React.Component {
 }
 
 stories.add('On Commit', () => <OnCommitApp />)
-
-stories
-  .addParameters({
-    options: { showPanel: true },
-  })
-  .add('Events', () => (
-    <ContainerUI
-      onSubmit={e => {
-        e.preventDefault()
-      }}
-    >
-      <NoteUI>
-        This is pretty slow because all the event callbacks in the world are
-        being passed...! This would be <strong>extremely</strong> rare, and it
-        might mean that most likely something is wrong
-      </NoteUI>
-      <EditableField
-        label="Favourite Paint Colour"
-        name="paint"
-        placeholder="Add a colour"
-        type="text"
-        valueOptions={PAINT_OPTIONS}
-        value={[
-          { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
-          { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
-          { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
-        ]}
-        onInputFocus={action('onInputFocus')}
-        onInputBlur={action('onInputBlur')}
-        onInputChange={action('onInputChange')}
-        onOptionFocus={action('onOptionFocus')}
-        onChange={action('onChange')}
-        onCommit={action('onCommit')}
-        onEnter={action('onEnter')}
-        onEscape={action('onEscape')}
-        onDelete={action('onDelete')}
-        onAdd={action('onAdd')}
-        onDiscard={action('onDiscard')}
-        onOptionChange={action('onOptionChange')}
-      />
-    </ContainerUI>
-  ))

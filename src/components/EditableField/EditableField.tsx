@@ -16,7 +16,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import {
   EF_COMPONENT_KEY,
-  createNewValueFieldFactory,
+  createNewValueFieldObject,
   generateFieldActions,
   normalizeFieldValue,
   ACTION_ICONS,
@@ -27,7 +27,7 @@ import {
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
-import { createUniqueIDFactory } from '../../utilities/id'
+// import { createUniqueIDFactory } from '../../utilities/id'
 import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 
@@ -38,9 +38,6 @@ import {
   EditableFieldState,
   FieldValue,
 } from './EditableField.types'
-
-const nextUuid = createUniqueIDFactory(EF_COMPONENT_KEY)
-const createNewFieldValue = createNewValueFieldFactory(nextUuid)
 
 const EMPTY_VALUE = ''
 
@@ -95,7 +92,6 @@ export class EditableField extends React.Component<
     const initialFieldValue = normalizeFieldValue({
       value,
       name,
-      createNewFieldValue,
       defaultOption: defaultStateOption,
     })
 
@@ -156,25 +152,25 @@ export class EditableField extends React.Component<
     return false
   }
 
-  componentDidUpdate(prevProps) {
-    if (!equal(this.props.value, prevProps.value)) {
-      const { name, defaultOption, value, valueOptions } = this.props
+  /* istanbul ignore next */
+  componentWillReceiveProps(nextProps) {
+    if (equal(nextProps.value, this.props.value)) return
 
-      let defaultStateOption: any = null
+    const { name, defaultOption, value, valueOptions } = nextProps
+    let defaultStateOption: any = null
 
-      // tested
-      /* istanbul ignore next */
-      if (valueOptions) {
-        defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
-      }
+    // tested
+    if (valueOptions) {
+      defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
+    }
 
-      const initialFieldValue = normalizeFieldValue({
-        value,
-        name,
-        createNewFieldValue,
-        defaultOption: defaultStateOption,
-      })
+    const initialFieldValue = normalizeFieldValue({
+      value,
+      name,
+      defaultOption: defaultStateOption,
+    })
 
+    if (!equal(initialFieldValue, this.state.fieldValue)) {
       this.setState({
         fieldValue: initialFieldValue,
         initialFieldValue,
@@ -709,12 +705,11 @@ export class EditableField extends React.Component<
     if (isNotSingleEmptyValue) {
       // it is tested
       const { name } = this.props
-      const newValueObject = createNewFieldValue(
-        {
-          value: EMPTY_VALUE,
-          name,
-        },
-        defaultOption
+      const newValueObject = createNewValueFieldObject(
+        EMPTY_VALUE,
+        name,
+        defaultOption,
+        fieldValue.length
       )
       const newFieldValue = fieldValue.concat(newValueObject)
       const newState: any = {

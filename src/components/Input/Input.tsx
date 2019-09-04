@@ -31,6 +31,7 @@ import {
   isTextArea,
 } from './Input.utils'
 import {
+  CharValidatorText,
   CharValidatorUI,
   InputWrapperUI,
   InlinePrefixSuffixUI,
@@ -45,7 +46,6 @@ const uniqueID = createUniqueIDFactory('Input')
 export class Input extends React.PureComponent<InputProps, InputState> {
   static defaultProps = {
     autoFocus: false,
-    charValidatorShowAt: 0,
     charValidatorLimit: 500,
     disabled: false,
     errorIcon: 'alert',
@@ -110,6 +110,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       typingThrottle: undefined,
       typingTimeout: undefined,
       value: props.value,
+      validatorCount: props.charValidatorLimit - props.value.length,
     }
   }
 
@@ -145,7 +146,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   }
 
   setValue = value => {
-    const { inputType } = this.props
+    const { inputType, withCharValidator } = this.props
     let nextValue = value
 
     if (inputType === 'number') {
@@ -153,7 +154,17 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     }
 
     this.setState({ value: nextValue })
+    withCharValidator && this.setValidatorCount(nextValue)
     return nextValue
+  }
+
+  setValidatorCount(value) {
+    const { charValidatorLimit } = this.props
+    const validatorCount = charValidatorLimit - value.length
+
+    if (value.length >= validatorCount) {
+      this.setState({ validatorCount })
+    }
   }
 
   maybeForceAutoFocus() {
@@ -550,15 +561,23 @@ export class Input extends React.PureComponent<InputProps, InputState> {
 
   getCharValidatorMarkup() {
     if (!this.props.withCharValidator) return null
-    const { charValidatorLimit, charValidatorShowAt } = this.props
-    const {
-      value: { length: count },
-    } = this.state
-    const isVisible =
-      charValidatorShowAt === 0 || (count > 0 && count >= charValidatorShowAt)
-    const currentCount = charValidatorLimit - count
-    const isTooMuch = count !== 0 && count >= charValidatorLimit
-    const nextText = `${count} / ${charValidatorLimit}`
+    const { charValidatorLimit } = this.props
+    const { value, isFocused, validatorCount } = this.state
+
+    const charValidatorShowAt = charValidatorLimit / 2
+    const isTooMuch = validatorCount <= 0
+    const isLessThanAFifth = validatorCount <= charValidatorLimit * 0.2
+    const isVisible = isFocused && value.length > charValidatorShowAt
+
+    function getBadgeColor() {
+      if (isTooMuch) {
+        return 'error'
+      } else if (isLessThanAFifth) {
+        return 'warning'
+      } else {
+        return 'success'
+      }
+    }
 
     return (
       <CharValidatorUI>
@@ -568,14 +587,13 @@ export class Input extends React.PureComponent<InputProps, InputState> {
           easing="bounce"
           in={isVisible}
           sequence="fade"
-          unmountOnExit
         >
-          <Badge
-            count={true}
-            status={isTooMuch ? 'error' : 'success'}
-            style={{ minWidth: 75 }}
-          >
-            {nextText}
+          <Badge count={true} status={getBadgeColor()}>
+            <CharValidatorText
+              chars={this.state.validatorCount.toString().length}
+            >
+              {this.state.validatorCount}
+            </CharValidatorText>
           </Badge>
         </Animate>
       </CharValidatorUI>
