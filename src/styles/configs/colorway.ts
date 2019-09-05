@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.0.11)
+// Generated with @helpscout/colorway (v0.3.0)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
@@ -39,16 +39,16 @@ const palette = {
     default: '#d6dde3',
   },
   yellow: {
-    '100': '#fffdf6',
-    '200': '#fff6e2',
-    '300': '#ffe8b5',
-    '400': '#ffd56d',
-    '500': '#ffc646',
-    '600': '#f5b126',
-    '700': '#d79400',
-    '800': '#b37100',
-    '900': '#875200',
-    default: '#ffc646',
+    '100': '#FFF9EF',
+    '200': '#FFF2D7',
+    '300': '#FFE7B8',
+    '400': '#FDD88E',
+    '500': '#FFC555',
+    '600': '#FAB347',
+    '700': '#E89635',
+    '800': '#CE7129',
+    '900': '#B24319',
+    default: '#FFC555',
   },
   green: {
     '100': '#fafdfb',
