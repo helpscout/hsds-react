@@ -314,6 +314,15 @@ export const clearSelection = (state, event) => {
   })
 }
 
+export const updateSelectedItem = (state, selectedItem) => {
+  return dispatch(state, {
+    type: actionTypes.UPDATE_SELECTED_ITEM,
+    payload: {
+      selectedItem,
+    },
+  })
+}
+
 export const updateIndex = (state, index) => {
   return dispatch(state, {
     type: actionTypes.UPDATE_INDEX,

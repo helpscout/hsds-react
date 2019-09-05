@@ -24,6 +24,7 @@ import {
   updateIndex,
   updateInputValue,
   updateDropUp,
+  updateSelectedItem,
 } from './Dropdown.actions'
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../../utilities/id'
@@ -114,7 +115,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     // Batch updates to a single update
     let nextState = {}
 
-    // Update items + regenerate the indexMap if items chage
+    // Update items + regenerate the indexMap if items change
     if (nextProps.items !== state.items) {
       nextState = {
         ...nextState,
@@ -160,6 +161,14 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
       }
     }
 
+    // Update selectedItem state, if changed externally
+    if (nextProps.selectedItem !== state.selectedItem) {
+      nextState = {
+        ...nextState,
+        ...updateSelectedItem(state, nextProps.selectedItem),
+      }
+    }
+
     const diffs = getShallowDiffs(this.props, nextProps)
     /* istanbul ignore else */
     if (diffs.diffs.length) {
@@ -174,7 +183,10 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
       } = diffs.next
 
       if (Object.keys(changedProps).length) {
-        nextState = { ...nextState, ...changedProps }
+        nextState = {
+          ...nextState,
+          ...changedProps,
+        }
       }
     }
 

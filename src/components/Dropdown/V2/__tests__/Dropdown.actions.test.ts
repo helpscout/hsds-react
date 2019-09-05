@@ -10,6 +10,7 @@ import {
   closeDropdown,
   selectItem,
   clearSelection,
+  updateSelectedItem,
 } from '../Dropdown.actions'
 
 const mockTriggerNode = {
@@ -367,6 +368,17 @@ describe('selectItem', () => {
     selectItem(state, event)
 
     expect(mockTriggerNode.focus).toHaveBeenCalled()
+  })
+})
+
+describe('updateSelectedItem', () => {
+  test('updates selectedItem state', () => {
+    const state = { selectedItem: 'Item 1' }
+    const newlySelectedItem = 'Item 2'
+
+    const nextState = updateSelectedItem(state, newlySelectedItem)
+
+    expect(nextState.selectedItem).toBe(newlySelectedItem)
   })
 })
 

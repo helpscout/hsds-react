@@ -17,6 +17,7 @@ const actionTypes = [
   'UPDATE_INPUT_VALUE',
   'UPDATE_ITEMS',
   'UPDATE_OPEN',
+  'UPDATE_SELECTED_ITEM',
 ]
 
 export default createActionTypes(actionTypes, '@@HSDS/DROPDOWN')

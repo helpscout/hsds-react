@@ -58,6 +58,14 @@ const reducer = (state = initialState, action: any = {}) => {
       }
       break
 
+    case actionTypes.UPDATE_SELECTED_ITEM:
+      nextState = {
+        ...state,
+        previousSelectedItem: state.selectedItem,
+        selectedItem: payload.selectedItem,
+      }
+      break
+
     case actionTypes.CLEAR_SELECTION:
       nextState = {
         ...payload,
@@ -94,6 +102,9 @@ const reducer = (state = initialState, action: any = {}) => {
 
     case actionTypes.UPDATE_DROPUP:
       nextState = { ...payload }
+      break
+    // This prevents eslint errors
+    default:
       break
   }
 
