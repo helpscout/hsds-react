@@ -159,7 +159,7 @@ export const TitleUI = styled('div')`
 
 export const StatusUI = styled('div')`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
 
   &.is-withBorder {
     transform: translate(-${config.borderWidth}px, -${config.borderWidth}px);
