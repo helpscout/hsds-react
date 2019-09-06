@@ -43,6 +43,7 @@ export interface Props {
   onBlur: (...args: any[]) => void
   onClick: (...args: any[]) => void
   onFocus: (...args: any[]) => void
+  preventSelect?: boolean
   renderItem?: (props: any) => void
   subMenuId?: string
   label: string
@@ -66,6 +67,7 @@ export class Item extends React.PureComponent<Props> {
     onBlur: noop,
     onClick: noop,
     onFocus: noop,
+    preventSelect: false,
     label: '',
     type: 'item',
     value: '',
@@ -84,10 +86,16 @@ export class Item extends React.PureComponent<Props> {
   }
 
   handleOnClick = (event: Event) => {
-    const { onClick } = this.props
+    const { label, onClick, preventSelect, value } = this.props
     const state: any = this.props.getState()
 
-    if (state && state.allowMultipleSelection && state.selectionClearer) {
+    if (preventSelect) {
+      onClick({ label, value }, event)
+    } else if (
+      state &&
+      state.allowMultipleSelection &&
+      state.selectionClearer
+    ) {
       onClick(state, event)
     } else {
       onClick(event, { hasSubMenu: this.hasSubMenu() })

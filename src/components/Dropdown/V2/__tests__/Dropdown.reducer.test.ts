@@ -178,3 +178,18 @@ describe('SelectItem', () => {
     expect(nextState.isOpen).toBe(true)
   })
 })
+
+describe('UpdateItem', () => {
+  test('Can updated a selected item', () => {
+    const action = {
+      type: actionTypes.UPDATE_SELECTED_ITEM,
+      payload: {
+        selectedItem: '2',
+      },
+    }
+    const nextState = reducer({ ...initialState, selectedItem: '0' }, action)
+
+    expect(nextState.selectedItem).toBe('2')
+    expect(nextState.previousSelectedItem).toBe('0')
+  })
+})

@@ -226,12 +226,26 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
   const index = getIndexFromItemDOMNode(node)
   const itemValue = getValueFromItemDOMNode(node)
   const item = getItemFromCollection(items, itemValue)
+  const maybeCallItemOnClick = () => {
+    const isMouseEvent = isDefined(event.pageX)
+
+    if (item && item.onClick && !isMouseEvent) {
+      item.onClick(event)
+    }
+  }
 
   // Performance guard to prevent store from updating
   if (!index) return
   if (!item) return
   if (item.disabled) return
   if (item.items) return
+
+  // This allows dropdown items to be clickable, but
+  // not update the internal `selectedItem` state.
+  if (item.preventSelect) {
+    maybeCallItemOnClick()
+    return updateOpen(state, false)
+  }
 
   let selectedItem
 
@@ -261,13 +275,7 @@ export const selectItem = (state, event: any, eventTarget?: any) => {
     })
   }
 
-  // Trigger item.onClick callback
-  const isMouseEvent = isDefined(event.pageX)
-
-  if (item && item.onClick && !isMouseEvent) {
-    item.onClick(event)
-  }
-
+  maybeCallItemOnClick()
   closeAndRefocusTriggerNode(state)
 
   return dispatch(state, {
@@ -302,6 +310,15 @@ export const clearSelection = (state, event) => {
     type: actionTypes.CLEAR_SELECTION,
     payload: {
       selectedItem: '',
+    },
+  })
+}
+
+export const updateSelectedItem = (state, selectedItem) => {
+  return dispatch(state, {
+    type: actionTypes.UPDATE_SELECTED_ITEM,
+    payload: {
+      selectedItem,
     },
   })
 }
