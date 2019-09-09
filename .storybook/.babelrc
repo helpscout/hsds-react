@@ -29,6 +29,7 @@
         }
       }
     ],
+    "babel-plugin-styled-components",
     "emotion"
   ],
   "exclude": ["node_modules"]
