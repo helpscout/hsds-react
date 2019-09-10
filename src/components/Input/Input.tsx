@@ -564,10 +564,18 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     const { charValidatorLimit } = this.props
     const { value, isFocused, validatorCount } = this.state
 
-    const charValidatorShowAt = charValidatorLimit / 2
+    // shows validator green at 50% rounded down to the nearest 10th
+    const charValidatorShowAt =
+      Math.floor(charValidatorLimit / 2 / 10) * 10 || charValidatorLimit / 2
     const isTooMuch = validatorCount <= 0
-    const isLessThanAFifth = validatorCount <= charValidatorLimit * 0.2
-    const isVisible = isFocused && value.length > charValidatorShowAt
+    // shows validator yellow at 20% rounded down to the nearest 10th
+    const isLessThanAFifth =
+      validatorCount <=
+      (Math.floor(charValidatorLimit / 5 / 10) * 10 || charValidatorLimit / 5)
+    const isVisible =
+      isFocused &&
+      validatorCount <= charValidatorShowAt &&
+      value.length >= validatorCount
 
     function getBadgeColor() {
       if (isTooMuch) {

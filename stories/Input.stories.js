@@ -115,9 +115,18 @@ stories.add('multiline + char validation', () => (
     <Input
       autoFocus
       multiline={3}
+      placeholder="Show at char validation at 5, turn to yellow at 2, turn to red at 0 chars"
+      withCharValidator={true}
+      charValidatorLimit={10}
+      resizable
+    />
+    <br />
+    <Input
+      autoFocus
+      multiline={3}
       placeholder="Show at char validation at 50, turn to yellow at 20, turn to red at 0 chars"
       withCharValidator={true}
-      charValidatorLimit={100}
+      charValidatorLimit={105}
       resizable
     />
     <br />
@@ -126,7 +135,7 @@ stories.add('multiline + char validation', () => (
       multiline={3}
       placeholder="Show at char validation at 250, turn to yellow at 400, turn to red at 0 chars"
       withCharValidator={true}
-      charValidatorLimit={500}
+      charValidatorLimit={512}
       resizable
     />
   </div>
