@@ -1,13 +1,9 @@
 import * as React from 'react'
 import { MessageChat } from './Message.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ChatBlock from './Message.ChatBlock'
-import styled from '../styled'
 import PreviewCardContext from '../PreviewCard/PreviewCard.Context'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Content.css'
-import { COMPONENT_KEY } from './Message.utils'
+import { ContentUI } from './styles/Content.css'
 
 type Props = MessageChat
 
@@ -56,16 +52,14 @@ const Content = (props: Props) => {
   }
 
   return (
-    <ChatBlock {...chatProps} className={componentClassName}>
+    <ContentUI {...chatProps} className={componentClassName}>
       <PreviewCardContext.Provider value={contextProps}>
         <div {...getValidProps(rest)} className={innerComponentClassName}>
           {children}
         </div>
       </PreviewCardContext.Provider>
-    </ChatBlock>
+    </ContentUI>
   )
 }
 
-namespaceComponent(COMPONENT_KEY.Content)(Content)
-
-export default styled(Content)(css)
+export default Content

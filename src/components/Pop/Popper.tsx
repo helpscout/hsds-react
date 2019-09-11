@@ -115,52 +115,54 @@ export class Popper extends React.Component<Props> {
         placement={placement}
         positionFixed={positionFixed}
       >
-        {({ ref, style, placement, arrowProps }) => (
-          <Portal
-            className="PopPortal"
-            id={this.getId()}
-            isOpen={isOpen}
-            onClose={close}
-          >
-            <div
-              {...getValidProps(rest)}
-              className={componentClassName}
-              data-placement={placement}
-              onClick={this.handleOnClick}
-              ref={ref}
-              role="tooltip"
-              style={{
-                ...enhancePopperStyles({
-                  arrowSize,
-                  offset,
-                  placement,
-                  style,
-                }),
-                zIndex,
-              }}
+        {({ ref, style, placement, arrowProps }) => {
+          return (
+            <Portal
+              className="PopPortal"
+              id={this.getId()}
+              isOpen={isOpen}
+              onClose={close}
             >
-              <Animate {...animateProps}>
-                <div
-                  className="c-PopPopperContentWrapper"
-                  onMouseLeave={onMouseLeave}
-                  style={{ position: 'relative', zIndex }}
-                >
-                  {this.renderChildren()}
-                  <Arrow
-                    color={arrowColor}
-                    className={arrowClassName}
-                    innerRef={arrowProps.ref}
-                    placement={placement}
-                    showArrow={showArrow}
-                    style={arrowProps.style}
-                    size={arrowSize}
-                    zIndex={zIndex - 1}
-                  />
-                </div>
-              </Animate>
-            </div>
-          </Portal>
-        )}
+              <div
+                {...getValidProps(rest)}
+                className={componentClassName}
+                data-placement={placement}
+                onClick={this.handleOnClick}
+                ref={ref}
+                role="tooltip"
+                style={{
+                  ...enhancePopperStyles({
+                    arrowSize,
+                    offset,
+                    placement,
+                    style,
+                  }),
+                  zIndex,
+                }}
+              >
+                <Animate {...animateProps}>
+                  <div
+                    className="c-PopPopperContentWrapper"
+                    onMouseLeave={onMouseLeave}
+                    style={{ position: 'relative', zIndex }}
+                  >
+                    {this.renderChildren()}
+                    <Arrow
+                      color={arrowColor}
+                      className={arrowClassName}
+                      placement={placement}
+                      showArrow={showArrow}
+                      arrowRef={arrowProps.ref}
+                      style={arrowProps.style}
+                      size={arrowSize}
+                      zIndex={zIndex - 1}
+                    />
+                  </div>
+                </Animate>
+              </div>
+            </Portal>
+          )
+        }}
       </ReactPopper>
     )
   }
@@ -197,13 +199,13 @@ export const enhancePopperStyles = (props: any = {}) => {
   if (placement.indexOf('left') >= 0) {
     return {
       ...style,
-      left: `${arrowSize / 2 * -1}px`,
+      left: `${(arrowSize / 2) * -1}px`,
     }
   }
   if (placement.indexOf('right') >= 0) {
     return {
       ...style,
-      left: `${arrowSize / 2 * 1}px`,
+      left: `${(arrowSize / 2) * 1}px`,
     }
   }
 

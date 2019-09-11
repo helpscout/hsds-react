@@ -24,6 +24,4 @@ class Block extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Block)(Block)
-
 export default Block

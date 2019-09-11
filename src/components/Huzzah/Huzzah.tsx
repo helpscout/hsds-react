@@ -1,10 +1,9 @@
 import * as React from 'react'
-import styled from '../styled'
 import HUZZAHS from './huzzahs'
 import { getHuzzah, DEFAULT_HUZZAH } from './Huzzah.utils'
 import { classNames } from '../../utilities/classNames'
 import { sample } from '../../utilities/collection'
-import css from './styles/Huzzah.css'
+import { HuzzahUI } from './styles/Huzzah.css'
 
 type HuzzahSize = 'lg' | 'md' | 'sm'
 
@@ -36,7 +35,7 @@ class Huzzah extends React.PureComponent<Props> {
     const huzzahSVG = isRandom ? sample(HUZZAHS) : getHuzzah(name)
 
     return (
-      <div
+      <HuzzahUI
         className={componentClassName}
         dangerouslySetInnerHTML={{ __html: huzzahSVG }}
         title={name}
@@ -46,4 +45,4 @@ class Huzzah extends React.PureComponent<Props> {
   }
 }
 
-export default styled(Huzzah)(css)
+export default Huzzah

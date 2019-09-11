@@ -1,9 +1,10 @@
+import { styledComponent } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-Overflow')
 
-const css = `
+export const OverflowUI = styledComponent.div`
   ${baseStyles}
   overflow: hidden;
   position: relative;
@@ -48,5 +49,3 @@ const css = `
     }
   }
 `
-
-export default css

@@ -1,6 +1,7 @@
+import { styledComponent } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 
-const css = `
+export const AttachmentListUI = styledComponent.div`
   ${baseStyles}
 
   .c-AttachmentWrapper {
@@ -21,5 +22,3 @@ const css = `
     }
   }
 `
-
-export default css

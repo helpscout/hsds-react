@@ -2,13 +2,9 @@ import * as React from 'react'
 import { MessageBubble, MessageThemeContext } from './Message.types'
 import Link from '../Link'
 import Text from '../Text'
-import Chat from './Message.Chat'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css, { TextCSS } from './styles/Attachment.css'
-import { COMPONENT_KEY } from './Message.utils'
+import { AttachmentChatUI, TextUI } from './styles/Attachment.css'
 
 type Props = MessageBubble & {
   errorMessage?: string
@@ -22,8 +18,6 @@ type Props = MessageBubble & {
   url?: string
 }
 type Context = MessageThemeContext
-
-const MessageAttachmentText = styled(Text)(TextCSS)
 
 export const Attachment = (props: Props, context: Context) => {
   const {
@@ -70,13 +64,13 @@ export const Attachment = (props: Props, context: Context) => {
       </Text>
     </Link>
   ) : (
-    <MessageAttachmentText className={textClassName} truncate>
+    <TextUI className={textClassName} truncate>
       {filename}
-    </MessageAttachmentText>
+    </TextUI>
   )
 
   return (
-    <Chat
+    <AttachmentChatUI
       {...rest}
       bubbleClassName="c-MessageMedia__bubble"
       caption={isUploading ? uploadingMessage : null}
@@ -86,7 +80,7 @@ export const Attachment = (props: Props, context: Context) => {
       size={size}
     >
       {filenameMarkup}
-    </Chat>
+    </AttachmentChatUI>
   )
 }
 
@@ -105,6 +99,4 @@ Attachment.contextTypes = {
   theme: noop,
 }
 
-namespaceComponent(COMPONENT_KEY.Attachment)(Attachment)
-
-export default styled(Attachment)(css)
+export default Attachment

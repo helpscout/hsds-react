@@ -1,6 +1,7 @@
+import { styledComponent } from '../../styled'
 import base from '../../../styles/resets/base.css'
 
-const css = `
+export const HuzzahUI = styledComponent.div`
   ${base}
   display: block;
   height: 120px;
@@ -28,5 +29,3 @@ const css = `
     width: 80px;
   }
 `
-
-export default css

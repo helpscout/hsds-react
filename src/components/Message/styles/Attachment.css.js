@@ -1,6 +1,9 @@
+import { styledComponent } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
+import Chat from '../Message.Chat'
+import Text from '../../Text'
 
-export const TextCSS = `
+export const TextUI = styledComponent(Text)`
   ${baseStyles}
 
   &.has-noUrl {
@@ -8,8 +11,6 @@ export const TextCSS = `
   }
 `
 
-const css = `
+export const AttachmentChatUI = styledComponent(Chat)`
   ${baseStyles}
 `
-
-export default css

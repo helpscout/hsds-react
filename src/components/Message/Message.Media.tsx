@@ -1,17 +1,13 @@
 import * as React from 'react'
 import { MessageBubble } from './Message.types'
-import styled from '../styled'
 import Link from '../Link'
 import Spinner from '../Spinner'
 import Modal from '../Modal'
-import Chat from './Message.Chat'
 import Caption from './Message.Caption'
 import classNames, { BEM } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import css, { ImageUI } from './styles/Media.css'
-import { COMPONENT_KEY } from './Message.utils'
+import { MediaUI, ImageUI } from './styles/Media.css'
 
 type Props = MessageBubble & {
   className: string
@@ -287,18 +283,16 @@ export class Media extends React.Component<Props> {
     )
 
     return (
-      <Chat
+      <MediaUI
         {...rest}
         bubbleClassName="c-MessageMedia__bubble"
         className={componentClassName}
         size="sm"
       >
         {mediaContentMarkup}
-      </Chat>
+      </MediaUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Media)(Media)
-
-export default styled(Media)(css)
+export default Media

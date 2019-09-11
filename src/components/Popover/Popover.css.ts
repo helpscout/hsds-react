@@ -1,4 +1,4 @@
-import styled from '../styled'
+import { styledComponent } from '../styled'
 import Tooltip from '../Tooltip/Tooltip'
 import { getColor } from '../../styles/utilities/color'
 import { getShadow } from '../../styles/utilities/shadow'
@@ -10,7 +10,7 @@ export const config = {
   padding: '15px',
 }
 
-export const PopoverUI = styled(Tooltip)`
+export const PopoverUI = styledComponent(Tooltip)`
   .c-PopoverContent {
     background: white;
     border: 1px solid ${config.borderColor};
@@ -30,7 +30,7 @@ export const PopoverUI = styled(Tooltip)`
   }
 `
 
-export const HeaderUI = styled('div')`
+export const HeaderUI = styledComponent('div')`
   border-bottom: 1px solid ${config.borderColor};
   margin-bottom: ${config.padding};
   margin-left: calc(${config.padding} * -1);
@@ -39,7 +39,7 @@ export const HeaderUI = styled('div')`
   padding: 10px ${config.padding};
 `
 
-export const HeadingUI = styled(Heading)`
+export const HeadingUI = styledComponent(Heading)`
   color: ${getColor('charcoal.300')};
 `
 HeadingUI.defaultProps = {

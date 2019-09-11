@@ -11,16 +11,15 @@ export const COMPONENT_KEY = 'Image'
  * @param   {Object} props The component props.
  * @returns {Object} The updated styles.
  */
-export function enhanceStyleWithSize(props: ImageProps): Object {
-  const { maxWidth, maxHeight, width, height, style } = props
+export function getImageSize(props: ImageProps): Object {
+  const { maxWidth, maxHeight, width, height } = props
   const imageProps: any = { maxWidth, maxHeight, width, height }
 
-  if (!allPropsDefined(imageProps)) return style
+  if (!allPropsDefined(imageProps)) return {}
 
   const aspect = calculateAspectRatioFit(imageProps)
 
   return {
-    ...style,
     height: aspect.height,
     width: aspect.width,
   }

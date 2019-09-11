@@ -19,20 +19,20 @@ stories.addParameters({
   a11y: { element: '.c-DropdownV2' },
 })
 
-stories.addDecorator(storyFn => (
-  <Artboard
-    name="dropdown-v2"
-    withCenterGuides={false}
-    artboardWidth={480}
-    artboardHeight={300}
-  >
-    <div
-      style={{ boxSizing: 'border-box', width: 480, height: 300, padding: 30 }}
-    >
-      <Provider store={store}>{storyFn()}</Provider>
-    </div>
-  </Artboard>
-))
+// stories.addDecorator(storyFn => (
+//   <Artboard
+//     name="dropdown-v2"
+//     withCenterGuides={false}
+//     artboardWidth={480}
+//     artboardHeight={300}
+//   >
+//     <div
+//       style={{ boxSizing: 'border-box', width: 480, height: 300, padding: 30 }}
+//     >
+//       <Provider store={store}>{storyFn()}</Provider>
+//     </div>
+//   </Artboard>
+// ))
 
 export const ItemSpec = createSpec({
   id: faker.random.uuid(),

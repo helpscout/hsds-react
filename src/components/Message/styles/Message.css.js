@@ -1,9 +1,10 @@
+import { styledComponent } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-Message')
 
-const css = `
+export const MessageUI = styledComponent.div`
   ${baseStyles}
   margin-bottom: 20px;
   min-width: 320px;
@@ -61,5 +62,3 @@ const css = `
     min-width: initial;
   }
 `
-
-export default css

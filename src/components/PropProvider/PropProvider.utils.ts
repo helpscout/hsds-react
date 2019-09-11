@@ -174,11 +174,13 @@ export function getConfigPropsFromArray(
   if (!isObject(config)) return {}
   if (!isArray(array)) return config
 
-  return array.filter(value => isString(value)).reduce((remappedProps, key) => {
-    remappedProps[key] = config[key]
+  return array
+    .filter(value => isString(value))
+    .reduce((remappedProps, key) => {
+      remappedProps[key] = config[key]
 
-    return remappedProps
-  }, {})
+      return remappedProps
+    }, {})
 }
 
 /**
@@ -188,5 +190,5 @@ export function getConfigPropsFromArray(
  * @returns {boolean} The result.
  */
 export function isStateless(Component: any): boolean {
-  return !isString(Component) && !Component.prototype.render
+  return !isString(Component) && !Component.render
 }

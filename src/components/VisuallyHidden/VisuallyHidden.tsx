@@ -1,7 +1,6 @@
 import * as React from 'react'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import css from './styles/VisuallyHidden.css'
+import { VisuallyHiddenUI } from './styles/VisuallyHidden.css'
 
 type Props = {
   children?: any
@@ -21,9 +20,13 @@ const VisuallyHidden = (props: Props) => {
   const tabIndex = focusable ? 1 : undefined
 
   return (
-    <span className={componentClassName} tabIndex={tabIndex} {...rest}>
+    <VisuallyHiddenUI
+      className={componentClassName}
+      tabIndex={tabIndex}
+      {...rest}
+    >
       {children}
-    </span>
+    </VisuallyHiddenUI>
   )
 }
 
@@ -31,4 +34,4 @@ VisuallyHidden.defaultProps = {
   focusable: false,
 }
 
-export default styled(VisuallyHidden)(css)
+export default VisuallyHidden

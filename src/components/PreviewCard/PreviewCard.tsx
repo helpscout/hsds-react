@@ -1,11 +1,10 @@
 import * as React from 'react'
 import Context from './PreviewCard.Context'
-import Card from '../Card'
+
 import Heading from '../Heading'
 import Text from '../Text'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import css from './styles/PreviewCard.css'
+import { PreviewCardUI } from './styles/PreviewCard.css'
 
 type Props = {
   children?: any
@@ -33,12 +32,12 @@ const PreviewCard = (props: Props) => {
     ) : null
 
     return (
-      <Card className={componentClassName} {...rest}>
+      <PreviewCardUI className={componentClassName} {...rest}>
         {titleMarkup}
         <Text muted className="c-PreviewCard__content">
           {children}
         </Text>
-      </Card>
+      </PreviewCardUI>
     )
   }
 
@@ -49,4 +48,4 @@ const PreviewCard = (props: Props) => {
   )
 }
 
-export default styled(PreviewCard)(css)
+export default PreviewCard

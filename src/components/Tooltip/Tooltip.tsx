@@ -18,7 +18,7 @@ export interface Props extends PopProps {
   className?: string
   color: string
   dataCyPopper: string
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   minWidth?: number | string
   maxWidth?: number | string
   renderContent?: (props: any) => void
@@ -38,7 +38,7 @@ export class Tooltip extends React.PureComponent<Props> {
     closeOnContentClick: false,
     closeOnMouseLeave: true,
     dataCyPopper: 'TooltipContent',
-    innerRef: noop,
+    ref: noop,
     isOpen: false,
     modifiers: {},
     placement: 'top',

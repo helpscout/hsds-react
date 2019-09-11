@@ -5,12 +5,9 @@ import Flexy from '../Flexy'
 import Action from './Message.Action'
 import Bubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/ChatBlock.css'
-import { COMPONENT_KEY } from './Message.utils'
+import { ChatBlockUI } from './styles/ChatBlock.css'
 
 export type MetaPosition = 'top' | 'bottom'
 
@@ -95,7 +92,7 @@ export class ChatBlock extends React.PureComponent<Props> {
     const timestampMarkup = this.getTimestampMarkup()
 
     return (
-      <div {...getValidProps(rest)} className={componentClassName}>
+      <ChatBlockUI {...getValidProps(rest)} className={componentClassName}>
         {metaPosition !== 'bottom' && meta}
         <Flexy className="c-MessageChatBlock__flexy" gap="sm">
           {to && timestampMarkup}
@@ -105,11 +102,9 @@ export class ChatBlock extends React.PureComponent<Props> {
           {from && timestampMarkup}
         </Flexy>
         {metaPosition === 'bottom' && meta}
-      </div>
+      </ChatBlockUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.ChatBlock)(ChatBlock)
-
-export default styled(ChatBlock)(css)
+export default ChatBlock

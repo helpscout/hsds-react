@@ -1,11 +1,14 @@
+import { styledComponent } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { config as BubbleConfig } from './Bubble.css'
+import ChatBlock from '../Message.ChatBlock'
+
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageChat')
 const MessageBubble = '.c-MessageBubble'
 
-const css = `
+export const ChatBlockUI = styledComponent(ChatBlock)`
   ${baseStyles}
   display: block;
   margin: 0 0 2px;
@@ -35,5 +38,3 @@ const css = `
     }
   }
 `
-
-export default css

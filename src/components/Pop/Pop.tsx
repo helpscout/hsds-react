@@ -53,12 +53,17 @@ class Pop extends React.Component<Props, State> {
   static Popper = Popper
   static Reference = Reference
 
-  node = null
+  node: any = null
   _isMounted = false
 
   state = {
     id: uniqueID(),
     isOpen: this.props.isOpen || false,
+  }
+
+  constructor(props) {
+    super(props)
+    this.node = React.createRef()
   }
 
   componentDidMount() {
@@ -86,7 +91,6 @@ class Pop extends React.Component<Props, State> {
 
   componentWillUnmount = () => {
     this._isMounted = false
-    this.node = null
   }
 
   safeSetState = (state, callback) => {
@@ -122,9 +126,9 @@ class Pop extends React.Component<Props, State> {
 
     if (
       !event ||
-      event.target === this.node ||
+      event.target === this.node.current ||
       // @ts-ignore
-      this.node.contains(event.target) ||
+      this.node.current.contains(event.target) ||
       (popperNode && popperNode.contains(event.target))
     ) {
       return
@@ -179,8 +183,6 @@ class Pop extends React.Component<Props, State> {
     }
   }
 
-  setNodeRef = node => (this.node = node)
-
   render() {
     const {
       animationDelay,
@@ -207,44 +209,40 @@ class Pop extends React.Component<Props, State> {
       className
     )
 
-    const referenceMarkup = React.Children.map(
-      children,
-      child =>
-        child.type === Reference
-          ? React.cloneElement(child, {
-              'aria-describedby': id,
-              display,
-            })
-          : null
+    const referenceMarkup = React.Children.map(children, child =>
+      child.type === Reference
+        ? React.cloneElement(child, {
+            'aria-describedby': id,
+            display,
+          })
+        : null
     )
 
     /* istanbul ignore next */
     /**
      * Too difficult to text in Enzyme, due to createContext + Portal + cloning.
      */
-    const popperMarkup = React.Children.map(
-      children,
-      child =>
-        child.type === Popper
-          ? React.cloneElement(child, {
-              animationDelay,
-              animationDuration,
-              animationEasing,
-              animationSequence,
-              arrowSize,
-              className,
-              close: this.close,
-              'data-cy': `${this.props['data-cy']}Popper`,
-              id,
-              isOpen: this.state.isOpen,
-              onContentClick: this.handleOnContentClick,
-              onMouseLeave: this.handleOnPopperMouseLeave,
-              modifiers,
-              placement,
-              showArrow,
-              zIndex,
-            })
-          : null
+    const popperMarkup = React.Children.map(children, child =>
+      child.type === Popper
+        ? React.cloneElement(child, {
+            animationDelay,
+            animationDuration,
+            animationEasing,
+            animationSequence,
+            arrowSize,
+            className,
+            close: this.close,
+            'data-cy': `${this.props['data-cy']}Popper`,
+            id,
+            isOpen: this.state.isOpen,
+            onContentClick: this.handleOnContentClick,
+            onMouseLeave: this.handleOnPopperMouseLeave,
+            modifiers,
+            placement,
+            showArrow,
+            zIndex,
+          })
+        : null
     )
 
     return (
@@ -258,7 +256,7 @@ class Pop extends React.Component<Props, State> {
           <PopUI
             className={componentClassName}
             data-cy={this.props['data-cy']}
-            innerRef={this.setNodeRef}
+            ref={this.node}
             onMouseMove={this.handleMouseMove}
             onMouseLeave={this.handleMouseLeave}
             onClick={this.handleClick}

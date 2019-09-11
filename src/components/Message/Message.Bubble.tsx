@@ -3,40 +3,34 @@ import { MessageBubble, MessageThemeContext } from './Message.types'
 import { noop } from '../../utilities/other'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
-import Heading from '../Heading'
 import LoadingDots from '../LoadingDots'
 import Icon from '../Icon'
 import Text from '../Text'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import {
   convertLinksToHTML,
   escapeHTML,
   isWord,
   newlineToHTML,
 } from '../../utilities/strings'
-import css, {
-  BodyCSS,
-  FromCSS,
-  IconWrapperCSS,
-  TitleCSS,
-  TypingCSS,
+
+import {
+  MessageBubbleUI,
+  MessageBubbleBodyUI,
+  MessageBubbleFromUI,
+  MessageBubbleIconWrapperUI,
+  MessageBubbleTitleUI,
+  MessageBubbleTypingUI,
 } from './styles/Bubble.css'
-import { COMPONENT_KEY } from './Message.utils'
 
 type Props = MessageBubble
 type Context = MessageThemeContext
 
-// Sub-Components
-const MessageBubbleBody = styled('span')(BodyCSS)
-const MessageBubbleFrom = styled('div')(FromCSS)
-const MessageBubbleIconWrapper = styled('div')(IconWrapperCSS)
-const MessageBubbleTitle = styled(Heading)(TitleCSS)
-const MessageBubbleTyping = styled('div')(TypingCSS)
-
 // convertLinksToHTML will escape for output as HTML
-const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
+const enhanceBody = compose(
+  newlineToHTML,
+  convertLinksToHTML
+)
 
 export const Bubble = (props: Props, context: Context) => {
   const {
@@ -79,11 +73,11 @@ export const Bubble = (props: Props, context: Context) => {
 
   const childrenMarkup = React.Children.map(children, child => {
     return isWord(child) || isNativeSpanType(child) ? (
-      <MessageBubbleBody className="c-MessageBubble__body">
+      <MessageBubbleBodyUI className="c-MessageBubble__body">
         <Text lineHeightInherit wordWrap>
           {child}
         </Text>
-      </MessageBubbleBody>
+      </MessageBubbleBodyUI>
     ) : (
       child
     )
@@ -91,32 +85,32 @@ export const Bubble = (props: Props, context: Context) => {
 
   const fromMarkup =
     isThemeNotifications && fromName ? (
-      <MessageBubbleFrom className="c-MessageBubble__from">
+      <MessageBubbleFromUI className="c-MessageBubble__from">
         <Text className="c-MessageBubble__fromText" lineHeightReset size="11">
           {fromName}
         </Text>
-      </MessageBubbleFrom>
+      </MessageBubbleFromUI>
     ) : null
 
   const iconMarkup = icon ? (
-    <MessageBubbleIconWrapper className="c-MessageBubble__iconWrapper">
+    <MessageBubbleIconWrapperUI className="c-MessageBubble__iconWrapper">
       <Icon
         className="c-MessageBubble__icon"
         name={icon}
         size="20"
         shade="extraMuted"
       />
-    </MessageBubbleIconWrapper>
+    </MessageBubbleIconWrapperUI>
   ) : null
 
   const titleMarkup = title ? (
-    <MessageBubbleTitle className="c-MessageBubble__title" size="small">
+    <MessageBubbleTitleUI className="c-MessageBubble__title" size="small">
       {title}
-    </MessageBubbleTitle>
+    </MessageBubbleTitleUI>
   ) : null
 
   const bodyMarkup = body ? (
-    <MessageBubbleBody
+    <MessageBubbleBodyUI
       className="c-MessageBubble__body"
       dangerouslySetInnerHTML={{
         __html: enhanceBody(body),
@@ -127,9 +121,9 @@ export const Bubble = (props: Props, context: Context) => {
   )
 
   const innerContentMarkup = typing ? (
-    <MessageBubbleTyping className="c-MessageBubble__typing">
+    <MessageBubbleTypingUI className="c-MessageBubble__typing">
       <LoadingDots />
-    </MessageBubbleTyping>
+    </MessageBubbleTypingUI>
   ) : (
     bodyMarkup
   )
@@ -142,11 +136,11 @@ export const Bubble = (props: Props, context: Context) => {
   )
 
   return (
-    <div className={componentClassName} {...rest}>
+    <MessageBubbleUI className={componentClassName} {...rest}>
       {fromMarkup}
       {titleMarkup}
       {contentMarkup}
-    </div>
+    </MessageBubbleUI>
   )
 }
 
@@ -154,6 +148,4 @@ Bubble.contextTypes = {
   theme: noop,
 }
 
-namespaceComponent(COMPONENT_KEY.Bubble)(Bubble)
-
-export default styled(Bubble)(css)
+export default Bubble

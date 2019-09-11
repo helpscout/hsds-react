@@ -3,12 +3,9 @@ import { BlockSelectorTag } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Link from '../Link'
 import Block from './Card.Block'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Card.css'
-import { COMPONENT_KEY } from './Card.utils'
+import { CardUI } from './styles/Card.css'
 
 export type Props = {
   autoWordWrap?: boolean
@@ -87,41 +84,38 @@ class Card extends React.PureComponent<Props> {
       className
     )
 
-    const element =
-      href || to ? (
-        <Link
-          {...rest}
-          autoWordWrap={autoWordWrap}
-          block
-          className={componentClassName}
-          onClick={onClick}
-          href={href}
-          to={to}
-          innerRef={innerRef}
-          nodeRef={nodeRef}
-        >
-          {children}
-        </Link>
-      ) : (
-        React.createElement(
-          selector,
-          {
-            ...getValidProps(rest),
-            className: componentClassName,
-            href,
-            onClick,
-            ref: nodeRef,
-          },
-          children
-        )
-      )
+    const sharedProps = {
+      className: componentClassName,
+      onClick,
+    }
 
-    return element
+    const extraStaticProps = {
+      as: selector,
+      href,
+
+      ref: nodeRef,
+    }
+
+    const extraLinksProps = {
+      autoWordWrap,
+      block: true,
+      href,
+      to,
+      innerRef,
+      nodeRef,
+    }
+
+    const props =
+      href || to
+        ? { ...sharedProps, ...extraLinksProps }
+        : { ...sharedProps, ...extraStaticProps }
+
+    return (
+      <CardUI {...rest} {...props}>
+        {children}
+      </CardUI>
+    )
   }
 }
 
-const StyledCard = styled(Card)(css)
-
-namespaceComponent(COMPONENT_KEY.Card)(StyledCard)
-
-export default StyledCard
+export default Card

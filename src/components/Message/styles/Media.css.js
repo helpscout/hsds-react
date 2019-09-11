@@ -1,10 +1,11 @@
-import styled from '../../styled'
+import { styledComponent } from '../../styled'
 import Image from '../../Image'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
+import Chat from '../Message.Chat'
 
 const bem = BEM('.c-MessageMedia')
 
@@ -14,11 +15,11 @@ const mediaImageStyles = `
   object-fit: cover;
 `
 
-export const ImageUI = styled(Image)`
+export const ImageUI = styledComponent(Image)`
   ${mediaImageStyles};
 `
 
-const css = `
+export const MediaUI = styledComponent(Chat)`
   ${baseStyles};
 
   ${bem.element('caption')} {
@@ -124,5 +125,3 @@ const css = `
     text-decoration: underline;
   }
 `
-
-export default css

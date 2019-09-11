@@ -1,12 +1,10 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import styled from '../styled'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Icon.css'
-import { COMPONENT_KEY, renameSVGIds } from './Icon.utils'
+import { IconUI } from './styles/Icon.css'
+import { renameSVGIds } from './Icon.utils'
 import { svgSet } from './Icon.utils'
 import { IconProps } from './Icon.types'
 
@@ -66,7 +64,7 @@ const Icon = (props: IconProps) => {
   ) : null
 
   return (
-    <span
+    <IconUI
       aria-hidden
       {...getValidProps(rest)}
       className={componentClassName}
@@ -80,7 +78,7 @@ const Icon = (props: IconProps) => {
       />
       {caretMarkup}
       {isWithHiddenTitle ? <VisuallyHidden>{iconTitle}</VisuallyHidden> : null}
-    </span>
+    </IconUI>
   )
 }
 
@@ -98,6 +96,4 @@ Icon.defaultProps = {
   withCaret: false,
 }
 
-namespaceComponent(COMPONENT_KEY)(Icon)
-
-export default styled(Icon)(css)
+export default Icon

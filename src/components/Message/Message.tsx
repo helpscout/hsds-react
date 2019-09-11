@@ -13,16 +13,11 @@ import Embed from './Message.Embed'
 import Media from './Message.Media'
 import Provider from './Message.Provider'
 import Question from './Message.Question'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import {
-  isComponentTypeChat,
-  namespaceComponent,
-} from '../../utilities/component'
+import { isComponentTypeChat } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import css from './styles/Message.css'
-import { COMPONENT_KEY } from './Message.utils'
+import { MessageUI } from './styles/Message.css'
 
 type Props = MessageType & {
   avatar?: any
@@ -143,7 +138,7 @@ export class Message extends React.PureComponent<Props> {
     const fromMarkup = this.getFromMarkup()
 
     return (
-      <div {...getValidProps(rest)} className={componentClassName}>
+      <MessageUI {...getValidProps(rest)} className={componentClassName}>
         {fromMarkup}
         <Flexy align="top" gap="xs">
           {from && avatarMarkup}
@@ -152,11 +147,9 @@ export class Message extends React.PureComponent<Props> {
           </Flexy.Block>
           {to && avatarMarkup}
         </Flexy>
-      </div>
+      </MessageUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Message)(Message)
-
-export default styled(Message)(css)
+export default Message

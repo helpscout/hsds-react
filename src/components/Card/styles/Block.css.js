@@ -1,6 +1,7 @@
+import { styledComponent } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
-export const css = `
+export const BlockUI = styledComponent.div`
   ${baseStyles}
   padding: 20px 20px;
 
@@ -26,5 +27,3 @@ export const css = `
     flex: 1;
   }
 `
-
-export default css

@@ -1,7 +1,9 @@
+import { styledComponent } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 import { getColor } from '../../../styles/utilities/color'
 import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
+import Chat from '../Message.Chat'
 
 const config = {
   embedBorderRadius: '3px',
@@ -11,7 +13,7 @@ const config = {
 
 const bem = BEM('.c-MessageEmbed')
 
-export const css = `
+export const EmbedUI = styledComponent(Chat)`
   ${baseStyles}
 
   ${bem.element('html')} {
@@ -58,5 +60,3 @@ export const css = `
     transform: translate(-50%, -50%);
   }
 `
-
-export default css

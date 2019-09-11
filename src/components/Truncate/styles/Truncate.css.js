@@ -1,3 +1,4 @@
+import { styledComponent } from '../../styled'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-Truncate')
@@ -9,7 +10,7 @@ const truncateStyles = `
   white-space: nowrap;
 `
 
-const css = `
+export const TruncateUI = styledComponent.span`
   box-sizing: border-box;
   will-change: contents;
 
@@ -21,5 +22,3 @@ const css = `
     }
   }
 `
-
-export default css

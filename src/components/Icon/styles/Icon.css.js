@@ -3,6 +3,7 @@ import baseStyles from '../../../styles/resets/base.css.js'
 import { STATES, TEXT_SHADES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
+import { styledComponent } from '../../styled'
 
 const bem = BEM('.c-Icon')
 
@@ -16,7 +17,7 @@ export const config = {
   size: 20,
 }
 
-const css = `
+export const IconUI = styledComponent.span`
   ${baseStyles};
   color: currentColor;
   display: block;
@@ -127,5 +128,3 @@ function makeStateColorStyles() {
   `
   )
 }
-
-export default css
