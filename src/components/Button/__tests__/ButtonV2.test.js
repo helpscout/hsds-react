@@ -71,6 +71,18 @@ describe('States', () => {
     expect(wrapper.find('button.c-ButtonV2').hasClass('is-active')).toBe(true)
   })
 
+  test('Adds the focus classNames', () => {
+    const wrapper = mount(<Button isFocused>Button</Button>)
+
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-focused')).toBe(true)
+  })
+
+  test('Adds the hover classNames', () => {
+    const wrapper = mount(<Button isHovered>Button</Button>)
+
+    expect(wrapper.find('button.c-ButtonV2').hasClass('is-hovered')).toBe(true)
+  })
+
   test('Disables the button', () => {
     const callback = jest.fn()
     const disabledButton = mount(

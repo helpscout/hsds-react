@@ -31,6 +31,8 @@ export interface Props {
   isActive: boolean
   isBlock: boolean
   isFirst: boolean
+  isFocused: boolean
+  isHovered: boolean
   isNotOnly: boolean
   isLast: boolean
   isLoading: boolean
@@ -55,7 +57,9 @@ class Button extends React.PureComponent<Props> {
     innerRef: noop,
     isActive: false,
     isBlock: false,
+    isFocused: false,
     isFirst: false,
+    isHovered: false,
     isNotOnly: false,
     isLast: false,
     isSuffix: false,
@@ -154,6 +158,8 @@ class Button extends React.PureComponent<Props> {
       isActive,
       isBlock,
       isFirst,
+      isFocused,
+      isHovered,
       isNotOnly,
       isLast,
       isLoading,
@@ -177,6 +183,8 @@ class Button extends React.PureComponent<Props> {
       isBlock && 'is-block',
       isDisabled && 'is-disabled',
       isFirst && 'is-first',
+      isFocused && 'is-focused',
+      isHovered && 'is-hovered',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
       isLoading && 'is-loading',

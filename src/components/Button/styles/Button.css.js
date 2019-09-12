@@ -284,6 +284,7 @@ export const makeButtonUI = (selector = 'button') => {
       }
     }
 
+    &.is-focused,
     &:focus {
       z-index: 2;
       .c-ButtonV2Focus {
@@ -372,7 +373,8 @@ function makeButtonKindStyles(kind, config) {
       ${renderStyleForProp(config, 'padding', 'padding-right')}
       ${renderStyleForProp(config, 'textDecoration', 'text-decoration')}
 
-      &:hover {
+      &:hover,
+      &.is-hovered {
         background: ${config.backgroundColorHover};
         border-color: ${config.borderColorHover};
         ${renderStyleForProp(config, 'colorHover', 'color')}
@@ -415,12 +417,14 @@ function makeButtonStateStyles(config, state) {
       border-color: ${config[state].borderColor};
       color: ${config[state].color};
 
-      &:hover {
+      &:hover,
+      &.is-hovered {
         background-color: ${config[state].backgroundColorHover};
         border-color: ${config[state].borderColorHover};
         color: ${config[state].colorHover};
       }
-      &:active {
+      &:active,
+      &.is-active {
         background-color: ${config[state].backgroundColorActive};
         border-color: ${config[state].borderColorActive};
         color: ${config[state].colorActive};
