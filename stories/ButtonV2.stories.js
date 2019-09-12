@@ -28,6 +28,12 @@ const makeButtonVariations = (props = {}) => {
         <h5>Base</h5>
         <Flexy just="left">
           <Button {...props}>Button</Button>
+          <Button {...props} isHovered>
+            Hover
+          </Button>
+          <Button {...props} isActive>
+            Active
+          </Button>
           <Button {...props} isFocused>
             Focused
           </Button>

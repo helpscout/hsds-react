@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.59.4",
+  "version": "2.60.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -135,7 +135,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@helpscout/artboard": "0.2.0",
-    "@helpscout/colorway": "0.0.11",
+    "@helpscout/colorway": "0.3.0",
     "@helpscout/cyan": "0.12.1",
     "@helpscout/helix": "^0.1.0",
     "@helpscout/hsds-illos": "1.4.4",
