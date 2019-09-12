@@ -14,8 +14,14 @@ module.exports = api => {
         },
       },
     ],
-    'babel-plugin-styled-components',
     'emotion',
+    [
+      'babel-plugin-styled-components',
+      {
+        displayName: true,
+        fileName: true,
+      },
+    ],
   ]
 
   if (isTest) {

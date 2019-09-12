@@ -66,7 +66,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
       disabled,
       onBlur,
       onFocus,
-      innerRef: node => this.setTriggerNodeRef(node),
+      triggerRef: node => this.setTriggerNodeRef(node),
     }
   }
 
@@ -114,7 +114,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     return (
       <MenuContainer
         children={children}
-        innerRef={this.setMenuNodeRef}
+        menuRef={this.setMenuNodeRef}
         allowMultipleSelection={allowMultipleSelection}
       />
     )
@@ -143,7 +143,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
       <DropdownUI
         className={componentClassName}
         data-cy={this.props['data-cy']}
-        innerRef={this.setNodeRef}
+        ref={this.setNodeRef}
         id={id}
       >
         {this.renderAriaLive()}
@@ -159,7 +159,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Dropdown)(Dropdown)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
 
 const ConnectedDropdown: any = connect(

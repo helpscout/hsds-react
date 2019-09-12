@@ -13,8 +13,8 @@ export interface Props {
   className?: string
   children?: any
   id?: string
-  innerRef: (node: HTMLElement) => void
-  innerWrapperRef: (node: HTMLElement) => void
+  menuRef: (node: HTMLElement) => void
+  wrapperRef: (node: HTMLElement) => void
   isSubMenu: boolean
   renderMenu?: (props: any) => void
   style: Object
@@ -24,8 +24,8 @@ export interface Props {
 
 export class Menu extends React.PureComponent<Props> {
   static defaultProps = {
-    innerRef: noop,
-    innerWrapperRef: noop,
+    menuRef: noop,
+    wrapperRef: noop,
     isSubMenu: false,
     role: 'listbox',
     style: {},
@@ -43,8 +43,8 @@ export class Menu extends React.PureComponent<Props> {
     const {
       children,
       className,
-      innerRef,
-      innerWrapperRef,
+      menuRef,
+      wrapperRef,
       isSubMenu,
       renderMenu,
       ...rest
@@ -60,7 +60,7 @@ export class Menu extends React.PureComponent<Props> {
       ...getValidProps(rest),
       children,
       className: componentClassName,
-      innerRef: renderMenu ? undefined : innerRef,
+      menuRef: renderMenu ? undefined : menuRef,
       style: this.getStyles(),
     }
 
@@ -71,10 +71,7 @@ export class Menu extends React.PureComponent<Props> {
     )
 
     return (
-      <MenuWrapperUI
-        className="c-DropdownV2MenuWrapper"
-        innerRef={innerWrapperRef}
-      >
+      <MenuWrapperUI className="c-DropdownV2MenuWrapper test" ref={wrapperRef}>
         {menuMarkup}
       </MenuWrapperUI>
     )

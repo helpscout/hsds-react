@@ -34,7 +34,7 @@ export interface Props {
   getState: (...args: any[]) => void
   id?: string
   index: string
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   isHover: boolean
   isSelectionClearer: boolean
   items: Array<any>
@@ -56,7 +56,7 @@ export class Item extends React.PureComponent<Props> {
     getState: noop,
     disabled: false,
     index: '0',
-    innerRef: noop,
+    ref: noop,
     isHover: false,
     isSelectionClearer: false,
     items: undefined,
@@ -139,7 +139,7 @@ export class Item extends React.PureComponent<Props> {
 
     return {
       className: 'c-DropdownV2MenuWrapper',
-      innerRef: this.setWrapperNodeRef,
+      wrapperRef: this.setWrapperNodeRef,
       [SELECTORS.indexAttribute]: index,
       [SELECTORS.valueAttribute]: value,
     }
@@ -154,7 +154,7 @@ export class Item extends React.PureComponent<Props> {
           <Card>
             <Menu
               aria-labelledby={actionId}
-              innerRef={this.setMenuNodeRef}
+              menuRef={this.setMenuNodeRef}
               isSubMenu
               id={subMenuId}
             >
@@ -222,7 +222,7 @@ export class Item extends React.PureComponent<Props> {
 
     const actionProps = {
       id: actionId,
-      innerRef: this.setActionNodeRef,
+      ref: this.setActionNodeRef,
       className: componentClassName,
     }
 
@@ -238,11 +238,14 @@ export class Item extends React.PureComponent<Props> {
 
   setNodeRef = node => {
     this.node = node
-    this.props.innerRef(node)
+    this.props.ref(node)
   }
   setActionNodeRef = node => (this.actionNode = node)
   setWrapperNodeRef = node => (this.wrapperNode = node)
-  setMenuNodeRef = node => (this.menuNode = node)
+  setMenuNodeRef = node => {
+    console.log('menuRef', node)
+    this.menuNode = node
+  }
 
   render() {
     const { className, disabled, type, isSelectionClearer } = this.props
@@ -265,7 +268,7 @@ export class Item extends React.PureComponent<Props> {
         className={componentClassName}
         aria-disabled={disabled}
         onClick={this.handleOnClick}
-        innerRef={this.setNodeRef}
+        ref={this.setNodeRef}
         role={hasSubMenu ? 'group' : 'option'}
       >
         {this.renderContent()}
@@ -275,7 +278,6 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Item)(Item)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 
 const ConnectedItem: any = connect(

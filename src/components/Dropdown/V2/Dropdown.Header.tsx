@@ -11,17 +11,17 @@ import { COMPONENT_KEY } from './Dropdown.utils'
 export interface Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   label?: string
 }
 
 export class Header extends React.PureComponent<Props> {
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
   }
 
   render() {
-    const { className, children, innerRef, label, ...rest } = this.props
+    const { className, children, ref, label, ...rest } = this.props
     const componentClassName = classNames('c-DropdownV2Header', className)
 
     const textLabel = children || label
@@ -30,7 +30,7 @@ export class Header extends React.PureComponent<Props> {
       <HeaderUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={ref}
         tabIndex={null}
       >
         <Heading size="small" light>
@@ -41,7 +41,6 @@ export class Header extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Header)(Header)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Header)(Header)
 
 export default PropConnectedComponent

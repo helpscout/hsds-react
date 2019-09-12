@@ -10,23 +10,23 @@ import { COMPONENT_KEY } from './Dropdown.utils'
 export interface Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
 }
 
 export class Group extends React.PureComponent<Props> {
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
   }
 
   render() {
-    const { className, children, innerRef, ...rest } = this.props
+    const { className, children, ref, ...rest } = this.props
     const componentClassName = classNames('c-DropdownV2Group', className)
 
     return (
       <GroupUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={ref}
         tabIndex={null}
         role="group"
       >
@@ -36,7 +36,6 @@ export class Group extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Group)(Group)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Group)(Group)
 
 export default PropConnectedComponent
