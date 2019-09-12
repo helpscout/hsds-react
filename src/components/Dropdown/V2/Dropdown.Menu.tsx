@@ -19,6 +19,7 @@ export interface Props {
   renderMenu?: (props: any) => void
   style: Object
   withScrollLock: boolean
+  wrapperStyles: Object
   zIndex: number
 }
 
@@ -30,6 +31,7 @@ export class Menu extends React.PureComponent<Props> {
     role: 'listbox',
     style: {},
     withScrollLock: true,
+    wrapperStyles: {},
     zIndex: 1015,
   }
 
@@ -37,6 +39,12 @@ export class Menu extends React.PureComponent<Props> {
     const { style, zIndex } = this.props
 
     return { ...style, zIndex }
+  }
+
+  getWrapperStyles(): Object {
+    const { wrapperStyles } = this.props
+
+    return { ...wrapperStyles }
   }
 
   renderMenu() {
@@ -74,6 +82,7 @@ export class Menu extends React.PureComponent<Props> {
       <MenuWrapperUI
         className="c-DropdownV2MenuWrapper"
         innerRef={innerWrapperRef}
+        style={this.getWrapperStyles()}
       >
         {menuMarkup}
       </MenuWrapperUI>
