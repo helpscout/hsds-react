@@ -3,11 +3,30 @@ import * as React from 'react'
 import { ComponentUI, FieldButtonUI } from './styles/EditableField.Actions.css'
 import Icon from '../Icon'
 
-import { ACTION_ICONS, ACTIONS_CLASSNAMES } from './EditableField.utils'
+import { classNames } from '../../utilities/classNames'
+import {
+  ACTION_ICONS,
+  ACTIONS_CLASSNAMES,
+  STATES_CLASSNAMES,
+} from './EditableField.utils'
 
-export class EditableFieldActions extends React.Component<any> {
+import * as equal from 'fast-deep-equal'
+import { noop } from '../../utilities/other'
+
+import { ActionsProps } from './EditableField.types'
+
+export class EditableFieldActions extends React.Component<ActionsProps> {
+  static defaultProps = {
+    deleteAction: noop,
+    customAction: noop,
+  }
+
   shouldComponentUpdate(nextProps) {
     if (this.props.fieldValue.value !== nextProps.fieldValue.value) {
+      return true
+    }
+
+    if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
     }
 
@@ -29,11 +48,14 @@ export class EditableFieldActions extends React.Component<any> {
   }
 
   render() {
-    const { actions } = this.props
+    const { actions, validationInfo } = this.props
 
     return (
       <ComponentUI
-        className={ACTIONS_CLASSNAMES.actions}
+        className={classNames(
+          ACTIONS_CLASSNAMES.actions,
+          validationInfo && STATES_CLASSNAMES.withValidation
+        )}
         numberOfActions={actions.length}
       >
         {(actions as any).map(action => {

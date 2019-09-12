@@ -70,13 +70,14 @@ export const FieldUI = styled('div')`
     border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
   }
 
-  .${STATES_CLASSNAMES.isDisabled}
-    &:hover
+  
+  /* prettier-ignore */
+  &.${STATES_CLASSNAMES.fieldDisabled + ':hover'},
+  .${STATES_CLASSNAMES.fieldDisabled} &:hover {
     .${MASK_CLASSNAMES.option},
-    .${STATES_CLASSNAMES.isDisabled}
-    &:hover
     .${MASK_CLASSNAMES.value} {
     border-bottom: 1px solid ${COLOURS.invisible};
+    }
   }
 
   .is-temporary-value {
@@ -94,7 +95,7 @@ export const AddButtonUI = styled('button')`
   height: 20px;
   width: 20px;
   padding: 0;
-  margin: 8px 0 0 0;
+  margin: 9px 0 0 0;
   border: none;
   color: ${getColor('grey.800')};
   background-color: ${getColor('grey.300')};
@@ -115,7 +116,7 @@ export const AddButtonUI = styled('button')`
   }
 
   &:disabled {
-    cursor: default;
+    cursor: not-allowed;
     color: #c6d0d8;
     background-color: ${getColor('grey.300')};
   }

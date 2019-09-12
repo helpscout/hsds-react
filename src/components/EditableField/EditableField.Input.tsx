@@ -8,10 +8,12 @@ import {
   OptionsDropdownUI,
   TriggerUI,
   FocusIndicatorUI,
+  ValidationIconUI,
 } from './styles/EditableField.Input.css'
 
 import Dropdown from '../Dropdown/DropdownV2'
 import Icon from '../Icon'
+import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -19,12 +21,15 @@ import {
   ACTION_ICONS,
   findParentByClassName,
   isEllipsisActive,
+  getValidationColor,
+  FIELDTYPES,
   EDITABLEFIELD_CLASSNAMES,
   MASK_CLASSNAMES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   TRUNCATED_CLASSNAMES,
   STATES_CLASSNAMES,
+  COLOURS,
 } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
@@ -41,13 +46,13 @@ export class EditableFieldInput extends React.Component<InputProps> {
     isActive: false,
     inline: false,
     placeholder: '',
-    type: 'text',
+    type: FIELDTYPES.text,
     innerRef: noop,
     onInputFocus: noop,
     onInputBlur: noop,
-    onInputChange: noop,
     onOptionFocus: noop,
     onOptionSelection: noop,
+    onOptionBlur: noop,
     onChange: noop,
     onKeyDown: noop,
     deleteAction: noop,
@@ -93,23 +98,24 @@ export class EditableFieldInput extends React.Component<InputProps> {
       return true
     }
 
+    if (this.props.disabled !== nextProps.disabled) {
+      return true
+    }
+
+    // Below is tested
+    /* istanbul ignore next */
+    if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
+      return true
+    }
+
     return false
   }
 
   componentDidUpdate() {
-    const { isActive } = this.props
-
     this.setInputTitle()
-
-    if (isActive) {
-      if (document.activeElement !== this.optionsDropdownRef) {
-        const inputNode = this.inputRef
-
-        inputNode && inputNode.focus()
-      }
-    }
   }
 
+  /* istanbul ignore next */
   setInputTitle = () => {
     const { fieldValue } = this.props
     const inputNode = this.inputRef
@@ -127,7 +133,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
       `.${MASK_CLASSNAMES.value} .${TRUNCATED_CLASSNAMES.firstChunk}`
     )
 
-    /* istanbul ignore next */
     if (isEllipsisActive(contentNode) || isEllipsisActive(firstChunkNode)) {
       inputNode && inputNode.setAttribute('title', fieldValue.value)
     }
@@ -158,33 +163,24 @@ export class EditableFieldInput extends React.Component<InputProps> {
   }
 
   handleChange = event => {
-    const { onChange, onInputChange } = this.props
+    const { onChange } = this.props
 
     onChange({
       inputValue: event.currentTarget.value,
       name: this.props.name,
       event,
     })
-    /* istanbul ignore else */
-    if (onInputChange) {
-      onInputChange({
-        inputValue: event.currentTarget.value,
-        name: this.props.name,
-        event,
-      })
-    }
   }
 
+  /* istanbul ignore next */
   handleKeyDown = event => {
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
     const isDropdownTrigger = event.target.classList.contains(
       OTHERCOMPONENTS_CLASSNAMES.dropdownTrigger
     )
-    /* istanbul ignore else */
     if ((isEnter && !isDropdownTrigger) || isEscape) {
       const { name, onKeyDown } = this.props
-      // const staticValueNode = this.staticValueRef
       const inputNode = this.inputRef
 
       onKeyDown({ event, name }).then(() => {
@@ -197,6 +193,12 @@ export class EditableFieldInput extends React.Component<InputProps> {
         }
       })
     }
+  }
+
+  handleOptionsBlur = event => {
+    const { name, onOptionBlur } = this.props
+
+    onOptionBlur({ name, event })
   }
 
   handleDropdownSelect = selection => {
@@ -221,7 +223,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
           shouldRefocusOnClose={() => false}
           minWidth={75}
           maxWidth={200}
-          onBlur={this.handleInputBlur}
+          onBlur={this.handleOptionsBlur}
           onFocus={this.handleOptionFocus}
           onSelect={this.handleDropdownSelect}
           triggerRef={this.setOptionsDropdownNode}
@@ -241,6 +243,32 @@ export class EditableFieldInput extends React.Component<InputProps> {
     )
   }
 
+  renderValidationInfo = () => {
+    const { name, validationInfo } = this.props
+
+    if (!validationInfo) return null
+    if (name !== validationInfo.name) return null
+
+    const DEFAULT_ICON = 'alert-small'
+
+    return (
+      <ValidationIconUI
+        className={INPUT_CLASSNAMES.validation}
+        color={getValidationColor(validationInfo)}
+      >
+        <Tooltip
+          animationDelay={0}
+          animationDuration={0}
+          display="block"
+          placement="top-end"
+          title={validationInfo.message}
+        >
+          <Icon name={validationInfo.icon || DEFAULT_ICON} size={24} />
+        </Tooltip>
+      </ValidationIconUI>
+    )
+  }
+
   render() {
     const {
       disabled,
@@ -250,6 +278,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
       name,
       placeholder,
       type,
+      validationInfo,
       valueOptions,
       ...rest
     } = this.props
@@ -258,7 +287,11 @@ export class EditableFieldInput extends React.Component<InputProps> {
       <ComponentUI
         className={classNames(
           INPUT_CLASSNAMES.content,
-          inline && STATES_CLASSNAMES.isInline
+          inline && STATES_CLASSNAMES.isInline,
+          disabled && STATES_CLASSNAMES.isDisabled,
+          validationInfo &&
+            name === validationInfo.name &&
+            STATES_CLASSNAMES.withValidation
         )}
         innerRef={this.setFieldInputContentNode}
       >
@@ -275,7 +308,6 @@ export class EditableFieldInput extends React.Component<InputProps> {
             id={name}
             innerRef={this.setInputNode}
             name={name}
-            disabled={disabled}
             placeholder={placeholder}
             type={type}
             value={fieldValue.value}
@@ -284,7 +316,13 @@ export class EditableFieldInput extends React.Component<InputProps> {
             onFocus={this.handleInputFocus}
             onKeyDown={this.handleKeyDown}
           />
-          <FocusIndicatorUI className={INPUT_CLASSNAMES.focusIndicator} />
+
+          {this.renderValidationInfo()}
+
+          <FocusIndicatorUI
+            className={INPUT_CLASSNAMES.focusIndicator}
+            color={getValidationColor(validationInfo)}
+          />
         </InputWrapperUI>
       </ComponentUI>
     )
