@@ -29,7 +29,6 @@ import {
   OTHERCOMPONENTS_CLASSNAMES,
   TRUNCATED_CLASSNAMES,
   STATES_CLASSNAMES,
-  COLOURS,
 } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
@@ -55,6 +54,8 @@ export class EditableFieldInput extends React.Component<InputProps> {
     onOptionBlur: noop,
     onChange: noop,
     onKeyDown: noop,
+    onKeyPress: noop,
+    onKeyUp: noop,
     deleteAction: noop,
     customAction: noop,
   }
@@ -175,15 +176,19 @@ export class EditableFieldInput extends React.Component<InputProps> {
   /* istanbul ignore next */
   handleKeyDown = event => {
     const isEnter = event.key === key.ENTER
-    const isEscape = event.key === key.ESCAPE
     const isDropdownTrigger = event.target.classList.contains(
       OTHERCOMPONENTS_CLASSNAMES.dropdownTrigger
     )
-    if ((isEnter && !isDropdownTrigger) || isEscape) {
-      const { name, onKeyDown } = this.props
-      const inputNode = this.inputRef
 
-      onKeyDown({ event, name }).then(() => {
+    if (isEnter && isDropdownTrigger) {
+      return
+    }
+
+    const { name, onKeyDown } = this.props
+    const inputNode = this.inputRef
+
+    onKeyDown({ event, name })
+      .then(() => {
         // In case the value is longer than the width of the input
         // lets move the cursor to the very beginning
         // when clicking the input the cursor will be at the expected position :)
@@ -192,7 +197,19 @@ export class EditableFieldInput extends React.Component<InputProps> {
           inputNode.setSelectionRange(0, 0)
         }
       })
-    }
+      .catch(err => {
+        // Do nothing
+      })
+  }
+
+  handleKeyPress = event => {
+    const { name, onKeyPress } = this.props
+    onKeyPress({ event, name })
+  }
+
+  handleKeyUp = event => {
+    const { name, onKeyUp } = this.props
+    onKeyUp({ event, name })
   }
 
   handleOptionsBlur = event => {

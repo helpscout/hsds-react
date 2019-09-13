@@ -65,6 +65,9 @@ export class EditableField extends React.Component<
     onEscape: noop,
     onInputBlur: noop,
     onInputFocus: noop,
+    onInputKeyDown: noop,
+    onInputKeyPress: noop,
+    onInputKeyUp: noop,
     onOptionBlur: noop,
     onOptionChange: noop,
     onOptionFocus: noop,
@@ -435,12 +438,21 @@ export class EditableField extends React.Component<
     } else if (isEscape) {
       return this.handleFieldEscapePress({ event, name })
     }
-    // This path is never taken, as handleInputKeyDown is only called on enter or escape from the input
-    // But typescript is being annoying about it
-    /* istanbul ignore next */
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyDown({ name, value, event })
     return new Promise((resolve, reject) => {
       reject()
     })
+  }
+
+  handleInputKeyPress = ({ name, event }) => {
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyPress({ name, value, event })
+  }
+
+  handleInputKeyUp = ({ name, event }) => {
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyUp({ name, value, event })
   }
 
   handleFieldEnterPress = ({ event, name }) => {
@@ -860,6 +872,8 @@ export class EditableField extends React.Component<
                 onOptionSelection={this.handleOptionSelection}
                 onChange={this.handleInputChange}
                 onKeyDown={this.handleInputKeyDown}
+                onKeyPress={this.handleInputKeyPress}
+                onKeyUp={this.handleInputKeyUp}
               />
               <Mask
                 {...getValidProps(rest)}
