@@ -70,6 +70,9 @@ export class EditableFieldComposite extends React.PureComponent<
           size: props.size,
           onInputFocus: this.handleFieldFocus(child.props.onInputFocus),
           onInputBlur: this.handleFieldBlur(child.props.onInputBlur),
+          onKeyDown: this.handleFieldKeyEvent(child.props.onInputKeyDown),
+          onKeyPress: this.handleFieldKeyEvent(child.props.onInputKeyPress),
+          onKeyUp: this.handleFieldKeyEvent(child.props.onInputKeyUp),
           onChange: this.handleChange(child.props.onChange),
           onEnter: this.handleEnter(child.props.onEnter),
           onEscape: this.handleEscape(child.props.onEscape),
@@ -154,6 +157,12 @@ export class EditableFieldComposite extends React.PureComponent<
       this.setState({ inputState: 'focused', hasActiveFields: true })
 
       this.maskRef.removeAttribute('tabindex')
+    }
+  }
+
+  handleFieldKeyEvent = passedFn => {
+    return (...params) => {
+      passedFn && passedFn(...params)
     }
   }
 
