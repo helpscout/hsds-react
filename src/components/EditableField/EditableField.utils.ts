@@ -21,41 +21,76 @@ export const deleteAction: FieldAction = {
   name: 'delete',
 }
 
+export const FIELDTYPES = {
+  text: 'text',
+  email: 'email',
+  url: 'url',
+  tel: 'tel',
+  number: 'number',
+  textarea: 'textarea',
+}
+export const FIELDSIZES = { md: 'md', lg: 'lg' }
+export const FIELDSTATES = {
+  default: 'default',
+  error: 'error',
+  warning: 'warning',
+}
+export const COMMIT_CAUSES = {
+  BLUR: 'BLUR',
+  ENTER: 'ENTER',
+  OPTION_SELECTION: 'OPTION_SELECTION',
+  DELETE_ACTION: 'DELETE_ACTION',
+}
+
 export function normalizeFieldValue({
   value,
   name,
-  createNewFieldValue,
   defaultOption,
 }): FieldValue[] {
-  return isArray(value)
-    ? value.map(val => createNewFieldValue({ value: val, name }, defaultOption))
-    : [createNewFieldValue({ value, name }, defaultOption)]
+  if (isArray(value)) {
+    if (value.length === 0) {
+      return [createNewValueFieldObject('', name, defaultOption)]
+    }
+    return value.map((val, idx) =>
+      createNewValueFieldObject(val, name, defaultOption, idx)
+    )
+  } else {
+    return [createNewValueFieldObject(value, name, defaultOption)]
+  }
 }
 
-export function createNewValueFieldFactory(uuidFn) {
-  return function createNewValueFieldObject(
-    { value, name },
-    defaultOption: string | null
-  ): FieldValue {
-    // If it's an object already, grab the fields first
-    if (isObject(value)) {
-      const fieldObj = { ...value, id: uuidFn(`${name}_`) }
-
-      if (defaultOption !== null && !Boolean(value.option)) {
-        fieldObj.option = defaultOption
-      }
-
-      return fieldObj
+export function createNewValueFieldObject(
+  value,
+  name,
+  defaultOption,
+  idx = 0
+): FieldValue {
+  // If it's an object already, grab the fields first
+  if (isObject(value)) {
+    const fieldObj = {
+      ...value,
+      id: value.id || `${name}_${idx}`,
+      validated: false,
     }
 
-    const fieldObj: any = { value, id: uuidFn(`${name}_`) }
-
-    if (defaultOption !== null) {
+    if (defaultOption !== null && !Boolean(value.option)) {
       fieldObj.option = defaultOption
     }
 
     return fieldObj
   }
+
+  const fieldObj: any = {
+    value,
+    id: `${name}_${idx}`,
+    validated: false,
+  }
+
+  if (defaultOption !== null) {
+    fieldObj.option = defaultOption
+  }
+
+  return fieldObj
 }
 
 export function generateFieldActions(actions): FieldAction[] | [] {
@@ -190,6 +225,7 @@ export const INPUT_CLASSNAMES = {
   optionsDropdown: `${INPUT_COMPONENT_KEY}__optionsDropdown`,
   selectedOption: `${INPUT_COMPONENT_KEY}__selectedOption`,
   focusIndicator: `${INPUT_COMPONENT_KEY}__focusIndicator`,
+  validation: `${INPUT_COMPONENT_KEY}__validation`,
 }
 
 export const ACTIONS_CLASSNAMES = {
@@ -222,6 +258,7 @@ export const OTHERCOMPONENTS_CLASSNAMES = {
 export const STATES_CLASSNAMES = {
   hasOptions: 'has-options',
   hasActiveFields: 'has-activeFields',
+  fieldDisabled: 'field-disabled',
   isActive: 'is-active',
   isDisabled: 'is-disabled',
   isEmphasized: 'is-emphasized',
@@ -231,7 +268,10 @@ export const STATES_CLASSNAMES = {
   isLarge: 'is-large',
   isPlaceholder: 'is-placeholder',
   isTemporaryValue: 'is-temporary-value',
+  error: 'is-error',
+  warning: 'is-warning',
   withPlaceholder: 'with-placeholder',
+  withValidation: 'with-validation',
 }
 
 export const COLOURS = {
@@ -264,4 +304,20 @@ export const COLOURS = {
     hover: '#3c5263',
     delete: getColor('red.500'),
   },
+  states: {
+    default: getColor('blue.500'),
+    error: getColor('red.500'),
+    warning: getColor('yellow.500'),
+  },
+}
+
+export function getValidationColor(validationInfo?): string {
+  let color =
+    COLOURS.states[(validationInfo && validationInfo.type) || 'default']
+
+  if (validationInfo && validationInfo.color) {
+    color = validationInfo.color
+  }
+
+  return color
 }

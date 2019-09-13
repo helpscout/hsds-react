@@ -1,5 +1,10 @@
 import styled from '../../styled/index'
-import { COLOURS, ACTIONS_CLASSNAMES } from '../EditableField.utils'
+import {
+  COLOURS,
+  ACTIONS_CLASSNAMES,
+  STATES_CLASSNAMES,
+  OTHERCOMPONENTS_CLASSNAMES,
+} from '../EditableField.utils'
 
 export const ComponentUI = styled('div')`
   ${({ numberOfActions }) => `width: ${numberOfActions * 25 + 5}px;`}
@@ -14,6 +19,11 @@ export const ComponentUI = styled('div')`
 
   &:hover {
     opacity: 1;
+  }
+
+  .${STATES_CLASSNAMES.fieldDisabled} &,
+  &.${STATES_CLASSNAMES.withValidation} {
+    display: none;
   }
 `
 
@@ -49,7 +59,7 @@ export const FieldButtonUI = styled('button')`
       }
     }
 
-    .c-Icon {
+    .${OTHERCOMPONENTS_CLASSNAMES.icon} {
       width: 24px;
       transform: translateX(3px);
     }

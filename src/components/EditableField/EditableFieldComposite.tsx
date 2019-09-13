@@ -15,6 +15,7 @@ import {
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
 import propConnect from '../PropProvider/propConnect'
+import * as equal from 'fast-deep-equal'
 
 import { CompositeProps, CompositeState } from './EditableField.types'
 
@@ -31,28 +32,7 @@ export class EditableFieldComposite extends React.PureComponent<
   constructor(props) {
     super(props)
 
-    let fields: React.ReactElement<any>[] = []
-    let maskItems: { name: string; text: string }[] = []
-
-    React.Children.forEach(props.children, (child: React.ReactElement<any>) => {
-      maskItems.push({
-        name: child.props.name,
-        text: child.props.value ? child.props.value : '',
-      })
-
-      fields.push(
-        React.cloneElement(child, {
-          key: child.props.name,
-          inline: true,
-          size: props.size,
-          onInputFocus: this.handleFieldFocus(child.props.onInputFocus),
-          onInputBlur: this.handleFieldBlur(child.props.onInputBlur),
-          onInputChange: this.handleInputChange(child.props.onInputChange),
-          onEnter: this.handleEnter(child.props.onEnter),
-          onEscape: this.handleEscape(child.props.onEscape),
-        })
-      )
-    })
+    const { fields, maskItems } = this.getChildrenFromProps(props)
 
     this.state = {
       fields,
@@ -73,7 +53,41 @@ export class EditableFieldComposite extends React.PureComponent<
     this.maskRef = node
   }
 
-  componentDidUpdate() {
+  getChildrenFromProps = (props): any => {
+    let fields: React.ReactElement<any>[] = []
+    let maskItems: { name: string; text: string }[] = []
+
+    React.Children.forEach(props.children, (child: React.ReactElement<any>) => {
+      maskItems.push({
+        name: child.props.name,
+        text: child.props.value ? child.props.value : '',
+      })
+
+      fields.push(
+        React.cloneElement(child, {
+          key: child.props.name,
+          inline: true,
+          size: props.size,
+          onInputFocus: this.handleFieldFocus(child.props.onInputFocus),
+          onInputBlur: this.handleFieldBlur(child.props.onInputBlur),
+          onChange: this.handleChange(child.props.onChange),
+          onEnter: this.handleEnter(child.props.onEnter),
+          onEscape: this.handleEscape(child.props.onEscape),
+        })
+      )
+    })
+
+    return { fields, maskItems }
+  }
+
+  componentDidUpdate(prevProps) {
+    /* istanbul ignore next */
+    if (!equal(this.props.children, prevProps.children)) {
+      const { fields, maskItems } = this.getChildrenFromProps(this.props)
+
+      this.setState({ fields, maskItems })
+    }
+
     if (this.state.inputState === 'blurred') {
       /**
        * Beware: Trickery ahead
@@ -151,7 +165,7 @@ export class EditableFieldComposite extends React.PureComponent<
     }
   }
 
-  handleInputChange = passedFn => {
+  handleChange = passedFn => {
     return ({ name, value }) => {
       passedFn && passedFn()
 
@@ -159,7 +173,7 @@ export class EditableFieldComposite extends React.PureComponent<
 
       this.setState({
         maskItems: maskItems.map(m => {
-          if (name.includes(m.name)) {
+          if (name && name.includes(m.name)) {
             return { ...m, text: value[0].value }
           }
           return m

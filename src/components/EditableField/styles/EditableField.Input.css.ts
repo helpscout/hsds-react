@@ -5,6 +5,7 @@ import { FONT_FAMILY } from '../../../styles/configs/constants'
 import {
   COLOURS,
   SIZES,
+  FIELDSTATES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   STATES_CLASSNAMES,
@@ -41,7 +42,7 @@ export const ComponentUI = styled('div')`
     height: ${field.height.large};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} &:hover {
+  .${STATES_CLASSNAMES.fieldDisabled} &:hover {
     cursor: initial;
     border-bottom: 1px solid ${COLOURS.invisible};
   }
@@ -147,7 +148,7 @@ export const InputUI = styled('input')`
 
       & + .${INPUT_CLASSNAMES.focusIndicator} {
         transform: scaleX(1);
-        background-color: ${COLOURS.focusIndicator.active} !important;
+        background-color: ${COLOURS.focusIndicator.active};
         height: ${focusIndicator.active};
       }
     }
@@ -156,8 +157,11 @@ export const InputUI = styled('input')`
       cursor: pointer;
     }
 
-    .${STATES_CLASSNAMES.isDisabled} & {
+    .${STATES_CLASSNAMES.fieldDisabled} & {
       cursor: not-allowed;
+      pointer-events: none;
+      display: none;
+      color: ${COLOURS.input.placeholder};
     }
 
     .${STATES_CLASSNAMES.isEmpty} &:focus {
@@ -208,7 +212,9 @@ export const OptionsWrapperUI = styled('div')`
     height: ${field.height.large};
   }
 
-  .${STATES_CLASSNAMES.isDisabled} & ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
+  .${STATES_CLASSNAMES.fieldDisabled}
+    &
+    ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
     cursor: initial;
   }
 
@@ -300,10 +306,28 @@ export const FocusIndicatorUI = styled('span')`
   left: 0;
   right: 0;
   height: ${focusIndicator.active};
-  background-color: ${COLOURS.focusIndicator.active};
+  background-color: ${({ color }) => color};
   transform-origin: bottom left;
   transform: scaleX(0);
   transition: transform 0.3s ease, background-color 0.3s ease;
   z-index: 3;
   will-change: transform, background-color;
+
+  .${STATES_CLASSNAMES.withValidation} & {
+    transform: scaleX(1);
+  }
+`
+
+export const ValidationIconUI = styled('div')`
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: all;
+
+  .${OTHERCOMPONENTS_CLASSNAMES.icon} {
+    color: ${({ color }) => color};
+  }
 `
