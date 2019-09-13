@@ -175,6 +175,66 @@ describe('Value', () => {
     expect(val2).toEqual(initialValue)
   })
 
+  test('handleInputKeyPress', () => {
+    const spy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" value="hello" onInputKeyPress={spy} />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleInputKeyPress({
+      event,
+      name,
+    })
+    expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
+  })
+
+  test('handleInputKeyUp', () => {
+    const spy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" value="hello" onInputKeyUp={spy} />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleInputKeyUp({
+      event,
+      name,
+    })
+    expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
+  })
+
+  test('handleInputKeyDown', () => {
+    const spy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" value="hello" onInputKeyDown={spy} />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleInputKeyDown({
+      event,
+      name,
+    })
+    expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
+  })
+
   test('handleInputKeyDown enter: commits value', () => {
     const wrapper: any = mount(<EditableField name="company" value="hello" />)
     const initialValue = wrapper.state('fieldValue')
