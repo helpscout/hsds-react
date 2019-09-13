@@ -44,7 +44,7 @@ export type Validation = {
 
 export type CommitData = {
   cause: 'BLUR' | 'ENTER' | 'OPTION_SELECTION' | 'DELETE_ACTION'
-  operation: 'CREATE' | 'UPDATE' | 'DELETE'
+  operation: string
   item: Object
 }
 

@@ -6,6 +6,7 @@ import {
   LabelTextUI,
   AddButtonUI,
 } from './styles/EditableField.css'
+import { OPERATION } from './constants'
 import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
@@ -255,7 +256,7 @@ export class EditableField extends React.Component<
             value: fieldValue,
             data: {
               cause: 'BLUR',
-              operation: 'UPDATE',
+              operation: OPERATION.UPDATE,
               item: changedField,
             },
           })
@@ -303,8 +304,8 @@ export class EditableField extends React.Component<
                   operation:
                     /* istanbul ignore next */ updatedFieldValue.length >
                     initialFieldValue.length
-                      ? 'CREATE'
-                      : 'UPDATE',
+                      ? OPERATION.CREATE
+                      : OPERATION.UPDATE,
                   item: changedField,
                 },
               })
@@ -382,7 +383,7 @@ export class EditableField extends React.Component<
               value: this.state.fieldValue,
               data: {
                 cause: 'BLUR',
-                operation: 'DELETE',
+                operation: OPERATION.DELETE,
                 item: fieldValue.filter(field => !Boolean(field.value))[0],
               },
             })
@@ -396,7 +397,7 @@ export class EditableField extends React.Component<
             value: this.state.fieldValue,
             data: {
               cause: 'BLUR',
-              operation: 'UPDATE',
+              operation: OPERATION.UPDATE,
               item: fieldValue.filter(field => !Boolean(field.value))[0],
             },
           })
@@ -523,8 +524,8 @@ export class EditableField extends React.Component<
                       operation:
                         /* istanbul ignore next */ updatedFieldValue.length >
                         initialFieldValue.length
-                          ? 'CREATE'
-                          : 'UPDATE',
+                          ? OPERATION.CREATE
+                          : OPERATION.UPDATE,
                       item: updatedFieldValue.filter(
                         field => field.id === name
                       )[0],
@@ -697,7 +698,7 @@ export class EditableField extends React.Component<
             value: newFieldValue,
             data: {
               cause: 'OPTION_SELECTION',
-              operation: 'UPDATE',
+              operation: OPERATION.UPDATE,
               item,
             },
           })
@@ -774,7 +775,7 @@ export class EditableField extends React.Component<
           value: this.state.fieldValue,
           data: {
             cause: 'DELETE_ACTION',
-            operation: 'DELETE',
+            operation: OPERATION.DELETE,
             item: fieldValue.filter(field => field.id === name)[0],
           },
         })
