@@ -9,7 +9,6 @@ export const AvatarCrop = props => {
     animationEasing,
     className,
     children,
-    hasImage,
     isImageLoaded,
     withShadow,
   } = props
@@ -22,7 +21,6 @@ export const AvatarCrop = props => {
   )
 
   const styles = {
-    backgroundColor: isImageLoaded ? 'transparent' : 'currentColor',
     transition: `background-color ${animationDuration}ms ${getEasingTiming(
       animationEasing
     )}`,
