@@ -117,6 +117,7 @@ export class Avatar extends React.PureComponent<Props, State> {
         ? IMAGE_STATES.fallbackLoaded
         : IMAGE_STATES.loaded,
     })
+
     this.props.onLoad && this.props.onLoad()
   }
 
