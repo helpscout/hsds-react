@@ -1,13 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-// import Frame from 'react-frame-component'
-import { Text, Tooltip } from '../../src/components/index'
+import { Text, Tooltip } from '../src/components'
 import styled from 'styled-components'
-import { ScopeProvider, ThemeProvider } from '../../src/components/styled'
+import { ScopeProvider, ThemeProvider } from '../src/components/styled'
 
-import { Frame } from '../../src/components/FrameProvider'
+import Frame from '../src/components/Frame'
 
-const stories = storiesOf('Fancy/FrameProvider', module)
+const stories = storiesOf('Frame', module)
 
 const Card = styled('div')`
   padding: 20px;
