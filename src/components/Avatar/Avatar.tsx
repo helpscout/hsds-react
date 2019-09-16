@@ -93,11 +93,6 @@ export class Avatar extends React.PureComponent<Props, State> {
     imageLoaded: IMAGE_STATES.loading,
   }
 
-  shouldComponentUpdate(newProps, newState) {
-    console.log('shouldComponentUpdate', newProps, newState)
-    return true
-  }
-
   onImageLoadedError = () => {
     const { imageLoaded } = this.state
 
@@ -111,7 +106,6 @@ export class Avatar extends React.PureComponent<Props, State> {
     this.setState({
       imageLoaded: newImageLoaded,
     })
-    console.log('onImageLoaonImageLoadedErrordedSuccess', newImageLoaded)
     this.props.onError && this.props.onError()
   }
 
@@ -123,10 +117,7 @@ export class Avatar extends React.PureComponent<Props, State> {
         ? IMAGE_STATES.fallbackLoaded
         : IMAGE_STATES.loaded,
     })
-    console.log(
-      'onImageLoadedSuccess',
-      isFallbackLoading ? IMAGE_STATES.fallbackLoaded : IMAGE_STATES.loaded
-    )
+
     this.props.onLoad && this.props.onLoad()
   }
 

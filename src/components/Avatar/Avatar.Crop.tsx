@@ -21,12 +21,11 @@ export const AvatarCrop = props => {
   )
 
   const styles = {
-    // backgroundColor: isImageLoaded ? 'transparent' : 'currentColor',
     transition: `background-color ${animationDuration}ms ${getEasingTiming(
       animationEasing
     )}`,
   }
-  console.log(styles)
+
   return (
     <CropUI className={componentClassName} style={styles}>
       {children}
