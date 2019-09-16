@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import EditableField from '../src/components/EditableField'
 import { EditableFieldComposite } from '../src/components/EditableField'
 
@@ -11,7 +12,7 @@ import { withAktiv } from './utils'
 
 const stories = storiesOf('EditableField', module)
   .addParameters({
-    options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
+    options: { showPanel: true, enableShortcuts: false, isFullscreen: false },
     readme: { sidebar: ReadMe },
     a11y: { element: 'c-EditableField' },
   })
@@ -376,6 +377,22 @@ stories.add('Validation', () => (
         { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
       ]}
       validate={validateFieldValue}
+    />
+  </ContainerUI>
+))
+
+stories.add('Key Events', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Company"
+      name="company"
+      placeholder="Add a company name"
+      type="text"
+      onKeyUp={action('onKeyUp')}
     />
   </ContainerUI>
 ))
