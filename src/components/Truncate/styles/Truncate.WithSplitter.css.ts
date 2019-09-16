@@ -8,7 +8,7 @@ export const TruncateWithSplitterUI = styled('div')`
 
   .${TRUNCATED_CLASSNAMES.firstChunk} {
     flex-shrink: 2;
-    min-width: 20px;
+    min-width: 21px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
