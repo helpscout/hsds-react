@@ -72,7 +72,7 @@ class Heading extends React.PureComponent<Props> {
 
     return (
       <HeadingUI
-        as={selectorTag}
+        as={selectorTag as any}
         {...getValidProps(rest)}
         className={componentClassName}
       >

@@ -7,7 +7,7 @@ import Spinner from '../../Spinner'
 import Icon from '../../Icon'
 import Text from '../../Text'
 import Flexy from '../../Flexy'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const config = {
   borderRadius: 3,

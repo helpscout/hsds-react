@@ -1,7 +1,11 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 
-export const FormLabelUI = styled('div')`
+interface FormLabelUIProps {
+  isHelpTextPresent?: any
+  isInline?: any
+}
+export const FormLabelUI = styled('div')<FormLabelUIProps>`
   ${baseStyles};
   display: flex;
   flex-flow: column;
@@ -37,11 +41,10 @@ export default FormLabelUI
  * is present or not
  * @param props {isInline:boolean, isHelpTextPresent:boolean }
  */
-type funcArg = { isInline: boolean; isHelpTextPresent: boolean }
 export function calculateContentRules({
   isInline,
   isHelpTextPresent,
-}: funcArg): string {
+}: FormLabelUIProps): string {
   if (isInline) {
     if (isHelpTextPresent) {
       return `

@@ -1,7 +1,7 @@
 import Dropdown from '../../Dropdown/DropdownV2'
 import Input from '../../Input'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const InputUI = styled(Input)`
   padding-left: 10px;

@@ -1,5 +1,5 @@
 import { STATUSES } from '../../../styles/configs/constants'
-import styled from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
@@ -7,7 +7,13 @@ import variableFontSize from '../../../styles/utilities/variableFontSize'
 
 const DEFAULT_COLOR = getColor('charcoal.200')
 
-const BadgeUI = styled('div')`
+interface BadgeUIProps {
+  inverted?: boolean
+  textColor?: any
+  color?: any
+}
+
+const BadgeUI = styled.div<BadgeUIProps>`
   ${baseStyles}
   ${variableFontSize({ fontSize: 12 })}
   background-color: ${props =>

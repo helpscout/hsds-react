@@ -98,19 +98,19 @@ export type InputState = {
   value: InputValue
 }
 
-export type InputBackfropV2Props = {
+export type InputBackdropV2Props = {
   className?: string
   choiceKind?: string
-  disabled: boolean
-  isFilled: boolean
-  isFocused: boolean
-  isFirst: boolean
-  isNotOnly: boolean
-  isLast: boolean
-  isSeamless: boolean
+  disabled?: boolean
+  isFilled?: boolean
+  isFocused?: boolean
+  isFirst?: boolean
+  isNotOnly?: boolean
+  isLast?: boolean
+  isSeamless?: boolean
   kind?: string
-  readOnly: boolean
-  showFocus: boolean
+  readOnly?: boolean
+  showFocus?: boolean
   state?: UIState
 }
 

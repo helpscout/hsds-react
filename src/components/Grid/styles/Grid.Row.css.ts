@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import forEach from '../../../styles/utilities/forEach'
 
 export const config = {

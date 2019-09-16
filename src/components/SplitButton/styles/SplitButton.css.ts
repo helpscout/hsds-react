@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Button from '../../Button'
 import { getColor } from '../../../styles/utilities/color'
 

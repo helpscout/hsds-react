@@ -165,7 +165,7 @@ export class ActionSelect extends React.PureComponent<
       <ActionSelectUI
         className={this.getClassName()}
         data-cy={this.props['data-cy']}
-        innerRef={innerRef}
+        ref={innerRef as any}
       >
         <div className="c-ActionSelectDropdownWrapper">
           <SelectDropdown

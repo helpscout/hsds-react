@@ -1,3 +1,4 @@
+// @ts-ignore
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
@@ -18,11 +19,11 @@ export interface Props {
   backgroundColor: string
   className?: string
   contentClassName?: string
-  fade: boolean
-  fadeBottom: boolean
-  fadeLeft: boolean
-  fadeRight: boolean
-  faderSize: number
+  fade?: boolean
+  fadeBottom?: boolean
+  fadeLeft?: boolean
+  fadeRight?: boolean
+  faderSize?: number
   innerRef: (node: HTMLElement) => void
   onScroll: (event: Event) => void
   rounded: boolean
@@ -139,7 +140,7 @@ export class Scrollable extends React.PureComponent<Props> {
     return (
       <FaderUI
         className={componentClassName}
-        innerRef={this.setFaderNodeTopNode}
+        ref={this.setFaderNodeTopNode}
         role="presentation"
         style={{
           color: backgroundColor,
@@ -159,7 +160,7 @@ export class Scrollable extends React.PureComponent<Props> {
         fadeSides
         rounded={rounded}
         className={componentClassName}
-        innerRef={this.setFaderNodeLeftNode}
+        ref={this.setFaderNodeLeftNode}
         role="presentation"
         style={{
           color: backgroundColor,
@@ -180,7 +181,7 @@ export class Scrollable extends React.PureComponent<Props> {
         fadeSides
         rounded={rounded}
         className={componentClassName}
-        innerRef={this.setFaderNodeRightNode}
+        ref={this.setFaderNodeRightNode}
         role="presentation"
         style={{
           color: backgroundColor,
@@ -203,7 +204,7 @@ export class Scrollable extends React.PureComponent<Props> {
     return (
       <FaderUI
         className={componentClassName}
-        innerRef={this.setFaderNodeBottomNode}
+        ref={this.setFaderNodeBottomNode}
         role="presentation"
         style={{
           color: backgroundColor,
@@ -236,7 +237,7 @@ export class Scrollable extends React.PureComponent<Props> {
         isScrollLocked={isScrollLocked}
         className={componentClassName}
         onScroll={this.handleOnScroll}
-        innerRef={this.setContainerNode}
+        ref={this.setContainerNode}
       >
         {children}
       </ContentUI>
@@ -274,7 +275,7 @@ export class Scrollable extends React.PureComponent<Props> {
         {...getValidProps(rest)}
         fadeSides={fadeLeft || fadeRight}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef as any}
       >
         {(fadeLeft || fadeRight) && (
           <EventListener event="resize" handler={this.handleWindowResize} />

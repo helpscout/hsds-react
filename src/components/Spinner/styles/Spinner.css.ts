@@ -1,5 +1,5 @@
 import baseStyles from '../../../styles/resets/base.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const config = {
   defaultSize: 16,
@@ -12,7 +12,7 @@ export const config = {
   },
 }
 
-export const SpinnerUI = styled('div')(props => {
+export const SpinnerUI = styled('div')<{ spinnerSize: any }>(props => {
   const { spinnerSize } = props
 
   return `
@@ -23,7 +23,7 @@ export const SpinnerUI = styled('div')(props => {
   `
 })
 
-export const SpinnerSVGUI = styled('svg')(props => {
+export const SpinnerSVGUI = styled('svg')<{ spinnerSize: any }>(props => {
   const { speed, spinnerSize } = props
 
   return `
@@ -43,8 +43,13 @@ export const SpinnerSVGUI = styled('svg')(props => {
     }
   `
 })
-
-export const SpinnerCircleUI = styled('circle')(props => {
+interface SpinnerCircleUIProps {
+  color?: any
+  shade?: any
+  isRounded?: any
+  speed?: any
+}
+export const SpinnerCircleUI = styled('circle')<SpinnerCircleUIProps>(props => {
   const { color, shade, isRounded, speed } = props
 
   const lineCap = isRounded ? 'round' : 'square'

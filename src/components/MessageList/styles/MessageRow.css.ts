@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Flexy from '../../Flexy'
 import { getColor } from '../../../styles/utilities/color'
 import Icon from '../../Icon/index'
@@ -27,14 +27,16 @@ export const ContentUI = styled(Flexy)`
   padding-right: 5px;
 `
 
-export const SortableItemUI = styled('div')`
+export const SortableItemUI = styled('div')<{ isDragging?: boolean }>`
   border-bottom: 1px solid ${getColor('border')};
   pointer-events: all;
   position: relative;
   width: 100%;
   z-index: 2;
-  &.is-dragging {
+  ${({ isDragging }) =>
+    isDragging &&
+    `
     background-color: ${getColor('grey.200')};
     border-bottom: none;
-  }
+  `};
 `

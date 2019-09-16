@@ -1,6 +1,6 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 
-export const ImageUI = styledComponent.img`
+export const ImageUI = styled.img`
   box-sizing: border-box;
   height: auto;
   max-width: 100%;

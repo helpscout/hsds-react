@@ -1,12 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Frame from 'react-frame-component'
+// import Frame from 'react-frame-component'
 import { Text, Tooltip } from '../../src/components/index'
-import styled, {
-  FrameProvider,
-  ScopeProvider,
-  ThemeProvider,
-} from '../../src/components/styled'
+import styled from 'styled-components'
+import { ScopeProvider, ThemeProvider } from '../../src/components/styled'
+
+import { Frame } from '../../src/components/FrameProvider'
 
 const stories = storiesOf('Fancy/FrameProvider', module)
 
@@ -38,21 +37,19 @@ stories.add('default', () => {
           <br />
           {this.state.showFrame && (
             <Frame>
-              <FrameProvider>
-                <ScopeProvider scope="html">
-                  <ThemeProvider theme={{ color: '#eee' }}>
-                    <div id="App">
-                      <Card>
-                        <Text>
-                          <Tooltip title="Elf!" triggerOn="click">
-                            Buddy!
-                          </Tooltip>
-                        </Text>
-                      </Card>
-                    </div>
-                  </ThemeProvider>
-                </ScopeProvider>
-              </FrameProvider>
+              <ScopeProvider scope="html">
+                <ThemeProvider theme={{ color: '#eee' }}>
+                  <div id="App">
+                    <Card>
+                      <Text>
+                        <Tooltip title="Elf!" triggerOn="click">
+                          Buddy!
+                        </Tooltip>
+                      </Text>
+                    </Card>
+                  </div>
+                </ThemeProvider>
+              </ScopeProvider>
             </Frame>
           )}
         </div>

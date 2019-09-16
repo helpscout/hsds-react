@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Icon from '../../Icon'
 import { getColor, rgba } from '../../../styles/utilities/color'
 

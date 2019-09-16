@@ -3,9 +3,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { isStateful } from './Input.utils'
 import { BackdropUI, FocusUI } from './styles/Input.BackdropV2.css'
-import { InputBackfropV2Props } from './Input.types'
+import { InputBackdropV2Props } from './Input.types'
 
-export class Backdrop extends React.PureComponent<InputBackfropV2Props> {
+export class Backdrop extends React.PureComponent<InputBackdropV2Props> {
   static defaultProps = {
     disabled: false,
     isFilled: false,

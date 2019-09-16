@@ -1,4 +1,4 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import Link from '../../Link'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import cardStyles from '../../../styles/mixins/cardStyles.css.js'
@@ -14,7 +14,7 @@ export const config = {
   transition: 'box-shadow 200ms linear, transform 200ms linear',
 }
 
-export const CardUI = styledComponent(Link)`
+export const CardUI = styled(Link)`
   ${baseStyles}
   background-color: white;
   border: 1px solid rgba(193, 203, 212, 0.7);

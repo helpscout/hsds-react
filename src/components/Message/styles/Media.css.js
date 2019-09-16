@@ -1,4 +1,4 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import Image from '../../Image'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
@@ -15,11 +15,11 @@ const mediaImageStyles = `
   object-fit: cover;
 `
 
-export const ImageUI = styledComponent(Image)`
+export const ImageUI = styled(Image)`
   ${mediaImageStyles};
 `
 
-export const MediaUI = styledComponent(Chat)`
+export const MediaUI = styled(Chat)`
   ${baseStyles};
 
   ${bem.element('caption')} {

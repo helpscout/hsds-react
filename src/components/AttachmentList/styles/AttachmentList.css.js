@@ -1,7 +1,7 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 
-export const AttachmentListUI = styledComponent.div`
+export const AttachmentListUI = styled.div`
   ${baseStyles}
 
   .c-AttachmentWrapper {

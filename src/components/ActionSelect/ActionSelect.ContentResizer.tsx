@@ -135,7 +135,7 @@ export class ContentResizer extends React.PureComponent<
         style={this.getResizeStyles()}
         onTransitionEnd={this.resetHeight}
       >
-        <ContentUI data-cy="ActionSelectContent" innerRef={this.setNodeRef}>
+        <ContentUI data-cy="ActionSelectContent" ref={this.setNodeRef}>
           {this.renderContent()}
         </ContentUI>
       </ContentResizerUI>

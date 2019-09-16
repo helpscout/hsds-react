@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
 
 import { getColor } from '../src/styles/utilities/color'
-import styled from '../src/components/styled'
+import styled from 'styled-components'
 
 import { Pagination } from '../src/components'
 

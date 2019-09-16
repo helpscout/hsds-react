@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import styled, { ThemeProvider } from '../../src/components/styled'
+import styled from 'styled-components'
+import { ThemeProvider } from '../../src/components/styled'
 
 const stories = storiesOf('Fancy/ThemeProvider', module)
 

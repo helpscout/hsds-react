@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from 'styled-components'
 import { COLOURS, ACTIONS_CLASSNAMES } from '../EditableField.utils'
 
 export const ComponentUI = styled('div')`

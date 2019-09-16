@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from '../../src/components/styled'
+import styled from 'styled-components'
 
 export const App = storyFn => <AppUI>{storyFn()}</AppUI>
 

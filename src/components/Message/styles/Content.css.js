@@ -1,11 +1,11 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import ChatBlock from '../Message.ChatBlock'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageContent')
 
-export const ContentUI = styledComponent(ChatBlock)`
+export const ContentUI = styled(ChatBlock)`
   ${baseStyles}
 
   ${bem.element('content')} {

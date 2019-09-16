@@ -108,6 +108,7 @@
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
     "react-sortable-hoc": "^1.10.0",
+    "react-styled-frame": "^1.1.0",
     "react-transition-group": "2.5.3",
     "styled-components": "5.0.0-beta.8",
     "warning": "4.0.3"
@@ -159,6 +160,7 @@
     "@types/react-dom": "^16.0.8",
     "@types/react-transition-group": "^2.0.14",
     "@types/storybook__react": "^4.0.1",
+    "@types/styled-components": "^4.1.19",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "@welldone-software/why-did-you-render": "^3.0.9",

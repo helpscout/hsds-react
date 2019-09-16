@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import { makeFieldStyles } from '../../Input/styles/Input.css'
 import { getColor } from '../../../styles/utilities/color'
 export { InlinePrefixSuffixUI } from '../../Input/styles/Input.css'

@@ -76,7 +76,7 @@ class AddButton extends React.PureComponent<ConditionAddButtonProps> {
     const size = isAnd ? 'sm' : 'xxs'
 
     return (
-      <ButtonWrapperUI align={align} innerRef={this.setNodeRef}>
+      <ButtonWrapperUI align={align} ref={this.setNodeRef as any}>
         <ButtonUI
           {...rest}
           className={this.getClassName()}

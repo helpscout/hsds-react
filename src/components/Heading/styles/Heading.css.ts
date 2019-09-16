@@ -1,4 +1,4 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import linkStyles from '../../../styles/mixins/linkStyles.css'
 import { getColor } from '../../../styles/utilities/color'
@@ -24,7 +24,7 @@ export const HEADING_SIZES = {
   small: 11,
 }
 
-export const HeadingUI = styledComponent.div`
+export const HeadingUI = styled.div`
   ${baseStyles}
   color: ${getColor('charcoal.600')};
   display: block;

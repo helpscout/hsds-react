@@ -1,4 +1,4 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import { getColor } from '../../../styles/utilities/color'
 import { shadowlessBoxShadowWithHover } from '../../../styles/mixins/cardStyles.css'
 import { noteBoxShadowWithHover } from '../../../styles/mixins/noteStyles.css'
@@ -8,7 +8,7 @@ import Card from '../../Card'
 
 const bem = BEM('.c-PreviewCard')
 
-export const PreviewCardUI = styledComponent(Card)`
+export const PreviewCardUI = styled(Card)`
   ${baseStyles};
   ${shadowlessBoxShadowWithHover()};
   padding: 20px;

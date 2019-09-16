@@ -1,6 +1,6 @@
 import { getColor } from '../../../styles/utilities/color'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 import Heading from '../../Heading'
 import Text from '../../Text'

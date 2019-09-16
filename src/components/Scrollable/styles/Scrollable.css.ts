@@ -1,10 +1,14 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const config = {
   borderRadius: '4px',
 }
 
-export const ScrollableUI = styled('div')`
+interface ScrollableUIProps {
+  fadeSides?: any
+}
+
+export const ScrollableUI = styled.div<ScrollableUIProps>`
   box-sizing: border-box;
   display: flex;
   max-height: 100%;
@@ -14,26 +18,32 @@ export const ScrollableUI = styled('div')`
   width: 100%;
 `
 
-export const ContentUI = styled('div')`
+interface ContentUIProps {
+  fadeSides?: any
+  fade?: any
+  isScrollLocked?: boolean
+}
+
+export const ContentUI = styled.div<ContentUIProps>`
   box-sizing: border-box;
   max-height: 100%;
   min-height: 0;
-  height: ${props => (props.fadeSides ? '100%' : 'auto')};
-  overflow-x: ${props => (props.fadeSides ? 'auto' : 'hidden')};
+  height: ${(props: any) => (props.fadeSides ? '100%' : 'auto')};
+  overflow-x: ${(props: any) => (props.fadeSides ? 'auto' : 'hidden')};
   overflow-y: auto;
-  overscroll-behavior-x: ${props =>
+  overscroll-behavior-x: ${(props: any) =>
     props.isScrollLocked && props.fadeSides ? 'contain' : 'auto'};
-  overscroll-behavior-y: ${props =>
+  overscroll-behavior-y: ${(props: any) =>
     props.isScrollLocked && props.fade ? 'contain' : 'auto'};
   position: relative;
   width: 100%;
   will-change: scroll-position;
 `
 
-export const FaderUI = styled('div')`
+export const FaderUI = styled<any>('div')`
   color: white;
-  height: ${props => (props.fadeSides ? '100%' : '28px')};
-  width: ${props => (props.fadeSides ? '28px' : 'auto')};
+  height: ${(props: any) => (props.fadeSides ? '100%' : '28px')};
+  width: ${(props: any) => (props.fadeSides ? '28px' : 'auto')};
   position: absolute;
   transform: scaleY(0);
   z-index: 1;

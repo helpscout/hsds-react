@@ -1,4 +1,4 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 import { getColor } from '../../../styles/utilities/color'
@@ -13,7 +13,7 @@ const config = {
 
 const bem = BEM('.c-MessageEmbed')
 
-export const EmbedUI = styledComponent(Chat)`
+export const EmbedUI = styled(Chat)`
   ${baseStyles}
 
   ${bem.element('html')} {

@@ -1,4 +1,4 @@
-import styled, { styledComponent } from '../styled'
+import styled from 'styled-components'
 import { BEM } from '../../utilities/classNames'
 import baseStyles from '../../styles/resets/baseStyles.css'
 import cardStyles, {
@@ -35,7 +35,7 @@ export const ErrorBorderUI = styled('div')`
   `};
 `
 
-export const AttachmentUI = styledComponent.a`
+export const AttachmentUI = styled.a`
   ${linkStyles()}
   ${baseStyles}
   background-color: white;

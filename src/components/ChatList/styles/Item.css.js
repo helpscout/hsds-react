@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Card from '../../Card'
 import Flexy from '../../Flexy'
 import Link from '../../Link'

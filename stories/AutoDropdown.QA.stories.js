@@ -6,7 +6,7 @@ import AutoDropdown from '../src/components/AutoDropdown'
 import Button from '../src/components/Button'
 import Input from '../src/components/Input'
 import Modal from '../src/components/Modal'
-import styled from '../src/components/styled'
+import styled from 'styled-components'
 import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
 

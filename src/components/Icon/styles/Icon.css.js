@@ -3,7 +3,7 @@ import baseStyles from '../../../styles/resets/base.css.js'
 import { STATES, TEXT_SHADES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 
 const bem = BEM('.c-Icon')
 
@@ -17,7 +17,7 @@ export const config = {
   size: 20,
 }
 
-export const IconUI = styledComponent.span`
+export const IconUI = styled.span`
   ${baseStyles};
   color: currentColor;
   display: block;
@@ -83,9 +83,9 @@ export const IconUI = styledComponent.span`
       height: ${config.caretSize}px;
       position: absolute;
       right: 0;
-      top: calc(50% - ${Math.round(config.caretSize / 2)}px + ${
-  config.offsetTop
-});
+      top: calc(
+        50% - ${Math.round(config.caretSize / 2)}px + ${config.offsetTop}
+      );
       width: ${config.caretSize}px;
     }
   }

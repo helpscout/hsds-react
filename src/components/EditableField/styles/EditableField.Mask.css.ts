@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from 'styled-components'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 import {
   COLOURS,

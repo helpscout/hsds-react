@@ -96,7 +96,7 @@ class Text extends React.PureComponent<Props> {
 
     return (
       <TextUI
-        as={selector}
+        as={selector as any}
         {...getValidProps(rest)}
         className={componentClassName}
       >

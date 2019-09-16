@@ -4,7 +4,8 @@ import { action } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import InputReadme from '../src/components/Input/README.md'
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { Button, Flexy, Icon, Input, styled } from '../src/index'
+import styled from 'styled-components'
+import { Button, Flexy, Icon, Input } from '../src/index'
 
 const stories = storiesOf('Input', module)
 

@@ -30,7 +30,7 @@ export class Item extends React.PureComponent<Props> {
       <ItemUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
         role="listitem"
       >
         {children}

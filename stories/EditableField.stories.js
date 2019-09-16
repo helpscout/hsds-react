@@ -6,7 +6,7 @@ import { action } from '@storybook/addon-actions'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import ReadMe from '../src/components/EditableField/docs/README.md'
 
-import styled from '../src/components/styled'
+import styled from 'styled-components'
 import baseStyles from '../src/styles/resets/baseStyles.css'
 import { withAktiv } from './utils'
 

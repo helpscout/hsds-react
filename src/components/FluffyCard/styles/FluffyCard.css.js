@@ -1,6 +1,6 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import Card from '../../Card'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const config = {
   borderRadius: 4,

@@ -6,6 +6,7 @@ type Props = {
   children?: any
   className?: string
   focusable: boolean
+  role?: string
 }
 
 const VisuallyHidden = (props: Props) => {

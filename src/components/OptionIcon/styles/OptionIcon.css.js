@@ -1,6 +1,6 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const config = {
   backgroundColor: getColor('purple.500'),

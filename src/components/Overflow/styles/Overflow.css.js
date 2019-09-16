@@ -1,10 +1,10 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-Overflow')
 
-export const OverflowUI = styledComponent.div`
+export const OverflowUI = styled.div`
   ${baseStyles}
   overflow: hidden;
   position: relative;
@@ -38,12 +38,20 @@ export const OverflowUI = styledComponent.div`
     z-index: 1;
 
     &.is-left {
-      background: linear-gradient(to right, currentColor, rgba(255, 255, 255, 0));
+      background: linear-gradient(
+        to right,
+        currentColor,
+        rgba(255, 255, 255, 0)
+      );
       left: 0;
       transform-origin: left;
     }
     &.is-right {
-      background: linear-gradient(to left, currentColor, rgba(255, 255, 255, 0));
+      background: linear-gradient(
+        to left,
+        currentColor,
+        rgba(255, 255, 255, 0)
+      );
       right: 0;
       transform-origin: right;
     }

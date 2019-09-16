@@ -207,7 +207,7 @@ class Collapsible extends React.Component<CollapsibleProps, CollapsibleState> {
         aria-hidden={!isOpen}
         style={componentStyle}
         className={componentClassName}
-        innerRef={this.setNodeRef}
+        ref={this.setNodeRef}
       >
         <div ref={this.setHeightNodeRef}>{content}</div>
       </CollapsibleUI>

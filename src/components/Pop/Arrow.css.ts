@@ -1,7 +1,12 @@
-import { styledComponent } from '../styled'
+import styled from 'styled-components'
 import baseStyles from '../../styles/resets/base.css.js'
 
-export const ArrowUI = styledComponent.span`
+interface ArrowUIProps {
+  size?: any
+  color?: any
+}
+
+export const ArrowUI = styled.span<ArrowUIProps>`
   ${baseStyles};
   height: ${({ size }) => size}px;
   pointer-events: none;

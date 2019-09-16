@@ -1,4 +1,4 @@
-import styled from '../../src/components/styled'
+import styled from 'styled-components'
 
 import FormLabel from '../../src/components/FormLabel'
 import Icon from '../../src/components/Icon'

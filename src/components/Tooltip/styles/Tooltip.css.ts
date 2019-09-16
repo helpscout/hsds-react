@@ -1,5 +1,5 @@
 import baseStyles from '../../../styles/resets/base.css.js'
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import Pop from '../../Pop'
 import { getColor } from '../../../styles/utilities/color'
 
@@ -8,11 +8,11 @@ export const config = {
   text: 'white',
 }
 
-export const TooltipUI = styledComponent(Pop)`
+export const TooltipUI = styled(Pop)`
   ${baseStyles};
 `
 
-export const PopperUI = styledComponent('span')`
+export const PopperUI = styled('span')`
   ${baseStyles};
   background-color: ${config.background};
   border-radius: 3px;

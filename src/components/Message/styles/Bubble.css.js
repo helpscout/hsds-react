@@ -1,4 +1,4 @@
-import { styledComponent } from '../../styled'
+import styled from 'styled-components'
 import Heading from '../../Heading'
 import { getColor } from '../../../styles/utilities/color'
 import baseStyles from '../../../styles/resets/baseStyles.css'
@@ -30,7 +30,7 @@ export const config = {
   },
 }
 
-export const MessageBubbleBodyUI = styledComponent.span`
+export const MessageBubbleBodyUI = styled.span`
   color: ${getColor('charcoal.500')};
   font-size: ${variableFontSize({ fontSize: 13 })};
   line-height: 19px;
@@ -38,28 +38,28 @@ export const MessageBubbleBodyUI = styledComponent.span`
   word-break: break-word;
 `
 
-export const MessageBubbleFromUI = styledComponent.div`
+export const MessageBubbleFromUI = styled.div`
   color: ${getColor('grey.800')};
   margin-bottom: 5px;
   text-align: right;
 `
 
-export const MessageBubbleIconWrapperUI = styledComponent.div`
+export const MessageBubbleIconWrapperUI = styled.div`
   left: ${config.icon.left}px;
   position: absolute;
 `
 
-export const MessageBubbleTitleUI = styledComponent(Heading)`
+export const MessageBubbleTitleUI = styled(Heading)`
   margin-bottom: 2px;
 `
 
-export const MessageBubbleTypingUI = styledComponent.div`
+export const MessageBubbleTypingUI = styled.div`
   margin-left: -5px;
   margin-right: -5px;
   padding: 7px 0;
 `
 
-export const MessageBubbleUI = styledComponent.div`
+export const MessageBubbleUI = styled.div`
   ${baseStyles}
   background-color: ${getColor('grey.400')};
   border: 1px solid ${getColor('grey.400')};

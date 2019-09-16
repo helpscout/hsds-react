@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import { isHSApp } from '../../../styles/utilities/theme'
 import Animate from '../../Animate'
 import Card from '../../Card'

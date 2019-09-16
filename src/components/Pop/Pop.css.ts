@@ -1,7 +1,7 @@
 import baseStyles from '../../styles/resets/base.css.js'
-import { styledComponent } from '../styled'
+import styled from 'styled-components'
 
-export const PopUI = styledComponent('span')`
+export const PopUI = styled('span')`
   ${baseStyles};
 
   &.is-display-block {

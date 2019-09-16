@@ -2,7 +2,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 import { config as buttonConfig } from '../../Button/styles/Button.css'
 
@@ -205,7 +205,7 @@ export const StatusUI = styled('div')`
   }
 `
 
-export const CropBorderUI = styled('div')`
+export const CropBorderUI = styled('div')<{ borderColor?: any }>`
   position: absolute;
   top: -${config.borderWidth}px;
   bottom: -${config.borderWidth}px;

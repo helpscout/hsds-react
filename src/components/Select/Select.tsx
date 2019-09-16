@@ -105,7 +105,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     }, forceAutoFocusTimeout)
   }
 
-  handleOnChange = (event: SelectEvent) => {
+  handleOnChange = (event: any) => {
     const value = (event.currentTarget as HTMLSelectElement).value
     this.props.onChange(value)
 
@@ -114,7 +114,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     })
   }
 
-  handleOnBlur = (event: SelectEvent) => {
+  handleOnBlur = (event: any) => {
     this.setState({
       isFocused: false,
     })
@@ -122,7 +122,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     this.props.onBlur(event)
   }
 
-  handleOnFocus = (event: SelectEvent) => {
+  handleOnFocus = (event: any) => {
     const { onFocus, removeStateStylesOnFocus } = this.props
     const { state } = this.state
 
@@ -343,7 +343,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
         onBlur={this.handleOnBlur}
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
-        innerRef={this.setSelectNode}
+        ref={this.setSelectNode as any}
         value={selectedValue}
       >
         {placeholderMarkup}

@@ -35,7 +35,7 @@ export class Inline extends React.PureComponent<Props> {
       <InlineUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
         role="list"
       >
         {children}
