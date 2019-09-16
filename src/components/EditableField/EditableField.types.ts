@@ -44,7 +44,7 @@ export type Validation = {
 
 export type CommitData = {
   cause: 'BLUR' | 'ENTER' | 'OPTION_SELECTION' | 'DELETE_ACTION'
-  operation: 'CREATE' | 'UPDATE' | 'DELETE'
+  operation: string
   item: Object
 }
 
@@ -89,6 +89,21 @@ export interface EditableFieldProps {
     name: string
     selection: string
     value: FieldValue[]
+  }) => void
+  onInputKeyDown: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputKeyPress: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputKeyUp: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
   }) => void
   onChange: (args: { name: string; value: FieldValue[]; event?: Event }) => void
   onEnter: (args: { name: string; value: FieldValue[]; event: Event }) => void
@@ -137,6 +152,8 @@ export interface InputProps {
   onOptionSelection: (args: { name: string; selection: string }) => void
   onChange: (args: { name: string; inputValue: string; event?: Event }) => void
   onKeyDown: (args: { name: string; event: Event }) => Promise<any>
+  onKeyPress: (args: { name: string; event: Event }) => void
+  onKeyUp: (args: { name: string; event: Event }) => void
   deleteAction: (args: {
     name: string
     action: FieldAction

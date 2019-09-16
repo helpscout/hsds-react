@@ -248,4 +248,42 @@ describe('validation', () => {
 
     expect(cy.get(`.${INPUT_CLASSNAMES.validation}`).exists()).toBeFalsy()
   })
+
+  test('handleKeyPress', () => {
+    const spy = jest.fn()
+    const name = 'greeting_1'
+    const fieldValue = { value: 'hello', id: name }
+    const wrapper: any = mount(
+      <EditableFieldInput
+        name={name}
+        fieldValue={fieldValue}
+        onKeyPress={spy}
+      />
+    )
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleKeyPress(event)
+    expect(spy).toHaveBeenCalledWith({ event, name })
+  })
+
+  test('handleKeyUp', () => {
+    const spy = jest.fn()
+    const name = 'greeting_1'
+    const fieldValue = { value: 'hello', id: name }
+    const wrapper: any = mount(
+      <EditableFieldInput name={name} fieldValue={fieldValue} onKeyUp={spy} />
+    )
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleKeyUp(event)
+    expect(spy).toHaveBeenCalledWith({ event, name })
+  })
 })

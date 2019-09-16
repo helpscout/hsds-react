@@ -6,6 +6,7 @@ import {
   LabelTextUI,
   AddButtonUI,
 } from './styles/EditableField.css'
+import { OPERATION } from './constants'
 import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
@@ -65,6 +66,9 @@ export class EditableField extends React.Component<
     onEscape: noop,
     onInputBlur: noop,
     onInputFocus: noop,
+    onInputKeyDown: noop,
+    onInputKeyPress: noop,
+    onInputKeyUp: noop,
     onOptionBlur: noop,
     onOptionChange: noop,
     onOptionFocus: noop,
@@ -252,7 +256,7 @@ export class EditableField extends React.Component<
             value: fieldValue,
             data: {
               cause: 'BLUR',
-              operation: 'UPDATE',
+              operation: OPERATION.UPDATE,
               item: changedField,
             },
           })
@@ -300,8 +304,8 @@ export class EditableField extends React.Component<
                   operation:
                     /* istanbul ignore next */ updatedFieldValue.length >
                     initialFieldValue.length
-                      ? 'CREATE'
-                      : 'UPDATE',
+                      ? OPERATION.CREATE
+                      : OPERATION.UPDATE,
                   item: changedField,
                 },
               })
@@ -379,7 +383,7 @@ export class EditableField extends React.Component<
               value: this.state.fieldValue,
               data: {
                 cause: 'BLUR',
-                operation: 'DELETE',
+                operation: OPERATION.DELETE,
                 item: fieldValue.filter(field => !Boolean(field.value))[0],
               },
             })
@@ -393,7 +397,7 @@ export class EditableField extends React.Component<
             value: this.state.fieldValue,
             data: {
               cause: 'BLUR',
-              operation: 'UPDATE',
+              operation: OPERATION.UPDATE,
               item: fieldValue.filter(field => !Boolean(field.value))[0],
             },
           })
@@ -435,12 +439,21 @@ export class EditableField extends React.Component<
     } else if (isEscape) {
       return this.handleFieldEscapePress({ event, name })
     }
-    // This path is never taken, as handleInputKeyDown is only called on enter or escape from the input
-    // But typescript is being annoying about it
-    /* istanbul ignore next */
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyDown({ name, value, event })
     return new Promise((resolve, reject) => {
       reject()
     })
+  }
+
+  handleInputKeyPress = ({ name, event }) => {
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyPress({ name, value, event })
+  }
+
+  handleInputKeyUp = ({ name, event }) => {
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyUp({ name, value, event })
   }
 
   handleFieldEnterPress = ({ event, name }) => {
@@ -511,8 +524,8 @@ export class EditableField extends React.Component<
                       operation:
                         /* istanbul ignore next */ updatedFieldValue.length >
                         initialFieldValue.length
-                          ? 'CREATE'
-                          : 'UPDATE',
+                          ? OPERATION.CREATE
+                          : OPERATION.UPDATE,
                       item: updatedFieldValue.filter(
                         field => field.id === name
                       )[0],
@@ -685,7 +698,7 @@ export class EditableField extends React.Component<
             value: newFieldValue,
             data: {
               cause: 'OPTION_SELECTION',
-              operation: 'UPDATE',
+              operation: OPERATION.UPDATE,
               item,
             },
           })
@@ -762,7 +775,7 @@ export class EditableField extends React.Component<
           value: this.state.fieldValue,
           data: {
             cause: 'DELETE_ACTION',
-            operation: 'DELETE',
+            operation: OPERATION.DELETE,
             item: fieldValue.filter(field => field.id === name)[0],
           },
         })
@@ -860,6 +873,8 @@ export class EditableField extends React.Component<
                 onOptionSelection={this.handleOptionSelection}
                 onChange={this.handleInputChange}
                 onKeyDown={this.handleInputKeyDown}
+                onKeyPress={this.handleInputKeyPress}
+                onKeyUp={this.handleInputKeyUp}
               />
               <Mask
                 {...getValidProps(rest)}
