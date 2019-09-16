@@ -73,6 +73,7 @@ export class EditableField extends React.Component<
     onOptionChange: noop,
     onOptionFocus: noop,
     validate: () => Promise.resolve({ isValid: true }),
+    validationInfo: [],
   }
 
   constructor(props) {
@@ -116,7 +117,7 @@ export class EditableField extends React.Component<
               value: option,
             }))
           : null,
-      validationInfo: [],
+      validationInfo: this.props.validationInfo,
     }
   }
 
@@ -158,26 +159,39 @@ export class EditableField extends React.Component<
 
   /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
-    if (equal(nextProps.value, this.props.value)) return
-
-    const { name, defaultOption, value, valueOptions } = nextProps
-    let defaultStateOption: any = null
-
-    // tested
-    if (valueOptions) {
-      defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
+    if (
+      equal(nextProps.value, this.props.value) &&
+      equal(nextProps.validationInfo, this.props.validationInfo)
+    ) {
+      return
     }
 
-    const initialFieldValue = normalizeFieldValue({
-      value,
-      name,
-      defaultOption: defaultStateOption,
-    })
+    if (!equal(nextProps.value, this.props.value)) {
+      const { name, defaultOption, value, valueOptions } = nextProps
+      let defaultStateOption: any = null
 
-    if (!equal(initialFieldValue, this.state.fieldValue)) {
+      // tested
+      if (valueOptions) {
+        defaultStateOption = defaultOption ? defaultOption : valueOptions[0]
+      }
+
+      const initialFieldValue = normalizeFieldValue({
+        value,
+        name,
+        defaultOption: defaultStateOption,
+      })
+
+      if (!equal(initialFieldValue, this.state.fieldValue)) {
+        this.setState({
+          fieldValue: initialFieldValue,
+          initialFieldValue,
+        })
+      }
+    }
+
+    if (!equal(nextProps.validationInfo, this.props.validationInfo)) {
       this.setState({
-        fieldValue: initialFieldValue,
-        initialFieldValue,
+        validationInfo: nextProps.validationInfo,
       })
     }
   }

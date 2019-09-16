@@ -381,6 +381,63 @@ stories.add('Validation', () => (
   </ContainerUI>
 ))
 
+stories.add('Initial Validation Errors', () => {
+  const validationInfo = [
+    {
+      isValid: false,
+      message: 'This error was set programmatically',
+      name: 'team_0',
+      type: 'error',
+      value: 'off',
+    },
+  ]
+
+  class Example extends React.Component {
+    state = {
+      validationInfo,
+    }
+    clearValidationInfo = () => this.setState({ validationInfo: [] })
+    resetValidationInfo = () => this.setState({ validationInfo })
+    render() {
+      return (
+        <ContainerUI
+          onSubmit={e => {
+            e.preventDefault()
+          }}
+        >
+          <NoteUI>
+            Type:
+            <ul>
+              <li>
+                <strong>"off"</strong> to get the error style
+              </li>
+              <li>
+                <strong>"warn"</strong> to get a warning style
+              </li>
+              <li>
+                <strong>"other"</strong> to get a custom validation style
+              </li>
+            </ul>
+          </NoteUI>
+          <EditableField
+            label="team"
+            name="team"
+            placeholder="Add a team name"
+            type="text"
+            value="atlas"
+            validate={validateFieldValue}
+            validationInfo={this.state.validationInfo}
+          />
+          <button onClick={this.clearValidationInfo}>Clear Errors</button>
+          <button onClick={this.resetValidationInfo}>Reset Errors</button>
+        </ContainerUI>
+      )
+    }
+  }
+
+  return <Example />
+})
+
 stories.add('Key Events', () => (
   <ContainerUI
     onSubmit={e => {

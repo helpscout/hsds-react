@@ -117,6 +117,7 @@ export interface EditableFieldProps {
   onDelete: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onDiscard: (args: { value: FieldValue[] }) => void
   validate: (args: { value: string; name: string }) => Promise<Validation>
+  validationInfo: Validation[]
 }
 
 export interface EditableFieldState {
