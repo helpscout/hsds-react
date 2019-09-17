@@ -189,9 +189,42 @@ export class EditableField extends React.Component<
       }
     }
 
-    if (!equal(nextProps.validationInfo, this.props.validationInfo)) {
+    if (!equal(nextProps.validationInfo, this.state.validationInfo)) {
+      const currValidationInfo = this.state.validationInfo
+      const nextValidationInfo = nextProps.validationInfo
+      const prevValidationInfo = this.props.validationInfo
+
+      if (!currValidationInfo.length) {
+        this.setState({ validationInfo: nextValidationInfo })
+      }
+
+      // Remove items that were in the previous set but not the current.
+      const removedItems = prevValidationInfo
+        .filter(({ name }) => {
+          const nextNames = nextValidationInfo.map(({ name }) => name)
+          return !nextNames.includes(name)
+        })
+        .map(({ name }) => name)
+      let updatedValidationInfo = currValidationInfo.filter(
+        ({ name }) => !removedItems.includes(name)
+      )
+
+      // Update existing items in the current set.
+      updatedValidationInfo = updatedValidationInfo.map(vi => {
+        const matches = nextValidationInfo.filter(
+          ({ name }) => name === vi.name
+        )
+        return matches.length ? matches[0] : vi
+      })
+
+      // Add extra items
+      const addedValidationInfo = nextValidationInfo.filter(({ name }) => {
+        const prevNames = prevValidationInfo.map(({ name }) => name)
+        return !prevNames.includes(name)
+      })
+
       this.setState({
-        validationInfo: nextProps.validationInfo,
+        validationInfo: [...updatedValidationInfo, ...addedValidationInfo],
       })
     }
   }

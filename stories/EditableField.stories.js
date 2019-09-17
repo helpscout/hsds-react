@@ -393,9 +393,7 @@ stories.add('Initial Validation Errors', () => {
   ]
 
   class Example extends React.Component {
-    state = {
-      validationInfo,
-    }
+    state = { validationInfo }
     clearValidationInfo = () => this.setState({ validationInfo: [] })
     resetValidationInfo = () => this.setState({ validationInfo })
     render() {
