@@ -14,7 +14,6 @@ module.exports = api => {
         },
       },
     ],
-    'emotion',
     [
       'babel-plugin-styled-components',
       {

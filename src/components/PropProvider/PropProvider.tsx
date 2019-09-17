@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { PropProviderProps } from './PropProvider.types'
 import Context from './Context'
-import { ThemeProvider } from '../styled'
+import { ThemeProvider } from 'styled-components'
 import { renderAsSingleChild } from '../../utilities/component'
 import {
   setGlobalApp,
