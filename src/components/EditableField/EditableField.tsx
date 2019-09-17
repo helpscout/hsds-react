@@ -189,7 +189,7 @@ export class EditableField extends React.Component<
       }
     }
 
-    if (!equal(nextProps.validationInfo, this.state.validationInfo)) {
+    if (!equal(nextProps.validationInfo, this.props.validationInfo)) {
       const currValidationInfo = this.state.validationInfo
       const nextValidationInfo = nextProps.validationInfo
       const prevValidationInfo = this.props.validationInfo
