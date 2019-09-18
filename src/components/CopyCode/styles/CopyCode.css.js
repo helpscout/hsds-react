@@ -65,10 +65,12 @@ export const SyntaxHighlight = styled('div')`
   outline: none;
   color: #4f5d6b;
 
-  :-moz-selection {
+  div::-moz-selection,
+  span::-moz-selection {
     background: #daf1ff;
   }
-  :selection {
+  div::selection,
+  span::selection {
     background: #daf1ff;
   }
 
