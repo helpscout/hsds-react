@@ -57,7 +57,7 @@ export const SyntaxHighlight = styled('div')`
   width: 100%;
   height: 100%;
   word-break: break-all;
-  white-space: normal;
+  white-space: pre-wrap;
   background: none;
   font-family: 'Roboto Mono', monospace;
   font-size: 12px;

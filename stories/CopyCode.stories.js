@@ -19,7 +19,7 @@ stories.add('JavaScript', () => {
 stories.add('Swift', () => {
   return (
     <CopyCode
-      code={`let settings = HSBeaconSettings(beaconId: "dfb87142-d529-4f3a-aa31-1e3afc4a18b8") HSBeacon.open(settings)`}
+      code={`let settings = HSBeaconSettings(beaconId: "dfb87142-d529-4f3a-aa31-1e3afc4a18b8") \n HSBeacon.open(settings)`}
       maxWidth={500}
       language="swift"
       onCopy={action('Copy')}
