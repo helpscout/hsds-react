@@ -198,19 +198,8 @@ export class EditableField extends React.Component<
         this.setState({ validationInfo: nextValidationInfo })
       }
 
-      // Remove items that were in the previous set but not the current.
-      const removedItems = prevValidationInfo
-        .filter(({ name }) => {
-          const nextNames = nextValidationInfo.map(({ name }) => name)
-          return !nextNames.includes(name)
-        })
-        .map(({ name }) => name)
-      let updatedValidationInfo = currValidationInfo.filter(
-        ({ name }) => !removedItems.includes(name)
-      )
-
       // Update existing items in the current set.
-      updatedValidationInfo = updatedValidationInfo.map(vi => {
+      const updatedValidationInfo = currValidationInfo.map(vi => {
         const matches = nextValidationInfo.filter(
           ({ name }) => name === vi.name
         )
