@@ -13,7 +13,7 @@ stories.add('default', () => (
     <p>
       Auto:
       <br />
-      <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
+      <Truncate>{fixture.generate()}</Truncate>
     </p>
     <p>
       Start:
