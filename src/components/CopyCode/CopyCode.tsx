@@ -1,13 +1,22 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Highlight from '../Highlight'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { COMPONENT_KEY } from './CopyCode.utils'
-import { CopyButtonUI, CopyCodeUI, WrapperUI } from './styles/CopyCode.css'
+import {
+  CopyButtonUI,
+  CopyCodeUI,
+  SyntaxHighlight,
+  WrapperUI,
+} from './styles/CopyCode.css'
 import Keys from '../../constants/Keys'
+const Prism = require('prismjs')
+require('prismjs/components/prism-java')
+require('prismjs/components/prism-swift')
+require('prismjs/components/prism-c')
+require('prismjs/components/prism-objectivec')
 
 type Props = {
   autoFocus: boolean
@@ -15,7 +24,7 @@ type Props = {
   code: string
   copyToClipboard: boolean
   innerRef: (node: HTMLElement) => void
-  language?: string
+  language: string
   onCopy: (code: string) => void
 }
 
@@ -27,7 +36,7 @@ class CopyCode extends React.PureComponent<Props> {
     innerRef: noop,
     onCopy: noop,
   }
-  codeNode: HTMLElement
+  node: HTMLElement
 
   componentDidMount() {
     /* istanbul ignore else */
@@ -66,7 +75,7 @@ class CopyCode extends React.PureComponent<Props> {
   }
 
   selectText = () => {
-    this.codeNode && selectText(this.codeNode)
+    this.node && selectText(this.node)
   }
 
   preventEventDefault = (event: KeyboardEvent | Event) => {
@@ -75,28 +84,31 @@ class CopyCode extends React.PureComponent<Props> {
   }
 
   setNodeRef = (node: HTMLElement) => {
-    this.codeNode = node
+    this.node = node
     this.props.innerRef(node)
   }
 
-  getCodeMarkup = () => {
+  getCodeMarkup() {
     const { code, language } = this.props
 
-    return language ? (
-      <Highlight language={language}>{code}</Highlight>
-    ) : (
-      <pre>
-        <code>{code}</code>
-      </pre>
+    function createMarkup() {
+      const html = Prism.highlight(code, Prism.languages[language], language)
+      return { __html: html }
+    }
+
+    return (
+      <SyntaxHighlight>
+        <div dangerouslySetInnerHTML={createMarkup()} />
+      </SyntaxHighlight>
     )
   }
 
   render() {
-    const { className, code, language, ...rest } = this.props
+    const { className, code, maxWidth, ...rest } = this.props
     const componentClassName = classNames('c-CopyCode', className)
 
     return (
-      <WrapperUI className={componentClassName}>
+      <WrapperUI className={componentClassName} maxWidth={maxWidth}>
         <CopyCodeUI
           {...getValidProps(rest)}
           contentEditable
@@ -109,7 +121,6 @@ class CopyCode extends React.PureComponent<Props> {
         >
           {this.getCodeMarkup()}
         </CopyCodeUI>
-
         <CopyButtonUI
           kind="secondary"
           onClick={this.handleCopyClick}
