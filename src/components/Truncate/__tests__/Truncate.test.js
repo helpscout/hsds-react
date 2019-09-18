@@ -3,6 +3,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import { mount } from 'enzyme'
 import Tooltip from '../../Tooltip'
 import { Truncate } from '../Truncate'
+import { TRUNCATED_CLASSNAMES } from '../Truncate.utils'
 
 const fixture = createSpec(faker.lorem.paragraph())
 
@@ -50,6 +51,27 @@ describe('Type', () => {
     wrapper.setProps({ type: 'start' })
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('splitter', () => {
+  test('Will truncate text with splitter if provided', () => {
+    const wrapper = mount(
+      <Truncate type="end" limit={10} splitter="@">
+        longemailaddress@gmail.com
+      </Truncate>
+    )
+
+    expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.withSplitter}`)).toBeTruthy()
+    expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.firstChunk}`).text()).toBe(
+      'longemailaddress'
+    )
+    expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.splitterChunk}`).text()).toBe(
+      '@'
+    )
+    expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.secondChunk}`).text()).toBe(
+      'gmail.com'
+    )
   })
 })
 
