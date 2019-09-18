@@ -31,7 +31,7 @@ type Props = {
 
 class CopyCode extends React.PureComponent<Props> {
   static defaultProps = {
-    autoFocus: true,
+    autoFocus: false,
     code: '',
     copyToClipboard: true,
     innerRef: noop,
