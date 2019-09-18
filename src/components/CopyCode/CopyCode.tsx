@@ -35,6 +35,7 @@ class CopyCode extends React.PureComponent<Props> {
     code: '',
     copyToClipboard: true,
     innerRef: noop,
+    language: 'javascript',
     maxWidth: 500,
     onCopy: noop,
   }
