@@ -25,6 +25,7 @@ type Props = {
   copyToClipboard: boolean
   innerRef: (node: HTMLElement) => void
   language: string
+  maxWidth: number
   onCopy: (code: string) => void
 }
 
@@ -34,6 +35,7 @@ class CopyCode extends React.PureComponent<Props> {
     code: '',
     copyToClipboard: true,
     innerRef: noop,
+    maxWidth: 500,
     onCopy: noop,
   }
   node: HTMLElement
