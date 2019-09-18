@@ -10,7 +10,7 @@ const limit = 10
 
 stories.add('default', () => (
   <div>
-    <p style={{ width: '50%' }}>
+    <p>
       Auto:
       <br />
       <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
