@@ -1,6 +1,6 @@
 # CopyCode
 
-This component renders a [Highlighted](../Highlight) code snippet with the ability to copy to clipboard, powered by [CopyButton](../CopyButton).
+This component renders a code snippet with the ability to copy to clipboard, powered by [CopyButton](../CopyButton).
 
 ## Example
 
@@ -10,12 +10,12 @@ This component renders a [Highlighted](../Highlight) code snippet with the abili
 
 ## Props
 
-| Prop            | Type       | Description                                                                                                                                                     |
-| --------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| autoFocus       | `boolean`  | Automatically select `code` when component mounts.                                                                                                              |
-| className       | `string`   | Custom class names to be added to the component.                                                                                                                |
-| code            | `string`   | The code to be displayed within the container.                                                                                                                  |
-| copyToClipboard | `boolean`  | Enables copying to clipboard.                                                                                                                                   |
-| innerRef        | `function` | Retrieves the DOM node.                                                                                                                                         |
-| language        | `string`   | The language of the code for syntax highlighting ([available languages in highlight.js](https://github.com/highlightjs/highlight.js/tree/master/src/languages)) |
-| onCopy          | `function` | Callback function when the copy button is clicked.                                                                                                              |
+| Prop            | Type       | Description                                                    |
+| --------------- | ---------- | -------------------------------------------------------------- |
+| autoFocus       | `boolean`  | Automatically select `code` when component mounts.             |
+| code            | `string`   | The code to be displayed within the container.                 |
+| copyToClipboard | `boolean`  | Enables copying to clipboard.                                  |
+| innerRef        | `function` | Retrieves the DOM node.                                        |
+| language        | `string`   | Can be one of `c`, `java`, `javascript`, `objectivec`, `swift` |
+| maxWidth        | `number`   | Sets the max width of the container.                           |
+| onCopy          | `function` | Callback function when the copy button is clicked.             |
