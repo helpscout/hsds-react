@@ -1,6 +1,6 @@
 # CopyCode
 
-This component renders a [Highlighted](../Highlight) code snippet with the ability to copy to clipboard, powered by [CopyButton](../CopyButton).
+This component renders a code snippet with the ability to copy to clipboard, powered by [CopyButton](../CopyButton).
 
 ## Example
 
