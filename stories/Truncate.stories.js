@@ -11,25 +11,36 @@ const limit = 10
 stories.add('default', () => (
   <div>
     <p>
-      Auto:<br />
-      <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
+      Auto:
+      <br />
+      <Truncate>{fixture.generate()}</Truncate>
     </p>
     <p>
-      Start:<br />
+      Start:
+      <br />
       <Truncate type="start" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      Middle:<br />
+      Middle:
+      <br />
       <Truncate type="middle" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      End:<br />
+      End:
+      <br />
       <Truncate type="end" limit={limit}>
         {fixture.generate()}
+      </Truncate>
+    </p>
+    <p style={{ width: '25%' }}>
+      Truncate by Splitter:
+      <br />
+      <Truncate type="start" limit={limit} splitter="@">
+        longemailaddress@gmail.com
       </Truncate>
     </p>
     <br />
@@ -39,23 +50,27 @@ stories.add('default', () => (
 stories.add('tooltip', () => (
   <div>
     <p>
-      Auto:<br />
+      Auto:
+      <br />
       <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
     </p>
     <p>
-      Start:<br />
+      Start:
+      <br />
       <Truncate showTooltipOnTruncate type="start" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      Middle:<br />
+      Middle:
+      <br />
       <Truncate showTooltipOnTruncate type="middle" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      End:<br />
+      End:
+      <br />
       <Truncate showTooltipOnTruncate type="end" limit={limit}>
         {fixture.generate()}
       </Truncate>

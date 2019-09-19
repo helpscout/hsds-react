@@ -6,6 +6,8 @@ import styled from '../styled'
 import { truncateMiddle } from '../../utilities/strings'
 import css from './styles/Truncate.css'
 import { TruncateProps, TruncateState } from './Truncate.types'
+import { TruncateWithSplitterUI } from './styles/Truncate.WithSplitter.css'
+import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
 
 export class Truncate extends React.PureComponent<
   TruncateProps,
@@ -101,6 +103,7 @@ export class Truncate extends React.PureComponent<
       ellipsis,
       limit,
       showTooltipOnTruncate,
+      splitter,
       tooltipPlacement,
       tooltipProps,
       tooltipModifiers,
@@ -117,14 +120,37 @@ export class Truncate extends React.PureComponent<
     )
 
     const shouldShowTooltip = showTooltipOnTruncate && this.state.isTruncated
-    const word = this.getTruncatedContent()
+    let truncatedText
 
-    const wordMarkup = (
+    if (splitter) {
+      const str = text || children
+      const [first, second] = str.split(splitter)
+
+      truncatedText = (
+        <TruncateWithSplitterUI
+          className={`${TRUNCATED_CLASSNAMES.component} ${
+            TRUNCATED_CLASSNAMES.withSplitter
+          }`}
+        >
+          <span className={`${TRUNCATED_CLASSNAMES.firstChunk}`}>{first}</span>
+          <span className={`${TRUNCATED_CLASSNAMES.splitterChunk}`}>
+            {splitter}
+          </span>
+          <span className={`${TRUNCATED_CLASSNAMES.secondChunk}`}>
+            {second}
+          </span>
+        </TruncateWithSplitterUI>
+      )
+    } else {
+      truncatedText = this.getTruncatedContent()
+    }
+
+    const textMarkup = (
       <span
         className="c-Truncate__content"
         ref={(ref: any) => (this.contentNode = ref)}
       >
-        {word}
+        {truncatedText}
       </span>
     )
     const content = shouldShowTooltip ? (
@@ -134,10 +160,10 @@ export class Truncate extends React.PureComponent<
         placement={tooltipPlacement}
         title={title || this.getText()}
       >
-        {wordMarkup}
+        {textMarkup}
       </Tooltip>
     ) : (
-      wordMarkup
+      textMarkup
     )
 
     return (
