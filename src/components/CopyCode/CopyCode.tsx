@@ -77,7 +77,7 @@ class CopyCode extends React.PureComponent<Props> {
     return this.props.code
   }
 
-  selectText = () => {
+  selectText() {
     this.node && selectText(this.node)
   }
 

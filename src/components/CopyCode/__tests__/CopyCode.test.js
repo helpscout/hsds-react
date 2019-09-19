@@ -16,6 +16,19 @@ document.createRange = () => ({
   selectNodeContents: () => {},
 })
 
+describe('selectText', () => {
+  it('Should not call selectText', () => {
+    const selectTextSpy = jest.spyOn(CopyCode.prototype, 'selectText')
+    const wrapper = mount(<CopyCode autoFocus={false} />)
+    expect(selectTextSpy).not.toHaveBeenCalled()
+  })
+  it('Should call selectText', () => {
+    const selectTextSpy = jest.spyOn(CopyCode.prototype, 'selectText')
+    const wrapper = mount(<CopyCode autoFocus={true} />)
+    expect(selectTextSpy).toHaveBeenCalled()
+  })
+})
+
 describe('ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<CopyCode />)
