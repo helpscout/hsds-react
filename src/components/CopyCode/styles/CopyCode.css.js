@@ -30,7 +30,7 @@ export const CopyCodeUI = styled('div')`
   line-height: calc(${config.lineHeight} / ${config.fontSize});
   outline: none;
   overflow: hidden;
-  padding: 25px 20px;
+  padding: 15px 20px;
   white-space: normal;
   width: auto;
   word-break: break-all;
