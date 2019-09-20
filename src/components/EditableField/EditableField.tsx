@@ -255,6 +255,8 @@ export class EditableField extends React.Component<
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: fieldValue, event })
       })
+
+      return
     }
 
     if (!changedField.value) {
