@@ -246,6 +246,16 @@ export class EditableField extends React.Component<
       fieldValue.length === 1
         ? fieldValue[0]
         : find(fieldValue, val => val.id === event.target.id)
+    const initialField =
+      initialFieldValue.length === 1
+        ? initialFieldValue[0]
+        : find(initialFieldValue, val => val.id === event.target.id)
+
+    if (equal(initialField, changedField)) {
+      this.setState({ activeField: EMPTY_VALUE }, () => {
+        onInputBlur({ name, value: fieldValue, event })
+      })
+    }
 
     if (!changedField.value) {
       if (!multipleValuesEnabled) {
