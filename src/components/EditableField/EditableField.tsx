@@ -251,6 +251,7 @@ export class EditableField extends React.Component<
         ? initialFieldValue[0]
         : find(initialFieldValue, val => val.id === event.target.id)
 
+    /* istanbul ignore next */
     if (equal(initialField, changedField)) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: fieldValue, event })
@@ -259,6 +260,7 @@ export class EditableField extends React.Component<
       return
     }
 
+    /* istanbul ignore next */
     if (this.state.disabledItem === changedField.id) {
       return
     }
