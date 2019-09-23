@@ -259,6 +259,10 @@ export class EditableField extends React.Component<
       return
     }
 
+    if (this.state.disabledItem === changedField.id) {
+      return
+    }
+
     if (!changedField.value) {
       if (!multipleValuesEnabled) {
         this.setState({ activeField: EMPTY_VALUE }, () => {
