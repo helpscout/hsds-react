@@ -94,7 +94,7 @@ export interface EditableFieldProps {
     name: string
     value: FieldValue[]
     event: Event
-  }) => void
+  }) => any
   onInputKeyPress: (args: {
     name: string
     value: FieldValue[]

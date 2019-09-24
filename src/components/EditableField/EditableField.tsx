@@ -478,11 +478,11 @@ export class EditableField extends React.Component<
     const isEscape = event.key === key.ESCAPE
 
     const { fieldValue: value } = this.state
-    this.props.onInputKeyDown({ name, value, event })
+    const isBlocked = this.props.onInputKeyDown({ name, value, event })
 
-    if (isEnter) {
+    if (isEnter && isBlocked !== false) {
       return this.handleFieldEnterPress({ event, name })
-    } else if (isEscape) {
+    } else if (isEscape && isBlocked !== false) {
       return this.handleFieldEscapePress({ event, name })
     }
 
