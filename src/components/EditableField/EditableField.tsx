@@ -224,7 +224,8 @@ export class EditableField extends React.Component<
     )
   }
 
-  handleInputBlur = ({ name, event }) => {
+  handleInputBlur = payload => {
+    const { name, event } = payload
     const {
       activeField,
       fieldValue,
@@ -262,6 +263,10 @@ export class EditableField extends React.Component<
 
     /* istanbul ignore next */
     if (this.state.disabledItem === changedField.id) {
+      this.setState({ activeField: EMPTY_VALUE }, () => {
+        onInputBlur({ name, value: fieldValue, event })
+      })
+
       return
     }
 
