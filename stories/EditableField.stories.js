@@ -397,7 +397,8 @@ stories.add('Key Events', () => (
   </ContainerUI>
 ))
 
-function validateFieldValue({ name, value }) {
+function validateFieldValue(payload) {
+  const { name, value } = payload
   let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
 
   return new Promise(resolve => {

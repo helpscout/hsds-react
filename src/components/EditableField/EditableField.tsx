@@ -224,7 +224,8 @@ export class EditableField extends React.Component<
     )
   }
 
-  handleInputBlur = ({ name, event }) => {
+  handleInputBlur = payload => {
+    const { name, event } = payload
     const {
       activeField,
       fieldValue,
@@ -246,6 +247,28 @@ export class EditableField extends React.Component<
       fieldValue.length === 1
         ? fieldValue[0]
         : find(fieldValue, val => val.id === event.target.id)
+    const initialField =
+      initialFieldValue.length === 1
+        ? initialFieldValue[0]
+        : find(initialFieldValue, val => val.id === event.target.id)
+
+    /* istanbul ignore next */
+    if (equal(initialField, changedField)) {
+      this.setState({ activeField: EMPTY_VALUE }, () => {
+        onInputBlur({ name, value: fieldValue, event })
+      })
+
+      return
+    }
+
+    /* istanbul ignore next */
+    if (this.state.disabledItem === changedField.id) {
+      this.setState({ activeField: EMPTY_VALUE }, () => {
+        onInputBlur({ name, value: fieldValue, event })
+      })
+
+      return
+    }
 
     if (!changedField.value) {
       if (!multipleValuesEnabled) {
@@ -269,11 +292,36 @@ export class EditableField extends React.Component<
     if (changedField.value && !changedField.validated) {
       this.setState({ disabledItem: changedField.id })
 
+      // Get the next values and commit prior to validation so that
+      // we can use it in validation.
+      let updatedFieldValue = this.state.fieldValue.map(field => {
+        // tested
+        /* istanbul ignore next */
+        if (field.id === changedField.id) {
+          return { ...changedField, validated: true }
+        }
+        // tested
+        /* istanbul ignore next */
+        return field
+      })
+
       validate({
-        value: changedField.value,
+        data: {
+          cause: 'BLUR',
+          operation:
+            /* istanbul ignore next */ updatedFieldValue.length >
+            initialFieldValue.length
+              ? OPERATION.CREATE
+              : OPERATION.UPDATE,
+          item: changedField,
+        },
         name: changedField.id,
+        value: changedField.value,
+        values: updatedFieldValue,
       }).then(validation => {
-        const updatedFieldValue = this.state.fieldValue.map(field => {
+        // Since this is async and the state of other fields may have changed,
+        // we need to recompute this.
+        updatedFieldValue = this.state.fieldValue.map(field => {
           // tested
           /* istanbul ignore next */
           if (field.id === changedField.id) {
@@ -434,13 +482,15 @@ export class EditableField extends React.Component<
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
 
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyDown({ name, value, event })
+
     if (isEnter) {
       return this.handleFieldEnterPress({ event, name })
     } else if (isEscape) {
       return this.handleFieldEscapePress({ event, name })
     }
-    const { fieldValue: value } = this.state
-    this.props.onInputKeyDown({ name, value, event })
+
     return new Promise((resolve, reject) => {
       reject()
     })
@@ -489,15 +539,35 @@ export class EditableField extends React.Component<
         // Case 3: value was changed
         const impactedField = find(fieldValue, val => val.id === name)
 
+        // Get the next values and commit prior to validation so that
+        // we can use it in validation.
+        let updatedFieldValue = this.updateFieldValue({
+          name,
+          value: inputValue,
+        })
+
         // Skip if the field was marked as validated
         /* istanbul ignore else */
         if (!impactedField.validated) {
           this.setState({ disabledItem: name })
 
-          validate({ value: inputValue, name }).then(validation => {
-            let updatedFieldValue
-
+          validate({
+            data: {
+              cause: 'ENTER',
+              operation:
+                /* istanbul ignore next */ updatedFieldValue.length >
+                initialFieldValue.length
+                  ? OPERATION.CREATE
+                  : OPERATION.UPDATE,
+              item: updatedFieldValue.filter(field => field.id === name)[0],
+            },
+            name,
+            value: inputValue,
+            values: updatedFieldValue,
+          }).then(validation => {
             if (validation.isValid) {
+              // Since this is async and the state of other fields may have changed,
+              // we need to recompute this.
               updatedFieldValue = this.updateFieldValue({
                 name,
                 value: inputValue,

@@ -147,6 +147,17 @@ stories.add('default', () => (
   </Modal>
 ))
 
+stories.add('no close on escape', () => (
+  <Modal closeOnEscape={false} trigger={<Link>Open dis modal</Link>}>
+    <Modal.Body>
+      <Heading>Title</Heading>
+      {ContentSpec.generate(8).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+  </Modal>
+))
+
 stories.add('open', () => (
   <Modal isOpen trigger={<Link>Clicky</Link>}>
     <Modal.Content>
