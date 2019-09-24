@@ -480,6 +480,8 @@ export class EditableField extends React.Component<
     if (isEnter) {
       return this.handleFieldEnterPress({ event, name })
     } else if (isEscape) {
+      // Stop the escape event from bubbling up
+      event.stopPropagation()
       return this.handleFieldEscapePress({ event, name })
     }
 
