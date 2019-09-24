@@ -477,16 +477,14 @@ export class EditableField extends React.Component<
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
 
+    const { fieldValue: value } = this.state
+    this.props.onInputKeyDown({ name, value, event })
+
     if (isEnter) {
       return this.handleFieldEnterPress({ event, name })
     } else if (isEscape) {
-      // Stop the escape event from bubbling up
-      event.stopPropagation() && event.stopImmediatePropagation()
       return this.handleFieldEscapePress({ event, name })
     }
-
-    const { fieldValue: value } = this.state
-    this.props.onInputKeyDown({ name, value, event })
 
     return new Promise((resolve, reject) => {
       reject()
