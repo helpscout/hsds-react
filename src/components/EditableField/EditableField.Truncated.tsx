@@ -17,10 +17,10 @@ const Truncated = ({ string, splitter }: TruncateProps) => {
         }`}
       >
         <span className={`${TRUNCATED_CLASSNAMES.firstChunk}`}>{first}</span>
-        <span className={`${TRUNCATED_CLASSNAMES.splitterChunk}`}>
+        <span className={`${TRUNCATED_CLASSNAMES.secondChunk}`}>
           {splitter}
+          {second}
         </span>
-        <span className={`${TRUNCATED_CLASSNAMES.secondChunk}`}>{second}</span>
       </TruncatedUI>
     )
   }

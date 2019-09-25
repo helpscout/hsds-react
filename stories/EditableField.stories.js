@@ -158,6 +158,7 @@ stories.add('Email Multiple', () => (
       placeholder="Add your email"
       type="email"
       value={[
+        'a@hello.com',
         'art_vandelay@vandelayindustries.com',
         'john_locke@dharma.org',
         'pennypacker@kramerica.com',
