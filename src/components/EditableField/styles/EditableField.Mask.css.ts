@@ -154,7 +154,6 @@ export const MaskValueUI = styled('span')`
   }
 
   &:focus {
-    width: auto;
     outline: 0;
     border-bottom: 1px dashed ${COLOURS.mask.focused};
 

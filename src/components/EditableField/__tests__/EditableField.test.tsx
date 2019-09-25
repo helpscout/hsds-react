@@ -40,6 +40,13 @@ describe('HTML props', () => {
 
     expect(el.exists()).toBeTruthy()
   })
+
+  test('email type should have input text type', () => {
+    cy.render(<EditableField type="email" name="company" />)
+    const el = cy.get('input')
+
+    expect(el.getAttribute('type')).toBe('text')
+  })
 })
 
 describe('Label', () => {
