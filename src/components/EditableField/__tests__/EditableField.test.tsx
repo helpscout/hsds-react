@@ -1261,7 +1261,7 @@ describe('should component update', () => {
       ...actualState,
     }
     const newStateChanged = {
-      maskTabIndex: 'something',
+      maskTabIndex: ['something'],
     }
 
     expect(
@@ -1285,7 +1285,7 @@ describe('should component update', () => {
       ...actualState,
     }
     const newStateChanged = {
-      disabledItem: 'something',
+      disabledItem: ['something'],
     }
 
     expect(

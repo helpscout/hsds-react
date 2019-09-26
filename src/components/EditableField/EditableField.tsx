@@ -965,7 +965,7 @@ export class EditableField extends React.Component<
               />
               {actions &&
               Boolean(val.value) &&
-              disabledItem.indexOf(val.id) !== -1 &&
+              disabledItem.indexOf(val.id) === -1 &&
               !disabled ? (
                 <Actions
                   actions={actions}
