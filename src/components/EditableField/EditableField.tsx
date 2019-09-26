@@ -102,7 +102,7 @@ export class EditableField extends React.Component<
       actions: generateFieldActions(actions),
       activeField: EMPTY_VALUE,
       defaultOption: defaultStateOption,
-      disabledItem: '',
+      disabledItem: [],
       fieldValue: initialFieldValue,
       initialFieldValue,
       maskTabIndex: null,
@@ -142,7 +142,7 @@ export class EditableField extends React.Component<
       return true
     }
 
-    if (this.state.disabledItem !== nextState.disabledItem) {
+    if (!equal(this.state.disabledItem, nextState.disabledItem)) {
       return true
     }
 
@@ -230,7 +230,6 @@ export class EditableField extends React.Component<
       fieldValue,
       initialFieldValue,
       multipleValuesEnabled,
-      validationInfo,
     } = this.state
     const { validate, onCommit, onInputBlur } = this.props
 
@@ -261,7 +260,7 @@ export class EditableField extends React.Component<
     }
 
     /* istanbul ignore next */
-    if (this.state.disabledItem === changedField.id) {
+    if (this.state.disabledItem.indexOf(changedField.id) !== -1) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: fieldValue, event })
       })
@@ -289,7 +288,9 @@ export class EditableField extends React.Component<
     }
 
     if (changedField.value && !changedField.validated) {
-      this.setState({ disabledItem: changedField.id })
+      this.setState({
+        disabledItem: this.state.disabledItem.concat(changedField.id),
+      })
 
       // Get the next values and commit prior to validation so that
       // we can use it in validation.
@@ -334,10 +335,12 @@ export class EditableField extends React.Component<
         if (validation.isValid) {
           this.setState(
             {
-              disabledItem: '',
+              disabledItem: this.state.disabledItem.filter(
+                item => item !== changedField.id
+              ),
               fieldValue: updatedFieldValue,
               initialFieldValue: updatedFieldValue,
-              validationInfo: validationInfo.filter(
+              validationInfo: this.state.validationInfo.filter(
                 /* istanbul ignore next */ valItem =>
                   valItem.name !== changedField.id
               ),
@@ -393,9 +396,11 @@ export class EditableField extends React.Component<
         } else {
           this.setState(
             {
-              disabledItem: '',
+              disabledItem: this.state.disabledItem.filter(
+                item => item !== changedField.id
+              ),
               fieldValue: updatedFieldValue,
-              validationInfo: validationInfo.concat(validation),
+              validationInfo: this.state.validationInfo.concat(validation),
             },
             () => {
               onInputBlur({ name, value: fieldValue, event })
@@ -458,7 +463,6 @@ export class EditableField extends React.Component<
 
   handleInputChange = ({ inputValue, name, event }) => {
     const { onChange } = this.props
-    const { validationInfo } = this.state
     const newFieldValue = this.assignInputValueToFieldValue({
       inputValue,
       name,
@@ -467,7 +471,7 @@ export class EditableField extends React.Component<
     this.setState(
       {
         fieldValue: newFieldValue,
-        validationInfo: validationInfo.filter(
+        validationInfo: this.state.validationInfo.filter(
           /* istanbul ignore next */ valItem => valItem.name !== name
         ),
       },
@@ -507,12 +511,7 @@ export class EditableField extends React.Component<
 
   handleFieldEnterPress = ({ event, name }) => {
     const { validate, onEnter, onCommit } = this.props
-    const {
-      initialFieldValue,
-      fieldValue,
-      multipleValuesEnabled,
-      validationInfo,
-    } = this.state
+    const { initialFieldValue, fieldValue, multipleValuesEnabled } = this.state
     const inputValue = event.currentTarget.value
     const impactedField = find(initialFieldValue, val => val.id === name)
     const valueDidNotChange =
@@ -548,7 +547,7 @@ export class EditableField extends React.Component<
         // Skip if the field was marked as validated
         /* istanbul ignore else */
         if (!impactedField.validated) {
-          this.setState({ disabledItem: name })
+          this.setState({ disabledItem: this.state.disabledItem.concat(name) })
 
           validate({
             data: {
@@ -575,11 +574,13 @@ export class EditableField extends React.Component<
               this.setState(
                 {
                   activeField: EMPTY_VALUE,
-                  disabledItem: '',
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== name
+                  ),
                   fieldValue: updatedFieldValue,
                   initialFieldValue: updatedFieldValue,
                   maskTabIndex: name,
-                  validationInfo: validationInfo.filter(
+                  validationInfo: this.state.validationInfo.filter(
                     /* istanbul ignore next */ valItem => valItem.name === name
                   ),
                 },
@@ -623,9 +624,11 @@ export class EditableField extends React.Component<
               this.setState(
                 {
                   activeField: name,
-                  disabledItem: '',
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== name
+                  ),
                   fieldValue: updatedFieldValue,
-                  validationInfo: validationInfo.concat(validation),
+                  validationInfo: this.state.validationInfo.concat(validation),
                 },
                 () => {
                   resolve()
@@ -725,7 +728,7 @@ export class EditableField extends React.Component<
 
   handleOptionSelection = ({ name, selection }) => {
     const { onChange, onOptionChange, onCommit } = this.props
-    const { fieldValue, validationInfo } = this.state
+    const { fieldValue } = this.state
     let newFieldValue: FieldValue[] = []
     let changed = false
     let hasBeenValidated = ''
@@ -752,7 +755,7 @@ export class EditableField extends React.Component<
 
       if (hasBeenValidated !== '') {
         isItemInvalid = find(
-          validationInfo,
+          this.state.validationInfo,
           val => val.name === hasBeenValidated
         )
       }
@@ -871,13 +874,13 @@ export class EditableField extends React.Component<
 
   renderAddButton = () => {
     const { disabled } = this.props
-    const { fieldValue, multipleValuesEnabled, validationInfo } = this.state
+    const { fieldValue, multipleValuesEnabled } = this.state
 
     const isLastValueEmpty =
       fieldValue[fieldValue.length - 1].value === EMPTY_VALUE
     const isSingleAndEmpty = fieldValue.length === 1 && isLastValueEmpty
     const invalidValuePresent =
-      validationInfo.filter(valItem => !valItem.isValid).length > 0
+      this.state.validationInfo.filter(valItem => !valItem.isValid).length > 0
 
     return multipleValuesEnabled && !isSingleAndEmpty && !disabled ? (
       <AddButtonUI
@@ -901,16 +904,16 @@ export class EditableField extends React.Component<
       maskTabIndex,
       multipleValuesEnabled,
       valueOptions,
-      validationInfo,
     } = this.state
 
     return (
       <div className={EDITABLEFIELD_CLASSNAMES.fieldWrapper}>
         {fieldValue.map((val, index) => {
           const isActive = activeField === val.id
-          const isDisabled = val.disabled || disabledItem === val.id
+          const isDisabled =
+            val.disabled || this.state.disabledItem.indexOf(val.id) !== -1
           const valInfo = find(
-            validationInfo,
+            this.state.validationInfo,
             valItem => valItem.name === val.id
           )
 
@@ -962,7 +965,7 @@ export class EditableField extends React.Component<
               />
               {actions &&
               Boolean(val.value) &&
-              disabledItem !== val.id &&
+              disabledItem.indexOf(val.id) !== -1 &&
               !disabled ? (
                 <Actions
                   actions={actions}
@@ -1025,6 +1028,8 @@ export class EditableField extends React.Component<
   render() {
     const { disabled, inline, label, name, type, value, ...rest } = this.props
     const { fieldValue } = this.state
+
+    // console.log(`EditableField ${name}`, this.state.maskTabIndex)
 
     if (inline) {
       return (
