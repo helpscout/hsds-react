@@ -269,6 +269,13 @@ export class EditableField extends React.Component<
       return
     }
 
+    /**
+     * This should no longer be needed, but just commenting out
+     * for now to do a beta release and verify in-app. In a nutshell,
+     * even if there is no value, we want to validation to run if the
+     * value did not change and this field is not currently being
+     * validated.
+     *
     if (!changedField.value) {
       if (!multipleValuesEnabled) {
         this.setState({ activeField: EMPTY_VALUE }, () => {
@@ -287,6 +294,7 @@ export class EditableField extends React.Component<
         return
       }
     }
+    */
 
     if (changedField.value && !changedField.validated) {
       this.setState({ disabledItem: changedField.id })
