@@ -333,6 +333,8 @@ class ValidationApp extends React.Component {
   state = { timeout: 100 }
 
   validateFieldValue = payload => {
+    console.log('validating')
+
     const { name, value } = payload
     let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
 

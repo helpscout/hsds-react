@@ -268,26 +268,7 @@ export class EditableField extends React.Component<
       return
     }
 
-    if (!changedField.value) {
-      if (!multipleValuesEnabled) {
-        this.setState({ activeField: EMPTY_VALUE }, () => {
-          onInputBlur({ name, value: fieldValue, event })
-          onCommit({
-            name,
-            value: fieldValue,
-            data: {
-              cause: 'BLUR',
-              operation: OPERATION.UPDATE,
-              item: changedField,
-            },
-          })
-        })
-
-        return
-      }
-    }
-
-    if (changedField.value && !changedField.validated) {
+    if (!changedField.validated) {
       this.setState({
         disabledItem: this.state.disabledItem.concat(changedField.id),
       })
