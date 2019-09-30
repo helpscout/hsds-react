@@ -326,7 +326,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
             innerRef={this.setInputNode}
             name={name}
             placeholder={placeholder}
-            type="text"
+            type={type === 'password' ? type : 'text'}
             value={fieldValue.value}
             onBlur={this.handleInputBlur}
             onChange={this.handleChange}

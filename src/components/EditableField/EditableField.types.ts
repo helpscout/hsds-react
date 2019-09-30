@@ -28,7 +28,14 @@ export type Option = {
   value: string
 }
 
-export type FieldType = 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+export type FieldType =
+  | 'text'
+  | 'email'
+  | 'url'
+  | 'tel'
+  | 'number'
+  | 'textarea'
+  | 'password'
 export type FieldSize = 'md' | 'lg'
 export type FieldState = 'default' | 'error' | 'warning' | 'other'
 

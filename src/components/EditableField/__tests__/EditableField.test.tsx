@@ -47,6 +47,13 @@ describe('HTML props', () => {
 
     expect(el.getAttribute('type')).toBe('text')
   })
+
+  test('password type should have input password type', () => {
+    cy.render(<EditableField type="password" name="company" />)
+    const el = cy.get('input')
+
+    expect(el.getAttribute('type')).toBe('password')
+  })
 })
 
 describe('Label', () => {
