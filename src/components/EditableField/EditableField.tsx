@@ -324,6 +324,10 @@ export class EditableField extends React.Component<
         return field
       })
 
+      // Allow references to this event to be maintained in the async
+      // code that follows.
+      event.persist()
+
       validate({
         data: {
           cause: CAUSE.BLUR,
@@ -551,6 +555,10 @@ export class EditableField extends React.Component<
         /* istanbul ignore else */
         if (!impactedField.validated) {
           this.setState({ disabledItem: this.state.disabledItem.concat(name) })
+
+          // Allow references to this event to be maintained in the async
+          // code that follows.
+          event.persist()
 
           validate({
             data: {
