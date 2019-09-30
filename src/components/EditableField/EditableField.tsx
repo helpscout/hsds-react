@@ -225,35 +225,30 @@ export class EditableField extends React.Component<
 
   handleInputBlur = payload => {
     const { name, event } = payload
-    const {
-      activeField,
-      fieldValue,
-      initialFieldValue,
-      multipleValuesEnabled,
-    } = this.state
-    const { validate, onCommit, onInputBlur } = this.props
+    const { activeField, multipleValuesEnabled } = this.state
+    const { validate, onCommit, onDiscard, onInputBlur } = this.props
 
-    if (equal(initialFieldValue, fieldValue)) {
+    if (equal(this.state.initialFieldValue, this.state.fieldValue)) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: fieldValue, event })
+        onInputBlur({ name, value: this.state.fieldValue, event })
       })
 
       return
     }
 
     const changedField =
-      fieldValue.length === 1
-        ? fieldValue[0]
-        : find(fieldValue, val => val.id === event.target.id)
+      this.state.fieldValue.length === 1
+        ? this.state.fieldValue[0]
+        : find(this.state.fieldValue, val => val.id === event.target.id)
     const initialField =
-      initialFieldValue.length === 1
-        ? initialFieldValue[0]
-        : find(initialFieldValue, val => val.id === event.target.id)
+      this.state.initialFieldValue.length === 1
+        ? this.state.initialFieldValue[0]
+        : find(this.state.initialFieldValue, val => val.id === event.target.id)
 
     /* istanbul ignore next */
     if (equal(initialField, changedField)) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: fieldValue, event })
+        onInputBlur({ name, value: this.state.fieldValue, event })
       })
 
       return
@@ -262,12 +257,14 @@ export class EditableField extends React.Component<
     /* istanbul ignore next */
     if (this.state.disabledItem.indexOf(changedField.id) !== -1) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: fieldValue, event })
+        onInputBlur({ name, value: this.state.fieldValue, event })
       })
 
       return
     }
 
+    // tested
+    /* istanbul ignore else */
     if (!changedField.validated) {
       this.setState({
         disabledItem: this.state.disabledItem.concat(changedField.id),
@@ -291,7 +288,7 @@ export class EditableField extends React.Component<
           cause: 'BLUR',
           operation:
             /* istanbul ignore next */ updatedFieldValue.length >
-            initialFieldValue.length
+            this.state.initialFieldValue.length
               ? OPERATION.CREATE
               : OPERATION.UPDATE,
           item: changedField,
@@ -314,66 +311,133 @@ export class EditableField extends React.Component<
         })
 
         if (validation.isValid) {
-          this.setState(
-            {
-              disabledItem: this.state.disabledItem.filter(
-                item => item !== changedField.id
-              ),
-              fieldValue: updatedFieldValue,
-              initialFieldValue: updatedFieldValue,
-              validationInfo: this.state.validationInfo.filter(
-                /* istanbul ignore next */ valItem =>
-                  valItem.name !== changedField.id
-              ),
-            },
-            () => {
-              onCommit({
-                name,
-                value: fieldValue,
-                data: {
-                  cause: 'BLUR',
-                  operation:
-                    /* istanbul ignore next */ updatedFieldValue.length >
-                    initialFieldValue.length
-                      ? OPERATION.CREATE
-                      : OPERATION.UPDATE,
-                  item: changedField,
+          // 1. Non-empty Value
+          if (changedField.value) {
+            this.setState(
+              {
+                disabledItem: this.state.disabledItem.filter(
+                  item => item !== changedField.id
+                ),
+                fieldValue: updatedFieldValue,
+                initialFieldValue: updatedFieldValue,
+                validationInfo: this.state.validationInfo.filter(
+                  /* istanbul ignore next */ valItem =>
+                    valItem.name !== changedField.id
+                ),
+              },
+              () => {
+                onCommit({
+                  name,
+                  value: this.state.fieldValue,
+                  data: {
+                    cause: 'BLUR',
+                    operation:
+                      /* istanbul ignore next */ updatedFieldValue.length >
+                      this.state.initialFieldValue.length
+                        ? OPERATION.CREATE
+                        : OPERATION.UPDATE,
+                    item: changedField,
+                  },
+                })
+                onInputBlur({ name, value: this.state.fieldValue, event })
+
+                /**
+                 * Managing "Active Field"
+                 *
+                 * One consequence of the 'blur' activity being _always_ async (the result of being executed inside a Promise)
+                 * is that the normal sequence of events is no longer executed in the "regular" flow.
+                 *
+                 * Sync (previous behaviour):
+                 * 1. blur (sets activeField to '')
+                 * 2. focus (sets activeField to whatever input was focused)
+                 *
+                 * Async (current behaviour):
+                 * 1. blur ...validation Promise...
+                 * 2. focus (sets activeField to whatever input was focused)
+                 * 3. ...validation Promise comes back... blur sets activeField to '' <=== DAMN!
+                 *
+                 * To get back the correct behaviour, we leave 'focus' as is, which will _always_ set the activeField
+                 * to the focused input. With that info, we can update the active field _after_ the blur
+                 * setState, knowing that if the activeState in the state is different from what we had before
+                 * it means the focus event kicked in.
+                 */
+
+                const unchangedByFocusEvent =
+                  this.state.activeField === activeField
+
+                /* istanbul ignore next */
+                this.setState({
+                  activeField: unchangedByFocusEvent
+                    ? EMPTY_VALUE
+                    : this.state.activeField,
+                })
+              }
+            )
+          } else {
+            // 2. Empty value
+            const removedEmptyFields = this.state.fieldValue.filter(field =>
+              Boolean(field.value)
+            )
+            const shouldDiscardEmpty =
+              multipleValuesEnabled &&
+              removedEmptyFields.length < this.state.fieldValue.length &&
+              removedEmptyFields.length > 0
+
+            // 2.1 In multivalue fields, remove just the empty one when there's at least 2 fields
+            if (shouldDiscardEmpty) {
+              this.setState(
+                {
+                  activeField: EMPTY_VALUE,
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== changedField.id
+                  ),
+                  fieldValue: removedEmptyFields,
+                  initialFieldValue: this.state.fieldValue,
                 },
-              })
-              onInputBlur({ name, value: fieldValue, event })
-
-              /**
-               * Managing "Active Field"
-               *
-               * One consequence of the 'blur' activity being _always_ async (the result of being executed inside a Promise)
-               * is that the normal sequence of events is no longer executed in the "regular" flow.
-               *
-               * Sync (previous behaviour):
-               * 1. blur (sets activeField to '')
-               * 2. focus (sets activeField to whatever input was focused)
-               *
-               * Async (current behaviour):
-               * 1. blur ...validation Promise...
-               * 2. focus (sets activeField to whatever input was focused)
-               * 3. ...validation Promise comes back... blur sets activeField to '' <=== DAMN!
-               *
-               * To get back the correct behaviour, we leave 'focus' as is, which will _always_ set the activeField
-               * to the focused input. With that info, we can update the active field _after_ the blur
-               * setState, knowing that if the activeState in the state is different from what we had before
-               * it means the focus event kicked in.
-               */
-
-              const unchangedByFocusEvent =
-                this.state.activeField === activeField
-
-              /* istanbul ignore next */
-              this.setState({
-                activeField: unchangedByFocusEvent
-                  ? EMPTY_VALUE
-                  : this.state.activeField,
-              })
+                () => {
+                  onCommit({
+                    name,
+                    value: this.state.fieldValue,
+                    data: {
+                      cause: 'BLUR',
+                      operation: OPERATION.DELETE,
+                      item: this.state.fieldValue.filter(
+                        field => !Boolean(field.value)
+                      )[0],
+                    },
+                  })
+                  onDiscard({ value: this.state.fieldValue })
+                  onInputBlur({ name, value: this.state.fieldValue, event })
+                }
+              )
+            } else {
+              // 2.2 If single value or multivalue field with just one value, clear the field but don't remove it
+              this.setState(
+                {
+                  activeField: EMPTY_VALUE,
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== changedField.id
+                  ),
+                  fieldValue: this.state.fieldValue,
+                  initialFieldValue: this.state.fieldValue,
+                },
+                () => {
+                  onCommit({
+                    name,
+                    value: this.state.fieldValue,
+                    data: {
+                      cause: 'BLUR',
+                      operation: OPERATION.UPDATE,
+                      item: this.state.fieldValue.filter(
+                        field => !Boolean(field.value)
+                      )[0],
+                    },
+                  })
+                  onInputBlur({ name, value: this.state.fieldValue, event })
+                }
+              )
             }
-          )
+          }
         } else {
           this.setState(
             {
@@ -384,59 +448,11 @@ export class EditableField extends React.Component<
               validationInfo: this.state.validationInfo.concat(validation),
             },
             () => {
-              onInputBlur({ name, value: fieldValue, event })
+              onInputBlur({ name, value: this.state.fieldValue, event })
             }
           )
         }
       })
-
-      return
-    }
-
-    /* istanbul ignore else */
-    if (this.state.valueOptions == null) {
-      const removedEmptyFields = fieldValue.filter(field =>
-        Boolean(field.value)
-      )
-      const shouldDiscardEmpty =
-        multipleValuesEnabled &&
-        removedEmptyFields.length < fieldValue.length &&
-        removedEmptyFields.length > 0
-
-      if (shouldDiscardEmpty) {
-        this.setState(
-          {
-            fieldValue: removedEmptyFields,
-            activeField: EMPTY_VALUE,
-          },
-          () => {
-            this.props.onDiscard({ value: this.state.fieldValue })
-            onCommit({
-              name,
-              value: this.state.fieldValue,
-              data: {
-                cause: 'BLUR',
-                operation: OPERATION.DELETE,
-                item: fieldValue.filter(field => !Boolean(field.value))[0],
-              },
-            })
-            this.props.onInputBlur({ name, value: fieldValue, event })
-          }
-        )
-      } else {
-        this.setState({ activeField: EMPTY_VALUE }, () => {
-          onCommit({
-            name,
-            value: this.state.fieldValue,
-            data: {
-              cause: 'BLUR',
-              operation: OPERATION.UPDATE,
-              item: fieldValue.filter(field => !Boolean(field.value))[0],
-            },
-          })
-          onInputBlur({ name, value: fieldValue, event })
-        })
-      }
 
       return
     }

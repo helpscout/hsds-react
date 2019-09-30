@@ -1369,9 +1369,14 @@ describe('Input Blur', () => {
     cy.get('input').type('')
     cy.get('input').blur()
 
-    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
-    expect(commitSpy).toHaveBeenCalled()
-    expect(blurSpy).toHaveBeenCalled()
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
   })
 
   test('If value cleared in multivalue, it should deactivate the field and remove', () => {
@@ -1403,11 +1408,16 @@ describe('Input Blur', () => {
       .first()
       .blur()
 
-    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
-    expect(cy.get('input').length).toBe(1)
-    expect(commitSpy).toHaveBeenCalled()
-    expect(blurSpy).toHaveBeenCalled()
-    expect(discardSpy).toHaveBeenCalled()
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(cy.get('input').length).toBe(1)
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+      expect(discardSpy).toHaveBeenCalled()
+    })
   })
 
   test('If value cleared in multivalue, it should not remove the only field left', () => {
@@ -1439,10 +1449,15 @@ describe('Input Blur', () => {
       .first()
       .blur()
 
-    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
-    expect(cy.get('input').length).toBe(1)
-    expect(commitSpy).toHaveBeenCalled()
-    expect(blurSpy).toHaveBeenCalled()
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(cy.get('input').length).toBe(1)
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
   })
 
   test('If value changed and valid, it should commit', () => {
