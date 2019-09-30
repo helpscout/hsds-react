@@ -279,7 +279,7 @@ export class EditableField extends React.Component<
         {
           activeField: EMPTY_VALUE,
           disabledItem: this.state.disabledItem.filter(
-            item => item !== changedField.id
+            /* istanbul ignore next */ item => item !== changedField.id
           ),
           fieldValue: removedEmptyFields,
           initialFieldValue: this.state.fieldValue,
