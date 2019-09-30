@@ -10,38 +10,6 @@ export const INPUT_COMPONENT_KEY = 'FieldInput'
 export const MASK_COMPONENT_KEY = 'FieldMask'
 export const TRUNCATED_COMPONENT_KEY = 'Truncated'
 
-export const ACTION_ICONS = {
-  delete: 'cross-small',
-  link: 'new-window',
-  plus: 'plus-small',
-  valueOption: 'chevron-down',
-}
-
-export const deleteAction: FieldAction = {
-  name: 'delete',
-}
-
-export const FIELDTYPES = {
-  text: 'text',
-  email: 'email',
-  url: 'url',
-  tel: 'tel',
-  number: 'number',
-  textarea: 'textarea',
-}
-export const FIELDSIZES = { md: 'md', lg: 'lg' }
-export const FIELDSTATES = {
-  default: 'default',
-  error: 'error',
-  warning: 'warning',
-}
-export const COMMIT_CAUSES = {
-  BLUR: 'BLUR',
-  ENTER: 'ENTER',
-  OPTION_SELECTION: 'OPTION_SELECTION',
-  DELETE_ACTION: 'DELETE_ACTION',
-}
-
 export function normalizeFieldValue({
   value,
   name,
@@ -91,6 +59,10 @@ export function createNewValueFieldObject(
   }
 
   return fieldObj
+}
+
+const deleteAction: FieldAction = {
+  name: 'delete',
 }
 
 export function generateFieldActions(actions): FieldAction[] | [] {

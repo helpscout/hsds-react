@@ -6,7 +6,14 @@ import {
   LabelTextUI,
   AddButtonUI,
 } from './styles/EditableField.css'
-import { OPERATION } from './constants'
+import {
+  ACTION_ICONS,
+  CAUSE,
+  EMPTY_VALUE,
+  FIELDTYPES,
+  FIELDSIZES,
+  OPERATION,
+} from './constants'
 import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
@@ -20,9 +27,6 @@ import {
   createNewValueFieldObject,
   generateFieldActions,
   normalizeFieldValue,
-  ACTION_ICONS,
-  FIELDTYPES,
-  FIELDSIZES,
   EDITABLEFIELD_CLASSNAMES,
   STATES_CLASSNAMES,
 } from './EditableField.utils'
@@ -38,8 +42,6 @@ import {
   EditableFieldState,
   FieldValue,
 } from './EditableField.types'
-
-const EMPTY_VALUE = ''
 
 export class EditableField extends React.Component<
   EditableFieldProps,
@@ -263,6 +265,45 @@ export class EditableField extends React.Component<
       return
     }
 
+    // In multivalue fields, remove the empty one when there're at least 2 fields
+    const removedEmptyFields = this.state.fieldValue.filter(field =>
+      Boolean(field.value)
+    )
+    const shouldDiscardEmpty =
+      multipleValuesEnabled &&
+      removedEmptyFields.length < this.state.fieldValue.length &&
+      removedEmptyFields.length > 0
+
+    if (shouldDiscardEmpty) {
+      this.setState(
+        {
+          activeField: EMPTY_VALUE,
+          disabledItem: this.state.disabledItem.filter(
+            item => item !== changedField.id
+          ),
+          fieldValue: removedEmptyFields,
+          initialFieldValue: this.state.fieldValue,
+        },
+        () => {
+          onCommit({
+            name,
+            value: this.state.fieldValue,
+            data: {
+              cause: CAUSE.BLUR,
+              operation: OPERATION.DELETE,
+              item: this.state.fieldValue.filter(
+                field => !Boolean(field.value)
+              )[0],
+            },
+          })
+          onDiscard({ value: this.state.fieldValue })
+          onInputBlur({ name, value: this.state.fieldValue, event })
+        }
+      )
+
+      return
+    }
+
     // tested
     /* istanbul ignore else */
     if (!changedField.validated) {
@@ -285,7 +326,7 @@ export class EditableField extends React.Component<
 
       validate({
         data: {
-          cause: 'BLUR',
+          cause: CAUSE.BLUR,
           operation:
             /* istanbul ignore next */ updatedFieldValue.length >
             this.state.initialFieldValue.length
@@ -330,7 +371,7 @@ export class EditableField extends React.Component<
                   name,
                   value: this.state.fieldValue,
                   data: {
-                    cause: 'BLUR',
+                    cause: CAUSE.BLUR,
                     operation:
                       /* istanbul ignore next */ updatedFieldValue.length >
                       this.state.initialFieldValue.length
@@ -375,68 +416,31 @@ export class EditableField extends React.Component<
             )
           } else {
             // 2. Empty value
-            const removedEmptyFields = this.state.fieldValue.filter(field =>
-              Boolean(field.value)
+            // If single value or multivalue field with just one value, clear the field but don't remove it
+            this.setState(
+              {
+                activeField: EMPTY_VALUE,
+                disabledItem: this.state.disabledItem.filter(
+                  item => item !== changedField.id
+                ),
+                fieldValue: this.state.fieldValue,
+                initialFieldValue: this.state.fieldValue,
+              },
+              () => {
+                onCommit({
+                  name,
+                  value: this.state.fieldValue,
+                  data: {
+                    cause: CAUSE.BLUR,
+                    operation: OPERATION.UPDATE,
+                    item: this.state.fieldValue.filter(
+                      field => !Boolean(field.value)
+                    )[0],
+                  },
+                })
+                onInputBlur({ name, value: this.state.fieldValue, event })
+              }
             )
-            const shouldDiscardEmpty =
-              multipleValuesEnabled &&
-              removedEmptyFields.length < this.state.fieldValue.length &&
-              removedEmptyFields.length > 0
-
-            // 2.1 In multivalue fields, remove just the empty one when there's at least 2 fields
-            if (shouldDiscardEmpty) {
-              this.setState(
-                {
-                  activeField: EMPTY_VALUE,
-                  disabledItem: this.state.disabledItem.filter(
-                    item => item !== changedField.id
-                  ),
-                  fieldValue: removedEmptyFields,
-                  initialFieldValue: this.state.fieldValue,
-                },
-                () => {
-                  onCommit({
-                    name,
-                    value: this.state.fieldValue,
-                    data: {
-                      cause: 'BLUR',
-                      operation: OPERATION.DELETE,
-                      item: this.state.fieldValue.filter(
-                        field => !Boolean(field.value)
-                      )[0],
-                    },
-                  })
-                  onDiscard({ value: this.state.fieldValue })
-                  onInputBlur({ name, value: this.state.fieldValue, event })
-                }
-              )
-            } else {
-              // 2.2 If single value or multivalue field with just one value, clear the field but don't remove it
-              this.setState(
-                {
-                  activeField: EMPTY_VALUE,
-                  disabledItem: this.state.disabledItem.filter(
-                    item => item !== changedField.id
-                  ),
-                  fieldValue: this.state.fieldValue,
-                  initialFieldValue: this.state.fieldValue,
-                },
-                () => {
-                  onCommit({
-                    name,
-                    value: this.state.fieldValue,
-                    data: {
-                      cause: 'BLUR',
-                      operation: OPERATION.UPDATE,
-                      item: this.state.fieldValue.filter(
-                        field => !Boolean(field.value)
-                      )[0],
-                    },
-                  })
-                  onInputBlur({ name, value: this.state.fieldValue, event })
-                }
-              )
-            }
           }
         } else {
           this.setState(
@@ -548,7 +552,7 @@ export class EditableField extends React.Component<
 
           validate({
             data: {
-              cause: 'ENTER',
+              cause: CAUSE.ENTER,
               operation:
                 /* istanbul ignore next */ updatedFieldValue.length >
                 initialFieldValue.length
@@ -587,7 +591,7 @@ export class EditableField extends React.Component<
                     name,
                     value: updatedFieldValue,
                     data: {
-                      cause: 'ENTER',
+                      cause: CAUSE.ENTER,
                       operation:
                         /* istanbul ignore next */ updatedFieldValue.length >
                         initialFieldValue.length
@@ -766,7 +770,7 @@ export class EditableField extends React.Component<
             name,
             value: newFieldValue,
             data: {
-              cause: 'OPTION_SELECTION',
+              cause: CAUSE.OPTION_SELECTION,
               operation: OPERATION.UPDATE,
               item,
             },
@@ -843,7 +847,7 @@ export class EditableField extends React.Component<
           name,
           value: this.state.fieldValue,
           data: {
-            cause: 'DELETE_ACTION',
+            cause: CAUSE.DELETE_ACTION,
             operation: OPERATION.DELETE,
             item: fieldValue.filter(field => field.id === name)[0],
           },

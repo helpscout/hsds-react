@@ -17,12 +17,12 @@ import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { ACTION_ICONS, FIELDTYPES } from './constants'
+
 import {
-  ACTION_ICONS,
   findParentByClassName,
   isEllipsisActive,
   getValidationColor,
-  FIELDTYPES,
   EDITABLEFIELD_CLASSNAMES,
   MASK_CLASSNAMES,
   INPUT_CLASSNAMES,
@@ -326,7 +326,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
             innerRef={this.setInputNode}
             name={name}
             placeholder={placeholder}
-            type={type === 'email' ? 'text' : type}
+            type="text"
             value={fieldValue.value}
             onBlur={this.handleInputBlur}
             onChange={this.handleChange}

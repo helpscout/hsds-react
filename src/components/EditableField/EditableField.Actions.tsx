@@ -4,11 +4,8 @@ import { ComponentUI, FieldButtonUI } from './styles/EditableField.Actions.css'
 import Icon from '../Icon'
 
 import { classNames } from '../../utilities/classNames'
-import {
-  ACTION_ICONS,
-  ACTIONS_CLASSNAMES,
-  STATES_CLASSNAMES,
-} from './EditableField.utils'
+import { ACTION_ICONS } from './constants'
+import { ACTIONS_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
 
 import * as equal from 'fast-deep-equal'
 import { noop } from '../../utilities/other'
