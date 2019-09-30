@@ -2,6 +2,9 @@ import { FieldAction, FieldValue } from './EditableField.types'
 import { isArray, isObject } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
+import { createUniqueIDFactory } from '../../utilities/id'
+
+const uniqueID = createUniqueIDFactory('EditableField')
 
 export const EF_COMPONENT_KEY = 'EditableField'
 export const COMPOSITE_COMPONENT_KEY = 'EditableFieldComposite'
@@ -51,9 +54,7 @@ export function normalizeFieldValue({
     if (value.length === 0) {
       return [createNewValueFieldObject('', name, defaultOption)]
     }
-    return value.map((val, idx) =>
-      createNewValueFieldObject(val, name, defaultOption, idx)
-    )
+    return value.map(val => createNewValueFieldObject(val, name, defaultOption))
   } else {
     return [createNewValueFieldObject(value, name, defaultOption)]
   }
@@ -62,14 +63,13 @@ export function normalizeFieldValue({
 export function createNewValueFieldObject(
   value,
   name,
-  defaultOption,
-  idx = 0
+  defaultOption
 ): FieldValue {
   // If it's an object already, grab the fields first
   if (isObject(value)) {
     const fieldObj = {
       ...value,
-      id: value.id || `${name}_${idx}`,
+      id: value.id || `${name}_${uniqueID()}`,
       validated: false,
     }
 
@@ -82,7 +82,7 @@ export function createNewValueFieldObject(
 
   const fieldObj: any = {
     value,
-    id: `${name}_${idx}`,
+    id: `${name}_${uniqueID()}`,
     validated: false,
   }
 

@@ -790,8 +790,7 @@ export class EditableField extends React.Component<
       const newValueObject = createNewValueFieldObject(
         EMPTY_VALUE,
         name,
-        defaultOption,
-        fieldValue.length
+        defaultOption
       )
       const newFieldValue = fieldValue.concat(newValueObject)
       const newState: any = {
