@@ -462,20 +462,24 @@ export class EditableField extends React.Component<
             )
           }
         })
-        .catch(() => {
+        .catch(
           // tested
           /* istanbul ignore next */
-          this.setState(
-            {
-              // tested
-              /* istanbul ignore next */
-              disabledItem: this.state.disabledItem.filter(
-                item => item !== name
-              ),
-            },
-            () => this.handleFieldEscapePress({ event, name })
-          )
-        })
+          () => {
+            // tested
+            /* istanbul ignore next */
+            this.setState(
+              {
+                // tested
+                /* istanbul ignore next */
+                disabledItem: this.state.disabledItem.filter(
+                  item => item !== name
+                ),
+              },
+              () => this.handleFieldEscapePress({ event, name })
+            )
+          }
+        )
 
       return
     }
@@ -670,20 +674,24 @@ export class EditableField extends React.Component<
                 )
               }
             })
-            .catch(() => {
+            .catch(
               // tested
               /* istanbul ignore next */
-              this.setState(
-                {
-                  // tested
-                  /* istanbul ignore next */
-                  disabledItem: this.state.disabledItem.filter(
-                    item => item !== name
-                  ),
-                },
-                () => this.handleFieldEscapePress({ event, name })
-              )
-            })
+              () => {
+                // tested
+                /* istanbul ignore next */
+                this.setState(
+                  {
+                    // tested
+                    /* istanbul ignore next */
+                    disabledItem: this.state.disabledItem.filter(
+                      item => item !== name
+                    ),
+                  },
+                  () => this.handleFieldEscapePress({ event, name })
+                )
+              }
+            )
         }
       }
     })
