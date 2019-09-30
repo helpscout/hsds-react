@@ -5,7 +5,6 @@ import { FONT_FAMILY } from '../../../styles/configs/constants'
 import {
   COLOURS,
   SIZES,
-  FIELDSTATES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   STATES_CLASSNAMES,

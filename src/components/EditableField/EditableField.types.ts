@@ -28,7 +28,14 @@ export type Option = {
   value: string
 }
 
-export type FieldType = 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+export type FieldType =
+  | 'text'
+  | 'email'
+  | 'url'
+  | 'tel'
+  | 'number'
+  | 'textarea'
+  | 'password'
 export type FieldSize = 'md' | 'lg'
 export type FieldState = 'default' | 'error' | 'warning' | 'other'
 
@@ -43,7 +50,7 @@ export type Validation = {
 }
 
 export type CommitData = {
-  cause: 'BLUR' | 'ENTER' | 'OPTION_SELECTION' | 'DELETE_ACTION'
+  cause: string
   operation: string
   item: Object
 }
@@ -128,7 +135,7 @@ export interface EditableFieldState {
   actions?: FieldAction[]
   activeField: string
   defaultOption: string | null
-  disabledItem: string
+  disabledItem: string[]
   fieldValue: FieldValue[]
   initialFieldValue: FieldValue[]
   maskTabIndex: string | null
