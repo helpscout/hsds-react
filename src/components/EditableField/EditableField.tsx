@@ -462,7 +462,7 @@ export class EditableField extends React.Component<
             )
           }
         })
-        .catch(err => {
+        .catch(() => {
           // tested
           /* istanbul ignore next */
           this.setState(
@@ -670,7 +670,7 @@ export class EditableField extends React.Component<
                 )
               }
             })
-            .catch(err => {
+            .catch(() => {
               // tested
               /* istanbul ignore next */
               this.setState(
