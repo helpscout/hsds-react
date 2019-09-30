@@ -1153,6 +1153,34 @@ describe('enter press', () => {
       expect(onCommitSpy).toHaveBeenCalled()
     })
   })
+
+  test('Pressing Enter: should escape on validation rejection', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        validate={() => Promise.reject(new Error('Oops'))}
+      />
+    )
+
+    // @ts-ignore
+    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
+    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
+    wrapper.instance().forceUpdate()
+
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+    input.simulate('keydown', { key: 'Enter' })
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(escapeSpy).toHaveBeenCalled()
+      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
+    })
+  })
 })
 
 describe('should component update', () => {
@@ -1527,6 +1555,34 @@ describe('Input Blur', () => {
       expect(cy.get('input').getValue()).toBe('hola')
       expect(commitSpy).not.toHaveBeenCalled()
       expect(blurSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('If value is changed but validate rejects it should escape', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        validate={() => Promise.reject(new Error('Oops'))}
+      />
+    )
+
+    // @ts-ignore
+    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
+    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
+    wrapper.instance().forceUpdate()
+
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+    input.simulate('blur')
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(escapeSpy).toHaveBeenCalled()
+      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
     })
   })
 })
