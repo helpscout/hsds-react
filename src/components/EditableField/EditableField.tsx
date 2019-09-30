@@ -463,10 +463,14 @@ export class EditableField extends React.Component<
           }
         })
         .catch(err => {
-          this.setState({
-            disabledItem: this.state.disabledItem.filter(item => item !== name),
-          })
-          this.handleFieldEscapePress({ event, name })
+          this.setState(
+            {
+              disabledItem: this.state.disabledItem.filter(
+                item => item !== name
+              ),
+            },
+            () => this.handleFieldEscapePress({ event, name })
+          )
         })
 
       return
@@ -663,12 +667,14 @@ export class EditableField extends React.Component<
               }
             })
             .catch(err => {
-              this.setState({
-                disabledItem: this.state.disabledItem.filter(
-                  item => item !== name
-                ),
-              })
-              this.handleFieldEscapePress({ event, name })
+              this.setState(
+                {
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== name
+                  ),
+                },
+                () => this.handleFieldEscapePress({ event, name })
+              )
             })
         }
       }
