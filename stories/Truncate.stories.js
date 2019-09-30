@@ -36,12 +36,10 @@ stories.add('default', () => (
         {fixture.generate()}
       </Truncate>
     </p>
-    <p style={{ width: '25%' }}>
+    <p>
       Truncate by Splitter:
       <br />
-      <Truncate type="start" limit={limit} splitter="@">
-        longemailaddress@gmail.com
-      </Truncate>
+      <Truncate splitter="@">longemailaddress@gmail.com</Truncate>
     </p>
     <br />
   </div>

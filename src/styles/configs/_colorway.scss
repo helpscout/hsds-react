@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.4.0)
+// Generated with @helpscout/colorway (v0.4.1)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
