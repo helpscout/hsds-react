@@ -76,16 +76,28 @@ export class Truncate extends React.PureComponent<
       this.contentNode.style.display = 'initial'
       // 2. Calculate the differences
       const isContentTruncated =
-        // TODO: fix typescript complains
-        // @ts-ignore
-        this.contentNode.offsetWidth > this.node.offsetWidth
+        props.splitter && props.showTooltipOnTruncate
+          ? this.isSplitContentTruncated(this.contentNode, this.node)
+          : // TODO: fix typescript complains
+            // @ts-ignore
+            this.contentNode.offsetWidth > this.node.offsetWidth
       // 3. Resets the display
       // TODO: fix typescript complains
       // @ts-ignore
-      this.contentNode.style.display = null
 
       return isContentTruncated
     }
+  }
+
+  isSplitContentTruncated = (contentNode: any, node: any): boolean => {
+    const [
+      firstSpan,
+      secondSpan,
+    ] = node.children[1].children[1].children[0].children[0].children[0].children
+
+    return (
+      contentNode.offsetWidth < firstSpan.scrollWidth + secondSpan.scrollWidth
+    )
   }
 
   getText = (props: TruncateProps = this.props) => {
@@ -133,10 +145,8 @@ export class Truncate extends React.PureComponent<
           }`}
         >
           <span className={`${TRUNCATED_CLASSNAMES.firstChunk}`}>{first}</span>
-          <span className={`${TRUNCATED_CLASSNAMES.splitterChunk}`}>
-            {splitter}
-          </span>
           <span className={`${TRUNCATED_CLASSNAMES.secondChunk}`}>
+            {splitter}
             {second}
           </span>
         </TruncateWithSplitterUI>

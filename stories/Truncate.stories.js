@@ -40,6 +40,7 @@ stories.add('default', () => (
       Truncate by Splitter:
       <br />
       <Truncate splitter="@">longemailaddress@gmail.com</Truncate>
+      <Truncate splitter="@">a@myemail.com</Truncate>
     </p>
     <br />
   </div>
@@ -71,6 +72,13 @@ stories.add('tooltip', () => (
       <br />
       <Truncate showTooltipOnTruncate type="end" limit={limit}>
         {fixture.generate()}
+      </Truncate>
+    </p>
+    <p>
+      Splitter:
+      <br />
+      <Truncate showTooltipOnTruncate splitter="@">
+        longemailaddress@gmail.com
       </Truncate>
     </p>
     <br />
