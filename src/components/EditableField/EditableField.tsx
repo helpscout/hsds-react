@@ -6,7 +6,14 @@ import {
   LabelTextUI,
   AddButtonUI,
 } from './styles/EditableField.css'
-import { OPERATION } from './constants'
+import {
+  ACTION_ICONS,
+  CAUSE,
+  EMPTY_VALUE,
+  FIELDTYPES,
+  FIELDSIZES,
+  OPERATION,
+} from './constants'
 import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
@@ -20,9 +27,6 @@ import {
   createNewValueFieldObject,
   generateFieldActions,
   normalizeFieldValue,
-  ACTION_ICONS,
-  FIELDTYPES,
-  FIELDSIZES,
   EDITABLEFIELD_CLASSNAMES,
   STATES_CLASSNAMES,
 } from './EditableField.utils'
@@ -38,8 +42,6 @@ import {
   EditableFieldState,
   FieldValue,
 } from './EditableField.types'
-
-const EMPTY_VALUE = ''
 
 export class EditableField extends React.Component<
   EditableFieldProps,
@@ -102,7 +104,7 @@ export class EditableField extends React.Component<
       actions: generateFieldActions(actions),
       activeField: EMPTY_VALUE,
       defaultOption: defaultStateOption,
-      disabledItem: '',
+      disabledItem: [],
       fieldValue: initialFieldValue,
       initialFieldValue,
       maskTabIndex: null,
@@ -142,7 +144,7 @@ export class EditableField extends React.Component<
       return true
     }
 
-    if (this.state.disabledItem !== nextState.disabledItem) {
+    if (!equal(this.state.disabledItem, nextState.disabledItem)) {
       return true
     }
 
@@ -225,71 +227,89 @@ export class EditableField extends React.Component<
 
   handleInputBlur = payload => {
     const { name, event } = payload
-    const {
-      activeField,
-      fieldValue,
-      initialFieldValue,
-      multipleValuesEnabled,
-      validationInfo,
-    } = this.state
-    const { validate, onCommit, onInputBlur } = this.props
+    const { activeField, multipleValuesEnabled } = this.state
+    const { validate, onCommit, onDiscard, onInputBlur } = this.props
 
-    if (equal(initialFieldValue, fieldValue)) {
+    if (equal(this.state.initialFieldValue, this.state.fieldValue)) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: fieldValue, event })
+        onInputBlur({ name, value: this.state.fieldValue, event })
       })
 
       return
     }
 
     const changedField =
-      fieldValue.length === 1
-        ? fieldValue[0]
-        : find(fieldValue, val => val.id === event.target.id)
+      this.state.fieldValue.length === 1
+        ? this.state.fieldValue[0]
+        : find(this.state.fieldValue, val => val.id === event.target.id)
     const initialField =
-      initialFieldValue.length === 1
-        ? initialFieldValue[0]
-        : find(initialFieldValue, val => val.id === event.target.id)
+      this.state.initialFieldValue.length === 1
+        ? this.state.initialFieldValue[0]
+        : find(this.state.initialFieldValue, val => val.id === event.target.id)
 
     /* istanbul ignore next */
     if (equal(initialField, changedField)) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: fieldValue, event })
+        onInputBlur({ name, value: this.state.fieldValue, event })
       })
 
       return
     }
 
     /* istanbul ignore next */
-    if (this.state.disabledItem === changedField.id) {
+    if (this.state.disabledItem.indexOf(changedField.id) !== -1) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: fieldValue, event })
+        onInputBlur({ name, value: this.state.fieldValue, event })
       })
 
       return
     }
 
-    if (!changedField.value) {
-      if (!multipleValuesEnabled) {
-        this.setState({ activeField: EMPTY_VALUE }, () => {
-          onInputBlur({ name, value: fieldValue, event })
+    // In multivalue fields, remove the empty one when there're at least 2 fields
+    const removedEmptyFields = this.state.fieldValue.filter(field =>
+      Boolean(field.value)
+    )
+    const shouldDiscardEmpty =
+      multipleValuesEnabled &&
+      removedEmptyFields.length < this.state.fieldValue.length &&
+      removedEmptyFields.length > 0
+
+    if (shouldDiscardEmpty) {
+      this.setState(
+        {
+          activeField: EMPTY_VALUE,
+          disabledItem: this.state.disabledItem.filter(
+            /* istanbul ignore next */ item => item !== changedField.id
+          ),
+          fieldValue: removedEmptyFields,
+          initialFieldValue: this.state.fieldValue,
+        },
+        () => {
           onCommit({
             name,
-            value: fieldValue,
+            value: this.state.fieldValue,
             data: {
-              cause: 'BLUR',
-              operation: OPERATION.UPDATE,
-              item: changedField,
+              cause: CAUSE.BLUR,
+              operation: OPERATION.DELETE,
+              item: this.state.fieldValue.filter(
+                field => !Boolean(field.value)
+              )[0],
             },
           })
-        })
+          onDiscard({ value: this.state.fieldValue })
+          onInputBlur({ name, value: this.state.fieldValue, event })
+        }
+      )
 
-        return
-      }
+      return
     }
 
-    if (changedField.value && !changedField.validated) {
-      this.setState({ disabledItem: changedField.id })
+    // tested
+    /* istanbul ignore else */
+    if (!changedField.validated) {
+      this.setState({
+        disabledItem: this.state.disabledItem.concat(changedField.id),
+      })
 
       // Get the next values and commit prior to validation so that
       // we can use it in validation.
@@ -304,12 +324,16 @@ export class EditableField extends React.Component<
         return field
       })
 
+      // Allow references to this event to be maintained in the async
+      // code that follows.
+      event.persist()
+
       validate({
         data: {
-          cause: 'BLUR',
+          cause: CAUSE.BLUR,
           operation:
             /* istanbul ignore next */ updatedFieldValue.length >
-            initialFieldValue.length
+            this.state.initialFieldValue.length
               ? OPERATION.CREATE
               : OPERATION.UPDATE,
           item: changedField,
@@ -317,140 +341,145 @@ export class EditableField extends React.Component<
         name: changedField.id,
         value: changedField.value,
         values: updatedFieldValue,
-      }).then(validation => {
-        // Since this is async and the state of other fields may have changed,
-        // we need to recompute this.
-        updatedFieldValue = this.state.fieldValue.map(field => {
-          // tested
-          /* istanbul ignore next */
-          if (field.id === changedField.id) {
-            return { ...changedField, validated: true }
-          }
-          // tested
-          /* istanbul ignore next */
-          return field
-        })
-
-        if (validation.isValid) {
-          this.setState(
-            {
-              disabledItem: '',
-              fieldValue: updatedFieldValue,
-              initialFieldValue: updatedFieldValue,
-              validationInfo: validationInfo.filter(
-                /* istanbul ignore next */ valItem =>
-                  valItem.name !== changedField.id
-              ),
-            },
-            () => {
-              onCommit({
-                name,
-                value: fieldValue,
-                data: {
-                  cause: 'BLUR',
-                  operation:
-                    /* istanbul ignore next */ updatedFieldValue.length >
-                    initialFieldValue.length
-                      ? OPERATION.CREATE
-                      : OPERATION.UPDATE,
-                  item: changedField,
-                },
-              })
-              onInputBlur({ name, value: fieldValue, event })
-
-              /**
-               * Managing "Active Field"
-               *
-               * One consequence of the 'blur' activity being _always_ async (the result of being executed inside a Promise)
-               * is that the normal sequence of events is no longer executed in the "regular" flow.
-               *
-               * Sync (previous behaviour):
-               * 1. blur (sets activeField to '')
-               * 2. focus (sets activeField to whatever input was focused)
-               *
-               * Async (current behaviour):
-               * 1. blur ...validation Promise...
-               * 2. focus (sets activeField to whatever input was focused)
-               * 3. ...validation Promise comes back... blur sets activeField to '' <=== DAMN!
-               *
-               * To get back the correct behaviour, we leave 'focus' as is, which will _always_ set the activeField
-               * to the focused input. With that info, we can update the active field _after_ the blur
-               * setState, knowing that if the activeState in the state is different from what we had before
-               * it means the focus event kicked in.
-               */
-
-              const unchangedByFocusEvent =
-                this.state.activeField === activeField
-
-              /* istanbul ignore next */
-              this.setState({
-                activeField: unchangedByFocusEvent
-                  ? EMPTY_VALUE
-                  : this.state.activeField,
-              })
-            }
-          )
-        } else {
-          this.setState(
-            {
-              disabledItem: '',
-              fieldValue: updatedFieldValue,
-              validationInfo: validationInfo.concat(validation),
-            },
-            () => {
-              onInputBlur({ name, value: fieldValue, event })
-            }
-          )
-        }
       })
+        .then(validation => {
+          // Since this is async and the state of other fields may have changed,
+          // we need to recompute this.
+          updatedFieldValue = this.state.fieldValue.map(field => {
+            // tested
+            /* istanbul ignore next */
+            if (field.id === changedField.id) {
+              return { ...changedField, validated: true }
+            }
+            // tested
+            /* istanbul ignore next */
+            return field
+          })
 
-      return
-    }
+          if (validation.isValid) {
+            // 1. Non-empty Value
+            if (changedField.value) {
+              this.setState(
+                {
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== changedField.id
+                  ),
+                  fieldValue: updatedFieldValue,
+                  initialFieldValue: updatedFieldValue,
+                  validationInfo: this.state.validationInfo.filter(
+                    /* istanbul ignore next */ valItem =>
+                      valItem.name !== changedField.id
+                  ),
+                },
+                () => {
+                  onCommit({
+                    name,
+                    value: this.state.fieldValue,
+                    data: {
+                      cause: CAUSE.BLUR,
+                      operation:
+                        /* istanbul ignore next */ updatedFieldValue.length >
+                        this.state.initialFieldValue.length
+                          ? OPERATION.CREATE
+                          : OPERATION.UPDATE,
+                      item: changedField,
+                    },
+                  })
+                  onInputBlur({ name, value: this.state.fieldValue, event })
 
-    /* istanbul ignore else */
-    if (this.state.valueOptions == null) {
-      const removedEmptyFields = fieldValue.filter(field =>
-        Boolean(field.value)
-      )
-      const shouldDiscardEmpty =
-        multipleValuesEnabled &&
-        removedEmptyFields.length < fieldValue.length &&
-        removedEmptyFields.length > 0
+                  /**
+                   * Managing "Active Field"
+                   *
+                   * One consequence of the 'blur' activity being _always_ async (the result of being executed inside a Promise)
+                   * is that the normal sequence of events is no longer executed in the "regular" flow.
+                   *
+                   * Sync (previous behaviour):
+                   * 1. blur (sets activeField to '')
+                   * 2. focus (sets activeField to whatever input was focused)
+                   *
+                   * Async (current behaviour):
+                   * 1. blur ...validation Promise...
+                   * 2. focus (sets activeField to whatever input was focused)
+                   * 3. ...validation Promise comes back... blur sets activeField to '' <=== DAMN!
+                   *
+                   * To get back the correct behaviour, we leave 'focus' as is, which will _always_ set the activeField
+                   * to the focused input. With that info, we can update the active field _after_ the blur
+                   * setState, knowing that if the activeState in the state is different from what we had before
+                   * it means the focus event kicked in.
+                   */
 
-      if (shouldDiscardEmpty) {
-        this.setState(
-          {
-            fieldValue: removedEmptyFields,
-            activeField: EMPTY_VALUE,
-          },
-          () => {
-            this.props.onDiscard({ value: this.state.fieldValue })
-            onCommit({
-              name,
-              value: this.state.fieldValue,
-              data: {
-                cause: 'BLUR',
-                operation: OPERATION.DELETE,
-                item: fieldValue.filter(field => !Boolean(field.value))[0],
+                  const unchangedByFocusEvent =
+                    this.state.activeField === activeField
+
+                  /* istanbul ignore next */
+                  this.setState({
+                    activeField: unchangedByFocusEvent
+                      ? EMPTY_VALUE
+                      : this.state.activeField,
+                  })
+                }
+              )
+            } else {
+              // 2. Empty value
+              // If single value or multivalue field with just one value, clear the field but don't remove it
+              this.setState(
+                {
+                  activeField: EMPTY_VALUE,
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== changedField.id
+                  ),
+                  fieldValue: this.state.fieldValue,
+                  initialFieldValue: this.state.fieldValue,
+                },
+                () => {
+                  onCommit({
+                    name,
+                    value: this.state.fieldValue,
+                    data: {
+                      cause: CAUSE.BLUR,
+                      operation: OPERATION.UPDATE,
+                      item: this.state.fieldValue.filter(
+                        field => !Boolean(field.value)
+                      )[0],
+                    },
+                  })
+                  onInputBlur({ name, value: this.state.fieldValue, event })
+                }
+              )
+            }
+          } else {
+            this.setState(
+              {
+                disabledItem: this.state.disabledItem.filter(
+                  item => item !== changedField.id
+                ),
+                fieldValue: updatedFieldValue,
+                validationInfo: this.state.validationInfo.concat(validation),
               },
-            })
-            this.props.onInputBlur({ name, value: fieldValue, event })
+              () => {
+                onInputBlur({ name, value: this.state.fieldValue, event })
+              }
+            )
+          }
+        })
+        .catch(
+          // tested
+          /* istanbul ignore next */
+          () => {
+            // tested
+            /* istanbul ignore next */
+            this.setState(
+              {
+                // tested
+                /* istanbul ignore next */
+                disabledItem: this.state.disabledItem.filter(
+                  item => item !== name
+                ),
+              },
+              () => this.handleFieldEscapePress({ event, name })
+            )
           }
         )
-      } else {
-        this.setState({ activeField: EMPTY_VALUE }, () => {
-          onCommit({
-            name,
-            value: this.state.fieldValue,
-            data: {
-              cause: 'BLUR',
-              operation: OPERATION.UPDATE,
-              item: fieldValue.filter(field => !Boolean(field.value))[0],
-            },
-          })
-          onInputBlur({ name, value: fieldValue, event })
-        })
-      }
 
       return
     }
@@ -458,7 +487,6 @@ export class EditableField extends React.Component<
 
   handleInputChange = ({ inputValue, name, event }) => {
     const { onChange } = this.props
-    const { validationInfo } = this.state
     const newFieldValue = this.assignInputValueToFieldValue({
       inputValue,
       name,
@@ -467,7 +495,7 @@ export class EditableField extends React.Component<
     this.setState(
       {
         fieldValue: newFieldValue,
-        validationInfo: validationInfo.filter(
+        validationInfo: this.state.validationInfo.filter(
           /* istanbul ignore next */ valItem => valItem.name !== name
         ),
       },
@@ -507,12 +535,7 @@ export class EditableField extends React.Component<
 
   handleFieldEnterPress = ({ event, name }) => {
     const { validate, onEnter, onCommit } = this.props
-    const {
-      initialFieldValue,
-      fieldValue,
-      multipleValuesEnabled,
-      validationInfo,
-    } = this.state
+    const { initialFieldValue, fieldValue, multipleValuesEnabled } = this.state
     const inputValue = event.currentTarget.value
     const impactedField = find(initialFieldValue, val => val.id === name)
     const valueDidNotChange =
@@ -548,11 +571,15 @@ export class EditableField extends React.Component<
         // Skip if the field was marked as validated
         /* istanbul ignore else */
         if (!impactedField.validated) {
-          this.setState({ disabledItem: name })
+          this.setState({ disabledItem: this.state.disabledItem.concat(name) })
+
+          // Allow references to this event to be maintained in the async
+          // code that follows.
+          event.persist()
 
           validate({
             data: {
-              cause: 'ENTER',
+              cause: CAUSE.ENTER,
               operation:
                 /* istanbul ignore next */ updatedFieldValue.length >
                 initialFieldValue.length
@@ -563,82 +590,108 @@ export class EditableField extends React.Component<
             name,
             value: inputValue,
             values: updatedFieldValue,
-          }).then(validation => {
-            if (validation.isValid) {
-              // Since this is async and the state of other fields may have changed,
-              // we need to recompute this.
-              updatedFieldValue = this.updateFieldValue({
-                name,
-                value: inputValue,
-              })
-
-              this.setState(
-                {
-                  activeField: EMPTY_VALUE,
-                  disabledItem: '',
-                  fieldValue: updatedFieldValue,
-                  initialFieldValue: updatedFieldValue,
-                  maskTabIndex: name,
-                  validationInfo: validationInfo.filter(
-                    /* istanbul ignore next */ valItem => valItem.name === name
-                  ),
-                },
-                () => {
-                  resolve()
-                  onCommit({
-                    name,
-                    value: updatedFieldValue,
-                    data: {
-                      cause: 'ENTER',
-                      operation:
-                        /* istanbul ignore next */ updatedFieldValue.length >
-                        initialFieldValue.length
-                          ? OPERATION.CREATE
-                          : OPERATION.UPDATE,
-                      item: updatedFieldValue.filter(
-                        field => field.id === name
-                      )[0],
-                    },
-                  })
-
-                  onEnter({
-                    name,
-                    value: updatedFieldValue,
-                    event: cachedEvent,
-                  })
-                }
-              )
-            } else {
-              updatedFieldValue = fieldValue.map(field => {
-                // tested
-                /* istanbul ignore next */
-                if (field.id === name) {
-                  return { ...field, validated: true }
-                }
-                // tested
-                /* istanbul ignore next */
-                return field
-              })
-
-              this.setState(
-                {
-                  activeField: name,
-                  disabledItem: '',
-                  fieldValue: updatedFieldValue,
-                  validationInfo: validationInfo.concat(validation),
-                },
-                () => {
-                  resolve()
-
-                  onEnter({
-                    name,
-                    value: updatedFieldValue,
-                    event: cachedEvent,
-                  })
-                }
-              )
-            }
           })
+            .then(validation => {
+              if (validation.isValid) {
+                // Since this is async and the state of other fields may have changed,
+                // we need to recompute this.
+                updatedFieldValue = this.updateFieldValue({
+                  name,
+                  value: inputValue,
+                })
+
+                this.setState(
+                  {
+                    activeField: EMPTY_VALUE,
+                    disabledItem: this.state.disabledItem.filter(
+                      item => item !== name
+                    ),
+                    fieldValue: updatedFieldValue,
+                    initialFieldValue: updatedFieldValue,
+                    maskTabIndex: name,
+                    validationInfo: this.state.validationInfo.filter(
+                      /* istanbul ignore next */ valItem =>
+                        valItem.name === name
+                    ),
+                  },
+                  () => {
+                    resolve()
+                    onCommit({
+                      name,
+                      value: updatedFieldValue,
+                      data: {
+                        cause: CAUSE.ENTER,
+                        operation:
+                          /* istanbul ignore next */ updatedFieldValue.length >
+                          initialFieldValue.length
+                            ? OPERATION.CREATE
+                            : OPERATION.UPDATE,
+                        item: updatedFieldValue.filter(
+                          field => field.id === name
+                        )[0],
+                      },
+                    })
+
+                    onEnter({
+                      name,
+                      value: updatedFieldValue,
+                      event: cachedEvent,
+                    })
+                  }
+                )
+              } else {
+                updatedFieldValue = fieldValue.map(field => {
+                  // tested
+                  /* istanbul ignore next */
+                  if (field.id === name) {
+                    return { ...field, validated: true }
+                  }
+                  // tested
+                  /* istanbul ignore next */
+                  return field
+                })
+
+                this.setState(
+                  {
+                    activeField: name,
+                    disabledItem: this.state.disabledItem.filter(
+                      item => item !== name
+                    ),
+                    fieldValue: updatedFieldValue,
+                    validationInfo: this.state.validationInfo.concat(
+                      validation
+                    ),
+                  },
+                  () => {
+                    resolve()
+
+                    onEnter({
+                      name,
+                      value: updatedFieldValue,
+                      event: cachedEvent,
+                    })
+                  }
+                )
+              }
+            })
+            .catch(
+              // tested
+              /* istanbul ignore next */
+              () => {
+                // tested
+                /* istanbul ignore next */
+                this.setState(
+                  {
+                    // tested
+                    /* istanbul ignore next */
+                    disabledItem: this.state.disabledItem.filter(
+                      item => item !== name
+                    ),
+                  },
+                  () => this.handleFieldEscapePress({ event, name })
+                )
+              }
+            )
         }
       }
     })
@@ -725,7 +778,7 @@ export class EditableField extends React.Component<
 
   handleOptionSelection = ({ name, selection }) => {
     const { onChange, onOptionChange, onCommit } = this.props
-    const { fieldValue, validationInfo } = this.state
+    const { fieldValue } = this.state
     let newFieldValue: FieldValue[] = []
     let changed = false
     let hasBeenValidated = ''
@@ -752,7 +805,7 @@ export class EditableField extends React.Component<
 
       if (hasBeenValidated !== '') {
         isItemInvalid = find(
-          validationInfo,
+          this.state.validationInfo,
           val => val.name === hasBeenValidated
         )
       }
@@ -766,7 +819,7 @@ export class EditableField extends React.Component<
             name,
             value: newFieldValue,
             data: {
-              cause: 'OPTION_SELECTION',
+              cause: CAUSE.OPTION_SELECTION,
               operation: OPERATION.UPDATE,
               item,
             },
@@ -842,7 +895,7 @@ export class EditableField extends React.Component<
           name,
           value: this.state.fieldValue,
           data: {
-            cause: 'DELETE_ACTION',
+            cause: CAUSE.DELETE_ACTION,
             operation: OPERATION.DELETE,
             item: fieldValue.filter(field => field.id === name)[0],
           },
@@ -870,13 +923,13 @@ export class EditableField extends React.Component<
 
   renderAddButton = () => {
     const { disabled } = this.props
-    const { fieldValue, multipleValuesEnabled, validationInfo } = this.state
+    const { fieldValue, multipleValuesEnabled } = this.state
 
     const isLastValueEmpty =
       fieldValue[fieldValue.length - 1].value === EMPTY_VALUE
     const isSingleAndEmpty = fieldValue.length === 1 && isLastValueEmpty
     const invalidValuePresent =
-      validationInfo.filter(valItem => !valItem.isValid).length > 0
+      this.state.validationInfo.filter(valItem => !valItem.isValid).length > 0
 
     return multipleValuesEnabled && !isSingleAndEmpty && !disabled ? (
       <AddButtonUI
@@ -900,16 +953,16 @@ export class EditableField extends React.Component<
       maskTabIndex,
       multipleValuesEnabled,
       valueOptions,
-      validationInfo,
     } = this.state
 
     return (
       <div className={EDITABLEFIELD_CLASSNAMES.fieldWrapper}>
         {fieldValue.map((val, index) => {
           const isActive = activeField === val.id
-          const isDisabled = val.disabled || disabledItem === val.id
+          const isDisabled =
+            val.disabled || this.state.disabledItem.indexOf(val.id) !== -1
           const valInfo = find(
-            validationInfo,
+            this.state.validationInfo,
             valItem => valItem.name === val.id
           )
 
@@ -961,7 +1014,7 @@ export class EditableField extends React.Component<
               />
               {actions &&
               Boolean(val.value) &&
-              disabledItem !== val.id &&
+              disabledItem.indexOf(val.id) === -1 &&
               !disabled ? (
                 <Actions
                   actions={actions}
@@ -1024,6 +1077,8 @@ export class EditableField extends React.Component<
   render() {
     const { disabled, inline, label, name, type, value, ...rest } = this.props
     const { fieldValue } = this.state
+
+    // console.log(`EditableField ${name}`, this.state.maskTabIndex)
 
     if (inline) {
       return (
