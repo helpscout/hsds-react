@@ -66,11 +66,8 @@ describe('splitter', () => {
     expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.firstChunk}`).text()).toBe(
       'longemailaddress'
     )
-    expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.splitterChunk}`).text()).toBe(
-      '@'
-    )
     expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.secondChunk}`).text()).toBe(
-      'gmail.com'
+      '@gmail.com'
     )
   })
 })
@@ -239,6 +236,19 @@ describe('Truncate: Check', () => {
 describe('Tooltip', () => {
   test('Renders tooltip if truncated', () => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
+    wrapper.setState({ isTruncated: false })
+    expect(wrapper.find(Tooltip).length).toBe(0)
+
+    wrapper.setState({ isTruncated: true })
+    expect(wrapper.find(Tooltip).length).toBe(1)
+  })
+
+  test('Renders tooltip if truncated using splitter prop', () => {
+    const wrapper = mount(
+      <Truncate showTooltipOnTruncate splitter="@">
+        averylongemailaddress@gmail.com
+      </Truncate>
+    )
     wrapper.setState({ isTruncated: false })
     expect(wrapper.find(Tooltip).length).toBe(0)
 
