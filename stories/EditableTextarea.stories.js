@@ -43,6 +43,10 @@ stories.add('default', () => (
 `}
       maxRows={3}
     />
-    <EditableTextarea />
+    <EditableTextarea
+      onCommit={({ data }) => {
+        console.log('HSDS: data', data)
+      }}
+    />
   </ContainerUI>
 ))

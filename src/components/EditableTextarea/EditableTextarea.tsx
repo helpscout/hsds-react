@@ -7,11 +7,14 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import debounce from '../../utilities/debounce'
+import * as equal from 'fast-deep-equal'
+
 import { ComponentUI, EditableTextareaUI } from './styles/EditableTextarea.css'
 import { LabelTextUI } from '../EditableField/styles/EditableField.css'
 
 import { COMPONENT_KEY } from './EditableTextarea.utils'
 import { key } from '../../constants/Keys'
+import { CAUSE, OPERATION } from '../EditableField/constants'
 
 import {
   EditableTextareaProps,
@@ -24,10 +27,15 @@ export class EditableTextarea extends React.PureComponent<
 > {
   static className = 'c-EditableTextarea'
   static defaultProps = {
+    id: 'editabletextarea',
     innerRef: noop,
     maxRows: 5,
     placeholder: 'Enter your notes',
     value: '',
+    onCommit: noop,
+    onChange: noop,
+    onEnter: noop,
+    onEscape: noop,
   }
 
   constructor(props) {
@@ -48,28 +56,39 @@ export class EditableTextarea extends React.PureComponent<
 
   textArea: any
   debouncedScroll: any
+  editableTextareaRef: HTMLDivElement
+
+  setEditableTextareaNode = node => {
+    this.editableTextareaRef = node
+    this.props.innerRef(node)
+  }
 
   getClassName() {
     const { className } = this.props
-    const { clamped, readOnly, value } = this.state
 
-    return classNames(
-      EditableTextarea.className,
-      readOnly && 'is-readonly',
-      readOnly && clamped && 'is-clamped',
-      !Boolean(value) && 'with-placeholder',
-      className
-    )
+    return classNames(EditableTextarea.className, className)
   }
-
+  /* istanbul ignore next */
   componentDidMount() {
     this.textArea.current.addEventListener('scroll', this.debouncedScroll)
   }
 
+  /* istanbul ignore next */
   componentWillUnmount() {
     this.textArea.current.removeEventListener('scroll', this.debouncedScroll)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value === this.props.value) return
+    // Tested
+    /* istanbul ignore next */ if (nextProps.value === this.state.value) return
+
+    this.setState({
+      value: nextProps.value,
+    })
+  }
+
+  /* istanbul ignore next */
   componentDidUpdate(prevProps, prevState) {
     if (this.props.value !== prevProps.value) {
       this.setClampVisualCue()
@@ -79,36 +98,68 @@ export class EditableTextarea extends React.PureComponent<
     }
   }
 
+  /* istanbul ignore next */
   detectScroll = e => {
     // If the user scrolls to the bottom, remove the visual clamp cue
-    if (
+    const hasReachedBottom =
       this.textArea.current.clientHeight + this.textArea.current.scrollTop >=
       this.textArea.current.scrollHeight
-    ) {
-      this.setState({ clamped: false })
-    } else {
-      this.setState({ clamped: true })
-    }
+
+    this.setState({ clamped: !hasReachedBottom })
   }
 
   handleOnBlur = e => {
+    const { id, onCommit } = this.props
+    const { value } = this.state
+    const item = {
+      value,
+      id,
+    }
+
     this.setState(
       {
         readOnly: true,
       },
       () => {
-        this.textArea.current.scrollTo({ top: 0, behavior: 'smooth' })
+        onCommit({
+          data: {
+            cause: CAUSE.BLUR,
+            operation: OPERATION.UPDATE,
+            item,
+          },
+          name: id,
+          value: [item],
+        })
+        /* istanbul ignore next */
+        this.textArea.current.scrollTo &&
+          this.textArea.current.scrollTo({ top: 0, behavior: 'smooth' })
       }
     )
   }
 
   handleOnChange = e => {
-    this.setState({
-      value: e.target.value,
-    })
+    this.setState(
+      {
+        value: e.target.value,
+      },
+      () => {
+        const { id } = this.props
+        const { value } = this.state
+        const item = {
+          value,
+          id,
+        }
+        this.props.onChange({
+          name: id,
+          value: [item],
+          event: e,
+        })
+      }
+    )
   }
 
-  handleOnClick = e => {
+  handleOnClick = () => {
+    /* istanbul ignore else */
     if (this.state.readOnly) {
       this.setState({
         prevValue: this.textArea.current.value,
@@ -121,35 +172,64 @@ export class EditableTextarea extends React.PureComponent<
     const code = e.key
     const isShiftPressed = e.shiftKey
 
+    /* istanbul ignore next */
     const stop = () => e.preventDefault() && e.stopPropagation()
 
+    // Escape route tested
+    /* istanbul ignore else */
     if (!isShiftPressed && code === key.ENTER) {
       stop()
+
       this.setState(
         {
           value: this.state.value.trim(),
         },
         () => {
+          const { id } = this.props
+          const { value } = this.state
+          const item = {
+            value,
+            id,
+          }
+          this.props.onEnter({
+            name: id,
+            value: [item],
+            event: e,
+          })
           this.textArea.current.blur()
         }
       )
     } else if (code === key.ESCAPE) {
       stop()
+
       this.setState(
         {
           value: this.state.prevValue,
         },
         () => {
+          const { id } = this.props
+          const { value } = this.state
+          const item = {
+            value,
+            id,
+          }
+          this.props.onEscape({
+            name: id,
+            value: [item],
+            event: e,
+          })
           this.textArea.current.blur()
         }
       )
     }
   }
 
+  /* istanbul ignore next */
   handleTextareaHeightChange = () => {
     this.setClampVisualCue()
   }
 
+  /* istanbul ignore next */
   setClampVisualCue = () => {
     this.setState({
       clamped:
@@ -160,15 +240,28 @@ export class EditableTextarea extends React.PureComponent<
   }
 
   render() {
-    const { maxRows, placeholder } = this.props
-    const { readOnly, value, ...rest } = this.state
+    const { id, maxRows, placeholder, ...rest } = this.props
+    const { clamped, readOnly, value } = this.state
 
     return (
-      <ComponentUI>
-        <LabelTextUI>Notes</LabelTextUI>
-        <EditableTextareaUI className={this.getClassName()}>
+      <ComponentUI
+        innerRef={this.setEditableTextareaNode}
+        className={this.getClassName()}
+      >
+        <label className="EditableTextarea__label" htmlFor={id}>
+          <LabelTextUI>Notes</LabelTextUI>
+        </label>
+        <EditableTextareaUI
+          className={classNames(
+            'EditableTextarea__ResizableTextarea',
+            readOnly && 'is-readonly',
+            /* istanbul ignore next */ readOnly && clamped && 'is-clamped',
+            !Boolean(value) && 'with-placeholder'
+          )}
+        >
           <Textarea
             {...getValidProps(rest)}
+            id={id}
             inputRef={this.textArea}
             onBlur={this.handleOnBlur}
             onChange={this.handleOnChange}

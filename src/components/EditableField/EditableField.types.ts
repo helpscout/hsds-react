@@ -8,14 +8,6 @@ export type FieldValue = {
   disabled?: boolean
 }
 
-export type InputFields = {
-  label?: string
-  name: string
-  placeholder?: string
-  type: FieldType
-  value: Value | Value[]
-}
-
 export type FieldAction = {
   name: string
   icon?: string
@@ -66,7 +58,6 @@ export interface EditableFieldProps {
   multipleValues: boolean
   name: string
   placeholder?: string
-  secondInput?: InputFields
   size: FieldSize
   type: FieldType
   value: Value | Value[]
