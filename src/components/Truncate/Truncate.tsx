@@ -90,13 +90,10 @@ export class Truncate extends React.PureComponent<
   }
 
   isSplitContentTruncated = (contentNode: any, node: any): boolean => {
-    const [
-      firstSpan,
-      secondSpan,
-    ] = node.children[1].children[1].children[0].children[0].children[0].children
-
     return (
-      contentNode.offsetWidth < firstSpan.scrollWidth + secondSpan.scrollWidth
+      contentNode.offsetWidth <
+      node.querySelector(`.${TRUNCATED_CLASSNAMES.firstChunk}`).scrollWidth +
+        node.querySelector(`.${TRUNCATED_CLASSNAMES.secondChunk}`).scrollWidth
     )
   }
 
