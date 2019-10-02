@@ -45,6 +45,26 @@ stories.add('Default', () => {
   return <SelectDropdown {...props} />
 })
 
+stories.add('Really long items', () => {
+  const props = {
+    items: [
+      {
+        label:
+          'Will has a really really really really really really really really really really really really really really really long name',
+        value: '1',
+      },
+      {
+        label:
+          'Ron has a really really really really really really really really really really really really really really really long name',
+        value: '2',
+      },
+    ],
+    value: null,
+  }
+
+  return <SelectDropdown {...props} />
+})
+
 stories.add('Statefully controlled', () => {
   class Example extends React.Component {
     state = {
