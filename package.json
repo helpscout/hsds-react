@@ -109,6 +109,7 @@
     "popper.js": "1.14.3",
     "prismjs": "^1.17.1",
     "react-sortable-hoc": "^1.10.0",
+    "react-textarea-autosize": "^7.1.0",
     "react-transition-group": "2.5.3",
     "warning": "4.0.3"
   },
