@@ -1,16 +1,18 @@
 import * as React from 'react'
+
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
-import { StatusDotStatus } from '../StatusDot/StatusDot.types'
-import { AvatarShape, AvatarSize } from './Avatar.types'
 import StatusDot from '../StatusDot'
 import Icon from '../Icon'
-import { IconSize } from '../Icon/Icon.types'
+
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
+
 import AvatarCrop from './Avatar.Crop'
 import AvatarImage from './Avatar.Image'
+import { AvatarProps, AvatarState } from './Avatar.types'
+
 import {
   ActionUI,
   AvatarButtonUI,
@@ -27,42 +29,7 @@ import {
 
 import { COMPONENT_KEY, getImageSrc } from './Avatar.utils'
 
-export interface Props {
-  actionable?: boolean
-  actionIcon?: string
-  actionIconSize?: IconSize
-  active?: boolean
-  animation: boolean
-  animationDuration: number
-  animationEasing: string
-  borderColor?: string
-  className?: string
-  count?: number | string
-  fallbackImage?: string
-  image?: string
-  initials?: string
-  light: boolean
-  name: string
-  onActionClick?: () => void
-  onError?: () => void
-  onLoad?: () => void
-  onRemoveAnimationEnd?: () => void
-  outerBorderColor?: string
-  removingAvatarAnimation: boolean
-  shape: AvatarShape
-  showStatusBorderColor: boolean
-  size: AvatarSize
-  status?: StatusDotStatus
-  statusIcon?: string
-  style: any
-  withShadow: boolean
-}
-
-export interface State {
-  imageLoaded: boolean
-}
-
-export class Avatar extends React.PureComponent<Props, State> {
+export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
   static defaultProps = {
     actionable: false,
     actionIcon: 'trash',

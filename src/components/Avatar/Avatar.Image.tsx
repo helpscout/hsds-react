@@ -5,37 +5,22 @@
 // code here into an <Image /> component
 
 import * as React from 'react'
+
 import VisuallyHidden from '../VisuallyHidden'
+
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+
 import { ImageWrapperUI, ImageUI, TitleUI } from './styles/Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
+import { ImageProps, ImageState } from './Avatar.types'
 
 let cache = {}
 export const clearCache = () => {
   cache = {}
 }
-// ... 29,134,155,206
-export interface Props {
-  animation: boolean
-  animationDuration: number
-  animationEasing: string
-  className?: string
-  src?: string[] | string
-  light: boolean
-  name: string
-  onError?: () => void
-  onLoad?: () => void
-  title: string | number
-}
 
-export interface State {
-  currentIndex: number
-  isLoading: boolean
-  isLoaded: boolean
-}
-
-export class AvatarImage extends React.PureComponent<Props, State> {
+export class AvatarImage extends React.PureComponent<ImageProps, ImageState> {
   static defaultProps = {
     animation: true,
     animationDuration: 160,
