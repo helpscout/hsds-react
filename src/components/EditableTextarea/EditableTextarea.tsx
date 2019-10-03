@@ -31,7 +31,7 @@ export class EditableTextarea extends React.PureComponent<
     label: 'Notes',
     maxRows: 5,
     overflowCueColor: 'white',
-    placeholder: 'Enter your notes',
+    placeholder: 'Add notes',
     value: '',
     onCommit: noop,
     onChange: noop,

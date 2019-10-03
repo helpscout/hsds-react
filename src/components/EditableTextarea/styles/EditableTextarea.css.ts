@@ -69,21 +69,21 @@ export const EditableTextareaUI = styled('div')`
     display: block;
     position: absolute;
     width: 100%;
-    height: 20px;
+    height: 50px;
     ${({ overflowCueColor }) =>
       `background: -moz-linear-gradient(
         top,
-        ${overflowCueColor} 20%,
+        ${overflowCueColor} 0%,
         rgba(255, 255, 255, 0) 100%
       );
       background: -webkit-linear-gradient(
         top,
-        ${overflowCueColor} 20%,
+        ${overflowCueColor} 0%,
         rgba(255, 255, 255, 0) 100%
       );
       background: linear-gradient(
         to top,
-        ${overflowCueColor} 20%,
+        ${overflowCueColor} 0%,
         rgba(255, 255, 255, 0) 100%
       )`};
     left: 0;
