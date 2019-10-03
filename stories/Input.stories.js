@@ -242,6 +242,10 @@ stories.add('states', () => (
 
 stories.add('state: error', () => (
   <div>
+    <div style={{ width: 100 }}>
+      <Input state="error" errorMessage="This is incorrect!" />
+    </div>
+    <br />
     <Input state="error" errorMessage="This is incorrect!" />
     <br />
     <Input state="error" inlineSuffix=".00" errorMessage="This is incorrect!" />
