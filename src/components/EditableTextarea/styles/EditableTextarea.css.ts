@@ -58,6 +58,10 @@ export const EditableTextareaUI = styled('div')`
   &.with-placeholder.is-readonly {
     .field {
       border-bottom: 1px dashed ${COLOURS.mask.border};
+
+      &:hover {
+        border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
+      }
     }
   }
 
