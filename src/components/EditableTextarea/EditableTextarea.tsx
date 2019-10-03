@@ -7,7 +7,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import debounce from '../../utilities/debounce'
-import * as equal from 'fast-deep-equal'
 
 import { ComponentUI, EditableTextareaUI } from './styles/EditableTextarea.css'
 import { LabelTextUI } from '../EditableField/styles/EditableField.css'
@@ -29,7 +28,9 @@ export class EditableTextarea extends React.PureComponent<
   static defaultProps = {
     id: 'editabletextarea',
     innerRef: noop,
+    label: 'Notes',
     maxRows: 5,
+    overflowCueColor: 'white',
     placeholder: 'Enter your notes',
     value: '',
     onCommit: noop,
@@ -51,7 +52,7 @@ export class EditableTextarea extends React.PureComponent<
     }
 
     this.textArea = React.createRef()
-    this.debouncedScroll = debounce(this.detectScroll, 50)
+    this.debouncedScroll = debounce(this.detectScroll, 30)
   }
 
   textArea: any
@@ -80,9 +81,9 @@ export class EditableTextarea extends React.PureComponent<
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value === this.props.value) return
-
     // Tested
-    /* istanbul ignore next */ if (nextProps.value === this.state.value) return
+    /* istanbul ignore next */
+    if (nextProps.value === this.state.value) return
 
     this.setState({
       value: nextProps.value,
@@ -241,7 +242,14 @@ export class EditableTextarea extends React.PureComponent<
   }
 
   render() {
-    const { id, maxRows, placeholder, ...rest } = this.props
+    const {
+      id,
+      label,
+      maxRows,
+      placeholder,
+      overflowCueColor,
+      ...rest
+    } = this.props
     const { clamped, readOnly, value } = this.state
 
     return (
@@ -250,7 +258,7 @@ export class EditableTextarea extends React.PureComponent<
         className={this.getClassName()}
       >
         <label className="EditableTextarea__label" htmlFor={id}>
-          <LabelTextUI>Notes</LabelTextUI>
+          <LabelTextUI>{label}</LabelTextUI>
         </label>
         <EditableTextareaUI
           className={classNames(
@@ -259,20 +267,21 @@ export class EditableTextarea extends React.PureComponent<
             /* istanbul ignore next */ readOnly && clamped && 'is-clamped',
             !Boolean(value) && 'with-placeholder'
           )}
+          overflowCueColor={overflowCueColor}
         >
           <Textarea
             {...getValidProps(rest)}
             id={id}
             inputRef={this.textArea}
-            onBlur={this.handleOnBlur}
-            onChange={this.handleOnChange}
-            onClick={this.handleOnClick}
-            onKeyDown={this.handleOnKeyDown}
+            maxRows={maxRows}
             placeholder={placeholder}
             readOnly={readOnly}
             value={value}
-            maxRows={maxRows}
+            onBlur={this.handleOnBlur}
+            onChange={this.handleOnChange}
+            onClick={this.handleOnClick}
             onHeightChange={this.handleTextareaHeightChange}
+            onKeyDown={this.handleOnKeyDown}
           />
         </EditableTextareaUI>
       </ComponentUI>

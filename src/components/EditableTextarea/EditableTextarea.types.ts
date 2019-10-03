@@ -3,8 +3,10 @@ import { CommitData, FieldValue } from '../EditableField/EditableField.types'
 export interface EditableTextareaProps {
   className?: string
   id: string
+  label: string
   maxRows: number
   innerRef: (node: HTMLElement) => void
+  overflowCueColor: string
   placeholder: string
   value: string
   onCommit: (args: {
