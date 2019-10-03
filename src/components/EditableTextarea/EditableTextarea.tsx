@@ -98,6 +98,9 @@ export class EditableTextarea extends React.PureComponent<
     if (this.state.value !== prevState.value) {
       this.setClampVisualCue()
     }
+    if (!prevProps.value) {
+      this.textArea.current.focus()
+    }
   }
 
   /* istanbul ignore next */
@@ -252,6 +255,16 @@ export class EditableTextarea extends React.PureComponent<
     } = this.props
     const { clamped, readOnly, value } = this.state
 
+    const textAreaClasses = classNames(
+      'field',
+      readOnly && !Boolean(value) && 'hide'
+    )
+    const maskClasses = classNames(
+      (!readOnly || Boolean(value)) && 'hide',
+      readOnly && !Boolean(value) && 'inline',
+      'field'
+    )
+
     return (
       <ComponentUI
         innerRef={this.setEditableTextareaNode}
@@ -265,12 +278,14 @@ export class EditableTextarea extends React.PureComponent<
             'EditableTextarea__ResizableTextarea',
             readOnly && 'is-readonly',
             /* istanbul ignore next */ readOnly && clamped && 'is-clamped',
-            !Boolean(value) && 'with-placeholder'
+            !Boolean(value) && 'with-placeholder',
+            (!readOnly || Boolean(value)) && 'inline'
           )}
           overflowCueColor={overflowCueColor}
         >
           <Textarea
             {...getValidProps(rest)}
+            className={textAreaClasses}
             id={id}
             inputRef={this.textArea}
             maxRows={maxRows}
@@ -283,6 +298,9 @@ export class EditableTextarea extends React.PureComponent<
             onHeightChange={this.handleTextareaHeightChange}
             onKeyDown={this.handleOnKeyDown}
           />
+          <div className={maskClasses} onClick={this.handleOnClick}>
+            {placeholder}
+          </div>
         </EditableTextareaUI>
       </ComponentUI>
     )

@@ -42,7 +42,7 @@ export const EditableTextareaUI = styled('div')`
   &.is-readonly {
     border-bottom: 1px dashed ${COLOURS.invisible};
 
-    &:hover {
+    &:not(.with-placeholder):hover {
       border-bottom: 1px dashed ${COLOURS.mask.border};
     }
 
@@ -56,10 +56,8 @@ export const EditableTextareaUI = styled('div')`
   }
 
   &.with-placeholder.is-readonly {
-    border-bottom: 1px dashed ${COLOURS.mask.border};
-
-    &:hover {
-      border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
+    .field {
+      border-bottom: 1px dashed ${COLOURS.mask.border};
     }
   }
 
@@ -92,7 +90,15 @@ export const EditableTextareaUI = styled('div')`
     z-index: 3;
   }
 
-  textarea {
+  .field {
+    &.hide {
+      display: none;
+    }
+    &.inline {
+      display: inline-block;
+      width: auto;
+      padding: 0;
+    }
     box-sizing: border-box;
     position: relative;
     width: 100%;
@@ -115,7 +121,8 @@ export const EditableTextareaUI = styled('div')`
     overflow: hidden;
     box-shadow: none;
     scrollbar-width: thin;
-
+  }
+  textarea {
     &:hover,
     &:focus {
       overflow-y: auto;
