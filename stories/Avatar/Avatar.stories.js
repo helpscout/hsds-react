@@ -8,8 +8,6 @@ import { action } from '@storybook/addon-actions'
 import { getColor } from '../../src/styles/utilities/color'
 import { withKnobs, boolean, select } from '@storybook/addon-knobs'
 
-import Img from 'react-image'
-
 const stories = storiesOf('Avatar', module)
 
 stories.addDecorator(
