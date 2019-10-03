@@ -8,6 +8,7 @@ import Icon from '../Icon'
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
+import { noop } from '../../utilities/other'
 
 import AvatarCrop from './Avatar.Crop'
 import AvatarImage from './Avatar.Image'
@@ -48,6 +49,8 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
     shape: 'circle',
     style: {},
     withShadow: false,
+    onError: noop,
+    onLoad: noop,
   }
 
   src: string[]
@@ -67,11 +70,18 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
       newProps.fallbackImage !== this.props.fallbackImage
     if (imageHasChanged || fallbackHasChanged) {
       this.src = getImageSrc(newProps)
+      this.setState({
+        imageLoaded: false,
+      })
     }
   }
 
   onImageLoadedError = () => {
-    this.props.onError && this.props.onError()
+    this.setState({
+      imageLoaded: false,
+    })
+
+    this.props.onError()
   }
 
   onImageLoadedSuccess = () => {
@@ -79,7 +89,7 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
       imageLoaded: true,
     })
 
-    this.props.onLoad && this.props.onLoad()
+    this.props.onLoad()
   }
 
   getShapeClassNames = (): string => {

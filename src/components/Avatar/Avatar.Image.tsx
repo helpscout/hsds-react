@@ -77,7 +77,7 @@ export class AvatarImage extends React.PureComponent<ImageProps, ImageState> {
     /* istanbul ignore else */
     if (this.image) {
       this.setState({ isLoaded: true })
-      this.props.onLoad && this.props.onLoad()
+      this.props.onLoad()
     }
   }
 
@@ -111,7 +111,7 @@ export class AvatarImage extends React.PureComponent<ImageProps, ImageState> {
           isLoading: false,
           isLoaded: true,
         })
-        this.props.onLoad && this.props.onLoad()
+        this.props.onLoad()
         return true
       }
 
@@ -124,7 +124,7 @@ export class AvatarImage extends React.PureComponent<ImageProps, ImageState> {
     // if we have no more sources to try, return - we are done
     if (nextIndex === this.sourceList.length) {
       this.setState({ isLoading: false })
-      this.props.onError && this.props.onError()
+      this.props.onError()
       return false
     }
 

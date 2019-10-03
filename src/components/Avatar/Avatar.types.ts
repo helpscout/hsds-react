@@ -23,8 +23,8 @@ export interface AvatarProps {
   light: boolean
   name: string
   onActionClick?: () => void
-  onError?: () => void
-  onLoad?: () => void
+  onError: () => void
+  onLoad: () => void
   onRemoveAnimationEnd?: () => void
   outerBorderColor?: string
   removingAvatarAnimation: boolean
@@ -49,8 +49,8 @@ export interface ImageProps {
   src?: string[] | string
   light: boolean
   name: string
-  onError?: () => void
-  onLoad?: () => void
+  onError: () => void
+  onLoad: () => void
   title: string | number
 }
 
