@@ -28,7 +28,7 @@ export const ContainerUI = styled('div')`
   border-radius: 3px;
 `
 
-const NoteUI = styled('div')`
+export const NoteUI = styled('div')`
   width: 100%;
   padding: 20px;
   background-color: rgba(155, 155, 195, 0.1);
@@ -43,6 +43,22 @@ const NoteUI = styled('div')`
     &:last-child {
       margin: 0;
     }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-position: outside;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  code {
+    border: 1px solid rgba(125, 115, 165, 0.5);
+    display: inline-block;
+    padding: 2px 3px;
   }
 `
 
