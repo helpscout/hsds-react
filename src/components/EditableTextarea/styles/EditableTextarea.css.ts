@@ -17,11 +17,6 @@ export const EditableTextareaUI = styled('div')`
   box-sizing: border-box;
   position: relative;
 
-  // we don't want a border on the bottom when the field
-  // is active, it should just have the blue bar
-  // border-bottom: 1px dashed ${COLOURS.mask.border};
-  border-bottom: 1px solid transparent;
-
   &:after {
     content: '';
     box-sizing: border-box;
@@ -44,8 +39,6 @@ export const EditableTextareaUI = styled('div')`
   }
 
   &.is-readonly {
-    border-bottom: 1px dashed ${COLOURS.invisible};
-
     &:not(.with-placeholder):hover {
       textarea {
         border-bottom: 1px dashed ${COLOURS.mask.border};
@@ -62,7 +55,7 @@ export const EditableTextareaUI = styled('div')`
   }
 
   &.with-placeholder.is-readonly {
-    .field {
+    .field:not(.hide) {
       border-bottom: 1px dashed ${COLOURS.mask.border};
 
       &:hover {
@@ -101,15 +94,19 @@ export const EditableTextareaUI = styled('div')`
   }
 
   .field {
+    &:not(.hide):not(.inline) {
+      border-bottom: 1px solid transparent;
+    }
     &.hide {
       display: none;
     }
     &.inline {
       display: inline-block;
-      height: 20px;
+      height: 21px;
       width: auto;
       padding: 0;
       color: ${COLOURS.mask.placeholder.regular};
+      border-bottom: 1px solid transparent;
     }
     box-sizing: border-box;
     position: relative;
@@ -118,13 +115,11 @@ export const EditableTextareaUI = styled('div')`
     height: auto;
     border: 0;
     margin: 0;
-    ${
-      /* 
+    ${/* 
       I have no idea why Chrome and safari are adding 3px to the height of the parent of the textarea,
       so I'm adding those 3px to firefox for parity  ¯\_(ツ)_/¯
     */
-      isFirefox() && 'margin-bottom: 3px;'
-    }
+    isFirefox() && 'margin-bottom: 3px;'}
     padding: 0 10px 0 0;
     color: ${COLOURS.input.regular};
     font-family: ${FONT_FAMILY};
@@ -137,6 +132,10 @@ export const EditableTextareaUI = styled('div')`
     scrollbar-width: thin;
   }
   textarea {
+    // height: 21px;
+    &.field {
+      // height: 21px;
+    }
     &:hover,
     &:focus {
       overflow-y: auto;
