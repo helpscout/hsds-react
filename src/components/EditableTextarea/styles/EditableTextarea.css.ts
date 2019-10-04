@@ -137,10 +137,6 @@ export const EditableTextareaUI = styled('div')`
     scrollbar-width: thin;
   }
   textarea {
-    // height: 21px;
-    &.field {
-      // height: 21px;
-    }
     &:hover,
     &:focus {
       overflow-y: auto;
