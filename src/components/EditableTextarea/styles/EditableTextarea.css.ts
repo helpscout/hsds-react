@@ -16,13 +16,14 @@ export const ComponentUI = styled('div')`
 export const EditableTextareaUI = styled('div')`
   box-sizing: border-box;
   position: relative;
+  display: flex;
 
   &:after {
     content: '';
     box-sizing: border-box;
     display: block;
     position: absolute;
-    bottom: 2px;
+    bottom: 0;
     left: 0;
     right: 0;
     height: ${focusIndicator.active};
@@ -94,6 +95,7 @@ export const EditableTextareaUI = styled('div')`
   }
 
   .field {
+    align-items: stretch;
     &:not(.hide):not(.inline) {
       border-bottom: 1px solid transparent;
     }

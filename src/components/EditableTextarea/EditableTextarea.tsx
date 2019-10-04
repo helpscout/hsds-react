@@ -278,8 +278,8 @@ export class EditableTextarea extends React.PureComponent<
             'EditableTextarea__ResizableTextarea',
             readOnly && 'is-readonly',
             /* istanbul ignore next */ readOnly && clamped && 'is-clamped',
-            !Boolean(value) && 'with-placeholder',
-            (!readOnly || Boolean(value)) && 'inline'
+            !Boolean(value) && 'with-placeholder'
+            // (!readOnly || Boolean(value)) && 'inline'
           )}
           overflowCueColor={overflowCueColor}
         >
