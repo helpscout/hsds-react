@@ -47,7 +47,9 @@ export const EditableTextareaUI = styled('div')`
     border-bottom: 1px dashed ${COLOURS.invisible};
 
     &:not(.with-placeholder):hover {
-      border-bottom: 1px dashed ${COLOURS.mask.border};
+      textarea {
+        border-bottom: 1px dashed ${COLOURS.mask.border};
+      }
     }
 
     textarea {
