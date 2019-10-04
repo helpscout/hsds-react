@@ -4,16 +4,19 @@ export type InputEvent = Event
 export type RadioCardProps = {
   checked: boolean
   className?: string
+  content: string | Component
+  heading?: string
   icon: string | Component
   iconSize: number
   id?: string
-  inputRef: (node: InputNode) => void
   innerRef: (node: InputNode) => void
+  inputRef: (node: InputNode) => void
   isFocused: boolean
+  maxWidth?: string | number
   onBlur: (event: InputEvent) => void
+  onChange: (value: any) => void
   onFocus: (event: InputEvent) => void
   title?: string
-  onChange: (value: any) => void
   value?: string
 }
 

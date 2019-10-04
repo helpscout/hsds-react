@@ -12,6 +12,20 @@ describe('ClassName', () => {
   })
 })
 
+describe('maxWidth', () => {
+  test('Applies maxWidth to card', () => {
+    const maxWidth = '124px'
+    const wrapper = mount(<RadioCard maxWidth={maxWidth} />)
+
+    expect(
+      wrapper
+        .find('.c-RadioCard')
+        .first()
+        .props().maxWidth
+    ).toBe(maxWidth)
+  })
+})
+
 describe('Radio', () => {
   test('Renders a custom radio', () => {
     const wrapper = mount(<RadioCard checked={true} />)
@@ -167,6 +181,47 @@ describe('Focus', () => {
   })
 })
 
+describe('Heading', () => {
+  test('Can render custom Heading component', () => {
+    const Custom = () => <div />
+    const wrapper = mount(<RadioCard checked={true} heading={Custom} />)
+
+    expect(wrapper.find(Custom).length).toBeTruthy()
+  })
+
+  test('Can render Heading string', () => {
+    const heading = 'this is a heading'
+    const wrapper = mount(<RadioCard checked={true} heading={heading} />)
+
+    expect(
+      wrapper
+        .find('.c-RadioCard__heading')
+        .first()
+        .text()
+    ).toBe(heading)
+  })
+})
+
+describe('Content', () => {
+  test('Can render custom Content component', () => {
+    const Custom = () => <div />
+    const wrapper = mount(<RadioCard checked={true} content={Custom} />)
+
+    expect(wrapper.find(Custom).length).toBeTruthy()
+  })
+
+  test('Can render Content string', () => {
+    const content = 'this is a content'
+    const wrapper = mount(<RadioCard checked={true} content={content} />)
+
+    expect(
+      wrapper
+        .find('.c-RadioCard__content')
+        .first()
+        .text()
+    ).toBe(content)
+  })
+})
 describe('ChoiceGroup.Context', () => {
   test('Can propogate checked value', () => {
     const wrapper = mount(
