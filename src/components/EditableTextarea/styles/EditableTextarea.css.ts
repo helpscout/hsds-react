@@ -28,7 +28,7 @@ export const EditableTextareaUI = styled('div')`
     box-sizing: border-box;
     display: block;
     position: absolute;
-    bottom: -2px;
+    bottom: 2px;
     left: 0;
     right: 0;
     height: ${focusIndicator.active};
