@@ -3,6 +3,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { COLOURS, SIZES } from '../../EditableField/EditableField.utils'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 import { isFirefox } from '../../../utilities/browser'
+import { getColor } from '../../../styles/utilities/color'
 
 const { field, focusIndicator } = SIZES
 
@@ -16,7 +17,11 @@ export const ComponentUI = styled('div')`
 export const EditableTextareaUI = styled('div')`
   box-sizing: border-box;
   position: relative;
-  border-bottom: 1px dashed ${COLOURS.mask.border};
+
+  // we don't want a border on the bottom when the field
+  // is active, it should just have the blue bar
+  // border-bottom: 1px dashed ${COLOURS.mask.border};
+  border-bottom: 1px solid transparent;
 
   &:after {
     content: '';
@@ -100,8 +105,10 @@ export const EditableTextareaUI = styled('div')`
     }
     &.inline {
       display: inline-block;
+      height: 20px;
       width: auto;
       padding: 0;
+      color: ${getColor('charcoal.300')} !important;
     }
     box-sizing: border-box;
     position: relative;
@@ -110,11 +117,13 @@ export const EditableTextareaUI = styled('div')`
     height: auto;
     border: 0;
     margin: 0;
-    ${/* 
+    ${
+      /* 
       I have no idea why Chrome and safari are adding 3px to the height of the parent of the textarea,
       so I'm adding those 3px to firefox for parity  ¯\_(ツ)_/¯
     */
-    isFirefox() && 'margin-bottom: 3px;'}
+      isFirefox() && 'margin-bottom: 3px;'
+    }
     padding: 0 10px 0 0;
     color: ${COLOURS.input.regular};
     font-family: ${FONT_FAMILY};
