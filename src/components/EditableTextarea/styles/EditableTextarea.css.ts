@@ -52,6 +52,7 @@ export const EditableTextareaUI = styled('div')`
     }
     textarea {
       cursor: pointer;
+      background-color: #fff;
 
       &::placeholder {
         color: ${COLOURS.mask.placeholder.regular};
