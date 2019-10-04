@@ -3,7 +3,6 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { COLOURS, SIZES } from '../../EditableField/EditableField.utils'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 import { isFirefox } from '../../../utilities/browser'
-import { getColor } from '../../../styles/utilities/color'
 
 const { field, focusIndicator } = SIZES
 
@@ -108,7 +107,7 @@ export const EditableTextareaUI = styled('div')`
       height: 20px;
       width: auto;
       padding: 0;
-      color: ${getColor('charcoal.300')} !important;
+      color: ${COLOURS.mask.placeholder.regular};
     }
     box-sizing: border-box;
     position: relative;
@@ -143,7 +142,7 @@ export const EditableTextareaUI = styled('div')`
     }
 
     &::placeholder {
-      color: ${COLOURS.mask.placeholder.regular};
+      color: ${COLOURS.mask.placeholder.disabled};
     }
 
     ::-webkit-scrollbar {
