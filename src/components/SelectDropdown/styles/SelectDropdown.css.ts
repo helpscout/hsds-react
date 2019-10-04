@@ -42,6 +42,7 @@ export const LabelUI = styled('div')`
   --BlueConfigGlobalFontSize: 14px;
   font-size: 14px;
   color: #2a3b47;
+  max-width: 100%;
   padding-right: 20px;
   position: relative;
   text-decoration: none !important;
