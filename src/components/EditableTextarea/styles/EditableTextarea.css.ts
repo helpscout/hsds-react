@@ -33,6 +33,9 @@ export const EditableTextareaUI = styled('div')`
     transition: transform 0.3s ease;
     z-index: 3;
     will-change: transform;
+    @-moz-document url-prefix() {
+      bottom: 2px;
+    }
   }
 
   &.is-readonly:after {
