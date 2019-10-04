@@ -73,7 +73,7 @@ export const EditableTextareaUI = styled('div')`
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 100%;
+    width: calc(100% - 10px);
     height: 50px;
     ${({ overflowCueColor }) =>
       `background: -moz-linear-gradient(
