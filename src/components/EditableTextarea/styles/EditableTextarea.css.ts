@@ -2,7 +2,6 @@ import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { COLOURS, SIZES } from '../../EditableField/EditableField.utils'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
-import { isFirefox } from '../../../utilities/browser'
 
 const { field, focusIndicator } = SIZES
 
@@ -17,14 +16,13 @@ export const EditableTextareaUI = styled('div')`
   box-sizing: border-box;
   position: relative;
   display: flex;
-  border-bottom: 1px dashed ${COLOURS.invisible};
 
   &:after {
     content: '';
     box-sizing: border-box;
     display: block;
     position: absolute;
-    bottom: -1px;
+    bottom: 0;
     left: 0;
     right: 0;
     height: ${focusIndicator.active};
@@ -34,9 +32,6 @@ export const EditableTextareaUI = styled('div')`
     transition: transform 0.3s ease;
     z-index: 3;
     will-change: transform;
-    @-moz-document url-prefix() {
-      bottom: -1px;
-    }
   }
 
   &.is-readonly:after {
@@ -44,9 +39,8 @@ export const EditableTextareaUI = styled('div')`
   }
 
   &.is-readonly {
-    &:not(.with-placeholder) {
-      border-bottom: 1px dashed ${COLOURS.invisible};
-      &:hover {
+    &:not(.with-placeholder):hover {
+      textarea {
         border-bottom: 1px dashed ${COLOURS.mask.border};
       }
     }
@@ -93,7 +87,7 @@ export const EditableTextareaUI = styled('div')`
         rgba(255, 255, 255, 0) 100%
       )`};
     left: 0;
-    bottom: 0;
+    bottom: 1px;
     pointer-events: none;
     z-index: 3;
   }
@@ -121,11 +115,6 @@ export const EditableTextareaUI = styled('div')`
     height: auto;
     border: 0;
     margin: 0;
-    ${/* 
-      I have no idea why Chrome and safari are adding 3px to the height of the parent of the textarea,
-      so I'm adding those 3px to firefox for parity  ¯\_(ツ)_/¯
-    */
-    isFirefox() && 'margin-bottom: 3px;'}
     padding: 0 10px 0 0;
     color: ${COLOURS.input.regular};
     font-family: ${FONT_FAMILY};
@@ -138,9 +127,6 @@ export const EditableTextareaUI = styled('div')`
     scrollbar-width: thin;
   }
   textarea {
-    &.field {
-      // height: 21px;
-    }
     &:hover,
     &:focus {
       overflow-y: auto;
