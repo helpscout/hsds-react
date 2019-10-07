@@ -104,7 +104,7 @@ describe('Icon', () => {
   })
 
   test('Can render custom Icon component', () => {
-    const wrapper = mount(<RadioCard checked={true} icon={TestComponent} />)
+    const wrapper = mount(<RadioCard checked={true} icon={<TestComponent />} />)
 
     expect(wrapper.find(TestComponent).length).toBeTruthy()
   })
@@ -202,7 +202,9 @@ describe('Heading', () => {
   })
 
   test('Can render custom Heading component', () => {
-    const wrapper = mount(<RadioCard checked={true} heading={TestComponent} />)
+    const wrapper = mount(
+      <RadioCard checked={true} heading={<TestComponent />} />
+    )
 
     expect(wrapper.find(TestComponent).length).toBeTruthy()
   })
@@ -229,7 +231,9 @@ describe('Content', () => {
   })
 
   test('Can render custom Content component', () => {
-    const wrapper = mount(<RadioCard checked={true} content={TestComponent} />)
+    const wrapper = mount(
+      <RadioCard checked={true} content={<TestComponent />} />
+    )
 
     expect(wrapper.find(TestComponent).length).toBeTruthy()
   })
