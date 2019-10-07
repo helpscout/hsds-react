@@ -109,6 +109,7 @@ export const CropUI = styled('div')`
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0) inset, ${config.boxShadow};
 
     &.is-imageLoaded {
+      color: 'transparent';
       box-shadow: 0 0 0 1px rgba(255, 255, 255, 1) inset, ${config.boxShadow};
     }
   }
