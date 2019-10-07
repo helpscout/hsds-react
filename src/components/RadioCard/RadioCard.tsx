@@ -73,6 +73,10 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
       return null
     }
 
+    if (React.isValidElement(content)) {
+      return content
+    }
+
     if (isFunction(content)) {
       return React.createElement(content)
     }
@@ -87,6 +91,10 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
       return null
     }
 
+    if (React.isValidElement(heading)) {
+      return heading
+    }
+
     if (isFunction(heading)) {
       return React.createElement(heading)
     }
@@ -96,6 +104,10 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
 
   getIconMarkup = () => {
     const { icon, iconSize } = this.props
+
+    if (React.isValidElement(icon)) {
+      return icon
+    }
 
     if (isFunction(icon)) {
       return React.createElement(icon)

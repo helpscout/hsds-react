@@ -4,9 +4,9 @@ export type InputEvent = Event
 export type RadioCardProps = {
   checked: boolean
   className?: string
-  content: string | Component
-  heading?: string
-  icon: string | Component
+  content?: string | Component | React.ReactNode
+  heading?: string | Component | React.ReactNode
+  icon: string | Component | React.ReactNode
   iconSize: number
   id?: string
   innerRef: (node: InputNode) => void

@@ -65,11 +65,11 @@ stories.add('focused', () => (
 
 stories.add('custom icons', () => (
   <ChoiceGroup align="horizontal" onChange={onChange} value="chat">
-    <RadioCard icon={<Icon name="search" />} value="chat" />
-    <RadioCard icon={<Icon name="search" />} value="antenna" />
-    <RadioCard icon={<Icon name="search" />} value="buoy" />
-    <RadioCard icon={<Icon name="search" />} value="search" />
-    <RadioCard icon={<Icon name="search" />} value="question" />
+    <RadioCard icon={<Icon size="24" name="search" />} value="chat" />
+    <RadioCard icon={<Icon size="24" name="search" />} value="antenna" />
+    <RadioCard icon={<Icon size="24" name="fab-antenna" />} value="buoy" />
+    <RadioCard icon={<Icon size="24" name="search" />} value="search" />
+    <RadioCard icon={<Icon size="24" name="search" />} value="question" />
   </ChoiceGroup>
 ))
 
