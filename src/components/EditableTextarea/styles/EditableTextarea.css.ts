@@ -28,7 +28,7 @@ export const EditableTextareaUI = styled('div')`
     left: 0;
     right: 0;
     height: ${focusIndicator.active};
-    background-color: ${COLOURS.focusIndicator.active};
+    background-color: ${({ focusIndicatorColor }) => focusIndicatorColor};
     transform-origin: bottom left;
     transform: scaleX(1);
     transition: transform 0.3s ease;
