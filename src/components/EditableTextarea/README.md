@@ -27,17 +27,18 @@ This text
 
 ## Props
 
-| Prop             | Type                                                          | Default            | Description                                                         |
-| ---------------- | ------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------- |
-| className        | `string`                                                      |                    | The className of the component.                                     |
-| id               | `string`                                                      | 'editabletextarea' | The id to assign to the component.                                  |
-| label            | `string`                                                      | 'editabletextarea' | The label for the field                                             |
-| maxRows          | `number`                                                      | 5                  | The maximum number of lines the textarea will grow to (max height). |
-| overflowCueColor | `string`                                                      | 'white'            | The color of the visual cue when content is overflowing.            |
-| placeholder      | `string`                                                      | 'Enter your notes' | The placeholder of the textarea.                                    |
-| value            | `string`                                                      | 'Enter your notes' | The value of the textarea.                                          |
-| innerRef         | `Function`                                                    |                    | Retrieve the inner DOM node.                                        |
-| onChange:        | (args: { name: string; value: Value; event?: Event }) => void | `noop function`    | Fires when either the input or an option is changed                 |
-| onEnter:         | (args: { name: string; value: Value; event: Event }) => void  | `noop function`    | Fires when Enter is pressed on the input                            |
-| onEscape:        | (args: { name: string; value: Value; event: Event }) => void  | `noop function`    | Fires when Escape is pressed on the input                           |
-| onCommit:        | (args: { name: string; value: Value }) => void                | `noop function`    | Fires when a change is “saved” (see below)                          |
+| Prop             | Type                                                           | Default                                    | Description                                                                                          |
+| ---------------- | -------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| className        | `string`                                                       |                                            | The className of the component.                                                                      |
+| id               | `string`                                                       | 'editabletextarea'                         | The id to assign to the component.                                                                   |
+| label            | `string`                                                       | 'editabletextarea'                         | The label for the field                                                                              |
+| maxRows          | `number`                                                       | 5                                          | The maximum number of lines the textarea will grow to (max height).                                  |
+| overflowCueColor | `string`                                                       | 'white'                                    | The color of the visual cue when content is overflowing.                                             |
+| placeholder      | `string`                                                       | 'Enter your notes'                         | The placeholder of the textarea.                                                                     |
+| value            | `string`                                                       | 'Enter your notes'                         | The value of the textarea.                                                                           |
+| validate:        | (args: { value: string; name: string }) => Promise<Validation> | `() => Promise.resolve({ isValid: true })` | Function that validates the value, should always return a Promise that resolves to a Validation type |
+| innerRef         | `Function`                                                     |                                            | Retrieve the inner DOM node.                                                                         |
+| onChange:        | (args: { name: string; value: Value; event?: Event }) => void  | `noop function`                            | Fires when either the input or an option is changed                                                  |
+| onEnter:         | (args: { name: string; value: Value; event: Event }) => void   | `noop function`                            | Fires when Enter is pressed on the input                                                             |
+| onEscape:        | (args: { name: string; value: Value; event: Event }) => void   | `noop function`                            | Fires when Escape is pressed on the input                                                            |
+| onCommit:        | (args: { name: string; value: Value }) => void                 | `noop function`                            | Fires when a change is “saved” (see below)                                                           |

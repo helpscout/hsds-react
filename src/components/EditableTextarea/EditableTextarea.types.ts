@@ -1,4 +1,8 @@
-import { CommitData, FieldValue } from '../EditableField/EditableField.types'
+import {
+  CommitData,
+  FieldValue,
+  Validation,
+} from '../EditableField/EditableField.types'
 
 export interface EditableTextareaProps {
   className?: string
@@ -17,6 +21,12 @@ export interface EditableTextareaProps {
   onChange: (args: { name: string; value: FieldValue[]; event?: Event }) => void
   onEnter: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onEscape: (args: { name: string; value: FieldValue[]; event: Event }) => void
+  validate: (args: {
+    data: CommitData
+    name: string
+    value: string
+    values: FieldValue[]
+  }) => Promise<Validation>
 }
 
 export interface EditableTextareaState {
@@ -24,4 +34,6 @@ export interface EditableTextareaState {
   prevValue: string
   readOnly: boolean
   value: string
+  validated: boolean
+  validationInfo: Validation | null
 }

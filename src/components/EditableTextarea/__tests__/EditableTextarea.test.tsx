@@ -2,6 +2,15 @@ import * as React from 'react'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { EditableTextarea } from '../EditableTextarea'
+import { Validation } from '../../EditableField/EditableField.types'
+import {
+  INPUT_CLASSNAMES,
+  STATES_CLASSNAMES,
+} from '../../EditableField/EditableField.utils'
+
+const flushPromises = () => new Promise(setImmediate)
+
+jest.useFakeTimers()
 
 describe('className', () => {
   test('Has default className', () => {
@@ -193,16 +202,135 @@ describe('Keydown', () => {
 })
 
 describe('Blur', () => {
-  test('should commit', () => {
+  test('should commit if value changes', () => {
     const onCommitSpy = jest.fn()
 
     cy.render(
       <EditableTextarea id="company" value="hello" onCommit={onCommitSpy} />
     )
 
-    cy.get('textarea').blur()
+    const textarea = cy.get('textarea')
 
-    expect(onCommitSpy).toHaveBeenCalled()
+    textarea.type('a')
+    textarea.blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(onCommitSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('should not commit if value unchanged', () => {
+    const onCommitSpy = jest.fn()
+
+    cy.render(
+      <EditableTextarea id="company" value="hello" onCommit={onCommitSpy} />
+    )
+
+    const textarea = cy.get('textarea')
+
+    textarea.type('hello')
+    textarea.blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(onCommitSpy).not.toHaveBeenCalled()
+    })
+  })
+
+  test('Pressing Enter: should commit if value changes', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableTextarea
+        id="company"
+        value="1234567"
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+      />
+    )
+
+    const textarea = wrapper.find('textarea').first()
+    // @ts-ignore
+    textarea.getDOMNode().value = '123'
+    textarea.simulate('keydown', { key: 'Enter' })
+
+    flushPromises().then(() => {
+      wrapper.update()
+
+      expect(onEnterSpy).toHaveBeenCalled()
+      expect(onCommitSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('Pressing Enter: should not commit if value invalid', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableTextarea
+        id="company"
+        value="1234567"
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: false,
+            name,
+            value,
+            type: 'error',
+            message: 'That is definitely not right',
+          })
+        }
+      />
+    )
+
+    const textarea = wrapper.find('textarea').first()
+
+    // @ts-ignore
+    textarea.getDOMNode().value = '8888'
+
+    textarea.simulate('keydown', { key: 'Enter' })
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(onEnterSpy).toHaveBeenCalled()
+      expect(onCommitSpy).not.toHaveBeenCalled()
+    })
+  })
+
+  test('should not run validate fn if value already validated', () => {
+    const validateSpy = jest.fn()
+
+    cy.render(
+      <EditableTextarea id="company" value="hello" validate={validateSpy} />
+    )
+
+    const textarea = cy.get('textarea')
+
+    textarea.type('hello')
+    textarea.blur()
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(validateSpy).toHaveBeenCalled()
+    })
+
+    textarea.focus()
+    textarea.blur()
+
+    const t = flushPromises()
+    jest.runAllImmediates()
+
+    t.then(() => {
+      expect(validateSpy).not.toHaveBeenCalled()
+    })
   })
 })
 
@@ -221,5 +349,118 @@ describe('Readonly', () => {
 
     wrapper.find('textarea').simulate('blur')
     expect(wrapper.state('readOnly')).toBeTruthy()
+  })
+})
+
+describe('validation rendering', () => {
+  test('should not render validation on mount', () => {
+    cy.render(<EditableTextarea id="greeting" value="hello" />)
+
+    expect(cy.get(`.${INPUT_CLASSNAMES.validation}`).exists()).toBeFalsy()
+  })
+
+  test('should render validation if invalid', () => {
+    cy.render(
+      <EditableTextarea
+        id="greeting_0"
+        value="hello"
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: false,
+            name,
+            value,
+            type: 'error',
+            message: 'That is definitely not right',
+          })
+        }
+      />
+    )
+
+    const textarea = cy.get('textarea')
+
+    textarea.type('hello')
+    textarea.blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(
+        cy.get(`.${EditableTextarea.className}__validation`).exists()
+      ).toBeTruthy()
+      expect(
+        cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()
+      ).toBeTruthy()
+    })
+  })
+
+  test('should not render validation if valid', () => {
+    cy.render(
+      <EditableTextarea
+        id="greeting_0"
+        value="hello"
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: true,
+            name,
+            value,
+            type: 'other',
+            message: '',
+          })
+        }
+      />
+    )
+
+    const textarea = cy.get('textarea')
+
+    textarea.type('hello')
+    textarea.blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(
+        cy.get(`.${EditableTextarea.className}__validation`).exists()
+      ).toBeFalsy()
+      expect(
+        cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()
+      ).toBeFalsy()
+    })
+  })
+
+  test('should not render validation if id mistmatches', () => {
+    cy.render(
+      <EditableTextarea
+        id="greeting_0"
+        value="hello"
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: true,
+            name: 'something else',
+            value,
+            type: 'other',
+            message: '',
+          })
+        }
+      />
+    )
+
+    const textarea = cy.get('textarea')
+
+    textarea.type('hello')
+    textarea.blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(
+        cy.get(`.${EditableTextarea.className}__validation`).exists()
+      ).toBeFalsy()
+      expect(
+        cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()
+      ).toBeFalsy()
+    })
   })
 })

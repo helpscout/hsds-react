@@ -48,7 +48,7 @@ export const NoteUI = styled('div')`
   ul {
     padding: 0;
     margin: 0;
-    list-style-position: outside;
+    list-style-position: inside;
   }
 
   li {

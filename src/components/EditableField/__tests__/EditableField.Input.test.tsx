@@ -248,7 +248,9 @@ describe('validation', () => {
 
     expect(cy.get(`.${INPUT_CLASSNAMES.validation}`).exists()).toBeFalsy()
   })
+})
 
+describe('handle key up', () => {
   test('handleKeyPress', () => {
     const spy = jest.fn()
     const name = 'greeting_1'

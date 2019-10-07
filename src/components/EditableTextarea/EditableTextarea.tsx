@@ -10,10 +10,14 @@ import debounce from '../../utilities/debounce'
 
 import { ComponentUI, EditableTextareaUI } from './styles/EditableTextarea.css'
 import { LabelTextUI } from '../EditableField/styles/EditableField.css'
+import { ValidationIconUI } from '../EditableField/styles/EditableField.Input.css'
+import Icon from '../Icon'
+import Tooltip from '../Tooltip'
 
-import { COMPONENT_KEY } from './EditableTextarea.utils'
+import { COMPONENT_KEY, scrollToTop } from './EditableTextarea.utils'
 import { key } from '../../constants/Keys'
 import { CAUSE, OPERATION } from '../EditableField/constants'
+import { getValidationColor } from '../EditableField/EditableField.utils'
 
 import {
   EditableTextareaProps,
@@ -37,6 +41,7 @@ export class EditableTextarea extends React.PureComponent<
     onChange: noop,
     onEnter: noop,
     onEscape: noop,
+    validate: () => Promise.resolve({ isValid: true }),
   }
 
   constructor(props) {
@@ -49,6 +54,8 @@ export class EditableTextarea extends React.PureComponent<
       readOnly: true,
       prevValue: valueFromProps,
       value: valueFromProps,
+      validated: false,
+      validationInfo: null,
     }
 
     this.textArea = React.createRef()
@@ -113,39 +120,12 @@ export class EditableTextarea extends React.PureComponent<
     this.setState({ clamped: !hasReachedBottom })
   }
 
-  handleOnBlur = e => {
-    const { id, onCommit } = this.props
-    const { value } = this.state
-    const item = {
-      value,
-      id,
-    }
-
-    this.setState(
-      {
-        readOnly: true,
-      },
-      () => {
-        onCommit({
-          data: {
-            cause: CAUSE.BLUR,
-            operation: OPERATION.UPDATE,
-            item,
-          },
-          name: id,
-          value: [item],
-        })
-        /* istanbul ignore next */
-        this.textArea.current.scrollTo &&
-          this.textArea.current.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-    )
-  }
-
   handleOnChange = e => {
     this.setState(
       {
         value: e.target.value,
+        validationInfo: null,
+        validated: false,
       },
       () => {
         const { id } = this.props
@@ -229,6 +209,76 @@ export class EditableTextarea extends React.PureComponent<
     }
   }
 
+  handleOnBlur = e => {
+    const { id, onCommit, validate } = this.props
+    const { prevValue, value, validated } = this.state
+    const item = {
+      value,
+      id,
+    }
+
+    // Unchanged value, or ESC case
+    if (value === prevValue) {
+      this.setState(
+        {
+          readOnly: true,
+          validationInfo: null,
+        },
+        () => {
+          scrollToTop(this.textArea.current)
+        }
+      )
+    } else {
+      /* istanbul ignore else */
+      if (!validated) {
+        validate({
+          data: {
+            cause: CAUSE.BLUR,
+            operation: OPERATION.UPDATE,
+            item,
+          },
+          name: id,
+          value,
+          values: [item],
+        }).then(validation => {
+          // Both cases tested
+          /* istanbul ignore next */
+          if (validation.isValid) {
+            this.setState(
+              {
+                readOnly: true,
+                validationInfo: null,
+                validated: true,
+              },
+              () => {
+                onCommit({
+                  data: {
+                    cause: CAUSE.BLUR,
+                    operation: OPERATION.UPDATE,
+                    item,
+                  },
+                  name: id,
+                  value: [item],
+                })
+                scrollToTop(this.textArea.current)
+              }
+            )
+          } else {
+            this.setState(
+              {
+                validationInfo: validation,
+                validated: true,
+              },
+              () => {
+                scrollToTop(this.textArea.current)
+              }
+            )
+          }
+        })
+      }
+    }
+  }
+
   /* istanbul ignore next */
   handleTextareaHeightChange = () => {
     this.setClampVisualCue()
@@ -244,6 +294,35 @@ export class EditableTextarea extends React.PureComponent<
     })
   }
 
+  // Tested here and in EditableField
+  /* istanbul ignore next */
+  renderValidationInfo = () => {
+    const { id } = this.props
+    const { validationInfo } = this.state
+
+    if (!validationInfo) return null
+    if (id !== validationInfo.name) return null
+
+    const DEFAULT_ICON = 'alert-small'
+
+    return (
+      <ValidationIconUI
+        className={`${EditableTextarea.className}__validation`}
+        color={getValidationColor(validationInfo)}
+      >
+        <Tooltip
+          animationDelay={0}
+          animationDuration={0}
+          display="block"
+          placement="top-end"
+          title={validationInfo.message}
+        >
+          <Icon name={validationInfo.icon || DEFAULT_ICON} size={24} />
+        </Tooltip>
+      </ValidationIconUI>
+    )
+  }
+
   render() {
     const {
       id,
@@ -253,7 +332,7 @@ export class EditableTextarea extends React.PureComponent<
       overflowCueColor,
       ...rest
     } = this.props
-    const { clamped, readOnly, value } = this.state
+    const { clamped, readOnly, value, validationInfo } = this.state
 
     const textAreaClasses = classNames(
       'field',
@@ -279,9 +358,9 @@ export class EditableTextarea extends React.PureComponent<
             readOnly && 'is-readonly',
             /* istanbul ignore next */ readOnly && clamped && 'is-clamped',
             !Boolean(value) && 'with-placeholder'
-            // (!readOnly || Boolean(value)) && 'inline'
           )}
           overflowCueColor={overflowCueColor}
+          focusIndicatorColor={getValidationColor(validationInfo)}
         >
           <Textarea
             {...getValidProps(rest)}
@@ -301,6 +380,7 @@ export class EditableTextarea extends React.PureComponent<
           <div className={maskClasses} onClick={this.handleOnClick}>
             {placeholder}
           </div>
+          {this.renderValidationInfo()}
         </EditableTextareaUI>
       </ComponentUI>
     )
