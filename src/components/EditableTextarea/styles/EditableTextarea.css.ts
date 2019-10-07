@@ -2,7 +2,6 @@ import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { COLOURS, SIZES } from '../../EditableField/EditableField.utils'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
-import { isFirefox } from '../../../utilities/browser'
 
 const { field, focusIndicator } = SIZES
 
@@ -121,11 +120,6 @@ export const EditableTextareaUI = styled('div')`
     height: auto;
     border: 0;
     margin: 0;
-    ${/* 
-      I have no idea why Chrome and safari are adding 3px to the height of the parent of the textarea,
-      so I'm adding those 3px to firefox for parity  ¯\_(ツ)_/¯
-    */
-    isFirefox() && 'margin-bottom: 3px;'}
     padding: 0 10px 0 0;
     color: ${COLOURS.input.regular};
     font-family: ${FONT_FAMILY};
