@@ -3,6 +3,12 @@ import { mount } from 'enzyme'
 import RadioCard from '../RadioCard'
 import ChoiceGroup from '../../ChoiceGroup'
 
+class TestComponent extends React.PureComponent {
+  render() {
+    return <span>test</span>
+  }
+}
+
 describe('ClassName', () => {
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
@@ -90,11 +96,17 @@ describe('Icon', () => {
     expect(o.prop('name')).toBe('emoji')
   })
 
-  test('Can render custom Icon component', () => {
+  test('Can render custom Icon function', () => {
     const Custom = () => <div />
     const wrapper = mount(<RadioCard checked={true} icon={Custom} />)
 
     expect(wrapper.find(Custom).length).toBeTruthy()
+  })
+
+  test('Can render custom Icon component', () => {
+    const wrapper = mount(<RadioCard checked={true} icon={TestComponent} />)
+
+    expect(wrapper.find(TestComponent).length).toBeTruthy()
   })
 
   test('Falls back to defaultIcon if icon is invalid', () => {
@@ -182,11 +194,17 @@ describe('Focus', () => {
 })
 
 describe('Heading', () => {
-  test('Can render custom Heading component', () => {
+  test('Can render custom Heading function', () => {
     const Custom = () => <div />
     const wrapper = mount(<RadioCard checked={true} heading={Custom} />)
 
     expect(wrapper.find(Custom).length).toBeTruthy()
+  })
+
+  test('Can render custom Heading component', () => {
+    const wrapper = mount(<RadioCard checked={true} heading={TestComponent} />)
+
+    expect(wrapper.find(TestComponent).length).toBeTruthy()
   })
 
   test('Can render Heading string', () => {
@@ -203,11 +221,17 @@ describe('Heading', () => {
 })
 
 describe('Content', () => {
-  test('Can render custom Content component', () => {
+  test('Can render custom Content function', () => {
     const Custom = () => <div />
     const wrapper = mount(<RadioCard checked={true} content={Custom} />)
 
     expect(wrapper.find(Custom).length).toBeTruthy()
+  })
+
+  test('Can render custom Content component', () => {
+    const wrapper = mount(<RadioCard checked={true} content={TestComponent} />)
+
+    expect(wrapper.find(TestComponent).length).toBeTruthy()
   })
 
   test('Can render Content string', () => {
