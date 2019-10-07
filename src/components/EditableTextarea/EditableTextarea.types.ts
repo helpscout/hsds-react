@@ -6,6 +6,7 @@ import {
 
 export interface EditableTextareaProps {
   className?: string
+  floatingLabels: boolean
   id: string
   label: string
   maxRows: number

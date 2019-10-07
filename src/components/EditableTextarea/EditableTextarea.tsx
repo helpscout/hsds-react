@@ -8,7 +8,11 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import debounce from '../../utilities/debounce'
 
-import { ComponentUI, EditableTextareaUI } from './styles/EditableTextarea.css'
+import {
+  ComponentUI,
+  EditableTextareaUI,
+  MaskUI,
+} from './styles/EditableTextarea.css'
 import { LabelTextUI } from '../EditableField/styles/EditableField.css'
 import { ValidationIconUI } from '../EditableField/styles/EditableField.Input.css'
 import Icon from '../Icon'
@@ -30,6 +34,7 @@ export class EditableTextarea extends React.PureComponent<
 > {
   static className = 'c-EditableTextarea'
   static defaultProps = {
+    floatingLabels: false,
     id: 'editabletextarea',
     innerRef: noop,
     label: 'Notes',
@@ -72,9 +77,13 @@ export class EditableTextarea extends React.PureComponent<
   }
 
   getClassName() {
-    const { className } = this.props
+    const { className, floatingLabels } = this.props
 
-    return classNames(EditableTextarea.className, className)
+    return classNames(
+      EditableTextarea.className,
+      floatingLabels && 'with-floatingLabels',
+      className
+    )
   }
   /* istanbul ignore next */
   componentDidMount() {
@@ -325,6 +334,7 @@ export class EditableTextarea extends React.PureComponent<
 
   render() {
     const {
+      floatingLabels,
       id,
       label,
       maxRows,
@@ -339,7 +349,8 @@ export class EditableTextarea extends React.PureComponent<
       readOnly && !Boolean(value) && 'hide'
     )
     const maskClasses = classNames(
-      (!readOnly || Boolean(value)) && 'hide',
+      'EditableTextarea__Mask',
+      (!readOnly || Boolean(value)) && !floatingLabels && 'hide',
       readOnly && !Boolean(value) && 'inline',
       'field'
     )
@@ -349,9 +360,12 @@ export class EditableTextarea extends React.PureComponent<
         innerRef={this.setEditableTextareaNode}
         className={this.getClassName()}
       >
-        <label className="EditableTextarea__label" htmlFor={id}>
-          <LabelTextUI>{label}</LabelTextUI>
-        </label>
+        {!floatingLabels ? (
+          <label className="EditableTextarea__label" htmlFor={id}>
+            <LabelTextUI>{label}</LabelTextUI>
+          </label>
+        ) : null}
+
         <EditableTextareaUI
           className={classNames(
             'EditableTextarea__ResizableTextarea',
@@ -361,6 +375,7 @@ export class EditableTextarea extends React.PureComponent<
           )}
           overflowCueColor={overflowCueColor}
           focusIndicatorColor={getValidationColor(validationInfo)}
+          inputValue={value}
         >
           <Textarea
             {...getValidProps(rest)}
@@ -377,9 +392,13 @@ export class EditableTextarea extends React.PureComponent<
             onHeightChange={this.handleTextareaHeightChange}
             onKeyDown={this.handleOnKeyDown}
           />
-          <div className={maskClasses} onClick={this.handleOnClick}>
+          <MaskUI
+            className={maskClasses}
+            onClick={this.handleOnClick}
+            inputValue={value}
+          >
             {placeholder}
-          </div>
+          </MaskUI>
           {this.renderValidationInfo()}
         </EditableTextareaUI>
       </ComponentUI>

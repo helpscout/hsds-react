@@ -53,6 +53,7 @@ export class EditableField extends React.Component<
     defaultOption: null,
     disabled: false,
     emphasizeTopValue: false,
+    floatingLabels: false,
     inline: false,
     multipleValues: false,
     size: FIELDSIZES.md,
@@ -189,13 +190,14 @@ export class EditableField extends React.Component<
   }
 
   getClassName() {
-    const { className, size, disabled } = this.props
+    const { className, size, disabled, floatingLabels } = this.props
 
     return classNames(
       EditableField.className,
       className,
       disabled && STATES_CLASSNAMES.fieldDisabled,
-      size === FIELDSIZES.lg && STATES_CLASSNAMES.isLarge
+      size === FIELDSIZES.lg && STATES_CLASSNAMES.isLarge,
+      floatingLabels && STATES_CLASSNAMES.withFloatingLabels
     )
   }
 
@@ -1075,10 +1077,17 @@ export class EditableField extends React.Component<
   }
 
   render() {
-    const { disabled, inline, label, name, type, value, ...rest } = this.props
+    const {
+      disabled,
+      floatingLabels,
+      inline,
+      label,
+      name,
+      type,
+      value,
+      ...rest
+    } = this.props
     const { fieldValue } = this.state
-
-    // console.log(`EditableField ${name}`, this.state.maskTabIndex)
 
     if (inline) {
       return (
@@ -1099,14 +1108,17 @@ export class EditableField extends React.Component<
         className={this.getClassName()}
         innerRef={this.setEditableNode}
       >
-        <label
-          className={EDITABLEFIELD_CLASSNAMES.label}
-          htmlFor={fieldValue[0].id}
-        >
-          <LabelTextUI className={EDITABLEFIELD_CLASSNAMES.labelText}>
-            {label || name}
-          </LabelTextUI>
-        </label>
+        {!floatingLabels ? (
+          <label
+            className={EDITABLEFIELD_CLASSNAMES.label}
+            htmlFor={fieldValue[0].id}
+          >
+            <LabelTextUI className={EDITABLEFIELD_CLASSNAMES.labelText}>
+              {label || name}
+            </LabelTextUI>
+          </label>
+        ) : null}
+
         {this.renderFields()}
       </ComponentUI>
     )

@@ -3,7 +3,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { COLOURS, SIZES } from '../../EditableField/EditableField.utils'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 
-const { field, focusIndicator } = SIZES
+const { field, focusIndicator, floatingLabel } = SIZES
 
 export const ComponentUI = styled('div')`
   ${baseStyles};
@@ -18,7 +18,7 @@ export const EditableTextareaUI = styled('div')`
   display: flex;
   border-bottom: 1px dashed ${COLOURS.invisible};
 
-  &:after {
+  &::after {
     content: '';
     box-sizing: border-box;
     display: block;
@@ -33,9 +33,6 @@ export const EditableTextareaUI = styled('div')`
     transition: transform 0.3s ease;
     z-index: 3;
     will-change: transform;
-    @-moz-document url-prefix() {
-      bottom: -1px;
-    }
   }
 
   &.is-readonly:after {
@@ -68,7 +65,7 @@ export const EditableTextareaUI = styled('div')`
     }
   }
 
-  &.is-readonly.is-clamped:before {
+  &.is-readonly.is-clamped::before {
     content: '';
     box-sizing: border-box;
     display: block;
@@ -99,20 +96,6 @@ export const EditableTextareaUI = styled('div')`
 
   .field {
     align-items: stretch;
-    &:not(.hide):not(.inline) {
-      border-bottom: 1px solid transparent;
-    }
-    &.hide {
-      display: none;
-    }
-    &.inline {
-      display: inline-block;
-      height: 21px;
-      width: auto;
-      padding: 0;
-      color: ${COLOURS.mask.placeholder.regular};
-      border-bottom: 1px solid transparent;
-    }
     box-sizing: border-box;
     position: relative;
     width: 100%;
@@ -130,11 +113,26 @@ export const EditableTextareaUI = styled('div')`
     overflow: hidden;
     box-shadow: none;
     scrollbar-width: thin;
-  }
-  textarea {
-    &.field {
-      // height: 21px;
+
+    &:not(.hide):not(.inline) {
+      border-bottom: 1px solid transparent;
     }
+
+    &.hide {
+      display: none;
+    }
+
+    &.inline {
+      display: inline-block;
+      height: 21px;
+      width: auto;
+      padding: 0;
+      color: ${COLOURS.mask.placeholder.regular};
+      border-bottom: 1px solid transparent;
+    }
+  }
+
+  textarea {
     &:hover,
     &:focus {
       overflow-y: auto;
@@ -143,6 +141,13 @@ export const EditableTextareaUI = styled('div')`
 
     &::placeholder {
       color: ${COLOURS.mask.placeholder.disabled};
+    }
+
+    .with-floatingLabels & {
+      &::placeholder {
+        color: ${({ inputValue }) =>
+          `${inputValue ? COLOURS.invisible : COLOURS.input.placeholder}`};
+      }
     }
 
     ::-webkit-scrollbar {
@@ -159,6 +164,35 @@ export const EditableTextareaUI = styled('div')`
     ::-webkit-scrollbar-thumb:active {
       background: rgba(0, 0, 0, 0.5);
       border-radius: 100px;
+    }
+  }
+`
+
+export const MaskUI = styled('div')`
+  &.EditableTextarea__Mask {
+    will-change: transform, font-size;
+    transition-property: transform, font-size;
+    transition-timing-function: linear;
+    transition-duration: 0.2s;
+
+    .with-floatingLabels & {
+      display: block;
+      opacity: ${({ inputValue }) => `${inputValue ? '1' : '0'}`};
+      transform: ${({ inputValue }) => `translateY(${inputValue ? -15 : 0}px)`};
+      transform-origin: center left;
+      position: ${({ inputValue }) =>
+        `${inputValue ? 'absolute' : 'relative'}`};
+      z-index: 5;
+      top: 0;
+      left: 0;
+      font-family: ${FONT_FAMILY};
+      font-size: ${({ inputValue }) =>
+        `${inputValue ? floatingLabel.font.medium : field.font.medium}`};
+      color: ${COLOURS.input.placeholder};
+    }
+
+    .with-floatingLabels .is-readonly & {
+      opacity: 1;
     }
   }
 `

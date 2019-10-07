@@ -121,6 +121,30 @@ stories.add('Text large', () => (
   </ContainerUI>
 ))
 
+stories.add('Floating Labels', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Company"
+      name="company"
+      placeholder="Company"
+      type="text"
+      floatingLabels
+    />
+    <EditableField
+      label="Team"
+      name="team"
+      placeholder="Sports team"
+      type="text"
+      value="Atlas"
+      floatingLabels
+    />
+  </ContainerUI>
+))
+
 stories.add('Text Multiple', () => (
   <ContainerUI
     onSubmit={e => {
