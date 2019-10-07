@@ -21,6 +21,7 @@ export const AvatarCrop = props => {
   )
 
   const styles = {
+    color: 'transparent',
     transition: `background-color ${animationDuration}ms ${getEasingTiming(
       animationEasing
     )}`,
