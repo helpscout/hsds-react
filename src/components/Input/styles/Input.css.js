@@ -224,6 +224,10 @@ export function makeFieldStyles() {
     width: 100%;
     z-index: 1;
 
+    &.is-error {
+      width: calc(100% - 24px);
+    }
+
     &:focus {
       outline: none;
     }
