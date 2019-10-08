@@ -94,7 +94,8 @@ export const ActionUI = styled('div')`
 
 export const CropUI = styled('div')`
   align-items: center;
-  background-color: currentColor;
+  background-color: ${({ hasImage }) =>
+    hasImage ? 'tranparent' : 'currentColor'};
   border-radius: 200%;
   display: flex;
   height: 100%;
@@ -109,7 +110,6 @@ export const CropUI = styled('div')`
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0) inset, ${config.boxShadow};
 
     &.is-imageLoaded {
-      color: 'transparent';
       box-shadow: 0 0 0 1px rgba(255, 255, 255, 1) inset, ${config.boxShadow};
     }
   }
