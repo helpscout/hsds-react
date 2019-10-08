@@ -29,8 +29,11 @@ Note: When Radio is used within a `<ChoiceGroup>`, it is automatically wrapped w
 
 | Prop     | Type                | Description                               |
 | -------- | ------------------- | ----------------------------------------- |
+| content  | `string`/`Function` | Optional content to render.               |
 | checked  | `boolean`           | Determines of the `radio` is checked.     |
 | icon     | `string`/`Function` | Icon to render.                           |
+| heading  | `string`/`Function` | Optional heading to render.               |
+| maxWidth | `string`/`number`   | Set the max width of the RadioCard.       |
 | iconSize | `number`/`string`   | Size to render the [Icon](../Icon).       |
 | id       | `string`            | ID for the input.                         |
 | onChange | `Function`          | Callback when the input value is changed. |
