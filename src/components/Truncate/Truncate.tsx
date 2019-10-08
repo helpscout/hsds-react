@@ -34,11 +34,13 @@ export class Truncate extends React.PureComponent<
   }
 
   componentDidMount() {
-    if (this.props.type === 'auto') {
-      this.setState({
-        isTruncated: this.isTruncated(this.props),
-      })
-    }
+    setTimeout(() => {
+      if (this.props.type === 'auto') {
+        this.setState({
+          isTruncated: this.isTruncated(this.props),
+        })
+      }
+    }, 0)
   }
 
   componentWillUnmount() {
