@@ -114,9 +114,6 @@ export class EditableTextarea extends React.PureComponent<
     if (this.state.value !== prevState.value) {
       this.setClampVisualCue()
     }
-    if (!prevProps.value) {
-      this.textArea.current.focus()
-    }
   }
 
   /* istanbul ignore next */
@@ -155,10 +152,15 @@ export class EditableTextarea extends React.PureComponent<
   handleOnClick = () => {
     /* istanbul ignore else */
     if (this.state.readOnly) {
-      this.setState({
-        prevValue: this.textArea.current.value,
-        readOnly: false,
-      })
+      this.setState(
+        {
+          prevValue: this.textArea.current.value,
+          readOnly: false,
+        },
+        () => {
+          this.textArea.current.focus()
+        }
+      )
     }
   }
 
@@ -387,6 +389,7 @@ export class EditableTextarea extends React.PureComponent<
             readOnly={readOnly}
             value={value}
             onBlur={this.handleOnBlur}
+            onFocus={this.handleOnClick}
             onChange={this.handleOnChange}
             onClick={this.handleOnClick}
             onHeightChange={this.handleTextareaHeightChange}

@@ -701,7 +701,7 @@ class OnCommitApp extends React.PureComponent {
             { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
             { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
           ]}
-          validate={validateFieldValue}
+          validate={this.validateFieldValue}
           onCommit={passed => {
             this.setState({ commit: passed })
           }}
