@@ -243,6 +243,7 @@ export const STATES_CLASSNAMES = {
   warning: 'is-warning',
   withPlaceholder: 'with-placeholder',
   withValidation: 'with-validation',
+  withFloatingLabels: 'with-floatingLabels',
 }
 
 export const COLOURS = {

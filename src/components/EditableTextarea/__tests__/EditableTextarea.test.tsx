@@ -464,3 +464,19 @@ describe('validation rendering', () => {
     })
   })
 })
+
+describe('floating labels', () => {
+  test('Adds the floating labels className', () => {
+    const wrapper = cy.render(<EditableTextarea id="company" floatingLabels />)
+
+    expect(wrapper.hasClass(STATES_CLASSNAMES.withFloatingLabels)).toBeTruthy()
+  })
+
+  test('Label is hidden when floating labels on', () => {
+    cy.render(<EditableTextarea id="company" floatingLabels />)
+
+    const el = cy.get(`.EditableTextarea__label`)
+
+    expect(el.exists()).toBeFalsy()
+  })
+})
