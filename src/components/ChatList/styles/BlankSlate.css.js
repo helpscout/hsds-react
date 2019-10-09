@@ -10,7 +10,7 @@ export const BlankSlateUI = styled('div')`
 
 export const SpeechBubbleIlloUI = styled(SpeechBubble)`
   display: block;
-  margin: -10px auto -13px auto;
+  margin: 0px auto -13px auto;
 `
 
 export const ContentUI = styled('div')`
