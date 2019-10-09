@@ -83,6 +83,7 @@ export const InputWrapperUI = styled('div')`
     pointer-events: none;
   }
 
+  .${STATES_CLASSNAMES.withFloatingLabels} &,
   .${STATES_CLASSNAMES.hasActiveFields} & {
     &::before {
       content: ${({ placeholder }) => `"${placeholder}"`};

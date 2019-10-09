@@ -53,6 +53,7 @@ export interface EditableFieldProps {
   defaultOption: string | null
   disabled: boolean
   emphasizeTopValue: boolean
+  floatingLabels: boolean
   inline: boolean
   label?: string
   multipleValues: boolean

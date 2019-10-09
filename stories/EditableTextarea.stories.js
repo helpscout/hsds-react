@@ -67,6 +67,35 @@ Hey, you know how I'm, like, always trying to save the planet? Here's my chance.
     />
   </ContainerUI>
 ))
+
+stories.add('floating labels', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableTextarea
+      label="Notes"
+      id="notes"
+      label="Some notes"
+      placeholder="Some notes"
+      floatingLabels
+    />
+    <EditableTextarea
+      floatingLabels
+      id="todo"
+      label="Some todos"
+      placeholder="Some todos"
+      value={`Hello don't forget:
+  1. To brush your teeth
+  2. Pick up some beer
+  3. Maybe pick up some wine too
+`}
+      maxRows={4}
+    />
+  </ContainerUI>
+))
+
 stories.add('Validation', () => (
   <ContainerUI>
     <NoteUI>
