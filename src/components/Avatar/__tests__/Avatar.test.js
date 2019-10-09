@@ -74,21 +74,24 @@ describe('Image', () => {
   })
 
   test('Background is currentColor to prevent flash of color before image loads', () => {
-    cy.render(<Avatar name="Buddy the Elf" image="buddy.jpg" image="" />)
+    cy.render(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
     const crop = cy.get(`div${ui.crop}`)
 
     expect(crop.exists()).toBeTruthy()
     expect(crop.getComputedStyle().backgroundColor).toEqual('currentColor')
   })
 
-  test('Background is transparent if there is an image', () => {
-    cy.render(
-      <Avatar name="Buddy the Elf" image="buddy.jpg" image="buddy.jpg" />
-    )
-    const crop = cy.get(`div${ui.crop}`)
+  test('Background is transparent if there is an image', cb => {
+    global.Image.prototype.decode = () => Promise.resolve()
 
-    expect(crop.exists()).toBeTruthy()
-    expect(crop.getComputedStyle().backgroundColor).toEqual('transparent')
+    const onLoad = () => {
+      const crop = cy.get(`div${ui.crop}`)
+      expect(crop.exists()).toBeTruthy()
+      expect(crop.getComputedStyle().backgroundColor).toEqual('transparent')
+      cb()
+    }
+
+    cy.render(<Avatar image="buddy.jpg" onLoad={onLoad} />)
   })
 
   test('Do not render image if image prop is specified but image is loading', () => {
