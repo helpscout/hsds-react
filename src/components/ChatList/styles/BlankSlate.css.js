@@ -1,15 +1,16 @@
 import styled from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
+import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
 
 export const BlankSlateUI = styled('div')`
   ${baseStyles}
   background-color: ${getColor('grey.200')};
 `
 
-export const IlloWrapperUI = styled('div')`
-  margin-bottom: -10px;
-  margin-top: -13px;
+export const SpeechBubbleIlloUI = styled(SpeechBubble)`
+  display: block;
+  margin: -10px auto -13px auto;
 `
 
 export const ContentUI = styled('div')`
