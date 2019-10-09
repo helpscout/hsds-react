@@ -37,6 +37,7 @@ export type ModalBodyProps = {
   children?: any
   className?: string
   innerRef: (node: HTMLElement) => void
+  isScrollLocked: boolean
   isSeamless: boolean
   onScroll: (event: Event) => void
   scrollable: boolean

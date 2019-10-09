@@ -12,7 +12,11 @@ export const AvatarCrop = props => {
     className
   )
 
-  return <CropUI className={componentClassName}>{children}</CropUI>
+  return (
+    <CropUI className={componentClassName} isImageLoaded={isImageLoaded}>
+      {children}
+    </CropUI>
+  )
 }
 
 AvatarCrop.defaultProps = {

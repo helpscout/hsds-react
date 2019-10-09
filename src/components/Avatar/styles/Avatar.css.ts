@@ -94,7 +94,8 @@ export const ActionUI = styled('div')`
 
 export const CropUI = styled('div')`
   align-items: center;
-  background-color: currentColor;
+  background-color: ${({ isImageLoaded }) =>
+    isImageLoaded ? 'transparent' : 'currentColor'};
   border-radius: 200%;
   display: flex;
   height: 100%;
@@ -119,11 +120,13 @@ export const ImageWrapperUI = styled('div')`
   display: block;
   height: 100%;
   overflow: hidden;
-  transform: translate3d(0, 0, 0) scale(1.0125);
+  transform: translate3d(0, 0, 0);
+  will-change: opacity;
   width: 100%;
   position: relative;
   z-index: 2;
   opacity: 1;
+
   ${({ animation }) => !animation && `opacity: 1;`}
   ${({ animation, animationDuration, animationEasing }) =>
     animation &&
