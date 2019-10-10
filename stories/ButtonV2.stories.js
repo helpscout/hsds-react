@@ -6,6 +6,7 @@ import {
   ControlGroup,
   Flexy,
   FormGroup,
+  Heading,
   Icon,
   PropProvider,
 } from '../src/index'
@@ -67,7 +68,39 @@ const makeButtonVariations = (props = {}) => {
   )
 }
 
-stories.add('Default', () => {
+stories.add('default', () => (
+  <PropProvider value={{ Button: { version: 2 } }}>
+    <ContainerUI>
+      <Heading style={{ marginBottom: '20px' }}>Kinds</Heading>
+      <Flexy just="left">
+        <Button>default</Button>
+        <Button kind="primary">primary</Button>
+        <Button kind="primaryAlt">primaryAlt</Button>
+        <Button kind="secondary">secondary</Button>
+        <Button kind="secondaryAlt">secondaryAlt</Button>
+        <Button kind="link">link</Button>
+        <Button kind="pill">Pill</Button>
+      </Flexy>
+    </ContainerUI>
+    <ContainerUI>
+      <Heading style={{ marginBottom: '20px' }}>States</Heading>
+      <Flexy just="left">
+        <Button kind="primary">default</Button>
+        <Button kind="primary" state="danger">
+          danger
+        </Button>
+        <Button kind="primary" state="success">
+          success
+        </Button>
+        <Button kind="primary" state="warning">
+          warning
+        </Button>
+      </Flexy>
+    </ContainerUI>
+  </PropProvider>
+))
+
+stories.add('Playground', () => {
   const props = {
     children: text('children', 'Button'),
     disabled: boolean('disabled', false),
