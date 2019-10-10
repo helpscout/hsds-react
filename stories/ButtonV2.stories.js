@@ -79,7 +79,10 @@ stories.add('default', () => (
         <Button kind="secondary">secondary</Button>
         <Button kind="secondaryAlt">secondaryAlt</Button>
         <Button kind="link">link</Button>
-        <Button shape="rounded">rounded</Button>
+        <Button kind="primary" shape="rounded" size="md">
+          ROUNDED
+          <Icon name="caret-up" size="14" />
+        </Button>
       </Flexy>
     </ContainerUI>
     <ContainerUI>
@@ -183,6 +186,35 @@ stories.add('icon', () => (
         <Button kind="secondary" onClick={e => console.log(e)}>
           Words
           <Icon />
+        </Button>
+      </Flexy>
+    </ContainerUI>
+  </PropProvider>
+))
+
+stories.add('end chat', () => (
+  <PropProvider value={{ Button: { version: 2 } }}>
+    <ContainerUI>
+      <Flexy>
+        <Button kind="primary" shape="rounded" size="sm" state="gray">
+          CLOSED
+          <Icon
+            name="caret-up"
+            size="14"
+            style={{ marginRight: -6, fontSize: '11px' }}
+          />
+        </Button>
+        <Button kind="primary" shape="rounded" size="sm" state="success">
+          ACTIVE
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+        </Button>
+        <Button kind="primary" shape="rounded" size="sm" state="pending">
+          PENDING
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+        </Button>
+        <Button kind="primary" shape="rounded" size="sm" state="danger">
+          SPAM
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
         </Button>
       </Flexy>
     </ContainerUI>

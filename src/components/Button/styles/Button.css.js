@@ -151,9 +151,10 @@ function makeButtonKindStyles(kind, config) {
         ${renderStyleForProp(config, 'textDecorationFocus', 'text-decoration')}
       }
 
-      ${makeDangerStyles(config)}
-      ${makeSuccessStyles(config)}
-      ${makeWarningStyles(config)}
+      ${makeButtonStateStyles(config, 'danger')}
+      ${makeButtonStateStyles(config, 'gray')}
+      ${makeButtonStateStyles(config, 'success')}
+      ${makeButtonStateStyles(config, 'warning')}
 
       ${makeDisabledStyles(`
         background: ${config.disabledBackgroundColor} !important;
@@ -187,18 +188,6 @@ function makeButtonStateStyles(config, state) {
       }
     }
   `
-}
-
-function makeDangerStyles(config) {
-  return makeButtonStateStyles(config, 'danger')
-}
-
-function makeSuccessStyles(config) {
-  return makeButtonStateStyles(config, 'success')
-}
-
-function makeWarningStyles(config) {
-  return makeButtonStateStyles(config, 'warning')
 }
 
 function makeDisabledStyles(content) {
