@@ -57,10 +57,11 @@ export const EditableTextareaUI = styled('div')`
   }
 
   &.with-placeholder.is-readonly {
-    .field:not(.hide) {
+    .field:not(.is-hidden):not(.EditableTextarea__Textarea) {
       border-bottom: 1px dashed ${COLOURS.mask.border};
       &:hover {
         border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
+        cursor: pointer;
       }
     }
   }
@@ -114,17 +115,17 @@ export const EditableTextareaUI = styled('div')`
     box-shadow: none;
     scrollbar-width: thin;
 
-    &:not(.hide):not(.inline) {
+    &:not(.is-hidden):not(.is-inline):not(.EditableTextarea__Textarea) {
       border-bottom: 1px solid transparent;
     }
 
-    &.hide {
+    &.is-hidden {
       display: none;
     }
 
-    &.inline {
+    &.is-inline {
       display: inline-block;
-      height: 21px;
+      height: 20px;
       width: auto;
       padding: 0;
       color: ${COLOURS.mask.placeholder.regular};
@@ -132,7 +133,20 @@ export const EditableTextareaUI = styled('div')`
     }
   }
 
-  textarea {
+  .EditableTextarea__Textarea {
+    &.is-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 0;
+      transform: scaleX(0.1);
+      transform-origin: top left;
+
+      &::placeholder {
+        color: ${COLOURS.invisible};
+      }
+    }
+
     &:hover,
     &:focus {
       overflow-y: auto;
