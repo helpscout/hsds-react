@@ -347,14 +347,16 @@ export class EditableTextarea extends React.PureComponent<
     const { clamped, readOnly, value, validationInfo } = this.state
 
     const textAreaClasses = classNames(
+      'EditableTextarea__Textarea',
       'field',
-      readOnly && !Boolean(value) && 'hide'
+      readOnly && !Boolean(value) && 'is-placeholder'
     )
+
     const maskClasses = classNames(
       'EditableTextarea__Mask',
-      (!readOnly || Boolean(value)) && !floatingLabels && 'hide',
-      readOnly && !Boolean(value) && 'inline',
-      'field'
+      'field',
+      (!readOnly || Boolean(value)) && !floatingLabels && 'is-hidden',
+      readOnly && !Boolean(value) && 'is-inline'
     )
 
     return (
