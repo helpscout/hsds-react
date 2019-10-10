@@ -194,6 +194,7 @@ const config = {
   shape: {
     default: '3px',
     circle: '9999px',
+    rounded: '16px',
   },
   size: {
     xl: {

@@ -79,7 +79,7 @@ stories.add('default', () => (
         <Button kind="secondary">secondary</Button>
         <Button kind="secondaryAlt">secondaryAlt</Button>
         <Button kind="link">link</Button>
-        <Button kind="pill">Pill</Button>
+        <Button shape="rounded">rounded</Button>
       </Flexy>
     </ContainerUI>
     <ContainerUI>
