@@ -716,7 +716,7 @@ describe('Typing events', () => {
     expect(spies.callStartTyping).toHaveBeenCalledTimes(1)
     expect(spies.setTypingTimeout).toHaveBeenCalledTimes(1)
     expect(spies.onStartTyping).toHaveBeenCalledTimes(1)
-    expect(setTimeout).toHaveBeenCalledTimes(1)
+    expect(setTimeout.mock.calls[1][1]).toEqual(3000)
   })
 
   test('After a delay of 3000ms and no more typing events, should call stop typing events and clear timeout', () => {
@@ -766,7 +766,6 @@ describe('Typing events', () => {
     wrapper.find('input').simulate('change')
     wrapper.unmount()
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
-    expect(clearTimeout).toHaveBeenCalledTimes(1)
   })
 
   test('Should call callStopTyping on refApplyCallStopTyping', () => {
@@ -776,6 +775,17 @@ describe('Typing events', () => {
     refs.applySubmit()
     expect(spies.onStopTyping).toHaveBeenCalledTimes(1)
     expect(spies.clearTypingTimeout).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('Unmount', () => {
+  it('should call clearTimeout once when the component unmounts', () => {
+    const clearTimeout = jest.spyOn(window, 'clearTimeout')
+    const wrapper = mount(<Input />)
+    wrapper.find('input').simulate('change')
+    const id = wrapper.instance().autoFocusTimeoutId
+    wrapper.unmount()
+    expect(clearTimeout).toHaveBeenCalledWith(id)
   })
 })
 

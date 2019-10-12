@@ -145,7 +145,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   componentWillUnmount() {
     this.inputNode = null
     this.props.withTypingEvent && this.clearTypingTimeout()
-    this.autoFocusTimeoutId && window.clearTimeout(this.autoFocusTimeoutId)
+    this.autoFocusTimeoutId && clearTimeout(this.autoFocusTimeoutId)
   }
 
   setValue = value => {
