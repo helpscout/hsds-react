@@ -4,6 +4,7 @@ import { ComponentUI, FieldButtonUI } from './styles/EditableField.Actions.css'
 import Icon from '../Icon'
 
 import { classNames } from '../../utilities/classNames'
+import { normalizeUrl } from '../../utilities/urls'
 import { ACTION_ICONS } from './constants'
 import { ACTIONS_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
 
@@ -31,14 +32,17 @@ export class EditableFieldActions extends React.Component<ActionsProps> {
   }
 
   handleActionClick = ({ action, event }) => {
-    const { name, fieldValue } = this.props
+    const {
+      name,
+      fieldValue: { value },
+    } = this.props
     /* istanbul ignore else */
     if (action.name === 'delete') {
       this.props.deleteAction({ action, name, event })
     }
     /* istanbul ignore next */
     if (action.name === 'link') {
-      window && window.open(fieldValue.value)
+      window && window.open(normalizeUrl(value))
     } else {
       this.props.customAction({ action, name, event })
     }
