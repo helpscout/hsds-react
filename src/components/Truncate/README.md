@@ -12,14 +12,14 @@ an email address.
 
 ## Props
 
-| Prop              | Type      | Description                                                                |
-| ----------------- | --------- | -------------------------------------------------------------------------- |
-| className         | `string`  | Custom class names to be added to the component.                           |
-| ellipsis          | `string`  | Characters to show during truncation.                                      |
-| limit             | `number`  | The amount of characters to keep before truncation.                        |
-| shouldShowTooltip | `boolean` | Renders a [Tooltip](../Tooltip) if content is truncated. Default `false`.  |
-| splitter          | `string`  | Char to split string on for truncating mid-string, `longEma...@email.com`. |
-| type              | `string`  | Location of truncation.                                                    |
+| Prop                  | Type      | Description                                                                |
+| --------------------- | --------- | -------------------------------------------------------------------------- |
+| className             | `string`  | Custom class names to be added to the component.                           |
+| ellipsis              | `string`  | Characters to show during truncation.                                      |
+| limit                 | `number`  | The amount of characters to keep before truncation.                        |
+| showTooltipOnTruncate | `boolean` | Renders a [Tooltip](../Tooltip) if content is truncated. Default `false`.  |
+| splitter              | `string`  | Char to split string on for truncating mid-string, `longEma...@email.com`. |
+| type                  | `string`  | Location of truncation.                                                    |
 
 ### `type`
 
