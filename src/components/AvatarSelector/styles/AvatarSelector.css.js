@@ -6,7 +6,34 @@ import Icon from '../../Icon'
 
 export const AvatarSelectorWrapperUI = styled('div')`
   width: 52px;
+  height: 30px;
+  display: block;
   position: relative;
+  border-radius: 16px;
+
+  &::before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: '';
+    border: 2px solid transparent;
+    left: -2px;
+    top: -2px;
+    box-shadow: 0px 0px 0px 2px #1292ee;
+    z-index: 0;
+    border-radius: 30px;
+    display: none;
+    opacity: 1;
+  }
+
+  :focus {
+    outline: none;
+
+    &::before {
+      display: block;
+      opacity: 1;
+    }
+  }
 `
 export const AvatarSelectorUI = styled('div')`
   ${baseStyles};
@@ -32,5 +59,8 @@ export const IconCaretUI = styled(Icon)`
   right: 7px;
   top: 9px;
 `
-
-export const IconAssignUI = styled(Icon)``
+export const IconAssignUI = styled(Icon)`
+  position: absolute;
+  top: 5px;
+  left: 11px;
+`
