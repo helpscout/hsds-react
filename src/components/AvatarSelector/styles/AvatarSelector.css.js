@@ -5,11 +5,13 @@ import { Avatar } from '../../index'
 import Icon from '../../Icon'
 
 export const AvatarSelectorWrapperUI = styled('div')`
-  width: 52px;
+  width: 50px;
   height: 30px;
   display: block;
   position: relative;
   border-radius: 16px;
+  background-color: ${getColor('grey.400')};
+  z-index: 2;
 
   &::before {
     position: absolute;
@@ -26,7 +28,7 @@ export const AvatarSelectorWrapperUI = styled('div')`
     opacity: 1;
   }
 
-  :focus {
+  &:focus {
     outline: none;
 
     &::before {
@@ -34,19 +36,22 @@ export const AvatarSelectorWrapperUI = styled('div')`
       opacity: 1;
     }
   }
+
+  &:hover {
+    background-color: ${getColor('grey.500')};
+  }
 `
 export const AvatarSelectorUI = styled('div')`
   ${baseStyles};
   float: right;
-  background-color: ${getColor('grey.400')};
   border-radius: 16px;
+  color: ${getColor('charcoal.500')};
+  height: 30px;
   position: absolute;
   right: 0;
   top: 0;
-  height: 30px;
   width: 52px;
   z-index: -1;
-  color: ${getColor('charcoal.500')};
 `
 
 export const AvatarUI = styled(Avatar)`
@@ -56,11 +61,13 @@ export const AvatarUI = styled(Avatar)`
 
 export const IconCaretUI = styled(Icon)`
   position: absolute;
-  right: 7px;
+  right: 6px;
   top: 9px;
+  z-index: 2;
 `
 export const IconAssignUI = styled(Icon)`
   position: absolute;
   top: 5px;
   left: 11px;
+  z-index: 1;
 `

@@ -9,6 +9,7 @@ import {
   Heading,
   Icon,
   PropProvider,
+  Text,
 } from '../src/index'
 import styled from '../src/components/styled'
 
@@ -197,23 +198,19 @@ stories.add('end chat', () => (
     <ContainerUI>
       <Flexy>
         <Button kind="primary" shape="rounded" size="sm" state="gray">
-          CLOSED
-          <Icon
-            name="caret-up"
-            size="14"
-            style={{ marginRight: -6, fontSize: '11px' }}
-          />
+          <Text size="11">CLOSED</Text>
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
         </Button>
         <Button kind="primary" shape="rounded" size="sm" state="success">
-          ACTIVE
+          <Text size="11">ACTIVE</Text>
           <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
         </Button>
         <Button kind="primary" shape="rounded" size="sm" state="pending">
-          PENDING
+          <Text size="11">PENDING</Text>
           <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
         </Button>
         <Button kind="primary" shape="rounded" size="sm" state="danger">
-          SPAM
+          <Text size="11">SPAM</Text>
           <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
         </Button>
       </Flexy>
