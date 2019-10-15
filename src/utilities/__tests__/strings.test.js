@@ -9,6 +9,7 @@ import {
   truncateMiddle,
   wordHasSpaces,
 } from '../strings'
+import * as urlUtils from '../urls'
 
 describe('nameToInitials', () => {
   test('Returns empty string if no args are passed', () => {
@@ -508,6 +509,13 @@ describe('convertLinksToHTML', () => {
     it(`should autolink URLs in "${fixture[0]}"`, () => {
       expect(convertLinksToHTML(fixture[0])).toEqual(fixture[1])
     })
+  })
+
+  it('should normalize the url if one is provided', () => {
+    const urlUtilSpy = jest.spyOn(urlUtils, 'normalizeUrl')
+
+    convertLinksToHTML('www.google.com')
+    expect(urlUtilSpy).toHaveBeenCalled()
   })
 
   const withoutUrls = [
