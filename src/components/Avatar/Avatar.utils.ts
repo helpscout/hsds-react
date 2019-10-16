@@ -8,7 +8,7 @@ export const getImageSrc = (props): string[] => {
   if (fallbackImage) {
     src.push(fallbackImage)
   }
-  return src
+  return src.filter(i => !!i)
 }
 
 export const getAnimationProps = (props): object => {

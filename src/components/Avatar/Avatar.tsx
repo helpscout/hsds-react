@@ -57,6 +57,7 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
 
   state = {
     imageLoaded: false,
+    imageFailed: false,
   }
 
   constructor(props) {
@@ -72,6 +73,7 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
       this.src = getImageSrc(newProps)
       this.setState({
         imageLoaded: false,
+        imageFailed: false,
       })
     }
   }
@@ -79,6 +81,7 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
   onImageLoadedError = () => {
     this.setState({
       imageLoaded: false,
+      imageFailed: true,
     })
 
     this.props.onError()
@@ -136,12 +139,15 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
 
     const shapeClassnames = this.getShapeClassNames()
 
+    const hasImage = this.src.length > 0 && !this.state.imageFailed
+
     const title = this.getTitle()
     return (
       <AvatarCrop
         className={shapeClassnames}
         isImageLoaded={this.state.imageLoaded}
         withShadow={withShadow}
+        hasImage={hasImage}
       >
         <AvatarImage
           animation={animation}

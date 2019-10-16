@@ -3,7 +3,7 @@ import { classNames } from '../../utilities/classNames'
 import { CropUI } from './styles/Avatar.css'
 
 export const AvatarCrop = props => {
-  const { className, children, isImageLoaded, withShadow } = props
+  const { className, children, isImageLoaded, withShadow, hasImage } = props
 
   const componentClassName = classNames(
     'c-Avatar__crop',
@@ -13,7 +13,7 @@ export const AvatarCrop = props => {
   )
 
   return (
-    <CropUI className={componentClassName} isImageLoaded={isImageLoaded}>
+    <CropUI className={componentClassName} hasImage={hasImage}>
       {children}
     </CropUI>
   )
