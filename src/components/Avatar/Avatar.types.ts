@@ -39,6 +39,7 @@ export interface AvatarProps {
 
 export interface AvatarState {
   imageLoaded: boolean
+  imageFailed: boolean
 }
 
 export interface ImageProps {
