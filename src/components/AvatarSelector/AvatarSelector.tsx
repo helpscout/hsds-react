@@ -10,6 +10,7 @@ import {
 export interface Props {
   image: string
   isOpen: boolean
+  name: string
 }
 
 export default class AvatorSelector extends React.PureComponent<Props> {
@@ -19,7 +20,8 @@ export default class AvatorSelector extends React.PureComponent<Props> {
   }
 
   renderAvatar() {
-    return <AvatarUI borderColor="#fff" size="sm" image={this.props.image} />
+    const { image, name } = this.props
+    return <AvatarUI borderColor="#fff" size="sm" image={image} name={name} />
   }
 
   renderAssign() {
