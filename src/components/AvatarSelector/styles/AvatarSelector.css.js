@@ -46,7 +46,7 @@ export const AvatarSelectorUI = styled('div')`
   float: right;
   border-radius: 16px;
   color: ${getColor('charcoal.500')};
-  height: 30px;
+  height: 32px;
   position: absolute;
   right: 0;
   top: 0;

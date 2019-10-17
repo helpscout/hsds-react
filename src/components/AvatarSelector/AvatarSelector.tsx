@@ -30,7 +30,7 @@ export default class AvatorSelector extends React.PureComponent<Props> {
     const { image, isOpen } = this.props
     return (
       <AvatarSelectorWrapperUI className="c-AvatarSelector" tabIndex="1">
-        {this.props.image ? this.renderAvatar() : this.renderAssign()}
+        {image ? this.renderAvatar() : this.renderAssign()}
         <AvatarSelectorUI>
           <IconCaretUI
             shade="faint"
