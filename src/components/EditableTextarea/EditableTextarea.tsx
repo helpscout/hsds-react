@@ -44,6 +44,8 @@ export class EditableTextarea extends React.PureComponent<
     value: '',
     onCommit: noop,
     onChange: noop,
+    onInputBlur: noop,
+    onInputFocus: noop,
     onEnter: noop,
     onEscape: noop,
     validate: () => Promise.resolve({ isValid: true }),
@@ -149,7 +151,14 @@ export class EditableTextarea extends React.PureComponent<
     )
   }
 
-  handleOnClick = () => {
+  handleOnClick = e => {
+    const { id, onInputFocus } = this.props
+    const { value } = this.state
+    const item = {
+      value,
+      id,
+    }
+
     /* istanbul ignore else */
     if (this.state.readOnly) {
       this.setState(
@@ -159,6 +168,7 @@ export class EditableTextarea extends React.PureComponent<
         },
         () => {
           this.textArea.current.focus()
+          onInputFocus({ name: id, value: [item], event: e })
         }
       )
     }
@@ -221,7 +231,7 @@ export class EditableTextarea extends React.PureComponent<
   }
 
   handleOnBlur = e => {
-    const { id, onCommit, validate } = this.props
+    const { id, onCommit, onInputBlur, validate } = this.props
     const { prevValue, value, validated } = this.state
     const item = {
       value,
@@ -270,6 +280,11 @@ export class EditableTextarea extends React.PureComponent<
                   },
                   name: id,
                   value: [item],
+                })
+                onInputBlur({
+                  name: id,
+                  value: [item],
+                  event: e,
                 })
                 scrollToTop(this.textArea.current)
               }
