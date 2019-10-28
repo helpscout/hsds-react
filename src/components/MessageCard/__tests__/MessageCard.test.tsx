@@ -26,6 +26,22 @@ describe('className', () => {
   })
 })
 
+describe('Mobile', () => {
+  test('Should not have mobile styles by default', () => {
+    const wrapper = mount(<MessageCard />)
+    const el = wrapper.find('div.c-MessageCard')
+
+    expect(el.getDOMNode().classList.contains('is-mobile')).toBeFalsy()
+  })
+
+  test('Should have mobile styles if specified', () => {
+    const wrapper = mount(<MessageCard isMobile />)
+    const el = wrapper.find('div.c-MessageCard')
+
+    expect(el.getDOMNode().classList.contains('is-mobile')).toBeTruthy()
+  })
+})
+
 describe('Align', () => {
   test('Has default alignment of right', () => {
     const wrapper = mount(<MessageCard />)
