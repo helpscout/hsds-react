@@ -25,7 +25,7 @@ export class ContentResizer extends React.PureComponent<
     animationEasing: 'ease',
     borderOffset: 1,
     'data-cy': 'ActionSelectContentResizer',
-    innerRef: noop,
+    ref: noop,
     isFadeContentOnOpen: true,
     onResize: noop,
     resizeCount: 0,
@@ -112,7 +112,7 @@ export class ContentResizer extends React.PureComponent<
 
   setNodeRef = node => {
     this.node = node
-    this.props.innerRef(node)
+    this.props.ref(node)
   }
 
   renderContent() {

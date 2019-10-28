@@ -27,7 +27,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     allowMultipleSelection: false,
     'data-cy': 'Dropdown',
     disabled: false,
-    innerRef: noop,
+    ref: noop,
     menuRef: noop,
     setMenuNode: noop,
     setTriggerNode: noop,
@@ -82,7 +82,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
 
   setNodeRef = (node: HTMLElement) => {
     this.node = node
-    this.props.innerRef(node)
+    this.props.ref(node)
   }
 
   setMenuNodeRef = (node: HTMLElement) => {

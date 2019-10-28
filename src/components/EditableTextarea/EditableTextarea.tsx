@@ -36,7 +36,7 @@ export class EditableTextarea extends React.PureComponent<
   static defaultProps = {
     floatingLabels: false,
     id: 'editabletextarea',
-    innerRef: noop,
+    ref: noop,
     label: 'Notes',
     maxRows: 5,
     overflowCueColor: 'white',
@@ -73,7 +73,7 @@ export class EditableTextarea extends React.PureComponent<
 
   setEditableTextareaNode = node => {
     this.editableTextareaRef = node
-    this.props.innerRef(node)
+    this.props.ref(node)
   }
 
   getClassName() {
@@ -361,7 +361,7 @@ export class EditableTextarea extends React.PureComponent<
 
     return (
       <ComponentUI
-        innerRef={this.setEditableTextareaNode}
+        ref={this.setEditableTextareaNode}
         className={this.getClassName()}
       >
         {!floatingLabels ? (

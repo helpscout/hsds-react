@@ -10,7 +10,7 @@ import { COMPONENT_KEY } from './<%= name %>.utils'
 export class <%= name %> extends React.PureComponent<<%= name %>Props> {
   static className = 'c-<%= name %>'
   static defaultProps = {
-    innerRef: noop
+    ref: noop
   }
 
   getClassName() {
@@ -22,13 +22,13 @@ export class <%= name %> extends React.PureComponent<<%= name %>Props> {
   }
 
   render() {
-    const { children, innerRef, ...rest } = this.props
+    const { children, ref, ...rest } = this.props
 
     return (
       <<%= name %>UI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={ref}
       >
         {children}
       </<%= name %>UI>

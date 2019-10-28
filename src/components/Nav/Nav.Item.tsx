@@ -24,7 +24,7 @@ export interface Props {
   error: string
   exact: boolean
   href?: string
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   isActive?: any
   location?: any
   to?: string
@@ -38,7 +38,7 @@ export class Item extends React.Component<Props> {
     disabled: false,
     error: '',
     exact: true,
-    innerRef: noop,
+    ref: noop,
   }
 
   getClassName() {
@@ -113,13 +113,13 @@ export class Item extends React.Component<Props> {
   }
 
   render() {
-    const { children, href, innerRef, to, ...rest } = this.props
+    const { children, href, ref, to, ...rest } = this.props
 
     return (
       <ItemUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={ref}
       >
         <NavLink
           {...this.getLinkProps()}

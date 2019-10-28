@@ -27,7 +27,7 @@ export interface Props {
   disableOnLoading: boolean
   kind: ButtonKind
   href?: string
-  innerRef: (ref: any) => void
+  ref: (ref: any) => void
   isActive: boolean
   isBlock: boolean
   isFirst: boolean
@@ -54,7 +54,7 @@ class Button extends React.PureComponent<Props> {
     disable: false,
     disableOnLoading: true,
     kind: 'default',
-    innerRef: noop,
+    ref: noop,
     isActive: false,
     isBlock: false,
     isFocused: false,
@@ -115,8 +115,8 @@ class Button extends React.PureComponent<Props> {
     return <FocusUI className={focusClassName} role="presentation" />
   }
 
-  setInnerRef = ref => {
-    this.props.innerRef(ref)
+  setRef = ref => {
+    this.props.ref(ref)
     this.props.buttonRef(ref)
   }
 
@@ -154,7 +154,7 @@ class Button extends React.PureComponent<Props> {
       disabled,
       disableOnLoading,
       kind,
-      innerRef,
+      ref,
       isActive,
       isBlock,
       isFirst,
@@ -207,7 +207,7 @@ class Button extends React.PureComponent<Props> {
         {...getValidProps(rest)}
         className={componentClassName}
         disabled={isDisabled}
-        innerRef={this.setInnerRef}
+        ref={this.setRef}
         type={type}
       >
         {isLoading ? <SpinnerUI /> : null}

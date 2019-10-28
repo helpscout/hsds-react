@@ -19,7 +19,7 @@ When rendered within a [Page](../Page) component, ConditionList will automatical
 | Prop           | Type       | Default | Description                                                             |
 | -------------- | ---------- | ------- | ----------------------------------------------------------------------- |
 | className      | `string`   |         | The className of the component.                                         |
-| innerRef       | `Function` |         | Retrieve the inner DOM node.                                            |
+| ref            | `Function` |         | Retrieve the inner DOM node.                                            |
 | isAddEnabled   | `boolean`  | `true`  | Renders an inner [Condition.AddButton](../Condition).                   |
 | isWithOffset   | `boolean`  | `false` | Renders component with negative left/right margins.                     |
 | onAdd          | `Function` |         | Callback when the inner [Condition.AddButton](../Condition) is clicked. |

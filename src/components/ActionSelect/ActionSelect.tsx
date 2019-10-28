@@ -24,7 +24,7 @@ export class ActionSelect extends React.PureComponent<
     cardBorderColor: getColor('grey.700'),
     children: null,
     enableTabNavigation: false,
-    innerRef: noop,
+    ref: noop,
     isAutoFocusNodeOnSelect: true,
     isFadeContentOnOpen: true,
     items: [],
@@ -154,7 +154,7 @@ export class ActionSelect extends React.PureComponent<
       animationDuration,
       animationEasing,
       children,
-      innerRef,
+      ref,
       onResize,
       ...rest
     } = this.props
@@ -165,7 +165,7 @@ export class ActionSelect extends React.PureComponent<
       <ActionSelectUI
         className={this.getClassName()}
         data-cy={this.props['data-cy']}
-        ref={innerRef as any}
+        ref={ref as any}
       >
         <div className="c-ActionSelectDropdownWrapper">
           <SelectDropdown
@@ -181,7 +181,7 @@ export class ActionSelect extends React.PureComponent<
           animationDuration={animationDuration}
           animationEasing={animationEasing}
           borderWidth={1}
-          innerRef={this.setContentNode}
+          ref={this.setContentNode}
           isOpen={this.state.isOpen}
           onResize={onResize}
           resizeCount={this.state.resizeCount}

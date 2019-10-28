@@ -13,7 +13,7 @@ import { StepperStep } from './Stepper.types'
 export interface Props {
   className?: string
   currentIndex?: any
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   isClickable: boolean
   onChange: (Step: any) => void
   onComplete: () => void
@@ -25,7 +25,7 @@ export class Stepper extends React.PureComponent<Props> {
   static className = 'c-Stepper'
   static defaultProps = {
     currentIndex: 0,
-    innerRef: noop,
+    ref: noop,
     isClickable: false,
     onChange: noop,
     onComplete: noop,
@@ -110,13 +110,13 @@ export class Stepper extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, innerRef, steps, ...rest } = this.props
+    const { children, ref, steps, ...rest } = this.props
 
     return (
       <StepperUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        ref={innerRef as any}
+        ref={ref as any}
         aria-valuemax={steps.length}
         aria-valuemin={1}
         aria-valuenow={this.getProgress()}

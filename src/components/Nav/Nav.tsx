@@ -10,13 +10,13 @@ import { COMPONENT_KEY } from './Nav.utils'
 export interface Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
 }
 
 export class Nav extends React.Component<Props> {
   static className = 'c-Nav'
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
   }
 
   static Item = Item
@@ -27,14 +27,10 @@ export class Nav extends React.Component<Props> {
   }
 
   render() {
-    const { children, innerRef, ...rest } = this.props
+    const { children, ref, ...rest } = this.props
 
     return (
-      <NavUI
-        {...getValidProps(rest)}
-        className={this.getClassName()}
-        innerRef={innerRef}
-      >
+      <NavUI {...getValidProps(rest)} className={this.getClassName()} ref={ref}>
         <ListUI className="c-NavList">{children}</ListUI>
       </NavUI>
     )

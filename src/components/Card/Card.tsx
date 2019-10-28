@@ -17,7 +17,7 @@ export type Props = {
   fullHeight: boolean
   hover: boolean
   href?: string
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   nodeRef: () => void
   onBlur: (event: Event) => void
   onClick: (event: Event) => void
@@ -34,7 +34,7 @@ class Card extends React.PureComponent<Props> {
     floating: false,
     fullHeight: false,
     hover: false,
-    innerRef: noop,
+    ref: noop,
     nodeRef: noop,
     onBlur: noop,
     onClick: noop,
@@ -60,7 +60,7 @@ class Card extends React.PureComponent<Props> {
       fullHeight,
       hover,
       href,
-      innerRef,
+      ref,
       nodeRef,
       onClick,
       seamless,
@@ -101,7 +101,7 @@ class Card extends React.PureComponent<Props> {
       block: true,
       href,
       to,
-      innerRef,
+      ref,
       nodeRef,
     }
 

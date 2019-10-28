@@ -27,7 +27,7 @@ A ConditionField is a single item that renders within a [Condition](../Condition
 | --------------- | ---------- | ---------- | ------------------------------------------------------------------------------------- |
 | className       | `string`   |            | The className of the component.                                                       |
 | closeIcon       | `string`   | `collapse` | The [Icon](../Icon) to render.                                                        |
-| innerRef        | `Function` |            | Retrieve the inner DOM node.                                                          |
+| ref             | `Function` |            | Retrieve the inner DOM node.                                                          |
 | isWithRemove    | `boolean`  | `true`     | Whether to show the remove button or not.                                             |
 | onRemove        | `Function` |            | Callback when the remove [IconButton](../IconButton) is clicked.                      |
 | removeTitle     | `string`   |            | Title to show in the [Tooltip](../Tooltip) on the remove [IconButton](../IconButton). |
@@ -55,7 +55,7 @@ A ConditionField.Group contains children ConditionField components, and automati
 | Prop         | Type       | Default | Description                                                             |
 | ------------ | ---------- | ------- | ----------------------------------------------------------------------- |
 | className    | `string`   |         | The className of the component.                                         |
-| innerRef     | `Function` |         | Retrieve the inner DOM node.                                            |
+| ref          | `Function` |         | Retrieve the inner DOM node.                                            |
 | isAddEnabled | `boolean`  | `true`  | Renders an inner [Condition.AddButton](../Condition).                   |
 | onAdd        | `Function` |         | Callback when the inner [Condition.AddButton](../Condition) is clicked. |
 
@@ -113,7 +113,7 @@ A ConditionFiekd.AddButton renders an "And" or "Or" interface. It is an action u
 | animationDuration | `number`   | `250`   | Time (ms) it takes to animate on mount/unmount.    |
 | animationEasing   | `string`   | `250`   | Time (ms) it takes to animate on mount/unmount.    |
 | className         | `string`   |         | The className of the component.                    |
-| innerRef          | `Function` |         | Retrieve the inner DOM node.                       |
+| ref               | `Function` |         | Retrieve the inner DOM node.                       |
 | isBorderless      | `boolean`  | `true`  | Renders a white border.                            |
 | onClick           | `Function` |         | Callback when component is clicked.                |
 | scrollDuration    | `number`   | `300`   | Time (ms) it takes to scroll into view.            |

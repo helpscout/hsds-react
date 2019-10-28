@@ -63,7 +63,7 @@ export interface EditableFieldProps {
   type: FieldType
   value: Value | Value[]
   valueOptions?: string[] | Option[]
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   onInputFocus: (args: {
     name: string
     value: FieldValue[]
@@ -148,7 +148,7 @@ export interface InputProps {
   type: FieldType
   validationInfo?: Validation
   valueOptions?: Option[]
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   onInputFocus: (args: { name: string; event: Event }) => void
   onInputBlur: (args: { name: string; event: Event }) => void
   onOptionFocus: (args: { name: string; event: Event }) => void

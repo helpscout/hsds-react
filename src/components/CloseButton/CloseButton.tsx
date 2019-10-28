@@ -11,7 +11,7 @@ import { CloseButtonUI, IconUI } from './styles/CloseButton.css'
 export interface Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   onBlur: (event: Event) => void
   onClick: (event: Event) => void
   onFocus: (event: Event) => void
@@ -22,7 +22,7 @@ export interface Props {
 
 export class CloseButton extends React.PureComponent<Props> {
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
     onBlur: noop,
     onClick: noop,
     onFocus: noop,
@@ -47,14 +47,7 @@ export class CloseButton extends React.PureComponent<Props> {
   }
 
   render() {
-    const {
-      children,
-      className,
-      innerRef,
-      seamless,
-      size,
-      ...rest
-    } = this.props
+    const { children, className, ref, seamless, size, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-CloseButton',
@@ -68,7 +61,7 @@ export class CloseButton extends React.PureComponent<Props> {
         aria-label="Close"
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={ref}
       >
         {this.renderIcon()}
       </CloseButtonUI>

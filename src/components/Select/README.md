@@ -51,7 +51,7 @@ This component also accepts regular `<option>` elements as children.
 | helpText                 | `string`/`component`      | Displays text underneath select.                                          |
 | hintText                 | `string`/`component`      | Displays text above select.                                               |
 | id                       | `string`                  | ID for the select.                                                        |
-| innerRef                 | `function`                | Retrieves the `input` DOM node.                                           |
+| ref                      | `function`                | Retrieves the `input` DOM node.                                           |
 | isFocused                | `string`                  | Determines if the component is focused.                                   |
 | label                    | `string`/`component`      | Label for the select.                                                     |
 | name                     | `string`                  | Name for the select.                                                      |

@@ -32,7 +32,7 @@ This component is extended by the `RouteWrapper` higher order component, and can
 | className          | `string`   | Custom class names to be added to the component.                                         |
 | disabled           | `bool`     | Disable the button so it can't be clicked.                                               |
 | fetch              | `function` | function which returns a promise, will be invoked before routing the `to` route          |
-| innerRef           | `function` | Retrieves the `button` DOM node.                                                         |
+| ref                | `function` | Retrieves the `button` DOM node.                                                         |
 | onBlur             | `function` | `onBlur` event handler.                                                                  |
 | onClick            | `function` | `onClick` event handler.                                                                 |
 | onFocus            | `function` | `onFocus` event handler.                                                                 |

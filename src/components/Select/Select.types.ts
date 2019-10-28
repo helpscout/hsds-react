@@ -35,7 +35,7 @@ export type SelectProps = {
   helpText: any
   hintText: any
   id: string
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   isFocused: boolean
   isFirst: boolean
   isNotOnly: boolean

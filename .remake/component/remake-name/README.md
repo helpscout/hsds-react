@@ -14,4 +14,4 @@ A <%= name %> does something special.
 | Prop            | Type       | Default     | Description                     |
 | --------------- | ---------- | ----------- | ------------------------------- |
 | className       | `string`   |             | The className of the component. |
-| innerRef        | `Function`  |            | Retrieve the inner DOM node.    |
+| ref        | `Function`  |            | Retrieve the inner DOM node.    |

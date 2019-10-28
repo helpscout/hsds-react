@@ -16,7 +16,7 @@ const trigger = <button>Some Emoji!</button>
 | ------------- | ---------- | --------- | -------------------------------------------- |
 | className     | `string`   |           | The className of the component.              |
 | emojiSet      | `Array`    |           | An array of emoji objects.                   |
-| innerRef      | `Function` |           | Retrieves the `Emoji` DOM node.              |
+| ref           | `Function` |           | Retrieves the `Emoji` DOM node.              |
 | onSelect      | `Function` |           | Callback when item is selected.              |
 | renderTrigger | `Function` |           | Callback to customize how a trigger renders. |
 | size          | `string`   | `default` | The size of the emoji.                       |

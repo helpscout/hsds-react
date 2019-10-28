@@ -23,7 +23,7 @@ import Icon from '../Icon'
 export interface Props {
   activePage: number
   className?: string
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   isLoading?: boolean
   onChange: (nextPageNumber: number) => void
   pluralizedSubject?: string
@@ -37,7 +37,7 @@ export interface Props {
 export class Pagination extends React.PureComponent<Props> {
   static defaultProps = {
     activePage: 1,
-    innerRef: noop,
+    ref: noop,
     isLoading: false,
     onChange: noop,
     rangePerPage: 50,
@@ -228,7 +228,7 @@ export class Pagination extends React.PureComponent<Props> {
     const {
       children,
       className,
-      innerRef,
+      ref,
       onChange,
       separator,
       showNavigation,
@@ -243,7 +243,7 @@ export class Pagination extends React.PureComponent<Props> {
         aria-label="Pagination"
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={ref}
       >
         <InformationUI>
           <Text size={13}>

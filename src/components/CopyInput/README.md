@@ -14,7 +14,7 @@ This component renders a content with the ability to copy to clipboard, powered 
 | --------------- | ---------- | -------------------------------------------------- |
 | copyToClipboard | `boolean`  | Enables copying to clipboard.                      |
 | className       | `string`   | Custom class names to be added to the component.   |
-| innerRef        | `function` | Retrieves the `input` DOM node.                    |
+| ref             | `function` | Retrieves the `input` DOM node.                    |
 | onCopy          | `function` | Callback function when the copy button is clicked. |
 | readOnly        | `boolean`  | Whether the Input is read only.                    |
 | value           | `string`   | The value to be displayed within the Input.        |

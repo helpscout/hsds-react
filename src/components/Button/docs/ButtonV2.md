@@ -32,7 +32,7 @@ Alternatively, [PropProvider](../../PropProvider) can be used to set this prop a
 | disabledOnLoading            | `boolean`  | Disables the button when `isLoading` is true. Default `true`.                   |
 | fetch                        | `function` | function which returns a promise, will be invoked before routing the `to` route |
 | href                         | `string`   | Hyperlink for the button. This transforms the button to a `<a>` selector.       |
-| innerRef                     | `function` | Retrieves the `button` DOM node.                                                |
+| ref                          | `function` | Retrieves the `button` DOM node.                                                |
 | isFocused                    | `boolean`  | Renders the focused style.                                                      |
 | isLoading                    | `boolean`  | Renders a loading [Spinner](../../Spinner).                                     |
 | isSuffix                     | `boolean`  | Renders suffix styles.                                                          |

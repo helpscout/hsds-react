@@ -11,7 +11,7 @@ export type FluffyCardTextAlign = 'left' | 'center' | 'right'
 export interface Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   promoColor?: string
   textAlign: FluffyCardTextAlign
 }
@@ -19,7 +19,7 @@ export interface Props {
 export class PromoCard extends React.PureComponent<Props> {
   static className = 'c-PromoCard'
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
     promoColor: 'blue',
     textAlign: 'left',
   }
@@ -30,14 +30,10 @@ export class PromoCard extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, innerRef, promoColor, ...rest } = this.props
+    const { children, ref, promoColor, ...rest } = this.props
 
     return (
-      <PromoCardUI
-        {...rest}
-        className={this.getClassName()}
-        innerRef={innerRef}
-      >
+      <PromoCardUI {...rest} className={this.getClassName()} ref={ref}>
         <BorderUI borderColor={promoColor} />
         <ContentUI>{children}</ContentUI>
       </PromoCardUI>

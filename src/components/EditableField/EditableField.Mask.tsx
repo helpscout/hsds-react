@@ -104,7 +104,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
             !fieldValue.value && STATES_CLASSNAMES.withPlaceholder,
             emphasize && STATES_CLASSNAMES.isEmphasized
           )}
-          innerRef={this.setValueNode}
+          ref={this.setValueNode}
           onBlur={this.handleValueBlur}
           onKeyDown={this.handleValueKeyDown}
           numberOfActions={actions ? actions.length : 0}

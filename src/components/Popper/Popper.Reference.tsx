@@ -5,18 +5,16 @@ import { safeInvoke, unwrapArray } from './Popper.utils'
 export type ReferenceChildrenProps = { ref: (HTMLElement?) => void }
 export type ReferenceProps = {
   children: (ReferenceChildrenProps) => any
-  innerRef?: (HTMLElement?) => void
+  ref?: (HTMLElement?) => void
 }
 
-type InnerReferenceProps = {
+type referenceProps = {
   getReferenceRef?: (HTMLElement?) => void
 }
 
-class InnerReference extends React.Component<
-  ReferenceProps & InnerReferenceProps
-> {
+class reference extends React.Component<ReferenceProps & referenceProps> {
   refHandler = node => {
-    safeInvoke(this.props.innerRef, node)
+    safeInvoke(this.props.ref, node)
     safeInvoke(this.props.getReferenceRef, node)
   }
 
@@ -29,7 +27,7 @@ export default function Reference(props: ReferenceProps) {
   return (
     <ManagerContext.Consumer>
       {({ getReferenceRef }) => (
-        <InnerReference getReferenceRef={getReferenceRef} {...props} />
+        <reference getReferenceRef={getReferenceRef} {...props} />
       )}
     </ManagerContext.Consumer>
   )

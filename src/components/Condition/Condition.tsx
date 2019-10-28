@@ -20,7 +20,7 @@ import {
 
 export class Condition extends React.PureComponent<ConditionProps> {
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
     isWithAnd: false,
     onChange: noop,
     options: [],
@@ -53,13 +53,13 @@ export class Condition extends React.PureComponent<ConditionProps> {
   }
 
   render() {
-    const { children, innerRef, options, onChange, value, ...rest } = this.props
+    const { children, ref, options, onChange, value, ...rest } = this.props
 
     return (
       <ConditionUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        ref={innerRef as any}
+        ref={ref as any}
       >
         {this.renderOperator()}
         <PropProvider value={this.getProviderProps()}>

@@ -50,10 +50,10 @@ describe('Accessibility', () => {
   })
 })
 
-describe('innerRef', () => {
-  test('Can set an innerRef to a DOM node', () => {
+describe('ref', () => {
+  test('Can set an ref to a DOM node', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Trigger innerRef={spy} />)
+    const wrapper = mount(<Trigger ref={spy} />)
     const el = wrapper.getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(el)

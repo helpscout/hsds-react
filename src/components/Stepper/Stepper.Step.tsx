@@ -12,7 +12,7 @@ import { StepperStep } from './Stepper.types'
 export interface Props extends StepperStep {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   index: number
   isActive: boolean
   isClickable: boolean
@@ -25,7 +25,7 @@ export class Step extends React.PureComponent<Props> {
     isActive: false,
     isClickable: false,
     index: 0,
-    innerRef: noop,
+    ref: noop,
     onClick: noop,
   }
 
@@ -46,14 +46,14 @@ export class Step extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, innerRef, isActive, title, ...rest } = this.props
+    const { children, ref, isActive, title, ...rest } = this.props
 
     return (
       <StepUI
         {...getValidProps(rest)}
         className={this.getClassName()}
         onClick={this.handleOnClick}
-        ref={innerRef as any}
+        ref={ref as any}
         title={title}
       >
         <Text className="c-StepperStepTitle" size="14">

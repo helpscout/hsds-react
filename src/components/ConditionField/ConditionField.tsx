@@ -22,7 +22,7 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   static className = 'c-ConditionField'
   static defaultProps = {
     closeIcon: 'collapse',
-    innerRef: noop,
+    ref: noop,
     isWithOr: false,
     isWithRemove: true,
     onRemove: noop,
@@ -52,7 +52,7 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     const {
       children,
       closeIcon,
-      innerRef,
+      ref,
       isWithRemove,
       onRemove,
       removeTitle,

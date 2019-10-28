@@ -11,7 +11,7 @@ export class AddButton extends React.PureComponent<
   ConditionListAddButtonProps
 > {
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
     onClick: noop,
     scrollDuration: 300,
     scrollOffset: 200,

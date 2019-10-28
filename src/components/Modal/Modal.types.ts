@@ -36,7 +36,7 @@ type KeyboardEvent = Event
 export type ModalBodyProps = {
   children?: any
   className?: string
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   isScrollLocked: boolean
   isSeamless: boolean
   onScroll: (event: Event) => void

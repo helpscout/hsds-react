@@ -9,12 +9,12 @@ import { COMPONENT_KEY } from './Centralize.utils'
 export interface Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLDivElement) => void
+  ref: (node: HTMLDivElement) => void
 }
 
 export class Centralize extends React.PureComponent<Props> {
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
   }
 
   static className = 'c-Centralize'
@@ -26,13 +26,13 @@ export class Centralize extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, innerRef, ...rest } = this.props
+    const { children, ref, ...rest } = this.props
 
     return (
       <CentralizeUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        ref={innerRef as any}
+        ref={ref as any}
       >
         {children}
       </CentralizeUI>

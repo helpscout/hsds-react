@@ -46,7 +46,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
     inline: false,
     placeholder: '',
     type: FIELDTYPES.text,
-    innerRef: noop,
+    ref: noop,
     onInputFocus: noop,
     onInputBlur: noop,
     onOptionFocus: noop,
@@ -310,7 +310,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
             name === validationInfo.name &&
             STATES_CLASSNAMES.withValidation
         )}
-        innerRef={this.setFieldInputContentNode}
+        ref={this.setFieldInputContentNode}
       >
         {valueOptions ? this.renderOptions() : null}
 
@@ -323,7 +323,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
             {...getValidProps(rest)}
             className={INPUT_CLASSNAMES.input}
             id={name}
-            innerRef={this.setInputNode}
+            ref={this.setInputNode}
             name={name}
             placeholder={placeholder}
             type={type === 'password' ? type : 'text'}

@@ -51,7 +51,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     errorIcon: 'alert',
     forceAutoFocusTimeout: 0,
     hasInsertCarriageReturns: false,
-    innerRef: noop,
+    ref: noop,
     inputRef: noop,
     isFirst: false,
     isFocused: false,
@@ -412,7 +412,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   setInputNodeRef = (node: InputNode) => {
     this.inputNode = node
     this.props.inputRef(node)
-    this.props.innerRef(node)
+    this.props.ref(node)
   }
 
   // Assumption: The padding-bottom does not change after the component is
@@ -719,7 +719,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       className: fieldClassName,
       disabled,
       id,
-      innerRef: this.setInputNodeRef,
+      ref: this.setInputNodeRef,
       maxLength: withCharValidator ? charValidatorLimit : maxLength,
       name,
       onBlur: this.handleOnInputBlur,

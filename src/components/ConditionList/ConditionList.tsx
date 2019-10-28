@@ -13,7 +13,7 @@ import { COMPONENT_KEY as CONDITION_COMPONENT_KEY } from '../Condition/Condition
 export class ConditionList extends React.Component<ConditionListProps> {
   static className = 'c-ConditionList'
   static defaultProps = {
-    innerRef: noop,
+    ref: noop,
     onAdd: noop,
     isAddEnabled: true,
     isWithOffset: false,
@@ -60,13 +60,13 @@ export class ConditionList extends React.Component<ConditionListProps> {
   }
 
   render() {
-    const { children, innerRef, isAddEnabled, ...rest } = this.props
+    const { children, ref, isAddEnabled, ...rest } = this.props
 
     return (
       <ConditionListUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        ref={innerRef as any}
+        ref={ref as any}
       >
         {this.renderConditions()}
         {this.renderAddAction()}

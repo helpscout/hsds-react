@@ -22,7 +22,7 @@ export class Actions extends React.PureComponent<
 
   static defaultProps = {
     direction: 'right',
-    innerRef: noop,
+    ref: noop,
     onStickyStart: noop,
     onStickyEnd: noop,
     isResponsive: false,
@@ -64,7 +64,7 @@ export class Actions extends React.PureComponent<
 
   renderContent({ withStickyWrapper }) {
     const {
-      innerRef,
+      ref,
       isResponsive,
       primary,
       serious,
@@ -78,7 +78,7 @@ export class Actions extends React.PureComponent<
         data-cy="PageActionsContent"
         {...getValidProps(rest)}
         className={this.getClassName()}
-        ref={(withStickyWrapper ? innerRef : null) as any}
+        ref={(withStickyWrapper ? ref : null) as any}
         withStickyWrapper={withStickyWrapper}
         role="toolbar"
       >

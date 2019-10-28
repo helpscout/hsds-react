@@ -221,9 +221,9 @@ describe('RouteWrapper', () => {
 })
 
 describe('Ref', () => {
-  test('Can retrieve button ref from innerRef prop', () => {
+  test('Can retrieve button ref from ref prop', () => {
     let ref
-    mount(<Button innerRef={node => (ref = node)} />)
+    mount(<Button ref={node => (ref = node)} />)
 
     expect(ref).toBeTruthy()
     expect(ref.tagName).toBe('BUTTON')

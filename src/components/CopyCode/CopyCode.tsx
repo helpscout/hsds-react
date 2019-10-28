@@ -23,7 +23,7 @@ type Props = {
   className?: string
   code: string
   copyToClipboard: boolean
-  innerRef: (node: HTMLElement) => void
+  ref: (node: HTMLElement) => void
   language: string
   maxWidth: number
   onCopy: (code: string) => void
@@ -34,7 +34,7 @@ class CopyCode extends React.PureComponent<Props> {
     autoFocus: false,
     code: '',
     copyToClipboard: true,
-    innerRef: noop,
+    ref: noop,
     language: 'javascript',
     maxWidth: 500,
     onCopy: noop,
@@ -88,7 +88,7 @@ class CopyCode extends React.PureComponent<Props> {
 
   setNodeRef = (node: HTMLElement) => {
     this.node = node
-    this.props.innerRef(node)
+    this.props.ref(node)
   }
 
   getCodeMarkup() {
@@ -118,7 +118,7 @@ class CopyCode extends React.PureComponent<Props> {
           onCut={this.preventEventDefault}
           onPaste={this.preventEventDefault}
           onKeyDown={this.handleOnKeyDown}
-          innerRef={this.setNodeRef}
+          ref={this.setNodeRef}
           spellCheck={false}
           suppressContentEditableWarning
         >
