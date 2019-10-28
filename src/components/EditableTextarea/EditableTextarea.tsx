@@ -98,7 +98,6 @@ export class EditableTextarea extends React.PureComponent<
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value === this.props.value) return
     // Tested
     /* istanbul ignore next */
     if (nextProps.value === this.state.value) return
