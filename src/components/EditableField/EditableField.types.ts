@@ -4,14 +4,8 @@ export type FieldValue = {
   value: string
   id: string
   option?: string
-}
-
-export type InputFields = {
-  label?: string
-  name: string
-  placeholder?: string
-  type: FieldType
-  value: Value | Value[]
+  validated?: boolean
+  disabled?: boolean
 }
 
 export type FieldAction = {
@@ -26,7 +20,32 @@ export type Option = {
   value: string
 }
 
-export type FieldType = 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+export type FieldType =
+  | 'text'
+  | 'email'
+  | 'url'
+  | 'tel'
+  | 'number'
+  | 'textarea'
+  | 'password'
+export type FieldSize = 'md' | 'lg'
+export type FieldState = 'default' | 'error' | 'warning' | 'other'
+
+export type Validation = {
+  isValid: boolean
+  name: string
+  value: string
+  type: FieldState
+  message?: string
+  icon?: string
+  color?: string
+}
+
+export type CommitData = {
+  cause: string
+  operation: string
+  item: Object
+}
 
 export interface EditableFieldProps {
   actions?: FieldAction | FieldAction[] | null
@@ -34,13 +53,13 @@ export interface EditableFieldProps {
   defaultOption: string | null
   disabled: boolean
   emphasizeTopValue: boolean
+  floatingLabels: boolean
   inline: boolean
   label?: string
   multipleValues: boolean
   name: string
   placeholder?: string
-  secondInput?: InputFields
-  size: 'md' | 'lg'
+  size: FieldSize
   type: FieldType
   value: Value | Value[]
   valueOptions?: string[] | Option[]
@@ -55,12 +74,12 @@ export interface EditableFieldProps {
     value: FieldValue[]
     event: Event
   }) => void
-  onInputChange: (args: {
+  onOptionFocus: (args: {
     name: string
     value: FieldValue[]
     event: Event
   }) => void
-  onOptionFocus: (args: {
+  onOptionBlur: (args: {
     name: string
     value: FieldValue[]
     event: Event
@@ -70,25 +89,51 @@ export interface EditableFieldProps {
     selection: string
     value: FieldValue[]
   }) => void
+  onInputKeyDown: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputKeyPress: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputKeyUp: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
   onChange: (args: { name: string; value: FieldValue[]; event?: Event }) => void
   onEnter: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onEscape: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onAdd: (args: { name: string; value: FieldValue[] }) => void
-  onCommit: (args: { name: string; value: FieldValue[] }) => void
+  onCommit: (args: {
+    name: string
+    value: FieldValue[]
+    data: CommitData
+  }) => void
   onDelete: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onDiscard: (args: { value: FieldValue[] }) => void
+  validate: (args: {
+    data: CommitData
+    name: string
+    value: string
+    values: FieldValue[]
+  }) => Promise<Validation>
 }
 
 export interface EditableFieldState {
   actions?: FieldAction[]
   activeField: string
   defaultOption: string | null
+  disabledItem: string[]
   fieldValue: FieldValue[]
-  focusedByLabel: boolean
   initialFieldValue: FieldValue[]
-  multipleValuesEnabled: boolean
-  valueOptions: any
   maskTabIndex: string | null
+  multipleValuesEnabled: boolean
+  validationInfo: Validation[]
+  valueOptions: any
 }
 
 export interface InputProps {
@@ -100,20 +145,19 @@ export interface InputProps {
   isActive: boolean
   name: string
   placeholder: string
-  type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+  type: FieldType
+  validationInfo?: Validation
   valueOptions?: Option[]
   innerRef: (node: HTMLElement) => void
   onInputFocus: (args: { name: string; event: Event }) => void
   onInputBlur: (args: { name: string; event: Event }) => void
-  onInputChange: (args: {
-    name: string
-    inputValue: string
-    event: Event
-  }) => void
   onOptionFocus: (args: { name: string; event: Event }) => void
+  onOptionBlur: (args: { name: string; event: Event }) => void
   onOptionSelection: (args: { name: string; selection: string }) => void
   onChange: (args: { name: string; inputValue: string; event?: Event }) => void
   onKeyDown: (args: { name: string; event: Event }) => Promise<any>
+  onKeyPress: (args: { name: string; event: Event }) => void
+  onKeyUp: (args: { name: string; event: Event }) => void
   deleteAction: (args: {
     name: string
     action: FieldAction
@@ -128,14 +172,33 @@ export interface InputProps {
 
 export interface MaskProps {
   actions?: FieldAction[]
+  disabled: boolean
   emphasize: boolean
   fieldValue: FieldValue
   maskTabIndex: string | null
   name: string
   placeholder?: string
-  type: 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+  type: FieldType
+  validationInfo?: Validation
   valueOptions?: Option[]
   onValueKeyDown: (args: { name: string; event?: Event }) => void
+}
+
+export interface ActionsProps {
+  actions: FieldAction[]
+  name: string
+  fieldValue: FieldValue
+  validationInfo?: Validation
+  deleteAction: (args: {
+    name: string
+    action: FieldAction
+    event: Event
+  }) => void
+  customAction: (args: {
+    name: string
+    action: FieldAction
+    event: Event
+  }) => void
 }
 
 export interface TruncateProps {

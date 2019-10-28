@@ -27,18 +27,32 @@ export const MessageCardUI = styled(Card)`
   &.is-with-box-shadow {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.15);
   }
+
+  @media (max-width: 400px) {
+    width: 100%;
+  }
 `
 
 export const TitleUI = styled(Heading)`
   ${fontFamily};
   line-height: 22px !important;
   margin-top: 5px;
+
+  @media (max-width: 400px) {
+    font-size: 20px !important;
+    line-height: 24px !important;
+  }
 `
 
 export const SubtitleUI = styled(Heading)`
   ${setFontSize(12)};
   line-height: 18px !important;
   margin-top: 6px;
+
+  @media (max-width: 400px) {
+    font-size: 14px !important;
+    margin-top: 10px;
+  }
 `
 
 export const BodyUI = styled(Text)`
@@ -46,14 +60,29 @@ export const BodyUI = styled(Text)`
   line-height: 20px;
   margin-top: ${({ withMargin }) => (withMargin ? '12px' : '0')};
   white-space: pre-wrap;
+
+  @media (max-width: 400px) {
+    font-size: 14px !important;
+    line-height: 22px;
+    margin-top: 20px;
+  }
 `
 
 export const ActionUI = styled('div')`
   margin-bottom: -5px;
   margin-top: 20px;
+
+  @media (max-width: 400px) {
+    margin-top: 30px;
+  }
 `
 
 export const ActionButtonUI = styled(Button)`
   ${setFontSize(14)};
   line-height: normal !important;
+
+  @media (max-width: 400px) {
+    font-size: 16px !important;
+    height: 65px !important;
+  }
 `

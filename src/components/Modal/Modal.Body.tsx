@@ -11,6 +11,7 @@ import { ModalBodyProps } from './Modal.types'
 class Body extends React.PureComponent<ModalBodyProps> {
   static defaultProps = {
     innerRef: noop,
+    isScrollLocked: true,
     isSeamless: false,
     onScroll: noop,
     scrollable: true,
@@ -53,6 +54,7 @@ class Body extends React.PureComponent<ModalBodyProps> {
     const {
       className,
       children,
+      isScrollLocked,
       isSeamless,
       onScroll,
       scrollable,
@@ -73,6 +75,7 @@ class Body extends React.PureComponent<ModalBodyProps> {
         className="c-ModalBody__scrollable"
         contentClassName="c-ModalBody__scrollableContent"
         fade={scrollFade}
+        isScrollLocked={isScrollLocked}
         rounded
         onScroll={onScroll}
         scrollableRef={this.setScrollableRef}

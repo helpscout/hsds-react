@@ -1,6 +1,9 @@
+import styled from 'styled-components'
+
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
-import styled from 'styled-components'
+import Heading from '../../Heading'
+import Text from '../../Text'
 
 export const config = {
   boxShadow: `
@@ -35,7 +38,7 @@ export const RadioCardUI = styled('label')`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: ${config.maxWidth};
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : config.maxWidth)};
   min-width: 0;
   padding: ${config.padding};
   position: relative;
@@ -86,6 +89,20 @@ export const FocusUI = styled('div')`
       opacity: 1;
     }
   }
+`
+
+export const HeadingUI = styled(Heading)`
+  font-size: 13px;
+  margin-bottom: 0;
+  color: ${getColor('charcoal.700')};
+  text-align: center;
+`
+
+export const ContentUI = styled(Text)`
+  font-size: 13px;
+  margin-bottom: 25px;
+  color: ${getColor('charcoal.200')};
+  text-align: center;
 `
 
 export default RadioCardUI

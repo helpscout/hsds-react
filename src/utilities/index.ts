@@ -14,6 +14,7 @@ import * as otherUtils from './other'
 import * as scrollFadeUtils from './scrollFade'
 import * as smoothScrollUtils from './smoothScroll'
 import * as stringsUtils from './strings'
+import * as urlUtils from './urls'
 
 export const arrays = arraysUtils
 export const animation = animationUtils
@@ -31,6 +32,7 @@ export const other = otherUtils
 export const scrollFade = scrollFadeUtils
 export const smoothScroll = smoothScrollUtils
 export const strings = stringsUtils
+export const urls = urlUtils
 
 export default {
   arrays,
@@ -49,4 +51,5 @@ export default {
   scrollFade,
   smoothScroll,
   strings,
+  urls,
 }

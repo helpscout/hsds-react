@@ -259,7 +259,7 @@ export class Item extends React.PureComponent<Props> {
       className
     )
 
-    if (type === 'group') return <Header {...this.props} />
+    if (type === 'group' || type === 'header') return <Header {...this.props} />
     if (type === 'divider') return <Divider />
 
     return (

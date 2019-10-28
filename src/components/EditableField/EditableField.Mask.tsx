@@ -17,6 +17,7 @@ import { MaskProps } from './EditableField.types'
 
 export class EditableFieldMask extends React.Component<MaskProps> {
   static defaultProps = {
+    disabled: false,
     emphasize: false,
     maskTabIndex: null,
     type: 'text',
@@ -46,10 +47,13 @@ export class EditableFieldMask extends React.Component<MaskProps> {
     const { name, maskTabIndex } = this.props
     const valueNode = this.valueRef
 
-    if (prevProps.maskTabIndex == null && maskTabIndex === name) {
+    if (prevProps.maskTabIndex !== maskTabIndex && maskTabIndex === name) {
       valueNode.setAttribute('tabindex', '0')
       valueNode.focus()
-    } else if (prevProps.maskTabIndex === name && maskTabIndex == null) {
+    } else if (
+      prevProps.maskTabIndex === name &&
+      (maskTabIndex == null || maskTabIndex === prevProps.maskTabIndex)
+    ) {
       valueNode && valueNode.removeAttribute('tabindex')
       valueNode.blur()
     }
@@ -71,15 +75,23 @@ export class EditableFieldMask extends React.Component<MaskProps> {
   render() {
     const {
       actions,
+      disabled,
       emphasize,
       fieldValue,
       placeholder,
       type,
+      validationInfo,
       valueOptions,
     } = this.props
 
     return (
-      <ComponentUI className={MASK_CLASSNAMES.component}>
+      <ComponentUI
+        className={classNames(
+          MASK_CLASSNAMES.component,
+          disabled && STATES_CLASSNAMES.isDisabled,
+          validationInfo && STATES_CLASSNAMES.withValidation
+        )}
+      >
         {valueOptions ? (
           <MaskOptionUI className={MASK_CLASSNAMES.option}>
             <Truncate>{fieldValue.option}</Truncate>

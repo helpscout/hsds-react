@@ -6,6 +6,7 @@ export interface TruncateProps {
   end?: number
   start?: number
   showTooltipOnTruncate: boolean
+  splitter?: string
   text?: string
   title?: string
   tooltipProps: Object

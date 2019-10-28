@@ -94,7 +94,8 @@ export const ActionUI = styled('div')`
 
 export const CropUI = styled('div')`
   align-items: center;
-  background-color: currentColor;
+  background-color: ${({ hasImage }) =>
+    hasImage ? 'transparent' : 'currentColor'};
   border-radius: 200%;
   display: flex;
   height: 100%;

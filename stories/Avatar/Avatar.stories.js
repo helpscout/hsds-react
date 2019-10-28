@@ -5,13 +5,8 @@ import { ThemeProvider } from 'styled-components'
 import AvatarSpec from './specs/Avatar'
 
 import { action } from '@storybook/addon-actions'
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
+import { getColor } from '../../src/styles/utilities/color'
+import { withKnobs, boolean, select } from '@storybook/addon-knobs'
 
 const stories = storiesOf('Avatar', module)
 
@@ -24,7 +19,9 @@ stories.addDecorator(
 const fixture = AvatarSpec.generate()
 
 stories.add('default', () => (
-  <Avatar name={fixture.name} image={fixture.image} />
+  <ThemeProvider theme={{ brandColor: { brandColor: getColor('grey.300') } }}>
+    <Avatar name={fixture.name} image={fixture.image} />
+  </ThemeProvider>
 ))
 
 stories.add('failed', () => (

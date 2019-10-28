@@ -8,7 +8,13 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import Radio from '../Radio'
-import { RadioCardUI, IconWrapperUI, FocusUI } from './styles/RadioCard.css'
+import {
+  RadioCardUI,
+  IconWrapperUI,
+  FocusUI,
+  ContentUI,
+  HeadingUI,
+} from './styles/RadioCard.css'
 import { COMPONENT_KEY } from './RadioCard.utils'
 import { RadioCardProps, RadioCardState, InputEvent } from './RadioCard.types'
 
@@ -17,13 +23,16 @@ const uniqueID = createUniqueIDFactory('RadioCard')
 class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
   static defaultProps = {
     checked: false,
-    onChange: noop,
+    content: null,
+    heading: null,
     icon: 'fab-chat',
     iconSize: 52,
-    inputRef: noop,
     innerRef: noop,
+    inputRef: noop,
     isFocused: false,
+    maxWidth: null,
     onBlur: noop,
+    onChange: noop,
     onFocus: noop,
   }
 
@@ -57,8 +66,48 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     })
   }
 
+  getContentMarkup = () => {
+    const { content } = this.props
+
+    if (!content) {
+      return null
+    }
+
+    if (React.isValidElement(content)) {
+      return content
+    }
+
+    if (isFunction(content)) {
+      return React.createElement(content)
+    }
+
+    return <ContentUI className="c-RadioCard__content">{content}</ContentUI>
+  }
+
+  getHeadingMarkup = () => {
+    const { heading } = this.props
+
+    if (!heading) {
+      return null
+    }
+
+    if (React.isValidElement(heading)) {
+      return heading
+    }
+
+    if (isFunction(heading)) {
+      return React.createElement(heading)
+    }
+
+    return <HeadingUI className="c-RadioCard__heading">{heading}</HeadingUI>
+  }
+
   getIconMarkup = () => {
     const { icon, iconSize } = this.props
+
+    if (React.isValidElement(icon)) {
+      return icon
+    }
 
     if (isFunction(icon)) {
       return React.createElement(icon)
@@ -78,7 +127,17 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
   }
 
   getCardMarkup = contextProps => {
-    const { className, checked, icon, title, value, ...rest } = this.props
+    const {
+      checked,
+      className,
+      content,
+      heading,
+      icon,
+      maxWidth,
+      title,
+      value,
+      ...rest
+    } = this.props
     const { id, isFocused } = this.state
 
     const isChecked =
@@ -94,7 +153,12 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     )
 
     return (
-      <RadioCardUI htmlFor={id} className={componentClassName} title={title}>
+      <RadioCardUI
+        htmlFor={id}
+        className={componentClassName}
+        title={title}
+        maxWidth={maxWidth}
+      >
         <IconWrapperUI
           className={classNames(
             'c-RadioCard__iconWrapper',
@@ -103,6 +167,8 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
         >
           {this.getIconMarkup()}
         </IconWrapperUI>
+        {this.getHeadingMarkup()}
+        {this.getContentMarkup()}
         <Radio
           {...rest}
           checked={isChecked}

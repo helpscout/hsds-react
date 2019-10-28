@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import CopyButton from '../../CopyButton'
-import Highlight from '../../Highlight'
 import CopyCode from '../CopyCode'
 import { CopyCodeUI } from '../styles/CopyCode.css.js'
 import Keys from '../../../constants/Keys'
@@ -15,6 +14,19 @@ window.getSelection = () => ({
 
 document.createRange = () => ({
   selectNodeContents: () => {},
+})
+
+describe('selectText', () => {
+  it('Should not call selectText', () => {
+    const selectTextSpy = jest.spyOn(CopyCode.prototype, 'selectText')
+    const wrapper = mount(<CopyCode autoFocus={false} />)
+    expect(selectTextSpy).not.toHaveBeenCalled()
+  })
+  it('Should call selectText', () => {
+    const selectTextSpy = jest.spyOn(CopyCode.prototype, 'selectText')
+    const wrapper = mount(<CopyCode autoFocus={true} />)
+    expect(selectTextSpy).toHaveBeenCalled()
+  })
 })
 
 describe('ClassName', () => {
@@ -42,15 +54,6 @@ describe('Copy button', () => {
 
     wrapper.find(CopyButton).simulate('click')
     expect(onCopySpy).toHaveBeenCalledWith(code)
-  })
-})
-
-describe('Highlight', () => {
-  test('Uses syntax highlighting with language specified', () => {
-    const code = 'return true;'
-    const wrapper = mount(<CopyCode code={code} language="php" />)
-
-    expect(wrapper.find(Highlight).prop('language')).toBe('php')
   })
 })
 

@@ -28,6 +28,7 @@ export const AvatarImage = props => {
   const backgroundImage: any = isImageLoaded ? `url('${image}')` : null
 
   const imageStyle = {
+    transform: 'none',
     transition: `opacity ${animationDuration}ms ${getEasingTiming(
       animationEasing
     )}`,

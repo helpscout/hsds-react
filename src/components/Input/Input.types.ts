@@ -26,6 +26,7 @@ export type InputValue = string
 export type InputProps = {
   action?: any
   autoFocus: boolean
+  autoFocusTimeoutId: any
   charValidatorLimit: number
   className: string
   disabled: boolean

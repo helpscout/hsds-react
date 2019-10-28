@@ -1,5 +1,6 @@
 import activity from '../../icons/activity.svg'
 import alert from '../../icons/alert.svg'
+import alertSmall from '../../icons/alert-small.svg'
 import alignCenter from '../../icons/align-center.svg'
 import alignLeft from '../../icons/align-left.svg'
 import alignRight from '../../icons/align-right.svg'
@@ -212,6 +213,7 @@ import xLargeSingleArrowRight from '../../icons/x-large-single-arrow-right.svg'
 const ICONS = {
   activity,
   alert,
+  'alert-small': alertSmall,
   'align-center': alignCenter,
   'align-left': alignLeft,
   'align-right': alignRight,

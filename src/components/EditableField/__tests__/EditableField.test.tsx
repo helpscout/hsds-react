@@ -7,9 +7,14 @@ import {
   EDITABLEFIELD_CLASSNAMES,
   INPUT_CLASSNAMES,
   MASK_CLASSNAMES,
+  STATES_CLASSNAMES,
 } from '../EditableField.utils'
 
-cy.useFakeTimers()
+import { Validation } from '../EditableField.types'
+
+const flushPromises = () => new Promise(setImmediate)
+
+jest.useFakeTimers()
 
 describe('className', () => {
   test('Has default className', () => {
@@ -34,6 +39,20 @@ describe('HTML props', () => {
     const el = cy.getByCy('BlueBlueBlue')
 
     expect(el.exists()).toBeTruthy()
+  })
+
+  test('email type should have input text type', () => {
+    cy.render(<EditableField type="email" name="company" />)
+    const el = cy.get('input')
+
+    expect(el.getAttribute('type')).toBe('text')
+  })
+
+  test('password type should have input password type', () => {
+    cy.render(<EditableField type="password" name="company" />)
+    const el = cy.get('input')
+
+    expect(el.getAttribute('type')).toBe('password')
   })
 })
 
@@ -106,6 +125,24 @@ describe('Value', () => {
     expect(input.getValue()).toBe('hello')
   })
 
+  test('Should change a given value if passed on props', () => {
+    const wrapper = cy.render(<EditableField name="company" value="hello" />)
+
+    expect(cy.get('input').getValue()).toBe('hello')
+
+    wrapper.setProps({ value: 'hola' })
+
+    expect(cy.get('input').getValue()).toBe('hola')
+  })
+
+  test('Should assign an empty value if passed empty array on props', () => {
+    cy.render(<EditableField name="company" value={[]} />)
+
+    const input = cy.get('input')
+
+    expect(input.getValue()).toBe('')
+  })
+
   test('Should render as many fields as values are passed', () => {
     cy.render(
       <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
@@ -152,6 +189,66 @@ describe('Value', () => {
     expect(val2).toEqual(initialValue)
   })
 
+  test('handleInputKeyPress', () => {
+    const spy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" value="hello" onInputKeyPress={spy} />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleInputKeyPress({
+      event,
+      name,
+    })
+    expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
+  })
+
+  test('handleInputKeyUp', () => {
+    const spy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" value="hello" onInputKeyUp={spy} />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleInputKeyUp({
+      event,
+      name,
+    })
+    expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
+  })
+
+  test('handleInputKeyDown', () => {
+    const spy = jest.fn()
+    const wrapper: any = mount(
+      <EditableField name="company" value="hello" onInputKeyDown={spy} />
+    )
+    const initialValue = wrapper.state('fieldValue')
+    const name = initialValue[0].id
+    const event = {
+      key: 'J',
+      currentTarget: {
+        value: 'howdy',
+      },
+    }
+    wrapper.instance().handleInputKeyDown({
+      event,
+      name,
+    })
+    expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
+  })
+
   test('handleInputKeyDown enter: commits value', () => {
     const wrapper: any = mount(<EditableField name="company" value="hello" />)
     const initialValue = wrapper.state('fieldValue')
@@ -167,12 +264,21 @@ describe('Value', () => {
       name,
     })
 
-    expect(wrapper.state('fieldValue')).toEqual([
-      {
-        id: name,
-        value: 'howdy',
-      },
-    ])
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      wrapper.update()
+
+      expect(wrapper.state('fieldValue')).toEqual([
+        {
+          id: name,
+          value: 'howdy',
+          disabled: false,
+          validated: true,
+        },
+      ])
+    })
   })
 
   test('handleInputKeyDown enter: commits value (with options)', () => {
@@ -196,13 +302,22 @@ describe('Value', () => {
       name,
     })
 
-    expect(wrapper.state('fieldValue')).toEqual([
-      {
-        id: name,
-        option: 'Work',
-        value: 'howdy',
-      },
-    ])
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      wrapper.update()
+
+      expect(wrapper.state('fieldValue')).toEqual([
+        {
+          id: name,
+          option: 'Work',
+          value: 'howdy',
+          disabled: false,
+          validated: true,
+        },
+      ])
+    })
   })
 
   test('handleInputKeyDown enter: empty value (with options)', () => {
@@ -226,13 +341,22 @@ describe('Value', () => {
       name,
     })
 
-    expect(wrapper.state('fieldValue')).toEqual([
-      {
-        id: name,
-        option: 'Home',
-        value: 'howdy',
-      },
-    ])
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      wrapper.update()
+
+      expect(wrapper.state('fieldValue')).toEqual([
+        {
+          id: name,
+          option: 'Home',
+          value: 'howdy',
+          disabled: false,
+          validated: true,
+        },
+      ])
+    })
   })
 
   test('handleInputKeyDown esc: discards value', () => {
@@ -340,6 +464,7 @@ describe('Value', () => {
 
   test('should remove an input field when clicking the delete action (with options)', () => {
     const spy = jest.fn()
+
     cy.render(
       <EditableField
         name="company"
@@ -482,6 +607,41 @@ describe('Options', () => {
 
     expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
   })
+
+  test('Should change a given value if passed on props with options', () => {
+    const wrapper = cy.render(
+      <EditableField
+        name="company"
+        value={{ option: 'Work', value: '11111', id: '001' }}
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Work')
+
+    wrapper.setProps({ value: { option: 'Home', value: '888888', id: '001' } })
+
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
+  })
+
+  test('Should change a given value if passed on props with options (default option)', () => {
+    const wrapper = cy.render(
+      <EditableField
+        name="company"
+        defaultOption="Other"
+        value={{ value: '11111', id: '001' }}
+        valueOptions={['Home', 'Work', 'Other']}
+      />
+    )
+
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe(
+      'Other'
+    )
+
+    wrapper.setProps({ value: { option: 'Home', value: '888888', id: '001' } })
+
+    expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
+  })
 })
 
 describe('Static Value', () => {
@@ -566,12 +726,6 @@ describe('Actions', () => {
 
     expect(cy.get(`.${ACTIONS_CLASSNAMES.actions}`).exists()).toBeTruthy()
     expect(cy.get('.action-delete').exists()).toBeTruthy()
-  })
-
-  test('actions should not be focusable', () => {
-    cy.render(<EditableField name="company" value="hello" />)
-
-    expect(cy.get('.action-delete').getAttribute('tabindex')).toBe('-1')
   })
 
   test('should not render delete action if null passed', () => {
@@ -667,7 +821,7 @@ describe('disabled', () => {
     expect(cy.get('input').getAttribute('disabled')).toBeDefined()
   })
 
-  test('should put is-disabled classname', () => {
+  test('should put disabled classname', () => {
     const wrapper = cy.render(
       <EditableField
         name="company"
@@ -677,7 +831,7 @@ describe('disabled', () => {
       />
     )
 
-    expect(wrapper.hasClass('is-disabled')).toBeTruthy()
+    expect(wrapper.hasClass(STATES_CLASSNAMES.fieldDisabled)).toBeTruthy()
   })
 
   test('should not render actions', () => {
@@ -722,182 +876,6 @@ describe('disabled', () => {
   })
 })
 
-describe('Label click event', () => {
-  test('should mark the state when clicking the label', () => {
-    const wrapper = mount(
-      <EditableField
-        name="company"
-        value={[{ option: 'Work', value: '123456789', id: '' }]}
-        valueOptions={['Home', 'Work', 'Other']}
-      />
-    )
-    const label = wrapper.find(`.${EDITABLEFIELD_CLASSNAMES.label}`).first()
-
-    label.simulate('click')
-
-    expect(wrapper.state('focusedByLabel')).toBeTruthy()
-  })
-
-  test('should not run when disabled and clicking the label', () => {
-    const wrapper = mount(
-      <EditableField
-        name="company"
-        value={[{ option: 'Work', value: '123456789', id: '' }]}
-        valueOptions={['Home', 'Work', 'Other']}
-        disabled
-      />
-    )
-    const label = wrapper.find(`.${EDITABLEFIELD_CLASSNAMES.label}`).first()
-
-    label.simulate('click')
-
-    expect(wrapper.state('focusedByLabel')).toBeFalsy()
-  })
-})
-
-describe('Click outside field', () => {
-  test('When document.body is clicked, the field is not active (single)', () => {
-    const commitSpy = jest.fn()
-    const wrapper: any = mount(
-      <EditableField name="company" onCommit={commitSpy} />
-    )
-    // Make document.activeElement something other than document.body
-    wrapper
-      .find('input')
-      .first()
-      .getDOMNode()
-      .focus()
-
-    wrapper.setState({
-      activeField: 'company_67',
-      fieldValue: [{ value: '123', id: 'company_67' }],
-    })
-
-    wrapper.instance().handleOnDocumentBodyMouseDown({
-      target: document.body,
-    })
-
-    expect(wrapper.state('activeField')).toBe('')
-    expect(commitSpy).toHaveBeenCalled()
-  })
-
-  test('When document.body is clicked, the field is not active (multi, no change)', () => {
-    const wrapper: any = mount(<EditableField name="company" />)
-    // Make document.activeElement something other than document.body
-    wrapper
-      .find('input')
-      .first()
-      .getDOMNode()
-      .focus()
-
-    wrapper.setState({
-      activeField: 'company_67',
-      fieldValue: [
-        { value: '123', id: 'company_67' },
-        { value: '12345', id: 'company_68' },
-      ],
-    })
-
-    wrapper.instance().handleOnDocumentBodyMouseDown({
-      target: document.body,
-    })
-
-    expect(wrapper.state('activeField')).toBe('')
-  })
-
-  test('When document.body is clicked, the field is not active (multi, empty value, discard)', () => {
-    const discardSpy = jest.fn()
-    const wrapper: any = mount(
-      <EditableField name="company" onDiscard={discardSpy} />
-    )
-    // Make document.activeElement something other than document.body
-    wrapper
-      .find('input')
-      .first()
-      .getDOMNode()
-      .focus()
-
-    wrapper.setState({
-      activeField: 'company_67',
-      fieldValue: [
-        { value: '123', id: 'company_67' },
-        { value: '', id: 'company_68' },
-      ],
-    })
-
-    wrapper.instance().handleOnDocumentBodyMouseDown({
-      target: document.body,
-    })
-
-    expect(wrapper.state('activeField')).toBe('')
-    expect(discardSpy).toHaveBeenCalled()
-  })
-
-  test('When document.body is clicked, the field is not active (multi, empty value, discard)', () => {
-    const commitSpy = jest.fn()
-    const wrapper: any = mount(
-      <EditableField name="company" onCommit={commitSpy} />
-    )
-    // Make document.activeElement something other than document.body
-    wrapper
-      .find('input')
-      .first()
-      .getDOMNode()
-      .focus()
-
-    wrapper.setState({
-      activeField: 'company_67',
-      fieldValue: [
-        { value: '123', id: 'company_67' },
-        { value: '12345', id: 'company_68' },
-      ],
-    })
-
-    wrapper.instance().handleOnDocumentBodyMouseDown({
-      target: document.body,
-    })
-
-    expect(wrapper.state('activeField')).toBe('')
-    expect(commitSpy).toHaveBeenCalled()
-  })
-
-  test('When document.body is clicked, if field is not active return', () => {
-    const wrapper: any = mount(<EditableField name="company" />)
-    // Make document.activeElement something other than document.body
-    wrapper
-      .find('input')
-      .first()
-      .getDOMNode()
-      .focus()
-
-    wrapper.setState({ activeField: '' })
-
-    const returnValue = wrapper.instance().handleOnDocumentBodyMouseDown({
-      target: document.body,
-    })
-
-    expect(wrapper.state('activeField')).toBe('')
-    expect(returnValue).toBeUndefined()
-  })
-
-  test('When document.body is clicked, if no event return', () => {
-    const wrapper: any = mount(<EditableField name="company" />)
-    // Make document.activeElement something other than document.body
-    wrapper
-      .find('input')
-      .first()
-      .getDOMNode()
-      .focus()
-
-    wrapper.setState({ activeField: '' })
-
-    const returnValue = wrapper.instance().handleOnDocumentBodyMouseDown()
-
-    expect(wrapper.state('activeField')).toBe('')
-    expect(returnValue).toBeUndefined()
-  })
-})
-
 describe('Events', () => {
   test('onInputFocus', () => {
     const spy = jest.fn()
@@ -920,26 +898,6 @@ describe('Events', () => {
     input.blur()
 
     expect(spy).toHaveBeenCalled()
-  })
-
-  test('onInputChange', () => {
-    const inputChangeSpy = jest.fn()
-    const changeSpy = jest.fn()
-
-    cy.render(
-      <EditableField
-        name="company"
-        onInputChange={inputChangeSpy}
-        onChange={changeSpy}
-      />
-    )
-
-    const input = cy.get('input')
-
-    input.type('a')
-
-    expect(inputChangeSpy).toHaveBeenCalled()
-    expect(changeSpy).toHaveBeenCalled()
   })
 
   test('onChange', () => {
@@ -990,75 +948,6 @@ describe('Events', () => {
 
     button.click()
     expect(spy).not.toHaveBeenCalled()
-  })
-
-  test('Pressing Enter: should commit if value changes', () => {
-    const onEnterSpy = jest.fn()
-    const onCommitSpy = jest.fn()
-    const wrapper = mount(
-      <EditableField
-        name="company"
-        value={{ value: '1234567', id: '1' }}
-        onEnter={onEnterSpy}
-        onCommit={onCommitSpy}
-      />
-    )
-
-    const input = wrapper.find('input').first()
-
-    // @ts-ignore
-    input.getDOMNode().value = '123'
-
-    input.simulate('keydown', { key: 'Enter' })
-
-    expect(onEnterSpy).toHaveBeenCalled()
-    expect(onCommitSpy).toHaveBeenCalled()
-  })
-
-  test('Pressing Enter: should not commit if value unchanged', () => {
-    const onEnterSpy = jest.fn()
-    const onCommitSpy = jest.fn()
-    const wrapper = mount(
-      <EditableField
-        name="company"
-        value={{ value: '1234567', id: '1' }}
-        onEnter={onEnterSpy}
-        onCommit={onCommitSpy}
-      />
-    )
-
-    const input = wrapper.find('input').first()
-
-    // @ts-ignore
-    input.getDOMNode().value = '1234567'
-
-    input.simulate('keydown', { key: 'Enter' })
-
-    expect(onEnterSpy).toHaveBeenCalled()
-    expect(onCommitSpy).not.toHaveBeenCalled()
-  })
-
-  test('Pressing Enter: should not commit if value empty', () => {
-    const onEnterSpy = jest.fn()
-    const onCommitSpy = jest.fn()
-    const wrapper = mount(
-      <EditableField
-        name="company"
-        multipleValues
-        value="hello"
-        onEnter={onEnterSpy}
-        onCommit={onCommitSpy}
-      />
-    )
-
-    const input = wrapper.find('input').first()
-
-    // @ts-ignore
-    input.getDOMNode().value = ''
-
-    input.simulate('keydown', { key: 'Enter' })
-
-    expect(onCommitSpy).not.toHaveBeenCalled()
   })
 
   test('Pressing escape', () => {
@@ -1119,6 +1008,24 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
+  test('Blur option', () => {
+    const spy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={{ option: 'Work', value: '123456789', id: '1' }}
+        valueOptions={['Home', 'Work', 'Other']}
+        onOptionBlur={spy}
+      />
+    )
+
+    cy.getByCy('DropdownTrigger').focus()
+    cy.getByCy('DropdownTrigger').blur()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('Changing option', () => {
     const onOptionChangeSpy = jest.fn()
     const onChangeSpy = jest.fn()
@@ -1142,5 +1049,563 @@ describe('Events', () => {
     expect(onOptionChangeSpy).toHaveBeenCalled()
     expect(onChangeSpy).toHaveBeenCalled()
     expect(onCommitSpy).toHaveBeenCalled()
+  })
+})
+
+describe('enter press', () => {
+  test('Pressing Enter: should not commit if value unchanged', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+      />
+    )
+
+    const input = wrapper.find('input').first()
+
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+
+    input.simulate('keydown', { key: 'Enter' })
+
+    expect(onEnterSpy).toHaveBeenCalled()
+    expect(onCommitSpy).not.toHaveBeenCalled()
+  })
+
+  test('Pressing Enter: should not commit if value invalid', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: false,
+            name,
+            value,
+            type: 'error',
+            message: 'That is definitely not right',
+          })
+        }
+      />
+    )
+
+    const input = wrapper.find('input').first()
+
+    // @ts-ignore
+    input.getDOMNode().value = '8888'
+
+    input.simulate('keydown', { key: 'Enter' })
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(onEnterSpy).toHaveBeenCalled()
+      expect(onCommitSpy).not.toHaveBeenCalled()
+    })
+  })
+
+  test('Pressing Enter: should not commit if value empty', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        multipleValues
+        value="hello"
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+      />
+    )
+
+    const input = wrapper.find('input').first()
+
+    // @ts-ignore
+    input.getDOMNode().value = ''
+
+    input.simulate('keydown', { key: 'Enter' })
+
+    expect(onCommitSpy).not.toHaveBeenCalled()
+  })
+
+  test('Pressing Enter: should commit if value changes', () => {
+    const onEnterSpy = jest.fn()
+    const onCommitSpy = jest.fn()
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        onEnter={onEnterSpy}
+        onCommit={onCommitSpy}
+      />
+    )
+
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '123'
+    input.simulate('keydown', { key: 'Enter' })
+
+    flushPromises().then(() => {
+      wrapper.update()
+
+      expect(onEnterSpy).toHaveBeenCalled()
+      expect(onCommitSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('Pressing Enter: should escape on validation rejection', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        validate={() => Promise.reject(new Error('Oops'))}
+      />
+    )
+
+    // @ts-ignore
+    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
+    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
+    wrapper.instance().forceUpdate()
+
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+    input.simulate('keydown', { key: 'Enter' })
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(escapeSpy).toHaveBeenCalled()
+      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
+    })
+  })
+})
+
+describe('should component update', () => {
+  test('value', () => {
+    const wrapper: any = mount(<EditableField name="greeting" value="hello" />)
+    const actualProps = wrapper.props()
+    const actualState = wrapper.state()
+    const newPropsSame = {
+      ...actualProps,
+      value: 'hello',
+    }
+    const newPropsChanged = {
+      ...actualProps,
+      value: 'hola',
+    }
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(newPropsSame, actualState)
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(newPropsChanged, actualState)
+    ).toBeTruthy()
+  })
+
+  test('fieldValue', () => {
+    const val = {
+      value: 'hello',
+      id: 'greeting_0',
+    }
+    const wrapper: any = mount(<EditableField name="greeting" value={val} />)
+    const actualProps = wrapper.props()
+    const actualState = wrapper.state()
+    const newStateSame = {
+      ...actualState,
+    }
+    const newStateChanged = {
+      fieldValue: [],
+    }
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateSame)
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateChanged)
+    ).toBeTruthy()
+  })
+
+  test('disabled', () => {
+    const wrapper: any = mount(
+      <EditableField name="greeting" value="hello" disabled />
+    )
+    const actualProps = wrapper.props()
+    const actualState = wrapper.state()
+    const newPropsSame = {
+      ...actualProps,
+    }
+    const newPropsChanged = {
+      ...actualProps,
+      disabled: false,
+    }
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(newPropsSame, actualState)
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(newPropsChanged, actualState)
+    ).toBeTruthy()
+  })
+
+  test('activeField', () => {
+    const val = {
+      value: 'hello',
+      id: 'greeting_0',
+    }
+    const wrapper: any = mount(<EditableField name="greeting" value={val} />)
+    const actualProps = wrapper.props()
+    const actualState = wrapper.state()
+    const newStateSame = {
+      ...actualState,
+    }
+    const newStateChanged = {
+      activeField: 'something',
+    }
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateSame)
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateChanged)
+    ).toBeTruthy()
+  })
+
+  test('mask tab index', () => {
+    const val = {
+      value: 'hello',
+      id: 'greeting_0',
+    }
+    const wrapper: any = mount(<EditableField name="greeting" value={val} />)
+    const actualProps = wrapper.props()
+    const actualState = wrapper.state()
+    const newStateSame = {
+      ...actualState,
+    }
+    const newStateChanged = {
+      maskTabIndex: 'something',
+    }
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateSame)
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateChanged)
+    ).toBeTruthy()
+  })
+
+  test('disabledItem', () => {
+    const val = {
+      value: 'hello',
+      id: 'greeting_0',
+    }
+    const wrapper: any = mount(<EditableField name="greeting" value={val} />)
+    const actualProps = wrapper.props()
+    const actualState = wrapper.state()
+    const newStateSame = {
+      ...actualState,
+    }
+    const newStateChanged = {
+      disabledItem: ['something'],
+    }
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateSame)
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateChanged)
+    ).toBeTruthy()
+  })
+
+  test('validationInfo', () => {
+    const validationInfo: Validation = {
+      isValid: false,
+      name: 'email',
+      value: 'hello',
+      type: 'error',
+    }
+    const val = {
+      value: 'hello',
+      id: 'greeting_0',
+    }
+    const wrapper: any = mount(<EditableField name="greeting" value={val} />)
+    const actualProps = wrapper.props()
+    const actualState = wrapper.state()
+    const newStateSame = {
+      ...actualState,
+    }
+    const newStateChanged = {
+      validationInfo,
+    }
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateSame)
+    ).toBeFalsy()
+
+    expect(
+      wrapper.instance().shouldComponentUpdate(actualProps, newStateChanged)
+    ).toBeTruthy()
+  })
+})
+
+describe('Input Blur', () => {
+  test('If unchanged, it should deactivate the field and leave as', () => {
+    const blurSpy = jest.fn()
+
+    cy.render(
+      <EditableField name="company" value="hello" onInputBlur={blurSpy} />
+    )
+
+    cy.get('input').focus()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
+
+    cy.get('input').clear()
+    cy.get('input').type('hello')
+    cy.get('input').blur()
+
+    expect(cy.get('input').getValue()).toBe('hello')
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+    expect(blurSpy).toHaveBeenCalled()
+  })
+
+  test('If value cleared in single value case, it should deactivate the field and leave as', () => {
+    const commitSpy = jest.fn()
+    const blurSpy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value="hello"
+        onCommit={commitSpy}
+        onInputBlur={blurSpy}
+      />
+    )
+
+    cy.get('input').focus()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
+
+    cy.get('input').type('')
+    cy.get('input').blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('If value cleared in multivalue, it should deactivate the field and remove', () => {
+    const commitSpy = jest.fn()
+    const blurSpy = jest.fn()
+    const discardSpy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={['hello', 'hola']}
+        onCommit={commitSpy}
+        onInputBlur={blurSpy}
+        onDiscard={discardSpy}
+      />
+    )
+
+    cy.get('input')
+      .first()
+      .focus()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
+    expect(cy.get('input').length).toBe(2)
+
+    cy.get('input')
+      .first()
+      .type('')
+    cy.get('input')
+      .first()
+      .blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(cy.get('input').length).toBe(1)
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+      expect(discardSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('If value cleared in multivalue, it should not remove the only field left', () => {
+    const commitSpy = jest.fn()
+    const blurSpy = jest.fn()
+    const discardSpy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value={['hello']}
+        onCommit={commitSpy}
+        onInputBlur={blurSpy}
+        onDiscard={discardSpy}
+      />
+    )
+
+    cy.get('input')
+      .first()
+      .focus()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
+    expect(cy.get('input').length).toBe(1)
+
+    cy.get('input')
+      .first()
+      .type('')
+    cy.get('input')
+      .first()
+      .blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(cy.get('input').length).toBe(1)
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('If value changed and valid, it should commit', () => {
+    const commitSpy = jest.fn()
+    const blurSpy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value="hello"
+        onCommit={commitSpy}
+        onInputBlur={blurSpy}
+      />
+    )
+
+    cy.get('input').focus()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
+
+    cy.get('input').type('hola')
+    cy.get('input').blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get('input').getValue()).toBe('hola')
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('If value changed and invalid, it should not commit', () => {
+    const commitSpy = jest.fn()
+    const blurSpy = jest.fn()
+
+    cy.render(
+      <EditableField
+        name="company"
+        value="hello"
+        onCommit={commitSpy}
+        onInputBlur={blurSpy}
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: false,
+            name,
+            value,
+            type: 'error',
+            message: 'That is definitely not right',
+          })
+        }
+      />
+    )
+
+    cy.get('input').focus()
+
+    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
+
+    cy.get('input').type('hola')
+    cy.get('input').blur()
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get('input').getValue()).toBe('hola')
+      expect(commitSpy).not.toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('If value is changed but validate rejects it should escape', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        validate={() => Promise.reject(new Error('Oops'))}
+      />
+    )
+
+    // @ts-ignore
+    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
+    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
+    wrapper.instance().forceUpdate()
+
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+    input.simulate('blur')
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(escapeSpy).toHaveBeenCalled()
+      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
+    })
+  })
+})
+
+describe('floating labels', () => {
+  test('Adds the floating labels className', () => {
+    const wrapper = cy.render(<EditableField name="company" floatingLabels />)
+
+    expect(wrapper.hasClass(STATES_CLASSNAMES.withFloatingLabels)).toBeTruthy()
+  })
+
+  test('Label is hidden when floating labels on', () => {
+    cy.render(<EditableField name="company" floatingLabels />)
+
+    const el = cy.get(`.${EDITABLEFIELD_CLASSNAMES.label}`)
+
+    expect(el.exists()).toBeFalsy()
   })
 })

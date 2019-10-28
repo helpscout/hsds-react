@@ -29,9 +29,7 @@ stories.add('default', () => (
         type="text"
         placeholder="First Name"
         value="Johnny"
-        onInputFocus={() => {
-          console.log('execute!')
-        }}
+        validate={validateFieldValue}
       />
       <EditableField
         label="Last Name"
@@ -39,6 +37,7 @@ stories.add('default', () => (
         type="text"
         placeholder="Last Name"
         value="Cash"
+        validate={validateFieldValue}
       />
     </EditableFieldComposite>
   </ContainerUI>
@@ -117,3 +116,44 @@ stories.add('large', () => (
     </EditableFieldComposite>
   </ContainerUI>
 ))
+
+function validateFieldValue(payload) {
+  console.log('validating')
+
+  const { name, value } = payload
+  let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
+
+  return new Promise(resolve => {
+    if (isValid) {
+      resolve({ isValid, name, value })
+    } else {
+      if (value === 'off') {
+        resolve({
+          isValid,
+          name,
+          value,
+          type: 'error',
+          message: 'That is definitely not right',
+        })
+      } else if (value === 'warn') {
+        resolve({
+          isValid,
+          name,
+          value,
+          type: 'warning',
+          message: "That's it, you have been warned",
+        })
+      } else if (value === 'other') {
+        resolve({
+          isValid,
+          name,
+          value,
+          type: 'other',
+          message: "I don't know what you're talking about, have a trophy",
+          color: '#57c28d',
+          icon: 'activity',
+        })
+      }
+    }
+  })
+}

@@ -104,12 +104,12 @@ describe('Children', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onInputChange still gets executed if passed on an EditableField', () => {
+  test('onChange still gets executed if passed on an EditableField', () => {
     const spy = jest.fn()
 
     const wrapper = cy.render(
       <EditableFieldComposite>
-        <EditableField name="city" onInputChange={spy} />
+        <EditableField name="city" onChange={spy} />
         <EditableField name="country" />
       </EditableFieldComposite>
     )

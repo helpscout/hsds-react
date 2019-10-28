@@ -17,14 +17,10 @@ describe('Editable Field truncate', () => {
       cy.get(`.${TRUNCATED_CLASSNAMES.withSplitter}`).exists()
     ).toBeTruthy()
     expect(cy.get(`.${TRUNCATED_CLASSNAMES.firstChunk}`).exists()).toBeTruthy()
-    expect(
-      cy.get(`.${TRUNCATED_CLASSNAMES.splitterChunk}`).exists()
-    ).toBeTruthy()
     expect(cy.get(`.${TRUNCATED_CLASSNAMES.secondChunk}`).exists()).toBeTruthy()
     expect(cy.get(`.${TRUNCATED_CLASSNAMES.firstChunk}`).text()).toBe('email')
-    expect(cy.get(`.${TRUNCATED_CLASSNAMES.splitterChunk}`).text()).toBe('@')
     expect(cy.get(`.${TRUNCATED_CLASSNAMES.secondChunk}`).text()).toBe(
-      'something.com'
+      '@something.com'
     )
   })
 })

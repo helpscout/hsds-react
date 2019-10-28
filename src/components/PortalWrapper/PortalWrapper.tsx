@@ -20,6 +20,7 @@ import matchPath from '../../utilities/react-router/matchPath'
 import Content from './PortalWrapper.Content'
 
 interface PortalWrapperProps extends PortalProps {
+  closeOnEscape: boolean
   isOpen: boolean
   trigger: any
   isOpenProps: boolean
@@ -55,6 +56,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     PortalWrapperState
   > {
     static defaultProps = {
+      closeOnEscape: true,
       isOpen: false,
     }
     static contextTypes = {
@@ -90,8 +92,8 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         props.timeout !== undefined
           ? props.timeout
           : composedWrapperTimeout !== undefined
-            ? composedWrapperTimeout
-            : extendedOptions.timeout
+          ? composedWrapperTimeout
+          : extendedOptions.timeout
 
       this.state = {
         isOpen: props.isOpen,
@@ -336,10 +338,17 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       )
     }
 
+    renderEventListener() {
+      const { closeOnEscape } = this.props
+      return closeOnEscape ? (
+        <KeypressListener keyCode={Keys.ESCAPE} handler={this.handleOnEsc} />
+      ) : null
+    }
+
     render() {
       return (
         <div className="c-PortalWrapper">
-          <KeypressListener keyCode={Keys.ESCAPE} handler={this.handleOnEsc} />
+          {this.renderEventListener()}
           {this.renderTrigger()}
           {this.renderPortal()}
         </div>

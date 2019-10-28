@@ -1,7 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { default as BlankSlate } from '../ChatList.BlankSlate'
-import { Illo, Text } from '../../index'
+import { SpeechBubbleIlloUI } from '../styles/BlankSlate.css'
+import { Text } from '../../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -36,16 +37,9 @@ describe('Children', () => {
 describe('Illo', () => {
   test('Renders an Illo by default', () => {
     const wrapper = mount(<BlankSlate />)
-    const o = wrapper.find(Illo)
+    const o = wrapper.find(SpeechBubbleIlloUI)
 
     expect(o.length).toBeTruthy()
-  })
-
-  test('Does not render an Illo if illoName prop is blank', () => {
-    const wrapper = mount(<BlankSlate illoName="" />)
-    const o = wrapper.find(Illo)
-
-    expect(o.length).not.toBeTruthy()
   })
 })
 
