@@ -269,6 +269,7 @@ export class EditableTextarea extends React.PureComponent<
                 readOnly: true,
                 validationInfo: null,
                 validated: true,
+                value,
               },
               () => {
                 onCommit({
