@@ -98,6 +98,10 @@ export class EditableTextarea extends React.PureComponent<
   }
 
   componentWillReceiveProps(nextProps) {
+    // Unless the field is dirty (e.g. has state), then we should short
+    // circuit if the value prop has not changed.
+    if (!this.state.value && nextProps.value === this.props.value) return
+
     // Tested
     /* istanbul ignore next */
     if (nextProps.value === this.state.value) return
