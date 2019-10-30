@@ -17,6 +17,7 @@ export default class AvatorSelector extends React.PureComponent<Props> {
   static default = {
     image: '',
     isOpen: false,
+    name: '',
   }
 
   renderAvatar() {
@@ -29,7 +30,7 @@ export default class AvatorSelector extends React.PureComponent<Props> {
   }
 
   render() {
-    const { image, isOpen } = this.props
+    const { image, isOpen, name } = this.props
     return (
       <AvatarSelectorWrapperUI className="c-AvatarSelector" tabIndex="1">
         {image || name ? this.renderAvatar() : this.renderAssign()}

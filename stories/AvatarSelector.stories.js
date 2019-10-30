@@ -25,6 +25,7 @@ class AvatarSelectorWithDropdown extends React.Component {
   onSelect = (value, event) => {
     this.setState({
       image: event.item.image,
+      name: event.item.label,
     })
   }
 
@@ -48,7 +49,11 @@ class AvatarSelectorWithDropdown extends React.Component {
         onOpen={this.onOpen}
         onSelect={this.onSelect}
         renderTrigger={
-          <AvatarSelector image={this.state.image} isOpen={this.state.isOpen} />
+          <AvatarSelector
+            image=""
+            name={this.state.name}
+            isOpen={this.state.isOpen}
+          />
         }
       />
     )
@@ -56,5 +61,8 @@ class AvatarSelectorWithDropdown extends React.Component {
 }
 
 stories.add('default', () => <AvatarSelector />)
-
 stories.add('with dropdown', () => <AvatarSelectorWithDropdown />)
+stories.add('with image', () => (
+  <AvatarSelector image={fixtures[0].image} name="Buzz Arooooooo" />
+))
+stories.add('with intials', () => <AvatarSelector name="Buzz Arooooooo" />)
