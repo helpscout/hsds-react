@@ -180,8 +180,6 @@ export class EditableTextarea extends React.PureComponent<
     /* istanbul ignore next */
     const stop = () => e.preventDefault() && e.stopPropagation()
 
-    // Escape route tested
-    /* istanbul ignore else */
     if (!isShiftPressed && code === key.ENTER) {
       stop()
 
@@ -204,28 +202,6 @@ export class EditableTextarea extends React.PureComponent<
           this.textArea.current.blur()
         }
       )
-    } else if (code === key.ESCAPE) {
-      stop()
-
-      this.setState(
-        {
-          value: this.state.prevValue,
-        },
-        () => {
-          const { id } = this.props
-          const { value } = this.state
-          const item = {
-            value,
-            id,
-          }
-          this.props.onEscape({
-            name: id,
-            value: [item],
-            event: e,
-          })
-          this.textArea.current.blur()
-        }
-      )
     }
   }
 
@@ -235,6 +211,8 @@ export class EditableTextarea extends React.PureComponent<
     /* istanbul ignore next */
     const stop = () => e.preventDefault() && e.stopPropagation()
 
+    // Escape route tested
+    /* istanbul ignore if */
     if (code === key.ESCAPE) {
       stop()
 
