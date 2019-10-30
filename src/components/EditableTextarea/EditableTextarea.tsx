@@ -229,6 +229,37 @@ export class EditableTextarea extends React.PureComponent<
     }
   }
 
+  handleOnKeyUp = e => {
+    const code = e.key
+
+    /* istanbul ignore next */
+    const stop = () => e.preventDefault() && e.stopPropagation()
+
+    if (code === key.ESCAPE) {
+      stop()
+
+      this.setState(
+        {
+          value: this.state.prevValue,
+        },
+        () => {
+          const { id } = this.props
+          const { value } = this.state
+          const item = {
+            value,
+            id,
+          }
+          this.props.onEscape({
+            name: id,
+            value: [item],
+            event: e,
+          })
+          this.textArea.current.blur()
+        }
+      )
+    }
+  }
+
   handleOnBlur = e => {
     const { id, onCommit, onInputBlur, validate } = this.props
     const { prevValue, value, validated } = this.state
@@ -411,6 +442,7 @@ export class EditableTextarea extends React.PureComponent<
             onClick={this.handleOnClick}
             onHeightChange={this.handleTextareaHeightChange}
             onKeyDown={this.handleOnKeyDown}
+            onKeyUp={this.handleOnKeyUp}
           />
           <MaskUI
             className={maskClasses}
