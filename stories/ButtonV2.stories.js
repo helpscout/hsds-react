@@ -6,8 +6,10 @@ import {
   ControlGroup,
   Flexy,
   FormGroup,
+  Heading,
   Icon,
   PropProvider,
+  Text,
 } from '../src/index'
 import styled from '../src/components/styled'
 
@@ -67,7 +69,42 @@ const makeButtonVariations = (props = {}) => {
   )
 }
 
-stories.add('Default', () => {
+stories.add('default', () => (
+  <PropProvider value={{ Button: { version: 2 } }}>
+    <ContainerUI>
+      <Heading style={{ marginBottom: '20px' }}>Kinds</Heading>
+      <Flexy just="left">
+        <Button>default</Button>
+        <Button kind="primary">primary</Button>
+        <Button kind="primaryAlt">primaryAlt</Button>
+        <Button kind="secondary">secondary</Button>
+        <Button kind="secondaryAlt">secondaryAlt</Button>
+        <Button kind="link">link</Button>
+        <Button kind="primary" shape="rounded" size="md">
+          ROUNDED
+          <Icon name="caret-up" size="14" />
+        </Button>
+      </Flexy>
+    </ContainerUI>
+    <ContainerUI>
+      <Heading style={{ marginBottom: '20px' }}>States</Heading>
+      <Flexy just="left">
+        <Button kind="primary">default</Button>
+        <Button kind="primary" state="danger">
+          danger
+        </Button>
+        <Button kind="primary" state="success">
+          success
+        </Button>
+        <Button kind="primary" state="warning">
+          warning
+        </Button>
+      </Flexy>
+    </ContainerUI>
+  </PropProvider>
+))
+
+stories.add('Playground', () => {
   const props = {
     children: text('children', 'Button'),
     disabled: boolean('disabled', false),
@@ -150,6 +187,31 @@ stories.add('icon', () => (
         <Button kind="secondary" onClick={e => console.log(e)}>
           Words
           <Icon />
+        </Button>
+      </Flexy>
+    </ContainerUI>
+  </PropProvider>
+))
+
+stories.add('end chat', () => (
+  <PropProvider value={{ Button: { version: 2 } }}>
+    <ContainerUI>
+      <Flexy>
+        <Button kind="primary" shape="rounded" size="sm" state="gray">
+          <Text size="11">CLOSED</Text>
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+        </Button>
+        <Button kind="primary" shape="rounded" size="sm" state="success">
+          <Text size="11">ACTIVE</Text>
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+        </Button>
+        <Button kind="primary" shape="rounded" size="sm" state="pending">
+          <Text size="11">PENDING</Text>
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+        </Button>
+        <Button kind="primary" shape="rounded" size="sm" state="danger">
+          <Text size="11">SPAM</Text>
+          <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
         </Button>
       </Flexy>
     </ContainerUI>

@@ -3,8 +3,7 @@ import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import styled from '../../styled'
-
-import { config as buttonConfig } from '../../Button/styles/Button.css'
+import buttonConfig from '../../Button/styles/Button.config.css.js'
 
 export const config = {
   borderRadius: 3,
