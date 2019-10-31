@@ -13,7 +13,7 @@ export interface Props {
   name: string
 }
 
-export default class AvatorSelector extends React.PureComponent<Props> {
+export default class AvatarSelector extends React.PureComponent<Props> {
   static default = {
     image: '',
     isOpen: false,
