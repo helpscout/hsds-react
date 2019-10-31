@@ -1,6 +1,6 @@
 import styled from '../../styled/index'
 import Button from '../../Button/index'
-import { config as buttonConfig } from '../../Button/styles/Button.css'
+import buttonConfig from '../../Button/styles/Button.config.css.js'
 import forEach from '../../../styles/utilities/forEach'
 
 export const config = {
