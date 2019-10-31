@@ -63,7 +63,9 @@ Alternatively, [PropProvider](../../PropProvider) can be used to set this prop a
 
 These states can be used with `primary` or `default` kinds.
 
-| Value     | Description           |
-| --------- | --------------------- |
-| `danger`  | Renders red colors.   |
-| `success` | Renders green colors. |
+| Value     | Description                   |
+| --------- | ----------------------------- |
+| `danger`  | Renders error red color.      |
+| `success` | Renders success green color.  |
+| `gray`    | Renders gray color.           |
+| `warning` | Renders warning orange color. |

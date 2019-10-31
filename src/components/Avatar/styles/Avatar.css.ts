@@ -4,7 +4,7 @@ import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import styled from 'styled-components'
 
-import { config as buttonConfig } from '../../Button/styles/Button.css'
+import buttonConfig from '../../Button/styles/Button.config.css'
 
 export const config = {
   borderRadius: 3,
