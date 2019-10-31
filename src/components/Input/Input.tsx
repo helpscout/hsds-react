@@ -114,6 +114,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     }
   }
 
+  autoFocusTimeoutId = setTimeout(() => '', 0)
+
   componentDidMount() {
     this.maybeForceAutoFocus()
     this.props.withTypingEvent &&
@@ -143,6 +145,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   componentWillUnmount() {
     this.inputNode = null
     this.props.withTypingEvent && this.clearTypingTimeout()
+    this.autoFocusTimeoutId && clearTimeout(this.autoFocusTimeoutId)
   }
 
   setValue = value => {
@@ -179,7 +182,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   forceAutoFocus() {
     const { forceAutoFocusTimeout } = this.props
 
-    setTimeout(() => {
+    this.autoFocusTimeoutId = setTimeout(() => {
       /* istanbul ignore else */
       if (this.inputNode) {
         this.inputNode.focus()
