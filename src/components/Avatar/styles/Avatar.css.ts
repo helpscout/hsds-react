@@ -9,7 +9,7 @@ export const config = {
   borderRadius: 3,
   borderWidth: 2,
   boxShadow: '0 5px 8px rgba(0, 0, 0, 0.2)',
-  color: getColor('blue.500'),
+  color: getColor('grey.600'),
   position: 'relative',
   size: {
     xl: {
@@ -322,7 +322,9 @@ export const AvatarUI = styled('div')`
   position: relative;
   width: ${config.size.md.size}px;
 
-  ${props => getColorStyles(props)} &.is-light {
+  ${props => getColorStyles(props)}
+
+  &.is-light {
     color: ${getColor('grey.400')};
   }
 
