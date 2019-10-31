@@ -231,15 +231,10 @@ export class EditableTextarea extends React.PureComponent<
   handleOnKeyUp = e => {
     const code = e.key
 
-    // Escape route tested
-    /* istanbul ignore if */
     if (code === key.ESCAPE) {
       /* istanbul ignore next */
       e.preventDefault() && e.stopPropagation()
 
-      // Tested by ensuring state is set to readOnly
-      // which happens on blur.
-      /* istanbul ignore next */
       this.textArea.current.blur()
     }
   }

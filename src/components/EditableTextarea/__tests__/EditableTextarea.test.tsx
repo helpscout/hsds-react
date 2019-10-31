@@ -202,7 +202,7 @@ describe('Keydown', () => {
 })
 
 describe('Keyup', () => {
-  test('Escape', () => {
+  test('Escape', done => {
     const wrapper = mount(<EditableTextarea id="company" value="hello" />)
     expect(wrapper.state('readOnly')).toEqual(true)
 
@@ -211,12 +211,17 @@ describe('Keyup', () => {
     expect(wrapper.state('readOnly')).toEqual(false)
 
     ta.simulate('keyup', { key: 'a' })
-    expect(wrapper.state('readOnly')).toEqual(false)
-
     jest.runAllImmediates()
-    const f = flushPromises()
+    let f = flushPromises()
     f.then(() => {
-      expect(wrapper.state('readOnly')).toEqual(true)
+      expect(wrapper.state('readOnly')).toEqual(false)
+      ta.simulate('keyup', { key: 'Escape' })
+      jest.runAllImmediates()
+      f = flushPromises()
+      f.then(() => {
+        expect(wrapper.state('readOnly')).toEqual(false)
+        done()
+      })
     })
   })
 })
