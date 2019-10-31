@@ -23,7 +23,7 @@ export const MenuUI = styled('div')`
   }
 `
 
-export const ItemWrapperUI = styled('div')`
+export const ItemWrapperUI = styled('div')<any>`
   align-items: center;
   background: transparent;
   border-radius: 9999px;
@@ -45,7 +45,7 @@ export const ItemWrapperUI = styled('div')`
   `}
 `
 
-export const ItemUI = styled('div')`
+export const ItemUI = styled('div')<any>`
   ${({ size }) =>
     size &&
     `

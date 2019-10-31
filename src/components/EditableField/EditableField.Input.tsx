@@ -46,7 +46,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
     inline: false,
     placeholder: '',
     type: FIELDTYPES.text,
-    ref: noop,
+    innerRef: noop,
     onInputFocus: noop,
     onInputBlur: noop,
     onOptionFocus: noop,

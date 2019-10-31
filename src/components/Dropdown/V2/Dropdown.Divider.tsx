@@ -9,23 +9,23 @@ import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   className?: string
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
 }
 
 export class Divider extends React.PureComponent<Props> {
   static defaultProps = {
-    ref: noop,
+    innerRef: noop,
   }
 
   render() {
-    const { className, children, ref, ...rest } = this.props
+    const { className, children, innerRef, ...rest } = this.props
     const componentClassName = classNames('c-DropdownV2Divider', className)
 
     return (
       <DividerUI
         {...getValidProps(rest)}
         className={componentClassName}
-        ref={ref}
+        ref={innerRef}
         tabIndex={null}
         role="presentation"
       />

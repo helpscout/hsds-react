@@ -66,7 +66,7 @@ export class EditableFieldActions extends React.Component<ActionsProps> {
                 action.name
               }`}
               key={action.name}
-              tabIndex="-1"
+              tabIndex={-1}
               type="button"
               onClick={event => {
                 this.handleActionClick({ action, event })

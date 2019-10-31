@@ -92,7 +92,11 @@ export const ActionUI = styled('div')`
   }
 `
 
-export const CropUI = styled('div')`
+export interface CropProps {
+  hasImage: boolean
+}
+
+export const CropUI = styled('div')<CropProps>`
   align-items: center;
   background-color: ${({ hasImage }) =>
     hasImage ? 'transparent' : 'currentColor'};

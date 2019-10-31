@@ -10,14 +10,14 @@ import { COMPONENT_KEY } from './Dropdown.utils'
 export interface Props {
   className?: string
   children?: any
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   isSeamless: boolean
   isStretchy: boolean
 }
 
 export class Block extends React.PureComponent<Props> {
   static defaultProps = {
-    ref: noop,
+    innerRef: noop,
     isSeamless: false,
     isStretchy: false,
   }
@@ -26,7 +26,7 @@ export class Block extends React.PureComponent<Props> {
     const {
       children,
       className,
-      ref,
+      innerRef,
       isSeamless,
       isStretchy,
       ...rest
@@ -43,7 +43,7 @@ export class Block extends React.PureComponent<Props> {
       <BlockUI
         {...getValidProps(rest)}
         className={componentClassName}
-        ref={ref}
+        ref={innerRef}
       >
         {children}
       </BlockUI>

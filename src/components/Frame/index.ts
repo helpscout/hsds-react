@@ -1,3 +1,4 @@
-import Frame from './Frame'
+import { FrameComponent } from './Frame'
+export { ThemableFrame } from './Frame'
 
-export default Frame
+export default FrameComponent

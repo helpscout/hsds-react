@@ -8,11 +8,13 @@ export type ReferenceProps = {
   ref?: (HTMLElement?) => void
 }
 
-type referenceProps = {
+type InnerReferenceProps = {
   getReferenceRef?: (HTMLElement?) => void
 }
 
-class reference extends React.Component<ReferenceProps & referenceProps> {
+class InnerReference extends React.Component<
+  ReferenceProps & InnerReferenceProps
+> {
   refHandler = node => {
     safeInvoke(this.props.ref, node)
     safeInvoke(this.props.getReferenceRef, node)
@@ -27,7 +29,7 @@ export default function Reference(props: ReferenceProps) {
   return (
     <ManagerContext.Consumer>
       {({ getReferenceRef }) => (
-        <reference getReferenceRef={getReferenceRef} {...props} />
+        <InnerReference getReferenceRef={getReferenceRef} {...props} />
       )}
     </ManagerContext.Consumer>
   )

@@ -13,7 +13,7 @@ type InputNode = HTMLInputElement | HTMLTextAreaElement
 type Props = {
   copyToClipboard: boolean
   className?: string
-  ref: (node: InputNode) => void
+  innerRef: (node: InputNode) => void
   onCopy: (value: string) => void
   readOnly: boolean
   value: string
@@ -22,7 +22,7 @@ type Props = {
 class CopyInput extends React.PureComponent<Props> {
   static defaultProps = {
     copyToClipboard: true,
-    ref: noop,
+    innerRef: noop,
     onCopy: noop,
     readOnly: true,
     value: '',
@@ -50,7 +50,7 @@ class CopyInput extends React.PureComponent<Props> {
 
   setNodeRef = (node: InputNode) => {
     this.inputNode = node
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
 
   render() {

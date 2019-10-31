@@ -74,7 +74,7 @@ export class ArticleCard extends React.PureComponent<Props> {
   }
 
   renderContent = () => {
-    const { content, contentLimit, contentSize } = this.props
+    const { content } = this.props
 
     return (
       !!content && (

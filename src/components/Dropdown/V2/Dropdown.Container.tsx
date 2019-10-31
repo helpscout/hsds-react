@@ -51,7 +51,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     onClose: noop,
     onFocus: noop,
     isOpen: false,
-    ref: noop,
+    innerRef: noop,
     onSelect: noop,
     subscribe: noop,
     trigger: 'Dropdown',

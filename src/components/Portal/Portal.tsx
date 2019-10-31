@@ -83,7 +83,7 @@ export class Portal extends React.Component<PortalProps> {
     if (!mountSelector && window.parent && !window.STORYBOOK_ENV) {
       mountSelector = window.parent.document.body
     }
-
+    // @ts-ignore
     return mountSelector || this.document.body // fallback
   }
 

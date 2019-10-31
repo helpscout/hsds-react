@@ -56,7 +56,7 @@ describe('Label', () => {
 describe('ref', () => {
   test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
-    const wrapper = mount(<EditableTextarea id="company" ref={spy} />)
+    const wrapper = mount(<EditableTextarea id="company" innerRef={spy} />)
     const o = wrapper
       .find('.c-EditableTextarea')
       .first()

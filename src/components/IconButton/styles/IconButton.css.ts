@@ -17,7 +17,7 @@ export const IconButtonUI = styled(Button)`
 
   &.is-borderless,
   &.is-borderless:hover {
-    border-color: transparent;
+    border-color: transparent !important;
   }
 
   ${makeButtonSizeStyles};

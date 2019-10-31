@@ -37,9 +37,10 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   }
 
   render() {
-    const { children, isAddEnabled, ...rest } = this.props
+    const { children, isAddEnabled, onAdd, ...rest } = this.props
 
     return (
+      // @ts-ignore
       <ConditionFieldUI {...rest}>
         {this.renderFields()}
         {this.renderAddAction()}

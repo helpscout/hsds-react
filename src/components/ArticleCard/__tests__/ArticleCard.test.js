@@ -55,7 +55,7 @@ describe('Content', () => {
   })
 
   test('Render custom font-size', () => {
-    const fontSize = 16
+    const fontSize = 15
     const content =
       'Some people choose to see the ugliness in this world. The disarray. I choose to see the beauty.'
     const wrapper = mount(
@@ -65,7 +65,7 @@ describe('Content', () => {
     const innerContent = wrapper.find(
       `div.c-ArticleCard__content .is-${fontSize}`
     )
-    expect(innerContent.length).toBe(1)
+    expect(innerContent.length).toBeTruthy()
   })
 })
 
@@ -88,12 +88,12 @@ describe('title', () => {
   })
 
   test('Render custom font-size', () => {
-    const fontSize = 16
+    const fontSize = 15
     const title = 'Teddy Flood'
     const wrapper = mount(<ArticleCard title={title} titleSize={fontSize} />)
 
     const innerTitle = wrapper.find(`div.c-ArticleCard__title .is-${fontSize}`)
-    expect(innerTitle.length).toBe(1)
+    expect(innerTitle.length).toBeTruthy()
   })
 })
 

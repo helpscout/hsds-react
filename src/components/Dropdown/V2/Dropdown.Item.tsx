@@ -34,7 +34,7 @@ export interface Props {
   getState: (...args: any[]) => void
   id?: string
   index: string
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   isHover: boolean
   isSelectionClearer: boolean
   items: Array<any>
@@ -56,7 +56,7 @@ export class Item extends React.PureComponent<Props> {
     getState: noop,
     disabled: false,
     index: '0',
-    ref: noop,
+    innerRef: noop,
     isHover: false,
     isSelectionClearer: false,
     items: undefined,
@@ -139,7 +139,7 @@ export class Item extends React.PureComponent<Props> {
 
     return {
       className: 'c-DropdownV2MenuWrapper',
-      wrapperRef: this.setWrapperNodeRef,
+      ref: this.setWrapperNodeRef,
       [SELECTORS.indexAttribute]: index,
       [SELECTORS.valueAttribute]: value,
     }
@@ -238,12 +238,12 @@ export class Item extends React.PureComponent<Props> {
 
   setNodeRef = node => {
     this.node = node
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
   setActionNodeRef = node => (this.actionNode = node)
   setWrapperNodeRef = node => (this.wrapperNode = node)
   setMenuNodeRef = node => {
-    console.log('menuRef', node)
+    console.log('setMenuNodeRef')
     this.menuNode = node
   }
 

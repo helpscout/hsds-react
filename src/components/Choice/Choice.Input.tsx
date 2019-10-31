@@ -111,7 +111,9 @@ class Input extends React.PureComponent<Props, State> {
 
   setRef = (node: HTMLElement) => {
     this.props.inputRef(node)
-    this.props.ref(node)
+    if (this.props.ref) {
+      this.props.ref(node)
+    }
   }
 
   render() {

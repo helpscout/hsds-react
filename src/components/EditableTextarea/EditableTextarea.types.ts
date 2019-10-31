@@ -10,7 +10,7 @@ export interface EditableTextareaProps {
   id: string
   label: string
   maxRows: number
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   overflowCueColor: string
   placeholder: string
   value: string

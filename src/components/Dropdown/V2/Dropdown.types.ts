@@ -78,7 +78,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   getState: (...args: any[]) => void
   id?: string
   index?: string
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   inputValue: string
   isLoading: boolean
   isOpen: boolean

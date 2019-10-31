@@ -284,6 +284,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         trigger,
         timeout: timeoutProp,
         wrapperClassName: propsWrapperClassName,
+        closeOnEscape,
         ...rest
       } = this.props
 

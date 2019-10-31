@@ -58,7 +58,7 @@ export class EditableField extends React.Component<
     multipleValues: false,
     size: FIELDSIZES.md,
     value: EMPTY_VALUE,
-    ref: noop,
+    innerRef: noop,
     onAdd: noop,
     onChange: noop,
     onCommit: noop,
@@ -186,7 +186,7 @@ export class EditableField extends React.Component<
 
   setEditableNode = node => {
     this.editableFieldRef = node
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
 
   getClassName() {

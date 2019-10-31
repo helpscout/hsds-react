@@ -15,7 +15,7 @@ type Props = {
   fullHeight: boolean
   hover: boolean
   href?: string
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   nodeRef: () => void
   onBlur: (event: Event) => void
   onClick: (event: Event) => void
@@ -32,7 +32,7 @@ class FluffyCard extends React.PureComponent<Props> {
     floating: false,
     fullHeight: false,
     hover: false,
-    ref: noop,
+    innerRef: noop,
     nodeRef: noop,
     onBlur: noop,
     onClick: noop,
@@ -44,7 +44,7 @@ class FluffyCard extends React.PureComponent<Props> {
   static Container = Container
 
   render() {
-    const { children, className, ref, textAlign, ...rest } = this.props
+    const { children, className, innerRef, textAlign, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-FluffyCard',
@@ -57,7 +57,7 @@ class FluffyCard extends React.PureComponent<Props> {
         {...rest}
         borderless
         className={componentClassName}
-        ref={ref}
+        ref={innerRef}
       >
         {children}
       </FluffyCardUI>

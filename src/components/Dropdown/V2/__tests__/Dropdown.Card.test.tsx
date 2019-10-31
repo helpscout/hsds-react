@@ -32,7 +32,7 @@ describe('children', () => {
 describe('ref', () => {
   test('Can set an ref to a DOM node', () => {
     const spy = jest.fn()
-    mount(<Card ref={spy} />)
+    mount(<Card cardRef={spy} />)
 
     expect(spy).toHaveBeenCalled()
   })

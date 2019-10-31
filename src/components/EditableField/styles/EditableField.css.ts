@@ -12,7 +12,7 @@ import {
 
 const { field, fieldLabel } = SIZES
 
-export const ComponentUI = styled('div')`
+export const ComponentUI = styled('div')<any>`
   ${baseStyles};
   position: relative;
   margin-bottom: 40px;

@@ -86,7 +86,7 @@ export const MaskOptionUI = styled('span')`
   }
 `
 
-export const MaskValueUI = styled('span')`
+export const MaskValueUI = styled('span')<any>`
   display: inline-block;
   vertical-align: bottom;
   height: ${mask.height.medium};

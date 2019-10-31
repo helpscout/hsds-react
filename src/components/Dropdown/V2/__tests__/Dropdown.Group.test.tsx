@@ -32,7 +32,7 @@ describe('children', () => {
 describe('ref', () => {
   test('Can set an ref to a DOM node', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Group ref={spy} />)
+    const wrapper = mount(<Group innerRef={spy} />)
     const el = wrapper.getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(el)

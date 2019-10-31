@@ -53,7 +53,7 @@ describe('Accessibility', () => {
 describe('ref', () => {
   test('Can set an ref to a DOM node', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Trigger ref={spy} />)
+    const wrapper = mount(<Trigger triggerRef={spy} />)
     const el = wrapper.getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(el)

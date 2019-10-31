@@ -14,7 +14,7 @@ export interface Props {
   clickable: boolean
   isActive: boolean
   isDisabled: boolean
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   inline: boolean
   name: EmoticonName
   title?: string
@@ -29,7 +29,7 @@ export class Emoticon extends React.PureComponent<Props> {
     inline: false,
     isActive: true,
     isDisabled: false,
-    ref: noop,
+    innerRef: noop,
     name: 'happy',
     role: 'presentation',
     size: 'md',
@@ -71,7 +71,7 @@ export class Emoticon extends React.PureComponent<Props> {
       className,
       center,
       clickable,
-      ref,
+      innerRef,
       isActive,
       isDisabled,
       inline,
@@ -87,7 +87,7 @@ export class Emoticon extends React.PureComponent<Props> {
       <EmoticonUI
         {...getValidProps(rest)}
         className={this.getClassNames()}
-        ref={ref}
+        ref={innerRef}
       >
         <Face isActive={isActive} isDisabled={isDisabled}>
           <IconUI

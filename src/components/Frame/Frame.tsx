@@ -4,32 +4,40 @@ import * as React from 'react'
 import Frame, { FrameContextConsumer } from 'react-frame-component'
 import { StyleSheetManager, withTheme, ThemeProvider } from 'styled-components'
 
-export default withTheme(props => {
-  const { theme, style = {}, children, ...rest } = props
+export class FrameComponent extends React.Component<any, any> {
+  render() {
+    const { theme, style = {}, children, ...rest } = this.props
 
-  return (
-    <div className="HSDS-FrameProvider">
-      <Frame
-        style={{
-          display: 'block',
-          overflow: 'scroll',
-          border: 0,
-          ...style,
-        }}
-        {...rest}
-      >
-        <FrameContextConsumer>
-          {frameContext => (
-            <StyleSheetManager target={frameContext.document.head}>
-              {theme ? (
-                <ThemeProvider theme={theme}>{children}</ThemeProvider>
-              ) : (
-                children
-              )}
-            </StyleSheetManager>
-          )}
-        </FrameContextConsumer>
-      </Frame>
-    </div>
-  )
-})
+    return (
+      <div className="HSDS-FrameProvider">
+        <Frame
+          style={{
+            display: 'block',
+            overflow: 'scroll',
+            border: 0,
+            ...style,
+          }}
+          {...rest}
+        >
+          <FrameContextConsumer>
+            {frameContext => {
+              return (
+                <StyleSheetManager target={frameContext.document.head}>
+                  {theme ? (
+                    <ThemeProvider theme={theme}>
+                      <>{children}</>
+                    </ThemeProvider>
+                  ) : (
+                    <>{children}</>
+                  )}
+                </StyleSheetManager>
+              )
+            }}
+          </FrameContextConsumer>
+        </Frame>
+      </div>
+    )
+  }
+}
+
+export const ThemableFrame = withTheme(FrameComponent)

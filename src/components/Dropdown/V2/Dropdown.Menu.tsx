@@ -68,7 +68,7 @@ export class Menu extends React.PureComponent<Props> {
       ...getValidProps(rest),
       children,
       className: componentClassName,
-      menuRef: renderMenu ? undefined : menuRef,
+      ref: renderMenu ? undefined : menuRef,
       style: this.getStyles(),
     }
 

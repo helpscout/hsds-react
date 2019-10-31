@@ -124,7 +124,6 @@ export const isComponentTypeCard = (Component: any): boolean => {
  */
 export const isComponentTypeControl = (Component: any): boolean => {
   const key = getComponentName(Component)
-  console.log(Component.displayName)
   return includes(CONTROL_TYPE, key)
 }
 
@@ -136,7 +135,6 @@ export const isComponentTypeControl = (Component: any): boolean => {
  */
 export const isComponentTypeChat = (Component: any): boolean => {
   const key = getComponentName(Component)
-  console.log(key)
   return includes(CHAT_TYPE, key)
 }
 

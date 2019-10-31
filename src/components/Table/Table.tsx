@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { ThemeProvider } from '../styled'
+import { ThemeProvider } from 'styled-components'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 

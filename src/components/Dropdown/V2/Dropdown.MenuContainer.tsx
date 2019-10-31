@@ -420,7 +420,6 @@ export class MenuContainer extends React.PureComponent<
   }
 
   setWrapperNode = node => {
-    console.log('wrapperNode', node)
     this.wrapperNode = node
   }
   setPlacementNode = node => {

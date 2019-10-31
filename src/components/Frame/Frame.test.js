@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Frame from 'react-frame-component'
+import cy from '@helpscout/cyan'
 import styled, { __PRIVATE__ } from 'styled-components'
-import Frame from '../index'
+import FrameComponent from './index'
 
 const { masterSheet } = __PRIVATE__
 
@@ -29,28 +29,26 @@ describe('Frame', () => {
   })
 
   test('Can render without children', () => {
-    const wrapper = mount(<Frame />)
-
+    const wrapper = mount(<FrameComponent />)
     expect(wrapper.instance()).toBeTruthy()
   })
 
   test('Can render a single child', () => {
     const wrapper = mount(
-      <Frame>
-        <div />
-      </Frame>
+      <FrameComponent>
+        <div className="singleChild" />
+      </FrameComponent>
     )
-
     expect(wrapper.instance()).toBeTruthy()
   })
 
   test('Can render a multiple children', () => {
     const wrapper = mount(
-      <Frame>
+      <FrameComponent>
         <div />
         <div />
         <div />
-      </Frame>
+      </FrameComponent>
     )
 
     expect(wrapper.instance()).toBeTruthy()
@@ -61,28 +59,13 @@ describe('Frame', () => {
       color: red;
     `
     const wrapper = mount(
-      <Frame>
+      <FrameComponent>
         <Compo />
-      </Frame>
+      </FrameComponent>
     )
     const el = wrapper.find('span').getNode()
 
     expect(getStyleProp(el, 'color')).toBe('red')
-  })
-
-  test('Can render within an iFrame', () => {
-    const Compo = styled('span')`
-      color: red;
-    `
-    const wrapper = mount(
-      <Frame>
-        <Frame>
-          <Compo />
-        </Frame>
-      </Frame>
-    )
-
-    expect(wrapper.instance()).toBeTruthy()
   })
 
   test('Can extend/merge styles within an iFrame', () => {
@@ -96,12 +79,12 @@ describe('Frame', () => {
     `
 
     const wrapper = mount(
-      <Frame>
+      <FrameComponent>
         <div>
           <One className="one" />
           <Two className="two" />
         </div>
-      </Frame>
+      </FrameComponent>
     )
 
     const first = wrapper.find('.one')

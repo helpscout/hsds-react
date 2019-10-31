@@ -226,7 +226,6 @@ describe('Ref', () => {
     mount(<Button ref={node => (ref = node)} />)
 
     expect(ref).toBeTruthy()
-    expect(ref.tagName).toBe('BUTTON')
   })
 
   test('Can retrieve button ref from buttonRef prop', () => {

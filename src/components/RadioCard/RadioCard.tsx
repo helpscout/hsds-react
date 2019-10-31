@@ -153,6 +153,7 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     )
 
     return (
+      // @ts-ignore
       <RadioCardUI
         htmlFor={id}
         className={componentClassName}

@@ -57,7 +57,7 @@ export const ComponentUI = styled('div')`
   }
 `
 
-export const InputWrapperUI = styled('div')`
+export const InputWrapperUI = styled('div')<any>`
   position: relative;
   height: ${input.height.medium};
   width: 100%;

@@ -35,20 +35,16 @@ stories.add('default', () => {
           <button onClick={this.toggle}>Toggle Frame</button>
           <br />
           {this.state.showFrame && (
-            <Frame>
-              <ScopeProvider scope="html">
-                <ThemeProvider theme={{ color: '#eee' }}>
-                  <div id="App">
-                    <Card>
-                      <Text>
-                        <Tooltip title="Elf!" triggerOn="click">
-                          Buddy!
-                        </Tooltip>
-                      </Text>
-                    </Card>
-                  </div>
-                </ThemeProvider>
-              </ScopeProvider>
+            <Frame theme={{ color: 'red' }}>
+              <div id="App">
+                <Card>
+                  <Text>
+                    <Tooltip title="Elf!" triggerOn="click">
+                      Buddy!
+                    </Tooltip>
+                  </Text>
+                </Card>
+              </div>
             </Frame>
           )}
         </div>
