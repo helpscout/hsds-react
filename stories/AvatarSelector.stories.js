@@ -50,7 +50,7 @@ class AvatarSelectorWithDropdown extends React.Component {
         onSelect={this.onSelect}
         renderTrigger={
           <AvatarSelector
-            image=""
+            image={this.state.image}
             name={this.state.name}
             isOpen={this.state.isOpen}
           />
