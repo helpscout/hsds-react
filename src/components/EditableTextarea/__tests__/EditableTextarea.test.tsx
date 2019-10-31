@@ -201,6 +201,31 @@ describe('Keydown', () => {
   })
 })
 
+describe('Keyup', () => {
+  test('Escape', done => {
+    const wrapper = mount(<EditableTextarea id="company" value="hello" />)
+    expect(wrapper.state('readOnly')).toEqual(true)
+
+    const ta = wrapper.find('textarea').first()
+    ta.simulate('click')
+    expect(wrapper.state('readOnly')).toEqual(false)
+
+    ta.simulate('keyup', { key: 'a' })
+    jest.runAllImmediates()
+    let f = flushPromises()
+    f.then(() => {
+      expect(wrapper.state('readOnly')).toEqual(false)
+      ta.simulate('keyup', { key: 'Escape' })
+      jest.runAllImmediates()
+      f = flushPromises()
+      f.then(() => {
+        expect(wrapper.state('readOnly')).toEqual(false)
+        done()
+      })
+    })
+  })
+})
+
 describe('Blur', () => {
   test('should commit if value changes', () => {
     const onCommitSpy = jest.fn()
