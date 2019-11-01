@@ -32,6 +32,7 @@ export interface Props {
   dropRight: boolean
   dropUp: boolean
   getState: (...args: any[]) => void
+  href?: string
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
