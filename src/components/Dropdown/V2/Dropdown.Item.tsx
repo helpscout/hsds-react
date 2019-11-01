@@ -115,7 +115,7 @@ export class Item extends React.PureComponent<Props> {
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
-      /* istanbul ignore else */
+      /* istanbul ignore next */
       if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
         setMenuPositionStyles({
           dropRight,
@@ -243,7 +243,7 @@ export class Item extends React.PureComponent<Props> {
   setActionNodeRef = node => (this.actionNode = node)
   setWrapperNodeRef = node => (this.wrapperNode = node)
   setMenuNodeRef = node => {
-    console.log('setMenuNodeRef')
+    /* istanbul ignore next */
     this.menuNode = node
   }
 

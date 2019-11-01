@@ -112,6 +112,7 @@ export class ContentResizer extends React.PureComponent<
 
   setNodeRef = node => {
     this.node = node
+    /* istanbul ignore if */
     if (this.props.mainRef) {
       this.props.mainRef(node)
     }
