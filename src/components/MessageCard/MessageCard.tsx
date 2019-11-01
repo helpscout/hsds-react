@@ -26,6 +26,7 @@ export interface Props {
   children?: any
   innerRef: (node: HTMLElement) => void
   in: boolean
+  isMobile: boolean
   isWithBoxShadow: boolean
   subtitle?: string
   title?: string
@@ -38,17 +39,19 @@ export class MessageCard extends React.PureComponent<Props> {
     animationSequence: '',
     innerRef: noop,
     in: true,
+    isMobile: false,
     isWithBoxShadow: true,
   }
 
   static Button = Button
 
   getClassName() {
-    const { align, className, isWithBoxShadow } = this.props
+    const { align, className, isMobile, isWithBoxShadow } = this.props
     return classNames(
       MessageCard.className,
       align && `is-align-${align}`,
       className,
+      isMobile && 'is-mobile',
       isWithBoxShadow && `is-with-box-shadow`
     )
   }
