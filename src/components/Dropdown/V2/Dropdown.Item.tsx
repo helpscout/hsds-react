@@ -260,10 +260,7 @@ export class Item extends React.PureComponent<Props> {
     if (type === 'group' || type === 'header') return <Header {...this.props} />
     if (type === 'divider') return <Divider />
 
-    const ItemUI =
-      !['group', 'header', 'divider'].includes(type) && href
-        ? makeItemUI('a')
-        : makeItemUI('div')
+    const ItemUI = href ? makeItemUI('a') : makeItemUI('div')
 
     return (
       <ItemUI
