@@ -30,5 +30,12 @@ yarn-debug.log*
 yarn-error.log*
 
 storybook-static
+<<<<<<< HEAD
 
 .env
+||||||| merged common ancestors
+.env
+=======
+
+.env
+>>>>>>> Add percy integration (#736)
