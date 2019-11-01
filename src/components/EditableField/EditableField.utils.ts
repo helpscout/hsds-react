@@ -2,6 +2,9 @@ import { FieldAction, FieldValue } from './EditableField.types'
 import { isArray, isObject } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
+import { createUniqueIDFactory } from '../../utilities/id'
+
+const uniqueID = createUniqueIDFactory('EditableField')
 
 export const EF_COMPONENT_KEY = 'EditableField'
 export const COMPOSITE_COMPONENT_KEY = 'EditableFieldComposite'
@@ -9,38 +12,6 @@ export const ACTIONS_COMPONENT_KEY = 'FieldActions'
 export const INPUT_COMPONENT_KEY = 'FieldInput'
 export const MASK_COMPONENT_KEY = 'FieldMask'
 export const TRUNCATED_COMPONENT_KEY = 'Truncated'
-
-export const ACTION_ICONS = {
-  delete: 'cross-small',
-  link: 'new-window',
-  plus: 'plus-small',
-  valueOption: 'chevron-down',
-}
-
-export const deleteAction: FieldAction = {
-  name: 'delete',
-}
-
-export const FIELDTYPES = {
-  text: 'text',
-  email: 'email',
-  url: 'url',
-  tel: 'tel',
-  number: 'number',
-  textarea: 'textarea',
-}
-export const FIELDSIZES = { md: 'md', lg: 'lg' }
-export const FIELDSTATES = {
-  default: 'default',
-  error: 'error',
-  warning: 'warning',
-}
-export const COMMIT_CAUSES = {
-  BLUR: 'BLUR',
-  ENTER: 'ENTER',
-  OPTION_SELECTION: 'OPTION_SELECTION',
-  DELETE_ACTION: 'DELETE_ACTION',
-}
 
 export function normalizeFieldValue({
   value,
@@ -51,9 +22,7 @@ export function normalizeFieldValue({
     if (value.length === 0) {
       return [createNewValueFieldObject('', name, defaultOption)]
     }
-    return value.map((val, idx) =>
-      createNewValueFieldObject(val, name, defaultOption, idx)
-    )
+    return value.map(val => createNewValueFieldObject(val, name, defaultOption))
   } else {
     return [createNewValueFieldObject(value, name, defaultOption)]
   }
@@ -62,14 +31,13 @@ export function normalizeFieldValue({
 export function createNewValueFieldObject(
   value,
   name,
-  defaultOption,
-  idx = 0
+  defaultOption
 ): FieldValue {
   // If it's an object already, grab the fields first
   if (isObject(value)) {
     const fieldObj = {
       ...value,
-      id: value.id || `${name}_${idx}`,
+      id: value.id || `${name}_${uniqueID()}`,
       validated: false,
     }
 
@@ -82,7 +50,7 @@ export function createNewValueFieldObject(
 
   const fieldObj: any = {
     value,
-    id: `${name}_${idx}`,
+    id: `${name}_${uniqueID()}`,
     validated: false,
   }
 
@@ -91,6 +59,10 @@ export function createNewValueFieldObject(
   }
 
   return fieldObj
+}
+
+const deleteAction: FieldAction = {
+  name: 'delete',
 }
 
 export function generateFieldActions(actions): FieldAction[] | [] {
@@ -243,7 +215,6 @@ export const TRUNCATED_CLASSNAMES = {
   component: TRUNCATED_COMPONENT_KEY,
   withSplitter: 'withSplitter',
   firstChunk: `${TRUNCATED_COMPONENT_KEY}__firstChunk`,
-  splitterChunk: `${TRUNCATED_COMPONENT_KEY}__splitterChunk`,
   secondChunk: `${TRUNCATED_COMPONENT_KEY}__secondChunk`,
 }
 
@@ -272,6 +243,7 @@ export const STATES_CLASSNAMES = {
   warning: 'is-warning',
   withPlaceholder: 'with-placeholder',
   withValidation: 'with-validation',
+  withFloatingLabels: 'with-floatingLabels',
 }
 
 export const COLOURS = {

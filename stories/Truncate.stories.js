@@ -11,25 +11,41 @@ const limit = 10
 stories.add('default', () => (
   <div>
     <p>
-      Auto:<br />
-      <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
+      Auto:
+      <br />
+      <Truncate>{fixture.generate()}</Truncate>
     </p>
     <p>
-      Start:<br />
+      Start:
+      <br />
       <Truncate type="start" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      Middle:<br />
+      Middle:
+      <br />
       <Truncate type="middle" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      End:<br />
+      End:
+      <br />
       <Truncate type="end" limit={limit}>
         {fixture.generate()}
+      </Truncate>
+    </p>
+    <p>
+      Truncate by Splitter - resize display window:
+      <br />
+      <Truncate splitter="@">a@hello.com</Truncate>
+      <Truncate splitter="@">art_vandelay@vandelayindustries.com</Truncate>
+      <Truncate splitter="@">john_locke@dharma.org</Truncate>
+      <Truncate splitter="@">pennypacker@kramerica.com</Truncate>
+      <Truncate splitter="@">this_is_kind_of_long@annoyingemails.com</Truncate>
+      <Truncate splitter="@">
+        this_is_kind_of_long@evenmoreannoyingemails.com
       </Truncate>
     </p>
     <br />
@@ -39,25 +55,36 @@ stories.add('default', () => (
 stories.add('tooltip', () => (
   <div>
     <p>
-      Auto:<br />
+      Auto:
+      <br />
       <Truncate showTooltipOnTruncate>{fixture.generate()}</Truncate>
     </p>
     <p>
-      Start:<br />
+      Start:
+      <br />
       <Truncate showTooltipOnTruncate type="start" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      Middle:<br />
+      Middle:
+      <br />
       <Truncate showTooltipOnTruncate type="middle" limit={limit}>
         {fixture.generate()}
       </Truncate>
     </p>
     <p>
-      End:<br />
+      End:
+      <br />
       <Truncate showTooltipOnTruncate type="end" limit={limit}>
         {fixture.generate()}
+      </Truncate>
+    </p>
+    <p>
+      Truncate by Splitter - resize display window:
+      <br />
+      <Truncate showTooltipOnTruncate splitter="@">
+        longemailaddress@gmail.com
       </Truncate>
     </p>
     <br />

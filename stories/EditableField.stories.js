@@ -28,7 +28,7 @@ export const ContainerUI = styled('div')`
   border-radius: 3px;
 `
 
-const NoteUI = styled('div')`
+export const NoteUI = styled('div')`
   width: 100%;
   padding: 20px;
   background-color: rgba(155, 155, 195, 0.1);
@@ -43,6 +43,22 @@ const NoteUI = styled('div')`
     &:last-child {
       margin: 0;
     }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-position: inside;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  code {
+    border: 1px solid rgba(125, 115, 165, 0.5);
+    display: inline-block;
+    padding: 2px 3px;
   }
 `
 
@@ -105,6 +121,30 @@ stories.add('Text large', () => (
   </ContainerUI>
 ))
 
+stories.add('Floating Labels', () => (
+  <ContainerUI
+    onSubmit={e => {
+      e.preventDefault()
+    }}
+  >
+    <EditableField
+      label="Company"
+      name="company"
+      placeholder="Company"
+      type="text"
+      floatingLabels
+    />
+    <EditableField
+      label="Team"
+      name="team"
+      placeholder="Sports team"
+      type="text"
+      value="Atlas"
+      floatingLabels
+    />
+  </ContainerUI>
+))
+
 stories.add('Text Multiple', () => (
   <ContainerUI
     onSubmit={e => {
@@ -158,6 +198,7 @@ stories.add('Email Multiple', () => (
       placeholder="Add your email"
       type="email"
       value={[
+        'a@hello.com',
         'art_vandelay@vandelayindustries.com',
         'john_locke@dharma.org',
         'pennypacker@kramerica.com',
@@ -180,6 +221,19 @@ stories.add('Url', () => (
       placeholder="Add a website address"
       type="url"
       value="http://mysite.net"
+      actions={{
+        name: 'link',
+        callback(obj) {
+          console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+        },
+      }}
+    />
+    <EditableField
+      label="Website Without Protocol"
+      name="website2"
+      placeholder="Add a website address"
+      type="url"
+      value="mysite.net"
       actions={{
         name: 'link',
         callback(obj) {
@@ -328,58 +382,131 @@ stories.add('Disabled', () => (
   </ContainerUI>
 ))
 
-stories.add('Validation', () => (
-  <ContainerUI
-    onSubmit={e => {
-      e.preventDefault()
-    }}
-  >
-    <NoteUI>
-      Type:
-      <ul>
-        <li>
-          <strong>"off"</strong> to get the error style
-        </li>
-        <li>
-          <strong>"warn"</strong> to get a warning style
-        </li>
-        <li>
-          <strong>"other"</strong> to get a custom validation style
-        </li>
-      </ul>
-    </NoteUI>
-    <EditableField
-      label="team"
-      name="team"
-      placeholder="Add a team name"
-      type="text"
-      value="atlas"
-      validate={validateFieldValue}
-    />
-    <EditableField
-      label="Musicians"
-      name="musicians"
-      type="text"
-      placeholder="Add a musician name"
-      value={['George Harrison', 'Neil Young']}
-      validate={validateFieldValue}
-    />
+class ValidationApp extends React.Component {
+  state = { timeout: 100 }
 
-    <EditableField
-      label="Favourite Paint Colour"
-      name="paint"
-      placeholder="Add a colour"
-      type="text"
-      valueOptions={PAINT_OPTIONS}
-      value={[
-        { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
-        { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
-        { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
-      ]}
-      validate={validateFieldValue}
-    />
-  </ContainerUI>
-))
+  validateFieldValue = payload => {
+    console.log('validating')
+
+    const { name, value } = payload
+    let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
+
+    return new Promise(resolve => {
+      setTimeout(function() {
+        if (isValid) {
+          resolve({ isValid, name, value })
+        } else {
+          if (value === 'off') {
+            resolve({
+              isValid,
+              name,
+              value,
+              type: 'error',
+              message: 'That is definitely not right',
+            })
+          } else if (value === 'warn') {
+            resolve({
+              isValid,
+              name,
+              value,
+              type: 'warning',
+              message: "That's it, you have been warned",
+            })
+          } else if (value === 'other') {
+            resolve({
+              isValid,
+              name,
+              value,
+              type: 'other',
+              message: "I don't know what you're talking about, have a trophy",
+              color: '#57c28d',
+              icon: 'activity',
+            })
+          }
+        }
+      }, this.state.timeout)
+    })
+  }
+
+  render() {
+    const { timeout } = this.state
+
+    return (
+      <ContainerUI
+        onSubmit={e => {
+          e.preventDefault()
+        }}
+      >
+        <NoteUI>
+          Type:
+          <ul>
+            <li>
+              <strong>"off"</strong> to get the error style
+            </li>
+            <li>
+              <strong>"warn"</strong> to get a warning style
+            </li>
+            <li>
+              <strong>"other"</strong> to get a custom validation style
+            </li>
+          </ul>
+          <p>Delay the time it takes for the validation to resolve:</p>
+          <label htmlFor="timoeut">
+            Timeout:
+            <input
+              style={{
+                marginLeft: '10px',
+                width: '70px',
+                padding: '3px',
+                textAlign: 'right',
+                borderRadius: '3px',
+                border: '0',
+              }}
+              type="number"
+              value={timeout}
+              onChange={event => {
+                this.setState({ timeout: event.target.value })
+              }}
+            />{' '}
+            ms
+          </label>
+        </NoteUI>
+        <EditableField
+          label="team"
+          name="team"
+          placeholder="Add a team name"
+          type="text"
+          value="atlas"
+          validate={this.validateFieldValue}
+        />
+        <EditableField
+          label="Musicians"
+          name="musicians"
+          type="text"
+          placeholder="Add a musician name"
+          value={['George Harrison', 'Neil Young']}
+          validate={this.validateFieldValue}
+        />
+
+        <EditableField
+          label="Favourite Paint Colour"
+          name="paint"
+          placeholder="Add a colour"
+          type="text"
+          valueOptions={PAINT_OPTIONS}
+          value={[
+            { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
+            { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
+            { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
+          ]}
+          validate={this.validateFieldValue}
+        />
+      </ContainerUI>
+    )
+  }
+}
+
+stories.add('Validation', () => <ValidationApp />)
 
 stories.add('Key Events', () => (
   <ContainerUI
@@ -396,44 +523,6 @@ stories.add('Key Events', () => (
     />
   </ContainerUI>
 ))
-
-function validateFieldValue({ name, value }) {
-  let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
-
-  return new Promise(resolve => {
-    if (isValid) {
-      resolve({ isValid, name, value })
-    } else {
-      if (value === 'off') {
-        resolve({
-          isValid,
-          name,
-          value,
-          type: 'error',
-          message: 'That is definitely not right',
-        })
-      } else if (value === 'warn') {
-        resolve({
-          isValid,
-          name,
-          value,
-          type: 'warning',
-          message: "That's it, you have been warned",
-        })
-      } else if (value === 'other') {
-        resolve({
-          isValid,
-          name,
-          value,
-          type: 'other',
-          message: "I don't know what you're talking about, have a trophy",
-          color: '#57c28d',
-          icon: 'activity',
-        })
-      }
-    }
-  })
-}
 
 class ValuePropsApp extends React.Component {
   state = {
@@ -625,7 +714,7 @@ class OnCommitApp extends React.PureComponent {
             { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
             { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
           ]}
-          validate={validateFieldValue}
+          validate={this.validateFieldValue}
           onCommit={passed => {
             this.setState({ commit: passed })
           }}

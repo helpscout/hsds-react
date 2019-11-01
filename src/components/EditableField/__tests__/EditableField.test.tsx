@@ -40,6 +40,20 @@ describe('HTML props', () => {
 
     expect(el.exists()).toBeTruthy()
   })
+
+  test('email type should have input text type', () => {
+    cy.render(<EditableField type="email" name="company" />)
+    const el = cy.get('input')
+
+    expect(el.getAttribute('type')).toBe('text')
+  })
+
+  test('password type should have input password type', () => {
+    cy.render(<EditableField type="password" name="company" />)
+    const el = cy.get('input')
+
+    expect(el.getAttribute('type')).toBe('password')
+  })
 })
 
 describe('Label', () => {
@@ -1146,6 +1160,34 @@ describe('enter press', () => {
       expect(onCommitSpy).toHaveBeenCalled()
     })
   })
+
+  test('Pressing Enter: should escape on validation rejection', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        validate={() => Promise.reject(new Error('Oops'))}
+      />
+    )
+
+    // @ts-ignore
+    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
+    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
+    wrapper.instance().forceUpdate()
+
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+    input.simulate('keydown', { key: 'Enter' })
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(escapeSpy).toHaveBeenCalled()
+      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
+    })
+  })
 })
 
 describe('should component update', () => {
@@ -1278,7 +1320,7 @@ describe('should component update', () => {
       ...actualState,
     }
     const newStateChanged = {
-      disabledItem: 'something',
+      disabledItem: ['something'],
     }
 
     expect(
@@ -1362,9 +1404,14 @@ describe('Input Blur', () => {
     cy.get('input').type('')
     cy.get('input').blur()
 
-    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
-    expect(commitSpy).toHaveBeenCalled()
-    expect(blurSpy).toHaveBeenCalled()
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
   })
 
   test('If value cleared in multivalue, it should deactivate the field and remove', () => {
@@ -1396,11 +1443,16 @@ describe('Input Blur', () => {
       .first()
       .blur()
 
-    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
-    expect(cy.get('input').length).toBe(1)
-    expect(commitSpy).toHaveBeenCalled()
-    expect(blurSpy).toHaveBeenCalled()
-    expect(discardSpy).toHaveBeenCalled()
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(cy.get('input').length).toBe(1)
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+      expect(discardSpy).toHaveBeenCalled()
+    })
   })
 
   test('If value cleared in multivalue, it should not remove the only field left', () => {
@@ -1432,10 +1484,15 @@ describe('Input Blur', () => {
       .first()
       .blur()
 
-    expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
-    expect(cy.get('input').length).toBe(1)
-    expect(commitSpy).toHaveBeenCalled()
-    expect(blurSpy).toHaveBeenCalled()
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
+      expect(cy.get('input').length).toBe(1)
+      expect(commitSpy).toHaveBeenCalled()
+      expect(blurSpy).toHaveBeenCalled()
+    })
   })
 
   test('If value changed and valid, it should commit', () => {
@@ -1506,5 +1563,49 @@ describe('Input Blur', () => {
       expect(commitSpy).not.toHaveBeenCalled()
       expect(blurSpy).toHaveBeenCalled()
     })
+  })
+
+  test('If value is changed but validate rejects it should escape', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '1234567', id: '1' }}
+        validate={() => Promise.reject(new Error('Oops'))}
+      />
+    )
+
+    // @ts-ignore
+    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
+    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
+    wrapper.instance().forceUpdate()
+
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+    input.simulate('blur')
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(escapeSpy).toHaveBeenCalled()
+      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
+    })
+  })
+})
+
+describe('floating labels', () => {
+  test('Adds the floating labels className', () => {
+    const wrapper = cy.render(<EditableField name="company" floatingLabels />)
+
+    expect(wrapper.hasClass(STATES_CLASSNAMES.withFloatingLabels)).toBeTruthy()
+  })
+
+  test('Label is hidden when floating labels on', () => {
+    cy.render(<EditableField name="company" floatingLabels />)
+
+    const el = cy.get(`.${EDITABLEFIELD_CLASSNAMES.label}`)
+
+    expect(el.exists()).toBeFalsy()
   })
 })

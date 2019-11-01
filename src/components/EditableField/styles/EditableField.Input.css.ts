@@ -5,7 +5,6 @@ import { FONT_FAMILY } from '../../../styles/configs/constants'
 import {
   COLOURS,
   SIZES,
-  FIELDSTATES,
   INPUT_CLASSNAMES,
   OTHERCOMPONENTS_CLASSNAMES,
   STATES_CLASSNAMES,
@@ -84,6 +83,7 @@ export const InputWrapperUI = styled('div')`
     pointer-events: none;
   }
 
+  .${STATES_CLASSNAMES.withFloatingLabels} &,
   .${STATES_CLASSNAMES.hasActiveFields} & {
     &::before {
       content: ${({ placeholder }) => `"${placeholder}"`};

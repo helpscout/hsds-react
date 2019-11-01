@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import KeypressListener from '../../KeypressListener'
 import PortalWrapper from '../PortalWrapper'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
@@ -351,6 +352,24 @@ describe('Esc keypress', () => {
       wrapper.unmount()
       window.removeEventListener('keyup', globalSpy)
     }, 20)
+  })
+
+  test('Prevents adding KeypressListener when closeOnEscape is false', () => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = <div className="trigger">Trigger</div>
+    const wrapper = mount(
+      <TestComponent timeout={0} closeOnEscape={false} trigger={trigger} />
+    )
+    expect(wrapper.find(KeypressListener)).toHaveLength(0)
+  })
+
+  test('Adds KeypressListener when closeOnEscape is true', () => {
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = <div className="trigger">Trigger</div>
+    const wrapper = mount(
+      <TestComponent timeout={0} closeOnEscape trigger={trigger} />
+    )
+    expect(wrapper.find(KeypressListener)).toHaveLength(1)
   })
 })
 

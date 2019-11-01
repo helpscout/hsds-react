@@ -47,10 +47,13 @@ export class EditableFieldMask extends React.Component<MaskProps> {
     const { name, maskTabIndex } = this.props
     const valueNode = this.valueRef
 
-    if (prevProps.maskTabIndex == null && maskTabIndex === name) {
+    if (prevProps.maskTabIndex !== maskTabIndex && maskTabIndex === name) {
       valueNode.setAttribute('tabindex', '0')
       valueNode.focus()
-    } else if (prevProps.maskTabIndex === name && maskTabIndex == null) {
+    } else if (
+      prevProps.maskTabIndex === name &&
+      (maskTabIndex == null || maskTabIndex === prevProps.maskTabIndex)
+    ) {
       valueNode && valueNode.removeAttribute('tabindex')
       valueNode.blur()
     }

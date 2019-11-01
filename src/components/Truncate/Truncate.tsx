@@ -6,6 +6,8 @@ import styled from '../styled'
 import { truncateMiddle } from '../../utilities/strings'
 import css from './styles/Truncate.css'
 import { TruncateProps, TruncateState } from './Truncate.types'
+import { TruncateWithSplitterUI } from './styles/Truncate.WithSplitter.css'
+import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
 
 export class Truncate extends React.PureComponent<
   TruncateProps,
@@ -23,6 +25,7 @@ export class Truncate extends React.PureComponent<
   }
   node = null
   contentNode = null
+  _isMounted = false
 
   constructor(props: TruncateProps) {
     super(props)
@@ -32,16 +35,26 @@ export class Truncate extends React.PureComponent<
   }
 
   componentDidMount() {
-    if (this.props.type === 'auto') {
-      this.setState({
-        isTruncated: this.isTruncated(this.props),
-      })
-    }
+    this._isMounted = true
+
+    // The timeout is necessary to ensure the `isTruncated` calculation
+    // happens after the content has been rendered to the page. The
+    // _isMounted guard is necessary because sometimes the callback
+    // will run after the component has been unmounted, which results
+    // in a warning.
+    setTimeout(() => {
+      if (this.props.type === 'auto' && this._isMounted) {
+        this.setState({
+          isTruncated: this.isTruncated(this.props),
+        })
+      }
+    }, 0)
   }
 
   componentWillUnmount() {
     this.node = null
     this.contentNode = null
+    this._isMounted = false
   }
 
   componentWillReceiveProps(nextProps: TruncateProps) {
@@ -68,22 +81,22 @@ export class Truncate extends React.PureComponent<
       /* istanbul ignore next */
       if (!this.node || !this.contentNode) return false
 
-      // 1. Normalizes the display to allow for calculation
-      // TODO: fix typescript complains
-      // @ts-ignore
-      this.contentNode.style.display = 'initial'
-      // 2. Calculate the differences
-      const isContentTruncated =
-        // TODO: fix typescript complains
-        // @ts-ignore
-        this.contentNode.offsetWidth > this.node.offsetWidth
-      // 3. Resets the display
-      // TODO: fix typescript complains
-      // @ts-ignore
-      this.contentNode.style.display = null
+      const isContentTruncated = props.splitter
+        ? this.isSplitContentTruncated(this.contentNode, this.node)
+        : // TODO: fix typescript complains
+          // @ts-ignore
+          this.contentNode.scrollWidth > this.node.offsetWidth
 
       return isContentTruncated
     }
+  }
+
+  isSplitContentTruncated = (contentNode: any, node: any): boolean => {
+    return (
+      contentNode.offsetWidth <
+      node.querySelector(`.${TRUNCATED_CLASSNAMES.firstChunk}`).scrollWidth +
+        node.querySelector(`.${TRUNCATED_CLASSNAMES.secondChunk}`).scrollWidth
+    )
   }
 
   getText = (props: TruncateProps = this.props) => {
@@ -101,6 +114,7 @@ export class Truncate extends React.PureComponent<
       ellipsis,
       limit,
       showTooltipOnTruncate,
+      splitter,
       tooltipPlacement,
       tooltipProps,
       tooltipModifiers,
@@ -117,14 +131,35 @@ export class Truncate extends React.PureComponent<
     )
 
     const shouldShowTooltip = showTooltipOnTruncate && this.state.isTruncated
-    const word = this.getTruncatedContent()
+    let truncatedText
 
-    const wordMarkup = (
+    if (splitter) {
+      const str = text || children
+      const [first, second] = str.split(splitter)
+
+      truncatedText = (
+        <TruncateWithSplitterUI
+          className={`${TRUNCATED_CLASSNAMES.component} ${
+            TRUNCATED_CLASSNAMES.withSplitter
+          }`}
+        >
+          <span className={`${TRUNCATED_CLASSNAMES.firstChunk}`}>{first}</span>
+          <span className={`${TRUNCATED_CLASSNAMES.secondChunk}`}>
+            {splitter}
+            {second}
+          </span>
+        </TruncateWithSplitterUI>
+      )
+    } else {
+      truncatedText = this.getTruncatedContent()
+    }
+
+    const textMarkup = (
       <span
         className="c-Truncate__content"
         ref={(ref: any) => (this.contentNode = ref)}
       >
-        {word}
+        {truncatedText}
       </span>
     )
     const content = shouldShowTooltip ? (
@@ -134,10 +169,10 @@ export class Truncate extends React.PureComponent<
         placement={tooltipPlacement}
         title={title || this.getText()}
       >
-        {wordMarkup}
+        {textMarkup}
       </Tooltip>
     ) : (
-      wordMarkup
+      textMarkup
     )
 
     return (

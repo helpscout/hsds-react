@@ -8,14 +8,6 @@ export type FieldValue = {
   disabled?: boolean
 }
 
-export type InputFields = {
-  label?: string
-  name: string
-  placeholder?: string
-  type: FieldType
-  value: Value | Value[]
-}
-
 export type FieldAction = {
   name: string
   icon?: string
@@ -28,7 +20,14 @@ export type Option = {
   value: string
 }
 
-export type FieldType = 'text' | 'email' | 'url' | 'tel' | 'number' | 'textarea'
+export type FieldType =
+  | 'text'
+  | 'email'
+  | 'url'
+  | 'tel'
+  | 'number'
+  | 'textarea'
+  | 'password'
 export type FieldSize = 'md' | 'lg'
 export type FieldState = 'default' | 'error' | 'warning' | 'other'
 
@@ -43,7 +42,7 @@ export type Validation = {
 }
 
 export type CommitData = {
-  cause: 'BLUR' | 'ENTER' | 'OPTION_SELECTION' | 'DELETE_ACTION'
+  cause: string
   operation: string
   item: Object
 }
@@ -54,12 +53,12 @@ export interface EditableFieldProps {
   defaultOption: string | null
   disabled: boolean
   emphasizeTopValue: boolean
+  floatingLabels: boolean
   inline: boolean
   label?: string
   multipleValues: boolean
   name: string
   placeholder?: string
-  secondInput?: InputFields
   size: FieldSize
   type: FieldType
   value: Value | Value[]
@@ -116,14 +115,19 @@ export interface EditableFieldProps {
   }) => void
   onDelete: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onDiscard: (args: { value: FieldValue[] }) => void
-  validate: (args: { value: string; name: string }) => Promise<Validation>
+  validate: (args: {
+    data: CommitData
+    name: string
+    value: string
+    values: FieldValue[]
+  }) => Promise<Validation>
 }
 
 export interface EditableFieldState {
   actions?: FieldAction[]
   activeField: string
   defaultOption: string | null
-  disabledItem: string
+  disabledItem: string[]
   fieldValue: FieldValue[]
   initialFieldValue: FieldValue[]
   maskTabIndex: string | null

@@ -3,6 +3,14 @@ module.exports = api => {
   const plugins = [
     '@babel/plugin-proposal-class-properties',
     [
+      'prismjs',
+      {
+        languages: ['c', 'java', 'javascript', 'objectivec', 'swift'],
+        theme: 'twilight',
+        css: true,
+      },
+    ],
+    [
       'inline-svg',
       {
         svgo: {

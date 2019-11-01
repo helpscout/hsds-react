@@ -9,6 +9,7 @@ export const AvatarCrop = props => {
     animationEasing,
     className,
     children,
+    hasImage,
     isImageLoaded,
     withShadow,
   } = props
@@ -27,7 +28,7 @@ export const AvatarCrop = props => {
   }
 
   return (
-    <CropUI className={componentClassName} style={styles}>
+    <CropUI className={componentClassName} hasImage={hasImage} style={styles}>
       {children}
     </CropUI>
   )
