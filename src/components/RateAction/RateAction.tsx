@@ -13,7 +13,7 @@ export interface Props {
   children?: any
   disabled: boolean
   isActive: boolean
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   onBlur: (...args: any[]) => void
   onFocus: (...args: any[]) => void
   name: EmoticonName
@@ -29,7 +29,7 @@ export class RateAction extends React.PureComponent<Props, State> {
   static className = 'c-RateAction'
   static defaultProps = {
     disabled: false,
-    ref: noop,
+    innerRef: noop,
     isActive: false,
     name: 'happy',
     onBlur: noop,
@@ -78,14 +78,21 @@ export class RateAction extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { children, disabled, ref, onBlur, onFocus, ...rest } = this.props
+    const {
+      children,
+      disabled,
+      innerRef,
+      onBlur,
+      onFocus,
+      ...rest
+    } = this.props
 
     return (
       <RateActionUI
         {...getValidProps(rest)}
         className={this.getClassName()}
         disabled={disabled}
-        ref={ref as any}
+        ref={innerRef as any}
         onBlur={this.handleOnBlur}
         onFocus={this.handleOnFocus}
       >

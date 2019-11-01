@@ -50,4 +50,4 @@ Use `<Pagination>` in HSDS together with `<Table>`, see `TableWithPagination.js`
 | sortedInfo       | `object{ columnKey: string, order: string }` | When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) |
 | onRowClick       | `function`                                   | Callback function when a row is clicked. Arguments are the event and the row clicked.                      |
 | tableRef         | `function`                                   | Retrieves the <table> node.                                                                                |
-| wrapperRef       | `function`                                   | Retrieves the table wrapper node.                                                                          |
+| innerRef         | `function`                                   | Retrieves the table wrapper node.                                                                          |

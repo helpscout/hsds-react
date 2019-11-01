@@ -149,9 +149,9 @@ describe('Ref', () => {
     expect(spy).toHaveBeenCalledWith(o)
   })
 
-  test('Can retrieve the input node from ref', () => {
+  test('Can retrieve the input node from innerRef', () => {
     const spy = jest.fn()
-    const wrapper = mount(<RadioCard ref={spy} />)
+    const wrapper = mount(<RadioCard innerRef={spy} />)
     const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)

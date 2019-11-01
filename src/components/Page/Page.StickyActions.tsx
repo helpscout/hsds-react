@@ -14,7 +14,7 @@ class StickyActions extends React.PureComponent<
   static className = 'c-PageStickyActions'
 
   static defaultProps = {
-    ref: noop,
+    innerRef: noop,
     offset: 10,
     onStickyStart: noop,
     onStickyEnd: noop,
@@ -77,7 +77,7 @@ class StickyActions extends React.PureComponent<
 
   setNodeRef = node => {
     this.node = node
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
 
   render() {

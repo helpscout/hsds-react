@@ -12,7 +12,7 @@ export interface Props extends TooltipProps {
   className?: string
   content?: any
   children?: any
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   header?: any
   renderHeader?: any
   renderContent?: any
@@ -28,7 +28,7 @@ export class Popover extends React.PureComponent<Props> {
   static defaultProps = {
     ...Tooltip.defaultProps,
     color: 'white',
-    ref: noop,
+    innerRef: noop,
   }
 
   getClassName() {
@@ -99,7 +99,7 @@ export class Popover extends React.PureComponent<Props> {
   }
 
   render() {
-    const { ref, ...rest } = this.props
+    const { innerRef, ...rest } = this.props
 
     return (
       <PopoverUI
@@ -111,7 +111,7 @@ export class Popover extends React.PureComponent<Props> {
         closeOnMouseLeave={false}
         data-cy="Popover"
         dataCyPopper="PopoverContent"
-        ref={ref}
+        ref={innerRef}
         renderContent={this.renderContent}
       />
     )

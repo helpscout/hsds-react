@@ -15,7 +15,7 @@ export interface Props {
   linkStyle?: boolean
   noWrap: boolean
   selector?: string
-  size: HeadingSize
+  size?: HeadingSize
   truncate: boolean
   weight?: number | string
   wordWrap: boolean

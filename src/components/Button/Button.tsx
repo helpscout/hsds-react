@@ -16,7 +16,7 @@ export interface Props {
   className?: string
   danger: boolean
   disabled: boolean
-  ref: (ref: any) => void
+  innerRef: (ref: any) => void
   isActive: boolean
   isFirst: boolean
   isNotOnly: boolean
@@ -37,7 +37,7 @@ class Button extends React.PureComponent<Props> {
     buttonRef: noop,
     danger: false,
     disable: false,
-    ref: noop,
+    innerRef: noop,
     isActive: false,
     isFirst: false,
     isNotOnly: false,
@@ -54,7 +54,7 @@ class Button extends React.PureComponent<Props> {
 
   setRef = node => {
     this.props.buttonRef(node)
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
 
   render() {

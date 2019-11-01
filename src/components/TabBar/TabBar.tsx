@@ -11,7 +11,7 @@ import { COMPONENT_KEY } from './TabBar.utils'
 export interface Props {
   className?: string
   children?: any
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   secContent?: any
   align?: 'left' | 'center' | 'right'
 }
@@ -19,7 +19,7 @@ export interface Props {
 export class TabBar extends React.Component<Props> {
   static className = 'c-TabBar'
   static defaultProps = {
-    ref: noop,
+    innerRef: noop,
     align: 'left',
   }
 
@@ -31,13 +31,13 @@ export class TabBar extends React.Component<Props> {
   }
 
   render() {
-    const { children, ref, secContent, align, ...rest } = this.props
+    const { children, innerRef, secContent, align, ...rest } = this.props
 
     return (
       <TabBarUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        ref={ref as any}
+        ref={innerRef as any}
         align={align}
       >
         <ToolbarUI placement="top">

@@ -36,7 +36,7 @@ describe('children', () => {
 describe('ref', () => {
   test('Can set an ref to a DOM node', () => {
     const spy = jest.fn()
-    mount(<Menu ref={spy} />)
+    mount(<Menu innerRef={spy} />)
 
     expect(spy).toHaveBeenCalled()
   })

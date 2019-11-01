@@ -8,6 +8,7 @@ import Chat from '../Message.Chat'
 import Caption from '../Message.Caption'
 
 const cx = 'c-MessageChat'
+const cxBubble = 'c-MessageBubble'
 const ui = {
   caption: `.${cx}__caption`,
   error: `.${cx}__error`,
@@ -32,23 +33,27 @@ describe('ClassNames', () => {
 describe('Bubble', () => {
   test('Contains Bubble component', () => {
     const wrapper = mount(<Chat />)
-    const o = wrapper.find(Bubble)
-
+    const o = wrapper.find(`.${cxBubble}`).first()
     expect(o.length).toBeTruthy()
   })
 
   test('Bubble does not inherit component classNames', () => {
     const wrapper = mount(<Chat />)
-    const o = wrapper.find(Bubble)
+    const o = wrapper.find(`.${cxBubble}`).first()
 
     expect(o.getDOMNode().classList.contains(cx)).not.toBeTruthy()
   })
 
   test('Renders content inside of Bubble', () => {
     const wrapper = mount(<Chat>Mugatu</Chat>)
-    const o = wrapper.find(Bubble)
+    const o = wrapper.find(`.${cxBubble}`)
+    expect(o.first().text()).toContain('Mugatu')
+  })
 
-    expect(o.instance().props.children).toBe('Mugatu')
+  test('Renders body inside of Bubble', () => {
+    const wrapper = mount(<Chat body="bodytest">Mugatu</Chat>)
+    const o = wrapper.find(`.c-MessageBubble__body`)
+    expect(o.first().text()).toContain('bodytest')
   })
 
   test('Passes correct props to Bubble', () => {
@@ -59,25 +64,22 @@ describe('Bubble', () => {
         isNote
         ltr
         primary
-        rtl
         size="sm"
         title="title"
         to
         typing
       />
     )
-    const props = wrapper.find(Bubble).instance().props
+    const o = wrapper.find(`.${cxBubble}`).first()
+    const classList = o.getDOMNode().classList
 
-    expect(props.body).toBeTruthy()
-    expect(props.from).toBeTruthy()
-    expect(props.isNote).toBeTruthy()
-    expect(props.ltr).toBeTruthy()
-    expect(props.primary).toBeTruthy()
-    expect(props.rtl).toBeTruthy()
-    expect(props.size).toBeTruthy()
-    expect(props.title).toBeTruthy()
-    expect(props.to).toBeTruthy()
-    expect(props.typing).toBeTruthy()
+    expect(classList.contains('is-note')).toBeTruthy()
+    expect(classList.contains('is-ltr')).toBeTruthy()
+    expect(classList.contains('is-primary')).toBeTruthy()
+    expect(classList.contains('is-sm')).toBeTruthy()
+    expect(classList.contains('is-to')).toBeTruthy()
+    expect(classList.contains('is-from')).toBeTruthy()
+    expect(classList.contains('is-typing')).toBeTruthy()
   })
 })
 

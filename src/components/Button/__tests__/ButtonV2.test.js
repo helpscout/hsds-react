@@ -223,7 +223,7 @@ describe('Focus', () => {
 describe('Ref', () => {
   test('Can retrieve button ref from ref prop', () => {
     let ref
-    mount(<Button kind="primary" ref={node => (ref = node)} />)
+    mount(<Button kind="primary" innerRef={node => (ref = node)} />)
 
     expect(ref).toBeTruthy()
   })

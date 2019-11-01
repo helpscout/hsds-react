@@ -10,7 +10,7 @@ import { ModalBodyProps } from './Modal.types'
 
 class Body extends React.PureComponent<ModalBodyProps> {
   static defaultProps = {
-    ref: noop,
+    innerRef: noop,
     isScrollLocked: true,
     isSeamless: false,
     onScroll: noop,
@@ -47,7 +47,7 @@ class Body extends React.PureComponent<ModalBodyProps> {
 
   setNodeRef = node => {
     this.node = node
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
 
   render() {

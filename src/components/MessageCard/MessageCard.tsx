@@ -24,7 +24,7 @@ export interface Props {
   body?: string
   className?: string
   children?: any
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   in: boolean
   isWithBoxShadow: boolean
   subtitle?: string
@@ -36,7 +36,7 @@ export class MessageCard extends React.PureComponent<Props> {
   static defaultProps = {
     align: 'right',
     animationSequence: '',
-    ref: noop,
+    innerRef: noop,
     in: true,
     isWithBoxShadow: true,
   }
@@ -113,7 +113,7 @@ export class MessageCard extends React.PureComponent<Props> {
       animationEasing,
       animationSequence,
       children,
-      ref,
+      innerRef,
       in: inProp,
       title,
       ...rest
@@ -130,7 +130,7 @@ export class MessageCard extends React.PureComponent<Props> {
         <MessageCardUI
           {...getValidProps(rest)}
           className={this.getClassName()}
-          ref={ref}
+          ref={innerRef}
         >
           {this.renderTitle()}
           {this.renderSubtitle()}

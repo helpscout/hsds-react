@@ -9,13 +9,13 @@ import { POPPER_COMPONENT_KEY } from './Tooltip.utils'
 export interface Props {
   children: any
   className?: string
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   theme?: string
 }
 
 export class Popper extends React.PureComponent<Props> {
   static defaultProps = {
-    ref: noop,
+    innerRef: noop,
   }
 
   static className = 'c-TooltipPopper'
@@ -27,12 +27,12 @@ export class Popper extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, className, ref, theme, ...rest } = this.props
+    const { children, className, innerRef, theme, ...rest } = this.props
 
     return (
       <PopperUI
         {...getValidProps(rest)}
-        ref={ref}
+        ref={innerRef}
         className={this.getClassName()}
       >
         {children}

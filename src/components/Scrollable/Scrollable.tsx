@@ -24,7 +24,7 @@ export interface Props {
   fadeLeft?: boolean
   fadeRight?: boolean
   faderSize?: number
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   onScroll: (event: Event) => void
   rounded: boolean
   scrollableRef: (node: HTMLElement) => void
@@ -40,7 +40,7 @@ export class Scrollable extends React.PureComponent<Props> {
     fadeLeft: false,
     fadeRight: false,
     faderSize: 28,
-    ref: noop,
+    innerRef: noop,
     onScroll: noop,
     scrollableRef: noop,
     isScrollLocked: true,
@@ -252,7 +252,7 @@ export class Scrollable extends React.PureComponent<Props> {
       contentClassName,
       fade,
       fadeBottom,
-      ref,
+      innerRef,
       onScroll,
       rounded,
       scrollableRef,
@@ -275,7 +275,7 @@ export class Scrollable extends React.PureComponent<Props> {
         {...getValidProps(rest)}
         fadeSides={fadeLeft || fadeRight}
         className={componentClassName}
-        ref={ref as any}
+        ref={innerRef as any}
       >
         {(fadeLeft || fadeRight) && (
           <EventListener event="resize" handler={this.handleWindowResize} />

@@ -33,7 +33,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     onInputChange: noop,
     inputProps: {},
     itemFilterKey: 'value',
-    wrapperRef: noop,
+    innerRef: noop,
     maxHeight: 330,
     minWidth: 222,
     maxWidth: 222,
@@ -331,7 +331,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
 
             <MenuUI
               className={this.getMenuClassName()}
-              wrapperRef={this.setMenuWrapperNode}
+              innerRef={this.setMenuWrapperNode}
             >
               {this.renderMenuStart()}
               {this.renderItems(dropdownProps)}

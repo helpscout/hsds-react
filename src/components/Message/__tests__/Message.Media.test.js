@@ -176,8 +176,7 @@ describe('Image', () => {
     const markup = wrapper.instance().getMediaMarkup()
     const o = mount(markup).find('img')
 
-    expect(o.prop('style').width).toBe(undefined)
-    expect(o.prop('style').height).toBe(undefined)
+    expect(o.prop('style')).toBe(undefined)
   })
 
   test('Renders a thumbnailImageUrl, if defined', () => {

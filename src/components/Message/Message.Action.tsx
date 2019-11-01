@@ -5,6 +5,7 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ActionChatBlockUI } from './styles/Action.css'
+import ChatBlock from './Message.ChatBlock'
 
 type Props = MessageChat & {
   className?: string
@@ -40,24 +41,26 @@ export const Action = (props: Props, context: Context) => {
   const textShade = isThemeEmbed ? 'faint' : 'muted'
 
   return (
-    <ActionChatBlockUI
-      from={from}
-      ltr={ltr}
-      read={read}
-      rtl={rtl}
-      timestamp={timestamp}
-      to={to}
-      type="action"
-    >
-      <div {...getValidProps(rest)} className={componentClassName}>
-        <Text
-          className="c-MessageAction__text"
-          shade={textShade}
-          size={textSize}
-        >
-          {children}
-        </Text>
-      </div>
+    <ActionChatBlockUI>
+      <ChatBlock
+        from={from}
+        ltr={ltr}
+        read={read}
+        rtl={rtl}
+        timestamp={timestamp}
+        to={to}
+        type="action"
+      >
+        <div {...getValidProps(rest)} className={componentClassName}>
+          <Text
+            className="c-MessageAction__text"
+            shade={textShade}
+            size={textSize}
+          >
+            {children}
+          </Text>
+        </div>
+      </ChatBlock>
     </ActionChatBlockUI>
   )
 }

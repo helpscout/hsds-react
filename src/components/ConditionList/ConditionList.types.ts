@@ -1,7 +1,7 @@
 export interface ConditionListBaseProps {
   className?: string
   children?: any
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
 }
 
 export interface ConditionListProps extends ConditionListBaseProps {

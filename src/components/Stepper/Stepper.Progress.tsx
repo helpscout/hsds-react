@@ -5,7 +5,7 @@ import { ProgressLineUI } from './styles/Stepper.css'
 
 export interface Props {
   className?: string
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   isActive: boolean
 }
 
@@ -13,7 +13,7 @@ export class Progress extends React.PureComponent<Props> {
   static className = 'c-StepperStepProgress'
   static defaultProps = {
     isActive: false,
-    ref: noop,
+    innerRef: noop,
   }
 
   getClassName() {
@@ -22,13 +22,13 @@ export class Progress extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, ref, isActive, ...rest } = this.props
+    const { children, innerRef, isActive, ...rest } = this.props
 
     return (
       <ProgressLineUI
         {...rest}
         className={this.getClassName()}
-        ref={ref as any}
+        ref={innerRef as any}
       />
     )
   }

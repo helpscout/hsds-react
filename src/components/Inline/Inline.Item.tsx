@@ -9,13 +9,13 @@ import { ITEM_COMPONENT_KEY } from './Inline.utils'
 export interface Props {
   className?: string
   children?: any
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
 }
 
 export class Item extends React.PureComponent<Props> {
   static className = 'c-InlineItem'
   static defaultProps = {
-    ref: noop,
+    innerRef: noop,
   }
 
   getClassName() {
@@ -24,13 +24,13 @@ export class Item extends React.PureComponent<Props> {
   }
 
   render() {
-    const { children, ref, ...rest } = this.props
+    const { children, innerRef, ...rest } = this.props
 
     return (
       <ItemUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        ref={ref as any}
+        ref={innerRef as any}
         role="listitem"
       >
         {children}

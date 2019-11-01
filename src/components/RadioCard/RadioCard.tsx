@@ -27,7 +27,7 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     heading: null,
     icon: 'fab-chat',
     iconSize: 52,
-    ref: noop,
+    innerRef: noop,
     inputRef: noop,
     isFocused: false,
     maxWidth: null,
@@ -188,7 +188,7 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
   setInputNodeRef = (node: HTMLInputElement) => {
     this.inputNode = node
     this.props.inputRef(node)
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
 
   render() {

@@ -27,7 +27,7 @@ export interface Props {
   disableOnLoading: boolean
   kind: ButtonKind
   href?: string
-  ref: (ref: any) => void
+  innerRef: (ref: any) => void
   isActive: boolean
   isBlock: boolean
   isFirst: boolean
@@ -54,7 +54,7 @@ class Button extends React.PureComponent<Props> {
     disable: false,
     disableOnLoading: true,
     kind: 'default',
-    ref: noop,
+    innerRef: noop,
     isActive: false,
     isBlock: false,
     isFocused: false,
@@ -116,7 +116,7 @@ class Button extends React.PureComponent<Props> {
   }
 
   setRef = ref => {
-    this.props.ref(ref)
+    this.props.innerRef(ref)
     this.props.buttonRef(ref)
   }
 
@@ -154,7 +154,7 @@ class Button extends React.PureComponent<Props> {
       disabled,
       disableOnLoading,
       kind,
-      ref,
+      innerRef,
       isActive,
       isBlock,
       isFirst,

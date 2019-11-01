@@ -23,7 +23,7 @@ type Props = {
   helpText?: string
   id?: string
   inputRef: (node: HTMLElement) => void
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   kind?: string
   onBlur: (event: Event) => void
   onChange: (event: Event, checked: boolean, id?: string) => void
@@ -47,7 +47,7 @@ class Input extends React.PureComponent<Props, State> {
     onChange: noop,
     onFocus: noop,
     inputRef: noop,
-    ref: noop,
+    innerRef: noop,
     readOnly: false,
     type: 'checkbox',
     value: '',
@@ -111,8 +111,8 @@ class Input extends React.PureComponent<Props, State> {
 
   setRef = (node: HTMLElement) => {
     this.props.inputRef(node)
-    if (this.props.ref) {
-      this.props.ref(node)
+    if (this.props.innerRef) {
+      this.props.innerRef(node)
     }
   }
 

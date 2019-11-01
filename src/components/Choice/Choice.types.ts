@@ -17,7 +17,7 @@ export interface ChoiceProps {
   id?: string
   isBlock: boolean
   inputRef: (node: HTMLElement) => void
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   kind?: string
   label?: string
   onBlur: (event: Event) => void

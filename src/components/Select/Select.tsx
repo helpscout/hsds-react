@@ -32,7 +32,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     autoFocus: false,
     disabled: false,
     errorIcon: 'alert',
-    ref: noop,
+    innerRef: noop,
     forceAutoFocusTimeout: 120,
     onBlur: noop,
     onChange: noop,
@@ -280,7 +280,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
 
   setSelectNode = (node: HTMLSelectElement) => {
     this.selectNode = node
-    this.props.ref(node)
+    this.props.innerRef(node)
   }
 
   getSelectMarkup = (props: any) => {
@@ -293,7 +293,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
       forceAutoFocusTimeout,
       helpText,
       hintText,
-      ref,
+      innerRef,
       isFocused,
       isFirst,
       isNotOnly,

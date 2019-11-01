@@ -39,7 +39,7 @@ export type InputProps = {
   id: string
   inlinePrefix?: string
   inlineSuffix?: string
-  ref: (ref: HTMLElement) => void
+  innerRef: (ref: HTMLElement) => void
   inputRef: (ref: HTMLElement) => void
   inputType: string
   isFirst: boolean

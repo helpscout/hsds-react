@@ -24,7 +24,7 @@ export const HEADING_SIZES = {
   small: 11,
 }
 
-export const HeadingUI = styled.div`
+export const HeadingUI = styled.div<any>`
   ${baseStyles}
   color: ${getColor('charcoal.600')};
   display: block;

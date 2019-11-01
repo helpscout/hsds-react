@@ -906,7 +906,7 @@ describe('Suffix', () => {
 describe('ref', () => {
   test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Input ref={spy} />)
+    const wrapper = mount(<Input innerRef={spy} />)
     const o = wrapper.find('input').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)

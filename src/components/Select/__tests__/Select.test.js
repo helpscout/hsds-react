@@ -538,7 +538,7 @@ describe('ErrorMessage', () => {
 describe('ref', () => {
   test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Select ref={spy} />)
+    const wrapper = mount(<Select innerRef={spy} />)
     const o = wrapper.find('select').getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)

@@ -9,7 +9,7 @@ export type RadioCardProps = {
   icon: string | Component | React.ReactNode
   iconSize: number
   id?: string
-  ref: (node: InputNode) => void
+  innerRef: (node: InputNode) => void
   inputRef: (node: InputNode) => void
   isFocused: boolean
   maxWidth?: string | number

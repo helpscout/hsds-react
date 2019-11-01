@@ -9,7 +9,7 @@ export interface PageProps {
 export interface PageActionsProps {
   className?: string
   direction?: ActionsDirection
-  ref: (node: HTMLDivElement) => void
+  innerRef: (node: HTMLDivElement) => void
   isResponsive: boolean
   isSticky: boolean
   onStickyStart: (ndoe: HTMLElement) => void
@@ -28,7 +28,7 @@ export interface PageActionsState {
 export interface PageStickyActionsProps {
   classNames?: string
   children?: React.ReactNode
-  ref: (node: HTMLElement) => void
+  innerRef: (node: HTMLElement) => void
   onStickyStart: (ndoe: HTMLElement) => void
   onStickyEnd: (ndoe: HTMLElement) => void
   offset: number

@@ -223,7 +223,7 @@ describe('RouteWrapper', () => {
 describe('Ref', () => {
   test('Can retrieve button ref from ref prop', () => {
     let ref
-    mount(<Button ref={node => (ref = node)} />)
+    mount(<Button innerRef={node => (ref = node)} />)
 
     expect(ref).toBeTruthy()
   })

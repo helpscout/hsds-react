@@ -72,6 +72,6 @@ describe('Content', () => {
 
 describe('Display name', () => {
   test('Has a display name', () => {
-    expect(Embed.displayName).toEqual('Styled(Message.Embed)')
+    expect(Embed.displayName).toEqual('Message.Embed')
   })
 })
