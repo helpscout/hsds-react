@@ -243,8 +243,9 @@ export class Item extends React.PureComponent<Props> {
   }
   setActionNodeRef = node => (this.actionNode = node)
   setWrapperNodeRef = node => (this.wrapperNode = node)
+
+  /* istanbul ignore next */
   setMenuNodeRef = node => {
-    /* istanbul ignore next */
     this.menuNode = node
   }
 
