@@ -71,7 +71,7 @@ export class IconButton extends React.PureComponent<Props> {
       <IconButtonUI
         {...rest}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef}
         version={2}
       >
         <Icon

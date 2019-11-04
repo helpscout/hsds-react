@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from 'styled-components'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 import {
   COLOURS,
@@ -86,7 +86,7 @@ export const MaskOptionUI = styled('span')`
   }
 `
 
-export const MaskValueUI = styled('span')`
+export const MaskValueUI = styled('span')<any>`
   display: inline-block;
   vertical-align: bottom;
   height: ${mask.height.medium};

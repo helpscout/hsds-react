@@ -386,7 +386,7 @@ export class EditableTextarea extends React.PureComponent<
 
     return (
       <ComponentUI
-        innerRef={this.setEditableTextareaNode}
+        ref={this.setEditableTextareaNode}
         className={this.getClassName()}
       >
         {!floatingLabels ? (

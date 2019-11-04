@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { ThemeProvider } from '../styled'
+import { ThemeProvider } from 'styled-components'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
@@ -146,7 +146,7 @@ export class Table extends React.Component<TableProps, TableState> {
       <ThemeProvider theme={chooseTheme(theme)}>
         <TableWrapperUI
           className={tableWrapperClassNames}
-          innerRef={this.setWrapperNode}
+          ref={this.setWrapperNode}
           containerWidth={containerWidth}
           {...getValidProps(rest)}
         >
@@ -159,7 +159,7 @@ export class Table extends React.Component<TableProps, TableState> {
             <TableUI
               tableWidth={tableWidth}
               className={tableClassNames}
-              innerRef={this.setTableNode}
+              ref={this.setTableNode}
             >
               <Head
                 columns={columns}

@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Icon from '../../Icon'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'

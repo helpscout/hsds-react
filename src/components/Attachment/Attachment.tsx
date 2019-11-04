@@ -7,12 +7,9 @@ import CloseButton from '../CloseButton'
 import Image from '../Image'
 import Text from '../Text'
 import Truncate from '../Truncate'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Attachment.utils'
-import css, { ErrorBorderUI } from './Attachment.css'
+import { AttachmentUI, ErrorBorderUI } from './Attachment.css'
 
 export const Provider = AttachmentProvider
 
@@ -164,7 +161,7 @@ export class Attachment extends React.PureComponent<Props> {
     }
 
     return (
-      <a
+      <AttachmentUI
         {...getValidProps(rest)}
         className={componentClassName}
         href={url}
@@ -175,13 +172,9 @@ export class Attachment extends React.PureComponent<Props> {
         {contentMarkup}
         {closeMarkup}
         {this.renderErrorBorder()}
-      </a>
+      </AttachmentUI>
     )
   }
 }
 
-const StyledAttachment = styled(Attachment)(css)
-
-namespaceComponent(COMPONENT_KEY)(StyledAttachment)
-
-export default StyledAttachment
+export default Attachment

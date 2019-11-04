@@ -58,7 +58,7 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | index                     | `string`                 |              | Current selected item index.                                                                                 |
 | inputValue                | `string`                 |              | Used when constructing a filterable Dropdown.                                                                |
 | id                        | `string`                 |              | ID of the component.                                                                                         |
-| innerRef                  | `Function`               |              | Retrieves the Dropdown DOM node.                                                                             |
+| ref                       | `Function`               |              | Retrieves the Dropdown DOM node.                                                                             |
 | items                     | `Array<Object>`          | `[]`         | Items to render.                                                                                             |
 | isLoading                 | `boolean`                | `false`      | Renders the loading UI.                                                                                      |
 | isFocusSelectedItemOnOpen | `boolean`                | `false`      | Focuses the selected item when the dropdown opens.                                                           |

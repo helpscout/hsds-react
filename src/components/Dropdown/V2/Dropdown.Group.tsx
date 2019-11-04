@@ -26,7 +26,7 @@ export class Group extends React.PureComponent<Props> {
       <GroupUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef}
         tabIndex={null}
         role="group"
       >
@@ -36,7 +36,6 @@ export class Group extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Group)(Group)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Group)(Group)
 
 export default PropConnectedComponent

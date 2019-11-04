@@ -1,7 +1,7 @@
 import Button from '../../Button'
 import Centralize from '../../Centralize'
 import Flexy from '../../Flexy'
-import styled from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 
@@ -50,7 +50,7 @@ export const OperatorUI = styled('div')`
   }
 `
 
-export const ButtonWrapperUI = styled('div')`
+export const ButtonWrapperUI = styled('div')<{ align?: any }>`
   ${baseStyles};
   ${({ align }) => `text-align: ${align};`};
 `

@@ -92,7 +92,7 @@ export class RateAction extends React.PureComponent<Props, State> {
         {...getValidProps(rest)}
         className={this.getClassName()}
         disabled={disabled}
-        innerRef={innerRef}
+        ref={innerRef as any}
         onBlur={this.handleOnBlur}
         onFocus={this.handleOnFocus}
       >

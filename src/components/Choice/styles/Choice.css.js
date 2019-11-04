@@ -1,5 +1,5 @@
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {

@@ -1,5 +1,5 @@
 import Card from '../../Card'
-import styled from '../../styled'
+import styled from 'styled-components'
 import { getColor, rgba } from '../../../styles/utilities/color'
 
 export const config = {

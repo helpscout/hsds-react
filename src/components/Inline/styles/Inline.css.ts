@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import forEach from '../../../styles/utilities/forEach'
 
@@ -11,6 +11,8 @@ export const config = {
     lg: '10px',
   },
 }
+
+interface InlineUIProps {}
 
 export const InlineUI = styled('div')`
   ${baseStyles};

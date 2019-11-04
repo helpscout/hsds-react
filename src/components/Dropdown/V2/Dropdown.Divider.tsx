@@ -25,7 +25,7 @@ export class Divider extends React.PureComponent<Props> {
       <DividerUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef}
         tabIndex={null}
         role="presentation"
       />
@@ -33,7 +33,6 @@ export class Divider extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Divider)(Divider)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Divider)(Divider)
 
 export default PropConnectedComponent

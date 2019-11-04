@@ -1,6 +1,7 @@
+import styled from 'styled-components'
+
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
-import styled from '../../styled'
 import Heading from '../../Heading'
 import Text from '../../Text'
 
@@ -29,7 +30,11 @@ export const config = {
   willChange: 'box-shadow',
 }
 
-export const RadioCardUI = styled('label')`
+interface RadioCardUIProp {
+  maxWidth: any
+}
+
+export const RadioCardUI = styled('label')<RadioCardUIProp>`
   ${baseStyles} align-items: center;
   border-radius: ${config.borderRadius};
   box-shadow: ${config.boxShadow};

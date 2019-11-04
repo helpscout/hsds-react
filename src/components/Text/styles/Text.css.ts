@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import linkStyles from '../../../styles/mixins/linkStyles.css.js'
 import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
@@ -10,7 +11,7 @@ export const VAR_NAMESPACE_SIZE = 'BlueConfigTextFontSize'
 export const TEXT_SIZES = [10, 11, 12, 13, 14, 15, 16, 20, 48]
 export const TEXT_WEIGHTS = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
-const css: string = `
+export const TextUI = styled.span`
   ${baseStyles}
   line-height: 1.5;
 
@@ -116,5 +117,3 @@ export function makeWeightStyles(): string {
     `
   )
 }
-
-export default css

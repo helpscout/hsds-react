@@ -66,7 +66,7 @@ export class ConditionList extends React.Component<ConditionListProps> {
       <ConditionListUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
       >
         {this.renderConditions()}
         {this.renderAddAction()}

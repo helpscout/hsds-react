@@ -37,7 +37,7 @@ Add the starting styled component boilerplate for `Strong.css.js`:
 
 ```jsx
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const StrongUI = styled('strong')`
   ${baseStyles} font-weight: 600;
@@ -84,5 +84,5 @@ Let's [write a story](storybook.md) to see this thing in a browser!
 
 ## See also
 
-* [Fancy](https://helpscout.gitbook.io/fancy)
-* [Emotion](https://emotion.sh/)
+- [Fancy](https://helpscout.gitbook.io/fancy)
+- [Emotion](https://emotion.sh/)

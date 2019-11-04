@@ -57,7 +57,7 @@ class FluffyCard extends React.PureComponent<Props> {
         {...rest}
         borderless
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef}
       >
         {children}
       </FluffyCardUI>

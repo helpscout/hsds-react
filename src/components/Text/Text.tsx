@@ -1,11 +1,8 @@
 import * as React from 'react'
 import { TextSize, TextShade, UIState } from './Text.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Text.css'
-import { COMPONENT_KEY } from './Text.utils'
+import { TextUI } from './styles/Text.css'
 
 export interface Props {
   allCaps?: boolean
@@ -97,17 +94,18 @@ class Text extends React.PureComponent<Props> {
       className
     )
 
-    return React.createElement(
-      selector,
-      {
-        ...getValidProps(rest),
-        className: componentClassName,
-      },
-      children
+    return (
+      <TextUI
+        as={selector as any}
+        {...getValidProps(rest)}
+        className={componentClassName}
+      >
+        {children}
+      </TextUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Text)
+// namespaceComponent(COMPONENT_KEY)(Text)
 
-export default styled(Text)(css)
+export default Text

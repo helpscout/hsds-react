@@ -2,8 +2,9 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
-import styled from '../../styled'
-import buttonConfig from '../../Button/styles/Button.config.css.js'
+
+import styled from 'styled-components'
+import buttonConfig from '../../Button/styles/Button.config.css'
 
 export const config = {
   borderRadius: 3,
@@ -91,7 +92,11 @@ export const ActionUI = styled('div')`
   }
 `
 
-export const CropUI = styled('div')`
+export interface CropProps {
+  hasImage: boolean
+}
+
+export const CropUI = styled('div')<CropProps>`
   align-items: center;
   background-color: ${({ hasImage }) =>
     hasImage ? 'transparent' : 'currentColor'};
@@ -205,7 +210,7 @@ export const StatusUI = styled('div')`
   }
 `
 
-export const CropBorderUI = styled('div')`
+export const CropBorderUI = styled('div')<{ borderColor?: any }>`
   position: absolute;
   top: -${config.borderWidth}px;
   bottom: -${config.borderWidth}px;

@@ -119,7 +119,7 @@ export class Item extends React.Component<Props> {
       <ItemUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
       >
         <NavLink
           {...this.getLinkProps()}

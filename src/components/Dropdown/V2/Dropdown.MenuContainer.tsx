@@ -50,7 +50,7 @@ export class MenuContainer extends React.PureComponent<
     forceDropDown: false,
     focusItem: noop,
     getState: noop,
-    innerRef: noop,
+    menuRef: noop,
     isLoading: false,
     isOpen: true,
     items: [],
@@ -282,7 +282,6 @@ export class MenuContainer extends React.PureComponent<
 
   getStylePosition = (): any => {
     const targetNode = this.getTargetNode()
-
     const rect = getComputedClientRect(targetNode)
     const { top, left } = rect
 
@@ -417,11 +416,15 @@ export class MenuContainer extends React.PureComponent<
       this.parentNode = node.parentElement
     }
 
-    this.props.innerRef(node)
+    this.props.menuRef(node)
   }
 
-  setWrapperNode = node => (this.wrapperNode = node)
-  setPlacementNode = node => (this.placementNode = node)
+  setWrapperNode = node => {
+    this.wrapperNode = node
+  }
+  setPlacementNode = node => {
+    this.placementNode = node
+  }
 
   render() {
     const {
@@ -466,7 +469,7 @@ export class MenuContainer extends React.PureComponent<
             >
               <MenuContainerUI
                 className={componentClassName}
-                innerRef={this.setNodeRef}
+                ref={this.setNodeRef}
                 onClick={selectItem}
                 onMouseMove={focusItem}
                 {...{
@@ -483,7 +486,6 @@ export class MenuContainer extends React.PureComponent<
   }
 }
 
-namespaceComponent(COMPONENT_KEY.MenuContainer)(MenuContainer)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.MenuContainer)(
   MenuContainer
 )

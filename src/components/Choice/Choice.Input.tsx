@@ -109,9 +109,12 @@ class Input extends React.PureComponent<Props, State> {
     )
   }
 
-  setInnerRef = (node: HTMLElement) => {
+  setRef = (node: HTMLElement) => {
     this.props.inputRef(node)
-    this.props.innerRef(node)
+    /* istanbul ignore if */
+    if (this.props.innerRef) {
+      this.props.innerRef(node)
+    }
   }
 
   render() {
@@ -165,7 +168,7 @@ class Input extends React.PureComponent<Props, State> {
           className={inputClassName}
           disabled={disabled}
           id={id}
-          innerRef={this.setInnerRef}
+          ref={this.setRef}
           name={name}
           onBlur={this.handleOnBlur}
           onChange={this.handleOnChange}

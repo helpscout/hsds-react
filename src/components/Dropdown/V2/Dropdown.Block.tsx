@@ -43,7 +43,7 @@ export class Block extends React.PureComponent<Props> {
       <BlockUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef}
       >
         {children}
       </BlockUI>
@@ -51,7 +51,6 @@ export class Block extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Block)(Block)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Block)(Block)
 
 export default PropConnectedComponent

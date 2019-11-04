@@ -119,7 +119,7 @@ export class Resizer extends React.PureComponent<InputResizerProps> {
 
     return (
       <GhostUI
-        innerRef={this.setMinimumLinesNode}
+        ref={this.setMinimumLinesNode as any}
         className={this.getContentClassName()}
         dangerouslySetInnerHTML={{
           __html: this.getContentsForMinimumLines(minimumLines),
@@ -135,7 +135,7 @@ export class Resizer extends React.PureComponent<InputResizerProps> {
       <ResizerUI aria-hidden className={this.getClassName()}>
         <EventListener event="resize" handler={this.handleOnResize} />
         <GhostUI
-          innerRef={this.setContentNodeRef}
+          ref={this.setContentNodeRef as any}
           className={this.getContentClassName()}
           dangerouslySetInnerHTML={{ __html: this.getFinalContents(contents) }}
         />

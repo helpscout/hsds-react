@@ -1,4 +1,9 @@
-import styled from '@helpscout/fancy'
+import styled from 'styled-components'
 
-export * from '@helpscout/fancy'
+export { ThemeProvider } from 'styled-components'
+
+export {
+  default as ScopeProvider,
+} from '@helpscout/fancy/dist/ScopeProvider/index'
+
 export default styled

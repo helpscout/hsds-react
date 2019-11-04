@@ -118,7 +118,7 @@ class CopyCode extends React.PureComponent<Props> {
           onCut={this.preventEventDefault}
           onPaste={this.preventEventDefault}
           onKeyDown={this.handleOnKeyDown}
-          innerRef={this.setNodeRef}
+          ref={this.setNodeRef}
           spellCheck={false}
           suppressContentEditableWarning
         >

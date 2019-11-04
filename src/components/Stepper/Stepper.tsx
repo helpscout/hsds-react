@@ -116,7 +116,7 @@ export class Stepper extends React.PureComponent<Props> {
       <StepperUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
         aria-valuemax={steps.length}
         aria-valuemin={1}
         aria-valuenow={this.getProgress()}

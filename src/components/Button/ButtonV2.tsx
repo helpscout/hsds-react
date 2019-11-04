@@ -4,10 +4,9 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
-import { memoize } from '../../utilities/memoize'
 import RouteWrapper from '../RouteWrapper'
 import {
-  makeButtonUI,
+  ButtonUI,
   ButtonContentUI,
   FocusUI,
   SpinnerUI,
@@ -71,8 +70,6 @@ class Button extends React.PureComponent<Props> {
 
   static BlueComponentVersion = 2
 
-  makeButtonUI = memoize(makeButtonUI)
-
   isLink() {
     // TODO: Resolve data-bypass
     // const { href, 'data-bypass': dataBypass } = this.props
@@ -115,7 +112,7 @@ class Button extends React.PureComponent<Props> {
     return <FocusUI className={focusClassName} role="presentation" />
   }
 
-  setInnerRef = ref => {
+  setRef = ref => {
     this.props.innerRef(ref)
     this.props.buttonRef(ref)
   }
@@ -136,14 +133,6 @@ class Button extends React.PureComponent<Props> {
         offsetRight: isLast && !isOnly,
       })
     })
-  }
-
-  getButtonUI() {
-    const selector = this.isLink() ? 'a' : 'button'
-
-    // TODO: fix typescript complains
-    // @ts-ignore
-    return this.makeButtonUI(selector)
   }
 
   render() {
@@ -200,15 +189,16 @@ class Button extends React.PureComponent<Props> {
 
     const type = submit ? 'submit' : 'button'
 
-    const ButtonUI = this.getButtonUI()
+    const selector = this.isLink() ? 'a' : 'button'
 
     return (
       <ButtonUI
         {...getValidProps(rest)}
         className={componentClassName}
         disabled={isDisabled}
-        innerRef={this.setInnerRef}
+        ref={this.setRef}
         type={type}
+        as={selector}
       >
         {isLoading ? <SpinnerUI /> : null}
         <ButtonContentUI

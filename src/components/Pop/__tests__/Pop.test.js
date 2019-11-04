@@ -212,7 +212,7 @@ describe('Pop', () => {
 
       wrapper.unmount()
 
-      expect(o.node).toBeFalsy()
+      expect(o.node.current).toBeFalsy()
     })
   })
 

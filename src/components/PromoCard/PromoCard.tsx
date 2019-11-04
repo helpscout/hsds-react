@@ -33,11 +33,7 @@ export class PromoCard extends React.PureComponent<Props> {
     const { children, innerRef, promoColor, ...rest } = this.props
 
     return (
-      <PromoCardUI
-        {...rest}
-        className={this.getClassName()}
-        innerRef={innerRef}
-      >
+      <PromoCardUI {...rest} className={this.getClassName()} ref={innerRef}>
         <BorderUI borderColor={promoColor} />
         <ContentUI>{children}</ContentUI>
       </PromoCardUI>

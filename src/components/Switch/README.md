@@ -17,7 +17,7 @@ A Switch component is an alternative to a [Checkbox](../Checkbox) that provides 
 | id        | `string`          | Sets a custom ID for the component.                                         |
 | isLoading | `bool`            | Activates the loading state.                                                |
 | inputRef  | `function`        | Callback to retrieve the `input` node.                                      |
-| innerRef  | `function`        | Callback to retrieve the `input` node.                                      |
+| ref       | `function`        | Callback to retrieve the `input` node.                                      |
 | name      | `string`          | Name attribute for the component's `input` node.                            |
 | onBlur    | `function`        | Callback function when component blurs.                                     |
 | onClick   | `function`        | Callback function when component is clicked.                                |

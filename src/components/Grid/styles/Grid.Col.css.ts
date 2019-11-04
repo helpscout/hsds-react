@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import { breakpoints } from '../../../styles/mixins/breakpoints.css'
 
 export const config = {

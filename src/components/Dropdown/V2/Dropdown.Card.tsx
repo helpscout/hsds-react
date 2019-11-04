@@ -17,7 +17,7 @@ export interface State {
 
 export class Card extends React.PureComponent<DropdownCardProps> {
   static defaultProps = {
-    innerRef: noop,
+    cardRef: noop,
     style: {},
   }
 
@@ -71,7 +71,7 @@ export class Card extends React.PureComponent<DropdownCardProps> {
   }
 
   render() {
-    const { className, children, innerRef, ...rest } = this.props
+    const { className, children, cardRef, ...rest } = this.props
 
     const componentClassName = classNames(Card.className, className)
 
@@ -79,7 +79,7 @@ export class Card extends React.PureComponent<DropdownCardProps> {
       <CardUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={cardRef}
         style={this.getStyles()}
       >
         <EventListener event="resize" handler={this.updateWidth} />
@@ -89,7 +89,6 @@ export class Card extends React.PureComponent<DropdownCardProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Card)(Card)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Card)(Card)
 
 const ConnectedCard: any = connect(

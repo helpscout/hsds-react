@@ -82,7 +82,7 @@ class StickyActions extends React.PureComponent<
 
   render() {
     return (
-      <StickyActionsUI innerRef={this.setNodeRef}>
+      <StickyActionsUI ref={this.setNodeRef as any}>
         {this.props.children}
       </StickyActionsUI>
     )

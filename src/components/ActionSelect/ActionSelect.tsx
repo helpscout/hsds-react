@@ -165,7 +165,7 @@ export class ActionSelect extends React.PureComponent<
       <ActionSelectUI
         className={this.getClassName()}
         data-cy={this.props['data-cy']}
-        innerRef={innerRef}
+        ref={innerRef as any}
       >
         <div className="c-ActionSelectDropdownWrapper">
           <SelectDropdown
@@ -181,7 +181,7 @@ export class ActionSelect extends React.PureComponent<
           animationDuration={animationDuration}
           animationEasing={animationEasing}
           borderWidth={1}
-          innerRef={this.setContentNode}
+          mainRef={this.setContentNode}
           isOpen={this.state.isOpen}
           onResize={onResize}
           resizeCount={this.state.resizeCount}

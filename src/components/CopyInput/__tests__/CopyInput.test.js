@@ -44,8 +44,8 @@ describe('Copy button', () => {
   })
 })
 
-describe('innerRef', () => {
-  test('Can retrieve innerRef DOM node', () => {
+describe('ref', () => {
+  test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<CopyInput innerRef={spy} />)
     const o = wrapper.find('input').getDOMNode()

@@ -30,7 +30,7 @@ export class Header extends React.PureComponent<Props> {
       <HeaderUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef}
         tabIndex={null}
       >
         <Heading size="small" light>
@@ -41,7 +41,6 @@ export class Header extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Header)(Header)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Header)(Header)
 
 export default PropConnectedComponent

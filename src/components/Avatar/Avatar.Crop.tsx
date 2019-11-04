@@ -28,6 +28,7 @@ export const AvatarCrop = props => {
   }
 
   return (
+    // @ts-ignore
     <CropUI className={componentClassName} hasImage={hasImage} style={styles}>
       {children}
     </CropUI>

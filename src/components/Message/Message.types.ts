@@ -9,6 +9,7 @@ export type Message = {
   rtl?: boolean
   to?: any
   type?: MessageType
+  onClick?(event: Event): void
 }
 
 export type MessageChat = Message & {

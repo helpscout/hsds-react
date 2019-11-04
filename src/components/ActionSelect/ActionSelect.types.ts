@@ -5,7 +5,7 @@ export interface ActionSelectBaseProps {
   animationEasing: string
   children?: any
   className?: string
-  innerRef: (node: HTMLElement) => void
+  mainRef?: (node: HTMLElement) => void
   isFadeContentOnOpen: boolean
   onResize: () => void
   selectedKey?: string

@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 
@@ -7,7 +8,7 @@ export const config = {
   transition: 'opacity 100ms linear',
 }
 
-const css = `
+export const ChatBlockUI = styled.div`
   ${baseStyles}
   display: block;
   margin: 0 0 2px;
@@ -77,5 +78,3 @@ const css = `
     }
   }
 `
-
-export default css

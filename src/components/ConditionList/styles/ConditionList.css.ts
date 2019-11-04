@@ -1,5 +1,5 @@
 import PageConfig from '../../Page/styles/Page.config.css'
-import styled from '../../styled'
+import styled from 'styled-components'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'

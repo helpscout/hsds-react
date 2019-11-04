@@ -320,7 +320,7 @@ export class EditableFieldComposite extends React.PureComponent<
           hasActiveFields && STATES_CLASSNAMES.hasActiveFields,
           size === 'lg' && STATES_CLASSNAMES.isLarge
         )}
-        innerRef={this.setGroupNode}
+        ref={this.setGroupNode}
       >
         {fields}
         <ComposedMaskUI
@@ -328,7 +328,7 @@ export class EditableFieldComposite extends React.PureComponent<
             COMPOSITE_CLASSNAMES.mask,
             hasActiveFields && STATES_CLASSNAMES.isHidden
           )}
-          innerRef={this.setMaskNode}
+          ref={this.setMaskNode}
           onKeyDown={this.handleMaskKeyDown}
         >
           {this.renderMaskContent()}

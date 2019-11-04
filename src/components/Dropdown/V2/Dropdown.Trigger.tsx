@@ -15,7 +15,7 @@ export interface Props {
   className?: string
   closeDropdown: () => void
   disabled: boolean
-  innerRef: (node: HTMLElement) => void
+  triggerRef: (node: HTMLElement) => void
   id?: string
   isOpen: boolean
   onBlur: (event: Event) => void
@@ -30,7 +30,7 @@ export interface Props {
 export class Trigger extends React.PureComponent<Props> {
   static defaultProps = {
     disabled: false,
-    innerRef: noop,
+    triggerRef: noop,
     isOpen: false,
     onBlur: noop,
     onFocus: noop,
@@ -93,7 +93,7 @@ export class Trigger extends React.PureComponent<Props> {
       disabled,
       onBlur,
       onFocus,
-      innerRef,
+      triggerRef,
       isOpen,
       ...rest
     } = this.props
@@ -113,7 +113,7 @@ export class Trigger extends React.PureComponent<Props> {
         aria-expanded={isOpen}
         className={componentClassName}
         disabled={disabled}
-        innerRef={innerRef}
+        ref={triggerRef}
         onBlur={onBlur}
         onFocus={onFocus}
         onClick={this.handleOnClick}
@@ -123,7 +123,6 @@ export class Trigger extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Trigger)(Trigger)
 const PropConnectedTrigger = propConnect(COMPONENT_KEY.Trigger)(Trigger)
 
 export const mapStateToProps = (state: any) => {

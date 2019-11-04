@@ -133,7 +133,7 @@ class Switch extends React.PureComponent<Props, State> {
     this.props.onMouseUp(event)
   }
 
-  setInnerRef = (node: HTMLElement) => {
+  setRef = (node: HTMLElement) => {
     this.props.inputRef(node)
     this.props.innerRef(node)
   }
@@ -169,7 +169,7 @@ class Switch extends React.PureComponent<Props, State> {
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
         onClick={this.handleOnClick}
-        innerRef={this.setInnerRef}
+        ref={this.setRef}
         role="switch"
         type="checkbox"
         value={value}

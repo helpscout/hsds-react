@@ -22,7 +22,13 @@ module.exports = api => {
         },
       },
     ],
-    'emotion',
+    [
+      'babel-plugin-styled-components',
+      {
+        displayName: true,
+        fileName: true,
+      },
+    ],
   ]
 
   if (isTest) {

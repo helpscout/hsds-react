@@ -1,6 +1,6 @@
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
-import styled from '../../styled'
+import styled from 'styled-components'
 import { config as pageConfig } from './Page.css'
 
 export const config = {
@@ -8,9 +8,12 @@ export const config = {
   marginTop: 30,
   spacing: 10,
 }
+interface ActionsUIProps {
+  withStickyWrapper?: any
+  zIndex?: any
+}
 
-export const ActionsUI = styled('div')`
-  ${baseStyles};
+export const ActionsUI = styled('div')<ActionsUIProps>`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -49,7 +52,7 @@ export const ActionsBlockUI = styled('div')`
   min-width: 0;
 `
 
-export const StickyActionsWrapperUI = styled('div')`
+export const StickyActionsWrapperUI = styled('div')<{ zIndex: any }>`
   ${baseStyles};
   position: fixed;
   bottom: 0;

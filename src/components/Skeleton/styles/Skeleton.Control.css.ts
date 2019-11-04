@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Block from '../Skeleton.Block'
 import forEach from '../../../styles/utilities/forEach'
 

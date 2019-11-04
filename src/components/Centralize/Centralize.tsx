@@ -32,7 +32,7 @@ export class Centralize extends React.PureComponent<Props> {
       <CentralizeUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
       >
         {children}
       </CentralizeUI>

@@ -1,8 +1,8 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 
-import Button from '../../Button'
+import Button from '../../Button/ButtonV2'
 import Text from '../../Text'
 import Heading from '../../Heading'
 
@@ -18,7 +18,7 @@ const config = {
   baseNavWidth: '250px',
 }
 
-export const FadeInOutUI = styled('div')`
+export const FadeInOutUI = styled.div`
   display: flex;
   flex: 1 1 100%;
   align-items: center;
@@ -27,7 +27,7 @@ export const FadeInOutUI = styled('div')`
   will-change: opacity;
 `
 
-export const IconUI = styled('span')`
+export const IconUI = styled.span`
   color: ${getColor('grey.600')};
   margin-right: 10px;
   margin-left: -2px;
@@ -114,7 +114,7 @@ export const ButtonFooterUI = styled(Button)`
   }
 `
 
-export const FooterUI = styled('footer')`
+export const FooterUI = styled.footer`
   display: flex;
 
   ${DropdownUI}, ${ButtonFooterUI} {
@@ -134,7 +134,7 @@ export const FooterUI = styled('footer')`
   }
 `
 
-export const SectionUI = styled('div')`
+export const SectionUI = styled.div`
   margin-bottom: 16px;
 
   &:last-child {
@@ -146,7 +146,7 @@ export const SectionUI = styled('div')`
   }
 `
 
-export const ItemUI = styled('div')`
+export const ItemUI = styled.div`
   padding-bottom: 2px;
 
   &.is-muted {
@@ -183,7 +183,7 @@ export const ItemUI = styled('div')`
   }
 `
 
-export const HeaderUI = styled('header')`
+export const HeaderUI = styled.header`
   padding: 0 ${config.sidePadding};
   color: ${getColor('charcoal.500')};
   margin-bottom: calc(40px - ${config.badgeHeight});
@@ -200,13 +200,13 @@ export const HeaderUI = styled('header')`
   }
 `
 
-export const DropdownHeaderUI = styled('div')`
+export const DropdownHeaderUI = styled.div`
   .is-open .c-SideNavigation__Heading {
     color: ${getColor('blue.600')};
   }
 `
 
-export const HeaderLinkUI = styled('a')`
+export const HeaderLinkUI = styled.a`
   color: ${getColor('charcoal.500')};
   text-decoration: none;
 
@@ -225,7 +225,7 @@ export const SectionHeadingUI = styled(Heading)`
   }
 `
 
-export const BadgeUI = styled('span')`
+export const BadgeUI = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,19 +241,19 @@ export const BadgeUI = styled('span')`
   position: relative;
 `
 
-export const SideNavigationCollapsableUI = styled('div')`
+export const SideNavigationCollapsableUI = styled.div`
   position: relative;
   height: 100%;
   width: ${config.collapsableHeight};
 `
 
-export const SideNavigationFloatingUI = styled('div')`
+export const SideNavigationFloatingUI = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
 `
 
-export const SideNavigationUI = styled('nav')`
+export const SideNavigationUI = styled.nav`
   ${baseStyles};
   background-color: ${getColor('grey.300')};
   border-right: ${config.border};

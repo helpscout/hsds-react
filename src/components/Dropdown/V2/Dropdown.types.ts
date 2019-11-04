@@ -38,7 +38,7 @@ export interface DropdownMenuContainerProps {
   focusItem: (...args: any[]) => void
   getState: (...args: any[]) => void
   id?: string
-  innerRef: (node: HTMLElement) => void
+  menuRef: (node: HTMLElement) => void
   isLoading: boolean
   isOpen: boolean
   items: Array<any>
@@ -119,7 +119,7 @@ export interface DropdownCardProps {
   borderColor?: string
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  cardRef: (node: HTMLElement) => void
   minWidth?: number | string
   minHeight?: number | string
   maxHeight?: number | string

@@ -243,7 +243,7 @@ export class Pagination extends React.PureComponent<Props> {
         aria-label="Pagination"
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef}
       >
         <InformationUI>
           <Text size={13}>

@@ -2,12 +2,9 @@ import * as React from 'react'
 import { UISize } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Block.css'
-import { COMPONENT_KEY } from './Card.utils'
+import { BlockUI } from './styles/Block.css'
 
 type Props = {
   bgMuted: boolean
@@ -57,9 +54,9 @@ class Block extends React.PureComponent<Props> {
     )
 
     const contentMarkup = (
-      <div {...getValidProps(rest)} className={componentClassName}>
+      <BlockUI {...getValidProps(rest)} className={componentClassName}>
         {children}
-      </div>
+      </BlockUI>
     )
 
     const componentMarkup = scrollable ? (
@@ -78,8 +75,4 @@ class Block extends React.PureComponent<Props> {
   }
 }
 
-const StyledBlock = styled(Block)(css)
-
-namespaceComponent(COMPONENT_KEY.Block)(StyledBlock)
-
-export default StyledBlock
+export default Block

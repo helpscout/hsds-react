@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from 'styled-components'
 import {
   COLOURS,
   ACTIONS_CLASSNAMES,
@@ -6,7 +6,7 @@ import {
   OTHERCOMPONENTS_CLASSNAMES,
 } from '../EditableField.utils'
 
-export const ComponentUI = styled('div')`
+export const ComponentUI = styled('div')<any>`
   ${({ numberOfActions }) => `width: ${numberOfActions * 25 + 5}px;`}
   height: 21px;
   position: absolute;

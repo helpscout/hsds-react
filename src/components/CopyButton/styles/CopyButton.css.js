@@ -1,5 +1,5 @@
 import { getColor } from '../../../styles/utilities/color'
-import styled from '../../styled'
+import styled from 'styled-components'
 import Button from '../../Button'
 
 export const config = {

@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Scrollable from '../../Scrollable'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 

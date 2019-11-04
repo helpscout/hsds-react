@@ -87,8 +87,8 @@ describe('Label', () => {
   })
 })
 
-describe('InnerRef', () => {
-  test('Can retrieve innerRef DOM node', () => {
+describe('ref', () => {
+  test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<EditableField name="company" innerRef={spy} />)
     const o = wrapper

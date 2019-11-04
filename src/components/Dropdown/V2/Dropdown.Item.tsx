@@ -10,7 +10,7 @@ import Menu from './Dropdown.Menu'
 import {
   ActionUI,
   ActionContentUI,
-  makeItemUI,
+  ItemUI,
   SubMenuIncidatorUI,
   WrapperUI,
 } from './Dropdown.css.js'
@@ -116,7 +116,7 @@ export class Item extends React.PureComponent<Props> {
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
-      /* istanbul ignore else */
+      /* istanbul ignore next */
       if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
         setMenuPositionStyles({
           dropRight,
@@ -140,7 +140,7 @@ export class Item extends React.PureComponent<Props> {
 
     return {
       className: 'c-DropdownV2MenuWrapper',
-      innerRef: this.setWrapperNodeRef,
+      ref: this.setWrapperNodeRef,
       [SELECTORS.indexAttribute]: index,
       [SELECTORS.valueAttribute]: value,
     }
@@ -155,7 +155,7 @@ export class Item extends React.PureComponent<Props> {
           <Card>
             <Menu
               aria-labelledby={actionId}
-              innerRef={this.setMenuNodeRef}
+              menuRef={this.setMenuNodeRef}
               isSubMenu
               id={subMenuId}
             >
@@ -223,7 +223,7 @@ export class Item extends React.PureComponent<Props> {
 
     const actionProps = {
       id: actionId,
-      innerRef: this.setActionNodeRef,
+      ref: this.setActionNodeRef,
       className: componentClassName,
     }
 
@@ -243,7 +243,11 @@ export class Item extends React.PureComponent<Props> {
   }
   setActionNodeRef = node => (this.actionNode = node)
   setWrapperNodeRef = node => (this.wrapperNode = node)
-  setMenuNodeRef = node => (this.menuNode = node)
+
+  /* istanbul ignore next */
+  setMenuNodeRef = node => {
+    this.menuNode = node
+  }
 
   render() {
     const { className, disabled, href, isSelectionClearer, type } = this.props
@@ -260,7 +264,7 @@ export class Item extends React.PureComponent<Props> {
     if (type === 'group' || type === 'header') return <Header {...this.props} />
     if (type === 'divider') return <Divider />
 
-    const ItemUI = href ? makeItemUI('a') : makeItemUI('div')
+    const selector = href ? 'a' : 'div'
 
     return (
       <ItemUI
@@ -268,8 +272,9 @@ export class Item extends React.PureComponent<Props> {
         className={componentClassName}
         aria-disabled={disabled}
         onClick={this.handleOnClick}
-        innerRef={this.setNodeRef}
+        ref={this.setNodeRef}
         role={hasSubMenu ? 'group' : 'option'}
+        as={selector}
       >
         {this.renderContent()}
         {this.renderSubMenu()}
@@ -278,7 +283,6 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Item)(Item)
 const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 
 const ConnectedItem: any = connect(

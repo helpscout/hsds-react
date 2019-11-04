@@ -359,8 +359,8 @@ describe('Styles', () => {
   })
 })
 
-describe('innerRef', () => {
-  test('Can retrieve innerRef DOM node', () => {
+describe('ref', () => {
+  test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<Switch innerRef={spy} />)
     const o = wrapper.find('input').getDOMNode()

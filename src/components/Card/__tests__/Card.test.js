@@ -164,7 +164,7 @@ describe('Link', () => {
     const wrapper = mount(<Card autoWordWrap />)
     const o = wrapper.find('.c-Card')
 
-    expect(o.props().autoWordWrap).toBeFalsy()
+    expect(o.first().props().autoWordWrap).toBeFalsy()
   })
 
   test('Can pass autoWordWrap to Link', () => {

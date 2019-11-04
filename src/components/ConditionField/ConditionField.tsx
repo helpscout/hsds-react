@@ -64,7 +64,7 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     return (
       <FieldWrapperUI data-cy="ConditionFieldWrapper">
         {this.renderOperator()}
-        <FieldUI {...rest} className={this.getClassName()}>
+        <FieldUI {...rest} ref={innerRef} className={this.getClassName()}>
           <FieldContentWrapperUI data-cy="ConditionFieldContentWrapper">
             <Flexy align="top" gap="md">
               {children}

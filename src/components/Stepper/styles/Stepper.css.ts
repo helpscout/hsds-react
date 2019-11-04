@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Text from '../../Text'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
@@ -76,7 +76,7 @@ export const GhostTitleUI = styled(Text)`
   visibility: hidden;
 `
 
-export const CircleUI = styled('div')`
+export const CircleUI = styled('div')<{ isActive: any }>`
   ${baseStyles};
   background: ${config.backgroundColor};
   box-shadow: 0 0 0 3px ${config.backgroundColor};

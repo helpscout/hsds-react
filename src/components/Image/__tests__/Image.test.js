@@ -65,22 +65,16 @@ describe('Styles', () => {
 describe('Width/Height', () => {
   test('Does not render with any width/height by default', () => {
     const wrapper = mount(<Image src="mugatu.jpg" />)
-    const o = wrapper.find('img')
 
     expect(wrapper.prop('height')).toBe(undefined)
     expect(wrapper.prop('width')).toBe(undefined)
-    expect(o.prop('style').width).toBe(undefined)
-    expect(o.prop('style').height).toBe(undefined)
   })
 
   test('Renders with a width/height, if specified', () => {
     const wrapper = mount(<Image src="mugatu.jpg" width={20} height={100} />)
-    const o = wrapper.find('img')
 
     expect(wrapper.prop('height')).toBe(100)
     expect(wrapper.prop('width')).toBe(20)
-    expect(o.prop('style').width).toBe(undefined)
-    expect(o.prop('style').height).toBe(undefined)
   })
 
   test('Renders with a width/height, with style overrides, if specified', () => {
@@ -92,12 +86,9 @@ describe('Width/Height', () => {
         style={{ width: 21, height: 101 }}
       />
     )
-    const o = wrapper.find('img')
 
     expect(wrapper.prop('height')).toBe(100)
     expect(wrapper.prop('width')).toBe(20)
-    expect(o.prop('style').width).toBe(21)
-    expect(o.prop('style').height).toBe(101)
   })
 
   test('Renders with an aspect fit width/height, if specified', () => {
@@ -110,12 +101,9 @@ describe('Width/Height', () => {
         maxHeight={100}
       />
     )
-    const o = wrapper.find('img')
 
     expect(wrapper.prop('width')).toBe(300)
     expect(wrapper.prop('height')).toBe(150)
-    expect(o.prop('style').width).toBe(100)
-    expect(o.prop('style').height).toBe(50)
   })
 
   test('Use the width/height as aspect fit width/height if less than max', () => {
@@ -128,11 +116,7 @@ describe('Width/Height', () => {
         maxHeight={100}
       />
     )
-    const o = wrapper.find('img')
-
     expect(wrapper.prop('width')).toBe(75)
     expect(wrapper.prop('height')).toBe(50)
-    expect(o.prop('style').width).toBe(75)
-    expect(o.prop('style').height).toBe(50)
   })
 })

@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from 'styled-components'
 import Button from '../../Button/index'
 import buttonConfig from '../../Button/styles/Button.config.css.js'
 import forEach from '../../../styles/utilities/forEach'
@@ -17,7 +17,7 @@ export const IconButtonUI = styled(Button)`
 
   &.is-borderless,
   &.is-borderless:hover {
-    border-color: transparent;
+    border-color: transparent !important;
   }
 
   ${makeButtonSizeStyles};

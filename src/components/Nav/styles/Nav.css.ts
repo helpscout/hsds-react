@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Flexy from '../../Flexy'
 import Text from '../../Text'
 import { getColor } from '../../../styles/utilities/color'
@@ -9,14 +9,14 @@ export const config = {
   padding: '10px',
 }
 
-export const NavUI = styled('nav', { pure: false })`
+export const NavUI = styled('nav')`
   --BlueConfigGlobalFontSize: 14px;
   ${baseStyles};
   display: flex;
   margin: 0 auto;
 `
 
-export const ListUI = styled('ul', { pure: false })`
+export const ListUI = styled('ul')`
   ${baseStyles};
   display: flex;
   list-style: none;
@@ -24,7 +24,7 @@ export const ListUI = styled('ul', { pure: false })`
   padding: 0;
 `
 
-export const ItemUI = styled('li', { pure: false })`
+export const ItemUI = styled('li')`
   padding: 0;
   transform: translateZ(0);
 
@@ -80,7 +80,7 @@ export const ErrorWrapperUI = styled(Flexy.Item)`
   width: 20px;
 `
 
-export const IndicatorUI = styled('div')`
+export const IndicatorUI = styled('div')<{ isActive?: any }>`
   background: ${getColor('blue.500')};
   border-radius: 9999px;
   bottom: -1px;

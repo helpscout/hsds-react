@@ -1,5 +1,5 @@
 import base from '../../../styles/resets/base.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const ItemUI = styled('div')`
   ${base} &.is-inlineItem {

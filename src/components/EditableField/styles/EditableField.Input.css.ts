@@ -1,4 +1,4 @@
-import styled from '../../styled/index'
+import styled from 'styled-components'
 import { getColor } from '../../../styles/utilities/color'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 
@@ -57,7 +57,7 @@ export const ComponentUI = styled('div')`
   }
 `
 
-export const InputWrapperUI = styled('div')`
+export const InputWrapperUI = styled('div')<any>`
   position: relative;
   height: ${input.height.medium};
   width: 100%;

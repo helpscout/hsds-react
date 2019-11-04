@@ -1094,7 +1094,7 @@ export class EditableField extends React.Component<
         <ComponentUI
           {...getValidProps(rest)}
           className={this.getClassName()}
-          innerRef={this.setEditableNode}
+          ref={this.setEditableNode}
           inline
         >
           {this.renderFieldsInline()}
@@ -1106,7 +1106,7 @@ export class EditableField extends React.Component<
       <ComponentUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={this.setEditableNode}
+        ref={this.setEditableNode}
       >
         {!floatingLabels ? (
           <label

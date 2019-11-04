@@ -8,7 +8,7 @@ export interface Props {
   color?: string
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  arrowRef: React.RefObject<HTMLInputElement>
   placement: string
   offset: number
   size: number
@@ -21,7 +21,7 @@ export interface Props {
 export class Arrow extends React.PureComponent<Props> {
   static defaultProps = {
     'data-cy': 'PopArrow',
-    innerRef: noop,
+    ref: null,
     offset: 0,
     placement: 'top',
     showArrow: true,
@@ -30,14 +30,12 @@ export class Arrow extends React.PureComponent<Props> {
     zIndex: 999,
   }
 
-  setArrowNodeRef = node => this.props.innerRef(node)
-
   render() {
     const {
       className,
       children,
       color,
-      innerRef,
+      arrowRef,
       placement,
       offset,
       showArrow,
@@ -81,7 +79,7 @@ export class Arrow extends React.PureComponent<Props> {
     return (
       <ArrowUI
         className={wrapperClassName}
-        innerRef={this.setArrowNodeRef}
+        ref={this.props.arrowRef}
         data-x-placement={placement}
         color={color}
         size={size}

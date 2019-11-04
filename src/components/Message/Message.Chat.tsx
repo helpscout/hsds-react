@@ -2,15 +2,12 @@ import * as React from 'react'
 import { MessageBubble } from './Message.types'
 import Bubble from './Message.Bubble'
 import Caption from './Message.Caption'
-import ChatBlock, { MetaPosition } from './Message.ChatBlock'
+import { MetaPosition } from './Message.ChatBlock'
 import Flexy from '../Flexy'
 import Spinner from '../Spinner'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import css from './styles/Chat.css'
-import { COMPONENT_KEY } from './Message.utils'
+import { ChatBlockUI } from './styles/Chat.css'
 
 type Props = MessageBubble & {
   bubbleClassName?: string
@@ -112,7 +109,7 @@ export class Chat extends React.PureComponent<Props> {
     )
 
     return (
-      <ChatBlock
+      <ChatBlockUI
         className={componentClassName}
         meta={metaMarkup}
         metaPosition={metaPosition}
@@ -131,11 +128,9 @@ export class Chat extends React.PureComponent<Props> {
           typing={typing}
           type={type}
         />
-      </ChatBlock>
+      </ChatBlockUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Chat)(Chat)
-
-export default styled(Chat)(css)
+export default Chat

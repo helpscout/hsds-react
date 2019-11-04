@@ -1,5 +1,5 @@
 import FluffyCard from '../../FluffyCard'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const config = {
   headerOffset: 10,

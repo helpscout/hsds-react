@@ -37,7 +37,7 @@ export class TabBar extends React.Component<Props> {
       <TabBarUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
         align={align}
       >
         <ToolbarUI placement="top">

@@ -68,7 +68,7 @@ export class CloseButton extends React.PureComponent<Props> {
         aria-label="Close"
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={innerRef}
+        ref={innerRef}
       >
         {this.renderIcon()}
       </CloseButtonUI>

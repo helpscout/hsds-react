@@ -1,6 +1,6 @@
 import Flexy from '../../Flexy'
 import Nav from '../../Nav'
-import styled from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import forEach from '../../../styles/utilities/forEach'
 import { getColor } from '../../../styles/utilities/color'

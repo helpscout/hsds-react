@@ -31,10 +31,11 @@ export default class Manager extends React.Component<
     }
   }
 
-  getReferenceRef = referenceNode =>
+  getReferenceRef = referenceNode => {
     this.setState(({ context }) => ({
       context: { ...context, referenceNode },
     }))
+  }
 
   render() {
     return (

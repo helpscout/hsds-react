@@ -133,7 +133,7 @@ export class MessageCard extends React.PureComponent<Props> {
         <MessageCardUI
           {...getValidProps(rest)}
           className={this.getClassName()}
-          innerRef={innerRef}
+          ref={innerRef}
         >
           {this.renderTitle()}
           {this.renderSubtitle()}

@@ -160,7 +160,7 @@ class Modal extends React.PureComponent<ModalProps> {
 
     return (
       shouldRenderClose && (
-        <CloseUI className="c-Modal__close" innerRef={this.setCloseNode}>
+        <CloseUI className="c-Modal__close" ref={this.setCloseNode}>
           <CloseButton onClick={forceClosePortal} />
         </CloseUI>
       )

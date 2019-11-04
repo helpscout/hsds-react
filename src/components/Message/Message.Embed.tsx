@@ -1,12 +1,8 @@
 import * as React from 'react'
 import { MessageChat, MessageThemeContext } from './Message.types'
-import styled from '../styled'
-import Chat from './Message.Chat'
 import LoadingDots from '../LoadingDots'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Embed.css'
-import { COMPONENT_KEY } from './Message.utils'
+import { EmbedUI } from './styles/Embed.css'
 
 type Props = MessageChat & {
   className?: string
@@ -69,7 +65,7 @@ class Embed extends React.Component<Props, State> {
     )
 
     return (
-      <Chat
+      <EmbedUI
         {...rest}
         bubbleClassName="c-MessageEmbed__bubble"
         className={componentClassName}
@@ -80,11 +76,9 @@ class Embed extends React.Component<Props, State> {
           ref={this.setNodeRef}
         />
         {isLoading && <LoadingDots className="c-MessageEmbed__loading" />}
-      </Chat>
+      </EmbedUI>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Embed)(Embed)
-
-export default styled(Embed)(css)
+export default Embed

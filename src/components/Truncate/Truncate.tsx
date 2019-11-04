@@ -2,9 +2,8 @@ import * as React from 'react'
 import EventListener from '../EventListener'
 import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
-import styled from '../styled'
 import { truncateMiddle } from '../../utilities/strings'
-import css from './styles/Truncate.css'
+import { TruncateUI } from './styles/Truncate.css'
 import { TruncateProps, TruncateState } from './Truncate.types'
 import { TruncateWithSplitterUI } from './styles/Truncate.WithSplitter.css'
 import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
@@ -176,14 +175,14 @@ export class Truncate extends React.PureComponent<
     )
 
     return (
-      <span
+      <TruncateUI
         className={componentClassName}
         ref={(ref: any) => (this.node = ref)}
         {...rest}
       >
         <EventListener event="resize" handler={this.handleOnResize} />
         {content}
-      </span>
+      </TruncateUI>
     )
   }
 }
@@ -222,4 +221,4 @@ export function getTruncatedContent(props: any): string {
   return word
 }
 
-export default styled(Truncate)(css)
+export default Truncate

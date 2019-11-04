@@ -87,7 +87,7 @@ export class Emoticon extends React.PureComponent<Props> {
       <EmoticonUI
         {...getValidProps(rest)}
         className={this.getClassNames()}
-        innerRef={innerRef}
+        ref={innerRef}
       >
         <Face isActive={isActive} isDisabled={isDisabled}>
           <IconUI

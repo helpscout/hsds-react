@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Toolbar from '../../Toolbar'
 
 import { getColor } from '../../../styles/utilities/color'
@@ -23,7 +23,7 @@ const getDirection = align => {
   }
 }
 
-export const TabBarUI = styled('nav')`
+export const TabBarUI = styled('nav')<{ align?: any }>`
   ${baseStyles};
   ${setFontSize(14)};
 

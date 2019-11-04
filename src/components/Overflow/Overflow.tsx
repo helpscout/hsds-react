@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { remapScrollingPlane } from '../../utilities/scrolling'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
@@ -11,7 +10,7 @@ import {
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
-import css from './styles/Overflow.css'
+import { OverflowUI } from './styles/Overflow.css'
 
 type Props = {
   backgroundColor?: string
@@ -270,7 +269,7 @@ export class Overflow extends React.PureComponent<Props, State> {
     )
 
     return (
-      <div className={componentClassName} {...rest}>
+      <OverflowUI className={componentClassName} {...rest}>
         {faderLeftMarkup}
         <div
           className="c-Overflow__container"
@@ -285,9 +284,9 @@ export class Overflow extends React.PureComponent<Props, State> {
         </div>
         {faderRightMarkup}
         <EventListener event="resize" handler={this.handleOnResize} />
-      </div>
+      </OverflowUI>
     )
   }
 }
 
-export default styled(Overflow)(css)
+export default Overflow

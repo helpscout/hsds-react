@@ -33,8 +33,8 @@ describe('children', () => {
   })
 })
 
-describe('innerRef', () => {
-  test('Can set an innerRef to a DOM node', () => {
+describe('ref', () => {
+  test('Can set an ref to a DOM node', () => {
     const spy = jest.fn()
     mount(<Menu innerRef={spy} />)
 

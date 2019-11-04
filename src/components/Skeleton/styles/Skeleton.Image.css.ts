@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Block from '../Skeleton.Block'
 
 export const ImageUI = styled(Block)`

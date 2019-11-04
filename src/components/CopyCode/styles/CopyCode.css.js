@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import CopyButton from '../../CopyButton'
 import { getColor } from '../../../styles/utilities/color'
 

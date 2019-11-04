@@ -29,7 +29,12 @@ describe('ClassNames', () => {
     const wrapper = mount(<Message className="mugatu" />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
+    expect(
+      o
+        .first()
+        .getDOMNode()
+        .classList.contains('mugatu')
+    ).toBeTruthy()
   })
 })
 
@@ -133,13 +138,23 @@ describe('Styles', () => {
   test('Applies "from" styles, if defined', () => {
     const wrapper = mount(<Message from />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-from')).toBeTruthy()
+    expect(
+      wrapper
+        .first()
+        .getDOMNode()
+        .classList.contains('is-from')
+    ).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
     const wrapper = mount(<Message to />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-to')).toBeTruthy()
+    expect(
+      wrapper
+        .first()
+        .getDOMNode()
+        .classList.contains('is-to')
+    ).toBeTruthy()
   })
 })
 
@@ -152,7 +167,7 @@ describe('Context', () => {
     )
     const el = wrapper.find(ui.base)
 
-    expect(el.props().className).toContain('is-theme-embed')
+    expect(el.first().props().className).toContain('is-theme-embed')
   })
 
   test('Can render from, if theme is embed', () => {

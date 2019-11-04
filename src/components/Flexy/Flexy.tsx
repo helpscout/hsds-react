@@ -59,6 +59,4 @@ class Flexy extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Flexy)(Flexy)
-
 export default Flexy

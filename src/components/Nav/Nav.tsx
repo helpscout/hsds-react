@@ -33,7 +33,7 @@ export class Nav extends React.Component<Props> {
       <NavUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef}
       >
         <ListUI className="c-NavList">{children}</ListUI>
       </NavUI>

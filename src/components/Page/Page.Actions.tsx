@@ -78,7 +78,7 @@ export class Actions extends React.PureComponent<
         data-cy="PageActionsContent"
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={withStickyWrapper ? innerRef : null}
+        ref={(withStickyWrapper ? innerRef : null) as any}
         withStickyWrapper={withStickyWrapper}
         role="toolbar"
       >

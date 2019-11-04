@@ -719,7 +719,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       className: fieldClassName,
       disabled,
       id,
-      innerRef: this.setInputNodeRef,
+      ref: this.setInputNodeRef,
       maxLength: withCharValidator ? charValidatorLimit : maxLength,
       name,
       onBlur: this.handleOnInputBlur,

@@ -22,13 +22,13 @@ export class <%= name %> extends React.PureComponent<<%= name %>Props> {
   }
 
   render() {
-    const { children, innerRef, ...rest } = this.props
+    const { children, ref, ...rest } = this.props
 
     return (
       <<%= name %>UI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef}
       >
         {children}
       </<%= name %>UI>

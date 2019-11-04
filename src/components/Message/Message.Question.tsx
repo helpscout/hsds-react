@@ -1,7 +1,5 @@
 import * as React from 'react'
 import Chat from './Message.Chat'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Message.utils'
 
 type Props = {
   primary?: boolean
@@ -13,7 +11,5 @@ const Question = (props: Props) => {
 
   return <Chat primary title="Question:" {...rest} />
 }
-
-namespaceComponent(COMPONENT_KEY.Question)(Question)
 
 export default Question

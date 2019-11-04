@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import { TRUNCATED_CLASSNAMES } from '../EditableField.utils'
 
 export const TruncatedUI = styled('div')`

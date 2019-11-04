@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import Animate from '../../Animate'
 import Text from '../../Text'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'

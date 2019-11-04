@@ -213,6 +213,7 @@ class Choice extends React.PureComponent<ChoiceProps, ChoiceState> {
 
     const labelMarkup = this.getLabelMarkup()
 
+    // @ts-ignore
     const inputMarkup = (
       <span className="c-Choice__control">
         <Input {...inputProps} />

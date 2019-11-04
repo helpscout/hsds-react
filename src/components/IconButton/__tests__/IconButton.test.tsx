@@ -155,8 +155,7 @@ describe('Events', () => {
 
 describe('Styles', () => {
   test('Renders borderless, by default', () => {
-    const wrapper = cy.render(<IconButton kind="secondary" />)
-
+    const wrapper = cy.render(<IconButton />)
     expect(wrapper.style('border-color')).toBe('transparent')
   })
 

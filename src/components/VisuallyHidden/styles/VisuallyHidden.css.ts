@@ -1,6 +1,7 @@
+import styled from 'styled-components'
 import visuallyHidden from '../../../styles/mixins/visuallyHidden.css'
 
-const css = `
+export const VisuallyHiddenUI = styled.span`
   ${visuallyHidden()}
 
   &.is-focusable {
@@ -15,5 +16,3 @@ const css = `
     }
   }
 `
-
-export default css

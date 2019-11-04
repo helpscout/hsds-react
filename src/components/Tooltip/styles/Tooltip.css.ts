@@ -1,5 +1,5 @@
 import baseStyles from '../../../styles/resets/base.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 import Pop from '../../Pop'
 import { getColor } from '../../../styles/utilities/color'
 

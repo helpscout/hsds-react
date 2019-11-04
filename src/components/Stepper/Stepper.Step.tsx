@@ -53,7 +53,7 @@ export class Step extends React.PureComponent<Props> {
         {...getValidProps(rest)}
         className={this.getClassName()}
         onClick={this.handleOnClick}
-        innerRef={innerRef}
+        ref={innerRef as any}
         title={title}
       >
         <Text className="c-StepperStepTitle" size="14">

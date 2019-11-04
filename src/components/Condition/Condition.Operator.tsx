@@ -18,6 +18,7 @@ export const Operator = (props: ConditionOperatorProps) => {
   )
 
   return (
+    // @ts-ignore
     <OperatorUI {...rest} className={componentClassName}>
       <Text block lineHeightReset size="11" weight={500}>
         {label}

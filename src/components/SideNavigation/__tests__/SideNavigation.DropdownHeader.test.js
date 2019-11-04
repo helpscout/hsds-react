@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
+import { DropdownHeader } from '../SideNavigation.DropdownHeader'
 import AutoDropdown from '../../AutoDropdown/AutoDropdown'
 import { Trigger } from '../../Dropdown/V2/Dropdown.Trigger'
 
@@ -47,8 +48,8 @@ describe('Children', () => {
 
 describe('ID', () => {
   test('Has a unique ID', () => {
-    const wrapper = mount(<SideNavigation.DropdownHeader />)
-    expect(wrapper.instance().wrappedInstance.id).toBeTruthy()
+    const wrapper = mount(<DropdownHeader />)
+    expect(wrapper.instance().id).toBeTruthy()
   })
 })
 
@@ -57,13 +58,13 @@ describe('Actions', () => {
     const forceNavVisibleOn = jest.fn()
     const forceNavVisibleOff = jest.fn()
     const wrapper = mount(
-      <SideNavigation.DropdownHeader
+      <DropdownHeader
         forceNavVisibleOn={forceNavVisibleOn}
         forceNavVisibleOff={forceNavVisibleOff}
       />
     )
 
-    const id = wrapper.instance().wrappedInstance.id
+    const id = wrapper.instance().id
 
     wrapper.find(Trigger).simulate('click')
     wrapper.find(Trigger).simulate('click')

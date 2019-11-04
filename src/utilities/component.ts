@@ -16,13 +16,13 @@ export const CONTROL_TYPE = [
 ]
 
 export const CHAT_TYPE = [
-  'Message.Action',
-  'Message.Attachment',
-  'Message.Chat',
-  'Message.Content',
-  'Message.Embed',
-  'Message.Media',
-  'Message.Question',
+  'MessageAction',
+  'MessageAttachment',
+  'MessageChat',
+  'MessageContent',
+  'MessageEmbed',
+  'MessageMedia',
+  'MessageQuestion',
 ]
 
 /**
@@ -124,7 +124,6 @@ export const isComponentTypeCard = (Component: any): boolean => {
  */
 export const isComponentTypeControl = (Component: any): boolean => {
   const key = getComponentName(Component)
-
   return includes(CONTROL_TYPE, key)
 }
 
@@ -136,7 +135,6 @@ export const isComponentTypeControl = (Component: any): boolean => {
  */
 export const isComponentTypeChat = (Component: any): boolean => {
   const key = getComponentName(Component)
-
   return includes(CHAT_TYPE, key)
 }
 

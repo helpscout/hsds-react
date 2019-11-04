@@ -25,7 +25,7 @@ export const AvatarImage = props => {
     className
   )
 
-  const backgroundImage = isImageLoaded ? `url('${image}')` : null
+  const backgroundImage: any = isImageLoaded ? `url('${image}')` : null
 
   const imageStyle = {
     transform: 'none',

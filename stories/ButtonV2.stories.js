@@ -11,7 +11,7 @@ import {
   PropProvider,
   Text,
 } from '../src/index'
-import styled from '../src/components/styled'
+import styled from 'styled-components'
 
 const stories = storiesOf('Button/V2', module)
 

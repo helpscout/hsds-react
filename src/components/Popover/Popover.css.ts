@@ -1,4 +1,4 @@
-import styled from '../styled'
+import styled from 'styled-components'
 import Tooltip from '../Tooltip/Tooltip'
 import { getColor } from '../../styles/utilities/color'
 import { getShadow } from '../../styles/utilities/shadow'

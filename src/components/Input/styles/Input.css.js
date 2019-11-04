@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor } from '../../../styles/utilities/color'

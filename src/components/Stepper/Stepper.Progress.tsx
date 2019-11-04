@@ -28,7 +28,7 @@ export class Progress extends React.PureComponent<Props> {
       <ProgressLineUI
         {...rest}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
       />
     )
   }

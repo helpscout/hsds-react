@@ -27,7 +27,7 @@ export type PopperChildren = any
 export type PopperProps = {
   children: PopperChildren
   eventsEnabled?: boolean
-  innerRef?: any
+  ref?: any
   modifiers?: any
   placement?: any
   positionFixed?: boolean
@@ -65,8 +65,14 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     popperInstance: undefined,
     data: undefined,
   }
+  arrowNodeRef: any = null
 
   _isMounted = false
+
+  constructor(props) {
+    super(props)
+    this.arrowNodeRef = React.createRef()
+  }
 
   componentDidMount() {
     this._isMounted = true
@@ -88,10 +94,9 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
   }
 
   setPopperNode = popperNode => {
-    safeInvoke(this.props.innerRef, popperNode)
+    safeInvoke(this.props.ref, popperNode)
     this.safeSetState({ popperNode })
   }
-  setArrowNode = arrowNode => this.safeSetState({ arrowNode })
 
   updateStateModifier = {
     enabled: true,
@@ -109,8 +114,8 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     modifiers: {
       ...this.props.modifiers,
       arrow: {
-        enabled: !!this.state.arrowNode,
-        element: this.state.arrowNode,
+        enabled: !!this.arrowNodeRef.current,
+        element: this.arrowNodeRef.current,
       },
       applyStyle: { enabled: false },
       updateStateModifier: this.updateStateModifier,
@@ -135,7 +140,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     !this.state.data ? undefined : this.state.data.placement
 
   getArrowStyle = () =>
-    !this.state.arrowNode || !this.state.data
+    !this.arrowNodeRef.current || !this.state.data
       ? initialArrowStyle
       : // TODO: fix typescript complains
         // @ts-ignore
@@ -148,13 +153,13 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
 
   initPopperInstance = () => {
     const { referenceElement } = this.props
-    const { popperNode, popperInstance } = this.state
-    if (referenceElement && popperNode && !popperInstance) {
+    const { popperInstance } = this.state
+    if (referenceElement && this.state.popperNode && !popperInstance) {
       // TODO: fix typescript complains
       // @ts-ignore
       const popperInstance = new PopperJS(
         referenceElement,
-        popperNode,
+        this.state.popperNode,
         this.getOptions()
       )
       this.safeSetState({ popperInstance })
@@ -196,8 +201,6 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
       if (
         this.props.placement !== prevProps.placement ||
         this.props.eventsEnabled !== prevProps.eventsEnabled ||
-        this.state.arrowNode !== prevState.arrowNode ||
-        this.state.popperNode !== prevState.popperNode ||
         this.props.referenceElement !== prevProps.referenceElement ||
         this.props.positionFixed !== prevProps.positionFixed
       ) {
@@ -214,7 +217,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
       outOfBoundaries: this.getOutOfBoundariesState(),
       scheduleUpdate: this.scheduleUpdate,
       arrowProps: {
-        ref: this.setArrowNode,
+        ref: this.arrowNodeRef,
         style: this.getArrowStyle(),
       },
     })

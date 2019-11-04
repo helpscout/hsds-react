@@ -59,7 +59,7 @@ export class Condition extends React.PureComponent<ConditionProps> {
       <ConditionUI
         {...getValidProps(rest)}
         className={this.getClassName()}
-        innerRef={innerRef}
+        ref={innerRef as any}
       >
         {this.renderOperator()}
         <PropProvider value={this.getProviderProps()}>

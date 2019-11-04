@@ -79,6 +79,12 @@ export class Portal extends React.Component<PortalProps> {
     // 3. Fallback to document.body
     // TODO: fix typescript complains
     // @ts-ignore
+    // 3- is inside an iframe
+    if (!mountSelector && window.parent && !window.STORYBOOK_ENV) {
+      mountSelector = window.parent.document.body
+    }
+    /* istanbul ignore next */
+    // @ts-ignore
     return mountSelector || this.document.body // fallback
   }
 

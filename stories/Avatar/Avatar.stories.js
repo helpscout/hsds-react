@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, Flexy, Button } from '../../src/index'
-import { ThemeProvider } from '../../src/components/styled'
+import { ThemeProvider } from 'styled-components'
 import AvatarSpec from './specs/Avatar'
 
 import { action } from '@storybook/addon-actions'

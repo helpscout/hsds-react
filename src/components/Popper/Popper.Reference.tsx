@@ -5,7 +5,7 @@ import { safeInvoke, unwrapArray } from './Popper.utils'
 export type ReferenceChildrenProps = { ref: (HTMLElement?) => void }
 export type ReferenceProps = {
   children: (ReferenceChildrenProps) => any
-  innerRef?: (HTMLElement?) => void
+  ref?: (HTMLElement?) => void
 }
 
 type InnerReferenceProps = {
@@ -16,7 +16,7 @@ class InnerReference extends React.Component<
   ReferenceProps & InnerReferenceProps
 > {
   refHandler = node => {
-    safeInvoke(this.props.innerRef, node)
+    safeInvoke(this.props.ref, node)
     safeInvoke(this.props.getReferenceRef, node)
   }
 

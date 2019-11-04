@@ -52,7 +52,7 @@ class Button extends React.PureComponent<Props> {
 
   static BlueComponentVersion = 1
 
-  setInnerRef = node => {
+  setRef = node => {
     this.props.buttonRef(node)
     this.props.innerRef(node)
   }
@@ -101,7 +101,7 @@ class Button extends React.PureComponent<Props> {
       <button
         {...getValidProps(rest)}
         aria-label={accessibilityLabel}
-        ref={this.setInnerRef}
+        ref={this.setRef}
         className={componentClassName}
         disabled={disabled}
         type={type}

@@ -29,7 +29,13 @@
         }
       }
     ],
-    "emotion"
+    [
+      "babel-plugin-styled-components",
+      {
+        "displayName": true,
+        "fileName": true
+      }
+    ]
   ],
   "exclude": ["node_modules"]
 }

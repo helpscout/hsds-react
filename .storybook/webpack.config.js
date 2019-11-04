@@ -2,6 +2,7 @@ const path = require('path')
 const paths = require('../config/paths')
 const harvester = require('seed-harvester')
 const includePaths = harvester(['./src/scss'])
+const webpack = require('webpack')
 
 module.exports = ({ config }) => {
   // Storybook StorySource AddOn
@@ -51,6 +52,8 @@ module.exports = ({ config }) => {
   config.plugins = config.plugins.filter(
     plugin => plugin.constructor.name !== 'ProgressPlugin'
   )
+
+  config.plugins.push(new webpack.EnvironmentPlugin(['NODE_ENV', 'SC_ATTR']))
 
   return config
 }

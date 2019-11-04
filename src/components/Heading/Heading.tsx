@@ -1,11 +1,8 @@
 import * as React from 'react'
 import { HeadingSize } from './Heading.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import css from './styles/Heading.css'
-import { COMPONENT_KEY } from './Heading.utils'
+import { HeadingUI } from './styles/Heading.css'
 
 export interface Props {
   center: boolean
@@ -18,7 +15,7 @@ export interface Props {
   linkStyle?: boolean
   noWrap: boolean
   selector?: string
-  size: HeadingSize
+  size?: HeadingSize
   truncate: boolean
   weight?: number | string
   wordWrap: boolean
@@ -73,19 +70,16 @@ class Heading extends React.PureComponent<Props> {
 
     const selectorTag = selector || 'div'
 
-    const element = React.createElement(
-      selectorTag,
-      {
-        ...getValidProps(rest),
-        className: componentClassName,
-      },
-      children
+    return (
+      <HeadingUI
+        as={selectorTag as any}
+        {...getValidProps(rest)}
+        className={componentClassName}
+      >
+        {children}
+      </HeadingUI>
     )
-
-    return element
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Heading)
-
-export default styled(Heading)(css)
+export default Heading

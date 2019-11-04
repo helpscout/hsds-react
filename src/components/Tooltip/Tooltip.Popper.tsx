@@ -32,7 +32,7 @@ export class Popper extends React.PureComponent<Props> {
     return (
       <PopperUI
         {...getValidProps(rest)}
-        innerRef={innerRef}
+        ref={innerRef}
         className={this.getClassName()}
       >
         {children}

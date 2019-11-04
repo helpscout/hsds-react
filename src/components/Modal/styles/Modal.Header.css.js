@@ -1,5 +1,5 @@
 import Toolbar from '../../Toolbar'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const HeaderUI = styled(Toolbar)`
   border-top-left-radius: 4px;

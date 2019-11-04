@@ -1,5 +1,5 @@
 import baseStyles from '../../styles/resets/base.css.js'
-import styled from '../styled'
+import styled from 'styled-components'
 
 export const PopUI = styled('span')`
   ${baseStyles};

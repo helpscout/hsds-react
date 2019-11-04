@@ -12,7 +12,7 @@ export const ComponentUI = styled('div')`
   margin-bottom: 40px;
 `
 
-export const EditableTextareaUI = styled('div')`
+export const EditableTextareaUI = styled('div')<any>`
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -182,7 +182,7 @@ export const EditableTextareaUI = styled('div')`
   }
 `
 
-export const MaskUI = styled('div')`
+export const MaskUI = styled('div')<any>`
   &.EditableTextarea__Mask {
     will-change: transform, font-size;
     transition-property: transform, font-size;

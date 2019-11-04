@@ -90,7 +90,7 @@ class Body extends React.PureComponent<ModalBodyProps> {
       <BodyUI
         {...getValidProps(rest)}
         className={componentClassName}
-        innerRef={this.setNodeRef}
+        ref={this.setNodeRef}
       >
         {childrenContent}
       </BodyUI>

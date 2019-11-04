@@ -3,10 +3,9 @@ import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
-import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import css from './styles/AttachmentList.css'
+import { AttachmentListUI } from './styles/AttachmentList.css'
 
 type Props = {
   children: Array<any> | string
@@ -150,11 +149,11 @@ export class AttachmentList extends React.Component<Props> {
       )
 
     return (
-      <div className={componentClassName} {...rest}>
+      <AttachmentListUI className={componentClassName} {...rest}>
         {wrappedContentMarkup}
-      </div>
+      </AttachmentListUI>
     )
   }
 }
 
-export default styled(AttachmentList)(css)
+export default AttachmentList
