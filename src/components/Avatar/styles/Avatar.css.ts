@@ -2,8 +2,8 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
-import styled from 'styled-components'
 
+import styled from 'styled-components'
 import buttonConfig from '../../Button/styles/Button.config.css'
 
 export const config = {

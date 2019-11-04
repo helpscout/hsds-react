@@ -41,6 +41,18 @@ describe('className', () => {
     expect(hasClass(wrapper, 'c-DropdownV2Item')).toBe(true)
   })
 
+  test('Is div by default', () => {
+    const wrapper = mount(<Item />)
+    expect(wrapper.getDOMNode().tagName).toEqual('DIV')
+  })
+
+  test('Is a when provided with href', () => {
+    const wrapper = mount(<Item href="https://helpscout.com" />)
+    const node = wrapper.getDOMNode()
+    expect(node.tagName).toEqual('A')
+    expect(node.getAttribute('href')).toEqual('https://helpscout.com')
+  })
+
   test('Accepts custom className', () => {
     const wrapper = mount(<Item className="ron" />)
 
