@@ -14,11 +14,10 @@ import {
   Toolbar,
   styled,
 } from '../src/index'
-import { FrameProvider } from '../src/components/styled'
+import Frame from '../src/components/Frame'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
-import Frame from 'react-frame-component'
 
 const stories = storiesOf('Modal', module)
 
@@ -496,28 +495,28 @@ class HSAppExample extends React.Component {
               border: 'none',
             }}
           >
-            <FrameProvider>
-              <PropProvider app={app} value={value}>
-                <Modal isOpen onClose={this.closeModal}>
-                  <Modal.Content>
-                    <Modal.Body>
-                      <Heading>Title</Heading>
-                      <FormLabel label="See HS App styles">
-                        <Switch
-                          checked={this.state.hsApp}
-                          onChange={this.toggle}
-                        />
-                      </FormLabel>
-                      <Button kind="primary">Primary Button</Button>
-                      <Button>Button</Button>
-                      {ContentSpec.generate(12).map(({ id, content }) => (
-                        <p key={id}>{content}</p>
-                      ))}
-                    </Modal.Body>
-                  </Modal.Content>
-                </Modal>
-              </PropProvider>
-            </FrameProvider>
+            <PropProvider app={app} value={value}>
+              <Modal isOpen onClose={this.closeModal}>
+                <Modal.Content>
+                  <Modal.Body>
+                    <Heading>Title</Heading>
+                    <FormLabel label="See HS App styles">
+                      <Switch
+                        checked={this.state.hsApp}
+                        onChange={this.toggle}
+                      />
+                    </FormLabel>
+                    <Button kind="primary" version={2}>
+                      Primary Button
+                    </Button>
+                    <Button>Button</Button>
+                    {ContentSpec.generate(12).map(({ id, content }) => (
+                      <p key={id}>{content}</p>
+                    ))}
+                  </Modal.Body>
+                </Modal.Content>
+              </Modal>
+            </PropProvider>
           </Frame>
         )}
       </div>

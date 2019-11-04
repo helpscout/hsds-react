@@ -9,8 +9,8 @@ const avatars = AvatarSpec.generate(8)
 
 const getItemMarkup = () => {
   const fixtures = ChatSpec.generate(8)
-
-  return fixtures.map((item, index) => {
+  const values = Object.values(fixtures).filter(i => !!i)
+  return values.map((item, index) => {
     const avatar = (
       <Avatar
         image={avatars[4].image}

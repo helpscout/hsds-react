@@ -7,89 +7,87 @@ import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import config from './Button.config.css'
 
-export const makeButtonUI = (selector = 'button') => {
-  return styled(selector)`
-    ${baseStyles};
-    appearance: none;
-    align-items: center;
-    border: 1px solid transparent;
-    cursor: pointer;
-    display: inline-flex;
-    font-weight: normal;
-    height: ${config.size.md.height}px;
-    justify-content: center;
-    line-height: 1;
-    min-width: ${config.size.md.minWidth};
+export const ButtonUI = styled.button`
+  ${baseStyles};
+  appearance: none;
+  align-items: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: normal;
+  height: ${config.size.md.height}px;
+  justify-content: center;
+  line-height: 1;
+  min-width: ${config.size.md.minWidth};
+  outline: none;
+  padding: 0 ${config.size.md.padding}px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:focus {
     outline: none;
-    padding: 0 ${config.size.md.padding}px;
-    position: relative;
-    text-align: center;
     text-decoration: none;
+  }
 
-    &:hover,
-    &:active,
-    &:focus {
-      outline: none;
-      text-decoration: none;
+  &:active,
+  &:active:focus {
+    .c-ButtonV2Focus {
+      display: none;
     }
+  }
 
-    &:active,
-    &:active:focus {
-      .c-ButtonV2Focus {
-        display: none;
-      }
+  &.is-focused,
+  &:focus {
+    z-index: 2;
+    .c-ButtonV2Focus {
+      display: block;
     }
+  }
 
-    &.is-focused,
-    &:focus {
-      z-index: 2;
-      .c-ButtonV2Focus {
-        display: block;
-      }
-    }
+  &.is-first {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.is-notOnly {
+    border-radius: 0;
+  }
+  &.is-last {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 
-    &.is-first {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-    &.is-notOnly {
-      border-radius: 0;
-    }
-    &.is-last {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
+  &.is-block {
+    display: flex;
+    width: 100%;
+  }
 
-    &.is-block {
-      display: flex;
-      width: 100%;
-    }
-
-    &.is-loading {
-      &.is-spinButtonOnLoading {
-        animation: SpinButtonOnLoadAnimation 700ms linear infinite;
-        will-change: transform;
-        @keyframes SpinButtonOnLoadAnimation {
-          100% {
-            transform: rotate(360deg);
-          }
+  &.is-loading {
+    &.is-spinButtonOnLoading {
+      animation: SpinButtonOnLoadAnimation 700ms linear infinite;
+      will-change: transform;
+      @keyframes SpinButtonOnLoadAnimation {
+        100% {
+          transform: rotate(360deg);
         }
       }
     }
+  }
 
-    ${makeButtonShapeStyles()}
-    ${makeButtonSizeStyles()}
+  ${makeButtonShapeStyles()}
+  ${makeButtonSizeStyles()}
 
-    ${props => makePrimaryStyles('primary', props)}
-    ${props => makePrimaryStyles('primaryAlt', props)}
-    ${makeButtonKindStyles('secondary', config.secondary)}
-    ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
-    ${makeButtonKindStyles('tertiary', config.tertiary)}
-    ${makeButtonKindStyles('default', config.default)}
-    ${makeButtonKindStyles('link', config.link)}
-    ${makeButtonKindStyles('suffix', config.suffix)}
-  `
-}
+  ${props => makePrimaryStyles('primary', props)}
+  ${props => makePrimaryStyles('primaryAlt', props)}
+  ${makeButtonKindStyles('secondary', config.secondary)}
+  ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
+  ${makeButtonKindStyles('tertiary', config.tertiary)}
+  ${makeButtonKindStyles('default', config.default)}
+  ${makeButtonKindStyles('link', config.link)}
+  ${makeButtonKindStyles('suffix', config.suffix)}
+`
 
 function makePrimaryStyles(name = 'primary', props = {}) {
   const theme = get(props, 'theme.brandColor', {})

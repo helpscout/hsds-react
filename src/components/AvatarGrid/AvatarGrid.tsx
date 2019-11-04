@@ -4,12 +4,16 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
-import styled from 'styled-components'
+
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
-import avatarGridWrapperCSS from './styles/AvatarGridWrapper.css'
-import avatarGridContainerCSS from './styles/AvatarGridContainer.css'
-import avatarGridCSS from './styles/AvatarGrid.css'
+
+import {
+  AvatarGridUI,
+  AvatarGridWrapperUI,
+  AvatarGridContainerUI,
+} from './styles/AvatarGrid.css'
+
 import { COMPONENT_KEY } from './AvatarGrid.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
@@ -26,10 +30,6 @@ type Props = {
   showStatusBorderColor: boolean
   size: AvatarSize
 }
-
-const AvatarGridWrapper = styled('div')(avatarGridWrapperCSS)
-const AvatarGridContainer = styled('div')(avatarGridContainerCSS)
-const AvatarGridComponent = styled('div')(avatarGridCSS)
 
 class AvatarGrid extends React.PureComponent<Props> {
   static defaultProps = {
@@ -116,17 +116,14 @@ class AvatarGrid extends React.PureComponent<Props> {
     })
 
     return (
-      <AvatarGridWrapper className={componentWrapperClassName}>
-        <AvatarGridContainer className="c-AvatarGridContainer">
-          <AvatarGridComponent
-            {...getValidProps(rest)}
-            className={componentClassName}
-          >
+      <AvatarGridWrapperUI className={componentWrapperClassName}>
+        <AvatarGridContainerUI className="c-AvatarGridContainer">
+          <AvatarGridUI {...getValidProps(rest)} className={componentClassName}>
             {avatarMarkup}
             {additionalAvatarMarkup}
-          </AvatarGridComponent>
-        </AvatarGridContainer>
-      </AvatarGridWrapper>
+          </AvatarGridUI>
+        </AvatarGridContainerUI>
+      </AvatarGridWrapperUI>
     )
   }
 }

@@ -4,10 +4,9 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
-import { memoize } from '../../utilities/memoize'
 import RouteWrapper from '../RouteWrapper'
 import {
-  makeButtonUI,
+  ButtonUI,
   ButtonContentUI,
   FocusUI,
   SpinnerUI,
@@ -70,8 +69,6 @@ class Button extends React.PureComponent<Props> {
   }
 
   static BlueComponentVersion = 2
-
-  makeButtonUI = memoize(makeButtonUI)
 
   isLink() {
     // TODO: Resolve data-bypass
@@ -138,14 +135,6 @@ class Button extends React.PureComponent<Props> {
     })
   }
 
-  getButtonUI() {
-    const selector = this.isLink() ? 'a' : 'button'
-
-    // TODO: fix typescript complains
-    // @ts-ignore
-    return this.makeButtonUI(selector)
-  }
-
   render() {
     const {
       allowContentEventPropogation,
@@ -200,7 +189,7 @@ class Button extends React.PureComponent<Props> {
 
     const type = submit ? 'submit' : 'button'
 
-    const ButtonUI = this.getButtonUI()
+    const selector = this.isLink() ? 'a' : 'button'
 
     return (
       <ButtonUI
@@ -209,6 +198,7 @@ class Button extends React.PureComponent<Props> {
         disabled={isDisabled}
         ref={this.setRef}
         type={type}
+        as={selector}
       >
         {isLoading ? <SpinnerUI /> : null}
         <ButtonContentUI

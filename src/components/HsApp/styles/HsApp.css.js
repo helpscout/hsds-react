@@ -8,16 +8,16 @@ export const config = {
   headerHeight: '54px',
 }
 
-export const HsAppUI = styled('div')`
+export const HsAppUI = styled.div`
   ${baseStyles};
 `
 
-export const AppLayoutUI = styled('div')`
+export const AppLayoutUI = styled.div`
   align-items: stretch;
   display: flex;
   justify-content: space-between;
 `
-export const AppContainerUI = styled('div')`
+export const AppContainerUI = styled.div`
   align-items: stretch;
   box-sizing: border-box;
   display: flex;
@@ -27,7 +27,7 @@ export const AppContainerUI = styled('div')`
   width: 100%;
 `
 
-export const HeaderUI = styled('div')`
+export const HeaderUI = styled.div`
   background: ${getColor('blue.700')};
   padding: 7px 10px 7px 4px;
   position: relative;
@@ -37,7 +37,7 @@ export const HeaderUI = styled('div')`
   align-items: center;
 `
 
-export const LogoUI = styled('span')`
+export const LogoUI = styled.span`
   padding: 0 10px 0 16px;
   color: ${getColor('blue.300')};
 
@@ -47,7 +47,7 @@ export const LogoUI = styled('span')`
   }
 `
 
-export const SecIconUI = styled('span')`
+export const SecIconUI = styled.span`
   padding: 0 18px;
   color: ${getColor('blue.300')};
 
@@ -61,22 +61,22 @@ export const SecIconUI = styled('span')`
   }
 `
 
-export const SecondaryNavUI = styled('span')`
+export const SecondaryNavUI = styled.span`
   margin-left: auto;
   display: flex;
   align-items: center;
 `
 
-export const NavUI = styled('span')`
+export const NavUI = styled.span`
   display: flex;
-  flew-direction: row;
+  flex-direction: row;
 `
 
 export const AvatarUI = styled(Avatar)`
   margin: 0 10px;
 `
 
-export const DropdownTriggerUI = styled('span')`
+export const DropdownTriggerUI = styled.span`
   display: inline-flex;
   align-items: center;
   height: 40px;
@@ -98,14 +98,14 @@ export const DropdownUI = styled(Dropdown)`
   }
 `
 
-export const SidenavUI = styled('div')`
+export const SidenavUI = styled.div`
   background: ${getColor('grey.300')};
   width: 250px;
   border-right: 1px solid ${getColor('grey.500')};
   height: 100%;
 `
 
-export const ContentUI = styled('div')`
+export const ContentUI = styled.div`
   box-shadow: -1px 0 0 #d6dde3, 1px 0 0 #d6dde3, 0 1px 0 #d6dde3;
   box-sizing: border-box;
   flex: 1;
@@ -119,7 +119,7 @@ export const ContentUI = styled('div')`
   padding: 20px;
 `
 
-export const InnerContentUI = styled('div')`
+export const InnerContentUI = styled.div`
   background: #fff;
   padding: 20px;
 `
