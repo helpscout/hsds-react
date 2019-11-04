@@ -8,11 +8,11 @@ import Divider from './Dropdown.Divider'
 import Header from './Dropdown.Header'
 import Menu from './Dropdown.Menu'
 import {
-  ItemUI,
   ActionUI,
   ActionContentUI,
-  WrapperUI,
+  makeItemUI,
   SubMenuIncidatorUI,
+  WrapperUI,
 } from './Dropdown.css.js'
 import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
 import { setMenuPositionStyles } from './Dropdown.renderUtils'
@@ -32,6 +32,7 @@ export interface Props {
   dropRight: boolean
   dropUp: boolean
   getState: (...args: any[]) => void
+  href?: string
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
@@ -245,7 +246,7 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { className, disabled, type, isSelectionClearer } = this.props
+    const { className, disabled, href, isSelectionClearer, type } = this.props
     const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
@@ -258,6 +259,8 @@ export class Item extends React.PureComponent<Props> {
 
     if (type === 'group' || type === 'header') return <Header {...this.props} />
     if (type === 'divider') return <Divider />
+
+    const ItemUI = href ? makeItemUI('a') : makeItemUI('div')
 
     return (
       <ItemUI
