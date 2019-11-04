@@ -1,12 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-<<<<<<< HEAD
-  "version": "2.69.0",
-||||||| merged common ancestors
-  "version": "2.68.9",
-=======
   "version": "2.70.0",
->>>>>>> v3
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",

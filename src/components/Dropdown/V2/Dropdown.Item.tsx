@@ -10,7 +10,7 @@ import Menu from './Dropdown.Menu'
 import {
   ActionUI,
   ActionContentUI,
-  makeItemUI,
+  ItemUI,
   SubMenuIncidatorUI,
   WrapperUI,
 } from './Dropdown.css.js'
@@ -263,7 +263,7 @@ export class Item extends React.PureComponent<Props> {
     if (type === 'group' || type === 'header') return <Header {...this.props} />
     if (type === 'divider') return <Divider />
 
-    const ItemUI = href ? makeItemUI('a') : makeItemUI('div')
+    const selector = href ? 'a' : 'div'
 
     return (
       <ItemUI
@@ -273,6 +273,7 @@ export class Item extends React.PureComponent<Props> {
         onClick={this.handleOnClick}
         ref={this.setNodeRef}
         role={hasSubMenu ? 'group' : 'option'}
+        as={selector}
       >
         {this.renderContent()}
         {this.renderSubMenu()}
