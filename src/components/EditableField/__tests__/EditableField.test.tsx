@@ -1188,6 +1188,36 @@ describe('enter press', () => {
       expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
     })
   })
+
+  test('Pressing Enter: should update props on validation resolved', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '123456', id: '1' }}
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: true,
+            name: 'company',
+            type: 'default',
+            updatedProps: { _id: 7 },
+            value: '123',
+          })
+        }
+      />
+    )
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '123'
+    input.simulate('keydown', { key: 'Enter' })
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(wrapper.state('value')).toEqual('123')
+      expect(wrapper.state('_id')).toEqual(7)
+    })
+  })
 })
 
 describe('should component update', () => {
