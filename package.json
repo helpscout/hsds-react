@@ -113,7 +113,7 @@
     "react-styled-frame": "^1.1.0",
     "react-textarea-autosize": "^7.1.0",
     "react-transition-group": "2.5.3",
-    "styled-components": "5.0.0-beta.11",
+    "styled-components": "5.0.0-rc.1",
     "warning": "4.0.3"
   },
   "devDependencies": {
