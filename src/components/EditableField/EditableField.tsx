@@ -600,6 +600,7 @@ export class EditableField extends React.Component<
                 updatedFieldValue = this.updateFieldValue({
                   name,
                   value: inputValue,
+                  updatedProps: validation.updatedProps || {},
                 })
 
                 this.setState(
@@ -701,12 +702,17 @@ export class EditableField extends React.Component<
 
   // tested
   /* istanbul ignore next */
-  updateFieldValue = ({ value, name }) => {
+  updateFieldValue = ({ value, name, updatedProps = {} }) => {
     const { fieldValue } = this.state
 
     return fieldValue.map(val => {
       if (val.id === name) {
-        return { ...val, value: value, validated: true }
+        return {
+          ...val,
+          ...updatedProps,
+          value: value,
+          validated: true,
+        }
       }
       return val
     })

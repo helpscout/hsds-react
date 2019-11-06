@@ -31,6 +31,10 @@ export type FieldType =
 export type FieldSize = 'md' | 'lg'
 export type FieldState = 'default' | 'error' | 'warning' | 'other'
 
+export interface ValidationUpdatedProps {
+  [key: string]: any
+}
+
 export type Validation = {
   isValid: boolean
   name: string
@@ -39,6 +43,7 @@ export type Validation = {
   message?: string
   icon?: string
   color?: string
+  updatedProps?: ValidationUpdatedProps
 }
 
 export type CommitData = {
