@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import {
@@ -21,7 +22,23 @@ import {
   alternativeTheme,
 } from '../../src/components/Table/styles/themes'
 
+import styled from '../../src/components/styled'
+
 const stories = storiesOf('Table', module)
+
+export const ContainerUI = styled('div')`
+  table {
+    tbody {
+      tr.c-Table__Row.stale {
+        background-color: red !important;
+      }
+    }
+  }
+
+  td {
+    color: blue !important;
+  }
+`
 
 stories.add('default', () => (
   <div>
@@ -104,6 +121,19 @@ stories.add('with custom cell rendering', () => (
     tableWidth={{ max: '800px', min: '500px' }}
   />
 ))
+
+stories.add('with custom style applied to <tr>', () => {
+  const customers = createFakeCustomers({ amount: 20 }).map(info => {
+    const className = info.lastSeen < 10 ? 'active' : 'stale'
+    return { ...info, ...{ className } }
+  })
+
+  return (
+    <ContainerUI>
+      <Table columns={defaultColumns} data={customers} />
+    </ContainerUI>
+  )
+})
 
 stories.add('with horizontal scroll', () => (
   <Table
