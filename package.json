@@ -147,7 +147,6 @@
     "@percy/storybook": "^3.2.0",
     "@storybook/addon-a11y": "^5.1.10",
     "@storybook/addon-actions": "^5.1.10",
-    "@storybook/addon-console": "^1.1.0",
     "@storybook/addon-knobs": "5.2.1",
     "@storybook/addon-links": "^5.2.1",
     "@storybook/addon-storysource": "^5.2.1",
