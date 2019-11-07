@@ -29,14 +29,13 @@ const stories = storiesOf('Table', module)
 export const ContainerUI = styled('div')`
   table {
     tbody {
-      tr.c-Table__Row.stale {
-        background-color: red !important;
+      tr.active td {
+        background-color: lightsteelblue;
+      }
+      tr.stale td {
+        background-color: lavenderblush;
       }
     }
-  }
-
-  td {
-    color: blue !important;
   }
 `
 
@@ -122,9 +121,9 @@ stories.add('with custom cell rendering', () => (
   />
 ))
 
-stories.add('with custom style applied to <tr>', () => {
-  const customers = createFakeCustomers({ amount: 20 }).map(info => {
-    const className = info.lastSeen < 10 ? 'active' : 'stale'
+stories.add('with className provided to row for styling', () => {
+  const customers = createFakeCustomers({ amount: 10 }).map(info => {
+    const className = info.days < 50 ? 'active' : 'stale'
     return { ...info, ...{ className } }
   })
 
