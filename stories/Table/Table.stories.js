@@ -28,13 +28,11 @@ const stories = storiesOf('Table', module)
 
 export const ContainerUI = styled('div')`
   table {
-    tbody {
-      tr.active td {
-        background-color: lightsteelblue;
-      }
-      tr.stale td {
-        background-color: lavenderblush;
-      }
+    tr.active td {
+      background-color: lightsteelblue;
+    }
+    tr.stale td {
+      background-color: lavenderblush;
     }
   }
 `
