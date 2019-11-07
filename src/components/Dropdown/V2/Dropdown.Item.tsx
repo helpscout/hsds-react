@@ -10,7 +10,7 @@ import Menu from './Dropdown.Menu'
 import {
   ActionUI,
   ActionContentUI,
-  makeItemUI,
+  ItemUI,
   SubMenuIncidatorUI,
   WrapperUI,
 } from './Dropdown.css.js'
@@ -260,10 +260,10 @@ export class Item extends React.PureComponent<Props> {
     if (type === 'group' || type === 'header') return <Header {...this.props} />
     if (type === 'divider') return <Divider />
 
-    const ItemUI = href ? makeItemUI('a') : makeItemUI('div')
+    const DDItemUI = href ? ItemUI.withComponent('a') : ItemUI
 
     return (
-      <ItemUI
+      <DDItemUI
         {...getValidProps(this.props)}
         className={componentClassName}
         aria-disabled={disabled}
@@ -273,7 +273,7 @@ export class Item extends React.PureComponent<Props> {
       >
         {this.renderContent()}
         {this.renderSubMenu()}
-      </ItemUI>
+      </DDItemUI>
     )
   }
 }
