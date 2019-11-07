@@ -10,6 +10,7 @@ import copy from '../../icons/copy.svg'
 import crossLarge from '../../icons/cross-large.svg'
 import crossSmall from '../../icons/cross-small.svg'
 import ellipsis from '../../icons/ellipsis.svg'
+import emoji from '../../icons/emoji.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import hsLogo from '../../icons/hs-logo.svg'
 import image from '../../icons/image.svg'
@@ -37,6 +38,7 @@ const ICONS = {
   'cross-large': crossLarge,
   'cross-small': crossSmall,
   cross: crossLarge,
+  emoji,
   fullscreen,
   'helpscout-logo': hsLogo,
   'hs-logo': hsLogo,
