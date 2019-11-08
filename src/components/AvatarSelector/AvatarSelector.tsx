@@ -9,6 +9,7 @@ import {
 
 export interface Props {
   image: string
+  initials: string
   isOpen: boolean
   name: string
 }
@@ -16,24 +17,35 @@ export interface Props {
 export default class AvatarSelector extends React.PureComponent<Props> {
   static defaultProps = {
     image: '',
+    initials: '',
     isOpen: false,
     name: '',
   }
 
   renderAvatar() {
-    const { image, name } = this.props
-    return <AvatarUI borderColor="#fff" size="sm" image={image} name={name} />
+    const { image, initials, name } = this.props
+    return (
+      <AvatarUI
+        borderColor="#fff"
+        size="sm"
+        image={image}
+        name={name}
+        initials={initials || name}
+      />
+    )
   }
 
-  renderAssign() {
+  renderBlankAvatar() {
     return <IconAssignUI name="assigned" shade="faint" />
   }
 
   render() {
-    const { image, isOpen, name } = this.props
+    const { image, initials, isOpen, name } = this.props
     return (
       <AvatarSelectorWrapperUI className="c-AvatarSelector" tabIndex="1">
-        {image || name ? this.renderAvatar() : this.renderAssign()}
+        {image || initials || name
+          ? this.renderAvatar()
+          : this.renderBlankAvatar()}
         <AvatarSelectorUI>
           <IconCaretUI
             shade="subtle"
