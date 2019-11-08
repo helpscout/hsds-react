@@ -46,6 +46,7 @@ export class EditableTextarea extends React.PureComponent<
     onChange: noop,
     onInputBlur: noop,
     onInputFocus: noop,
+    onInputKeyDown: noop,
     onEnter: noop,
     onEscape: noop,
     validate: () => Promise.resolve({ isValid: true }),
@@ -226,6 +227,12 @@ export class EditableTextarea extends React.PureComponent<
         }
       )
     }
+
+    this.props.onInputKeyDown({
+      name: this.props.id,
+      value: [{ value: this.state.value, id: this.props.id }],
+      event: e,
+    })
   }
 
   handleOnKeyUp = e => {
