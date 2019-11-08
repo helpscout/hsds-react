@@ -442,7 +442,7 @@ export class EditableTextarea extends React.PureComponent<
             onClick={this.handleOnClick}
             inputValue={value}
           >
-            {placeholder}
+            <span>{placeholder}</span>
           </MaskUI>
           {this.renderValidationInfo()}
         </EditableTextareaUI>
