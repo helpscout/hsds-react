@@ -35,6 +35,11 @@ export interface EditableTextareaProps {
     value: FieldValue[]
     event: Event
   }) => void
+  onInputKeyUp: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
   onEnter: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onEscape: (args: { name: string; value: FieldValue[]; event: Event }) => void
   validate: (args: {

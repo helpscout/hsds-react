@@ -47,6 +47,7 @@ export class EditableTextarea extends React.PureComponent<
     onInputBlur: noop,
     onInputFocus: noop,
     onInputKeyDown: noop,
+    onInputKeyUp: noop,
     onEnter: noop,
     onEscape: noop,
     validate: () => Promise.resolve({ isValid: true }),
@@ -244,6 +245,12 @@ export class EditableTextarea extends React.PureComponent<
 
       this.textArea.current.blur()
     }
+
+    this.props.onInputKeyUp({
+      name: this.props.id,
+      value: [{ value: this.state.value, id: this.props.id }],
+      event: e,
+    })
   }
 
   handleOnBlur = e => {
