@@ -330,7 +330,6 @@ export class EditableField extends React.Component<
       // code that follows.
       event && event.persist && event.persist()
 
-      console.log('will validate')
       validate({
         data: {
           cause: CAUSE.BLUR,
