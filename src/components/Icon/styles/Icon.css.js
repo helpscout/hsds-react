@@ -95,7 +95,7 @@ function makeShadeStyles() {
     TEXT_SHADES,
     shade => `
     &.is-${shade} {
-      color: ${getColor('text', shade)};
+      color: red;
     }
   `
   )
