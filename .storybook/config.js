@@ -27,10 +27,10 @@ const withStats = storyFn => (
 )
 
 const withGlobalStyle = storyFn => (
-  <>
+  <div className="hsds-react">
     <GlobalStyle />
     {storyFn()}
-  </>
+  </div>
 )
 
 addDecorator(withStats)

@@ -3,7 +3,6 @@ import Card from '../../Card'
 import Button from '../../Button'
 import Heading from '../../Heading'
 import Text from '../../Text'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { makeFontFamily, setFontSize } from '../../../styles/utilities/font'
 
 const fontFamily = makeFontFamily('Barlow')
