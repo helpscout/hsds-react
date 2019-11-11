@@ -22,7 +22,6 @@ export const config = {
 }
 
 export const FlexyUI = styled('div')`
-  ${base};
   align-items: center;
   display: flex;
   justify-content: space-between;

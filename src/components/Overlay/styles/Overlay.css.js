@@ -12,7 +12,7 @@ export const config = {
 }
 
 export const OverlayUI = styled('div')`
-  ${baseStyles} align-items: center;
+  align-items: center;
   background-color: ${config.backgroundColor};
   bottom: 0;
   cursor: pointer;

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
 export const ContentUI = styled('div')`
-  ${baseStyles} display: flex;
+  display: flex;
   flex: 1;
   flex-direction: column;
   height: 100%;

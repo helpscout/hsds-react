@@ -11,7 +11,6 @@ export const config = {
 }
 
 export const AlertUI = styled('div')`
-  ${baseStyles};
   background-color: ${config.backgroundColor};
   color: ${config.color};
   box-shadow: ${config.boxShadow};

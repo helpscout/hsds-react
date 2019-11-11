@@ -322,7 +322,6 @@ function getBorderAnimationSizeStyles(): string {
 }
 
 export const AvatarUI = styled('div')`
-  ${baseStyles};
   height: ${config.size.md.size}px;
   position: relative;
   width: ${config.size.md.size}px;
@@ -371,7 +370,6 @@ export const BorderAnimationUI = styled('svg')`
 `
 
 export const AvatarButtonUI = styled('button')`
-  ${baseStyles};
   padding: 0;
   border: none;
   height: ${config.size.md.size}px;

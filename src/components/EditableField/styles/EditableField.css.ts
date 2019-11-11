@@ -13,17 +13,13 @@ import {
 const { field, fieldLabel } = SIZES
 
 export const ComponentUI = styled('div')<any>`
-  ${baseStyles};
   position: relative;
   margin-bottom: 40px;
 `
 
-export const EditableFieldLabelUI = styled('label')`
-  ${baseStyles};
-`
+export const EditableFieldLabelUI = styled('label')``
 
 export const LabelTextUI = styled('span')`
-  ${baseStyles};
   display: block;
   margin-bottom: 5px;
   color: ${getColor('grey.800')};
@@ -34,7 +30,7 @@ export const LabelTextUI = styled('span')`
 `
 
 export const FieldUI = styled('div')`
-  ${baseStyles};
+  
   position: relative;
   height: ${field.height};
   margin-bottom: 2px;

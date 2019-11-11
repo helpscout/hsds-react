@@ -14,7 +14,7 @@ interface BadgeUIProps {
 }
 
 const BadgeUI = styled.div<BadgeUIProps>`
-  ${baseStyles}
+  
   ${variableFontSize({ fontSize: 12 })}
   background-color: ${props =>
     props.inverted ? 'white' : props.color || DEFAULT_COLOR};

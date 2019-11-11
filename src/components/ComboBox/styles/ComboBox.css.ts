@@ -9,7 +9,6 @@ export const InputUI = styled(Input)`
 `
 
 export const HeaderUI = styled('div')`
-  ${baseStyles};
   flex: none;
   max-height: 100%;
   min-height: 0;
@@ -17,15 +16,12 @@ export const HeaderUI = styled('div')`
 `
 
 export const MenuUI = styled(Dropdown.Menu)`
-  ${baseStyles};
-
   &.is-withInput {
     padding-top: 0;
   }
 `
 
 export const EmptyItemUI = styled('div')`
-  ${baseStyles};
   padding: 8px 16px;
   word-break: break-word;
 

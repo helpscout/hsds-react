@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
 
 export const LabelUI = styled('label')`
-  ${baseStyles} display: inline-block;
+  display: inline-block;
   margin-bottom: 4px;
 
   ${makeStateColorStyles()} &.is-marginless {

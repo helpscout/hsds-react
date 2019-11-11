@@ -32,8 +32,6 @@ export const config = {
 }
 
 export const BackdropUI = styled('div')`
-  ${baseStyles};
-
   background-color: ${config.backgroundColor};
   border: 1px solid;
   border-color: ${config.borderColor};

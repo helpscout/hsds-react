@@ -2,9 +2,7 @@ import Flexy from '../../Flexy'
 import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 
-export const FieldWrapperUI = styled('div')`
-  ${baseStyles};
-`
+export const FieldWrapperUI = styled('div')``
 
 export const FieldUI = styled(Flexy)``
 
@@ -14,19 +12,12 @@ export const FieldCloseWrapperUI = styled(Flexy.Item)`
   margin: 2.5px 0;
 `
 
-export const ConditionFieldUI = styled('div')`
-  ${baseStyles};
-`
+export const ConditionFieldUI = styled('div')``
 
-export const AddButtonWrapperUI = styled('div')`
-  ${baseStyles};
-`
+export const AddButtonWrapperUI = styled('div')``
 
 export const AddButtonContentUI = styled('div')`
-  ${baseStyles};
   padding: 5px 0;
 `
 
-export const OrWrapperUI = styled('div')`
-  ${baseStyles};
-`
+export const OrWrapperUI = styled('div')``

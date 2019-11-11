@@ -8,7 +8,6 @@ import variableFontSize from '../../../styles/utilities/variableFontSize'
 import config from './Button.config.css'
 
 export const ButtonUI = styled.button`
-  ${baseStyles};
   appearance: none;
   align-items: center;
   border: 1px solid transparent;
@@ -76,17 +75,17 @@ export const ButtonUI = styled.button`
     }
   }
 
-  ${makeButtonShapeStyles()}
-  ${makeButtonSizeStyles()}
+  ${makeButtonShapeStyles()};
+  ${makeButtonSizeStyles()};
 
-  ${props => makePrimaryStyles('primary', props)}
-  ${props => makePrimaryStyles('primaryAlt', props)}
-  ${makeButtonKindStyles('secondary', config.secondary)}
-  ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)}
-  ${makeButtonKindStyles('tertiary', config.tertiary)}
-  ${makeButtonKindStyles('default', config.default)}
-  ${makeButtonKindStyles('link', config.link)}
-  ${makeButtonKindStyles('suffix', config.suffix)}
+  ${props => makePrimaryStyles('primary', props)};
+  ${props => makePrimaryStyles('primaryAlt', props)};
+  ${makeButtonKindStyles('secondary', config.secondary)};
+  ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)};
+  ${makeButtonKindStyles('tertiary', config.tertiary)};
+  ${makeButtonKindStyles('default', config.default)};
+  ${makeButtonKindStyles('link', config.link)};
+  ${makeButtonKindStyles('suffix', config.suffix)};
 `
 
 function makePrimaryStyles(name = 'primary', props = {}) {
@@ -215,8 +214,8 @@ function makeButtonSizeStyles() {
     config.size,
     (size, props) => `
     &.is-${size} {
-      ${variableFontSize({ fontSize: props.fontSize })}
-      ${renderStyleForProp(props, 'fontWeight', 'font-weight')}
+      ${variableFontSize({ fontSize: props.fontSize })};
+      ${renderStyleForProp(props, 'fontWeight', 'font-weight')};
       height: ${props.height}px;
       min-width: ${props.minWidth};
       padding-left: ${props.padding}px;

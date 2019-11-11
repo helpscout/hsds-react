@@ -104,7 +104,6 @@ export const TagWrapperUI = styled('div')`
 `
 
 export const TagUI = styled('div')`
-  ${baseStyles};
   background-color: white;
   border-radius: ${config.borderRadius}px;
   border: 1px solid currentColor;

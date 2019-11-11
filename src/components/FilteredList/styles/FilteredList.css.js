@@ -31,7 +31,6 @@ export const SeparatorUI = styled('span')`
 `
 
 export const FilteredListUI = styled('ul')`
-  ${baseStyles};
   margin: 0;
   ${setFontSize(13)};
   display: flex;

@@ -12,7 +12,7 @@ export const TEXT_SIZES = [10, 11, 12, 13, 14, 15, 16, 20, 48]
 export const TEXT_WEIGHTS = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
 export const TextUI = styled.span`
-  ${baseStyles}
+  
   line-height: 1.5;
 
   &.is-disableSelect {

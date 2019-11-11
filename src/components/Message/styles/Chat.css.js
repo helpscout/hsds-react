@@ -9,7 +9,6 @@ const bem = BEM('.c-MessageChat')
 const MessageBubble = '.c-MessageBubble'
 
 export const ChatBlockUI = styled(ChatBlock)`
-  ${baseStyles}
   display: block;
   margin: 0 0 2px;
 

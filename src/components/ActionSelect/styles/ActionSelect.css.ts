@@ -12,8 +12,6 @@ export const config = {
 }
 
 export const ActionSelectUI = styled('div')`
-  ${baseStyles};
-
   &.is-withContent {
     .c-ActionSelectDropdownWrapper {
       .${Backdrop.className} {
@@ -25,7 +23,6 @@ export const ActionSelectUI = styled('div')`
 `
 
 export const ContentUI = styled('div')`
-  ${baseStyles};
   border-bottom-left-radius: ${config.borderRadius};
   border-bottom-right-radius: ${config.borderRadius};
   padding: ${config.padding};
@@ -43,7 +40,6 @@ export const ContentUI = styled('div')`
 `
 
 export const ContentResizerUI = styled('div')`
-  ${baseStyles};
   background-color: ${config.backgroundColor};
   border: 1px solid ${config.borderColor};
   border-top: none;

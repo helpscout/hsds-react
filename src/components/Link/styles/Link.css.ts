@@ -3,7 +3,6 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import linkStyles from '../../../styles/mixins/linkStyles.css'
 
 export const LinkUI = styled('a')`
-  ${baseStyles};
   ${linkStyles};
 
   &:focus {

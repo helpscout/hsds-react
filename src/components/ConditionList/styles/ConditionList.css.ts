@@ -10,7 +10,6 @@ export const config = {
 }
 
 export const ConditionListUI = styled('div')`
-  ${baseStyles};
   position: relative;
 
   &::before {
@@ -47,7 +46,6 @@ export const ConditionListUI = styled('div')`
 `
 
 export const AndWrapperUI = styled('div')`
-  ${baseStyles};
   align-items: center;
   display: flex;
   justify-content: center;

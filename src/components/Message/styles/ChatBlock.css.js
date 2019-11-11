@@ -9,7 +9,6 @@ export const config = {
 }
 
 export const ChatBlockUI = styled.div`
-  ${baseStyles}
   display: block;
   margin: 0 0 2px;
 

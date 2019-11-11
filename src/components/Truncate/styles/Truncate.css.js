@@ -15,10 +15,10 @@ export const TruncateUI = styled.span`
   will-change: contents;
 
   &.is-auto {
-    ${truncateStyles}
+    ${truncateStyles};
 
-    ${bem.element('content')} {
-      ${truncateStyles}
+    .c-Truncate__content {
+      ${truncateStyles};
     }
   }
 `

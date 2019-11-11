@@ -35,7 +35,7 @@ interface RadioCardUIProp {
 }
 
 export const RadioCardUI = styled('label')<RadioCardUIProp>`
-  ${baseStyles} align-items: center;
+  align-items: center;
   border-radius: ${config.borderRadius};
   box-shadow: ${config.boxShadow};
   cursor: pointer;

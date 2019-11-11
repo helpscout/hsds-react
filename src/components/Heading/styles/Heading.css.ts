@@ -25,7 +25,6 @@ export const HEADING_SIZES = {
 }
 
 export const HeadingUI = styled.div<any>`
-  ${baseStyles}
   color: ${getColor('charcoal.600')};
   display: block;
   font-size: ${HEADING_SIZES.h1}px;

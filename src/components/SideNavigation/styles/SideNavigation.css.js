@@ -254,7 +254,6 @@ export const SideNavigationFloatingUI = styled.div`
 `
 
 export const SideNavigationUI = styled.nav`
-  ${baseStyles};
   background-color: ${getColor('grey.300')};
   border-right: ${config.border};
   height: 100%;

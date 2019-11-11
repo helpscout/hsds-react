@@ -8,12 +8,9 @@ export const config = {
   text: 'white',
 }
 
-export const TooltipUI = styled(Pop)`
-  ${baseStyles};
-`
+export const TooltipUI = styled(Pop)``
 
 export const PopperUI = styled('span')`
-  ${baseStyles};
   background-color: ${config.background};
   border-radius: 3px;
   color: ${config.text};

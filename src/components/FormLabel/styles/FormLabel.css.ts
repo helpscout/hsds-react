@@ -6,7 +6,6 @@ interface FormLabelUIProps {
   isInline?: any
 }
 export const FormLabelUI = styled('div')<FormLabelUIProps>`
-  ${baseStyles};
   display: flex;
   flex-flow: column;
   align-items: stretch;

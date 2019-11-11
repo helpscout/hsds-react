@@ -36,8 +36,8 @@ export const ErrorBorderUI = styled('div')`
 `
 
 export const AttachmentUI = styled.a`
-  ${linkStyles()}
-  ${baseStyles}
+  ${linkStyles()};
+
   background-color: white;
   border: 1px solid ${getColor('grey.500')};
   border-radius: 9999px;
@@ -57,16 +57,14 @@ export const AttachmentUI = styled.a`
     }
   }
 
-  // Modifiers
   &.is-action {
     ${bem.element('name')} {
       text-decoration: none;
     }
   }
 
-  // Themes
   &.is-theme-preview {
-    ${cardSubtleStyles()}
+    ${cardSubtleStyles()};
     border: none;
     display: block;
     font-weight: 500;
@@ -108,7 +106,7 @@ export const AttachmentUI = styled.a`
   }
 
   ${bem.element('closeButton')} {
-    ${cardStyles()}
+    ${cardStyles()};
     display: none;
     border-radius: 9999px !important;
     position: absolute;

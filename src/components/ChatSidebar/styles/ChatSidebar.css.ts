@@ -3,7 +3,7 @@ import Scrollable from '../../Scrollable'
 import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
 export const ChatSidebarUI = styled('div')`
-  ${baseStyles} display: flex;
+  display: flex;
   height: 100%;
   position: relative;
 

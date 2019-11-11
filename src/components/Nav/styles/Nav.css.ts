@@ -11,13 +11,12 @@ export const config = {
 
 export const NavUI = styled('nav')`
   --BlueConfigGlobalFontSize: 14px;
-  ${baseStyles};
+
   display: flex;
   margin: 0 auto;
 `
 
 export const ListUI = styled('ul')`
-  ${baseStyles};
   display: flex;
   list-style: none;
   margin: 0 auto;

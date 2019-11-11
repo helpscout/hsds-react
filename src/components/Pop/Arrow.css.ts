@@ -7,7 +7,6 @@ interface ArrowUIProps {
 }
 
 export const ArrowUI = styled.span<ArrowUIProps>`
-  ${baseStyles};
   height: ${({ size }) => size}px;
   pointer-events: none;
   position: absolute;
@@ -18,7 +17,6 @@ export const ArrowUI = styled.span<ArrowUIProps>`
   }
 
   .c-PopArrow {
-    ${baseStyles};
     ${({ color }) =>
       color
         ? `

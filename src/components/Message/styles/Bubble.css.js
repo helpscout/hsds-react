@@ -60,7 +60,6 @@ export const MessageBubbleTypingUI = styled.div`
 `
 
 export const MessageBubbleUI = styled.div`
-  ${baseStyles}
   background-color: ${getColor('grey.400')};
   border: 1px solid ${getColor('grey.400')};
   border-top-left-radius: ${config.borderRadius.md}px;

@@ -31,7 +31,6 @@ export const config = {
 }
 
 export const CardUI = styled('div')`
-  ${baseStyles};
   background-color: white;
   border-radius: ${config.borderRadius};
   box-shadow: ${config.boxShadow};

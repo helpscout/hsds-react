@@ -16,7 +16,6 @@ export const config = {
 }
 
 export const ConditionUI = styled('div')`
-  ${baseStyles};
   color: ${getColor('text.subtle')};
 `
 
@@ -34,7 +33,6 @@ export const OptionsWrapperUI = styled(Flexy.Item)`
 export const ContentWrapperUI = styled(Flexy.Block)``
 
 export const OperatorUI = styled('div')`
-  ${baseStyles};
   background: ${getColor('grey.600')};
   border-radius: ${config.operatorBorderWidth};
   box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
@@ -51,7 +49,6 @@ export const OperatorUI = styled('div')`
 `
 
 export const ButtonWrapperUI = styled('div')<{ align?: any }>`
-  ${baseStyles};
   ${({ align }) => `text-align: ${align};`};
 `
 
@@ -84,7 +81,6 @@ export const ButtonUI = styled(Button)`
 `
 
 export const OperatorWrapperBaseUI = styled(Centralize)`
-  ${baseStyles};
   position: relative;
   height: ${config.operatorHeight};
 

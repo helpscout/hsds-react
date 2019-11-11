@@ -18,7 +18,6 @@ export const config = {
 }
 
 export const HeaderUI = styled('header')`
-  ${baseStyles};
   margin-bottom: 0;
   width: ${config.width.default};
 
@@ -49,12 +48,9 @@ export const HeaderUI = styled('header')`
     )};
   }
 `
-export const TitleUI = styled('div')`
-  ${baseStyles};
-`
+export const TitleUI = styled('div')``
 
 export const SubTitleUI = styled('div')`
-  ${baseStyles};
   margin-top: 5px;
 `
 

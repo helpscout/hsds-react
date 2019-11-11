@@ -6,7 +6,7 @@ export const config = {
 }
 
 export const ChoiceGroupUI = styled('div')`
-  ${baseStyles} &.is-align-horizontal {
+  &.is-align-horizontal {
     display: flex;
 
     > * {

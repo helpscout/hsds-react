@@ -8,9 +8,7 @@ export const config = {
   headerHeight: '54px',
 }
 
-export const HsAppUI = styled.div`
-  ${baseStyles};
-`
+export const HsAppUI = styled.div``
 
 export const AppLayoutUI = styled.div`
   align-items: stretch;

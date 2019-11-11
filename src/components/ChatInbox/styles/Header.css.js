@@ -7,8 +7,6 @@ export const config = {
 }
 
 export const HeaderUI = styled('div')`
-  ${baseStyles};
-
   &.is-collapsible {
     cursor: pointer;
   }

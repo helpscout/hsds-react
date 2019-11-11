@@ -19,6 +19,4 @@ export const BorderUI = styled('div')<{ borderColor?: any }>`
   width: 100%;
 `
 
-export const ContentUI = styled('div')`
-  ${baseStyles};
-`
+export const ContentUI = styled('div')``

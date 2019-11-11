@@ -6,8 +6,6 @@ import { BEM } from '../../../utilities/classNames'
 const bem = BEM('.c-MessageContent')
 
 export const ContentUI = styled(ChatBlock)`
-  ${baseStyles}
-
   ${bem.element('content')} {
     max-width: 500px;
     text-align: left;

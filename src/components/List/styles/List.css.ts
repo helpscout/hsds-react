@@ -23,7 +23,6 @@ export const config = {
 }
 
 export const ItemUI = styled('li')`
-  ${baseStyles};
   box-sizing: border-box;
   display: block;
   margin: 0;
@@ -80,7 +79,7 @@ export const NumberedListUI = styled('ol')`
 
 function makeListStyles() {
   return `
-    ${baseStyles};
+    
     box-sizing: border-box;
     display: block;
     list-style: none;

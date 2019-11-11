@@ -6,7 +6,6 @@ import { FONT_FAMILY } from '../../../styles/configs/constants'
 const { field, focusIndicator, floatingLabel } = SIZES
 
 export const ComponentUI = styled('div')`
-  ${baseStyles};
   width: 100%;
   max-width: 100%;
   margin-bottom: 40px;

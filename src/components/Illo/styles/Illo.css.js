@@ -10,7 +10,7 @@ export const ILLO_SIZES = [ILLO_DEFAULT_SIZE, 60, 72, 80, 90]
 const bem = BEM('.c-Illo')
 
 export const IlloUI = styled('span')`
-  ${baseStyles} color: currentColor;
+  color: currentColor;
   display: block;
   height: ${ILLO_DEFAULT_SIZE}px;
   margin: auto;

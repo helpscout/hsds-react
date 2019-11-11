@@ -18,7 +18,6 @@ export const config = {
 }
 
 export const IconUI = styled.span`
-  ${baseStyles};
   color: currentColor;
   display: block;
   height: ${config.size}px;

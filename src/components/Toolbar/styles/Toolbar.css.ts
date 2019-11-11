@@ -23,12 +23,10 @@ export const config = {
 }
 
 export const WrapperUI = styled('div')`
-  ${baseStyles};
   position: relative;
 `
 
 export const ToolbarUI = styled(Flexy)`
-  ${baseStyles};
   background-color: white;
   min-height: ${config.height};
   padding: 4px 8px;

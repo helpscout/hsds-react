@@ -14,7 +14,6 @@ export const config = {
 }
 
 export const PageUI = styled('div')`
-  ${baseStyles};
   margin-left: auto;
   margin-right: auto;
   max-width: ${config.maxWidth.default};

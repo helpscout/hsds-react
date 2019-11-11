@@ -12,7 +12,6 @@ import {
 const { compositeMask } = SIZES
 
 export const ComponentUI = styled('div')`
-  ${baseStyles};
   display: flex;
   position: relative;
 

@@ -11,12 +11,9 @@ export const config = {
   labelTextMargin: '10px',
 }
 
-export const ChoiceUI = styled('div')`
-  ${baseStyles};
-`
+export const ChoiceUI = styled('div')``
 
 export const ChoiceLabelUI = styled('label')`
-  ${baseStyles};
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0;
@@ -41,7 +38,6 @@ export const ChoiceLabelUI = styled('label')`
 `
 
 export const ChoiceHelpTextUI = styled('div')`
-  ${baseStyles};
   margin-left: ${config.helpTextOffset};
 
   &.is-stacked {
@@ -50,8 +46,6 @@ export const ChoiceHelpTextUI = styled('div')`
 `
 
 export const ChoiceLabelTextUI = styled('span')`
-  ${baseStyles};
-
   &.is-stacked {
     display: block;
     font-weight: bold;

@@ -7,7 +7,7 @@ export const config = {
 }
 
 export const ItemUI = styled('div')`
-  ${baseStyles} margin-top: 0;
+  margin-top: 0;
   min-width: 0;
   position: relative;
   width: auto;

@@ -40,20 +40,18 @@ export const ActionsUI = styled('div')<ActionsUIProps>`
 `
 
 export const ActionsItemUI = styled('div')`
-  ${baseStyles};
   min-width: 0;
   margin: 0 ${config.spacing}px;
 `
 
 export const ActionsBlockUI = styled('div')`
-  ${baseStyles};
   flex: 1;
   max-width: 100%;
   min-width: 0;
 `
 
 export const StickyActionsWrapperUI = styled('div')<{ zIndex: any }>`
-  ${baseStyles};
+  
   position: fixed;
   bottom: 0;
   left: 0;

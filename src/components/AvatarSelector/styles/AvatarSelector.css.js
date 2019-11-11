@@ -42,7 +42,6 @@ export const AvatarSelectorWrapperUI = styled('div')`
   }
 `
 export const AvatarSelectorUI = styled('div')`
-  ${baseStyles};
   float: right;
   border-radius: 16px;
   color: ${getColor('charcoal.500')};

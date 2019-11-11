@@ -51,7 +51,6 @@ export const FaceUI = styled('div')`
 `
 
 export const EmoticonUI = styled('span')`
-  ${base};
   color: currentColor;
   cursor: pointer;
   display: block;

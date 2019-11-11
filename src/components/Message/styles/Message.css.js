@@ -5,7 +5,6 @@ import { BEM } from '../../../utilities/classNames'
 const bem = BEM('.c-Message')
 
 export const MessageUI = styled.div`
-  ${baseStyles}
   margin-bottom: 20px;
   min-width: 320px;
 

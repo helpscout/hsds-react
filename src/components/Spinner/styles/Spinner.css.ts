@@ -16,7 +16,7 @@ export const SpinnerUI = styled('div')<{ spinnerSize: any }>(props => {
   const { spinnerSize } = props
 
   return `
-    ${baseStyles};
+    
     display: block;
     width: ${spinnerSize}px;
     height: ${spinnerSize}px;
@@ -27,7 +27,7 @@ export const SpinnerSVGUI = styled('svg')<{ spinnerSize: any }>(props => {
   const { speed, spinnerSize } = props
 
   return `
-    ${baseStyles};
+    
     animation: SpinnerUIAnimation ${speed}ms linear infinite;
     display: block;
     width: ${spinnerSize}px;
@@ -56,7 +56,7 @@ export const SpinnerCircleUI = styled('circle')<SpinnerCircleUIProps>(props => {
   const opacity = config.shades[shade]
 
   return `
-    ${baseStyles};
+    
     animation: SpinnerCircleUIAnimation ${speed}ms ease-in-out infinite;
     display: block;
     fill: transparent;

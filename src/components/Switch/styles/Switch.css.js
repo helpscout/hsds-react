@@ -36,12 +36,52 @@ export const config = {
   },
 }
 
+function getWidth(size) {
+  return Math.floor(size * 2)
+}
+
+function makeSizeStyles(config) {
+  return forEach(
+    config.size,
+    (size, value) => `
+    &.is-${size} {
+      height: ${value}px;
+      line-height: ${value}px;
+      width: ${getWidth(value)}px;
+    }
+  `
+  )
+}
+
+function makeToggleSizeStyles(config) {
+  return forEach(
+    config.size,
+    (size, value) => `
+    &.is-${size} {
+      height: ${value - config.toggle.offset * 2}px;
+      width: ${value - config.toggle.offset * 2}px;
+    }
+  `
+  )
+}
+
+function makeToggleOffsetStyles(config) {
+  return forEach(
+    config.size,
+    (size, value) => `
+    &.is-${size} {
+      margin-left: -${value / 2 - config.toggle.offset / 1}px;
+    }
+  `
+  )
+}
+
 export const WrapperUI = styled('div')`
-  ${baseStyles} display: inline-block;
+  display: inline-block;
 `
 
 export const SwitchUI = styled('label')`
-  ${baseStyles} cursor: pointer;
+  cursor: pointer;
   display: block;
   margin: 0;
   position: relative;
@@ -56,7 +96,7 @@ export const SwitchUI = styled('label')`
 `
 
 export const InputUI = styled('input')`
-  ${baseStyles} bottom: 0;
+  bottom: 0;
   height: 100%;
   left: 0;
   margin: 0;
@@ -106,8 +146,6 @@ export const BackdropUI = styled('div')`
       color: ${config.color.disabled};
     }
   }
-
-  ${makeSizeStyles(config)};
 `
 
 export const ToggleUI = styled('div')`
@@ -122,7 +160,7 @@ export const ToggleUI = styled('div')`
   top: ${config.toggle.offset}px;
   transition: ${config.transition.toggle};
 
-  ${makeToggleSizeStyles(config)}
+  ${makeToggleSizeStyles(config)};
 
   &.is-active {
     width: 60%;
@@ -138,7 +176,7 @@ export const ToggleUI = styled('div')`
     left: 50%;
     right: inherit;
 
-    ${makeToggleOffsetStyles(config)}
+    ${makeToggleOffsetStyles(config)};
   }
 
   @keyframes SwitchTogglePulse {
@@ -154,10 +192,9 @@ export const ToggleUI = styled('div')`
 
     100% {
       box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-   	  transform: scale(0.8);
+      transform: scale(0.8);
     }
   }
-}
 `
 
 export const StateUI = styled('div')`
@@ -172,45 +209,5 @@ export const StateUI = styled('div')`
   top: 0;
   z-index: 0;
 `
-
-function getWidth(size) {
-  return Math.floor(size * 2)
-}
-
-function makeSizeStyles(config) {
-  return forEach(
-    config.size,
-    (size, value) => `
-    &.is-${size} {
-      height: ${value}px;
-      line-height: ${value}px;
-      width: ${getWidth(value)}px;
-    }
-  `
-  )
-}
-
-function makeToggleSizeStyles(config) {
-  return forEach(
-    config.size,
-    (size, value) => `
-    &.is-${size} {
-      height: ${value - config.toggle.offset * 2}px;
-      width: ${value - config.toggle.offset * 2}px;
-    }
-  `
-  )
-}
-
-function makeToggleOffsetStyles(config) {
-  return forEach(
-    config.size,
-    (size, value) => `
-    &.is-${size} {
-      margin-left: -${value / 2 - config.toggle.offset / 1}px;
-    }
-  `
-  )
-}
 
 export default SwitchUI

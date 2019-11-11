@@ -13,7 +13,6 @@ export const config = {
 }
 
 export const NotificationUI = styled(Animate)`
-  ${baseStyles};
   max-width: 300px;
 
   ${config.bubbleClassName} {
@@ -114,7 +113,6 @@ export const TextUI = styled(Text)`
 `
 
 export const TimerUI = styled('div')`
-  ${baseStyles};
   animation-fill-mode: forward;
   animation-name: HSDSNotificationTimer;
   animation-iteration-count: 1;

@@ -38,7 +38,6 @@ export const IconUI = styled(Icon)`
 `
 
 export const CloseButtonUI = styled('button')`
-  ${baseStyles};
   appearance: none;
   cursor: pointer;
   outline: none;

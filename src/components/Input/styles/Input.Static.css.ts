@@ -9,7 +9,6 @@ export const config = {
 }
 
 export const StaticUI = styled('div')`
-  ${baseStyles};
   color: currentColor;
   display: inline-block;
   min-height: ${config.defaultHeight};

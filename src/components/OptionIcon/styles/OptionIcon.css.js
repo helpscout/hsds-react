@@ -9,7 +9,7 @@ export const config = {
 }
 
 export const OptionIconUI = styled('div')`
-  ${baseStyles} align-items: center;
+  align-items: center;
   border-radius: 99999px;
   display: flex;
   height: ${config.size}px;

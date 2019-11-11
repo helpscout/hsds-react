@@ -7,7 +7,6 @@ import { classNameStrings as titleClassNames } from '../Accordion.Title'
 import { setFontSize } from '../../../styles/utilities/font'
 
 export const AccordionUI = styled('div')`
-  ${baseStyles};
   border: 1px solid ${getColor('border')};
   border-radius: 4px;
   overflow: hidden;
@@ -32,8 +31,6 @@ export const AccordionUI = styled('div')`
 `
 
 export const BodyUI = styled('div')`
-  ${baseStyles};
-
   display: block;
   overflow: hidden;
   padding: 24px 20px;
@@ -74,7 +71,6 @@ export const BodyUI = styled('div')`
 `
 
 export const SectionUI = styled('div')`
-  ${baseStyles};
   border-bottom: 1px solid ${getColor('border')};
 
   &.is-seamless,
@@ -85,7 +81,6 @@ export const SectionUI = styled('div')`
 
 export const makeTitleUI = (selector: 'div') => {
   return styled(selector)`
-    ${baseStyles};
     ${setFontSize(14)};
     color: currentColor;
     cursor: pointer;

@@ -9,7 +9,6 @@ import Card from '../../Card'
 const bem = BEM('.c-PreviewCard')
 
 export const PreviewCardUI = styled(Card)`
-  ${baseStyles};
   ${shadowlessBoxShadowWithHover()};
   padding: 20px;
   text-decoration: none;
@@ -33,7 +32,7 @@ export const PreviewCardUI = styled(Card)`
   }
 
   &.is-note {
-    ${noteBoxShadowWithHover()}
+    ${noteBoxShadowWithHover()};
     border: none;
   }
 `
