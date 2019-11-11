@@ -328,8 +328,9 @@ export class EditableField extends React.Component<
 
       // Allow references to this event to be maintained in the async
       // code that follows.
-      event.persist()
+      event && event.persist && event.persist()
 
+      console.log('will validate')
       validate({
         data: {
           cause: CAUSE.BLUR,
@@ -351,7 +352,15 @@ export class EditableField extends React.Component<
             // tested
             /* istanbul ignore next */
             if (field.id === changedField.id) {
-              return { ...changedField, validated: true }
+              const updatedProps =
+                validation.isValid && validation.updatedProps
+                  ? validation.updatedProps
+                  : {}
+              return {
+                ...changedField,
+                validated: true,
+                ...updatedProps,
+              }
             }
             // tested
             /* istanbul ignore next */
@@ -577,7 +586,7 @@ export class EditableField extends React.Component<
 
           // Allow references to this event to be maintained in the async
           // code that follows.
-          event.persist()
+          event && event.persist && event.persist()
 
           validate({
             data: {

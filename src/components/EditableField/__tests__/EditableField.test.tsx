@@ -1622,6 +1622,37 @@ describe('Input Blur', () => {
       expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
     })
   })
+
+  test('Input blur: should update props on validation resolved', () => {
+    const wrapper = mount(
+      <EditableField
+        name="company"
+        value={{ value: '123456', id: '1' }}
+        validate={() => {
+          console.log('is validating')
+          return Promise.resolve({
+            isValid: true,
+            name: 'company',
+            type: 'default',
+            updatedProps: { _id: 7 },
+            value: '1234567',
+          })
+        }}
+      />
+    )
+    const input = wrapper.find('input').first()
+    // @ts-ignore
+    input.getDOMNode().value = '1234567'
+    input.simulate('blur')
+
+    const f = flushPromises()
+    jest.runAllImmediates()
+
+    f.then(() => {
+      expect(wrapper.state('value')).toEqual('1234567')
+      expect(wrapper.state('_id')).toEqual(7)
+    })
+  })
 })
 
 describe('floating labels', () => {
