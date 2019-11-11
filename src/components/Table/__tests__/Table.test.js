@@ -93,6 +93,21 @@ describe('Table Body', () => {
     expect(cellsInRow.at(3).text()).toBe(customer.lastSeen)
   })
 
+  test('Renders rows with provided classNames', () => {
+    const customers = createFakeCustomers({ amount: 10 }).map(info => {
+      const className = info.days < 50 ? 'active' : 'stale'
+      return { ...info, ...{ className } }
+    })
+
+    const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
+    const tbody = wrapper.find('tbody')
+    const rows = tbody.find('tr')
+
+    customers.forEach((customer, i) => {
+      expect(rows.get(i).props.className).toContain(customer.className)
+    })
+  })
+
   test('Custom cell rendering on compound columns', () => {
     const columns = [
       {
