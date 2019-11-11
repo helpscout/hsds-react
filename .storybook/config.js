@@ -14,6 +14,7 @@ import { withConsole } from '@storybook/addon-console'
 import { withA11y } from '@storybook/addon-a11y'
 
 import '../src/adapters/app'
+import '../src/styles/blue.scss'
 import './storybook.css'
 import '@storybook/addon-console'
 
@@ -49,7 +50,7 @@ addParameters({
         'https://github.com/helpscout/hsds-react/tree/master/src/components',
     }),
     isFullscreen: false,
-    panelPosition: 'right',
+    panelPosition: 'bottom',
     isToolshown: true,
   },
   readme: {

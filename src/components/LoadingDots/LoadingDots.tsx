@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
+import { LoadingDotsUI, LoadingDotUI } from './styles/LoadingDots.css'
 
 type Props = {
   align?: 'left' | 'center' | 'right' | ''
@@ -15,11 +16,11 @@ const LoadingDots = (props: Props) => {
   )
 
   return (
-    <div className={componentClassName} {...rest}>
-      <div className="c-LoadingDots__dot c-LoadingDots__dot--one" />
-      <div className="c-LoadingDots__dot c-LoadingDots__dot--two" />
-      <div className="c-LoadingDots__dot c-LoadingDots__dot--three" />
-    </div>
+    <LoadingDotsUI className={componentClassName} {...rest}>
+      <LoadingDotUI className="is-one" />
+      <LoadingDotUI className="is-two" />
+      <LoadingDotUI className="is-three" />
+    </LoadingDotsUI>
   )
 }
 
