@@ -1,4 +1,7 @@
 {
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
   "eslint.autoFixOnSave": true,
   "eslint.validate": [
     "javascript",
