@@ -40,7 +40,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 
 export const StrongUI = styled('strong')`
-  ${baseStyles} font-weight: 600;
+  font-weight: 600;
 
   &.is-superBold {
     font-weight: 900;
@@ -56,7 +56,7 @@ Whoa 😳! Lots of stuff! What is this stuff!
 
 These are initial styles used for **every single** HSDS component. HSDS is designed to work out-of-the-box, with no reliance on normalizers or resets. As such, basic reset styles like `box-sizing: border-box;` and `font-family` are manually added to every component.
 
-Add your desired custom styling after adding `${baseStyles}`.
+Add your desired custom styling after adding ``.
 
 #### `styled`
 

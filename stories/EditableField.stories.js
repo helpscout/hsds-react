@@ -19,7 +19,6 @@ const stories = storiesOf('EditableField', module)
   .addDecorator(withAktiv)
 
 export const ContainerUI = styled('div')`
-  ${baseStyles};
   width: 300px;
   padding: 20px;
   background-color: white;

@@ -22,6 +22,7 @@ module.exports = api => {
         },
       },
     ],
+    '@quickbaseoss/babel-plugin-styled-components-css-namespace',
     [
       'babel-plugin-styled-components',
       {
