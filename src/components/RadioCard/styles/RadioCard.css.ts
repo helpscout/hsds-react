@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import Heading from '../../Heading'
 import Text from '../../Text'

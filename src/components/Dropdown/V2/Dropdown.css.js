@@ -1,7 +1,7 @@
 import { SELECTORS } from './Dropdown.utils'
 import styled from 'styled-components'
 import Card from '../../Card'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import { getColor, rgba } from '../../../styles/utilities/color'
 
 export const DropdownUI = styled('div')`

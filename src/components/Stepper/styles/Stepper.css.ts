@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Text from '../../Text'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {

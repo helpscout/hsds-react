@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Flexy from '../../Flexy'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
 export const config = {
   height: 54,

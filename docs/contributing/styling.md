@@ -36,7 +36,6 @@ The `.css.js` file extension is a convention HSDS uses to distinguish dedicated 
 Add the starting styled component boilerplate for `Strong.css.js`:
 
 ```jsx
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 
 export const StrongUI = styled('strong')`
@@ -51,12 +50,6 @@ export default StrongUI
 ```
 
 Whoa 😳! Lots of stuff! What is this stuff!
-
-#### `baseStyles`
-
-These are initial styles used for **every single** HSDS component. HSDS is designed to work out-of-the-box, with no reliance on normalizers or resets. As such, basic reset styles like `box-sizing: border-box;` and `font-family` are manually added to every component.
-
-Add your desired custom styling after adding ``.
 
 #### `styled`
 

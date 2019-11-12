@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import linkStyles from '../../../styles/mixins/linkStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'

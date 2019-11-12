@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Card from '../../Card'
 import Flexy from '../../Flexy'
 import Link from '../../Link'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {

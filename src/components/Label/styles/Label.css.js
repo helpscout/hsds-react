@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
 

@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/base.css.js'
 import sequencesStyles from './sequences/index.css.js'
 import styled from 'styled-components'
 

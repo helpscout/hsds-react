@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import ChatBlock from '../Message.ChatBlock'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageContent')

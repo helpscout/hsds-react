@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import linkStyles from '../../../styles/mixins/linkStyles.css.js'
 import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import baseStyles from '../../styles/resets/base.css.js'
 
 interface ArrowUIProps {
   size?: any

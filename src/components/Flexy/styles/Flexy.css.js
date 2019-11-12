@@ -1,4 +1,3 @@
-import base from '../../../styles/resets/base.css.js'
 import forEach from '../../../styles/utilities/forEach'
 import styled from 'styled-components'
 

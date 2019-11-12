@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { config as inputConfig } from './Input.css'
 import forEach from '../../../styles/utilities/forEach'
 

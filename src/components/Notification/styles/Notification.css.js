@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Animate from '../../Animate'
 import Text from '../../Text'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import { getColor, rgba } from '../../../styles/utilities/color'
 
 export const config = {

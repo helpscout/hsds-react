@@ -1,5 +1,4 @@
 import { getColor } from '../../../styles/utilities/color'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 
 import forEach from '../../../styles/utilities/forEach'
 import Animate from '../../Animate'

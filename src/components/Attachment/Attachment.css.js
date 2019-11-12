@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { BEM } from '../../utilities/classNames'
-import baseStyles from '../../styles/resets/baseStyles.css'
 import cardStyles, {
   cardSubtleStyles,
 } from '../../styles/mixins/cardStyles.css'

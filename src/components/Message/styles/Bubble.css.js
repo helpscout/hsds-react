@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Heading from '../../Heading'
 import { getColor } from '../../../styles/utilities/color'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import { BEM } from '../../../utilities/classNames'
 

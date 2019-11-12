@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { STATES } from '../../../styles/configs/constants'
 import { getColor, rgba } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'

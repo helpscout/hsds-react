@@ -7,7 +7,6 @@ import { EditableFieldComposite } from '../src/components/EditableField'
 import ReadMe from '../src/components/EditableField/docs/README.md'
 
 import styled from 'styled-components'
-import baseStyles from '../src/styles/resets/baseStyles.css'
 import { withAktiv } from './utils'
 
 const stories = storiesOf('EditableField', module)

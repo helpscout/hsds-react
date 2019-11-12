@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/base.css.js'
 import styled from 'styled-components'
 
 export const config = {

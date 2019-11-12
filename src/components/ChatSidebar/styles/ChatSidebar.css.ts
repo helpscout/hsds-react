@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Scrollable from '../../Scrollable'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 
 export const ChatSidebarUI = styled('div')`
   display: flex;

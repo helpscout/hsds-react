@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 
 import {

@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import Flexy from '../../Flexy'
 import Text from '../../Text'
 import { getColor } from '../../../styles/utilities/color'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 
 export const config = {
   indicatorTransition: 'opacity 100ms ease',

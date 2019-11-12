@@ -2,7 +2,7 @@ import Button from '../../Button'
 import Centralize from '../../Centralize'
 import Flexy from '../../Flexy'
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {

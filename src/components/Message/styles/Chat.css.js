@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { config as BubbleConfig } from './Bubble.css'
 import ChatBlock from '../Message.ChatBlock'
 

@@ -1,4 +1,3 @@
-import base from '../../../styles/resets/base.css'
 import styled from 'styled-components'
 
 export const BlockUI = styled('div')`

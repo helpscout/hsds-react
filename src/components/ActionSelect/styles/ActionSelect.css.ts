@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Backdrop from '../../Input/Input.BackdropV2'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import base from '../../../styles/resets/base.css'
 
 export const HuzzahUI = styled.div`
   display: block;

@@ -1,5 +1,5 @@
 import styled from '../../styled'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { COLOURS, SIZES } from '../../EditableField/EditableField.utils'
 import { FONT_FAMILY } from '../../../styles/configs/constants'
 
