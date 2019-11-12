@@ -133,7 +133,7 @@ stories.add('Within Modal', () => {
       return (
         <Modal trigger={<Button>Open Modal</Button>}>
           <Modal.Body>
-            <Button version={2} onClick={this.increment} kind="primaryAlt">
+            <Button onClick={this.increment} kind="primaryAlt">
               Update State
             </Button>
             <br />

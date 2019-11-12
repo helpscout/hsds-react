@@ -506,9 +506,7 @@ class HSAppExample extends React.Component {
                         onChange={this.toggle}
                       />
                     </FormLabel>
-                    <Button kind="primary" version={2}>
-                      Primary Button
-                    </Button>
+                    <Button kind="primary">Primary Button</Button>
                     <Button>Button</Button>
                     {ContentSpec.generate(12).map(({ id, content }) => (
                       <p key={id}>{content}</p>

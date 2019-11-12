@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 
-import Button from '../../Button/ButtonV2'
+import Button from '../../Button'
 import Text from '../../Text'
 import Heading from '../../Heading'
 

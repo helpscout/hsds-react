@@ -33,7 +33,7 @@ export const ButtonUI = styled.button`
 
   &:active,
   &:active:focus {
-    .c-ButtonV2Focus {
+    .c-ButtonFocus {
       display: none;
     }
   }
@@ -41,7 +41,7 @@ export const ButtonUI = styled.button`
   &.is-focused,
   &:focus {
     z-index: 2;
-    .c-ButtonV2Focus {
+    .c-ButtonFocus {
       display: block;
     }
   }

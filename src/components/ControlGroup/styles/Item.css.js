@@ -14,6 +14,25 @@ export const ItemUI = styled('div')`
 
   & + *:not(:first-child) {
     margin-left: -${config.borderWidth}px;
+
+    .c-Button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  & + *:not(:last-child) {
+    .c-Button {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  &:first-child {
+    .c-Button {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 
   &.is-block {

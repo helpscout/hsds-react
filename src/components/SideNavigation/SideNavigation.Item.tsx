@@ -52,7 +52,6 @@ export class Item extends React.PureComponent<SideNavigationItemProps> {
     return (
       <ItemUI {...getValidProps(rest)} className={componentClassName}>
         <ButtonUI
-          version={2}
           href={href}
           disabled={disabled}
           onClick={onClick}

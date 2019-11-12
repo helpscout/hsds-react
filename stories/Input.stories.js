@@ -188,7 +188,7 @@ stories.add('prefix', () => (
   <div>
     <Input
       prefix={
-        <Button version={2} kind="secondary" size="lg" isFirst>
+        <Button kind="secondary" size="lg" isFirst>
           Prefix
         </Button>
       }
@@ -201,7 +201,7 @@ stories.add('suffix', () => (
   <div>
     <Input
       suffix={
-        <Button version={2} kind="secondary" size="lg" isLast>
+        <Button kind="secondary" size="lg" isLast>
           Suffix
         </Button>
       }
@@ -357,12 +357,7 @@ stories.add('Action', () => {
             value={this.state.value}
             state={state}
             action={
-              <Button
-                version={2}
-                kind="primary"
-                size="sm"
-                disabled={this.state.isDisabled}
-              >
+              <Button kind="primary" size="sm" disabled={this.state.isDisabled}>
                 Apply
               </Button>
             }
@@ -379,12 +374,7 @@ stories.add('Action', () => {
             size="sm"
             state={state}
             action={
-              <Button
-                version={2}
-                kind="primary"
-                size="xs"
-                disabled={this.state.isDisabled}
-              >
+              <Button kind="primary" size="xs" disabled={this.state.isDisabled}>
                 Apply
               </Button>
             }
@@ -408,12 +398,12 @@ stories.add('Multi-Action', () => {
       action={
         <Flexy gap="xs">
           <Flexy.Item>
-            <Button version={2} kind="primary" size="sm">
+            <Button kind="primary" size="sm">
               Apply
             </Button>
           </Flexy.Item>
           <Flexy.Item>
-            <Button version={2} kind="secondary" size="sm">
+            <Button kind="secondary" size="sm">
               Cancel
             </Button>
           </Flexy.Item>

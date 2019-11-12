@@ -43,7 +43,7 @@ export class SplitButton extends React.PureComponent<Props> {
   renderButton() {
     const { dropdownProps, ...rest } = this.props
 
-    return <Button {...rest} version={2} className="c-SplitButton__button" />
+    return <Button {...rest} className="c-SplitButton__button" />
   }
 
   renderDropdownTrigger() {
@@ -64,7 +64,6 @@ export class SplitButton extends React.PureComponent<Props> {
         onClick={onTriggerClick}
         size={size}
         state={state}
-        version={2}
       >
         <Icon name="caret-down" size="16" />
       </OptionsTriggerButtonUI>

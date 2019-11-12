@@ -28,7 +28,7 @@ export const OptionsTriggerButtonUI = styled(Button)`
     }
   }
 
-  .c-ButtonV2__content {
+  .c-Button__content {
     padding-top: 2px;
     width: 16px !important;
   }

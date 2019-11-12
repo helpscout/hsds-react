@@ -41,7 +41,6 @@ export default class TableCustomizer extends Component {
             <Heading size="h4">Table Options</Heading>
             <Button
               size="sm"
-              version={2}
               kind="secondary"
               style={{ margin: '0 20px' }}
               onClick={() => {
@@ -52,7 +51,6 @@ export default class TableCustomizer extends Component {
             </Button>
             <Button
               size="sm"
-              version={2}
               kind="secondary"
               style={{ marginRight: '20px' }}
               onClick={() => {
@@ -63,7 +61,6 @@ export default class TableCustomizer extends Component {
             </Button>
             <Button
               size="sm"
-              version={2}
               kind="secondary"
               onClick={() => {
                 this.handleResetTableClick('custom')

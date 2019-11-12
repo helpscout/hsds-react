@@ -125,7 +125,6 @@ class CopyButton extends React.PureComponent<Props, State> {
         className={componentClassName}
         kind={kind}
         onClick={this.handleOnClick}
-        version={2}
       >
         <ConfirmationIconWrapperUI className={wrapperClassName}>
           <Icon className="c-CopyButton__iconConfirmation" name="tick-small" />

@@ -15,13 +15,7 @@ stories.add('Scrolling', () => {
         </div>
         <Example />
         <div style={{ height: 40 }} />
-        <Page.Actions
-          primary={
-            <Button kind="primary" version={2}>
-              Save Changes
-            </Button>
-          }
-        />
+        <Page.Actions primary={<Button kind="primary">Save Changes</Button>} />
       </Page>
     </div>
   )

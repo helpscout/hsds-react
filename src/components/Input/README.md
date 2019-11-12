@@ -29,13 +29,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 Actions (typically [Buttons](../Button)) can be embedded within the `Input` using the `action` prop:
 
 ```jsx
-<Input
-  action={
-    <Button version={2} size="sm">
-      Submit
-    </Button>
-  }
-/>
+<Input action={<Button size="sm">Submit</Button>} />
 ```
 
 The `Button` should be one step smaller compared to the `Input`.

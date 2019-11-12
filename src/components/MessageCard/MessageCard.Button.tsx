@@ -24,7 +24,7 @@ export class Button extends React.PureComponent<Props> {
     const { children, ...rest } = this.props
 
     return (
-      <ActionButtonUI {...rest} version={2}>
+      <ActionButtonUI {...rest}>
         <Truncate>{children}</Truncate>
       </ActionButtonUI>
     )

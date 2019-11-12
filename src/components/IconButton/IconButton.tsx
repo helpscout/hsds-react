@@ -1,6 +1,6 @@
 import * as React from 'react'
 import propConnect from '../PropProvider/propConnect'
-import Button, { Props as ButtonPropsInterface } from '../Button/ButtonV2'
+import Button, { Props as ButtonPropsInterface } from '../Button/Button'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -68,12 +68,7 @@ export class IconButton extends React.PureComponent<Props> {
     } = this.props
 
     return (
-      <IconButtonUI
-        {...rest}
-        className={this.getClassName()}
-        ref={innerRef}
-        version={2}
-      >
+      <IconButtonUI {...rest} className={this.getClassName()} ref={innerRef}>
         <Icon
           name={icon}
           size={this.getIconSize()}

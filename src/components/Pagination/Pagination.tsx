@@ -175,7 +175,6 @@ export class Pagination extends React.PureComponent<Props> {
         {isNotFirstPage && [
           <ButtonIconUI
             key="firstButton"
-            version={2}
             onClick={this.handleFirstClick}
             className="c-Pagination__firstButton"
             disabled={isLoading}
@@ -186,7 +185,6 @@ export class Pagination extends React.PureComponent<Props> {
           </ButtonIconUI>,
           <ButtonIconUI
             key="prevButton"
-            version={2}
             onClick={this.handlePrevClick}
             className="c-Pagination__prevButton"
             disabled={isLoading}
@@ -199,7 +197,6 @@ export class Pagination extends React.PureComponent<Props> {
         {!isLastPage && [
           <ButtonIconUI
             key="nextButton"
-            version={2}
             disabled={isLoading}
             onClick={this.handleNextClick}
             className="c-Pagination__nextButton"
@@ -210,7 +207,6 @@ export class Pagination extends React.PureComponent<Props> {
           </ButtonIconUI>,
           <ButtonIconUI
             key="lastButton"
-            version={2}
             disabled={isLoading}
             onClick={this.handleEndClick}
             className="c-Pagination__lastButton"

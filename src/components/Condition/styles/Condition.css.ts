@@ -69,7 +69,7 @@ export const ButtonUI = styled(Button)`
   }
 
   &.is-or {
-    .c-ButtonV2__content {
+    .c-Button__content {
       position: relative;
       top: -1px;
     }

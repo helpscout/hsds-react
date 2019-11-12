@@ -370,13 +370,7 @@ stories.add('Builder', () => {
           <ConditionBuilder error={error} isAddEnabled={isAddEnabled} />
         </Page.Section>
       </Page.Card>
-      <Page.Actions
-        primary={
-          <Button kind="primary" version={2}>
-            Save Changes
-          </Button>
-        }
-      />
+      <Page.Actions primary={<Button kind="primary">Save Changes</Button>} />
     </Page>
   )
 })

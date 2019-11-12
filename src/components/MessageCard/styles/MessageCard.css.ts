@@ -44,7 +44,7 @@ export const MessageCardUI = styled(Card)`
       margin-top: 20px;
     }
 
-    .c-ButtonV2 {
+    .c-Button {
       margin-top: 30px;
       font-size: 16px !important;
       height: 65px !important;
