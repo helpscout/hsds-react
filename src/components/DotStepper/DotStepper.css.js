@@ -6,15 +6,16 @@ const BULLET_MARGIN = 5
 const getProgressWidth = step => step * BULLET_SIZE + (step - 1) * BULLET_MARGIN
 
 export const DotStepperUI = styled('ol')`
+  display: flex;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: ${BULLET_MARGIN}px;
   position: relative;
 `
 
 export const ProgressBulletUI = styled('div')`
   position: absolute;
-  top: 0;
+  top: ${BULLET_MARGIN}px;
   left: ${BULLET_MARGIN}px;
   background: ${getColor('green.300')};
   width: ${({ step }) => getProgressWidth(step)}px;
@@ -43,4 +44,8 @@ export const BulletUI = styled('li')`
   overflow: hidden;
   margin: 0 0 0 ${BULLET_MARGIN}px;
   text-indent: -9999px;
+
+  &:first-child {
+    margin: 0;
+  }
 `

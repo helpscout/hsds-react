@@ -1,4 +1,5 @@
 import React from 'react'
+import Tooltip from '../Tooltip'
 import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css.js'
 import { classNames } from '../../utilities/classNames'
 
@@ -8,14 +9,14 @@ class DotStepper extends React.Component {
     step: 1,
   }
 
-  getAriaLabel() {
-    const { numSteps, step } = this.props
-    return `Step ${step} out of ${numSteps}`
-  }
-
   getClassName() {
     const { className } = this.props
     return classNames('c-DotStepper', className)
+  }
+
+  getTitle() {
+    const { numSteps, step } = this.props
+    return `Step ${step} of ${numSteps}`
   }
 
   renderSteps() {
@@ -31,16 +32,19 @@ class DotStepper extends React.Component {
 
   render() {
     const { className, step, ...rest } = this.props
+    const title = this.getTitle()
 
     return (
-      <DotStepperUI
-        aria-label={this.getAriaLabel()}
-        className={this.getClassName()}
-        {...rest}
-      >
-        <ProgressBulletUI step={step} />
-        {this.renderSteps()}
-      </DotStepperUI>
+      <Tooltip title={title} placement="bottom">
+        <DotStepperUI
+          aria-label={title}
+          className={this.getClassName()}
+          {...rest}
+        >
+          {this.renderSteps()}
+          <ProgressBulletUI step={step} />
+        </DotStepperUI>
+      </Tooltip>
     )
   }
 }
