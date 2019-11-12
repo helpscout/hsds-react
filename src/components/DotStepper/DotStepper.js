@@ -10,7 +10,6 @@ class DotStepper extends React.Component {
 
   getAriaLabel() {
     const { numSteps, step } = this.props
-
     return `Step ${step} out of ${numSteps}`
   }
 
