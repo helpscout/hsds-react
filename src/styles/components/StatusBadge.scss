@@ -1,15 +1,2 @@
-.c-StatusBadge {
-  @import "../resets/base";
-  @import "../configs/color";
-
-  display: inline-block;
-  position: relative;
-
-  &__statusDot {
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: translate(50%, -50%);
-    z-index: 1;
-  }
-}
+// Is now being rendered by Fancy :)
+// File exists to preserve @import implementation.

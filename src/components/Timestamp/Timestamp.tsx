@@ -5,6 +5,8 @@ import Icon from '../Icon'
 import Text from '../Text'
 import Time from './Timestamp.Time'
 
+import { TimestampUI } from './styles/Timestamp.css'
+
 type Props = {
   children?: any
   className?: string
@@ -46,7 +48,7 @@ class Timestamp extends React.Component<Props> {
     ) : null
 
     return (
-      <div className={componentClassName} {...rest}>
+      <TimestampUI className={componentClassName} {...rest}>
         <Flexy gap="xs" just="left">
           <Flexy.Item>
             <Text size="12" faint disableSelect noWrap>
@@ -59,7 +61,7 @@ class Timestamp extends React.Component<Props> {
           </Flexy.Item>
           <Flexy.Item>{readMarkup}</Flexy.Item>
         </Flexy>
-      </div>
+      </TimestampUI>
     )
   }
 }
