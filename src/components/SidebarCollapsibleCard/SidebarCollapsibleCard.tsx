@@ -13,6 +13,15 @@ import {
   SidebarCollapsibleCardState,
 } from './SidebarCollapsibleCard.types'
 
+import {
+  SidebarCollapsibleCardUI,
+  SidebarCollapsibleHeaderUI,
+  SidebarCollapsibleTitleUI,
+  SidebarCollapsibleBodyUI,
+  SidebarCollapsibleContentUI,
+  SidebarCollapsibleDragHandleUI,
+} from './styles/SidebarCollapsibleCard.css'
+
 const uniqueID = createUniqueIDFactory('SidebarCollapsibleCard')
 
 class SidebarCollapsibleCard extends React.PureComponent<
@@ -106,13 +115,13 @@ class SidebarCollapsibleCard extends React.PureComponent<
       if (header) return header
       if (title) {
         return (
-          <Heading
+          <SidebarCollapsibleTitleUI
             className="c-SidebarCollapsibleCard__title"
             size="h4"
             lineHeightReset
           >
             {title}
-          </Heading>
+          </SidebarCollapsibleTitleUI>
         )
       }
       return null
@@ -123,7 +132,7 @@ class SidebarCollapsibleCard extends React.PureComponent<
     const headerMarkup = displayHeader()
     const dragHandleMarkup = sortable ? (
       <Flexy.Item>
-        <SortableDragHandle
+        <SidebarCollapsibleDragHandleUI
           className="c-SidebarCollapsibleCard__drag-handle"
           onDragStart={handleOnSortStart}
         />
@@ -131,14 +140,14 @@ class SidebarCollapsibleCard extends React.PureComponent<
     ) : null
 
     return (
-      <div
+      <SidebarCollapsibleCardUI
         className={componentClassName}
         {...rest}
         role="presentation"
         id={cardId}
       >
         <EventListener event="mouseup" handler={handleOnSortEnd} />
-        <a
+        <SidebarCollapsibleHeaderUI
           className="c-SidebarCollapsibleCard__header"
           onClick={handleToggleOpen}
           role="heading"
@@ -153,8 +162,8 @@ class SidebarCollapsibleCard extends React.PureComponent<
               <Icon name={iconName} size="14" muted />
             </Flexy.Item>
           </Flexy>
-        </a>
-        <div
+        </SidebarCollapsibleHeaderUI>
+        <SidebarCollapsibleBodyUI
           className="c-SidebarCollapsibleCard__body"
           role="region"
           id={regionId}
@@ -167,10 +176,12 @@ class SidebarCollapsibleCard extends React.PureComponent<
             onClose={onClose}
             isOpen={open}
           >
-            <div className="c-SidebarCollapsibleCard__content">{children}</div>
+            <SidebarCollapsibleContentUI className="c-SidebarCollapsibleCard__content">
+              {children}
+            </SidebarCollapsibleContentUI>
           </Collapsible>
-        </div>
-      </div>
+        </SidebarCollapsibleBodyUI>
+      </SidebarCollapsibleCardUI>
     )
   }
 }
