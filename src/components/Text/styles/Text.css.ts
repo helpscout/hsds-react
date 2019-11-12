@@ -78,7 +78,7 @@ export const TextUI = styled.span`
 
   &.is-samp {
     font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
-    font-family: var(--BlueConfigGlobalFontFamilyMono);
+    font-family: var(--HSDSGlobalFontFamilyMono);
   }
 `
 

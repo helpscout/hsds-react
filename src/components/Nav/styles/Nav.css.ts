@@ -9,7 +9,7 @@ export const config = {
 }
 
 export const NavUI = styled('nav')`
-  --BlueConfigGlobalFontSize: 14px;
+  --HSDSGlobalFontSize: 14px;
 
   display: flex;
   margin: 0 auto;

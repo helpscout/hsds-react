@@ -39,7 +39,7 @@ export const InputUI = styled('div')`
 `
 
 export const LabelUI = styled('div')`
-  --BlueConfigGlobalFontSize: 14px;
+  --HSDSGlobalFontSize: 14px;
   font-size: 14px;
   color: #2a3b47;
   max-width: 100%;
