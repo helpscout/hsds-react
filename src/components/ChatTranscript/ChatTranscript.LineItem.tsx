@@ -4,6 +4,8 @@ import { classNames } from '../../utilities/classNames'
 import { escapeHTML, newlineToHTML } from '../../utilities/strings'
 import compose from '@helpscout/react-utils/dist/compose'
 
+import { LineItemUI } from './styles/ChatTranscript.css'
+
 type Props = {
   body?: string
   children?: any
@@ -51,7 +53,7 @@ const LineItem = (props: Props) => {
   )
 
   return (
-    <div className={componentClassName} {...rest}>
+    <LineItemUI className={componentClassName} {...rest}>
       <Text
         className="c-ChatTranscriptLineItem__content"
         block
@@ -61,7 +63,7 @@ const LineItem = (props: Props) => {
         {contentMarkup}
         {timestampMarkup}
       </Text>
-    </div>
+    </LineItemUI>
   )
 }
 
