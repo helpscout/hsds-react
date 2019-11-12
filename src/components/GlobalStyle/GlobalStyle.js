@@ -14,7 +14,7 @@ export default createGlobalStyle`
     --HSDSGlobalFontFamily: ${props =>
       props.fontFamily ? props.fontFamily : FONT_FAMILY};
     --HSDSGlobalFontFamilyMono: ${props =>
-      props.fontFamilyMono ? props.fontFamilyMono : FONT_FAMILY};
+      props.fontFamilyMono ? props.fontFamilyMono : FONT_FAMILY_MONO};
     --HSDSGlobalFontSize: ${props =>
       props.fontSize ? props.fontSize : BASE_FONT_SIZE}px;
   }

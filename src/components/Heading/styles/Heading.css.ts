@@ -8,7 +8,7 @@ import variableFontSize, {
 } from '../../../styles/utilities/variableFontSize'
 import { makeWeightStyles } from '../../Text/styles/Text.css'
 
-export const VAR_NAMESPACE_SIZE = 'BlueConfigHeadingFontSize'
+export const VAR_NAMESPACE_SIZE = 'HSDSGlobalHeadingFontSize'
 export const SHADES = {
   light: getColor('charcoal.200'),
 }

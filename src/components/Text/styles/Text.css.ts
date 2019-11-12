@@ -7,7 +7,7 @@ import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import { TEXT_SHADES } from '../../../styles/configs/constants'
 
-export const VAR_NAMESPACE_SIZE = 'BlueConfigTextFontSize'
+export const VAR_NAMESPACE_SIZE = 'HSDSGlobalTextFontSize'
 export const TEXT_SIZES = [10, 11, 12, 13, 14, 15, 16, 20, 48]
 export const TEXT_WEIGHTS = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
