@@ -37,7 +37,7 @@ class DotStepper extends React.Component {
     return (
       <Tooltip title={title} placement="bottom">
         <DotStepperUI
-          data-cy="dot-stepper"
+          data-cy="DotStepper"
           aria-label={title}
           className={this.getClassName()}
           {...rest}
