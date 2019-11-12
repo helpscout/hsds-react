@@ -2,6 +2,8 @@ import * as React from 'react'
 import Heading from '../Heading/index'
 import { classNames } from '../../utilities/classNames'
 
+import { DropdownHeaderUI } from './Dropdown.css'
+
 type Props = {
   children?: any
   className?: string
@@ -13,11 +15,11 @@ const Header = (props: Props) => {
   const componentClassName = classNames('c-DropdownHeader', className)
 
   return (
-    <div className={componentClassName} {...rest}>
+    <DropdownHeaderUI className={componentClassName} {...rest}>
       <Heading size="small" light>
         {children}
       </Heading>
-    </div>
+    </DropdownHeaderUI>
   )
 }
 

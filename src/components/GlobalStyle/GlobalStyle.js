@@ -10,7 +10,7 @@ export const FONT_FAMILY_MONO =
 export const BASE_FONT_SIZE = 13
 
 export default createGlobalStyle`
-  &:root{
+  :root{
     --HSDSGlobalFontFamily: ${props =>
       props.fontFamily ? props.fontFamily : FONT_FAMILY};
     --HSDSGlobalFontFamilyMono: ${props =>

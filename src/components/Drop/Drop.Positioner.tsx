@@ -9,6 +9,8 @@ import {
 } from '../../utilities/nodePosition'
 import { noop } from '../../utilities/other'
 
+import { DropContentUI, DropUI } from './styles/Drop.css'
+
 export interface DropPositionerProps {
   className?: string
   autoPosition: boolean
@@ -161,7 +163,7 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
     const updatePosition = this.updatePosition
 
     return (
-      <div
+      <DropUI
         className={componentClassName}
         ref={node => {
           this.node = node
@@ -174,15 +176,15 @@ class Positioner extends React.PureComponent<DropPositionerProps> {
             return updatePosition()
           }}
         />
-        <div
+        <DropContentUI
           className="c-DropPositioner__content"
           ref={node => {
             this.contentNode = node
           }}
         >
           {children}
-        </div>
-      </div>
+        </DropContentUI>
+      </DropUI>
     )
   }
 }

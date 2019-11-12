@@ -5,6 +5,8 @@ import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
+import { DragHandleUI } from './styles/Sortable.css'
+
 const defaultProps = {
   onDragStart: noop,
 }
@@ -15,13 +17,13 @@ const DragHandle = SortableHandle(props => {
   const componentClassName = classNames('c-SortableDragHandle', className)
 
   return (
-    <div
+    <DragHandleUI
       {...getValidProps(rest)}
       className={componentClassName}
       onMouseDown={onDragStart}
     >
       <Icon name="drag-handle" ignoreClick={false} />
-    </div>
+    </DragHandleUI>
   )
 })
 

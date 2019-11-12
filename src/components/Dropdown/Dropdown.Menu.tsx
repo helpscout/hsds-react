@@ -16,6 +16,8 @@ import { applyStylesToNode, isNodeScrollable } from '../../utilities/node'
 import { getHeightRelativeToViewport } from '../../utilities/nodePosition'
 import { DropdownMenuProps, DropdownMenuState } from './Dropdown.types'
 
+import { DropdownMenuUI } from './Dropdown.css'
+
 const dropOptions = {
   autoPosition: true,
   id: 'Dropdown',
@@ -342,9 +344,10 @@ class Menu extends React.PureComponent<DropdownMenuProps, DropdownMenuState> {
             isHover: hoverIndex === index,
             isFocused: focusIndex === index,
             onFocus: handleItemOnFocus,
-            onClick: enhanceComponentMethod(child, 'onClick')(
-              handleItemOnClick
-            ),
+            onClick: enhanceComponentMethod(
+              child,
+              'onClick'
+            )(handleItemOnClick),
             onMouseEnter: handleItemOnMouseEnter,
             onMenuClose: handleItemOnMenuClose,
             onParentMenuClose: handleOnCloseParent,
@@ -367,7 +370,7 @@ class Menu extends React.PureComponent<DropdownMenuProps, DropdownMenuState> {
         }}
         onClick={handleOnMenuClick}
       >
-        <div
+        <DropdownMenuUI
           className={componentClassName}
           ref={node => {
             this.node = node
@@ -435,7 +438,7 @@ class Menu extends React.PureComponent<DropdownMenuProps, DropdownMenuState> {
               </div>
             </Card>
           </Animate>
-        </div>
+        </DropdownMenuUI>
       </div>
     )
   }

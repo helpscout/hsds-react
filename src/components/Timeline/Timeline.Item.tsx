@@ -4,6 +4,8 @@ import Flexy from '../Flexy'
 import Timestamp from '../Timestamp'
 import { classNames } from '../../utilities/classNames'
 
+import { TimelineItemUI } from './styles/Timeline.css'
+
 type Props = {
   children?: any
   className?: string
@@ -23,7 +25,7 @@ class Item extends React.PureComponent<Props> {
     ) : null
 
     return (
-      <div
+      <TimelineItemUI
         {...getValidProps(rest)}
         className={componentClassName}
         role="listitem"
@@ -32,7 +34,7 @@ class Item extends React.PureComponent<Props> {
           <Flexy.Item className="c-TimelineItem__block">{children}</Flexy.Item>
           {timestampMarkup}
         </Flexy>
-      </div>
+      </TimelineItemUI>
     )
   }
 }

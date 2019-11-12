@@ -2,6 +2,8 @@ import * as React from 'react'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 
+import { StatusBarButtonUI } from './styles/StatusBar.css'
+
 const Button = props => {
   const { children, className, icon, ...rest } = props
 
@@ -12,10 +14,10 @@ const Button = props => {
   ) : null
 
   return (
-    <button className={componentClassName} {...rest}>
+    <StatusBarButtonUI className={componentClassName} {...rest}>
       {children}
       {iconMarkup}
-    </button>
+    </StatusBarButtonUI>
   )
 }
 

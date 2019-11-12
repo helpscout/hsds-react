@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Button from '../Button/index'
-import Icon from '../Icon/index'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { DropdownTriggerProps } from './Dropdown.types'
+import { DropdownTriggerIconUI } from './Dropdown.css'
 
 class Trigger extends React.PureComponent<DropdownTriggerProps> {
   static defaultProps = {
@@ -35,7 +35,7 @@ class Trigger extends React.PureComponent<DropdownTriggerProps> {
     )
 
     const iconMarkup = (
-      <Icon
+      <DropdownTriggerIconUI
         className="c-DropdownTrigger__icon"
         inline
         muted

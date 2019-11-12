@@ -1,15 +1,17 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
+import { DetailListItemUI } from './styles/DetailList.css'
+
 const Item = props => {
   const { children, className, ...rest } = props
 
   const componentClassName = classNames('c-DetailListItem', className)
 
   return (
-    <dd className={componentClassName} {...rest}>
+    <DetailListItemUI className={componentClassName} {...rest}>
       {children}
-    </dd>
+    </DetailListItemUI>
   )
 }
 
