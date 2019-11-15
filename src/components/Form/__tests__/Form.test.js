@@ -2,6 +2,21 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Form from '../Form'
 
+describe('ClassName', () => {
+  test('Has default className', () => {
+    const wrapper = mount(<Form />)
+
+    expect(wrapper.getDOMNode().classList.contains('c-Form')).toBeTruthy()
+  })
+
+  test('Applies custom className if specified', () => {
+    const customClass = 'schrute'
+    const wrapper = mount(<Form className={customClass} />)
+
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBeTruthy()
+  })
+})
+
 describe('Children', () => {
   test('Renders child content', () => {
     const text = 'Hello'
