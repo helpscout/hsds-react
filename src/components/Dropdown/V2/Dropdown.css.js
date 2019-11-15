@@ -145,6 +145,7 @@ export const ItemUI = styled('div')`
   &.is-active {
     > ${ActionUI}, &.is-option {
       font-weight: 500;
+      color: ${getColor('charcoal.600')};
     }
   }
 
