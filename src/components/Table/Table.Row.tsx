@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { classNames } from '../../utilities/classNames'
 
 import Cell from './Table.Cell'
 import { TABLE_CLASSNAME } from './Table'
@@ -16,7 +17,10 @@ export default class Row extends React.PureComponent<RowProps> {
     const { row, columns } = this.props
 
     return (
-      <tr className={`${TABLE_CLASSNAME}__Row`} onClick={this.handleRowClick}>
+      <tr
+        className={classNames(`${TABLE_CLASSNAME}__Row`, row.className)}
+        onClick={this.handleRowClick}
+      >
         {columns.map(column => (
           <Cell
             column={column}

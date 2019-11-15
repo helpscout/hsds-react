@@ -8,7 +8,9 @@ import ChatListItemStateExample from './ChatListItemStateExample'
 const avatars = AvatarSpec.generate(8)
 const fixtures = ChatSpec.generate(8)
 
-const itemMarkup = fixtures.map((item, index) => {
+const itemMarkup = Object.keys(fixtures).forEach((key, index) => {
+  const item = fixtures[key]
+
   const avatar = (
     <Avatar
       image={avatars[4].image}

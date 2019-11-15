@@ -125,85 +125,79 @@ export const ActionContentUI = styled('div')`
   max-width: 100%;
 `
 
-export const makeItemUI = element => {
-  const ItemUI = styled(element)`
-    ${baseStyles};
-    background-color: ${rgba(getColor('grey.400'), 0)};
-    border-radius: 0 !important;
-    color: ${getColor('charcoal.400')};
-    cursor: pointer;
-    display: block;
-    outline: none;
-    position: static;
-    text-decoration: none;
-    transition: background-color 0.1s ease;
-    user-select: none;
+export const ItemUI = styled('div')`
+  ${baseStyles};
+  background-color: ${rgba(getColor('grey.400'), 0)};
+  border-radius: 0 !important;
+  color: ${getColor('charcoal.400')};
+  cursor: pointer;
+  display: block;
+  outline: none;
+  position: static;
+  text-decoration: none;
+  transition: background-color 0.1s ease;
+  user-select: none;
 
-    &.is-option {
-      padding: 8px 16px;
-    }
-
-    &.is-active {
-      > ${ActionUI}, &.is-option {
-        font-weight: 500;
-      }
-    }
-
-    &.c-SelectionClearerItem + .c-DropdownV2Item {
-      padding-top: 12px;
-    }
-
-    &:focus {
-      ${MenuUI} {
-        color: initial;
-      }
-    }
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    &:last-child {
-      border: none;
-    }
-
-    ${WrapperUI} {
-      position: absolute;
-      padding-left: 20px;
-      padding-right: 20px;
-      margin-left: -20px;
-      margin-right: -20px;
-    }
-
-    &.is-focused {
-      > ${ActionUI}, &.is-option {
-        background-color: ${rgba(getColor('grey.300'), 1)};
-        color: ${getColor('link.base')};
-      }
-    }
-    &.is-focused:hover,
-    &.is-open {
-      > ${WrapperUI} {
-        visibility: visible;
-        pointer-events: auto;
-      }
-    }
-
-    &.is-disabled {
-      cursor: initial;
-      pointer-events: none;
-      opacity: 0.4;
-    }
-  `
-
-  ItemUI.defaultProps = {
-    [SELECTORS.itemAttribute]: true,
+  &.is-option {
+    padding: 8px 16px;
   }
 
-  return ItemUI
-}
+  &.is-active {
+    > ${ActionUI}, &.is-option {
+      font-weight: 500;
+    }
+  }
 
-export const ItemUI = makeItemUI('div')
+  &.c-SelectionClearerItem + .c-DropdownV2Item {
+    padding-top: 12px;
+  }
+
+  &:focus {
+    ${MenuUI} {
+      color: initial;
+    }
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:last-child {
+    border: none;
+  }
+
+  ${WrapperUI} {
+    position: absolute;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+  &.is-focused {
+    > ${ActionUI}, &.is-option {
+      background-color: ${rgba(getColor('grey.300'), 1)};
+      color: ${getColor('link.base')};
+    }
+  }
+  &.is-focused:hover,
+  &.is-open {
+    > ${WrapperUI} {
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+
+  &.is-disabled {
+    cursor: initial;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+`
+
+ItemUI.defaultProps = {
+  [SELECTORS.itemAttribute]: true,
+}
 
 export const GroupUI = styled('div')`
   margin-top: 0;
@@ -237,6 +231,10 @@ export const TriggerUI = styled('span')`
 
   &.is-open {
     color: ${getColor('blue.700')};
+  }
+
+  & > * {
+    pointer-events: none;
   }
 `
 

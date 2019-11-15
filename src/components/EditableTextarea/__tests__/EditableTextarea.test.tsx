@@ -199,6 +199,27 @@ describe('Keydown', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('onInputKeyDown', () => {
+    const onInputKeyDownSpy = jest.fn()
+    const wrapper = mount(
+      <EditableTextarea
+        id="company"
+        value="hello"
+        onInputKeyDown={onInputKeyDownSpy}
+      />
+    )
+    wrapper
+      .find('textarea')
+      .first()
+      .simulate('keydown', { key: 'Tab' })
+    expect(onInputKeyDownSpy).toHaveBeenCalled()
+    const arg = onInputKeyDownSpy.mock.calls[0][0]
+    expect(arg.name).toEqual('company')
+    expect(arg.value).toHaveLength(1)
+    expect(arg.value[0].id).toEqual('company')
+    expect(arg.value[0].value).toEqual('hello')
+  })
 })
 
 describe('Keyup', () => {
@@ -223,6 +244,27 @@ describe('Keyup', () => {
         done()
       })
     })
+  })
+
+  test('onInputKeyUp', () => {
+    const onInputKeyUpSpy = jest.fn()
+    const wrapper = mount(
+      <EditableTextarea
+        id="company"
+        value="hello"
+        onInputKeyUp={onInputKeyUpSpy}
+      />
+    )
+    wrapper
+      .find('textarea')
+      .first()
+      .simulate('keyup', { key: 'Tab' })
+    expect(onInputKeyUpSpy).toHaveBeenCalled()
+    const arg = onInputKeyUpSpy.mock.calls[0][0]
+    expect(arg.name).toEqual('company')
+    expect(arg.value).toHaveLength(1)
+    expect(arg.value[0].id).toEqual('company')
+    expect(arg.value[0].value).toEqual('hello')
   })
 })
 
