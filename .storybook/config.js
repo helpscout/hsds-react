@@ -52,8 +52,12 @@ addParameters({
 
 // automatically import all files ending in *.stories.js
 function loadStories() {
-  const req = require.context('../stories', true, /.stories.(js|ts|tsx)$/)
-  req.keys().forEach(filename => req(filename))
+  const reqs = [
+    require.context('../stories', true, /.stories.(js|ts|tsx)$/),
+    require.context('../src', true, /.stories.(js|ts|tsx)$/),
+  ]
+
+  reqs.forEach(req => req.keys().forEach(filename => req(filename)))
 }
 
 configure(loadStories, module)
