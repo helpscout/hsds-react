@@ -32,19 +32,53 @@ describe('Children', () => {
 })
 
 describe('Actions', () => {
-  test('Renders primary button', () => {
+  test('Renders only a save button by default with default text', () => {
     const wrapper = mount(<Form />)
-    const el = wrapper.find('.is-primary').hostNodes()
+    const el = wrapper.find('.save-button').hostNodes()
 
-    expect(el.text()).toContain('Submit')
-    expect(el.length).toBe(1)
+    expect(el.text()).toContain('Save')
+    expect(wrapper.find('button').length).toEqual(1)
   })
 
-  test('Renders secondary button', () => {
-    const wrapper = mount(<Form />)
-    const el = wrapper.find('.is-primary').hostNodes()
+  test('Renders a save button with custom text if specified', () => {
+    const text = 'Save Entry'
+    const wrapper = mount(<Form saveText={text} />)
+    const el = wrapper.find('.save-button').hostNodes()
 
-    expect(el.text()).toContain('Submit')
-    expect(el.length).toBe(1)
+    expect(el.text()).toEqual(text)
+  })
+
+  test('Renders a cancel button if specified', () => {
+    const text = 'Cancel'
+    const wrapper = mount(<Form cancelText={text} />)
+    const el = wrapper.find('.cancel-button').hostNodes()
+
+    expect(el.text()).toEqual(text)
+    expect(wrapper.find('button').length).toEqual(2)
+  })
+
+  test('Renders a delete button if specified', () => {
+    const text = 'Delete'
+    const wrapper = mount(<Form destroyText={text} />)
+    const el = wrapper.find('.delete-button').hostNodes()
+
+    expect(el.text()).toEqual(text)
+    expect(wrapper.find('button').length).toEqual(2)
+  })
+
+  test('Renders a save, cancel and delete button from left to right by default', () => {
+    const wrapper = mount(<Form cancelText="Cancel" destroyText="Delete" />)
+
+    expect(wrapper.find('.is-right').hostNodes()).toHaveLength(1)
+    expect(wrapper.find('.is-left').hostNodes()).toHaveLength(0)
+  })
+
+  test('Renders a save, cancel and delete button from right to left by default', () => {
+    const wrapper = mount(
+      <Form cancelText="Cancel" destroyText="Delete" actionDirection="left" />
+    )
+
+    expect(wrapper.find('.is-right').hostNodes()).toHaveLength(0)
+    expect(wrapper.find('.is-left').hostNodes()).toHaveLength(1)
   })
 })
