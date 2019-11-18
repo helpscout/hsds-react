@@ -5,19 +5,36 @@ This component is a presentational wrapper used to render content, typically for
 ## Example
 
 ```jsx
-<Form>
+<Form
+  cancelText="Cancel"
+  deleteText="Delete"
+  className="entry-form"
+  actionDirection="left"
+>
   <FormGroup>
     <FormLabel label="Site Name">
       <Input value="Dashing Dash" />
     </FormLabel>
   </FormGroup>
-  <Form.Actions primary={<Button>Save Changes</Button>} />
 </Form>
 ```
 
 ## Props
 
-| Prop      | Type     | Description                                      |
-| --------- | -------- | ------------------------------------------------ |
-| children  | `any`    | Content to render.                               |
-| className | `string` | Custom class names to be added to the component. |
+| Prop                               | Type     | Description                                       |
+| ---------------------------------- | -------- | ------------------------------------------------- |
+| actionDirection                    | `string` | Optional. Direction in which buttons render,      |
+| right or left. Defaults to "right" |
+| cancelText                         | `string` | Optional. Text for the cancel button. Button will |
+| not render without text.           |
+| children                           | `any`    | Content to render.                                |
+| className                          | `string` | Optional. Custom class names to be added to the   |
+
+| component.
+| destroyText | `string` | Optional. Text for the delete button. Button will |
+| not render without text. |
+| onSave | `string` | Callback for when the form is submitted |
+| onCancel | `string` | Callback for the cancel button |
+| onDestroy | `string` | Callback for the delete button |
+| saveText | `string` | Optional. Text for the save button. Defaults to |
+| "Save". Button always renders.
