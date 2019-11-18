@@ -31,12 +31,12 @@ storiesOf('Form', module).add('default', () => (
   <ContainerUI>
     <Form
       actionDirection="left"
-      saveText="Save Entry"
       cancelText="Cancel"
       destroyText="Delete"
-      onSave={handleFormSubmit}
       onCancel={handleCancel}
       onDestroy={handleDestroy}
+      onSave={handleFormSubmit}
+      saveText="Save Entry"
     >
       <FormGroup>
         <FormLabel label="Site Name">

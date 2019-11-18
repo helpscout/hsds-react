@@ -7,12 +7,12 @@ export class Form extends React.PureComponent {
   static Actions = Actions
 
   static defaultProps = {
-    saveText: 'Save',
+    onCancel: () => {},
+    onDestroy: () => {},
     onSave: evt => {
       evt && evt.preventDefault()
     },
-    onCancel: () => {},
-    onDestroy: () => {},
+    saveText: 'Save',
   }
 
   render() {
@@ -22,9 +22,9 @@ export class Form extends React.PureComponent {
       children,
       className,
       destroyText,
-      onSave,
       onCancel,
       onDestroy,
+      onSave,
       saveText,
     } = this.props
 

@@ -14,15 +14,15 @@ export class Actions extends React.PureComponent {
   }
 
   getClassName() {
-    const { className, direction, save, cancel, destroy } = this.props
+    const { cancel, className, destroy, direction, save } = this.props
 
     return classNames(
       Actions.className,
-      direction && `is-${direction}`,
-      save && 'withSave',
       cancel && 'withCancel',
+      className,
       destroy && 'withDestroy',
-      className
+      direction && `is-${direction}`,
+      save && 'withSave'
     )
   }
 
