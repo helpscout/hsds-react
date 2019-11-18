@@ -7,12 +7,12 @@ export class Form extends React.PureComponent {
   static Actions = Actions
 
   static defaultProps = {
-    primaryButtonText: 'Submit',
-    onFormSubmit: evt => {
+    saveText: 'Save',
+    onSave: evt => {
       evt && evt.preventDefault()
     },
-    onSecondaryButtonClick: () => {},
-    onSeriousButtonClick: () => {},
+    onCancel: () => {},
+    onDestroy: () => {},
   }
 
   render() {
@@ -20,47 +20,59 @@ export class Form extends React.PureComponent {
       actionDirection,
       children,
       className,
-      onFormSubmit,
-      onSecondaryButtonClick,
-      onSeriousButtonClick,
-      primaryButtonText,
-      secondaryButtonText,
-      seriousButtonText,
+      onSave,
+      onCancel,
+      onDestroy,
+      saveText,
+      cancelText,
+      destroyText,
     } = this.props
 
     const componentClassName = classNames('c-Form', className)
 
-    const primaryButton = (
-      <Button kind="primary" size="lg" version={2} submit={true}>
-        {primaryButtonText}
-      </Button>
-    )
-
-    const secondaryButton = secondaryButtonText && (
-      <Button size="md" version={2} onClick={onSecondaryButtonClick}>
-        {secondaryButtonText}
-      </Button>
-    )
-
-    const seriousButton = seriousButtonText && (
+    const saveButton = (
       <Button
+        className="save-button"
+        kind="primary"
+        size="lg"
+        version={2}
+        submit={true}
+      >
+        {saveText}
+      </Button>
+    )
+
+    const cancelButton = cancelText && (
+      <Button
+        className="cancel-button"
+        size="md"
+        version={2}
+        onClick={onCancel}
+      >
+        {cancelText}
+      </Button>
+    )
+
+    const destroyButton = destroyText && (
+      <Button
+        className="delete-button"
         state="danger"
         size="md"
         version={2}
-        onClick={onSeriousButtonClick}
+        onClick={onDestroy}
       >
-        {seriousButtonText}
+        {destroyText}
       </Button>
     )
 
     return (
-      <form onSubmit={onFormSubmit} className={componentClassName}>
+      <form onSubmit={onSave} className={componentClassName}>
         {children}
         <Form.Actions
           direction={actionDirection}
-          primary={primaryButton}
-          secondary={secondaryButton}
-          serious={seriousButton}
+          save={saveButton}
+          cancel={cancelButton}
+          destroy={destroyButton}
         />
       </form>
     )

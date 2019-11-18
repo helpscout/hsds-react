@@ -30,3 +30,21 @@ describe('Children', () => {
     expect(el.text()).toContain(text)
   })
 })
+
+describe('Actions', () => {
+  test('Renders primary button', () => {
+    const wrapper = mount(<Form />)
+    const el = wrapper.find('.is-primary').hostNodes()
+
+    expect(el.text()).toContain('Submit')
+    expect(el.length).toBe(1)
+  })
+
+  test('Renders secondary button', () => {
+    const wrapper = mount(<Form />)
+    const el = wrapper.find('.is-primary').hostNodes()
+
+    expect(el.text()).toContain('Submit')
+    expect(el.length).toBe(1)
+  })
+})

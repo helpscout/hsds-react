@@ -19,14 +19,24 @@ const handleFormSubmit = evt => {
   console.log('submitted the form!')
 }
 
+const handleCancel = () => {
+  console.log('cancelling!')
+}
+
+const handleDestroy = () => {
+  console.log('deleting!')
+}
+
 storiesOf('Form', module).add('default', () => (
   <ContainerUI>
     <Form
       actionDirection="left"
-      primaryButtonText="Save"
-      secondaryButtonText="Cancel"
-      seriousButtonText="Delete"
-      onFormSubmit={handleFormSubmit}
+      saveText="Save"
+      cancelText="Cancel"
+      destroyText="Delete"
+      onSave={handleFormSubmit}
+      onCancel={handleCancel}
+      onDestroy={handleDestroy}
     >
       <FormGroup>
         <FormLabel label="Site Name">

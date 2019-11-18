@@ -14,20 +14,20 @@ export class Actions extends React.PureComponent {
   }
 
   getClassName() {
-    const { className, direction, primary, secondary, serious } = this.props
+    const { className, direction, save, cancel, destroy } = this.props
 
     return classNames(
       Actions.className,
       direction && `is-${direction}`,
-      primary && 'withPrimary',
-      secondary && 'withSecondary',
-      serious && 'withSerious',
+      save && 'withSave',
+      cancel && 'withCancel',
+      destroy && 'withDestroy',
       className
     )
   }
 
   render() {
-    const { primary, serious, secondary } = this.props
+    const { cancel, destroy, save } = this.props
 
     return (
       <ActionsUI
@@ -36,26 +36,26 @@ export class Actions extends React.PureComponent {
         role="toolbar"
       >
         <ActionsItemUI
-          className="c-FormActions__primary"
-          data-cy="FormActionsPrimaryItemWrapper"
+          className="c-FormActions__save"
+          data-cy="FormActionsSaveItemWrapper"
         >
-          {primary}
+          {save}
         </ActionsItemUI>
-        {secondary && (
+        {cancel && (
           <ActionsItemUI
-            className="c-FormActions__secondary"
-            data-cy="FormActionsSecondaryItemWrapper"
+            className="c-FormActions__cancel"
+            data-cy="FormActionsCancelItemWrapper"
           >
-            {secondary}
+            {cancel}
           </ActionsItemUI>
         )}
-        {serious && <ActionsBlockUI className="c-FormActions__block" />}
-        {serious && (
+        {destroy && <ActionsBlockUI className="c-FormActions__block" />}
+        {destroy && (
           <ActionsItemUI
-            className="c-FormActions__serious"
-            data-cy="FormActionsSeriousItemWrapper"
+            className="c-FormActions__destroy"
+            data-cy="FormActionsDestroyItemWrapper"
           >
-            {serious}
+            {destroy}
           </ActionsItemUI>
         )}
       </ActionsUI>
