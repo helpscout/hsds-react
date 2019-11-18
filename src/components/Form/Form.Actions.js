@@ -41,19 +41,23 @@ export class Actions extends React.PureComponent {
         >
           {primary}
         </ActionsItemUI>
-        <ActionsItemUI
-          className="c-FormActions__secondary"
-          data-cy="FormActionsSecondaryItemWrapper"
-        >
-          {secondary}
-        </ActionsItemUI>
-        <ActionsBlockUI className="c-FormActions__block" />
-        <ActionsItemUI
-          className="c-FormActions__serious"
-          data-cy="FormActionsSeriousItemWrapper"
-        >
-          {serious}
-        </ActionsItemUI>
+        {secondary && (
+          <ActionsItemUI
+            className="c-FormActions__secondary"
+            data-cy="FormActionsSecondaryItemWrapper"
+          >
+            {secondary}
+          </ActionsItemUI>
+        )}
+        {serious && <ActionsBlockUI className="c-FormActions__block" />}
+        {serious && (
+          <ActionsItemUI
+            className="c-FormActions__serious"
+            data-cy="FormActionsSeriousItemWrapper"
+          >
+            {serious}
+          </ActionsItemUI>
+        )}
       </ActionsUI>
     )
   }
