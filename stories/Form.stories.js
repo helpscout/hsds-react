@@ -14,35 +14,58 @@ export const ContainerUI = styled('div')`
     max-width: 60%;
   }
 `
-const handleFormSubmit = evt => {
-  evt.preventDefault()
-  console.log('submitted the form!')
-}
 
-const handleCancel = () => {
-  console.log('cancelling!')
-}
+const stories = storiesOf('Form', module)
 
-const handleDestroy = () => {
-  console.log('deleting!')
-}
+stories.add('Form', () => {
+  class SampleForm extends React.Component {
+    state = {
+      text: 'Sample Text',
+    }
 
-storiesOf('Form', module).add('default', () => (
-  <ContainerUI>
-    <Form
-      actionDirection="left"
-      cancelText="Cancel"
-      destroyText="Delete"
-      onCancel={handleCancel}
-      onDestroy={handleDestroy}
-      onSave={handleFormSubmit}
-      saveText="Save Entry"
-    >
-      <FormGroup>
-        <FormLabel label="Site Name">
-          <Input value="Dashing Dash" />
-        </FormLabel>
-      </FormGroup>
-    </Form>
-  </ContainerUI>
-))
+    handleChange = value => {
+      this.setState({
+        text: value,
+      })
+    }
+
+    handleFormSubmit = evt => {
+      evt.preventDefault()
+      console.log(`Submitting text: "${this.state.text}"`)
+      this.setState({ text: '' })
+    }
+
+    handleCancel = () => {
+      console.log('cancelling!')
+      this.setState({ text: '' })
+    }
+
+    handleDestroy = () => {
+      console.log('deleting!')
+      this.setState({ text: '' })
+    }
+    render() {
+      return (
+        <ContainerUI>
+          <Form
+            actionDirection="left"
+            cancelText="Cancel"
+            destroyText="Delete"
+            onCancel={this.handleCancel}
+            onDestroy={this.handleDestroy}
+            onSave={this.handleFormSubmit}
+            saveText="Save Entry"
+          >
+            <FormGroup>
+              <FormLabel label="Site Name">
+                <Input onChange={this.handleChange} value={this.state.text} />
+              </FormLabel>
+            </FormGroup>
+          </Form>
+        </ContainerUI>
+      )
+    }
+  }
+
+  return <SampleForm />
+})
