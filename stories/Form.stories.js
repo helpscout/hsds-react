@@ -14,44 +14,25 @@ export const ContainerUI = styled('div')`
     max-width: 60%;
   }
 `
+const handleFormSubmit = evt => {
+  evt.preventDefault()
+  console.log('submitted the form!')
+}
 
 storiesOf('Form', module).add('default', () => (
   <ContainerUI>
-    <Form>
+    <Form
+      actionDirection="left"
+      primaryButtonText="Save"
+      secondaryButtonText="Cancel"
+      seriousButtonText="Delete"
+      onFormSubmit={handleFormSubmit}
+    >
       <FormGroup>
         <FormLabel label="Site Name">
           <Input value="Dashing Dash" />
         </FormLabel>
       </FormGroup>
-
-      <Form.Actions
-        direction="left"
-        primary={
-          <Button
-            kind="primary"
-            size="lg"
-            version={2}
-            onClick={action('Save Changes')}
-          >
-            Save Changes
-          </Button>
-        }
-        secondary={
-          <Button size="md" version={2} onClick={action('Discard Changes')}>
-            Discard Changes
-          </Button>
-        }
-        serious={
-          <Button
-            state="danger"
-            size="md"
-            version={2}
-            onClick={action('Something Serious')}
-          >
-            Something serious!
-          </Button>
-        }
-      />
     </Form>
   </ContainerUI>
 ))
