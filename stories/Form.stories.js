@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action as addonAction } from '@storybook/addon-actions'
+import { withKnobs, text } from '@storybook/addon-knobs'
 import styled from '../src/components/styled'
 import { Button, Form, FormGroup, FormLabel, Input } from '../src/index'
 
@@ -17,7 +18,9 @@ export const ContainerUI = styled('div')`
 
 const stories = storiesOf('Form', module)
 
-stories.add('Form', () => {
+stories.addDecorator(withKnobs)
+
+stories.add('default', () => {
   class SampleForm extends React.Component {
     state = {
       text: 'Sample Text',
@@ -48,9 +51,9 @@ stories.add('Form', () => {
       return (
         <ContainerUI>
           <Form
-            actionDirection="left"
-            cancelText="Cancel"
-            destroyText="Delete"
+            actionDirection={text('actionDirection', 'left')}
+            cancelText={text('cancelText', 'Cancel')}
+            destroyText={text('destroyText', 'Delete')}
             onCancel={this.handleCancel}
             onDestroy={this.handleDestroy}
             onSave={this.handleFormSubmit}
