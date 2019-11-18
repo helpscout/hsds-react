@@ -31,7 +31,7 @@ storiesOf('Form', module).add('default', () => (
   <ContainerUI>
     <Form
       actionDirection="left"
-      saveText="Save"
+      saveText="Save Entry"
       cancelText="Cancel"
       destroyText="Delete"
       onSave={handleFormSubmit}

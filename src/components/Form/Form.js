@@ -18,14 +18,14 @@ export class Form extends React.PureComponent {
   render() {
     const {
       actionDirection,
+      cancelText,
       children,
       className,
+      destroyText,
       onSave,
       onCancel,
       onDestroy,
       saveText,
-      cancelText,
-      destroyText,
     } = this.props
 
     const componentClassName = classNames('c-Form', className)
