@@ -7,8 +7,8 @@ export class Form extends React.PureComponent {
   static Actions = Actions
 
   static defaultProps = {
-    onCancel: () => {},
-    onDestroy: () => {},
+    cancelText: 'Cancel',
+    destroyText: 'Delete',
     onSave: evt => {
       evt && evt.preventDefault()
     },
@@ -42,7 +42,7 @@ export class Form extends React.PureComponent {
       </Button>
     )
 
-    const cancelButton = cancelText && (
+    const cancelButton = onCancel && (
       <Button
         className="cancel-button"
         size="md"
@@ -53,7 +53,7 @@ export class Form extends React.PureComponent {
       </Button>
     )
 
-    const destroyButton = destroyText && (
+    const destroyButton = onDestroy && (
       <Button
         className="delete-button"
         state="danger"
