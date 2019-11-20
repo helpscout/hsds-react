@@ -49,34 +49,31 @@ describe('Actions', () => {
   })
 
   test('Renders a cancel button if specified', () => {
-    const text = 'Cancel'
-    const wrapper = mount(<Form cancelText={text} />)
+    const wrapper = mount(<Form onCancel={() => {}} />)
+
     const el = wrapper.find('.cancel-button').hostNodes()
 
-    expect(el.text()).toEqual(text)
+    expect(el.text()).toEqual('Cancel')
     expect(wrapper.find('button').length).toEqual(2)
   })
 
   test('Renders a delete button if specified', () => {
-    const text = 'Delete'
-    const wrapper = mount(<Form destroyText={text} />)
+    const wrapper = mount(<Form onDestroy={() => {}} />)
     const el = wrapper.find('.delete-button').hostNodes()
 
-    expect(el.text()).toEqual(text)
+    expect(el.text()).toEqual('Delete')
     expect(wrapper.find('button').length).toEqual(2)
   })
 
-  test('Renders a save, cancel and delete button from left to right by default', () => {
-    const wrapper = mount(<Form cancelText="Cancel" destroyText="Delete" />)
+  test('Renders buttons from left to right by default', () => {
+    const wrapper = mount(<Form />)
 
     expect(wrapper.find('.is-right').hostNodes()).toHaveLength(1)
     expect(wrapper.find('.is-left').hostNodes()).toHaveLength(0)
   })
 
-  test('Renders a save, cancel and delete button from right to left by default', () => {
-    const wrapper = mount(
-      <Form cancelText="Cancel" destroyText="Delete" actionDirection="left" />
-    )
+  test('Renders buttons right to left when specified', () => {
+    const wrapper = mount(<Form actionDirection="left" />)
 
     expect(wrapper.find('.is-right').hostNodes()).toHaveLength(0)
     expect(wrapper.find('.is-left').hostNodes()).toHaveLength(1)
