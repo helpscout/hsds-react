@@ -1,6 +1,6 @@
 # Actions
 
-This component is a presentational wrapper used to render action buttons within a [`Form`](./Form.md).
+This component is a presentational wrapper used to render action buttons within a [`Form`](../README.md).
 
 ## Example
 

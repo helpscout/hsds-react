@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ActionsUI, ActionsBlockUI, ActionsItemUI } from './Form.Actions.css'
-import { classNames } from '../../utilities/classNames'
+import { classNames } from '../../../utilities/classNames'
 
 export class Actions extends React.PureComponent {
   static className = 'c-FormActions'

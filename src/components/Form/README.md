@@ -6,7 +6,7 @@ A Form component is a wrapper that will wrap around children like `<FormGroup>` 
 
 This component contains a smaller sub-component:
 
-- [Actions](./docs/Actions.md)
+- [Actions](./Actions/README.md)
 
 ## Example
 

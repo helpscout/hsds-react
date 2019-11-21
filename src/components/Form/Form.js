@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Actions from './Form.Actions'
+import Actions from './Actions/Form.Actions'
 import Button from '../Button'
 import { classNames } from '../../utilities/classNames'
 
