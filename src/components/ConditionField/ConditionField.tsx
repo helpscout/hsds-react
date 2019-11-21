@@ -11,12 +11,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionFieldProps } from './ConditionField.types'
 import { COMPONENT_KEY } from './ConditionField.utils'
-import {
-  FieldWrapperUI,
-  FieldUI,
-  FieldContentWrapperUI,
-  FieldCloseWrapperUI,
-} from './styles/ConditionField.css'
+import { FieldCloseWrapperUI } from './styles/ConditionField.css'
 
 export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   static className = 'c-ConditionField'
@@ -62,14 +57,14 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     } = this.props
 
     return (
-      <FieldWrapperUI data-cy="ConditionFieldWrapper">
+      <div data-cy="ConditionFieldWrapper">
         {this.renderOperator()}
-        <FieldUI {...rest} ref={innerRef} className={this.getClassName()}>
-          <FieldContentWrapperUI data-cy="ConditionFieldContentWrapper">
+        <Flexy {...rest} ref={innerRef} className={this.getClassName()}>
+          <Flexy.Block data-cy="ConditionFieldContentWrapper">
             <Flexy align="top" gap="md">
               {children}
             </Flexy>
-          </FieldContentWrapperUI>
+          </Flexy.Block>
           <FieldCloseWrapperUI data-cy="ConditionFieldCloseWrapper">
             <Tooltip
               title={removeTitle}
@@ -85,8 +80,8 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
               ) : null}
             </Tooltip>
           </FieldCloseWrapperUI>
-        </FieldUI>
-      </FieldWrapperUI>
+        </Flexy>
+      </div>
     )
   }
 }

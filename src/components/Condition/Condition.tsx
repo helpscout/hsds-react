@@ -2,6 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
+import Flexy from '../Flexy'
 import { COMPONENT_KEY as FLEXY_COMPONENT_KEY } from '../Flexy/Flexy.utils'
 import Select from '../Select'
 import And from './Condition.And'
@@ -15,7 +16,6 @@ import {
   ConditionUI,
   ConditionContentUI,
   OptionsWrapperUI,
-  ContentWrapperUI,
 } from './styles/Condition.css'
 
 export class Condition extends React.PureComponent<ConditionProps> {
@@ -71,9 +71,9 @@ export class Condition extends React.PureComponent<ConditionProps> {
             <OptionsWrapperUI data-cy="ConditionSelectWrapper">
               <Select onChange={onChange} options={options} value={value} />
             </OptionsWrapperUI>
-            <ContentWrapperUI data-cy="ConditionInnerContentWrapper">
+            <Flexy.Block data-cy="ConditionInnerContentWrapper">
               {children}
-            </ContentWrapperUI>
+            </Flexy.Block>
           </ConditionContentUI>
         </PropProvider>
       </ConditionUI>

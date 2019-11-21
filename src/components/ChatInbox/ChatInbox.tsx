@@ -7,7 +7,6 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { namespaceComponent, isComponentNamed } from '../../utilities/component'
 import { COMPONENT_KEY } from './ChatInbox.utils'
-import { ChatInboxUI } from './styles/ChatInbox.css.js'
 
 type Props = {
   className?: string
@@ -88,9 +87,9 @@ class ChatInbox extends React.Component<Props, State> {
     })
 
     return (
-      <ChatInboxUI {...getValidProps(rest)} className={componentClassName}>
+      <div {...getValidProps(rest)} className={componentClassName}>
         {contentMarkup}
-      </ChatInboxUI>
+      </div>
     )
   }
 }

@@ -30,8 +30,6 @@ export const OptionsWrapperUI = styled(Flexy.Item)`
   width: ${config.optionsWidth};
 `
 
-export const ContentWrapperUI = styled(Flexy.Block)``
-
 export const OperatorUI = styled('div')`
   background: ${getColor('grey.600')};
   border-radius: ${config.operatorBorderWidth};

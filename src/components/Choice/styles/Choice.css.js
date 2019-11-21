@@ -10,8 +10,6 @@ export const config = {
   labelTextMargin: '10px',
 }
 
-export const ChoiceUI = styled('div')``
-
 export const ChoiceLabelUI = styled('label')`
   cursor: pointer;
   display: inline-block;
@@ -51,5 +49,3 @@ export const ChoiceLabelTextUI = styled('span')`
     margin-top: ${config.labelTextMargin};
   }
 `
-
-export default ChoiceUI

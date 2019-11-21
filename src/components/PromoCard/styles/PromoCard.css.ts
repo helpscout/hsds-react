@@ -18,5 +18,3 @@ export const BorderUI = styled('div')<{ borderColor?: any }>`
   top: 0;
   width: 100%;
 `
-
-export const ContentUI = styled('div')``

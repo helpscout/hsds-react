@@ -47,7 +47,6 @@ export const HeaderUI = styled('header')`
     )};
   }
 `
-export const TitleUI = styled('div')``
 
 export const SubTitleUI = styled('div')`
   margin-top: 5px;

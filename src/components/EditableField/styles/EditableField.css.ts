@@ -17,8 +17,6 @@ export const ComponentUI = styled('div')<any>`
   margin-bottom: 40px;
 `
 
-export const EditableFieldLabelUI = styled('label')``
-
 export const LabelTextUI = styled('span')`
   display: block;
   margin-bottom: 5px;

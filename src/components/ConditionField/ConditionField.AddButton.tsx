@@ -4,10 +4,7 @@ import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
 import { COMPONENT_KEY } from './ConditionField.utils'
-import {
-  AddButtonWrapperUI,
-  AddButtonContentUI,
-} from './styles/ConditionField.css'
+import { AddButtonContentUI } from './styles/ConditionField.css'
 
 export const AddButton = props => {
   const { className, ...rest } = props
@@ -15,11 +12,11 @@ export const AddButton = props => {
   const componentClassName = classNames(AddButton.className, className)
 
   return (
-    <AddButtonWrapperUI data-cy="ConditionFieldAddButtonWrapper">
+    <div data-cy="ConditionFieldAddButtonWrapper">
       <AddButtonContentUI>
         <Condition.AddButton {...rest} className={componentClassName} />
       </AddButtonContentUI>
-    </AddButtonWrapperUI>
+    </div>
   )
 }
 

@@ -12,7 +12,6 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import {
-  ChoiceUI,
   ChoiceLabelUI,
   ChoiceLabelTextUI,
   ChoiceHelpTextUI,
@@ -288,13 +287,13 @@ class Choice extends React.PureComponent<ChoiceProps, ChoiceState> {
     return (
       <ChoiceGroupContext.Consumer>
         {(contextProps: Object) => (
-          <ChoiceUI {...getValidProps(rest)} className={componentClassName}>
+          <div {...getValidProps(rest)} className={componentClassName}>
             <ChoiceLabelUI htmlFor={choiceID} className={labelClassName}>
               {this.getInputMarkup(contextProps)}
               {stacked ? this.getHelpTextMarkup() : null}
             </ChoiceLabelUI>
             {!stacked ? this.getHelpTextMarkup() : null}
-          </ChoiceUI>
+          </div>
         )}
       </ChoiceGroupContext.Consumer>
     )

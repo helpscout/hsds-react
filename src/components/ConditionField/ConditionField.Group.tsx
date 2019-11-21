@@ -7,7 +7,6 @@ import { getComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { ConditionFieldGroupProps } from './ConditionField.types'
 import { COMPONENT_KEY } from './ConditionField.utils'
-import { ConditionFieldUI } from './styles/ConditionField.css'
 
 export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   static defaultProps = {
@@ -41,10 +40,10 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
 
     return (
       // @ts-ignore
-      <ConditionFieldUI {...rest}>
+      <div {...rest}>
         {this.renderFields()}
         {this.renderAddAction()}
-      </ConditionFieldUI>
+      </div>
     )
   }
 }
