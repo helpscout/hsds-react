@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Form from '../Form'
+import Form from './Form'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -31,7 +31,7 @@ describe('Children', () => {
   })
 })
 
-describe('Actions', () => {
+describe.only('Actions', () => {
   test('Renders only a save button by default with default text', () => {
     const wrapper = mount(<Form />)
     const el = wrapper.find('.save-button').hostNodes()

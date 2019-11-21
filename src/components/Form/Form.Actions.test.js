@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 
-import Actions from '../Form.Actions'
+import Actions from './Form.Actions'
 
 describe('ClassName', () => {
   test('Has default className', () => {

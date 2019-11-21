@@ -2,9 +2,9 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action as addonAction } from '@storybook/addon-actions'
 import { withKnobs, text } from '@storybook/addon-knobs'
-import styled from '../src/components/styled'
-import { Form, FormGroup, FormLabel, Input } from '../src/index'
-import Readme from '../src/components/Form/docs/Form.md'
+import styled from '../styled'
+import { Form, FormGroup, FormLabel, Input } from '../index'
+import Readme from './docs/Form.md'
 
 const action = name => (...args) => {
   addonAction(name)(...args)
