@@ -31,7 +31,17 @@ describe('Children', () => {
   })
 })
 
-describe.only('Actions', () => {
+describe('Actions', () => {
+  test('submits the Form on click of the save button', () => {
+    const wrapper = mount(<Form />)
+    const el = wrapper.find('.c-Form').hostNodes()
+    const spy = jest.fn()
+
+    el.simulate('submit', { preventDefault: spy })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('Renders only a save button by default with default text', () => {
     const wrapper = mount(<Form />)
     const el = wrapper.find('.save-button').hostNodes()
