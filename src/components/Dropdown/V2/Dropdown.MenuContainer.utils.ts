@@ -6,7 +6,7 @@ type ClientRect = {
 
 export const getComputedClientRect = (
   node: HTMLElement,
-  containerWindow: any
+  customWindow: any
 ): ClientRect => {
   const defaultRect = {
     height: 0,
@@ -23,8 +23,8 @@ export const getComputedClientRect = (
   // within JSDOM. Manually tested in the browser, and the calculations are
   // correct.
   /* istanbul ignore next */
-  const computedTop = top + height + containerWindow.scrollY
-  const computedLeft = left + containerWindow.scrollX
+  const computedTop = top + height + customWindow.scrollY
+  const computedLeft = left + customWindow.scrollX
 
   return {
     left: computedLeft,

@@ -120,7 +120,7 @@ export const didCloseSubMenu = (
 // Going to be ignoring chunks of this from test coverage, since DOM related
 // calculations are difficult to mock/test within JSDOM.
 export const setMenuPositionStyles = (props: {
-  containerWindow: any
+  customWindow: any
   dropRight?: boolean
   dropUp?: boolean
   menuNode: HTMLElement | null
@@ -134,7 +134,7 @@ export const setMenuPositionStyles = (props: {
   }
 
   const {
-    containerWindow,
+    customWindow,
     dropRight,
     dropUp,
     menuNode,
@@ -171,7 +171,7 @@ export const setMenuPositionStyles = (props: {
 
   /* istanbul ignore next */
   const shouldDropUp =
-    containerWindow.innerHeight < predictedOffsetBottom &&
+    customWindow.innerHeight < predictedOffsetBottom &&
     predictedFlippedOffsetTop > 0
 
   /* istanbul ignore next */

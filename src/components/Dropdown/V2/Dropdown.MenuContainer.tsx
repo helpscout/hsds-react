@@ -45,7 +45,7 @@ export class MenuContainer extends React.PureComponent<
     animationDuration: 80,
     animationSequence: 'fade down',
     closeDropdown: noop,
-    containerWindow: window,
+    customWindow: window,
     dropRight: true,
     dropUp: false,
     forceDropDown: false,
@@ -91,7 +91,7 @@ export class MenuContainer extends React.PureComponent<
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
   shouldDropUp(): boolean {
-    const { containerWindow, dropUp } = this.props
+    const { customWindow, dropUp } = this.props
     // Always return true, if dropUp
     if (dropUp) return true
 
@@ -100,7 +100,7 @@ export class MenuContainer extends React.PureComponent<
     const { top } = this.wrapperNode.getBoundingClientRect()
     const { clientHeight: height } = this.node
 
-    const hasWindowBottomOverflow = top + height > containerWindow.innerHeight
+    const hasWindowBottomOverflow = top + height > customWindow.innerHeight
     const hasWindowTopOverflow = top - height < 0
 
     if (hasWindowBottomOverflow) {
@@ -283,10 +283,10 @@ export class MenuContainer extends React.PureComponent<
   }
 
   getStylePosition = (): any => {
-    const { containerWindow } = this.props
+    const { customWindow } = this.props
     const targetNode = this.getTargetNode()
 
-    const rect = getComputedClientRect(targetNode, containerWindow)
+    const rect = getComputedClientRect(targetNode, customWindow)
     const { top, left } = rect
 
     return {
@@ -496,7 +496,7 @@ const ConnectedMenuContainer: any = connect(
   (state: any) => {
     const {
       allowMultipleSelection,
-      containerWindow,
+      customWindow,
       dropUp,
       forceDropDown,
       getState,
@@ -519,7 +519,7 @@ const ConnectedMenuContainer: any = connect(
 
     return {
       allowMultipleSelection,
-      containerWindow,
+      customWindow,
       dropRight: isDropRight(state),
       dropUp,
       forceDropDown,

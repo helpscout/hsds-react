@@ -28,7 +28,7 @@ import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 export interface Props {
   actionId?: string
   className?: string
-  containerWindow: any
+  customWindow: any
   disabled: boolean
   dropRight: boolean
   dropUp: boolean
@@ -55,7 +55,7 @@ export interface Props {
 
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
-    containerWindow: window,
+    customWindow: window,
     getState: noop,
     disabled: false,
     index: '0',
@@ -114,14 +114,14 @@ export class Item extends React.PureComponent<Props> {
   renderMenu() {
     if (!this.hasSubMenu()) return
 
-    const { containerWindow, dropRight, dropUp } = this.props
+    const { customWindow, dropRight, dropUp } = this.props
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
       /* istanbul ignore else */
       if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
         setMenuPositionStyles({
-          containerWindow,
+          customWindow,
           dropRight,
           dropUp,
           menuNode: this.menuNode,
@@ -287,10 +287,10 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 const ConnectedItem: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { containerWindow, getState, renderItem, selectedItem } = state
+    const { customWindow, getState, renderItem, selectedItem } = state
 
     return {
-      containerWindow,
+      customWindow,
       getState,
       renderItem,
       selectedItem,

@@ -83,7 +83,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
       // When displaying the dropdown component in an `iframe` (e.g. Beacon),
       // this scopes the window reference to the `iframe`, instead of the host.
       // When not in an `iframe` the default window object will be set.
-      containerWindow: props.customWindow || window,
+      customWindow: props.customWindow || window,
       id,
       menuId,
       triggerId,
