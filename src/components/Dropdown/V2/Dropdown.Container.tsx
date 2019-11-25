@@ -80,6 +80,10 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     const initialState = {
       ...this.props,
       envNode: getDocumentFromComponent(this),
+      // When displaying the dropdown component in an `iframe` (e.g. Beacon),
+      // this scopes the window reference to the `iframe`, instead of the main
+      // window. When not in an `iframe` the default window object will be set.
+      contentWindow: props.contentWindow || window,
       id,
       menuId,
       triggerId,
