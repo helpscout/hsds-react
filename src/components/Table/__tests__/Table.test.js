@@ -3,7 +3,7 @@ import { mount, render } from 'enzyme'
 import { Table, TABLE_CLASSNAME } from '../Table'
 import Body from '../Table.Body'
 import Head from '../Table.Head'
-import { defaultTheme, alternativeTheme, chooseTheme } from '../styles/themes'
+import { defaultSkin, alternativeSkin, chooseSkin } from '../styles/skins'
 
 import {
   createFakeCustomers,
@@ -153,35 +153,35 @@ describe('Table Body', () => {
   })
 })
 
-describe('Theme', () => {
-  test('Renders default without specifying theme', () => {
+describe('Skin', () => {
+  test('Renders default without specifying skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual(defaultTheme)
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
   })
 
-  test('Renders default theme', () => {
+  test('Renders default skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} theme="default" />
+      <Table columns={defaultColumns} data={customers} skin="default" />
     )
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual(defaultTheme)
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
   })
 
-  test('Renders alternative theme', () => {
+  test('Renders alternative skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} theme="alternative" />
+      <Table columns={defaultColumns} data={customers} skin="alternative" />
     )
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual(alternativeTheme)
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual(alternativeSkin)
   })
 
-  test('Renders custom theme', () => {
+  test('Renders custom skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
-    const purpleTheme = {
+    const purpleSkin = {
       fontColorHeader: 'rebeccapurple',
       fontColorBody: 'rebeccapurple',
       fontColorAlternate: 'plum',
@@ -194,12 +194,12 @@ describe('Theme', () => {
       borderColumns: '1px solid blueviolet',
     }
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} theme={purpleTheme} />
+      <Table columns={defaultColumns} data={customers} skin={purpleSkin} />
     )
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual({
-      ...defaultTheme,
-      ...purpleTheme,
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual({
+      ...defaultSkin,
+      ...purpleSkin,
     })
   })
 })

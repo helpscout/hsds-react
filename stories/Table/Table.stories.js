@@ -18,9 +18,9 @@ import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 
 import {
-  defaultTheme,
-  alternativeTheme,
-} from '../../src/components/Table/styles/themes'
+  defaultSkin,
+  alternativeSkin,
+} from '../../src/components/Table/styles/skins'
 
 import styled from '../../src/components/styled'
 
@@ -40,12 +40,12 @@ export const ContainerUI = styled('div')`
 stories.add('default', () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
-      <Heading size="h4">Default theme</Heading>
+      <Heading size="h4">Default skin</Heading>
       <pre>
-        <code>theme = 'default' || undefined</code>
+        <code>skin = 'default' || undefined</code>
       </pre>
       <pre>
-        <code>{JSON.stringify(defaultTheme, null, 2)}</code>
+        <code>{JSON.stringify(defaultSkin, null, 2)}</code>
       </pre>
     </PreviewCard>
     <Table
@@ -55,26 +55,29 @@ stories.add('default', () => (
   </div>
 ))
 
-stories.add('alternative theme (built in)', () => (
+const TableUI = styled(Table)``
+
+stories.add('alternative skin (built in)', () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
-      <Heading size="h4">Alternative theme</Heading>
+      <Heading size="h4">Alternative skin</Heading>
       <pre>
-        <code>theme = 'alternative'</code>
+        <code>skin = 'alternative'</code>
       </pre>
       <pre>
-        <code>{JSON.stringify(alternativeTheme, null, 2)}</code>
+        <code>{JSON.stringify(alternativeSkin, null, 2)}</code>
       </pre>
     </PreviewCard>
-    <Table
+    <TableUI
+      skin="alternative"
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
-      theme="alternative"
+      skin="alternative"
     />
   </div>
 ))
 
-const purpleTheme = {
+const purpleSkin = {
   fontColorHeader: 'rebeccapurple',
   fontColorBody: 'rebeccapurple',
   fontColorAlternate: 'plum',
@@ -87,19 +90,19 @@ const purpleTheme = {
   borderColumns: '1px solid blueviolet',
 }
 
-stories.add('with custom theme', () => (
+stories.add('with custom skin', () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
-      <Heading size="h4">Custom theme</Heading>
+      <Heading size="h4">Custom skin</Heading>
       <pre>
-        <code>theme = </code>
-        <code>{JSON.stringify(purpleTheme, null, 2)}</code>
+        <code>skin = </code>
+        <code>{JSON.stringify(purpleSkin, null, 2)}</code>
       </pre>
     </PreviewCard>
     <Table
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
-      theme={purpleTheme}
+      skin={purpleSkin}
     />
   </div>
 ))

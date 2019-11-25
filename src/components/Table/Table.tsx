@@ -13,7 +13,7 @@ import Scrollable from '../Scrollable'
 import { COMPONENT_KEY } from './Table.utils'
 
 import { TableWrapperUI, TableUI, LoadingUI } from './styles/Table.css'
-import { defaultTheme, chooseTheme } from './styles/themes'
+import { defaultSkin, chooseSkin } from './styles/skins'
 
 import Body from './Table.Body'
 import Head from './Table.Head'
@@ -37,7 +37,7 @@ export class Table extends React.Component<TableProps, TableState> {
   static defaultProps = {
     columns: [],
     data: [],
-    theme: defaultTheme,
+    skin: defaultSkin,
     tableWidth: { min: '700px' },
     containerWidth: '100%',
     sortedInfo: {
@@ -131,7 +131,7 @@ export class Table extends React.Component<TableProps, TableState> {
       isLoading,
       isScrollLocked,
       onRowClick,
-      theme,
+      skin,
       ...rest
     } = this.props
 
@@ -143,7 +143,7 @@ export class Table extends React.Component<TableProps, TableState> {
     } = this.getComponentClassNames()
 
     return (
-      <ThemeProvider theme={chooseTheme(theme)}>
+      <ThemeProvider theme={chooseSkin(skin)}>
         <TableWrapperUI
           className={tableWrapperClassNames}
           innerRef={this.setWrapperNode}

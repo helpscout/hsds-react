@@ -1,6 +1,6 @@
 import { getColor } from '../../../styles/utilities/color'
 
-export const defaultTheme = {
+export const defaultSkin = {
   fontColorHeader: getColor('charcoal.500'),
   fontColorBody: getColor('charcoal.500'),
   fontColorAlternate: getColor('charcoal.500'),
@@ -14,16 +14,16 @@ export const defaultTheme = {
   borderColumns: 'none',
 }
 
-export const alternativeTheme = {
-  ...defaultTheme,
+export const alternativeSkin = {
+  ...defaultSkin,
   ...{
     borderTableHeader: `1px solid ${getColor('grey.500')}`,
     bgHeader: getColor('grey.400'),
   },
 }
 
-export const chooseTheme = theme => {
-  if (!theme || theme === 'default') return defaultTheme
-  if (theme === 'alternative') return alternativeTheme
-  return { ...defaultTheme, ...theme }
+export const chooseSkin = skin => {
+  if (!skin || skin === 'default') return defaultSkin
+  if (skin === 'alternative') return alternativeSkin
+  return { ...defaultSkin, ...skin }
 }
