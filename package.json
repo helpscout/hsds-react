@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.74.1",
+  "version": "2.75.0-beta-dropdown-component-dynamic-window-reference",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
