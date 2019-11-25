@@ -1,4 +1,4 @@
-export interface Theme {
+export interface Skin {
   fontColorHeader?: string
   fontColorBody?: string
   fontColorAlternate?: string
@@ -46,7 +46,7 @@ export interface TableProps {
   maxRowsToDisplay?: number
   containerWidth?: string
   tableWidth?: TableWidth
-  theme?: Theme
+  skin?: Skin
   isLoading: boolean
   isScrollLocked: boolean
   sortedInfo?: SortedInfo
