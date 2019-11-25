@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Provider } from '@helpscout/wedux'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
+import getWindowFromComponent from '@helpscout/react-utils/dist/getWindowFromComponent'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import { DropdownProps } from './Dropdown.types'
 import createStore, { initialState } from './Dropdown.store'
@@ -79,7 +80,11 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     // Define the initial state for the store
     const initialState = {
       ...this.props,
-      envNode: getDocumentFromComponent(this),
+      envNode: getDocumentFromComponent(this) || window,
+      // When displaying the dropdown component in an `iframe` (e.g. Beacon),
+      // this scopes the window reference to the `iframe`, instead of the host.
+      // When not in an `iframe` the default window object will be set.
+      containerWindow: getWindowFromComponent(this),
       id,
       menuId,
       triggerId,
