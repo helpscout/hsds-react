@@ -1,3 +1,3 @@
 export default {
-  version: '2.74.1',
+  version: '2.75.0-beta-dropdown-component-dynamic-window-reference',
 }
