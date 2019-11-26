@@ -122,8 +122,9 @@ export class Table extends React.Component<TableProps, TableState> {
     const {
       className,
       tableClassName,
-      data,
       columns,
+      data,
+      expanderText,
       maxRowsToDisplay,
       tableWidth,
       containerWidth,
@@ -179,7 +180,7 @@ export class Table extends React.Component<TableProps, TableState> {
 
           {isLoading && <LoadingUI className={`${TABLE_CLASSNAME}__Loading`} />}
 
-          {isTableCollapsed ? (
+          {maxRowsToDisplay && isTableCollapsed ? (
             <Button
               version={2}
               style={{ marginLeft: '14px' }}
@@ -187,7 +188,19 @@ export class Table extends React.Component<TableProps, TableState> {
               className={`${TABLE_CLASSNAME}__Expander`}
               onClick={this.handleExpanderClick}
             >
-              View all
+              {expanderText ? expanderText.collapsed : 'View All'}
+            </Button>
+          ) : null}
+
+          {maxRowsToDisplay && !isTableCollapsed ? (
+            <Button
+              version={2}
+              style={{ marginLeft: '14px' }}
+              kind="link"
+              className={`${TABLE_CLASSNAME}__Expander`}
+              onClick={this.handleExpanderClick}
+            >
+              {expanderText ? expanderText.expanded : 'Collapse'}
             </Button>
           ) : null}
         </TableWrapperUI>
