@@ -10,8 +10,8 @@ const statusStyles = {
   warning: 'yellow',
 }
 
-const statusBarStyleBold = color =>
-  `
+const statusBarStyleBold = color => {
+  return `
     background-color: ${getColor(`${color}.500`)};
     border-bottom: 1px solid ${getColor(`${color}.600`)};
     color: white;
@@ -21,9 +21,9 @@ const statusBarStyleBold = color =>
         text-shadow: 0 1px 1px ${rgba('black', 0.1)};
     }
     `
-
-const statusBarStyleLight = color =>
-  `
+}
+const statusBarStyleLight = color => {
+  return `
     background-color: ${getColor(`${color}.200`)};
     border-bottom: 1px solid ${getColor(`${color}.300`)};
     color: ${getColor(`${color}.500`)};
@@ -35,23 +35,22 @@ const statusBarStyleLight = color =>
         }
     }
     `
-
+}
 const makeStatusStyles = () => {
-  return forEach(
-    statusStyles,
-    (name, value) => `
-        &.is-${name} {
-            &.is-bold {
-                ${statusBarStyleBold(value)};
-            }
-            &.is-light {
-                ${statusBarStyleLight(value)};
-            }
+  return forEach(statusStyles, (name, value) => {
+    return `
+      &.is-${name} {
+          &.is-bold {
+              ${statusBarStyleBold(value)};
+          }
+          &.is-light {
+              ${statusBarStyleLight(value)};
+          }
 
-            
-        }
-      `
-  )
+          
+      }
+    `
+  })
 }
 
 export const StatusBarUI = styled(Centralize)`
