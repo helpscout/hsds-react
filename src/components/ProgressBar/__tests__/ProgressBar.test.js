@@ -41,42 +41,42 @@ describe('Value', () => {
     const wrapper = shallow(<ProgressBar value="11" />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
-    expect(bar.prop('style').width).toBe('11%')
+    expect(bar.prop('width')).toBe('11%')
   })
 
   test('Accepts a float string', () => {
     const wrapper = shallow(<ProgressBar value="11.875" />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
-    expect(bar.prop('style').width).toBe('11.875%')
+    expect(bar.prop('width')).toBe('11.875%')
   })
 
   test('Accepts a number', () => {
     const wrapper = shallow(<ProgressBar value={11} />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
-    expect(bar.prop('style').width).toBe('11%')
+    expect(bar.prop('width')).toBe('11%')
   })
 
   test('Accepts a float number', () => {
     const wrapper = shallow(<ProgressBar value={11.875} />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
-    expect(bar.prop('style').width).toBe('11.875%')
+    expect(bar.prop('width')).toBe('11.875%')
   })
 
   test('Normalizes value over 100', () => {
     const wrapper = shallow(<ProgressBar value={7000000000000} />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
-    expect(bar.prop('style').width).toBe('100%')
+    expect(bar.prop('width')).toBe('100%')
   })
 
   test('Normalizes value under 100', () => {
     const wrapper = shallow(<ProgressBar value={-7000000000000} />)
     const bar = wrapper.find('.c-ProgressBar__bar')
 
-    expect(bar.prop('style').width).toBe('0%')
+    expect(bar.prop('width')).toBe('0%')
   })
 })
 

@@ -285,11 +285,7 @@ stories.add('Trigger/Custom', () => {
   return (
     <Dropdown
       items={items}
-      renderTrigger={
-        <Button version={2} kind="secondary">
-          Dropdown
-        </Button>
-      }
+      renderTrigger={<Button kind="secondary">Dropdown</Button>}
     />
   )
 })

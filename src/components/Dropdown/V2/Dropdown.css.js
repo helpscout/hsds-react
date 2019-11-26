@@ -1,16 +1,14 @@
 import { SELECTORS } from './Dropdown.utils'
 import styled from 'styled-components'
 import Card from '../../Card'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import { getColor, rgba } from '../../../styles/utilities/color'
 
 export const DropdownUI = styled('div')`
-  ${baseStyles};
   position: relative;
 `
 
 export const MenuContainerUI = styled('div')`
-  ${baseStyles};
   position: absolute;
 
   &.is-dropUp {
@@ -49,7 +47,6 @@ export const MenuWrapperUI = styled('div')`
 `
 
 export const MenuUI = styled('div')`
-  ${baseStyles};
   padding: 8px 0;
   width: 100%;
 `
@@ -75,7 +72,6 @@ export const BlockUI = styled('div')`
 `
 
 export const WrapperUI = styled('div')`
-  ${baseStyles};
   visibility: hidden;
   pointer-events: none;
   position: relative;
@@ -95,7 +91,6 @@ WrapperUI.defaultProps = {
 }
 
 export const ActionUI = styled('div')`
-  ${baseStyles};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -126,7 +121,6 @@ export const ActionContentUI = styled('div')`
 `
 
 export const ItemUI = styled.div`
-  ${baseStyles};
   background-color: ${rgba(getColor('grey.400'), 0)};
   border-radius: 0 !important;
   color: ${getColor('charcoal.400')};
@@ -218,7 +212,6 @@ export const DividerUI = styled('div')`
 `
 
 export const TriggerUI = styled('span')`
-  ${baseStyles};
   color: ${getColor('link.base')};
   cursor: pointer;
   display: inline-block;

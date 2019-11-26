@@ -1,8 +1,7 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 
 export const ControlGroupUI = styled('div')`
-  ${baseStyles} display: flex;
+  display: flex;
   position: relative;
   vertical-align: middle;
 `

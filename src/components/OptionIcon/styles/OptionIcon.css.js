@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import styled from 'styled-components'
 
@@ -9,7 +8,7 @@ export const config = {
 }
 
 export const OptionIconUI = styled('div')`
-  ${baseStyles} align-items: center;
+  align-items: center;
   border-radius: 99999px;
   display: flex;
   height: ${config.size}px;

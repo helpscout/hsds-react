@@ -6,7 +6,7 @@ type VariableFontSizeProps = {
   fontSize: number
 }
 
-export const GLOBAL_FONT_SIZE_NAMESPACE = '--BlueConfigGlobalFontSize'
+export const GLOBAL_FONT_SIZE_NAMESPACE = '--HSDSGlobalFontSize'
 export const BASE_FONT_SIZE = FONT_SIZE
 
 export const defaultProps = {

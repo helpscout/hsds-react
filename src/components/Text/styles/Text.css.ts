@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import linkStyles from '../../../styles/mixins/linkStyles.css.js'
 import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.css.js'
 import { getColor } from '../../../styles/utilities/color'
@@ -7,12 +7,12 @@ import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
 import { TEXT_SHADES } from '../../../styles/configs/constants'
 
-export const VAR_NAMESPACE_SIZE = 'BlueConfigTextFontSize'
+export const VAR_NAMESPACE_SIZE = 'HSDSGlobalTextFontSize'
 export const TEXT_SIZES = [10, 11, 12, 13, 14, 15, 16, 20, 48]
 export const TEXT_WEIGHTS = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
 export const TextUI = styled.span`
-  ${baseStyles}
+  
   line-height: 1.5;
 
   &.is-disableSelect {
@@ -78,7 +78,7 @@ export const TextUI = styled.span`
 
   &.is-samp {
     font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
-    font-family: var(--BlueConfigGlobalFontFamilyMono);
+    font-family: var(--HSDSGlobalFontFamilyMono);
   }
 `
 

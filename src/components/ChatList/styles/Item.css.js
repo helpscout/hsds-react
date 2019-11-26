@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Card from '../../Card'
 import Flexy from '../../Flexy'
 import Link from '../../Link'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {
@@ -20,15 +20,14 @@ export const config = {
 }
 
 export const ItemUI = styled(Link)`
-  ${baseStyles}
-  ${makeBackgroundColorStyles(config.backgroundColor)}
+  ${makeBackgroundColorStyles(config.backgroundColor)};
 
   border-left: ${config.borderWidth}px solid transparent;
   position: relative;
   transition: ${config.transition};
 
   &:hover {
-    ${makeBackgroundColorStyles(config.backgroundColorHover)}
+    ${makeBackgroundColorStyles(config.backgroundColorHover)};
   }
 
   &:focus {
@@ -38,19 +37,19 @@ export const ItemUI = styled(Link)`
 
   &.is-assigned,
   &.is-loading {
-    ${makeBackgroundColorStyles(config.backgroundColorAssigned)}
+    ${makeBackgroundColorStyles(config.backgroundColorAssigned)};
 
     &:hover {
-      ${makeBackgroundColorStyles(config.backgroundColorAssignedHover)}
+      ${makeBackgroundColorStyles(config.backgroundColorAssignedHover)};
     }
   }
 
   &.is-focused {
-    ${makeBackgroundColorStyles(config.backgroundColorFocused)}
+    ${makeBackgroundColorStyles(config.backgroundColorFocused)};
     border-left: ${config.borderWidth}px solid ${config.borderColorFocused};
 
     &:hover {
-      ${makeBackgroundColorStyles(config.backgroundColorFocusedHover)}
+      ${makeBackgroundColorStyles(config.backgroundColorFocusedHover)};
     }
   }
 `

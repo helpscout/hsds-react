@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import PageConfig from './Page.config.css'
 
@@ -15,7 +15,6 @@ export const config = {
 }
 
 export const SectionUI = styled('section')`
-  ${baseStyles};
   display: flex;
   flex-direction: ${config.flexDirection.default};
   width: 100%;

@@ -83,7 +83,6 @@ class AddButton extends React.PureComponent<ConditionAddButtonProps> {
           kind="secondaryAlt"
           onClick={this.handleOnClick}
           size={size}
-          version={2}
         >
           <Icon name="plus-small" isWithHiddenTitle={false} size={iconSize} />
           {label}

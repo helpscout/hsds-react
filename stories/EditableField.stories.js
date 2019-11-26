@@ -7,7 +7,6 @@ import { EditableFieldComposite } from '../src/components/EditableField'
 import ReadMe from '../src/components/EditableField/docs/README.md'
 
 import styled from 'styled-components'
-import baseStyles from '../src/styles/resets/baseStyles.css'
 import { withAktiv } from './utils'
 
 const stories = storiesOf('EditableField', module)
@@ -19,7 +18,6 @@ const stories = storiesOf('EditableField', module)
   .addDecorator(withAktiv)
 
 export const ContainerUI = styled('div')`
-  ${baseStyles};
   width: 300px;
   padding: 20px;
   background-color: white;

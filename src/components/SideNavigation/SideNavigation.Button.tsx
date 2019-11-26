@@ -29,11 +29,7 @@ export class Button extends React.PureComponent<SideNavigationButtonProps> {
     const ElementName = floatingMenu ? ButtonUI : ButtonFooterUI
 
     return (
-      <ElementName
-        version={2}
-        {...getValidProps(rest)}
-        className={componentClassName}
-      >
+      <ElementName {...getValidProps(rest)} className={componentClassName}>
         {iconName && <Icon name={iconName} />}
         {icon && icon}
         {floatingMenu && children}

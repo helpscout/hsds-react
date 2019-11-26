@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Text from '../../Text'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {
@@ -19,18 +19,15 @@ export const config = {
 }
 
 export const StepperUI = styled('div')`
-  ${baseStyles};
   position: relative;
   margin: 0 auto;
 `
 
 export const StepWrapperUI = styled('div')`
-  ${baseStyles};
   display: flex;
 `
 
 export const StepUI = styled('div')`
-  ${baseStyles};
   color: ${config.textInactiveColor};
   align-items: center;
   display: flex;
@@ -77,7 +74,6 @@ export const GhostTitleUI = styled(Text)`
 `
 
 export const CircleUI = styled('div')<{ isActive: any }>`
-  ${baseStyles};
   background: ${config.backgroundColor};
   box-shadow: 0 0 0 3px ${config.backgroundColor};
   border: 3px solid currentColor;
@@ -103,7 +99,6 @@ export const CircleUI = styled('div')<{ isActive: any }>`
 `
 
 export const LineUI = styled('div')`
-  ${baseStyles};
   background: ${config.lineColor};
   bottom: 6px;
   left: 0;

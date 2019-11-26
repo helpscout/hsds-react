@@ -1,8 +1,7 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 
 export const TableWrapperUI = styled('div')`
-  ${baseStyles} overflow-x: auto;
+  overflow-x: auto;
   transition: opacity 0.15s ease-in-out;
   width: ${props => props.containerWidth || '100%'};
   position: relative;
@@ -20,7 +19,6 @@ export const LoadingUI = styled('div')`
 `
 
 export const TableUI = styled('table')`
-  ${baseStyles};
   ${props => generateTableWidthStyles(props.tableWidth)};
   border-spacing: 0;
   table-layout: fixed;
@@ -149,13 +147,11 @@ export const TableUI = styled('table')`
 `
 
 export const HeaderCellUI = styled('th')`
-  ${baseStyles}
   text-align: ${props => props.align || 'left'};
   width: ${props => props.cellWidth || 'auto'};
 `
 
 export const CellUI = styled('td')`
-  ${baseStyles}
   text-align: ${props => props.align || 'left'};
 `
 

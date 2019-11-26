@@ -230,7 +230,7 @@ stories.add('with CTA button', () => (
     <SideNavigation.Header label="Help Scout" />
     <SidebarHsAppItems />
     <SideNavigation.Section withPadding={true}>
-      <Button version={2} kind="secondary" size="sm">
+      <Button kind="secondary" size="sm">
         Open mailbox
       </Button>
     </SideNavigation.Section>

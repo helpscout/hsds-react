@@ -6,6 +6,8 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { StatusBarProps, StatusBarState } from './StatusBar.types'
 
+import { StatusBarUI } from './styles/StatusBar.css'
+
 class StatusBar extends React.PureComponent<StatusBarProps, StatusBarState> {
   constructor(props) {
     super(props)
@@ -69,13 +71,13 @@ class StatusBar extends React.PureComponent<StatusBarProps, StatusBarState> {
 
     return (
       <Collapsible isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-        <Centralize
+        <StatusBarUI
           className={componentClassName}
           onClick={handleOnClick}
           {...rest}
         >
           <div className="c-StatusBar__content">{children}</div>
-        </Centralize>
+        </StatusBarUI>
       </Collapsible>
     )
   }

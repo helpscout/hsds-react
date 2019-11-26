@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 import Dropdown from '../../Dropdown/DropdownV2'
 import Avatar from '../../Avatar'
@@ -7,10 +7,6 @@ import Avatar from '../../Avatar'
 export const config = {
   headerHeight: '54px',
 }
-
-export const HsAppUI = styled.div`
-  ${baseStyles};
-`
 
 export const AppLayoutUI = styled.div`
   align-items: stretch;

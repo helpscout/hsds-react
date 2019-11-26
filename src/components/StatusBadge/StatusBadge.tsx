@@ -4,6 +4,8 @@ import Badge from '../Badge'
 import StatusDot from '../StatusDot'
 import { classNames } from '../../utilities/classNames'
 
+import { StatusBadgeUI, StatusDotUI } from './styles/StatusBadge.css'
+
 const defaultProps = {
   count: 0,
 }
@@ -36,20 +38,20 @@ const StatusBadge = props => {
   const hasStatus = status !== null && status !== undefined
 
   const statusDotMarkup = (
-    <div className="c-StatusBadge__statusDot">
+    <StatusDotUI className="c-StatusBadge__statusDot">
       <Animate duration={100} in={hasStatus} sequence="scale fade">
         <StatusDot {...statusDotProps} status={status} />
       </Animate>
-    </div>
+    </StatusDotUI>
   )
 
   return (
-    <div className={componentClassName} {...rest}>
+    <StatusBadgeUI className={componentClassName} {...rest}>
       {statusDotMarkup}
       <Badge isSquare className="c-StatusBadge__badge">
         {count}
       </Badge>
-    </div>
+    </StatusBadgeUI>
   )
 }
 

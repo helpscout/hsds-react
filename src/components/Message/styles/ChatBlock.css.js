@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-MessageChatBlock')
@@ -9,7 +9,6 @@ export const config = {
 }
 
 export const ChatBlockUI = styled.div`
-  ${baseStyles}
   display: block;
   margin: 0 0 2px;
 

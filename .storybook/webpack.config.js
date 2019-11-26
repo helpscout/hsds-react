@@ -1,7 +1,3 @@
-const path = require('path')
-const paths = require('../config/paths')
-const harvester = require('seed-harvester')
-const includePaths = harvester(['./src/scss'])
 const webpack = require('webpack')
 
 module.exports = ({ config }) => {
@@ -26,27 +22,6 @@ module.exports = ({ config }) => {
     },
   })
   config.resolve.extensions.push('.ts', '.tsx')
-
-  // SCSS
-  config.module.rules.push({
-    test: /\.scss$/,
-    include: paths.appSrc,
-    use: [
-      {
-        loader: 'style-loader',
-      },
-      {
-        loader: 'css-loader',
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          includePaths,
-        },
-      },
-    ],
-  })
-  config.resolve.extensions.push('.scss')
 
   // Removes process logging
   config.plugins = config.plugins.filter(

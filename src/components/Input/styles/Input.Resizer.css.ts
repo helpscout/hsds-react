@@ -1,8 +1,6 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 
 export const ResizerUI = styled('div')`
-  ${baseStyles};
   bottom: 0;
   height: 0;
   left: 0;

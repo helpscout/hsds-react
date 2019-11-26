@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import baseStyles from '../../styles/resets/base.css.js'
 
 interface ArrowUIProps {
   size?: any
@@ -7,7 +6,6 @@ interface ArrowUIProps {
 }
 
 export const ArrowUI = styled.span<ArrowUIProps>`
-  ${baseStyles};
   height: ${({ size }) => size}px;
   pointer-events: none;
   position: absolute;
@@ -18,7 +16,6 @@ export const ArrowUI = styled.span<ArrowUIProps>`
   }
 
   .c-PopArrow {
-    ${baseStyles};
     ${({ color }) =>
       color
         ? `

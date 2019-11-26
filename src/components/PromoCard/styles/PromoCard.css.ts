@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import FluffyCard from '../../FluffyCard'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const PromoCardUI = styled(FluffyCard)`
@@ -17,8 +17,4 @@ export const BorderUI = styled('div')<{ borderColor?: any }>`
   position: absolute;
   top: 0;
   width: 100%;
-`
-
-export const ContentUI = styled('div')`
-  ${baseStyles};
 `

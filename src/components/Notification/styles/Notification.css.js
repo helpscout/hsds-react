@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Animate from '../../Animate'
 import Text from '../../Text'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import { getColor, rgba } from '../../../styles/utilities/color'
 
 export const config = {
@@ -13,7 +13,6 @@ export const config = {
 }
 
 export const NotificationUI = styled(Animate)`
-  ${baseStyles};
   max-width: 300px;
 
   ${config.bubbleClassName} {
@@ -114,7 +113,6 @@ export const TextUI = styled(Text)`
 `
 
 export const TimerUI = styled('div')`
-  ${baseStyles};
   animation-fill-mode: forward;
   animation-name: HSDSNotificationTimer;
   animation-iteration-count: 1;

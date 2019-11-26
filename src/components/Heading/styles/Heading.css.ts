@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import linkStyles from '../../../styles/mixins/linkStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
@@ -8,7 +8,7 @@ import variableFontSize, {
 } from '../../../styles/utilities/variableFontSize'
 import { makeWeightStyles } from '../../Text/styles/Text.css'
 
-export const VAR_NAMESPACE_SIZE = 'BlueConfigHeadingFontSize'
+export const VAR_NAMESPACE_SIZE = 'HSDSGlobalHeadingFontSize'
 export const SHADES = {
   light: getColor('charcoal.200'),
 }
@@ -25,7 +25,6 @@ export const HEADING_SIZES = {
 }
 
 export const HeadingUI = styled.div<any>`
-  ${baseStyles}
   color: ${getColor('charcoal.600')};
   display: block;
   font-size: ${HEADING_SIZES.h1}px;

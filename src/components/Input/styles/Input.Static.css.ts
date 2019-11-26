@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { config as inputConfig } from './Input.css'
 import forEach from '../../../styles/utilities/forEach'
 
@@ -9,7 +9,6 @@ export const config = {
 }
 
 export const StaticUI = styled('div')`
-  ${baseStyles};
   color: currentColor;
   display: inline-block;
   min-height: ${config.defaultHeight};

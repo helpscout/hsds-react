@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import forEach from '../../../styles/utilities/forEach'
 
 export const config = {
@@ -15,7 +15,6 @@ export const config = {
 interface InlineUIProps {}
 
 export const InlineUI = styled('div')`
-  ${baseStyles};
   display: block;
   margin-bottom: calc(${config.defaultSpacing} * -1);
   margin-left: 0;
@@ -37,7 +36,6 @@ export const InlineUI = styled('div')`
 `
 
 export const ItemUI = styled('div')`
-  ${baseStyles};
   display: inline-block;
   margin: 0 ${config.defaultSpacing} ${config.defaultSpacing} 0;
   max-width: 100%;

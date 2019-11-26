@@ -1,8 +1,6 @@
 import styled from 'styled-components'
-import base from '../../../styles/resets/base.css'
 
 export const HuzzahUI = styled.div`
-  ${base}
   display: block;
   height: 120px;
   margin-left: auto;

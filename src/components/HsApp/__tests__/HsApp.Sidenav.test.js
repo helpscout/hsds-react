@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Sidenav from '../HsApp.Sidenav'
 import SideNavigation from '../../SideNavigation'
-import Button from '../../Button/ButtonV2'
+import Button from '../../Button'
 
 describe('ClassName', () => {
   test('Has default className', () => {

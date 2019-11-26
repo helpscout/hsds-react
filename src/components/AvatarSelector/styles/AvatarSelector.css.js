@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from '../../styled'
 import { getColor } from '../../../styles/utilities/color'
 import { Avatar } from '../../index'
@@ -42,7 +41,6 @@ export const AvatarSelectorWrapperUI = styled('div')`
   }
 `
 export const AvatarSelectorUI = styled('div')`
-  ${baseStyles};
   float: right;
   border-radius: 16px;
   color: ${getColor('charcoal.500')};

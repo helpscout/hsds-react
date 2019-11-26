@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import styled from 'styled-components'
 
@@ -9,7 +8,6 @@ export const config = {
 }
 
 export const AddOnUI = styled('div')`
-  ${baseStyles};
   background-color: ${config.backgroundColor};
   border: 1px solid ${config.borderColor};
   align-items: center;

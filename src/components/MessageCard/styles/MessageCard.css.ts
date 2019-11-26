@@ -3,13 +3,11 @@ import Card from '../../Card'
 import Button from '../../Button'
 import Heading from '../../Heading'
 import Text from '../../Text'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { makeFontFamily, setFontSize } from '../../../styles/utilities/font'
 
 const fontFamily = makeFontFamily('Barlow')
 
 export const MessageCardUI = styled(Card)`
-  ${baseStyles};
   background-color: white;
   border-color: transparent !important;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
@@ -46,7 +44,7 @@ export const MessageCardUI = styled(Card)`
       margin-top: 20px;
     }
 
-    .c-ButtonV2 {
+    .c-Button {
       margin-top: 30px;
       font-size: 16px !important;
       height: 65px !important;

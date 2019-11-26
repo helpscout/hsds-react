@@ -2,7 +2,7 @@ import Button from '../../Button'
 import Centralize from '../../Centralize'
 import Flexy from '../../Flexy'
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {
@@ -16,7 +16,6 @@ export const config = {
 }
 
 export const ConditionUI = styled('div')`
-  ${baseStyles};
   color: ${getColor('text.subtle')};
 `
 
@@ -31,10 +30,7 @@ export const OptionsWrapperUI = styled(Flexy.Item)`
   width: ${config.optionsWidth};
 `
 
-export const ContentWrapperUI = styled(Flexy.Block)``
-
 export const OperatorUI = styled('div')`
-  ${baseStyles};
   background: ${getColor('grey.600')};
   border-radius: ${config.operatorBorderWidth};
   box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
@@ -51,7 +47,6 @@ export const OperatorUI = styled('div')`
 `
 
 export const ButtonWrapperUI = styled('div')<{ align?: any }>`
-  ${baseStyles};
   ${({ align }) => `text-align: ${align};`};
 `
 
@@ -72,7 +67,7 @@ export const ButtonUI = styled(Button)`
   }
 
   &.is-or {
-    .c-ButtonV2__content {
+    .c-Button__content {
       position: relative;
       top: -1px;
     }
@@ -84,7 +79,6 @@ export const ButtonUI = styled(Button)`
 `
 
 export const OperatorWrapperBaseUI = styled(Centralize)`
-  ${baseStyles};
   position: relative;
   height: ${config.operatorHeight};
 

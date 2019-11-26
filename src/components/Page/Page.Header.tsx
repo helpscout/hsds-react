@@ -3,12 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import {
-  HeaderUI,
-  TitleUI,
-  SubTitleUI,
-  HeadingUI,
-} from './styles/Page.Header.css'
+import { HeaderUI, SubTitleUI, HeadingUI } from './styles/Page.Header.css'
 import { COMPONENT_KEY } from './Page.utils'
 import { PageHeaderProps } from './Page.types'
 
@@ -17,7 +12,7 @@ const Title = props => {
   const componentClassName = classNames('c-PageHeading', className)
 
   return (
-    <TitleUI className="c-PageHeader__title">
+    <div className="c-PageHeader__title">
       <HeadingUI
         {...getValidProps(rest)}
         selector={headingLevel || 'h1'}
@@ -26,7 +21,7 @@ const Title = props => {
       >
         {children}
       </HeadingUI>
-    </TitleUI>
+    </div>
   )
 }
 

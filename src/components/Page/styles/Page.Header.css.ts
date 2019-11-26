@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import styled from 'styled-components'
 import PageConfig from './Page.config.css'
@@ -18,7 +17,6 @@ export const config = {
 }
 
 export const HeaderUI = styled('header')`
-  ${baseStyles};
   margin-bottom: 0;
   width: ${config.width.default};
 
@@ -49,12 +47,8 @@ export const HeaderUI = styled('header')`
     )};
   }
 `
-export const TitleUI = styled('div')`
-  ${baseStyles};
-`
 
 export const SubTitleUI = styled('div')`
-  ${baseStyles};
   margin-top: 5px;
 `
 

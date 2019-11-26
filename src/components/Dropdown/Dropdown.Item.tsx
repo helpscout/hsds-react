@@ -7,6 +7,8 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { DropdownItemProps, DropdownItemState } from './Dropdown.types'
 
+import { DropdownItemUI } from './Dropdown.css'
+
 class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
   static defaultProps = {
     disabled: false,
@@ -243,7 +245,11 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
     ) : null
 
     return (
-      <div className={componentClassName} role="presentation" {...rest}>
+      <DropdownItemUI
+        className={componentClassName}
+        role="presentation"
+        {...rest}
+      >
         <div
           className="c-DropdownItem__link"
           onBlur={handleOnBlur}
@@ -268,7 +274,7 @@ class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
           </Flexy>
         </div>
         {menuMarkup}
-      </div>
+      </DropdownItemUI>
     )
   }
 }

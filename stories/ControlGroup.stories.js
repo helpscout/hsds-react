@@ -41,7 +41,7 @@ stories.add('input + button', () => (
       <Input value="HELLO" />
     </ControlGroup.Block>
     <ControlGroup.Item>
-      <Button version={2} kind="secondary" size="lg" isSuffix>
+      <Button kind="secondary" size="lg" isSuffix>
         <Icon name="copy" />
       </Button>
     </ControlGroup.Item>

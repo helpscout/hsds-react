@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor, getThemeBrandProp } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import variableFontSize from '../../../styles/utilities/variableFontSize'
@@ -10,7 +9,7 @@ export const config = {
   borderRadius: 3,
   borderWidth: 2,
   boxShadow: '0 5px 8px rgba(0, 0, 0, 0.2)',
-  color: getColor('blue.500'),
+  color: getColor('grey.600'),
   position: 'relative',
   size: {
     xl: {
@@ -322,12 +321,13 @@ function getBorderAnimationSizeStyles(): string {
 }
 
 export const AvatarUI = styled('div')`
-  ${baseStyles};
   height: ${config.size.md.size}px;
   position: relative;
   width: ${config.size.md.size}px;
 
-  ${props => getColorStyles(props)} &.is-light {
+  ${props => getColorStyles(props)}
+
+  &.is-light {
     color: ${getColor('grey.400')};
   }
 
@@ -369,7 +369,6 @@ export const BorderAnimationUI = styled('svg')`
 `
 
 export const AvatarButtonUI = styled('button')`
-  ${baseStyles};
   padding: 0;
   border: none;
   height: ${config.size.md.size}px;

@@ -1,4 +1,3 @@
-import base from '../../../styles/resets/base.css.js'
 import styled from 'styled-components'
 
 export const config = {
@@ -51,7 +50,6 @@ export const FaceUI = styled('div')`
 `
 
 export const EmoticonUI = styled('span')`
-  ${base};
   color: currentColor;
   cursor: pointer;
   display: block;

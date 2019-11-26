@@ -44,7 +44,6 @@ export default class ColumnCustomizer extends Component {
           {columns.map((column, index) => (
             <FlexQuarter className="column" key={column.columnKey}>
               <Button
-                version={2}
                 kind="default"
                 size="sm"
                 style={{ marginLeft: 'auto', display: 'block' }}

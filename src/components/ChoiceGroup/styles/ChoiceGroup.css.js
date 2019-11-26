@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 
 export const config = {
@@ -6,7 +5,7 @@ export const config = {
 }
 
 export const ChoiceGroupUI = styled('div')`
-  ${baseStyles} &.is-align-horizontal {
+  &.is-align-horizontal {
     display: flex;
 
     > * {

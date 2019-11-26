@@ -11,7 +11,6 @@ import {
   isComponentNamed,
   getComponentKey,
 } from '../../utilities/component'
-import { AvatarListWrapperUI } from './styles/AvatarList.css.js'
 import { COMPONENT_KEY } from './AvatarList.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
@@ -146,7 +145,7 @@ export class AvatarList extends React.PureComponent<Props> {
     )
 
     return (
-      <AvatarListWrapperUI className="c-AvatarListWrapper">
+      <div className="c-AvatarListWrapper">
         <PropProvider value={{ [AVATAR_KEY]: { ...this.getAvatarProps() } }}>
           <List
             {...getValidProps(rest)}
@@ -160,7 +159,7 @@ export class AvatarList extends React.PureComponent<Props> {
             {this.getAdditionalAvatarMarkup()}
           </List>
         </PropProvider>
-      </AvatarListWrapperUI>
+      </div>
     )
   }
 }

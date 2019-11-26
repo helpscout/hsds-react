@@ -1,76 +1,230 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Button } from '../src/index'
+import { boolean, select, text } from '@storybook/addon-knobs'
+import {
+  Button,
+  ControlGroup,
+  Flexy,
+  FormGroup,
+  Heading,
+  Icon,
+  PropProvider,
+  Text,
+} from '../src/index'
+import styled from 'styled-components'
 
 const stories = storiesOf('Button', module)
 
-stories.add('default', () => <Button>Click Me</Button>)
+const ContainerUI = styled('div')`
+  background: #f1f3f5;
+  padding: 40px;
+`
 
-stories.add('types', () => (
-  <div>
-    <Button>Regular</Button>
-    <Button primary>Primary</Button>
-    <Button plain>Plain</Button>
-    <Button outline>Outline Button</Button>
-  </div>
-))
-
-stories.add('sizes', () => (
-  <div>
+const makeButtonVariations = (props = {}) => {
+  return (
     <div>
-      <Button size="lg">Large</Button>
-      <Button size="md">Medium</Button>
-      <Button size="sm">Small</Button>
-      <Button size="xs">Extra Small</Button>
+      <FormGroup>
+        <h4>
+          {props.kind}.{props.state}
+        </h4>
+        <h5>Base</h5>
+        <Flexy just="left">
+          <Button {...props}>Button</Button>
+          <Button {...props} isHovered>
+            Hover
+          </Button>
+          <Button {...props} isActive>
+            Active
+          </Button>
+          <Button {...props} isFocused>
+            Focused
+          </Button>
+          <Button {...props} disabled>
+            Disabled
+          </Button>
+        </Flexy>
+        <h5>Sizes</h5>
+        <Flexy just="left">
+          <Button {...props} size="xl">
+            Button
+          </Button>
+          <Button {...props} size="lgxl">
+            Button
+          </Button>
+          <Button {...props} size="lg">
+            Button
+          </Button>
+          <Button {...props} size="md">
+            Button
+          </Button>
+          <Button {...props} size="sm">
+            Button
+          </Button>
+        </Flexy>
+      </FormGroup>
+      <br />
+      <hr />
+      <br />
     </div>
-    <div>
-      <Button size="lg" outline>
-        Large
-      </Button>
-      <Button size="md" outline>
-        Medium
-      </Button>
-      <Button size="sm" outline>
-        Small
-      </Button>
-      <Button size="xs" outline>
-        Extra Small
-      </Button>
-    </div>
+  )
+}
+
+stories.add('default', () => (
+  <div>
+    <ContainerUI>
+      <Heading style={{ marginBottom: '20px' }}>Kinds</Heading>
+      <Flexy just="left">
+        <Button>default</Button>
+        <Button kind="primary">primary</Button>
+        <Button kind="primaryAlt">primaryAlt</Button>
+        <Button kind="secondary">secondary</Button>
+        <Button kind="secondaryAlt">secondaryAlt</Button>
+        <Button kind="link">link</Button>
+        <Button kind="primary" shape="rounded" size="md">
+          ROUNDED
+          <Icon name="caret-up" size="14" />
+        </Button>
+      </Flexy>
+    </ContainerUI>
+    <ContainerUI>
+      <Heading style={{ marginBottom: '20px' }}>States</Heading>
+      <Flexy just="left">
+        <Button kind="primary">default</Button>
+        <Button kind="primary" state="danger">
+          danger
+        </Button>
+        <Button kind="primary" state="success">
+          success
+        </Button>
+        <Button kind="primary" state="warning">
+          warning
+        </Button>
+      </Flexy>
+    </ContainerUI>
   </div>
 ))
 
-stories.add('states', () => (
-  <div>
-    <Button state="success">Success</Button>
-    <Button state="error">Error</Button>
-    <Button state="warning">Warning</Button>
-  </div>
+stories.add('Playground', () => {
+  const props = {
+    children: text('children', 'Button'),
+    disabled: boolean('disabled', false),
+    disableOnLoading: boolean('disableOnLoading', true),
+    isActive: boolean('isActive', false),
+    isBlock: boolean('isBlock', false),
+    isLoading: boolean('isLoading', false),
+    kind: select(
+      'kind',
+      {
+        primary: 'primary',
+        primaryAlt: 'primaryAlt',
+        secondary: 'secondary',
+        secondaryAlt: 'secondaryAlt',
+        default: 'default',
+        link: 'link',
+      },
+      'secondary'
+    ),
+    size: select(
+      'size',
+      {
+        xl: 'xl',
+        lgxl: 'lgxl',
+        lg: 'lg',
+        md: 'md',
+        sm: 'sm',
+        xs: 'xs',
+      },
+      'lg'
+    ),
+    spinButtonOnLoading: boolean('spinButtonOnLoading', false),
+  }
+  return <Button {...props} />
+})
+
+stories.add('everything', () => (
+  <ContainerUI>
+    {makeButtonVariations({ kind: 'primary' })}
+    {makeButtonVariations({ kind: 'primaryAlt' })}
+    {makeButtonVariations({ kind: 'secondary' })}
+    {makeButtonVariations({ kind: 'secondaryAlt' })}
+    {makeButtonVariations({ kind: 'default' })}
+    {makeButtonVariations({ kind: 'link' })}
+    {makeButtonVariations({ kind: 'default', state: 'danger' })}
+    {makeButtonVariations({ kind: 'primary', state: 'danger' })}
+    {makeButtonVariations({ kind: 'primary', state: 'success' })}
+    {makeButtonVariations({ kind: 'primary', state: 'warning' })}
+  </ContainerUI>
 ))
 
-stories.add('disabled', () => (
-  <div>
-    <Button disabled>Cant touch this!</Button>
-  </div>
+stories.add('button-group', () => (
+  <ContainerUI>
+    <ControlGroup>
+      <ControlGroup.Item>
+        <Button kind="secondary">Button</Button>
+      </ControlGroup.Item>
+      <ControlGroup.Item>
+        <Button kind="secondary">Button</Button>
+      </ControlGroup.Item>
+      <ControlGroup.Item>
+        <Button kind="secondary">Button</Button>
+      </ControlGroup.Item>
+    </ControlGroup>
+  </ContainerUI>
 ))
 
-stories.add('themes', () => (
-  <div>
-    <Button theme="editing" block size="lg">
-      Block
-    </Button>
-    <br />
-    <Button theme="editing" block disabled>
-      Block
-    </Button>
-    <br />
-    <Button theme="pill" size="lg">
-      Pill Button
-    </Button>
-    <br />
-    <Button theme="pill" disabled>
-      Pill Button
-    </Button>
-    <br />
-  </div>
+stories.add('icon', () => (
+  <ContainerUI>
+    <Flexy>
+      <Button kind="secondary" onClick={e => console.log(e)}>
+        <Icon />
+        Words
+      </Button>
+      <Button kind="secondary" onClick={e => console.log(e)}>
+        Words
+        <Icon />
+      </Button>
+    </Flexy>
+  </ContainerUI>
 ))
+
+stories.add('end chat', () => (
+  <ContainerUI>
+    <Flexy>
+      <Button kind="primary" shape="rounded" size="sm" state="gray">
+        <Text size="11">CLOSED</Text>
+        <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+      </Button>
+      <Button kind="primary" shape="rounded" size="sm" state="success">
+        <Text size="11">ACTIVE</Text>
+        <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+      </Button>
+      <Button kind="primary" shape="rounded" size="sm" state="pending">
+        <Text size="11">PENDING</Text>
+        <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+      </Button>
+      <Button kind="primary" shape="rounded" size="sm" state="danger">
+        <Text size="11">SPAM</Text>
+        <Icon name="caret-up" size="14" style={{ marginRight: -6 }} />
+      </Button>
+    </Flexy>
+  </ContainerUI>
+))
+
+stories.add('selector', () => {
+  const props = {
+    href: select(
+      'selector',
+      {
+        button: '',
+        link: '/',
+      },
+      ''
+    ),
+  }
+
+  return (
+    <Button {...props} size="lg" kind="primary">
+      {props.href ? 'Link' : 'Button'}
+    </Button>
+  )
+})

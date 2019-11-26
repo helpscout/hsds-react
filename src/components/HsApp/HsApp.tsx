@@ -48,7 +48,7 @@ class HsApp extends React.PureComponent<Props> {
   render() {
     const { sidenavComponent, contentComponent, navComponent } = this.props
     return (
-      <HsAppUI className="c-HsApp">
+      <div className="c-HsApp">
         {navComponent ? navComponent : <HsApp.Nav />}
         <AppLayoutUI>
           <AppContainerUI>
@@ -60,7 +60,7 @@ class HsApp extends React.PureComponent<Props> {
             )}
           </AppContainerUI>
         </AppLayoutUI>
-      </HsAppUI>
+      </div>
     )
   }
 }

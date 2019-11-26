@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import Heading from '../../Heading'
 import Text from '../../Text'
@@ -35,7 +34,7 @@ interface RadioCardUIProp {
 }
 
 export const RadioCardUI = styled('label')<RadioCardUIProp>`
-  ${baseStyles} align-items: center;
+  align-items: center;
   border-radius: ${config.borderRadius};
   box-shadow: ${config.boxShadow};
   cursor: pointer;

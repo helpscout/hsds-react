@@ -3,7 +3,6 @@ import Toolbar from '../../Toolbar'
 
 import { getColor } from '../../../styles/utilities/color'
 import { setFontSize } from '../../../styles/utilities/font'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 
 const getAlignment = align => {
   switch (align) {
@@ -24,7 +23,6 @@ const getDirection = align => {
 }
 
 export const TabBarUI = styled('nav')<{ align?: any }>`
-  ${baseStyles};
   ${setFontSize(14)};
 
   display: flex;

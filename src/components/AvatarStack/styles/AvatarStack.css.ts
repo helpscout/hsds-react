@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import styled from 'styled-components'
 
 export const config = {
@@ -6,7 +5,6 @@ export const config = {
 }
 
 export const AvatarStackUI = styled('div')`
-  ${baseStyles};
   display: flex;
   position: relative;
 
@@ -26,7 +24,6 @@ export const AvatarStackLayeringUI = styled(AvatarStackUI)`
 `
 
 export const ItemUI = styled('div')`
-  ${baseStyles};
   position: relative;
 
   &.is-withLayerStack {

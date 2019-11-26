@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { getColor } from '../../../styles/utilities/color'
 import forEach from '../../../styles/utilities/forEach'
 import styled from 'styled-components'
@@ -23,7 +22,7 @@ export const config = {
 }
 
 export const StatusDotUI = styled('div')`
-  ${baseStyles} background-color: currentColor;
+  background-color: currentColor;
   border-radius: 50%;
   border: ${config.borderWidth}px solid ${config.backgroundColor};
   color: ${config.color.default};

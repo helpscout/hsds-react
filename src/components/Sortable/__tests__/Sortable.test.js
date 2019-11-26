@@ -2,6 +2,7 @@ import * as React from 'react'
 import { mount, shallow } from 'enzyme'
 import Sortable from '../Sortable'
 import List from '../Sortable.List'
+import DragHandle from '../Sortable.DragHandle'
 import SortableItem from '../Sortable.Item'
 import SidebarCollapsibleCard from '../../SidebarCollapsibleCard'
 
@@ -81,8 +82,7 @@ describe('DragHandles', () => {
         <div>Brick</div>
       </Sortable>
     )
-    const o = wrapper.find('.c-SortableDragHandle')
-
+    const o = wrapper.find(DragHandle)
     expect(o.length).toBe(3)
     wrapper.unmount()
   })
@@ -95,7 +95,7 @@ describe('DragHandles', () => {
         <div>Brick</div>
       </Sortable>
     )
-    const o = wrapper.find('.c-SortableDragHandle')
+    const o = wrapper.find(DragHandle)
 
     expect(o.length).toBe(0)
 
@@ -110,7 +110,7 @@ describe('DragHandles', () => {
         <div>Brick</div>
       </Sortable>
     )
-    const o = wrapper.find('.c-SortableDragHandle')
+    const o = wrapper.find(DragHandle)
 
     expect(o.length).toBe(0)
 

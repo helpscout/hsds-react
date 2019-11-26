@@ -1,7 +1,7 @@
 import Flexy from '../../Flexy'
 import Nav from '../../Nav'
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import forEach from '../../../styles/utilities/forEach'
 import { getColor } from '../../../styles/utilities/color'
 
@@ -23,12 +23,10 @@ export const config = {
 }
 
 export const WrapperUI = styled('div')`
-  ${baseStyles};
   position: relative;
 `
 
 export const ToolbarUI = styled(Flexy)`
-  ${baseStyles};
   background-color: white;
   min-height: ${config.height};
   padding: 4px 8px;

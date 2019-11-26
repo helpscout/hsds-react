@@ -7,8 +7,6 @@ export const config = {
   borderColorFocus: getColor('blue.400'),
   boxShadow: '0 0 0 0 transparent',
   boxShadowFocus: `0 0 0 1px ${getColor('blue.400')}`,
-  fontFamily:
-    '"SFMono-Regular","Roboto Mono",Consolas,"Liberation Mono",Menlo,Courier,monospace',
   fontSize: 12,
   lineHeight: 22,
   padding: 20,
@@ -24,7 +22,7 @@ export const CopyCodeUI = styled('div')`
   border: 1px solid ${config.borderColor};
   box-shadow: ${config.boxShadow};
   box-sizing: border-box;
-  font-family: ${config.fontFamily};
+  font-family: var(--HSDSGlobalFontFamilyMono);
   font-size: ${config.fontSize};
   height: auto;
   line-height: calc(${config.lineHeight} / ${config.fontSize});

@@ -1,4 +1,3 @@
-import base from '../../../styles/resets/base.css.js'
 import forEach from '../../../styles/utilities/forEach'
 import styled from 'styled-components'
 
@@ -22,7 +21,6 @@ export const config = {
 }
 
 export const FlexyUI = styled('div')`
-  ${base};
   align-items: center;
   display: flex;
   justify-content: space-between;

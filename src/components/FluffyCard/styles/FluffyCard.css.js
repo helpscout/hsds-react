@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import Card from '../../Card'
 import styled from 'styled-components'
 
@@ -13,7 +12,6 @@ export const config = {
 }
 
 export const FluffyCardUI = styled(Card)`
-  ${baseStyles}
   box-shadow: ${config.boxShadow};
   border-radius: ${config.borderRadius}px;
   flex: 1;

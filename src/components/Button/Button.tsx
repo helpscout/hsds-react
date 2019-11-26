@@ -1,113 +1,213 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { namespaceComponent } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
+import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
+import {
+  ButtonUI,
+  ButtonContentUI,
+  FocusUI,
+  SpinnerUI,
+} from './styles/Button.css'
 import { COMPONENT_KEY } from './Button.utils'
+import { COMPONENT_KEY as ICON_KEY } from '../Icon/Icon.utils'
+import { ButtonKind, ButtonShape, ButtonSize } from './Button.types'
 import { UIState } from '../../constants/types'
-import { ButtonSelector, ButtonSize } from './Button.types'
 
 export interface Props {
-  accessibilityLabel?: string
-  block: boolean
+  allowContentEventPropogation: boolean
   buttonRef: (ref: any) => void
+  canRenderFocus: boolean
   children?: any
   className?: string
-  danger: boolean
   disabled: boolean
+  disableOnLoading: boolean
+  kind: ButtonKind
+  href?: string
   innerRef: (ref: any) => void
   isActive: boolean
+  isBlock: boolean
   isFirst: boolean
+  isFocused: boolean
+  isHovered: boolean
   isNotOnly: boolean
   isLast: boolean
-  outline: boolean
-  plain: boolean
-  primary: boolean
-  selector: ButtonSelector
+  isLoading: boolean
+  isSuffix: boolean
+  shape: ButtonShape
   size: ButtonSize
+  spinButtonOnLoading: boolean
   state?: UIState
   submit: boolean
   theme?: string
+  to?: string
 }
 
 class Button extends React.PureComponent<Props> {
   static defaultProps = {
-    block: false,
+    allowContentEventPropogation: true,
     buttonRef: noop,
-    danger: false,
+    canRenderFocus: true,
     disable: false,
+    disableOnLoading: true,
+    kind: 'default',
     innerRef: noop,
     isActive: false,
+    isBlock: false,
+    isFocused: false,
     isFirst: false,
+    isHovered: false,
     isNotOnly: false,
     isLast: false,
-    outline: false,
-    plain: false,
-    primary: false,
-    selector: 'button',
+    isSuffix: false,
+    shape: 'default',
     size: 'md',
+    spinButtonOnLoading: false,
     submit: false,
   }
 
-  static BlueComponentVersion = 1
+  isLink() {
+    // TODO: Resolve data-bypass
+    // const { href, 'data-bypass': dataBypass } = this.props
+    // return href || dataBypass
 
-  setRef = node => {
-    this.props.buttonRef(node)
-    this.props.innerRef(node)
+    // TODO: fix typescript complains
+    // @ts-ignore
+    return this.props.href
+  }
+
+  shouldShowFocus = (): boolean => {
+    const paddedButtonKinds = [
+      'primary',
+      'primaryAlt',
+      'secondary',
+      'secondaryAlt',
+      'tertiary',
+    ]
+
+    return (
+      !this.props.disabled &&
+      this.props.canRenderFocus &&
+      includes(paddedButtonKinds, this.props.kind)
+    )
+  }
+
+  getFocusMarkup = () => {
+    const { isFirst, isNotOnly, isLast, shape } = this.props
+
+    const focusClassName = classNames(
+      'c-ButtonFocus',
+      isFirst && 'is-first',
+      isNotOnly && 'is-notOnly',
+      isLast && 'is-last',
+      shape && `is-shape-${shape}`
+    )
+
+    if (!this.shouldShowFocus()) return null
+
+    return <FocusUI className={focusClassName} role="presentation" />
+  }
+
+  setRef = ref => {
+    this.props.innerRef(ref)
+    this.props.buttonRef(ref)
+  }
+
+  getChildrenMarkup = () => {
+    const { children } = this.props
+
+    return React.Children.map(children, (child, index) => {
+      if (!isComponentNamed(child, ICON_KEY)) return child
+
+      const len = React.Children.count(children)
+      const isFirst = index === 0
+      const isLast = index === len - 1
+      const isOnly = isFirst && isLast
+
+      return React.cloneElement(child, {
+        offsetLeft: isFirst && !isOnly,
+        offsetRight: isLast && !isOnly,
+      })
+    })
   }
 
   render() {
     const {
-      accessibilityLabel,
-      block,
-      buttonRef,
+      allowContentEventPropogation,
       children,
       className,
       disabled,
+      disableOnLoading,
+      kind,
+      innerRef,
       isActive,
+      isBlock,
       isFirst,
+      isFocused,
+      isHovered,
       isNotOnly,
       isLast,
-      outline,
-      plain,
-      primary,
+      isLoading,
+      isSuffix,
+      shape,
       size,
+      spinButtonOnLoading,
       state,
       submit,
       theme,
+      // Deprecating
+      buttonRef,
       ...rest
     } = this.props
 
+    const isDisabled = disabled || (isLoading && disableOnLoading)
+
     const componentClassName = classNames(
       'c-Button',
-      isActive && 'is-selected',
-      block && 'c-Button--block',
+      isActive && 'is-active',
+      isBlock && 'is-block',
+      isDisabled && 'is-disabled',
       isFirst && 'is-first',
+      isFocused && 'is-focused',
+      isHovered && 'is-hovered',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
-      outline && 'c-Button--outline',
-      plain && 'c-Button--link',
-      primary && 'c-Button--primary',
-      size && `c-Button--${size}`,
+      isLoading && 'is-loading',
+      isSuffix && 'is-suffix',
+      kind && `is-${kind}`,
+      shape && `is-shape-${shape}`,
+      size && `is-${size}`,
+      spinButtonOnLoading && 'is-spinButtonOnLoading',
       state && `is-${state}`,
-      theme && `c-Button--${theme}`,
+      theme && `is-${theme}`,
       className
     )
 
     const type = submit ? 'submit' : 'button'
 
+    const selector = this.isLink() ? 'a' : 'button'
+
     return (
-      <button
+      <ButtonUI
         {...getValidProps(rest)}
-        aria-label={accessibilityLabel}
-        ref={this.setRef}
         className={componentClassName}
-        disabled={disabled}
+        disabled={isDisabled}
+        ref={this.setRef}
         type={type}
+        as={selector}
       >
-        {children}
-      </button>
+        {isLoading ? <SpinnerUI /> : null}
+        <ButtonContentUI
+          allowContentEventPropogation={allowContentEventPropogation}
+          className="c-Button__content c-Button__content"
+          isLoading={isLoading}
+        >
+          {this.getChildrenMarkup()}
+        </ButtonContentUI>
+        {this.getFocusMarkup()}
+      </ButtonUI>
     )
   }
 }

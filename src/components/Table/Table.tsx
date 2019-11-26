@@ -181,7 +181,6 @@ export class Table extends React.Component<TableProps, TableState> {
 
           {isTableCollapsed ? (
             <Button
-              version={2}
               style={{ marginLeft: '14px' }}
               kind="link"
               className={`${TABLE_CLASSNAME}__Expander`}

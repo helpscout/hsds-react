@@ -64,11 +64,7 @@ const dropdownContent = (
   <Dropdown
     direction="left"
     items={ItemSpec.generate(8)}
-    renderTrigger={
-      <Button version={2} kind="link">
-        Dropdown
-      </Button>
-    }
+    renderTrigger={<Button kind="link">Dropdown</Button>}
   />
 )
 

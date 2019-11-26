@@ -5,6 +5,7 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { AttachmentChatUI, TextUI } from './styles/Attachment.css'
+import MessageChat from './Message.Chat'
 
 type Props = MessageBubble & {
   errorMessage?: string
@@ -70,7 +71,7 @@ export const Attachment = (props: Props, context: Context) => {
   )
 
   return (
-    <AttachmentChatUI
+    <MessageChat
       {...rest}
       bubbleClassName="c-MessageMedia__bubble"
       caption={isUploading ? uploadingMessage : null}
@@ -80,7 +81,7 @@ export const Attachment = (props: Props, context: Context) => {
       size={size}
     >
       {filenameMarkup}
-    </AttachmentChatUI>
+    </MessageChat>
   )
 }
 

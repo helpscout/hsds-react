@@ -1,14 +1,22 @@
 import * as React from 'react'
 import LineItem from './ChatTranscript.LineItem'
 import Attachment from '../Attachment'
-import AttachmentList from '../AttachmentList'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
-import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { convertLinksToHTML, newlineToHTML } from '../../utilities/strings'
 import compose from '@helpscout/react-utils/dist/compose'
+
+import {
+  ItemContentWrapperUI,
+  ItemUI,
+  ItemHeaderUI,
+  ItemCreatedAtUI,
+  ItemContentUI,
+  ItemPrivateNoteUI,
+  ItemAttachmentListUI,
+} from './styles/ChatTranscript.css'
 
 export const ITEM_TYPES = {
   lineItem: 'line_item',
@@ -83,7 +91,11 @@ const Item = (props: Props) => {
       timestamp,
       ...rest,
     }
-    return <LineItem {...lineItemProps}>{children}</LineItem>
+    return (
+      <ItemUI as={LineItem} {...lineItemProps}>
+        {children}
+      </ItemUI>
+    )
   }
   const contentClassName = classNames(
     'c-ChatTranscriptItem__content',
@@ -104,20 +116,20 @@ const Item = (props: Props) => {
 
   const privateNoteMarkup = maybeNote ? (
     <Flexy.Item>
-      <Text
+      <ItemPrivateNoteUI
         className="c-ChatTranscriptItem__privateNote"
         block
         lineHeightReset
         size="12"
       >
         Private Note
-      </Text>
+      </ItemPrivateNoteUI>
     </Flexy.Item>
   ) : null
 
   const timestampMarkup = createdAt ? (
     <Flexy.Item>
-      <Text
+      <ItemCreatedAtUI
         className="c-ChatTranscriptItem__createdAt"
         block
         lineHeightReset
@@ -125,18 +137,18 @@ const Item = (props: Props) => {
         title={timestamp}
       >
         {createdAt}
-      </Text>
+      </ItemCreatedAtUI>
     </Flexy.Item>
   ) : null
 
   const headerMarkup = (
-    <div className="c-ChatTranscriptItem__header">
+    <ItemHeaderUI className="c-ChatTranscriptItem__header">
       <Flexy align="bottom" gap="xs" just="left">
         {authorMarkup}
         {privateNoteMarkup}
         {timestampMarkup}
       </Flexy>
-    </div>
+    </ItemHeaderUI>
   )
 
   // Older transcripts will have a body that was sanitized by Chat API
@@ -144,18 +156,18 @@ const Item = (props: Props) => {
   const contentHTML = isBodySafe ? body : enhanceBody(body)
 
   const contentMarkup = contentHTML ? (
-    <div
+    <ItemContentUI
       className={contentClassName}
       dangerouslySetInnerHTML={{
         __html: contentHTML,
       }}
     />
   ) : (
-    <div className={contentClassName}>{children}</div>
+    <ItemContentUI className={contentClassName}>{children}</ItemContentUI>
   )
 
   const attachmentMarkup = attachments.length ? (
-    <AttachmentList
+    <ItemAttachmentListUI
       className="c-ChatTranscriptItem__attachmentList"
       onDownloadAllClick={onDownloadAllAttachmentClick}
       showDownloadAll={showDownloadAllAttachments}
@@ -171,17 +183,17 @@ const Item = (props: Props) => {
           <Attachment onClick={onAttachmentClick} key={key} {...attachment} />
         )
       })}
-    </AttachmentList>
+    </ItemAttachmentListUI>
   ) : null
 
   return (
-    <div className={componentClassName} {...rest}>
-      <div className="c-ChatTranscriptItem__contentWrapper">
+    <ItemUI className={componentClassName} {...rest}>
+      <ItemContentWrapperUI className="c-ChatTranscriptItem__contentWrapper">
         {headerMarkup}
         {contentMarkup}
         {attachmentMarkup}
-      </div>
-    </div>
+      </ItemContentWrapperUI>
+    </ItemUI>
   )
 }
 

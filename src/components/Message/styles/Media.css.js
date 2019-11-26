@@ -3,7 +3,7 @@ import Image from '../../Image'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import { noteBoxShadow } from '../../../styles/mixins/noteStyles.css'
 import { getColor } from '../../../styles/utilities/color'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { BEM } from '../../../utilities/classNames'
 import Chat from '../Message.Chat'
 
@@ -20,25 +20,22 @@ export const ImageUI = styled(Image)`
 `
 
 export const MediaUI = styled(Chat)`
-  ${baseStyles};
-
   ${bem.element('caption')} {
     padding: 8px;
   }
 
   ${bem.element('mediaImage')} {
-    ${mediaImageStyles}
+    ${mediaImageStyles};
     max-height: 250px;
     opacity: 1;
     transition: opacity 200ms linear;
   }
 
-  ${bem.element('bubble')}.c-MessageBubble {
+  ${bem.element('bubble')}.c-messagebubble {
     background-color: white;
     border: none;
-    box-shadow:
-      0px 1px 3px 0px rgba(0,0,0,0.1),
-      0px 0px 0px 1px rgba(193,203,212,.7) inset,
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+      0px 0px 0px 1px rgba(193, 203, 212, 0.7) inset,
       0px -1px 0px 0px ${getColor('grey.600')} inset;
     color: ${getColor('charcoal.200')};
     display: inline-block;
@@ -50,7 +47,7 @@ export const MediaUI = styled(Chat)`
     }
 
     &.is-note {
-      ${noteBoxShadow()}
+      ${noteBoxShadow()};
       background-color: ${getColor('yellow.200')};
       color: ${getColor('yellow.800')};
     }
@@ -78,14 +75,13 @@ export const MediaUI = styled(Chat)`
     top: 1px;
   }
 
-  // Modal
   &__modal.c-Modal {
     ${breakpoint(
       'md',
       `
       padding: 20px;
     `
-    )}
+    )};
   }
 
   &__modal {
@@ -96,7 +92,7 @@ export const MediaUI = styled(Chat)`
     }
 
     ${bem.element('mediaImage')} {
-      ${mediaImageStyles}
+      ${mediaImageStyles};
     }
 
     ${bem.element('caption')} {
@@ -108,9 +104,8 @@ export const MediaUI = styled(Chat)`
     overflow: hidden;
   }
 
-  // State
   &.is-error {
-    ${bem.element('bubble')}.c-MessageBubble {
+    ${bem.element('bubble')}.c-messagebubble {
       box-shadow: 0 0 0 1px ${getColor('red.400')} inset;
       color: ${getColor('red.500')};
 

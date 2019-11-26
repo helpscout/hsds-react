@@ -11,7 +11,3 @@ body {
 body.with-hsapp-wrapper {
   margin: 0;
 }
-
-.with-aktiv {
-  --BlueConfigGlobalFontFamily: 'Aktiv Grotesk', sans-serif !important;
-}

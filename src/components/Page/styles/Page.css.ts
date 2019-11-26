@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import styled from 'styled-components'
 import PageConfig from './Page.config.css'
@@ -14,7 +13,6 @@ export const config = {
 }
 
 export const PageUI = styled('div')`
-  ${baseStyles};
   margin-left: auto;
   margin-right: auto;
   max-width: ${config.maxWidth.default};

@@ -1,5 +1,4 @@
 import { getColor } from '../../../styles/utilities/color'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 
 import forEach from '../../../styles/utilities/forEach'
 import Animate from '../../Animate'
@@ -104,7 +103,6 @@ export const TagWrapperUI = styled('div')`
 `
 
 export const TagUI = styled('div')`
-  ${baseStyles};
   background-color: white;
   border-radius: ${config.borderRadius}px;
   border: 1px solid currentColor;

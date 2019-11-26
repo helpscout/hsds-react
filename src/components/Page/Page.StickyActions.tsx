@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { StickyActionsUI } from './styles/Page.StickyActions.css'
 import { PageStickyActionsProps, PageStickyActionsState } from './Page.types'
 import { noop } from '../../utilities/other'
 import { isIntersectionObserverSupported } from './Page.utils'
@@ -81,11 +80,7 @@ class StickyActions extends React.PureComponent<
   }
 
   render() {
-    return (
-      <StickyActionsUI ref={this.setNodeRef as any}>
-        {this.props.children}
-      </StickyActionsUI>
-    )
+    return <div ref={this.setNodeRef as any}>{this.props.children}</div>
   }
 }
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Link from '../../Link'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import cardStyles from '../../../styles/mixins/cardStyles.css.js'
 
 export const config = {
@@ -15,7 +15,6 @@ export const config = {
 }
 
 export const CardUI = styled(Link)`
-  ${baseStyles}
   background-color: white;
   border: 1px solid rgba(193, 203, 212, 0.7);
   border-radius: ${config.borderRadius}px;
@@ -64,7 +63,7 @@ export const CardUI = styled(Link)`
 
   &.is-hoverable {
     border: none;
-    ${cardStyles()}
+    ${cardStyles()};
   }
 
   &.is-seamless {

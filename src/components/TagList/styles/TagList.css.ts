@@ -1,10 +1,8 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 import { getColor } from '../../../styles/utilities/color'
 import { setFontSize } from '../../../styles/utilities/font'
 
 export const TagListUI = styled('div')`
-  ${baseStyles};
   max-height: 36px;
   overflow: hidden;
   will-change: contents;
@@ -15,7 +13,6 @@ export const TagListUI = styled('div')`
 `
 
 export const ClearAllUI = styled('button')`
-  ${baseStyles};
   border: none;
   background: none;
   cursor: pointer;

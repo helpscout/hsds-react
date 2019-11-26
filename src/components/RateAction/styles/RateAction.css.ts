@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 
 export const config = {
@@ -15,7 +15,7 @@ export const config = {
 
 export const RateActionUI = styled('button')`
   -webkit-user-drag: none;
-  ${baseStyles};
+
   appearance: none;
   border-radius: 50%;
   border: 2px solid white;
@@ -32,7 +32,6 @@ export const RateActionUI = styled('button')`
   z-index: 0;
 
   &:after {
-    ${baseStyles};
     content: '';
     border-radius: 50%;
     border: 2px solid ${config.outlineColor};

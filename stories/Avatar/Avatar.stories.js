@@ -232,7 +232,6 @@ class AnimationSequence extends React.Component {
           fallbackImage="https://d33v4339jhl8k0.cloudfront.net/customer-avatar/01.png"
         />
         <Button
-          version={2}
           onClick={() =>
             this.setState({
               removingAvatarAnimation: false,

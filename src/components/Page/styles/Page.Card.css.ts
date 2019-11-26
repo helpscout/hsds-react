@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { getColor } from '../../../styles/utilities/color'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import PageConfig from './Page.config.css'
@@ -31,7 +31,6 @@ export const config = {
 }
 
 export const CardUI = styled('div')`
-  ${baseStyles};
   background-color: white;
   border-radius: ${config.borderRadius};
   box-shadow: ${config.boxShadow};

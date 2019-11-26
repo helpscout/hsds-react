@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import visuallyHidden from '../../../styles/mixins/visuallyHidden.css.js'
 import styled from 'styled-components'
 
@@ -12,7 +11,7 @@ export const config = {
 }
 
 export const InputUI = styled('div')`
-  ${baseStyles} align-items: center;
+  align-items: center;
   display: flex;
   justify-content: center;
   height: ${config.size}px;

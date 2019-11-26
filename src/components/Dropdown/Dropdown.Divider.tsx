@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
+import { DropdownDividerUI } from './Dropdown.css'
+
 type Props = {
   children?: any
   className?: string
@@ -11,7 +13,13 @@ const Divider = (props: Props) => {
 
   const componentClassName = classNames('c-DropdownDivider', className)
 
-  return <div className={componentClassName} role="separator" {...rest} />
+  return (
+    <DropdownDividerUI
+      className={componentClassName}
+      role="separator"
+      {...rest}
+    />
+  )
 }
 
 export default Divider

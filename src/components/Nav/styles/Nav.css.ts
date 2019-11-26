@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import Flexy from '../../Flexy'
 import Text from '../../Text'
 import { getColor } from '../../../styles/utilities/color'
-import baseStyles from '../../../styles/resets/baseStyles.css'
 
 export const config = {
   indicatorTransition: 'opacity 100ms ease',
@@ -10,14 +9,13 @@ export const config = {
 }
 
 export const NavUI = styled('nav')`
-  --BlueConfigGlobalFontSize: 14px;
-  ${baseStyles};
+  --HSDSGlobalFontSize: 14px;
+
   display: flex;
   margin: 0 auto;
 `
 
 export const ListUI = styled('ul')`
-  ${baseStyles};
   display: flex;
   list-style: none;
   margin: 0 auto;

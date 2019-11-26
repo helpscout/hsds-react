@@ -1,11 +1,10 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css'
+
 import { BEM } from '../../../utilities/classNames'
 
 const bem = BEM('.c-Overflow')
 
 export const OverflowUI = styled.div`
-  ${baseStyles}
   overflow: hidden;
   position: relative;
   transition: height 100ms ease;

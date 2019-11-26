@@ -1,4 +1,3 @@
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
 import styled from 'styled-components'
 import { getColor } from '../../../styles/utilities/color'
 
@@ -11,12 +10,7 @@ export const config = {
   labelTextMargin: '10px',
 }
 
-export const ChoiceUI = styled('div')`
-  ${baseStyles};
-`
-
 export const ChoiceLabelUI = styled('label')`
-  ${baseStyles};
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0;
@@ -41,7 +35,6 @@ export const ChoiceLabelUI = styled('label')`
 `
 
 export const ChoiceHelpTextUI = styled('div')`
-  ${baseStyles};
   margin-left: ${config.helpTextOffset};
 
   &.is-stacked {
@@ -50,13 +43,9 @@ export const ChoiceHelpTextUI = styled('div')`
 `
 
 export const ChoiceLabelTextUI = styled('span')`
-  ${baseStyles};
-
   &.is-stacked {
     display: block;
     font-weight: bold;
     margin-top: ${config.labelTextMargin};
   }
 `
-
-export default ChoiceUI

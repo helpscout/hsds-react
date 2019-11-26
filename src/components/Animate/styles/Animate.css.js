@@ -1,9 +1,7 @@
-import baseStyles from '../../../styles/resets/base.css.js'
 import sequencesStyles from './sequences/index.css.js'
 import styled from 'styled-components'
 
 export const AnimateUI = styled('div')`
-  ${baseStyles};
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function: ease-in-out;

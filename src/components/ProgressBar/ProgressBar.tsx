@@ -2,6 +2,7 @@ import * as React from 'react'
 import { UISize } from '../../constants/types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { ProgressBarUI, BarUI } from './styles/ProgressBar.css'
 
 type Value = number | string
 
@@ -57,12 +58,9 @@ class ProgressBar extends React.PureComponent<Props> {
       size && `is-${size}`,
       className
     )
-    const progressBarStyle = {
-      width: this.getValueAsPercent(value),
-    }
 
     return (
-      <div
+      <ProgressBarUI
         className={componentClassName}
         role="progressbar"
         aria-valuenow={Number(value)}
@@ -71,8 +69,11 @@ class ProgressBar extends React.PureComponent<Props> {
         aria-valuetext={description}
         {...rest}
       >
-        <div className="c-ProgressBar__bar" style={progressBarStyle} />
-      </div>
+        <BarUI
+          className="c-ProgressBar__bar"
+          width={this.getValueAsPercent(value)}
+        />
+      </ProgressBarUI>
     )
   }
 }

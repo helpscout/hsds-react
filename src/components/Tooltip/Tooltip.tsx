@@ -8,7 +8,6 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import { renderChildrenSafely } from '../../utilities/component'
-import { TooltipUI } from './styles/Tooltip.css'
 import { COMPONENT_KEY } from './Tooltip.utils'
 import { getColor } from '../../styles/utilities/color'
 
@@ -121,7 +120,7 @@ export class Tooltip extends React.PureComponent<Props> {
     }
 
     return (
-      <TooltipUI {...rest} className={this.getClassName()}>
+      <Pop {...rest} className={this.getClassName()}>
         <Pop.Reference
           className="c-Tooltip__reference"
           data-cy={`${this.props['data-cy']}Reference`}
@@ -135,7 +134,7 @@ export class Tooltip extends React.PureComponent<Props> {
         >
           {this.renderPopper}
         </Pop.Popper>
-      </TooltipUI>
+      </Pop>
     )
   }
 }

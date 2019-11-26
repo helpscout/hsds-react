@@ -14,13 +14,21 @@ import { withConsole } from '@storybook/addon-console'
 import { withA11y } from '@storybook/addon-a11y'
 
 import '../src/adapters/app'
-import '../src/styles/blue.scss'
 import './storybook.css'
 import '@storybook/addon-console'
+
+import GlobalStyle from '../src/components/GlobalStyle'
 
 const withStats = storyFn => (
   <div>
     <StatsGraph right={5} opacity={0.2} />
+    {storyFn()}
+  </div>
+)
+
+const withGlobalStyle = storyFn => (
+  <div className="hsds-react">
+    <GlobalStyle />
     {storyFn()}
   </div>
 )
@@ -30,6 +38,7 @@ addDecorator(withKnobs)
 addDecorator(addReadme)
 addDecorator((storyFn, context) => withConsole()(storyFn)(context))
 addDecorator(withA11y)
+addDecorator(withGlobalStyle)
 
 addParameters({
   options: {
@@ -40,7 +49,7 @@ addParameters({
         'https://github.com/helpscout/hsds-react/tree/master/src/components',
     }),
     isFullscreen: false,
-    panelPosition: 'right',
+    panelPosition: 'bottom',
     isToolshown: true,
   },
   readme: {

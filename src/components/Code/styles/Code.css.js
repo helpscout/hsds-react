@@ -2,8 +2,6 @@ import styled from 'styled-components'
 
 export const config = {
   borderRadius: 3,
-  fontFamily:
-    "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
   fontSize: '85%',
   padding: '0.2em 0',
 }
@@ -12,7 +10,7 @@ export const CodeUI = styled('code')`
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: ${config.borderRadius}px;
   box-sizing: border-box;
-  font-family: ${config.fontFamily};
+  font-family: var(--HSDSGlobalFontFamilyMono);
   font-size: ${config.fontSize};
   margin: 0;
   padding: ${config.padding};

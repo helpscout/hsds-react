@@ -1,13 +1,11 @@
 import styled from 'styled-components'
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
+
 import { getColor } from '../../../styles/utilities/color'
 import Button from '../../Button'
 
 import config from '../../Button/styles/Button.config.css.js'
 
 export const PaginationUI = styled('div')`
-  ${baseStyles};
-
   padding: 0 10px;
   min-height: 36px;
   display: flex;

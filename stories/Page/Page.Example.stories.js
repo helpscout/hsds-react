@@ -73,17 +73,12 @@ stories.add('Responsive', () => {
         isSticky={isSticky}
         zIndex={zIndex}
         primary={
-          <Button
-            kind="primary"
-            size="lg"
-            version={2}
-            onClick={action('Save Changes')}
-          >
+          <Button kind="primary" size="lg" onClick={action('Save Changes')}>
             Save Changes
           </Button>
         }
         secondary={
-          <Button size="md" version={2} onClick={action('Discard Changes')}>
+          <Button size="md" onClick={action('Discard Changes')}>
             Discard Changes
           </Button>
         }
@@ -91,7 +86,6 @@ stories.add('Responsive', () => {
           <Button
             state="danger"
             size="md"
-            version={2}
             onClick={action('Something Serious')}
           >
             Something serious!
