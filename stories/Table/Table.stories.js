@@ -184,11 +184,29 @@ stories.add('with row click', () => (
 ))
 
 stories.add('expandable', () => (
-  <Table
-    columns={defaultColumns}
-    data={createFakeCustomers({ amount: 10 })}
-    maxRowsToDisplay={4}
-  />
+  <div>
+    <Heading size="h4" style={{ marginBottom: '20px' }}>
+      Default expander text
+    </Heading>
+    <Table
+      columns={defaultColumns}
+      data={createFakeCustomers({ amount: 10 })}
+      maxRowsToDisplay={4}
+      style={{ marginBottom: '40px' }}
+    />
+    <Heading size="h4" style={{ marginBottom: '20px' }}>
+      Custom expander text
+    </Heading>
+    <Table
+      columns={defaultColumns}
+      data={createFakeCustomers({ amount: 10 })}
+      maxRowsToDisplay={4}
+      expanderText={{
+        collapsed: 'Show me all',
+        expanded: 'Show me the top 4',
+      }}
+    />
+  </div>
 ))
 
 stories.add('playground', () => <TablePlayground />)

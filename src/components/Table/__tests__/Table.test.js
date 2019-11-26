@@ -336,7 +336,7 @@ describe('Expandable', () => {
     expect(rows.length).toBe(4)
   })
 
-  test('Table expands on click of Expander', () => {
+  test('Table expands/collapses on click of Expander', () => {
     const wrapper = mount(
       <Table
         columns={defaultColumns}
@@ -345,14 +345,44 @@ describe('Expandable', () => {
       />
     )
     const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-
     expander.simulate('click')
-
     const tbody = wrapper.find('tbody')
     const rows = tbody.find('tr')
 
     expect(wrapper.state('isTableCollapsed')).toBeFalsy()
     expect(rows.length).toBe(10)
+    expect(expander.text()).toBe('View All')
+
+    const expander2 = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+    expander2.simulate('click')
+    const rows2 = wrapper.find('tbody').find('tr')
+
+    expect(wrapper.state('isTableCollapsed')).toBeTruthy()
+    expect(rows2.length).toBe(4)
+    expect(expander2.text()).toBe('Collapse')
+  })
+
+  test('Table expands/collapses on click of Expander (custom text)', () => {
+    const wrapper = mount(
+      <Table
+        columns={defaultColumns}
+        data={createFakeCustomers({ amount: 10 })}
+        maxRowsToDisplay={4}
+        expanderText={{
+          collapsed: 'Show me all',
+          expanded: 'Show me the top 4',
+        }}
+      />
+    )
+    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+    expander.simulate('click')
+
+    expect(expander.text()).toBe('Show me all')
+
+    const expander2 = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+    expander2.simulate('click')
+
+    expect(expander2.text()).toBe('Show me the top 4')
   })
 
   test('Table fires onExpand on click of Expander', () => {

@@ -10,7 +10,10 @@ export default class Body extends React.Component<BodyProps, BodyState> {
   columnsCache = this.getColumnsCache(this.props.columns)
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    /* istanbul ignore else */
     if (!equal(nextProps.rows, prevState.rows)) {
+      return { rows: Body.getRows(nextProps) }
+    } else if (nextProps.isTableCollapsed) {
       return { rows: Body.getRows(nextProps) }
     }
     return null

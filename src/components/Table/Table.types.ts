@@ -43,6 +43,7 @@ export interface TableProps {
   tableClassName?: string
   columns: Column[]
   data: Data[]
+  expanderText?: any
   maxRowsToDisplay?: number
   containerWidth?: string
   tableWidth?: TableWidth
