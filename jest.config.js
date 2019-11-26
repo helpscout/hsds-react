@@ -29,6 +29,7 @@ module.exports = {
     '!src/vendors/**/*.{js,jsx}',
     '!src/components/index.js',
     '!src/components/Animate/animations/**/*',
+    '!src/components/GlobalStyle/**/*',
   ],
   coverageDirectory: 'coverage/',
   coverageThreshold: {

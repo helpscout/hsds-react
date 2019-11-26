@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import Trigger from '../Dropdown.Trigger'
 import { Button, Icon } from '../../'
 
@@ -45,7 +45,7 @@ describe('Active', () => {
 
 describe('Children', () => {
   test('Can render a text-node child, with default button markup', () => {
-    const wrapper = shallow(<Trigger>Text</Trigger>)
+    const wrapper = mount(<Trigger>Text</Trigger>)
     const o = wrapper.find(Button)
 
     expect(o.length).toBeTruthy()

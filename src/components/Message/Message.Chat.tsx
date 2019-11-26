@@ -12,7 +12,7 @@ import { ChatBlockUI } from './styles/Chat.css'
 type Props = MessageBubble & {
   bubbleClassName?: string
   captionSize?: string
-  caption?: string
+  caption?: string | null
   errorMessage?: string
   error?: boolean | string
   isLoading?: boolean

@@ -32,14 +32,14 @@ describe('Accessibility', () => {
     const body = wrapper.find('.c-SidebarCollapsibleCard__body')
 
     expect(id).toContain('SidebarCollapsibleCard')
-    expect(el.props().role).toBe('presentation')
-    expect(header.props().role).toBe('heading')
-    expect(header.props()['aria-expanded']).toBeFalsy()
-    expect(header.props()['aria-controls']).toContain(id)
-    expect(header.props()['aria-controls']).toContain('region')
-    expect(body.props().role).toBe('region')
-    expect(body.props().id).toContain(id)
-    expect(body.props().id).toContain('region')
+    expect(el.first().props().role).toBe('presentation')
+    expect(header.first().props().role).toBe('heading')
+    expect(header.first().props()['aria-expanded']).toBeFalsy()
+    expect(header.first().props()['aria-controls']).toContain(id)
+    expect(header.first().props()['aria-controls']).toContain('region')
+    expect(body.first().props().role).toBe('region')
+    expect(body.first().props().id).toContain(id)
+    expect(body.first().props().id).toContain('region')
   })
 })
 
@@ -116,10 +116,10 @@ describe('Header/Title', () => {
 
     expect(wrapper.state().isOpen).not.toBeTruthy()
 
-    o.simulate('click')
+    o.first().simulate('click')
     expect(wrapper.state().isOpen).toBeTruthy()
 
-    o.simulate('click')
+    o.first().simulate('click')
     expect(wrapper.state().isOpen).not.toBeTruthy()
 
     wrapper.unmount()
