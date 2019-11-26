@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cy } from '@helpscout/cyan'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import { EditableField } from '../EditableField'
 import {
   ACTIONS_CLASSNAMES,
@@ -249,7 +249,7 @@ describe('Value', () => {
     expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
   })
 
-  test('handleInputKeyDown enter: commits value', () => {
+  test('handleInputKeyDown enter: commits value', done => {
     const wrapper: any = mount(<EditableField name="company" value="hello" />)
     const initialValue = wrapper.state('fieldValue')
     const name = initialValue[0].id
@@ -274,14 +274,14 @@ describe('Value', () => {
         {
           id: name,
           value: 'howdy',
-          disabled: false,
           validated: true,
         },
       ])
-    })
+      done()
+    }).catch(done)
   })
 
-  test('handleInputKeyDown enter: commits value (with options)', () => {
+  test('handleInputKeyDown enter: commits value (with options)', done => {
     const wrapper: any = mount(
       <EditableField
         name="company"
@@ -313,14 +313,14 @@ describe('Value', () => {
           id: name,
           option: 'Work',
           value: 'howdy',
-          disabled: false,
           validated: true,
         },
       ])
-    })
+      done()
+    }).catch(done)
   })
 
-  test('handleInputKeyDown enter: empty value (with options)', () => {
+  test('handleInputKeyDown enter: empty value (with options)', done => {
     const wrapper: any = mount(
       <EditableField
         name="company"
@@ -352,11 +352,11 @@ describe('Value', () => {
           id: name,
           option: 'Home',
           value: 'howdy',
-          disabled: false,
           validated: true,
         },
       ])
-    })
+      done()
+    }).catch(done)
   })
 
   test('handleInputKeyDown esc: discards value', () => {
@@ -1076,7 +1076,7 @@ describe('enter press', () => {
     expect(onCommitSpy).not.toHaveBeenCalled()
   })
 
-  test('Pressing Enter: should not commit if value invalid', () => {
+  test('Pressing Enter: should not commit if value invalid', done => {
     const onEnterSpy = jest.fn()
     const onCommitSpy = jest.fn()
     const wrapper = mount(
@@ -1110,7 +1110,8 @@ describe('enter press', () => {
     f.then(() => {
       expect(onEnterSpy).toHaveBeenCalled()
       expect(onCommitSpy).not.toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
   test('Pressing Enter: should not commit if value empty', () => {
@@ -1161,32 +1162,41 @@ describe('enter press', () => {
     })
   })
 
-  test('Pressing Enter: should escape on validation rejection', () => {
+  test('Pressing Enter: should update props on validation resolved', done => {
     const wrapper = mount(
       <EditableField
         name="company"
-        value={{ value: '1234567', id: '1' }}
-        validate={() => Promise.reject(new Error('Oops'))}
+        value={{ value: '123456', id: '1' }}
+        validate={({ name, value }) =>
+          Promise.resolve({
+            isValid: true,
+            name: 'company',
+            type: 'default',
+            updatedProps: { _id: 7 },
+            value: '123',
+          })
+        }
       />
     )
-
-    // @ts-ignore
-    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
-    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
-    wrapper.instance().forceUpdate()
-
     const input = wrapper.find('input').first()
     // @ts-ignore
-    input.getDOMNode().value = '1234567'
+    input.getDOMNode().value = '123'
     input.simulate('keydown', { key: 'Enter' })
 
     const f = flushPromises()
     jest.runAllImmediates()
 
     f.then(() => {
-      expect(escapeSpy).toHaveBeenCalled()
-      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
-    })
+      expect(wrapper.state('fieldValue')).toEqual([
+        {
+          _id: 7,
+          id: '1',
+          validated: true,
+          value: '123',
+        },
+      ])
+      done()
+    }).catch(done)
   })
 
   test('Pressing Enter: should update props on validation resolved', () => {
@@ -1414,7 +1424,7 @@ describe('Input Blur', () => {
     expect(blurSpy).toHaveBeenCalled()
   })
 
-  test('If value cleared in single value case, it should deactivate the field and leave as', () => {
+  test('If value cleared in single value case, it should deactivate the field and leave as', done => {
     const commitSpy = jest.fn()
     const blurSpy = jest.fn()
 
@@ -1441,10 +1451,11 @@ describe('Input Blur', () => {
       expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
       expect(commitSpy).toHaveBeenCalled()
       expect(blurSpy).toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('If value cleared in multivalue, it should deactivate the field and remove', () => {
+  test('If value cleared in multivalue, it should deactivate the field and remove', done => {
     const commitSpy = jest.fn()
     const blurSpy = jest.fn()
     const discardSpy = jest.fn()
@@ -1482,10 +1493,11 @@ describe('Input Blur', () => {
       expect(commitSpy).toHaveBeenCalled()
       expect(blurSpy).toHaveBeenCalled()
       expect(discardSpy).toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('If value cleared in multivalue, it should not remove the only field left', () => {
+  test('If value cleared in multivalue, it should not remove the only field left', done => {
     const commitSpy = jest.fn()
     const blurSpy = jest.fn()
     const discardSpy = jest.fn()
@@ -1522,10 +1534,11 @@ describe('Input Blur', () => {
       expect(cy.get('input').length).toBe(1)
       expect(commitSpy).toHaveBeenCalled()
       expect(blurSpy).toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('If value changed and valid, it should commit', () => {
+  test('If value changed and valid, it should commit', done => {
     const commitSpy = jest.fn()
     const blurSpy = jest.fn()
 
@@ -1553,10 +1566,11 @@ describe('Input Blur', () => {
       expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
       expect(commitSpy).toHaveBeenCalled()
       expect(blurSpy).toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('If value changed and invalid, it should not commit', () => {
+  test('If value changed and invalid, it should not commit', done => {
     const commitSpy = jest.fn()
     const blurSpy = jest.fn()
 
@@ -1592,35 +1606,46 @@ describe('Input Blur', () => {
       expect(cy.get('input').getValue()).toBe('hola')
       expect(commitSpy).not.toHaveBeenCalled()
       expect(blurSpy).toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('If value is changed but validate rejects it should escape', () => {
+  test('Input blur: should update props on validation resolved', done => {
     const wrapper = mount(
       <EditableField
         name="company"
-        value={{ value: '1234567', id: '1' }}
-        validate={() => Promise.reject(new Error('Oops'))}
+        value={{ value: '', id: '1' }}
+        validate={() => {
+          return Promise.resolve({
+            isValid: true,
+            name: 'company',
+            type: 'default',
+            updatedProps: { _id: 7 },
+            value: '1234567',
+          })
+        }}
       />
     )
-
-    // @ts-ignore
-    const escapeSpy = jest.spyOn(wrapper.instance(), 'handleFieldEscapePress')
-    const stateSpy = jest.spyOn(wrapper.instance(), 'setState')
-    wrapper.instance().forceUpdate()
-
     const input = wrapper.find('input').first()
-    // @ts-ignore
-    input.getDOMNode().value = '1234567'
-    input.simulate('blur')
+    input.simulate('focus')
 
+    // @ts-ignore
+    wrapper.instance().handleInputChange({ name: '1', inputValue: '1234567' })
+
+    input.simulate('blur')
     const f = flushPromises()
     jest.runAllImmediates()
-
     f.then(() => {
-      expect(escapeSpy).toHaveBeenCalled()
-      expect(stateSpy).toHaveBeenCalledWith({ disabledItem: [] })
-    })
+      expect(wrapper.state('fieldValue')).toEqual([
+        {
+          _id: 7,
+          id: '1',
+          validated: true,
+          value: '1234567',
+        },
+      ])
+      done()
+    }).catch(done)
   })
 })
 

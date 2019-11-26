@@ -18,7 +18,7 @@ import {
 
 export default class TableCustomizer extends Component {
   render() {
-    const { numberOfRows, containerWidth, theme, tableWidth } = this.props
+    const { numberOfRows, containerWidth, skin, tableWidth } = this.props
     const {
       fontColorHeader,
       fontColorBody,
@@ -30,7 +30,7 @@ export default class TableCustomizer extends Component {
       borderTableHeader,
       borderRows,
       borderColumns,
-    } = theme
+    } = skin
     const { min, max } = tableWidth
 
     return (
@@ -47,7 +47,7 @@ export default class TableCustomizer extends Component {
                 this.handleResetTableClick('default')
               }}
             >
-              Load default theme
+              Load default skin
             </Button>
             <Button
               size="sm"
@@ -57,7 +57,7 @@ export default class TableCustomizer extends Component {
                 this.handleResetTableClick('alternative')
               }}
             >
-              Load alternative theme
+              Load alternative skin
             </Button>
             <Button
               size="sm"
@@ -110,7 +110,7 @@ export default class TableCustomizer extends Component {
                 borderStyle={borderTableBody}
                 value={borderTableBody}
                 onChange={value => {
-                  this.handleValueChange('theme.borderTableBody', value)
+                  this.handleValueChange('skin.borderTableBody', value)
                 }}
               />
             </FormLabelUI>
@@ -122,7 +122,7 @@ export default class TableCustomizer extends Component {
                 borderStyle={borderTableHeader}
                 value={borderTableHeader}
                 onChange={value => {
-                  this.handleValueChange('theme.borderTableHeader', value)
+                  this.handleValueChange('skin.borderTableHeader', value)
                 }}
               />
             </FormLabelUI>
@@ -136,7 +136,7 @@ export default class TableCustomizer extends Component {
                 borderStyle={borderRows}
                 value={borderRows}
                 onChange={value => {
-                  this.handleValueChange('theme.borderRows', value)
+                  this.handleValueChange('skin.borderRows', value)
                 }}
               />
             </FormLabelUI>
@@ -148,7 +148,7 @@ export default class TableCustomizer extends Component {
                 borderStyle={borderColumns}
                 value={borderColumns}
                 onChange={value => {
-                  this.handleValueChange('theme.borderColumns', value)
+                  this.handleValueChange('skin.borderColumns', value)
                 }}
               />
             </FormLabelUI>
@@ -193,7 +193,7 @@ export default class TableCustomizer extends Component {
                 value={bgColor}
                 type="color"
                 onChange={value => {
-                  this.handleValueChange('theme.bgColor', value)
+                  this.handleValueChange('skin.bgColor', value)
                 }}
               />
             </FormLabelUI>
@@ -206,7 +206,7 @@ export default class TableCustomizer extends Component {
                 value={fontColorBody}
                 type="color"
                 onChange={value => {
-                  this.handleValueChange('theme.fontColorBody', value)
+                  this.handleValueChange('skin.fontColorBody', value)
                 }}
               />
             </FormLabelUI>
@@ -219,7 +219,7 @@ export default class TableCustomizer extends Component {
                 value={bgAlternate}
                 type="color"
                 onChange={value => {
-                  this.handleValueChange('theme.bgAlternate', value)
+                  this.handleValueChange('skin.bgAlternate', value)
                 }}
               />
             </FormLabelUI>
@@ -232,7 +232,7 @@ export default class TableCustomizer extends Component {
                 value={fontColorAlternate}
                 type="color"
                 onChange={value => {
-                  this.handleValueChange('theme.fontColorAlternate', value)
+                  this.handleValueChange('skin.fontColorAlternate', value)
                 }}
               />
             </FormLabelUI>
@@ -247,7 +247,7 @@ export default class TableCustomizer extends Component {
                 value={bgHeader}
                 type="color"
                 onChange={value => {
-                  this.handleValueChange('theme.bgHeader', value)
+                  this.handleValueChange('skin.bgHeader', value)
                 }}
               />
             </FormLabelUI>
@@ -260,7 +260,7 @@ export default class TableCustomizer extends Component {
                 value={fontColorHeader}
                 type="color"
                 onChange={value => {
-                  this.handleValueChange('theme.fontColorHeader', value)
+                  this.handleValueChange('skin.fontColorHeader', value)
                 }}
               />
             </FormLabelUI>
@@ -276,7 +276,7 @@ export default class TableCustomizer extends Component {
     onChangeTableOption(option, value)
   }
 
-  handleResetTableClick = theme => {
-    this.props.resetTable(theme)
+  handleResetTableClick = skin => {
+    this.props.resetTable(skin)
   }
 }

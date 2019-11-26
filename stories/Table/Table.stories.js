@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import {
@@ -17,21 +18,34 @@ import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 
 import {
-  defaultTheme,
-  alternativeTheme,
-} from '../../src/components/Table/styles/themes'
+  defaultSkin,
+  alternativeSkin,
+} from '../../src/components/Table/styles/skins'
+
+import styled from '../../src/components/styled'
 
 const stories = storiesOf('Table', module)
+
+export const ContainerUI = styled('div')`
+  table {
+    tr.active td {
+      background-color: lightsteelblue;
+    }
+    tr.stale td {
+      background-color: lavenderblush;
+    }
+  }
+`
 
 stories.add('default', () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
-      <Heading size="h4">Default theme</Heading>
+      <Heading size="h4">Default skin</Heading>
       <pre>
-        <code>theme = 'default' || undefined</code>
+        <code>skin = 'default' || undefined</code>
       </pre>
       <pre>
-        <code>{JSON.stringify(defaultTheme, null, 2)}</code>
+        <code>{JSON.stringify(defaultSkin, null, 2)}</code>
       </pre>
     </PreviewCard>
     <Table
@@ -41,26 +55,29 @@ stories.add('default', () => (
   </div>
 ))
 
-stories.add('alternative theme (built in)', () => (
+const TableUI = styled(Table)``
+
+stories.add('alternative skin (built in)', () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
-      <Heading size="h4">Alternative theme</Heading>
+      <Heading size="h4">Alternative skin</Heading>
       <pre>
-        <code>theme = 'alternative'</code>
+        <code>skin = 'alternative'</code>
       </pre>
       <pre>
-        <code>{JSON.stringify(alternativeTheme, null, 2)}</code>
+        <code>{JSON.stringify(alternativeSkin, null, 2)}</code>
       </pre>
     </PreviewCard>
-    <Table
+    <TableUI
+      skin="alternative"
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
-      theme="alternative"
+      skin="alternative"
     />
   </div>
 ))
 
-const purpleTheme = {
+const purpleSkin = {
   fontColorHeader: 'rebeccapurple',
   fontColorBody: 'rebeccapurple',
   fontColorAlternate: 'plum',
@@ -73,19 +90,19 @@ const purpleTheme = {
   borderColumns: '1px solid blueviolet',
 }
 
-stories.add('with custom theme', () => (
+stories.add('with custom skin', () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
-      <Heading size="h4">Custom theme</Heading>
+      <Heading size="h4">Custom skin</Heading>
       <pre>
-        <code>theme = </code>
-        <code>{JSON.stringify(purpleTheme, null, 2)}</code>
+        <code>skin = </code>
+        <code>{JSON.stringify(purpleSkin, null, 2)}</code>
       </pre>
     </PreviewCard>
     <Table
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
-      theme={purpleTheme}
+      skin={purpleSkin}
     />
   </div>
 ))
@@ -104,6 +121,19 @@ stories.add('with custom cell rendering', () => (
     tableWidth={{ max: '800px', min: '500px' }}
   />
 ))
+
+stories.add('with className provided to row for styling', () => {
+  const customers = createFakeCustomers({ amount: 10 }).map(info => {
+    const className = info.days < 50 ? 'active' : 'stale'
+    return { ...info, ...{ className } }
+  })
+
+  return (
+    <ContainerUI>
+      <Table columns={defaultColumns} data={customers} />
+    </ContainerUI>
+  )
+})
 
 stories.add('with horizontal scroll', () => (
   <Table
@@ -154,11 +184,29 @@ stories.add('with row click', () => (
 ))
 
 stories.add('expandable', () => (
-  <Table
-    columns={defaultColumns}
-    data={createFakeCustomers({ amount: 10 })}
-    maxRowsToDisplay={4}
-  />
+  <div>
+    <Heading size="h4" style={{ marginBottom: '20px' }}>
+      Default expander text
+    </Heading>
+    <Table
+      columns={defaultColumns}
+      data={createFakeCustomers({ amount: 10 })}
+      maxRowsToDisplay={4}
+      style={{ marginBottom: '40px' }}
+    />
+    <Heading size="h4" style={{ marginBottom: '20px' }}>
+      Custom expander text
+    </Heading>
+    <Table
+      columns={defaultColumns}
+      data={createFakeCustomers({ amount: 10 })}
+      maxRowsToDisplay={4}
+      expanderText={{
+        collapsed: 'Show me all',
+        expanded: 'Show me the top 4',
+      }}
+    />
+  </div>
 ))
 
 stories.add('playground', () => <TablePlayground />)

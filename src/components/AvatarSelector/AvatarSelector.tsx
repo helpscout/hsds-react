@@ -42,7 +42,7 @@ export default class AvatarSelector extends React.PureComponent<Props> {
   render() {
     const { image, initials, isOpen, name } = this.props
     return (
-      <AvatarSelectorWrapperUI className="c-AvatarSelector" tabIndex="1">
+      <AvatarSelectorWrapperUI className="c-AvatarSelector" tabIndex="0">
         {image || initials || name
           ? this.renderAvatar()
           : this.renderBlankAvatar()}

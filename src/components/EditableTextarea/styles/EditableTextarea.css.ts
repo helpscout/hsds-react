@@ -46,7 +46,7 @@ export const EditableTextareaUI = styled('div')<any>`
       }
     }
     textarea {
-      cursor: pointer;
+      cursor: text;
       background-color: #fff;
 
       &::placeholder {
@@ -57,10 +57,21 @@ export const EditableTextareaUI = styled('div')<any>`
 
   &.with-placeholder.is-readonly {
     .field:not(.is-hidden):not(.EditableTextarea__Textarea) {
-      border-bottom: 1px dashed ${COLOURS.mask.border};
+      display: block;
+      overflow: visible;
+      width: 100%;
+
+      span {
+        border-bottom: 1px dashed ${COLOURS.mask.border};
+        display: inline-block;
+        height: 20px;
+      }
+
       &:hover {
-        border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
         cursor: pointer;
+        span {
+          border-bottom: 1px dashed ${COLOURS.mask.placeholder.border.hover};
+        }
       }
     }
   }

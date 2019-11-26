@@ -10,12 +10,10 @@ import { create } from '@storybook/theming'
 import { withKnobs } from '@storybook/addon-knobs'
 import { StatsGraph } from '@helpscout/stats'
 import { addReadme } from 'storybook-readme'
-import { withConsole } from '@storybook/addon-console'
 import { withA11y } from '@storybook/addon-a11y'
 
 import '../src/adapters/app'
 import './storybook.css'
-import '@storybook/addon-console'
 
 import GlobalStyle from '../src/components/GlobalStyle'
 
@@ -36,7 +34,6 @@ const withGlobalStyle = storyFn => (
 addDecorator(withStats)
 addDecorator(withKnobs)
 addDecorator(addReadme)
-addDecorator((storyFn, context) => withConsole()(storyFn)(context))
 addDecorator(withA11y)
 addDecorator(withGlobalStyle)
 
@@ -64,8 +61,12 @@ addParameters({
 
 // automatically import all files ending in *.stories.js
 function loadStories() {
-  const req = require.context('../stories', true, /.stories.(js|ts|tsx)$/)
-  req.keys().forEach(filename => req(filename))
+  const reqs = [
+    require.context('../stories', true, /.stories.(js|ts|tsx)$/),
+    require.context('../src', true, /.stories.(js|ts|tsx)$/),
+  ]
+
+  reqs.forEach(req => req.keys().forEach(filename => req(filename)))
 }
 
 configure(loadStories, module)

@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.70.4",
+  "version": "2.74.2",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -142,7 +142,6 @@
     "@quickbaseoss/babel-plugin-styled-components-css-namespace": "^1.0.0-rc3",
     "@storybook/addon-a11y": "^5.1.10",
     "@storybook/addon-actions": "^5.1.10",
-    "@storybook/addon-console": "^1.1.0",
     "@storybook/addon-knobs": "5.2.1",
     "@storybook/addon-links": "^5.2.1",
     "@storybook/addon-storysource": "^5.2.1",

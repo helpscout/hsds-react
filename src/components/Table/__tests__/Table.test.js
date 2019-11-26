@@ -3,7 +3,7 @@ import { mount, render } from 'enzyme'
 import { Table, TABLE_CLASSNAME } from '../Table'
 import Body from '../Table.Body'
 import Head from '../Table.Head'
-import { defaultTheme, alternativeTheme, chooseTheme } from '../styles/themes'
+import { defaultSkin, alternativeSkin, chooseSkin } from '../styles/skins'
 
 import {
   createFakeCustomers,
@@ -93,6 +93,21 @@ describe('Table Body', () => {
     expect(cellsInRow.at(3).text()).toBe(customer.lastSeen)
   })
 
+  test('Renders rows with provided classNames', () => {
+    const customers = createFakeCustomers({ amount: 10 }).map(info => {
+      const className = info.days < 50 ? 'active' : 'stale'
+      return { ...info, ...{ className } }
+    })
+
+    const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
+    const tbody = wrapper.find('tbody')
+    const rows = tbody.find('tr')
+
+    customers.forEach((customer, i) => {
+      expect(rows.get(i).props.className).toContain(customer.className)
+    })
+  })
+
   test('Custom cell rendering on compound columns', () => {
     const columns = [
       {
@@ -138,35 +153,35 @@ describe('Table Body', () => {
   })
 })
 
-describe('Theme', () => {
-  test('Renders default without specifying theme', () => {
+describe('Skin', () => {
+  test('Renders default without specifying skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual(defaultTheme)
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
   })
 
-  test('Renders default theme', () => {
+  test('Renders default skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} theme="default" />
+      <Table columns={defaultColumns} data={customers} skin="default" />
     )
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual(defaultTheme)
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
   })
 
-  test('Renders alternative theme', () => {
+  test('Renders alternative skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} theme="alternative" />
+      <Table columns={defaultColumns} data={customers} skin="alternative" />
     )
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual(alternativeTheme)
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual(alternativeSkin)
   })
 
-  test('Renders custom theme', () => {
+  test('Renders custom skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
-    const purpleTheme = {
+    const purpleSkin = {
       fontColorHeader: 'rebeccapurple',
       fontColorBody: 'rebeccapurple',
       fontColorAlternate: 'plum',
@@ -179,12 +194,12 @@ describe('Theme', () => {
       borderColumns: '1px solid blueviolet',
     }
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} theme={purpleTheme} />
+      <Table columns={defaultColumns} data={customers} skin={purpleSkin} />
     )
 
-    expect(chooseTheme(wrapper.prop('theme'))).toEqual({
-      ...defaultTheme,
-      ...purpleTheme,
+    expect(chooseSkin(wrapper.prop('skin'))).toEqual({
+      ...defaultSkin,
+      ...purpleSkin,
     })
   })
 })
@@ -321,7 +336,7 @@ describe('Expandable', () => {
     expect(rows.length).toBe(4)
   })
 
-  test('Table expands on click of Expander', () => {
+  test('Table expands/collapses on click of Expander', () => {
     const wrapper = mount(
       <Table
         columns={defaultColumns}
@@ -330,14 +345,44 @@ describe('Expandable', () => {
       />
     )
     const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-
     expander.simulate('click')
-
     const tbody = wrapper.find('tbody')
     const rows = tbody.find('tr')
 
     expect(wrapper.state('isTableCollapsed')).toBeFalsy()
     expect(rows.length).toBe(10)
+    expect(expander.text()).toBe('View All')
+
+    const expander2 = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+    expander2.simulate('click')
+    const rows2 = wrapper.find('tbody').find('tr')
+
+    expect(wrapper.state('isTableCollapsed')).toBeTruthy()
+    expect(rows2.length).toBe(4)
+    expect(expander2.text()).toBe('Collapse')
+  })
+
+  test('Table expands/collapses on click of Expander (custom text)', () => {
+    const wrapper = mount(
+      <Table
+        columns={defaultColumns}
+        data={createFakeCustomers({ amount: 10 })}
+        maxRowsToDisplay={4}
+        expanderText={{
+          collapsed: 'Show me all',
+          expanded: 'Show me the top 4',
+        }}
+      />
+    )
+    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+    expander.simulate('click')
+
+    expect(expander.text()).toBe('Show me all')
+
+    const expander2 = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
+    expander2.simulate('click')
+
+    expect(expander2.text()).toBe('Show me the top 4')
   })
 
   test('Table fires onExpand on click of Expander', () => {

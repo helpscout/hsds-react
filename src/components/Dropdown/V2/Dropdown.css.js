@@ -225,6 +225,10 @@ export const TriggerUI = styled('span')`
   &.is-open {
     color: ${getColor('blue.700')};
   }
+
+  & > * {
+    pointer-events: none;
+  }
 `
 
 TriggerUI.defaultProps = {

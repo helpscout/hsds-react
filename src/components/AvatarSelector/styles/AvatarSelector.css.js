@@ -17,10 +17,10 @@ export const AvatarSelectorWrapperUI = styled('div')`
     width: 100%;
     height: 100%;
     content: '';
-    border: 2px solid transparent;
-    left: -2px;
-    top: -2px;
-    box-shadow: 0px 0px 0px 2px #1292ee;
+    border: 1px solid transparent;
+    left: -1px;
+    top: -1px;
+    box-shadow: 0px 0px 0px 2px ${getColor('blue.400')};
     z-index: 0;
     border-radius: 30px;
     display: none;

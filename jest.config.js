@@ -5,6 +5,7 @@ module.exports = {
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/?(*.)types.{js,jsx,ts,tsx}',
     '!src/**/?(*.)helpers.{js,jsx,ts,tsx}',
+    '!src/**/?(*.)stories.{js,jsx,ts,tsx}',
     '!src/**/?(*.)testHelpers.{js,jsx,ts,tsx}',
     '!src/tests/helpers/**/*.{js,jsx,ts,tsx}',
     '!src/styles/tests/helpers/**/*.{js,jsx,ts,tsx}',

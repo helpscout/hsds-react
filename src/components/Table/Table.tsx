@@ -13,7 +13,7 @@ import Scrollable from '../Scrollable'
 import { COMPONENT_KEY } from './Table.utils'
 
 import { TableWrapperUI, TableUI, LoadingUI } from './styles/Table.css'
-import { defaultTheme, chooseTheme } from './styles/themes'
+import { defaultSkin, chooseSkin } from './styles/skins'
 
 import Body from './Table.Body'
 import Head from './Table.Head'
@@ -37,7 +37,7 @@ export class Table extends React.Component<TableProps, TableState> {
   static defaultProps = {
     columns: [],
     data: [],
-    theme: defaultTheme,
+    skin: defaultSkin,
     tableWidth: { min: '700px' },
     containerWidth: '100%',
     sortedInfo: {
@@ -122,8 +122,9 @@ export class Table extends React.Component<TableProps, TableState> {
     const {
       className,
       tableClassName,
-      data,
       columns,
+      data,
+      expanderText,
       maxRowsToDisplay,
       tableWidth,
       containerWidth,
@@ -131,7 +132,7 @@ export class Table extends React.Component<TableProps, TableState> {
       isLoading,
       isScrollLocked,
       onRowClick,
-      theme,
+      skin,
       ...rest
     } = this.props
 
@@ -143,7 +144,7 @@ export class Table extends React.Component<TableProps, TableState> {
     } = this.getComponentClassNames()
 
     return (
-      <ThemeProvider theme={chooseTheme(theme)}>
+      <ThemeProvider theme={chooseSkin(skin)}>
         <TableWrapperUI
           className={tableWrapperClassNames}
           ref={this.setWrapperNode}
@@ -179,14 +180,26 @@ export class Table extends React.Component<TableProps, TableState> {
 
           {isLoading && <LoadingUI className={`${TABLE_CLASSNAME}__Loading`} />}
 
-          {isTableCollapsed ? (
+          {maxRowsToDisplay && isTableCollapsed ? (
+            <Button
+              version={2}
+              style={{ marginLeft: '14px' }}
+              kind="link"
+              className={`${TABLE_CLASSNAME}__Expander`}
+              onClick={this.handleExpanderClick}
+            >
+              {expanderText ? expanderText.collapsed : 'View All'}
+            </Button>
+          ) : null}
+
+          {maxRowsToDisplay && !isTableCollapsed ? (
             <Button
               style={{ marginLeft: '14px' }}
               kind="link"
               className={`${TABLE_CLASSNAME}__Expander`}
               onClick={this.handleExpanderClick}
             >
-              View all
+              {expanderText ? expanderText.expanded : 'Collapse'}
             </Button>
           ) : null}
         </TableWrapperUI>
