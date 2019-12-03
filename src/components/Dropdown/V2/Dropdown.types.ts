@@ -32,6 +32,7 @@ export interface DropdownMenuContainerProps {
   className?: string
   clearSelection: (...args: any[]) => void
   closeDropdown: () => void
+  contentWindow: any
   dropRight: boolean
   dropUp: boolean
   forceDropDown: boolean
@@ -67,6 +68,7 @@ export interface DropdownProps extends DropdownMenuDimensions {
   clearOnSelect: boolean
   closeDropdown: () => void
   closeOnSelect: boolean
+  contentWindow: any
   direction: 'left' | 'right'
   disabled: boolean
   dropUp: boolean
