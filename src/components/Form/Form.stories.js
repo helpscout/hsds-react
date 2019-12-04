@@ -206,3 +206,7 @@ stories.add('with only save button', () => {
 
   return <SampleForm />
 })
+
+stories.add('with unfocusable buttons', () => (
+  <Form actionFocusable={false} onCancel={() => {}} onDestroy={() => {}} />
+))
