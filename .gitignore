@@ -30,3 +30,5 @@ yarn-debug.log*
 yarn-error.log*
 
 storybook-static
+
+.env

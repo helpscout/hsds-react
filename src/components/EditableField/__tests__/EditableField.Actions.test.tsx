@@ -2,6 +2,7 @@ import * as React from 'react'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { EditableFieldActions as Actions } from '../EditableField.Actions'
+import * as urlUtils from '../../../utilities/urls'
 
 import { STATES_CLASSNAMES } from '../EditableField.utils'
 
@@ -116,5 +117,29 @@ describe('Should component update', () => {
     expect(
       wrapper.instance().shouldComponentUpdate(newPropsChanged)
     ).toBeTruthy()
+  })
+})
+
+describe('handleActionClick', () => {
+  test('on click of link, it opens a new window', () => {
+    const urlUtilSpy = jest.spyOn(urlUtils, 'normalizeUrl')
+    window.open = jest.fn()
+
+    const val = {
+      value: 'google.com',
+      id: 'site0',
+    }
+
+    const actions = [{ name: 'link' }]
+
+    const wrapper: any = mount(
+      <Actions name="website" fieldValue={val} actions={actions} />
+    )
+
+    const button = wrapper.find('.FieldActions_button').hostNodes()
+    button.simulate('click')
+
+    expect(urlUtilSpy).toHaveBeenCalledWith(val.value)
+    expect(window.open).toHaveBeenCalledWith(`http://${val.value}`)
   })
 })

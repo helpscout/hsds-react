@@ -228,6 +228,19 @@ stories.add('Url', () => (
         },
       }}
     />
+    <EditableField
+      label="Website Without Protocol"
+      name="website2"
+      placeholder="Add a website address"
+      type="url"
+      value="mysite.net"
+      actions={{
+        name: 'link',
+        callback(obj) {
+          console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+        },
+      }}
+    />
   </ContainerUI>
 ))
 

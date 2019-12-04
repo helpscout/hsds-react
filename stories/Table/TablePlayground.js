@@ -12,11 +12,11 @@ import {
 } from '../../src/components/Table/__tests__/utils'
 import { getColor } from '../../src/styles/utilities/color'
 import {
-  defaultTheme,
-  alternativeTheme,
-} from '../../src/components/Table/styles/themes'
+  defaultSkin,
+  alternativeSkin,
+} from '../../src/components/Table/styles/skins'
 
-const customTheme = {
+const customSkin = {
   fontColorHeader: '#ffffff',
   fontColorBody: getColor('purple.500'),
   fontColorAlternate: getColor('purple.800'),
@@ -112,7 +112,7 @@ export default class TablePlayground extends Component {
         order: null,
       },
       isLoading: false,
-      theme: customTheme,
+      skin: customSkin,
       tableWidth: { min: '700px' },
       containerWidth: '100%',
       activePage: 1,
@@ -127,7 +127,7 @@ export default class TablePlayground extends Component {
       isLoading,
       tableWidth,
       containerWidth,
-      theme,
+      skin,
     } = this.state
 
     return (
@@ -141,7 +141,7 @@ export default class TablePlayground extends Component {
           containerWidth={containerWidth}
           tableWidth={tableWidth}
           numberOfRows={data.length}
-          theme={theme}
+          skin={skin}
           resetTable={this.handleResetTable}
           onChangeTableOption={this.handleTableOptionChange}
         />
@@ -158,7 +158,7 @@ export default class TablePlayground extends Component {
           data={data}
           sortedInfo={sortedInfo}
           isLoading={isLoading}
-          theme={theme}
+          skin={skin}
           tableWidth={tableWidth}
           containerWidth={containerWidth}
         />
@@ -181,18 +181,18 @@ export default class TablePlayground extends Component {
     })
   }
 
-  handleResetTable = theme => {
-    let themeToUse
+  handleResetTable = skin => {
+    let skinToUse
 
-    if (theme === 'default') {
-      themeToUse = defaultTheme
-    } else if (theme === 'alternative') {
-      themeToUse = alternativeTheme
-    } else if (theme === 'custom') {
-      themeToUse = customTheme
+    if (skin === 'default') {
+      skinToUse = defaultSkin
+    } else if (skin === 'alternative') {
+      skinToUse = alternativeSkin
+    } else if (skin === 'custom') {
+      skinToUse = customSkin
     }
 
-    this.setState({ theme: themeToUse })
+    this.setState({ skin: skinToUse })
   }
 
   handleTableOptionChange = (option, value) => {

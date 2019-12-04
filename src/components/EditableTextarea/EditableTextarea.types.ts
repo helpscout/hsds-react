@@ -20,6 +20,26 @@ export interface EditableTextareaProps {
     data: CommitData
   }) => void
   onChange: (args: { name: string; value: FieldValue[]; event?: Event }) => void
+  onInputBlur: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputFocus: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputKeyDown: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
+  onInputKeyUp: (args: {
+    name: string
+    value: FieldValue[]
+    event: Event
+  }) => void
   onEnter: (args: { name: string; value: FieldValue[]; event: Event }) => void
   onEscape: (args: { name: string; value: FieldValue[]; event: Event }) => void
   validate: (args: {

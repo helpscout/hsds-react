@@ -1,4 +1,6 @@
 import { isString } from './is'
+import { normalizeUrl } from './urls'
+import { normalize } from 'path'
 
 export const nameToInitials = (name: string = ''): string => {
   // Returning early if undefined to avoid casting undefined to "undefined"
@@ -249,10 +251,8 @@ export const convertLinksToHTML = (string: string): string => {
           return accumulator + url
         }
 
-        if (url.indexOf('http://') !== 0 && url.indexOf('https://') !== 0) {
-          // Add http as the default scheme
-          url = `http://${url}`
-        }
+        // Add http as the default scheme if needed
+        url = normalizeUrl(url)
 
         // Adding target blank and rel noopener for external links
         // See: https://developers.google.com/web/tools/lighthouse/audits/noopener

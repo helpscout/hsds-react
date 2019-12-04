@@ -27,6 +27,31 @@ export const MessageCardUI = styled(Card)`
   &.is-with-box-shadow {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.15);
   }
+  &.is-mobile {
+    width: 100%;
+
+    .is-h4 {
+      font-size: 20px !important;
+      line-height: 24px !important;
+    }
+
+    .is-h5 {
+      font-size: 14px !important;
+      margin-top: 10px;
+    }
+
+    .c-Text {
+      font-size: 14px !important;
+      line-height: 22px;
+      margin-top: 20px;
+    }
+
+    .c-ButtonV2 {
+      margin-top: 30px;
+      font-size: 16px !important;
+      height: 65px !important;
+    }
+  }
 `
 
 export const TitleUI = styled(Heading)`

@@ -66,11 +66,8 @@ describe('splitter', () => {
     expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.firstChunk}`).text()).toBe(
       'longemailaddress'
     )
-    expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.splitterChunk}`).text()).toBe(
-      '@'
-    )
     expect(wrapper.find(`.${TRUNCATED_CLASSNAMES.secondChunk}`).text()).toBe(
-      'gmail.com'
+      '@gmail.com'
     )
   })
 })
@@ -147,7 +144,7 @@ describe('node', () => {
 })
 
 describe('Truncate: Check', () => {
-  test('isTruncated can calculate truncation', () => {
+  test('isTruncated can calculate truncation for text without splitter', () => {
     const props = { type: 'auto' }
     const wrapper = mount(<Truncate>Words</Truncate>)
     const o = wrapper.instance()
@@ -159,7 +156,7 @@ describe('Truncate: Check', () => {
       style: {
         display: undefined,
       },
-      offsetWidth: 200,
+      scrollWidth: 200,
     }
     expect(o.isTruncated(props)).toBe(true)
 
@@ -170,31 +167,62 @@ describe('Truncate: Check', () => {
       style: {
         display: undefined,
       },
-      offsetWidth: 200,
+      scrollWidth: 200,
     }
     expect(o.isTruncated(props)).toBe(false)
   })
 
-  test('Recalculates on appropriate prop change', () => {
-    const wrapper = mount(<Truncate type="auto">Words</Truncate>)
+  test('isTruncated can calculate truncation for text with splitter', () => {
+    const props = { type: 'auto', splitter: '@' }
+    const wrapper = mount(<Truncate>Words</Truncate>)
+    const o = wrapper.instance()
 
-    expect(wrapper.state().isTruncated).toBe(false)
+    o.node = {
+      querySelector: () => ({ scrollWidth: 100 }),
+    }
+    o.contentNode = {
+      offsetWidth: 500,
+    }
 
-    wrapper.instance().isTruncated = () => true
-    wrapper.setProps({ type: 'middle' })
+    expect(o.isTruncated(props)).toBe(false)
 
-    expect(wrapper.state().isTruncated).toBe(true)
+    o.node = {
+      querySelector: () => ({ scrollWidth: 100 }),
+    }
+    o.contentNode = {
+      offsetWidth: 100,
+    }
+
+    expect(o.isTruncated(props)).toBe(true)
   })
 
-  test('Recalculates on resize, if desired', () => {
+  test('Recalculates on appropriate prop change', done => {
+    const wrapper = mount(<Truncate type="auto">Words</Truncate>)
+
+    setTimeout(() => {
+      expect(wrapper.state().isTruncated).toBe(false)
+
+      wrapper.instance().isTruncated = () => true
+      wrapper.setProps({ type: 'middle' })
+
+      setTimeout(() => {
+        expect(wrapper.state().isTruncated).toBe(true)
+        done()
+      }, 0)
+    }, 0)
+  })
+
+  test('Recalculates on resize, if desired', done => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
     wrapper.setState({ isTruncated: false })
     // Stub
     wrapper.instance().isTruncated = () => true
-
     wrapper.instance().handleOnResize()
 
-    expect(wrapper.state().isTruncated).toBe(true)
+    setTimeout(() => {
+      expect(wrapper.state().isTruncated).toBe(true)
+      done()
+    })
   })
 
   test('Resize: Does not setState if truncate check is the same as current state', () => {
@@ -222,11 +250,14 @@ describe('Truncate: Check', () => {
     expect(spy).not.toHaveBeenCalled()
   })
 
-  test('Check returns false, if node is somehow not defined', () => {
+  test('Check returns false, if node is somehow not defined', done => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
     wrapper.instance().node = null
 
-    expect(wrapper.state().isTruncated).toBe(false)
+    setTimeout(() => {
+      expect(wrapper.state().isTruncated).toBe(false)
+      done()
+    }, 0)
   })
 
   test('Check returns false, if content does not change', () => {
@@ -239,6 +270,19 @@ describe('Truncate: Check', () => {
 describe('Tooltip', () => {
   test('Renders tooltip if truncated', () => {
     const wrapper = mount(<Truncate showTooltipOnTruncate>Words</Truncate>)
+    wrapper.setState({ isTruncated: false })
+    expect(wrapper.find(Tooltip).length).toBe(0)
+
+    wrapper.setState({ isTruncated: true })
+    expect(wrapper.find(Tooltip).length).toBe(1)
+  })
+
+  test('Renders tooltip if truncated using splitter prop', () => {
+    const wrapper = mount(
+      <Truncate showTooltipOnTruncate splitter="@">
+        averylongemailaddress@gmail.com
+      </Truncate>
+    )
     wrapper.setState({ isTruncated: false })
     expect(wrapper.find(Tooltip).length).toBe(0)
 

@@ -44,6 +44,10 @@ export class EditableTextarea extends React.PureComponent<
     value: '',
     onCommit: noop,
     onChange: noop,
+    onInputBlur: noop,
+    onInputFocus: noop,
+    onInputKeyDown: noop,
+    onInputKeyUp: noop,
     onEnter: noop,
     onEscape: noop,
     validate: () => Promise.resolve({ isValid: true }),
@@ -96,7 +100,6 @@ export class EditableTextarea extends React.PureComponent<
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value === this.props.value) return
     // Tested
     /* istanbul ignore next */
     if (nextProps.value === this.state.value) return
@@ -149,7 +152,14 @@ export class EditableTextarea extends React.PureComponent<
     )
   }
 
-  handleOnClick = () => {
+  handleOnClick = e => {
+    const { id, onInputFocus } = this.props
+    const { value } = this.state
+    const item = {
+      value,
+      id,
+    }
+
     /* istanbul ignore else */
     if (this.state.readOnly) {
       this.setState(
@@ -159,6 +169,7 @@ export class EditableTextarea extends React.PureComponent<
         },
         () => {
           this.textArea.current.focus()
+          onInputFocus({ name: id, value: [item], event: e })
         }
       )
     }
@@ -214,14 +225,36 @@ export class EditableTextarea extends React.PureComponent<
             value: [item],
             event: e,
           })
-          this.textArea.current.blur()
         }
       )
     }
+
+    this.props.onInputKeyDown({
+      name: this.props.id,
+      value: [{ value: this.state.value, id: this.props.id }],
+      event: e,
+    })
+  }
+
+  handleOnKeyUp = e => {
+    const code = e.key
+
+    if (code === key.ESCAPE) {
+      /* istanbul ignore next */
+      e.preventDefault() && e.stopPropagation()
+
+      this.textArea.current.blur()
+    }
+
+    this.props.onInputKeyUp({
+      name: this.props.id,
+      value: [{ value: this.state.value, id: this.props.id }],
+      event: e,
+    })
   }
 
   handleOnBlur = e => {
-    const { id, onCommit, validate } = this.props
+    const { id, onCommit, onInputBlur, validate } = this.props
     const { prevValue, value, validated } = this.state
     const item = {
       value,
@@ -260,6 +293,7 @@ export class EditableTextarea extends React.PureComponent<
                 readOnly: true,
                 validationInfo: null,
                 validated: true,
+                value,
               },
               () => {
                 onCommit({
@@ -270,6 +304,11 @@ export class EditableTextarea extends React.PureComponent<
                   },
                   name: id,
                   value: [item],
+                })
+                onInputBlur({
+                  name: id,
+                  value: [item],
+                  event: e,
                 })
                 scrollToTop(this.textArea.current)
               }
@@ -347,14 +386,16 @@ export class EditableTextarea extends React.PureComponent<
     const { clamped, readOnly, value, validationInfo } = this.state
 
     const textAreaClasses = classNames(
+      'EditableTextarea__Textarea',
       'field',
-      readOnly && !Boolean(value) && 'hide'
+      readOnly && !Boolean(value) && 'is-placeholder'
     )
+
     const maskClasses = classNames(
       'EditableTextarea__Mask',
-      (!readOnly || Boolean(value)) && !floatingLabels && 'hide',
-      readOnly && !Boolean(value) && 'inline',
-      'field'
+      'field',
+      (!readOnly || Boolean(value)) && !floatingLabels && 'is-hidden',
+      readOnly && !Boolean(value) && 'is-inline'
     )
 
     return (
@@ -394,13 +435,14 @@ export class EditableTextarea extends React.PureComponent<
             onClick={this.handleOnClick}
             onHeightChange={this.handleTextareaHeightChange}
             onKeyDown={this.handleOnKeyDown}
+            onKeyUp={this.handleOnKeyUp}
           />
           <MaskUI
             className={maskClasses}
             onClick={this.handleOnClick}
             inputValue={value}
           >
-            {placeholder}
+            <span>{placeholder}</span>
           </MaskUI>
           {this.renderValidationInfo()}
         </EditableTextareaUI>

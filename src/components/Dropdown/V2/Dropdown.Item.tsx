@@ -8,11 +8,11 @@ import Divider from './Dropdown.Divider'
 import Header from './Dropdown.Header'
 import Menu from './Dropdown.Menu'
 import {
-  ItemUI,
   ActionUI,
   ActionContentUI,
-  WrapperUI,
+  ItemUI,
   SubMenuIncidatorUI,
+  WrapperUI,
 } from './Dropdown.css.js'
 import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
 import { setMenuPositionStyles } from './Dropdown.renderUtils'
@@ -28,10 +28,12 @@ import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 export interface Props {
   actionId?: string
   className?: string
+  contentWindow: any
   disabled: boolean
   dropRight: boolean
   dropUp: boolean
   getState: (...args: any[]) => void
+  href?: string
   id?: string
   index: string
   innerRef: (node: HTMLElement) => void
@@ -53,6 +55,7 @@ export interface Props {
 
 export class Item extends React.PureComponent<Props> {
   static defaultProps = {
+    contentWindow: window,
     getState: noop,
     disabled: false,
     index: '0',
@@ -111,13 +114,14 @@ export class Item extends React.PureComponent<Props> {
   renderMenu() {
     if (!this.hasSubMenu()) return
 
-    const { dropRight, dropUp } = this.props
+    const { contentWindow, dropRight, dropUp } = this.props
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
       /* istanbul ignore else */
       if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
         setMenuPositionStyles({
+          contentWindow,
           dropRight,
           dropUp,
           menuNode: this.menuNode,
@@ -245,7 +249,7 @@ export class Item extends React.PureComponent<Props> {
   setMenuNodeRef = node => (this.menuNode = node)
 
   render() {
-    const { className, disabled, type, isSelectionClearer } = this.props
+    const { className, disabled, href, isSelectionClearer, type } = this.props
     const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
@@ -259,8 +263,10 @@ export class Item extends React.PureComponent<Props> {
     if (type === 'group' || type === 'header') return <Header {...this.props} />
     if (type === 'divider') return <Divider />
 
+    const DDItemUI = href ? ItemUI.withComponent('a') : ItemUI
+
     return (
-      <ItemUI
+      <DDItemUI
         {...getValidProps(this.props)}
         className={componentClassName}
         aria-disabled={disabled}
@@ -270,7 +276,7 @@ export class Item extends React.PureComponent<Props> {
       >
         {this.renderContent()}
         {this.renderSubMenu()}
-      </ItemUI>
+      </DDItemUI>
     )
   }
 }
@@ -281,9 +287,10 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
 const ConnectedItem: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { getState, renderItem, selectedItem } = state
+    const { contentWindow, getState, renderItem, selectedItem } = state
 
     return {
+      contentWindow,
       getState,
       renderItem,
       selectedItem,

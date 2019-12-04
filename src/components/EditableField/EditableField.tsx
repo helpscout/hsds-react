@@ -328,7 +328,7 @@ export class EditableField extends React.Component<
 
       // Allow references to this event to be maintained in the async
       // code that follows.
-      event.persist()
+      event && event.persist && event.persist()
 
       validate({
         data: {
@@ -351,7 +351,15 @@ export class EditableField extends React.Component<
             // tested
             /* istanbul ignore next */
             if (field.id === changedField.id) {
-              return { ...changedField, validated: true }
+              const updatedProps =
+                validation.isValid && validation.updatedProps
+                  ? validation.updatedProps
+                  : {}
+              return {
+                ...changedField,
+                validated: true,
+                ...updatedProps,
+              }
             }
             // tested
             /* istanbul ignore next */
@@ -577,7 +585,7 @@ export class EditableField extends React.Component<
 
           // Allow references to this event to be maintained in the async
           // code that follows.
-          event.persist()
+          event && event.persist && event.persist()
 
           validate({
             data: {
@@ -600,6 +608,7 @@ export class EditableField extends React.Component<
                 updatedFieldValue = this.updateFieldValue({
                   name,
                   value: inputValue,
+                  updatedProps: validation.updatedProps || {},
                 })
 
                 this.setState(
@@ -701,12 +710,17 @@ export class EditableField extends React.Component<
 
   // tested
   /* istanbul ignore next */
-  updateFieldValue = ({ value, name }) => {
+  updateFieldValue = ({ value, name, updatedProps = {} }) => {
     const { fieldValue } = this.state
 
     return fieldValue.map(val => {
       if (val.id === name) {
-        return { ...val, value: value, validated: true }
+        return {
+          ...val,
+          ...updatedProps,
+          value: value,
+          validated: true,
+        }
       }
       return val
     })

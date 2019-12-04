@@ -134,6 +134,7 @@ export const ItemUI = styled('div')`
   display: block;
   outline: none;
   position: static;
+  text-decoration: none;
   transition: background-color 0.1s ease;
   user-select: none;
 
@@ -144,6 +145,7 @@ export const ItemUI = styled('div')`
   &.is-active {
     > ${ActionUI}, &.is-option {
       font-weight: 500;
+      color: ${getColor('charcoal.600')};
     }
   }
 
@@ -155,6 +157,10 @@ export const ItemUI = styled('div')`
     ${MenuUI} {
       color: initial;
     }
+  }
+
+  &:hover {
+    text-decoration: none;
   }
 
   &:last-child {
@@ -189,6 +195,7 @@ export const ItemUI = styled('div')`
     opacity: 0.4;
   }
 `
+
 ItemUI.defaultProps = {
   [SELECTORS.itemAttribute]: true,
 }
@@ -225,6 +232,10 @@ export const TriggerUI = styled('span')`
 
   &.is-open {
     color: ${getColor('blue.700')};
+  }
+
+  & > * {
+    pointer-events: none;
   }
 `
 

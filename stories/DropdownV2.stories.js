@@ -167,6 +167,32 @@ stories.add('Menu/Nested/UpLeft', () => {
   return <Dropdown items={items} dropUp direction="left" />
 })
 
+stories.add('Item/Link', () => {
+  const props = {
+    disabled: boolean('disabled', false),
+    items: ItemSpec.generate(100).map(item => ({
+      ...item,
+      href: 'https://helpscout.com',
+    })),
+  }
+
+  return <Dropdown {...props} />
+})
+
+stories.add('Item/Disabled Link', () => {
+  const props = {
+    disabled: boolean('disabled', false),
+    items: ItemSpec.generate(100)
+      .map(item => ({ ...item, href: 'https://helpscout.com' }))
+      .map((item, index) => ({
+        ...item,
+        disabled: index === 5 || index === 15 || index === 75,
+      })),
+  }
+
+  return <Dropdown {...props} />
+})
+
 stories.add('Item/Active', () => {
   const items = ItemSpec.generate(8)
   const selectedItem = items[0]
