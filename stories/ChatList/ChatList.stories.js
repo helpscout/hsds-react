@@ -8,35 +8,35 @@ import ChatListItemStateExample from './ChatListItemStateExample'
 const avatars = AvatarSpec.generate(8)
 const fixtures = ChatSpec.generate(8)
 
-const itemMarkup = Object.keys(fixtures).forEach((key, index) => {
-  const item = fixtures[key]
+const itemMarkup = Array.isArray(fixtures)
+  ? fixtures.map((item, index) => {
+      const avatar = (
+        <Avatar
+          image={avatars[4].image}
+          name={avatars[4].name}
+          size="xs"
+          shape="rounded"
+        />
+      )
 
-  const avatar = (
-    <Avatar
-      image={avatars[4].image}
-      name={avatars[4].name}
-      size="xs"
-      shape="rounded"
-    />
-  )
-
-  return (
-    <ChatList.Item
-      avatar={item.isAssigned ? avatar : null}
-      key={item.id}
-      isAssigned={item.isAssigned}
-      isFocused={index === 2}
-      isTyping={item.isTyping}
-      isViewing={item.isViewing}
-      isWaiting={item.isWaiting}
-      message={item.message}
-      name={item.name}
-      newMessageCount={item.newMessageCount}
-      tags={item.tags}
-      timestamp={item.timestamp}
-    />
-  )
-})
+      return (
+        <ChatList.Item
+          avatar={item.isAssigned ? avatar : null}
+          key={item.id}
+          isAssigned={item.isAssigned}
+          isFocused={index === 2}
+          isTyping={item.isTyping}
+          isViewing={item.isViewing}
+          isWaiting={item.isWaiting}
+          message={item.message}
+          name={item.name}
+          newMessageCount={item.newMessageCount}
+          tags={item.tags}
+          timestamp={item.timestamp}
+        />
+      )
+    })
+  : []
 
 const stories = storiesOf('ChatList', module)
 

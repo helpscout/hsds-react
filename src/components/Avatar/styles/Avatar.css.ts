@@ -118,12 +118,21 @@ export const ImageWrapperUI = styled('div')`
   backface-visibility: hidden;
   display: block;
   height: 100%;
-  opacity: 0;
   overflow: hidden;
-  transform: translate3d(0, 0, 0) scale(1.0125);
+  transform: translate3d(0, 0, 0);
+  will-change: opacity;
   width: 100%;
   position: relative;
   z-index: 2;
+  opacity: 1;
+
+  ${({ animation }) => !animation && `opacity: 1;`}
+  ${({ animation, animationDuration, animationEasing }) =>
+    animation &&
+    `
+    transition: opacity ${animationDuration}ms ${animationEasing};
+    opacity:0;
+    `}
 
   &.c-Avatar__imageStaticWrapper {
     position: absolute;
@@ -132,15 +141,15 @@ export const ImageWrapperUI = styled('div')`
 
   ${getBorderRadiusStyles()};
 
-  &.is-herbieFullyLoaded {
+  &.is-loaded {
     opacity: 1;
-    transition-delay: 0.8s !important;
   }
 `
 
 export const ImageUI = styled('div')`
   background-position: center center;
   background-size: cover;
+  ${({ src }) => src && `background-image: url('${src}');`}
   display: block;
   height: 100%;
   width: 100%;
