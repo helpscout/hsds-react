@@ -78,7 +78,7 @@ describe('Image', () => {
     const crop = cy.get(`div${ui.crop}`)
 
     expect(crop.exists()).toBeTruthy()
-    expect(crop.getComputedStyle().backgroundColor).toEqual('currentColor')
+    expect(crop.getComputedStyle().backgroundColor).toEqual('transparent')
   })
 
   test('Background is transparent if there is an image', cb => {
