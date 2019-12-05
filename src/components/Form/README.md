@@ -16,7 +16,7 @@ This component contains a smaller sub-component:
   deleteText="Delete"
   className="entry-form"
   actionDirection="left"
-  actionFocusable={false}
+  actionTabbable={false}
 >
   <FormGroup>
     <FormLabel label="Site Name">
@@ -30,7 +30,7 @@ This component contains a smaller sub-component:
 
 | Prop            | Type      | Description                                                                     |
 | --------------- | --------- | ------------------------------------------------------------------------------- |
-| actionFocusable | `boolean` | Optional. Can the user focus on actions by tabbing. Defaults to "true"          |
+| actionTabbable  | `boolean` | Optional. Can the user focus on actions by tabbing. Defaults to "true"          |
 | actionDirection | `string`  | Optional. Direction in which buttons render, right or left. Defaults to "right" |
 | cancelText      | `string`  | Optional. Text for the cancel button. Button will not render without text.      |
 | children        | `any`     | Content to render.                                                              |

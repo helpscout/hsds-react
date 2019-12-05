@@ -7,7 +7,7 @@ export class Form extends React.PureComponent {
   static Actions = Actions
 
   static defaultProps = {
-    actionFocusable: true,
+    actionTabbable: true,
     cancelText: 'Cancel',
     destroyText: 'Delete',
     onSave: evt => {
@@ -19,7 +19,7 @@ export class Form extends React.PureComponent {
   render() {
     const {
       actionDirection,
-      actionFocusable,
+      actionTabbable,
       cancelText,
       children,
       className,
@@ -31,7 +31,7 @@ export class Form extends React.PureComponent {
     } = this.props
 
     const componentClassName = classNames('c-Form', className)
-    const commonButtonProps = actionFocusable ? {} : { tabIndex: -1 }
+    const commonButtonProps = actionTabbable ? {} : { tabIndex: -1 }
 
     const saveButton = (
       <Button
@@ -76,7 +76,6 @@ export class Form extends React.PureComponent {
         {children}
         <Form.Actions
           direction={actionDirection}
-          focusable={actionFocusable}
           save={saveButton}
           cancel={cancelButton}
           destroy={destroyButton}

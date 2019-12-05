@@ -99,7 +99,7 @@ describe('Actions', () => {
 
   test('renders buttons with negative tabIndex when actionFocusable is false', () => {
     const wrapper = mount(
-      <Form actionFocusable={false} onCancel={() => {}} onDestroy={() => {}} />
+      <Form actionTabbable={false} onCancel={() => {}} onDestroy={() => {}} />
     )
     ;['cancel', 'delete', 'save'].forEach(action =>
       expect(getAttribute(wrapper, `.${action}-button`, 'tabIndex')).toEqual(
