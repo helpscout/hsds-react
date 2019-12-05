@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action as addonAction } from '@storybook/addon-actions'
-import { withKnobs, text } from '@storybook/addon-knobs'
+import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import styled from '../styled'
 import { Form, FormGroup, FormLabel, Input } from '../index'
 import Readme from './README.md'
@@ -190,6 +190,49 @@ stories.add('with only save button', () => {
         <ContainerUI>
           <Form
             actionDirection={text('actionDirection', 'left')}
+            onSave={this.handleFormSubmit}
+            saveText="Save Entry"
+          >
+            <FormGroup>
+              <FormLabel label="Site Name">
+                <Input onChange={this.handleChange} value={this.state.text} />
+              </FormLabel>
+            </FormGroup>
+          </Form>
+        </ContainerUI>
+      )
+    }
+  }
+
+  return <SampleForm />
+})
+
+stories.add('with unfocusable buttons', () => {
+  class SampleForm extends React.Component {
+    state = {
+      text: 'Sample Text',
+    }
+
+    handleChange = value => {
+      this.setState({
+        text: value,
+      })
+    }
+
+    handleFormSubmit = evt => {
+      evt.preventDefault()
+      console.log(`Submitting text: "${this.state.text}"`)
+      this.setState({ text: '' })
+    }
+
+    render() {
+      return (
+        <ContainerUI>
+          <Form
+            actionDirection="left"
+            actionTabbable={boolean('actionTabbable', false)}
+            onCancel={() => console.log('cancel')}
+            onDestroy={() => console.log('delete')}
             onSave={this.handleFormSubmit}
             saveText="Save Entry"
           >
