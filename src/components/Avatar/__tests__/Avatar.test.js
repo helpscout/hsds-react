@@ -1,7 +1,8 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import { cy } from '@helpscout/cyan'
 import { Avatar } from '../Avatar'
+import AvatarImage, { clearCache } from '../Avatar.Image'
 import { getCircleProps } from '../styles/Avatar.css'
 import { StatusDot } from '../../index'
 
@@ -15,6 +16,11 @@ const ui = {
 }
 
 jest.useFakeTimers()
+
+beforeEach(() => {
+  clearCache()
+  global.Image.prototype.decode = null
+})
 
 describe('Name', () => {
   test('Uses the `initials` attribute if specified', () => {
@@ -68,44 +74,52 @@ describe('Image', () => {
   })
 
   test('Background is currentColor to prevent flash of color before image loads', () => {
-    cy.render(<Avatar name="Buddy the Elf" image="buddy.jpg" image="" />)
-    const crop = cy.get(`div${ui.crop}`)
-
-    expect(crop.exists()).toBeTruthy()
-    expect(crop.getComputedStyle().backgroundColor).toEqual('currentColor')
-  })
-
-  test('Background is transparent if there is an image', () => {
-    cy.render(
-      <Avatar name="Buddy the Elf" image="buddy.jpg" image="buddy.jpg" />
-    )
+    cy.render(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
     const crop = cy.get(`div${ui.crop}`)
 
     expect(crop.exists()).toBeTruthy()
     expect(crop.getComputedStyle().backgroundColor).toEqual('transparent')
   })
 
-  test('Do not render image if image prop is specified but image is loading', () => {
-    const src = 'buddy.jpg'
-    const wrapper = mount(<Avatar name="Buddy the Elf" image={src} />)
-    const image = wrapper.find(`div${ui.image}`)
+  test('Background is transparent if there is an image', cb => {
+    global.Image.prototype.decode = () => Promise.resolve()
 
-    expect(image.exists()).toBeTruthy()
-    expect(image.prop('style').backgroundImage).toBeFalsy()
+    const onLoad = () => {
+      const crop = cy.get(`div${ui.crop}`)
+      expect(crop.exists()).toBeTruthy()
+      expect(crop.getComputedStyle().backgroundColor).toEqual('transparent')
+      cb()
+    }
+
+    cy.render(<Avatar image="buddy.jpg" onLoad={onLoad} />)
   })
 
-  test('Render image if image prop is specified and image has finished loading', () => {
+  test('Do not render image if image prop is specified but image is loading', () => {
     const src = 'buddy.jpg'
-    const wrapper = mount(<Avatar name="Buddy the Elf" image={src} />)
+    cy.render(<Avatar name="Buddy the Elf" image={src} />)
+    const image = cy.get(`div${ui.image}`)
 
+    expect(image.exists()).toBeTruthy()
+    expect(image.getComputedStyle().backgroundImage).toBeFalsy()
+  })
+
+  test('Render image if image prop is specified and image has finished loading', cb => {
+    const src = 'buddy.jpg'
+
+    const onLoad = () => {
+      wrapper.update()
+      const image = wrapper.find(`div${ui.image}`)
+      expect(image.exists()).toBeTruthy()
+      expect(image.prop('src')).toContain(src)
+      cb()
+    }
+    const wrapper = mount(
+      <Avatar name="Buddy the Elf" image={src} onLoad={onLoad} />
+    )
     wrapper
-      .find('img')
-      .first()
-      .simulate('load')
-
-    const image = wrapper.find(`div${ui.image}`)
-
-    expect(image.prop('style').backgroundImage).toContain(src)
+      .find(AvatarImage)
+      .instance()
+      .image.onload()
   })
 
   test('Rendered image should have name within', () => {
@@ -123,56 +137,130 @@ describe('Image', () => {
     expect(initials.exists()).toBeFalsy()
   })
 
-  test('Replaces image with initials on error', () => {
-    const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
+  test('Replaces image with initials on error', cb => {
+    const onError = () => {
+      wrapper.update()
+      const initials = wrapper.find(ui.initials)
+      const image = wrapper.find(`div${ui.image}`)
+      expect(initials.exists()).toBeTruthy()
+      expect(image.exists()).toBeFalsy()
+      cb()
+    }
+    const wrapper = mount(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" onError={onError} />
+    )
+
     wrapper
-      .find('img')
-      .first()
-      .simulate('error')
-
-    const initials = wrapper.find(`div${ui.initials}`)
-    const image = wrapper.find(`div${ui.image}`)
-
-    expect(initials.exists()).toBeTruthy()
-    expect(image.exists()).toBeFalsy()
+      .find(AvatarImage)
+      .instance()
+      .image.onerror()
   })
 
-  test('Replaces image with fallback on error', () => {
+  test('Replaces image with fallback on error', cb => {
     const fallbackSrc = 'buddy2.jpg'
+
+    const onLoad = () => {
+      wrapper.update()
+      const image = wrapper.find(`div${ui.image}`)
+      expect(image.exists()).toBeTruthy()
+      expect(image.prop('src')).toContain(fallbackSrc)
+      cb()
+    }
+
     const wrapper = mount(
       <Avatar
         name="Buddy the Elf"
         image="buddy.jpg"
         fallbackImage={fallbackSrc}
+        onLoad={onLoad}
       />
     )
     wrapper
-      .find('img')
-      .first()
-      .simulate('error')
-      .simulate('load')
-
-    const image = wrapper.update().find(`div${ui.image}`)
-
-    expect(image.prop('style').backgroundImage).toContain(fallbackSrc)
-  })
-
-  test('Background style is unset on error', () => {
-    const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
+      .find(AvatarImage)
+      .instance()
+      .image.onerror()
     wrapper
-      .find('img')
-      .first()
-      .simulate('error')
-
-    const crop = wrapper.find(`div${ui.crop}`)
-
-    expect(crop.prop('style').background).toBeFalsy()
+      .find(AvatarImage)
+      .instance()
+      .image.onload()
   })
 
   test('Sets `title` attribute to the `name`', () => {
     const wrapper = mount(<Avatar name="Bobby McGee" />)
     const root = wrapper.find(`div${ui.root}`)
     expect(root.prop('title')).toBe('Bobby McGee')
+  })
+
+  test('Avatar src should be an array', () => {
+    const firstSrc = 'test2.jpg'
+
+    const wrapper = mount(<Avatar image={firstSrc} />)
+    expect(Array.isArray(wrapper.instance().src)).toBeTruthy()
+  })
+
+  test('Updating the props will update the src value', () => {
+    const firstSrc = 'test2.jpg'
+    const secondSrc = 'test3.jpg'
+
+    const wrapper = mount(<Avatar image={firstSrc} />)
+    expect(wrapper.instance().src.join('')).toContain(firstSrc)
+    wrapper.setProps({ image: secondSrc })
+    expect(wrapper.instance().src.join('')).toContain(secondSrc)
+  })
+
+  test('Clearing the props will hide the actual image', () => {
+    const wrapper = mount(<Avatar image="buddy.jpg" />)
+    wrapper.setProps({ image: null })
+    expect(wrapper.instance().src.join('')).toBe('')
+    expect(wrapper.find(AvatarImage).state().isLoading).toBeFalsy()
+  })
+
+  test('Uses decoding image if available', cb => {
+    global.Image.prototype.decode = () => Promise.resolve()
+
+    const onLoad = () => {
+      wrapper.update()
+      expect(wrapper.find(AvatarImage).state().isLoaded).toBeTruthy()
+      cb()
+    }
+
+    const wrapper = mount(<Avatar image="buddy.jpg" onLoad={onLoad} />)
+  })
+
+  test('Use image from the cache', () => {
+    const wrapper = mount(<Avatar image="buddy.jpg" />)
+    wrapper
+      .find(AvatarImage)
+      .instance()
+      .image.onload()
+    const wrapperCache = mount(<Avatar image="buddy.jpg" />)
+    const state = wrapperCache.find(AvatarImage).state()
+    expect(state.isLoading).toBeFalsy()
+    expect(state.isLoaded).toBeTruthy()
+  })
+
+  test('Validate that image exists when calling onerror', () => {
+    const wrapper = mount(<Avatar image="buddy.jpg" />)
+    const instance = wrapper.find(AvatarImage).instance()
+    wrapper.unmount()
+    expect(instance.onError()).toBeFalsy()
+  })
+
+  test('Use cache when loading fallback image if it exists', () => {
+    const wrapper1 = mount(<Avatar image="buddy.jpg" />)
+    wrapper1
+      .find(AvatarImage)
+      .instance()
+      .image.onload()
+
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Avatar image="buddy2.jpg" fallbackImage="buddy.jpg" onLoad={spy} />
+    )
+    const instance = wrapper.find(AvatarImage).instance()
+    const result = instance.image.onerror()
+    expect(result).toBeTruthy()
+    expect(spy).toHaveBeenCalled()
   })
 })
 
@@ -208,6 +296,24 @@ describe('ClassNames', () => {
     const root = wrapper.find(`div${ui.root}`)
 
     expect(root.props().className).toContain('is-active')
+  })
+
+  test('imageWrapper received animation props', () => {
+    const wrapper = mount(<Avatar animation={true} image="buddy.jpg" />)
+    const imageWrapper = wrapper.find('.c-Avatar__imageWrapper').first()
+    const props = imageWrapper.props()
+    expect(props.animation).toBeTruthy()
+    expect(props.animationEasing).toBeTruthy()
+    expect(props.animationDuration).toBeTruthy()
+  })
+
+  test('imageWrapper received no animation if disabled', () => {
+    const wrapper = mount(<Avatar animation={false} image="buddy.jpg" />)
+    const imageWrapper = wrapper.find('.c-Avatar__imageWrapper').first()
+    const props = imageWrapper.props()
+    expect(props.animation).toBeFalsy()
+    expect(props.animationEasing).toBeFalsy()
+    expect(props.animationDuration).toBeFalsy()
   })
 })
 
@@ -355,8 +461,10 @@ describe('onError', () => {
     const wrapper = mount(
       <Avatar name="Buddy" image="buddy.jpg" onError={spy} />
     )
-    const img = wrapper.find('img').first()
-    img.simulate('error')
+    wrapper
+      .find(AvatarImage)
+      .instance()
+      .image.onerror()
     expect(spy).toHaveBeenCalled()
   })
 })
@@ -367,8 +475,10 @@ describe('onLoad', () => {
     const wrapper = mount(
       <Avatar name="Buddy" image="buddy.jpg" onLoad={spy} />
     )
-    const img = wrapper.find('img').first()
-    img.simulate('load')
+    wrapper
+      .find(AvatarImage)
+      .instance()
+      .image.onload()
     expect(spy).toHaveBeenCalled()
   })
 })

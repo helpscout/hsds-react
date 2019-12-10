@@ -25,6 +25,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   static defaultProps = {
     ...initialState,
     allowMultipleSelection: false,
+    contentWindow: window,
     'data-cy': 'Dropdown',
     disabled: false,
     innerRef: noop,
@@ -45,9 +46,17 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     const targetNode = event.target
 
     /* istanbul ignore else */
-    if (targetNode instanceof Element) {
-      if (this.menuNode.contains(targetNode) || targetNode === this.triggerNode)
+    // When the component is displayed in an `iframe` (e.g. Beacon) we need
+    // to do an instanceof check based on the `iframe`#Element class type,
+    // using the `contentWindow` prop. https://stackoverflow.com/a/26251098
+    if (targetNode instanceof this.props.contentWindow.Element) {
+      if (
+        // @ts-ignore
+        this.menuNode.contains(targetNode) ||
+        targetNode === this.triggerNode
+      ) {
         return
+      }
 
       this.closeMenu()
     }
@@ -164,8 +173,9 @@ const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
 const ConnectedDropdown: any = connect(
   // mapStateToProps
   (state: any) => {
-    const { envNode, id, isOpen, getState } = state
+    const { contentWindow, envNode, id, isOpen, getState } = state
     return {
+      contentWindow,
       envNode,
       id,
       isOpen,
