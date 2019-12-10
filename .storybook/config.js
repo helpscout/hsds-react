@@ -15,7 +15,7 @@ import { withA11y } from '@storybook/addon-a11y'
 import '../src/adapters/app'
 import './storybook.css'
 
-import GlobalStyle from '../src/components/GlobalStyle'
+import HSDS from '../src/components/HSDS'
 
 const withStats = storyFn => (
   <div>
@@ -24,18 +24,13 @@ const withStats = storyFn => (
   </div>
 )
 
-const withGlobalStyle = storyFn => (
-  <div className="hsds-react">
-    <GlobalStyle />
-    {storyFn()}
-  </div>
-)
+const withHSDSScope = storyFn => <HSDS.Provider>{storyFn()}</HSDS.Provider>
 
 addDecorator(withStats)
 addDecorator(withKnobs)
 addDecorator(addReadme)
 addDecorator(withA11y)
-addDecorator(withGlobalStyle)
+addDecorator(withHSDSScope)
 
 addParameters({
   options: {

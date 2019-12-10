@@ -118,7 +118,7 @@ export const CropUI = styled('div')<CropProps>`
   }
 `
 
-export const ImageWrapperUI = styled('div')`
+export const ImageWrapperUI = styled('div')<any>`
   backface-visibility: hidden;
   display: block;
   height: 100%;
@@ -150,7 +150,7 @@ export const ImageWrapperUI = styled('div')`
   }
 `
 
-export const ImageUI = styled('div')`
+export const ImageUI = styled('div')<any>`
   background-position: center center;
   background-size: cover;
   ${({ src }) => src && `background-image: url('${src}');`}

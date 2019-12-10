@@ -9,6 +9,6 @@ export const COMPONENT_KEY = {
   Embed: 'Message.Embed',
   Media: 'Message.Media',
   Message: 'Message',
-  Provider: 'Message.Provier',
+  Provider: 'Message.Provider',
   Question: 'Message.Question',
 }

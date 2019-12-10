@@ -111,7 +111,7 @@ class Input extends React.PureComponent<Props, State> {
 
   setRef = (node: HTMLElement) => {
     this.props.inputRef(node)
-    /* istanbul ignore if */
+    /* istanbul ignore next */
     if (this.props.innerRef) {
       this.props.innerRef(node)
     }
