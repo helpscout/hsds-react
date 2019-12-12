@@ -18,11 +18,43 @@ stories.addDecorator(
 
 const fixture = AvatarSpec.generate()
 
-stories.add('default', () => (
-  <ThemeProvider theme={{ brandColor: { brandColor: getColor('grey.300') } }}>
-    <Avatar name={fixture.name} image={fixture.image} />
-  </ThemeProvider>
-))
+class AvatarReload extends React.Component {
+  state = {
+    fixture: null,
+  }
+  constructor() {
+    super()
+    this.state.fixture = AvatarSpec.generate()
+  }
+  reload = () => {
+    const fixture = AvatarSpec.generate()
+    this.setState({
+      fixture,
+    })
+  }
+  render() {
+    return (
+      <ThemeProvider
+        theme={{ brandColor: { brandColor: getColor('grey.300') } }}
+      >
+        <div>
+          <div>
+            <h2>Avatar:</h2>{' '}
+            <Avatar
+              name={this.state.fixture.name}
+              image={this.state.fixture.image}
+            />
+          </div>
+          <button onClick={this.reload}>reload</button>
+        </div>
+      </ThemeProvider>
+    )
+  }
+}
+
+stories.add('default', () => {
+  return <AvatarReload />
+})
 
 stories.add('failed', () => (
   <Avatar name={fixture.name} image="https://notfound" />

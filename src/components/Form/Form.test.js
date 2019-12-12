@@ -1,4 +1,5 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import { mount } from 'enzyme'
 import Form from './Form'
 
@@ -88,4 +89,28 @@ describe('Actions', () => {
     expect(wrapper.find('.is-right').hostNodes()).toHaveLength(0)
     expect(wrapper.find('.is-left').hostNodes()).toHaveLength(1)
   })
+
+  test('renders buttons with no tabIndex by default', () => {
+    const wrapper = mount(<Form onCancel={() => {}} onDestroy={() => {}} />)
+    ;['cancel', 'delete', 'save'].forEach(action =>
+      expect(getAttribute(wrapper, `.${action}-button`, 'tabIndex')).toBeNull()
+    )
+  })
+
+  test('renders buttons with negative tabIndex when actionFocusable is false', () => {
+    const wrapper = mount(
+      <Form actionTabbable={false} onCancel={() => {}} onDestroy={() => {}} />
+    )
+    ;['cancel', 'delete', 'save'].forEach(action =>
+      expect(getAttribute(wrapper, `.${action}-button`, 'tabIndex')).toEqual(
+        '-1'
+      )
+    )
+  })
 })
+
+function getAttribute(wrapper, selector, attribute) {
+  return findDOMNode(wrapper.instance())
+    .querySelector(selector)
+    .getAttribute(attribute)
+}

@@ -41,6 +41,7 @@ const RouteWrapper = WrappedComponent => {
       if (!to || !history) return
 
       // Allow ctrl + clicks + non-left-clicks to function normally
+      /* istanbul ignore next */
       if (isModifierKeyPressed(event) || event.button) {
         return
       }

@@ -7,6 +7,7 @@ export class Form extends React.PureComponent {
   static Actions = Actions
 
   static defaultProps = {
+    actionTabbable: true,
     cancelText: 'Cancel',
     destroyText: 'Delete',
     onSave: evt => {
@@ -18,6 +19,7 @@ export class Form extends React.PureComponent {
   render() {
     const {
       actionDirection,
+      actionTabbable,
       cancelText,
       children,
       className,
@@ -29,6 +31,7 @@ export class Form extends React.PureComponent {
     } = this.props
 
     const componentClassName = classNames('c-Form', className)
+    const commonButtonProps = actionTabbable ? {} : { tabIndex: -1 }
 
     const saveButton = (
       <Button
@@ -37,6 +40,7 @@ export class Form extends React.PureComponent {
         size="lg"
         version={2}
         submit={true}
+        {...commonButtonProps}
       >
         {saveText}
       </Button>
@@ -48,6 +52,7 @@ export class Form extends React.PureComponent {
         size="md"
         version={2}
         onClick={onCancel}
+        {...commonButtonProps}
       >
         {cancelText}
       </Button>
@@ -60,6 +65,7 @@ export class Form extends React.PureComponent {
         size="md"
         version={2}
         onClick={onDestroy}
+        {...commonButtonProps}
       >
         {destroyText}
       </Button>

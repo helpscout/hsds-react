@@ -1,4 +1,3 @@
-import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
 export const FONT_FAMILY =
@@ -18,17 +17,14 @@ export default createGlobalStyle`
     --HSDSGlobalFontSize: ${props =>
       props.fontSize ? props.fontSize : BASE_FONT_SIZE}px;
   }
-  
-  *{
-    font-family: var(--HSDSGlobalFontFamily);
-    font-size: var(--HSDSGlobalFontSize);
-  }
 
-  .hsds-react{
+  ${props => (props.scope ? props.scope : '.hsds-react')} {
     box-sizing: border-box;
 
     *, *::before, *::after {
       box-sizing: border-box;
+      font-family: var(--HSDSGlobalFontFamily);
+      font-size: var(--HSDSGlobalFontSize);
     }
   }
 `

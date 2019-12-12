@@ -30,7 +30,8 @@ module.exports = {
     '!src/vendors/**/*.{js,jsx}',
     '!src/components/index.js',
     '!src/components/Animate/animations/**/*',
-    '!src/components/GlobalStyle/**/*',
+    '!src/components/HSDS/**/*',
+    '!src/components/ScopeProvider/**/*',
   ],
   coverageDirectory: 'coverage/',
   coverageThreshold: {

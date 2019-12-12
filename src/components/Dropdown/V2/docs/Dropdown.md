@@ -47,6 +47,7 @@ This component supports async rendering of items. Render the `Dropdown` as you w
 | cardBorderColor           | `string`                 |              | Customize the Dropdown Card border color.                                                                    |
 | clearOnSelect             | `boolean`                | `true`       | Removes selected item on select.                                                                             |
 | closeOnSelect             | `boolean`                | `true`       | Closes Dropdown on select.                                                                                   |
+| contentWindow             | `window/object`          | `window`     | Custom window object (e.g. iframe window object)                                                             |
 | children                  | `Function`               |              | Render prop to customize the Dropdown contents.                                                              |
 | direction                 | `string`                 | `right`      | Preferred horizontal drop direction for the menu.                                                            |
 | disabled                  | `bool`                   | `false`      | Disable the dropdown trigger so it can't be clicked.                                                         |

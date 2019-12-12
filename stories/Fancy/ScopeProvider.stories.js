@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { ScopeProvider, ThemeProvider } from '../../src/components/styled'
 
-const stories = storiesOf('Fancy/ScopeProvider', module)
+const stories = storiesOf('ScopeProvider', module)
 
 const Card = styled('div')`
   padding: 20px;
