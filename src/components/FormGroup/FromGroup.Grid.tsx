@@ -11,6 +11,8 @@ type Props = {
 }
 
 class Grid extends React.PureComponent<Props> {
+  static displayName = 'FormGroupGrid'
+
   render() {
     const { className, children, ...rest } = this.props
 

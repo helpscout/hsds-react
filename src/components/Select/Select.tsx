@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import Backdrop from '../Input/Input.BackdropV2'
@@ -10,11 +9,9 @@ import Tooltip from '../Tooltip'
 import Arrows from './Select.Arrows'
 import { STATES } from '../../constants'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Select.utils'
 import { InputWrapperUI } from '../Input/styles/Input.css'
 import {
   SelectUI,
@@ -22,7 +19,7 @@ import {
   InlinePrefixSuffixUI,
   ItemUI,
 } from './styles/Select.css'
-import { SelectProps, SelectState, SelectEvent } from './Select.types'
+import { SelectProps, SelectState } from './Select.types'
 
 const PLACEHOLDER_VALUE = '__placeholder__'
 const uniqueID = createUniqueIDFactory('Select')
@@ -417,6 +414,4 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Select)
-
-export default propConnect(COMPONENT_KEY)(Select)
+export default Select

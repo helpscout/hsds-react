@@ -27,6 +27,4 @@ class Provider extends ThemeProvider<MessageProviderProps> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Provider)(Provider)
-
 export default Provider

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Flexy from '../Flexy'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
@@ -15,7 +14,6 @@ import {
   IconWrapperUI,
   TextUI,
 } from './styles/Tag.css'
-import { COMPONENT_KEY } from './Tag.utils'
 
 type TagColor =
   | 'blue'
@@ -170,7 +168,7 @@ export class Tag extends React.PureComponent<Props, State> {
   renderChildren() {
     const { children, value } = this.props
 
-    return value || (children || null)
+    return value || children || null
   }
 
   render() {
@@ -221,6 +219,4 @@ export class Tag extends React.PureComponent<Props, State> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Tag)
-
-export default PropConnectedComponent
+export default Tag

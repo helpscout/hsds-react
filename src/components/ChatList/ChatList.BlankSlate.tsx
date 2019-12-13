@@ -3,8 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Hr from '../Hr'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './ChatList.utils'
+
 import {
   BlankSlateUI,
   SpeechBubbleIlloUI,
@@ -19,6 +18,8 @@ type Props = {
 export const defaultMessage = "You're all caught-up"
 
 class BlankSlate extends React.PureComponent<Props> {
+  static displayName = 'ChatListBlankSlate'
+
   render() {
     const { className, children, ...rest } = this.props
 
@@ -40,7 +41,5 @@ class BlankSlate extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.BlankSlate)(BlankSlate)
 
 export default BlankSlate

@@ -1,10 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Pagination.utils'
 import pluralize from '../../utilities/pluralize'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
@@ -255,7 +252,4 @@ export class Pagination extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Pagination)
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Pagination)
-
-export default PropConnectedComponent
+export default Pagination

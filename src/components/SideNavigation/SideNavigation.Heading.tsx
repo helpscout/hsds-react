@@ -1,15 +1,14 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './SideNavigation.utils'
 import { SideNavigationHeadingProps } from './SideNavigation.types'
-import { propConnect } from '../PropProvider'
 import Heading from '../Heading'
 
 export class SideNavigationHeading extends React.PureComponent<
   SideNavigationHeadingProps
 > {
   static defaultProps = {}
+  static displayName = 'SideNavigation.Heading'
 
   render() {
     const { children, className } = this.props
@@ -32,4 +31,4 @@ export class SideNavigationHeading extends React.PureComponent<
   }
 }
 
-export default propConnect(COMPONENT_KEY.Heading)(SideNavigationHeading)
+export default SideNavigationHeading

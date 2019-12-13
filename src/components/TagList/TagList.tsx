@@ -1,6 +1,5 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
 import PropProvider from '../PropProvider'
@@ -8,7 +7,6 @@ import { classNames } from '../../utilities/classNames'
 import { isComponentNamed } from '../../utilities/component'
 import { noop, promiseNoop } from '../../utilities/other'
 import { TagListUI, ClearAllUI } from './styles/TagList.css'
-import { COMPONENT_KEY } from './TagList.utils'
 import { COMPONENT_KEY as TAG } from '../Tag/Tag.utils'
 
 export interface Props {
@@ -100,6 +98,4 @@ export class TagList extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(TagList)
-
-export default PropConnectedComponent
+export default TagList

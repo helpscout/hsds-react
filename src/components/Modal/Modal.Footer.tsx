@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Modal.utils'
 import { FooterUI } from './styles/Modal.Footer.css'
 import { ModalFooterProps } from './Modal.types'
 
 class Footer extends React.PureComponent<ModalFooterProps> {
+  static displayName = 'Modal.Footer'
   static defaultProps = {
     seamless: false,
     shadow: false,
@@ -24,7 +23,5 @@ class Footer extends React.PureComponent<ModalFooterProps> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Footer)(Footer)
 
 export default Footer

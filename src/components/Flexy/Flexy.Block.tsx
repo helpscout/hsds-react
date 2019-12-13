@@ -1,8 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Flexy.utils'
 import { BlockUI } from './styles/Flexy.Block.css'
 
 export interface Props {
@@ -11,6 +9,7 @@ export interface Props {
 }
 
 class Block extends React.PureComponent<Props> {
+  static displayName = 'FlexyBlock'
   render() {
     const { children, className, ...rest } = this.props
 

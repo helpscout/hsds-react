@@ -1,12 +1,10 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Emoticon from '../Emoticon'
 import { EmoticonName, EmoticonSize } from '../Emoticon/Emoticon.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { RateActionUI } from './styles/RateAction.css'
-import { COMPONENT_KEY } from './RateAction.utils'
 
 export interface Props {
   className?: string
@@ -106,6 +104,4 @@ export class RateAction extends React.PureComponent<Props, State> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(RateAction)
-
-export default PropConnectedComponent
+export default RateAction

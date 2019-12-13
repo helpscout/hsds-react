@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import Icon from '../Icon'
 import { ButtonWrapperUI, ButtonUI } from './styles/Condition.css'
 import { classNames } from '../../utilities/classNames'
@@ -7,7 +6,6 @@ import { isNodeWithinViewport } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 import { ConditionAddButtonProps } from './Condition.types'
-import { COMPONENT_KEY } from './Condition.utils'
 
 class AddButton extends React.PureComponent<ConditionAddButtonProps> {
   static defaultProps = {
@@ -17,6 +15,8 @@ class AddButton extends React.PureComponent<ConditionAddButtonProps> {
     scrollOffset: 200,
     type: 'or',
   }
+
+  static displayName = 'ConditionAddButton'
 
   static className = 'c-ConditionAddButton'
 
@@ -92,6 +92,4 @@ class AddButton extends React.PureComponent<ConditionAddButtonProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.AddButton)(AddButton)
-
-export default PropConnectedComponent
+export default AddButton

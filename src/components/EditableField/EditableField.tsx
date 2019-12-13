@@ -19,11 +19,9 @@ import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
 import Icon from '../Icon'
 
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import {
-  EF_COMPONENT_KEY,
   createNewValueFieldObject,
   generateFieldActions,
   normalizeFieldValue,
@@ -1139,6 +1137,4 @@ export class EditableField extends React.Component<
   }
 }
 
-const PropConnectedComponent = propConnect(EF_COMPONENT_KEY)(EditableField)
-
-export default PropConnectedComponent
+export default EditableField

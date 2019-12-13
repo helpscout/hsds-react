@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Step from './Stepper.Step'
 import { classNames } from '../../utilities/classNames'
@@ -7,7 +6,6 @@ import { getComponentKey } from '../../utilities/component'
 import { isDefined } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { StepperUI, StepWrapperUI } from './styles/Stepper.css'
-import { COMPONENT_KEY } from './Stepper.utils'
 import { StepperStep } from './Stepper.types'
 
 export interface Props {
@@ -131,6 +129,4 @@ export class Stepper extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Stepper)
-
-export default PropConnectedComponent
+export default Stepper

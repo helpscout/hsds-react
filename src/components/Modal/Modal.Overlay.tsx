@@ -3,12 +3,11 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import BaseOverlay from '../Overlay'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Modal.utils'
 import { ModalOverlayProps } from './Modal.types'
 
 class Overlay extends React.PureComponent<ModalOverlayProps> {
+  static displayName = 'Modal.Overlay'
   static defaultProps = {
     onClick: noop,
     isOpen: true,
@@ -53,7 +52,5 @@ class Overlay extends React.PureComponent<ModalOverlayProps> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Overlay)(Overlay)
 
 export default Overlay

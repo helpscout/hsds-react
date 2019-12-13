@@ -2,7 +2,6 @@ import * as React from 'react'
 import { connect } from '@helpscout/wedux'
 import { initialState } from './Dropdown.store'
 import { DropdownProps } from './Dropdown.types'
-import propConnect from '../../PropProvider/propConnect'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
 import EventListener from '../../EventListener'
 import MenuContainer from './Dropdown.MenuContainer'
@@ -11,11 +10,7 @@ import VisuallyHidden from '../../VisuallyHidden'
 import { DropdownUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
-import {
-  namespaceComponent,
-  renderRenderPropComponent,
-} from '../../../utilities/component'
-import { COMPONENT_KEY } from './Dropdown.utils'
+import { renderRenderPropComponent } from '../../../utilities/component'
 
 export interface State {
   items: Array<any>
@@ -168,8 +163,6 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Dropdown)(Dropdown)
-
 const ConnectedDropdown: any = connect(
   // mapStateToProps
   (state: any) => {
@@ -190,7 +183,7 @@ const ConnectedDropdown: any = connect(
   }
 )(
   // @ts-ignore
-  PropConnectedComponent
+  Dropdown
 )
 
 export default ConnectedDropdown

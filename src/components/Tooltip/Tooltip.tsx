@@ -1,14 +1,12 @@
 import * as React from 'react'
 import { PopProps } from '../Pop/Pop.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Pop from '../Pop'
 import Popper from './Tooltip.Popper'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import { renderChildrenSafely } from '../../utilities/component'
-import { COMPONENT_KEY } from './Tooltip.utils'
 import { getColor } from '../../styles/utilities/color'
 
 export interface Props extends PopProps {
@@ -139,6 +137,4 @@ export class Tooltip extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Tooltip)
-
-export default PropConnectedComponent
+export default Tooltip

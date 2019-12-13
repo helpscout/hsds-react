@@ -4,14 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
 import List from '../List'
-import PropProvider, { propConnect } from '../PropProvider'
+import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import {
-  namespaceComponent,
-  isComponentNamed,
-  getComponentKey,
-} from '../../utilities/component'
-import { COMPONENT_KEY } from './AvatarList.utils'
+import { getComponentKey } from '../../utilities/component'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 export interface Props {
@@ -39,9 +34,7 @@ export class AvatarList extends React.PureComponent<Props> {
   }
 
   getAvatars = () => {
-    return React.Children.toArray(this.props.children).filter(child =>
-      isComponentNamed(child, AVATAR_KEY)
-    )
+    return React.Children.toArray(this.props.children).filter(child => true)
   }
 
   getTotalAvatarCount = () => {
@@ -164,6 +157,4 @@ export class AvatarList extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(AvatarList)
-
-export default propConnect(COMPONENT_KEY)(AvatarList)
+export default AvatarList

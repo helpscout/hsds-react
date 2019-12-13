@@ -1,11 +1,10 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
+
 import Button, { Props as ButtonPropsInterface } from '../Button/Button'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { IconButtonUI } from './styles/IconButton.css'
-import { COMPONENT_KEY } from './IconButton.utils'
 
 export interface Props extends ButtonPropsInterface {
   icon: string
@@ -80,6 +79,4 @@ export class IconButton extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(IconButton)
-
-export default PropConnectedComponent
+export default IconButton

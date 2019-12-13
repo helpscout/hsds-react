@@ -1,6 +1,5 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Page from './Page'
 import {
   ActionsUI,
@@ -10,7 +9,6 @@ import {
 } from './styles/Page.Actions.css'
 import StickyActions from './Page.StickyActions'
 import { PageActionsProps, PageActionsState } from './Page.types'
-import { COMPONENT_KEY } from './Page.utils'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
@@ -18,6 +16,7 @@ export class Actions extends React.PureComponent<
   PageActionsProps,
   PageActionsState
 > {
+  static displayName = 'Page.Actions'
   static className = 'c-PageActions'
 
   static defaultProps = {
@@ -144,4 +143,4 @@ export class Actions extends React.PureComponent<
   }
 }
 
-export default propConnect(COMPONENT_KEY.Actions)(Actions)
+export default Actions

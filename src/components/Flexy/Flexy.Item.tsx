@@ -13,6 +13,7 @@ class Item extends React.PureComponent<Props> {
   static defaultProps = {
     inline: false,
   }
+  static displayName = 'FlexyItem'
 
   render() {
     const { children, className, inline, ...rest } = this.props

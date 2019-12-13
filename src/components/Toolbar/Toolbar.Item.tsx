@@ -1,8 +1,6 @@
 import * as React from 'react'
 import Flexy from '../Flexy'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { ITEM_COMPONENT_KEY } from './Toolbar.utils'
 
 export interface Props {
   className?: string
@@ -10,6 +8,7 @@ export interface Props {
 }
 
 export class Item extends React.PureComponent<Props> {
+  static displayName = 'Toolbar.Item'
   static className = 'c-ToolbarItem'
 
   getClassName() {
@@ -33,6 +32,4 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(ITEM_COMPONENT_KEY)(Item)
-
-export default PropConnectedComponent
+export default Item

@@ -1,9 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { ContainerUI } from './styles/FluffyCard.Container.css'
-import { COMPONENT_KEY } from './FluffyCard.utils'
 
 type Props = {
   children?: any
@@ -11,6 +9,8 @@ type Props = {
 }
 
 class Container extends React.PureComponent<Props> {
+  static displayName = 'FluffyCardContainer'
+
   render() {
     const { children, className, ...rest } = this.props
 
@@ -23,7 +23,5 @@ class Container extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Container)(Container)
 
 export default Container

@@ -1,8 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './ChatInbox.utils'
 
 type Props = {
   children?: any
@@ -10,6 +8,8 @@ type Props = {
 }
 
 class Content extends React.Component<Props> {
+  static displayName = 'ChatInboxContent'
+
   render() {
     const { className, children, ...rest } = this.props
 
@@ -22,7 +22,5 @@ class Content extends React.Component<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Content)(Content)
 
 export default Content

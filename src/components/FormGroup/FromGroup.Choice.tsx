@@ -19,6 +19,8 @@ class Choice extends React.PureComponent<Props> {
     style: {},
   }
 
+  static displayName = 'FormGroupChoice'
+
   render() {
     const {
       className,

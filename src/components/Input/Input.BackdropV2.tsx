@@ -6,6 +6,8 @@ import { BackdropUI, FocusUI } from './styles/Input.BackdropV2.css'
 import { InputBackdropV2Props } from './Input.types'
 
 export class Backdrop extends React.PureComponent<InputBackdropV2Props> {
+  static displayName = 'InputBackdropV2'
+
   static defaultProps = {
     disabled: false,
     isFilled: false,

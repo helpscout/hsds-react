@@ -1,6 +1,5 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Flexy from '../Flexy'
 import Link from '../Link'
 import Icon from '../Icon'
@@ -10,7 +9,6 @@ import { memoize } from '../../utilities/memoize'
 import { noop } from '../../utilities/other'
 import { makeTitleUI } from './styles/Accordion.css'
 import { TitleProps } from './Accordion.types'
-import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
@@ -165,7 +163,7 @@ class Title extends React.Component<TitleProps> {
 }
 
 const remappedProps = (props, ownProps) => {
-  const remappedConnectedProps = mapConnectedPropsAsProps(props)
+  const remappedConnectedProps = props
   const isLink = ownProps.to || ownProps.href
   const isSeamless = isLink ? false : remappedConnectedProps.isSeamless
 
@@ -175,8 +173,4 @@ const remappedProps = (props, ownProps) => {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Title, {
-  mapConnectedPropsAsProps: remappedProps,
-})(Title)
-
-export default PropConnectedComponent
+export default Title

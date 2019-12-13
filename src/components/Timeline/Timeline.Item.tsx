@@ -13,6 +13,8 @@ type Props = {
 }
 
 class Item extends React.PureComponent<Props> {
+  static displayName = 'Timeline.Item'
+
   render() {
     const { children, className, timestamp, ...rest } = this.props
 

@@ -1,9 +1,7 @@
 import * as React from 'react'
 import { ListBorder, ListGenericProps } from './List.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY } from './List.utils'
 import { ItemUI } from './styles/List.css'
 
 export interface Props extends ListGenericProps {
@@ -12,6 +10,8 @@ export interface Props extends ListGenericProps {
 }
 
 export class Item extends React.PureComponent<Props> {
+  static displayName = 'ListItem'
+
   static defaultProps = {
     isListItem: false,
     role: 'listitem',
@@ -46,6 +46,4 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
-
-export default PropConnectedComponent
+export default Item

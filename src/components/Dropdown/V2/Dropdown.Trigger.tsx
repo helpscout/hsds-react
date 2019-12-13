@@ -2,13 +2,10 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
-import propConnect from '../../PropProvider/propConnect'
 import { TriggerUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
-import { namespaceComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
-import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   children?: any
@@ -123,8 +120,6 @@ export class Trigger extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedTrigger = propConnect(COMPONENT_KEY.Trigger)(Trigger)
-
 export const mapStateToProps = (state: any) => {
   const { isOpen, triggerId, triggerProps, triggerStyle } = state
 
@@ -141,7 +136,7 @@ const ConnectedTrigger: any = connect(
   }
 )(
   // @ts-ignore
-  PropConnectedTrigger
+  Trigger
 )
 
 export default ConnectedTrigger

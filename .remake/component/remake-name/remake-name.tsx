@@ -1,11 +1,9 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { <%= name %>Props } from './<%= name %>.types'
 import { <%= name %>UI } from './styles/<%= name %>.css'
-import { COMPONENT_KEY } from './<%= name %>.utils'
 
 export class <%= name %> extends React.PureComponent<<%= name %>Props> {
   static className = 'c-<%= name %>'
@@ -36,6 +34,4 @@ export class <%= name %> extends React.PureComponent<<%= name %>Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(<%= name %>)
-
-export default PropConnectedComponent
+export default <%= name %>

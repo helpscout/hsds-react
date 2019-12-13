@@ -2,10 +2,8 @@ import * as React from 'react'
 import { UIState } from '../../constants/types'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { LabelUI } from './styles/Label.css'
-import { COMPONENT_KEY } from './Label.utils'
 
 type Props = {
   className?: string
@@ -53,7 +51,5 @@ class Label extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(Label)
 
 export default Label

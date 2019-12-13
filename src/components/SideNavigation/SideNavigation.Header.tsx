@@ -2,15 +2,14 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './SideNavigation.utils'
 import { SideNavigationHeaderProps } from './SideNavigation.types'
-import { propConnect } from '../PropProvider'
 import FadeInOut from './SideNavigation.FadeInOut'
 import Heading from './SideNavigation.Heading'
 import { HeaderUI, BadgeUI, HeaderLinkUI } from './styles/SideNavigation.css'
 
 export class Header extends React.PureComponent<SideNavigationHeaderProps> {
   static defaultProps = {}
+  static displayName = 'SideNavigation.Header'
 
   getInitial() {
     const { badge, label = '' } = this.props
@@ -51,4 +50,4 @@ export class Header extends React.PureComponent<SideNavigationHeaderProps> {
   }
 }
 
-export default propConnect(COMPONENT_KEY.Header)(Header)
+export default Header

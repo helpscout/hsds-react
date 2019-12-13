@@ -157,6 +157,4 @@ class ChatSidebar extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(ChatSidebar)
-
 export default ChatSidebar

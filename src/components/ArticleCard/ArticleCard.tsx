@@ -1,11 +1,8 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { isString } from '../../utilities/is'
-import { COMPONENT_KEY } from './ArticleCard.utils'
 import {
   ArticleCardUI,
   ContentUI,
@@ -137,7 +134,4 @@ export class ArticleCard extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(ArticleCard)
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(ArticleCard)
-
-export default PropConnectedComponent
+export default ArticleCard

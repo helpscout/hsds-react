@@ -2,9 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import Avatar from '../Avatar'
-import AnimateGroup from '../AnimateGroup'
 import Animate from '../Animate'
-import propConnect from '../PropProvider/propConnect'
 import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { isComponentNamed, getComponentKey } from '../../utilities/component'
@@ -14,7 +12,6 @@ import {
   AvatarStackLayeringUI,
   ItemUI,
 } from './styles/AvatarStack.css'
-import { COMPONENT_KEY } from './AvatarStack.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 export interface Props {
@@ -270,6 +267,4 @@ export class AvatarStack extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(AvatarStack)
-
-export default PropConnectedComponent
+export default AvatarStack

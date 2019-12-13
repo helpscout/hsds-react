@@ -2,11 +2,9 @@ import * as React from 'react'
 import Block from './Toolbar.Block'
 import Item from './Toolbar.Item'
 import Shadow from './Toolbar.Shadow'
-import propConnect from '../PropProvider/propConnect'
 import { ToolbarPlacement, ToolbarSize, ToolbarTheme } from './Toolbar.types'
 import { classNames } from '../../utilities/classNames'
 import { WrapperUI, ToolbarUI } from './styles/Toolbar.css'
-import { COMPONENT_KEY } from './Toolbar.utils'
 
 export interface Props {
   className?: string
@@ -76,6 +74,4 @@ export class Toolbar extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Toolbar)
-
-export default PropConnectedComponent
+export default Toolbar

@@ -1,10 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { PopperUI } from './styles/Tooltip.css'
-import { POPPER_COMPONENT_KEY } from './Tooltip.utils'
 
 export interface Props {
   children: any
@@ -41,6 +39,4 @@ export class Popper extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(POPPER_COMPONENT_KEY)(Popper)
-
-export default PropConnectedComponent
+export default Popper

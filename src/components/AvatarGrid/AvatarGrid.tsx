@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
 

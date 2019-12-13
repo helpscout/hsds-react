@@ -13,8 +13,7 @@ import Text from '../Text'
 import Timestamp from '../Timestamp'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './ChatList.utils'
+
 import {
   ItemUI,
   BlockUI,
@@ -59,6 +58,8 @@ class Item extends React.Component<Props> {
     tags: [],
     timestampFormatter: timestamp => timestamp,
   }
+
+  static displayName = 'ChatListItem'
 
   render() {
     const {
@@ -230,7 +231,5 @@ class Item extends React.Component<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Item)(Item)
 
 export default Item

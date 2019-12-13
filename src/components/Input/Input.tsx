@@ -18,13 +18,11 @@ import Tooltip from '../Tooltip'
 import { STATES } from '../../constants'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isModifierKeyPressed } from '../../utilities/keys'
 import { isDefined } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import {
-  COMPONENT_KEY,
   getTextAreaLineCurrent,
   getTextAreaLineTotal,
   moveCursorToEnd,
@@ -813,7 +811,5 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Input)(Input)
 
 export default Input

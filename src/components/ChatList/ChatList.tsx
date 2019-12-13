@@ -1,11 +1,9 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import BlankSlate from './ChatList.BlankSlate'
 import Item from './ChatList.Item'
 import { ChatListUI } from './styles/ChatList.css'
-import { COMPONENT_KEY } from './ChatList.utils'
 
 type Props = {
   className?: string
@@ -34,7 +32,5 @@ class ChatList extends React.Component<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.ChatList)(ChatList)
 
 export default ChatList

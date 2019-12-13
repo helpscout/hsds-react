@@ -1,9 +1,6 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Overlay.utils'
 import { OverlayUI } from './styles/Overlay.css'
 
 type Props = {
@@ -41,6 +38,4 @@ class Overlay extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Overlay)
-
-export default propConnect(COMPONENT_KEY)(Overlay)
+export default Overlay

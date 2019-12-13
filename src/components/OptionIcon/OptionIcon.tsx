@@ -2,9 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { OptionIconUI } from './styles/OptionIcon.css'
-import { COMPONENT_KEY } from './OptionIcon.utils'
 
 type Props = {
   children?: any
@@ -34,7 +32,5 @@ class OptionIcon extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(OptionIcon)
 
 export default OptionIcon

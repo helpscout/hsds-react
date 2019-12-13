@@ -1,12 +1,11 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Input.utils'
 import { SuffixUI } from './styles/Input.css'
 import { InputSuffixProps } from './Input.types'
 
 class Suffix extends React.PureComponent<InputSuffixProps> {
+  static displayName = 'InputSuffix'
   static defaultProps = {
     isAction: false,
     isSeamless: false,
@@ -27,7 +26,5 @@ class Suffix extends React.PureComponent<InputSuffixProps> {
     return <SuffixUI {...getValidProps(rest)} className={componentClassName} />
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Suffix)(Suffix)
 
 export default Suffix

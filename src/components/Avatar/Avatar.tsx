@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import StatusDot from '../StatusDot'
 import Icon from '../Icon'
 
@@ -28,7 +27,7 @@ import {
   getCircleProps,
 } from './styles/Avatar.css'
 
-import { COMPONENT_KEY, getImageSrc } from './Avatar.utils'
+import { getImageSrc } from './Avatar.utils'
 
 export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
   static defaultProps = {
@@ -352,6 +351,4 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Avatar)
-
-export default PropConnectedComponent
+export default Avatar

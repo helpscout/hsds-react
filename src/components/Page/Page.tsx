@@ -1,6 +1,5 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Actions from './Page.Actions'
 import Card from './Page.Card'
 import Content from './Page.Content'
@@ -64,4 +63,4 @@ export class Page extends React.PureComponent<PageProps> {
   }
 }
 
-export default propConnect(COMPONENT_KEY.Page)(Page)
+export default Page

@@ -2,7 +2,6 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { ListBorder, ListGenericProps } from './List.types'
 import PropProvider from '../PropProvider/PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import Item from './List.Item'
 import { COMPONENT_KEY } from './List.utils'
@@ -76,6 +75,4 @@ export class List extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.List)(List)
-
-export default PropConnectedComponent
+export default List

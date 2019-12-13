@@ -1,12 +1,12 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Input.utils'
 import { PrefixUI } from './styles/Input.css'
 import { InputPrefixProps } from './Input.types'
 
 class Prefix extends React.PureComponent<InputPrefixProps> {
+  static displayName = 'InputPrefix'
+
   static defaultProps = {
     isSeamless: false,
   }
@@ -25,7 +25,5 @@ class Prefix extends React.PureComponent<InputPrefixProps> {
     return <PrefixUI {...getValidProps(rest)} className={componentClassName} />
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Prefix)(Prefix)
 
 export default Prefix

@@ -5,7 +5,6 @@ import { COMPONENT_KEY } from './SideNavigation.utils'
 import { SideNavigationDropdownHeaderProps } from './SideNavigation.types'
 
 import { createUniqueIDFactory } from '../../utilities/id'
-import { propConnect } from '../PropProvider'
 
 import Icon from '../Icon'
 import AutoDropdown from '../AutoDropdown/AutoDropdown'
@@ -18,6 +17,7 @@ const UNIQUE_ID = createUniqueIDFactory(COMPONENT_KEY.DropdownHeader)
 export class DropdownHeader extends React.PureComponent<
   SideNavigationDropdownHeaderProps
 > {
+  static displayName = 'SideNavigation.DropdownHeader'
   static defaultProps = {}
 
   id = UNIQUE_ID()
@@ -65,4 +65,4 @@ export class DropdownHeader extends React.PureComponent<
   }
 }
 
-export default propConnect(COMPONENT_KEY.DropdownHeader)(DropdownHeader)
+export default DropdownHeader

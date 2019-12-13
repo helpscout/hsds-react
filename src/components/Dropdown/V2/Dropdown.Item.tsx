@@ -1,7 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
-import propConnect from '../../PropProvider/propConnect'
 import Icon from '../../Icon'
 import Card from './Dropdown.Card'
 import Divider from './Dropdown.Divider'
@@ -17,12 +16,8 @@ import {
 import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
 import { setMenuPositionStyles } from './Dropdown.renderUtils'
 import { classNames } from '../../../utilities/classNames'
-import {
-  getComponentKey,
-  namespaceComponent,
-} from '../../../utilities/component'
+import { getComponentKey } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
-import { COMPONENT_KEY } from './Dropdown.utils'
 import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 
 export interface Props {
@@ -286,8 +281,6 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Item)(Item)
-
 const ConnectedItem: any = connect(
   // mapStateToProps
   (state: any) => {
@@ -302,7 +295,7 @@ const ConnectedItem: any = connect(
   }
 )(
   // @ts-ignore
-  PropConnectedComponent
+  Item
 )
 
 export default ConnectedItem

@@ -1,8 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { noop } from '../../utilities/other'
-import propConnect from '../PropProvider/propConnect'
-import { COMPONENT_KEY, handleWheelEvent } from './ScrollLock.utils'
+import { handleWheelEvent } from './ScrollLock.utils'
 
 export interface Props {
   children?: any
@@ -57,6 +56,4 @@ export class ScrollLock extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(ScrollLock)
-
-export default PropConnectedComponent
+export default ScrollLock

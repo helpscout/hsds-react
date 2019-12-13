@@ -18,6 +18,8 @@ const ENTITIES_TO_REPLACE = {
 const REPLACE_REGEX = /[\n&<>]/g
 
 export class Resizer extends React.PureComponent<InputResizerProps> {
+  static displayName = 'InputResizer'
+
   static defaultProps = {
     contents: '',
     currentHeight: null,

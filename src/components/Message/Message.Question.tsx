@@ -12,4 +12,6 @@ const Question = (props: Props) => {
   return <Chat primary title="Question:" {...rest} />
 }
 
+Question.displayName = 'MessageQuestion'
+
 export default Question

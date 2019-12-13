@@ -107,6 +107,4 @@ class FormLabel extends React.Component<Props, State> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(FormLabel)
-
 export default FormLabel

@@ -1,17 +1,16 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
-import { COMPONENT_KEY } from './Page.utils'
 import { classNames } from '../../utilities/classNames'
 import { SectionUI } from './styles/Page.Section.css'
 import { PageSectionProps } from './Page.types'
 
 export class Section extends React.PureComponent<PageSectionProps> {
+  static displayName = 'Page.Section'
   static defaultProps = {
     isResponsive: false,
   }
 
   render() {
-    const { children, className, isResponsive, ...rest } = this.props
+    const { children, className, isResponsive } = this.props
 
     const componentClassName = classNames(
       'c-PageSection',
@@ -19,12 +18,8 @@ export class Section extends React.PureComponent<PageSectionProps> {
       className
     )
 
-    return (
-      <SectionUI className={componentClassName}>
-        {this.props.children}
-      </SectionUI>
-    )
+    return <SectionUI className={componentClassName}>{children}</SectionUI>
   }
 }
 
-export default propConnect(COMPONENT_KEY.Section)(Section)
+export default Section

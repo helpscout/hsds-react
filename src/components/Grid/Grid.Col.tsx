@@ -1,12 +1,12 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames, variantClassNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Grid.utils'
 import { ColUI } from './styles/Grid.Col.css'
 import { GridColProps } from './Grid.types'
 
 class Col extends React.PureComponent<GridColProps> {
+  static displayName = 'GridCol'
+
   render() {
     const { className, children, size, ...rest } = this.props
 
@@ -20,7 +20,5 @@ class Col extends React.PureComponent<GridColProps> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Col)(Col)
 
 export default Col

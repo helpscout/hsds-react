@@ -1,13 +1,10 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
-import propConnect from '../../PropProvider/propConnect'
 import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
-import { namespaceComponent } from '../../../utilities/component'
-import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   className?: string
@@ -100,9 +97,6 @@ export class Menu extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY.Menu)(Menu)
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Menu)(Menu)
-
 const ConnectedMenu: any = connect(
   // mapStateToProps
   (state: any) => {
@@ -115,7 +109,7 @@ const ConnectedMenu: any = connect(
   }
 )(
   // @ts-ignore
-  PropConnectedComponent
+  Menu
 )
 
 export default ConnectedMenu

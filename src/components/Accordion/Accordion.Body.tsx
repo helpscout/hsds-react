@@ -1,12 +1,10 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Collapsible from '../Collapsible'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { BodyUI } from './styles/Accordion.css'
 import { BodyProps } from './Accordion.types'
-import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Body',
@@ -58,6 +56,8 @@ export class Body extends React.Component<BodyProps> {
     onClose: noop,
   }
 
+  static displayName = 'AccordionBody'
+
   // This method is difficult to test through this component in enzyme
   // but tests for the Collapsible component should cover this.
   handleOnOpen = () => {
@@ -93,8 +93,4 @@ export class Body extends React.Component<BodyProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Body, {
-  mapConnectedPropsAsProps,
-})(Body)
-
-export default PropConnectedComponent
+export default Body

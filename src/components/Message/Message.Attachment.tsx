@@ -100,4 +100,6 @@ Attachment.contextTypes = {
   theme: noop,
 }
 
+Attachment.displayName = 'MessageAttachment'
+
 export default Attachment

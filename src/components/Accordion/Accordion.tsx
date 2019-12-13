@@ -2,7 +2,6 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { AccordionProps, AccordionState } from './Accordion.types'
 import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import Body from './Accordion.Body'
 import Section from './Accordion.Section'
 import Link from './Accordion.Link'
@@ -169,6 +168,4 @@ export class Accordion extends React.PureComponent<
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Accordion)(Accordion)
-
-export default PropConnectedComponent
+export default Accordion

@@ -2,13 +2,13 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './SideNavigation.utils'
 import { SideNavigationSectionProps } from './SideNavigation.types'
-import { propConnect } from '../PropProvider'
 import { SectionUI, SectionHeadingUI } from './styles/SideNavigation.css'
 import FadeInOut from './SideNavigation.FadeInOut'
 
 export class Section extends React.PureComponent<SideNavigationSectionProps> {
+  static displayName = 'SideNavigation.Section'
+
   static defaultProps = {
     withPadding: false,
   }
@@ -35,4 +35,4 @@ export class Section extends React.PureComponent<SideNavigationSectionProps> {
   }
 }
 
-export default propConnect(COMPONENT_KEY.Section)(Section)
+export default Section

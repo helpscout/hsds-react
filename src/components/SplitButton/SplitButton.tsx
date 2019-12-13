@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import AutoDropDown from '../AutoDropdown'
@@ -8,7 +7,6 @@ import ControlGroup from '../ControlGroup'
 import Icon from '../Icon'
 
 import { OptionsTriggerButtonUI } from './styles/SplitButton.css'
-import { COMPONENT_KEY } from './SplitButton.utils'
 
 export interface Props {
   buttonRef?: (ref: any) => void
@@ -105,6 +103,4 @@ export class SplitButton extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(SplitButton)
-
-export default PropConnectedComponent
+export default SplitButton

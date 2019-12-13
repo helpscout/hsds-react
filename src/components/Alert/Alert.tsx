@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { UIStatus } from '../../constants/types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
+
 import Badge from '../Badge'
 import Animate from '../Animate'
 import Collapsible from '../Collapsible'
@@ -9,7 +9,7 @@ import CloseButton from '../CloseButton'
 import Icon from '../Icon'
 import classNames from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Alert.utils'
+
 import {
   AlertUI,
   BadgeWrapperUI,
@@ -155,6 +155,4 @@ export class Alert extends React.PureComponent<Props, State> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Alert)
-
-export default PropConnectedComponent
+export default Alert

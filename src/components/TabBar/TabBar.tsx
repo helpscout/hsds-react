@@ -1,12 +1,10 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Nav from '../Nav'
 import Toolbar from '../Toolbar'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { TabBarUI, SecContentUI, ToolbarUI } from './styles/TabBar.css'
-import { COMPONENT_KEY } from './TabBar.utils'
 
 export interface Props {
   className?: string
@@ -53,8 +51,4 @@ export class TabBar extends React.Component<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY, { pure: false })(
-  TabBar
-)
-
-export default PropConnectedComponent
+export default TabBar

@@ -3,10 +3,8 @@
 
 import * as React from 'react'
 import Route from '../Route'
-import propConnect from '../PropProvider/propConnect'
 import Link from '../Link'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY } from './NavLink.utils'
 
 export const NavLink = ({
   'aria-current': ariaCurrent,
@@ -59,7 +57,7 @@ export const NavLink = ({
     />
   )
 }
-
+NavLink.displayName = 'Nav.Link'
 NavLink.className = 'c-NavLink'
 NavLink.defaultProps = {
   'aria-current': 'page',
@@ -68,8 +66,4 @@ NavLink.defaultProps = {
   style: {},
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY, { pure: false })(
-  NavLink
-)
-
-export default PropConnectedComponent
+export default NavLink

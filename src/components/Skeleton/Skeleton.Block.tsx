@@ -1,11 +1,11 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Skeleton.utils'
 import { BlockUI } from './styles/Skeleton.Block.css'
 
 class Block extends React.PureComponent<any> {
+  static displayName = 'Skeleton.Block'
+
   static defaultProps = {
     withAnimations: true,
   }
@@ -28,7 +28,5 @@ class Block extends React.PureComponent<any> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Block)(Block)
 
 export default Block

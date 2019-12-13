@@ -1,9 +1,6 @@
 import * as React from 'react'
 import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import AddButton from './ConditionField.AddButton'
-import Operator from '../Condition/Condition.Operator'
-import { getComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { ConditionFieldGroupProps } from './ConditionField.types'
 import { COMPONENT_KEY } from './ConditionField.utils'
@@ -13,6 +10,8 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
     isAddEnabled: true,
     onAdd: noop,
   }
+
+  static displayName = 'ConditionGroup'
 
   renderFields() {
     const { children } = this.props
@@ -48,6 +47,4 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Group)(Group)
-
-export default PropConnectedComponent
+export default Group

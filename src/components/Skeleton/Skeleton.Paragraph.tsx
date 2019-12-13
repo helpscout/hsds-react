@@ -2,10 +2,10 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from './Skeleton.Text'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Skeleton.utils'
 
 class Paragraph extends React.PureComponent<any> {
+  static displayName = 'Skeleton.Paragraph'
+
   render() {
     const { className, withAnimations, ...rest } = this.props
 
@@ -21,7 +21,5 @@ class Paragraph extends React.PureComponent<any> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Paragraph)(Paragraph)
 
 export default Paragraph

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import AutoDropdown from '../AutoDropdown'
 import Icon from '../Icon'
 import Text from '../Text'
@@ -7,7 +6,6 @@ import SelectArrows from '../Select/Select.Arrows'
 import Tooltip from '../Tooltip'
 import { initialState } from '../Dropdown/V2/Dropdown.store'
 import { itemIsActive } from '../Dropdown/V2/Dropdown.utils'
-import { COMPONENT_KEY } from './SelectDropdown.utils'
 import { find } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -196,6 +194,4 @@ export class SelectDropdown extends React.PureComponent<
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(SelectDropdown)
-
-export default PropConnectedComponent
+export default SelectDropdown

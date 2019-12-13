@@ -1,9 +1,7 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY } from './ConditionField.utils'
 import { AddButtonContentUI } from './styles/ConditionField.css'
 
 export const AddButton = props => {
@@ -77,8 +75,6 @@ const AnimatedComponent = withMotion({
   },
 })(AddButton)
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.AddButton)(
-  AnimatedComponent
-)
+AnimatedComponent.displayName = 'ConditionAddButton'
 
-export default PropConnectedComponent
+export default AnimatedComponent

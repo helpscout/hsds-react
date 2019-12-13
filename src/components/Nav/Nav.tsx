@@ -1,11 +1,9 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Nav.Item'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { NavUI, ListUI } from './styles/Nav.css'
-import { COMPONENT_KEY } from './Nav.utils'
 
 export interface Props {
   className?: string
@@ -41,6 +39,4 @@ export class Nav extends React.Component<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY, { pure: false })(Nav)
-
-export default PropConnectedComponent
+export default Nav

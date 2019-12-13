@@ -1,11 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../../PropProvider/propConnect'
 import { classNames } from '../../../utilities/classNames'
 import { DividerUI } from './Dropdown.css'
-import { namespaceComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
-import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface Props {
   className?: string
@@ -33,6 +30,4 @@ export class Divider extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Divider)(Divider)
-
-export default PropConnectedComponent
+export default Divider

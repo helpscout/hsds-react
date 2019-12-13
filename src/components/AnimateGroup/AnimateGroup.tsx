@@ -2,10 +2,8 @@ import * as React from 'react'
 import { TransitionGroup } from 'react-transition-group'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
-import { COMPONENT_KEY } from './AnimateGroup.utils'
 
 export interface Props {
   appear?: any
@@ -115,6 +113,4 @@ export class AnimateGroup extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(AnimateGroup)
-
-export default PropConnectedComponent
+export default AnimateGroup

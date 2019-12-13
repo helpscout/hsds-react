@@ -1,5 +1,5 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
+
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Button from './MessageCard.Button'
 import { classNames } from '../../utilities/classNames'
@@ -12,7 +12,7 @@ import {
   BodyUI,
   ActionUI,
 } from './styles/MessageCard.css'
-import { COMPONENT_KEY } from './MessageCard.utils'
+
 import Truncate from '../Truncate'
 
 export interface Props {
@@ -146,6 +146,4 @@ export class MessageCard extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(MessageCard)
-
-export default PropConnectedComponent
+export default MessageCard

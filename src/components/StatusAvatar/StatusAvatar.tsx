@@ -1,10 +1,7 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import Avatar from '../Avatar'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './StatusAvatar.utils'
 
 type Props = {
   className?: string
@@ -47,6 +44,4 @@ class StatusAvatar extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(StatusAvatar)
-
-export default propConnect(COMPONENT_KEY)(StatusAvatar)
+export default StatusAvatar

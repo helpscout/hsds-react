@@ -1,12 +1,10 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed, namespaceComponent } from '../../utilities/component'
+import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY as NOTIFICATION } from '../Notification/Notification.utils'
 import { NotificationStackUI } from './styles/NotificationStack.css'
-import { COMPONENT_KEY } from './NotificationStack.utils'
 
 export interface Props {
   autoDismiss: boolean
@@ -119,7 +117,4 @@ export class NotificationStack extends React.PureComponent<Props, State> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(NotificationStack)
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(NotificationStack)
-
-export default PropConnectedComponent
+export default NotificationStack

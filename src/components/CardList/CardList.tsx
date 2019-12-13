@@ -1,9 +1,7 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
 import { isComponentTypeCard, getComponentKey } from '../../utilities/component'
-import { COMPONENT_KEY } from './CardList.utils'
 import classNames from '../../utilities/classNames'
 
 export interface Props {
@@ -66,6 +64,4 @@ export class CardList extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(CardList)
-
-export default PropConnectedComponent
+export default CardList

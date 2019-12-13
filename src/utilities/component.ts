@@ -220,15 +220,3 @@ export const renderAsSingleChild = (
   // Render single child
   return React.Children.only(children)
 }
-
-export const unwrapNamespace = (namespace: string): string => {
-  if (!namespace) return namespace
-
-  const token = '*||*'
-  const matches = namespace
-    .replace(/\(|\)/g, token)
-    .split(token)
-    .filter(n => n)
-
-  return last(matches)
-}

@@ -11,6 +11,8 @@ export interface Props {
 }
 
 class Sidenav extends React.PureComponent<Props> {
+  static displayName = 'HsAppSidenav'
+
   static defaultProps = {
     footerItems: [],
     headerLabel: 'Help Scout',

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
@@ -44,6 +43,8 @@ export class Section extends React.Component<SectionProps> {
     sections: {},
     setOpen: noop,
   }
+
+  static displayName = 'AccordionSection'
 
   getId() {
     const { id, uuid } = this.props
@@ -93,10 +94,4 @@ export class Section extends React.Component<SectionProps> {
   }
 }
 
-export const SectionWithUuid = withUuid(nextUuid)(Section)
-
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Section)(
-  SectionWithUuid
-)
-
-export default PropConnectedComponent
+export default withUuid(nextUuid)(Section)

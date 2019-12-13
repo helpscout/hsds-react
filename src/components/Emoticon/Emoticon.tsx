@@ -1,12 +1,10 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import EMOTICONS from './Emoticon.icons'
 import { EmoticonName, EmoticonSize } from './Emoticon.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { EmoticonUI, FaceUI, IconUI } from './styles/Emoticon.css'
-import { COMPONENT_KEY } from './Emoticon.utils'
 
 export interface Props {
   className?: string
@@ -111,6 +109,4 @@ const Face = ({ isActive, isDisabled, ...rest }) => {
   return <FaceUI {...rest} className={className} />
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Emoticon)
-
-export default PropConnectedComponent
+export default Emoticon

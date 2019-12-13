@@ -1,12 +1,10 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Progress from './Stepper.Progress'
 import { StepUI, LineUI, CircleUI, GhostTitleUI } from './styles/Stepper.css'
-import { STEP_COMPONENT_KEY } from './Stepper.utils'
 import { StepperStep } from './Stepper.types'
 
 export interface Props extends StepperStep {
@@ -20,6 +18,8 @@ export interface Props extends StepperStep {
 }
 
 export class Step extends React.PureComponent<Props> {
+  static displayName = 'Stepper.Step'
+
   static className = 'c-StepperStep'
   static defaultProps = {
     isActive: false,
@@ -70,6 +70,4 @@ export class Step extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(STEP_COMPONENT_KEY)(Step)
-
-export default PropConnectedComponent
+export default Step

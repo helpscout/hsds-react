@@ -1,11 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { CloseButtonSize } from './CloseButton.types'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './CloseButton.utils'
 import { CloseButtonUI, IconUI } from './styles/CloseButton.css'
 
 export interface Props {
@@ -76,7 +73,4 @@ export class CloseButton extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(CloseButton)
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(CloseButton)
-
-export default PropConnectedComponent
+export default CloseButton

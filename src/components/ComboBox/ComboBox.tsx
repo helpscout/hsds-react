@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import Dropdown from '../Dropdown/DropdownV2'
 import { isItemsEmpty } from '../Dropdown/V2/Dropdown.utils'
 import { initialState } from '../Dropdown/V2/Dropdown.store'
@@ -7,12 +6,8 @@ import Keys from '../../constants/Keys'
 import Text from '../Text'
 import { noop } from '../../utilities/other'
 import { classNames } from '../../utilities/classNames'
-import {
-  namespaceComponent,
-  renderRenderPropComponent,
-} from '../../utilities/component'
+import { renderRenderPropComponent } from '../../utilities/component'
 import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './styles/ComboBox.css'
-import { COMPONENT_KEY } from './ComboBox.utils'
 import { ComboBoxProps, ComboBoxState } from './ComboBox.types'
 
 const defaultInputProps = {
@@ -345,7 +340,4 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(ComboBox)
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(ComboBox)
-
-export default PropConnectedComponent
+export default ComboBox

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Skeleton.utils'
 import { ImageUI } from './styles/Skeleton.Image.css'
 
 class Image extends React.PureComponent<any> {
+  static displayName = 'Skeleton.Image'
+
   render() {
     const { className, ...rest } = this.props
 
@@ -13,7 +13,5 @@ class Image extends React.PureComponent<any> {
     return <ImageUI {...rest} className={componentClassName} />
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Image)(Image)
 
 export default Image

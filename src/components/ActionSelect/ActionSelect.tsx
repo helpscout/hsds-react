@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import { getUniqueKeyFromItem } from '../Dropdown/V2/Dropdown.utils'
 import SelectDropdown from '../SelectDropdown'
 import ContentResizer from './ActionSelect.ContentResizer'
@@ -9,7 +8,6 @@ import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 import { noop } from '../../utilities/other'
 import { ActionSelectProps, ActionSelectState } from './ActionSelect.types'
 import { ActionSelectUI } from './styles/ActionSelect.css'
-import { COMPONENT_KEY } from './ActionSelect.utils'
 import { getColor } from '../../styles/utilities/color'
 
 export class ActionSelect extends React.PureComponent<
@@ -194,6 +192,4 @@ export class ActionSelect extends React.PureComponent<
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(ActionSelect)
-
-export default PropConnectedComponent
+export default ActionSelect

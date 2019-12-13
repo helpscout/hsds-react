@@ -1,10 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { HeaderUI, SubTitleUI, HeadingUI } from './styles/Page.Header.css'
-import { COMPONENT_KEY } from './Page.utils'
 import { PageHeaderProps } from './Page.types'
 
 const Title = props => {
@@ -32,6 +30,8 @@ const Subtitle = ({ children }) => (
 )
 
 export class Header extends React.PureComponent<PageHeaderProps> {
+  static displayName = 'Page.Header'
+
   static defaultProps = {
     isResponsive: false,
     title: 'Title',
@@ -74,4 +74,4 @@ export class Header extends React.PureComponent<PageHeaderProps> {
   }
 }
 
-export default propConnect(COMPONENT_KEY.Header)(Header)
+export default Header

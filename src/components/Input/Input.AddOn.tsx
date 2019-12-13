@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { AddOnUI } from './styles/Input.AddOn.css'
-import { COMPONENT_KEY } from './Input.utils'
 import { InputAddOnProps } from './Input.types'
 
 const AddOn = (props: InputAddOnProps) => {
@@ -29,6 +27,6 @@ AddOn.defaultProps = {
   isLast: false,
 }
 
-namespaceComponent(COMPONENT_KEY.AddOn)(AddOn)
+AddOn.displayName = 'InputAddOn'
 
 export default AddOn

@@ -1,12 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import {
-  isComponentTypeControl,
-  namespaceComponent,
-} from '../../utilities/component'
+import { isComponentTypeControl } from '../../utilities/component'
 import { ItemUI } from './styles/Item.css'
-import { COMPONENT_KEY } from './ControlGroup.utils'
 
 type Props = {
   className?: string
@@ -24,6 +20,7 @@ class Item extends React.PureComponent<Props> {
     isNotOnly: false,
     isLast: false,
   }
+  static displayName = 'ControlGroupItem'
 
   getChildrenMarkup = () => {
     const { children, isFirst, isNotOnly, isLast } = this.props
@@ -68,7 +65,5 @@ class Item extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Item)(Item)
 
 export default Item

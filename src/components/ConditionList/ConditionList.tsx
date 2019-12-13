@@ -1,13 +1,11 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import AddButton from './ConditionList.AddButton'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionListProps } from './ConditionList.types'
 import { ConditionListUI } from './styles/ConditionList.css'
-import { COMPONENT_KEY } from './ConditionList.utils'
 import { COMPONENT_KEY as CONDITION_COMPONENT_KEY } from '../Condition/Condition.utils'
 
 export class ConditionList extends React.Component<ConditionListProps> {
@@ -75,8 +73,4 @@ export class ConditionList extends React.Component<ConditionListProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.ConditionList)(
-  ConditionList
-)
-
-export default PropConnectedComponent
+export default ConditionList

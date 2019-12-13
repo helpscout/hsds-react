@@ -62,4 +62,6 @@ const Content = (props: Props) => {
   )
 }
 
+Content.displayName = 'MessageContent'
+
 export default Content

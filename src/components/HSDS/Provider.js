@@ -14,4 +14,6 @@ const Provider = props => {
   )
 }
 
+Provider.displayName = 'HSDSProvider'
+
 export default Provider

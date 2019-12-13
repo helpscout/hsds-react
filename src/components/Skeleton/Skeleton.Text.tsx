@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Skeleton.utils'
 import { TextUI } from './styles/Skeleton.Text.css'
 
 class Text extends React.PureComponent<any> {
+  static displayName = 'Skeleton.Text'
+
   static defaultProps = {
     heading: false,
     withAnimations: false,
@@ -37,7 +37,5 @@ class Text extends React.PureComponent<any> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Text)(Text)
 
 export default Text
