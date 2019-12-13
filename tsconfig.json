@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
     "declaration": true,
@@ -10,6 +10,7 @@
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
+    "noEmitOnError": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,

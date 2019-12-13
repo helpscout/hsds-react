@@ -1,9 +1,7 @@
 import * as React from 'react'
-import { includes, last } from './arrays'
+import getComponentNameUtil from '@helpscout/react-utils/dist/getComponentName'
+import { includes } from './arrays'
 import { isArray, isFunction, isObject, isDefined, isString } from './is'
-
-let REGISTERED_COMPONENTS = {}
-export const COMPONENT_NAMESPACE_KEY = '__BlueComponent__'
 
 export const CARD_TYPE = ['ArticleCard', 'Card']
 
@@ -46,51 +44,7 @@ export const isReactComponent = (Component: any) => {
  * @returns {string} The namespace value.
  */
 export const getComponentName = (Component: any): string => {
-  if (isReactComponent(Component)) {
-    return Component.type[COMPONENT_NAMESPACE_KEY]
-  }
-
-  return Component && Component[COMPONENT_NAMESPACE_KEY]
-}
-
-/**
- * Retrieves a list of namespace registered Blue components.
- *
- * @returns {Array<string>} The registered namespaces.
- */
-export const getRegisteredComponents = (): Array<string> =>
-  Object.keys(REGISTERED_COMPONENTS).filter(key => key)
-
-/**
- * Secretly reset internal namespace registry.
- */
-export const __clearRegisteredComponents = () => {
-  REGISTERED_COMPONENTS = {}
-}
-
-/**
- * Decorator (HOC) that sets the internal Blue component namespace/key.
- *
- * @param   {string} The namespace value.
- * @param   {React.Component} Component The component.
- * @returns {React.Component} The updated component.
- */
-export const namespaceComponent = (key: string) => (Component: any): any => {
-  /* istanbul ignore else */
-  if (Component) {
-    // Set the namespace.
-    Component[COMPONENT_NAMESPACE_KEY] = key
-    // Add to internal registry.
-    REGISTERED_COMPONENTS[key] = true
-    // Conveniently set the displayName too.
-    Component.displayName = key
-  }
-
-  return Component
-}
-
-export const isComponentNamespaced = (Component: any): boolean => {
-  return !!getComponentName(Component)
+  return getComponentNameUtil(Component)
 }
 
 /**
