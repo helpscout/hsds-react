@@ -198,14 +198,35 @@ stories.add('prefix', () => (
 
 stories.add('suffix', () => (
   <div>
-    <Input
-      suffix={
-        <Button version={2} kind="secondary" size="lg" isLast>
-          Suffix
-        </Button>
-      }
-      value="Input Suffix"
-    />
+    <p>
+      <Input
+        suffix={
+          <Button version={2} kind="secondary" size="lg" isLast>
+            Suffix
+          </Button>
+        }
+        value="Input Suffix"
+      />
+    </p>
+    <p>
+      <Input
+        errorMessage="This is incorrect!"
+        state="error"
+        suffix={
+          <Button
+            version={2}
+            size="lg"
+            kind="secondary"
+            isLast
+            state="danger"
+            disabled
+          >
+            Suffix
+          </Button>
+        }
+        value="Input Suffix"
+      />
+    </p>
   </div>
 ))
 

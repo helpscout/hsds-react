@@ -792,8 +792,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
               {this.getInlinePrefixMarkup()}
               {this.getInputMarkup(props)}
               {this.getInlineSuffixMarkup()}
-              {this.getSuffixMarkup()}
               {this.getErrorMarkup()}
+              {this.getSuffixMarkup()}
               {this.getActionMarkup()}
               <Backdrop
                 className="c-Input__backdrop"
