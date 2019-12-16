@@ -551,6 +551,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
             name={errorIcon}
             size={24}
             state={STATES.error}
+            tabIndex="0"
           />
         </Tooltip>
       </InlinePrefixSuffixUI>
