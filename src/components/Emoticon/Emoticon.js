@@ -1,28 +1,13 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import propConnect from '../PropProvider/propConnect'
-import EMOTICONS from './Emoticon.icons'
-import { EmoticonName, EmoticonSize } from './Emoticon.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { EmoticonUI, FaceUI, IconUI } from './styles/Emoticon.css'
-import { COMPONENT_KEY } from './Emoticon.utils'
+import { EmoticonUI, IconUI } from './Emoticon.css'
+import { COMPONENT_KEY, getName, getIcon } from './Emoticon.utils'
 
-export interface Props {
-  className?: string
-  center: boolean
-  clickable: boolean
-  isActive: boolean
-  isDisabled: boolean
-  innerRef: (node: HTMLElement) => void
-  inline: boolean
-  name: EmoticonName
-  title?: string
-  size?: EmoticonSize
-  withAnimation: boolean
-}
-
-export class Emoticon extends React.PureComponent<Props> {
+export class Emoticon extends React.PureComponent {
   static defaultProps = {
     center: false,
     clickable: true,
@@ -49,19 +34,17 @@ export class Emoticon extends React.PureComponent<Props> {
       inline,
       name,
       size,
-      withAnimation,
     } = this.props
 
     return classNames(
       Emoticon.className,
       !clickable && 'is-noInteract',
+      isActive && 'is-active',
       center && 'is-center',
       inline && 'is-inline',
-      isActive && 'is-active',
       isDisabled && 'is-disabled',
-      name && `is-${name}`,
+      name && `is-${getName(name)}`,
       size && `is-${size}`,
-      withAnimation && 'is-withAnimation',
       className
     )
   }
@@ -80,35 +63,47 @@ export class Emoticon extends React.PureComponent<Props> {
       size,
       ...rest
     } = this.props
-
-    const src = { __html: EMOTICONS[name] }
+    console.log('size', size)
+    const iconName = getName(name)
+    const icon = getIcon({ iconName, size, isActive })
+    const src = { __html: icon }
 
     return (
       <EmoticonUI
         {...getValidProps(rest)}
+        size={size}
         className={this.getClassNames()}
         innerRef={innerRef}
       >
-        <Face isActive={isActive} isDisabled={isDisabled}>
-          <IconUI
-            className="c-Emoticon__icon"
-            dangerouslySetInnerHTML={src}
-            title={title}
-          />
-        </Face>
+        <IconUI
+          className="c-Emoticon__icon"
+          dangerouslySetInnerHTML={src}
+          title={title}
+        />
       </EmoticonUI>
     )
   }
 }
 
-const Face = ({ isActive, isDisabled, ...rest }) => {
-  const className = classNames(
-    'c-Emoticon__face',
-    isActive && 'is-active',
-    isDisabled && 'is-disabled'
-  )
-
-  return <FaceUI {...rest} className={className} />
+Emoticon.propTypes = {
+  className: PropTypes.string,
+  center: PropTypes.bool,
+  clickable: PropTypes.bool,
+  isActive: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  innerRef: PropTypes.func,
+  inline: PropTypes.bool,
+  name: PropTypes.oneOf([
+    'happy',
+    'sad',
+    'meh',
+    'reaction-happy',
+    'reaction-sad',
+    'reaction-okay',
+  ]),
+  title: PropTypes.string,
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  withAnimation: PropTypes.bool,
 }
 
 const PropConnectedComponent = propConnect(COMPONENT_KEY)(Emoticon)

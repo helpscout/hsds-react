@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Emoticon } from '../Emoticon'
+import { Emoticon } from './Emoticon'
 
 describe('ClassName', () => {
   test('Has default className', () => {

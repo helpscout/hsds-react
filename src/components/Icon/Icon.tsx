@@ -6,8 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import css from './styles/Icon.css'
-import { COMPONENT_KEY, renameSVGIds } from './Icon.utils'
-import { svgSet } from './Icon.utils'
+import { COMPONENT_KEY, renameSVGIds, svgSet } from './Icon.utils'
 import { IconProps } from './Icon.types'
 
 const Icon = (props: IconProps) => {
