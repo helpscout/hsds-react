@@ -59,7 +59,15 @@ export class RateAction extends React.PureComponent {
   }
 
   render() {
-    const { disabled, innerRef, size, onBlur, onFocus, ...rest } = this.props
+    const {
+      name,
+      disabled,
+      innerRef,
+      size,
+      onBlur,
+      onFocus,
+      ...rest
+    } = this.props
 
     return (
       <RateActionUI
@@ -73,6 +81,7 @@ export class RateAction extends React.PureComponent {
         <Emoticon
           {...rest}
           size={size}
+          name={getName(name)}
           isActive={this.state.isActive}
           isDisabled={disabled}
         />

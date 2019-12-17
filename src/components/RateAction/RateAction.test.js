@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount, render } from 'enzyme'
-import { RateAction } from '../RateAction'
+import { RateAction } from './RateAction'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -57,7 +57,6 @@ describe('isActive', () => {
 
     wrapper.simulate('blur')
 
-    // @ts-ignore
     expect(wrapper.state().isActive).toBe(false)
   })
 
@@ -66,7 +65,6 @@ describe('isActive', () => {
 
     wrapper.simulate('focus')
 
-    // @ts-ignore
     expect(wrapper.state().isActive).toBe(true)
   })
 
@@ -75,7 +73,6 @@ describe('isActive', () => {
     wrapper.setState({ isActive: true })
     wrapper.setProps({ isActive: false })
 
-    // @ts-ignore
     expect(wrapper.state().isActive).toBe(false)
   })
 
@@ -84,17 +81,51 @@ describe('isActive', () => {
     wrapper.setState({ isActive: true })
     wrapper.setProps({ isActive: true })
 
-    // @ts-ignore
     expect(wrapper.state().isActive).toBe(true)
   })
 })
 
 describe('Emoticon', () => {
-  test('Renders the correct Emoticon, based on name', () => {
+  test('Renders the correct Emoticon, based on name (okay)', () => {
+    const wrapper = mount(<RateAction name="reaction-okay" />)
+    const comp = wrapper.find('Emoticon')
+
+    expect(comp.prop('name')).toBe('reaction-okay')
+  })
+
+  test('Renders the correct Emoticon, based on name (happy)', () => {
+    const wrapper = mount(<RateAction name="reaction-happy" />)
+    const comp = wrapper.find('Emoticon')
+
+    expect(comp.prop('name')).toBe('reaction-happy')
+  })
+
+  test('Renders the correct Emoticon, based on name (sad)', () => {
+    const wrapper = mount(<RateAction name="reaction-sad" />)
+    const comp = wrapper.find('Emoticon')
+
+    expect(comp.prop('name')).toBe('reaction-sad')
+  })
+
+  test('Renders the correct Emoticon, based on name (meh legacy)', () => {
     const wrapper = mount(<RateAction name="meh" />)
     const comp = wrapper.find('Emoticon')
 
-    expect(comp.prop('name')).toBe('meh')
+    expect(comp.prop('name')).toBe('reaction-okay')
+  })
+
+  test('Renders the correct Emoticon, based on name (happy legacy)', () => {
+    const wrapper = mount(<RateAction name="happy" />)
+    const comp = wrapper.find('Emoticon')
+
+    expect(comp.prop('name')).toBe('reaction-happy')
+  })
+
+  test('Renders the correct Emoticon, based on name (sad legacy)', () => {
+    const wrapper = mount(<RateAction name="sad" />)
+    const comp = wrapper.find('Emoticon')
+
+    expect(comp.prop('name')).toBe('reaction-sad')
   })
 
   test('Passes isActive state to Emoticon', () => {
@@ -109,12 +140,5 @@ describe('Emoticon', () => {
     const comp = wrapper.find('Emoticon')
 
     expect(comp.prop('isDisabled')).toBe(true)
-  })
-
-  test('Can disable Emoticon animation', () => {
-    const wrapper = mount(<RateAction withAnimation={false} />)
-    const comp = wrapper.find('Emoticon')
-
-    expect(comp.prop('withAnimation')).toBe(false)
   })
 })
