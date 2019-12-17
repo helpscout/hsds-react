@@ -1,41 +1,22 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Emoticon from '../Emoticon'
-import { EmoticonName, EmoticonSize } from '../Emoticon/Emoticon.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { RateActionUI } from './styles/RateAction.css'
-import { COMPONENT_KEY } from './RateAction.utils'
+import { RateActionUI } from './RateAction.css'
+import { getName } from '../Emoticon/Emoticon.utils'
 
-export interface Props {
-  className?: string
-  children?: any
-  disabled: boolean
-  isActive: boolean
-  innerRef: (node: HTMLElement) => void
-  onBlur: (...args: any[]) => void
-  onFocus: (...args: any[]) => void
-  name: EmoticonName
-  size: EmoticonSize
-  withAnimation: boolean
-}
-
-export interface State {
-  isActive: boolean
-}
-
-export class RateAction extends React.PureComponent<Props, State> {
+export class RateAction extends React.PureComponent {
   static className = 'c-RateAction'
   static defaultProps = {
     disabled: false,
     innerRef: noop,
     isActive: false,
-    name: 'happy',
+    name: 'reaction-happy',
     onBlur: noop,
     onFocus: noop,
-    size: 'md',
-    withAnimation: true,
+    size: 'lg',
   }
 
   state = {
@@ -71,21 +52,14 @@ export class RateAction extends React.PureComponent<Props, State> {
     return classNames(
       RateAction.className,
       isActive && `is-active`,
-      name && `is-${name}`,
+      name && `is-${getName(name)}`,
       size && `is-${size}`,
       className
     )
   }
 
   render() {
-    const {
-      children,
-      disabled,
-      innerRef,
-      onBlur,
-      onFocus,
-      ...rest
-    } = this.props
+    const { disabled, innerRef, size, onBlur, onFocus, ...rest } = this.props
 
     return (
       <RateActionUI
@@ -98,7 +72,7 @@ export class RateAction extends React.PureComponent<Props, State> {
       >
         <Emoticon
           {...rest}
-          size="lg"
+          size={size}
           isActive={this.state.isActive}
           isDisabled={disabled}
         />
@@ -107,6 +81,22 @@ export class RateAction extends React.PureComponent<Props, State> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(RateAction)
+RateAction.propTypes = {
+  className: PropTypes.string,
+  isActive: PropTypes.bool,
+  disabled: PropTypes.bool,
+  innerRef: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  name: PropTypes.oneOf([
+    'happy',
+    'sad',
+    'meh',
+    'reaction-happy',
+    'reaction-sad',
+    'reaction-okay',
+  ]),
+}
 
-export default PropConnectedComponent
+export default RateAction

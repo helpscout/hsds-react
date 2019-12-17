@@ -73,8 +73,8 @@ const REACTIONS_EMOTICONS = ['reaction-happy', 'reaction-okay', 'reaction-sad']
 
 stories.add('Reactions', () => (
   <div style={{ fontFamily: font }}>
-    <h4>Default</h4>
     <div style={{ margin: '0 0 35px' }}>
+      <h4>Default</h4>
       {REACTIONS_EMOTICONS.map(iconName => (
         <div style={{ margin: '0 0 15px' }}>
           <span>{iconName}: </span>
