@@ -23,7 +23,8 @@
         "svgo": {
           "plugins": [
             {
-              "removeViewBox": false
+              "removeViewBox": false,
+              "cleanupIDs": false
             }
           ]
         }

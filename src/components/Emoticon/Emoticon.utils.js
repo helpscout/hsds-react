@@ -20,12 +20,11 @@ export function getName(name) {
 
 /**
  * Generates the full icon name and returns the SVG icon based on name, size and active status
- * @param {Object} IconProps Object that contains the keys: 'iconName', 'size' and 'isActive'
+ * @param {string} emoticonName Desired emoticon
+ * @param {string} size Size of the emoticon, default 'md'
  *
  * @returns {string} Emoticon SVG string
  */
-export function getIcon({ iconName, size, isActive }) {
-  const fullName = `${iconName}-${isActive ? 'on' : 'off'}-${size}`
-  console.log('fullName', fullName)
-  return EMOTICONS[fullName]
+export function getIcon(emoticonName, size = 'md') {
+  return EMOTICONS[`${emoticonName}-${size}`]
 }

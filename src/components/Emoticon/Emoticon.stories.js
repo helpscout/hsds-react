@@ -67,39 +67,46 @@ class Play extends React.Component {
   }
 }
 stories.add('Default', () => <Play />)
-stories.add('All Variants', () => (
+
+const SIZES = ['lg', 'md', 'sm']
+const REACTIONS_EMOTICONS = ['reaction-happy', 'reaction-okay', 'reaction-sad']
+
+stories.add('Reactions', () => (
   <div style={{ fontFamily: font }}>
-    <div style={{ margin: '10px 0 25px' }}>
-      <h4>Sizes</h4>
-      <span style={{ marginLeft: '10px' }}>Large:</span>
-      <Emoticon size="lg" name="reaction-sad" />
-      <br />
-      <span style={{ marginLeft: '10px' }}>Medium:</span>
-      <Emoticon size="md" name="reaction-sad" />
-      <br />
-      <span style={{ marginLeft: '10px' }}>Small:</span>
-      <Emoticon size="sm" name="reaction-sad" />
+    <h4>Default</h4>
+    <div style={{ margin: '0 0 35px' }}>
+      {REACTIONS_EMOTICONS.map(iconName => (
+        <div style={{ margin: '0 0 15px' }}>
+          <span>{iconName}: </span>
+          {SIZES.map(size => (
+            <Emoticon size={size} name={iconName} inline />
+          ))}
+        </div>
+      ))}
     </div>
-    <div style={{ margin: '10px 0 25px' }}>
-      <h4>Active</h4>
-      <span style={{ marginLeft: '10px' }}>On:</span>
-      <Emoticon size="lg" name="reaction-sad" isActive />
-      <br />
-      <span style={{ marginLeft: '10px' }}>Off:</span>
-      <Emoticon size="lg" name="reaction-sad" isActive={false} />
-    </div>
-    <div style={{ margin: '10px 0 25px' }}>
-      <h4>"Unclickable"</h4>
-      <Emoticon size="lg" name="reaction-sad" clickable={false} />
-    </div>
-    <div style={{ margin: '10px 0 25px' }}>
+
+    <div style={{ margin: '0 0 35px' }}>
       <h4>Disabled</h4>
-      <Emoticon size="lg" name="reaction-sad" isDisabled />
+      {REACTIONS_EMOTICONS.map(iconName => (
+        <div style={{ margin: '0 0 15px' }}>
+          <span>{iconName}: </span>
+          {SIZES.map(size => (
+            <Emoticon size={size} name={iconName} isDisabled inline />
+          ))}
+        </div>
+      ))}
     </div>
-    <div style={{ margin: '10px 0 25px' }}>
-      <h4>Inline</h4>
-      <Emoticon size="lg" name="reaction-sad" inline />
-      <Emoticon size="lg" name="reaction-happy" inline />
+
+    <div style={{ margin: '0 0 35px' }}>
+      <h4>Inactive</h4>
+      {REACTIONS_EMOTICONS.map(iconName => (
+        <div style={{ margin: '0 0 15px' }}>
+          <span>{iconName}: </span>
+          {SIZES.map(size => (
+            <Emoticon size={size} name={iconName} isActive={false} inline />
+          ))}
+        </div>
+      ))}
     </div>
   </div>
 ))

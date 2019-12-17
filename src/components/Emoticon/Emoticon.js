@@ -18,7 +18,6 @@ export class Emoticon extends React.PureComponent {
     role: 'presentation',
     size: 'md',
     title: '',
-    withAnimation: true,
   }
 
   static className = 'c-Emoticon'
@@ -38,7 +37,7 @@ export class Emoticon extends React.PureComponent {
     return classNames(
       Emoticon.className,
       !clickable && 'is-noInteract',
-      isActive && 'is-active',
+      isActive ? 'is-active' : 'is-inactive',
       center && 'is-center',
       inline && 'is-inline',
       isDisabled && 'is-disabled',
@@ -62,9 +61,8 @@ export class Emoticon extends React.PureComponent {
       size,
       ...rest
     } = this.props
-    console.log('size', size)
     const iconName = getName(name)
-    const icon = getIcon({ iconName, size, isActive })
+    const icon = getIcon(iconName, size)
     const src = { __html: icon }
 
     return (
