@@ -98,6 +98,7 @@ export class RateAction extends React.PureComponent<Props, State> {
       >
         <Emoticon
           {...rest}
+          size="lg"
           isActive={this.state.isActive}
           isDisabled={disabled}
         />

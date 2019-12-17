@@ -33,6 +33,8 @@ const ICONS = {
 
   /**
    * New reactions emoticons
+   *
+   * Format: [emoticon-name (kebabcase)]-[active status: on, off]-[size: lg, md, sm]
    */
   'reaction-happy-on-lg': reactionHappyOnLarge,
   'reaction-happy-on-md': reactionHappyOnMedium,

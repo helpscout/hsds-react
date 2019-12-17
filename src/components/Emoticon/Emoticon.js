@@ -1,11 +1,10 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { EmoticonUI, IconUI } from './Emoticon.css'
-import { COMPONENT_KEY, getName, getIcon } from './Emoticon.utils'
+import { getName, getIcon } from './Emoticon.utils'
 
 export class Emoticon extends React.PureComponent {
   static defaultProps = {
@@ -103,9 +102,6 @@ Emoticon.propTypes = {
   ]),
   title: PropTypes.string,
   size: PropTypes.oneOf(['lg', 'md', 'sm']),
-  withAnimation: PropTypes.bool,
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Emoticon)
-
-export default PropConnectedComponent
+export default Emoticon

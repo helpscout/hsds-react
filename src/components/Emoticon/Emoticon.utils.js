@@ -1,7 +1,5 @@
 import EMOTICONS from './Emoticon.icons'
 
-export const COMPONENT_KEY = 'Emoticon'
-
 /**
  * Generates the correct emoticon name to support a couple of legacy names
  * @param {string} name The given emoticon name

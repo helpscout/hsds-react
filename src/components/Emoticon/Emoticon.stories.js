@@ -1,21 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Emoticon } from './Emoticon'
-import EMOTICONS from './Emoticon.icons'
 
-import { withKnobs, boolean, select } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
+const font =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
 const stories = storiesOf('Emoticon', module)
-stories.addDecorator(
-  withArtboard({
-    id: 'hsds-emoticon',
-    width: 100,
-    height: 100,
-    withCenterGuides: false,
-  })
-)
-stories.addDecorator(withKnobs)
+
 class Play extends React.Component {
   state = {
     size: 'lg',
@@ -24,7 +15,7 @@ class Play extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ fontFamily: font }}>
         <button
           onClick={() => {
             this.setState({ isActive: !this.state.isActive })
@@ -76,3 +67,39 @@ class Play extends React.Component {
   }
 }
 stories.add('Default', () => <Play />)
+stories.add('All Variants', () => (
+  <div style={{ fontFamily: font }}>
+    <div style={{ margin: '10px 0 25px' }}>
+      <h4>Sizes</h4>
+      <span style={{ marginLeft: '10px' }}>Large:</span>
+      <Emoticon size="lg" name="reaction-sad" />
+      <br />
+      <span style={{ marginLeft: '10px' }}>Medium:</span>
+      <Emoticon size="md" name="reaction-sad" />
+      <br />
+      <span style={{ marginLeft: '10px' }}>Small:</span>
+      <Emoticon size="sm" name="reaction-sad" />
+    </div>
+    <div style={{ margin: '10px 0 25px' }}>
+      <h4>Active</h4>
+      <span style={{ marginLeft: '10px' }}>On:</span>
+      <Emoticon size="lg" name="reaction-sad" isActive />
+      <br />
+      <span style={{ marginLeft: '10px' }}>Off:</span>
+      <Emoticon size="lg" name="reaction-sad" isActive={false} />
+    </div>
+    <div style={{ margin: '10px 0 25px' }}>
+      <h4>"Unclickable"</h4>
+      <Emoticon size="lg" name="reaction-sad" clickable={false} />
+    </div>
+    <div style={{ margin: '10px 0 25px' }}>
+      <h4>Disabled</h4>
+      <Emoticon size="lg" name="reaction-sad" isDisabled />
+    </div>
+    <div style={{ margin: '10px 0 25px' }}>
+      <h4>Inline</h4>
+      <Emoticon size="lg" name="reaction-sad" inline />
+      <Emoticon size="lg" name="reaction-happy" inline />
+    </div>
+  </div>
+))
