@@ -519,6 +519,79 @@ describe('Pop', () => {
     })
   })
 
+  describe('Keyboard accessibility', () => {
+    test('Fires onOpen/onClose on enter press for trigger on click', async () => {
+      const nonEvent = {
+        keyCode: 74,
+        preventDefault: () => {},
+        stopPropagation: () => {},
+      }
+      const toggleEvent = {
+        ...nonEvent,
+        keyCode: 13,
+      }
+      const spyOpen = jest.fn()
+      const spyClose = jest.fn()
+      const wrapper = shallow(
+        <Pop triggerOn="click" onOpen={spyOpen} onClose={spyClose}>
+          <Pop.Reference />
+        </Pop>
+      )
+      const el = wrapper.find(cx.node)
+
+      // Random key does not open closed pop
+      el.simulate('keyUp', nonEvent)
+      await timeout()
+      expect(spyOpen).not.toHaveBeenCalled()
+
+      // focus does not open closed pop
+      el.simulate('focus')
+      await timeout()
+      expect(spyOpen).not.toHaveBeenCalled()
+
+      // Enter key opens closed pop
+      el.simulate('keyUp', toggleEvent)
+      await timeout()
+      expect(spyOpen).toHaveBeenCalled()
+
+      // Random key does not close open pop
+      el.simulate('keyUp', nonEvent)
+      await timeout()
+      expect(spyClose).not.toHaveBeenCalled()
+
+      // Enter key closes open pop
+      el.simulate('keyUp', toggleEvent)
+      await timeout()
+      expect(spyClose).toHaveBeenCalled()
+    })
+
+    test('Fires onOpen/onClose on focus/blur for trigger on hover', async () => {
+      const spyOpen = jest.fn()
+      const spyClose = jest.fn()
+      const wrapper = shallow(
+        <Pop triggerOn="hover" onOpen={spyOpen} onClose={spyClose}>
+          <Pop.Reference />
+        </Pop>
+      )
+      const el = wrapper.find(cx.node)
+
+      // onClose does not get called when closed pop is blurred
+      el.simulate('blur')
+      await timeout()
+      expect(spyOpen).not.toHaveBeenCalled()
+
+      // focus opens closed pop
+      el.simulate('focus')
+      await timeout()
+      expect(spyOpen).toHaveBeenCalled()
+
+      // blur closes open pop
+      el.simulate('blur')
+      await timeout()
+      expect(spyClose).toHaveBeenCalled()
+    })
+  })
+
   describe('Closing mechanisms', () => {
     test('Closes on block click, if defined', async () => {
       const spy = jest.fn()
