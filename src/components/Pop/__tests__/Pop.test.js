@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Pop from '../Pop'
+import Keys from '../../../constants/Keys'
 
 jest.mock('../Pop.Portal', () => {
   const Portal = ({ children }) => <div>{children}</div>
@@ -522,13 +523,13 @@ describe('Pop', () => {
   describe('Keyboard accessibility', () => {
     test('Fires onOpen/onClose on enter press for trigger on click', async () => {
       const nonEvent = {
-        keyCode: 74,
+        keyCode: Keys.KEY_J,
         preventDefault: () => {},
         stopPropagation: () => {},
       }
       const toggleEvent = {
         ...nonEvent,
-        keyCode: 13,
+        keyCode: Keys.ENTER,
       }
       const spyOpen = jest.fn()
       const spyClose = jest.fn()

@@ -4,6 +4,7 @@ import Manager from './Manager'
 import Arrow from './Arrow'
 import Popper from './Popper'
 import Reference from './Reference'
+import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -116,7 +117,7 @@ class Pop extends React.Component<Props, State> {
   }
 
   handleKeyUp = event => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === Keys.ENTER) {
       this.handleClick(event)
     }
   }
