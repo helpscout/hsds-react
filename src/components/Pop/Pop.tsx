@@ -122,6 +122,8 @@ class Pop extends React.Component<Props, State> {
   }
 
   handleBlur = event => {
+    // Whether the Pop was opened by focus or enter press,
+    // it should be closed on blur.
     if (this.state.isOpen) {
       this.safeSetState({ isOpen: false }, () => {
         this.props.onClose(this)
@@ -130,7 +132,10 @@ class Pop extends React.Component<Props, State> {
   }
 
   handleFocus = event => {
-    if (this.shouldHandleFocus()) {
+    // We do not always want to open the Pop on focus,
+    // as sometimes other interaction may be required
+    // to open it.
+    if (this.shouldHandleFocus() && !this.state.isOpen) {
       this.toggleOpen(event)
     }
   }
