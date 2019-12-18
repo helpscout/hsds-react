@@ -74,7 +74,7 @@ stories.add('Default', () => {
     <PropProvider value={{ Popover: { zIndex: 10 } }}>
       <div style={{ padding: '20%', textAlign: 'center' }}>
         <Popover {...props}>
-          <div>Popover Trigger</div>
+          <div tabIndex="0">Popover Trigger</div>
         </Popover>
       </div>
     </PropProvider>
