@@ -27,36 +27,61 @@ stories.add('Default', () => {
 
 class Play extends React.Component {
   state = {
-    isHappyActive: false,
-    isOkayActive: false,
-    isSadActive: false,
+    activeReaction: null,
   }
 
   render() {
     return (
       <div>
+        <div style={{ margin: '0 0 20px' }}>
+          <select
+            onChange={e => {
+              this.setState({ activeReaction: e.target.value })
+            }}
+          >
+            <option value="" selected={this.state.activeReaction == null}>
+              Choose one...
+            </option>
+            <option
+              value="happy"
+              selected={this.state.activeReaction === 'happy'}
+            >
+              happy
+            </option>
+            <option
+              value="okay"
+              selected={this.state.activeReaction === 'okay'}
+            >
+              okay
+            </option>
+            <option value="sad" selected={this.state.activeReaction === 'sad'}>
+              sad
+            </option>
+          </select>
+        </div>
         <div>
           <RateAction
             name="reaction-happy"
-            isActive={this.state.isHappyActive}
+            style={{ margin: '0 15px 0 0' }}
+            isActive={this.state.activeReaction === 'happy'}
             onClick={() => {
-              this.setState({ isHappyActive: !this.state.isHappyActive })
+              this.setState({ activeReaction: 'happy' })
             }}
           />
           <RateAction
             name="reaction-okay"
-            size="md"
-            isActive={this.state.isOkayActive}
+            style={{ margin: '0 15px 0 0' }}
+            isActive={this.state.activeReaction === 'okay'}
             onClick={() => {
-              this.setState({ isOkayActive: !this.state.isOkayActive })
+              this.setState({ activeReaction: 'okay' })
             }}
           />
           <RateAction
             name="reaction-sad"
-            size="sm"
-            isActive={this.state.isSadActive}
+            style={{ margin: '0 15px 0 0' }}
+            isActive={this.state.activeReaction === 'sad'}
             onClick={() => {
-              this.setState({ isSadActive: !this.state.isSadActive })
+              this.setState({ activeReaction: 'sad' })
             }}
           />
         </div>

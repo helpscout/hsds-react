@@ -14,8 +14,7 @@ export class RateAction extends React.PureComponent {
     innerRef: noop,
     isActive: false,
     name: 'reaction-happy',
-    onBlur: noop,
-    onFocus: noop,
+    onClick: noop,
     size: 'lg',
   }
 
@@ -31,18 +30,12 @@ export class RateAction extends React.PureComponent {
     }
   }
 
-  handleOnBlur = event => {
-    this.setState({
-      isActive: false,
-    })
-    this.props.onBlur(event)
-  }
-
-  handleOnFocus = event => {
+  handleOnClick = event => {
     this.setState({
       isActive: true,
     })
-    this.props.onFocus(event)
+
+    this.props.onClick(event)
   }
 
   getClassName() {
@@ -76,6 +69,7 @@ export class RateAction extends React.PureComponent {
         disabled={disabled}
         innerRef={innerRef}
         onBlur={this.handleOnBlur}
+        onClick={this.handleOnClick}
         onFocus={this.handleOnFocus}
       >
         <Emoticon
@@ -95,8 +89,7 @@ RateAction.propTypes = {
   isActive: PropTypes.bool,
   disabled: PropTypes.bool,
   innerRef: PropTypes.func,
-  onBlur: PropTypes.func,
-  onFocus: PropTypes.func,
+  onClick: PropTypes.func,
   size: PropTypes.oneOf(['lg', 'md', 'sm']),
   name: PropTypes.oneOf([
     'happy',

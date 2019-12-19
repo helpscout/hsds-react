@@ -18,7 +18,7 @@ export const config = {
 export const RateActionUI = styled('button')`
   &.c-RateAction {
     ${baseStyles};
-    appearance: none;
+    -webkit-appearance: none;
     border-radius: 50%;
     border: 2px solid white;
     box-shadow: 0 3px 6px 0 rgba(${config.boxShadowColor}, 0.5);
@@ -36,6 +36,11 @@ export const RateActionUI = styled('button')`
 
     path {
       transition: fill 200ms linear;
+    }
+
+    /* Removes the ugly dotted line in firefox when focused */
+    &::-moz-focus-inner {
+      border: 0;
     }
 
     &:after {
@@ -63,6 +68,9 @@ export const RateActionUI = styled('button')`
     }
 
     &.is-active {
+      &:focus {
+        transform: scale(1);
+      }
       &:after {
         animation: HSDSRateActionSelected 200ms
           cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -74,7 +82,8 @@ export const RateActionUI = styled('button')`
       pointer-events: none;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       cursor: pointer;
 
       .is-reaction-happy {
@@ -83,7 +92,7 @@ export const RateActionUI = styled('button')`
         }
         .reaction-face {
           fill: ${reactionEmoticonsColours.on.face};
-          animation: HSDSEmoticonYep 1.5s steps(5, start) 0.15s forwards;
+          animation: HSDSEmoticonYep 1s;
         }
       }
       .is-reaction-okay {
@@ -101,7 +110,7 @@ export const RateActionUI = styled('button')`
         }
         .reaction-face {
           fill: ${reactionEmoticonsColours.on.face};
-          animation: HSDSEmoticonNotReally 1.5s steps(5, start) 0.15s forwards;
+          animation: HSDSEmoticonNotReally 1s;
         }
       }
     }
@@ -142,26 +151,14 @@ export const RateActionUI = styled('button')`
    */
 
     @keyframes HSDSEmoticonYep {
-      0%,
-      100% {
-        transform: translateY(0);
+      15%,
+      45%,
+      75% {
+        transform: translate3d(0, -2px, 0);
       }
-      10%,
       30%,
-      50%,
-      70% {
-        transform: translateY(-3.5px);
-      }
-      20%,
-      40%,
       60% {
-        transform: translateY(3.5px);
-      }
-      80% {
-        transform: translateY(2.6px);
-      }
-      90% {
-        transform: translateY(-2.6px);
+        transform: translate3d(0, 2px, 0);
       }
     }
 
@@ -175,26 +172,14 @@ export const RateActionUI = styled('button')`
     }
 
     @keyframes HSDSEmoticonNotReally {
-      0%,
-      100% {
-        transform: translateX(0);
+      15%,
+      45%,
+      75% {
+        transform: translate3d(-2px, 0, 0);
       }
-      10%,
       30%,
-      50%,
-      70% {
-        transform: translateX(-3.5px);
-      }
-      20%,
-      40%,
       60% {
-        transform: translateX(3.5px);
-      }
-      80% {
-        transform: translateX(2.6px);
-      }
-      90% {
-        transform: translateX(-2.6px);
+        transform: translate3d(2px, 0, 0);
       }
     }
   }

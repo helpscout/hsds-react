@@ -26,20 +26,11 @@ describe('HTML props', () => {
 })
 
 describe('Events', () => {
-  test('onBlur callback still works', () => {
+  test('onClick callback still works', () => {
     const spy = jest.fn()
-    const wrapper = mount(<RateAction onBlur={spy} />)
+    const wrapper = mount(<RateAction onClick={spy} />)
 
-    wrapper.simulate('blur')
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('onFocus callback still works', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<RateAction onFocus={spy} />)
-
-    wrapper.simulate('focus')
+    wrapper.simulate('click')
 
     expect(spy).toHaveBeenCalled()
   })
@@ -50,22 +41,6 @@ describe('isActive', () => {
     const wrapper = render(<RateAction isActive />)
 
     expect(wrapper.hasClass('is-active')).toBeTruthy()
-  })
-
-  test('onBlur sets isActive to false', () => {
-    const wrapper = mount(<RateAction isActive={true} />)
-
-    wrapper.simulate('blur')
-
-    expect(wrapper.state().isActive).toBe(false)
-  })
-
-  test('onFocus sets isActive to false', () => {
-    const wrapper = mount(<RateAction isActive={false} />)
-
-    wrapper.simulate('focus')
-
-    expect(wrapper.state().isActive).toBe(true)
   })
 
   test('Can control isActive state with isActive prop', () => {
