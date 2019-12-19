@@ -43,6 +43,10 @@ export const RateActionUI = styled('button')`
       border: 0;
     }
 
+    .c-Emoticon {
+      -webkit-backface-visibility: hidden;
+    }
+
     &:after {
       ${baseStyles};
       content: '';
