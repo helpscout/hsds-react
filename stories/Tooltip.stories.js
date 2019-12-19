@@ -81,7 +81,7 @@ stories.add('Default', () => {
     <PropProvider value={{ Tooltip: { zIndex: 10 } }}>
       <div style={{ padding: '20%', textAlign: 'center' }}>
         <Tooltip {...props}>
-          <div>Tooltip Trigger</div>
+          <div tabIndex="0">Tooltip Trigger</div>
         </Tooltip>
       </div>
     </PropProvider>

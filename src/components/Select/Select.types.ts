@@ -54,6 +54,7 @@ export type SelectProps = {
   size: UISize
   state?: UIState
   success: boolean
+  tabIndex: number
   value: string
   width: number | string
 }

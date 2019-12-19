@@ -4,6 +4,7 @@ import Manager from './Manager'
 import Arrow from './Arrow'
 import Popper from './Popper'
 import Reference from './Reference'
+import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -115,6 +116,31 @@ class Pop extends React.Component<Props, State> {
     this.toggleOpen(event)
   }
 
+  handleKeyUp = event => {
+    if (event.keyCode === Keys.ENTER) {
+      this.handleClick(event)
+    }
+  }
+
+  handleBlur = event => {
+    // Whether the Pop was opened by focus or enter press,
+    // it should be closed on blur.
+    if (this.state.isOpen) {
+      this.safeSetState({ isOpen: false }, () => {
+        this.props.onClose(this)
+      })
+    }
+  }
+
+  handleFocus = event => {
+    // We do not always want to open the Pop on focus,
+    // as sometimes other interaction may be required
+    // to open it.
+    if (this.shouldHandleFocus() && !this.state.isOpen) {
+      this.toggleOpen(event)
+    }
+  }
+
   handleOnBodyClick = event => {
     if (!this.state.isOpen) return
     if (!this.shouldHandleHover() && !this.props.closeOnBodyClick) return
@@ -148,6 +174,8 @@ class Pop extends React.Component<Props, State> {
     if (!this.shouldHandleHover()) return
     this.close({ type: INTERACTION_TYPE.POPPER_MOUSE_LEAVE, props: { event } })
   }
+
+  shouldHandleFocus = () => this.props.triggerOn === 'hover'
 
   shouldHandleHover = () => this.props.triggerOn === 'hover'
 
@@ -207,44 +235,40 @@ class Pop extends React.Component<Props, State> {
       className
     )
 
-    const referenceMarkup = React.Children.map(
-      children,
-      child =>
-        child.type === Reference
-          ? React.cloneElement(child, {
-              'aria-describedby': id,
-              display,
-            })
-          : null
+    const referenceMarkup = React.Children.map(children, child =>
+      child.type === Reference
+        ? React.cloneElement(child, {
+            'aria-describedby': id,
+            display,
+          })
+        : null
     )
 
     /* istanbul ignore next */
     /**
      * Too difficult to text in Enzyme, due to createContext + Portal + cloning.
      */
-    const popperMarkup = React.Children.map(
-      children,
-      child =>
-        child.type === Popper
-          ? React.cloneElement(child, {
-              animationDelay,
-              animationDuration,
-              animationEasing,
-              animationSequence,
-              arrowSize,
-              className,
-              close: this.close,
-              'data-cy': `${this.props['data-cy']}Popper`,
-              id,
-              isOpen: this.state.isOpen,
-              onContentClick: this.handleOnContentClick,
-              onMouseLeave: this.handleOnPopperMouseLeave,
-              modifiers,
-              placement,
-              showArrow,
-              zIndex,
-            })
-          : null
+    const popperMarkup = React.Children.map(children, child =>
+      child.type === Popper
+        ? React.cloneElement(child, {
+            animationDelay,
+            animationDuration,
+            animationEasing,
+            animationSequence,
+            arrowSize,
+            className,
+            close: this.close,
+            'data-cy': `${this.props['data-cy']}Popper`,
+            id,
+            isOpen: this.state.isOpen,
+            onContentClick: this.handleOnContentClick,
+            onMouseLeave: this.handleOnPopperMouseLeave,
+            modifiers,
+            placement,
+            showArrow,
+            zIndex,
+          })
+        : null
     )
 
     return (
@@ -261,7 +285,10 @@ class Pop extends React.Component<Props, State> {
             innerRef={this.setNodeRef}
             onMouseMove={this.handleMouseMove}
             onMouseLeave={this.handleMouseLeave}
+            onBlur={this.handleBlur}
             onClick={this.handleClick}
+            onFocus={this.handleFocus}
+            onKeyUp={this.handleKeyUp}
           >
             {referenceMarkup}
             {popperMarkup}
