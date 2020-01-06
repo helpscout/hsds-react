@@ -47,7 +47,7 @@ export const Section = props => {
   const { children, ...rest } = props
 
   const [uuid] = useState(nextUuid())
-  console.log('section uuid: ', uuid)
+
   const isOpen = getIsOpen({ ...props, uuid })
 
   const componentClassName = getComponentClassName({ ...props, isOpen })

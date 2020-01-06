@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Body from './Accordion.Body'
 import Section from './Accordion.Section'
@@ -8,6 +8,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { AccordionUI } from './Accordion.css'
 import { stringifyArray } from './Accordion.utils'
+import { PageContext } from '../Page/Page'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
@@ -62,13 +63,20 @@ const Accordion = props => {
     children,
     openSectionIds,
     duration,
-    isPage,
-    isSeamless,
+    isPage: isPageProps,
+    isSeamless: isSeamlessProps,
     size,
     ...rest
   } = props
 
   const [sections, setOpenSections] = useState({})
+
+  const { isPage: isPageContext, isSeamless: isSeamlessContext } = useContext(
+    PageContext
+  )
+
+  const isPage = isPageContext || isPageProps
+  const isSeamless = isSeamlessProps || isSeamlessContext
 
   useEffect(() => {
     setOpenSections(buildOpenSections(openSectionIds))
@@ -109,7 +117,7 @@ const Accordion = props => {
   return (
     <AccordionUI
       {...getValidProps(rest)}
-      className={getComponentClassName(props)}
+      className={getComponentClassName({ ...props, isSeamless, isPage })}
       role="tablist"
     >
       <AccordionContext.Provider value={contextValue}>
