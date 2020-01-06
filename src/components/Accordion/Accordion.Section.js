@@ -46,7 +46,7 @@ const getIsOpen = ({ isLink, isOpen, uuid }) => {
 export const Section = props => {
   const { children, ...rest } = props
 
-  const [uuid] = useState(nextUuid())
+  const [uuid] = useState(props.id || nextUuid())
 
   const isOpen = getIsOpen({ ...props, uuid })
 
