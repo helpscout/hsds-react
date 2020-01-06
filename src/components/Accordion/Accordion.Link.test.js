@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Link } from '../Accordion.Link'
-import { COMPONENT_KEY } from '../Accordion.utils'
+import { Link } from './Accordion.Link'
+import { COMPONENT_KEY } from './Accordion.utils'
 
 describe('Section', () => {
   test('Renders the link variant of Section if to/href are defined', () => {

@@ -1,4 +1,4 @@
-import { mapConnectedPropsAsProps } from '../Accordion.utils'
+import { mapConnectedPropsAsProps } from './Accordion.utils'
 
 describe('mapConnectedPropsAsProps', () => {
   test('Tests isOpen against sections, if applicable', () => {

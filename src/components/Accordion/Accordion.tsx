@@ -8,7 +8,7 @@ import Link from './Accordion.Link'
 import Title from './Accordion.Title'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { AccordionUI } from './styles/Accordion.css'
+import { AccordionUI } from './Accordion.css'
 import { COMPONENT_KEY } from './Accordion.utils'
 
 export const classNameStrings = {
