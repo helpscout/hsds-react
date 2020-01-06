@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Block from './Flexy.Block'
 import Item from './Flexy.Item'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { COMPONENT_KEY } from './Flexy.utils'
 import { FlexyUI } from './styles/Flexy.css'
 

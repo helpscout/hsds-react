@@ -4,7 +4,7 @@ import Context from './ChoiceGroup.Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
 import get from '../../utilities/get'
-import { isComponentNamed, namespaceComponent } from '../../utilities/component'
+import { isComponentNamed } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
@@ -190,7 +190,5 @@ class ChoiceGroup extends React.PureComponent<Props, State> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(ChoiceGroup)
 
 export default ChoiceGroup

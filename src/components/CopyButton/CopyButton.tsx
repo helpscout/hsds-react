@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { noop } from '../../utilities/other'
 import {
   CopyButtonUI,
@@ -136,7 +136,5 @@ class CopyButton extends React.PureComponent<Props, State> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(CopyButton)
 
 export default CopyButton

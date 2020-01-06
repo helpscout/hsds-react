@@ -5,7 +5,7 @@ import Header from './ChatInbox.Header'
 import Content from './ChatInbox.Content'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import { isComponentNamed } from '../../utilities/component'
 import { COMPONENT_KEY } from './ChatInbox.utils'
 
 type Props = {
@@ -93,7 +93,5 @@ class ChatInbox extends React.Component<Props, State> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.ChatInbox)(ChatInbox)
 
 export default ChatInbox

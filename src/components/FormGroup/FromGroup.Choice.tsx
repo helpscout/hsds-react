@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { FormGroupChoiceUI } from './styles/Choice.css'
 import { COMPONENT_KEY } from './FromGroup.utils'
 
@@ -53,7 +53,5 @@ class Choice extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Choice)(Choice)
 
 export default Choice

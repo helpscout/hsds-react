@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { FormGroupUI } from './styles/FormGroup.css'
 import { COMPONENT_KEY } from './FromGroup.utils'
 
@@ -26,7 +26,5 @@ class FormGroup extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.FormGroup)(FormGroup)
 
 export default FormGroup

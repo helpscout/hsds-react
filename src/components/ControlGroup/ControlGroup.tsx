@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed, namespaceComponent } from '../../utilities/component'
+import { isComponentNamed } from '../../utilities/component'
 import Block from './ControlGroup.Block'
 import Item from './ControlGroup.Item'
 import { ControlGroupUI } from './styles/ControlGroup.css'
@@ -46,7 +46,5 @@ class ControlGroup extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.ControlGroup)(ControlGroup)
 
 export default ControlGroup

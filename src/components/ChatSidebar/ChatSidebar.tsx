@@ -1,7 +1,7 @@
 import * as React from 'react'
 import StatusBar from '../StatusBar'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { noop } from '../../utilities/other'
 import pluralize from '../../utilities/pluralize'
 import { smoothScrollTo } from '../../utilities/smoothScroll'

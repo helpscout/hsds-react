@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import { isComponentNamed } from '../../utilities/component'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
@@ -211,7 +211,5 @@ class Button extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(Button)
 
 export default RouteWrapper(Button)

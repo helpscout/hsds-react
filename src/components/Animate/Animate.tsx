@@ -3,11 +3,9 @@ import * as React from 'react'
 import { Transition } from 'react-transition-group'
 import { getSequenceNames } from '../../utilities/animation'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
 import { AnimateUI } from './styles/Animate.css'
-import { COMPONENT_KEY } from './Animate.utils'
 
 export interface Props {
   animateOnMount: boolean
@@ -127,7 +125,5 @@ export class Animate extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(Animate)
 
 export default Animate

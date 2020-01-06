@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import GridComponent from '../Grid'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { COMPONENT_KEY } from './FromGroup.utils'
 
 type Props = {
@@ -25,7 +25,5 @@ class Grid extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Grid)(Grid)
 
 export default Grid

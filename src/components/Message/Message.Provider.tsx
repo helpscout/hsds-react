@@ -1,6 +1,6 @@
 import * as React from 'react'
 import ThemeProvider from '../ThemeProvider'
-import { namespaceComponent } from '../../utilities/component'
+
 import { noop } from '../../utilities/other'
 import { COMPONENT_KEY } from './Message.utils'
 

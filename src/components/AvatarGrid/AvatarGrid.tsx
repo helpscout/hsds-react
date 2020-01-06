@@ -5,7 +5,7 @@ import Avatar from '../Avatar'
 import Animate from '../Animate'
 
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
+import { isComponentNamed } from '../../utilities/component'
 
 import {
   AvatarGridUI,
@@ -126,7 +126,5 @@ class AvatarGrid extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(AvatarGrid)
 
 export default AvatarGrid
