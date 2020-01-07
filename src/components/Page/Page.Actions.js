@@ -94,6 +94,7 @@ const Actions = props => {
     onStickyEnd(node)
   }
 
+  const showStickyAction = isSticky && isStickyActive
   return (
     <div data-cy="PageActionsWrapper">
       <StickyActions
@@ -107,7 +108,7 @@ const Actions = props => {
           isResponsive={isResponsive}
         />
       </StickyActions>
-      {!(isSticky && isStickyActive) && (
+      {showStickyAction && (
         <ActionContent
           {...props}
           withStickyWrapper={true}

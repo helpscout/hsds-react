@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import Content from '../Page.Content'
+import { PageContext } from '../Page'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -37,14 +38,32 @@ describe('Content', () => {
 
 describe('Responsive', () => {
   test('Renders responsive styles, if specified', () => {
-    const wrapper = mount(<Content isResponsive={true} />)
+    const wrapper = mount(
+      <PageContext.Provider value={{ isResponsive: true }}>
+        <Content />
+      </PageContext.Provider>
+    )
 
-    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(true)
+    expect(
+      wrapper
+        .find(Content)
+        .getDOMNode()
+        .classList.contains('is-responsive')
+    ).toBe(true)
   })
 
   test('Does not render responsive styles, if specified', () => {
-    const wrapper = mount(<Content isResponsive={false} />)
+    const wrapper = mount(
+      <PageContext.Provider value={{ isResponsive: false }}>
+        <Content />
+      </PageContext.Provider>
+    )
 
-    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(false)
+    expect(
+      wrapper
+        .find(Content)
+        .getDOMNode()
+        .classList.contains('is-responsive')
+    ).toBe(false)
   })
 })
