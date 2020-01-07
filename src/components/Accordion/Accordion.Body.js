@@ -49,10 +49,9 @@ const getComponentClassName = ({
 
 export const Body = props => {
   const { className } = props
-  const { isPage, isSeamless, duration, onOpen, onClose, size } = useContext(
-    AccordionContext
-  )
-  const { isOpen, uuid } = useContext(SectionContext)
+  const { isPage, isSeamless, duration, onOpen, onClose, size } =
+    useContext(AccordionContext) || {}
+  const { isOpen, uuid } = useContext(SectionContext) || {}
 
   const componentClassName = getComponentClassName({
     className,
@@ -63,14 +62,17 @@ export const Body = props => {
   })
 
   const id = `accordion__section__body--${uuid}`
-
   return (
     <Collapsible
       duration={duration}
       id={id}
       isOpen={isOpen}
-      onOpen={() => onOpen(uuid)}
-      onClose={() => onClose(uuid)}
+      onOpen={() => {
+        onOpen(uuid)
+      }}
+      onClose={() => {
+        onClose(uuid)
+      }}
     >
       <BodyUI {...getValidProps(props)} className={componentClassName} />
     </Collapsible>

@@ -67,8 +67,9 @@ const getIconName = (isOpen, isLink) => {
 
 const Title = props => {
   const { children, className, onClick, ...rest } = props
-  const { uuid, isOpen } = useContext(SectionContext)
-  const { isPage, isSeamless, setOpen, size } = useContext(AccordionContext)
+  const { uuid, isOpen } = useContext(SectionContext) || {}
+  const { isPage, isSeamless, setOpen = noop, size } =
+    useContext(AccordionContext) || {}
 
   const isLink = props.href || props.to
   const isIconOpen = isLink ? false : isOpen

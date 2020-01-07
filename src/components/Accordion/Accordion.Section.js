@@ -17,7 +17,7 @@ export const classNameStrings = {
 }
 
 const getComponentClassName = ({ className, isOpen, isLink }) => {
-  let { isSeamless } = useContext(AccordionContext)
+  let { isSeamless } = useContext(AccordionContext) || {}
 
   if (isLink) isSeamless = false
 
@@ -38,7 +38,7 @@ const getComponentClassName = ({ className, isOpen, isLink }) => {
 const getIsOpen = ({ isLink, isOpen, uuid }) => {
   if (isLink) return false
 
-  const { sections } = useContext(AccordionContext)
+  const { sections = {} } = useContext(AccordionContext) || {}
 
   return !!(Object.keys(sections).length ? sections[uuid] : isOpen)
 }
@@ -65,7 +65,6 @@ export const Section = props => {
 
 Section.defaultProps = {
   isLink: false,
-  isOpen: false,
 }
 
 Section.displayName = 'AccordionSection'

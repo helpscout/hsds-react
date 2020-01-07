@@ -5,7 +5,6 @@ import Block from './Flexy.Block'
 import Item from './Flexy.Item'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './Flexy.utils'
 import { FlexyUI } from './styles/Flexy.css'
 
 export interface Props {
@@ -46,8 +45,8 @@ class Flexy extends React.PureComponent<Props> {
       just && `is-just-${just}`,
       className
     )
-
     return (
+      // @ts-ignore
       <FlexyUI
         {...getValidProps(rest)}
         baseSize={baseSize}

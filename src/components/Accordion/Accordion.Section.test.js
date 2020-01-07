@@ -1,9 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Accordion from './Accordion'
+import Accordion, { AccordionContext } from './Accordion'
 import Section, {
-  SectionWithUuid,
   classNameStrings as classNames,
+  SectionContext,
 } from './Accordion.Section'
 
 describe('ClassNames', () => {
@@ -44,59 +44,44 @@ describe('ClassNames', () => {
 })
 
 describe('Uuid', () => {
-  test('Has a unique id', () => {
-    const wrapper1 = mount(<SectionWithUuid />)
-    const uuid1 = wrapper1.state('uuid')
-    const wrapper2 = mount(<SectionWithUuid />)
-    const uuid2 = wrapper2.state('uuid')
-
-    expect(uuid1).toContain('AccordionSection')
-    expect(uuid2).toContain('AccordionSection')
-    expect(uuid1).not.toEqual(uuid2)
-  })
-})
-
-describe('isOpen', () => {
-  test('Determines if it is open if sections includes its uuid', () => {
-    const wrapper = mount(<SectionWithUuid />)
-    const uuid = wrapper.state('uuid')
-    let el = wrapper.find(`div.${classNames.baseComponentClassName}`)
-
-    expect(el.hasClass(classNames.isOpenClassName)).toBe(false)
-
-    wrapper.setProps({ sections: { [uuid]: true } })
-
-    el = wrapper.find(`div.${classNames.baseComponentClassName}`)
-
-    expect(el.hasClass(classNames.isOpenClassName)).toBe(true)
-  })
-
-  test('Determines if it is open if sections includes its id', () => {
-    const wrapper = mount(<SectionWithUuid id="7" />)
-    let el = wrapper.find(`div.${classNames.baseComponentClassName}`)
-
-    expect(el.hasClass(classNames.isOpenClassName)).toBe(false)
-
-    wrapper.setProps({ sections: { '7': true } })
-
-    el = wrapper.find(`div.${classNames.baseComponentClassName}`)
-
-    expect(el.hasClass(classNames.isOpenClassName)).toBe(true)
+  test('Has a unique id', cb => {
+    mount(
+      <Section>
+        <SectionContext.Consumer>
+          {({ uuid }) => {
+            expect(uuid).toContain('AccordionSection')
+            cb()
+          }}
+        </SectionContext.Consumer>
+      </Section>
+    )
   })
 })
 
 describe('isOpen', () => {
   test('Renders open styles, if defined', () => {
-    const wrapper = mount(<SectionWithUuid isOpen={true} />)
-    const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
+    const uuid = 'myuuid'
+    const sections = { [uuid]: true }
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ sections }}>
+        <Section id={uuid} />
+      </AccordionContext.Provider>
+    )
+    const el = wrapper.find(Section)
 
-    expect(el.hasClass('is-open')).toBeTruthy()
+    expect(el.getDOMNode().classList.contains('is-open')).toBeTruthy()
   })
 
   test('Always render non-open styles, if isLink', () => {
-    const wrapper = mount(<SectionWithUuid isLink={true} isOpen={true} />)
+    const uuid = 'myuuid'
+    const sections = { [uuid]: true }
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ sections }}>
+        <Section isLink={true} id={uuid} />
+      </AccordionContext.Provider>
+    )
     const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
 
-    expect(el.hasClass('is-open')).toBeFalsy()
+    expect(el.getDOMNode().classList.contains('is-open')).toBeFalsy()
   })
 })

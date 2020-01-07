@@ -90,6 +90,7 @@ const Accordion = props => {
 
   const setOpen = (uuid, isOpen) => {
     const { allowMultiple } = props
+
     if (allowMultiple) {
       return setOpenSections({
         ...sections,
