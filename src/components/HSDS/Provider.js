@@ -4,7 +4,7 @@ import GlobalStyle from './GlobalStyle'
 
 const Provider = props => {
   const { scope = 'hsds-react' } = props
-  console.log('scope: ', `.${scope}`)
+
   return (
     <>
       <GlobalStyle scope={`.${scope}`} />

@@ -28,6 +28,7 @@ import {
 } from './styles/Avatar.css'
 
 import { getImageSrc } from './Avatar.utils'
+import { AvatarListContext } from '../AvatarList/AvatarList'
 
 export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
   static defaultProps = {
@@ -351,4 +352,14 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
   }
 }
 
-export default Avatar
+const AvatarConsumer = props => {
+  const contextValue = React.useContext(AvatarListContext)
+  if (contextValue) {
+    const newProps = { ...props, ...contextValue }
+    newProps.className = classNames(props.className, contextValue.className)
+    return <Avatar {...newProps} />
+  }
+  return <Avatar {...props} />
+}
+
+export default AvatarConsumer

@@ -114,6 +114,7 @@ export class Animate extends React.PureComponent<Props> {
               `ax-${transitionState}`
             )}
             ref={node => {
+              // @ts-ignore
               this.node = node
             }}
             style={{ ...componentStyles }}
