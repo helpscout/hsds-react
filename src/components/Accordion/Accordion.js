@@ -71,12 +71,10 @@ const Accordion = props => {
 
   const [sections, setOpenSections] = useState({})
 
-  const { isPage: isPageContext, isSeamless: isSeamlessContext } = useContext(
-    PageContext
-  )
+  const { accordion = {} } = useContext(PageContext)
 
-  const isPage = isPageContext || isPageProps
-  const isSeamless = isSeamlessProps || isSeamlessContext
+  const isPage = accordion.isPage || isPageProps
+  const isSeamless = accordion.isSeamless || isSeamlessProps
 
   useEffect(() => {
     setOpenSections(buildOpenSections(openSectionIds))

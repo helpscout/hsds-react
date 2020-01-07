@@ -26,8 +26,10 @@ export class Page extends React.PureComponent<PageProps> {
 
     // [CONDITIONLIST_COMPONENT_KEY.ConditionList]: { isWithOffset: true },
     return {
-      isPage: true,
-      isSeamless: true,
+      accordion: {
+        isPage: true,
+        isSeamless: true,
+      },
       isWithOffset: true,
       isResponsive,
     }
