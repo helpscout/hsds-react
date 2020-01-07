@@ -96,7 +96,6 @@ export const makeTitleUI = (selector: 'div') => {
     &:hover,
     &:focus,
     &.is-open {
-      background-color: ${getColor('grey.200')};
       color: currentColor;
       text-decoration: none;
     }
@@ -106,8 +105,6 @@ export const makeTitleUI = (selector: 'div') => {
     }
 
     &.is-open {
-      border-bottom: 1px solid ${getColor('border')};
-
       &.is-link {
         border-bottom: none;
       }
