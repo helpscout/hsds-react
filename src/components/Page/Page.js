@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Actions from './Page.Actions'
 import Card from './Page.Card'
@@ -7,11 +7,10 @@ import Header from './Page.Header'
 import Section from './Page.Section'
 import { classNames } from '../../utilities/classNames'
 import { PageUI } from './styles/Page.css'
-import { PageProps } from './Page.types'
 
 export const PageContext = React.createContext({})
 
-export class Page extends React.PureComponent<PageProps> {
+export class Page extends React.PureComponent {
   static defaultProps = {
     isResponsive: false,
   }

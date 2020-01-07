@@ -1,14 +1,10 @@
-import * as React from 'react'
-import { PageStickyActionsProps, PageStickyActionsState } from './Page.types'
+import React from 'react'
 import { noop } from '../../utilities/other'
 import { isIntersectionObserverSupported } from './Page.utils'
 
-class StickyActions extends React.PureComponent<
-  PageStickyActionsProps,
-  PageStickyActionsState
-> {
-  node: HTMLElement
-  observer: IntersectionObserver
+class StickyActions extends React.PureComponent {
+  node = null
+  observer = null
 
   static className = 'c-PageStickyActions'
 
@@ -63,7 +59,7 @@ class StickyActions extends React.PureComponent<
     this.updateSticky(isSticky)
   }
 
-  updateSticky = (isSticky: boolean) => {
+  updateSticky = isSticky => {
     const { onStickyStart, onStickyEnd } = this.props
 
     /* istanbul ignore else */
@@ -80,7 +76,7 @@ class StickyActions extends React.PureComponent<
   }
 
   render() {
-    return <div ref={this.setNodeRef as any}>{this.props.children}</div>
+    return <div ref={this.setNodeRef}>{this.props.children}</div>
   }
 }
 

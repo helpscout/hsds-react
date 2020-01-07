@@ -46,7 +46,7 @@ const renderPropCodeSecondary = `
     )
 } />`
 
-const P = styled('p')`
+const P = styled('div')`
   margin: 0 0 1.5em 0;
   padding: 0;
   font-size: 14px;

@@ -7,12 +7,8 @@ export const config = {
   marginTop: 30,
   spacing: 10,
 }
-interface ActionsUIProps {
-  withStickyWrapper?: any
-  zIndex?: any
-}
 
-export const ActionsUI = styled('div')<ActionsUIProps>`
+export const ActionsUI = styled('div')`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -49,7 +45,7 @@ export const ActionsBlockUI = styled('div')`
   min-width: 0;
 `
 
-export const StickyActionsWrapperUI = styled('div')<{ zIndex: any }>`
+export const StickyActionsWrapperUI = styled('div')`
   
   position: fixed;
   bottom: 0;
