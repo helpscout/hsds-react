@@ -121,13 +121,11 @@ class Title extends React.Component<TitleProps> {
       name = 'caret-right'
     }
 
-    const size = isLink ? 14 : 18
-
     const iconProps = {
       className: classNameStrings.iconCaretClassName,
       faint: !isOpen,
       name,
-      size,
+      size: 14,
     }
 
     return <Icon {...iconProps} />
