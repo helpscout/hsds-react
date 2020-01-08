@@ -15,28 +15,19 @@ export const CopyButtonUI = styled(Button)`
   position: relative;
   transition: ${config.transition};
 
-  &.is-iconOnly {
-    padding-left: 9px !important;
-    padding-right: 9px !important;
-
-    &.is-lg {
-      min-width: initial;
-    }
-  }
-
   &.is-copyConfirmed {
     background: ${config.copyConfirmed.background} !important;
     border-color: ${config.copyConfirmed.background} !important;
     color: ${config.copyConfirmed.color} !important;
   }
+
+  &.is-lg {
+    min-width: 60px;
+  }
 `
 
 export const WrapperUI = styled('span')`
   display: block;
-
-  &.is-animatable {
-    transition: all ${config.iconTransitionDuration} linear;
-  }
 `
 
 export const ContentWrapperUI = styled(WrapperUI)`

@@ -15,7 +15,6 @@ export interface Props {
   canRenderFocus: boolean
   children?: any
   className?: string
-  icon: string
   kind: string
   onClick: (event: Event) => void
   onReset: () => void
@@ -31,8 +30,6 @@ export interface State {
 class CopyButton extends React.PureComponent<Props, State> {
   static defaultProps = {
     canRenderFocus: false,
-    icon: 'copy',
-    iconShade: 'faint',
     onClick: noop,
     onReset: noop,
     kind: 'tertiary',
@@ -87,36 +84,19 @@ class CopyButton extends React.PureComponent<Props, State> {
     this.props.onClick(event)
   }
 
-  isIconOnly = () => {
-    return !this.props.children
-  }
-
-  getContentMarkup = () => {
-    const { children, icon } = this.props
-
-    return this.isIconOnly() ? (
-      <Icon className="c-CopyButton__iconCopy" name={icon} />
-    ) : (
-      children
-    )
-  }
-
   render() {
-    const { className, icon, kind, ...rest } = this.props
+    const { className, kind, ...rest } = this.props
     const { shouldRenderConfirmation } = this.state
-    const isIconOnly = this.isIconOnly()
 
     const componentClassName = classNames(
       'c-CopyButton',
-      isIconOnly && 'is-iconOnly',
       shouldRenderConfirmation && 'is-copyConfirmed',
       className
     )
 
     const wrapperClassName = classNames(
       'c-CopyButton__contentWrapper',
-      shouldRenderConfirmation && 'is-copyConfirmed',
-      isIconOnly && 'is-animatable'
+      shouldRenderConfirmation && 'is-copyConfirmed'
     )
 
     return (
@@ -130,9 +110,7 @@ class CopyButton extends React.PureComponent<Props, State> {
         <ConfirmationIconWrapperUI className={wrapperClassName}>
           <Icon className="c-CopyButton__iconConfirmation" name="tick-small" />
         </ConfirmationIconWrapperUI>
-        <ContentWrapperUI className={wrapperClassName}>
-          {this.getContentMarkup()}
-        </ContentWrapperUI>
+        <ContentWrapperUI className={wrapperClassName}>Copy</ContentWrapperUI>
       </CopyButtonUI>
     )
   }
