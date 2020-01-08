@@ -17,6 +17,7 @@ module.exports = api => {
           plugins: [
             {
               removeViewBox: false,
+              cleanupIDs: false,
             },
           ],
         },

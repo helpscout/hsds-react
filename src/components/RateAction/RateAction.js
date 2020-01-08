@@ -1,42 +1,40 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Emoticon from '../Emoticon'
-import { EmoticonName, EmoticonSize } from '../Emoticon/Emoticon.types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { RateActionUI } from './styles/RateAction.css'
-import { COMPONENT_KEY } from './RateAction.utils'
+import { RateActionUI } from './RateAction.css'
+import { getName } from '../Emoticon/Emoticon.utils'
 
-export interface Props {
-  className?: string
-  children?: any
-  disabled: boolean
-  isActive: boolean
-  innerRef: (node: HTMLElement) => void
-  onBlur: (...args: any[]) => void
-  onFocus: (...args: any[]) => void
-  name: EmoticonName
-  size: EmoticonSize
-  withAnimation: boolean
-}
-
-export interface State {
-  isActive: boolean
-}
-
-export class RateAction extends React.PureComponent<Props, State> {
-  static className = 'c-RateAction'
+export class RateAction extends React.PureComponent {
   static defaultProps = {
     disabled: false,
     innerRef: noop,
     isActive: false,
-    name: 'happy',
-    onBlur: noop,
-    onFocus: noop,
-    size: 'md',
-    withAnimation: true,
+    name: 'reaction-happy',
+    onClick: noop,
+    size: 'lg',
   }
+
+  static propTypes = {
+    className: PropTypes.string,
+    isActive: PropTypes.bool,
+    disabled: PropTypes.bool,
+    innerRef: PropTypes.func,
+    onClick: PropTypes.func,
+    size: PropTypes.oneOf(['lg', 'md', 'sm']),
+    name: PropTypes.oneOf([
+      'happy',
+      'sad',
+      'meh',
+      'reaction-happy',
+      'reaction-sad',
+      'reaction-okay',
+    ]),
+  }
+
+  static className = 'c-RateAction'
 
   state = {
     isActive: this.props.isActive,
@@ -50,18 +48,12 @@ export class RateAction extends React.PureComponent<Props, State> {
     }
   }
 
-  handleOnBlur = event => {
-    this.setState({
-      isActive: false,
-    })
-    this.props.onBlur(event)
-  }
-
-  handleOnFocus = event => {
+  handleOnClick = event => {
     this.setState({
       isActive: true,
     })
-    this.props.onFocus(event)
+
+    this.props.onClick(event)
   }
 
   getClassName() {
@@ -71,7 +63,7 @@ export class RateAction extends React.PureComponent<Props, State> {
     return classNames(
       RateAction.className,
       isActive && `is-active`,
-      name && `is-${name}`,
+      name && `is-${getName(name)}`,
       size && `is-${size}`,
       className
     )
@@ -79,9 +71,10 @@ export class RateAction extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      children,
+      name,
       disabled,
       innerRef,
+      size,
       onBlur,
       onFocus,
       ...rest
@@ -94,10 +87,13 @@ export class RateAction extends React.PureComponent<Props, State> {
         disabled={disabled}
         innerRef={innerRef}
         onBlur={this.handleOnBlur}
+        onClick={this.handleOnClick}
         onFocus={this.handleOnFocus}
       >
         <Emoticon
           {...rest}
+          size={size}
+          name={getName(name)}
           isActive={this.state.isActive}
           isDisabled={disabled}
         />
@@ -106,6 +102,4 @@ export class RateAction extends React.PureComponent<Props, State> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(RateAction)
-
-export default PropConnectedComponent
+export default RateAction
