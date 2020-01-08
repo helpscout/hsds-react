@@ -1,5 +1,6 @@
 import styled from '../styled'
 
+// Note: colours here are not from the Help Scout palette
 export const reactionEmoticonsColours = {
   off: {
     head: '#E5E9EC',
@@ -39,6 +40,9 @@ export const EmoticonUI = styled('span')`
   opacity: 1;
   position: relative;
   user-select: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 
   /**
    * Modifiers

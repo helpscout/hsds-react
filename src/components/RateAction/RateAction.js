@@ -8,7 +8,6 @@ import { RateActionUI } from './RateAction.css'
 import { getName } from '../Emoticon/Emoticon.utils'
 
 export class RateAction extends React.PureComponent {
-  static className = 'c-RateAction'
   static defaultProps = {
     disabled: false,
     innerRef: noop,
@@ -17,6 +16,25 @@ export class RateAction extends React.PureComponent {
     onClick: noop,
     size: 'lg',
   }
+
+  static propTypes = {
+    className: PropTypes.string,
+    isActive: PropTypes.bool,
+    disabled: PropTypes.bool,
+    innerRef: PropTypes.func,
+    onClick: PropTypes.func,
+    size: PropTypes.oneOf(['lg', 'md', 'sm']),
+    name: PropTypes.oneOf([
+      'happy',
+      'sad',
+      'meh',
+      'reaction-happy',
+      'reaction-sad',
+      'reaction-okay',
+    ]),
+  }
+
+  static className = 'c-RateAction'
 
   state = {
     isActive: this.props.isActive,
@@ -82,23 +100,6 @@ export class RateAction extends React.PureComponent {
       </RateActionUI>
     )
   }
-}
-
-RateAction.propTypes = {
-  className: PropTypes.string,
-  isActive: PropTypes.bool,
-  disabled: PropTypes.bool,
-  innerRef: PropTypes.func,
-  onClick: PropTypes.func,
-  size: PropTypes.oneOf(['lg', 'md', 'sm']),
-  name: PropTypes.oneOf([
-    'happy',
-    'sad',
-    'meh',
-    'reaction-happy',
-    'reaction-sad',
-    'reaction-okay',
-  ]),
 }
 
 export default RateAction

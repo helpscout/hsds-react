@@ -7,6 +7,26 @@ import { EmoticonUI, IconUI } from './Emoticon.css'
 import { getName, getIcon } from './Emoticon.utils'
 
 export class Emoticon extends React.PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    center: PropTypes.bool,
+    clickable: PropTypes.bool,
+    isActive: PropTypes.bool,
+    isDisabled: PropTypes.bool,
+    innerRef: PropTypes.func,
+    inline: PropTypes.bool,
+    name: PropTypes.oneOf([
+      'happy',
+      'sad',
+      'meh',
+      'reaction-happy',
+      'reaction-sad',
+      'reaction-okay',
+    ]),
+    title: PropTypes.string,
+    size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  }
+
   static defaultProps = {
     center: false,
     clickable: true,
@@ -80,26 +100,6 @@ export class Emoticon extends React.PureComponent {
       </EmoticonUI>
     )
   }
-}
-
-Emoticon.propTypes = {
-  className: PropTypes.string,
-  center: PropTypes.bool,
-  clickable: PropTypes.bool,
-  isActive: PropTypes.bool,
-  isDisabled: PropTypes.bool,
-  innerRef: PropTypes.func,
-  inline: PropTypes.bool,
-  name: PropTypes.oneOf([
-    'happy',
-    'sad',
-    'meh',
-    'reaction-happy',
-    'reaction-sad',
-    'reaction-okay',
-  ]),
-  title: PropTypes.string,
-  size: PropTypes.oneOf(['lg', 'md', 'sm']),
 }
 
 export default Emoticon

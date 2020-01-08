@@ -1,6 +1,7 @@
 import styled from '../styled'
 import baseStyles from '../../styles/resets/baseStyles.css'
 import { getColor } from '../../styles/utilities/color'
+import { rgba } from '../../utilities/color'
 import { reactionEmoticonsColours } from '../Emoticon/Emoticon.css'
 
 export const config = {
@@ -10,7 +11,7 @@ export const config = {
     md: '24px',
     sm: '20px',
   },
-  boxShadowColor: '193, 203, 212', // grey.600
+  boxShadowColor: rgba(getColor('grey.600'), 0.5),
   outlineColor: getColor('green.500'),
   transition: 'all 200ms ease-in-out',
 }
@@ -21,7 +22,7 @@ export const RateActionUI = styled('button')`
     -webkit-appearance: none;
     border-radius: 50%;
     border: 2px solid white;
-    box-shadow: 0 3px 6px 0 rgba(${config.boxShadowColor}, 0.5);
+    box-shadow: 0 3px 6px 0 ${config.boxShadowColor};
     height: ${config.size.default};
     margin: 0;
     outline: none;
@@ -41,10 +42,6 @@ export const RateActionUI = styled('button')`
     /* Removes the ugly dotted line in firefox when focused */
     &::-moz-focus-inner {
       border: 0;
-    }
-
-    .c-Emoticon {
-      -webkit-backface-visibility: hidden;
     }
 
     &:after {
@@ -122,7 +119,7 @@ export const RateActionUI = styled('button')`
     &:hover,
     &:focus {
       outline: none;
-      box-shadow: 0 4px 7px 0 rgba(${config.boxShadowColor}, 0.6);
+      box-shadow: 0 4px 7px 0 ${config.boxShadowColor};
       transform: scale(1.3);
       z-index: 1;
     }
