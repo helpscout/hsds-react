@@ -68,6 +68,7 @@ class CopyInput extends React.PureComponent<Props> {
             onClick={this.handleCopyClick.bind(this)}
             size="lg"
             isLast
+            style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
           />
         }
       />
