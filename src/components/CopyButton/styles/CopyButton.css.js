@@ -21,8 +21,11 @@ export const CopyButtonUI = styled(Button)`
     color: ${config.copyConfirmed.color} !important;
   }
 
-  &.is-lg {
+  &.c-CopyButton {
     min-width: 60px;
+    :hover {
+      background-color: ${getColor('blue.100')};
+    }
   }
 `
 
@@ -50,7 +53,6 @@ export const ConfirmationIconWrapperUI = styled(WrapperUI)`
   right: 0;
   top: 0;
   z-index: 1;
-
   opacity: 0;
   transform: scale(2);
 
