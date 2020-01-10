@@ -22,7 +22,7 @@ export const config = {
   },
 }
 
-export const ItemUI = styled('li')`
+export const ItemUI = styled.li`
   box-sizing: border-box;
   display: block;
   margin: 0;
@@ -69,38 +69,27 @@ export const ItemUI = styled('li')`
   }
 `
 
-export const BulletListUI = styled('ul')`
-  ${makeListStyles};
-`
+export const ListUI = styled('ul')`
+  box-sizing: border-box;
+  display: block;
+  list-style: none;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
 
-export const NumberedListUI = styled('ol')`
-  ${makeListStyles};
-`
-
-function makeListStyles() {
-  return `
-    
-    box-sizing: border-box;
+  &.is-display-block {
     display: block;
-    list-style: none;
-    margin-bottom: 0;
-    margin-top: 0;
-    padding-left: 0;
+  }
+  &.is-display-flex {
+    display: flex;
+  }
 
-    &.is-display-block {
-      display: block;
-    }
-    &.is-display-flex {
-      display: flex;
-    }
-
-    &.is-bullet,
-    &.is-number {
-      list-style-type: decimal;
-      padding-left: 16px;
-    }
-  `
-}
+  &.is-bullet,
+  &.is-number {
+    list-style-type: decimal;
+    padding-left: 16px;
+  }
+`
 
 function makeSizeStyles() {
   return forEach(config.size, (size, values) => {
