@@ -6,6 +6,7 @@ import { OverlayUI } from './styles/Overlay.css'
 type Props = {
   children?: any
   className?: string
+  isHsApp: boolean
   fixed: boolean
   transparent: boolean
 }
@@ -13,11 +14,19 @@ type Props = {
 class Overlay extends React.PureComponent<Props> {
   static defaultProps = {
     fixed: false,
+    isHsApp: false,
     transparent: false,
   }
 
   render() {
-    const { children, className, fixed, transparent, ...rest } = this.props
+    const {
+      children,
+      className,
+      fixed,
+      transparent,
+      isHsApp,
+      ...rest
+    } = this.props
 
     const componentClassName = classNames(
       'c-Overlay',
@@ -31,6 +40,7 @@ class Overlay extends React.PureComponent<Props> {
         {...getValidProps(rest)}
         className={componentClassName}
         role="dialog"
+        isHsApp={isHsApp}
       >
         {children}
       </OverlayUI>

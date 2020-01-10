@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { isHSApp } from '../../../styles/utilities/theme'
 import Animate from '../../Animate'
 import Card from '../../Card'
 
@@ -68,7 +67,7 @@ export const CloseUI = styled('div')`
 `
 
 function makeHSAppInnerWrapperStyles(props) {
-  if (!isHSApp(props)) return ''
+  if (!props.isHsApp) return ''
 
   return `
     margin-bottom: ${config.theme.app.marginBottom};

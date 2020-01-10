@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-import { isHSApp } from '../../../styles/utilities/theme'
-
 export const config = {
   backgroundColor: 'rgba(57, 73, 86, 0.15)',
   theme: {
@@ -36,7 +34,7 @@ export const OverlayUI = styled('div')`
 `
 
 function makeHSAppStyles(props) {
-  if (!isHSApp(props)) return ''
+  if (!props.isHsApp) return ''
 
   return `
     background-color: ${config.theme.app.backgroundColor};

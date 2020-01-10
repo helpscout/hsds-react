@@ -11,6 +11,7 @@ class Overlay extends React.PureComponent<ModalOverlayProps> {
   static defaultProps = {
     onClick: noop,
     isOpen: true,
+    isHsApp: false,
     overlayAnimationDelay: 0,
     overlayAnimationDuration: 200,
     overlayAnimationEasing: 'ease',
@@ -23,6 +24,7 @@ class Overlay extends React.PureComponent<ModalOverlayProps> {
       children,
       onClick,
       isOpen,
+      isHsApp,
       overlayAnimationDelay,
       overlayAnimationDuration,
       overlayAnimationSequence,
@@ -44,6 +46,7 @@ class Overlay extends React.PureComponent<ModalOverlayProps> {
       >
         <BaseOverlay
           {...getValidProps(rest)}
+          isHsApp={isHsApp}
           className={componentClassName}
           onClick={onClick}
           role="presentation"
