@@ -136,7 +136,9 @@ stories.addDecorator(story => (
 ))
 
 stories.add('default', () => (
-  <Modal trigger={<Link>Open dis modal</Link>}>
+  <Modal
+    trigger={<Link onClick={e => e.preventDefault()}>Open dis modal</Link>}
+  >
     <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(8).map(({ id, content }) => (
@@ -147,7 +149,10 @@ stories.add('default', () => (
 ))
 
 stories.add('no close on escape', () => (
-  <Modal closeOnEscape={false} trigger={<Link>Open dis modal</Link>}>
+  <Modal
+    closeOnEscape={false}
+    trigger={<Link onClick={e => e.preventDefault()}>Open dis modal</Link>}
+  >
     <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(8).map(({ id, content }) => (
@@ -158,7 +163,7 @@ stories.add('no close on escape', () => (
 ))
 
 stories.add('open', () => (
-  <Modal isOpen trigger={<Link>Clicky</Link>}>
+  <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Content>
       <Modal.Body>
         <Heading>Title</Heading>
@@ -171,7 +176,7 @@ stories.add('open', () => (
 ))
 
 stories.add('header/footer', () => (
-  <Modal isOpen trigger={<Link>Clicky</Link>}>
+  <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Header>Header</Modal.Header>
     <Modal.Body>
       <Heading>Title</Heading>
@@ -184,7 +189,7 @@ stories.add('header/footer', () => (
 ))
 
 stories.add('header/footer styles', () => (
-  <Modal isOpen trigger={<Link>Clicky</Link>}>
+  <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Header seamless>Header</Modal.Header>
     <Modal.Body>
       <Heading>Title</Heading>
@@ -197,7 +202,11 @@ stories.add('header/footer styles', () => (
 ))
 
 stories.add('header/footer with items', () => (
-  <Modal isOpen trigger={<Link>Clicky</Link>} closeIcon={false}>
+  <Modal
+    isOpen
+    trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}
+    closeIcon={false}
+  >
     <Modal.Content>
       <Modal.Header>
         <Toolbar.Item>
@@ -246,14 +255,18 @@ stories.add('custom close trigger', () => {
   }
 
   return (
-    <Modal trigger={<Link>Open me</Link>}>
+    <Modal trigger={<Link onClick={e => e.preventDefault()}>Open me</Link>}>
       <Contents />
     </Modal>
   )
 })
 
 stories.add('seamless', () => (
-  <Modal trigger={<Link>Clicky</Link>} seamless isOpen>
+  <Modal
+    trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}
+    seamless
+    isOpen
+  >
     <Modal.Content>
       {ContentSpec.generate(8).map(({ id, content }) => (
         <p key={id}>{content}</p>
@@ -263,14 +276,14 @@ stories.add('seamless', () => (
 ))
 
 stories.add('nested', () => (
-  <Modal trigger={<Link>Clicky</Link>}>
+  <Modal trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(2).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
 
-      <Modal trigger={<Link>Level 2</Link>}>
+      <Modal trigger={<Link onClick={e => e.preventDefault()}>Level 2</Link>}>
         <Modal.Body>
           <Heading>Level 2</Heading>
 
@@ -281,7 +294,9 @@ stories.add('nested', () => (
             <p key={id}>{content}</p>
           ))}
 
-          <Modal trigger={<Link>Level 3</Link>}>
+          <Modal
+            trigger={<Link onClick={e => e.preventDefault()}>Level 3</Link>}
+          >
             <Modal.Body>
               <Heading>Level 3</Heading>
               {ContentSpec.generate(2).map(({ id, content }) => (
@@ -304,7 +319,10 @@ stories.add('custom mounting selector', () => {
       <p>Render modal here:</p>
       <div className="render-modal-here" />
 
-      <Modal trigger={<Link>Clicky</Link>} renderTo=".render-modal-here">
+      <Modal
+        trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}
+        renderTo=".render-modal-here"
+      >
         <Modal.Body>
           <Heading>Title</Heading>
           {ContentSpec.generate(2).map(({ id, content }) => (
@@ -337,7 +355,7 @@ stories.add('lifecycle events', () => {
         className="weee"
         onBeforeOpen={onBeforeOpen}
         onBeforeClose={onBeforeClose}
-        trigger={<Link>Clicky</Link>}
+        trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}
       >
         <Modal.Body>
           <Heading>Title</Heading>
@@ -431,7 +449,7 @@ stories.add('stateful example', () => (
 ))
 
 stories.add('tabbing', () => (
-  <Modal isOpen trigger={<Link>Clicky</Link>}>
+  <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Content>
       <Modal.Body>
         <Heading>Title</Heading>

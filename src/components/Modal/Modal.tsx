@@ -171,10 +171,13 @@ class Modal extends React.PureComponent<ModalProps> {
     const { children } = this.props
 
     return React.Children.map(children, child => {
+      const {
+        type: { displayName },
+      } = child
+
       if (
         child &&
-        (isComponentNamed(child, COMPONENT_KEY.Content) ||
-          isComponentNamed(child, COMPONENT_KEY.Body))
+        (displayName === 'Modal.Content' || displayName === 'Modal.Body')
       ) {
         return React.cloneElement(child, {
           scrollableRef: this.setScrollableNode,
