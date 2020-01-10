@@ -1,20 +1,20 @@
-import * as React from 'react'
+import React from 'react'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
 import { getComponentKey } from '../../utilities/component'
 import classNames from '../../utilities/classNames'
+import PropTypes from 'prop-types'
 
-export interface Props {
-  animationDelay: number
-  animationEasing: string
-  animationSequence: string
-  animationStagger: number
-  children?: any
-  className?: string
-  stagger: boolean
-}
+export class CardList extends React.PureComponent {
+  static propTypes = {
+    animationDelay: PropTypes.number,
+    animationEasing: PropTypes.string,
+    animationSequence: PropTypes.string,
+    animationStagger: PropTypes.number,
+    className: PropTypes.string,
+    stagger: PropTypes.bool,
+  }
 
-export class CardList extends React.PureComponent<Props> {
   static defaultProps = {
     animationDelay: 0,
     animationEasing: 'ease',

@@ -59,18 +59,6 @@ export const isComponentNamed = (Component: any, key: string): boolean => {
 }
 
 /**
- * Determines if the provided Component is a card type.
- *
- * @param   {React.Component} Component The component.
- * @returns {boolean} The result.
- */
-export const isComponentTypeCard = (Component: any): boolean => {
-  const key = getComponentName(Component)
-
-  return includes(CARD_TYPE, key)
-}
-
-/**
  * Determines if the provided Component is a control type.
  *
  * @param   {React.Component} Component The component.

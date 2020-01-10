@@ -202,6 +202,7 @@
     "postcss-flexbugs-fixes": "3.0.0",
     "prettier": "1.19.1",
     "pretty-quick": "^1.8.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-addons-test-utils": "15.6.2",
     "react-dev-utils": "^3.0.2",
