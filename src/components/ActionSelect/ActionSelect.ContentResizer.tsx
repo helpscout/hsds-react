@@ -43,7 +43,7 @@ export class ContentResizer extends React.PureComponent<
 
   componentDidMount() {
     this._isMounted = true
-    this.resizerNode.addEventListener('animationend', this.props.onAnimationEnd)
+    this.resizerNode.addEventListener('animationend', this.onAnimationEnd)
     this.resize(this.props)
   }
 
@@ -55,6 +55,11 @@ export class ContentResizer extends React.PureComponent<
     /* istanbul ignore else */
     if (nextProps.resizeCount !== this.props.resizeCount) {
       this.handleResize(nextProps)
+    }
+
+    if (nextProps.isOpen === false) {
+      this.animationUpdateInterval &&
+        clearInterval(this.animationUpdateInterval)
     }
   }
 
@@ -74,8 +79,7 @@ export class ContentResizer extends React.PureComponent<
     })
   }
 
-  onAnimationEnd() {
-    /* istanbul ignore next */
+  onAnimationEnd = () => {
     this.props.onAnimationEnd && this.props.onAnimationEnd()
     this.animationUpdateInterval && clearInterval(this.animationUpdateInterval)
   }
@@ -84,13 +88,14 @@ export class ContentResizer extends React.PureComponent<
   addOnAnimationUpdate() {
     const { isOpen, onAnimationUpdate } = this.props
 
+    if (this.animationUpdateInterval) {
+      clearInterval(this.animationUpdateInterval)
+    }
+
     if (!onAnimationUpdate || !isOpen) {
       return
     }
 
-    if (this.animationUpdateInterval) {
-      clearInterval(this.animationUpdateInterval)
-    }
     this.animationUpdateInterval = setInterval(this.props.onAnimationUpdate, 20)
   }
 

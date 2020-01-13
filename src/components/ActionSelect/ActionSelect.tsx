@@ -118,17 +118,25 @@ export class ActionSelect extends React.PureComponent<
   }
 
   handleOnOpen = () => {
-    this.safeSetState({
-      isOpen: true,
-    })
-    this.props.onOpen()
+    this.safeSetState(
+      {
+        isOpen: true,
+      },
+      () => {
+        this.props.onOpen()
+      }
+    )
   }
 
   handleOnClose = () => {
-    this.safeSetState({
-      isOpen: false,
-    })
-    this.props.onClose()
+    this.safeSetState(
+      {
+        isOpen: false,
+      },
+      () => {
+        this.props.onClose()
+      }
+    )
   }
 
   autoFocusChildNode = () => {
