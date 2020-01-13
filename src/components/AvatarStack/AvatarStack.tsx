@@ -4,16 +4,14 @@ import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import Avatar from '../Avatar'
 import { AvatarListContext } from '../AvatarList/AvatarList'
 import Animate from '../Animate'
-import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed, getComponentKey } from '../../utilities/component'
+import { getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
 import {
   AvatarStackUI,
   AvatarStackLayeringUI,
   ItemUI,
 } from './styles/AvatarStack.css'
-import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 export interface Props {
   animationDuration: number

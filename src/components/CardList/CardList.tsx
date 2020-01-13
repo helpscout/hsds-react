@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
-import { isComponentTypeCard, getComponentKey } from '../../utilities/component'
+import { getComponentKey } from '../../utilities/component'
 import classNames from '../../utilities/classNames'
 
 export interface Props {
@@ -27,9 +27,6 @@ export class CardList extends React.PureComponent<Props> {
     const { children } = this.props
 
     return React.Children.map(children, (child, index) => {
-      if (!isComponentTypeCard(child)) {
-        return null
-      }
       const key = getComponentKey(child, index)
 
       return <Animate key={key}>{child}</Animate>

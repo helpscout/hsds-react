@@ -1,9 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY as NOTIFICATION } from '../Notification/Notification.utils'
 import { NotificationStackUI } from './styles/NotificationStack.css'
 
 export interface Props {
@@ -77,7 +75,6 @@ export class NotificationStack extends React.PureComponent<Props, State> {
     const { isDismissable } = this.state
 
     return React.Children.map(children, (child, index) => {
-      if (!isComponentNamed(child, NOTIFICATION)) return null
       const count = React.Children.count(children) - index
       const isActive = count < limit + 1
 
