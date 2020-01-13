@@ -12,7 +12,11 @@ export const AddButton = props => {
   return (
     <div data-cy="ConditionFieldAddButtonWrapper">
       <AddButtonContentUI>
-        <Condition.AddButton {...rest} className={componentClassName} />
+        <Condition.AddButton
+          {...rest}
+          className={componentClassName}
+          data-cy="ConditionFieldAddButton"
+        />
       </AddButtonContentUI>
     </div>
   )

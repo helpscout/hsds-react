@@ -1,9 +1,7 @@
 import * as React from 'react'
-import PropProvider from '../PropProvider'
 import AddButton from './ConditionField.AddButton'
 import { noop } from '../../utilities/other'
 import { ConditionFieldGroupProps } from './ConditionField.types'
-import { COMPONENT_KEY } from './ConditionField.utils'
 
 export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   static defaultProps = {
@@ -17,13 +15,10 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
     const { children } = this.props
 
     return React.Children.map(children, (child, index) => {
-      const isWithOr = index > 0
-      const value = {
-        [COMPONENT_KEY.Field]: {
-          isWithOr,
-        },
-      }
-      return <PropProvider value={value}>{child}</PropProvider>
+      return React.cloneElement(child, {
+        ...child.props,
+        isWithOr: index > 0,
+      })
     })
   }
 
@@ -39,7 +34,7 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
 
     return (
       // @ts-ignore
-      <div {...rest}>
+      <div {...rest} data-cy="ConditionFieldGroup">
         {this.renderFields()}
         {this.renderAddAction()}
       </div>

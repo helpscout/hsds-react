@@ -19,15 +19,6 @@ describe('className', () => {
   })
 })
 
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    cy.render(<ConditionList data-cy="BlueBlueBlue" />)
-    const el = cy.getByCy('BlueBlueBlue')
-
-    expect(el.exists()).toBeTruthy()
-  })
-})
-
 describe('AddButton', () => {
   test('Renders an AddButton by default', () => {
     cy.render(<ConditionList />)

@@ -19,15 +19,6 @@ describe('className', () => {
   })
 })
 
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    cy.render(<Condition data-cy="BlueBlueBlue" />)
-    const el = cy.getByCy('BlueBlueBlue')
-
-    expect(el.exists()).toBeTruthy()
-  })
-})
-
 describe('Select', () => {
   test('Renders a Select with options', () => {
     const options = [

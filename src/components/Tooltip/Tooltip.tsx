@@ -120,10 +120,10 @@ export class Tooltip extends React.PureComponent<Props> {
     }
 
     return (
-      <Pop {...rest} className={this.getClassName()}>
+      <Pop {...rest} className={this.getClassName()} data-cy="Tooltip">
         <Pop.Reference
           className="c-Tooltip__reference"
-          data-cy={`${this.props['data-cy']}Reference`}
+          data-cy="ToolTipReference"
         >
           {children}
         </Pop.Reference>

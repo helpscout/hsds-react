@@ -56,6 +56,7 @@ export class Condition extends React.PureComponent<ConditionProps> {
         {...getValidProps(rest)}
         className={this.getClassName()}
         ref={innerRef as any}
+        data-cy="Condition"
       >
         {this.renderOperator()}
         <FlexyContext.Provider value={this.getProviderProps()}>

@@ -20,15 +20,6 @@ describe('className', () => {
   })
 })
 
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    cy.render(<ConditionField data-cy="BlueBlueBlue" />)
-    const el = cy.getByCy('BlueBlueBlue')
-
-    expect(el.exists()).toBeTruthy()
-  })
-})
-
 describe('onRemove', () => {
   test('Renders a remove button', () => {
     cy.render(<ConditionField />)

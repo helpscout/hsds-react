@@ -56,7 +56,12 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     return (
       <div data-cy="ConditionFieldWrapper">
         {this.renderOperator()}
-        <Flexy {...rest} innerRef={innerRef} className={this.getClassName()}>
+        <Flexy
+          {...rest}
+          innerRef={innerRef}
+          className={this.getClassName()}
+          data-cy="ConditionField"
+        >
           <Flexy.Block data-cy="ConditionFieldContentWrapper">
             <Flexy align="top" gap="md">
               {children}

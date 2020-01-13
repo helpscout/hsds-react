@@ -33,6 +33,7 @@ export class AddButton extends React.PureComponent<
           {...rest}
           className={this.getClassName()}
           type="and"
+          data-cy="ConditionListAddButton"
         />
       </AddButtonWrapperUI>
     )

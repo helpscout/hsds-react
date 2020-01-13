@@ -1,12 +1,11 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import PropProvider from '../PropProvider'
 import AddButton from './ConditionList.AddButton'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionListProps } from './ConditionList.types'
 import { ConditionListUI } from './styles/ConditionList.css'
-import { COMPONENT_KEY as CONDITION_COMPONENT_KEY } from '../Condition/Condition.utils'
+import { PageContext } from '../Page/Page'
 
 export class ConditionList extends React.Component<ConditionListProps> {
   static className = 'c-ConditionList'
@@ -62,6 +61,7 @@ export class ConditionList extends React.Component<ConditionListProps> {
         {...getValidProps(rest)}
         className={this.getClassName()}
         ref={innerRef as any}
+        data-cy="ConditionList"
       >
         {this.renderConditions()}
         {this.renderAddAction()}
@@ -70,4 +70,16 @@ export class ConditionList extends React.Component<ConditionListProps> {
   }
 }
 
-export default ConditionList
+const ConditionListConsumer = props => {
+  const contextValue = React.useContext(PageContext)
+
+  if (contextValue) {
+    const newProps = { ...props, ...contextValue }
+    newProps.className = classNames(props.className, contextValue.className)
+    return <ConditionList {...newProps} />
+  }
+
+  return <ConditionList {...props} />
+}
+
+export default ConditionListConsumer
