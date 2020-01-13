@@ -22,6 +22,8 @@ export interface Props extends PopProps {
   theme?: string
   title?: any
   zIndex?: number
+  placement?: any
+  display?: any
 }
 
 export class Tooltip extends React.PureComponent<Props> {

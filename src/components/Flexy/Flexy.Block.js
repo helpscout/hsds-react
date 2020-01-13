@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { BlockUI } from './styles/Flexy.Block.css'
 
-export const Block = ({ children, className, ...rest }) => (
+export const Block = ({ children, className = '', ...rest }) => (
   <BlockUI
     {...getValidProps(rest)}
     className={classNames('c-Flexy__block', className)}

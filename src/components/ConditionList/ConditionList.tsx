@@ -34,13 +34,10 @@ export class ConditionList extends React.Component<ConditionListProps> {
     const { children } = this.props
 
     return React.Children.map(children, (child, index) => {
-      const isWithAnd = index > 0
-      const value = {
-        [CONDITION_COMPONENT_KEY.Condition]: {
-          isWithAnd,
-        },
-      }
-      return <PropProvider value={value}>{child}</PropProvider>
+      return React.cloneElement(child, {
+        ...child.props,
+        isWithAnd: index > 0,
+      })
     })
   }
 

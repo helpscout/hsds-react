@@ -29,8 +29,8 @@ export interface IconProps {
   offsetLeft: boolean
   offsetRight: boolean
   shade?: TextShade
-  state?: UIState
-  size: IconSize
+  state?: UIState | any
+  size: IconSize | string | any
   subtle?: boolean
   title?: string
   withCaret: boolean

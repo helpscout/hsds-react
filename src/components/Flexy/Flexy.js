@@ -14,7 +14,16 @@ export const FlexyContext = React.createContext()
 export const Flexy = props => {
   const contextValue = useContext(FlexyContext)
   const newProps = { ...props, contextValue }
-  const { align, baseSize, children, className, gap, just, ...rest } = newProps
+  const {
+    align,
+    baseSize,
+    children,
+    className,
+    gap,
+    just,
+    innerRef,
+    ...rest
+  } = newProps
 
   const componentClassName = classNames(
     FlexyClassName,
@@ -29,6 +38,7 @@ export const Flexy = props => {
       {...getValidProps(rest)}
       baseSize={baseSize}
       className={componentClassName}
+      ref={innerRef}
     >
       {children}
     </FlexyUI>
@@ -48,6 +58,10 @@ Flexy.propTypes = {
   baseSize: PropTypes.number,
   gap: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs', 'none', '']),
   just: PropTypes.oneOf(['default', 'left', 'center', 'right', '']),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 }
 
 export default Flexy
