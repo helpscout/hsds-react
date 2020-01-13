@@ -43,11 +43,7 @@ export class ContentResizer extends React.PureComponent<
 
   componentDidMount() {
     this._isMounted = true
-    this.resizerNode.addEventListener('animationend', () => {
-      this.props.onAnimationEnd && this.props.onAnimationEnd()
-      this.animationUpdateInterval &&
-        clearInterval(this.animationUpdateInterval)
-    })
+    this.resizerNode.addEventListener('animationend', this.props.onAnimationEnd)
     this.resize(this.props)
   }
 
@@ -76,6 +72,12 @@ export class ContentResizer extends React.PureComponent<
       // Sets the next (animation) height (px)
       this.resize(props)
     })
+  }
+
+  onAnimationEnd() {
+    /* istanbul ignore next */
+    this.props.onAnimationEnd && this.props.onAnimationEnd()
+    this.animationUpdateInterval && clearInterval(this.animationUpdateInterval)
   }
 
   // calls the an update every 20 milleseconds when the animation is updating
