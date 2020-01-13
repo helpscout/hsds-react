@@ -3,12 +3,24 @@ import ContentResizer from '../ActionSelect.ContentResizer'
 import { mount } from 'enzyme'
 
 describe('content resizer', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     jest.useFakeTimers()
   })
 
-  afterAll(() => {
+  afterEach(() => {
     jest.resetAllMocks()
+  })
+
+  it('should call clearInterval onEndAnimation', () => {
+    const onAnimationEndSpy = jest.fn()
+    const clearIntervalSpy = jest.spyOn(window, 'clearInterval')
+    const wrapper = mount(
+      <ContentResizer isOpen={true} onAnimationEnd={onAnimationEndSpy} />
+    )
+    wrapper.instance().animationUpdateInterval = 1
+    wrapper.instance().onAnimationEnd()
+    expect(onAnimationEndSpy).toHaveBeenCalledTimes(1)
+    expect(clearIntervalSpy).toHaveBeenCalledTimes(1)
   })
 
   it('should clear animationUpdateInterval if set', () => {
