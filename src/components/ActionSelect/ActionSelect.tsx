@@ -28,6 +28,8 @@ export class ActionSelect extends React.PureComponent<
     isAutoFocusNodeOnSelect: true,
     isFadeContentOnOpen: true,
     items: [],
+    onAnimationEnd: null,
+    onAnimationUpdate: null,
     onClose: noop,
     onOpen: noop,
     onResize: noop,
@@ -155,6 +157,8 @@ export class ActionSelect extends React.PureComponent<
       animationEasing,
       children,
       innerRef,
+      onAnimationEnd,
+      onAnimationUpdate,
       onResize,
       ...rest
     } = this.props
@@ -183,6 +187,8 @@ export class ActionSelect extends React.PureComponent<
           borderWidth={1}
           innerRef={this.setContentNode}
           isOpen={this.state.isOpen}
+          onAnimationEnd={onAnimationEnd}
+          onAnimationUpdate={onAnimationUpdate}
           onResize={onResize}
           resizeCount={this.state.resizeCount}
           selectedKey={getUniqueKeyFromItem(selectedItem)}

@@ -27,18 +27,27 @@ export class ContentResizer extends React.PureComponent<
     'data-cy': 'ActionSelectContentResizer',
     innerRef: noop,
     isFadeContentOnOpen: true,
+    onAnimationEnd: null,
+    onAnimationUpdate: null,
     onResize: noop,
     resizeCount: 0,
     selectedKey: null,
   }
 
+  animationUpdateInterval: any
   _isMounted: boolean = false
   node: HTMLDivElement
+  resizerNode: any
 
   state = getInitialState(this.props)
 
   componentDidMount() {
     this._isMounted = true
+    this.resizerNode.addEventListener('animationend', () => {
+      this.props.onAnimationEnd && this.props.onAnimationEnd()
+      this.animationUpdateInterval &&
+        clearInterval(this.animationUpdateInterval)
+    })
     this.resize(this.props)
   }
 
@@ -69,6 +78,20 @@ export class ContentResizer extends React.PureComponent<
     })
   }
 
+  // calls the an update every 20 milleseconds when the animation is updating
+  addOnAnimationUpdate() {
+    const { isOpen, onAnimationUpdate } = this.props
+
+    if (!onAnimationUpdate || !isOpen) {
+      return
+    }
+
+    if (this.animationUpdateInterval) {
+      clearInterval(this.animationUpdateInterval)
+    }
+    this.animationUpdateInterval = setInterval(this.props.onAnimationUpdate, 20)
+  }
+
   resize = props => {
     /* istanbul ignore next */
     if (!this.node) return
@@ -78,9 +101,12 @@ export class ContentResizer extends React.PureComponent<
 
     const height = children ? clientHeight : 0
 
-    this.safeSetState({
-      height,
-    })
+    this.safeSetState(
+      {
+        height,
+      },
+      this.addOnAnimationUpdate
+    )
 
     this.props.onResize()
   }
@@ -115,6 +141,10 @@ export class ContentResizer extends React.PureComponent<
     this.props.innerRef(node)
   }
 
+  setResizerNodeRef = node => {
+    this.resizerNode = node
+  }
+
   renderContent() {
     const { animationDuration, children, selectedKey } = this.props
     if (!children) return null
@@ -132,6 +162,7 @@ export class ContentResizer extends React.PureComponent<
     return (
       <ContentResizerUI
         {...rest}
+        innerRef={this.setResizerNodeRef}
         style={this.getResizeStyles()}
         onTransitionEnd={this.resetHeight}
       >

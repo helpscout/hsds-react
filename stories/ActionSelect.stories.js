@@ -109,6 +109,12 @@ export class Example extends React.Component {
           animationDuration={this.props.animationDuration}
           label="Action Select"
           items={items}
+          onAnimationEnd={() => {
+            // console.log('onAnimationEnd')
+          }}
+          onAnimationUpdate={() => {
+            // console.log('onAnimationUpdate')
+          }}
           onResize={action('onResize')}
           onSelect={this.onSelect}
           shouldScrollIntoView={this.shouldScrollIntoView}
