@@ -34,7 +34,7 @@ export class AvatarList extends React.PureComponent<Props> {
   }
 
   getAvatars = () => {
-    return this.props.children
+    return React.Children.toArray(this.props.children)
   }
 
   getTotalAvatarCount = () => {
