@@ -11,17 +11,11 @@ describe('content resizer', () => {
     jest.resetAllMocks()
   })
 
-  it('should call onEndAnimation', () => {
-    const onAnimationEndSpy = jest.fn()
-    const wrapper = mount(<ContentResizer onAnimationEnd={onAnimationEndSpy} />)
-    wrapper.instance().onAnimationEnd()
-  })
-
   it('should clear animationUpdateInterval if set', () => {
-    const onAnimatedUpdateSpy = jest.fn()
+    const onAnimateUpdateSpy = jest.fn()
     const clearIntervalSpy = jest.spyOn(window, 'clearInterval')
     const wrapper = mount(
-      <ContentResizer isOpen={true} onAnimationUpdate={onAnimatedUpdateSpy} />
+      <ContentResizer isOpen={true} onAnimationUpdate={onAnimateUpdateSpy} />
     )
     wrapper.instance().addOnAnimationUpdate()
     wrapper.instance().addOnAnimationUpdate()
@@ -29,12 +23,12 @@ describe('content resizer', () => {
   })
 
   it('should call setInterval', () => {
-    const onAnimatedUpdateSpy = jest.fn()
+    const onAnimateUpdateSpy = jest.fn()
     const setIntervalSpy = jest.spyOn(window, 'setInterval')
     const wrapper = mount(
-      <ContentResizer isOpen={true} onAnimationUpdate={onAnimatedUpdateSpy} />
+      <ContentResizer isOpen={true} onAnimationUpdate={onAnimateUpdateSpy} />
     )
     wrapper.instance().addOnAnimationUpdate()
-    expect(setIntervalSpy).toHaveBeenCalledTimes(1)
+    expect(setIntervalSpy).toHaveBeenCalled()
   })
 })
