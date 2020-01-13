@@ -1,7 +1,6 @@
 import * as React from 'react'
-import createContext from '@helpscout/react-utils/dist/createContext'
 
-export const ManagerContext = createContext({
+export const ManagerContext = React.createContext({
   getReferenceRef: undefined,
   referenceNode: undefined,
 })
