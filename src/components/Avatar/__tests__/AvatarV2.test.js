@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { Avatar } from '../Avatar'
+import { AvatarContext } from '../../Avatar'
 import AvatarEntry from '../index'
-import PropProvider from '../../PropProvider'
 
 describe('AvatarV2', () => {
   test('Can render Avatar V2', () => {
@@ -12,11 +12,11 @@ describe('AvatarV2', () => {
     expect(o.length).toBe(1)
   })
 
-  test('Can render Avatar V2, via PropProvider', () => {
+  test('Can render Avatar V2, via AvatarContext.Provider', () => {
     const wrapper = mount(
-      <PropProvider value={{ Avatar: { version: 2 } }}>
+      <AvatarContext.Provider value={{ version: 2 }}>
         <AvatarEntry />
-      </PropProvider>
+      </AvatarContext.Provider>
     )
     const el = wrapper.find('div.c-Avatar')
     const comp = wrapper.find('Avatar').first()
@@ -27,9 +27,9 @@ describe('AvatarV2', () => {
 
   test('Can renders Avatar (v1), with enhanced properties', () => {
     const wrapper = mount(
-      <PropProvider value={{ Avatar: { version: 2 } }}>
+      <AvatarContext.Provider value={{ version: 2 }}>
         <AvatarEntry />
-      </PropProvider>
+      </AvatarContext.Provider>
     )
     const comp = wrapper.find('Avatar').last()
 
