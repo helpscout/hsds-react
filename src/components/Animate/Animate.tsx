@@ -6,6 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
 import { AnimateUI } from './styles/Animate.css'
+import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
 
 export interface Props {
   animateOnMount: boolean
@@ -114,7 +115,6 @@ export class Animate extends React.PureComponent<Props> {
               `ax-${transitionState}`
             )}
             ref={node => {
-              // @ts-ignore
               this.node = node
             }}
             style={{ ...componentStyles }}
@@ -127,4 +127,16 @@ export class Animate extends React.PureComponent<Props> {
   }
 }
 
-export default Animate
+const AnimateConsumer = props => {
+  const contextValue = React.useContext(AnimateGroupContext)
+
+  if (contextValue) {
+    const newProps = { ...props, ...contextValue }
+    newProps.className = classNames(props.className, contextValue.className)
+    return <Animate {...newProps} />
+  }
+
+  return <Animate {...props} />
+}
+
+export default AnimateConsumer

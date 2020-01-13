@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { TransitionGroup } from 'react-transition-group'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
+
+export const AnimateGroupContext = React.createContext({})
 
 export interface Props {
   appear?: any
@@ -68,9 +69,9 @@ export class AnimateGroup extends React.PureComponent<Props> {
     const key = getComponentKey(child, index)
 
     return childFactory(
-      <PropProvider value={animateProps} key={key}>
+      <AnimateGroupContext.Provider value={animateProps} key={key}>
         {child}
-      </PropProvider>,
+      </AnimateGroupContext.Provider>,
       index
     )
   }
