@@ -1,8 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY } from './SideNavigation.utils'
-import { SideNavigationDropdownHeaderProps } from './SideNavigation.types'
 
 import { createUniqueIDFactory } from '../../utilities/id'
 
@@ -10,13 +8,11 @@ import Icon from '../Icon'
 import AutoDropdown from '../AutoDropdown/AutoDropdown'
 
 import { DropdownHeaderUI } from './styles/SideNavigation.css'
-import SideNavigation from './SideNavigation'
+import SideNavigation, { SideNavigationContext } from './SideNavigation'
 
-const UNIQUE_ID = createUniqueIDFactory(COMPONENT_KEY.DropdownHeader)
+const UNIQUE_ID = createUniqueIDFactory('DropdownHeader')
 
-export class DropdownHeader extends React.PureComponent<
-  SideNavigationDropdownHeaderProps
-> {
+export class DropdownHeader extends React.PureComponent {
   static displayName = 'SideNavigation.DropdownHeader'
   static defaultProps = {}
 
@@ -65,4 +61,16 @@ export class DropdownHeader extends React.PureComponent<
   }
 }
 
-export default DropdownHeader
+const DropdownHeaderConsummer = props => {
+  const contextValue = React.useContext(SideNavigationContext)
+
+  if (contextValue) {
+    const newProps = { ...props, ...contextValue }
+    newProps.className = classNames(props.className, contextValue.className)
+    return <DropdownHeader {...newProps} />
+  }
+
+  return <DropdownHeader {...props} />
+}
+
+export default DropdownHeaderConsummer

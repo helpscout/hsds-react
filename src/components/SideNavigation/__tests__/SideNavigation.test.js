@@ -46,23 +46,3 @@ describe('Width', () => {
     expect(el.prop('width')).toBe(width)
   })
 })
-
-describe('Dropdowns', () => {
-  test('Adds a dropdown id to the list', () => {
-    const wrapper = mount(<SideNavigation collapsable={true} />)
-    const dropdownId = 'test1'
-
-    wrapper.instance().forceNavVisibleOn(dropdownId)
-    expect(wrapper.state().dropdowns).toContain(dropdownId)
-  })
-
-  test('Removes a dropdown id from the list', () => {
-    const wrapper = mount(<SideNavigation collapsable={true} />)
-    const dropdownId = 'test1'
-
-    wrapper.instance().forceNavVisibleOn(dropdownId)
-    expect(wrapper.state().dropdowns).toContain(dropdownId)
-    wrapper.instance().forceNavVisibleOff(dropdownId)
-    expect(wrapper.state().dropdowns).not.toContain(dropdownId)
-  })
-})
