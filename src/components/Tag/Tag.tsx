@@ -15,6 +15,8 @@ import {
   TextUI,
 } from './styles/Tag.css'
 
+import { TagListContext } from '../TagList/TagList'
+
 type TagColor =
   | 'blue'
   | 'lightBlue'
@@ -219,4 +221,16 @@ export class Tag extends React.PureComponent<Props, State> {
   }
 }
 
-export default Tag
+const TagConsumer = props => {
+  const contextValue = React.useContext(TagListContext)
+
+  if (contextValue) {
+    const newProps = { ...props, ...contextValue }
+    newProps.className = classNames(props.className, contextValue.className)
+    return <Tag {...newProps} />
+  }
+
+  return <Tag {...props} />
+}
+
+export default TagConsumer

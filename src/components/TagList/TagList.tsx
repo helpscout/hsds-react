@@ -2,12 +2,12 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
-import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import { noop, promiseNoop } from '../../utilities/other'
 import { TagListUI, ClearAllUI } from './styles/TagList.css'
 import { COMPONENT_KEY as TAG } from '../Tag/Tag.utils'
+
+export const TagListContext = React.createContext({})
 
 export interface Props {
   className?: string
@@ -58,10 +58,9 @@ export class TagList extends React.PureComponent<Props> {
 
     const childrenLength = React.Children.count(children)
     const childrenMarkup = React.Children.map(children, (child, index) => {
-      if (!isComponentNamed(child, TAG)) return null
-
       const isLastChildWithClearAll =
         childrenLength - 1 === index && clearAll && childrenLength > 1
+
       return (
         <Inline.Item>
           {React.cloneElement(child)}
@@ -75,15 +74,14 @@ export class TagList extends React.PureComponent<Props> {
     })
 
     return (
-      <PropProvider value={providerProps}>
+      <TagListContext.Provider value={providerProps}>
         <Inline size={size}>{childrenMarkup}</Inline>
-      </PropProvider>
+      </TagListContext.Provider>
     )
   }
 
   render() {
     const { overflowFade, ...rest } = this.props
-
     const componentMarkup = this.renderContent()
 
     return (
