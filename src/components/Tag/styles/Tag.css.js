@@ -199,7 +199,7 @@ export const IconUI = styled(Icon)`
   }
 `
 
-function makeColorStyles(): string {
+function makeColorStyles() {
   return forEach(
     config.colors,
     (colorName, { main, secondary }) => `
