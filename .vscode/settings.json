@@ -2,13 +2,6 @@
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
-  "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    { "language": "typescript", "autoFix": true },
-    { "language": "typescriptreact", "autoFix": true }
-  ],
   "editor.formatOnSave": true,
   "[javascript]": {
     "editor.formatOnSave": false
@@ -22,5 +15,8 @@
   "[typescriptreact]": {
     "editor.formatOnSave": false
   },
-  "workbench.colorCustomizations": {}
+  "workbench.colorCustomizations": {},
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
