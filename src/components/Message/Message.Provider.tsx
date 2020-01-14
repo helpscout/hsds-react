@@ -2,7 +2,6 @@ import * as React from 'react'
 import ThemeProvider from '../ThemeProvider'
 
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Message.utils'
 
 export type MessageProviderProps = {
   theme: any

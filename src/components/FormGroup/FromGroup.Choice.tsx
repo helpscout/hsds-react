@@ -3,7 +3,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 import { FormGroupChoiceUI } from './styles/Choice.css'
-import { COMPONENT_KEY } from './FromGroup.utils'
 
 type Props = {
   children?: any

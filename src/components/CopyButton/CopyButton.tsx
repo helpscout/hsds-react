@@ -8,7 +8,7 @@ import {
   ConfirmationIconWrapperUI,
   ContentWrapperUI,
 } from './styles/CopyButton.css.js'
-import { COMPONENT_KEY } from './CopyButton.utils'
+
 import { ButtonSize } from '../Button/Button.types'
 
 export interface Props {

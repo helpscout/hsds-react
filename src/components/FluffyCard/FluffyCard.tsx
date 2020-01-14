@@ -5,7 +5,6 @@ import { classNames } from '../../utilities/classNames'
 
 import { noop } from '../../utilities/other'
 import { FluffyCardUI } from './styles/FluffyCard.css'
-import { COMPONENT_KEY } from './FluffyCard.utils'
 
 type Props = {
   autoWordWrap?: boolean

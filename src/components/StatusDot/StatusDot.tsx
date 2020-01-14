@@ -5,7 +5,6 @@ import Centralize from '../Centralize'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './StatusDot.utils'
 import { StatusDotUI } from './styles/StatusDot.css'
 
 type Props = {

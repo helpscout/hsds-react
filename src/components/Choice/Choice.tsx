@@ -16,7 +16,7 @@ import {
   ChoiceLabelTextUI,
   ChoiceHelpTextUI,
 } from './styles/Choice.css'
-import { COMPONENT_KEY } from './Choice.utils'
+
 import { ChoiceValue, ChoiceProps, ChoiceState } from './Choice.types'
 
 const uniqueID = createUniqueIDFactory('Choice')

@@ -7,7 +7,6 @@ import { classNames } from '../../utilities/classNames'
 
 import { createUniqueIDFactory } from '../../utilities/id'
 import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css'
-import { COMPONENT_KEY } from './FormLabel.utils'
 
 export interface Props {
   children?: any

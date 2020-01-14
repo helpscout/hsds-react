@@ -15,7 +15,7 @@ import {
   ContentUI,
   HeadingUI,
 } from './styles/RadioCard.css'
-import { COMPONENT_KEY } from './RadioCard.utils'
+
 import { RadioCardProps, RadioCardState, InputEvent } from './RadioCard.types'
 
 const uniqueID = createUniqueIDFactory('RadioCard')

@@ -5,7 +5,6 @@ import Header from './ChatInbox.Header'
 import Content from './ChatInbox.Content'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './ChatInbox.utils'
 
 type Props = {
   className?: string

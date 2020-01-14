@@ -3,7 +3,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 import { CodeUI } from './styles/Code.css'
-import { COMPONENT_KEY } from './Code.utils'
 
 export interface Props {
   className?: string

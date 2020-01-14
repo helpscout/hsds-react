@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './Grid.utils'
 import Container from './Grid.Container'
 import Row from './Grid.Row'
 import Col from './Grid.Col'

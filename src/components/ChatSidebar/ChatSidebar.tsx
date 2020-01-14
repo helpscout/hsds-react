@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import pluralize from '../../utilities/pluralize'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
-import { COMPONENT_KEY } from './ChatSidebar.utils'
+
 import {
   ChatSidebarUI,
   StatusBarWrapperUI,

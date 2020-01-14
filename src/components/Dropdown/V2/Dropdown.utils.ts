@@ -4,19 +4,6 @@ import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
 import { isObject, isDefined, isArray, isString } from '../../../utilities/is'
 
-export const COMPONENT_KEY = {
-  Block: 'DropdownBlock',
-  Card: 'DropdownCard',
-  Divider: 'DropdownDivider',
-  Dropdown: 'Dropdown',
-  Group: 'DropdownGroup',
-  Header: 'DropdownHeader',
-  Item: 'DropdownItem',
-  Menu: 'DropdownMenu',
-  MenuContainer: 'DropdownMenuContainer',
-  Trigger: 'DropdownTrigger',
-}
-
 export const DELIMETER = '.'
 
 export const SELECTORS = {

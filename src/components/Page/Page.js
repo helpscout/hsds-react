@@ -23,7 +23,6 @@ export class Page extends React.PureComponent {
   getContextValue = () => {
     const { isResponsive } = this.props
 
-    // [CONDITIONLIST_COMPONENT_KEY.ConditionList]: { isWithOffset: true },
     return {
       accordion: {
         isPage: true,

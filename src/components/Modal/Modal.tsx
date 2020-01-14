@@ -15,7 +15,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
-import { COMPONENT_KEY } from './Modal.utils'
+
 import {
   ModalUI,
   InnerWrapperUI,

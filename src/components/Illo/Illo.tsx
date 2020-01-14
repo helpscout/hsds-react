@@ -5,7 +5,7 @@ import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 
 import { IlloUI, IconUI } from './styles/Illo.css'
-import { COMPONENT_KEY, injectFillColorIntoSvg, svgSet } from './Illo.utils'
+import { injectFillColorIntoSvg, svgSet } from './Illo.utils'
 import { IlloProps } from './Illo.types'
 
 const Illo = (props: IlloProps) => {

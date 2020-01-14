@@ -4,7 +4,7 @@ import { classNames } from '../../utilities/classNames'
 
 import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
-import { COMPONENT_KEY } from './CopyCode.utils'
+
 import {
   CopyButtonUI,
   CopyCodeUI,

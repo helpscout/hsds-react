@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Illo from '../Illo'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './BlankSlate.utils'
 import {
   BlankSlateUI,
   HeadingUI,

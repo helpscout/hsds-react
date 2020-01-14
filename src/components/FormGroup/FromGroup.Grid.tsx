@@ -3,8 +3,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import GridComponent from '../Grid'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './FromGroup.utils'
-
 type Props = {
   children?: any
   className?: string

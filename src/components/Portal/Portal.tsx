@@ -94,12 +94,7 @@ export class Portal extends React.Component<PortalProps> {
 
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
-      <PropProvider
-        app={propProviderContextApp}
-        value={propProviderContextValue}
-      >
-        {children}
-      </PropProvider>,
+      <>{children}</>,
       // TODO: fix typescript complains
       // @ts-ignore
       this.node
