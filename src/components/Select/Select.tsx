@@ -198,7 +198,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
   }
 
   getErrorMarkup = () => {
-    const { errorIcon, errorMessage, state } = this.props
+    const { errorIcon, errorMessage, state, tabIndex = 0 } = this.props
     const shouldRenderError = state === STATES.error
 
     if (!shouldRenderError) return null
@@ -212,6 +212,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
             name={errorIcon}
             state={STATES.error}
             className="c-Select__errorIcon"
+            tabIndex={tabIndex}
           />
         </Tooltip>
       </ItemUI>
@@ -307,6 +308,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
       state: stateProp,
       style: styleProp,
       success,
+      tabIndex,
       value,
       ...rest
     } = this.props

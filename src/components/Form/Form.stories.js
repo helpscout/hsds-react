@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action as addonAction } from '@storybook/addon-actions'
 import { withKnobs, text, boolean } from '@storybook/addon-knobs'
-import styled from '../styled'
+import styled from 'styled-components'
 import { Form, FormGroup, FormLabel, Input } from '../index'
 import Readme from './README.md'
 

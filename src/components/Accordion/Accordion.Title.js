@@ -104,7 +104,7 @@ const Title = props => {
     className: classNameStrings.iconCaretClassName,
     faint: !isIconOpen,
     name: getIconName(isIconOpen, isLink),
-    size: isLink ? 14 : 18,
+    size: 14,
   }
 
   const id = `accordion__section__title--${uuid}`

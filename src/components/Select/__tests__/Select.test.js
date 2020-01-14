@@ -511,6 +511,7 @@ describe('ErrorMessage', () => {
     const error = wrapper.find(ui.errorIcon)
 
     expect(error.length).toBeTruthy()
+    expect(error.first().props().tabIndex).toBe(0)
   })
 
   test('Renders a Tooltip, if error', () => {
@@ -522,10 +523,13 @@ describe('ErrorMessage', () => {
   })
 
   test('Can customize error Icon', () => {
-    const wrapper = mount(<Select state="error" errorIcon="chat" />)
+    const wrapper = mount(
+      <Select state="error" errorIcon="chat" tabIndex={3} />
+    )
     const el = wrapper.find('Icon')
 
     expect(el.props().name).toBe('chat')
+    expect(el.props().tabIndex).toBe(3)
   })
 })
 

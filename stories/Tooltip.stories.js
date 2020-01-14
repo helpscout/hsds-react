@@ -120,7 +120,7 @@ stories.add('With Context provider', () => {
     >
       <div style={{ padding: '20%', textAlign: 'center' }}>
         <Tooltip {...props}>
-          <div>Tooltip Trigger</div>
+          <div tabIndex="0">Tooltip Trigger</div>
         </Tooltip>
       </div>
     </TooltipContext.Provider>
