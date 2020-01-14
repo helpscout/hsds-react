@@ -58,6 +58,7 @@ export class ContentResizer extends React.PureComponent<
       this.handleResize(nextProps)
     }
 
+    /* istanbul ignore else */
     if (!nextProps.isOpen) {
       this.animationUpdateInterval &&
         clearInterval(this.animationUpdateInterval)
