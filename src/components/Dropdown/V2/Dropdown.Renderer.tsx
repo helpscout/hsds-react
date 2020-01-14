@@ -32,6 +32,8 @@ import { scrollIntoView } from '../../../utilities/scrolling'
 import { noop } from '../../../utilities/other'
 
 class Renderer extends React.PureComponent<any> {
+  static displayName = 'DropdownRenderer'
+
   static defaultProps = {
     activeClassName: 'is-active',
     decrementIndex: noop,

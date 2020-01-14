@@ -38,6 +38,7 @@ export interface PopProps {
   triggerOn: 'click' | 'hover'
   showArrow: boolean
   zIndex?: number
+  dataCy?: string
 }
 
 export type PopperStyles = {

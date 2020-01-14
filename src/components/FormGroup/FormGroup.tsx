@@ -2,8 +2,10 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
+import Choice from './FromGroup.Choice'
+import Grid from './FromGroup.Grid'
+
 import { FormGroupUI } from './styles/FormGroup.css'
-import { COMPONENT_KEY } from './FromGroup.utils'
 
 type Props = {
   children?: any
@@ -11,8 +13,8 @@ type Props = {
 }
 
 class FormGroup extends React.PureComponent<Props> {
-  static Choice: any
-  static Grid: any
+  static Choice: any = Choice
+  static Grid: any = Grid
 
   render() {
     const { className, children, ...rest } = this.props

@@ -35,22 +35,6 @@ describe('Animation', () => {
   })
 })
 
-describe('Children', () => {
-  test('Discards non-Avatar children', () => {
-    const wrapper = mount(
-      <AvatarList>
-        <Avatar />
-        <Text />
-      </AvatarList>
-    )
-    const avatar = wrapper.find(Avatar)
-    const text = wrapper.find(Text)
-
-    expect(avatar.length).toBeTruthy()
-    expect(text.length).toBe(0)
-  })
-})
-
 describe('Limit', () => {
   test('Can limit the amount of avatars', () => {
     const wrapper = mount(

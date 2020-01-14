@@ -41,6 +41,7 @@ class Overlay extends React.PureComponent<Props> {
         className={componentClassName}
         role="dialog"
         isHsApp={isHsApp}
+        data-cy="Overlay"
       >
         {children}
       </OverlayUI>

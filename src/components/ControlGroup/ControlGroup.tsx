@@ -1,11 +1,9 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import Block from './ControlGroup.Block'
 import Item from './ControlGroup.Item'
 import { ControlGroupUI } from './styles/ControlGroup.css'
-import { COMPONENT_KEY } from './ControlGroup.utils'
 
 type Props = {
   className?: string
@@ -22,7 +20,7 @@ class ControlGroup extends React.PureComponent<Props> {
     if (!children) return null
 
     return React.Children.map(children, (child, index) => {
-      if (!isComponentNamed(child, COMPONENT_KEY.Item)) return child
+      if (child.type !== Item && child.type !== Block) return child
 
       return React.cloneElement(child, {
         isFirst: index === 0 && children.length > 1,

@@ -38,6 +38,8 @@ const clearerID = createUniqueIDFactory('hsds-dropdown-v2-theallclearer')
 export class MenuContainer extends React.PureComponent<
   DropdownMenuContainerProps
 > {
+  static displayName = 'DropdownContainer'
+
   static defaultProps = {
     animationDuration: 80,
     animationSequence: 'fade down',

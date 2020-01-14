@@ -11,6 +11,8 @@ export interface Props {
 }
 
 export class Group extends React.PureComponent<Props> {
+  static displayName = 'DropdownGroup'
+
   static defaultProps = {
     innerRef: noop,
   }

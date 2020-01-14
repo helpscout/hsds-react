@@ -10,6 +10,8 @@ export interface Props {
 }
 
 export class Divider extends React.PureComponent<Props> {
+  static displayName = 'DropdownDivider'
+
   static defaultProps = {
     innerRef: noop,
   }

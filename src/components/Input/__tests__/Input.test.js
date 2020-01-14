@@ -181,7 +181,7 @@ describe('Events', () => {
   test('onResize callback is called when Input resizes', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={true} onResize={spy} />)
-    const resizer = wrapper.find('Resizer')
+    const resizer = wrapper.find('InputResizer')
 
     resizer.instance().handleOnResize()
 
@@ -452,12 +452,6 @@ describe('HintText', () => {
     const o = wrapper.find(ui.hintText).first()
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Hint text')
-  })
-
-  test('Does not pass state to hintText', () => {
-    const wrapper = mount(<Input hintText="Hint text" state="error" />)
-    const o = wrapper.find(ui.hintText).first()
-    expect(o.props().state).not.toBeTruthy()
   })
 
   test('Accepts React components', () => {

@@ -40,9 +40,9 @@ describe('message list', () => {
       const expectedItem = mockItems[index]
       expect(id).toEqual(expectedItem.id)
       expect(isDragging).toEqual(false)
-      expect(isPaused).toEqual(expectedItem.isPaused)
-      expect(isNotStarted).toEqual(expectedItem.isNotStarted)
-      expect(isValid).toEqual(expectedItem.isValid)
+      expect(isPaused).toEqual(!!expectedItem.isPaused)
+      expect(isNotStarted).toEqual(!!expectedItem.isNotStarted)
+      expect(isValid).toEqual(!!expectedItem.isValid)
       expect(name).toEqual(expectedItem.name)
       expect(title).toEqual(expectedItem.title)
       expect(to).toEqual(expectedItem.to)

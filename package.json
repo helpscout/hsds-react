@@ -222,7 +222,7 @@
     "start-server-and-test": "^1.7.11",
     "storybook-addon-jsx": "^7.1.2",
     "storybook-readme": "^5.0.8",
-    "styled-components": "5.0.0-rc.2",
+    "styled-components": "5.0.0",
     "stylelint": "^11.1.1",
     "stylelint-config-prettier": "^6.0.0",
     "stylelint-config-recommended": "^3.0.0",

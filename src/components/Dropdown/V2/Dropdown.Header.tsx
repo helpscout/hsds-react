@@ -13,6 +13,8 @@ export interface Props {
 }
 
 export class Header extends React.PureComponent<Props> {
+  static displayName = 'DropdownHeader'
+
   static defaultProps = {
     innerRef: noop,
   }

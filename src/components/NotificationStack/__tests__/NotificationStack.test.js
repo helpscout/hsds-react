@@ -28,24 +28,6 @@ describe('ClassName', () => {
   })
 })
 
-describe('Children', () => {
-  test('Only renders Notification children components', () => {
-    const wrapper = mount(
-      <NotificationStack>
-        <Notification />
-        <Notification />
-        <Notification />
-        <div className="other" />
-      </NotificationStack>
-    )
-    const n = wrapper.find(Notification)
-    const o = wrapper.find('.other')
-
-    expect(n.length).toBe(3)
-    expect(o.length).toBe(0)
-  })
-})
-
 describe('Notification', () => {
   test('Sets Notification isActive based on limit, in first->last order', () => {
     const wrapper = mount(
@@ -185,8 +167,7 @@ describe('NotificationID', () => {
     )
 
     const n = wrapper.find(Notification)
-    n
-      .last()
+    n.last()
       .props()
       .onClick()
 

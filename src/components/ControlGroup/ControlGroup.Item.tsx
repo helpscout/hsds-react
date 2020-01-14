@@ -1,7 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isComponentTypeControl } from '../../utilities/component'
 import { ItemUI } from './styles/Item.css'
 
 type Props = {
@@ -28,8 +27,6 @@ class Item extends React.PureComponent<Props> {
     if (!children) return null
 
     return React.Children.map(children, (child, index) => {
-      if (!isComponentTypeControl(child)) return child
-
       return React.cloneElement(child, {
         isFirst,
         isNotOnly,

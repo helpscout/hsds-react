@@ -21,20 +21,6 @@ describe('ClassName', () => {
   })
 })
 
-describe('Children', () => {
-  test('Only renders Tag children content', () => {
-    const wrapper = mount(
-      <TagList>
-        <Tag />
-        <div className="child">Hello</div>
-      </TagList>
-    )
-
-    expect(wrapper.find(Tag).length).toBe(1)
-    expect(wrapper.find('.child').length).toBe(0)
-  })
-})
-
 describe('Inline', () => {
   test('Renders content within Inline', () => {
     const wrapper = mount(
@@ -80,9 +66,9 @@ describe('isRemovable', () => {
         <Tag />
       </TagList>
     )
-    const o = wrapper.find('Tag')
+    const o = wrapper.find('.c-Tag__iconWrapper')
 
-    expect(o.props().isRemovable).toBe(true)
+    expect(o.exists()).toBe(true)
   })
 })
 

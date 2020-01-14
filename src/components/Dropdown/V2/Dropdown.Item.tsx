@@ -49,6 +49,8 @@ export interface Props {
 }
 
 export class Item extends React.PureComponent<Props> {
+  static displayName = 'DropdownItem'
+
   static defaultProps = {
     contentWindow: window,
     getState: noop,
@@ -273,6 +275,7 @@ export class Item extends React.PureComponent<Props> {
         ref={this.setNodeRef}
         role={hasSubMenu ? 'group' : 'option'}
         as={selector}
+        data-cy="DropdownItem"
       >
         {this.renderContent()}
         {this.renderSubMenu()}

@@ -1,10 +1,9 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Modal.utils'
 import { ContentUI } from './styles/Modal.Content.css'
 import { ModalContentProps } from './Modal.types'
+import Body from './Modal.Body'
 
 class Content extends React.PureComponent<ModalContentProps> {
   static displayName = 'Modal.Content'
@@ -18,7 +17,7 @@ class Content extends React.PureComponent<ModalContentProps> {
     const componentClassName = classNames('c-ModalContent', className)
 
     const childrenMarkup = React.Children.map(children, child => {
-      if (child && isComponentNamed(child, COMPONENT_KEY.Body)) {
+      if (child && child.type === Body) {
         return React.cloneElement(child, {
           scrollableRef,
         })

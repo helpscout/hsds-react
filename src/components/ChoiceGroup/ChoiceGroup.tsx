@@ -4,14 +4,12 @@ import Context from './ChoiceGroup.Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
 import get from '../../utilities/get'
-import { isComponentNamed } from '../../utilities/component'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { ChoiceGroupUI } from './styles/ChoiceGroup.css'
-import { COMPONENT_KEY as RADIO_KEY } from '../Radio/Radio.utils'
-import { COMPONENT_KEY as RADIOCARD_KEY } from '../RadioCard/RadioCard.utils'
-import { COMPONENT_KEY } from './ChoiceGroup.utils'
+import Radio from '../Radio'
+import RadioCard from '../RadioCard'
 
 type Props = {
   align: 'horizontal' | 'vertical'
@@ -70,9 +68,7 @@ class ChoiceGroup extends React.PureComponent<Props, State> {
     let multiSelect
 
     if (child) {
-      multiSelect =
-        !isComponentNamed(child, RADIO_KEY) &&
-        !isComponentNamed(child, RADIOCARD_KEY)
+      multiSelect = child.type !== Radio && child.type !== RadioCard
     }
     // Override auto-setting based on children
     multiSelect =

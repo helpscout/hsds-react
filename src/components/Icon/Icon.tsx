@@ -70,6 +70,7 @@ const Icon = (props: IconProps) => {
       className={componentClassName}
       onClick={onClick}
       data-icon-name={name}
+      data-cy="Icon"
     >
       <span
         className="c-Icon__icon"

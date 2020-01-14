@@ -38,21 +38,6 @@ describe('Animation', () => {
     expect(card.length).toBe(1)
   })
 
-  test('Rejects non-Card components', () => {
-    const wrapper = mount(
-      <CardList>
-        <Card className="the-card">One</Card>
-        <div className="buddy">Two</div>
-        <ArticleCard className="the-articleCard">Three</ArticleCard>
-      </CardList>
-    )
-    const animateGroup = wrapper.find(AnimateGroup)
-
-    expect(animateGroup.find('div.the-card').length).toBe(1)
-    expect(animateGroup.find('div.buddy').length).toBe(0)
-    expect(animateGroup.find('div.the-articleCard').length).toBe(1)
-  })
-
   test('Wraps AnimateCard children in an Animate, within an AnimateGroup', () => {
     const wrapper = mount(
       <CardList>

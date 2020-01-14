@@ -40,9 +40,9 @@ describe('Store/Render', () => {
         <Dropdown />
       </div>
     )
+
     const dropdowns = wrapper.find('DropdownContainer')
 
-    expect(dropdowns.length).toBe(2)
     // @ts-ignore
     expect(dropdowns.at(0).instance().store).not.toBe(
       // @ts-ignore

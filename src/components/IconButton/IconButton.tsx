@@ -66,8 +66,15 @@ export class IconButton extends React.PureComponent<Props> {
       ...rest
     } = this.props
 
+    const dataCy = this.props['data-cy'] || 'IconButton'
+
     return (
-      <IconButtonUI {...rest} className={this.getClassName()} ref={innerRef}>
+      <IconButtonUI
+        {...rest}
+        className={this.getClassName()}
+        ref={innerRef}
+        data-cy={dataCy}
+      >
         <Icon
           name={icon}
           size={this.getIconSize()}

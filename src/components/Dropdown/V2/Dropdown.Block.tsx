@@ -13,6 +13,8 @@ export interface Props {
 }
 
 export class Block extends React.PureComponent<Props> {
+  static displayName = 'DropdownBlock'
+
   static defaultProps = {
     innerRef: noop,
     isSeamless: false,

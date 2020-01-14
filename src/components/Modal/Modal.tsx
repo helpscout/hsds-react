@@ -12,7 +12,6 @@ import KeypressListener from '../KeypressListener'
 import PortalWrapper from '../PortalWrapper'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
@@ -171,6 +170,8 @@ class Modal extends React.PureComponent<ModalProps> {
     const { children } = this.props
 
     return React.Children.map(children, child => {
+      if (!child) return child
+
       const {
         type: { displayName },
       } = child

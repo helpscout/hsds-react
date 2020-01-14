@@ -21,6 +21,8 @@ export interface Props {
 }
 
 export class Menu extends React.PureComponent<Props> {
+  static displayName = 'DropdownMenu'
+
   static defaultProps = {
     menuRef: noop,
     innerRef: noop,
@@ -67,6 +69,7 @@ export class Menu extends React.PureComponent<Props> {
       className: componentClassName,
       ref: renderMenu ? undefined : menuRef,
       style: this.getStyles(),
+      'data-cy': 'DropdownMenu',
     }
 
     const menuMarkup = renderMenu ? (

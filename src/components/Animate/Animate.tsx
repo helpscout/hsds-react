@@ -128,10 +128,10 @@ export class Animate extends React.PureComponent<Props> {
 }
 
 const AnimateConsumer = props => {
-  const contextValue = React.useContext(AnimateGroupContext)
+  const contextValue: any = React.useContext(AnimateGroupContext)
 
   if (contextValue) {
-    const newProps = { ...props, ...contextValue }
+    const newProps = { ...contextValue, ...props }
     newProps.className = classNames(props.className, contextValue.className)
     return <Animate {...newProps} />
   }

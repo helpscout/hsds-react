@@ -13,6 +13,8 @@ export interface State {
 }
 
 export class Card extends React.PureComponent<DropdownCardProps> {
+  static displayName = 'DropdownCard'
+
   static defaultProps = {
     cardRef: noop,
     style: {},

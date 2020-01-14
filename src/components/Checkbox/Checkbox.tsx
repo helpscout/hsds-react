@@ -2,8 +2,6 @@ import * as React from 'react'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
 
-import { COMPONENT_KEY } from './Checkbox.utils'
-
 type Props = {
   className?: string
 }

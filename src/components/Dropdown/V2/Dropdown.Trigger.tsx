@@ -25,6 +25,8 @@ export interface Props {
 }
 
 export class Trigger extends React.PureComponent<Props> {
+  static displayName = 'DropdownTrigger'
+
   static defaultProps = {
     disabled: false,
     triggerRef: noop,
@@ -115,6 +117,7 @@ export class Trigger extends React.PureComponent<Props> {
         onFocus={onFocus}
         onClick={this.handleOnClick}
         onKeyDown={this.handleOnKeyDown}
+        data-cy="DropdownTrigger"
       />
     )
   }

@@ -22,8 +22,6 @@ export interface Props extends PopProps {
   theme?: string
   title?: any
   zIndex?: number
-  placement?: any
-  display?: any
 }
 
 export class Tooltip extends React.PureComponent<Props> {
@@ -110,6 +108,7 @@ export class Tooltip extends React.PureComponent<Props> {
 
   render() {
     const { className, children, color, ...rest } = this.props
+    const dataCy = this.props['data-cy'] || 'Tooltip'
 
     if (!this.shouldRenderPopper()) {
       return children ? (
@@ -120,7 +119,7 @@ export class Tooltip extends React.PureComponent<Props> {
     }
 
     return (
-      <Pop {...rest} className={this.getClassName()} data-cy="Tooltip">
+      <Pop {...rest} className={this.getClassName()} data-cy={dataCy}>
         <Pop.Reference
           className="c-Tooltip__reference"
           data-cy="ToolTipReference"

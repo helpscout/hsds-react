@@ -54,12 +54,10 @@ export class AnimateGroup extends React.PureComponent<Props> {
     const delay = stagger ? staggerIndexDelay : delayProp
 
     return {
-      Animate: {
-        duration,
-        delay,
-        easing,
-        sequence,
-      },
+      duration,
+      delay,
+      easing,
+      sequence,
     }
   }
 

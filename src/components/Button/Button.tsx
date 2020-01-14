@@ -1,7 +1,6 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
@@ -11,8 +10,7 @@ import {
   FocusUI,
   SpinnerUI,
 } from './styles/Button.css'
-import { COMPONENT_KEY } from './Button.utils'
-import { COMPONENT_KEY as ICON_KEY } from '../Icon/Icon.utils'
+import Icon from '../Icon'
 import { ButtonKind, ButtonShape, ButtonSize } from './Button.types'
 import { UIState } from '../../constants/types'
 
@@ -119,8 +117,9 @@ class Button extends React.PureComponent<Props> {
     const { children } = this.props
 
     return React.Children.map(children, (child, index) => {
-      if (!isComponentNamed(child, ICON_KEY)) return child
-
+      if (!child) return child
+      if (child && !child.hasOwnProperty('type')) return child
+      if (child.type !== Icon) return child
       const len = React.Children.count(children)
       const isFirst = index === 0
       const isLast = index === len - 1

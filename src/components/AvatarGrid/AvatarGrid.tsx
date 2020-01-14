@@ -5,16 +5,12 @@ import Avatar from '../Avatar'
 import Animate from '../Animate'
 
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 
 import {
   AvatarGridUI,
   AvatarGridWrapperUI,
   AvatarGridContainerUI,
 } from './styles/AvatarGrid.css'
-
-import { COMPONENT_KEY } from './AvatarGrid.utils'
-import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 type Props = {
   animationEasing: string
@@ -58,9 +54,7 @@ class AvatarGrid extends React.PureComponent<Props> {
       ...rest
     } = this.props
 
-    const avatars = React.Children.toArray(children).filter(child =>
-      isComponentNamed(child, AVATAR_KEY)
-    )
+    const avatars = React.Children.toArray(children)
 
     const totalAvatarCount = avatars.length
     const avatarList =

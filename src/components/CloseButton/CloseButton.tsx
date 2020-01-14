@@ -66,6 +66,7 @@ export class CloseButton extends React.PureComponent<Props> {
         {...getValidProps(rest)}
         className={componentClassName}
         ref={innerRef}
+        data-cy="CloseButton"
       >
         {this.renderIcon()}
       </CloseButtonUI>
