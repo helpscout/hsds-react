@@ -44,7 +44,6 @@ export class ContentResizer extends React.PureComponent<
   componentDidMount() {
     this._isMounted = true
     this.resizerNode.addEventListener('transitionend', this.onAnimationEnd)
-    this.resize(this.props)
   }
 
   componentWillUnmount() {
@@ -54,6 +53,8 @@ export class ContentResizer extends React.PureComponent<
   componentWillReceiveProps(nextProps) {
     /* istanbul ignore else */
     if (nextProps.resizeCount !== this.props.resizeCount) {
+      this.animationUpdateInterval &&
+        clearInterval(this.animationUpdateInterval)
       this.handleResize(nextProps)
     }
 
