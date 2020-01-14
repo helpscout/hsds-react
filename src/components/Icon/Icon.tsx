@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import css from './styles/Icon.css'
+import { IconUI } from './styles/Icon.css'
 import { COMPONENT_KEY, renameSVGIds, svgSet } from './Icon.utils'
 import { IconProps } from './Icon.types'
 
