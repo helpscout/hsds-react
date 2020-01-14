@@ -6,6 +6,7 @@ import InputReadme from '../src/components/Input/README.md'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import styled from 'styled-components'
 import { Button, Flexy, Icon, Input } from '../src/index'
+import { getColor } from '../src/styles/utilities/color'
 
 const stories = storiesOf('Input', module)
 
@@ -197,18 +198,61 @@ stories.add('prefix', () => (
   </div>
 ))
 
-stories.add('suffix', () => (
-  <div>
-    <Input
-      suffix={
-        <Button kind="secondary" size="lg" isLast>
-          Suffix
-        </Button>
-      }
-      value="Input Suffix"
-    />
-  </div>
-))
+stories.add('suffix', () => {
+  const StatefulButtonUI = ({ children, state = 'default', ...rest }) => (
+    <Button className={`is-state-${state}`} {...rest}>
+      {children}
+    </Button>
+  )
+
+  const StatefulButton = styled(Button)`
+    &.is-secondary.is-:disabled,
+    &.is-secondary[disabled] {
+      border-color: ${props =>
+        props.state === 'danger' && `${getColor('red.500')} !important`};
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      cursor: not-allowed;
+      pointer-events: all;
+    }
+  `
+
+  return (
+    <div>
+      <p>
+        <Input
+          suffix={
+            <Button version={2} kind="secondary" size="lg" isLast>
+              Suffix
+            </Button>
+          }
+          value="Input Suffix"
+        />
+      </p>
+      <p>
+        <Input
+          errorMessage="This is incorrect!"
+          state="error"
+          suffix={
+            <StatefulButton
+              disabled
+              version={2}
+              size="lg"
+              state="danger"
+              kind="secondary"
+              isFirst
+              isLast
+              disabled
+            >
+              Suffix
+            </StatefulButton>
+          }
+          value="Input Suffix"
+        />
+      </p>
+    </div>
+  )
+})
 
 stories.add('seamless', () => <Input seamless autoFocus />)
 

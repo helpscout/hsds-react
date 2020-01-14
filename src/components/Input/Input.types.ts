@@ -79,6 +79,7 @@ export type InputProps = {
   state?: UIState
   style: Object
   suffix: any
+  tabIndex: number
   type: string
   typingThrottleInterval: number
   typingTimeoutDelay: number

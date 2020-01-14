@@ -33,22 +33,22 @@ export const AccordionUI = styled('div')`
 export const BodyUI = styled('div')`
   display: block;
   overflow: hidden;
-  padding: 24px 20px;
+  padding: 0px 20px 20px 20px;
 
   .is-closed & {
     display: none;
   }
 
   &.is-md {
-    padding: 20px 20px;
+    padding: 0 20px 20px 20px;
   }
 
   &.is-sm {
-    padding: 16px 20px;
+    padding: 0 20px 16px 20px;
   }
 
   &.is-xs {
-    padding: 14px 20px;
+    padding: 0 20px 14px 20px;
   }
 
   &.is-seamless {
@@ -91,7 +91,6 @@ export const makeTitleUI = (selector: 'div') => {
     &:hover,
     &:focus,
     &.is-open {
-      background-color: ${getColor('grey.200')};
       color: currentColor;
       text-decoration: none;
     }
@@ -101,8 +100,6 @@ export const makeTitleUI = (selector: 'div') => {
     }
 
     &.is-open {
-      border-bottom: 1px solid ${getColor('border')};
-
       &.is-link {
         border-bottom: none;
       }

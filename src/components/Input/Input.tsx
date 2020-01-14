@@ -527,7 +527,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
   }
 
   getErrorMarkup() {
-    const { errorIcon, errorMessage, state } = this.props
+    const { errorIcon, errorMessage, state, tabIndex = 0 } = this.props
     const shouldRenderError = state === STATES.error
 
     if (!shouldRenderError) return null
@@ -551,6 +551,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
             name={errorIcon}
             size={24}
             state={STATES.error}
+            tabIndex={tabIndex}
           />
         </Tooltip>
       </InlinePrefixSuffixUI>
@@ -676,6 +677,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       state: stateProp,
       style: styleProp,
       suffix,
+      tabIndex,
       type,
       typingThrottleInterval,
       typingTimeoutDelay,
@@ -731,6 +733,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       placeholder,
       readOnly,
       style,
+      tabIndex,
       type,
       value,
     }
@@ -789,8 +792,8 @@ export class Input extends React.PureComponent<InputProps, InputState> {
               {this.getInlinePrefixMarkup()}
               {this.getInputMarkup(props)}
               {this.getInlineSuffixMarkup()}
-              {this.getSuffixMarkup()}
               {this.getErrorMarkup()}
+              {this.getSuffixMarkup()}
               {this.getActionMarkup()}
               <Backdrop
                 className="c-Input__backdrop"
