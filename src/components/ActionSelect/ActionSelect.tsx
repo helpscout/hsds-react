@@ -55,8 +55,9 @@ export class ActionSelect extends React.PureComponent<
     this._isMounted = false
   }
 
+  /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
-    /* istanbul ignore else */
+    /* istanbul ignore next */
     if (nextProps.selectedItem !== this.props.selectedItem) {
       /* istanbul ignore next */
       this.resizeContent()

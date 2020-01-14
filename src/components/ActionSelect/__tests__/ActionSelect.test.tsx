@@ -155,20 +155,6 @@ describe('Open/Close', () => {
 })
 
 describe('Resize', () => {
-  test('Resizes content when an selectedItem is updated', () => {
-    const resizeContentSpy = jest.spyOn(ActionSelect.prototype, 'resizeContent')
-    const wrapper = mount(
-      <ActionSelect
-        items={mockItems}
-        isOpen={true}
-        isAutoFocusNodeOnSelect={false}
-        selectedItem={mockItems[1]}
-      />
-    )
-    wrapper.setProps({ selectedItem: mockItems[0] })
-    expect(resizeContentSpy).toHaveBeenCalledTimes(1)
-  })
-
   test('Don\t resize content if the selectedItem is the same', () => {
     const spy = jest.fn()
 
