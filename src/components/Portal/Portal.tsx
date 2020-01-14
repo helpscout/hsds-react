@@ -1,8 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
-import contextConnect from '../PropProvider/contextConnect'
-import PropProvider from '../PropProvider/PropProvider'
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
 import { isObject, isString } from '../../utilities/is'
@@ -10,8 +8,6 @@ import { PortalProps } from './Portal.types'
 
 export class Portal extends React.Component<PortalProps> {
   static defaultProps = {
-    propProviderContextApp: 'blue',
-    propProviderContextValue: {},
     timeout: 0,
   }
   static Container = Container
@@ -89,7 +85,7 @@ export class Portal extends React.Component<PortalProps> {
   }
 
   renderPortalContent = props => {
-    const { propProviderContextApp, propProviderContextValue, children } = props
+    const { children } = props
     if (!children || !React.isValidElement(children)) return
 
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
@@ -210,4 +206,4 @@ export class Portal extends React.Component<PortalProps> {
   }
 }
 
-export default contextConnect()(Portal)
+export default Portal

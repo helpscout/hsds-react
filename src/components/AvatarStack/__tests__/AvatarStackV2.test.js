@@ -4,7 +4,6 @@ import { AvatarStack } from '../AvatarStack'
 import AvatarStackV2 from '../AvatarStackV2'
 import AvatarStackEntry from '../index'
 import Avatar from '../../Avatar'
-import PropProvider from '../../PropProvider'
 
 describe('AvatarStackV2', () => {
   test('Can render AvatarStack V2', () => {
