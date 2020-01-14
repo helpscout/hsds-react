@@ -24,6 +24,8 @@ export interface Props extends PopProps {
   zIndex?: number
 }
 
+export const TooltipContext = React.createContext({})
+
 export class Tooltip extends React.PureComponent<Props> {
   static defaultProps = {
     arrowClassName: 'c-TooltipArrow',
@@ -138,4 +140,16 @@ export class Tooltip extends React.PureComponent<Props> {
   }
 }
 
-export default Tooltip
+const TooltipConsumer = props => {
+  const contextValue = React.useContext(TooltipContext)
+
+  if (!contextValue) {
+    return <Tooltip {...props} />
+  }
+
+  const newProps = { ...props, ...contextValue }
+
+  return <Tooltip {...newProps} />
+}
+
+export default TooltipConsumer

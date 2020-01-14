@@ -33,7 +33,10 @@ export const ArrowUI = styled.span<ArrowUIProps>`
 
   .c-PopoverArrow {
     border: 1px solid ${popoverConfig.borderColor};
-    margin-top: 1px;
+
+    &.is-top {
+      margin-top: 1px;
+    }
 
     &.is-ghost {
       border-color: transparent;
