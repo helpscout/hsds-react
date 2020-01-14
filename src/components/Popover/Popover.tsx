@@ -2,7 +2,7 @@ import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
-import { PopoverUI, HeaderUI, HeadingUI } from './Popover.css'
+import { HeaderUI, HeadingUI } from './Popover.css'
 import Text from '../Text'
 import Tooltip, { Props as TooltipProps } from '../Tooltip/Tooltip'
 import { isPlainContent } from './Popover.utils'
@@ -101,7 +101,7 @@ export class Popover extends React.PureComponent<Props> {
     const { innerRef, ...rest } = this.props
 
     return (
-      <PopoverUI
+      <Tooltip
         {...rest}
         arrowClassName="c-PopoverArrow"
         arrowSize={16}

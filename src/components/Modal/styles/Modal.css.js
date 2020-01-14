@@ -26,6 +26,8 @@ export const ModalUI = styled('div')`
   position: fixed;
   right: 0;
   top: 0;
+  font-family: var(--HSDSGlobalFontFamily);
+  font-size: var(--HSDSGlobalFontSize);
 `
 
 export const InnerWrapperUI = styled('div')`

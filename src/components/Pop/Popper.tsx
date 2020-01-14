@@ -9,6 +9,7 @@ import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { PopProps } from './Pop.types'
+import { PopPopperUI } from './Pop.css'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
@@ -123,7 +124,7 @@ export class Popper extends React.Component<Props> {
               isOpen={isOpen}
               onClose={close}
             >
-              <div
+              <PopPopperUI
                 {...getValidProps(rest)}
                 className={componentClassName}
                 data-placement={placement}
@@ -159,7 +160,7 @@ export class Popper extends React.Component<Props> {
                     />
                   </div>
                 </Animate>
-              </div>
+              </PopPopperUI>
             </Portal>
           )
         }}
