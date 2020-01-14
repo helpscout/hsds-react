@@ -43,4 +43,18 @@ describe('content resizer', () => {
     wrapper.instance().addOnAnimationUpdate()
     expect(setIntervalSpy).toHaveBeenCalled()
   })
+
+  it('it should call clearInterval if animationUpdateInterval exsits', () => {
+    const onAnimateUpdateSpy = jest.fn()
+    const clearIntervalSpy = jest.spyOn(window, 'clearInterval')
+    const wrapper = mount(
+      <ContentResizer
+        isOpen={true}
+        onAnimationUpdate={onAnimateUpdateSpy}
+        resizeCount={1}
+      />
+    )
+    wrapper.setProps({ resizeCount: 2 })
+    expect(clearIntervalSpy).toHaveBeenCalled()
+  })
 })
