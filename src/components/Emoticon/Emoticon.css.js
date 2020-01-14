@@ -1,4 +1,4 @@
-import styled from '../styled'
+import styled from 'styled-components'
 
 // Note: colours here are not from the Help Scout palette
 export const reactionEmoticonsColours = {

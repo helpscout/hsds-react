@@ -1,4 +1,4 @@
-import styled from '../styled'
+import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 
 const BULLET_SIZE = 6
