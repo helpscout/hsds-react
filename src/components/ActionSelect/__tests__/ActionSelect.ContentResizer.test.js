@@ -31,7 +31,7 @@ describe('content resizer', () => {
     )
     wrapper.instance().addOnAnimationUpdate()
     wrapper.instance().addOnAnimationUpdate()
-    expect(clearIntervalSpy).toHaveBeenCalledTimes(2)
+    expect(clearIntervalSpy).toHaveBeenCalledTimes(1)
   })
 
   it('should call setInterval', () => {
