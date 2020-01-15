@@ -28,6 +28,8 @@ export class ActionSelect extends React.PureComponent<
     isAutoFocusNodeOnSelect: true,
     isFadeContentOnOpen: true,
     items: [],
+    onAnimationEnd: null,
+    onAnimationUpdate: null,
     onClose: noop,
     onOpen: noop,
     onResize: noop,
@@ -53,8 +55,11 @@ export class ActionSelect extends React.PureComponent<
     this._isMounted = false
   }
 
+  /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
+    /* istanbul ignore next */
     if (nextProps.selectedItem !== this.props.selectedItem) {
+      /* istanbul ignore next */
       this.resizeContent()
     }
   }
@@ -116,17 +121,25 @@ export class ActionSelect extends React.PureComponent<
   }
 
   handleOnOpen = () => {
-    this.safeSetState({
-      isOpen: true,
-    })
-    this.props.onOpen()
+    this.safeSetState(
+      {
+        isOpen: true,
+      },
+      () => {
+        this.props.onOpen()
+      }
+    )
   }
 
   handleOnClose = () => {
-    this.safeSetState({
-      isOpen: false,
-    })
-    this.props.onClose()
+    this.safeSetState(
+      {
+        isOpen: false,
+      },
+      () => {
+        this.props.onClose()
+      }
+    )
   }
 
   autoFocusChildNode = () => {
@@ -155,6 +168,8 @@ export class ActionSelect extends React.PureComponent<
       animationEasing,
       children,
       innerRef,
+      onAnimationEnd,
+      onAnimationUpdate,
       onResize,
       ...rest
     } = this.props
@@ -183,6 +198,8 @@ export class ActionSelect extends React.PureComponent<
           borderWidth={1}
           innerRef={this.setContentNode}
           isOpen={this.state.isOpen}
+          onAnimationEnd={onAnimationEnd}
+          onAnimationUpdate={onAnimationUpdate}
           onResize={onResize}
           resizeCount={this.state.resizeCount}
           selectedKey={getUniqueKeyFromItem(selectedItem)}

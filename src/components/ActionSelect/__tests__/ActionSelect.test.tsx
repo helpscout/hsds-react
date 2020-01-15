@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { cy } from '@helpscout/cyan'
 import ActionSelect from '../ActionSelect'
+import { mount } from 'enzyme'
 
 cy.useFakeTimers()
 
@@ -154,54 +155,10 @@ describe('Open/Close', () => {
 })
 
 describe('Resize', () => {
-  test('Resizes content when an item is selected', () => {
-    const spy = jest.fn()
-    const Small = () => <div className="ChildContent" />
-
-    const wrapper = cy.render(
-      <ActionSelect
-        items={mockItems}
-        isOpen={true}
-        isAutoFocusNodeOnSelect={false}
-        onResize={spy}
-      >
-        <Small />
-      </ActionSelect>
-    )
-
-    expect(spy).toHaveBeenCalledTimes(1)
-
-    cy.getByCy('DropdownItem')
-      .last()
-      .click()
-
-    expect(spy).toHaveBeenCalledTimes(3)
-  })
-
-  test('Resizes content when an selectedItem is updated', () => {
-    const spy = jest.fn()
-
-    const wrapper = cy.render(
-      <ActionSelect
-        items={mockItems}
-        isOpen={true}
-        isAutoFocusNodeOnSelect={false}
-        selectedItem={mockItems[1]}
-        onResize={spy}
-      />
-    )
-
-    expect(spy).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({ selectedItem: mockItems[0] })
-
-    expect(spy).toHaveBeenCalledTimes(3)
-  })
-
   test('Don\t resize content if the selectedItem is the same', () => {
     const spy = jest.fn()
 
-    const wrapper = cy.render(
+    const wrapper = mount(
       <ActionSelect
         items={mockItems}
         isOpen={true}
@@ -210,11 +167,7 @@ describe('Resize', () => {
         onResize={spy}
       />
     )
-
-    expect(spy).toHaveBeenCalledTimes(1)
-
     wrapper.setProps({ selectedItem: mockItems[1] })
-
-    expect(spy).not.toHaveBeenCalledTimes(3)
+    expect(spy).toHaveBeenCalledTimes(0)
   })
 })
