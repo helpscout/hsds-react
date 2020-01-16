@@ -67,11 +67,11 @@ export const SyntaxHighlight = styled('div')`
 
   div::-moz-selection,
   span::-moz-selection {
-    background: #daf1ff;
+    background: ${getColor('blue.200')};
   }
   div::selection,
   span::selection {
-    background: #daf1ff;
+    background: ${getColor('blue.200')};
   }
 
   .token.parameter {
