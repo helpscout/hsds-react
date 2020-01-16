@@ -4,7 +4,6 @@ import ChoiceGroup from '../ChoiceGroup'
 import FormGroup from '../../FormGroup'
 import Checkbox from '../../Checkbox'
 import Radio from '../../Radio'
-import RadioCard from '../../RadioCard'
 
 describe('ChoiceGroup', () => {
   describe('ClassName', () => {
@@ -57,22 +56,6 @@ describe('ChoiceGroup', () => {
       expect(formGroup.length).toBe(3)
       expect(radio.length).toBe(3)
       expect(formGroup.first().find(Radio).length).toBeTruthy()
-    })
-
-    test('Can render RadioCard components', () => {
-      const wrapper = mount(
-        <ChoiceGroup>
-          <RadioCard />
-          <RadioCard />
-          <RadioCard />
-        </ChoiceGroup>
-      )
-      const formGroup = wrapper.find(FormGroup.Choice)
-      const radio = wrapper.find(RadioCard)
-
-      expect(formGroup.length).toBe(3)
-      expect(radio.length).toBe(3)
-      expect(formGroup.first().find(RadioCard).length).toBeTruthy()
     })
   })
 

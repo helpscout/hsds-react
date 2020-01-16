@@ -10,7 +10,6 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { ChoiceGroupUI } from './styles/ChoiceGroup.css'
 import { COMPONENT_KEY as RADIO_KEY } from '../Radio/Radio.utils'
-import { COMPONENT_KEY as RADIOCARD_KEY } from '../RadioCard/RadioCard.utils'
 import { COMPONENT_KEY } from './ChoiceGroup.utils'
 
 type Props = {
@@ -70,9 +69,7 @@ class ChoiceGroup extends React.PureComponent<Props, State> {
     let multiSelect
 
     if (child) {
-      multiSelect =
-        !isComponentNamed(child, RADIO_KEY) &&
-        !isComponentNamed(child, RADIOCARD_KEY)
+      multiSelect = !isComponentNamed(child, RADIO_KEY)
     }
     // Override auto-setting based on children
     multiSelect =
