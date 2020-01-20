@@ -6,7 +6,7 @@ import Label from '../Label'
 import { classNames } from '../../utilities/classNames'
 
 import { createUniqueIDFactory } from '../../utilities/id'
-import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css'
+import { FormLabelUI, FormLabelHelpTextUI } from './FormLabel.css'
 
 export interface Props {
   children?: any

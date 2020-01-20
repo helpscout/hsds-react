@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { ItemUI } from './styles/Item.css'
+import { ItemUI } from './ControlGroup.css'
 
 type Props = {
   className?: string

@@ -12,7 +12,7 @@ import {
   BadgeUI,
   ItemUI,
   SeparatorUI,
-} from './styles/FilteredList.css.js'
+} from './FilteredList.css'
 
 export interface Props {
   className?: string

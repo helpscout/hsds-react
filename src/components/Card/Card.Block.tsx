@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { BlockUI } from './styles/Block.css'
+import { BlockUI } from './Card.css'
 
 type Props = {
   bgMuted: boolean

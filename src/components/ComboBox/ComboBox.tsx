@@ -7,7 +7,7 @@ import Text from '../Text'
 import { noop } from '../../utilities/other'
 import { classNames } from '../../utilities/classNames'
 import { renderRenderPropComponent } from '../../utilities/component'
-import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './styles/ComboBox.css'
+import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
 import { ComboBoxProps, ComboBoxState } from './ComboBox.types'
 
 const defaultInputProps = {

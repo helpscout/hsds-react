@@ -2,7 +2,7 @@ import * as React from 'react'
 import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
-import { AddButtonContentUI } from './styles/ConditionField.css'
+import { AddButtonContentUI } from './ConditionField.css'
 
 export const AddButton = props => {
   const { className, ...rest } = props

@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import Block from './ControlGroup.Block'
 import Item from './ControlGroup.Item'
-import { ControlGroupUI } from './styles/ControlGroup.css'
+import { ControlGroupUI } from './ControlGroup.css'
 
 type Props = {
   className?: string

@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import {
-  ComponentUI,
+  EditableFieldUI,
   FieldUI,
   LabelTextUI,
   AddButtonUI,
-} from './styles/EditableField.css'
+} from './EditableField.css'
 import {
   ACTION_ICONS,
   CAUSE,
@@ -1103,19 +1103,19 @@ export class EditableField extends React.Component<
 
     if (inline) {
       return (
-        <ComponentUI
+        <EditableFieldUI
           {...getValidProps(rest)}
           className={this.getClassName()}
           ref={this.setEditableNode}
           inline
         >
           {this.renderFieldsInline()}
-        </ComponentUI>
+        </EditableFieldUI>
       )
     }
 
     return (
-      <ComponentUI
+      <EditableFieldUI
         {...getValidProps(rest)}
         className={this.getClassName()}
         ref={this.setEditableNode}
@@ -1132,7 +1132,7 @@ export class EditableField extends React.Component<
         ) : null}
 
         {this.renderFields()}
-      </ComponentUI>
+      </EditableFieldUI>
     )
   }
 }

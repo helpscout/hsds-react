@@ -4,7 +4,7 @@ import { classNames } from '../../utilities/classNames'
 import { escapeHTML, newlineToHTML } from '../../utilities/strings'
 import compose from '@helpscout/react-utils/dist/compose'
 
-import { LineItemUI } from './styles/ChatTranscript.css'
+import { LineItemUI } from './ChatTranscript.css'
 
 type Props = {
   body?: string

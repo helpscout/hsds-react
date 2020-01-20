@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Icon from '../Icon'
-import { ButtonWrapperUI, ButtonUI } from './styles/Condition.css'
+import { ButtonWrapperUI, ButtonUI } from './Condition.css'
 import { classNames } from '../../utilities/classNames'
 import { isNodeWithinViewport } from '../../utilities/node'
 import { noop } from '../../utilities/other'

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 
-import { DetailListItemUI } from './styles/DetailList.css'
+import { DetailListItemUI } from './DetailList.css'
 
 const Item = props => {
   const { children, className, ...rest } = props

@@ -14,7 +14,7 @@ import {
   ConditionUI,
   ConditionContentUI,
   OptionsWrapperUI,
-} from './styles/Condition.css'
+} from './Condition.css'
 
 export class Condition extends React.PureComponent<ConditionProps> {
   static defaultProps = {

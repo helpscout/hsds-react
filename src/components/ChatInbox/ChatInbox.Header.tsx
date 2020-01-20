@@ -6,7 +6,7 @@ import Hr from '../Hr'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { HeaderUI, ContentUI } from './styles/Header.css.js'
+import { HeaderUI, ContentUI } from './ChatInbox.css.js'
 
 type Props = {
   avatars?: any

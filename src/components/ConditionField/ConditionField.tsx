@@ -8,7 +8,7 @@ import Static from './ConditionField.Static'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionFieldProps } from './ConditionField.types'
-import { FieldCloseWrapperUI } from './styles/ConditionField.css'
+import { FieldCloseWrapperUI } from './ConditionField.css'
 
 export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   static className = 'c-ConditionField'

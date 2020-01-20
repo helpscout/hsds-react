@@ -9,7 +9,7 @@ import {
   MetaHeaderUI,
   FooterUI,
   TitleUI,
-} from './styles/ArticleCard.css'
+} from './ArticleCard.css'
 
 export interface Props {
   className?: string

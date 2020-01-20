@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
-import { FormGroupChoiceUI } from './styles/Choice.css'
+import { FormGroupChoiceUI } from './FormGroup.css'
 
 type Props = {
   children?: any

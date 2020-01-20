@@ -15,7 +15,7 @@ import {
   ChoiceLabelUI,
   ChoiceLabelTextUI,
   ChoiceHelpTextUI,
-} from './styles/Choice.css'
+} from './Choice.css'
 
 import { ChoiceValue, ChoiceProps, ChoiceState } from './Choice.types'
 

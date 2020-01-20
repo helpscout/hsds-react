@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { ContainerUI } from './styles/FluffyCard.Container.css'
+import { FluffyCardContainerUI } from './FluffyCard.css'
 
 type Props = {
   children?: any
@@ -17,9 +17,12 @@ class Container extends React.PureComponent<Props> {
     const componentClassName = classNames('c-FluffyCardContainer', className)
 
     return (
-      <ContainerUI {...getValidProps(rest)} className={componentClassName}>
+      <FluffyCardContainerUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+      >
         {children}
-      </ContainerUI>
+      </FluffyCardContainerUI>
     )
   }
 }

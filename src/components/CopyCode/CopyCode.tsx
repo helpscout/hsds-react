@@ -10,7 +10,7 @@ import {
   CopyCodeUI,
   SyntaxHighlight,
   WrapperUI,
-} from './styles/CopyCode.css'
+} from './CopyCode.css'
 import Keys from '../../constants/Keys'
 const Prism = require('prismjs')
 require('prismjs/components/prism-java')

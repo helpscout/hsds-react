@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { ComponentUI, FieldButtonUI } from './styles/EditableField.Actions.css'
+import { EditableFieldActionsUI, FieldButtonUI } from './EditableField.css'
 import Icon from '../Icon'
 
 import { classNames } from '../../utilities/classNames'
@@ -52,7 +52,7 @@ export class EditableFieldActions extends React.Component<ActionsProps> {
     const { actions, validationInfo } = this.props
 
     return (
-      <ComponentUI
+      <EditableFieldActionsUI
         className={classNames(
           ACTIONS_CLASSNAMES.actions,
           validationInfo && STATES_CLASSNAMES.withValidation
@@ -62,9 +62,7 @@ export class EditableFieldActions extends React.Component<ActionsProps> {
         {(actions as any).map(action => {
           return (
             <FieldButtonUI
-              className={`${ACTIONS_CLASSNAMES.fieldButton} action-${
-                action.name
-              }`}
+              className={`${ACTIONS_CLASSNAMES.fieldButton} action-${action.name}`}
               key={action.name}
               tabIndex={-1}
               type="button"
@@ -76,7 +74,7 @@ export class EditableFieldActions extends React.Component<ActionsProps> {
             </FieldButtonUI>
           )
         })}
-      </ComponentUI>
+      </EditableFieldActionsUI>
     )
   }
 }

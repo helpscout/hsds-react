@@ -7,7 +7,7 @@ import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
   ContentWrapperUI,
-} from './styles/CopyButton.css.js'
+} from './CopyButton.css'
 
 import { ButtonSize } from '../Button/Button.types'
 

@@ -5,7 +5,7 @@ import Block from './Flexy.Block'
 import Item from './Flexy.Item'
 import { classNames } from '../../utilities/classNames'
 
-import { FlexyUI } from './styles/Flexy.css'
+import { FlexyUI } from './Flexy.css'
 
 export const FlexyClassName = 'c-Flexy'
 

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getColor } from '../../../styles/utilities/color'
 import Button from '../../Button'
 
-import config from '../../Button/styles/Button.config.css.js'
+import config from '../../Button/Button.config'
 
 export const PaginationUI = styled('div')`
   padding: 0 10px;

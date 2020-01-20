@@ -4,11 +4,7 @@ import Hr from '../Hr'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 
-import {
-  BlankSlateUI,
-  SpeechBubbleIlloUI,
-  ContentUI,
-} from './styles/BlankSlate.css'
+import { BlankSlateUI, SpeechBubbleIlloUI, ContentUI } from './ChatList.css'
 
 type Props = {
   className?: string

@@ -1,6 +1,6 @@
 import React from 'react'
 import Tooltip from '../Tooltip'
-import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css.js'
+import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css'
 import { classNames } from '../../utilities/classNames'
 
 class DotStepper extends React.Component {

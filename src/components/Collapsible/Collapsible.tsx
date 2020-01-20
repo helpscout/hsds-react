@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
-import { CollapsibleUI } from './styles/Collapsible.css'
+import { CollapsibleUI } from './Collapsible.css'
 import { CollapsibleProps, CollapsibleState } from './Collapsible.types'
 
 class Collapsible extends React.Component<CollapsibleProps, CollapsibleState> {

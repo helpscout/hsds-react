@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { CentralizeUI } from './styles/Centralize.css'
+import { CentralizeUI } from './Centralize.css'
 
 export interface Props {
   className?: string

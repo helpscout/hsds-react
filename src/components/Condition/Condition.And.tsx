@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Operator from './Condition.Operator'
 import { classNames } from '../../utilities/classNames'
-import { AndWrapperUI } from './styles/Condition.css'
+import { AndWrapperUI } from './Condition.css'
 
 export const And = props => {
   const { className, ...rest } = props

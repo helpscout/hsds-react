@@ -4,7 +4,7 @@ import Container from './FluffyCard.Container'
 import { classNames } from '../../utilities/classNames'
 
 import { noop } from '../../utilities/other'
-import { FluffyCardUI } from './styles/FluffyCard.css'
+import { FluffyCardUI } from './FluffyCard.css'
 
 type Props = {
   autoWordWrap?: boolean

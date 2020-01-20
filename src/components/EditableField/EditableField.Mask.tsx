@@ -1,10 +1,10 @@
 import * as React from 'react'
 
 import {
-  ComponentUI,
+  EditableFieldMaskUI,
   MaskValueUI,
   MaskOptionUI,
-} from './styles/EditableField.Mask.css'
+} from './EditableField.css'
 import Truncated from './EditableField.Truncated'
 import Truncate from '../Truncate'
 
@@ -85,7 +85,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
     } = this.props
 
     return (
-      <ComponentUI
+      <EditableFieldMaskUI
         className={classNames(
           MASK_CLASSNAMES.component,
           disabled && STATES_CLASSNAMES.isDisabled,
@@ -120,7 +120,7 @@ export class EditableFieldMask extends React.Component<MaskProps> {
             </span>
           )}
         </MaskValueUI>
-      </ComponentUI>
+      </EditableFieldMaskUI>
     )
   }
 }

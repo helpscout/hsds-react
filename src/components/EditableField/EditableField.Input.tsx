@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import {
-  ComponentUI,
+  EditableFieldInputUI,
   InputUI,
   InputWrapperUI,
   OptionsWrapperUI,
@@ -9,7 +9,7 @@ import {
   TriggerUI,
   FocusIndicatorUI,
   ValidationIconUI,
-} from './styles/EditableField.Input.css'
+} from './EditableField.css'
 
 import Dropdown from '../Dropdown/DropdownV2'
 import Icon from '../Icon'
@@ -301,7 +301,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
     } = this.props
 
     return (
-      <ComponentUI
+      <EditableFieldInputUI
         className={classNames(
           INPUT_CLASSNAMES.content,
           inline && STATES_CLASSNAMES.isInline,
@@ -341,7 +341,7 @@ export class EditableFieldInput extends React.Component<InputProps> {
             color={getValidationColor(validationInfo)}
           />
         </InputWrapperUI>
-      </ComponentUI>
+      </EditableFieldInputUI>
     )
   }
 }

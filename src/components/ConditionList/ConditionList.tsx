@@ -4,7 +4,7 @@ import AddButton from './ConditionList.AddButton'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionListProps } from './ConditionList.types'
-import { ConditionListUI } from './styles/ConditionList.css'
+import { ConditionListUI } from './ConditionList.css'
 import { PageContext } from '../Page/Page'
 
 export class ConditionList extends React.Component<ConditionListProps> {

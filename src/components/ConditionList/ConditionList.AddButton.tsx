@@ -3,7 +3,7 @@ import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionListAddButtonProps } from './ConditionList.types'
-import { AddButtonWrapperUI } from './styles/ConditionList.css'
+import { AddButtonWrapperUI } from './ConditionList.css'
 
 export class AddButton extends React.PureComponent<
   ConditionListAddButtonProps

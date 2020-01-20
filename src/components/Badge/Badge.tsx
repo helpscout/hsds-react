@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import BadgeUI from './styles/Badge.css'
+import BadgeUI from './Badge.css'
 import { UIStatus } from '../../constants/types'
 
 type BadgeDisplay = 'block' | 'inlineBlock'

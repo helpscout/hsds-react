@@ -1,16 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { BlockUI } from './styles/Flexy.Block.css'
+import { FlexyBlockUI } from './Flexy.css'
 
 export const Block = ({ children, className = '', ...rest }) => (
-  <BlockUI
+  <FlexyBlockUI
     {...getValidProps(rest)}
     className={classNames('c-Flexy__block', className)}
   >
     {children}
-  </BlockUI>
+  </FlexyBlockUI>
 )
 
 Block.displayName = 'FlexyBlock'

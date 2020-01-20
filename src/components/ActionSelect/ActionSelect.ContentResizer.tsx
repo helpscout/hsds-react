@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Animate from '../Animate'
-import { ContentUI, ContentResizerUI } from './styles/ActionSelect.css'
+import { ContentUI, ContentResizerUI } from './ActionSelect.css'
 import { getEasingTiming } from '../../utilities/easing'
 import { noop } from '../../utilities/other'
 import {

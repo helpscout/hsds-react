@@ -5,7 +5,7 @@ import { getSequenceNames } from '../../utilities/animation'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
-import { AnimateUI } from './styles/Animate.css'
+import { AnimateUI } from './Animate.css'
 import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
 
 export interface Props {

@@ -12,7 +12,7 @@ import {
   EditableTextareaUI,
   MaskUI,
 } from './styles/EditableTextarea.css'
-import { LabelTextUI } from '../EditableField/styles/EditableField.css'
+import { LabelTextUI } from '../EditableField/EditableField.css'
 import { ValidationIconUI } from '../EditableField/styles/EditableField.Input.css'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
