@@ -13,14 +13,11 @@ export const Or = props => {
       className={componentClassName}
       data-cy="ConditionFieldOrWrapper"
     >
-      <Operator data-cy={props['data-cy']} type="or" isBorderless={true} />
+      <Operator data-cy="ConditionFieldOr" type="or" isBorderless={true} />
     </div>
   )
 }
 
-Or.defaultProps = {
-  'data-cy': 'ConditionFieldOr',
-}
 Or.className = 'c-ConditionAnd'
 
 export default Or

@@ -1,12 +1,11 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
-import { PopoverUI, HeaderUI, HeadingUI } from './Popover.css'
-import { COMPONENT_KEY, isPlainContent } from './Popover.utils'
+import { HeaderUI, HeadingUI } from './Popover.css'
 import Text from '../Text'
 import Tooltip, { Props as TooltipProps } from '../Tooltip/Tooltip'
+import { isPlainContent } from './Popover.utils'
 
 export interface Props extends TooltipProps {
   className?: string
@@ -102,7 +101,7 @@ export class Popover extends React.PureComponent<Props> {
     const { innerRef, ...rest } = this.props
 
     return (
-      <PopoverUI
+      <Tooltip
         {...rest}
         arrowClassName="c-PopoverArrow"
         arrowSize={16}
@@ -118,6 +117,4 @@ export class Popover extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Popover)
-
-export default PropConnectedComponent
+export default Popover

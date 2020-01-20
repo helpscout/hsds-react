@@ -3,9 +3,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Illo from '../Illo'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 
-import { COMPONENT_KEY } from './BlankSlate.utils'
 import {
   BlankSlateUI,
   HeadingUI,
@@ -73,7 +71,5 @@ class BlankSlate extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(BlankSlate)
 
 export default BlankSlate

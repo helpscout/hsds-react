@@ -197,7 +197,7 @@ function makeStateStyles() {
 
 export function makeFieldStyles() {
   return `
-    
+    font-size: var(--HSDSGlobalFontSize);
     font-family: var(--HSDSGlobalFontFamily);
     appearance: none;
     background-color: transparent;

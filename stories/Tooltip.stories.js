@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { PropProvider, Hr, Text, Tooltip } from '../src/components'
+import Tooltip, { TooltipContext } from '../src/components/Tooltip'
+
 import {
   withKnobs,
   boolean,
@@ -78,12 +79,50 @@ stories.add('Default', () => {
   }
 
   return (
-    <PropProvider value={{ Tooltip: { zIndex: 10 } }}>
+    <TooltipContext.Provider value={{ zIndex: 10 }}>
+      <div style={{ padding: '20%', textAlign: 'center' }}>
+        <Tooltip {...props}>
+          <div>Tooltip Trigger</div>
+        </Tooltip>
+      </div>
+    </TooltipContext.Provider>
+  )
+})
+
+stories.add('With Context provider', () => {
+  const triggerOn = select(
+    'triggerOn',
+    {
+      click: 'click',
+      hover: 'hover',
+    },
+    'click'
+  )
+  const placement = select(
+    'placement',
+    {
+      auto: 'auto',
+      top: 'top',
+      right: 'right',
+      bottom: 'bottom',
+      left: 'left',
+    },
+    'top'
+  )
+
+  const props = {
+    title: text('title', '"Hello"'),
+  }
+
+  return (
+    <TooltipContext.Provider
+      value={{ zIndex: 10, animationDelay: 2500, animationDuration: 0 }}
+    >
       <div style={{ padding: '20%', textAlign: 'center' }}>
         <Tooltip {...props}>
           <div tabIndex="0">Tooltip Trigger</div>
         </Tooltip>
       </div>
-    </PropProvider>
+    </TooltipContext.Provider>
   )
 })

@@ -1,7 +1,5 @@
 import { isFirefox } from '../../utilities/browser'
 
-export const COMPONENT_KEY = 'ScrollLock'
-
 export function scrollLockX(event: any, stopPropagation: boolean) {
   // Disabled for Firefox
   /* istanbul ignore if */

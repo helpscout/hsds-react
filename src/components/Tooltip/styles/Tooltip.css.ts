@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Pop from '../../Pop'
 import { getColor } from '../../../styles/utilities/color'
+import { config as popoverConfig } from '../../Popover/Popover.css'
 
 export const config = {
   background: getColor('charcoal.700'),
@@ -16,4 +17,13 @@ export const PopperUI = styled('span')`
   max-width: 300px;
   padding: 6px 8px;
   word-break: break-word;
+
+  &.c-PopoverContent {
+    background: white;
+    border: 1px solid ${popoverConfig.borderColor};
+    box-shadow: ${popoverConfig.boxShadow};
+    color: inherit;
+    font-size: inherit;
+    padding: ${popoverConfig.padding};
+  }
 `

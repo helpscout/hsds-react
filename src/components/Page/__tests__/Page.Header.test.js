@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import Header from '../Page.Header'
+import { PageContext } from '../Page'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -112,15 +113,33 @@ describe('Border', () => {
 
 describe('Responsive', () => {
   test('Renders responsive styles, if specified', () => {
-    const wrapper = mount(<Header isResponsive={true} />)
+    const wrapper = mount(
+      <PageContext.Provider value={{ isResponsive: true }}>
+        <Header />
+      </PageContext.Provider>
+    )
 
-    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(true)
+    expect(
+      wrapper
+        .find(Header)
+        .getDOMNode()
+        .classList.contains('is-responsive')
+    ).toBe(true)
   })
 
   test('Does not render responsive styles, if specified', () => {
-    const wrapper = mount(<Header isResponsive={false} />)
+    const wrapper = mount(
+      <PageContext.Provider value={{ isResponsive: false }}>
+        <Header />
+      </PageContext.Provider>
+    )
 
-    expect(wrapper.getDOMNode().classList.contains('is-responsive')).toBe(false)
+    expect(
+      wrapper
+        .find(Header)
+        .getDOMNode()
+        .classList.contains('is-responsive')
+    ).toBe(false)
   })
 })
 

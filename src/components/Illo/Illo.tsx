@@ -3,9 +3,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { IlloUI, IconUI } from './styles/Illo.css'
-import { COMPONENT_KEY, injectFillColorIntoSvg, svgSet } from './Illo.utils'
+import { injectFillColorIntoSvg, svgSet } from './Illo.utils'
 import { IlloProps } from './Illo.types'
 
 const Illo = (props: IlloProps) => {
@@ -81,7 +81,5 @@ Illo.defaultProps = {
   colorUiWhite: 'white',
   size: '60',
 }
-
-namespaceComponent(COMPONENT_KEY)(Illo)
 
 export default Illo

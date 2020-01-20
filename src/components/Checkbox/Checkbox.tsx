@@ -1,8 +1,6 @@
 import * as React from 'react'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Checkbox.utils'
 
 type Props = {
   className?: string
@@ -24,7 +22,5 @@ class Checkbox extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(Checkbox)
 
 export default Checkbox

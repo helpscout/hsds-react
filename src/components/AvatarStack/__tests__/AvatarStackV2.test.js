@@ -4,7 +4,6 @@ import { AvatarStack } from '../AvatarStack'
 import AvatarStackV2 from '../AvatarStackV2'
 import AvatarStackEntry from '../index'
 import Avatar from '../../Avatar'
-import PropProvider from '../../PropProvider'
 
 describe('AvatarStackV2', () => {
   test('Can render AvatarStack V2', () => {
@@ -34,25 +33,8 @@ describe('AvatarStackV2', () => {
     expect(comp.prop('version')).toBe(1)
   })
 
-  test('Can render AvatarStackV2 via PropProvider', () => {
-    const wrapper = mount(
-      <PropProvider value={{ AvatarStack: { version: 2 } }}>
-        <AvatarStackEntry />
-      </PropProvider>
-    )
-    const comp = wrapper.find('AvatarStack').first()
-    const el = wrapper.find('div.c-AvatarStack')
-
-    expect(comp.prop('version')).toBe(2)
-    expect(el.length).toBe(1)
-  })
-
   test('Adds layer stack className', () => {
-    const wrapper = mount(
-      <PropProvider value={{ AvatarStack: { version: 2 } }}>
-        <AvatarStackEntry />
-      </PropProvider>
-    )
+    const wrapper = mount(<AvatarStackEntry version={2} />)
     const el = wrapper.find('div.c-AvatarStack')
 
     expect(el.hasClass('is-withLayerStack')).toBe(true)

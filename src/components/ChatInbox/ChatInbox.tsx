@@ -5,8 +5,6 @@ import Header from './ChatInbox.Header'
 import Content from './ChatInbox.Content'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { namespaceComponent, isComponentNamed } from '../../utilities/component'
-import { COMPONENT_KEY } from './ChatInbox.utils'
 
 type Props = {
   className?: string
@@ -63,8 +61,7 @@ class ChatInbox extends React.Component<Props, State> {
 
     const contentMarkup = React.Children.map(children, (child: any, index) => {
       const childProps = child.props
-
-      if (isComponentNamed(child, COMPONENT_KEY.Header)) {
+      if (child.type && child.type === Header) {
         return React.cloneElement(child, {
           key: index,
           isCollapsed,
@@ -75,7 +72,7 @@ class ChatInbox extends React.Component<Props, State> {
         })
       }
 
-      if (isComponentNamed(child, COMPONENT_KEY.Content) && isCollapsible) {
+      if (child.type && child.type === Content && isCollapsible) {
         return (
           <Collapsible isOpen={!isCollapsed} key={index} duration={250}>
             {child}
@@ -93,7 +90,5 @@ class ChatInbox extends React.Component<Props, State> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.ChatInbox)(ChatInbox)
 
 export default ChatInbox

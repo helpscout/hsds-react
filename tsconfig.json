@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
+    "checkJs": false,
     "declaration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
@@ -10,6 +11,7 @@
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
+    "noEmitOnError": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,

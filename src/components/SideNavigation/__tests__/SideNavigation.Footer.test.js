@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import SideNavigation from '../SideNavigation'
+import SideNavigation, { SideNavigationContext } from '../SideNavigation'
 import Icon from '../../Icon'
 
 describe('ClassName', () => {
@@ -20,7 +20,11 @@ describe('ClassName', () => {
   })
 
   test('Applies floating menu classname', () => {
-    const wrapper = mount(<SideNavigation.Footer floatingMenu={true} />)
+    const wrapper = mount(
+      <SideNavigationContext.Provider value={{ floatingMenu: true }}>
+        <SideNavigation.Footer />
+      </SideNavigationContext.Provider>
+    )
 
     expect(
       wrapper.getDOMNode().classList.contains('is-floating-menu')
@@ -41,7 +45,11 @@ describe('Children', () => {
   })
 
   test('Renders a three dots icon when collapsed', () => {
-    const wrapper = mount(<SideNavigation.Footer collapsable={true} />)
+    const wrapper = mount(
+      <SideNavigationContext.Provider value={{ collapsable: true }}>
+        <SideNavigation.Footer />
+      </SideNavigationContext.Provider>
+    )
 
     const el = wrapper.find(Icon)
 

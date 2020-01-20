@@ -2,10 +2,9 @@ import * as React from 'react'
 import { FluffyCardTextAlign } from './FluffyCard.types'
 import Container from './FluffyCard.Container'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { noop } from '../../utilities/other'
 import { FluffyCardUI } from './styles/FluffyCard.css'
-import { COMPONENT_KEY } from './FluffyCard.utils'
 
 type Props = {
   autoWordWrap?: boolean
@@ -64,7 +63,5 @@ class FluffyCard extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.FluffyCard)(FluffyCard)
 
 export default FluffyCard

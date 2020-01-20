@@ -1,8 +1,6 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY } from './Condition.utils'
 import { ConditionOperatorProps } from './Condition.types'
 import { OperatorUI } from './styles/Condition.css'
 
@@ -33,7 +31,6 @@ Operator.defaultProps = {
   isBorderless: true,
   type: 'or',
 }
+Operator.displayName = 'ConditionOperator'
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Operator)(Operator)
-
-export default PropConnectedComponent
+export default Operator

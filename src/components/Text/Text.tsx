@@ -106,6 +106,4 @@ class Text extends React.PureComponent<Props> {
   }
 }
 
-// namespaceComponent(COMPONENT_KEY)(Text)
-
 export default Text

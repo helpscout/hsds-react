@@ -1,9 +1,7 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './ConditionList.utils'
 import { ConditionListAddButtonProps } from './ConditionList.types'
 import { AddButtonWrapperUI } from './styles/ConditionList.css'
 
@@ -35,12 +33,11 @@ export class AddButton extends React.PureComponent<
           {...rest}
           className={this.getClassName()}
           type="and"
+          data-cy="ConditionListAddButton"
         />
       </AddButtonWrapperUI>
     )
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.AddButton)(AddButton)
-
-export default PropConnectedComponent
+export default AddButton

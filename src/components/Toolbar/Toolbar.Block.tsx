@@ -1,8 +1,6 @@
 import * as React from 'react'
 import Flexy from '../Flexy'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { BLOCK_COMPONENT_KEY } from './Toolbar.utils'
 
 export interface Props {
   className?: string
@@ -10,6 +8,7 @@ export interface Props {
 }
 
 export class Block extends React.PureComponent<Props> {
+  static displayName = 'Toolbar.Block'
   static className = 'c-ToolbarBlock'
 
   getClassName() {
@@ -33,6 +32,4 @@ export class Block extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(BLOCK_COMPONENT_KEY)(Block)
-
-export default PropConnectedComponent
+export default Block

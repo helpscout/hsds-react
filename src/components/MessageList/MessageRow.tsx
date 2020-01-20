@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import AccordionLink from '../Accordion/Accordion.Link'
 import Flexy from '../Flexy'
 import Badge from '../Badge'
@@ -15,8 +14,6 @@ import {
   SortableItemUI,
 } from './styles/MessageRow.css'
 import { SortableElement, SortableHandle } from 'react-sortable-hoc'
-
-const COMPONENT_KEY = 'MessageRow'
 
 const DraggableHandle = SortableHandle(({ isVisible }) => (
   <HandleUI>
@@ -190,6 +187,4 @@ export class MessageRow extends React.PureComponent<Props, State> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(MessageRow)
-
-export default PropConnectedComponent
+export default MessageRow

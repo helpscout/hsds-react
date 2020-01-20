@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Message from '../Message'
@@ -8,10 +7,8 @@ import Truncate from '../Truncate'
 import Timer from './Notification.Timer'
 import { NotificationUI, TextUI } from './styles/Notification.css'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { stripUrlPrefix } from '../../utilities/strings'
-import { COMPONENT_KEY } from './Notification.utils'
 
 export const NOTIFICATION_TYPE = {
   image: 'image',
@@ -221,7 +218,4 @@ export class Notification extends React.PureComponent<Props, State> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Notification)
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Notification)
-
-export default PropConnectedComponent
+export default Notification

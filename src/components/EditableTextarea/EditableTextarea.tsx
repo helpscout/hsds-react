@@ -2,7 +2,6 @@ import * as React from 'react'
 
 import Textarea from 'react-textarea-autosize'
 
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -18,7 +17,7 @@ import { ValidationIconUI } from '../EditableField/styles/EditableField.Input.cs
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 
-import { COMPONENT_KEY, scrollToTop } from './EditableTextarea.utils'
+import { scrollToTop } from './EditableTextarea.utils'
 import { key } from '../../constants/Keys'
 import { CAUSE, OPERATION } from '../EditableField/constants'
 import { getValidationColor } from '../EditableField/EditableField.utils'
@@ -451,6 +450,4 @@ export class EditableTextarea extends React.PureComponent<
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(EditableTextarea)
-
-export default PropConnectedComponent
+export default EditableTextarea

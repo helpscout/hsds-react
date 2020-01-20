@@ -71,4 +71,6 @@ Action.contextTypes = {
   theme: noop,
 }
 
+Action.displayName = 'MessageAction'
+
 export default Action

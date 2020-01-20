@@ -1,5 +1,4 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
@@ -15,7 +14,6 @@ import {
   IndicatorUI,
   ErrorWrapperUI,
 } from './styles/Nav.css'
-import { ITEM_COMPONENT_KEY } from './Nav.utils'
 
 export interface Props {
   children?: any
@@ -32,6 +30,8 @@ export interface Props {
 }
 
 export class Item extends React.Component<Props> {
+  static displayName = 'Nav.Item'
+
   static className = 'c-NavItem'
   static contentClassName = 'c-NavItemContent'
   static defaultProps = {
@@ -131,8 +131,4 @@ export class Item extends React.Component<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(ITEM_COMPONENT_KEY, { pure: false })(
-  Item
-)
-
-export default PropConnectedComponent
+export default Item

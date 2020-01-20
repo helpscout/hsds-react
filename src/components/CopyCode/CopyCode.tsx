@@ -1,10 +1,10 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
-import { COMPONENT_KEY } from './CopyCode.utils'
+
 import {
   CopyButtonUI,
   CopyCodeUI,
@@ -135,7 +135,5 @@ class CopyCode extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(CopyCode)
 
 export default CopyCode

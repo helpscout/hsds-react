@@ -1,10 +1,8 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ItemUI } from './styles/Inline.css'
-import { ITEM_COMPONENT_KEY } from './Inline.utils'
 
 export interface Props {
   className?: string
@@ -17,6 +15,7 @@ export class Item extends React.PureComponent<Props> {
   static defaultProps = {
     innerRef: noop,
   }
+  static displayName = 'InlineItem'
 
   getClassName() {
     const { className } = this.props
@@ -39,6 +38,4 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(ITEM_COMPONENT_KEY)(Item)
-
-export default PropConnectedComponent
+export default Item

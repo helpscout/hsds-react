@@ -15,6 +15,8 @@ import Text from '../Text'
 export interface Props {}
 
 class Nav extends React.PureComponent<Props> {
+  static displayName = 'HsAppNav'
+
   renderDropdowns() {
     const items = [
       { value: 'one', label: 'One' },

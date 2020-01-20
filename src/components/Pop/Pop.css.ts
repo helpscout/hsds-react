@@ -9,3 +9,8 @@ export const PopUI = styled('span')`
     display: inline-block;
   }
 `
+
+export const PopPopperUI = styled.div`
+  font-family: var(--HSDSGlobalFontFamily);
+  font-size: var(--HSDSGlobalFontSize);
+`

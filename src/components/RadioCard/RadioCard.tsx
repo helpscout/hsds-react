@@ -3,7 +3,7 @@ import Icon from '../Icon'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
-import { namespaceComponent } from '../../utilities/component'
+
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
@@ -15,7 +15,7 @@ import {
   ContentUI,
   HeadingUI,
 } from './styles/RadioCard.css'
-import { COMPONENT_KEY } from './RadioCard.utils'
+
 import { RadioCardProps, RadioCardState, InputEvent } from './RadioCard.types'
 
 const uniqueID = createUniqueIDFactory('RadioCard')
@@ -199,7 +199,5 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(RadioCard)
 
 export default RadioCard

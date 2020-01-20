@@ -1,6 +1,4 @@
 import * as React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Flexy from '../Flexy'
 import IconButton from '../IconButton'
 import Tooltip from '../Tooltip'
@@ -10,7 +8,6 @@ import Static from './ConditionField.Static'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionFieldProps } from './ConditionField.types'
-import { COMPONENT_KEY } from './ConditionField.utils'
 import { FieldCloseWrapperUI } from './styles/ConditionField.css'
 
 export class ConditionField extends React.PureComponent<ConditionFieldProps> {
@@ -59,7 +56,12 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
     return (
       <div data-cy="ConditionFieldWrapper">
         {this.renderOperator()}
-        <Flexy {...rest} ref={innerRef} className={this.getClassName()}>
+        <Flexy
+          {...rest}
+          innerRef={innerRef}
+          className={this.getClassName()}
+          data-cy="ConditionField"
+        >
           <Flexy.Block data-cy="ConditionFieldContentWrapper">
             <Flexy align="top" gap="md">
               {children}
@@ -86,6 +88,4 @@ export class ConditionField extends React.PureComponent<ConditionFieldProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Field)(ConditionField)
-
-export default PropConnectedComponent
+export default ConditionField

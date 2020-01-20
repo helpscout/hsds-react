@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { cy } from '@helpscout/cyan'
 import Page from '../Page'
 import Actions from '../Page.Actions'
@@ -50,8 +50,8 @@ describe('Slots', () => {
     const wrapper = cy.render(<Actions primary={<button />} />)
     const el = wrapper.find('.c-PageActions')
 
-    expect(cy.get('button').length).toBe(1)
-    expect(el.hasClass('withPrimary')).toBe(true)
+    expect(cy.get('button').length).toBeTruthy()
+    expect(el.hasClass('withPrimary')).toBeTruthy()
   })
 
   test('Can render in secondary slot', () => {

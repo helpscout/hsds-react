@@ -5,9 +5,7 @@ import Heading from '../Heading'
 import Hr from '../Hr'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './ChatInbox.utils'
 import { HeaderUI, ContentUI } from './styles/Header.css.js'
 
 type Props = {
@@ -26,6 +24,9 @@ class Header extends React.PureComponent<Props> {
     isCollapsed: false,
     onClick: noop,
   }
+
+  static displayName = 'ChatInboxHeader'
+
   render() {
     const {
       avatars,
@@ -85,7 +86,5 @@ class Header extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Header)(Header)
 
 export default Header

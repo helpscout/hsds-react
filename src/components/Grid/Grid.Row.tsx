@@ -1,12 +1,12 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Grid.utils'
 import { RowUI } from './styles/Grid.Row.css'
 import { GridRowProps } from './Grid.types'
 
 class Row extends React.PureComponent<GridRowProps> {
+  static displayName = 'GridRow'
+
   static defaultProps = {
     flex: false,
     isFlex: false,
@@ -29,7 +29,5 @@ class Row extends React.PureComponent<GridRowProps> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Row)(Row)
 
 export default Row

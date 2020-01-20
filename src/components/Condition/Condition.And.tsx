@@ -1,8 +1,6 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import Operator from './Condition.Operator'
 import { classNames } from '../../utilities/classNames'
-import { COMPONENT_KEY } from './Condition.utils'
 import { AndWrapperUI } from './styles/Condition.css'
 
 export const And = props => {
@@ -25,7 +23,6 @@ And.defaultProps = {
   'data-cy': 'ConditionAnd',
 }
 And.className = 'c-ConditionAnd'
+And.displayName = 'ConditionAnd'
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.And)(And)
-
-export default PropConnectedComponent
+export default And

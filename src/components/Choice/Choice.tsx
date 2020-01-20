@@ -9,14 +9,14 @@ import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { includes } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { namespaceComponent } from '../../utilities/component'
+
 import { noop } from '../../utilities/other'
 import {
   ChoiceLabelUI,
   ChoiceLabelTextUI,
   ChoiceHelpTextUI,
 } from './styles/Choice.css'
-import { COMPONENT_KEY } from './Choice.utils'
+
 import { ChoiceValue, ChoiceProps, ChoiceState } from './Choice.types'
 
 const uniqueID = createUniqueIDFactory('Choice')
@@ -299,7 +299,5 @@ class Choice extends React.PureComponent<ChoiceProps, ChoiceState> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(Choice)
 
 export default Choice

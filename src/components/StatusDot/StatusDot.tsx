@@ -4,8 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './StatusDot.utils'
+
 import { StatusDotUI } from './styles/StatusDot.css'
 
 type Props = {
@@ -114,7 +113,5 @@ class StatusDot extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(StatusDot)
 
 export default StatusDot

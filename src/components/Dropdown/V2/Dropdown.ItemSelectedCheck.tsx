@@ -41,6 +41,6 @@ const ItemSelectedCheck = (props: any = defaultProps) => {
 }
 
 ItemSelectedCheck.defaultProps = defaultProps
-ItemSelectedCheck.displayName = 'ItemSelectedCheck'
+ItemSelectedCheck.displayName = 'DropdownItemSelectedCheck'
 
 export default ItemSelectedCheck

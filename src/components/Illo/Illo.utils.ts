@@ -1,5 +1,3 @@
-export const COMPONENT_KEY = 'Illo'
-
 export let svgSet = {}
 
 export const load = (svgs = {}) => (svgSet = svgs)

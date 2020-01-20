@@ -14,7 +14,6 @@ import Media from './Message.Media'
 import Provider from './Message.Provider'
 import Question from './Message.Question'
 import { classNames } from '../../utilities/classNames'
-import { isComponentTypeChat } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { MessageUI } from './styles/Message.css'
@@ -77,14 +76,14 @@ export class Message extends React.PureComponent<Props> {
     const { children, from, ltr, rtl, to } = this.props
 
     return React.Children.map(children, child => {
-      return isComponentTypeChat(child)
-        ? React.cloneElement(child, {
-            from,
-            ltr,
-            rtl,
-            to,
-          })
-        : child
+      if (!child) return child
+
+      return React.cloneElement(child, {
+        from,
+        ltr,
+        rtl,
+        to,
+      })
     })
   }
 

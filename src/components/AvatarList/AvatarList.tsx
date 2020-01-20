@@ -4,15 +4,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
 import List from '../List'
-import PropProvider, { propConnect } from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import {
-  namespaceComponent,
-  isComponentNamed,
-  getComponentKey,
-} from '../../utilities/component'
-import { COMPONENT_KEY } from './AvatarList.utils'
-import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
+import { getComponentKey } from '../../utilities/component'
 
 export interface Props {
   animationEasing: string
@@ -28,6 +21,8 @@ export interface Props {
   size: AvatarSize
 }
 
+export const AvatarListContext = React.createContext({})
+
 export class AvatarList extends React.PureComponent<Props> {
   static defaultProps = {
     animationEasing: 'ease',
@@ -39,9 +34,7 @@ export class AvatarList extends React.PureComponent<Props> {
   }
 
   getAvatars = () => {
-    return React.Children.toArray(this.props.children).filter(child =>
-      isComponentNamed(child, AVATAR_KEY)
-    )
+    return React.Children.toArray(this.props.children)
   }
 
   getTotalAvatarCount = () => {
@@ -146,7 +139,7 @@ export class AvatarList extends React.PureComponent<Props> {
 
     return (
       <div className="c-AvatarListWrapper">
-        <PropProvider value={{ [AVATAR_KEY]: { ...this.getAvatarProps() } }}>
+        <AvatarListContext.Provider value={this.getAvatarProps()}>
           <List
             {...getValidProps(rest)}
             className={componentClassName}
@@ -158,12 +151,10 @@ export class AvatarList extends React.PureComponent<Props> {
             {this.getAvatarsMarkup()}
             {this.getAdditionalAvatarMarkup()}
           </List>
-        </PropProvider>
+        </AvatarListContext.Provider>
       </div>
     )
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(AvatarList)
-
-export default propConnect(COMPONENT_KEY)(AvatarList)
+export default AvatarList

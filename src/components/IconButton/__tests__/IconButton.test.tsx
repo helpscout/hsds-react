@@ -18,19 +18,10 @@ describe('className', () => {
   })
 })
 
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    const wrapper = cy.render(<IconButton data-cy="blue" />)
-
-    expect(wrapper.attr('data-cy')).toBe('blue')
-  })
-})
-
 describe('Icon', () => {
   test('Renders an Icon component', () => {
     cy.render(<IconButton />)
-
-    expect(cy.getByCy('Icon').exists()).toBeTruthy()
+    expect(cy.get('.c-Icon').exists()).toBeTruthy()
   })
 
   test('Renders an Icon SVG', () => {
@@ -48,7 +39,7 @@ describe('Icon', () => {
 
   test('Can customize Icon size', () => {
     const wrapper = cy.render(<IconButton icon="chat" iconSize={20} />)
-    const icon = wrapper.getByCy('Icon')
+    const icon = wrapper.get('.c-Icon')
 
     expect(icon.style('height')).toBe('20px')
     expect(icon.style('width')).toBe('20px')
@@ -56,14 +47,14 @@ describe('Icon', () => {
 
   test('Can render with caret', () => {
     const wrapper = cy.render(<IconButton withCaret />)
-    const icon = wrapper.getByCy('Icon')
+    const icon = wrapper.get('.c-Icon')
 
     expect(icon.find('.is-caret').exists()).toBeTruthy()
   })
 
   test('Does not render with caret by default', () => {
     const wrapper = cy.render(<IconButton />)
-    const icon = wrapper.getByCy('Icon')
+    const icon = wrapper.get('.c-Icon')
 
     expect(icon.find('.is-caret').exists()).toBeFalsy()
   })
@@ -74,13 +65,13 @@ describe('Icon', () => {
 
     wrapper.setProps({ size: 'sm' })
 
-    icon = wrapper.getByCy('Icon')
+    icon = wrapper.get('.c-Icon')
     expect(icon.style('height')).toBe('18px')
     expect(icon.style('width')).toBe('18px')
 
     wrapper.setProps({ size: 'xs' })
 
-    icon = wrapper.getByCy('Icon')
+    icon = wrapper.get('.c-Icon')
     expect(icon.style('height')).toBe('16px')
     expect(icon.style('width')).toBe('16px')
   })
@@ -147,7 +138,7 @@ describe('Events', () => {
     const spy = jest.fn()
     const wrapper = cy.render(<IconButton onClick={spy} />)
 
-    wrapper.getByCy('Icon').click()
+    wrapper.get('.c-Icon').click()
 
     expect(spy).toHaveBeenCalled()
   })

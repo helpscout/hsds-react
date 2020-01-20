@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Skeleton.utils'
 import { AvatarUI } from './styles/Skeleton.Avatar.css'
 
 export interface Props {
@@ -13,6 +11,7 @@ export interface Props {
 }
 
 class Avatar extends React.PureComponent<Props> {
+  static displayName = 'Skeleton.Avatar'
   static defaultProps = {
     size: 'md',
     shape: 'circle',
@@ -31,7 +30,5 @@ class Avatar extends React.PureComponent<Props> {
     return <AvatarUI {...rest} className={componentClassName} />
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Avatar)(Avatar)
 
 export default Avatar

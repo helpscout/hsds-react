@@ -44,6 +44,8 @@ export interface State {
 const uniqueID = createUniqueIDFactory('hsds-dropdown-v2-')
 
 export class DropdownContainer extends React.PureComponent<Props, State> {
+  static displayName = 'DropdownContainer'
+
   static defaultProps = {
     ...initialState,
     onBlur: noop,

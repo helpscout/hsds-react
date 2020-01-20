@@ -2,11 +2,10 @@ import * as React from 'react'
 import CopyButton from '../CopyButton'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { noop } from '../../utilities/other'
 import { CopyInputUI } from './styles/CopyInput.css'
-import { COMPONENT_KEY } from './CopyInput.utils'
 
 type InputNode = HTMLInputElement | HTMLTextAreaElement
 
@@ -75,7 +74,5 @@ class CopyInput extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(CopyInput)
 
 export default CopyInput

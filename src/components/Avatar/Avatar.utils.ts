@@ -1,7 +1,5 @@
 import { getEasingTiming } from '../../utilities/easing'
 
-export const COMPONENT_KEY = 'Avatar'
-
 export const getImageSrc = (props): string[] => {
   const { fallbackImage, image } = props
   const src = [image]

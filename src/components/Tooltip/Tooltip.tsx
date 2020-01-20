@@ -1,14 +1,12 @@
 import * as React from 'react'
 import { PopProps } from '../Pop/Pop.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Pop from '../Pop'
 import Popper from './Tooltip.Popper'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import { renderChildrenSafely } from '../../utilities/component'
-import { COMPONENT_KEY } from './Tooltip.utils'
 import { getColor } from '../../styles/utilities/color'
 
 export interface Props extends PopProps {
@@ -25,6 +23,8 @@ export interface Props extends PopProps {
   title?: any
   zIndex?: number
 }
+
+export const TooltipContext = React.createContext({})
 
 export class Tooltip extends React.PureComponent<Props> {
   static defaultProps = {
@@ -110,6 +110,7 @@ export class Tooltip extends React.PureComponent<Props> {
 
   render() {
     const { className, children, color, ...rest } = this.props
+    const dataCy = this.props['data-cy'] || 'Tooltip'
 
     if (!this.shouldRenderPopper()) {
       return children ? (
@@ -120,10 +121,10 @@ export class Tooltip extends React.PureComponent<Props> {
     }
 
     return (
-      <Pop {...rest} className={this.getClassName()}>
+      <Pop {...rest} className={this.getClassName()} data-cy={dataCy}>
         <Pop.Reference
           className="c-Tooltip__reference"
-          data-cy={`${this.props['data-cy']}Reference`}
+          data-cy="ToolTipReference"
         >
           {children}
         </Pop.Reference>
@@ -139,6 +140,16 @@ export class Tooltip extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Tooltip)
+const TooltipConsumer = props => {
+  const contextValue = React.useContext(TooltipContext)
 
-export default PropConnectedComponent
+  if (!contextValue) {
+    return <Tooltip {...props} />
+  }
+
+  const newProps = { ...props, ...contextValue }
+
+  return <Tooltip {...newProps} />
+}
+
+export default TooltipConsumer

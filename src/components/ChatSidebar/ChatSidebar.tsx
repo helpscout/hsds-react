@@ -1,11 +1,11 @@
 import * as React from 'react'
 import StatusBar from '../StatusBar'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { noop } from '../../utilities/other'
 import pluralize from '../../utilities/pluralize'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
-import { COMPONENT_KEY } from './ChatSidebar.utils'
+
 import {
   ChatSidebarUI,
   StatusBarWrapperUI,
@@ -156,7 +156,5 @@ class ChatSidebar extends React.PureComponent<Props> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(ChatSidebar)
 
 export default ChatSidebar

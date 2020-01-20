@@ -1,10 +1,8 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { CentralizeUI } from './styles/Centralize.css'
-import { COMPONENT_KEY } from './Centralize.utils'
 
 export interface Props {
   className?: string
@@ -40,6 +38,4 @@ export class Centralize extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Centralize)
-
-export default PropConnectedComponent
+export default Centralize

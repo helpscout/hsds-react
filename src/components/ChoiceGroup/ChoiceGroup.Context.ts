@@ -1,5 +1,3 @@
-import createContext from '@helpscout/react-utils/dist/createContext'
+import * as React from 'react'
 
-const Context = createContext({})
-
-export default Context
+export default React.createContext({})

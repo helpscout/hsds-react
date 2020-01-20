@@ -10,6 +10,8 @@ export const DropdownUI = styled('div')`
 
 export const MenuContainerUI = styled('div')`
   position: absolute;
+  font-family: var(--HSDSGlobalFontFamily);
+  font-size: var(--HSDSGlobalFontSize);
 
   &.is-dropUp {
     bottom: 100%;

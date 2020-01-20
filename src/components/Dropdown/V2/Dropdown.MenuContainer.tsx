@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from '@helpscout/wedux'
-import propConnect from '../../PropProvider/propConnect'
 import Animate from '../../Animate'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
@@ -27,8 +26,6 @@ import { MenuContainerUI } from './Dropdown.css.js'
 import { classNames } from '../../../utilities/classNames'
 import { renderRenderPropComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
-import { namespaceComponent } from '../../../utilities/component'
-import { COMPONENT_KEY } from './Dropdown.utils'
 import { isBrowserEnv } from '../../../utilities/env'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { memoizeWithProps } from '../../../utilities/memoize'
@@ -41,6 +38,8 @@ const clearerID = createUniqueIDFactory('hsds-dropdown-v2-theallclearer')
 export class MenuContainer extends React.PureComponent<
   DropdownMenuContainerProps
 > {
+  static displayName = 'DropdownContainer'
+
   static defaultProps = {
     animationDuration: 80,
     animationSequence: 'fade down',
@@ -490,10 +489,6 @@ export class MenuContainer extends React.PureComponent<
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.MenuContainer)(
-  MenuContainer
-)
-
 const ConnectedMenuContainer: any = connect(
   // mapStateToProps
   (state: any) => {
@@ -556,7 +551,7 @@ const ConnectedMenuContainer: any = connect(
   }
 )(
   // @ts-ignore
-  PropConnectedComponent
+  MenuContainer
 )
 
 export default ConnectedMenuContainer

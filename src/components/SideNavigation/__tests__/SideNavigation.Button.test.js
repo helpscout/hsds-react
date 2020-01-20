@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import SideNavigation from '../SideNavigation'
+import SideNavigation, { SideNavigationContext } from '../SideNavigation'
 import { ButtonUI, ButtonFooterUI } from '../styles/SideNavigation.css'
 import Icon from '../../Icon'
 
@@ -24,9 +24,11 @@ describe('ClassName', () => {
 describe('Children', () => {
   test('Renders child if inside floating menu', () => {
     const wrapper = mount(
-      <SideNavigation.Button floatingMenu={true}>
-        <div className="child">Hello</div>
-      </SideNavigation.Button>
+      <SideNavigationContext.Provider value={{ floatingMenu: true }}>
+        <SideNavigation.Button>
+          <div className="child">Hello</div>
+        </SideNavigation.Button>
+      </SideNavigationContext.Provider>
     )
     const el = wrapper.find('div.child')
 
@@ -77,7 +79,11 @@ describe('Element', () => {
   })
 
   test('Renders ButtonUI if floating menu', () => {
-    const wrapper = mount(<SideNavigation.Button floatingMenu={true} />)
+    const wrapper = mount(
+      <SideNavigationContext.Provider value={{ floatingMenu: true }}>
+        <SideNavigation.Button />
+      </SideNavigationContext.Provider>
+    )
     const el = wrapper.find(ButtonUI)
 
     expect(el.length).toBeTruthy()

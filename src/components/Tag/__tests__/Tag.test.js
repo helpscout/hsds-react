@@ -37,13 +37,9 @@ describe('Animate', () => {
   })
 
   test('Passes "in" state, to Animate', () => {
-    const wrapper = mount(<Tag />)
+    const wrapper = mount(<Tag isRemovable />)
 
-    wrapper.setState({ in: true })
     expect(wrapper.find(Animate).props().in).toBe(true)
-
-    wrapper.setState({ in: false })
-    expect(wrapper.find(Animate).props().in).toBe(false)
   })
 })
 
@@ -157,12 +153,8 @@ describe('Remove', () => {
     expect(wrapper.find('Spinner')).toHaveLength(0)
 
     wrapper.setProps({ isRemoving: true })
-
+    wrapper.update()
     expect(wrapper.find('Spinner')).toHaveLength(1)
-
-    wrapper.setProps({ isRemoving: false })
-
-    expect(wrapper.find('Spinner')).toHaveLength(0)
   })
 
   test('Renders spinner with filled styles, if defined', () => {
@@ -171,6 +163,7 @@ describe('Remove', () => {
     )
 
     wrapper.setProps({ isRemoving: true })
+    wrapper.update()
     expect(wrapper.find('Spinner').hasClass('is-filled')).toBeTruthy()
   })
 })

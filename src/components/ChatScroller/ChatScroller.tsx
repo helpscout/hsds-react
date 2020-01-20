@@ -2,12 +2,10 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
-import propConnect from '../PropProvider/propConnect'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { last, includes } from '../../utilities/arrays'
 import { allDefined } from '../../utilities/check'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './ChatScroller.utils'
 
 export interface Props {
   className?: string
@@ -214,6 +212,4 @@ export function shouldAutoScroll(props): boolean {
   return scrollTop + distanceForAutoScroll >= scrollHeight
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(ChatScroller)
-
-export default PropConnectedComponent
+export default ChatScroller

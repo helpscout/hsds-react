@@ -5,7 +5,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import {
@@ -16,7 +15,6 @@ import {
   BackdropUI,
   ToggleUI,
 } from './styles/Switch.css.js'
-import { COMPONENT_KEY } from './Switch.utils'
 
 export interface Props {
   className?: string
@@ -253,7 +251,5 @@ class Switch extends React.PureComponent<Props, State> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(Switch)
 
 export default Switch

@@ -3,15 +3,15 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import BaseOverlay from '../Overlay'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Modal.utils'
 import { ModalOverlayProps } from './Modal.types'
 
 class Overlay extends React.PureComponent<ModalOverlayProps> {
+  static displayName = 'Modal.Overlay'
   static defaultProps = {
     onClick: noop,
     isOpen: true,
+    isHsApp: false,
     overlayAnimationDelay: 0,
     overlayAnimationDuration: 200,
     overlayAnimationEasing: 'ease',
@@ -24,6 +24,7 @@ class Overlay extends React.PureComponent<ModalOverlayProps> {
       children,
       onClick,
       isOpen,
+      isHsApp,
       overlayAnimationDelay,
       overlayAnimationDuration,
       overlayAnimationSequence,
@@ -45,6 +46,7 @@ class Overlay extends React.PureComponent<ModalOverlayProps> {
       >
         <BaseOverlay
           {...getValidProps(rest)}
+          isHsApp={isHsApp}
           className={componentClassName}
           onClick={onClick}
           role="presentation"
@@ -53,7 +55,5 @@ class Overlay extends React.PureComponent<ModalOverlayProps> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Overlay)(Overlay)
 
 export default Overlay

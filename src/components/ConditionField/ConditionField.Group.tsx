@@ -1,12 +1,7 @@
 import * as React from 'react'
-import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import AddButton from './ConditionField.AddButton'
-import Operator from '../Condition/Condition.Operator'
-import { getComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { ConditionFieldGroupProps } from './ConditionField.types'
-import { COMPONENT_KEY } from './ConditionField.utils'
 
 export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   static defaultProps = {
@@ -14,17 +9,16 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
     onAdd: noop,
   }
 
+  static displayName = 'ConditionGroup'
+
   renderFields() {
     const { children } = this.props
 
     return React.Children.map(children, (child, index) => {
-      const isWithOr = index > 0
-      const value = {
-        [COMPONENT_KEY.Field]: {
-          isWithOr,
-        },
-      }
-      return <PropProvider value={value}>{child}</PropProvider>
+      return React.cloneElement(child, {
+        ...child.props,
+        isWithOr: index > 0,
+      })
     })
   }
 
@@ -40,7 +34,7 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
 
     return (
       // @ts-ignore
-      <div {...rest}>
+      <div {...rest} data-cy="ConditionFieldGroup">
         {this.renderFields()}
         {this.renderAddAction()}
       </div>
@@ -48,6 +42,4 @@ export class Group extends React.PureComponent<ConditionFieldGroupProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Group)(Group)
-
-export default PropConnectedComponent
+export default Group

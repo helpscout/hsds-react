@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { TransitionGroup } from 'react-transition-group'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
-import { COMPONENT_KEY } from './AnimateGroup.utils'
+
+export const AnimateGroupContext = React.createContext({})
 
 export interface Props {
   appear?: any
@@ -55,12 +54,10 @@ export class AnimateGroup extends React.PureComponent<Props> {
     const delay = stagger ? staggerIndexDelay : delayProp
 
     return {
-      Animate: {
-        duration,
-        delay,
-        easing,
-        sequence,
-      },
+      duration,
+      delay,
+      easing,
+      sequence,
     }
   }
 
@@ -70,9 +67,9 @@ export class AnimateGroup extends React.PureComponent<Props> {
     const key = getComponentKey(child, index)
 
     return childFactory(
-      <PropProvider value={animateProps} key={key}>
+      <AnimateGroupContext.Provider value={animateProps} key={key}>
         {child}
-      </PropProvider>,
+      </AnimateGroupContext.Provider>,
       index
     )
   }
@@ -115,6 +112,4 @@ export class AnimateGroup extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(AnimateGroup)
-
-export default PropConnectedComponent
+export default AnimateGroup

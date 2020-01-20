@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Skeleton.utils'
 import { ControlUI } from './styles/Skeleton.Control.css'
 
 class Control extends React.PureComponent<any> {
+  static displayName = 'Skeleton.Control'
+
   static defaultProps = {
     size: 'md',
   }
@@ -21,7 +21,5 @@ class Control extends React.PureComponent<any> {
     return <ControlUI {...rest} className={componentClassName} />
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Control)(Control)
 
 export default Control

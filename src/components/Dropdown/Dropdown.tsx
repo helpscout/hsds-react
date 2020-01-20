@@ -7,10 +7,9 @@ import Item from './Dropdown.Item'
 import { default as Menu, MenuComponent } from './Dropdown.Menu'
 import Trigger from './Dropdown.Trigger'
 import KeypressListener from '../KeypressListener'
-import { propConnect } from '../PropProvider'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import {
   focusNextFocusableNode,
   focusPreviousFocusableNode,
@@ -271,6 +270,4 @@ export class Dropdown extends React.PureComponent<
   }
 }
 
-namespaceComponent('Dropdown')(Dropdown)
-
-export default propConnect('Dropdown')(Dropdown)
+export default Dropdown

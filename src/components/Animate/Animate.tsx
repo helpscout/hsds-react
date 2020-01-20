@@ -3,11 +3,10 @@ import * as React from 'react'
 import { Transition } from 'react-transition-group'
 import { getSequenceNames } from '../../utilities/animation'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
 import { AnimateUI } from './styles/Animate.css'
-import { COMPONENT_KEY } from './Animate.utils'
+import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
 
 export interface Props {
   animateOnMount: boolean
@@ -128,6 +127,16 @@ export class Animate extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Animate)
+const AnimateConsumer = props => {
+  const contextValue: any = React.useContext(AnimateGroupContext)
 
-export default Animate
+  if (contextValue) {
+    const newProps = { ...contextValue, ...props }
+    newProps.className = classNames(props.className, contextValue.className)
+    return <Animate {...newProps} />
+  }
+
+  return <Animate {...props} />
+}
+
+export default AnimateConsumer

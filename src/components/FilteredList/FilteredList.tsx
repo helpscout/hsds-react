@@ -1,11 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { noop } from '../../utilities/other'
 import { isString, isObject } from '../../utilities/is'
-import { COMPONENT_KEY } from './FilteredList.utils'
 
 import Text from '../Text'
 import Tooltip from '../Tooltip'
@@ -138,7 +134,4 @@ export class FilteredList extends React.Component<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(FilteredList)
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(FilteredList)
-
-export default PropConnectedComponent
+export default FilteredList

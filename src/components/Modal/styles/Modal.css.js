@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { isHSApp } from '../../../styles/utilities/theme'
 import Animate from '../../Animate'
 import Card from '../../Card'
 
@@ -27,6 +26,8 @@ export const ModalUI = styled('div')`
   position: fixed;
   right: 0;
   top: 0;
+  font-family: var(--HSDSGlobalFontFamily);
+  font-size: var(--HSDSGlobalFontSize);
 `
 
 export const InnerWrapperUI = styled('div')`
@@ -68,7 +69,7 @@ export const CloseUI = styled('div')`
 `
 
 function makeHSAppInnerWrapperStyles(props) {
-  if (!isHSApp(props)) return ''
+  if (!props.isHsApp) return ''
 
   return `
     margin-bottom: ${config.theme.app.marginBottom};

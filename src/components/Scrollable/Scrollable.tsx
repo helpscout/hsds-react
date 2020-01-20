@@ -1,7 +1,6 @@
 // @ts-ignore
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import EventListener from '../EventListener'
 import ScrollLock from '../ScrollLock'
 import { classNames } from '../../utilities/classNames'
@@ -13,7 +12,6 @@ import {
 } from '../../utilities/scrollFade'
 import { noop } from '../../utilities/other'
 import { ScrollableUI, ContentUI, FaderUI } from './styles/Scrollable.css'
-import { COMPONENT_KEY } from './Scrollable.utils'
 
 export interface Props {
   backgroundColor: string
@@ -299,6 +297,4 @@ export class Scrollable extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Scrollable)
-
-export default PropConnectedComponent
+export default Scrollable

@@ -6,7 +6,6 @@ import {
 } from './styles/EditableFieldComposite.css'
 
 import {
-  COMPOSITE_COMPONENT_KEY,
   STATES_CLASSNAMES,
   COMPOSITE_CLASSNAMES,
   EDITABLEFIELD_CLASSNAMES,
@@ -14,7 +13,6 @@ import {
 } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
-import propConnect from '../PropProvider/propConnect'
 import * as equal from 'fast-deep-equal'
 
 import { CompositeProps, CompositeState } from './EditableField.types'
@@ -338,8 +336,4 @@ export class EditableFieldComposite extends React.PureComponent<
   }
 }
 
-const PropConnectedComponent = propConnect(COMPOSITE_COMPONENT_KEY)(
-  EditableFieldComposite
-)
-
-export default PropConnectedComponent
+export default EditableFieldComposite

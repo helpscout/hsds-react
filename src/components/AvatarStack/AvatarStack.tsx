@@ -2,20 +2,16 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import Avatar from '../Avatar'
-import AnimateGroup from '../AnimateGroup'
+import { AvatarListContext } from '../AvatarList/AvatarList'
 import Animate from '../Animate'
-import propConnect from '../PropProvider/propConnect'
-import PropProvider from '../PropProvider'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed, getComponentKey } from '../../utilities/component'
+import { getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
 import {
   AvatarStackUI,
   AvatarStackLayeringUI,
   ItemUI,
 } from './styles/AvatarStack.css'
-import { COMPONENT_KEY } from './AvatarStack.utils'
-import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
 
 export interface Props {
   animationDuration: number
@@ -59,9 +55,7 @@ export class AvatarStack extends React.PureComponent<Props> {
   }
 
   getAvatars = () => {
-    return React.Children.toArray(this.props.children).filter(child =>
-      isComponentNamed(child, AVATAR_KEY)
-    )
+    return React.Children.toArray(this.props.children)
   }
 
   getTotalAvatarCount() {
@@ -119,15 +113,13 @@ export class AvatarStack extends React.PureComponent<Props> {
     } = this.props
 
     return {
-      Avatar: {
-        borderColor,
-        className: classNames(avatarsClassName, 'c-AvatarStack__avatar'),
-        outerBorderColor,
-        shape,
-        showStatusBorderColor,
-        size: this.getAvatarSize(),
-        version,
-      },
+      borderColor,
+      className: classNames(avatarsClassName, 'c-AvatarStack__avatar'),
+      outerBorderColor,
+      shape,
+      showStatusBorderColor,
+      size: this.getAvatarSize(),
+      version,
     }
   }
 
@@ -176,7 +168,9 @@ export class AvatarStack extends React.PureComponent<Props> {
             easing={animationEasing}
             sequence={animationSequence}
           >
-            <PropProvider value={avatarProps}>{avatar}</PropProvider>
+            <AvatarListContext.Provider value={avatarProps}>
+              {avatar}
+            </AvatarListContext.Provider>
           </Animate>
         </ItemUI>
       )
@@ -270,6 +264,4 @@ export class AvatarStack extends React.PureComponent<Props> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(AvatarStack)
-
-export default PropConnectedComponent
+export default AvatarStack

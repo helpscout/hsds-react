@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { config as popoverConfig } from '../Popover/Popover.css'
+
 interface ArrowUIProps {
   size?: any
   color?: any
@@ -27,6 +29,19 @@ export const ArrowUI = styled.span<ArrowUIProps>`
     height: calc(${({ size }) => size}px - 4px);
     width: calc(${({ size }) => size}px - 4px);
     margin: 2px;
+  }
+
+  .c-PopoverArrow {
+    border: 1px solid ${popoverConfig.borderColor};
+
+    &.is-top {
+      margin-top: 1px;
+    }
+
+    &.is-ghost {
+      border-color: transparent;
+      box-shadow: none;
+    }
   }
 
   &.is-top {

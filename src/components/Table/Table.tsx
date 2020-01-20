@@ -7,10 +7,8 @@ import { noop } from '../../utilities/other'
 import * as equal from 'fast-deep-equal'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../PropProvider/propConnect'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
-import { COMPONENT_KEY } from './Table.utils'
 
 import { TableWrapperUI, TableUI, LoadingUI } from './styles/Table.css'
 import { defaultSkin, chooseSkin } from './styles/skins'
@@ -208,6 +206,4 @@ export class Table extends React.Component<TableProps, TableState> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(Table)
-
-export default PropConnectedComponent
+export default Table

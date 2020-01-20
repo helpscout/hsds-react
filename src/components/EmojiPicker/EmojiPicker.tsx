@@ -1,10 +1,8 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Dropdown from '../Dropdown/DropdownV2'
 import { EmojiPickerProps } from './EmojiPicker.types'
-import { COMPONENT_KEY } from './EmojiPicker.utils'
 import { MenuUI, TriggerUI } from './styles/EmojiPicker.css'
 import Item from './EmojiPicker.Item'
 import Emoji from './EmojiPicker.Emoji'
@@ -76,6 +74,4 @@ export class EmojiPicker extends React.PureComponent<EmojiPickerProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(EmojiPicker)
-
-export default PropConnectedComponent
+export default EmojiPicker

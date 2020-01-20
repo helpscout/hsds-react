@@ -4,10 +4,9 @@ import Context from './Context'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
+
 import { createUniqueIDFactory } from '../../utilities/id'
 import { FormLabelUI, FormLabelHelpTextUI } from './styles/FormLabel.css'
-import { COMPONENT_KEY } from './FormLabel.utils'
 
 export interface Props {
   children?: any
@@ -106,7 +105,5 @@ class FormLabel extends React.Component<Props, State> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY)(FormLabel)
 
 export default FormLabel

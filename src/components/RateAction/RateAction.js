@@ -1,6 +1,7 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+
 import Emoticon from '../Emoticon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'

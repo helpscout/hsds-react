@@ -20,11 +20,11 @@ export default createGlobalStyle`
 
   ${props => (props.scope ? props.scope : '.hsds-react')} {
     box-sizing: border-box;
+    font-family: var(--HSDSGlobalFontFamily);
+    font-size: var(--HSDSGlobalFontSize);
 
     *, *::before, *::after {
       box-sizing: border-box;
-      font-family: var(--HSDSGlobalFontFamily);
-      font-size: var(--HSDSGlobalFontSize);
     }
   }
 `

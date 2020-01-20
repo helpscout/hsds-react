@@ -2,13 +2,13 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Modal.utils'
 import { BodyUI } from './styles/Modal.Body.css'
 import { ModalBodyProps } from './Modal.types'
 
 class Body extends React.PureComponent<ModalBodyProps> {
+  static displayName = 'Modal.Body'
+
   static defaultProps = {
     innerRef: noop,
     isScrollLocked: true,
@@ -97,7 +97,5 @@ class Body extends React.PureComponent<ModalBodyProps> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Body)(Body)
 
 export default Body

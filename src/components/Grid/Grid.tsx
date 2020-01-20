@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Grid.utils'
+
 import Container from './Grid.Container'
 import Row from './Grid.Row'
 import Col from './Grid.Col'
@@ -23,7 +22,5 @@ class Grid extends React.PureComponent<any> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY.Grid)(Grid)
 
 export default Grid

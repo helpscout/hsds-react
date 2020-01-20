@@ -1,10 +1,7 @@
 import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
 import { RadioKind } from './Radio.types'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Radio.utils'
 
 type Props = {
   className?: string
@@ -33,6 +30,4 @@ class Radio extends React.PureComponent<Props> {
   }
 }
 
-namespaceComponent(COMPONENT_KEY)(Radio)
-
-export default propConnect(COMPONENT_KEY)(Radio)
+export default Radio

@@ -2,9 +2,7 @@ import * as React from 'react'
 import { MessageThemeContext } from './Message.types'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import { COMPONENT_KEY } from './Message.utils'
 
 type Props = {
   className?: string
@@ -50,6 +48,6 @@ Caption.contextTypes = {
   theme: noop,
 }
 
-namespaceComponent(COMPONENT_KEY.Caption)(Caption)
+Caption.displayName = 'MessageCaption'
 
 export default Caption

@@ -1,21 +1,20 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import propConnect from '../../PropProvider/propConnect'
 import EventListener from '../../EventListener'
 import { connect } from '@helpscout/wedux'
 import { CardUI } from './Dropdown.css'
 import { classNames } from '../../../utilities/classNames'
-import { namespaceComponent } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { isDefined, isNumber } from '../../../utilities/is'
 import { DropdownCardProps, WidthValue } from './Dropdown.types'
-import { COMPONENT_KEY } from './Dropdown.utils'
 
 export interface State {
   width?: WidthValue
 }
 
 export class Card extends React.PureComponent<DropdownCardProps> {
+  static displayName = 'DropdownCard'
+
   static defaultProps = {
     cardRef: noop,
     style: {},
@@ -89,8 +88,6 @@ export class Card extends React.PureComponent<DropdownCardProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Card)(Card)
-
 const ConnectedCard: any = connect(
   // mapStateToProps
   (state: any) => {
@@ -116,7 +113,7 @@ const ConnectedCard: any = connect(
   }
 )(
   // @ts-ignore
-  PropConnectedComponent
+  Card
 )
 
 export default ConnectedCard

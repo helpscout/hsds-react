@@ -1,7 +1,5 @@
 import * as React from 'react'
 import { BlockSelectorTag } from '../../constants/types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Link from '../Link'
 import Block from './Card.Block'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'

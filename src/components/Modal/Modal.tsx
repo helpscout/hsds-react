@@ -10,14 +10,12 @@ import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
 import PortalWrapper from '../PortalWrapper'
-import { isHSApp } from '../PropProvider/PropProvider.utils'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
-import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
-import { COMPONENT_KEY } from './Modal.utils'
+
 import {
   ModalUI,
   InnerWrapperUI,
@@ -39,6 +37,7 @@ class Modal extends React.PureComponent<ModalProps> {
     closePortal: noop,
     closeIconOffset: 10,
     seamless: false,
+    isHsApp: false,
     isOpen: false,
     closeIconRepositionDelay: 0,
     containTabKeyPress: true,
@@ -155,8 +154,8 @@ class Modal extends React.PureComponent<ModalProps> {
   }
 
   getCloseMarkup = () => {
-    const { closeIcon, forceClosePortal } = this.props
-    const shouldRenderClose = closeIcon && !isHSApp(this.props)
+    const { closeIcon, forceClosePortal, isHsApp } = this.props
+    const shouldRenderClose = closeIcon && !isHsApp
 
     return (
       shouldRenderClose && (
@@ -171,10 +170,15 @@ class Modal extends React.PureComponent<ModalProps> {
     const { children } = this.props
 
     return React.Children.map(children, child => {
+      if (!child) return child
+
+      const {
+        type: { displayName },
+      } = child
+
       if (
         child &&
-        (isComponentNamed(child, COMPONENT_KEY.Content) ||
-          isComponentNamed(child, COMPONENT_KEY.Body))
+        (displayName === 'Modal.Content' || displayName === 'Modal.Body')
       ) {
         return React.cloneElement(child, {
           scrollableRef: this.setScrollableNode,
@@ -239,6 +243,7 @@ class Modal extends React.PureComponent<ModalProps> {
   getOverlayMarkup = () => {
     const {
       forceClosePortal,
+      isHsApp,
       overlayAnimationDelay,
       overlayAnimationDuration,
       overlayAnimationSequence,
@@ -249,6 +254,7 @@ class Modal extends React.PureComponent<ModalProps> {
     const props = {
       className: overlayClassName,
       isOpen: portalIsOpen,
+      isHsApp,
       onClick: forceClosePortal,
       overlayAnimationDelay,
       overlayAnimationDuration,
@@ -271,7 +277,7 @@ class Modal extends React.PureComponent<ModalProps> {
   }
 
   render() {
-    const { className, isOpen, style, zIndex, ...rest } = this.props
+    const { className, isOpen, style, zIndex, isHsApp, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-Modal',
@@ -303,6 +309,7 @@ class Modal extends React.PureComponent<ModalProps> {
         <InnerWrapperUI
           {...getValidProps(rest)}
           className="c-Modal__innerWrapper"
+          isHsApp={isHsApp}
         >
           {this.getInnerContentMarkup()}
         </InnerWrapperUI>

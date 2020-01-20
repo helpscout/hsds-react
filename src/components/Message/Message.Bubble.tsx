@@ -27,10 +27,7 @@ type Props = MessageBubble
 type Context = MessageThemeContext
 
 // convertLinksToHTML will escape for output as HTML
-const enhanceBody = compose(
-  newlineToHTML,
-  convertLinksToHTML
-)
+const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
 
 export const Bubble = (props: Props, context: Context) => {
   const {
@@ -147,5 +144,7 @@ export const Bubble = (props: Props, context: Context) => {
 Bubble.contextTypes = {
   theme: noop,
 }
+
+Bubble.displayName = 'MessageBubble'
 
 export default Bubble

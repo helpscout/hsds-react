@@ -10,25 +10,8 @@ export const config = {
   padding: '15px',
 }
 
-export const PopoverUI = styled(Tooltip)`
-  .c-PopoverContent {
-    background: white;
-    border: 1px solid ${config.borderColor};
-    box-shadow: ${config.boxShadow};
-    color: inherit;
-    font-size: inherit;
-    padding: ${config.padding};
-  }
-
-  .c-PopoverArrow {
-    border: 1px solid ${config.borderColor};
-
-    &.is-ghost {
-      border-color: transparent;
-      box-shadow: none;
-    }
-  }
-`
+// popover styling has been move to Tooltip.css & Pop/Arrow.css
+// to account for a className merge behavior change within styled-components
 
 export const HeaderUI = styled('div')`
   border-bottom: 1px solid ${config.borderColor};

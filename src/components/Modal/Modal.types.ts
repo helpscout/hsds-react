@@ -11,6 +11,7 @@ export interface ModalProps extends PortalProps {
   closeIconOffset: number
   closePortal: () => void
   isOpen: boolean
+  isHsApp: boolean
   containTabKeyPress: boolean
   modalAnimationDelay: number
   modalAnimationDuration: number
@@ -71,6 +72,7 @@ export type ModalOverlayProps = {
   children?: any
   className?: string
   onClick: () => void
+  isHsApp: boolean
   isOpen: boolean
   overlayAnimationDelay: number
   overlayAnimationDuration: number

@@ -1,9 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import PropProvider from '../PropProvider'
-import propConnect from '../PropProvider/propConnect'
 import Flexy from '../Flexy'
-import { COMPONENT_KEY as FLEXY_COMPONENT_KEY } from '../Flexy/Flexy.utils'
+import { FlexyContext } from '../Flexy/Flexy'
 import Select from '../Select'
 import And from './Condition.And'
 import AddButton from './Condition.AddButton'
@@ -11,7 +9,7 @@ import Operator from './Condition.Operator'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionProps } from './Condition.types'
-import { COMPONENT_KEY } from './Condition.utils'
+
 import {
   ConditionUI,
   ConditionContentUI,
@@ -39,9 +37,7 @@ export class Condition extends React.PureComponent<ConditionProps> {
 
   getProviderProps() {
     return {
-      [FLEXY_COMPONENT_KEY.Flexy]: {
-        baseSize: 5,
-      },
+      baseSize: 5,
     }
   }
 
@@ -60,9 +56,10 @@ export class Condition extends React.PureComponent<ConditionProps> {
         {...getValidProps(rest)}
         className={this.getClassName()}
         ref={innerRef as any}
+        data-cy="Condition"
       >
         {this.renderOperator()}
-        <PropProvider value={this.getProviderProps()}>
+        <FlexyContext.Provider value={this.getProviderProps()}>
           <ConditionContentUI
             align="top"
             className="c-ConditionContent"
@@ -75,12 +72,10 @@ export class Condition extends React.PureComponent<ConditionProps> {
               {children}
             </Flexy.Block>
           </ConditionContentUI>
-        </PropProvider>
+        </FlexyContext.Provider>
       </ConditionUI>
     )
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY.Condition)(Condition)
-
-export default PropConnectedComponent
+export default Condition

@@ -282,12 +282,6 @@ describe('HintText', () => {
     expect(o.text()).toBe('Hint text')
   })
 
-  test('Does not pass state to hintText', () => {
-    const wrapper = mount(<Select hintText="Hint text" state="error" />)
-    const o = wrapper.find(ui.hintText).first()
-    expect(o.props().state).not.toBeTruthy()
-  })
-
   test('Accepts React components', () => {
     const custom = <div className="custom">Custom text</div>
     const wrapper = mount(<Select hintText={custom} />)
