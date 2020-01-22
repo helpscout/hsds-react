@@ -33,7 +33,7 @@ export const VerificationCodeFieldUI = styled('div')`
   }
 `
 
-export const DigitInputUI = styled('div')`
+export const DigitInputWrapperUI = styled('div')`
   position: relative;
   margin: 0 15px 0 0;
 `
@@ -43,12 +43,12 @@ export const DigitMaskUI = styled('div')`
   top: 0;
   left: 0;
   width: 40px;
-  height: 35px;
-  padding: 0 0 5px 0;
+  height: 50px;
+  padding: 0 0 7px 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 35px;
-  line-height: 27px;
+  line-height: 41px;
   text-align: center;
   color: ${getColor('charcoal.700')};
   border-bottom: 2px solid #d5dce1;
@@ -56,13 +56,17 @@ export const DigitMaskUI = styled('div')`
   &::selection {
     background-color: #b2d7ff;
   }
+
+  &.hidden {
+    opacity: 0;
+  }
 `
 
-export const InputUI = styled('input')`
+export const DigitInputUI = styled('input')`
   position: relative;
   width: 40px;
-  height: 35px;
-  padding: 0 0 5px 0;
+  height: 50px;
+  padding: 0 0 7px 0;
   margin: 0;
   border: 0;
   border-bottom: 2px solid #d5dce1;
@@ -85,4 +89,11 @@ export const InputUI = styled('input')`
   &.hidden {
     opacity: 0;
   }
+`
+
+export const ClipboardPlaceholderUI = styled('textarea')`
+  position: absolute;
+  top: 0px;
+  left: 700px;
+  pointer-events: none;
 `

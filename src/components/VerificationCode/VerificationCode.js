@@ -1,146 +1,156 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
+import { copyToClipboard } from '../../utilities/clipboard'
+import {
+  selectAll,
+  clearAll,
+  getCleanSelectedText,
+  showInputDigits,
+  CLASSNAMES,
+} from './VerificationCode.utils'
 import {
   VerificationCodeFieldUI,
-  DigitInputUI,
+  DigitInputWrapperUI,
   DigitMaskUI,
-  InputUI,
+  DigitInputUI,
+  ClipboardPlaceholderUI,
 } from './VerificationCode.css'
 
 export default class VerificationCode extends React.Component {
-  static propTypes = {}
-  static defaultProps = {}
+  static propTypes = {
+    charactersRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    numberOfChars: PropTypes.number,
+  }
+
+  static defaultProps = {
+    charactersRegex: /^\d+$/,
+    numberOfChars: 6,
+  }
+
+  componentDidMount() {
+    this.digitInputNodes = [...document.querySelectorAll('.DigitInput')]
+    this.digitMaskNodes = [...document.querySelectorAll('.DigitMask')]
+  }
 
   getClassName() {
     const { className } = this.props
+
     return classNames('c-VerificationCode', className)
   }
 
-  setFirstInputNode = node => {
-    this.firstInputRef = node
+  setClipboardPlaceholderNode = node => {
+    this.clipboardPlaceholderRef = node
   }
 
   handlePaste = e => {
-    // console.log('TCL: VerificationCode -> e', e.target)
-  }
+    const { numberOfChars } = this.props
+    const regex = new RegExp(this.props.charactersRegex)
+    const clipboardData = e.clipboardData || window.clipboardData
+    const pastedData = clipboardData.getData('Text')
 
-  handleKeyUp = e => {
-    // console.log('TCL: VerificationCode -> e', e.target)
-  }
+    e.stopPropagation()
+    e.preventDefault()
 
-  handleFieldFocus = e => {
-    if (
-      !document.activeElement.classList.contains('VerificationCode-digitInput')
-    ) {
-      this.firstInputRef.focus()
+    if (regex.test(pastedData) && pastedData.length === numberOfChars) {
+      this.digitInputNodes.forEach((digitInput, index) => {
+        digitInput.value = pastedData.charAt(index)
+        this.digitMaskNodes[index].innerText = pastedData.charAt(index)
+
+        if (index === numberOfChars - 1) {
+          digitInput.focus()
+        }
+      })
     }
   }
 
-  handleInputChange = e => {
-    const { value } = e.target
-    const digitMask = e.target.previousElementSibling
+  handleKeyDown = e => {
+    const { key, metaKey } = e
 
-    digitMask.innerText = value
+    if (metaKey && key === 'a') {
+      selectAll(this.digitInputNodes, this.digitMaskNodes)
+    } else if (metaKey && key === 'c') {
+      let selectionText = getCleanSelectedText()
+
+      this.clipboardPlaceholderRef.value = selectionText
+      this.clipboardPlaceholderRef.select()
+      copyToClipboard()
+      selectAll(this.digitInputNodes, this.digitMaskNodes)
+    }
+  }
+
+  handleInputKeyUp = (index, e) => {
+    const { key } = e
+
+    if (key === 'Meta') return
+
+    const { value } = e.target
+    const { numberOfChars, charactersRegex } = this.props
+    const digitMask = this.digitMaskNodes[index]
+    const regex = new RegExp(charactersRegex)
+
+    if (key === 'Backspace') {
+      let selectionText = getCleanSelectedText()
+
+      if (selectionText.length > 1) {
+        clearAll(this.digitInputNodes, this.digitMaskNodes)
+        showInputDigits(this.digitInputNodes, this.digitMaskNodes)
+        this.digitInputNodes[0].select()
+      } else {
+        const previousDigit = this.digitInputNodes[index === 0 ? 0 : index - 1]
+
+        previousDigit && previousDigit.select()
+        digitMask.innerText = value
+      }
+    } else if (regex.test(value)) {
+      const nextDigit = this.digitInputNodes[
+        index === numberOfChars - 1 ? numberOfChars : index + 1
+      ]
+
+      nextDigit && nextDigit.focus()
+      digitMask.innerText = value
+    }
   }
 
   handleInputClick = e => {
-    let inputs = document.querySelectorAll('.VerificationCode-digitInput')
-
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].classList.remove('hidden')
-    }
-
+    showInputDigits(this.digitInputNodes, this.digitMaskNodes)
     e.target.select()
   }
 
   render() {
+    const { numberOfChars } = this.props
+
     return (
       <div>
-        <button
-          onClick={e => {
-            let selection = window.getSelection()
-            let masks = document.querySelectorAll('.VerificationCode-digitMask')
-            let inputs = document.querySelectorAll(
-              '.VerificationCode-digitInput'
-            )
-
-            if (selection.rangeCount > 0) {
-              selection.removeAllRanges()
-            }
-
-            for (let i = 0; i < masks.length; i++) {
-              inputs[i].classList.add('hidden')
-              let range = document.createRange()
-              range.selectNode(masks[i])
-              selection.addRange(range)
-            }
-          }}
-        >
-          Select All
-        </button>
         <VerificationCodeFieldUI
           className={this.getClassName()}
           onPaste={this.handlePaste}
-          // onFocus={this.handleFieldFocus}
-          onKeyUp={this.handleKeyUp}
-          tabIndex="0"
+          onKeyDown={this.handleKeyDown}
         >
-          <DigitInputUI>
-            <DigitMaskUI className="VerificationCode-digitMask" />
-            <InputUI
-              className="VerificationCode-digitInput"
-              maxLength="1"
-              innerRef={this.setFirstInputNode}
-              onClick={this.handleInputClick}
-              onChange={this.handleInputChange}
-            />
-          </DigitInputUI>
-          <DigitInputUI>
-            <DigitMaskUI className="VerificationCode-digitMask" />
-            <InputUI
-              className="VerificationCode-digitInput"
-              maxLength="1"
-              onClick={this.handleInputClick}
-              onChange={this.handleInputChange}
-            />
-          </DigitInputUI>
-          <DigitInputUI>
-            <DigitMaskUI className="VerificationCode-digitMask" />
-            <InputUI
-              className="VerificationCode-digitInput"
-              maxLength="1"
-              onClick={this.handleInputClick}
-              onChange={this.handleInputChange}
-            />
-          </DigitInputUI>
-          <DigitInputUI>
-            <DigitMaskUI className="VerificationCode-digitMask" />
-            <InputUI
-              className="VerificationCode-digitInput"
-              maxLength="1"
-              onClick={this.handleInputClick}
-              onChange={this.handleInputChange}
-            />
-          </DigitInputUI>
-          <DigitInputUI>
-            <DigitMaskUI className="VerificationCode-digitMask" />
-            <InputUI
-              className="VerificationCode-digitInput"
-              maxLength="1"
-              onClick={this.handleInputClick}
-              onChange={this.handleInputChange}
-            />
-          </DigitInputUI>
-          <DigitInputUI>
-            <DigitMaskUI className="VerificationCode-digitMask" />
-            <InputUI
-              className="VerificationCode-digitInput"
-              maxLength="1"
-              onClick={this.handleInputClick}
-              onChange={this.handleInputChange}
-            />
-          </DigitInputUI>
+          <ClipboardPlaceholderUI
+            readOnly
+            innerRef={this.setClipboardPlaceholderNode}
+          />
+          {Array(numberOfChars)
+            .fill(0)
+            .map((_, index) => {
+              return (
+                <DigitInputWrapperUI
+                  className="DigitInputWrapper"
+                  key={`DigitInput-${index}`}
+                >
+                  <DigitMaskUI className={`DigitMask ${CLASSNAMES.hidden}`} />
+                  <DigitInputUI
+                    className="DigitInput"
+                    maxLength="1"
+                    onClick={this.handleInputClick}
+                    onKeyUp={e => {
+                      this.handleInputKeyUp(index, e)
+                    }}
+                  />
+                </DigitInputWrapperUI>
+              )
+            })}
         </VerificationCodeFieldUI>
       </div>
     )
