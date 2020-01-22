@@ -60,14 +60,17 @@ export default class VerificationCode extends React.Component {
     e.preventDefault()
 
     if (pastedData.length > 0) {
-      pastedData.split('').forEach((char, index, arr) => {
-        this.digitInputNodes[index].value = char
-        this.digitMaskNodes[index].innerText = char
+      pastedData
+        .slice(0, 6)
+        .split('')
+        .forEach((char, index, arr) => {
+          this.digitInputNodes[index].value = char
+          this.digitMaskNodes[index].innerText = char
 
-        if (index === arr.length - 1) {
-          this.digitInputNodes[index].focus()
-        }
-      })
+          if (index === arr.length - 1) {
+            this.digitInputNodes[index].focus()
+          }
+        })
     }
   }
 
