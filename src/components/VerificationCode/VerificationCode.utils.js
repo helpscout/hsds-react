@@ -39,3 +39,10 @@ export function getCleanSelectedText() {
     .toString()
     .replace(/\s/g, '')
 }
+
+export function getCurrentCodeValue(digitInputNodes) {
+  return digitInputNodes
+    .map(input => input.value)
+    .join('')
+    .trim()
+}

@@ -5,5 +5,11 @@ import VerificationCode from './'
 const stories = storiesOf('VerificationCode', module)
 
 stories.add('Default', () => {
-  return <VerificationCode />
+  return (
+    <VerificationCode
+      onChange={val => {
+        console.log(val)
+      }}
+    />
+  )
 })

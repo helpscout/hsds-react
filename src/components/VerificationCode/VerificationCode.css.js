@@ -8,8 +8,9 @@ export const VerificationCodeFieldUI = styled('div')`
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 500px;
-  height: 72px;
+  height: 74px;
   border: 1px solid #c5ced6;
   border-radius: 3px;
   background-color: #fff;
@@ -93,7 +94,10 @@ export const DigitInputUI = styled('input')`
 
 export const ClipboardPlaceholderUI = styled('textarea')`
   position: absolute;
-  top: 0px;
-  left: 700px;
+  top: 0;
+  left: 0;
+  opacity: 0;
   pointer-events: none;
+  width: 1px;
+  height: 1px;
 `
