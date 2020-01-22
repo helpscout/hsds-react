@@ -24,7 +24,6 @@ import Tooltip from '../Tooltip'
 
 export default class VerificationCode extends React.Component {
   static propTypes = {
-    charactersRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     isValid: PropTypes.bool,
     numberOfChars: PropTypes.number,
     onEnter: PropTypes.func,
@@ -32,7 +31,6 @@ export default class VerificationCode extends React.Component {
   }
 
   static defaultProps = {
-    charactersRegex: /^\d+$/,
     isValid: true,
     numberOfChars: 6,
     onEnter: noop,
@@ -55,21 +53,19 @@ export default class VerificationCode extends React.Component {
   }
 
   handlePaste = e => {
-    const { numberOfChars } = this.props
-    const regex = new RegExp(this.props.charactersRegex)
     const clipboardData = e.clipboardData || window.clipboardData
     const pastedData = clipboardData.getData('Text')
 
     e.stopPropagation()
     e.preventDefault()
 
-    if (regex.test(pastedData) && pastedData.length === numberOfChars) {
-      this.digitInputNodes.forEach((digitInput, index) => {
-        digitInput.value = pastedData.charAt(index)
-        this.digitMaskNodes[index].innerText = pastedData.charAt(index)
+    if (pastedData.length > 0) {
+      pastedData.split('').forEach((char, index, arr) => {
+        this.digitInputNodes[index].value = char
+        this.digitMaskNodes[index].innerText = char
 
-        if (index === numberOfChars - 1) {
-          digitInput.focus()
+        if (index === arr.length - 1) {
+          this.digitInputNodes[index].focus()
         }
       })
     }
@@ -104,9 +100,8 @@ export default class VerificationCode extends React.Component {
     if (key === 'Meta') return
 
     const { value } = e.target
-    const { numberOfChars, charactersRegex, onChange } = this.props
+    const { numberOfChars, onChange } = this.props
     const digitMask = this.digitMaskNodes[index]
-    const regex = new RegExp(charactersRegex)
 
     if (key === 'Backspace') {
       let selectionText = getCleanSelectedText()
@@ -123,7 +118,7 @@ export default class VerificationCode extends React.Component {
         digitMask.innerText = value
         onChange(getCurrentCodeValue(this.digitInputNodes))
       }
-    } else if (regex.test(value)) {
+    } else {
       const nextDigit = this.digitInputNodes[
         index === numberOfChars - 1 ? numberOfChars : index + 1
       ]
