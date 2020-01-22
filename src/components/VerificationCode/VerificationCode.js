@@ -17,11 +17,15 @@ import {
   DigitMaskUI,
   DigitInputUI,
   ClipboardPlaceholderUI,
+  IconUI,
+  ValidIconUI,
 } from './VerificationCode.css'
+import Tooltip from '../Tooltip'
 
 export default class VerificationCode extends React.Component {
   static propTypes = {
     charactersRegex: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    isValid: PropTypes.bool,
     numberOfChars: PropTypes.number,
     onEnter: PropTypes.func,
     onChange: PropTypes.func,
@@ -29,6 +33,7 @@ export default class VerificationCode extends React.Component {
 
   static defaultProps = {
     charactersRegex: /^\d+$/,
+    isValid: true,
     numberOfChars: 6,
     onEnter: noop,
     onChange: noop,
@@ -40,9 +45,9 @@ export default class VerificationCode extends React.Component {
   }
 
   getClassName() {
-    const { className } = this.props
+    const { className, isValid } = this.props
 
-    return classNames('c-VerificationCode', className)
+    return classNames('c-VerificationCode', !isValid && 'not-valid', className)
   }
 
   setClipboardPlaceholderNode = node => {
@@ -135,7 +140,7 @@ export default class VerificationCode extends React.Component {
   }
 
   render() {
-    const { numberOfChars } = this.props
+    const { numberOfChars, isValid } = this.props
 
     return (
       <VerificationCodeFieldUI
@@ -168,6 +173,19 @@ export default class VerificationCode extends React.Component {
               </DigitInputWrapperUI>
             )
           })}
+        {!isValid ? (
+          <ValidIconUI>
+            <Tooltip
+              animationDelay={0}
+              animationDuration={0}
+              display="block"
+              placement="top-end"
+              title="Invalid verification code"
+            >
+              <IconUI name="alert" size={24} />
+            </Tooltip>
+          </ValidIconUI>
+        ) : null}
       </VerificationCodeFieldUI>
     )
   }

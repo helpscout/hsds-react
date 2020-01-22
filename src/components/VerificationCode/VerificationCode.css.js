@@ -1,5 +1,7 @@
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'
+import Icon from '../Icon'
+import Tooltip from '../Tooltip'
 
 export const VerificationCodeFieldUI = styled('div')`
   box-sizing: border-box;
@@ -21,10 +23,6 @@ export const VerificationCodeFieldUI = styled('div')`
     box-sizing: inherit;
   }
 
-  div:last-child {
-    margin-right: 0;
-  }
-
   &:focus {
     outline: none;
   }
@@ -32,11 +30,19 @@ export const VerificationCodeFieldUI = styled('div')`
   &:focus-within {
     border: 2px solid ${getColor('blue.500')};
   }
+
+  &.not-valid {
+    border: 2px solid #f23459;
+  }
 `
 
 export const DigitInputWrapperUI = styled('div')`
   position: relative;
   margin: 0 15px 0 0;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 `
 
 export const DigitMaskUI = styled('div')`
@@ -100,4 +106,14 @@ export const ClipboardPlaceholderUI = styled('textarea')`
   pointer-events: none;
   width: 1px;
   height: 1px;
+`
+
+export const ValidIconUI = styled(Tooltip)`
+  position: absolute;
+  right: 8px;
+  top: calc(50% - 24px / 2);
+`
+
+export const IconUI = styled(Icon)`
+  color: #f23459;
 `
