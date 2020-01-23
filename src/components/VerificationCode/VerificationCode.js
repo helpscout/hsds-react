@@ -38,14 +38,22 @@ export default class VerificationCode extends React.Component {
   }
 
   componentDidMount() {
-    this.digitInputNodes = [...document.querySelectorAll('.DigitInput')]
-    this.digitMaskNodes = [...document.querySelectorAll('.DigitMask')]
+    this.digitInputNodes = this.verificationCodeFieldRef.querySelectorAll(
+      '.DigitInput'
+    )
+    this.digitMaskNodes = this.verificationCodeFieldRef.querySelectorAll(
+      '.DigitMask'
+    )
   }
 
   getClassName() {
     const { className, isValid } = this.props
 
     return classNames('c-VerificationCode', !isValid && 'not-valid', className)
+  }
+
+  setVerificationCodeFieldNode = node => {
+    this.verificationCodeFieldRef = node
   }
 
   setClipboardPlaceholderNode = node => {
@@ -64,22 +72,24 @@ export default class VerificationCode extends React.Component {
         .slice(0, 6)
         .split('')
         .forEach((char, index, arr) => {
-          this.digitInputNodes[index].value = char
-          this.digitMaskNodes[index].innerText = char
+          if (this.digitInputNodes.length > 0) {
+            this.digitInputNodes[index].value = char
+            this.digitMaskNodes[index].innerText = char
 
-          if (index === arr.length - 1) {
-            this.digitInputNodes[index].focus()
+            if (index === arr.length - 1) {
+              this.digitInputNodes[index].focus()
+            }
           }
         })
     }
   }
 
   handleKeyDown = e => {
-    const { key, metaKey } = e
+    const { key, metaKey, ctrlKey } = e
 
-    if (metaKey && key === 'a') {
+    if ((metaKey || ctrlKey) && key === 'a') {
       selectAll(this.digitInputNodes, this.digitMaskNodes)
-    } else if (metaKey && key === 'c') {
+    } else if ((metaKey || ctrlKey) && key === 'c') {
       const selectionText = getCleanSelectedText()
 
       this.clipboardPlaceholderRef.value = selectionText
@@ -100,35 +110,38 @@ export default class VerificationCode extends React.Component {
   handleInputKeyUp = (index, e) => {
     const { key } = e
 
-    if (key === 'Meta') return
+    if (key !== 'Meta') {
+      const { value } = e.target
+      const { numberOfChars, onChange } = this.props
+      const digitMask = this.digitMaskNodes[index]
 
-    const { value } = e.target
-    const { numberOfChars, onChange } = this.props
-    const digitMask = this.digitMaskNodes[index]
+      if (key === 'Backspace') {
+        let selectionText = getCleanSelectedText()
 
-    if (key === 'Backspace') {
-      let selectionText = getCleanSelectedText()
+        if (selectionText.length > 1) {
+          clearAll(this.digitInputNodes, this.digitMaskNodes)
+          showInputDigits(this.digitInputNodes, this.digitMaskNodes)
+          this.digitInputNodes[0].focus()
+          onChange('')
+        } else {
+          const previousDigit = this.digitInputNodes[
+            index === 0 ? 0 : index - 1
+          ]
 
-      if (selectionText.length > 1) {
-        clearAll(this.digitInputNodes, this.digitMaskNodes)
-        showInputDigits(this.digitInputNodes, this.digitMaskNodes)
-        this.digitInputNodes[0].select()
-        onChange('')
-      } else {
-        const previousDigit = this.digitInputNodes[index === 0 ? 0 : index - 1]
-
-        previousDigit && previousDigit.select()
+          previousDigit && previousDigit.select()
+          digitMask.innerText = value
+          onChange(getCurrentCodeValue(this.digitInputNodes))
+        }
+      } else if (key.length === 1) {
+        // all chars have a length of 1, special keys have more
+        const nextDigit = this.digitInputNodes[
+          index === numberOfChars - 1 ? numberOfChars : index + 1
+        ]
+        nextDigit && nextDigit.focus()
         digitMask.innerText = value
+
         onChange(getCurrentCodeValue(this.digitInputNodes))
       }
-    } else {
-      const nextDigit = this.digitInputNodes[
-        index === numberOfChars - 1 ? numberOfChars : index + 1
-      ]
-
-      nextDigit && nextDigit.focus()
-      digitMask.innerText = value
-      onChange(getCurrentCodeValue(this.digitInputNodes))
     }
   }
 
@@ -143,6 +156,7 @@ export default class VerificationCode extends React.Component {
     return (
       <VerificationCodeFieldUI
         className={this.getClassName()}
+        innerRef={this.setVerificationCodeFieldNode}
         onPaste={this.handlePaste}
         onKeyDown={this.handleKeyDown}
       >

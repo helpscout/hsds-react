@@ -18,3 +18,16 @@ stories.add('Invalid', () => {
     />
   )
 })
+
+stories.add('In context', () => {
+  return (
+    <div>
+      <input type="text" />
+      <div style={{ margin: '50px 0' }}>
+        <VerificationCode />
+      </div>
+      <button>Cancel</button>
+      <button>Submit</button>
+    </div>
+  )
+})
