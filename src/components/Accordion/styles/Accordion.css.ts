@@ -29,6 +29,10 @@ export const AccordionUI = styled('div')`
     `
     )};
   }
+
+  .is-sorting {
+    position: relative;
+  }
 `
 
 export const BodyUI = styled('div')`
@@ -106,9 +110,13 @@ export const makeTitleUI = (selector: 'div') => {
       outline: none;
     }
 
-    &.is-sorting {
+    .is-sorting & {
       background-color: ${getColor('grey.200')};
       cursor: move;
+
+      .drag-handle {
+        display: inline-block;
+      }
     }
 
     &.is-open {
@@ -176,8 +184,9 @@ export const makeTitleUI = (selector: 'div') => {
     }
 
     &:hover .drag-handle,
-    .drag-handle.is-sorting {
+    .is-sorting .drag-handle {
       display: inline-block;
+      z-index: 9999;
     }
   `
 }

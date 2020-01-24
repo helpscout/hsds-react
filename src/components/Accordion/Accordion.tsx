@@ -160,10 +160,10 @@ export class Accordion extends React.PureComponent<
 
     const content = isSortable ? (
       <Sortable
+        helperClass="is-sorting"
         hideDragHandles
         lockAxis="y"
-        pressDelay={200}
-        useDragHandle={true}
+        useDragHandle
       >
         {children}
       </Sortable>
