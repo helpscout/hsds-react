@@ -11,6 +11,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { AccordionUI } from './styles/Accordion.css'
 import { COMPONENT_KEY } from './Accordion.utils'
+import Sortable from '../Sortable'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
@@ -66,6 +67,7 @@ export class Accordion extends React.PureComponent<
   static defaultProps = {
     isPage: false,
     isSeamless: false,
+    isSortable: false,
     onOpen: noop,
     onClose: noop,
     openSectionIds: [],
@@ -127,13 +129,14 @@ export class Accordion extends React.PureComponent<
   }
 
   getSubComponentProps() {
-    const { duration, isPage, isSeamless, size } = this.props
+    const { duration, isPage, isSeamless, isSortable, size } = this.props
     const { sections } = this.state
 
     return {
       duration,
       isPage,
       isSeamless,
+      isSortable,
       onOpen: this.onOpen,
       onClose: this.onClose,
       sections,
@@ -152,8 +155,21 @@ export class Accordion extends React.PureComponent<
   }
 
   render() {
-    const { children, ...rest } = this.props
+    const { children, isSortable, ...rest } = this.props
     const componentClassName = getComponentClassName(this.props)
+
+    const content = isSortable ? (
+      <Sortable
+        hideDragHandles
+        lockAxis="y"
+        pressDelay={200}
+        useDragHandle={true}
+      >
+        {children}
+      </Sortable>
+    ) : (
+      children
+    )
 
     return (
       <AccordionUI
@@ -162,7 +178,7 @@ export class Accordion extends React.PureComponent<
         role="tablist"
       >
         <PropProvider value={this.getPropProviderProps()}>
-          {children}
+          {content}
         </PropProvider>
       </AccordionUI>
     )

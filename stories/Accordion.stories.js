@@ -84,6 +84,15 @@ stories.add('is seamless in page', () => (
   </Page>
 ))
 
+stories.add('is seamless in page and sortable', () => (
+  <Page>
+    <Page.Card>
+      <Page.Header subtitle="In seamless mode" />
+      <Accordion isSortable>{createSections(data)}</Accordion>
+    </Page.Card>
+  </Page>
+))
+
 stories.add('uses custom ids', () => {
   class AccordionWithCustomIds extends React.Component {
     state = {

@@ -76,6 +76,7 @@ export const BodyUI = styled('div')`
 export const SectionUI = styled('div')`
   ${baseStyles};
   border-bottom: 1px solid ${getColor('border')};
+  position: relative;
 
   &.is-seamless,
   &:last-child {
@@ -91,6 +92,7 @@ export const makeTitleUI = (selector: 'div') => {
     cursor: pointer;
     display: block;
     padding: 18px 20px;
+    position: relative;
     text-decoration: none;
 
     &:hover,
@@ -102,6 +104,11 @@ export const makeTitleUI = (selector: 'div') => {
 
     &:focus {
       outline: none;
+    }
+
+    &.is-sorting {
+      background-color: ${getColor('grey.200')};
+      cursor: move;
     }
 
     &.is-open {
@@ -152,6 +159,25 @@ export const makeTitleUI = (selector: 'div') => {
       padding-right: 100px;
     `
       )};
+    }
+
+    .drag-handle {
+      color: ${getColor('grey.800')};
+      cursor: move;
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &.is-page {
+        left: 24px;
+      }
+    }
+
+    &:hover .drag-handle,
+    .drag-handle.is-sorting {
+      display: inline-block;
     }
   `
 }
