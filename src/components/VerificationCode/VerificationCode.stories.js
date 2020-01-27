@@ -31,3 +31,32 @@ stories.add('In context', () => {
     </div>
   )
 })
+
+class ExternalValue extends React.PureComponent {
+  state = {
+    code: '123456',
+  }
+
+  handleChange = e => {
+    this.setState({ code: e.target.value })
+  }
+
+  render() {
+    const { code } = this.state
+
+    return (
+      <div>
+        <input type="text" onChange={this.handleChange} value={code} />
+        <div style={{ margin: '50px 0' }}>
+          <VerificationCode code={code} />
+        </div>
+        <button>Cancel</button>
+        <button>Submit</button>
+      </div>
+    )
+  }
+}
+
+stories.add('External value', () => {
+  return <ExternalValue />
+})

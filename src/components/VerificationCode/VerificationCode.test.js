@@ -11,9 +11,7 @@ import {
 } from './VerificationCode.css'
 
 window.getSelection = () => ({
-  addRange: () => {},
-  removeAllRanges: () => {},
-  toString: () => {},
+  toString: () => '',
 })
 
 describe('className', () => {
@@ -92,6 +90,33 @@ describe('Render', () => {
   })
 })
 
+describe('Code value prop', () => {
+  test('should fill the input with the given code on mount', () => {
+    const CODE = '123456'
+    const wrapper = mount(<VerificationCode code={CODE} />)
+
+    wrapper.instance().digitInputNodes.forEach((node, index) => {
+      expect(node.value).toBe(CODE.charAt(index))
+    })
+  })
+
+  test('should fill the input with the given code on prop change', () => {
+    const CODE1 = '123456'
+    const CODE2 = '456789'
+    const wrapper = mount(<VerificationCode code={CODE1} />)
+
+    wrapper.instance().digitInputNodes.forEach((node, index) => {
+      expect(node.value).toBe(CODE1.charAt(index))
+    })
+
+    wrapper.setProps({ code: CODE2 })
+
+    wrapper.instance().digitInputNodes.forEach((node, index) => {
+      expect(node.value).toBe(CODE2.charAt(index))
+    })
+  })
+})
+
 describe('Paste', () => {
   test('should paste the data correctly into the inputs', () => {
     const TEXT = '123456'
@@ -133,7 +158,10 @@ describe('Input KeyUp', () => {
     expect(onChangeSpy).not.toHaveBeenCalled()
   })
 
-  test('on backspace it should call onchange and move the focus to the previous digit ', () => {
+  test('on backspace it should call onchange and update the mask value if there is not a value', () => {
+    window.getSelection = () => ({
+      toString: () => '',
+    })
     const eventMock = {
       key: 'Backspace',
       target: {
@@ -146,13 +174,44 @@ describe('Input KeyUp', () => {
     wrapper
       .find(DigitInputUI)
       .at(3)
+      .simulate('focus')
+
+    wrapper
+      .find(DigitInputUI)
+      .at(3)
       .prop('onKeyUp')(eventMock)
 
     expect(onChangeSpy).toHaveBeenCalled()
     expect(wrapper.instance().digitMaskNodes[3].innerText).toBe('')
-    expect(document.activeElement).toStrictEqual(
-      wrapper.instance().digitInputNodes[2]
+  })
+
+  test('on backspace it should call onchange and update the mask value if there is a value', () => {
+    window.getSelection = () => ({
+      toString: () => '',
+    })
+    const eventMock = {
+      key: 'Backspace',
+      target: {
+        value: '',
+      },
+    }
+    const onChangeSpy = jest.fn()
+    const wrapper = mount(
+      <VerificationCode onChange={onChangeSpy} code="123456" />
     )
+
+    wrapper
+      .find(DigitInputUI)
+      .at(3)
+      .simulate('focus')
+
+    wrapper
+      .find(DigitInputUI)
+      .at(3)
+      .prop('onKeyUp')(eventMock)
+
+    expect(onChangeSpy).toHaveBeenCalled()
+    expect(wrapper.instance().digitMaskNodes[3].innerText).toBe('')
   })
 
   test('on backspace it should keep the focus on first digit if that is where we are ', () => {
@@ -208,5 +267,74 @@ describe('Input KeyUp', () => {
     expect(document.activeElement).toStrictEqual(
       wrapper.instance().digitInputNodes[0]
     )
+  })
+})
+
+describe('Enter key down', () => {
+  test('should call onEnter', () => {
+    const eventMock = {
+      key: 'Enter',
+    }
+    const onEnterSpy = jest.fn()
+
+    const wrapper = mount(<VerificationCode onEnter={onEnterSpy} />)
+
+    wrapper.simulate('keyDown', eventMock)
+
+    expect(onEnterSpy).toHaveBeenCalled()
+  })
+})
+
+describe('Field click', () => {
+  test('should handle focus first input if no other input is focused', () => {
+    const wrapper = mount(<VerificationCode />)
+
+    wrapper.simulate('click')
+
+    expect(document.activeElement).toStrictEqual(
+      wrapper.instance().digitInputNodes[0]
+    )
+  })
+
+  test('should keep input focus if one is focused', () => {
+    const wrapper = mount(<VerificationCode />)
+
+    wrapper
+      .find(DigitInputUI)
+      .at(2)
+      .simulate('click')
+
+    expect(document.activeElement).toStrictEqual(
+      wrapper.instance().digitInputNodes[2]
+    )
+
+    wrapper.simulate('click')
+
+    expect(document.activeElement).toStrictEqual(
+      wrapper.instance().digitInputNodes[2]
+    )
+
+    wrapper.simulate('click')
+
+    expect(document.activeElement).toStrictEqual(
+      wrapper.instance().digitInputNodes[2]
+    )
+  })
+})
+
+describe('Input click', () => {
+  test('should assign correct visual classes ', () => {
+    const wrapper = mount(<VerificationCode />)
+
+    wrapper
+      .find(DigitInputUI)
+      .first()
+      .simulate('click')
+    wrapper.instance().digitInputNodes.forEach((node, index) => {
+      expect(node.classList.contains('hidden')).toBeFalsy()
+      expect(
+        wrapper.instance().digitMaskNodes[index].classList.contains('hidden')
+      ).toBeTruthy()
+    })
   })
 })

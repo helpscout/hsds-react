@@ -2,6 +2,7 @@ export const CLASSNAMES = {
   hidden: 'hidden',
 }
 
+/* istanbul ignore next */
 export function selectAll(digitInputNodes, digitMaskNodes) {
   let selection = window.getSelection()
 
@@ -13,9 +14,11 @@ export function selectAll(digitInputNodes, digitMaskNodes) {
     digitInputNode.classList.add(CLASSNAMES.hidden)
     digitMaskNodes[index].classList.remove(CLASSNAMES.hidden)
 
-    let range = document.createRange()
-    range.selectNode(digitMaskNodes[index])
-    selection.addRange(range)
+    if (digitMaskNodes[index].innerText) {
+      let range = document.createRange()
+      range.selectNode(digitMaskNodes[index])
+      selection.addRange(range)
+    }
   })
 }
 
