@@ -88,6 +88,7 @@ export const DigitInputUI = styled('input')`
   line-height: 35px;
   text-align: center;
   color: ${getColor('charcoal.700')};
+  transition: border-color 200ms ease;
   -webkit-font-smoothing: antialiased;
 
   &:focus {
