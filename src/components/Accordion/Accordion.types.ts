@@ -15,6 +15,7 @@ export type AccordionProps = {
 }
 
 export type AccordionState = {
+  isSorting: boolean
   sections: Object
 }
 

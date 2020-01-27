@@ -110,9 +110,14 @@ export const makeTitleUI = (selector: 'div') => {
       outline: none;
     }
 
-    .is-sorting & {
+    .c-Accordion.is-sorting & {
+      pointer-events: none;
+    }
+
+    .is-sorting-item & {
       background-color: ${getColor('grey.200')};
       cursor: move;
+      pointer-events: all;
 
       .drag-handle {
         display: inline-block;
@@ -171,8 +176,9 @@ export const makeTitleUI = (selector: 'div') => {
 
     .drag-handle {
       color: ${getColor('grey.800')};
-      cursor: move;
+      cursor: drag;
       display: none;
+      pointer-events: none;
       position: absolute;
       left: 0;
       top: 50%;
@@ -183,10 +189,9 @@ export const makeTitleUI = (selector: 'div') => {
       }
     }
 
-    &:hover .drag-handle,
-    .is-sorting .drag-handle {
+    &:hover .drag-handle.is-page {
       display: inline-block;
-      z-index: 9999;
+      pointer-events: all;
     }
   `
 }

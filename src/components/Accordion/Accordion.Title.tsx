@@ -161,7 +161,6 @@ class Title extends React.Component<TitleProps, TitleState> {
     const dragHandle = isSortable ? (
       <SortableDragHandle
         className={getDragHandleClassName(this.props, this.state)}
-        onDragStart={this.handleOnSortStart}
       />
     ) : null
 
