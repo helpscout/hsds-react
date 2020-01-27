@@ -17,7 +17,7 @@ export const VerificationCodeFieldUI = styled('div')`
   border-radius: 3px;
   background-color: #fff;
   box-shadow: 0 0 0 0 ${rgba(getColor('border'), 0)};
-  transition: box-shadow 100ms ease;
+  transition: box-shadow 100ms ease, border-color 100ms ease;
 
   *,
   *:before,
@@ -30,11 +30,13 @@ export const VerificationCodeFieldUI = styled('div')`
   }
 
   &:focus-within {
+    border-color: transparent;
     box-shadow: 0 0 0 2px ${getColor('blue.500')};
   }
 
   &.not-valid {
-    border: 2px solid #f23459;
+    border-color: transparent;
+    box-shadow: 0 0 0 2px #f23459;
   }
 `
 
