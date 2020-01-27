@@ -79,12 +79,22 @@ export const BodyUI = styled('div')`
 
 export const SectionUI = styled('div')`
   ${baseStyles};
+  background: white;
   border-bottom: 1px solid ${getColor('border')};
   position: relative;
 
+  .is-page &.is-seamless,
+  .is-page .c-SortableItem &.is-seamless:last-child,
+  .is-sortable &:not(.is-seamless) {
+    border-bottom-width: 1px;
+  }
+
   &.is-seamless,
-  &:last-child {
-    border-bottom: none;
+  &:last-child,
+  .is-page &.is-seamless:last-child,
+  .is-page .c-SortableItem:last-child &.is-seamless:last-child,
+  .is-sortable .c-SortableItem:last-child &:not(.is-seamless) {
+    border-bottom-width: 0;
   }
 `
 
@@ -117,20 +127,11 @@ export const makeTitleUI = (selector: 'div') => {
     .is-sorting-item & {
       background-color: ${getColor('grey.200')};
       cursor: move;
+      overflow: hidden;
       pointer-events: all;
 
-      .drag-handle {
+      &.drag-handle {
         display: inline-block;
-      }
-    }
-
-    &.is-open {
-      &.is-link {
-        border-bottom: none;
-      }
-
-      &.is-seamless {
-        border-bottom-color: transparent;
       }
     }
 
@@ -176,20 +177,24 @@ export const makeTitleUI = (selector: 'div') => {
 
     .drag-handle {
       color: ${getColor('grey.800')};
-      cursor: drag;
+      cursor: move;
       display: none;
       pointer-events: none;
       position: absolute;
-      left: 0;
+      left: 2px;
       top: 50%;
       transform: translateY(-50%);
 
+      .is-seamless & {
+        left: -15px;
+      }
+
       &.is-page {
-        left: 24px;
+        left: 15px;
       }
     }
 
-    &:hover .drag-handle.is-page {
+    &:hover .drag-handle {
       display: inline-block;
       pointer-events: all;
     }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { text } from '@storybook/addon-knobs'
+import { boolean, text } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../src/index'
 import { faker } from '@helpscout/helix'
 import { withAktiv, withHsApp } from './utils'
@@ -32,7 +32,7 @@ const createSections = data =>
   data.map((datum, index) => (
     <Accordion.Section key={index} id={datum.id}>
       <Accordion.Title>
-        <Text truncate weight={700}>
+        <Text truncate weight={500}>
           {datum.title}
         </Text>
       </Accordion.Title>
@@ -44,51 +44,67 @@ const onOpen = id => console.log('Open', id)
 const onClose = id => console.log('Close', id)
 
 stories.add('default', () => (
-  <Accordion onOpen={onOpen} onClose={onClose}>
+  <Accordion
+    isSortable={boolean('isSortable', false)}
+    onOpen={onOpen}
+    onClose={onClose}
+  >
     {createSections(data)}
   </Accordion>
 ))
 
 stories.add('extra small', () => (
-  <Accordion onOpen={onOpen} onClose={onClose} size="xs">
+  <Accordion
+    isSortable={boolean('isSortable', false)}
+    onOpen={onOpen}
+    onClose={onClose}
+    size="xs"
+  >
     {createSections(data)}
   </Accordion>
 ))
 
 stories.add('small', () => (
-  <Accordion onOpen={onOpen} onClose={onClose} size="sm">
+  <Accordion
+    isSortable={boolean('isSortable', false)}
+    onOpen={onOpen}
+    onClose={onClose}
+    size="sm"
+  >
     {createSections(data)}
   </Accordion>
 ))
 
 stories.add('large', () => (
-  <Accordion onOpen={onOpen} onClose={onClose} size="lg">
+  <Accordion
+    isSortable={boolean('isSortable', false)}
+    onOpen={onOpen}
+    onClose={onClose}
+    size="lg"
+  >
     {createSections(data)}
   </Accordion>
 ))
 
 stories.add('allow multiple', () => (
-  <Accordion allowMultiple>{createSections(data)}</Accordion>
+  <Accordion allowMultiple isSortable={boolean('isSortable', false)}>
+    {createSections(data)}
+  </Accordion>
 ))
 
 stories.add('is seamless', () => (
-  <Accordion isSeamless>{createSections(data)}</Accordion>
+  <Accordion isSeamless isSortable={boolean('isSortable', false)}>
+    {createSections(data)}
+  </Accordion>
 ))
 
-stories.add('is seamless in page', () => (
+stories.add('is in page', () => (
   <Page>
     <Page.Card>
-      <Page.Header subtitle="In seamless mode" />
-      <Accordion>{createSections(data)}</Accordion>
-    </Page.Card>
-  </Page>
-))
-
-stories.add('is seamless in page and sortable', () => (
-  <Page>
-    <Page.Card>
-      <Page.Header subtitle="In seamless mode" />
-      <Accordion isSortable>{createSections(data)}</Accordion>
+      <Page.Header subtitle="In page mode" />
+      <Accordion isSortable={boolean('isSortable', false)}>
+        {createSections(data)}
+      </Accordion>
     </Page.Card>
   </Page>
 ))
@@ -128,7 +144,11 @@ stories.add('uses custom ids', () => {
               style={{ width: '100px' }}
             />
           </form>
-          <Accordion onOpen={this.updateSectionId} openSectionIds={[value]}>
+          <Accordion
+            isSortable={boolean('isSortable', false)}
+            onOpen={this.updateSectionId}
+            openSectionIds={[value]}
+          >
             {createSections(dataWithIds)}
           </Accordion>
         </div>
@@ -172,6 +192,7 @@ stories.add('uses multiple custom ids', () => {
           </form>
           <Accordion
             allowMultiple
+            isSortable={boolean('isSortable', false)}
             onOpen={(uuid, openSectionIds) =>
               this.updateSectionIds(openSectionIds)
             }
@@ -194,7 +215,7 @@ stories.add('Row (Link)', () => {
   return (
     <Page>
       <Page.Card>
-        <Accordion isSeamless>
+        <Accordion isSeamless isSortable={boolean('isSortable', false)}>
           <Accordion.Link to="/">
             <Text truncate weight={500}>
               {linkOneContent}
@@ -216,7 +237,11 @@ storiesHsApp.addDecorator(withAktiv)
 storiesHsApp.addDecorator(withHsApp)
 
 storiesHsApp.add('default', () => (
-  <Accordion onOpen={onOpen} onClose={onClose}>
+  <Accordion
+    isSortable={boolean('isSortable', false)}
+    onOpen={onOpen}
+    onClose={onClose}
+  >
     {createSections(data)}
   </Accordion>
 ))

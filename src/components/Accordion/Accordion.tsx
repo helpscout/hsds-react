@@ -18,11 +18,12 @@ export const classNameStrings = {
   isAllowMultipleClassName: 'is-allow-multiple',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
+  isSortableClassName: 'is-sortable',
   isSortingClassName: 'is-sorting',
 }
 
 const getComponentClassName = (
-  { allowMultiple, className, isPage, isSeamless }: AccordionProps,
+  { allowMultiple, className, isPage, isSeamless, isSortable }: AccordionProps,
   { isSorting }: AccordionState
 ): string => {
   const {
@@ -30,6 +31,7 @@ const getComponentClassName = (
     isAllowMultipleClassName,
     isPageClassName,
     isSeamlessClassName,
+    isSortableClassName,
     isSortingClassName,
   } = classNameStrings
   return classNames(
@@ -37,6 +39,7 @@ const getComponentClassName = (
     allowMultiple && isAllowMultipleClassName,
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
+    isSortable && isSortableClassName,
     isSorting && isSortingClassName,
     className
   )
@@ -159,7 +162,6 @@ export class Accordion extends React.PureComponent<
   render() {
     const { children, isSortable, ...rest } = this.props
     const componentClassName = getComponentClassName(this.props, this.state)
-
     const content = isSortable ? (
       <Sortable
         distance={5}
@@ -167,7 +169,7 @@ export class Accordion extends React.PureComponent<
         lockAxis="y"
         onSortStart={this.handleOnSortStart}
         onSortEnd={this.handleOnSortEnd}
-        //pressDelay={200}
+        //shouldCancelStart={this.shouldCancelSort}
       >
         {children}
       </Sortable>
@@ -194,6 +196,12 @@ export class Accordion extends React.PureComponent<
 
   handleOnSortEnd = () => {
     this.setState({ isSorting: false })
+  }
+
+  shouldCancelSort = () => {
+    // Cancel sorting if there are open sections
+    const { sections } = this.state
+    return typeof sections === 'object' && Object.keys(sections).length > 0
   }
 }
 
