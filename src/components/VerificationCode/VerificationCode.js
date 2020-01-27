@@ -146,22 +146,36 @@ export default class VerificationCode extends React.Component {
           showInputDigits(this.digitInputNodes, this.digitMaskNodes)
           this.digitInputNodes[0].focus()
           onChange('')
-        } else {
-          const previousDigit = this.digitInputNodes[
-            index === 0 ? 0 : index - 1
-          ]
+        } else if (value === '' && digitMask.innerText === '') {
+          const prevIndex = index === 0 ? 0 : index - 1
+          const previousDigit = this.digitInputNodes[prevIndex]
 
+          digitMask.innerText = value
           previousDigit && previousDigit.select()
+          onChange(getCurrentCodeValue(this.digitInputNodes))
+        } else {
           digitMask.innerText = value
           onChange(getCurrentCodeValue(this.digitInputNodes))
         }
+      } else if (key === 'ArrowLeft') {
+        const prevIndex = index === 0 ? 0 : index - 1
+        const previousDigit = this.digitInputNodes[prevIndex]
+
+        previousDigit && previousDigit.select()
+      } else if (key === 'ArrowRight') {
+        const nextIndex =
+          index === numberOfChars - 1 ? numberOfChars : index + 1
+        const nextDigit = this.digitInputNodes[nextIndex]
+
+        nextDigit && nextDigit.select()
       } else if (key.length === 1) {
         // all chars have a length of 1, special keys have more
-        const nextDigit = this.digitInputNodes[
+        const nextIndex =
           index === numberOfChars - 1 ? numberOfChars : index + 1
-        ]
-        nextDigit && nextDigit.focus()
+        const nextDigit = this.digitInputNodes[nextIndex]
+
         digitMask.innerText = value
+        nextDigit && nextDigit.select()
 
         onChange(getCurrentCodeValue(this.digitInputNodes))
       }

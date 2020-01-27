@@ -1,5 +1,5 @@
 import styled from '../styled'
-import { getColor } from '../../styles/utilities/color'
+import { getColor, rgba } from '../../styles/utilities/color'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 
@@ -16,6 +16,8 @@ export const VerificationCodeFieldUI = styled('div')`
   border: 1px solid #c5ced6;
   border-radius: 3px;
   background-color: #fff;
+  box-shadow: 0 0 0 0 ${rgba(getColor('border'), 0)};
+  transition: box-shadow 100ms ease;
 
   *,
   *:before,
@@ -28,7 +30,7 @@ export const VerificationCodeFieldUI = styled('div')`
   }
 
   &:focus-within {
-    border: 2px solid ${getColor('blue.500')};
+    box-shadow: 0 0 0 2px ${getColor('blue.500')};
   }
 
   &.not-valid {
