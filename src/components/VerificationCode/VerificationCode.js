@@ -38,11 +38,11 @@ export default class VerificationCode extends React.Component {
   }
 
   componentDidMount() {
-    this.digitInputNodes = this.verificationCodeFieldRef.querySelectorAll(
-      '.DigitInput'
+    this.digitInputNodes = Array.from(
+      this.verificationCodeFieldRef.querySelectorAll('.DigitInput')
     )
-    this.digitMaskNodes = this.verificationCodeFieldRef.querySelectorAll(
-      '.DigitMask'
+    this.digitMaskNodes = Array.from(
+      this.verificationCodeFieldRef.querySelectorAll('.DigitMask')
     )
   }
 
@@ -107,6 +107,29 @@ export default class VerificationCode extends React.Component {
     }
   }
 
+  handleMouseDown = e => {
+    const activeElement = document.activeElement
+    const { target } = e
+
+    if (
+      !target.classList.contains('DigitInput') &&
+      !activeElement.classList.contains('DigitInput')
+    ) {
+      // First we check if the click a) Wasn't executed directly on the input and b) one of the inputs is already focused
+      // If that is the case, we focus the first input
+      // We use a timeout to take the execution of this action out of the event loop so that the browser doesn't focus the body
+      setTimeout(() => {
+        this.digitInputNodes[0].focus()
+      }, 0)
+    } else if (!target.classList.contains('DigitInput')) {
+      // If the click happened anywhere inside but not an input, the browser tries to focus the body (or a parent), we bring the focus
+      // back to the cached activeElement using a timeout as above
+      setTimeout(() => {
+        activeElement.focus()
+      }, 0)
+    }
+  }
+
   handleInputKeyUp = (index, e) => {
     const { key } = e
 
@@ -159,6 +182,7 @@ export default class VerificationCode extends React.Component {
         innerRef={this.setVerificationCodeFieldNode}
         onPaste={this.handlePaste}
         onKeyDown={this.handleKeyDown}
+        onMouseDown={this.handleMouseDown}
       >
         <ClipboardPlaceholderUI
           readOnly={true}

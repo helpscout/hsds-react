@@ -59,6 +59,7 @@ export const DigitMaskUI = styled('div')`
   text-align: center;
   color: ${getColor('charcoal.700')};
   border-bottom: 2px solid #d5dce1;
+  -webkit-font-smoothing: antialiased;
 
   &::selection {
     background-color: #b2d7ff;
@@ -83,6 +84,7 @@ export const DigitInputUI = styled('input')`
   line-height: 35px;
   text-align: center;
   color: ${getColor('charcoal.700')};
+  -webkit-font-smoothing: antialiased;
 
   &:focus {
     outline: none;
