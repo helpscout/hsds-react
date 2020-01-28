@@ -7,7 +7,7 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import Icon from '../Icon'
 import AutoDropdown from '../AutoDropdown/AutoDropdown'
 
-import { DropdownHeaderUI } from './styles/SideNavigation.css'
+import { DropdownHeaderUI } from './SideNavigation.css'
 import SideNavigation, { SideNavigationContext } from './SideNavigation'
 
 const UNIQUE_ID = createUniqueIDFactory('DropdownHeader')

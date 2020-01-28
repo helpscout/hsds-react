@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-import { OptionIconUI } from './styles/OptionIcon.css'
+import { OptionIconUI } from './OptionIcon.css'
 
 type Props = {
   children?: any

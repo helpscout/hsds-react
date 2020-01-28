@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { PrefixUI } from './styles/Input.css'
+import { PrefixUI } from './Input.css'
 import { InputPrefixProps } from './Input.types'
 
 class Prefix extends React.PureComponent<InputPrefixProps> {

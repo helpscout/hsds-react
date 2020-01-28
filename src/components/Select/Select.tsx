@@ -12,13 +12,8 @@ import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { InputWrapperUI } from '../Input/styles/Input.css'
-import {
-  SelectUI,
-  FieldUI,
-  InlinePrefixSuffixUI,
-  ItemUI,
-} from './styles/Select.css'
+import { InputWrapperUI } from '../Input/Input.css'
+import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
 import { SelectProps, SelectState } from './Select.types'
 
 const PLACEHOLDER_VALUE = '__placeholder__'

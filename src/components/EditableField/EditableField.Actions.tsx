@@ -5,7 +5,7 @@ import Icon from '../Icon'
 
 import { classNames } from '../../utilities/classNames'
 import { normalizeUrl } from '../../utilities/urls'
-import { ACTION_ICONS } from './constants'
+import { ACTION_ICONS } from './EditableField.constants'
 import { ACTIONS_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
 
 import * as equal from 'fast-deep-equal'

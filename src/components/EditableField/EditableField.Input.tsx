@@ -17,7 +17,7 @@ import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { ACTION_ICONS, FIELDTYPES } from './constants'
+import { ACTION_ICONS, FIELDTYPES } from './EditableField.constants'
 
 import {
   findParentByClassName,

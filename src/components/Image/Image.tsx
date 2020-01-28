@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { ImageUI } from './styles/Image.css'
+import { ImageUI } from './Image.css'
 import { getImageSize } from './Image.utils'
 import { ImageProps } from './Image.types'
 

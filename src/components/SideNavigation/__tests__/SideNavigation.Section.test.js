@@ -2,7 +2,7 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
 import FadeInOut from '../SideNavigation.FadeInOut'
-import { SectionHeadingUI } from '../styles/SideNavigation.css'
+import { SectionHeadingUI } from '../SideNavigation.css'
 
 describe('ClassName', () => {
   test('Has default className', () => {

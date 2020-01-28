@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { BlockUI } from './styles/Skeleton.Block.css'
+import { BlockUI } from './Skeleton.Block.css'
 
 class Block extends React.PureComponent<any> {
   static displayName = 'Skeleton.Block'

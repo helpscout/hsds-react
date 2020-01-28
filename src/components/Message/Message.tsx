@@ -16,7 +16,7 @@ import Question from './Message.Question'
 import { classNames } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { MessageUI } from './styles/Message.css'
+import { MessageUI } from './Message.css'
 
 type Props = MessageType & {
   avatar?: any

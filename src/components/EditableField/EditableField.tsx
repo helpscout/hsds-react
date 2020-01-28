@@ -13,7 +13,7 @@ import {
   FIELDTYPES,
   FIELDSIZES,
   OPERATION,
-} from './constants'
+} from './EditableField.constants'
 import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'

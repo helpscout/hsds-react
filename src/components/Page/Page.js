@@ -6,7 +6,7 @@ import Content from './Page.Content'
 import Header from './Page.Header'
 import Section from './Page.Section'
 import { classNames } from '../../utilities/classNames'
-import { PageUI } from './styles/Page.css'
+import { PageUI } from './Page.css'
 
 export const PageContext = React.createContext({})
 

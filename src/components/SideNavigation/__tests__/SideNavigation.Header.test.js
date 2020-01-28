@@ -2,7 +2,7 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation, { SideNavigationContext } from '../SideNavigation'
 import FadeInOut from '../SideNavigation.FadeInOut'
-import { BadgeUI } from '../styles/SideNavigation.css'
+import { BadgeUI } from '../SideNavigation.css'
 
 describe('ClassName', () => {
   test('Has default className', () => {

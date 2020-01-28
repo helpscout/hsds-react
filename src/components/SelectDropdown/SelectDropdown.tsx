@@ -15,7 +15,7 @@ import {
   LabelUI,
   BackdropUI,
   ErrorUI,
-} from './styles/SelectDropdown.css'
+} from './SelectDropdown.css'
 import { isObject } from '../../utilities/is'
 import {
   SelectDropdownProps,

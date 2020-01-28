@@ -4,7 +4,7 @@ import Flexy from '../Flexy'
 import Timestamp from '../Timestamp'
 import { classNames } from '../../utilities/classNames'
 
-import { TimelineItemUI } from './styles/Timeline.css'
+import { TimelineItemUI } from './Timeline.css'
 
 type Props = {
   children?: any

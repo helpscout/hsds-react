@@ -5,7 +5,7 @@ import Input from '../Input'
 import Resizer from '../Input.Resizer'
 import Badge from '../../Badge'
 import Animate from '../../Animate'
-import { CharValidatorUI } from '../styles/Input.css'
+import { CharValidatorUI } from '../Input.css'
 
 jest.useFakeTimers()
 

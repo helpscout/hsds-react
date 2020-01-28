@@ -2,7 +2,7 @@ import * as React from 'react'
 import { HeadingSize } from './Heading.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { HeadingUI } from './styles/Heading.css'
+import { HeadingUI } from './Heading.css'
 
 export interface Props {
   center: boolean

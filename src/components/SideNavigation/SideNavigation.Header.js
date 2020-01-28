@@ -4,7 +4,7 @@ import { classNames } from '../../utilities/classNames'
 
 import FadeInOut from './SideNavigation.FadeInOut'
 import Heading from './SideNavigation.Heading'
-import { HeaderUI, BadgeUI, HeaderLinkUI } from './styles/SideNavigation.css'
+import { HeaderUI, BadgeUI, HeaderLinkUI } from './SideNavigation.css'
 import { SideNavigationContext } from './SideNavigation'
 
 const getInitial = ({ badge, label = '' }) => {

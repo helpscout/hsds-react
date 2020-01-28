@@ -5,9 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import EventListener from '../EventListener'
 import Collapsible from '../Collapsible'
 import Flexy from '../Flexy'
-import Heading from '../Heading'
 import Icon from '../Icon'
-import SortableDragHandle from '../Sortable/Sortable.DragHandle'
 import {
   SidebarCollapsibleCardProps,
   SidebarCollapsibleCardState,
@@ -20,7 +18,7 @@ import {
   SidebarCollapsibleBodyUI,
   SidebarCollapsibleContentUI,
   SidebarCollapsibleDragHandleUI,
-} from './styles/SidebarCollapsibleCard.css'
+} from './SidebarCollapsibleCard.css'
 
 const uniqueID = createUniqueIDFactory('SidebarCollapsibleCard')
 

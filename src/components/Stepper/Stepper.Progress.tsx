@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ProgressLineUI } from './styles/Stepper.css'
+import { ProgressLineUI } from './Stepper.css'
 
 export interface Props {
   className?: string

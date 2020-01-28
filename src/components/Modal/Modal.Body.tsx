@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { BodyUI } from './styles/Modal.Body.css'
+import { BodyUI } from './Modal.css'
 import { ModalBodyProps } from './Modal.types'
 
 class Body extends React.PureComponent<ModalBodyProps> {

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { HeaderUI, SubTitleUI, HeadingUI } from './styles/Page.Header.css'
+import { HeaderUI, SubTitleUI, HeadingUI } from './Page.css'
 import { PageContext } from './Page'
 
 const Title = props => {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
-import { CountUI, ButtonUI } from '../styles/SideNavigation.css'
+import { CountUI, ButtonUI } from '../SideNavigation.css'
 import Icon from '../../Icon'
 
 describe('ClassName', () => {

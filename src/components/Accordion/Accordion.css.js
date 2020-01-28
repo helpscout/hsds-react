@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
 import { getColor } from '../../styles/utilities/color'
-import PageConfig from '../Page/styles/Page.config.css'
+import { pageBreakpointsConfig } from '../Page/Page.config.css'
 import { classNameStrings as titleClassNames } from './Accordion.Title'
 import { setFontSize } from '../../styles/utilities/font'
 
@@ -21,7 +21,7 @@ export const AccordionUI = styled('div')`
     margin-right: -50px;
 
     ${breakpoint(
-      PageConfig.breakpoint.widescreen,
+      pageBreakpointsConfig.breakpoint.widescreen,
       `
       margin-left: -100px;
       margin-right: -100px;
@@ -61,7 +61,7 @@ export const BodyUI = styled('div')`
     padding-right: 50px;
 
     ${breakpoint(
-      PageConfig.breakpoint.widescreen,
+      pageBreakpointsConfig.breakpoint.widescreen,
       `
       padding-left: 100px;
       padding-right: 100px;
@@ -143,7 +143,7 @@ export const TitleUI = styled('div')`
     padding-right: 50px;
 
     ${breakpoint(
-      PageConfig.breakpoint.widescreen,
+      pageBreakpointsConfig.breakpoint.widescreen,
       `
     padding-left: 100px;
     padding-right: 100px;

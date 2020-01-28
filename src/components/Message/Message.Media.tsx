@@ -7,7 +7,7 @@ import Caption from './Message.Caption'
 import classNames, { BEM } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { MediaUI, ImageUI } from './styles/Media.css'
+import { MediaUI, ImageUI } from './Message.Media.css'
 
 type Props = MessageBubble & {
   className: string

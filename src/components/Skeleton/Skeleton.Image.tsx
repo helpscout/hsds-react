@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { ImageUI } from './styles/Skeleton.Image.css'
+import { ImageUI } from './Skeleton.Image.css'
 
 class Image extends React.PureComponent<any> {
   static displayName = 'Skeleton.Image'

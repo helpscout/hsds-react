@@ -7,19 +7,17 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import debounce from '../../utilities/debounce'
 
+import { ComponentUI, EditableTextareaUI, MaskUI } from './EditableTextarea.css'
 import {
-  ComponentUI,
-  EditableTextareaUI,
-  MaskUI,
-} from './styles/EditableTextarea.css'
-import { LabelTextUI } from '../EditableField/EditableField.css'
-import { ValidationIconUI } from '../EditableField/styles/EditableField.Input.css'
+  LabelTextUI,
+  ValidationIconUI,
+} from '../EditableField/EditableField.css'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 
 import { scrollToTop } from './EditableTextarea.utils'
 import { key } from '../../constants/Keys'
-import { CAUSE, OPERATION } from '../EditableField/constants'
+import { CAUSE, OPERATION } from '../EditableField/EditableField.constants'
 import { getValidationColor } from '../EditableField/EditableField.utils'
 
 import {

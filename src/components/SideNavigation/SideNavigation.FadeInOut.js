@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { classNames } from '../../utilities/classNames'
 
 import { SideNavigationContext } from './SideNavigation'
-import { FadeInOutUI } from './styles/SideNavigation.css'
+import { FadeInOutUI } from './SideNavigation.css'
 
 export const FadeInOut = ({ children, className }) => {
   const { collapsable } = useContext(SideNavigationContext)

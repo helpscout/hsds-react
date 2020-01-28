@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { NotificationStackUI } from './styles/NotificationStack.css'
+import { NotificationStackUI } from './NotificationStack.css'
 
 export interface Props {
   autoDismiss: boolean

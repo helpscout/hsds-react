@@ -7,7 +7,7 @@ import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 import FadeInOut from './SideNavigation.FadeInOut'
 
-import { ItemUI, ButtonUI, CountUI, IconUI } from './styles/SideNavigation.css'
+import { ItemUI, ButtonUI, CountUI, IconUI } from './SideNavigation.css'
 
 export const Item = ({
   children,

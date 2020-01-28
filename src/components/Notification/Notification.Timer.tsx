@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { TimerUI } from './styles/Notification.css'
+import { TimerUI } from './Notification.css'
 
 export interface Props {
   className?: string

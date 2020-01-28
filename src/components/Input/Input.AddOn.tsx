@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { AddOnUI } from './styles/Input.AddOn.css'
+import { AddOnUI } from './Input.AddOn.css'
 import { InputAddOnProps } from './Input.types'
 
 const AddOn = (props: InputAddOnProps) => {

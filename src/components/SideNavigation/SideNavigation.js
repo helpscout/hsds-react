@@ -15,7 +15,7 @@ import Section from './SideNavigation.Section'
 import {
   SideNavigationUI,
   SideNavigationCollapsableUI,
-} from './styles/SideNavigation.css'
+} from './SideNavigation.css'
 
 export const SideNavigationContext = React.createContext({})
 

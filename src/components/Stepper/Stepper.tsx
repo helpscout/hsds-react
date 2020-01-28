@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
 import { isDefined } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { StepperUI, StepWrapperUI } from './styles/Stepper.css'
+import { StepperUI, StepWrapperUI } from './Stepper.css'
 import { StepperStep } from './Stepper.types'
 
 export interface Props {

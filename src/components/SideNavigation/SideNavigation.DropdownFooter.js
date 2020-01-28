@@ -8,7 +8,7 @@ import Icon from '../Icon'
 import SideNavigation, { SideNavigationContext } from './SideNavigation'
 import Dropdown from '../Dropdown/DropdownV2'
 
-import {} from './styles/SideNavigation.css'
+import {} from './SideNavigation.css'
 
 const UNIQUE_ID = createUniqueIDFactory('DropdownFooter')
 

@@ -4,7 +4,7 @@ import { classNames } from '../../utilities/classNames'
 
 import Icon from '../Icon'
 import { SideNavigationContext } from './SideNavigation'
-import { ButtonUI, ButtonFooterUI } from './styles/SideNavigation.css'
+import { ButtonUI, ButtonFooterUI } from './SideNavigation.css'
 
 export const Button = ({ children, className, iconName, icon, ...rest }) => {
   const componentClassName = classNames('c-SideNavigation__Button', className)

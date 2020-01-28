@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Inline.Item'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { InlineUI } from './styles/Inline.css'
+import { InlineUI } from './Inline.css'
 
 export interface Props {
   className?: string

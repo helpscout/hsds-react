@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
-import PageConfig from '../Page/styles/Page.config.css'
+import { pageBreakpointsConfig } from '../Page/Page.config.css'
 import { getColor } from '../../styles/utilities/color'
 
 export const config = {
@@ -34,7 +34,7 @@ export const ConditionListUI = styled('div')`
     width: calc(100% + 20px);
 
     ${breakpoint(
-      PageConfig.breakpoint.widescreen,
+      pageBreakpointsConfig.breakpoint.widescreen,
       `
       margin-left: -60px;
       margin-right: -60px;

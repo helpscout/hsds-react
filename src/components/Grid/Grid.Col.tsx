@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames, variantClassNames } from '../../utilities/classNames'
-import { ColUI } from './styles/Grid.Col.css'
+import { ColUI } from './Grid.Col.css'
 import { GridColProps } from './Grid.types'
 
 class Col extends React.PureComponent<GridColProps> {

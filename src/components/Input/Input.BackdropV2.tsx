@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { isStateful } from './Input.utils'
-import { BackdropUI, FocusUI } from './styles/Input.BackdropV2.css'
+import { BackdropUI, FocusUI } from './Input.BackdropV2.css'
 import { InputBackdropV2Props } from './Input.types'
 
 export class Backdrop extends React.PureComponent<InputBackdropV2Props> {

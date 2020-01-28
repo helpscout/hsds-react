@@ -4,7 +4,7 @@ import Link from '../Link'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { AttachmentChatUI, TextUI } from './styles/Attachment.css'
+import { TextUI } from './Message.css'
 import MessageChat from './Message.Chat'
 
 type Props = MessageBubble & {

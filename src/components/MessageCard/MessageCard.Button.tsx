@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ActionButtonUI } from './styles/MessageCard.css'
+import { ActionButtonUI } from './MessageCard.css'
 import { noop } from '../../utilities/other'
 import Truncate from '../Truncate'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
-import { SectionUI, SectionHeadingUI } from './styles/SideNavigation.css'
+import { SectionUI, SectionHeadingUI } from './SideNavigation.css'
 import FadeInOut from './SideNavigation.FadeInOut'
 
 export const Section = ({

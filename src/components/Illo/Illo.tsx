@@ -4,7 +4,7 @@ import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 
-import { IlloUI, IconUI } from './styles/Illo.css'
+import { IlloUI, IconUI } from './Illo.css'
 import { injectFillColorIntoSvg, svgSet } from './Illo.utils'
 import { IlloProps } from './Illo.types'
 

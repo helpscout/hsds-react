@@ -3,7 +3,7 @@ import { MessageChat } from './Message.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PreviewCardContext from '../PreviewCard/PreviewCard.Context'
 import { classNames } from '../../utilities/classNames'
-import { ContentUI } from './styles/Content.css'
+import { ContentUI } from './Message.css'
 
 type Props = MessageChat
 

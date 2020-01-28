@@ -5,7 +5,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import Text from '../Text'
 import { isString } from '../../utilities/is'
-import { HelpTextUI } from './styles/HelpText.css'
+import { HelpTextUI } from './HelpText.css'
 
 type Props = {
   children?: any

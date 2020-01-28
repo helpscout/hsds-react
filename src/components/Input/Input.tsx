@@ -36,7 +36,7 @@ import {
   FieldUI,
   FieldTextAreaUI,
   InputUI,
-} from './styles/Input.css'
+} from './Input.css'
 import { InputProps, InputState, InputNode, InputEvent } from './Input.types'
 
 const uniqueID = createUniqueIDFactory('Input')

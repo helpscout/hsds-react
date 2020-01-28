@@ -5,7 +5,7 @@ import Centralize from '../Centralize'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 
-import { StatusDotUI } from './styles/StatusDot.css'
+import { StatusDotUI } from './StatusDot.css'
 
 type Props = {
   borderColor?: string

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { HeaderUI } from './styles/Modal.Header.css'
+import { HeaderUI } from './Modal.css'
 import { ModalHeaderProps } from './Modal.types'
 
 class Header extends React.PureComponent<ModalHeaderProps> {

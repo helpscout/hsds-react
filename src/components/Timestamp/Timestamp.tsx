@@ -5,7 +5,7 @@ import Icon from '../Icon'
 import Text from '../Text'
 import Time from './Timestamp.Time'
 
-import { TimestampUI } from './styles/Timestamp.css'
+import { TimestampUI } from './Timestamp.css'
 
 type Props = {
   children?: any

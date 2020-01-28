@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { ContentUI } from './styles/Page.Content.css'
+import { ContentUI } from './Page.css'
 import { PageContext } from './Page'
 
 export const Content = ({ children, className, ...rest }) => {

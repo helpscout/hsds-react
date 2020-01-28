@@ -8,7 +8,7 @@ import {
   SecIconUI,
   SecondaryNavUI,
   AvatarUI,
-} from './styles/HsApp.css'
+} from './HsApp.css'
 import Icon from '../Icon'
 import Text from '../Text'
 

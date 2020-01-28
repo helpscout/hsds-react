@@ -6,7 +6,7 @@ import Button from '../Button'
 import ControlGroup from '../ControlGroup'
 import Icon from '../Icon'
 
-import { OptionsTriggerButtonUI } from './styles/SplitButton.css'
+import { OptionsTriggerButtonUI } from './SplitButton.css'
 
 export interface Props {
   buttonRef?: (ref: any) => void
