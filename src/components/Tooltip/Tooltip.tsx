@@ -43,7 +43,7 @@ export class Tooltip extends React.PureComponent<Props> {
     modifiers: {},
     placement: 'top',
     triggerOn: 'hover',
-    zIndex: 999,
+    zIndex: 9999,
   }
 
   static className = 'c-Tooltip'
