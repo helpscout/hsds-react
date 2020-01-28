@@ -53,7 +53,7 @@ describe('children', () => {
     const wrapper = mount(<Stepper steps={mockSteps} currentIndex={2} />)
     wrapper.update()
     const steps = wrapper.find(StepUI)
-    let results: any = []
+    let results = []
     steps.forEach(step => {
       results.push(step.hasClass('is-active'))
     })

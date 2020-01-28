@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { makeStateColorStyles } from '../../../styles/mixins/stateStyles.js'
+import { makeStateColorStyles } from '../../styles/mixins/stateStyles.css'
 
 export const LabelUI = styled('label')`
   display: inline-block;

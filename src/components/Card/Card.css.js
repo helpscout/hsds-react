@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Link from '../Link'
 
-import cardStyles from '../../styles/mixins/cardStyles.js'
+import cardStyles from '../../styles/mixins/cardStyles.css'
 
 export const config = {
   borderRadius: 4,

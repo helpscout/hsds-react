@@ -5,7 +5,7 @@ import Input from './Choice.Input'
 describe('ClassName', () => {
   test('Has default className', () => {
     const wrapper = mount(<Input />)
-    const backdrop = wrapper.find('Backdrop')
+    const backdrop = wrapper.find('.c-InputBackdropV2')
 
     expect(backdrop.exists()).toBeTruthy()
   })

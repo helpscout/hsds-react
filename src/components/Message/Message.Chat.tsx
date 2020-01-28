@@ -7,7 +7,7 @@ import Flexy from '../Flexy'
 import Spinner from '../Spinner'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ChatUI } from './Message.css'
+import { ChatBlockUI } from './Message.Chat.css'
 
 type Props = MessageBubble & {
   bubbleClassName?: string
@@ -109,7 +109,7 @@ export class Chat extends React.PureComponent<Props> {
     )
 
     return (
-      <ChatUI
+      <ChatBlockUI
         className={componentClassName}
         meta={metaMarkup}
         metaPosition={metaPosition}
@@ -128,7 +128,7 @@ export class Chat extends React.PureComponent<Props> {
           typing={typing}
           type={type}
         />
-      </ChatUI>
+      </ChatBlockUI>
     )
   }
 }

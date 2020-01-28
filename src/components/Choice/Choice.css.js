@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import visuallyHidden from '../../styles/mixins/visuallyHidden.js'
+import visuallyHidden from '../../styles/mixins/visuallyHidden.css'
 
 export const choiceConfig = {
   color: {

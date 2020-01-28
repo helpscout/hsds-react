@@ -2,7 +2,7 @@ import * as React from 'react'
 import { MessageChat, MessageThemeContext } from './Message.types'
 import LoadingDots from '../LoadingDots'
 import { classNames } from '../../utilities/classNames'
-import { EmbedUI } from './Message.css'
+import { EmbedUI } from './Message.Embed.css'
 
 type Props = MessageChat & {
   className?: string

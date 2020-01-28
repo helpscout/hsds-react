@@ -2,7 +2,7 @@ import * as React from 'react'
 import { mount, render } from 'enzyme'
 import { SelectDropdown } from './SelectDropdown'
 
-jest.mock('../../Dropdown/DropdownV2', () => {
+jest.mock('../Dropdown/DropdownV2', () => {
   const Dropdown = () => <div />
   Dropdown.Card = () => <div />
   Dropdown.Menu = () => <div />

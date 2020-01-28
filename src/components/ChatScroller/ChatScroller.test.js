@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { ChatScroller, getScrollProps, shouldAutoScroll } from './'
+import { ChatScroller, getScrollProps, shouldAutoScroll } from './ChatScroller'
 import Message from '../Message'
 import Scrollable from '../Scrollable'
 

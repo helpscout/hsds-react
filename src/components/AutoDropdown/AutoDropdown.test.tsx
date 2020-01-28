@@ -2,7 +2,7 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import { AutoDropdown } from './AutoDropdown'
 
-jest.mock('../../ComboBox', () => {
+jest.mock('../ComboBox', () => {
   const ComboBox = () => <div />
   return { default: ComboBox }
 })

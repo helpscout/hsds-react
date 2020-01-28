@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-import linkStyles from '../../styles/mixins/linkStyles.css.js'
-import { makeStateColorStyles } from '../../styles/mixins/stateStyles.css.js'
+import linkStyles from '../../styles/mixins/linkStyles.css'
+import { makeStateColorStyles } from '../../styles/mixins/stateStyles.css'
 import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
 import variableFontSize from '../../styles/utilities/variableFontSize'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import AvatarSelector from './AvatarSelector'
-import { AvatarUI, IconAssignUI, IconCaretUI } from '../AvatarSelector.css'
+import { AvatarUI, IconAssignUI, IconCaretUI } from './AvatarSelector.css'
 
 describe('AvatarSelector', () => {
   it('should render caret down', () => {

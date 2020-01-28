@@ -421,7 +421,10 @@ describe('Pop', () => {
           </Pop.Popper>
         </Pop>
       )
-      const el = wrapper.find('.c-PopPopper')
+      const el = wrapper
+        .find('.c-PopPopper')
+        .first()
+        .first()
       el.simulate('click')
 
       await timeout()
@@ -444,7 +447,7 @@ describe('Pop', () => {
           </Pop.Popper>
         </Pop>
       )
-      const el = wrapper.find('.c-PopPopper')
+      const el = wrapper.find('.c-PopPopper').first()
       el.simulate('click')
 
       await timeout()

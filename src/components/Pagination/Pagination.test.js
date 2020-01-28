@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { Pagination } from './Pagination'
-import { NavigationUI, RangeUI, InformationUI } from '../styles/Pagination.css'
+import { NavigationUI, RangeUI, InformationUI } from './Pagination.css'
 import { hasClass } from '../../tests/helpers/enzyme'
 import { simulateKeyPress } from '../KeypressListener/KeypressListener.test'
 import Keys from '../../constants/Keys'
