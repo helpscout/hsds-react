@@ -8,7 +8,7 @@ import { setFontSize } from '../../../styles/utilities/font'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};
-  border: 1px solid ${getColor('border')};
+  border: 1px solid ${getColor('grey.400')};
   border-radius: 4px;
   overflow: hidden;
 
@@ -80,12 +80,8 @@ export const BodyUI = styled('div')`
 export const SectionUI = styled('div')`
   ${baseStyles};
   background: white;
-  border-bottom: 1px solid ${getColor('border')};
+  border-bottom: 1px solid ${getColor('grey.400')};
   position: relative;
-
-  .is-page & {
-    border-bottom-color: ${getColor('grey.300')};
-  }
 
   .is-page &.is-seamless,
   .is-page .c-SortableItem &.is-seamless:last-child,
