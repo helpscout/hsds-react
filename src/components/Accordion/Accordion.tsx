@@ -74,6 +74,7 @@ export class Accordion extends React.PureComponent<
     isSortable: false,
     onOpen: noop,
     onClose: noop,
+    onSortEnd: noop,
     openSectionIds: [],
     size: 'md',
   }
@@ -193,8 +194,9 @@ export class Accordion extends React.PureComponent<
     this.setState({ isSorting: true })
   }
 
-  handleOnSortEnd = () => {
+  handleOnSortEnd = (...args) => {
     this.setState({ isSorting: false })
+    this.props.onSortEnd(...args)
   }
 }
 

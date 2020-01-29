@@ -7,9 +7,10 @@ export type AccordionProps = {
   duration?: number
   isPage: boolean
   isSeamless: boolean
-  isSortable: boolean
+  isSortable?: boolean
   onOpen: (uuid: string, openIds?: Array<any>) => void
   onClose: (uuid: string, openIds?: Array<any>) => void
+  onSortEnd: (...args: any[]) => void
   openSectionIds?: Array<any>
   size?: Sizes
 }

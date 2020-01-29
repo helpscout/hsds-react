@@ -42,12 +42,14 @@ const createSections = data =>
 
 const onOpen = id => console.log('Open', id)
 const onClose = id => console.log('Close', id)
+const onSortEnd = (...args) => console.log('Sorted', ...args)
 
 stories.add('default', () => (
   <Accordion
     isSortable={boolean('isSortable', false)}
     onOpen={onOpen}
     onClose={onClose}
+    onSortEnd={onSortEnd}
   >
     {createSections(data)}
   </Accordion>
@@ -58,6 +60,7 @@ stories.add('extra small', () => (
     isSortable={boolean('isSortable', false)}
     onOpen={onOpen}
     onClose={onClose}
+    onSortEnd={onSortEnd}
     size="xs"
   >
     {createSections(data)}
@@ -69,6 +72,7 @@ stories.add('small', () => (
     isSortable={boolean('isSortable', false)}
     onOpen={onOpen}
     onClose={onClose}
+    onSortEnd={onSortEnd}
     size="sm"
   >
     {createSections(data)}
@@ -80,6 +84,7 @@ stories.add('large', () => (
     isSortable={boolean('isSortable', false)}
     onOpen={onOpen}
     onClose={onClose}
+    onSortEnd={onSortEnd}
     size="lg"
   >
     {createSections(data)}
@@ -87,13 +92,21 @@ stories.add('large', () => (
 ))
 
 stories.add('allow multiple', () => (
-  <Accordion allowMultiple isSortable={boolean('isSortable', false)}>
+  <Accordion
+    allowMultiple
+    isSortable={boolean('isSortable', false)}
+    onSortEnd={onSortEnd}
+  >
     {createSections(data)}
   </Accordion>
 ))
 
 stories.add('is seamless', () => (
-  <Accordion isSeamless isSortable={boolean('isSortable', false)}>
+  <Accordion
+    isSeamless
+    isSortable={boolean('isSortable', false)}
+    onSortEnd={onSortEnd}
+  >
     {createSections(data)}
   </Accordion>
 ))
@@ -102,7 +115,10 @@ stories.add('is in page', () => (
   <Page>
     <Page.Card>
       <Page.Header subtitle="In page mode" />
-      <Accordion isSortable={boolean('isSortable', false)}>
+      <Accordion
+        isSortable={boolean('isSortable', false)}
+        onSortEnd={onSortEnd}
+      >
         {createSections(data)}
       </Accordion>
     </Page.Card>
@@ -147,6 +163,7 @@ stories.add('uses custom ids', () => {
           <Accordion
             isSortable={boolean('isSortable', false)}
             onOpen={this.updateSectionId}
+            onSortEnd={onSortEnd}
             openSectionIds={[value]}
           >
             {createSections(dataWithIds)}
@@ -196,6 +213,7 @@ stories.add('uses multiple custom ids', () => {
             onOpen={(uuid, openSectionIds) =>
               this.updateSectionIds(openSectionIds)
             }
+            onSortEnd={onSortEnd}
             openSectionIds={values}
           >
             {createSections(dataWithIds)}
@@ -215,7 +233,11 @@ stories.add('Row (Link)', () => {
   return (
     <Page>
       <Page.Card>
-        <Accordion isSeamless isSortable={boolean('isSortable', false)}>
+        <Accordion
+          isSeamless
+          isSortable={boolean('isSortable', false)}
+          onSortEnd={onSortEnd}
+        >
           <Accordion.Link to="/">
             <Text truncate weight={500}>
               {linkOneContent}
@@ -241,6 +263,7 @@ storiesHsApp.add('default', () => (
     isSortable={boolean('isSortable', false)}
     onOpen={onOpen}
     onClose={onClose}
+    onSortEnd={onSortEnd}
   >
     {createSections(data)}
   </Accordion>
