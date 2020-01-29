@@ -1,7 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, AvatarList } from '../src/index'
-import AvatarSpec from './AvatarGrid/specs/Avatar'
+import AvatarSpec from '../src/utilities/specs/avatarGrid.specs'
 
 const stories = storiesOf('AvatarList', module)
 const fixtures = AvatarSpec.generate(20)

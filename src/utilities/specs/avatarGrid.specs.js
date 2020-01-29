@@ -1,5 +1,5 @@
 import { compose, createSpec, faker } from '@helpscout/helix'
-import AvatarSpec from '../../Avatar/specs/Avatar'
+import AvatarSpec from './avatar.specs'
 
 const Spec = createSpec({
   status: faker.random.arrayElement(['online', 'offline', 'busy']),

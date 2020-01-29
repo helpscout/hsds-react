@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, text } from '@storybook/addon-knobs'
-import withAktiv from './utils/withAktiv'
+import { withAktiv } from '../src/utilities/storybook'
 import HsApp from '../src/components/HsApp'
 
 import { SideNavigation, Flexy, Heading, Button } from '../src/index'

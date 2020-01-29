@@ -9,8 +9,8 @@ import {
   ChatSidebar,
   Flexy,
 } from '../src/index'
-import AvatarSpec from './Avatar/specs/Avatar'
-import ChatSpec from './ChatList/specs/Chat'
+import AvatarSpec from '../src/utilities/specs/avatar.specs'
+import ChatSpec from '../src/utilities/specs/chat.specs'
 
 ChatSpec.afterGenerate(({ isTyping, ...rest }) => {
   return {

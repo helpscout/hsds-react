@@ -6,7 +6,7 @@ import { Wrapper } from './commonComponents'
 import {
   createFakeCustomers,
   getCurrentPageData,
-} from '../../src/components/Table/__tests__/utils'
+} from '../../src/components/Table/Table.testUtils'
 
 export default class TableWithPagination extends Component {
   constructor(props) {

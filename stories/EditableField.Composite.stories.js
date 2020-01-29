@@ -5,7 +5,7 @@ import { EditableFieldComposite } from '../src/components/EditableField'
 import ReadMe from '../src/components/EditableField/docs/EditableFieldComposite.md'
 
 import { jsxDecorator } from 'storybook-addon-jsx'
-import { withAktiv } from './utils'
+import { withAktiv } from '../src/utilities/storybook'
 import { ContainerUI } from './EditableField.stories'
 
 const stories = storiesOf('EditableField/Composite', module)

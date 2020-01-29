@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ChatTranscript } from '../../src/index'
-import fixture from './fixture/data'
+import { ChatTranscript } from '../src/index'
+import fixture from '../src/utilities/specs/chatTranscript.specs'
 
 const stories = storiesOf('ChatTranscript', module)
 const fixtureTranscript = fixture.events
@@ -136,7 +136,7 @@ stories.add('body', () => {
         author={{
           name: 'Buddy',
         }}
-        body="<em>Safe body <a href=&quot;http://helpscout.com&quot;>http://helpscout.com</a></em>"
+        body='<em>Safe body <a href="http://helpscout.com">http://helpscout.com</a></em>'
         isBodySafe
         createdAt="9:41am"
         type="message"

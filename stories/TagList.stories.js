@@ -1,7 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import { TagList, Tag } from '../src/index'
-import TagSpec from './Tag/specs/Tag'
+import TagSpec from '../src/utilities/specs/tags.specs'
 
 const stories = storiesOf('TagList', module)
 

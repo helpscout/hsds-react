@@ -1,7 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import { AvatarSelector } from '../src/index'
-import AvatarSpec from './AvatarGrid/specs/Avatar'
+import AvatarSpec from '../src/utilities/specs/avatarGrid.specs'
 import Dropdown from '../src/components/Dropdown/DropdownV2'
 
 const stories = storiesOf('AvatarSelector', module)

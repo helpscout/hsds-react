@@ -5,7 +5,7 @@ import EditableTextarea from '../src/components/EditableTextarea'
 import ReadMe from '../src/components/EditableField/docs/README.md'
 
 import { ContainerUI, NoteUI } from './EditableField.stories'
-import { withAktiv } from './utils'
+import { withAktiv } from '../src/utilities/storybook'
 
 const stories = storiesOf('EditableTextarea', module)
   .addParameters({

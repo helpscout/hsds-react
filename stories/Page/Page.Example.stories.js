@@ -11,9 +11,9 @@ import {
   Page,
   Switch,
 } from '../../src/index'
-import { App } from './decorators'
+import { PageDecorator } from '../../src/utilities/storybook'
 
-const stories = storiesOf('Page/Example', module).addDecorator(App)
+const stories = storiesOf('Page/Example', module).addDecorator(PageDecorator)
 
 const action = name => (...args) => {
   addonAction(name)(...args)

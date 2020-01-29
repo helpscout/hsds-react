@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   createFakeCustomers,
   sortData,
-} from '../../src/components/Table/__tests__/utils'
+} from '../../src/components/Table/Table.testUtils'
 import { Table } from '../../src/index'
 import { Wrapper } from './commonComponents'
 

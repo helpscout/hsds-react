@@ -8,7 +8,7 @@ import {
   columsnWithCustomNameCell,
   columsnWithCustomHeaderNameCell,
   compoundColumns,
-} from '../../src/components/Table/__tests__/utils'
+} from '../../src/components/Table/Table.testUtils'
 
 import Heading from '../../src/components/Heading'
 import PreviewCard from '../../src/components/PreviewCard'
@@ -20,7 +20,7 @@ import TableWithSorting from './TableWithSorting'
 import {
   defaultSkin,
   alternativeSkin,
-} from '../../src/components/Table/styles/skins'
+} from '../../src/components/Table/Table.skins'
 
 import styled from '../../src/components/styled'
 

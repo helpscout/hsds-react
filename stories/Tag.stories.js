@@ -8,7 +8,7 @@ import {
   text,
 } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
-import { Tag } from '../../src/index'
+import { Tag } from '../src/index'
 
 const stories = storiesOf('Tag', module)
 stories.addDecorator(withArtboard({ id: 'Tag' }))

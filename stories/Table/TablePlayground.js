@@ -9,12 +9,12 @@ import { Wrapper, Header } from './commonComponents'
 import {
   createFakeCustomers,
   sortData,
-} from '../../src/components/Table/__tests__/utils'
+} from '../../src/components/Table/Table.testUtils'
 import { getColor } from '../../src/styles/utilities/color'
 import {
   defaultSkin,
   alternativeSkin,
-} from '../../src/components/Table/styles/skins'
+} from '../../src/components/Table/Table.skins'
 
 const customSkin = {
   fontColorHeader: '#ffffff',

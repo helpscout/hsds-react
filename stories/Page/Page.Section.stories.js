@@ -1,9 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Page } from '../../src/index'
-import { App } from './decorators'
+import { PageDecorator } from '../../src/utilities/storybook'
 
-const stories = storiesOf('Page/Section', module).addDecorator(App)
+const stories = storiesOf('Page/Section', module).addDecorator(PageDecorator)
 
 stories.add('default', () => (
   <Page>

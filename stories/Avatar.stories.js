@@ -1,11 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Avatar, Flexy, Button } from '../../src/index'
+import { Avatar, Flexy, Button } from '../src/index'
 import { ThemeProvider } from 'styled-components'
-import AvatarSpec from './specs/Avatar'
+import AvatarSpec from '../src/utilities/specs/avatar.specs'
 
 import { action } from '@storybook/addon-actions'
-import { getColor } from '../../src/styles/utilities/color'
+import { getColor } from '../src/styles/utilities/color'
 import { withKnobs, boolean, select } from '@storybook/addon-knobs'
 
 const stories = storiesOf('Avatar', module)

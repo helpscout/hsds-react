@@ -13,7 +13,7 @@ import {
   Icon,
   styled,
 } from '../src/index'
-import AvatarSpec from './AvatarGrid/specs/Avatar'
+import AvatarSpec from '../src/utilities/specs/avatarGrid.specs'
 
 const stories = storiesOf('ArticleCard', module)
 stories.addDecorator(withKnobs)

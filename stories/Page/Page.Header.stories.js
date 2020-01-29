@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { storiesOf } from '@storybook/react'
 import { Page } from '../../src/index'
-import { App } from './decorators'
+import { PageDecorator } from '../../src/utilities/storybook'
 
-const stories = storiesOf('Page/Header', module).addDecorator(App)
+const stories = storiesOf('Page/Header', module).addDecorator(PageDecorator)
 
 const renderPropCode = `
 <Page.Header

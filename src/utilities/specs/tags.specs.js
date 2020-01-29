@@ -1,6 +1,6 @@
 import { createSpec, faker } from '@helpscout/helix'
 
-const Spec = createSpec({
+export default createSpec({
   color: faker.random.arrayElement([
     'blue',
     'green',
@@ -12,6 +12,5 @@ const Spec = createSpec({
   id: faker.random.uuid(),
   filled: faker.random.boolean(),
   value: faker.lorem.sentence(),
+  children: faker.lorem.word(),
 })
-
-export default Spec

@@ -7,7 +7,7 @@ import Button from '../src/components/Button'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
 
-import { withAktiv, withHsApp } from './utils'
+import { withAktiv, withHsApp } from '../src/utilities/storybook'
 
 import {
   withKnobs,

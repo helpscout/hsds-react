@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
 import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
 import { BlankSlate } from '../src/index'
-import { withAktiv, withHsApp } from './utils'
+import { withAktiv, withHsApp } from '../src/utilities/storybook'
 
 const stories = storiesOf('BlankSlate', module)
 stories.addDecorator(

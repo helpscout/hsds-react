@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { text } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../src/index'
 import { faker } from '@helpscout/helix'
-import { withAktiv, withHsApp } from './utils'
+import { withAktiv, withHsApp } from '../src/utilities/storybook'
 
 const stories = storiesOf('Accordion', module)
 

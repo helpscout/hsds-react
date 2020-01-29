@@ -8,8 +8,8 @@ import {
   select,
 } from '@storybook/addon-knobs'
 import { withArtboard, Guide, GuideContainer } from '@helpscout/artboard'
-import { Avatar } from '../../src/index'
-import AvatarSpec from './specs/Avatar'
+import { Avatar } from '../src/index'
+import AvatarSpec from '../src/utilities/specs/avatar.specs'
 
 const stories = storiesOf('Avatar', module)
 stories.addDecorator(

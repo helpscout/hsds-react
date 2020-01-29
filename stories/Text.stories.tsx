@@ -2,7 +2,7 @@ import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import Text from '../src/components/Text'
 
-import { WithAktiv } from './utils/withAktiv'
+import { WithAktiv } from '../src/utilities/storybook'
 
 storiesOf('Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)

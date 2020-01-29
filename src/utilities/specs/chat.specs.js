@@ -1,5 +1,5 @@
 import { createSpec, faker } from '@helpscout/helix'
-import TagSpec from './Tag'
+import TagSpec from './tags.specs'
 
 export default createSpec({
   id: faker.random.uuid(),

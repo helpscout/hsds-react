@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { StatusAvatar } from '../src/index'
-import AvatarSpec from './Avatar/specs/Avatar'
+import AvatarSpec from '../src/utilities/specs/avatar.specs'
 
 const stories = storiesOf('StatusAvatar', module)
 const fixture = AvatarSpec.generate()
