@@ -169,7 +169,6 @@ export class Accordion extends React.PureComponent<
         lockAxis="y"
         onSortStart={this.handleOnSortStart}
         onSortEnd={this.handleOnSortEnd}
-        //shouldCancelStart={this.shouldCancelSort}
       >
         {children}
       </Sortable>
@@ -196,12 +195,6 @@ export class Accordion extends React.PureComponent<
 
   handleOnSortEnd = () => {
     this.setState({ isSorting: false })
-  }
-
-  shouldCancelSort = () => {
-    // Cancel sorting if there are open sections
-    const { sections } = this.state
-    return typeof sections === 'object' && Object.keys(sections).length > 0
   }
 }
 
