@@ -181,7 +181,7 @@ export const makeTitleUI = (selector: 'div') => {
       display: none;
       pointer-events: none;
       position: absolute;
-      left: 2px;
+      left: 1px;
       top: 50%;
       transform: translateY(-50%);
 
