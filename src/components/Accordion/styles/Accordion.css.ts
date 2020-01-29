@@ -83,6 +83,10 @@ export const SectionUI = styled('div')`
   border-bottom: 1px solid ${getColor('border')};
   position: relative;
 
+  .is-page & {
+    border-bottom-color: ${getColor('grey.300')};
+  }
+
   .is-page &.is-seamless,
   .is-page .c-SortableItem &.is-seamless:last-child,
   .is-sortable &:not(.is-seamless) {
