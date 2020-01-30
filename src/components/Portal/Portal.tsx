@@ -86,6 +86,7 @@ export class Portal extends React.Component<PortalProps> {
     const { propProviderContextApp, propProviderContextValue, children } = props
     if (!children || !React.isValidElement(children)) return
 
+    //@ts-ignore
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       <PropProvider

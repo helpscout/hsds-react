@@ -1,5 +1,4 @@
 import { StatusDotStatus } from '../StatusDot/StatusDot.types'
-import { AvatarShape, AvatarSize } from './Avatar.types'
 import { IconSize } from '../Icon/Icon.types'
 
 export type AvatarShape = 'square' | 'rounded' | 'circle'
