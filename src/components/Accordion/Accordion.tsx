@@ -166,7 +166,7 @@ export class Accordion extends React.PureComponent<
     const componentClassName = getComponentClassName(this.props, this.state)
     const content = isSortable ? (
       <Sortable
-        distance={5}
+        distance={50}
         helperClass="is-sorting-item"
         lockAxis="y"
         onSortStart={this.handleOnSortStart}

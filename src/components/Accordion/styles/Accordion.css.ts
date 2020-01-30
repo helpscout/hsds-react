@@ -17,6 +17,10 @@ export const AccordionUI = styled('div')`
     border-radius: none;
   }
 
+  &.is-sorting {
+    user-select: none;
+  }
+
   &.is-page {
     margin-left: -50px;
     margin-right: -50px;
@@ -124,13 +128,18 @@ export const makeTitleUI = (selector: 'div') => {
       pointer-events: none;
     }
 
+    .is-sortable & {
+      user-select: none;
+    }
+
     .is-sorting-item & {
       background-color: ${getColor('grey.200')};
       cursor: move;
       overflow: hidden;
       pointer-events: all;
+      user-select: none;
 
-      &.drag-handle {
+      .drag-handle {
         display: inline-block;
       }
     }
